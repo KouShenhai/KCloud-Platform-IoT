@@ -57,89 +57,87 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 
 	private final RegisteredClientRepository registeredClientRepository;
 
+	// @formatter:off
 	private static final ObjectMapper MAPPER = new ObjectMapper()
+		// https://docs.spring.io/spring-security/reference/servlet/integrations/jackson.html#page-title
 		.registerModules(SecurityJackson2Modules.getModules(RedisOAuth2AuthorizationService.class.getClassLoader()))
+		// https://docs.spring.io/spring-authorization-server/docs/current-SNAPSHOT/api/org/springframework/security/oauth2/server/authorization/jackson2/OAuth2AuthorizationServerJackson2Module.html
 		.registerModule(new OAuth2AuthorizationServerJackson2Module());
+	// @formatter:on
 
+	// @formatter:off
 	@Override
 	public void save(OAuth2Authorization authorization) {
 		Assert.isTrue(ObjectUtil.isNotNull(authorization), "authorization is null");
 		// access_token
-		if (ObjectUtil.isNotNull(authorization.getAccessToken())) {
-			AbstractOAuth2Token accessToken = authorization.getAccessToken().getToken();
-			setToken(accessToken, authorization, ACCESS_TOKEN);
+		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
+		if (ObjectUtil.isNotNull(accessToken)) {
+			setToken(accessToken.getToken(), authorization, ACCESS_TOKEN);
 		}
 		// refresh token
-		if (ObjectUtil.isNotNull(authorization.getRefreshToken())) {
-			AbstractOAuth2Token refreshToken = authorization.getRefreshToken().getToken();
-			setToken(refreshToken, authorization, REFRESH_TOKEN);
+		OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken = authorization.getRefreshToken();
+		if (ObjectUtil.isNotNull(refreshToken)) {
+			setToken(refreshToken.getToken(), authorization, REFRESH_TOKEN);
 		}
 		// authorization code
-		OAuth2Authorization.Token<OAuth2AuthorizationCode> authorizationCodeToken = authorization
-			.getToken(OAuth2AuthorizationCode.class);
-		if (ObjectUtil.isNotNull(authorizationCodeToken)) {
-			AbstractOAuth2Token authorizationCode = authorizationCodeToken.getToken();
-			setToken(authorizationCode, authorization, CODE);
+		OAuth2Authorization.Token<OAuth2AuthorizationCode> authorizationCode = authorization.getToken(OAuth2AuthorizationCode.class);
+		if (ObjectUtil.isNotNull(authorizationCode)) {
+			setToken(authorizationCode.getToken(), authorization, CODE);
 		}
 		// oidc id token
 		OAuth2Authorization.Token<OidcIdToken> oidcIdToken = authorization.getToken(OidcIdToken.class);
 		if (ObjectUtil.isNotNull(oidcIdToken)) {
-			AbstractOAuth2Token idToken = oidcIdToken.getToken();
-			setToken(idToken, authorization, ID_TOKEN);
+			setToken(oidcIdToken.getToken(), authorization, ID_TOKEN);
 		}
 		// user code
-		OAuth2Authorization.Token<OAuth2UserCode> userCodeToken = authorization.getToken(OAuth2UserCode.class);
-		if (ObjectUtil.isNotNull(userCodeToken)) {
-			AbstractOAuth2Token userCode = userCodeToken.getToken();
-			setToken(userCode, authorization, USER_CODE);
+		OAuth2Authorization.Token<OAuth2UserCode> userCode = authorization.getToken(OAuth2UserCode.class);
+		if (ObjectUtil.isNotNull(userCode)) {
+			setToken(userCode.getToken(), authorization, USER_CODE);
 		}
 		// device code
-		OAuth2Authorization.Token<OAuth2DeviceCode> deviceCodeToken = authorization.getToken(OAuth2DeviceCode.class);
-		if (ObjectUtil.isNotNull(deviceCodeToken)) {
-			AbstractOAuth2Token deviceCode = deviceCodeToken.getToken();
-			setToken(deviceCode, authorization, DEVICE_CODE);
+		OAuth2Authorization.Token<OAuth2DeviceCode> deviceCode = authorization.getToken(OAuth2DeviceCode.class);
+		if (ObjectUtil.isNotNull(deviceCode)) {
+			setToken(deviceCode.getToken(), authorization, DEVICE_CODE);
 		}
 	}
+	// @formatter:on
 
+	// @formatter:off
 	@Override
 	public void remove(OAuth2Authorization authorization) {
 		Assert.isTrue(ObjectUtil.isNotNull(authorization), "authorization is null");
 		// access_token
-		if (ObjectUtil.isNotNull(authorization.getAccessToken())) {
-			AbstractOAuth2Token accessToken = authorization.getAccessToken().getToken();
-			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(ACCESS_TOKEN), accessToken.getTokenValue());
+		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
+		if (ObjectUtil.isNotNull(accessToken)) {
+			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(ACCESS_TOKEN), accessToken.getToken().getTokenValue());
 		}
 		// refresh token
-		if (ObjectUtil.isNotNull(authorization.getRefreshToken())) {
-			AbstractOAuth2Token refreshToken = authorization.getRefreshToken().getToken();
-			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(REFRESH_TOKEN), refreshToken.getTokenValue());
+		OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken = authorization.getRefreshToken();
+		if (ObjectUtil.isNotNull(refreshToken)) {
+			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(REFRESH_TOKEN), refreshToken.getToken().getTokenValue());
 		}
 		// authorization code
-		OAuth2Authorization.Token<OAuth2AuthorizationCode> authorizationCodeToken = authorization
-			.getToken(OAuth2AuthorizationCode.class);
-		if (ObjectUtil.isNotNull(authorizationCodeToken)) {
-			AbstractOAuth2Token authorizationCode = authorizationCodeToken.getToken();
-			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(CODE), authorizationCode.getTokenValue());
+		OAuth2Authorization.Token<OAuth2AuthorizationCode> authorizationCode = authorization.getToken(OAuth2AuthorizationCode.class);
+		if (ObjectUtil.isNotNull(authorizationCode)) {
+			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(CODE), authorizationCode.getToken().getTokenValue());
 		}
 		// oidc id token
 		OAuth2Authorization.Token<OidcIdToken> oidcIdToken = authorization.getToken(OidcIdToken.class);
 		if (ObjectUtil.isNotNull(oidcIdToken)) {
-			AbstractOAuth2Token idToken = oidcIdToken.getToken();
-			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(ID_TOKEN), idToken.getTokenValue());
+			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(ID_TOKEN), oidcIdToken.getToken().getTokenValue());
 		}
 		// user code
-		OAuth2Authorization.Token<OAuth2UserCode> userCodeToken = authorization.getToken(OAuth2UserCode.class);
-		if (ObjectUtil.isNotNull(userCodeToken)) {
-			AbstractOAuth2Token userCode = userCodeToken.getToken();
-			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(USER_CODE), userCode.getTokenValue());
+		OAuth2Authorization.Token<OAuth2UserCode> userCode = authorization.getToken(OAuth2UserCode.class);
+		if (ObjectUtil.isNotNull(userCode)) {
+			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(USER_CODE), userCode.getToken().getTokenValue());
 		}
 		// device code
-		OAuth2Authorization.Token<OAuth2DeviceCode> deviceCodeToken = authorization.getToken(OAuth2DeviceCode.class);
-		if (ObjectUtil.isNotNull(deviceCodeToken)) {
-			AbstractOAuth2Token deviceCode = deviceCodeToken.getToken();
-			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(DEVICE_CODE), deviceCode.getTokenValue());
+		OAuth2Authorization.Token<OAuth2DeviceCode> deviceCode = authorization.getToken(OAuth2DeviceCode.class);
+		if (ObjectUtil.isNotNull(deviceCode)) {
+			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(DEVICE_CODE), deviceCode.getToken().getTokenValue());
 		}
 	}
+	// @formatter:on
 
 	@Nullable
 	@Override
