@@ -260,11 +260,19 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			// 初始化（多数据源切换）
 			String sourceName = getSourceName(tenantId);
 			// 加密
-			String encryptName = AesUtil.encrypt(username);
+			String encryptName;
+			boolean passwordFlag = false;
+			// 密码登录无需二次加密
+			if (PASSWORD.equals(type)) {
+				encryptName = username;
+				passwordFlag = true;
+			} else {
+				encryptName = AesUtil.encrypt(username);
+			}
 			User user;
 			try {
 				// 多租户查询（多数据源）
-				user = userGateway.getUserByUsername(new Auth(encryptName, type));
+				user = userGateway.getUserByUsername(new Auth(encryptName, type, AesUtil.getKey()));
 			}
 			catch (BadSqlGrammarException e) {
 				log.error("表 boot_sys_user 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
@@ -273,7 +281,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			if (ObjectUtil.isNull(user)) {
 				throw authenticationException(ACCOUNT_PASSWORD_ERROR, new User(username, tenantId), type, ip);
 			}
-			if (PASSWORD.equals(type)) {
+			if (passwordFlag) {
 				// 验证密码
 				String clientPassword = user.getPassword();
 				if (!passwordEncoder.matches(password, clientPassword)) {

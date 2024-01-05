@@ -42,11 +42,13 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	 */
 	Integer updateUser(@Param("userDO") UserDO userDO);
 
+	Integer insertUser(@Param("userDO") UserDO userDO, @Param("key")String key);
+
 	/**
 	 * 根据租户ID查询下拉列表
 	 * @return
 	 */
-	List<UserDO> getOptionList(@Param(PAGE_QUERY) PageQuery pageQuery);
+	List<UserDO> getOptionList(@Param(PAGE_QUERY) PageQuery pageQuery, @Param("key")String key);
 
 	/**
 	 * 查询用户列表
@@ -54,10 +56,10 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	 * @param pageQuery
 	 * @return
 	 */
-	List<UserDO> getUserListFilter(@Param("user") UserDO user, @Param(PAGE_QUERY) PageQuery pageQuery);
+	List<UserDO> getUserListFilter(@Param("user") UserDO user, @Param(PAGE_QUERY) PageQuery pageQuery, @Param("key")String key);
 
-	Integer getUserListTotalFilter(@Param("user") UserDO user, @Param(PAGE_QUERY) PageQuery pageQuery);
+	Integer getUserListTotalFilter(@Param("user") UserDO user, @Param(PAGE_QUERY) PageQuery pageQuery, @Param("key")String key);
 
-	Integer getUserCount(@Param("user") UserDO user);
+	Integer getUserCount(@Param("user") UserDO user, @Param("key")String key);
 
 }

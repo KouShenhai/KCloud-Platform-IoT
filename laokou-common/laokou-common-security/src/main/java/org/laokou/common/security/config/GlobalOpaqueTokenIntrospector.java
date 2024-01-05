@@ -103,15 +103,6 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 	 * @return UserDetail
 	 */
 	private User decryptInfo(User user) {
-		String username = user.getUsername();
-		if (StringUtil.isNotEmpty(username)) {
-			try {
-				user.setUsername(AesUtil.decrypt(username));
-			}
-			catch (Exception e) {
-				log.error("用户名解密失败，请使用AES加密");
-			}
-		}
 		String mail = user.getMail();
 		if (StringUtil.isNotEmpty(mail)) {
 			try {

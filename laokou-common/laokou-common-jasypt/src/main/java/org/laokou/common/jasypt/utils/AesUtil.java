@@ -22,31 +22,40 @@ import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.jasypt.annotation.Aes;
 import org.springframework.util.Assert;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 /**
  * @author laokou
  */
 public class AesUtil {
 
-	private static byte[] getSecretKey() {
-		String secretKey = getKey();
-		byte[] bytes = secretKey.getBytes(StandardCharsets.UTF_8);
-		Assert.isTrue(bytes.length == 16, "密钥长度必须16位");
-		return bytes;
+	private final static byte[] SECRET_KEY;
+
+	private final static String KEY;
+
+	static {
+		try (InputStream inputStream = ResourceUtil.getResource("conf/secretKey.b16").getInputStream()) {
+			SECRET_KEY = inputStream.readAllBytes();
+			Assert.isTrue(SECRET_KEY.length == 16, "密钥长度必须16位");
+			KEY = new String(SECRET_KEY, StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+    }
+
+	public static String getKey() {
+		return KEY;
 	}
 
-	@SneakyThrows
-	private static String getKey() {
-		try (InputStream inputStream = ResourceUtil.getResource("conf/secretKey.b16").getInputStream()) {
-			return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-		}
+	private static byte[] getSecretKey() {
+		return SECRET_KEY;
 	}
 
 	@SneakyThrows

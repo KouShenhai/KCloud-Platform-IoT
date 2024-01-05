@@ -35,4 +35,6 @@ public class Auth implements Serializable {
 
 	private String type;
 
+	private String key;
+
 }

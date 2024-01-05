@@ -15,6 +15,7 @@ import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.common.i18n.common.Constant.SINGLE_QUOT;
 import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
@@ -33,7 +34,7 @@ public class UserInsertCmdExe {
 	@DS(TENANT)
 	public Result<Boolean> execute(UserInsertCmd cmd) {
 		UserCO co = cmd.getUserCO();
-		int count = userMapper.getUserCount(toUserDO(co));
+		int count = userMapper.getUserCount(toUserDO(co), AesUtil.getKey());
 		if (count > 0) {
 			throw new SystemException("用户名已存在，请重新输入");
 		}
@@ -41,10 +42,7 @@ public class UserInsertCmdExe {
 	}
 
 	private UserDO toUserDO(UserCO co) {
-		UserDO userDO = userConvertor.toDataObj(co);
-		userDO.setTenantId(UserUtil.getTenantId());
-		userDO.setUsername(AesUtil.encrypt(userDO.getUsername()));
-		return userDO;
+        return userConvertor.toDataObj(co);
 	}
 
 	private User toUser(UserCO co) {
@@ -53,6 +51,7 @@ public class UserInsertCmdExe {
 		user.setCreator(UserUtil.getUserId());
 		user.setDeptId(co.getDeptId());
 		user.setDeptPath(co.getDeptPath());
+		user.setUsername(SINGLE_QUOT.concat(user.getUsername()).concat(SINGLE_QUOT));
 		return user;
 	}
 

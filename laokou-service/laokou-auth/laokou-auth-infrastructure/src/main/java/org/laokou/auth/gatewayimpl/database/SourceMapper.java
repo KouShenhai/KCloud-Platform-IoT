@@ -32,7 +32,7 @@ import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID
 public interface SourceMapper {
 
 	/**
-	 * 根据租户ID查询数据源名称
+	 * 根据租户ID查询数据源
 	 * @param tenantId 租户ID
 	 * @return String
 	 */

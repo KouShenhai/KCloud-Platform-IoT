@@ -26,7 +26,6 @@ import org.laokou.common.mybatisplus.handler.JasyptTypeHandler;
 
 import java.io.Serial;
 
-import static org.laokou.common.mybatisplus.config.DynamicTableNameHandler.PLACE_HOLDER;
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_USER;
 
 /**
@@ -41,7 +40,7 @@ public class UserDO extends BaseDO {
 	private static final long serialVersionUID = 1181289215379287683L;
 
 	@Schema(name = "username", description = "用户名", example = "admin")
-	@TableField(value = "username", typeHandler = JasyptTypeHandler.class)
+	@TableField(value = "username")
 	private String username;
 
 	@Schema(name = "password", description = "密码", example = "123456")
