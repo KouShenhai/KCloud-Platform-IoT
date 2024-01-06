@@ -16,32 +16,34 @@
  */
 package org.laokou.common.security.config.auto;
 
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.security.config.RedisOAuth2AuthorizationRepository;
 import org.laokou.common.security.config.RedisOAuth2AuthorizationService;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 
+import static org.springframework.data.redis.core.RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP;
+
 /**
  * @author laokou
  */
 @AutoConfiguration
+@EnableRedisRepositories(enableKeyspaceEvents = ON_STARTUP, basePackages = {"org.laokou.common.security.config"})
 class OAuth2AuthorizationAutoConfig {
 
 	/**
-	 * @param redisUtil Redis工具类
-	 * @param registeredClientRepository 注册信息
+	 * @param redisOAuth2AuthorizationRepository Redis缓存
 	 * @return OAuth2AuthorizationService
 	 */
 	@Bean
 	@ConditionalOnMissingBean(OAuth2AuthorizationService.class)
-	OAuth2AuthorizationService auth2AuthorizationService(RedisUtil redisUtil,
-			RegisteredClientRepository registeredClientRepository) {
-		return new RedisOAuth2AuthorizationService(redisUtil, registeredClientRepository);
+	OAuth2AuthorizationService auth2AuthorizationService(RedisOAuth2AuthorizationRepository redisOAuth2AuthorizationRepository, RegisteredClientRepository registeredClientRepository) {
+		return new RedisOAuth2AuthorizationService(redisOAuth2AuthorizationRepository, registeredClientRepository);
 	}
 
 	/**

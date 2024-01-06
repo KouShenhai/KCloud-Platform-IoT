@@ -17,24 +17,29 @@
 
 package org.laokou.common.security.config;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
 import org.laokou.common.i18n.dto.Authorization;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.TimeToLive;
+import org.springframework.data.redis.core.index.Indexed;
 
 import java.time.Instant;
 
 /**
  * 仿照 数据库表 oauth2_authorization
- *
+ * <a href="https://docs.spring.io/spring-data/redis/reference/redis/redis-repositories/indexes.html">二级索引</a>
+ * <a href="https://www.jdon.com/57902.html">用法</a>
  * @author laokou
  */
 @Data
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
+@RedisHash("oauth2-authorization")
 public class RedisOAuth2Authorization extends Authorization {
 
 	/**
 	 * ID
 	 */
+	@Id
 	private String id;
 
 	/**
@@ -65,11 +70,13 @@ public class RedisOAuth2Authorization extends Authorization {
 	/**
 	 * 认证状态
 	 */
+	@Indexed
 	private String state;
 
 	/**
 	 * 授权码-值
 	 */
+	@Indexed
 	private String authorizationCodeValue;
 
 	/**
@@ -90,6 +97,7 @@ public class RedisOAuth2Authorization extends Authorization {
 	/**
 	 * 令牌-值
 	 */
+	@Indexed
 	private String accessTokenValue;
 
 	/**
@@ -120,6 +128,7 @@ public class RedisOAuth2Authorization extends Authorization {
 	/**
 	 * OID-值
 	 */
+	@Indexed
 	private String oidcIdTokenValue;
 
 	/**
@@ -145,6 +154,7 @@ public class RedisOAuth2Authorization extends Authorization {
 	/**
 	 * 刷新令牌-值
 	 */
+	@Indexed
 	private String refreshTokenValue;
 
 	/**
@@ -165,6 +175,7 @@ public class RedisOAuth2Authorization extends Authorization {
 	/**
 	 * 用户码-值
 	 */
+	@Indexed
 	private String userCodeValue;
 
 	/**
@@ -185,6 +196,7 @@ public class RedisOAuth2Authorization extends Authorization {
 	/**
 	 * 设备码-值
 	 */
+	@Indexed
 	private String deviceCodeValue;
 
 	/**
@@ -201,5 +213,11 @@ public class RedisOAuth2Authorization extends Authorization {
 	 * 设备码-元数据
 	 */
 	private String deviceCodeMetadata;
+
+	/**
+     * 过期时间-秒
+     */
+	@TimeToLive
+	private Long ttl;
 
 }

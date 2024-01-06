@@ -24,8 +24,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
-import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.lang.Nullable;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.security.oauth2.core.*;
@@ -41,19 +39,23 @@ import org.springframework.util.Assert;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static org.laokou.common.i18n.common.Constant.COMMA;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.*;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 
 /**
+ * 仿照 JdbcOAuth2AuthorizationService
  * @author laokou
  */
 @RequiredArgsConstructor
 public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationService {
 
-	private final RedisUtil redisUtil;
+	private final RedisOAuth2AuthorizationRepository redisOAuth2AuthorizationRepository;
 
 	private final RegisteredClientRepository registeredClientRepository;
 
@@ -65,77 +67,32 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		.registerModule(new OAuth2AuthorizationServerJackson2Module());
 	// @formatter:on
 
-	// @formatter:off
 	@Override
 	public void save(OAuth2Authorization authorization) {
 		Assert.isTrue(ObjectUtil.isNotNull(authorization), "authorization is null");
-		// access_token
-		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
-		if (ObjectUtil.isNotNull(accessToken)) {
-			setToken(accessToken.getToken(), authorization, ACCESS_TOKEN);
-		}
-		// refresh token
-		OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken = authorization.getRefreshToken();
-		if (ObjectUtil.isNotNull(refreshToken)) {
-			setToken(refreshToken.getToken(), authorization, REFRESH_TOKEN);
-		}
-		// authorization code
-		OAuth2Authorization.Token<OAuth2AuthorizationCode> authorizationCode = authorization.getToken(OAuth2AuthorizationCode.class);
-		if (ObjectUtil.isNotNull(authorizationCode)) {
-			setToken(authorizationCode.getToken(), authorization, CODE);
-		}
-		// oidc id token
-		OAuth2Authorization.Token<OidcIdToken> oidcIdToken = authorization.getToken(OidcIdToken.class);
-		if (ObjectUtil.isNotNull(oidcIdToken)) {
-			setToken(oidcIdToken.getToken(), authorization, ID_TOKEN);
-		}
-		// user code
-		OAuth2Authorization.Token<OAuth2UserCode> userCode = authorization.getToken(OAuth2UserCode.class);
-		if (ObjectUtil.isNotNull(userCode)) {
-			setToken(userCode.getToken(), authorization, USER_CODE);
-		}
-		// device code
-		OAuth2Authorization.Token<OAuth2DeviceCode> deviceCode = authorization.getToken(OAuth2DeviceCode.class);
-		if (ObjectUtil.isNotNull(deviceCode)) {
-			setToken(deviceCode.getToken(), authorization, DEVICE_CODE);
-		}
+		RedisOAuth2Authorization redisOAuth2Authorization = convert(authorization);
+		List<Instant> expireAtList = Stream.of(redisOAuth2Authorization.getAuthorizationCodeExpiresAt(),
+				redisOAuth2Authorization.getAccessTokenExpiresAt(),
+				redisOAuth2Authorization.getOidcIdTokenExpiresAt(),
+				redisOAuth2Authorization.getRefreshTokenExpiresAt(),
+				redisOAuth2Authorization.getUserCodeExpiresAt(),
+				redisOAuth2Authorization.getDeviceCodeExpiresAt())
+				.filter(ObjectUtil::isNotNull)
+				.toList();
+		expireAtList
+				.stream()
+				.max(Comparator.comparing(Instant::getEpochSecond))
+				.ifPresent(instant -> redisOAuth2Authorization.setTtl(ChronoUnit.SECONDS.between(Instant.now(), instant)));
+		// 先删除后新增
+		redisOAuth2AuthorizationRepository.deleteById(authorization.getId());
+		redisOAuth2AuthorizationRepository.save(redisOAuth2Authorization);
 	}
-	// @formatter:on
 
 	// @formatter:off
 	@Override
 	public void remove(OAuth2Authorization authorization) {
 		Assert.isTrue(ObjectUtil.isNotNull(authorization), "authorization is null");
-		// access_token
-		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
-		if (ObjectUtil.isNotNull(accessToken)) {
-			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(ACCESS_TOKEN), accessToken.getToken().getTokenValue());
-		}
-		// refresh token
-		OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken = authorization.getRefreshToken();
-		if (ObjectUtil.isNotNull(refreshToken)) {
-			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(REFRESH_TOKEN), refreshToken.getToken().getTokenValue());
-		}
-		// authorization code
-		OAuth2Authorization.Token<OAuth2AuthorizationCode> authorizationCode = authorization.getToken(OAuth2AuthorizationCode.class);
-		if (ObjectUtil.isNotNull(authorizationCode)) {
-			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(CODE), authorizationCode.getToken().getTokenValue());
-		}
-		// oidc id token
-		OAuth2Authorization.Token<OidcIdToken> oidcIdToken = authorization.getToken(OidcIdToken.class);
-		if (ObjectUtil.isNotNull(oidcIdToken)) {
-			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(ID_TOKEN), oidcIdToken.getToken().getTokenValue());
-		}
-		// user code
-		OAuth2Authorization.Token<OAuth2UserCode> userCode = authorization.getToken(OAuth2UserCode.class);
-		if (ObjectUtil.isNotNull(userCode)) {
-			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(USER_CODE), userCode.getToken().getTokenValue());
-		}
-		// device code
-		OAuth2Authorization.Token<OAuth2DeviceCode> deviceCode = authorization.getToken(OAuth2DeviceCode.class);
-		if (ObjectUtil.isNotNull(deviceCode)) {
-			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(DEVICE_CODE), deviceCode.getToken().getTokenValue());
-		}
+		redisOAuth2AuthorizationRepository.deleteById(authorization.getId());
 	}
 	// @formatter:on
 
@@ -150,25 +107,23 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 	public OAuth2Authorization findByToken(String token, @Nullable OAuth2TokenType tokenType) {
 		Assert.isTrue(StringUtil.isNotEmpty(token), "token is empty");
 		Assert.isTrue(ObjectUtil.isNotNull(tokenType), "tokenType is null");
-		String authorizationHashKey = RedisKeyUtil.getOAuth2AuthorizationHashKey(tokenType.getValue());
-		Object obj = redisUtil.hGet(authorizationHashKey, token);
-		if (ObjectUtil.isNotNull(obj)) {
-			return parse((RedisOAuth2Authorization) obj);
-		}
-		return null;
-	}
-
-	private void setToken(AbstractOAuth2Token token, OAuth2Authorization authorization, String type) {
-		Instant issuedAt = ObjectUtil.requireNotNull(token.getIssuedAt());
-		Instant expiresAt = ObjectUtil.requireNotNull(token.getExpiresAt());
-		String tokenValue = token.getTokenValue();
-		long expireTime = ChronoUnit.SECONDS.between(issuedAt, expiresAt);
-		String authorizationHashKey = RedisKeyUtil.getOAuth2AuthorizationHashKey(type);
-		RedisOAuth2Authorization redisOAuth2Authorization = convert(authorization);
-		if (redisUtil.hasHashKey(authorizationHashKey, tokenValue)) {
-			redisUtil.hDel(authorizationHashKey, tokenValue);
-		}
-		redisUtil.hSet(authorizationHashKey, tokenValue, redisOAuth2Authorization, expireTime);
+		return switch (tokenType.getValue()) {
+			case STATE -> redisOAuth2AuthorizationRepository.findByState(token).map(this::parse).orElse(null);
+			case CODE -> redisOAuth2AuthorizationRepository.findByAuthorizationCodeValue(token).map(this::parse).orElse(null);
+			case ACCESS_TOKEN -> redisOAuth2AuthorizationRepository.findByAccessTokenValue(token).map(this::parse).orElse(null);
+			case ID_TOKEN -> redisOAuth2AuthorizationRepository.findByOidcIdTokenValue(token).map(this::parse).orElse(null);
+			case REFRESH_TOKEN -> redisOAuth2AuthorizationRepository.findByRefreshTokenValue(token).map(this::parse).orElse(null);
+			case USER_CODE -> redisOAuth2AuthorizationRepository.findByUserCodeValue(token).map(this::parse).orElse(null);
+			case DEVICE_CODE -> redisOAuth2AuthorizationRepository.findByDeviceCodeValue(token).map(this::parse).orElse(null);
+			case null -> redisOAuth2AuthorizationRepository.findByState(token)
+					.or(() -> redisOAuth2AuthorizationRepository.findByAuthorizationCodeValue(token))
+					.or(() -> redisOAuth2AuthorizationRepository.findByAccessTokenValue(token))
+					.or(() -> redisOAuth2AuthorizationRepository.findByOidcIdTokenValue(token))
+					.or(() -> redisOAuth2AuthorizationRepository.findByRefreshTokenValue(token))
+					.or(() -> redisOAuth2AuthorizationRepository.findByUserCodeValue(token))
+					.or(() -> redisOAuth2AuthorizationRepository.findByDeviceCodeValue(token)).map(this::parse).orElse(null);
+            default -> null;
+        };
 	}
 
 	@SneakyThrows
@@ -182,8 +137,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 			.principalName(redisOAuth2Authorization.getPrincipalName())
 			.authorizationGrantType(new AuthorizationGrantType(redisOAuth2Authorization.getAuthorizationGrantType()))
 			.authorizedScopes(StringUtil.commaDelimitedListToSet(redisOAuth2Authorization.getAuthorizedScopes()))
-			.attributes(attributesConsumer -> attributesConsumer
-				.putAll(parseMap(redisOAuth2Authorization.getAttributes(), mapType)));
+			.attributes(attributesConsumer -> attributesConsumer.putAll(parseMap(redisOAuth2Authorization.getAttributes(), mapType)));
 		if (StringUtil.isNotEmpty(redisOAuth2Authorization.getState())) {
 			builder.attribute(STATE, redisOAuth2Authorization.getState());
 		}
@@ -284,6 +238,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		}
 	}
 
+	// @formatter:off
 	@SneakyThrows
 	private RedisOAuth2Authorization convert(OAuth2Authorization authorization) {
 		RedisOAuth2Authorization redisOAuth2Authorization = new RedisOAuth2Authorization();
@@ -291,8 +246,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		redisOAuth2Authorization.setRegisteredClientId(authorization.getRegisteredClientId());
 		redisOAuth2Authorization.setPrincipalName(authorization.getPrincipalName());
 		redisOAuth2Authorization.setAuthorizationGrantType(authorization.getAuthorizationGrantType().getValue());
-		redisOAuth2Authorization
-			.setAuthorizedScopes(StringUtil.collectionToDelimitedString(authorization.getAuthorizedScopes(), COMMA));
+		redisOAuth2Authorization.setAuthorizedScopes(StringUtil.collectionToDelimitedString(authorization.getAuthorizedScopes(), COMMA));
 		redisOAuth2Authorization.setAttributes(MAPPER.writeValueAsString(authorization.getAttributes()));
 		redisOAuth2Authorization.setState(authorization.getAttribute(STATE));
 		// access token
@@ -309,7 +263,9 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		setDeviceCode(authorization, redisOAuth2Authorization);
 		return redisOAuth2Authorization;
 	}
+	// @formatter:on
 
+	// @formatter:off
 	@SneakyThrows
 	private void setAccessToken(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization) {
 		OAuth2Authorization.Token<OAuth2AccessToken> token = authorization.getAccessToken();
@@ -319,11 +275,11 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 			redisOAuth2Authorization.setAccessTokenIssuedAt(accessToken.getIssuedAt());
 			redisOAuth2Authorization.setAccessTokenExpiresAt(accessToken.getExpiresAt());
 			redisOAuth2Authorization.setAccessTokenMetadata(MAPPER.writeValueAsString(token.getMetadata()));
-			redisOAuth2Authorization
-				.setAccessTokenScopes(StringUtil.collectionToDelimitedString(accessToken.getScopes(), COMMA));
+			redisOAuth2Authorization.setAccessTokenScopes(StringUtil.collectionToDelimitedString(accessToken.getScopes(), COMMA));
 			redisOAuth2Authorization.setAccessTokenType(accessToken.getTokenType().getValue());
 		}
 	}
+	// @formatter:on
 
 	@SneakyThrows
 	private void setRefreshToken(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization) {

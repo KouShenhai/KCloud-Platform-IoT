@@ -105,11 +105,4 @@ public final class RedisKeyUtil {
 		return "ip:cache:" + type;
 	}
 
-	/**
-	 * OAuth2认证Key
-	 */
-	public static String getOAuth2AuthorizationHashKey(String type) {
-		return "oauth2:authorization:" + type;
-	}
-
 }
