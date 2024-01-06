@@ -50,6 +50,7 @@ import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParamet
 
 /**
  * 仿照 JdbcOAuth2AuthorizationService
+ *
  * @author laokou
  */
 @RequiredArgsConstructor
@@ -72,17 +73,14 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		Assert.isTrue(ObjectUtil.isNotNull(authorization), "authorization is null");
 		RedisOAuth2Authorization redisOAuth2Authorization = convert(authorization);
 		List<Instant> expireAtList = Stream.of(redisOAuth2Authorization.getAuthorizationCodeExpiresAt(),
-				redisOAuth2Authorization.getAccessTokenExpiresAt(),
-				redisOAuth2Authorization.getOidcIdTokenExpiresAt(),
-				redisOAuth2Authorization.getRefreshTokenExpiresAt(),
-				redisOAuth2Authorization.getUserCodeExpiresAt(),
+				redisOAuth2Authorization.getAccessTokenExpiresAt(), redisOAuth2Authorization.getOidcIdTokenExpiresAt(),
+				redisOAuth2Authorization.getRefreshTokenExpiresAt(), redisOAuth2Authorization.getUserCodeExpiresAt(),
 				redisOAuth2Authorization.getDeviceCodeExpiresAt())
-				.filter(ObjectUtil::isNotNull)
-				.toList();
-		expireAtList
-				.stream()
-				.max(Comparator.comparing(Instant::getEpochSecond))
-				.ifPresent(instant -> redisOAuth2Authorization.setTtl(ChronoUnit.SECONDS.between(Instant.now(), instant)));
+			.filter(ObjectUtil::isNotNull)
+			.toList();
+		expireAtList.stream()
+			.max(Comparator.comparing(Instant::getEpochSecond))
+			.ifPresent(instant -> redisOAuth2Authorization.setTtl(ChronoUnit.SECONDS.between(Instant.now(), instant)));
 		// 先删除后新增
 		redisOAuth2AuthorizationRepository.deleteById(authorization.getId());
 		redisOAuth2AuthorizationRepository.save(redisOAuth2Authorization);
@@ -109,21 +107,29 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		Assert.isTrue(ObjectUtil.isNotNull(tokenType), "tokenType is null");
 		return switch (tokenType.getValue()) {
 			case STATE -> redisOAuth2AuthorizationRepository.findByState(token).map(this::parse).orElse(null);
-			case CODE -> redisOAuth2AuthorizationRepository.findByAuthorizationCodeValue(token).map(this::parse).orElse(null);
-			case ACCESS_TOKEN -> redisOAuth2AuthorizationRepository.findByAccessTokenValue(token).map(this::parse).orElse(null);
-			case ID_TOKEN -> redisOAuth2AuthorizationRepository.findByOidcIdTokenValue(token).map(this::parse).orElse(null);
-			case REFRESH_TOKEN -> redisOAuth2AuthorizationRepository.findByRefreshTokenValue(token).map(this::parse).orElse(null);
-			case USER_CODE -> redisOAuth2AuthorizationRepository.findByUserCodeValue(token).map(this::parse).orElse(null);
-			case DEVICE_CODE -> redisOAuth2AuthorizationRepository.findByDeviceCodeValue(token).map(this::parse).orElse(null);
+			case CODE ->
+				redisOAuth2AuthorizationRepository.findByAuthorizationCodeValue(token).map(this::parse).orElse(null);
+			case ACCESS_TOKEN ->
+				redisOAuth2AuthorizationRepository.findByAccessTokenValue(token).map(this::parse).orElse(null);
+			case ID_TOKEN ->
+				redisOAuth2AuthorizationRepository.findByOidcIdTokenValue(token).map(this::parse).orElse(null);
+			case REFRESH_TOKEN ->
+				redisOAuth2AuthorizationRepository.findByRefreshTokenValue(token).map(this::parse).orElse(null);
+			case USER_CODE ->
+				redisOAuth2AuthorizationRepository.findByUserCodeValue(token).map(this::parse).orElse(null);
+			case DEVICE_CODE ->
+				redisOAuth2AuthorizationRepository.findByDeviceCodeValue(token).map(this::parse).orElse(null);
 			case null -> redisOAuth2AuthorizationRepository.findByState(token)
-					.or(() -> redisOAuth2AuthorizationRepository.findByAuthorizationCodeValue(token))
-					.or(() -> redisOAuth2AuthorizationRepository.findByAccessTokenValue(token))
-					.or(() -> redisOAuth2AuthorizationRepository.findByOidcIdTokenValue(token))
-					.or(() -> redisOAuth2AuthorizationRepository.findByRefreshTokenValue(token))
-					.or(() -> redisOAuth2AuthorizationRepository.findByUserCodeValue(token))
-					.or(() -> redisOAuth2AuthorizationRepository.findByDeviceCodeValue(token)).map(this::parse).orElse(null);
-            default -> null;
-        };
+				.or(() -> redisOAuth2AuthorizationRepository.findByAuthorizationCodeValue(token))
+				.or(() -> redisOAuth2AuthorizationRepository.findByAccessTokenValue(token))
+				.or(() -> redisOAuth2AuthorizationRepository.findByOidcIdTokenValue(token))
+				.or(() -> redisOAuth2AuthorizationRepository.findByRefreshTokenValue(token))
+				.or(() -> redisOAuth2AuthorizationRepository.findByUserCodeValue(token))
+				.or(() -> redisOAuth2AuthorizationRepository.findByDeviceCodeValue(token))
+				.map(this::parse)
+				.orElse(null);
+			default -> null;
+		};
 	}
 
 	@SneakyThrows
@@ -137,7 +143,8 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 			.principalName(redisOAuth2Authorization.getPrincipalName())
 			.authorizationGrantType(new AuthorizationGrantType(redisOAuth2Authorization.getAuthorizationGrantType()))
 			.authorizedScopes(StringUtil.commaDelimitedListToSet(redisOAuth2Authorization.getAuthorizedScopes()))
-			.attributes(attributesConsumer -> attributesConsumer.putAll(parseMap(redisOAuth2Authorization.getAttributes(), mapType)));
+			.attributes(attributesConsumer -> attributesConsumer
+				.putAll(parseMap(redisOAuth2Authorization.getAttributes(), mapType)));
 		if (StringUtil.isNotEmpty(redisOAuth2Authorization.getState())) {
 			builder.attribute(STATE, redisOAuth2Authorization.getState());
 		}

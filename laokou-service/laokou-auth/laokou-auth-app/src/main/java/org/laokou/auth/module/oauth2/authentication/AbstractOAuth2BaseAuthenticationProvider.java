@@ -266,7 +266,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			if (PASSWORD.equals(type)) {
 				encryptName = username;
 				passwordFlag = true;
-			} else {
+			}
+			else {
 				encryptName = AesUtil.encrypt(username);
 			}
 			User user;

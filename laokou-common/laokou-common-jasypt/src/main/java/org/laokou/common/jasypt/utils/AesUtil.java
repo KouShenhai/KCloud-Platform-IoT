@@ -45,10 +45,11 @@ public class AesUtil {
 			SECRET_KEY = inputStream.readAllBytes();
 			Assert.isTrue(SECRET_KEY.length == 16, "密钥长度必须16位");
 			KEY = new String(SECRET_KEY, StandardCharsets.UTF_8);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-    }
+	}
 
 	public static String getKey() {
 		return KEY;

@@ -117,8 +117,10 @@ public class UserGatewayImpl implements UserGateway {
 	public Datas<User> list(User user, PageQuery pageQuery) {
 		UserDO userDO = userConvertor.toDataObject(user);
 		final PageQuery page = pageQuery.page();
-		CompletableFuture<List<UserDO>> c1 = CompletableFuture.supplyAsync(() -> userMapper.getUserListFilter(userDO, page, AesUtil.getKey()), taskExecutor);
-		CompletableFuture<Integer> c2 = CompletableFuture.supplyAsync(() -> userMapper.getUserListTotalFilter(userDO, page, AesUtil.getKey()), taskExecutor);
+		CompletableFuture<List<UserDO>> c1 = CompletableFuture
+			.supplyAsync(() -> userMapper.getUserListFilter(userDO, page, AesUtil.getKey()), taskExecutor);
+		CompletableFuture<Integer> c2 = CompletableFuture
+			.supplyAsync(() -> userMapper.getUserListTotalFilter(userDO, page, AesUtil.getKey()), taskExecutor);
 		CompletableFuture.allOf(c1, c2).join();
 		Datas<User> datas = new Datas<>();
 		datas.setTotal(c2.get());

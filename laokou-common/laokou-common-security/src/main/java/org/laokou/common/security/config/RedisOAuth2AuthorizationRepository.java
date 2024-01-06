@@ -24,23 +24,24 @@ import java.util.Optional;
 
 /**
  * 仿照 findById
+ *
  * @author laokou
  */
 @Repository
 public interface RedisOAuth2AuthorizationRepository extends CrudRepository<RedisOAuth2Authorization, String> {
 
-    Optional<RedisOAuth2Authorization> findByState(String token);
+	Optional<RedisOAuth2Authorization> findByState(String token);
 
-    Optional<RedisOAuth2Authorization> findByAuthorizationCodeValue(String token);
+	Optional<RedisOAuth2Authorization> findByAuthorizationCodeValue(String token);
 
-    Optional<RedisOAuth2Authorization> findByAccessTokenValue(String token);
+	Optional<RedisOAuth2Authorization> findByAccessTokenValue(String token);
 
-    Optional<RedisOAuth2Authorization> findByOidcIdTokenValue(String token);
+	Optional<RedisOAuth2Authorization> findByOidcIdTokenValue(String token);
 
-    Optional<RedisOAuth2Authorization> findByRefreshTokenValue(String token);
+	Optional<RedisOAuth2Authorization> findByRefreshTokenValue(String token);
 
-    Optional<RedisOAuth2Authorization> findByUserCodeValue(String token);
+	Optional<RedisOAuth2Authorization> findByUserCodeValue(String token);
 
-    Optional<RedisOAuth2Authorization> findByDeviceCodeValue(String token);
+	Optional<RedisOAuth2Authorization> findByDeviceCodeValue(String token);
 
 }

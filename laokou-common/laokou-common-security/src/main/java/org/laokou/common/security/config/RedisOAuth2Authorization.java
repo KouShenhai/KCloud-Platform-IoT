@@ -23,18 +23,22 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
-
 import java.time.Instant;
 
+import static org.laokou.common.security.config.RedisOAuth2Authorization.KEY;
+
 /**
- * 仿照 数据库表 oauth2_authorization
- * <a href="https://docs.spring.io/spring-data/redis/reference/redis/redis-repositories/indexes.html">二级索引</a>
+ * 仿照 数据库表 oauth2_authorization <a href=
+ * "https://docs.spring.io/spring-data/redis/reference/redis/redis-repositories/indexes.html">二级索引</a>
  * <a href="https://www.jdon.com/57902.html">用法</a>
+ *
  * @author laokou
  */
 @Data
-@RedisHash("oauth2-authorization")
+@RedisHash(KEY)
 public class RedisOAuth2Authorization extends Authorization {
+
+	public static final String KEY = "oauth2:authorization";
 
 	/**
 	 * ID
@@ -215,8 +219,8 @@ public class RedisOAuth2Authorization extends Authorization {
 	private String deviceCodeMetadata;
 
 	/**
-     * 过期时间-秒
-     */
+	 * 过期时间-秒
+	 */
 	@TimeToLive
 	private Long ttl;
 

@@ -208,7 +208,7 @@ public class RedisUtil {
 		redissonClient.getMap(key).remove(field);
 	}
 
-	public void hDel(String key, String...field) {
+	public void hDel(String key, String... field) {
 		redissonClient.getMap(key).fastRemove(field);
 	}
 
