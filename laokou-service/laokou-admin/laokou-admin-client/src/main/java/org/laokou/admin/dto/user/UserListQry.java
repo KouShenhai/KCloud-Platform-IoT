@@ -32,4 +32,5 @@ public class UserListQry extends PageQuery {
 	public void setUsername(String username) {
 		this.username = StringUtil.like(username);
 	}
+
 }

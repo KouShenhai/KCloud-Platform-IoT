@@ -33,7 +33,7 @@ import static org.springframework.data.redis.core.RedisKeyValueAdapter.EnableKey
  * @author laokou
  */
 @AutoConfiguration
-@EnableRedisRepositories(enableKeyspaceEvents = ON_STARTUP, basePackages = {"org.laokou.common.security.config"})
+@EnableRedisRepositories(enableKeyspaceEvents = ON_STARTUP, basePackages = { "org.laokou.common.security.config" })
 class OAuth2AuthorizationAutoConfig {
 
 	/**
@@ -42,7 +42,9 @@ class OAuth2AuthorizationAutoConfig {
 	 */
 	@Bean
 	@ConditionalOnMissingBean(OAuth2AuthorizationService.class)
-	OAuth2AuthorizationService auth2AuthorizationService(RedisOAuth2AuthorizationRepository redisOAuth2AuthorizationRepository, RegisteredClientRepository registeredClientRepository) {
+	OAuth2AuthorizationService auth2AuthorizationService(
+			RedisOAuth2AuthorizationRepository redisOAuth2AuthorizationRepository,
+			RegisteredClientRepository registeredClientRepository) {
 		return new RedisOAuth2AuthorizationService(redisOAuth2AuthorizationRepository, registeredClientRepository);
 	}
 

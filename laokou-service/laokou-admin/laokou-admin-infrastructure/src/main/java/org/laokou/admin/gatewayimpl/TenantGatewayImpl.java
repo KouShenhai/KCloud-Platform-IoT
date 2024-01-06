@@ -149,7 +149,8 @@ public class TenantGatewayImpl implements TenantGateway {
 
 			// 初始化数据
 
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

@@ -42,7 +42,7 @@ public class UserUpdateCmdExe {
 	}
 
 	private UserDO toUserDO(UserCO co) {
-        return userConvertor.toDataObj(co);
+		return userConvertor.toDataObj(co);
 	}
 
 	private User toUser(UserCO co) {
