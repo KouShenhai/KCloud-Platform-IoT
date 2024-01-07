@@ -24,6 +24,7 @@ import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -52,16 +53,26 @@ public class TableTemplate {
 	}
 
 	@SneakyThrows
-	public static String getLoginLogSqlScript(LocalDateTime localDateTime) {
-		return getContent(localDateTime, "scripts/boot_sys_login_log.ftl");
+	public static String getCreateLoginLogTableSqlScript(LocalDateTime localDateTime) {
+		return getContent(localDateTime, "scripts/boot_sys_login_log.sql");
+	}
+
+	@SneakyThrows
+	public static String getCreateTenantDBSqlScript() {
+		return TemplateUtil.getContent("scripts/kcloud_platform_alibaba_tenant.sql", new HashMap<>(0));
 	}
 
 	@SneakyThrows
 	private static String getContent(LocalDateTime localDateTime, String location) {
+		Map<String, Object> params = new HashMap<>(1);
+		params.put("suffix", DateUtil.format(localDateTime, DateUtil.YYYYMM));
+		return getContent(location, params);
+	}
+
+	@SneakyThrows
+	private static String getContent(String location, Map<String, Object> params) {
 		try (InputStream inputStream = ResourceUtil.getResource(location).getInputStream()) {
-			String template = new String(inputStream.readAllBytes());
-			Map<String, Object> params = new HashMap<>(1);
-			params.put("suffix", DateUtil.format(localDateTime, DateUtil.YYYYMM));
+			String template = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 			return TemplateUtil.getContent(template, params);
 		}
 	}

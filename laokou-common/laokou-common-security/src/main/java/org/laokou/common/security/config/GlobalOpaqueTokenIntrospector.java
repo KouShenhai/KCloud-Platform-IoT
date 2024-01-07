@@ -43,6 +43,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 import static org.laokou.common.i18n.common.BizCode.ACCOUNT_FORCE_KILL;
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.Constant.FULL;
 
 /**
  * @author laokou
@@ -69,13 +71,12 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 			// 解密
 			return decryptInfo((User) obj);
 		}
-		OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token,
-				OAuth2TokenType.ACCESS_TOKEN);
-		if (ObjectUtil.isNull(oAuth2Authorization)) {
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, new OAuth2TokenType(FULL));
+		if (ObjectUtil.isNull(authorization)) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}
-		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = oAuth2Authorization.getAccessToken();
+		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
 		if (ObjectUtil.isNull(accessToken) || !accessToken.isActive()) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
@@ -87,7 +88,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		long minTime = 5;
 		if (expireTime > minTime) {
 			Object principal = ((UsernamePasswordAuthenticationToken) Objects
-				.requireNonNull(oAuth2Authorization.getAttribute(Principal.class.getName()))).getPrincipal();
+				.requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
 			User user = (User) principal;
 			redisUtil.set(userInfoKey, user, expireTime - 1);
 			// 解密

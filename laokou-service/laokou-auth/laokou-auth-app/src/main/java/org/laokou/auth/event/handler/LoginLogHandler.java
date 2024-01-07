@@ -77,7 +77,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 		Assert.isTrue(ObjectUtil.isNotNull(logDO), "logDO is null");
 		logDO.setCreator(event.getUserId());
 		logDO.setEditor(event.getUserId());
-		loginLogMapper.insertDynamicTable(logDO, TableTemplate.getLoginLogSqlScript(DateUtil.now()),
+		loginLogMapper.insertDynamicTable(logDO, TableTemplate.getCreateLoginLogTableSqlScript(DateUtil.now()),
 				UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
 	}
 

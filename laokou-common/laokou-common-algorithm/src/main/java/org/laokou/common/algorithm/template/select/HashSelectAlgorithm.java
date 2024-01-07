@@ -22,10 +22,10 @@ import java.util.List;
 /**
  * @author laokou
  */
-public class HashSelectAlgorithm<T> extends AbstractSelectAlgorithm<T> {
+public class HashSelectAlgorithm extends AbstractSelectAlgorithm {
 
 	@Override
-	public T select(List<T> list, Object arg) {
+	public <T> T select(List<T> list, Object arg) {
 		int value = arg.hashCode() % list.size();
 		if (value < 0) {
 			value = Math.abs(value);

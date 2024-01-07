@@ -19,6 +19,7 @@ package org.apache.rocketmq.spring.autoconfigure;
 
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.apache.rocketmq.client.AccessChannel;
 import org.apache.rocketmq.client.MQAdmin;
 import org.apache.rocketmq.client.consumer.DefaultLitePullConsumer;
@@ -32,7 +33,6 @@ import org.apache.rocketmq.spring.support.RocketMQUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.*;
@@ -57,6 +57,7 @@ import org.springframework.util.StringUtils;
 		RocketMQTransactionConfiguration.class, RocketMQListenerConfiguration.class })
 @AutoConfigureAfter({ MessageConverterConfiguration.class })
 @AutoConfigureBefore({ RocketMQTransactionConfiguration.class })
+@RequiredArgsConstructor
 public class RocketMQAutoConfiguration implements ApplicationContextAware {
 
 	private static final Logger log = LoggerFactory.getLogger(RocketMQAutoConfiguration.class);
@@ -67,8 +68,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 
 	public static final String CONSUMER_BEAN_NAME = "defaultLitePullConsumer";
 
-	@Autowired
-	private Environment environment;
+	private final Environment environment;
 
 	private ApplicationContext applicationContext;
 
