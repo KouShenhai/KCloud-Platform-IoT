@@ -22,6 +22,7 @@ import org.springframework.util.StringUtils;
 import java.util.Collection;
 import java.util.Set;
 
+import static org.laokou.common.i18n.common.Constant.EMPTY;
 import static org.laokou.common.i18n.common.Constant.PERCENT;
 
 /**
@@ -35,6 +36,13 @@ public class StringUtil {
 
 	public static String collectionToDelimitedString(Collection<?> coll, String delim) {
 		return StringUtils.collectionToDelimitedString(coll, delim);
+	}
+
+	public static String empty(String str) {
+		if (isEmpty(str)) {
+			return EMPTY;
+		}
+		return str;
 	}
 
 	public static Set<String> commaDelimitedListToSet(String str) {

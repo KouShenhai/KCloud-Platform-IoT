@@ -43,7 +43,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 import static org.laokou.common.i18n.common.BizCode.ACCOUNT_FORCE_KILL;
-import static org.laokou.common.i18n.common.Constant.EMPTY;
 import static org.laokou.common.i18n.common.Constant.FULL;
 
 /**
@@ -77,7 +76,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}
 		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
-		if (ObjectUtil.isNull(accessToken) || !accessToken.isActive()) {
+		if (ObjectUtil.isNull(accessToken) || accessToken.isExpired()) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}

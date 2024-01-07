@@ -34,8 +34,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Objects;
-
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
@@ -78,7 +76,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	Integer resultCountFilter(@Param("tables") List<String> tables, @Param("param") T param,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
-	@Update("${sql}")
+	@Update(value = { "${sql}" })
 	void execute(@Param("sql") String sql);
 
 	/**

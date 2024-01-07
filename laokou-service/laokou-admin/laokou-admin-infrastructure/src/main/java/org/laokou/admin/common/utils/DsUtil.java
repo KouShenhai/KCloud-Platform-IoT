@@ -27,7 +27,6 @@ import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.DataSourceException;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -73,16 +72,6 @@ public class DsUtil {
 		return sourceName;
 	}
 
-	public void loadDs(SourceDO sourceDO) {
-		if (ObjectUtil.isNull(sourceDO)) {
-			throw new SystemException("数据不存在");
-		}
-		String sourceName = sourceDO.getName();
-		if (validateDs(sourceName)) {
-			addDs(sourceName, properties(sourceDO));
-		}
-	}
-
 	public void addDs(String sourceName, DataSourceProperty properties) {
 		// 校验数据源
 		validateDs(properties);
@@ -114,7 +103,7 @@ public class DsUtil {
 
 	@SneakyThrows
 	private void validateDs(DataSourceProperty properties) {
-		Connection connection = null;
+		Connection connection;
 		PreparedStatement ps = null;
 		try {
 			Class.forName(properties.getDriverClassName());
@@ -128,6 +117,12 @@ public class DsUtil {
 			DriverManager.setLoginTimeout(1);
 			connection = DriverManager.getConnection(properties.getUrl(), properties.getUsername(),
 					properties.getPassword());
+		}
+		catch (Exception e) {
+			log.error("数据源连接超时，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			throw new DataSourceException(CUSTOM_SERVER_ERROR, "数据源连接超时");
+		}
+		try {
 			ps = connection.prepareStatement(SHOW_TABLES);
 			ResultSet rs = ps.executeQuery();
 			Set<String> defaultTenantTables = defaultConfigProperties.getTenantTables();
@@ -150,10 +145,6 @@ public class DsUtil {
 			if (CollectionUtil.isNotEmpty(list)) {
 				throw new DataSourceException(String.format("表 %s 不存在", String.join(DROP, list)));
 			}
-		}
-		catch (Exception e) {
-			log.error("数据源连接超时，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			throw new DataSourceException(CUSTOM_SERVER_ERROR, "数据源连接超时");
 		}
 		finally {
 			if (ObjectUtil.isNotNull(connection)) {

@@ -17,12 +17,17 @@
 package org.laokou.common.mybatisplus.database.dataobject;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.AbstractDO;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
+
+import static org.laokou.common.i18n.utils.DateUtil.Constant.DEFAULT_TIMEZONE;
+import static org.laokou.common.i18n.utils.DateUtil.Constant.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS;
 
 /**
  * @author laokou
@@ -68,10 +73,14 @@ public class BaseDO extends AbstractDO {
 
 	@Schema(name = CREATE_DATE, description = "创建时间")
 	@TableField(fill = FieldFill.INSERT)
+	@JsonFormat(pattern = YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
+	@DateTimeFormat(pattern = YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS)
 	private LocalDateTime createDate;
 
 	@Schema(name = UPDATE_DATE, description = "修改时间")
 	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@JsonFormat(pattern = YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
+	@DateTimeFormat(pattern = YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS)
 	private LocalDateTime updateDate;
 
 	@Schema(name = DEL_FLAG, description = "删除标识 0未删除 1已删除")
