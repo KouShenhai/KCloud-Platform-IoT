@@ -45,6 +45,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.laokou.common.i18n.common.Constant.COMMA;
+import static org.laokou.common.i18n.common.Constant.FULL;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.*;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 
@@ -119,7 +120,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 				redisOAuth2AuthorizationRepository.findByUserCodeValue(token).map(this::parse).orElse(null);
 			case DEVICE_CODE ->
 				redisOAuth2AuthorizationRepository.findByDeviceCodeValue(token).map(this::parse).orElse(null);
-			case null -> redisOAuth2AuthorizationRepository.findByState(token)
+			case FULL -> redisOAuth2AuthorizationRepository.findByState(token)
 				.or(() -> redisOAuth2AuthorizationRepository.findByAuthorizationCodeValue(token))
 				.or(() -> redisOAuth2AuthorizationRepository.findByAccessTokenValue(token))
 				.or(() -> redisOAuth2AuthorizationRepository.findByOidcIdTokenValue(token))

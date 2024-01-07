@@ -351,4 +351,9 @@ public interface Constant {
 	 */
 	String TENANT_PASSWORD = "tenant123";
 
+	/**
+	 * 所有
+	 */
+	String FULL = "full";
+
 }

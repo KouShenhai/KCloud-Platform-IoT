@@ -29,11 +29,8 @@ import java.util.Map;
  */
 public class TemplateUtil extends FreeMarkerTemplateUtils {
 
-	private static final Configuration CONFIGURATION;
-
-	static {
-		CONFIGURATION = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
-	}
+	private static final Configuration CONFIGURATION = new Configuration(
+			Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
 
 	public static String getContent(String template, Map<String, Object> params) throws IOException, TemplateException {
 		Template temp = getTemplate(template);

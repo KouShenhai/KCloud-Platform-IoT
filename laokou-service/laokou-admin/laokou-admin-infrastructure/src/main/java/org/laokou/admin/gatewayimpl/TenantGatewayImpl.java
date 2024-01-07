@@ -43,6 +43,7 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -146,9 +147,9 @@ public class TenantGatewayImpl implements TenantGateway {
 			dsUtil.loadDs(source);
 			DynamicDataSourceContextHolder.push(source.getName());
 			// 初始化表
-
+			tenantMapper.execute(TableTemplate.getCreateTenantDBSqlScript());
 			// 初始化数据
-
+			initDB(tenantId);
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
