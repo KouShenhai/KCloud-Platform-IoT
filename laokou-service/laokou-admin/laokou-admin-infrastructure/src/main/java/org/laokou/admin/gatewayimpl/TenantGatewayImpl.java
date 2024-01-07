@@ -17,13 +17,10 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DSTransactional;
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.common.utils.DsUtil;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
@@ -31,25 +28,32 @@ import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.domain.user.SuperAdmin;
 import org.laokou.admin.gatewayimpl.database.DeptMapper;
-import org.laokou.admin.gatewayimpl.database.SourceMapper;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import static org.laokou.common.i18n.common.Constant.*;
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_TENANT;
+import static org.laokou.common.mybatisplus.constant.DsConstant.*;
 
 /**
  * @author laokou
@@ -69,16 +73,13 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private final DeptMapper deptMapper;
 
+	private final MenuMapper menuMapper;
+
 	private final TenantConvertor tenantConvertor;
-
-	private final SourceMapper sourceMapper;
-
-	private final DsUtil dsUtil;
 
 	private final DefaultConfigProperties defaultConfigProperties;
 
 	@Override
-	@DSTransactional(rollbackFor = Exception.class)
 	public Boolean insert(Tenant tenant) {
 		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
 		tenantDO.setLabel(defaultConfigProperties.getTenantPrefix() + tenantMapper.maxLabelNum());
@@ -123,9 +124,16 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	private Boolean insertTenant(TenantDO tenantDO) {
-		tenantMapper.insertTable(tenantDO);
-		initTable(tenantDO.getId());
-		return true;
+		return transactionalUtil.defaultExecute(r -> {
+			try {
+				return tenantMapper.insertTable(tenantDO);
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				r.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
 	}
 
 	private Boolean updateTenant(TenantDO tenantDO) {
@@ -141,55 +149,86 @@ public class TenantGatewayImpl implements TenantGateway {
 		});
 	}
 
-	private void initTable(Long tenantId) {
-		try {
-			SourceDO source = sourceMapper.getSourceByTenantId(tenantId);
-			dsUtil.loadDs(source);
-			DynamicDataSourceContextHolder.push(source.getName());
-			// 初始化表
-			tenantMapper.execute(TableTemplate.getCreateTenantDBSqlScript());
-			// 初始化数据
-			initDB(tenantId);
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+	private List<String> getSql(long tenantId, long packageId) {
+		long userId = IdGenerator.defaultSnowflakeId();
+		long deptId = IdGenerator.defaultSnowflakeId();
+		String deptPath = DEFAULT + COMMA + deptId;
+		UserDO user = getUser(tenantId, userId, deptId, deptPath);
+		DeptDO dept = getDept(tenantId, userId, deptId, deptPath);
+		List<MenuDO> menuList = getMenuList(tenantId, userId, deptId, deptPath, packageId);
+		List<Map<String, String>> menuMapList = getMenuMapList(menuList);
+		Map<String, String> userMap = JacksonUtil.toMap(user, String.class, String.class);
+		Map<String, String> deptMap = JacksonUtil.toMap(dept, String.class, String.class);
+		List<String> userSqlList = TableTemplate.getInsertSqlScriptList(Collections.singletonList(userMap),
+				BOOT_SYS_USER);
+		List<String> deptSqlList = TableTemplate.getInsertSqlScriptList(Collections.singletonList(deptMap),
+				BOOT_SYS_DEPT);
+		List<String> menuSqlList = TableTemplate.getInsertSqlScriptList(menuMapList, BOOT_SYS_MENU);
+		List<String> list = new ArrayList<>(userSqlList.size() + deptSqlList.size() + menuSqlList.size());
+		list.addAll(userSqlList);
+		list.addAll(deptSqlList);
+		list.addAll(menuSqlList);
+		return list;
 	}
 
-	private void initDB(Long tenantId) {
-		insertUser(insertDept(tenantId), tenantId);
+	private List<Map<String, String>> getMenuMapList(List<MenuDO> menuList) {
+		List<Map<String, String>> menuMapList = new ArrayList<>(menuList.size());
+		menuList.forEach(item -> menuMapList.add(JacksonUtil.toMap(item, String.class, String.class)));
+		return menuMapList;
 	}
 
-	private void insertUser(DeptDO deptDO, Long tenantId) {
-		try {
-			// 初始化超级管理员
-			UserDO userDO = new UserDO();
-			userDO.setUsername(TENANT_USERNAME);
-			userDO.setTenantId(tenantId);
-			userDO.setPassword(passwordEncoder.encode(TENANT_PASSWORD));
-			userDO.setSuperAdmin(SuperAdmin.YES.ordinal());
-			userDO.setDeptId(deptDO.getId());
-			userDO.setDeptPath(deptDO.getPath());
-			userMapper.insertTable(userDO);
-		}
-		catch (Exception e) {
-			log.error("错误信息", e);
-			throw new SystemException(e.getMessage());
-		}
+	private List<MenuDO> getMenuList(long tenantId, long userId, long deptId, String deptPath, long packageId) {
+		List<MenuDO> menuList = menuMapper.getTenantMenuListByPackageId(packageId);
+		menuList.forEach(item -> {
+			item.setTenantId(tenantId);
+			item.setCreateDate(DateUtil.now());
+			item.setUpdateDate(DateUtil.now());
+			item.setCreator(userId);
+			item.setEditor(userId);
+			item.setVersion(DEFAULT);
+			item.setDelFlag(DEFAULT);
+			item.setDeptId(deptId);
+			item.setDeptPath(deptPath);
+		});
+		return menuList;
 	}
 
-	private DeptDO insertDept(Long tenantId) {
+	private UserDO getUser(long tenantId, long userId, long deptId, String deptPath) {
+		// 初始化超级管理员
+		UserDO userDO = new UserDO();
+		userDO.setId(userId);
+		userDO.setUsername(TENANT_USERNAME);
+		userDO.setTenantId(tenantId);
+		userDO.setPassword(passwordEncoder.encode(TENANT_PASSWORD));
+		userDO.setSuperAdmin(SuperAdmin.YES.ordinal());
+		userDO.setDeptId(deptId);
+		userDO.setDeptPath(deptPath);
+		userDO.setCreateDate(DateUtil.now());
+		userDO.setUpdateDate(DateUtil.now());
+		userDO.setCreator(userId);
+		userDO.setEditor(userId);
+		userDO.setVersion(DEFAULT);
+		userDO.setDelFlag(DEFAULT);
+		userDO.setStatus(DEFAULT);
+		return userDO;
+	}
+
+	private DeptDO getDept(long tenantId, long userId, long deptId, String deptPath) {
 		DeptDO deptDO = new DeptDO();
-		Long id = IdGenerator.defaultSnowflakeId();
-		deptDO.setId(id);
+		deptDO.setId(deptId);
 		deptDO.setName("多租户集团");
-		deptDO.setPath(DEFAULT + COMMA + id);
+		deptDO.setPath(deptPath);
 		deptDO.setSort(1000);
 		deptDO.setDeptPath(deptDO.getPath());
 		deptDO.setDeptId(deptDO.getId());
 		deptDO.setPid(0L);
 		deptDO.setTenantId(tenantId);
-		deptMapper.insert(deptDO);
+		deptDO.setCreateDate(DateUtil.now());
+		deptDO.setUpdateDate(DateUtil.now());
+		deptDO.setCreator(userId);
+		deptDO.setEditor(userId);
+		deptDO.setVersion(DEFAULT);
+		deptDO.setDelFlag(DEFAULT);
 		return deptDO;
 	}
 

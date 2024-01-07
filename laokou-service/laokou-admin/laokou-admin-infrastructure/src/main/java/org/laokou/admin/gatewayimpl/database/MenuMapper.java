@@ -38,4 +38,6 @@ public interface MenuMapper extends BatchMapper<MenuDO> {
 
 	List<MenuDO> getTenantMenuList();
 
+	List<MenuDO> getTenantMenuListByPackageId(@Param("packageId") Long packageId);
+
 }
