@@ -23,16 +23,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.database.SqlLogMapper;
 import org.laokou.common.mybatisplus.database.dataobject.SqlLogDO;
 import org.laokou.common.mybatisplus.handler.SqlLogEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
-
+import org.springframework.util.Assert;
 import java.util.concurrent.CompletableFuture;
-
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 
 /**
@@ -49,7 +48,6 @@ public class SqlLogHandler implements ApplicationListener<SqlLogEvent> {
 	private final ThreadPoolTaskExecutor taskExecutor;
 
 	@Override
-	@Async
 	public void onApplicationEvent(SqlLogEvent event) {
 		CompletableFuture.runAsync(() -> {
 			try {
@@ -73,6 +71,7 @@ public class SqlLogHandler implements ApplicationListener<SqlLogEvent> {
 
 	private SqlLogDO toSqlLog(SqlLogEvent event) {
 		SqlLogDO sqlLogDO = ConvertUtil.sourceToTarget(event, SqlLogDO.class);
+		Assert.isTrue(ObjectUtil.isNotNull(sqlLogDO), "sqlLogDO is null");
 		sqlLogDO.setDeptId(1535887940687765505L);
 		sqlLogDO.setDeptPath("0,1535887940687765505");
 		sqlLogDO.setEditor(1707428076142559234L);
