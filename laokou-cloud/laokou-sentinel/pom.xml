@@ -17,7 +17,7 @@
         <!--curator版本-->
         <curator.version>5.5.0</curator.version>
         <!--log4j版本-->
-        <log4j.version>2.22.0</log4j.version>
+        <log4j.version>2.22.1</log4j.version>
         <!--commons-lang版本-->
         <commons-lang.version>2.6</commons-lang.version>
         <!--httpclient版本-->
@@ -33,7 +33,7 @@
         <!--httpcore-nio版本-->
         <httpcore-nio.version>4.4.16</httpcore-nio.version>
         <!--fastjson版本-->
-        <fastjson.version>2.0.43</fastjson.version>
+        <fastjson.version>2.0.45</fastjson.version>
     </properties>
 
     <dependencies>
