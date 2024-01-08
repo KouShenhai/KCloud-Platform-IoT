@@ -28,8 +28,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.Objects;
-
 /**
  * @author laokou
  */
@@ -42,7 +40,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler({ FeignException.class, SystemException.class, ApiException.class, FlowException.class,
 			DataSourceException.class })
 	public Result<?> handle(GlobalException ex) {
-		log.error("错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
+		// log.error("错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
 		return Result.fail(ex.getCode(), ex.getMsg());
 	}
 

@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.resource.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.AuditLogConvertor;
@@ -29,6 +30,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+
 /**
  * @author laokou
  */
@@ -40,6 +43,7 @@ public class ResourceAuditLogListQryExe {
 
 	private final AuditLogConvertor auditLogConvertor;
 
+	@DS(TENANT)
 	public Result<List<AuditLogCO>> execute(ResourceAuditLogListQry qry) {
 		List<AuditLogDO> list = auditLogMapper.selectList(Wrappers.lambdaQuery(AuditLogDO.class)
 			.eq(AuditLogDO::getBusinessId, qry.getId())
