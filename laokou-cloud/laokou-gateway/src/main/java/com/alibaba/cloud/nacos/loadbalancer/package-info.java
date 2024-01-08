@@ -1,5 +1,3 @@
-<?xml version="1.0"?>
-<!--
 /*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
@@ -16,14 +14,5 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE suppressions PUBLIC
-        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
-        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
-<suppressions>
-    <suppress files="[\\/]laokou-cloud[\\/]" checks="HideUtilityClassConstructorCheck" />
-    <suppress files="[\\/]laokou-common[\\/]" checks="HideUtilityClassConstructorCheck" />
-    <suppress files="[\\/]laokou-release[\\/]" checks="HideUtilityClassConstructorCheck" />
-    <suppress files="[\\/]laokou-service[\\/]" checks="HideUtilityClassConstructorCheck" />
-    <suppress files=".*" checks="LineLength" />
-</suppressions>
+
+package com.alibaba.cloud.nacos.loadbalancer;

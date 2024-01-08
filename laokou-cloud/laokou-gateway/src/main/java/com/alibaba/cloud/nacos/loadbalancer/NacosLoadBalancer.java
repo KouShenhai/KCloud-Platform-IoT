@@ -193,6 +193,12 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		}
 	}
 
+	/**
+	 * 根据IP和端口匹配服务节点
+	 * @param instance 服务实例
+	 * @param headers 请求头
+	 * @return boolean
+	 */
 	private boolean match(ServiceInstance instance, HttpHeaders headers) {
 		String host = ObjectUtil.requireNotNull(headers.get(SERVICE_HOST)).getFirst();
 		String port = ObjectUtil.requireNotNull(headers.get(SERVICE_PORT)).getFirst();

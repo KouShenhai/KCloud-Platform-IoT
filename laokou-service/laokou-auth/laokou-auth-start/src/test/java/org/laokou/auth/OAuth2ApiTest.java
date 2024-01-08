@@ -40,6 +40,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.laokou.common.i18n.common.Constant.LOCAL_IP;
 import static org.laokou.common.i18n.common.Constant.RISK;
@@ -59,6 +60,10 @@ class OAuth2ApiTest {
 	private static final String USERNAME = "admin";
 
 	private static final String PASSWORD = "admin123";
+
+	private static final String ACCESS_TOKEN = "accessToken";
+
+	private static final String REFRESH_TOKEN = "refreshToken";
 
 	private static final Long SNOWFLAKE_ID = IdGenerator.defaultSnowflakeId();
 
@@ -86,18 +91,21 @@ class OAuth2ApiTest {
 		String encryptPassword = RsaUtil.encryptByPublicKey(PASSWORD, publicKey);
 		String decryptUsername = RsaUtil.decryptByPrivateKey(encryptUsername, privateKey);
 		String decryptPassword = RsaUtil.decryptByPrivateKey(encryptPassword, privateKey);
-		String token = getUsernamePasswordAuthApi(SNOWFLAKE_ID, captcha, decryptUsername, decryptPassword);
+		Map<String, String> tokenMap = getUsernamePasswordAuthApi(SNOWFLAKE_ID, captcha, decryptUsername,
+				decryptPassword);
 		log.info("验证码：{}", captcha);
 		log.info("加密用户名：{}", encryptUsername);
 		log.info("加密密码：{}", encryptPassword);
 		log.info("解密用户名：{}", decryptUsername);
 		log.info("解密密码：{}", decryptPassword);
 		log.info("uuid：{}", SNOWFLAKE_ID);
-		log.info("token：{}", token);
+		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
+		log.info("刷新token：{}", getRefreshTokenApi(tokenMap.get(REFRESH_TOKEN)));
 	}
 
 	@SneakyThrows
-	private String getUsernamePasswordAuthApi(long uuid, String captcha, String username, String password) {
+	private Map<String, String> getUsernamePasswordAuthApi(long uuid, String captcha, String username,
+			String password) {
 		String apiUrl = getOAuthApiUrl();
 		HashMap<String, String> params = new HashMap<>();
 		HashMap<String, String> headers = new HashMap<>(1);
@@ -110,8 +118,20 @@ class OAuth2ApiTest {
 		headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 		String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 		String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
+		String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
 		Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
-		return accessToken;
+		return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
+	}
+
+	private String getRefreshTokenApi(String refreshToken) {
+		String apiUrl = getOAuthApiUrl();
+		HashMap<String, String> params = new HashMap<>();
+		HashMap<String, String> headers = new HashMap<>(1);
+		params.put("refresh_token", refreshToken);
+		params.put("grant_type", "refresh_token");
+		headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+		String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+		return JacksonUtil.readTree(json).get("access_token").asText();
 	}
 
 	@SneakyThrows
