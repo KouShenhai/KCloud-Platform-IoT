@@ -22,7 +22,7 @@
 		"https://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 
-	<module name="SuppressionFilter">
+<!--	<module name="SuppressionFilter">
 		<property name="file" value="${checkstyle.suppressions.file}"/>
 		<property name="optional" value="true"/>
 	</module>
@@ -32,12 +32,17 @@
 		<property name="optional" value="true"/>
 	</module>
 
+-->
+
 	<!-- TAKEN FROM SPRING BOOT -->
 	<!-- Root Checks -->
 	<!-- 自定义配置，参考: https://checkstyle.sourceforge.io/checks/javadoc/javadocstyle.html#JavadocStyle -->
 	<module name="com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck">
+<!--
 		<property name="headerFile" value="${checkstyle.header.file}"/>
-		<property name="fileExtensions" value="java,groovy"/>
+-->
+		<!-- 限定检查的扩展类型 -->
+		<property name="fileExtensions" value="java, properties, xml"/>
 	</module>
 	<module name="com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck"/>
 

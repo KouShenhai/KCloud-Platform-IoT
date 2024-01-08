@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.holder.UserContextHolder;
-import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -36,12 +35,15 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
+
 import java.security.Principal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+
 import static org.laokou.common.i18n.common.BizCode.ACCOUNT_FORCE_KILL;
 import static org.laokou.common.i18n.common.Constant.FULL;
+import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
 
 /**
  * @author laokou
@@ -71,7 +73,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		}
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, new OAuth2TokenType(FULL));
 		if (ObjectUtil.isNull(authorization)) {
-			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
+			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED, MessageUtil.getMessage(UNAUTHORIZED));
 		}
 		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
 		Instant expiresAt = accessToken.getToken().getExpiresAt();
@@ -87,7 +89,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 			// 解密
 			return decryptInfo(user);
 		}
-		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
+		throw OAuth2ExceptionHandler.getException(UNAUTHORIZED, MessageUtil.getMessage(UNAUTHORIZED));
 	}
 	// @formatter:on
 
