@@ -73,7 +73,8 @@ public class OnlineUserListQryExe {
 			User user = (User) redisUtil.get(key);
 			String username = user.getUsername();
 			Long tenantId = user.getTenantId();
-			if (ObjectUtil.equals(tenantId, UserUtil.getTenantId()) && (StringUtil.isEmpty(keyword) || username.contains(keyword))) {
+			if (ObjectUtil.equals(tenantId, UserUtil.getTenantId())
+					&& (StringUtil.isEmpty(keyword) || username.contains(keyword))) {
 				UserOnlineCO co = new UserOnlineCO();
 				co.setUsername(username);
 				co.setToken(key.substring(userInfoKeyPrefix.length()));
