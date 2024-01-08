@@ -19,8 +19,13 @@ package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
+import jodd.io.ZipUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
@@ -33,19 +38,30 @@ import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.springframework.core.env.Environment;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -75,6 +91,8 @@ public class TenantGatewayImpl implements TenantGateway {
 	private final DefaultConfigProperties defaultConfigProperties;
 
 	private final ThreadPoolTaskExecutor taskExecutor;
+
+	private final Environment env;
 
 	@Override
 	public Boolean insert(Tenant tenant) {
@@ -120,6 +138,27 @@ public class TenantGatewayImpl implements TenantGateway {
 		});
 	}
 
+	@Override
+	@SneakyThrows
+	public void download(Long id, HttpServletResponse response) {
+		String fileName = "kcloud_platform_alibaba_tenant.sql";
+		String fileExt = FileUtil.getFileExt(fileName);
+		String name = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + fileExt;
+		response.setContentType("application/octet-stream");
+		response.setCharacterEncoding("utf-8");
+		response.setHeader("Content-disposition",
+				"attachment;filename=" + StandardCharsets.UTF_8.encode(fileName + ".zip"));
+		TenantDO tenantDO = tenantMapper.selectById(id);
+		Assert.isTrue(ObjectUtil.isNotNull(tenantDO), "tenantDO is null");
+		try (ServletOutputStream outputStream = response.getOutputStream()) {
+			File file = writeTempFile(fileName, name, id, tenantDO.getPackageId());
+			File zipFile = zipTempFile(file);
+			List<File> list = List.of(file, zipFile);
+			IOUtils.copy(new FileInputStream(zipFile), outputStream);
+			deleteTempFile(list);
+		}
+	}
+
 	private Boolean insertTenant(TenantDO tenantDO) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -146,8 +185,34 @@ public class TenantGatewayImpl implements TenantGateway {
 		});
 	}
 
-	private void writeFile() {
+	@SneakyThrows
+	private File writeTempFile(String fileName, String name, long tenantId, long packageId) {
+		String tempPath = env.getProperty("file.temp-path");
+		File file = FileUtil.createFile(tempPath, name);
+		Assert.isTrue(StringUtil.isNotEmpty(tempPath), "tempPath is empty");
+		try (InputStream inputStream = ResourceUtil.getResource("scripts/" + fileName).getInputStream();
+				FileOutputStream outputStream = new FileOutputStream(file);
+				FileChannel outChannel = outputStream.getChannel()) {
+			ByteBuffer buffer = ByteBuffer.wrap(inputStream.readAllBytes());
+			ByteBuffer buff = ByteBuffer.wrap(CollectionUtil.toStr(getSql(tenantId, packageId), EMPTY).getBytes());
+			outChannel.write(buffer);
+			outChannel.write(buff);
+			buffer.clear();
+			buff.clear();
+		}
+		return file;
+	}
 
+	@SneakyThrows
+	private File zipTempFile(File file) {
+		return ZipUtil.zip(file);
+	}
+
+	private void deleteTempFile(List<File> files) {
+		if (CollectionUtil.isEmpty(files)) {
+			return;
+		}
+		files.forEach(File::delete);
 	}
 
 	private List<String> getSql(long tenantId, long packageId) {
@@ -165,10 +230,12 @@ public class TenantGatewayImpl implements TenantGateway {
 		List<String> deptSqlList = TableTemplate.getInsertSqlScriptList(Collections.singletonList(deptMap),
 				BOOT_SYS_DEPT);
 		List<String> menuSqlList = TableTemplate.getInsertSqlScriptList(menuMapList, BOOT_SYS_MENU);
-		List<String> list = new ArrayList<>(userSqlList.size() + deptSqlList.size() + menuSqlList.size());
+		List<String> list = new ArrayList<>(userSqlList.size() + deptSqlList.size() + menuSqlList.size() + 1);
 		list.addAll(userSqlList);
 		list.addAll(deptSqlList);
 		list.addAll(menuSqlList);
+		list.add(String.format("UPDATE %s SET username = AES_ENCRYPT('%s','%s') WHERE ID = %s;\n", BOOT_SYS_USER,
+				TENANT_USERNAME, AesUtil.getKey(), userId));
 		return list;
 	}
 

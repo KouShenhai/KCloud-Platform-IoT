@@ -54,7 +54,7 @@ public class FileUtil {
 	}
 
 	@SneakyThrows
-	private static File createFile(String directory, String fileName) {
+	public static File createFile(String directory, String fileName) {
 		File directoryFile = new File(directory);
 		if (!directoryFile.exists()) {
 			directoryFile.mkdirs();

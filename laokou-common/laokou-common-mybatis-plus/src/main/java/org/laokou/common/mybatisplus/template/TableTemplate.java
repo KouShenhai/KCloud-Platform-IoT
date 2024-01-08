@@ -42,7 +42,7 @@ import static org.laokou.common.i18n.common.Constant.*;
 @Slf4j
 public class TableTemplate {
 
-	private static final String INSERT_SQL_TEMPLATE = "INSERT INTO `%s`(%s) VALUES(%s);";
+	private static final String INSERT_SQL_TEMPLATE = "INSERT INTO `%s`(%s) VALUES(%s);\n";
 
 	public static List<String> getDynamicTables(String start, String end, String tableName) {
 		LocalDate date1 = toDate(start);
@@ -71,6 +71,7 @@ public class TableTemplate {
 		list.forEach(item -> {
 			List<String> keys = item.keySet()
 				.stream()
+				// 转为下划线
 				.map(i -> CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, i))
 				.toList();
 			List<String> values = item.values()
