@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.resource;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class ResourceDownloadCmd extends CommonCommand {
 
 	private Long id;
 
+	@JsonIgnore
 	private HttpServletResponse response;
 
 }

@@ -29,6 +29,7 @@ import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IpUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
@@ -42,7 +43,6 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.common.i18n.common.BizCode.LOGIN_SUCCEEDED;
@@ -74,10 +74,10 @@ public class UsersServiceImpl implements UserDetailsService {
 		// 默认租户查询
 		Long tenantId = DEFAULT_TENANT;
 		String type = AuthorizationGrantType.AUTHORIZATION_CODE.getValue();
-		User user = userGateway.getUserByUsername(new Auth(AesUtil.encrypt(username), tenantId, type));
+		User user = userGateway.getUserByUsername(new Auth(username, type, AesUtil.getKey()));
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String ip = IpUtil.getIpAddr(request);
-		if (Objects.isNull(user)) {
+		if (ObjectUtil.isNull(user)) {
 			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, new User(username, tenantId), type, ip);
 		}
 		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);

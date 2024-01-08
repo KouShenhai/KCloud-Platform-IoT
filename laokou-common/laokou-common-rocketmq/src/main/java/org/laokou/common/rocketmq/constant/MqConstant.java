@@ -14,25 +14,44 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.rocketmq.constant;
 
 /**
- * 队列常量值
+ * 队列常量值.
  *
  * @author laokou
  */
 public interface MqConstant {
 
+	/**
+	 * 分布式链路Topic.
+	 */
 	String LAOKOU_MESSAGE_TOPIC = "laokou_message_topic";
 
+	/**
+	 * 通知消息Tag.
+	 */
 	String LAOKOU_NOTICE_MESSAGE_TAG = "notice";
 
+	/**
+	 * 提醒消息Tag.
+	 */
 	String LAOKOU_REMIND_MESSAGE_TAG = "remind";
 
+	/**
+	 * 提醒消息消费者组.
+	 */
 	String LAOKOU_REMIND_MESSAGE_CONSUMER_GROUP = "laokou_remind_message_consumer_group";
 
+	/**
+	 * 通知消息消费者组.
+	 */
 	String LAOKOU_NOTICE_MESSAGE_CONSUMER_GROUP = "laokou_notice_message_consumer_group";
 
+	/**
+	 * 分隔符.
+	 */
 	String TOPIC_TAG = "%s:%s";
 
 }

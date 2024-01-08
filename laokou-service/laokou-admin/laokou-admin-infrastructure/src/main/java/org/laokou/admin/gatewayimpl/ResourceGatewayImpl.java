@@ -30,10 +30,8 @@ import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.ResourceGateway;
-import org.laokou.admin.domain.message.Type;
 import org.laokou.admin.domain.resource.Resource;
 import org.laokou.admin.domain.resource.Status;
-import org.laokou.admin.dto.message.domainevent.MessageEvent;
 import org.laokou.admin.dto.resource.TaskStartCmd;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
@@ -49,16 +47,21 @@ import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.openfeign.utils.FeignUtil;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.Constant.DEFAULT;
-import static org.laokou.common.i18n.common.Constant.UNDER;
+import static org.laokou.common.i18n.common.Constant.*;
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_RESOURCE;
 
 /**
@@ -83,9 +86,9 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private final DefaultConfigProperties defaultConfigProperties;
 
-	private final EventUtil eventUtil;
+	private final TransactionalUtil transactionalUtil;
 
-	public static final String RESOURCE_INDEX = "laokou_resource";
+	private final EventUtil eventUtil;
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_RESOURCE)
@@ -136,6 +139,20 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		return true;
 	}
 
+	@Override
+	public Boolean deleteById(Long id) {
+		return transactionalUtil.defaultExecute(rollback -> {
+			try {
+				return resourceMapper.deleteById(id) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				rollback.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
+	}
+
 	private Boolean insertResource(Resource resource) {
 		return updateResource(insertTable(resource), DEFAULT);
 	}
@@ -182,20 +199,9 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private void insertResourceAudit(Resource resource) {
 		ResourceAuditDO resourceAuditDO = ConvertUtil.sourceToTarget(resource, ResourceAuditDO.class);
-		Assert.isTrue(Objects.nonNull(resourceAuditDO), "resource audit is null");
+		Assert.isTrue(ObjectUtil.isNotNull(resourceAuditDO), "resource audit is null");
 		resourceAuditDO.setResourceId(resource.getId());
 		resourceAuditMapper.insertTable(resourceAuditDO);
-	}
-
-	private MessageEvent toMessageEvent(Resource resource, String instanceId) {
-		String title = "资源待审批任务提醒";
-		String content = String.format("编号为%s，名称为%s的资源需要审批，请及时查看并审批", resource.getId(), resource.getTitle());
-		MessageEvent event = new MessageEvent(this);
-		event.setContent(content);
-		event.setTitle(title);
-		event.setInstanceId(instanceId);
-		event.setType(Type.REMIND.ordinal());
-		return event;
 	}
 
 	private void createIndex(List<String> list) {
@@ -204,7 +210,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 				elasticsearchTemplate.createIndex(index(ym), RESOURCE_INDEX, ResourceIndex.class);
 			}
 			catch (Exception e) {
-				log.info("错误信息", e);
+				log.error("索引创建失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw new SystemException("索引创建失败");
 			}
 		});
@@ -216,7 +222,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 				elasticsearchTemplate.deleteIndex(index(ym));
 			}
 			catch (Exception e) {
-				log.info("错误信息", e);
+				log.error("索引删除失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw new SystemException("索引删除失败");
 			}
 		});
@@ -244,7 +250,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 				elasticsearchTemplate.syncBatchIndex(index(k), JacksonUtil.toJsonStr(v));
 			}
 			catch (Exception e) {
-				log.info("错误信息", e);
+				log.error("索引同步失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw new SystemException("索引同步失败");
 			}
 		});

@@ -17,14 +17,17 @@
 
 package org.laokou.admin.command.user;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserProfileUpdateCmd;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -32,11 +35,10 @@ import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
+import org.springframework.util.Assert;
 
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
-import static org.laokou.common.mybatisplus.constant.DsConstant.USER;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -49,9 +51,9 @@ public class UserProfileUpdateCmdExe {
 
 	private final UserMapper userMapper;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(UserProfileUpdateCmd cmd) {
 		UserProfileCO co = cmd.getUserProfileCO();
-		DynamicDataSourceContextHolder.push(USER);
 		validate(co);
 		encrypt(co);
 		return Result.of(userGateway.updateInfo(toUser(co)));
@@ -59,6 +61,7 @@ public class UserProfileUpdateCmdExe {
 
 	private User toUser(UserProfileCO co) {
 		User user = ConvertUtil.sourceToTarget(co, User.class);
+		Assert.isTrue(ObjectUtil.isNotNull(user), "user is null");
 		user.setEditor(UserUtil.getUserId());
 		return user;
 	}
@@ -69,24 +72,23 @@ public class UserProfileUpdateCmdExe {
 	}
 
 	private void validate(UserProfileCO co) {
-		if (Objects.isNull(co.getId())) {
+		if (ObjectUtil.isNull(co.getId())) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		if (StringUtil.isNotEmpty(co.getMobile())) {
-			// Long count = userMapper.selectCount(Wrappers.query(UserDO.class)
-			// .eq("mobile", co.getMobile())
-			// .ne("id", co.getId()));
-			// if (count > 0) {
-			// throw new GlobalException("手机号已被注册，请重新填写");
-			// }
+			Long count = userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class)
+				.eq(UserDO::getMobile, co.getMobile())
+				.ne(UserDO::getId, co.getId()));
+			if (count > 0) {
+				throw new SystemException("手机号已被注册，请重新填写");
+			}
 		}
 		if (StringUtil.isNotEmpty(co.getMail())) {
-			// Long count = userMapper.selectCount(Wrappers.query(UserDO.class)
-			// .eq("mail", co.getMail())
-			// .ne("id", co.getId()));
-			// if (count > 0) {
-			// throw new GlobalException("邮箱地址已被注册，请重新填写");
-			// }
+			Long count = userMapper.selectCount(
+					Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMail, co.getMail()).ne(UserDO::getId, co.getId()));
+			if (count > 0) {
+				throw new SystemException("邮箱地址已被注册，请重新填写");
+			}
 		}
 	}
 

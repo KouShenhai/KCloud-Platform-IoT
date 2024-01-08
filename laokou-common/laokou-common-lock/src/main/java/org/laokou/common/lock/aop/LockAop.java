@@ -14,10 +14,12 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.lock.aop;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -25,21 +27,23 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.lock.Locks;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.lock.Lock;
 import org.laokou.common.lock.RedissonLock;
 import org.laokou.common.lock.annotation.Lock4j;
-import org.laokou.common.lock.enums.LockType;
+import org.laokou.common.lock.enums.Type;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
-import java.util.Objects;
 
 import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
 
 /**
+ * 分布式锁切面.
+ *
  * @author laokou
  */
 @Component
@@ -57,17 +61,17 @@ public class LockAop {
 		MethodSignature methodSignature = (MethodSignature) signature;
 		Method method = methodSignature.getMethod();
 		Lock4j lock4j = AnnotationUtils.findAnnotation(method, Lock4j.class);
-		Assert.isTrue(Objects.nonNull(lock4j), "@Lock4j is null");
+		Assert.isTrue(ObjectUtil.isNotNull(lock4j), "@Lock4j is null");
 		// 时间戳
 		String key = lock4j.key() + IdGenerator.SystemClock.now();
 		long expire = lock4j.expire();
 		long timeout = lock4j.timeout();
-		final LockType type = lock4j.type();
-		Locks locks = new RedissonLock(redisUtil);
+		final Type type = lock4j.type();
+		Lock lock = new RedissonLock(redisUtil);
 		Object obj;
 		// 设置锁的自动过期时间，则执行业务的时间一定要小于锁的自动过期时间，否则就会报错
 		try {
-			if (locks.tryLock(type, key, expire, timeout)) {
+			if (lock.tryLock(type, key, expire, timeout)) {
 				obj = joinPoint.proceed();
 			}
 			else {
@@ -80,7 +84,7 @@ public class LockAop {
 		}
 		finally {
 			// 释放锁
-			locks.unlock(type, key);
+			lock.unlock(type, key);
 		}
 		return obj;
 	}

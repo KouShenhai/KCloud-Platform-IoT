@@ -32,6 +32,8 @@ import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.log.domainevent.OperateLogEvent;
 import org.laokou.common.core.utils.*;
+import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -84,7 +86,7 @@ public class OperateLogAop {
 		Method method = methodSignature.getMethod();
 		OperateLog operateLog = AnnotationUtils.findAnnotation(method, OperateLog.class);
 		// 构建事件对象
-		Assert.isTrue(Objects.nonNull(operateLog), "@OperateLog is null");
+		Assert.isTrue(ObjectUtil.isNotNull(operateLog), "@OperateLog is null");
 		OperateLogEvent event = buildEvent(operateLog, request, joinPoint, e);
 		domainEventPublisher.publish(event);
 	}
@@ -98,7 +100,7 @@ public class OperateLogAop {
 			Object[] args = joinPoint.getArgs();
 			List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs).toList();
 			OperateLogEvent event = new OperateLogEvent(this);
-			Assert.isTrue(Objects.nonNull(operateLog), "@OperateLog is null");
+			Assert.isTrue(ObjectUtil.isNotNull(operateLog), "@OperateLog is null");
 			event.setModuleName(operateLog.module());
 			event.setName(operateLog.operation());
 			event.setUri(request.getRequestURI());
@@ -120,16 +122,16 @@ public class OperateLogAop {
 				obj = null;
 			}
 			else {
-				obj = params.get(0);
+				obj = params.getFirst();
 			}
-			if (Objects.isNull(obj)) {
+			if (ObjectUtil.isNull(obj)) {
 				event.setRequestParams(JacksonUtil.EMPTY_JSON);
 			}
 			else {
 				String str = JacksonUtil.toJsonStr(obj);
 				if (RISK.contains(str)) {
 					Map<String, String> map = removeAny(JacksonUtil.toMap(str, String.class, String.class),
-							defaultConfigProperties.getRemoveParams().toArray(new String[0]));
+							defaultConfigProperties.getRemoveParams().toArray(String[]::new));
 					event.setRequestParams(JacksonUtil.toJsonStr(map, true));
 				}
 				else {
@@ -140,7 +142,7 @@ public class OperateLogAop {
 			return event;
 		}
 		catch (Exception ex) {
-			log.error("错误信息", ex);
+			log.error("错误信息：{}，详情见日志", LogUtil.result(ex.getMessage()), ex);
 			throw ex;
 		}
 		finally {

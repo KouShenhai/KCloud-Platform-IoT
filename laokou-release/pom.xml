@@ -23,21 +23,21 @@
     <parent>
         <groupId>org.laokou</groupId>
         <artifactId>KCloud-Platform-Alibaba</artifactId>
-        <version>3.2.0</version>
+        <version>3.2.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.koushenhai</groupId>
     <artifactId>laokou-release</artifactId>
-    <version>3.2.0-M1</version>
+    <version>3.2.1-M1</version>
     <name>laokou-release</name>
     <description>一个企业级微服务架构的云服务多租户SaaS平台</description>
     <url>https://koushenhai.github.io/KCloud-Platform-Alibaba</url>
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
         <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
@@ -68,7 +68,7 @@
         </developer>
     </developers>
     <scm>
-        <tag>kcloud-platform-alibaba-3.2.0.RELEASE</tag>
+        <tag>kcloud-platform-alibaba-3.2.1.RELEASE</tag>
         <url>https://github.com/KouShenhai/KCloud-Platform-Alibaba</url>
         <connection>scm:git:https://github.com/KouShenhai/KCloud-Platform-Alibaba.git</connection>
         <developerConnection>scm:git:https://github.com/KouShenhai/KCloud-Platform-Alibaba.git</developerConnection>

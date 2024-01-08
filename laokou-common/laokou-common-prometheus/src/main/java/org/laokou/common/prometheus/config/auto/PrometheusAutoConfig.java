@@ -23,6 +23,8 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
+import static org.laokou.common.i18n.common.Constant.SPRING_APPLICATION_NAME;
+
 /**
  * @author laokou
  */
@@ -35,7 +37,7 @@ public class PrometheusAutoConfig {
 	@Bean
 	MeterRegistryCustomizer<MeterRegistry> configurer() {
 		return (registry) -> registry.config()
-			.commonTags("application", environment.getProperty("spring.application.name"));
+			.commonTags("application", environment.getProperty(SPRING_APPLICATION_NAME));
 	}
 
 }

@@ -98,4 +98,11 @@ public final class RedisKeyUtil {
 		return "tenant:domain-name";
 	}
 
+	/**
+	 * IP缓存Key
+	 */
+	public static String getIpCacheHashKey(String type) {
+		return "ip:cache:" + type;
+	}
+
 }

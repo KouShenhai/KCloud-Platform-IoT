@@ -13,7 +13,7 @@
 #  * See the License for the specific language governing permissions and
 #  * limitations under the License.
 #  */
-FROM docker.io/sunrdocker/jdk17-jre-font-openssl-alpine:latest
+FROM docker.io/sunrdocker/jdk21-jre-font-openssl-alpine:latest
 LABEL maintainer="laokou"
 LABEL description="laokou-flowable"
 RUN echo "http://mirrors.aliyun.com/alpine/v3.6/main" > /etc/apk/repositories \

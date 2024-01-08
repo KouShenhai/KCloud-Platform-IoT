@@ -25,7 +25,9 @@ import org.flowable.engine.repository.ProcessDefinition;
 import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.laokou.flowable.dto.definition.DefinitionActivateCmd;
 import org.springframework.stereotype.Component;
 
@@ -48,6 +50,7 @@ public class DefinitionActiveCmdExe {
 			String definitionId = cmd.getDefinitionId();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			ProcessDefinition definition = repositoryService.createProcessDefinitionQuery()
+				.processDefinitionTenantId(UserUtil.getTenantId().toString())
 				.processDefinitionId(definitionId)
 				.singleResult();
 			if (definition.isSuspended()) {
@@ -70,9 +73,9 @@ public class DefinitionActiveCmdExe {
 				return true;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(LogUtil.fail(e.getMessage()));
 			}
 		});
 	}

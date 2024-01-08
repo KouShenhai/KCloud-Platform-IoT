@@ -20,14 +20,12 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.LocaleUtil;
-import org.laokou.gateway.utils.RequestUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.nacos.utils.ResponseUtil;
+import org.laokou.gateway.utils.I18nUtil;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.support.NotFoundException;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.Ordered;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
@@ -46,39 +44,38 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 	@Override
 	public Mono<Void> handle(ServerWebExchange exchange, Throwable e) {
 		try {
-			String language = RequestUtil.getParamValue(exchange.getRequest(), HttpHeaders.ACCEPT_LANGUAGE);
-			LocaleContextHolder.setLocale(LocaleUtil.toLocale(language), true);
-			log.error("网关全局处理异常，异常信息", e);
+			I18nUtil.set(exchange);
 			if (e instanceof NotFoundException) {
-				log.error("服务正在维护，请联系管理员");
+				log.error("服务正在维护，请联系管理员，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				return ResponseUtil.response(exchange, Result.fail(SERVICE_UNAVAILABLE));
 			}
 			if (e instanceof ResponseStatusException responseStatusException) {
 				int statusCode = responseStatusException.getStatusCode().value();
-				log.info("状态码：{}", statusCode);
 				if (statusCode == NOT_FOUND) {
-					log.error("无法找到请求URL为{}的资源", exchange.getRequest().getPath().pathWithinApplication().value());
+					log.error("状态码：{}，无法找到请求URL为{}的资源，错误信息：{}，详情见日志", statusCode,
+							exchange.getRequest().getPath().pathWithinApplication().value(),
+							LogUtil.result(e.getMessage()), e);
 					return ResponseUtil.response(exchange, Result.fail(NOT_FOUND));
 				}
 				else if (statusCode == BAD_REQUEST) {
-					log.error("错误请求");
+					log.error("状态码：{}，错误请求，错误信息：{}，详情见日志", statusCode, LogUtil.result(e.getMessage()), e);
 					return ResponseUtil.response(exchange, Result.fail(BAD_REQUEST));
 				}
 				else if (statusCode == INTERNAL_SERVER_ERROR) {
-					log.error("服务器内部错误，无法完成请求");
+					log.error("状态码：{}，服务器内部错误，无法完成请求，错误信息：{}，详情见日志", statusCode, LogUtil.result(e.getMessage()), e);
 					return ResponseUtil.response(exchange, Result.fail(INTERNAL_SERVER_ERROR));
 				}
 			}
 			if (BlockException.isBlockException(e)) {
 				// 思路来源于SentinelGatewayBlockExceptionHandler
-				log.error("请求太频繁");
+				log.error("请求太频繁，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				return ResponseUtil.response(exchange, Result.fail(TOO_MANY_REQUESTS));
 			}
-			log.error("错误网关");
+			log.error("错误网关，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			return ResponseUtil.response(exchange, Result.fail(BAD_GATEWAY));
 		}
 		finally {
-			LocaleContextHolder.resetLocaleContext();
+			I18nUtil.reset();
 		}
 	}
 

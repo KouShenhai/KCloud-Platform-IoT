@@ -12,14 +12,18 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.algorithm.template;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
 public interface Algorithm {
+
+	<T> T select(List<T> list, Object arg);
 
 }

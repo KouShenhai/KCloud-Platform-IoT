@@ -36,7 +36,7 @@ public interface TasksServiceI {
 
 	Result<StartCO> start(TaskStartCmd cmd);
 
-	Result<String> diagram();
+	Result<String> diagram(TaskDiagramGetQry qry);
 
 	Result<Boolean> transfer(TaskTransferCmd cmd);
 

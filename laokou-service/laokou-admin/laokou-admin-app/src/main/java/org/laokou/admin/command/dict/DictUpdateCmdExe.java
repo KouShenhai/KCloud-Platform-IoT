@@ -28,10 +28,9 @@ import org.laokou.admin.gatewayimpl.database.DictMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
 
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
 import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
@@ -53,7 +52,7 @@ public class DictUpdateCmdExe {
 	public Result<Boolean> execute(DictUpdateCmd cmd) {
 		DictCO co = cmd.getDictCO();
 		Long id = co.getId();
-		if (Objects.isNull(id)) {
+		if (ObjectUtil.isNull(id)) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		String type = co.getType();

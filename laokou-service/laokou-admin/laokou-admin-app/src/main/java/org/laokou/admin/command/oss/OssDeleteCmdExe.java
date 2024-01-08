@@ -17,11 +17,14 @@
 
 package org.laokou.admin.command.oss;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.OssGateway;
 import org.laokou.admin.dto.oss.OssDeleteCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -32,6 +35,7 @@ public class OssDeleteCmdExe {
 
 	private final OssGateway ossGateway;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(OssDeleteCmd cmd) {
 		return Result.of(ossGateway.deleteById(cmd.getId()));
 	}

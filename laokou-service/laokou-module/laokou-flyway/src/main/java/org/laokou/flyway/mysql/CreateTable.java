@@ -37,9 +37,7 @@ public class CreateTable {
 
 	public static void main(String[] args) {
 		List<String> tableList = List.of("kcloud_platform_alibaba", "kcloud_platform_alibaba_flowable",
-				"kcloud_platform_alibaba_nacos", "kcloud_platform_alibaba_tenant", "kcloud_platform_alibaba_user",
-				"kcloud_platform_alibaba_xxl_job", "kcloud_platform_alibaba_seata",
-				"kcloud_platform_alibaba_login_log");
+				"kcloud_platform_alibaba_nacos", "kcloud_platform_alibaba_xxl_job");
 		tableList.forEach(item -> {
 			Connection connection;
 			try {
@@ -68,12 +66,6 @@ public class CreateTable {
 				catch (SQLException e) {
 					throw new RuntimeException(e);
 				}
-				try {
-					statement.executeUpdate(createTable(item));
-				}
-				catch (SQLException e) {
-					throw new RuntimeException(e);
-				}
 			}
 			finally {
 				if (Objects.nonNull(connection)) {
@@ -91,25 +83,6 @@ public class CreateTable {
 	private static String createDB(String dbName) {
 		return String.format("""
 				create database if not exists `%s`;
-				""", dbName);
-	}
-
-	private static String createTable(String dbName) {
-		return String.format("""
-				CREATE TABLE IF NOT EXISTS `%s`.`flyway_schema_history` (
-				                                         `installed_rank` int NOT NULL,
-				                                         `version` varchar(50) DEFAULT NULL,
-				                                         `description` varchar(200) NOT NULL,
-				                                         `type` varchar(20) NOT NULL,
-				                                         `script` varchar(1000) NOT NULL,
-				                                         `checksum` int DEFAULT NULL,
-				                                         `installed_by` varchar(100) NOT NULL,
-				                                         `installed_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				                                         `execution_time` int NOT NULL,
-				                                         `success` tinyint(1) NOT NULL,
-				                                         PRIMARY KEY (`installed_rank`),
-				                                         KEY `flyway_schema_history_s_idx` (`success`)
-				) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 				""", dbName);
 	}
 

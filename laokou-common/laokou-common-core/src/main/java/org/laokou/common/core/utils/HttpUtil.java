@@ -34,6 +34,7 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.apache.hc.core5.net.URIBuilder;
+import org.laokou.common.i18n.utils.LogUtil;
 
 import javax.net.ssl.*;
 import java.io.IOException;
@@ -91,9 +92,9 @@ public class HttpUtil {
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
 			catch (Exception e) {
-				log.error("调用失败，错误信息", e);
+				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
-			log.info("打印：{}", resultString);
+			// log.info("打印：{}", resultString);
 			return resultString;
 		}
 	}
@@ -124,9 +125,9 @@ public class HttpUtil {
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
 			catch (IOException e) {
-				log.error("调用失败，错误信息", e);
+				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
-			log.info("打印：{}", resultString);
+			// log.info("打印：{}", resultString);
 			return resultString;
 		}
 	}
@@ -168,9 +169,9 @@ public class HttpUtil {
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
 			catch (IOException e) {
-				log.error("调用失败，错误信息", e);
+				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
-			log.info("打印：{}", resultString);
+			// log.info("打印：{}", resultString);
 			return resultString;
 		}
 	}
@@ -201,9 +202,9 @@ public class HttpUtil {
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
 			catch (IOException e) {
-				log.error("调用失败，错误信息", e);
+				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
-			log.info("打印：{}", resultString);
+			// log.info("打印：{}", resultString);
 			return resultString;
 		}
 	}

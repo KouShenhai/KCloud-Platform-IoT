@@ -27,13 +27,16 @@ import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.DataSourceException;
+import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashSet;
@@ -41,6 +44,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.Constant.DROP;
+import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
 
 /**
  * @author laokou
@@ -62,42 +66,19 @@ public class DsUtil {
 		if (StringUtil.isEmpty(sourceName)) {
 			throw new DataSourceException("数据源名称不能为空");
 		}
-		if (!validateDs(sourceName)) {
+		if (validateDs(sourceName)) {
 			addDs(sourceName);
 		}
 		return sourceName;
 	}
 
-	public void addDs(String sourceName, DataSourceProperty properties, boolean disabledTenant) {
-		DataSource dataSource = dataSource(properties);
-		if (disabledTenant) {
-			// 校验数据源
-			validateDs(dataSource);
-		}
-		dynamicUtil.getDataSource().addDataSource(sourceName, dataSource);
+	public void addDs(String sourceName, DataSourceProperty properties) {
+		// 校验数据源
+		validateDs(properties);
+		dynamicUtil.getDataSource().addDataSource(sourceName, dataSource(properties));
 	}
 
-	private void addDs(String sourceName) {
-		SourceDO source = sourceMapper.getSourceByName(sourceName);
-		addDs(sourceName, properties(source), true);
-	}
-
-	private DataSource dataSource(DataSourceProperty properties) {
-		try {
-			HikariDataSourceCreator hikariDataSourceCreator = dynamicUtil.getHikariDataSourceCreator();
-			return hikariDataSourceCreator.createDataSource(properties);
-		}
-		catch (Exception e) {
-			log.error("加载数据源驱动失败，错误信息", e);
-			throw new DataSourceException("加载数据源驱动失败");
-		}
-	}
-
-	private boolean validateDs(String sourceName) {
-		return dynamicUtil.getDataSources().containsKey(sourceName);
-	}
-
-	private DataSourceProperty properties(SourceDO source) {
+	public DataSourceProperty properties(SourceDO source) {
 		DataSourceProperty properties = new DataSourceProperty();
 		properties.setUsername(source.getUsername());
 		properties.setPassword(source.getPassword());
@@ -106,15 +87,42 @@ public class DsUtil {
 		return properties;
 	}
 
-	/**
-	 * 连接数据库
-	 */
+	private DataSource dataSource(DataSourceProperty properties) {
+		HikariDataSourceCreator hikariDataSourceCreator = dynamicUtil.getHikariDataSourceCreator();
+		return hikariDataSourceCreator.createDataSource(properties);
+	}
+
+	private void addDs(String sourceName) {
+		SourceDO source = sourceMapper.getSourceByName(sourceName);
+		addDs(sourceName, properties(source));
+	}
+
+	public boolean validateDs(String sourceName) {
+		return !dynamicUtil.getDataSources().containsKey(sourceName);
+	}
+
 	@SneakyThrows
-	private void validateDs(DataSource dataSource) {
-		Connection connection = null;
+	private void validateDs(DataSourceProperty properties) {
+		Connection connection;
 		PreparedStatement ps = null;
 		try {
-			connection = DataSourceUtils.getConnection(dataSource);
+			Class.forName(properties.getDriverClassName());
+		}
+		catch (Exception e) {
+			log.error("加载数据源驱动失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			throw new DataSourceException(CUSTOM_SERVER_ERROR, "加载数据源驱动失败");
+		}
+		try {
+			// 1秒后连接超时
+			DriverManager.setLoginTimeout(1);
+			connection = DriverManager.getConnection(properties.getUrl(), properties.getUsername(),
+					properties.getPassword());
+		}
+		catch (Exception e) {
+			log.error("数据源连接超时，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			throw new DataSourceException(CUSTOM_SERVER_ERROR, "数据源连接超时");
+		}
+		try {
 			ps = connection.prepareStatement(SHOW_TABLES);
 			ResultSet rs = ps.executeQuery();
 			Set<String> defaultTenantTables = defaultConfigProperties.getTenantTables();
@@ -135,16 +143,14 @@ public class DsUtil {
 				list = defaultTenantTables;
 			}
 			if (CollectionUtil.isNotEmpty(list)) {
-				throw new DataSourceException(String.format("%s不存在", String.join(DROP, list)));
+				throw new DataSourceException(String.format("表 %s 不存在", String.join(DROP, list)));
 			}
 		}
-		catch (Exception e) {
-			log.error("数据源连接超时，错误信息", e);
-			throw new DataSourceException("数据源连接超时");
-		}
 		finally {
+			if (ObjectUtil.isNotNull(connection)) {
+				connection.close();
+			}
 			JdbcUtils.closeStatement(ps);
-			DataSourceUtils.releaseConnection(connection, dataSource);
 		}
 	}
 

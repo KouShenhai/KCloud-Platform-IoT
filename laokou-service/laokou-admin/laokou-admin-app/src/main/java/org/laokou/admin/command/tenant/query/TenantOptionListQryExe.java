@@ -40,18 +40,15 @@ public class TenantOptionListQryExe {
 	private final TenantMapper tenantMapper;
 
 	public Result<List<OptionCO>> execute(TenantOptionListQry qry) {
-		List<TenantDO> list = tenantMapper
-			.selectList(Wrappers.query(TenantDO.class).select("id", "name").orderByDesc("create_date"));
+		List<TenantDO> list = tenantMapper.selectList(Wrappers.lambdaQuery(TenantDO.class)
+			.select(TenantDO::getId, TenantDO::getName)
+			.orderByDesc(TenantDO::getId));
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}
-		List<OptionCO> options = new ArrayList<>(list.size());
-		for (TenantDO tenantDO : list) {
-			OptionCO oc = new OptionCO();
-			oc.setLabel(tenantDO.getName());
-			oc.setValue(String.valueOf(tenantDO.getId()));
-			options.add(oc);
-		}
+		List<OptionCO> options = list.stream()
+			.map(item -> new OptionCO(item.getName(), String.valueOf(item.getId())))
+			.toList();
 		return Result.of(options);
 	}
 

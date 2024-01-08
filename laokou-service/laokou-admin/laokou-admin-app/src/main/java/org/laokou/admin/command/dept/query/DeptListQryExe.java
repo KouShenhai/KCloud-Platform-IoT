@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.dept.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.DeptConvertor;
 import org.laokou.admin.domain.dept.Dept;
@@ -24,10 +25,11 @@ import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.admin.dto.dept.DeptListQry;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -40,10 +42,11 @@ public class DeptListQryExe {
 
 	private final DeptConvertor deptConvertor;
 
+	@DS(TENANT)
 	public Result<List<DeptCO>> execute(DeptListQry qry) {
 		Dept dept = new Dept();
 		dept.setName(qry.getName());
-		List<Dept> list = deptGateway.list(dept, UserUtil.getTenantId());
+		List<Dept> list = deptGateway.list(dept);
 		return Result.of(deptConvertor.convertClientObjectList(list));
 	}
 

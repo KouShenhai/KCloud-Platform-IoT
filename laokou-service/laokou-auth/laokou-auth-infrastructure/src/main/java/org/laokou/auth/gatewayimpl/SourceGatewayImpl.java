@@ -19,7 +19,11 @@ package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.domain.gateway.SourceGateway;
+import org.laokou.auth.domain.source.Source;
 import org.laokou.auth.gatewayimpl.database.SourceMapper;
+import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,8 +36,21 @@ public class SourceGatewayImpl implements SourceGateway {
 	private final SourceMapper sourceMapper;
 
 	@Override
-	public String getSourceName(Long tenantId) {
-		return sourceMapper.getSourceNameByTenantId(tenantId);
+	public Source getSourceName(Long tenantId) {
+		return toSource(sourceMapper.getSourceByTenantId(tenantId));
+	}
+
+	private Source toSource(SourceDO sourceDO) {
+		if (ObjectUtil.isNull(sourceDO)) {
+			throw new SystemException("数据不存在");
+		}
+		Source source = new Source();
+		source.setName(sourceDO.getName());
+		source.setPassword(sourceDO.getPassword());
+		source.setUsername(sourceDO.getUsername());
+		source.setUrl(sourceDO.getUrl());
+		source.setDriverClassName(sourceDO.getDriverClassName());
+		return source;
 	}
 
 }

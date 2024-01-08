@@ -1,0 +1,18 @@
+[
+  {
+    "resource": "/v1/captchas/{uuid}",
+    "limitApp": "default",
+    "count": 300,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v1/secrets",
+    "limitApp": "default",
+    "count": 300,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]

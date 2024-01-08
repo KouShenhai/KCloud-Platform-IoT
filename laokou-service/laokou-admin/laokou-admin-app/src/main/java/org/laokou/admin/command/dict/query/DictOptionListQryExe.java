@@ -17,9 +17,9 @@
 
 package org.laokou.admin.command.dict.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.DictConvertor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.dict.DictOptionListQry;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
@@ -32,6 +32,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+
 /**
  * @author laokou
  */
@@ -41,13 +43,12 @@ public class DictOptionListQryExe {
 
 	private final DictMapper dictMapper;
 
-	private final DictConvertor dictConvertor;
-
+	@DS(TENANT)
 	public Result<List<OptionCO>> execute(DictOptionListQry qry) {
-		List<DictDO> list = dictMapper.selectList(Wrappers.query(DictDO.class)
-			.eq("type", qry.getType())
-			.select("label", "value")
-			.orderByDesc("create_date"));
+		List<DictDO> list = dictMapper.selectList(Wrappers.lambdaQuery(DictDO.class)
+			.eq(DictDO::getType, qry.getType())
+			.select(DictDO::getLabel, DictDO::getValue)
+			.orderByDesc(DictDO::getId));
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}

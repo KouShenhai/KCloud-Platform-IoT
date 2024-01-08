@@ -24,13 +24,13 @@ public interface DsConstant {
 
 	String BOOT_SYS_MESSAGE = "boot_sys_message";
 
-	String BOOT_SYS_MESSAGE_DETAIL = "boot_sys_message_detail";
-
 	String BOOT_SYS_OSS = "boot_sys_oss";
 
-	String BOOT_SYS_OSS_LOG = "boot_sys_oss_log";
-
 	String BOOT_SYS_USER = "boot_sys_user";
+
+	String BOOT_SYS_DEPT = "boot_sys_dept";
+
+	String BOOT_SYS_MENU = "boot_sys_menu";
 
 	String BOOT_SYS_TENANT = "boot_sys_tenant";
 
@@ -48,15 +48,7 @@ public interface DsConstant {
 
 	String BOOT_SYS_SQL_LOG = "boot_sys_sql_log";
 
-	/**
-	 * 用户
-	 */
-	String USER = "user";
-
-	/**
-	 * 登录日志
-	 */
-	String LOGIN_LOG = "login_log";
+	String BOOT_SYS_IP = "boot_sys_ip";
 
 	/**
 	 * 租户

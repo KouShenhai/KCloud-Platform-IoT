@@ -14,11 +14,16 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.lock.annotation;
 
-import org.laokou.common.lock.enums.LockType;
+import org.laokou.common.lock.enums.Type;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author laokou
@@ -29,7 +34,7 @@ import java.lang.annotation.*;
 public @interface Lock4j {
 
 	/**
-	 * 键
+	 * 键.
 	 */
 	String key();
 
@@ -44,8 +49,8 @@ public @interface Lock4j {
 	long timeout() default 50;
 
 	/**
-	 * 类似
+	 * 分布式锁类型.
 	 */
-	LockType type() default LockType.LOCK;
+	Type type() default Type.LOCK;
 
 }

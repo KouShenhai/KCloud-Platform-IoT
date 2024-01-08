@@ -33,12 +33,12 @@ import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_TRACE_TOPIC;
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class KafkaTest {
+class KafkaTest {
 
 	private final DefaultKafkaTemplate defaultKafkaTemplate;
 
 	@Test
-	public void kafkaSenderTest() {
+	void kafkaSenderTest() {
 		defaultKafkaTemplate.send(LAOKOU_TRACE_TOPIC, "测试数据");
 	}
 

@@ -34,12 +34,12 @@ import java.time.Duration;
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class CacheTest {
+class CacheTest {
 
 	private final RedisUtil redisUtil;
 
 	@Test
-	public void timeTest() {
+	void timeTest() {
 		String value = "10s";
 		Duration duration = DurationStyle.detectAndParse(value);
 		log.info("获取值：{}", duration.toMillis());
@@ -47,8 +47,8 @@ public class CacheTest {
 
 	@Test
 	public void mapCacheTest() {
-		// redisUtil.hSet("tenantt", "ttt", "333");
-		Object o = redisUtil.hGet("tenantt3", "333");
+		redisUtil.hSet("tenantt", "ttt", "333");
+		Object o = redisUtil.hGet("tenantt", "ttt");
 		log.info("获取值：{}", o);
 	}
 

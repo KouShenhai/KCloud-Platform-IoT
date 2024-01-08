@@ -34,6 +34,7 @@
 
 	<!-- TAKEN FROM SPRING BOOT -->
 	<!-- Root Checks -->
+	<!-- 自定义配置，参考: https://checkstyle.sourceforge.io/checks/javadoc/javadocstyle.html#JavadocStyle -->
 	<module name="com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck">
 		<property name="headerFile" value="${checkstyle.header.file}"/>
 		<property name="fileExtensions" value="java,groovy"/>
@@ -83,7 +84,10 @@
 
 		<!-- Class Design -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.design.FinalClassCheck"/>
-		<module name="com.puppycrawl.tools.checkstyle.checks.design.InterfaceIsTypeCheck"/>
+		<module name="com.puppycrawl.tools.checkstyle.checks.design.InterfaceIsTypeCheck">
+			<!-- 不标记接口 -->
+			<property name="allowMarkerInterfaces" value="false"/>
+		</module>
 		<module name="com.puppycrawl.tools.checkstyle.checks.design.HideUtilityClassConstructorCheck"/>
 		<module name="com.puppycrawl.tools.checkstyle.checks.design.MutableExceptionCheck"/>
 		<module name="com.puppycrawl.tools.checkstyle.checks.design.InnerTypeLastCheck"/>
@@ -125,7 +129,7 @@
 			<property name="processJavadoc" value="true"/>
 		</module>
 		<module name="com.puppycrawl.tools.checkstyle.checks.imports.ImportOrderCheck">
-			<property name="groups" value="java,/^javax?\./,*,org.springframework"/>
+			<property name="groups" value="lombok,org,java,/^javax?\./,*"/>
 			<property name="ordered" value="true"/>
 			<property name="separated" value="true"/>
 			<property name="option" value="bottom"/>
@@ -142,7 +146,6 @@
 			<property name="scope" value="public"/>
 		</module>
 		<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck">
-
 			<!-- 自定义配置，参考: https://checkstyle.sourceforge.io/checks/javadoc/javadocstyle.html#JavadocStyle -->
 			<!-- 解决“Checkstyle: Javadoc 首句应以句号结尾。” 使其支持中文标点符号 -->
 			<property name="endOfSentenceFormat" value="([.?!。？！][ \t\n\r\f&lt;])|([.?!。？！]$)"/>

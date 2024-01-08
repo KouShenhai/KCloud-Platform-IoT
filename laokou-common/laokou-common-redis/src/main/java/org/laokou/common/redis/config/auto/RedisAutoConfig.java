@@ -16,8 +16,6 @@
  */
 package org.laokou.common.redis.config.auto;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.laokou.common.redis.config.GlobalJsonJacksonCodec;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -29,6 +27,9 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import static org.laokou.common.redis.config.GlobalJsonJacksonCodec.getJsonRedisSerializer;
+import static org.laokou.common.redis.config.GlobalJsonJacksonCodec.getStringRedisSerializer;
 
 /**
  * Redis配置
@@ -51,7 +52,7 @@ public class RedisAutoConfig {
 		redisTemplate.setConnectionFactory(lettuceConnectionFactory);
 		Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = getJsonRedisSerializer();
 		// string序列化
-		StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+		StringRedisSerializer stringRedisSerializer = getStringRedisSerializer();
 		// key
 		redisTemplate.setKeySerializer(stringRedisSerializer);
 		// value
@@ -63,12 +64,6 @@ public class RedisAutoConfig {
 		// 初始化
 		redisTemplate.afterPropertiesSet();
 		return redisTemplate;
-	}
-
-	private Jackson2JsonRedisSerializer<Object> getJsonRedisSerializer() {
-		// Json序列化配置
-		ObjectMapper objectMapper = GlobalJsonJacksonCodec.objectMapper();
-		return new Jackson2JsonRedisSerializer<>(objectMapper, Object.class);
 	}
 
 	@Bean

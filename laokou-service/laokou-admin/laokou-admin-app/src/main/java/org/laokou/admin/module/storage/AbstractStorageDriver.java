@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.LogUtil;
 
 import java.io.InputStream;
 
@@ -47,7 +48,7 @@ public abstract class AbstractStorageDriver<O> implements StorageDriver<O> {
 			return getUrl(obj, newFileName);
 		}
 		catch (Exception ex) {
-			log.error("文件上传失败，错误信息：{}", ex.getMessage());
+			log.error("文件上传失败，错误信息：{}，详情见日志", LogUtil.result(ex.getMessage()), ex);
 			throw new SystemException(String.format("文件上传失败，错误信息：%s", ex.getMessage()));
 		}
 	}

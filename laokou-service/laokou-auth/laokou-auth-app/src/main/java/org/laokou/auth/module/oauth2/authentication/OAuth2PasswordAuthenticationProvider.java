@@ -22,6 +22,7 @@ import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.auth.domain.gateway.*;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
+import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,9 +49,10 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 	public OAuth2PasswordAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway,
 			DeptGateway deptGateway, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway,
 			OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-			SourceGateway sourceGateway, RedisUtil redisUtil, LoginLogGateway loginLogGateway) {
+			SourceGateway sourceGateway, RedisUtil redisUtil, DynamicUtil dynamicUtil,
+			LoginLogGateway loginLogGateway) {
 		super(userGateway, menuGateway, deptGateway, passwordEncoder, captchaGateway, authorizationService,
-				tokenGenerator, sourceGateway, redisUtil, loginLogGateway);
+				tokenGenerator, sourceGateway, redisUtil, dynamicUtil, loginLogGateway);
 	}
 
 	@Override
@@ -62,28 +64,28 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 	Authentication principal(HttpServletRequest request) {
 		// 判断UUID是否为空
 		String uuid = request.getParameter(UUID);
-		log.info("UUID：{}", uuid);
+		// log.info("UUID：{}", uuid);
 		if (StringUtil.isEmpty(uuid)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
 		}
 		// 判断验证码是否为空
 		String captcha = request.getParameter(CAPTCHA);
-		log.info("验证码：{}", captcha);
+		// log.info("验证码：{}", captcha);
 		if (StringUtil.isEmpty(captcha)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
 		}
 		// 验证账号是否为空
 		String username = request.getParameter(OAuth2ParameterNames.USERNAME);
-		log.info("账号：{}", username);
+		// log.info("账号：{}", username);
 		if (StringUtil.isEmpty(username)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE));
 		}
 		// 验证密码是否为空
 		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
-		log.info("密码：{}", password);
+		// log.info("密码：{}", password);
 		if (StringUtil.isEmpty(password)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE));

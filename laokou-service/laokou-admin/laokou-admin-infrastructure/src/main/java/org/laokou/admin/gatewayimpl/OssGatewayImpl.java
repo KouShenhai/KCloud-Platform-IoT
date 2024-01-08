@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -34,11 +33,11 @@ import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_OSS;
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -58,7 +57,6 @@ public class OssGatewayImpl implements OssGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_OSS)
-	@DS(TENANT)
 	public Datas<Oss> list(Oss oss, PageQuery pageQuery) {
 		IPage<OssDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<OssDO> newPage = ossMapper.getOssListByFilter(page, oss.getName(), pageQuery);
@@ -69,20 +67,17 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	@Override
-	@DS(TENANT)
 	public Oss getById(Long id) {
 		return ossConvertor.convertEntity(ossMapper.selectById(id));
 	}
 
 	@Override
-	@DS(TENANT)
 	public Boolean insert(Oss oss) {
 		OssDO ossDO = ossConvertor.toDataObject(oss);
 		return insertOss(ossDO);
 	}
 
 	@Override
-	@DS(TENANT)
 	public Boolean update(Oss oss) {
 		OssDO ossDO = ossConvertor.toDataObject(oss);
 		ossDO.setVersion(ossMapper.getVersion(ossDO.getId(), OssDO.class));
@@ -90,14 +85,13 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	@Override
-	@DS(TENANT)
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return ossMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -124,7 +118,7 @@ public class OssGatewayImpl implements OssGateway {
 				return ossMapper.insertTable(ossDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

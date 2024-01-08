@@ -14,7 +14,7 @@
 #  * limitations under the License.
 #  */
 # 基础镜像
-FROM docker.io/sunrdocker/jdk17-jre-font-openssl-alpine:latest
+FROM docker.io/tabatad/jdk21
 # 信息
 LABEL maintainer="laokou"
 LABEL description="laokou-im"

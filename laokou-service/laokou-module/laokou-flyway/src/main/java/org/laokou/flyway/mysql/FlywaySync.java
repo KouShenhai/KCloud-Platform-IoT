@@ -34,10 +34,7 @@ public class FlywaySync {
 	private static final String PASSWORD = "laokou123";
 
 	public static void main(String[] args) {
-		Map<String, String> tableMap = Map.of("kcloud_platform_alibaba", "base", "kcloud_platform_alibaba_flowable",
-				"flowable", "kcloud_platform_alibaba_nacos", "nacos", "kcloud_platform_alibaba_tenant", "tenant",
-				"kcloud_platform_alibaba_user", "user", "kcloud_platform_alibaba_login_log", "login-log",
-				"kcloud_platform_alibaba_xxl_job", "xxl-job", "kcloud_platform_alibaba_seata", "seata");
+		Map<String, String> tableMap = Map.of("kcloud_platform_alibaba_nacos", "nacos");
 		tableMap.forEach((k, v) -> {
 			Flyway flyway = Flyway.configure()
 				.dataSource(String.format(URL, k), USERNAME, PASSWORD)

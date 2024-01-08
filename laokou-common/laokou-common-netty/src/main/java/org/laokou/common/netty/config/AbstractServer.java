@@ -22,9 +22,9 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
-
-import java.util.Objects;
 
 /**
  * @author laokou
@@ -73,7 +73,7 @@ public abstract class AbstractServer implements Server {
 	 * 启动(Bean单例存在资源竞争)
 	 */
 	@Override
-	public synchronized void start() {
+	public final synchronized void start() {
 		if (running) {
 			log.error("已启动监听，端口：{}", port);
 			return;
@@ -92,7 +92,7 @@ public abstract class AbstractServer implements Server {
 			});
 		}
 		catch (Exception e) {
-			log.error("启动失败，端口：{}，错误信息", port, e);
+			log.error("启动失败，端口：{}，错误信息：{}，详情见日志", port, LogUtil.result(e.getMessage()), e);
 		}
 	}
 
@@ -100,14 +100,14 @@ public abstract class AbstractServer implements Server {
 	 * 关闭(Bean单例存在资源竞争)
 	 */
 	@Override
-	public synchronized void stop() {
+	public final synchronized void stop() {
 		// 修改状态
 		running = false;
 		// 释放资源
-		if (Objects.nonNull(boss)) {
+		if (ObjectUtil.isNotNull(boss)) {
 			boss.shutdownGracefully();
 		}
-		if (Objects.nonNull(work)) {
+		if (ObjectUtil.isNotNull(work)) {
 			work.shutdownGracefully();
 		}
 		log.info("优雅关闭，释放资源");

@@ -17,8 +17,7 @@
 
 package org.laokou.common.core.utils;
 
-import java.lang.reflect.Array;
-import java.util.Objects;
+import org.springframework.util.ObjectUtils;
 
 /**
  * @author laokou
@@ -30,7 +29,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean isEmpty(Object[] array) {
-		return (Objects.nonNull(array) ? Array.getLength(array) : 0) == 0;
+		return ObjectUtils.isEmpty(array);
 	}
 
 }

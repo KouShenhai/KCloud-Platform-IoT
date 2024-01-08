@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.menu;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.MenuConvertor;
@@ -25,14 +26,14 @@ import org.laokou.admin.dto.menu.MenuUpdateCmd;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -47,10 +48,11 @@ public class MenuUpdateCmdExe {
 
 	private final MenuMapper menuMapper;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(MenuUpdateCmd cmd) {
 		MenuCO co = cmd.getMenuCO();
 		Long id = co.getId();
-		if (Objects.isNull(id)) {
+		if (ObjectUtil.isNull(id)) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		Long count = menuMapper

@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.dept;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.DeptConvertor;
@@ -27,8 +28,9 @@ import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -43,11 +45,10 @@ public class DeptInsertCmdExe {
 
 	private final DeptConvertor deptConvertor;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(DeptInsertCmd cmd) {
 		DeptCO co = cmd.getDeptCO();
-		long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class)
-			.eq(DeptDO::getTenantId, UserUtil.getTenantId())
-			.eq(DeptDO::getName, co.getName()));
+		long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, co.getName()));
 		if (count > 0) {
 			throw new SystemException("部门已存在，请重新填写");
 		}

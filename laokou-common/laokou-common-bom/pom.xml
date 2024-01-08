@@ -22,38 +22,40 @@
 
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common-bom</artifactId>
-    <version>3.2.0</version>
+    <version>3.2.1</version>
     <packaging>pom</packaging>
     <properties>
-        <laokou.version>3.2.0</laokou.version>
+        <laokou.version>3.2.1</laokou.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.2.0</spring-boot.version>
+        <spring-boot.version>3.2.1</spring-boot.version>
         <!--lombok版本-->
         <lombok.version>1.18.30</lombok.version>
         <!--mysql版本-->
         <mysql.version>8.0.33</mysql.version>
         <!--admin版本-->
-        <spring-boot-admin.version>3.1.8</spring-boot-admin.version>
+        <spring-boot-admin.version>3.2.1</spring-boot-admin.version>
         <!--flowable版本-->
         <flowable.version>7.0.0</flowable.version>
         <!--mybatis-plus版本 -->
-        <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <!--mybatis-spring版本-->
+        <mybatis-spring.version>3.0.3</mybatis-spring.version>
         <!--redisson版本-->
-        <redisson.version>3.25.0</redisson.version>
+        <redisson.version>3.25.2</redisson.version>
         <!--UserAgentUtils版本-->
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
         <!--jsoup版本-->
-        <jsoup.version>1.16.2</jsoup.version>
+        <jsoup.version>1.17.2</jsoup.version>
         <!--jasypt版本-->
         <jasypt.version>3.0.5</jasypt.version>
         <!--captcha版本-->
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <!--guava版本-->
-        <guava.version>32.1.3-jre</guava.version>
+        <guava.version>33.0.0-jre</guava.version>
         <!--freemarker模板引擎依赖-->
         <freemarker.version>2.3.32</freemarker.version>
         <!--oshi版本-->
-        <oshi.version>6.4.8</oshi.version>
+        <oshi.version>6.4.10</oshi.version>
         <!--elasticsearch版本-->
         <elasticsearch.version>8.6.2</elasticsearch.version>
         <!--rocketmq版本-->
@@ -61,37 +63,37 @@
         <!--jakarta.servlet-api版本-->
         <jakarta-servlet-api.version>6.1.0-M1</jakarta-servlet-api.version>
         <!--easyexcel版本-->
-        <easyexcel.version>3.3.2</easyexcel.version>
+        <easyexcel.version>3.3.3</easyexcel.version>
         <!--spring-security-oauth2-authorization-server版本-->
-        <spring-security-oauth2-authorization-server.version>1.2.0</spring-security-oauth2-authorization-server.version>
+        <spring-security-oauth2-authorization-server.version>1.2.1</spring-security-oauth2-authorization-server.version>
         <!--spring-boot-starter-oauth2-resource-server版本-->
-        <spring-boot-starter-oauth2-resource-server.version>3.2.0</spring-boot-starter-oauth2-resource-server.version>
+        <spring-boot-starter-oauth2-resource-server.version>3.2.1</spring-boot-starter-oauth2-resource-server.version>
         <!--aws-java-sdk-s3版本-->
         <aws-java-sdk-s3.version>1.12.267</aws-java-sdk-s3.version>
         <!--dynamic-datasource版本-->
-        <dynamic-datasource.version>4.2.0</dynamic-datasource.version>
+        <dynamic-datasource.version>4.3.0</dynamic-datasource.version>
         <!--httpclient5版本-->
-        <httpclient5.version>5.3-alpha1</httpclient5.version>
+        <httpclient5.version>5.3</httpclient5.version>
         <!--hibernate-validator版本-->
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <!--ip2region版本-->
         <ip2region.version>2.7.0</ip2region.version>
         <!--jackson-module-kotlin版本-->
-        <jackson-module-kotlin.version>2.16.0</jackson-module-kotlin.version>
+        <jackson-module-kotlin.version>2.16.1</jackson-module-kotlin.version>
         <!--xxl-job版本-->
         <xxl-job.version>2.4.0</xxl-job.version>
         <!--shardingsphere版本-->
         <shardingsphere.version>5.3.2</shardingsphere.version>
         <!--p6spy版本-->
         <p6spy.version>3.9.1</p6spy.version>
-        <!--kafka版本-->
-        <kafka.version>3.1.0</kafka.version>
+        <!--spring-kafka版本-->
+        <spring-kafka.version>3.1.1</spring-kafka.version>
         <!--netty版本-->
-        <netty.version>4.1.101.Final</netty.version>
+        <netty.version>4.1.104.Final</netty.version>
         <!--gson版本-->
         <gson.version>2.10.1</gson.version>
-        <!--swagger版本-->
-        <swagger.version>2.2.19</swagger.version>
+        <!--swagger-annotations-jakarta版本-->
+        <swagger-annotations-jakarta.version>2.2.20</swagger-annotations-jakarta.version>
         <!--disruptor版本-->
         <disruptor.version>3.4.4</disruptor.version>
         <!--dubbo版本-->
@@ -100,21 +102,33 @@
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <!--mapstruct版本-->
         <mapstruct.version>1.6.0.Beta1</mapstruct.version>
-        <!--mqtt版本-->
-        <mqtt.version>6.2.0</mqtt.version>
+        <!--spring-integration-mqtt版本-->
+        <spring-integration-mqtt.version>6.2.1</spring-integration-mqtt.version>
         <!--log4j2-ttl-thread-context-map版本-->
         <log4j2-ttl-thread-context-map.version>1.4.0</log4j2-ttl-thread-context-map.version>
         <!--transmittable-thread-local版本-->
-        <transmittable-thread-local.version>2.14.4</transmittable-thread-local.version>
+        <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
         <!--mqttv5-client版本-->
         <mqttv5-client.version>1.2.5</mqttv5-client.version>
         <!--mockito版本-->
         <mockito.version>5.8.0</mockito.version>
+        <!--flyway版本-->
+        <flyway.version>10.3.0</flyway.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-mysql</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
@@ -124,6 +138,11 @@
                 <groupId>org.eclipse.paho</groupId>
                 <artifactId>org.eclipse.paho.mqttv5.client</artifactId>
                 <version>${mqttv5-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-rate-limiter</artifactId>
+                <version>${laokou.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
@@ -158,7 +177,7 @@
             <dependency>
                 <groupId>org.springframework.integration</groupId>
                 <artifactId>spring-integration-mqtt</artifactId>
-                <version>${mqtt.version}</version>
+                <version>${spring-integration-mqtt.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
@@ -218,7 +237,7 @@
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-annotations-jakarta</artifactId>
-                <version>${swagger.version}</version>
+                <version>${swagger-annotations-jakarta.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -348,7 +367,7 @@
             <dependency>
                 <groupId>org.springframework.kafka</groupId>
                 <artifactId>spring-kafka</artifactId>
-                <version>${kafka.version}</version>
+                <version>${spring-kafka.version}</version>
             </dependency>
             <dependency>
                 <groupId>p6spy</groupId>
@@ -503,6 +522,11 @@
                 <groupId>org.jsoup</groupId>
                 <artifactId>jsoup</artifactId>
                 <version>${jsoup.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis-spring.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>

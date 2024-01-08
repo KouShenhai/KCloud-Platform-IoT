@@ -38,12 +38,11 @@ public class DeptGatewayImpl implements DeptGateway {
 	@Override
 	public List<String> getDeptPaths(User user) {
 		Long userId = user.getId();
-		Long tenantId = user.getTenantId();
 		Integer superAdmin = user.getSuperAdmin();
 		if (superAdmin == SuperAdmin.YES.ordinal()) {
-			return deptMapper.getDeptPathsByTenantId(tenantId);
+			return deptMapper.getDeptPaths();
 		}
-		return deptMapper.getDeptPathsByUserIdAndTenantId(userId, tenantId);
+		return deptMapper.getDeptPathsByUserId(userId);
 	}
 
 }

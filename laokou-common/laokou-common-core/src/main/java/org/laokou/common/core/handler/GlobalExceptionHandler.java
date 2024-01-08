@@ -20,14 +20,13 @@ import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.*;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.util.Objects;
 
 /**
  * @author laokou
@@ -41,7 +40,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler({ FeignException.class, SystemException.class, ApiException.class, FlowException.class,
 			DataSourceException.class })
 	public Result<?> handle(GlobalException ex) {
-		log.error("错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
+		// log.error("错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
 		return Result.fail(ex.getCode(), ex.getMsg());
 	}
 
@@ -49,7 +48,7 @@ public class GlobalExceptionHandler {
 	public Result<?> handle(Exception ex) {
 		if (ex instanceof MethodArgumentNotValidException mane) {
 			FieldError fieldError = mane.getFieldError();
-			if (Objects.nonNull(fieldError)) {
+			if (ObjectUtil.isNotNull(fieldError)) {
 				return Result.fail(fieldError.getDefaultMessage());
 			}
 		}

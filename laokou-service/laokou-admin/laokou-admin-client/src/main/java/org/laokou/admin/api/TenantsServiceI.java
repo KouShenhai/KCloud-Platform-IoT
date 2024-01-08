@@ -48,4 +48,6 @@ public interface TenantsServiceI {
 
 	Result<Long> getIdByDomainName(TenantGetIDQry qry);
 
+	void downloadDatasource(TenantDownloadDatasourceCmd cmd);
+
 }

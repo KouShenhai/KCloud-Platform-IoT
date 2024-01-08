@@ -17,6 +17,7 @@
 package org.laokou.common.core.holder;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Optional;
 
@@ -26,6 +27,7 @@ import java.util.Optional;
 public class UserContextHolder {
 
 	@Data
+	@NoArgsConstructor
 	public static class User {
 
 		private Long id;
@@ -36,13 +38,24 @@ public class UserContextHolder {
 
 		private Long deptId;
 
+		private String sourceName;
+
+		public User(Long tenantId, String sourceName) {
+			this.tenantId = tenantId;
+			this.sourceName = sourceName;
+		}
+
 	}
 
 	private static final ThreadLocal<User> USER_CONTEXT_HOLDER = new InheritableThreadLocal<>();
 
 	public static void set(User user) {
-		USER_CONTEXT_HOLDER.remove();
+		clear();
 		USER_CONTEXT_HOLDER.set(user);
+	}
+
+	public static void clear() {
+		USER_CONTEXT_HOLDER.remove();
 	}
 
 	public static User get() {

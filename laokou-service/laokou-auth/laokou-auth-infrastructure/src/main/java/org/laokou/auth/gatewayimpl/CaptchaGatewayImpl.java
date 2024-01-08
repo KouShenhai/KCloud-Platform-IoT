@@ -19,6 +19,7 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.CaptchaGateway;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -26,9 +27,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
 
 /**
  * @author laokou
@@ -58,25 +59,25 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	@Override
 	public String key(String uuid) {
 		String key = RedisKeyUtil.getUserCaptchaKey(uuid);
-		before(key);
+		// before(key);
 		key = DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
-		after(key);
+		// after(key);
 		return key;
 	}
 
 	private String get(String uuid) {
 		String key = key(uuid);
 		Object captcha = redisUtil.get(key);
-		if (Objects.nonNull(captcha)) {
+		if (ObjectUtil.isNotNull(captcha)) {
 			redisUtil.delete(key);
 		}
-		return Objects.nonNull(captcha) ? captcha.toString() : EMPTY;
+		return ObjectUtil.isNotNull(captcha) ? captcha.toString() : EMPTY;
 	}
 
 	private void setValue(String uuid, String code) {
 		String key = key(uuid);
 		// 保存五分钟
-		redisUtil.set(key, code, 60 * 5);
+		redisUtil.set(key, code, MINUTE_FIVE_EXPIRE);
 	}
 
 	private void before(String key) {

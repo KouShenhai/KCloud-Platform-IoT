@@ -32,11 +32,13 @@ import org.laokou.admin.gatewayimpl.database.RoleMenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleMenuDO;
+import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
@@ -91,7 +93,7 @@ public class RoleGatewayImpl implements RoleGateway {
 				return roleMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -118,7 +120,7 @@ public class RoleGatewayImpl implements RoleGateway {
 				return true;
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -155,14 +157,16 @@ public class RoleGatewayImpl implements RoleGateway {
 	private void insertRoleMenu(Long roleId, List<Long> menuIds, User user) {
 		if (CollectionUtil.isNotEmpty(menuIds)) {
 			List<RoleMenuDO> list = menuIds.parallelStream().map(menuId -> toRoleMenuDO(roleId, menuId, user)).toList();
-			mybatisUtil.batch(list, RoleMenuMapper.class, RoleMenuMapper::save);
+			mybatisUtil.batch(list, RoleMenuMapper.class, UserContextHolder.get().getSourceName(),
+					RoleMenuMapper::save);
 		}
 	}
 
 	private void insertRoleDept(Long roleId, List<Long> deptIds, User user) {
 		if (CollectionUtil.isNotEmpty(deptIds)) {
 			List<RoleDeptDO> list = deptIds.parallelStream().map(deptId -> toRoleDeptDO(roleId, deptId, user)).toList();
-			mybatisUtil.batch(list, RoleDeptMapper.class, RoleDeptMapper::save);
+			mybatisUtil.batch(list, RoleDeptMapper.class, UserContextHolder.get().getSourceName(),
+					RoleDeptMapper::save);
 		}
 	}
 

@@ -19,6 +19,7 @@ package org.laokou.common.core.utils;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import jakarta.servlet.http.HttpServletRequest;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -27,6 +28,7 @@ import org.yaml.snakeyaml.util.UriEncoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.Constant.*;
 
@@ -40,7 +42,7 @@ public class MapUtil {
 	}
 
 	public static boolean isEmpty(Map<?, ?> map) {
-		return Objects.isNull(map) || map.isEmpty();
+		return ObjectUtil.isNull(map) || map.isEmpty();
 	}
 
 	public static String toStr(Map<String, String> map, String on, String separator) {
@@ -48,6 +50,24 @@ public class MapUtil {
 			return EMPTY;
 		}
 		return Joiner.on(on).withKeyValueSeparator(separator).join(map);
+	}
+
+	public static Map<String, Set<String>> toUriMap(Map<String, Set<String>> uriMap, String serviceId,
+			String separator) {
+		if (uriMap.isEmpty()) {
+			return new HashMap<>(0);
+		}
+		Map<String, Set<String>> maps = new HashMap<>(uriMap.size());
+		uriMap.forEach((k, v) -> maps.put(k,
+				v.stream()
+					.filter(item -> item.contains(serviceId))
+					.map(item -> item.substring(0, item.indexOf(separator)))
+					.collect(Collectors.toSet())));
+		return maps;
+	}
+
+	public static Map<String, Set<String>> toUriMap(Map<String, Set<String>> uriMap, String serviceId) {
+		return toUriMap(uriMap, serviceId, EQUAL);
 	}
 
 	public static Map<String, String> toMap(String str, String on, String separator) {

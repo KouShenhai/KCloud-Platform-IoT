@@ -36,6 +36,4 @@ public class ClusterInstanceCO extends ClientObject {
 
 	private Integer port;
 
-	private String serviceId;
-
 }

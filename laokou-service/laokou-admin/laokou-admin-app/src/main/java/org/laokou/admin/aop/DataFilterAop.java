@@ -27,6 +27,8 @@ import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -63,7 +65,7 @@ public class DataFilterAop {
 				pageQuery.setSqlFilter(getSqlFilter(user, point));
 			}
 			catch (Exception ex) {
-				log.error("错误信息", ex);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(ex.getMessage()), ex);
 			}
 		}
 	}
@@ -75,7 +77,7 @@ public class DataFilterAop {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		Method method = signature.getMethod();
 		DataFilter dataFilter = AnnotationUtils.findAnnotation(method, DataFilter.class);
-		Assert.isTrue(Objects.nonNull(dataFilter), "@DataFilter is null");
+		Assert.isTrue(ObjectUtil.isNotNull(dataFilter), "@DataFilter is null");
 		String alias = dataFilter.alias();
 		String deptPathColumn = dataFilter.deptPath();
 		String userIdColumn = dataFilter.userId();

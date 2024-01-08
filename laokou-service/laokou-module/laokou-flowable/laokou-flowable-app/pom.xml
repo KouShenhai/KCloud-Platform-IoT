@@ -5,7 +5,7 @@
     <parent>
         <artifactId>laokou-flowable</artifactId>
         <groupId>org.laokou</groupId>
-        <version>3.2.0</version>
+        <version>3.2.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-flowable-app</artifactId>
@@ -14,6 +14,10 @@
         <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-flowable-infrastructure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-security</artifactId>
         </dependency>
     </dependencies>
 

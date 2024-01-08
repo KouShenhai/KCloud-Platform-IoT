@@ -17,12 +17,15 @@
 
 package org.laokou.admin.command.dict;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.dict.DictDeleteCmd;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -34,6 +37,7 @@ public class DictDeleteCmdExe {
 
 	private final DictGateway dictGateway;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(DictDeleteCmd cmd) {
 		return Result.of(dictGateway.deleteById(cmd.getId()));
 	}

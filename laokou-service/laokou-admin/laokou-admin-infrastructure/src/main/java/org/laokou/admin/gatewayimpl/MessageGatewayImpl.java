@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -41,6 +40,7 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
@@ -52,7 +52,6 @@ import java.util.Set;
 
 import static org.laokou.common.i18n.common.Constant.TRACE_ID;
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_MESSAGE;
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 import static org.laokou.common.rocketmq.constant.MqConstant.*;
 
 /**
@@ -77,7 +76,6 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_MESSAGE)
-	@DS(TENANT)
 	public Datas<Message> list(Message message, PageQuery pageQuery) {
 		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<MessageDO> newPage = messageMapper.getMessageListFilter(page, message.getTitle(), pageQuery);
@@ -88,7 +86,6 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	@Override
-	@DS(TENANT)
 	public Boolean insert(Message message, User user) {
 		insertMessage(messageConvertor.toDataObject(message), message, user);
 		// 插入成功发送消息
@@ -97,7 +94,6 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	@Override
-	@DS(TENANT)
 	public Message getById(Long id) {
 		return messageConvertor.convertEntity(messageMapper.selectById(id));
 	}
@@ -120,7 +116,7 @@ public class MessageGatewayImpl implements MessageGateway {
 				insertMessageDetail(messageDO.getId(), message.getReceiver(), user);
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				rollback.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

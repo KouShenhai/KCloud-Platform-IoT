@@ -19,6 +19,7 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.TenantsServiceI;
 import org.laokou.admin.domain.annotation.OperateLog;
@@ -30,6 +31,7 @@ import org.laokou.common.data.cache.enums.Type;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
+import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +39,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static org.laokou.common.data.cache.config.CacheConstant.TENANTS;
+import static org.laokou.common.ratelimiter.enums.Type.IP;
+import static org.redisson.api.RateIntervalUnit.MINUTES;
 
 /**
  * @author laokou
@@ -107,6 +111,15 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "解析域名查看ID")
 	public Result<Long> getIdByDomainName(HttpServletRequest request) {
 		return tenantsServiceI.getIdByDomainName(new TenantGetIDQry(request));
+	}
+
+	@GetMapping("{id}/download-datasource")
+	@PreAuthorize("hasAuthority('tenants:download-datasource')")
+	@Operation(summary = "租户管理", description = "下载数据库")
+	@OperateLog(module = "租户管理", operation = "下载数据库")
+	@RateLimiter(id = "DOWNLOAD_TENANT_DATASOURCE", rate = 5, interval = 10, unit = MINUTES, type = IP)
+	public void downloadDatasource(@PathVariable("id") Long id, HttpServletResponse response) {
+		tenantsServiceI.downloadDatasource(new TenantDownloadDatasourceCmd(id, response));
 	}
 
 }

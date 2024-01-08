@@ -20,6 +20,8 @@ import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import com.baomidou.mybatisplus.extension.parser.JsqlParserGlobal;
+import com.baomidou.mybatisplus.extension.parser.cache.JdkSerialCaffeineJsqlParseCache;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.*;
 import lombok.SneakyThrows;
@@ -40,6 +42,7 @@ import org.springframework.util.StringUtils;
 import javax.sql.DataSource;
 import java.net.InetAddress;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import static com.baomidou.mybatisplus.core.toolkit.Constants.MYBATIS_PLUS;
 import static org.laokou.common.i18n.common.Constant.*;
@@ -55,6 +58,13 @@ import static org.laokou.common.mybatisplus.config.MybatisPlusExtProperties.SLOW
 @MapperScan("org.laokou.common.mybatisplus.database")
 public class MybatisPlusAutoConfig {
 
+	// 静态注入缓存处理类
+	static {
+		// 默认支持序列化 FstSerialCaffeineJsqlParseCache、JdkSerialCaffeineJsqlParseCache
+		JsqlParserGlobal.setJsqlParseCache(new JdkSerialCaffeineJsqlParseCache(
+				cache -> cache.maximumSize(1024).expireAfterWrite(5, TimeUnit.SECONDS)));
+	}
+
 	@Bean
 	@ConditionalOnProperty(havingValue = TRUE, prefix = MYBATIS_PLUS + DOT + SLOW_SQL, name = ENABLED)
 	public ConfigurationCustomizer slowSqlConfigurationCustomizer(ConfigurableEnvironment environment,
@@ -64,6 +74,10 @@ public class MybatisPlusAutoConfig {
 		return configuration -> configuration.addInterceptor(slowSqlInterceptor);
 	}
 
+	/**
+	 * 注意: 使用多个功能需要注意顺序关系,建议使用如下顺序 - 多租户,动态表名 - 分页,乐观锁 - sql 性能规范,防止全表更新与删除 总结: 对 sql
+	 * 进行单次改造的优先放入,不对 sql 进行改造的最后放入
+	 */
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
 	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties) {
@@ -75,16 +89,16 @@ public class MybatisPlusAutoConfig {
 			interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(
 					new GlobalTenantLineHandler(mybatisPlusExtProperties.getTenant().getIgnoreTables())));
 		}
+		// 动态表名插件
+		DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
+		dynamicTableNameInnerInterceptor.setTableNameHandler(new DynamicTableNameHandler());
+		interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
 		// 分页插件
 		interceptor.addInnerInterceptor(paginationInnerInterceptor());
 		// 乐观锁插件
 		interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
 		// 防止全表更新与删除插件
 		interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
-		// 动态表名插件
-		DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
-		dynamicTableNameInnerInterceptor.setTableNameHandler(new DynamicTableNameHandler());
-		interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
 		return interceptor;
 	}
 
@@ -148,7 +162,7 @@ public class MybatisPlusAutoConfig {
 	}
 
 	private String getApplicationId(ConfigurableEnvironment environment) {
-		String name = environment.getProperty("spring.application.name");
+		String name = environment.getProperty(SPRING_APPLICATION_NAME);
 		return StringUtils.hasText(name) ? name : "application";
 	}
 

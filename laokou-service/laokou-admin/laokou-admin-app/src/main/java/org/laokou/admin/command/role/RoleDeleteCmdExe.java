@@ -17,12 +17,15 @@
 
 package org.laokou.admin.command.role;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.role.RoleDeleteCmd;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -34,6 +37,7 @@ public class RoleDeleteCmdExe {
 
 	private final RoleGateway roleGateway;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(RoleDeleteCmd cmd) {
 		return Result.of(roleGateway.deleteById(cmd.getId()));
 	}

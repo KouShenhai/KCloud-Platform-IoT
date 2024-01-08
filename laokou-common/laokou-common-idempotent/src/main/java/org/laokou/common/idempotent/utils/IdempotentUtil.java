@@ -18,15 +18,16 @@ package org.laokou.common.idempotent.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.DEFAULT;
+import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
 
 /**
  * 类名称：IdempotentUtils
@@ -52,7 +53,7 @@ public class IdempotentUtil {
 	public String getIdempotentKey() {
 		String idempotentKey = String.valueOf(IdGenerator.defaultSnowflakeId());
 		String apiIdempotentKey = RedisKeyUtil.getApiIdempotentKey(idempotentKey);
-		redisUtil.set(apiIdempotentKey, DEFAULT, RedisUtil.HOUR_ONE_EXPIRE);
+		redisUtil.set(apiIdempotentKey, DEFAULT, MINUTE_FIVE_EXPIRE);
 		return idempotentKey;
 	}
 
@@ -61,11 +62,11 @@ public class IdempotentUtil {
 	}
 
 	/**
-	 * 是否是幂等接口
+	 * 判断幂等接口
 	 */
 	public static boolean isIdempotent() {
 		Boolean status = IS_IDEMPOTENT.get();
-		return Objects.nonNull(status) && status;
+		return ObjectUtil.isNotNull(status) && status;
 	}
 
 	/**

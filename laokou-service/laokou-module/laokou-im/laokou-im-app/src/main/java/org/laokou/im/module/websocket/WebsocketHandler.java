@@ -35,6 +35,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -43,7 +45,6 @@ import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static org.laokou.common.i18n.common.Constant.*;
@@ -56,10 +57,6 @@ import static org.laokou.common.i18n.common.Constant.*;
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
 public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
-
-	private static final String WS_HEADER_NAME = "Upgrade";
-
-	private static final String WS_HEADER_VALUE = "websocket";
 
 	private final ReactiveRedisUtil reactiveRedisUtil;
 
@@ -87,14 +84,13 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 	@Override
 	public void handlerAdded(ChannelHandlerContext ctx) {
-		log.info("建立连接：{}", ctx.channel().id().asLongText());
+		// log.info("建立连接：{}", ctx.channel().id().asLongText());
 	}
 
 	@Override
 	public void handlerRemoved(ChannelHandlerContext ctx) {
 		// 移除channel
-		String channelId = ctx.channel().id().asLongText();
-		log.info("断开连接：{}", channelId);
+		// log.info("断开连接：{}", ctx.channel().id().asLongText());
 	}
 
 	private String getAuthorization(Map<String, String> paramMap) {
@@ -123,7 +119,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 			}
 			String userInfoKey = RedisKeyUtil.getUserInfoKey(Authorization);
 			reactiveRedisUtil.get(userInfoKey).subscribe(obj -> {
-				if (Objects.isNull(obj)) {
+				if (ObjectUtil.isNull(obj)) {
 					handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
 					return;
 				}
@@ -134,7 +130,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 			});
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}", e.getMessage());
+			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 		}
 	}
 

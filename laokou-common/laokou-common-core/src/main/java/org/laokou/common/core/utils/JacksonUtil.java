@@ -25,7 +25,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.io.InputStream;
 import java.util.Collection;
@@ -139,6 +138,17 @@ public class JacksonUtil {
 	 */
 	public <T> T toValue(Object obj, Class<T> clazz) {
 		return MAPPER.convertValue(obj, clazz);
+	}
+
+	/**
+	 * Map转对象
+	 * @param obj
+	 * @param keyClass
+	 * @param valueClass
+	 * @return T
+	 */
+	public <T, K, V> T toMap(Object obj, Class<K> keyClass, Class<V> valueClass) {
+		return MAPPER.convertValue(obj, mapType(keyClass, valueClass));
 	}
 
 	@SneakyThrows

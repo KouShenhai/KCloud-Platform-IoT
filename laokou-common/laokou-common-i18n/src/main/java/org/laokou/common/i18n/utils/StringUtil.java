@@ -19,8 +19,10 @@ package org.laokou.common.i18n.utils;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
-import java.util.Objects;
+import java.util.Collection;
+import java.util.Set;
 
+import static org.laokou.common.i18n.common.Constant.EMPTY;
 import static org.laokou.common.i18n.common.Constant.PERCENT;
 
 /**
@@ -30,6 +32,21 @@ public class StringUtil {
 
 	public static boolean isNotEmpty(String str) {
 		return hasText(str);
+	}
+
+	public static String collectionToDelimitedString(Collection<?> coll, String delim) {
+		return StringUtils.collectionToDelimitedString(coll, delim);
+	}
+
+	public static String empty(String str) {
+		if (isEmpty(str)) {
+			return EMPTY;
+		}
+		return str;
+	}
+
+	public static Set<String> commaDelimitedListToSet(String str) {
+		return StringUtils.commaDelimitedListToSet(str);
 	}
 
 	public static String like(String str) {
@@ -61,12 +78,12 @@ public class StringUtil {
 	}
 
 	public static boolean allNotNull(Object... values) {
-		if (Objects.isNull(values)) {
+		if (ObjectUtil.isNull(values)) {
 			return false;
 		}
 		else {
 			for (Object val : values) {
-				if (Objects.isNull(val)) {
+				if (ObjectUtil.isNull(val)) {
 					return false;
 				}
 			}

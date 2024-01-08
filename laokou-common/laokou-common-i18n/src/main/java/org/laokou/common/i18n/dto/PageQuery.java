@@ -22,6 +22,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
@@ -77,10 +78,10 @@ public class PageQuery extends Query {
 	}
 
 	public PageQuery time() {
-		if (Objects.isNull(this.startTime)) {
+		if (ObjectUtil.isNull(this.startTime)) {
 			throw new SystemException("开始时间不为空");
 		}
-		if (Objects.isNull(this.endTime)) {
+		if (ObjectUtil.isNull(this.endTime)) {
 			throw new SystemException("结束时间不为空");
 		}
 		int twoYearOfDays = 730;

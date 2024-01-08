@@ -33,9 +33,8 @@ import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
-import static org.laokou.admin.gatewayimpl.ResourceGatewayImpl.RESOURCE_INDEX;
+import static org.laokou.common.i18n.common.Constant.RESOURCE_INDEX;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,7 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Slf4j
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class ResourceApiTest extends CommonTest {
+class ResourceApiTest extends CommonTest {
 
 	private static final String API_PREFIX = "/v1/resource/";
 
@@ -57,7 +56,7 @@ public class ResourceApiTest extends CommonTest {
 
 	@Test
 	@SneakyThrows
-	public void resourceSyncApiTest() {
+	void resourceSyncApiTest() {
 		String apiUrl = API_PREFIX + "sync";
 		MvcResult mvcResult = super.mockMvc.perform(post(apiUrl).contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
@@ -75,7 +74,6 @@ public class ResourceApiTest extends CommonTest {
 		ResourceSearchGetQry qry = new ResourceSearchGetQry();
 		Search search = new Search();
 		search.setIndexNames(new String[] { RESOURCE_INDEX });
-		search.setHighlightFieldList(List.of("title", "remark"));
 		qry.setSearch(search);
 		MvcResult mvcResult = super.mockMvc
 			.perform(post(apiUrl).contentType(MediaType.APPLICATION_JSON)

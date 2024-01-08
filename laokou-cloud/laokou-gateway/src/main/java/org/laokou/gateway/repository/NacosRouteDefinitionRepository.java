@@ -24,6 +24,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -78,7 +79,6 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	public void init() throws NacosException {
 		// Spring Cloud Gateway 动态路由的 order 是路由匹配的顺序，值越小，优先级越高。当多个路由匹配同一个请求时
 		// Spring Cloud Gateway 会按照 order 的值从小到大进行匹配，找到第一个匹配成功的路由进行处理。
-		log.info("初始化路由配置");
 		String group = configUtil.getGroup();
 		ConfigService configService = configUtil.getConfigService();
 		configService.addListener(ROUTER_DATA_ID, group, new Listener() {
@@ -89,10 +89,10 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 			@Override
 			public void receiveConfigInfo(String configInfo) {
-				log.info("收到配置变动通知");
+				log.info("接收到配置变动通知");
 				// 清除缓存
 				reactiveHashOperations.delete(RedisKeyUtil.getRouteDefinitionHashKey())
-					.subscribe(success -> log.info("删除成功"), error -> log.error("删除失败，错误信息", error));
+					.subscribe(success -> log.info("删除成功"), error -> log.error("删除失败，错误信息：{}，详情见日志", LogUtil.result(error.getMessage()), error));
 				// 刷新事件
 				applicationEventPublisher.publishEvent(new RefreshRoutesEvent(this));
 			}
@@ -132,7 +132,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 						else {
 							log.error("新增失败，路由已存在");
 						}
-					}, error -> log.error("新增失败，错误信息", error))
+					}, error -> log.error("新增失败，错误信息：{}，详情见日志", LogUtil.result(error.getMessage()), error))
 			);
 	}
 
@@ -145,7 +145,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			return JacksonUtil.toList(configInfo, RouteDefinition.class);
 		}
 		catch (Exception e) {
-			log.error("错误信息", e);
+			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			throw new SystemException(ROUTER_ERROR);
 		}
 	}

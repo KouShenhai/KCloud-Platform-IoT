@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.proxy.ProtocolProxy;
 import org.laokou.common.nacos.clientobject.ConfigCO;
@@ -98,7 +99,7 @@ public class ApiUtil {
 		for (Field field : fields) {
 			field.setAccessible(true);
 			Object o = field.get(co);
-			params.put(field.getName(), Objects.isNull(o) ? EMPTY : o.toString());
+			params.put(field.getName(), ObjectUtil.isNull(o) ? EMPTY : o.toString());
 		}
 		return params;
 	}

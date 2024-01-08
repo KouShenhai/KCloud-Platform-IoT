@@ -17,14 +17,16 @@
 
 package org.laokou.common.mybatisplus.template;
 
+import com.google.common.base.CaseFormat;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.UNDER;
+import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * @author laokou
@@ -40,7 +42,7 @@ import static org.laokou.common.i18n.common.Constant.UNDER;
 @Slf4j
 public class TableTemplate {
 
-	public static final String MIN_TIME = "2022-01-01 00:00:00";
+	private static final String INSERT_SQL_TEMPLATE = "INSERT INTO `%s`(%s) VALUES(%s);\n";
 
 	public static List<String> getDynamicTables(String start, String end, String tableName) {
 		LocalDate date1 = toDate(start);
@@ -54,26 +56,47 @@ public class TableTemplate {
 		return list;
 	}
 
-	public static String getDynamicTable(Long snowflakeId, String tableName) {
-		return tableName + UNDER + DateUtil.format(IdGenerator.getLocalDateTime(snowflakeId), DateUtil.YYYYMM);
+	@SneakyThrows
+	public static String getCreateLoginLogTableSqlScript(LocalDateTime localDateTime) {
+		return getContent(localDateTime, "scripts/boot_sys_login_log.sql");
 	}
 
 	@SneakyThrows
-	public static String getLoginLogSqlScript(LocalDateTime localDateTime) {
-		return getContent(localDateTime, "scripts/boot_sys_login_log.ftl");
+	public static String getCreateTenantDBSqlScript() {
+		return TemplateUtil.getContent("scripts/kcloud_platform_alibaba_tenant.sql", new HashMap<>(0));
 	}
 
-	@SneakyThrows
-	public static String getUserSqlScript(LocalDateTime localDateTime) {
-		return getContent(localDateTime, "scripts/boot_sys_user.ftl");
+	public static List<String> getInsertSqlScriptList(List<Map<String, String>> list, String tableName) {
+		List<String> sqlList = new ArrayList<>(list.size());
+		list.forEach(item -> {
+			List<String> keys = item.keySet()
+				.stream()
+				// 转为下划线
+				.map(i -> CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, i))
+				.toList();
+			List<String> values = item.values()
+				.stream()
+				.map(i -> SINGLE_QUOT + StringUtil.empty(i) + SINGLE_QUOT)
+				.toList();
+			String sql = String.format(INSERT_SQL_TEMPLATE, tableName,
+					StringUtil.collectionToDelimitedString(keys, COMMA),
+					StringUtil.collectionToDelimitedString(values, COMMA));
+			sqlList.add(sql);
+		});
+		return sqlList;
 	}
 
 	@SneakyThrows
 	private static String getContent(LocalDateTime localDateTime, String location) {
+		Map<String, Object> params = new HashMap<>(1);
+		params.put("suffix", DateUtil.format(localDateTime, DateUtil.YYYYMM));
+		return getContent(location, params);
+	}
+
+	@SneakyThrows
+	private static String getContent(String location, Map<String, Object> params) {
 		try (InputStream inputStream = ResourceUtil.getResource(location).getInputStream()) {
-			String template = new String(inputStream.readAllBytes());
-			Map<String, Object> params = new HashMap<>(1);
-			params.put("suffix", DateUtil.format(localDateTime, DateUtil.YYYYMM));
+			String template = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 			return TemplateUtil.getContent(template, params);
 		}
 	}

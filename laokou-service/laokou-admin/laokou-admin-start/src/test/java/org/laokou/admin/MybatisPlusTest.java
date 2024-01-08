@@ -42,7 +42,7 @@ import static org.laokou.common.i18n.common.Constant.EMPTY;
 @Slf4j
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class MybatisPlusTest extends CommonTest {
+class MybatisPlusTest extends CommonTest {
 
 	private static final String DS_NAME = "test";
 
@@ -58,7 +58,7 @@ public class MybatisPlusTest extends CommonTest {
 	}
 
 	@Test
-	public void mybatisPlusBatchSaveTest() {
+	void mybatisPlusBatchSaveTest() {
 		// 新增数据源
 		addDs();
 		// 测试一百万数据
@@ -83,7 +83,7 @@ public class MybatisPlusTest extends CommonTest {
 		HikariCpConfig hikariCpConfig = new HikariCpConfig();
 		hikariCpConfig.setConnectionTimeout(180000L);
 		properties.setHikari(hikariCpConfig);
-		dsUtil.addDs(DS_NAME, properties, false);
+		dsUtil.addDs(DS_NAME, properties);
 	}
 
 }

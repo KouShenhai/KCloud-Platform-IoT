@@ -18,6 +18,9 @@
 package org.laokou.admin.command.resource;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.ResourceGateway;
+import org.laokou.admin.dto.resource.ResourceDeleteCmd;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +29,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ResourceDeleteCmdExe {
+
+	private final ResourceGateway resourceGateway;
+
+	public Result<Boolean> execute(ResourceDeleteCmd cmd) {
+		return Result.of(resourceGateway.deleteById(cmd.getId()));
+	}
 
 }

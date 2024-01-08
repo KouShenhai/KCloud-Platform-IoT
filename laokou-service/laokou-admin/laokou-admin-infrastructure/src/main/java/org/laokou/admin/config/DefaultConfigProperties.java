@@ -38,14 +38,14 @@ public class DefaultConfigProperties {
 
 	private String definitionKey;
 
-	private Set<String> tenantTables = new HashSet<>();
+	private Set<String> tenantTables = new HashSet<>(0);
 
-	private Set<String> removeParams = new HashSet<>();
+	private Set<String> removeParams = new HashSet<>(0);
 
-	private Set<String> gracefulShutdownServices = new HashSet<>();
+	private Set<String> gracefulShutdownServices = new HashSet<>(0);
 
 	private String tenantPrefix;
 
-	private Set<String> domainNames;
+	private Set<String> domainNames = new HashSet<>(0);
 
 }

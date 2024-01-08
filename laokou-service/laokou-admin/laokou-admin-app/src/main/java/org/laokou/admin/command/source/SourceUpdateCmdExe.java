@@ -25,13 +25,12 @@ import org.laokou.admin.domain.source.Source;
 import org.laokou.admin.dto.source.SourceUpdateCmd;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
 
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
 
@@ -57,14 +56,15 @@ public class SourceUpdateCmdExe {
 	private void validate(Source source) {
 		Long id = source.getId();
 		String name = source.getName();
-		if (Objects.isNull(id)) {
+		if (ObjectUtil.isNull(id)) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		boolean sourceRegex = RegexUtil.sourceRegex(name);
 		if (!sourceRegex) {
 			throw new SystemException("数据源名称必须包含字母、下划线和数字");
 		}
-		Long count = sourceMapper.selectCount(Wrappers.query(SourceDO.class).eq("name", name).ne("id", source.getId()));
+		Long count = sourceMapper.selectCount(
+				Wrappers.lambdaQuery(SourceDO.class).eq(SourceDO::getName, name).ne(SourceDO::getId, source.getId()));
 		if (count > 0) {
 			throw new SystemException("数据源名称已存在，请重新填写");
 		}

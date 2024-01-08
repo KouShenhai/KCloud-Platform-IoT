@@ -17,11 +17,14 @@
 
 package org.laokou.admin.command.resource;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.laokou.admin.dto.resource.ResourceSyncCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -32,6 +35,7 @@ public class ResourceSyncCmdExe {
 
 	private final ResourceGateway resourceGateway;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(ResourceSyncCmd cmd) {
 		return Result.of(resourceGateway.sync());
 	}

@@ -59,7 +59,6 @@ public class ClusterInstanceListQryExe {
 		co.setHost(instance.getHost());
 		co.setPort(instance.getPort());
 		co.setRouter(router);
-		co.setServiceId(instance.getServiceId());
 		return co;
 	}
 

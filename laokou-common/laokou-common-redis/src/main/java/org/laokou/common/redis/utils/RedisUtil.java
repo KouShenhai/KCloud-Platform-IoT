@@ -18,6 +18,7 @@ package org.laokou.common.redis.utils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.redisson.api.*;
 import org.springframework.data.redis.connection.RedisServerCommands;
@@ -34,7 +35,7 @@ import java.util.stream.Collectors;
 import static org.laokou.common.i18n.common.Constant.DEFAULT;
 
 /**
- * Redis工具类
+ * Redis工具类.
  *
  * @author laokou
  */
@@ -46,16 +47,29 @@ public class RedisUtil {
 
 	private final RedissonClient redissonClient;
 
-	/** 默认过期时长为24小时，单位：秒 */
+	/**
+	 * 24小时过期，单位：秒.
+	 */
 	public final static long DEFAULT_EXPIRE = 60 * 60 * 24;
 
-	/** 过期时长为1小时，单位：秒 */
+	/**
+	 * 1小时过期，单位：秒.
+	 */
 	public final static long HOUR_ONE_EXPIRE = 60 * 60;
 
-	/** 过期时长为6小时，单位：秒 */
+	/**
+	 * 6小时过期，单位：秒.
+	 */
 	public final static long HOUR_SIX_EXPIRE = 60 * 60 * 6;
 
-	/** 不设置过期时长 */
+	/**
+	 * 5分钟过期，单位：秒.
+	 */
+	public final static long MINUTE_FIVE_EXPIRE = 5 * 60;
+
+	/**
+	 * 永不过期.
+	 */
 	public final static long NOT_EXPIRE = -1L;
 
 	public RLock getLock(String key) {
@@ -80,6 +94,13 @@ public class RedisUtil {
 
 	public boolean tryLock(RLock lock, long expire, long timeout) throws InterruptedException {
 		return lock.tryLock(timeout, expire, TimeUnit.MILLISECONDS);
+	}
+
+	public boolean rateLimiter(String key, RateType mode, long replenishRate, long rateInterval,
+			RateIntervalUnit rateIntervalUnit) {
+		RRateLimiter rateLimiter = redissonClient.getRateLimiter(key);
+		rateLimiter.trySetRate(mode, replenishRate, rateInterval, rateIntervalUnit);
+		return rateLimiter.tryAcquire();
 	}
 
 	public boolean tryLock(String key, long expire, long timeout) throws InterruptedException {
@@ -123,7 +144,12 @@ public class RedisUtil {
 	}
 
 	public void set(String key, Object value, long expire) {
-		redissonClient.getBucket(key).set(value, Duration.ofSeconds(expire));
+		if (expire == NOT_EXPIRE) {
+			redissonClient.getBucket(key).set(value);
+		}
+		else {
+			redissonClient.getBucket(key).set(value, Duration.ofSeconds(expire));
+		}
 	}
 
 	public void lSet(String key, List<Object> objList, long expire) {
@@ -170,8 +196,20 @@ public class RedisUtil {
 		return redissonClient.getBucket(key).get();
 	}
 
+	public void hDel(String key) {
+		redissonClient.getMap(key).delete();
+	}
+
 	public boolean delete(String... key) {
 		return redissonClient.getKeys().delete(key) > 0;
+	}
+
+	public void hDel(String key, String field) {
+		redissonClient.getMap(key).remove(field);
+	}
+
+	public void hDel(String key, String... field) {
+		redissonClient.getMap(key).fastRemove(field);
 	}
 
 	public boolean hasKey(String key) {
@@ -214,8 +252,14 @@ public class RedisUtil {
 
 	public void hSet(String key, String field, Object value, long expire) {
 		RMap<String, Object> map = redissonClient.getMap(key);
-		map.expireIfNotSet(Duration.ofSeconds(expire));
+		map.expire(Duration.ofSeconds(expire));
 		map.put(field, value);
+	}
+
+	public void hSet(String key, Map<String, Object> map, long expire) {
+		RMap<String, Object> rMap = redissonClient.getMap(key);
+		rMap.expire(Duration.ofSeconds(expire));
+		rMap.putAll(map);
 	}
 
 	public void hSet(String key, String field, Object value) {
@@ -228,13 +272,13 @@ public class RedisUtil {
 
 	public long getKeysSize() {
 		final Object obj = redisTemplate.execute(RedisServerCommands::dbSize);
-		return Objects.isNull(obj) ? DEFAULT : Long.parseLong(obj.toString());
+		return ObjectUtil.isNull(obj) ? DEFAULT : Long.parseLong(obj.toString());
 	}
 
 	public List<Map<String, String>> getCommandStatus() {
 		Properties commandStats = (Properties) redisTemplate
 			.execute((RedisCallback<Object>) connection -> connection.serverCommands().info("commandstats"));
-		Assert.isTrue(Objects.nonNull(commandStats), "command states is null");
+		Assert.isTrue(ObjectUtil.isNotNull(commandStats), "command states is null");
 		Set<String> set = commandStats.stringPropertyNames();
 		List<Map<String, String>> pieList = new ArrayList<>(set.size());
 		set.forEach(key -> {
@@ -250,7 +294,7 @@ public class RedisUtil {
 	public Map<String, String> getInfo() {
 		final Properties properties = redisTemplate.execute(RedisServerCommands::info,
 				redisTemplate.isExposeConnection());
-		Assert.isTrue(Objects.nonNull(properties), "properties is null");
+		Assert.isTrue(ObjectUtil.isNotNull(properties), "properties is null");
 		final Set<String> set = properties.stringPropertyNames();
 		Map<String, String> dataMap = new HashMap<>(set.size());
 		set.forEach(key -> dataMap.put(key, properties.getProperty(key)));

@@ -252,11 +252,6 @@ public interface Constant {
 	String TENANT_ID = "tenant-id";
 
 	/**
-	 * 服务ID
-	 */
-	String SERVICE_ID = "service-id";
-
-	/**
 	 * 服务IP
 	 */
 	String SERVICE_HOST = "service-host";
@@ -289,17 +284,12 @@ public interface Constant {
 	/**
 	 * 版本
 	 */
-	String VERSION = "3.2.0";
+	String VERSION = "3.2.1";
 
 	/**
-	 * IP
+	 * IP参数
 	 */
 	String IP = "ip";
-
-	/**
-	 * HTTP协议
-	 */
-	String HTTP_SCHEME = "http";
 
 	/**
 	 * https协议
@@ -307,8 +297,63 @@ public interface Constant {
 	String HTTPS_SCHEME = "https";
 
 	/**
-	 * www
+	 * www域名前缀
 	 */
 	String WWW = "www";
+
+	/**
+	 * 应用名称YAML配置
+	 */
+	String SPRING_APPLICATION_NAME = "spring.application.name";
+
+	/**
+	 * IPV4正则表达式
+	 */
+	String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
+
+	/**
+	 * 资源索引
+	 */
+	String RESOURCE_INDEX = "laokou_resource";
+
+	/**
+	 * 分布式链路索引
+	 */
+	String TRACE_INDEX = "laokou_trace";
+
+	/**
+	 * undefined.
+	 */
+	String UNDEFINED = "undefined";
+
+	/**
+	 * 空日志信息提醒
+	 */
+	String EMPTY_LOG_MSG = "暂无信息";
+
+	/**
+	 * ws-key
+	 */
+	String WS_HEADER_NAME = "Upgrade";
+
+	/**
+	 * ws-value
+	 */
+	String WS_HEADER_VALUE = "websocket";
+
+	/**
+	 * 租户用户名
+	 */
+	String TENANT_USERNAME = "tenant";
+
+	/**
+	 * 租户密码
+	 */
+	String TENANT_PASSWORD = "tenant123";
+
+	/**
+	 * 所有
+	 */
+	String FULL = "full";
 
 }

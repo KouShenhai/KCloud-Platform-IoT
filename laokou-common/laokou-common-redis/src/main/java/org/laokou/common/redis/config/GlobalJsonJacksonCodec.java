@@ -28,7 +28,10 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.redisson.codec.JsonJacksonCodec;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -50,7 +53,7 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 	 * 解决查询缓存转换异常的问题
 	 * @return ObjectMapper
 	 */
-	public static ObjectMapper objectMapper() {
+	private static ObjectMapper objectMapper() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
 		// Long类型转String类型
@@ -61,10 +64,8 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 		javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
 		javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
 		objectMapper.registerModule(javaTimeModule);
-		// 所有属性访问器（字段、getter和setter）,不自动检测可见属性
-		objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
-		// 无论访问级别如何，将自动检测所有字段属性
-		objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+		// 所有属性访问器（字段、getter和setter），将自动检测所有字段属性
+		objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
 		// 对于所有非final类型，使用LaissezFaire子类型验证器来推断类型
 		objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, NON_FINAL, JsonTypeInfo.As.PROPERTY);
 		// 反序列化时，属性不存在的兼容处理
@@ -74,5 +75,15 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 		return objectMapper;
 	}
 	// @formatter:on
+
+	public static Jackson2JsonRedisSerializer<Object> getJsonRedisSerializer() {
+		// Json序列化配置
+		return new Jackson2JsonRedisSerializer<>(objectMapper(), Object.class);
+	}
+
+	public static StringRedisSerializer getStringRedisSerializer() {
+		// String序列化配置
+		return new StringRedisSerializer(StandardCharsets.UTF_8);
+	}
 
 }

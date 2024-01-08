@@ -30,12 +30,6 @@
           "_genkey_0": "/auth/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
-      },
-      {
-        "name": "IpWhite",
-        "args": {
-          "sources": "127.0.0.1,192.168.30.1"
-        }
       }
     ],
     "metadata": {
@@ -73,12 +67,6 @@
         "args": {
           "_genkey_0": "/admin/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
-        }
-      },
-      {
-        "name": "IpWhite",
-        "args": {
-          "sources": "127.0.0.1,192.168.30.1"
         }
       }
     ],
@@ -148,12 +136,6 @@
           "_genkey_0": "/im/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
-      },
-      {
-        "name": "IpWhite",
-        "args": {
-          "sources": "127.0.0.1,192.168.30.1"
-        }
       }
     ],
     "metadata": {
@@ -191,12 +173,6 @@
         "args": {
           "_genkey_0": "/flowable/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
-        }
-      },
-      {
-        "name": "IpWhite",
-        "args": {
-          "sources": "127.0.0.1,192.168.30.1"
         }
       }
     ],

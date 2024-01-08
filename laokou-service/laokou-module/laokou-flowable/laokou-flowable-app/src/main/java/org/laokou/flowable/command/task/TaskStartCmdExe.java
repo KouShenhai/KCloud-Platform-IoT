@@ -25,15 +25,16 @@ import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
+import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.laokou.flowable.dto.task.TaskStartCmd;
 import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
 
 import static org.laokou.flowable.common.Constant.FLOWABLE;
 
@@ -59,10 +60,11 @@ public class TaskStartCmdExe {
 			String businessKey = cmd.getBusinessKey();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+				.processDefinitionTenantId(UserUtil.getTenantId().toString())
 				.processDefinitionKey(definitionKey)
 				.latestVersion()
 				.singleResult();
-			if (Objects.isNull(processDefinition)) {
+			if (ObjectUtil.isNull(processDefinition)) {
 				throw new FlowException("流程未定义");
 			}
 			if (processDefinition.isSuspended()) {
@@ -78,8 +80,9 @@ public class TaskStartCmdExe {
 	private StartCO start(String definitionKey, String businessKey, String instanceName) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
-				ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(definitionKey, businessKey);
-				if (Objects.isNull(processInstance)) {
+				ProcessInstance processInstance = runtimeService.startProcessInstanceByKeyAndTenantId(definitionKey,
+						businessKey, UserUtil.getTenantId().toString());
+				if (ObjectUtil.isNull(processInstance)) {
 					throw new FlowException("流程不存在");
 				}
 				String instanceId = processInstance.getId();
@@ -87,9 +90,9 @@ public class TaskStartCmdExe {
 				return new StartCO(instanceId);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(LogUtil.fail(e.getMessage()));
 			}
 		});
 	}

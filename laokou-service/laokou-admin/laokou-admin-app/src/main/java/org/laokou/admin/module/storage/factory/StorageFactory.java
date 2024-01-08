@@ -25,7 +25,7 @@ import org.laokou.admin.gatewayimpl.database.OssMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.admin.module.storage.AmazonS3StorageDriver;
 import org.laokou.admin.module.storage.StorageDriver;
-import org.laokou.common.algorithm.template.select.AbstractSelectAlgorithm;
+import org.laokou.common.algorithm.template.Algorithm;
 import org.laokou.common.algorithm.template.select.PollSelectAlgorithm;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
@@ -59,7 +59,7 @@ public class StorageFactory {
 	}
 
 	private OssCO getOssConfig(Long tenantId) {
-		AbstractSelectAlgorithm<OssDO> algorithm = new PollSelectAlgorithm<>();
+		Algorithm algorithm = new PollSelectAlgorithm();
 		OssDO ossDO = algorithm.select(getOssCache(tenantId), EMPTY);
 		return ossConvertor.convertClientObj(ossDO);
 	}

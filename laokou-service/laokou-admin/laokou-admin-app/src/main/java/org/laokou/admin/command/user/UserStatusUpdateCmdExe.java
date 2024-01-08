@@ -17,7 +17,7 @@
 
 package org.laokou.admin.command.user;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
@@ -26,7 +26,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.USER;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -37,8 +37,8 @@ public class UserStatusUpdateCmdExe {
 
 	private final UserGateway userGateway;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(UserStatusUpdateCmd cmd) {
-		DynamicDataSourceContextHolder.push(USER);
 		return Result.of(userGateway.updateInfo(toUser(cmd)));
 	}
 

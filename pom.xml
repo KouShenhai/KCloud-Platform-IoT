@@ -21,7 +21,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-Alibaba</artifactId>
-    <version>3.2.0</version>
+    <version>3.2.1</version>
     <packaging>pom</packaging>
     <modules>
         <module>laokou-common</module>
@@ -32,24 +32,24 @@
     <description>一个企业级微服务架构的云服务多租户SaaS平台</description>
     <url>https://koushenhai.github.io/KCloud-Platform-Alibaba</url>
     <properties>
-        <laokou.version>3.2.0</laokou.version>
+        <laokou.version>3.2.1</laokou.version>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-        <spring-boot-maven-plugin.version>3.1.5</spring-boot-maven-plugin.version>
+        <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
+        <spring-boot-maven-plugin.version>3.2.1</spring-boot-maven-plugin.version>
         <maven-surefire-plugin.version>3.2.2</maven-surefire-plugin.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.2.0</spring-boot.version>
+        <spring-boot.version>3.2.1</spring-boot.version>
         <!--spring-cloud版本-->
         <spring-cloud.version>2023.0.0</spring-cloud.version>
         <!--spring-framework版本-->
-        <spring-framework.version>6.1.1</spring-framework.version>
+        <spring-framework.version>6.1.2</spring-framework.version>
         <!--cloud-alibaba版本-->
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
-        <!--spring-doc版本-->
-        <spring-doc.version>2.2.0</spring-doc.version>
+        <!--springdoc-openapi版本-->
+        <springdoc-openapi.version>2.3.0</springdoc-openapi.version>
         <!--mapstruct版本-->
         <mapstruct.version>1.6.0.Beta1</mapstruct.version>
         <!--lombok-mapstruct-binding版本-->
@@ -77,7 +77,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- 定义公共版本 -->
+            <!-- 定义 common 版本 -->
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-bom</artifactId>
@@ -117,11 +117,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- 定义 spring doc 版本 -->
+            <!-- 定义 springdoc openapi 版本 -->
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi</artifactId>
-                <version>${spring-doc.version}</version>
+                <version>${springdoc-openapi.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -171,10 +171,15 @@
                 <DATASOURCE-USERNAME>root</DATASOURCE-USERNAME>
                 <DATASOURCE-PASSWORD>laokou123</DATASOURCE-PASSWORD>
                 <DATASOURCE-HOST>mysql.laokou.org</DATASOURCE-HOST>
+                <!--<DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>-->
                 <DATASOURCE-PARAM>characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</DATASOURCE-PARAM>
+                <!--<DATASOURCE-PARAM>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false</DATASOURCE-PARAM>-->
                 <DATASOURCE-PORT>3306</DATASOURCE-PORT>
+                <!--<DATASOURCE-PORT>5432</DATASOURCE-PORT>-->
                 <DATASOURCE-DRIVER-CLASS-NAME>com.mysql.cj.jdbc.Driver</DATASOURCE-DRIVER-CLASS-NAME>
+                <!--<DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>-->
                 <DATASOURCE-PLATFORM>mysql</DATASOURCE-PLATFORM>
+                <!--<DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>-->
                 <DATASOURCE-DB-NACOS>kcloud_platform_alibaba_nacos</DATASOURCE-DB-NACOS>
                 <DATASOURCE-DB-SEATA>kcloud_platform_alibaba_seata</DATASOURCE-DB-SEATA>
                 <DATASOURCE-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</DATASOURCE-DB-XXL-JOB>
@@ -188,6 +193,7 @@
                 <SEATA-USERNAME>seata</SEATA-USERNAME>
                 <SEATA-PASSWORD>seata</SEATA-PASSWORD>
                 <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
+                <XXL-JOB-LOG-PATH>./logs/xxl-job</XXL-JOB-LOG-PATH>
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
@@ -195,6 +201,7 @@
                 <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
                 <MAIL-USERNAME>xxx</MAIL-USERNAME>
                 <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
+                <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -207,10 +214,15 @@
                 <DATASOURCE-USERNAME>ENC(aEwhK+oj5wQ/pJfRcfwXAw==)</DATASOURCE-USERNAME>
                 <DATASOURCE-PASSWORD>ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)</DATASOURCE-PASSWORD>
                 <DATASOURCE-HOST>mysql.laokou.org</DATASOURCE-HOST>
+                <!--<DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>-->
                 <DATASOURCE-PARAM>characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</DATASOURCE-PARAM>
+                <!--<DATASOURCE-PARAM>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false</DATASOURCE-PARAM>-->
                 <DATASOURCE-PORT>3306</DATASOURCE-PORT>
+                <!--<DATASOURCE-PORT>5432</DATASOURCE-PORT>-->
                 <DATASOURCE-DRIVER-CLASS-NAME>com.mysql.cj.jdbc.Driver</DATASOURCE-DRIVER-CLASS-NAME>
+                <!--<DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>-->
                 <DATASOURCE-PLATFORM>mysql</DATASOURCE-PLATFORM>
+                <!--<DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>-->
                 <DATASOURCE-DB-NACOS>kcloud_platform_alibaba_nacos</DATASOURCE-DB-NACOS>
                 <DATASOURCE-DB-SEATA>kcloud_platform_alibaba_seata</DATASOURCE-DB-SEATA>
                 <DATASOURCE-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</DATASOURCE-DB-XXL-JOB>
@@ -224,6 +236,7 @@
                 <SEATA-USERNAME>seata</SEATA-USERNAME>
                 <SEATA-PASSWORD>seata</SEATA-PASSWORD>
                 <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
+                <XXL-JOB-LOG-PATH>./logs/xxl-job</XXL-JOB-LOG-PATH>
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
@@ -231,6 +244,7 @@
                 <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
                 <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
                 <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
+                <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
             </properties>
         </profile>
         <!-- 正式环境 -->
@@ -244,7 +258,7 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <DATASOURCE-HOST>${DATASOURCE_HOST:mysql.laokou.org}</DATASOURCE-HOST>
                 <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-PARAM>${DATASOURCE_PARAM:}</DATASOURCE-PARAM>
+                <DATASOURCE-PARAM>${DATASOURCE_PARAM:characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true}</DATASOURCE-PARAM>
                 <!--suppress UnresolvedMavenProperty -->
                 <DATASOURCE-PORT>${DATASOURCE_PORT:3306}</DATASOURCE-PORT>
                 <!--suppress UnresolvedMavenProperty -->
@@ -276,7 +290,9 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <SEATA-PASSWORD>${SEATA_PASSWORD:seata}</SEATA-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
-                <SEATA-LOG-PATH>${SEATA_LOG_PATH:}</SEATA-LOG-PATH>
+                <SEATA-LOG-PATH>${SEATA_LOG_PATH:/opt}</SEATA-LOG-PATH>
+                <!--suppress UnresolvedMavenProperty -->
+                <XXL-JOB-LOG-PATH>${XXL_JOB_LOG_PATH:/opt}</XXL-JOB-LOG-PATH>
                 <!--suppress UnresolvedMavenProperty -->
                 <SENTINEL-USERNAME>${SENTINEL_USERNAME:sentinel}</SENTINEL-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->
@@ -289,6 +305,8 @@
                 <MAIL-USERNAME>${MAIL_USERNAME:2413176044@qq.com}</MAIL-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->
                 <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
+                <!--suppress UnresolvedMavenProperty -->
+                <FILE-TEMP-PATH>${FILE_TEMP_PATH:/opt/temp}</FILE-TEMP-PATH>
             </properties>
         </profile>
     </profiles>
@@ -302,8 +320,8 @@
                 <configuration>
                     <!--备份版本-->
                     <generateBackupPoms>true</generateBackupPoms>
-                    <newVersion>3.2.1</newVersion>
-                    <oldVersion>3.2.0</oldVersion>
+                    <newVersion>3.2.2</newVersion>
+                    <oldVersion>3.2.1</oldVersion>
                 </configuration>
             </plugin>
             <plugin>

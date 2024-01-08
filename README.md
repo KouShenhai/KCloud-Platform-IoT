@@ -6,7 +6,7 @@
 
 ### 📣 项目介绍
 <p align="center"><img src="doc/image/logo.png" width="625" height="205" alt="图标"/></p>
-KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的云服务平台。基于Spring Boot 3.2.0、Spring Cloud 2023.0.0、Spring Cloud Alibaba 2022.0.0.0 最新版本开发的多租户SaaS系统。
+KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的云服务平台。基于Spring Boot 3.2.1、Spring Cloud 2023.0.0、Spring Cloud Alibaba 2022.0.0.0 最新版本开发的多租户SaaS系统。
 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、服务限流、熔断降级、监控报警、多数据源、工作流、高亮搜索、定时任务、分布式链路、分布式缓存、分布式事务、分布式存储等功能，用于快速构建微服务项目。目前支持Shell、Docker等多种部署方式，并且支持GraalVM。实现RBAC权限、其中包含系统管理、系统监控、工作流程、数据分析等几大模块。
 遵循阿里代码规范，采用RESTful设计风格，代码简洁、架构清晰，非常适合作为基础框架使用。
 <p align="center">
@@ -16,16 +16,19 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
     <a target="_blank" href="https://github.com/KouShenhai/KCloud-Platform-Alibaba"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/KouShenhai/KCloud-Platform-Alibaba"></a>
 	<a target="_blank" href="https://gitee.com/laokouyun/KCloud-Platform-Alibaba/stargazers"><img src="https://gitee.com/laokouyun/KCloud-Platform-Alibaba/badge/star.svg?theme=dark" alt="Gitee Star"></a>
     <a target="_blank" href="https://gitee.com/laokouyun/KCloud-Platform-Alibaba"><img src="https://gitee.com/laokouyun/KCloud-Platform-Alibaba/badge/fork.svg?theme=dark"  alt="Gitee Fork"></a>
-    <a target="_blank" href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/static/v1?label=Spring Boot&message=3.2.0&color=green" alt="SpringBoot"></a>
+    <a target="_blank" href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/static/v1?label=Spring Boot&message=3.2.1&color=green" alt="SpringBoot"></a>
     <a target="_blank" href="https://spring.io/projects/spring-cloud"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2023.0.0&color=green"></a>
     <a target="_blank" href="https://github.com/alibaba/spring-cloud-alibaba"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud Alibaba&message=2022.0.0.0&color=orange"></a>
-    <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.2.0&color=blue"></a>
+    <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.2.1&color=blue"></a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java17"><img alt="JDK" src="https://img.shields.io/badge/GraalVM-21.0.1-blue.svg"/></a>
     <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流"></a>
 </p>
 
+### 🔗 在线体验
+[老寇云平台在线体验（请点击我，境外服务器网络延迟请稍候）](https://www.laokou.org.cn)
+
 ### 🔖 在线文档
-[https://koushenhai.github.io](https://koushenhai.github.io)
+[老寇云平台在线文档（请点击我）](https://koushenhai.github.io)
 
 ### 💪 版本号
 特此说明，与Spring Boot版本保持一致
@@ -36,12 +39,13 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 推荐 Microsoft Edge 浏览器  
 
 ### 🔎 功能介绍
-🚀 在线用户：强制踢出在线用户    
-🚀 用户管理：用户信息增删改查（字段隔离&分库分表）（可重置密码）   
-🚀 角色管理：角色信息增删改查，基于部门的数据权限、角色权限（字段隔离）     
-🚀 菜单管理：菜单信息增删改查（字段隔离）（自定义菜单图标）   
-🚀 部门管理：部门信息增删改查（字段隔离）    
-🚀 日志管理：操作日志、登录日志查询、导出（字段隔离）       
+🚀 在线用户：强制踢出在线用户  
+🚀 IP管理：黑名单、白名单增删查（默认数据库）  
+🚀 用户管理：用户信息增删改查（数据库隔离）（可重置密码）     
+🚀 角色管理：角色信息增删改查，基于部门的数据权限、角色权限（数据库隔离）       
+🚀 菜单管理：菜单信息增删改查（数据库隔离）（自定义菜单图标）       
+🚀 部门管理：部门信息增删改查（数据库隔离）      
+🚀 日志管理：操作日志、登录日志查询、导出（数据库隔离）         
 🚀 字典管理：字典信息管理（数据库隔离）    
 🚀 消息管理：消息提醒和消息通知（数据库隔离）（分布式消息）      
 🚀 流程定义：流程定义、挂起、激活、查看、删除（默认数据库）    
@@ -49,13 +53,14 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 🚀 服务监控：服务监控及报警     
 🚀 缓存监控：Redis内存监控    
 🚀 主机监控：服务器监控    
+🚀 索引管理：索引属性及分布式链路索引查看（默认ES）   
 🚀 存储管理：存储信息增删改查，兼容Amazon S3（数据库隔离）    
 🚀 租户管理：租户信息增删改查增删改查（默认数据库）       
 🚀 套餐管理：自定义租户菜单增删改查（默认数据库）    
 🚀 集群管理：服务实例查看与优雅停机（服务自动下线）  
 🚀 数据源管理：数据源信息增删改查（默认数据库）      
 🚀 代码生成器：自定义模板生成代码  
-🚀 资源管理：资源信息管理增删改查，（审批 + 处理 + 转办 + 委派 => Seata AT模式），审批日志（默认数据库），同步（批量同步到ES），通过关键字搜索并高亮显示（默认ES）          
+🚀 资源管理：资源信息管理增删改查，（审批 + 处理 + 转办 + 委派 => Seata AT模式），审批日志（数据库隔离），同步（批量同步到ES），通过关键字搜索并高亮显示（默认ES）          
 🚀 用户登录：账号密码登录（多租户）、授权码登录（默认数据库）、手机号或邮件登录、设备授权码登录（请运行认证模式测试脚本.http）
 
 ### 💡 系统架构
@@ -65,15 +70,15 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 #### 🎯 Spring全家桶及核心技术版本
 | 组件                          | 版本            |
 |:----------------------------|:--------------|
-| Spring Boot                 | 3.2.0         |
+| Spring Boot                 | 3.2.1         |
 | Spring Cloud                | 2023.0.0      |
 | Spring Cloud Alibaba        | 2022.0.0.0    |
-| Spring Boot Admin           | 3.1.8         |
-| Spring Authorization Server | 1.2.0         |
-| Mybatis Plus                | 3.5.4.1       |
+| Spring Boot Admin           | 3.2.1         |
+| Spring Authorization Server | 1.2.1         |
+| Mybatis Plus                | 3.5.5         |
 | Nacos                       | 2.2.4         |
 | Seata                       | 2.0.0         |
-| Sentinel                    | 1.8.6         |
+| Sentinel                    | 1.8.7         |
 | Mysql                       | 8.0.33        |
 | Redis                       | 7.0.11        |
 | Elasticsearch               | 8.6.2         |
@@ -81,11 +86,12 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | Flowable                    | 7.0.0         |
 | ShardingSphere              | 5.3.2         |
 | OpenResty                   | 1.21.4.1      |
-| Netty                       | 4.1.101.Final |
+| Netty                       | 4.1.104.Final |
 | Dubbo                       | 3.3.0-beta.1  |
 | Kafka                       | 3.6.0         |
 | EMQX                        | 5.3.0         |
-
+| Postgresql                  | 16.1          |
+| Flyway                      | 10.3.0        |
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
@@ -109,8 +115,9 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 - 持久层框架：Mybatis Plus
 - JSON序列化：Jackson
 - 对象转换：MapStruct
-- 数据库：Mysql
+- 数据库：Mysql & Postgresql
 - 工作流：Flowable
+- 数据库迁移：Flyway
 
 #### 🌴 项目结构
 ~~~
@@ -126,6 +133,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
         └── laokou-common-algorithm                --- 算法组件  
         └── laokou-common-prometheus               --- 监控组件  
         └── laokou-common-openapi-doc              --- 文档组件  
+        └── laokou-common-rate-limiter             --- 限流组件  
         └── laokou-common-elasticsearch            --- 搜索组件  
         └── laokou-common-bom                      --- 依赖版本库  
         └── laokou-common-i18n                     --- 国际化组件  
@@ -207,6 +215,10 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
         <td><img alt="暂无图片" src="doc/image/18.png"/></td>
     </tr>
     <tr>
+        <td><img alt="暂无图片" src="doc/image/35.png"/></td>
+        <td><img alt="暂无图片" src="doc/image/36.png"/></td>
+    </tr>
+    <tr>
         <td><img alt="暂无图片" src="doc/image/19.png"/></td>
         <td><img alt="暂无图片" src="doc/image/20.png"/></td>
     </tr>
@@ -252,7 +264,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 KCloud-Platform-Alibaba 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息  
 
 ### 🔧 参与贡献
-请查看 [CONTRIBUTING.md](CONTRIBUTING.md)  
+请查看 [提交规范（请点击我）](CONTRIBUTING.md)  
 
 ### 👀 项目地址
 Github 后端地址：[KCloud-Platform-Alibaba](https://github.com/KouShenhai/KCloud-Platform-Alibaba)  
@@ -260,6 +272,21 @@ Github 前端地址：[KCloud-Antdv-Alibaba](https://github.com/KouShenhai/KClou
 
 Gtiee 后端地址：[KCloud-Platform-Alibaba](https://gitee.com/laokouyun/KCloud-Platform-Alibaba)  
 Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-Antdv-Alibaba)  
+
+### 🍚 赞助打赏（用于服务器日常维护）
+<div>
+    <img src="doc/image/wxp.jpg" width="201" height="300" alt="暂无图片">
+    <img src="doc/image/zfb.jpg" width="201" height="300" alt="暂无图片">
+    <img src="doc/image/gzh.jpg" width="201" height="300" alt="暂无图片">
+    <img src="doc/image/zsxq.jpg" width="201" height="300" alt="暂无图片">
+</div>
+
+### 🙋 技术交流
+<div>
+    <img src="doc/image/wx.png" width="250" height="300" alt="暂无图片">
+    <img src="doc/image/wxq.png" width="250" height="300" alt="暂无图片">
+    <img src="doc/image/qqq.png" width="250" height="300" alt="暂无图片">
+</div>
 
 ### 🐭 鸣谢组织
 [Spring社区](https://spring.io)  
@@ -274,9 +301,6 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 非常感谢 Jetbrains 提供的开源 License    
 <a href="https://www.jetbrains.com/community/opensource/?utm_campaign=opensource&utm_content=approved&utm_medium=email&utm_source=newsletter&utm_term=jblogo#support"><img alt="暂无图片" width="100" height="100" src="doc/image/jb_beam.png"/></a>
 
-### 🙋 技术交流
-<img src="doc/image/wxq.png" width="250" height="300" alt="暂无图片">
-
 ### 🐼 鸣谢个人
 |                                                👤                                                |                                                👤                                                |                                                👤                                                |                                                👤                                                |                                                👤                                                 |                                                👤                                                |
 |:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|
@@ -284,6 +308,52 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 |                           [KouShenhai](https://github.com/KouShenhai)                            |                              [liang99](https://github.com/liang99)                               |                           [livk-cloud](https://github.com/livk-cloud)                            |                          [liukefu2050](https://github.com/liukefu2050)                           |                            [HalfPomelo](https://github.com/HalfPomelo)                            |                                [lixin](https://github.com/lixin)                                 |
 | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/2041471?s=64&amp;v=4'>  | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/43296325?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/89563182?s=64&amp;v=4'> |
 |                               [simman](https://github.com/simman)                                |                             [suhengli](https://github.com/suhengli)                              |                            [gitkakafu](https://github.com/gitkakafu)                             |  
+
+### ⛳️ 赞助列表（感谢各位大佬的赞助）
+<table>
+    <tr>
+        <th>时间</th>
+        <th>网名</th>
+        <th>金额/物品</th>
+        <th>备注</th>
+    </tr>
+    <tr>
+        <td>2023/12/22</td>
+        <td>*民</td>
+        <td>服务器</td>
+        <td>无</td>
+    </tr>
+    <tr>
+        <td>2023/12/08</td>
+        <td>*来</td>
+        <td>￥10</td>
+        <td>希望越来越好，一直坚持下去</td>
+    </tr>
+    <tr>
+        <td>2023/12/08</td>
+        <td>*迪</td>
+        <td>￥20</td>
+        <td>越来越好，继续干下去</td>
+    </tr>
+    <tr>
+        <td>2023/08/27</td>
+        <td>*界</td>
+        <td>￥10</td>
+        <td>希望越来越好</td>
+    </tr>
+    <tr>
+        <td>2023/06/29</td>
+        <td>顺</td>
+        <td>￥20</td>
+        <td>希望项目一直做下去就好</td>
+    </tr>
+    <tr>
+        <td>2023/03/27</td>
+        <td>s*e</td>
+        <td>￥10</td>
+        <td>无</td>
+    </tr>
+</table>
 
 ### 🚫 免责声明
 禁止使用本项目从事一切违法犯罪活动。作者不承担任何法律责任，特此声明

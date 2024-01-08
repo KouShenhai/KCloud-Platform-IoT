@@ -16,29 +16,36 @@
  */
 package org.laokou.common.openfeign.config.auto;
 
+import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
 import feign.*;
 import feign.codec.ErrorDecoder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.idempotent.aop.IdempotentAop;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
+import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
 import java.util.Map;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.laokou.common.i18n.common.Constant.*;
 
 /**
- * openfeign关闭ssl {@link FeignAutoConfiguration}
+ * openfeign关闭ssl {@link FeignAutoConfiguration} 开启MVC 请查看
+ * {@link FeignClientsConfiguration} 默认开启，支持@RequestLine @Header @RequestPart
  *
  * @author laokou
  */
 @Slf4j
-@AutoConfiguration
+@AutoConfiguration(before = SentinelFeignAutoConfiguration.class)
+@Import(FeignClientsConfiguration.class)
 @RequiredArgsConstructor
 public class OpenFeignAutoConfig extends ErrorDecoder.Default implements RequestInterceptor {
 
@@ -54,16 +61,23 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String authorization = request.getHeader(AUTHORIZATION);
 		String traceId = request.getHeader(TRACE_ID);
+		String userId = request.getHeader(USER_ID);
+		String username = request.getHeader(USER_NAME);
+		String tenantId = request.getHeader(TENANT_ID);
 		template.header(TRACE_ID, traceId);
 		template.header(AUTHORIZATION, authorization);
+		template.header(USER_ID, userId);
+		template.header(USER_NAME, username);
+		template.header(TENANT_ID, tenantId);
 		final boolean idempotent = IdempotentUtil.isIdempotent();
+		String msg = EMPTY;
 		if (idempotent) {
 			// 获取当前Feign客户端的接口名称
 			String clientName = template.feignTarget().type().getName();
 			// 获取请求的URL
 			String url = template.url();
 			String method = template.method();
-			// 将接口名称+URL+请求方式组合成一个key
+			// 将接口名称 + URL + 请求方式组合成一个key
 			String uniqueKey = clientName + UNDER + url + UNDER + method;
 			Map<String, String> idMap = IdempotentUtil.getRequestId();
 			// 检查是否已经为这个键生成了ID
@@ -74,23 +88,22 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 				idMap.put(uniqueKey, idempotentKey);
 			}
 			template.header(IdempotentAop.REQUEST_ID, idempotentKey);
-			log.info("OpenFeign分布式调用，Request-Id：{}", idMap.get(uniqueKey));
+			msg = String.format("，请求ID：%s", idMap.get(uniqueKey));
 		}
-		log.info("OpenFeign分布式调用，Authorization：{}", authorization);
+		log.info("OpenFeign分布式调用，令牌：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}" + msg, authorization, LogUtil.result(userId),
+				LogUtil.result(username), LogUtil.result(tenantId), LogUtil.result(traceId));
 	}
 
 	@Bean
 	public Retryer retryer() {
-		// 最大请求次数为5，初始间隔时间为100ms
+		// 最大请求次数为3，初始间隔时间为100ms
 		// 下次间隔时间1.5倍递增，重试间最大间隔时间为1s
-		return new Retryer.Default();
+		return new Retryer.Default(100, SECONDS.toMillis(1), 3);
 	}
 
 	@Override
 	public Exception decode(String methodKey, Response response) {
-		Exception exception = super.decode(methodKey, response);
-		log.error("拦截Feign报错信息", exception);
-		return exception;
+		return super.decode(methodKey, response);
 	}
 
 }

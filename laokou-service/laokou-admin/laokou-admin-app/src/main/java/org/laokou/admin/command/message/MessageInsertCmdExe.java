@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.message;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.gateway.MessageGateway;
@@ -29,6 +30,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+
 /**
  * @author laokou
  */
@@ -40,6 +43,7 @@ public class MessageInsertCmdExe {
 
 	private final MessageConvertor messageConvertor;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(MessageInsertCmd cmd) {
 		return Result.of(messageGateway.insert(toMessage(cmd.getMessageCO()), toUser()));
 	}

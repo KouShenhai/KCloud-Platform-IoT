@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.resource;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.common.utils.BusinessUtil;
 import org.laokou.admin.convertor.ResourceConvertor;
@@ -25,6 +26,8 @@ import org.laokou.admin.domain.resource.Resource;
 import org.laokou.admin.dto.resource.ResourceUpdateCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -37,6 +40,7 @@ public class ResourceUpdateCmdExe {
 
 	private final ResourceConvertor resourceConvertor;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(ResourceUpdateCmd cmd) {
 		Resource resource = resourceConvertor.toEntity(cmd.getResourceCO());
 		BusinessUtil.checkResource(resource);

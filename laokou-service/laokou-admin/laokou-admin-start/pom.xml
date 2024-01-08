@@ -5,12 +5,20 @@
     <parent>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-admin</artifactId>
-        <version>3.2.0</version>
+        <version>3.2.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-admin-start</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-prometheus</artifactId>

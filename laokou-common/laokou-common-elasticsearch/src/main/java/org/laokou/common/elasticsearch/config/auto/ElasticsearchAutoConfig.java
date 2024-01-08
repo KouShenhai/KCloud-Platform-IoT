@@ -30,6 +30,7 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.RestHighLevelClientBuilder;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -49,7 +50,7 @@ import java.util.Objects;
 import static org.laokou.common.i18n.common.Constant.RISK;
 
 /**
- * es配置文件
+ * ES自动装配
  *
  * @author laokou
  */
@@ -79,7 +80,7 @@ public class ElasticsearchAutoConfig {
 			builderCustomizers.orderedStream().forEach((customizer) -> customizer.customize(requestConfigBuilder));
 			return requestConfigBuilder;
 		});
-		if (Objects.nonNull(properties.getPathPrefix())) {
+		if (ObjectUtil.isNotNull(properties.getPathPrefix())) {
 			builder.setPathPrefix(properties.getPathPrefix());
 		}
 		builderCustomizers.orderedStream().forEach((customizer) -> customizer.customize(builder));
@@ -157,6 +158,7 @@ public class ElasticsearchAutoConfig {
 				.stream()
 				.map(this::toUri)
 				.filter(this::hasUserInfo)
+				.filter(Objects::nonNull)
 				.forEach(this::addUserInfoCredentials);
 		}
 
@@ -170,7 +172,7 @@ public class ElasticsearchAutoConfig {
 		}
 
 		private boolean hasUserInfo(URI uri) {
-			return Objects.nonNull(uri) && StringUtil.isNotEmpty(uri.getUserInfo());
+			return ObjectUtil.isNotNull(uri) && StringUtil.isNotEmpty(uri.getUserInfo());
 		}
 
 		private void addUserInfoCredentials(URI uri) {
@@ -202,7 +204,7 @@ public class ElasticsearchAutoConfig {
 	// return new ElasticsearchClient(transport);
 	// }
 
-	@Bean(name = "restHighLevelClient")
+	@Bean(name = "restHighLevelClient", destroyMethod = "close")
 	@ConditionalOnMissingBean(RestHighLevelClient.class)
 	@ConditionalOnClass(RestClientBuilder.class)
 	@Deprecated

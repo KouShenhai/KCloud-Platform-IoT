@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.resource.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.resource.ResourceDetailTaskGetQry;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
@@ -25,6 +26,8 @@ import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -35,6 +38,7 @@ public class ResourceDetailTaskGetQryExe {
 
 	private final ResourceAuditMapper resourceAuditMapper;
 
+	@DS(TENANT)
 	public Result<ResourceCO> execute(ResourceDetailTaskGetQry qry) {
 		ResourceAuditDO resourceAuditDO = resourceAuditMapper.getResourceAuditById(qry.getId());
 		return Result.of(ConvertUtil.sourceToTarget(resourceAuditDO, ResourceCO.class));

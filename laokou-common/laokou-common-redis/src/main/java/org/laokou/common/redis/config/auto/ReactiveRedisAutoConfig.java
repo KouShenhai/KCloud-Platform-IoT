@@ -28,9 +28,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import reactor.core.publisher.Flux;
+
+import static org.laokou.common.redis.config.GlobalJsonJacksonCodec.getJsonRedisSerializer;
+import static org.laokou.common.redis.config.GlobalJsonJacksonCodec.getStringRedisSerializer;
 
 /**
  * @author laokou
@@ -45,14 +49,14 @@ public class ReactiveRedisAutoConfig {
 	@ConditionalOnMissingBean(name = "reactiveRedisTemplate")
 	public ReactiveRedisTemplate<String, Object> reactiveRedisTemplate(
 			ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
-		RedisSerializer<String> stringRedisSerializer = RedisSerializer.string();
-		RedisSerializer<Object> objectRedisSerializer = RedisSerializer.json();
+		Jackson2JsonRedisSerializer<Object> jsonRedisSerializer = getJsonRedisSerializer();
+		StringRedisSerializer stringRedisSerializer = getStringRedisSerializer();
 		RedisSerializationContext<String, Object> serializationContext = RedisSerializationContext
 			.<String, Object>newSerializationContext()
 			.key(stringRedisSerializer)
-			.value(objectRedisSerializer)
+			.value(jsonRedisSerializer)
 			.hashKey(stringRedisSerializer)
-			.hashValue(objectRedisSerializer)
+			.hashValue(jsonRedisSerializer)
 			.build();
 		return new ReactiveRedisTemplate<>(reactiveRedisConnectionFactory, serializationContext);
 	}
@@ -72,8 +76,9 @@ public class ReactiveRedisAutoConfig {
 
 	@Bean
 	@ConditionalOnMissingBean(ReactiveRedisUtil.class)
-	public ReactiveRedisUtil reactiveRedisUtil(RedissonReactiveClient redissonReactiveClient) {
-		return new ReactiveRedisUtil(redissonReactiveClient);
+	public ReactiveRedisUtil reactiveRedisUtil(RedissonReactiveClient redissonReactiveClient,
+			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
+		return new ReactiveRedisUtil(reactiveRedisTemplate, redissonReactiveClient);
 	}
 
 }

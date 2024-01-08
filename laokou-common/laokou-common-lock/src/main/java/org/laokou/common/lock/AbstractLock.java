@@ -14,46 +14,63 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.lock;
 
-import org.laokou.common.lock.enums.LockType;
+import org.laokou.common.lock.enums.Type;
 
 /**
+ * 分布式锁抽象类.
+ *
  * @author laokou
  */
-public abstract class AbstractLock<T> implements Locks {
+public abstract class AbstractLock<T> implements Lock {
 
+	/**
+	 * 尝试加锁.
+	 * @param type 类型
+	 * @param key 键
+	 * @param expire 过期时间
+	 * @param timeout 锁等待超时时间
+	 * @return Boolean
+	 * @throws InterruptedException 线程中断异常
+	 */
 	@Override
-	public Boolean tryLock(LockType type, String key, long expire, long timeout) throws InterruptedException {
+	public Boolean tryLock(Type type, String key, long expire, long timeout) throws InterruptedException {
 		return tryLock(getLock(type, key), expire, timeout);
 	}
 
+	/**
+	 * 释放锁.
+	 * @param type 锁类型
+	 * @param key 键
+	 */
 	@Override
-	public void unlock(LockType type, String key) {
+	public void unlock(Type type, String key) {
 		unlock(getLock(type, key));
 	}
 
 	/**
-	 * 获取锁
-	 * @param type
-	 * @param key
-	 * @return
+	 * 获取锁.
+	 * @param type 锁类型
+	 * @param key 键
+	 * @return T
 	 */
-	public abstract T getLock(LockType type, String key);
+	public abstract T getLock(Type type, String key);
 
 	/**
-	 * 获取锁
-	 * @param lock
-	 * @param expire
-	 * @param timeout
-	 * @return
-	 * @throws InterruptedException
+	 * 尝试加锁.
+	 * @param lock 锁
+	 * @param expire 过期时间
+	 * @param timeout 线程等待超时时间
+	 * @return Boolean
+	 * @throws InterruptedException 线程中断异常
 	 */
 	public abstract Boolean tryLock(T lock, long expire, long timeout) throws InterruptedException;
 
 	/**
-	 * 释放锁
-	 * @param lock
+	 * 释放锁.
+	 * @param lock 锁
 	 */
 	public abstract void unlock(T lock);
 

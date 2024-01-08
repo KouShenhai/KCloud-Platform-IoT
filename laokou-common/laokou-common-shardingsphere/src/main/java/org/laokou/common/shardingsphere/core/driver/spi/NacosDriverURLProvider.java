@@ -26,6 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.driver.jdbc.core.driver.ShardingSphereDriverURLProvider;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.PropertyUtil;
+import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.shardingsphere.utils.CryptoUtil;
 import org.springframework.util.StringUtils;
@@ -37,7 +39,6 @@ import java.io.LineNumberReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -88,7 +89,7 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 		List<String> strList = list.stream().filter(i -> i.startsWith(PUBLIC_KEY)).toList();
 		String publicKey = "";
 		if (CollectionUtil.isNotEmpty(strList)) {
-			publicKey = strList.get(0).substring(11).trim();
+			publicKey = strList.getFirst().substring(11).trim();
 		}
 		StringBuilder stringBuilder = new StringBuilder();
 		String finalPublicKey = publicKey;
@@ -113,12 +114,12 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 		try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(
 				new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8))) {
 			String str;
-			while (Objects.nonNull((str = reader.readLine()))) {
+			while (ObjectUtil.isNotNull((str = reader.readLine()))) {
 				list.add(str);
 			}
 		}
 		catch (IOException e) {
-			log.error("错误信息", e);
+			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 		}
 		return list;
 	}

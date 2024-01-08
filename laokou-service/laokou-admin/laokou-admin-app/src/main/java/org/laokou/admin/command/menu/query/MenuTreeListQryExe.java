@@ -16,7 +16,9 @@
  */
 package org.laokou.admin.command.menu.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.admin.domain.menu.Menu;
 import org.laokou.admin.domain.user.User;
@@ -25,13 +27,15 @@ import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -44,15 +48,18 @@ public class MenuTreeListQryExe {
 
 	private final RedisUtil redisUtil;
 
+	private final MenuConvertor menuConvertor;
+
+	@DS(TENANT)
 	public Result<MenuCO> execute(MenuTreeListQry qry) {
 		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserUtil.getUserId());
 		Object obj = redisUtil.get(menuTreeKey);
-		if (Objects.nonNull(obj)) {
+		if (ObjectUtil.isNotNull(obj)) {
 			return Result.of((MenuCO) obj);
 		}
 		User user = ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
 		List<Menu> menuList = menuGateway.list(user, 0);
-		List<MenuCO> menus = ConvertUtil.sourceToTarget(menuList, MenuCO.class);
+		List<MenuCO> menus = menuConvertor.convertClientObjectList(menuList);
 		MenuCO menuCO = TreeUtil.buildTreeNode(menus, MenuCO.class);
 		redisUtil.set(menuTreeKey, menuCO, RedisUtil.HOUR_ONE_EXPIRE);
 		return Result.of(menuCO);

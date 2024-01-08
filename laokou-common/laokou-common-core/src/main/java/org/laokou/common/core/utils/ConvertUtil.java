@@ -17,6 +17,7 @@
 package org.laokou.common.core.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.beans.BeanUtils;
 import java.util.Collection;
 import java.util.Collections;
@@ -30,7 +31,7 @@ import java.util.Objects;
 public class ConvertUtil extends BeanUtils {
 
 	public static <T> T sourceToTarget(Object source, Class<T> target) {
-		if (Objects.isNull(source)) {
+		if (ObjectUtil.isNull(source)) {
 			return null;
 		}
 		T targetObject = null;

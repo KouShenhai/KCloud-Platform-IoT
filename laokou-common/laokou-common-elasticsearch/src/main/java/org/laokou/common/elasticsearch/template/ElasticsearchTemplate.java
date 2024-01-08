@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.DocWriteResponse;
+import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequest;
@@ -43,6 +44,10 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
+import org.elasticsearch.client.indices.GetIndexResponse;
+import org.elasticsearch.cluster.metadata.AliasMetadata;
+import org.elasticsearch.cluster.metadata.MappingMetadata;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.script.Script;
@@ -61,17 +66,23 @@ import org.elasticsearch.xcontent.XContentFactory;
 import org.elasticsearch.xcontent.XContentType;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.dto.Search;
+import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.elasticsearch.clientobject.SettingsCO;
 import org.laokou.common.elasticsearch.constant.EsConstant;
 import org.laokou.common.elasticsearch.utils.FieldMapping;
 import org.laokou.common.elasticsearch.utils.FieldMappingUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Search;
+import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.*;
+
+import static org.laokou.common.i18n.common.Constant.EMPTY;
 
 /**
  * @author laokou
@@ -79,6 +90,7 @@ import java.util.*;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@SuppressWarnings("unchecked")
 public class ElasticsearchTemplate {
 
 	private final RestHighLevelClient restHighLevelClient;
@@ -182,7 +194,7 @@ public class ElasticsearchTemplate {
 			log.info("索引：{}，新增{}个，修改{}个 -> 批量修改索引成功", indexName, createCount, updateCount);
 		}
 		catch (IOException e) {
-			log.error("索引：{} -> 批量修改索引更新，错误信息", indexName, e);
+			log.error("索引：{} -> 批量修改索引更新，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 			return false;
 		}
 		return true;
@@ -224,7 +236,7 @@ public class ElasticsearchTemplate {
 			}
 		}
 		catch (IOException e) {
-			log.error("索引：{}，主键：{} -> 修改索引失败，错误信息", indexName, id, e);
+			log.error("索引：{}，主键：{} -> 修改索引失败，错误信息：{}，详情见日志", indexName, id, LogUtil.result(e.getMessage()), e);
 		}
 		return true;
 	}
@@ -254,7 +266,7 @@ public class ElasticsearchTemplate {
 			}
 		}
 		catch (IOException e) {
-			log.error("索引：{} -> 删除索引失败，错误信息", indexName, e);
+			log.error("索引：{} -> 删除索引失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 		}
 		return true;
 	}
@@ -295,7 +307,7 @@ public class ElasticsearchTemplate {
 			log.info("索引：{}，删除{}个 -> 批量删除索引成功", indexName, deleteCount);
 		}
 		catch (IOException e) {
-			log.error("索引：{} -> 批量删除索引失败，错误信息", indexName, e);
+			log.error("索引：{} -> 批量删除索引失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 		}
 		return true;
 	}
@@ -363,7 +375,7 @@ public class ElasticsearchTemplate {
 			return resultJson;
 		}
 		catch (IOException e) {
-			log.error("索引：{}，主键：{} -> 查询索引失败，错误信息", indexName, id, e);
+			log.error("索引：{}，主键：{} -> 查询索引失败，错误信息：{}，详情见日志", indexName, id, LogUtil.result(e.getMessage()), e);
 			return null;
 		}
 	}
@@ -390,7 +402,7 @@ public class ElasticsearchTemplate {
 			log.info("索引：{} -> 删除索引成功", indexName);
 		}
 		catch (IOException e) {
-			log.error("索引：{} -> 删除索引失败，错误信息", indexName, e);
+			log.error("索引：{} -> 删除索引失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 		}
 		return true;
 	}
@@ -433,7 +445,7 @@ public class ElasticsearchTemplate {
 			// 失败操作
 			@Override
 			public void onFailure(Exception e) {
-				log.error("索引：{} -> 批量异步同步索引成功，错误信息", indexName, e);
+				log.error("索引：{} -> 批量异步同步索引成功，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 			}
 		};
 		restHighLevelClient.bulkAsync(bulkRequest, RequestOptions.DEFAULT, listener);
@@ -443,15 +455,14 @@ public class ElasticsearchTemplate {
 	/**
 	 * 删除索引
 	 * @param indexName 索引名称
-	 * @return Boolean
 	 * @throws IOException IOException
 	 */
-	public Boolean deleteIndex(String indexName) throws IOException {
+	public void deleteIndex(String indexName) throws IOException {
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
 			log.error("索引：{} -> 索引不存在，删除索引失败", indexName);
-			return false;
+			return;
 		}
 		// 删除操作Request
 		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(indexName);
@@ -460,10 +471,9 @@ public class ElasticsearchTemplate {
 			.delete(deleteIndexRequest, RequestOptions.DEFAULT);
 		if (!acknowledgedResponse.isAcknowledged()) {
 			log.error("索引：{} -> 删除索引失败", indexName);
-			return false;
+			return;
 		}
 		log.info("索引：{} -> 删除索引成功", indexName);
-		return true;
 	}
 
 	/**
@@ -491,7 +501,7 @@ public class ElasticsearchTemplate {
 
 			@Override
 			public void onFailure(Exception e) {
-				log.error("索引：{} -> 异步删除索引失败，错误信息", indexName, e);
+				log.error("索引：{} -> 异步删除索引失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 			}
 		};
 		restHighLevelClient.indices().deleteAsync(deleteIndexRequest, RequestOptions.DEFAULT, listener);
@@ -578,7 +588,7 @@ public class ElasticsearchTemplate {
 
 			@Override
 			public void onFailure(Exception e) {
-				log.error("索引：{} -> 异步创建索引失败，错误信息", indexName, e);
+				log.error("索引：{} -> 异步创建索引失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 			}
 		};
 		// 异步执行
@@ -667,7 +677,7 @@ public class ElasticsearchTemplate {
 
 			@Override
 			public void onFailure(Exception e) {
-				log.error("索引：{} -> 异步同步索引失败，错误信息", indexName, e);
+				log.error("索引：{} -> 异步同步索引失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 			}
 		};
 		restHighLevelClient.indexAsync(indexRequest, RequestOptions.DEFAULT, actionListener);
@@ -684,7 +694,7 @@ public class ElasticsearchTemplate {
 			return restHighLevelClient.indices().exists(getIndexRequest, RequestOptions.DEFAULT);
 		}
 		catch (Exception e) {
-			log.info("错误信息", e);
+			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 		}
 		return false;
 	}
@@ -768,7 +778,7 @@ public class ElasticsearchTemplate {
 					// fielddata=true 用来解决text字段不能进行聚合操作
 					.field("fielddata", true)
 					.field("analyzer", "ik_pinyin")
-					.field("search_analyzer", "ik_max_word")
+					.field("search_analyzer", "ik_smart")
 					.endObject();
 			}
 		}
@@ -863,7 +873,11 @@ public class ElasticsearchTemplate {
 			// or查询
 			BoolQueryBuilder orQuery = QueryBuilders.boolQuery();
 			for (Search.Query query : orQueryList) {
-				orQuery.should(QueryBuilders.termQuery(query.getField(), query.getValue()));
+				String value = query.getValue();
+				if (StringUtil.isEmpty(value)) {
+					continue;
+				}
+				orQuery.should(QueryBuilders.termQuery(query.getField(), value));
 			}
 			boolQueryBuilder.must(orQuery);
 		}
@@ -872,8 +886,12 @@ public class ElasticsearchTemplate {
 			BoolQueryBuilder analysisQuery = QueryBuilders.boolQuery();
 			for (Search.Query query : queryStringList) {
 				String field = query.getField();
+				String value = query.getValue();
+				if (StringUtil.isEmpty(value)) {
+					continue;
+				}
 				// 清除左右空格并处理特殊字符
-				String keyword = QueryParser.escape(query.getValue().trim());
+				String keyword = QueryParser.escape(value.trim());
 				analysisQuery.should(QueryBuilders.queryStringQuery(keyword).field(field));
 			}
 			boolQueryBuilder.must(analysisQuery);
@@ -894,8 +912,9 @@ public class ElasticsearchTemplate {
 		Integer pageNum = searchIndex.getPageNum();
 		Integer pageSize = searchIndex.getPageSize();
 		List<Search.Query> sortFieldList = searchIndex.getSortFieldList();
-		if (isHighlightSearchFlag) {
-			List<String> highlightFieldList = searchIndex.getHighlightFieldList();
+		List<Search.Query> queryStringList = searchIndex.getQueryStringList();
+		if (isHighlightSearchFlag && CollectionUtil.isNotEmpty(queryStringList)) {
+			List<String> highlightFieldList = queryStringList.stream().map(Search.Query::getField).toList();
 			// 高亮显示数据
 			HighlightBuilder highlightBuilder = new HighlightBuilder();
 			// 设置关键字显示颜色
@@ -940,7 +959,7 @@ public class ElasticsearchTemplate {
 		// 获取真实总数
 		searchSourceBuilder.trackTotalHits(true);
 		// 聚合对象
-		if (Objects.nonNull(aggregationBuilder)) {
+		if (ObjectUtil.isNotNull(aggregationBuilder)) {
 			searchSourceBuilder.aggregation(aggregationBuilder);
 		}
 		return searchSourceBuilder;
@@ -981,6 +1000,75 @@ public class ElasticsearchTemplate {
 		datas.setRecords(list);
 		datas.setTotal(list.size());
 		return datas;
+	}
+
+	public Map<String, String> getIndexNames(String[] indexAliasNames) {
+		try {
+			GetAliasesRequest getAliasesRequest = new GetAliasesRequest(indexAliasNames);
+			Map<String, Set<AliasMetadata>> aliases = restHighLevelClient.indices()
+				.getAlias(getAliasesRequest, RequestOptions.DEFAULT)
+				.getAliases();
+			Map<String, String> indexMap = new HashMap<>(aliases.size());
+			aliases
+				.forEach((k, v) -> indexMap.put(k, v.stream().map(AliasMetadata::getAlias).findFirst().orElse(EMPTY)));
+			return indexMap;
+		}
+		catch (Exception e) {
+			log.error("获取索引失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			throw new SystemException("获取索引失败");
+		}
+	}
+
+	public Map<String, Object> getIndexProperties(String indexName) {
+		try {
+			GetIndexRequest getIndexRequest = new GetIndexRequest(indexName);
+			GetIndexResponse getIndexResponse = restHighLevelClient.indices()
+				.get(getIndexRequest, RequestOptions.DEFAULT);
+			Map<String, Object> indexPropertiesMap = new HashMap<>(2);
+			Map<String, Settings> settings = getIndexResponse.getSettings();
+			Map<String, MappingMetadata> mappings = getIndexResponse.getMappings();
+			indexPropertiesMap.put("mappings", JacksonUtil.toJsonStr(mappings.get(indexName).getSourceAsMap(), true));
+			indexPropertiesMap.put("settings", JacksonUtil.toJsonStr(toCO(indexName, settings), true));
+			return indexPropertiesMap;
+		}
+		catch (Exception e) {
+			log.error("获取索引属性失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			throw new SystemException("获取索引属性失败");
+		}
+	}
+
+	private SettingsCO toCO(String indexName, Map<String, Settings> settings) {
+		SettingsCO co = new SettingsCO();
+		Settings indexSetting = settings.get(indexName).getAsGroups().get("index");
+		String uuid = indexSetting.get("uuid");
+		String creation_date = indexSetting.get("creation_date");
+		String number_of_replicas = indexSetting.get("number_of_replicas");
+		String number_of_shards = indexSetting.get("number_of_shards");
+		String provided_name = indexSetting.get("provided_name");
+		String refresh_interval = indexSetting.get("refresh_interval");
+		String created = indexSetting.get("version.created");
+		String _tier_preference = indexSetting.get("routing.allocation.include._tier_preference");
+		Map<String, Object> map1 = toMap(indexSetting, "analysis.analyzer");
+		Map<String, Object> map2 = toMap(indexSetting, "analysis.filter");
+		SettingsCO.Analysis analysis = new SettingsCO.Analysis(map1, map2);
+		SettingsCO.Version version = new SettingsCO.Version(created);
+		SettingsCO.Include include = new SettingsCO.Include(_tier_preference);
+		SettingsCO.Allocation allocation = new SettingsCO.Allocation(include);
+		SettingsCO.Routing routing = new SettingsCO.Routing(allocation);
+		SettingsCO.Index index = new SettingsCO.Index(uuid, creation_date, number_of_replicas, number_of_shards,
+				provided_name, refresh_interval, version, routing, analysis);
+		co.setIndex(index);
+		return co;
+	}
+
+	private Map<String, Object> toMap(Settings indexSetting, String key) {
+		Map<String, Settings> settingsMap = indexSetting.getAsSettings(key).getAsGroups();
+		if (MapUtil.isEmpty(settingsMap)) {
+			return new HashMap<>(0);
+		}
+		Map<String, Object> map = new HashMap<>(settingsMap.size());
+		settingsMap.forEach((k, v) -> map.put(k, JacksonUtil.toMap(v.toString(), String.class, String.class)));
+		return map;
 	}
 
 }

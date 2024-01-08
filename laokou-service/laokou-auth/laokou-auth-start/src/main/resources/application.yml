@@ -54,6 +54,8 @@ spring:
             data-type: json
             group-id: @NACOS-GROUP@
             rule-type: flow
+            username: @NACOS-USERNAME@
+            password: @NACOS-PASSWORD@
     # loadbalancer
     loadbalancer:
       nacos:
@@ -74,6 +76,7 @@ spring:
               authorization-code-time-to-live: 1h
               access-token-time-to-live: 1h
               refresh-token-time-to-live: 6h
+              device-code-time-to-live: 1h
             registration:
               id: 95TxSsTPFA3tF12TBSMmUVK0da
               client-id: 95TxSsTPFA3tF12TBSMmUVK0da
@@ -103,15 +106,6 @@ spring:
                 - http://127.0.0.1:8001
             # 客户端请求访问时需要授权同意
             require-authorization-consent: true
-        ignore-patterns:
-          - /v1/captchas/{uuid}
-          - /v1/secrets
-          - /v3/api-docs/**
-          - /swagger-ui.html
-          - /swagger-ui/**
-          - /actuator/**
-          - /error
-          - /graceful-shutdown
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml

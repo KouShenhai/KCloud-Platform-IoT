@@ -39,18 +39,15 @@ public class PackageOptionListQryExe {
 	private final PackageMapper packageMapper;
 
 	public Result<List<OptionCO>> execute() {
-		List<PackageDO> list = packageMapper
-			.selectList(Wrappers.query(PackageDO.class).select("id", "name").orderByDesc("create_date"));
+		List<PackageDO> list = packageMapper.selectList(Wrappers.lambdaQuery(PackageDO.class)
+			.select(PackageDO::getId, PackageDO::getName)
+			.orderByDesc(PackageDO::getId));
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}
-		List<OptionCO> options = new ArrayList<>(list.size());
-		for (PackageDO packageDO : list) {
-			OptionCO oc = new OptionCO();
-			oc.setLabel(packageDO.getName());
-			oc.setValue(String.valueOf(packageDO.getId()));
-			options.add(oc);
-		}
+		List<OptionCO> options = list.stream()
+			.map(item -> new OptionCO(item.getName(), String.valueOf(item.getId())))
+			.toList();
 		return Result.of(options);
 	}
 

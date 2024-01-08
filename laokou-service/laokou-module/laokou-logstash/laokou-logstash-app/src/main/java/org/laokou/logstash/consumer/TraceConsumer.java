@@ -23,10 +23,12 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceIndex;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -49,8 +51,6 @@ import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_TRACE_TOPIC;
 public class TraceConsumer {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
-
-	private static final String TRACE_INDEX = "laokou_trace";
 
 	@KafkaListener(topics = LAOKOU_TRACE_TOPIC, groupId = LAOKOU_LOGSTASH_CONSUMER_GROUP)
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
@@ -75,7 +75,7 @@ public class TraceConsumer {
 			XxlJobHelper.log("创建索引【{" + getIndexName(localDate) + "}】执行成功");
 		}
 		catch (Exception e) {
-			log.error("错误信息", e);
+			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			XxlJobHelper.log("创建索引【{" + getIndexName(localDate) + "}】执行失败");
 			XxlJobHelper.handleFail("创建索引【{" + getIndexName(localDate) + "}】执行失败");
 		}
@@ -86,7 +86,8 @@ public class TraceConsumer {
 			TraceIndex traceIndex = JacksonUtil.toBean(s, TraceIndex.class);
 			if (StringUtil.isNotEmpty(traceIndex.getTraceId()) && RegexUtil.numberRegex(traceIndex.getTraceId())) {
 				try {
-					traceIndex.setTenantId(replaceValue(traceIndex.getTraceId()));
+					traceIndex.setId(IdGenerator.defaultSnowflakeId());
+					traceIndex.setTenantId(replaceValue(traceIndex.getTenantId()));
 					traceIndex.setUserId(replaceValue(traceIndex.getUserId()));
 					traceIndex.setUsername(replaceValue(traceIndex.getUsername()));
 					String indexName = getIndexName(DateUtil.nowDate());
@@ -119,8 +120,8 @@ public class TraceConsumer {
 	}
 
 	private String replaceValue(String value) {
-		if (value.startsWith(DOLLAR)) {
-			return EMPTY;
+		if (value.startsWith(DOLLAR) || UNDEFINED.equals(value)) {
+			return EMPTY_LOG_MSG;
 		}
 		return value;
 	}
@@ -139,7 +140,7 @@ public class TraceConsumer {
 			}
 		}
 		catch (Exception e) {
-			log.error("创建索引【{}】失败,错误信息", indexName, e);
+			log.error("创建索引【{}】失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 			return false;
 		}
 	}

@@ -18,27 +18,27 @@
 package org.laokou.auth.module.oauth2.config;
 
 import lombok.Data;
+import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties.PREFIX;
 import static org.laokou.common.i18n.common.Constant.ENABLED;
 import static org.laokou.common.i18n.common.Constant.TRUE;
+import static org.laokou.common.security.config.auto.OAuth2ResourceServerAutoConfig.customizer;
 
 /**
  * @author laokou
  */
 @Data
 @Configuration
-@RefreshScope
 @ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = PREFIX, name = ENABLED)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class OAuth2ResourceServerConfig {
@@ -51,19 +51,12 @@ class OAuth2ResourceServerConfig {
 	 * @throws Exception Exception
 	 */
 	@Bean
-	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, OAuth2AuthorizationServerProperties properties)
-			throws Exception {
+	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
+			OAuth2ResourceServerProperties oAuth2ResourceServerProperties, Environment env) throws Exception {
 		return http
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.httpStrictTransportSecurity(
 					hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)))
-			.authorizeHttpRequests(request -> request
-				.requestMatchers(properties.getIgnorePatterns()
-					.stream()
-					.map(AntPathRequestMatcher::new)
-					.toArray(AntPathRequestMatcher[]::new))
-				.permitAll()
-				.anyRequest()
-				.authenticated())
+			.authorizeHttpRequests(customizer(env, oAuth2ResourceServerProperties))
 			.cors(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)
