@@ -27,10 +27,8 @@ import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.domain.user.SuperAdmin;
-import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
-import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
@@ -44,6 +42,7 @@ import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -69,15 +68,13 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private final PasswordEncoder passwordEncoder;
 
-	private final UserMapper userMapper;
-
-	private final DeptMapper deptMapper;
-
 	private final MenuMapper menuMapper;
 
 	private final TenantConvertor tenantConvertor;
 
 	private final DefaultConfigProperties defaultConfigProperties;
+
+	private final ThreadPoolTaskExecutor taskExecutor;
 
 	@Override
 	public Boolean insert(Tenant tenant) {
@@ -147,6 +144,10 @@ public class TenantGatewayImpl implements TenantGateway {
 				throw new SystemException(e.getMessage());
 			}
 		});
+	}
+
+	private void writeFile() {
+
 	}
 
 	private List<String> getSql(long tenantId, long packageId) {

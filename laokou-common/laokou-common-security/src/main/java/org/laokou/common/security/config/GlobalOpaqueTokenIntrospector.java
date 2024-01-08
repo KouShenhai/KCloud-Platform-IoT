@@ -36,12 +36,10 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
-
 import java.security.Principal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
-
 import static org.laokou.common.i18n.common.BizCode.ACCOUNT_FORCE_KILL;
 import static org.laokou.common.i18n.common.Constant.FULL;
 
@@ -57,6 +55,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
 	private final RedisUtil redisUtil;
 
+	// @formatter:off
 	@Override
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);
@@ -72,14 +71,9 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		}
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, new OAuth2TokenType(FULL));
 		if (ObjectUtil.isNull(authorization)) {
-			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
-					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
+			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}
 		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
-		if (ObjectUtil.isNull(accessToken) || accessToken.isExpired()) {
-			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
-					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
-		}
 		Instant expiresAt = accessToken.getToken().getExpiresAt();
 		Instant nowAt = Instant.now();
 		long expireTime = ChronoUnit.SECONDS.between(nowAt, expiresAt);
@@ -93,9 +87,9 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 			// 解密
 			return decryptInfo(user);
 		}
-		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
-				MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
+		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 	}
+	// @formatter:on
 
 	/**
 	 * 解密字段
