@@ -62,6 +62,7 @@ class OAuth2ApiTest {
 	private static final String PASSWORD = "admin123";
 
 	private static final String ACCESS_TOKEN = "accessToken";
+
 	private static final String REFRESH_TOKEN = "refreshToken";
 
 	private static final Long SNOWFLAKE_ID = IdGenerator.defaultSnowflakeId();
@@ -90,7 +91,8 @@ class OAuth2ApiTest {
 		String encryptPassword = RsaUtil.encryptByPublicKey(PASSWORD, publicKey);
 		String decryptUsername = RsaUtil.decryptByPrivateKey(encryptUsername, privateKey);
 		String decryptPassword = RsaUtil.decryptByPrivateKey(encryptPassword, privateKey);
-		Map<String, String> tokenMap = getUsernamePasswordAuthApi(SNOWFLAKE_ID, captcha, decryptUsername, decryptPassword);
+		Map<String, String> tokenMap = getUsernamePasswordAuthApi(SNOWFLAKE_ID, captcha, decryptUsername,
+				decryptPassword);
 		log.info("验证码：{}", captcha);
 		log.info("加密用户名：{}", encryptUsername);
 		log.info("加密密码：{}", encryptPassword);
@@ -102,7 +104,8 @@ class OAuth2ApiTest {
 	}
 
 	@SneakyThrows
-	private Map<String,String> getUsernamePasswordAuthApi(long uuid, String captcha, String username, String password) {
+	private Map<String, String> getUsernamePasswordAuthApi(long uuid, String captcha, String username,
+			String password) {
 		String apiUrl = getOAuthApiUrl();
 		HashMap<String, String> params = new HashMap<>();
 		HashMap<String, String> headers = new HashMap<>(1);
@@ -128,7 +131,7 @@ class OAuth2ApiTest {
 		params.put("grant_type", "refresh_token");
 		headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 		String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
-        return JacksonUtil.readTree(json).get("access_token").asText();
+		return JacksonUtil.readTree(json).get("access_token").asText();
 	}
 
 	@SneakyThrows
