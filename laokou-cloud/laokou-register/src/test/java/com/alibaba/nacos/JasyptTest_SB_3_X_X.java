@@ -22,7 +22,7 @@ import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 
 /**
- * 只针对 spring-boot 3.x.x
+ * 只针对 spring-boot 3.x.x.
  *
  * @author laokou
  */
@@ -39,7 +39,7 @@ public class JasyptTest_SB_3_X_X {
 	}
 
 	/**
-	 * Jasypt 3.x 加密（PBEWITHHMACSHA512ANDAES_256）
+	 * Jasypt 3.x 加密（PBEWITHHMACSHA512ANDAES_256）.
 	 * @param plainText 待加密的原文
 	 * @param factor 加密秘钥
 	 * @return java.lang.String
@@ -49,7 +49,7 @@ public class JasyptTest_SB_3_X_X {
 	}
 
 	/**
-	 * Jasypt 3.x 解密（PBEWITHHMACSHA512ANDAES_256）
+	 * Jasypt 3.x 解密（PBEWITHHMACSHA512ANDAES_256）.
 	 * @param encryptedText 待解密密文
 	 * @param factor 解密秘钥
 	 * @return java.lang.String

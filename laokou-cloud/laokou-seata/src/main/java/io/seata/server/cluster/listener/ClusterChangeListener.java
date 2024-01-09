@@ -21,7 +21,7 @@ package io.seata.server.cluster.listener;
 public interface ClusterChangeListener {
 
 	/**
-	 * cluster change event
+	 * cluster change event.
 	 * @param event event
 	 */
 	void onChangeEvent(ClusterChangeEvent event);

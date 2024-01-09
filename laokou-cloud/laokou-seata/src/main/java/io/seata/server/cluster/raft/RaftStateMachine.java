@@ -15,15 +15,6 @@
  */
 package io.seata.server.cluster.raft;
 
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 import com.alipay.sofa.jraft.Closure;
 import com.alipay.sofa.jraft.Iterator;
 import com.alipay.sofa.jraft.RouteTable;
@@ -39,10 +30,8 @@ import io.seata.common.metadata.ClusterRole;
 import io.seata.common.metadata.Node;
 import io.seata.common.store.StoreMode;
 import io.seata.common.util.StringUtils;
+import io.seata.server.cluster.listener.ClusterChangeEvent;
 import io.seata.server.cluster.raft.context.SeataClusterContext;
-import io.seata.server.cluster.raft.snapshot.metadata.LeaderMetadataSnapshotFile;
-import io.seata.server.cluster.raft.snapshot.session.SessionSnapshotFile;
-import io.seata.server.cluster.raft.snapshot.StoreSnapshotFile;
 import io.seata.server.cluster.raft.execute.RaftMsgExecute;
 import io.seata.server.cluster.raft.execute.branch.AddBranchSessionExecute;
 import io.seata.server.cluster.raft.execute.branch.RemoveBranchSessionExecute;
@@ -52,7 +41,9 @@ import io.seata.server.cluster.raft.execute.global.RemoveGlobalSessionExecute;
 import io.seata.server.cluster.raft.execute.global.UpdateGlobalSessionExecute;
 import io.seata.server.cluster.raft.execute.lock.BranchReleaseLockExecute;
 import io.seata.server.cluster.raft.execute.lock.GlobalReleaseLockExecute;
-import io.seata.server.cluster.listener.ClusterChangeEvent;
+import io.seata.server.cluster.raft.snapshot.StoreSnapshotFile;
+import io.seata.server.cluster.raft.snapshot.metadata.LeaderMetadataSnapshotFile;
+import io.seata.server.cluster.raft.snapshot.session.SessionSnapshotFile;
 import io.seata.server.cluster.raft.sync.RaftSyncMessageSerializer;
 import io.seata.server.cluster.raft.sync.msg.RaftBaseMsg;
 import io.seata.server.cluster.raft.sync.msg.RaftClusterMetadataMsg;
@@ -66,18 +57,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.env.Environment;
 
+import java.nio.ByteBuffer;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
+
 import static io.seata.common.Constants.OBJECT_KEY_SPRING_APPLICATION_CONTEXT;
 import static io.seata.common.Constants.OBJECT_KEY_SPRING_CONFIGURABLE_ENVIRONMENT;
 import static io.seata.common.DefaultValues.SERVICE_OFFSET_SPRING_BOOT;
-import static io.seata.server.cluster.raft.sync.msg.RaftSyncMsgType.ADD_BRANCH_SESSION;
-import static io.seata.server.cluster.raft.sync.msg.RaftSyncMsgType.ADD_GLOBAL_SESSION;
-import static io.seata.server.cluster.raft.sync.msg.RaftSyncMsgType.REFRESH_CLUSTER_METADATA;
-import static io.seata.server.cluster.raft.sync.msg.RaftSyncMsgType.RELEASE_BRANCH_SESSION_LOCK;
-import static io.seata.server.cluster.raft.sync.msg.RaftSyncMsgType.RELEASE_GLOBAL_SESSION_LOCK;
-import static io.seata.server.cluster.raft.sync.msg.RaftSyncMsgType.REMOVE_BRANCH_SESSION;
-import static io.seata.server.cluster.raft.sync.msg.RaftSyncMsgType.REMOVE_GLOBAL_SESSION;
-import static io.seata.server.cluster.raft.sync.msg.RaftSyncMsgType.UPDATE_BRANCH_SESSION_STATUS;
-import static io.seata.server.cluster.raft.sync.msg.RaftSyncMsgType.UPDATE_GLOBAL_SESSION_STATUS;
+import static io.seata.server.cluster.raft.sync.msg.RaftSyncMsgType.*;
 
 /**
  * @author funkye
@@ -97,12 +86,12 @@ public class RaftStateMachine extends StateMachineAdapter {
 	private volatile RaftClusterMetadata raftClusterMetadata;
 
 	/**
-	 * Leader term
+	 * Leader term.
 	 */
 	private final AtomicLong leaderTerm = new AtomicLong(-1);
 
 	/**
-	 * current term
+	 * current term.
 	 */
 	private final AtomicLong currentTerm = new AtomicLong(-1);
 

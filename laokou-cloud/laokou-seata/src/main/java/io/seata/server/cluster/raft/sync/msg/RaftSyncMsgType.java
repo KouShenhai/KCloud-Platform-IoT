@@ -21,11 +21,11 @@ package io.seata.server.cluster.raft.sync.msg;
 public enum RaftSyncMsgType {
 
 	/**
-	 * addGlobalSession
+	 * addGlobalSession.
 	 */
 	ADD_GLOBAL_SESSION,
 	/**
-	 * removeGlobalSession
+	 * removeGlobalSession.
 	 */
 	REMOVE_GLOBAL_SESSION,
 	/**
@@ -33,27 +33,27 @@ public enum RaftSyncMsgType {
 	 */
 	ADD_BRANCH_SESSION,
 	/**
-	 * addBranchSession
+	 * addBranchSession.
 	 */
 	REMOVE_BRANCH_SESSION,
 	/**
-	 * updateGlobalSessionStatus
+	 * updateGlobalSessionStatus.
 	 */
 	UPDATE_GLOBAL_SESSION_STATUS,
 	/**
-	 * updateBranchSessionStatus
+	 * updateBranchSessionStatus.
 	 */
 	UPDATE_BRANCH_SESSION_STATUS,
 	/**
-	 * releaseGlobalSessionLock
+	 * releaseGlobalSessionLock.
 	 */
 	RELEASE_GLOBAL_SESSION_LOCK,
 	/**
-	 * releaseBranchSessionLock
+	 * releaseBranchSessionLock.
 	 */
 	RELEASE_BRANCH_SESSION_LOCK,
 	/**
-	 * refresh cluster metadata
+	 * refresh cluster metadata.
 	 */
 	REFRESH_CLUSTER_METADATA;
 

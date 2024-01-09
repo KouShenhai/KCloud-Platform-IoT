@@ -15,19 +15,10 @@
  */
 package io.seata.server.session;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-
 import io.seata.common.ConfigurationKeys;
-import io.seata.common.exception.StoreException;
-import io.seata.core.model.LockStatus;
 import io.seata.common.XID;
 import io.seata.common.exception.ShouldNeverHappenException;
+import io.seata.common.exception.StoreException;
 import io.seata.common.loader.EnhancedServiceLoader;
 import io.seata.common.util.CollectionUtils;
 import io.seata.common.util.StringUtils;
@@ -35,21 +26,24 @@ import io.seata.config.Configuration;
 import io.seata.config.ConfigurationFactory;
 import io.seata.core.exception.TransactionException;
 import io.seata.core.model.GlobalStatus;
+import io.seata.core.model.LockStatus;
 import io.seata.core.store.DistributedLockDO;
 import io.seata.core.store.DistributedLocker;
+import io.seata.server.cluster.raft.RaftServerFactory;
 import io.seata.server.cluster.raft.context.SeataClusterContext;
 import io.seata.server.lock.distributed.DistributedLockerFactory;
-import io.seata.server.cluster.raft.RaftServerFactory;
 import io.seata.server.store.StoreConfig;
 import io.seata.server.store.StoreConfig.SessionMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static io.seata.common.DefaultValues.DEFAULT_SEATA_GROUP;
-import static java.io.File.separator;
-import static io.seata.common.DefaultValues.DEFAULT_DISTRIBUTED_LOCK_EXPIRE_TIME;
-import static io.seata.common.DefaultValues.DEFAULT_SESSION_STORE_FILE_DIR;
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+
 import static io.seata.common.ConfigurationKeys.SERVER_SERVICE_PORT_CAMEL;
+import static io.seata.common.DefaultValues.*;
+import static java.io.File.separator;
 
 /**
  * The type Session holder.
@@ -71,7 +65,7 @@ public class SessionHolder {
 	public static final String ROOT_SESSION_MANAGER_NAME = "root.data";
 
 	/**
-	 * The redis distributed lock expire time
+	 * The redis distributed lock expire time.
 	 */
 	private static long DISTRIBUTED_LOCK_EXPIRE_TIME = CONFIG.getLong(ConfigurationKeys.DISTRIBUTED_LOCK_EXPIRE_TIME,
 			DEFAULT_DISTRIBUTED_LOCK_EXPIRE_TIME);
@@ -374,7 +368,7 @@ public class SessionHolder {
 	public static boolean distributedLockAndExecute(String key, NoArgsFunc func) {
 		boolean lock = false;
 		try {
-			if (lock = acquireDistributedLock(key)) {
+			if (lock == acquireDistributedLock(key)) {
 				func.call();
 			}
 		}

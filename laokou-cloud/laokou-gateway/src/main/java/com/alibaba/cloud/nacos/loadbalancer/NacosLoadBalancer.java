@@ -63,7 +63,7 @@ import java.util.stream.Collectors;
 import static org.laokou.common.i18n.common.Constant.*;
 
 /**
- * Nacos路由负载均衡 see original.
+ * Nacos路由负载均衡.
  * {@link com.alibaba.cloud.nacos.loadbalancer.NacosLoadBalancerClientConfiguration}
  * {@link org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer}
  *
@@ -88,6 +88,9 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 */
 	public static String ipv6;
 
+	/**
+	 * 初始化.
+	 */
 	@PostConstruct
 	public void init() {
 		String ip = nacosDiscoveryProperties.getIp();
@@ -99,6 +102,11 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		}
 	}
 
+	/**
+	 * 根据IP类型过滤服务实例.
+	 * @param instances 服务实例
+	 * @return 服务实例列表
+	 */
 	private List<ServiceInstance> filterInstanceByIpType(List<ServiceInstance> instances) {
 		if (StringUtils.isNotEmpty(ipv6)) {
 			List<ServiceInstance> ipv6InstanceList = new ArrayList<>();
@@ -134,6 +142,11 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		this.nacosDiscoveryProperties = nacosDiscoveryProperties;
 	}
 
+	/**
+	 * 路由负载均衡.
+	 * @param request 请求
+	 * @return 服务实例（响应式）
+	 */
 	@Override
 	public Mono<Response<ServiceInstance>> choose(Request request) {
 		return serviceInstanceListSupplierProvider.getIfAvailable(NoopServiceInstanceListSupplier::new)
@@ -142,6 +155,12 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			.mapNotNull(instances -> choose(instances, request));
 	}
 
+	/**
+	 * 路由负载均衡.
+	 * @param instances 服务实例列表
+	 * @param request 请求
+	 * @return 服务实例响应体
+	 */
 	private Response<ServiceInstance> choose(List<ServiceInstance> instances, Request<?> request) {
 		// IP优先
 		if (request.getContext() instanceof RequestDataContext context) {
@@ -194,7 +213,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	}
 
 	/**
-	 * 根据IP和端口匹配服务节点
+	 * 根据IP和端口匹配服务节点.
 	 * @param instance 服务实例
 	 * @param headers 请求头
 	 * @return boolean

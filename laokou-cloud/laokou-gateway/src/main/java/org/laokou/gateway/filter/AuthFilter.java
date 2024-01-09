@@ -73,7 +73,7 @@ import static org.laokou.gateway.constant.Constant.OAUTH2_URI;
 import static org.laokou.gateway.utils.RequestUtil.pathMatcher;
 
 /**
- * 认证Filter
+ * 认证Filter.
  *
  * @author laokou
  */
@@ -132,10 +132,10 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	}
 
 	/**
-	 * OAuth2解密
+	 * OAuth2解密.
 	 * @param chain chain
 	 * @param exchange exchange
-	 * @return Mono<Void>
+	 * @return 响应式
 	 */
 	private Mono<Void> decode(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerRequest serverRequest = ServerRequest.create(exchange, HandlerStrategies.withDefaults().messageReaders());

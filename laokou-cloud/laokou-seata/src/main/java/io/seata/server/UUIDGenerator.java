@@ -27,7 +27,7 @@ public class UUIDGenerator {
 	private static volatile IdWorker idWorker;
 
 	/**
-	 * generate UUID using snowflake algorithm
+	 * generate UUID using snowflake algorithm.
 	 * @return UUID
 	 */
 	public static long generateUUID() {
@@ -42,7 +42,7 @@ public class UUIDGenerator {
 	}
 
 	/**
-	 * init IdWorker
+	 * init IdWorker.
 	 * @param serverNode the server node id, consider as machine id in snowflake
 	 */
 	public static void init(Long serverNode) {

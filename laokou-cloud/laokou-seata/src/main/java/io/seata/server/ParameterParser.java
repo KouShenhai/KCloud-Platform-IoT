@@ -74,8 +74,8 @@ public class ParameterParser {
 	}
 
 	/**
-	 * startup args > docker env
-	 * @param args
+	 * startup args > docker env.
+	 * @param args 参数
 	 */
 	private void init(String[] args) {
 		try {
@@ -181,7 +181,7 @@ public class ParameterParser {
 	}
 
 	/**
-	 * Gets seata env
+	 * Gets seata env。
 	 * @return the name used for multi-configuration isolation.
 	 */
 	public String getSeataEnv() {

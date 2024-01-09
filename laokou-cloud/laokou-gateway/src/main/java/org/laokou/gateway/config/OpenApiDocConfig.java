@@ -30,7 +30,7 @@ import java.util.List;
 import static org.laokou.common.i18n.common.Constant.HTTPS_SCHEME;
 
 /**
- * API文档配置
+ * API文档配置.
  *
  * @author laokou
  */
@@ -38,7 +38,7 @@ import static org.laokou.common.i18n.common.Constant.HTTPS_SCHEME;
 public class OpenApiDocConfig {
 
 	@Bean
-	@Lazy(value = false)
+	@Lazy(false)
 	@SneakyThrows
 	public List<GroupedOpenApi> openApis(RouteDefinitionLocator locator, ServerProperties serverProperties) {
 		List<GroupedOpenApi> groups = new ArrayList<>();

@@ -44,7 +44,7 @@ import org.springframework.stereotype.Component;
 import static io.seata.common.DefaultValues.DEFAULT_LOCK_DB_TABLE;
 
 /**
- * Global Lock DB ServiceImpl
+ * Global Lock DB ServiceImpl.
  *
  * @author zhongxiang.wang
  * @author lvekee 734843455@qq.com

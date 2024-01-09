@@ -35,7 +35,7 @@ public class LockerManagerFactory {
 	private static final Configuration CONFIG = ConfigurationFactory.getInstance();
 
 	/**
-	 * the lock manager
+	 * the lock manager.
 	 */
 	private static volatile LockManager LOCK_MANAGER;
 

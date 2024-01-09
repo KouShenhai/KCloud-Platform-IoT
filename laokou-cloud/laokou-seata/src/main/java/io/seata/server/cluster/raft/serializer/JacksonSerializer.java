@@ -15,11 +15,12 @@
  */
 package io.seata.server.cluster.raft.serializer;
 
-import java.io.IOException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.seata.common.loader.LoadLevel;
 import io.seata.core.serializer.Serializer;
+
+import java.io.IOException;
 
 /**
  * @author jianbin.chen
@@ -57,10 +58,10 @@ public class JacksonSerializer implements Serializer {
 
 		Class<?> clz;
 
-		public JsonInfo() {
+		JsonInfo() {
 		}
 
-		public JsonInfo(byte[] obj, Class<?> clz) {
+		JsonInfo(byte[] obj, Class<?> clz) {
 			this.obj = obj;
 			this.clz = clz;
 		}

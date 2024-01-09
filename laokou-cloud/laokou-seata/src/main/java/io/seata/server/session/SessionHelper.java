@@ -15,17 +15,6 @@
  */
 package io.seata.server.session;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-
 import io.seata.common.ConfigurationKeys;
 import io.seata.common.util.CollectionUtils;
 import io.seata.config.Configuration;
@@ -46,6 +35,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 import static io.seata.common.DefaultValues.DEFAULT_ENABLE_BRANCH_ASYNC_REMOVE;
 import static io.seata.common.DefaultValues.DEFAULT_SEATA_GROUP;
 
@@ -54,7 +49,7 @@ import static io.seata.common.DefaultValues.DEFAULT_SEATA_GROUP;
  *
  * @author sharajava
  */
-public class SessionHelper {
+public final class SessionHelper {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SessionHelper.class);
 
@@ -69,10 +64,13 @@ public class SessionHelper {
 	private static final String GROUP = CONFIG.getConfig(ConfigurationKeys.SERVER_RAFT_GROUP, DEFAULT_SEATA_GROUP);
 
 	/**
-	 * The instance of DefaultCoordinator
+	 * The instance of DefaultCoordinator.
 	 */
 	private static final DefaultCoordinator COORDINATOR = DefaultCoordinator.getInstance();
 
+	/**
+	 * delay handle session.
+	 */
 	private static final boolean DELAY_HANDLE_SESSION = !(Objects.equals(StoreConfig.getSessionMode(), SessionMode.FILE)
 			|| Objects.equals(StoreConfig.getSessionMode(), SessionMode.RAFT));
 
@@ -110,7 +108,7 @@ public class SessionHelper {
 	}
 
 	/**
-	 * New branch
+	 * New branch.
 	 * @param branchType the branch type
 	 * @param xid Transaction id.
 	 * @param branchId Branch id.
@@ -419,7 +417,7 @@ public class SessionHelper {
 	}
 
 	/**
-	 * remove branchSession from globalSession
+	 * remove branchSession from globalSession.
 	 * @param globalSession the globalSession
 	 * @param branchSession the branchSession
 	 * @param isAsync if asynchronous remove
@@ -436,7 +434,7 @@ public class SessionHelper {
 	}
 
 	/**
-	 * remove branchSession from globalSession
+	 * remove branchSession from globalSession.
 	 * @param globalSession the globalSession
 	 * @param isAsync if asynchronous remove
 	 */
@@ -460,7 +458,7 @@ public class SessionHelper {
 	}
 
 	/**
-	 * if true, enable delete the branch asynchronously
+	 * if true, enable delete the branch asynchronously.
 	 * @return the boolean
 	 */
 	private static boolean isEnableBranchRemoveAsync() {

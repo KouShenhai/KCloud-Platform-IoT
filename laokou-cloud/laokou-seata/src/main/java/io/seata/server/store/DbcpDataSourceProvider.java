@@ -23,7 +23,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 
 /**
- * The dbcp datasource provider
+ * The dbcp datasource provider.
  *
  * @author zhangsen
  * @author ggndnn

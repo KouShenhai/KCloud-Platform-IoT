@@ -15,8 +15,6 @@
  */
 package io.seata.server.metrics;
 
-import java.util.List;
-
 import io.seata.config.ConfigurationFactory;
 import io.seata.core.constants.ConfigurationKeys;
 import io.seata.metrics.exporter.Exporter;
@@ -25,26 +23,22 @@ import io.seata.metrics.registry.Registry;
 import io.seata.metrics.registry.RegistryFactory;
 import io.seata.server.event.EventBusManager;
 
+import java.util.List;
+
 import static io.seata.common.DefaultValues.DEFAULT_METRICS_ENABLED;
 
 /**
- * Metrics manager for init
+ * Metrics manager for init.
  *
  * @author zhengyangyong
  */
 public class MetricsManager {
 
-	private static class SingletonHolder {
+	private Registry registry;
 
-		private static MetricsManager INSTANCE = new MetricsManager();
-
-	}
-
-	public static final MetricsManager get() {
+	public static MetricsManager get() {
 		return MetricsManager.SingletonHolder.INSTANCE;
 	}
-
-	private Registry registry;
 
 	public Registry getRegistry() {
 		return registry;
@@ -65,6 +59,12 @@ public class MetricsManager {
 				}
 			}
 		}
+	}
+
+	private static class SingletonHolder {
+
+		private static final MetricsManager INSTANCE = new MetricsManager();
+
 	}
 
 }

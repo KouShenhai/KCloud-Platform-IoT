@@ -68,7 +68,7 @@ public class GlobalSession implements SessionLifecycle, SessionStorable {
 	/**
 	 * If the global session's status is (Rollbacking or Committing) and currentTime -
 	 * createTime >= RETRY_DEAD_THRESHOLD then the tx will be remand as need to retry
-	 * rollback
+	 * rollback.
 	 */
 	private static final int RETRY_DEAD_THRESHOLD = ConfigurationFactory.getInstance()
 		.getInt(ConfigurationKeys.RETRY_DEAD_THRESHOLD, DefaultValues.DEFAULT_RETRY_DEAD_THRESHOLD);
@@ -151,7 +151,7 @@ public class GlobalSession implements SessionLifecycle, SessionStorable {
 	}
 
 	/**
-	 * Has AT branch
+	 * Has AT branch.
 	 * @return the boolean
 	 */
 	public boolean hasATBranch() {
@@ -165,7 +165,7 @@ public class GlobalSession implements SessionLifecycle, SessionStorable {
 	}
 
 	/**
-	 * Is saga type transaction
+	 * Is saga type transaction.
 	 * @return is saga
 	 */
 	public boolean isSaga() {
@@ -188,7 +188,7 @@ public class GlobalSession implements SessionLifecycle, SessionStorable {
 	}
 
 	/**
-	 * prevent could not handle committing and rollbacking transaction
+	 * prevent could not handle committing and rollbacking transaction.
 	 * @return if true retry commit or roll back
 	 */
 	public boolean isDeadSession() {
@@ -706,45 +706,6 @@ public class GlobalSession implements SessionLifecycle, SessionStorable {
 		globalSessionLock.unlock();
 	}
 
-	private static class GlobalSessionLock {
-
-		private Lock globalSessionLock = new ReentrantLock();
-
-		private static final int GLOBAL_SESSION_LOCK_TIME_OUT_MILLS = 2 * 1000;
-
-		public void lock() throws TransactionException {
-			try {
-				if (globalSessionLock.tryLock(GLOBAL_SESSION_LOCK_TIME_OUT_MILLS, TimeUnit.MILLISECONDS)) {
-					return;
-				}
-			}
-			catch (InterruptedException e) {
-				LOGGER.error("Interrupted error", e);
-			}
-			throw new GlobalTransactionException(TransactionExceptionCode.FailedLockGlobalTranscation,
-					"Lock global session failed");
-		}
-
-		public void unlock() {
-			globalSessionLock.unlock();
-		}
-
-	}
-
-	@FunctionalInterface
-	public interface LockRunnable {
-
-		void run() throws TransactionException;
-
-	}
-
-	@FunctionalInterface
-	public interface LockCallable<V> {
-
-		V call() throws TransactionException;
-
-	}
-
 	public List<BranchSession> getBranchSessions() {
 		loadBranchs();
 		return branchSessions;
@@ -790,6 +751,45 @@ public class GlobalSession implements SessionLifecycle, SessionStorable {
 				+ beginTime + ", applicationData='" + applicationData + '\'' + ", lazyLoadBranch=" + lazyLoadBranch
 				+ ", active=" + active + ", branchSessions=" + branchSessions + ", globalSessionLock="
 				+ globalSessionLock + ", lifecycleListeners=" + lifecycleListeners + '}';
+	}
+
+	private static class GlobalSessionLock {
+
+		private final Lock globalSessionLock = new ReentrantLock();
+
+		private static final int GLOBAL_SESSION_LOCK_TIME_OUT_MILLS = 2 * 1000;
+
+		public void lock() throws TransactionException {
+			try {
+				if (globalSessionLock.tryLock(GLOBAL_SESSION_LOCK_TIME_OUT_MILLS, TimeUnit.MILLISECONDS)) {
+					return;
+				}
+			}
+			catch (InterruptedException e) {
+				LOGGER.error("Interrupted error", e);
+			}
+			throw new GlobalTransactionException(TransactionExceptionCode.FailedLockGlobalTranscation,
+					"Lock global session failed");
+		}
+
+		public void unlock() {
+			globalSessionLock.unlock();
+		}
+
+	}
+
+	@FunctionalInterface
+	public interface LockRunnable {
+
+		void run() throws TransactionException;
+
+	}
+
+	@FunctionalInterface
+	public interface LockCallable<V> {
+
+		V call() throws TransactionException;
+
 	}
 
 }

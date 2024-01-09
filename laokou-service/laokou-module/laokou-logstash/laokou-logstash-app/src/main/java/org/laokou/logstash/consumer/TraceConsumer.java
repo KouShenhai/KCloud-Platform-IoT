@@ -68,7 +68,7 @@ public class TraceConsumer {
 		log.info("接收调度中心参数：{}", param);
 		LocalDate localDate = StringUtil.isEmpty(param) ? DateUtil.nowDate()
 				: DateUtil.parseDate(param, DateUtil.YYYY_BAR_MM_BAR_DD);
-		localDate = DateUtil.plusDays(DateUtil.getFirstDayOfMonth(localDate), 1);
+		localDate = DateUtil.plusDays(DateUtil.getLastDayOfMonth(localDate), 1);
 		try {
 			log(createIndex(localDate), localDate);
 			XxlJobHelper.handleSuccess("创建索引【{" + getIndexName(localDate) + "}】执行成功");

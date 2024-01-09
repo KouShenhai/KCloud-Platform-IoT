@@ -39,7 +39,7 @@ public class StoreConfig {
 	private static LockMode lockMode;
 
 	/**
-	 * set storeMode sessionMode lockMode from StartupParameter
+	 * set storeMode sessionMode lockMode from StartupParameter.
 	 * @param storeMode storeMode
 	 * @param sessionMode sessionMode
 	 * @param lockMode lockMode
@@ -88,8 +88,8 @@ public class StoreConfig {
 	}
 
 	/**
-	 * only for inner call
-	 * @return
+	 * only for inner call.
+	 * @return StoreMode
 	 */
 	private static StoreMode getStoreMode() {
 		// startup
@@ -199,7 +199,7 @@ public class StoreConfig {
 		 */
 		REDIS("redis"),
 		/**
-		 * raft store
+		 * raft store.
 		 */
 		RAFT("raft");
 
@@ -239,7 +239,7 @@ public class StoreConfig {
 		 */
 		REDIS("redis"),
 		/**
-		 * raft store
+		 * raft store.
 		 */
 		RAFT("raft");
 
