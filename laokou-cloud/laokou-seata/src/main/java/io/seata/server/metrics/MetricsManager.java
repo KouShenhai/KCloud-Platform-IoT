@@ -33,18 +33,20 @@ import static io.seata.common.DefaultValues.DEFAULT_METRICS_ENABLED;
  * @author zhengyangyong
  */
 public class MetricsManager {
+
 	private Registry registry;
 
 	public static MetricsManager get() {
 		return MetricsManager.SingletonHolder.INSTANCE;
 	}
+
 	public Registry getRegistry() {
 		return registry;
 	}
 
 	public void init() {
 		boolean enabled = ConfigurationFactory.getInstance()
-				.getBoolean(ConfigurationKeys.METRICS_PREFIX + ConfigurationKeys.METRICS_ENABLED, DEFAULT_METRICS_ENABLED);
+			.getBoolean(ConfigurationKeys.METRICS_PREFIX + ConfigurationKeys.METRICS_ENABLED, DEFAULT_METRICS_ENABLED);
 		if (enabled) {
 			registry = RegistryFactory.getInstance();
 			if (registry != null) {

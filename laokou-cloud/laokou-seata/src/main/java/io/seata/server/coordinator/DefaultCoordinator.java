@@ -564,7 +564,8 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 		private final BranchSession branchSession;
 
 		/**
-		 * If you use this construct, the task will remove the branchSession provided by the parameter.
+		 * If you use this construct, the task will remove the branchSession provided by
+		 * the parameter.
 		 * @param globalSession the globalSession
 		 */
 		BranchRemoveTask(GlobalSession globalSession, BranchSession branchSession) {

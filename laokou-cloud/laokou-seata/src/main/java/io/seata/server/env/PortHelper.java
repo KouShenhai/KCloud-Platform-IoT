@@ -47,7 +47,8 @@ public class PortHelper {
 	}
 
 	/**
-	 * get config from configFile -Dspring.config.location > classpath:application.properties > classpath:application.yml.
+	 * get config from configFile -Dspring.config.location >
+	 * classpath:application.properties > classpath:application.yml.
 	 * @return the port
 	 * @throws IOException the io exception
 	 */

@@ -19,6 +19,7 @@ package org.laokou.gateway.constant;
 
 /**
  * 常量.
+ *
  * @author laokou
  */
 public interface Constant {
