@@ -20,14 +20,14 @@ import io.seata.server.console.vo.GlobalSessionVO;
 import io.seata.console.result.PageResult;
 
 /**
- * Global session service
+ * Global session service.
  *
  * @author wangzhongxiang
  */
 public interface GlobalSessionService {
 
 	/**
-	 * Query global session
+	 * Query global session.
 	 * @param param the param
 	 * @return the GlobalSessionVO list
 	 */

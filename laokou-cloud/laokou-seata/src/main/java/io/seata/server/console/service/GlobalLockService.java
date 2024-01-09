@@ -20,14 +20,14 @@ import io.seata.server.console.vo.GlobalLockVO;
 import io.seata.console.result.PageResult;
 
 /**
- * Global lock service
+ * Global lock service.
  *
  * @author wangzhongxiang
  */
 public interface GlobalLockService {
 
 	/**
-	 * Query locks by param
+	 * Query locks by param.
 	 * @param param the param
 	 * @return the list of GlobalLockVO
 	 */

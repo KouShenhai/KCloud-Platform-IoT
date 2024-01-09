@@ -32,44 +32,44 @@ import java.util.List;
 public interface UsersServiceI {
 
 	/**
-	 * 修改
+	 * 修改.
 	 * @param cmd 指定
-	 * @return Result<Boolean>
+	 * @return 修改结果
 	 */
 	Result<Boolean> update(UserUpdateCmd cmd);
 
 	/**
-	 * 新增
+	 * 新增.
 	 * @param cmd 指令
-	 * @return Result<Boolean>
+	 * @return 新增结果
 	 */
 	Result<Boolean> insert(UserInsertCmd cmd);
 
 	/**
-	 * 在线用户强踢
+	 * 在线用户强踢.
 	 * @param cmd 指令
-	 * @return Result<Boolean>
+	 * @return 强踢结果
 	 */
 	Result<Boolean> onlineKill(OnlineUserKillCmd cmd);
 
 	/**
-	 * 在线用户查询
+	 * 在线用户查询.
 	 * @param qry 查询
-	 * @return Result<Datas<UserOnlineCO>>
+	 * @return 在线用户
 	 */
 	Result<Datas<UserOnlineCO>> onlineList(OnlineUserListQry qry);
 
 	/**
-	 * 用户基本信息
-	 * @return Result<UserProfileCO>
+	 * 用户基本信息.
+	 * @return 用户信息
 	 */
 	Result<UserProfileCO> getProfile(UserProfileGetQry qry);
 
 	Result<Boolean> updateProfile(UserProfileUpdateCmd cmd);
 
 	/**
-	 * 用户下拉列表
-	 * @return Result<List<OptionCO>>
+	 * 用户下拉列表.
+	 * @return 下拉列表
 	 */
 	Result<List<OptionCO>> optionList(UserOptionListQry qry);
 

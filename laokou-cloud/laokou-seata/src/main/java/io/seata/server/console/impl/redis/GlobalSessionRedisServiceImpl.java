@@ -39,7 +39,7 @@ import static io.seata.console.result.PageResult.checkPage;
 import static io.seata.server.storage.SessionConverter.convertToGlobalSessionVo;
 
 /**
- * Global Session Redis ServiceImpl
+ * Global Session Redis ServiceImpl.
  *
  * @author zhongxiang.wang
  * @author doubleDimple

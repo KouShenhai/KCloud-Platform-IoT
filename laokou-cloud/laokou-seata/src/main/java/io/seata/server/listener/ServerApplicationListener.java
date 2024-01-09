@@ -115,7 +115,7 @@ public class ServerApplicationListener implements GenericApplicationListener {
 	}
 
 	/**
-	 * higher than LoggingApplicationListener
+	 * higher than LoggingApplicationListener.
 	 * @return the order
 	 */
 	@Override

@@ -12,32 +12,34 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
+
 package org.laokou.gateway.constant;
 
 /**
+ * 常量.
  * @author laokou
  */
 public interface Constant {
 
 	/**
-	 * 认证授权地址
+	 * 认证授权地址.
 	 */
 	String OAUTH2_URI = "/auth/oauth2/token";
 
 	/**
-	 * OAuth2错误信息
+	 * OAuth2错误信息.
 	 */
 	String ERROR_DESCRIPTION = "error_description";
 
 	/**
-	 * OAuth2错误码
+	 * OAuth2错误码.
 	 */
 	String ERROR = "error";
 
 	/**
-	 * 分块
+	 * 分块.
 	 */
 	String CHUNKED = "chunked";
 

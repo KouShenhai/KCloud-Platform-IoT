@@ -20,9 +20,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Component;
 
 /**
- * Branch Session File ServiceImpl
+ * Branch Session File ServiceImpl.
  *
- * @author: zhongxiang.wang
+ * @author zhongxiang.wang
  */
 @Component
 @org.springframework.context.annotation.Configuration

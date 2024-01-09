@@ -18,7 +18,7 @@ package io.seata.server.session;
 import io.seata.core.exception.TransactionException;
 
 /**
- * The Functional Interface Branch session handler
+ * The Functional Interface Branch session handler.
  *
  * @author wang.liang
  * @since 1.5.0
@@ -26,6 +26,9 @@ import io.seata.core.exception.TransactionException;
 @FunctionalInterface
 public interface BranchSessionHandler {
 
+	/**
+	 * 继续.
+	 */
 	Boolean CONTINUE = null;
 
 	/**

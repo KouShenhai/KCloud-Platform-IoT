@@ -77,7 +77,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 	}
 
 	/**
-	 * OAuth2响应
+	 * OAuth2响应.
 	 */
 	private Mono<Void> response(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerHttpResponse response = exchange.getResponse();

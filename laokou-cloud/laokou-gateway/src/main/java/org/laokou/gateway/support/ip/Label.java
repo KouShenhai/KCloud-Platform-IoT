@@ -21,7 +21,15 @@ import lombok.Getter;
 @Getter
 public enum Label {
 
-	WHITE("white"), BLACK("black");
+	/**
+	 * 白名单.
+	 */
+	WHITE("white"),
+
+	/**
+	 * 黑名单.
+	 */
+	BLACK("black");
 
 	private final String name;
 

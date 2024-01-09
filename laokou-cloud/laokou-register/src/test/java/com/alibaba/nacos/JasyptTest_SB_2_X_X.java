@@ -22,7 +22,7 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
 
 /**
- * 只针对 spring-boot 2.x.x
+ * 只针对 spring-boot 2.x.x.
  *
  * @author laokou
  */
@@ -32,7 +32,7 @@ public class JasyptTest_SB_2_X_X {
 	private static final String PBEWITHMD5ANDDES = "PBEWithMD5AndDES";
 
 	/**
-	 * Jasyp2.x 加密（PBEWithMD5AndDES）
+	 * Jasyp2.x 加密（PBEWithMD5AndDES）.
 	 * @param plainText 待加密的原文
 	 * @param factor 加密秘钥
 	 * @return java.lang.String
@@ -50,7 +50,7 @@ public class JasyptTest_SB_2_X_X {
 	}
 
 	/**
-	 * Jaspy2.x 解密（PBEWithMD5AndDES）
+	 * Jaspy2.x 解密（PBEWithMD5AndDES）.
 	 * @param encryptedText 待解密密文
 	 * @param factor 解密秘钥
 	 * @return java.lang.String

@@ -25,7 +25,7 @@ import io.seata.core.event.ExceptionEvent;
 import io.seata.server.event.EventBusManager;
 
 /**
- * The type metric logback appender
+ * The type metric logback appender.
  *
  * @author Bughue
  */

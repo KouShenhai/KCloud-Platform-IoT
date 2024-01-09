@@ -15,14 +15,14 @@
  */
 package io.seata.server.logging.logback.appender;
 
-import java.util.ArrayList;
-
 import net.logstash.logback.composite.JsonProvider;
 import net.logstash.logback.composite.JsonProviders;
 import net.logstash.logback.encoder.LogstashEncoder;
 
+import java.util.ArrayList;
+
 /**
- * The type Enhanced logstash encoder
+ * The type Enhanced logstash encoder.
  *
  * @author wang.liang
  * @since 1.5.0
@@ -30,7 +30,7 @@ import net.logstash.logback.encoder.LogstashEncoder;
 public class EnhancedLogstashEncoder extends LogstashEncoder {
 
 	/**
-	 * set exclude provider
+	 * set exclude provider.
 	 * @param excludedProviderClassName the excluded provider class name
 	 */
 	public void setExcludeProvider(String excludedProviderClassName) {

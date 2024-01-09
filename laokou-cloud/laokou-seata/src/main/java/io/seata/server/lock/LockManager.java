@@ -82,7 +82,7 @@ public interface LockManager {
 	void cleanAllLocks() throws TransactionException;
 
 	/**
-	 * Collect row locks list.`
+	 * Collect row locks list.
 	 * @param branchSession the branch session
 	 * @return the list
 	 */

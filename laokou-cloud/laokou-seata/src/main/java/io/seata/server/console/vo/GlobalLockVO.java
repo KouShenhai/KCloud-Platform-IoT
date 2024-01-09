@@ -15,6 +15,10 @@
  */
 package io.seata.server.console.vo;
 
+import io.seata.common.util.CollectionUtils;
+import io.seata.core.constants.ServerTableColumnsName;
+import io.seata.core.lock.RowLock;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -22,12 +26,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import io.seata.common.util.CollectionUtils;
-import io.seata.core.constants.ServerTableColumnsName;
-import io.seata.core.lock.RowLock;
-
 /**
- * GlobalLockVO
+ * GlobalLockVO.
  *
  * @author zhongxiang.wang
  * @author miaoxueyu
@@ -53,7 +53,7 @@ public class GlobalLockVO {
 	private Long gmtModified;
 
 	/**
-	 * convert RowLock list to GlobalLockVO list
+	 * convert RowLock list to GlobalLockVO list.
 	 * @param rowLocks the RowLock list
 	 * @return the GlobalLockVO list
 	 */
@@ -70,7 +70,7 @@ public class GlobalLockVO {
 	}
 
 	/**
-	 * convert RowLock to GlobalLockVO
+	 * convert RowLock to GlobalLockVO.
 	 * @param rowLock the RowLock
 	 * @return the GlobalLockVO
 	 */

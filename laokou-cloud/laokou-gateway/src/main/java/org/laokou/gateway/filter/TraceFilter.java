@@ -33,7 +33,7 @@ import reactor.core.publisher.Mono;
 import static org.laokou.common.i18n.common.Constant.*;
 
 /**
- * 请求链路
+ * 分布式请求链路.
  *
  * @author laokou
  */

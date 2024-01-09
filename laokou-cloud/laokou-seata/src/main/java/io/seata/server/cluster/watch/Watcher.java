@@ -91,8 +91,14 @@ public class Watcher<T> {
 
 	public interface Protocol {
 
+		/**
+		 * grpc协议.
+		 */
 		String GRPC = "grpc";
 
+		/**
+		 * http协议.
+		 */
 		String HTTP = "http";
 
 	}

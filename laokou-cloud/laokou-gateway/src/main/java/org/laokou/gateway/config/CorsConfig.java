@@ -35,7 +35,7 @@ import reactor.core.publisher.Mono;
 import static org.laokou.common.i18n.common.Constant.TRUE;
 
 /**
- * 跨域配置
+ * 跨域配置.
  *
  * @author laokou
  */

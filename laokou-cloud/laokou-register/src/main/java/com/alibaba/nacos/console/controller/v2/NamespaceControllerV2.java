@@ -78,7 +78,7 @@ public class NamespaceControllerV2 {
 	 * @param namespaceId namespaceId
 	 * @return namespace all info
 	 */
-	@GetMapping()
+	@GetMapping
 	@Secured(resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces", action = ActionTypes.READ,
 			signType = SignType.CONSOLE)
 	public Result<NamespaceAllInfo> getNamespace(@RequestParam("namespaceId") String namespaceId)
