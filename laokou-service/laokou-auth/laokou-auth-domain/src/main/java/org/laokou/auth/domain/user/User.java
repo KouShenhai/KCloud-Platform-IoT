@@ -35,7 +35,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * &#064;JsonTypeInfo(use = JsonTypeInfo.Id.NAME) => 多态子类与抽象类绑定
+ * &#064;JsonTypeInfo(use = JsonTypeInfo.Id.NAME) => 多态子类与抽象类绑定.
  *
  * @author laokou
  */
@@ -192,7 +192,7 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 	}
 
 	/**
-	 * Get the OAuth 2.0 token attributes
+	 * Get the OAuth 2.0 token attributes.
 	 * @return the OAuth 2.0 token attributes
 	 */
 	@Override

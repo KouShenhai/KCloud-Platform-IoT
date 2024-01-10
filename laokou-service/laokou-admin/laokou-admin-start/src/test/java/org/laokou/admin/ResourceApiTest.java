@@ -49,7 +49,7 @@ class ResourceApiTest extends CommonTest {
 
 	private static final String API_PREFIX = "/v1/resource/";
 
-	public ResourceApiTest(WebApplicationContext webApplicationContext,
+	ResourceApiTest(WebApplicationContext webApplicationContext,
 			OAuth2AuthorizationService oAuth2AuthorizationService) {
 		super(webApplicationContext, oAuth2AuthorizationService);
 	}

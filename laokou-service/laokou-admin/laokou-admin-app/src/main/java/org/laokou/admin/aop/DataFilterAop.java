@@ -72,7 +72,7 @@ public class DataFilterAop {
 	}
 
 	/**
-	 * 获取数据过滤的SQL
+	 * 获取数据过滤的SQL.
 	 */
 	private String getSqlFilter(User user, JoinPoint point) {
 		MethodSignature signature = (MethodSignature) point.getSignature();

@@ -23,9 +23,9 @@ import org.laokou.auth.domain.source.Source;
 public interface SourceGateway {
 
 	/**
-	 * 查询数据源名称
+	 * 查询数据源名称.
 	 * @param tenantId 租户ID
-	 * @return Source
+	 * @return 数据源对象
 	 */
 	Source getSourceName(Long tenantId);
 

@@ -36,7 +36,7 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 public interface UserMapper extends BatchMapper<UserDO> {
 
 	/**
-	 * 修改用户
+	 * 修改用户.
 	 * @param userDO 用户
 	 * @return int
 	 */
@@ -45,16 +45,16 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	Integer insertUser(@Param("userDO") UserDO userDO, @Param("key") String key);
 
 	/**
-	 * 根据租户ID查询下拉列表
-	 * @return
+	 * 根据租户ID查询下拉列表.
+	 * @return 用户列表
 	 */
 	List<UserDO> getOptionList(@Param(PAGE_QUERY) PageQuery pageQuery, @Param("key") String key);
 
 	/**
-	 * 查询用户列表
-	 * @param user
-	 * @param pageQuery
-	 * @return
+	 * 查询用户列表.
+	 * @param user 用户参数
+	 * @param pageQuery 分页参数
+	 * @return 用户列表
 	 */
 	List<UserDO> getUserListFilter(@Param("user") UserDO user, @Param(PAGE_QUERY) PageQuery pageQuery,
 			@Param("key") String key);

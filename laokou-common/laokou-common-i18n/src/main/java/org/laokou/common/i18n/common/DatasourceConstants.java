@@ -77,6 +77,8 @@ public final class DatasourceConstants {
 
 	public static final String INSERT_SQL_TEMPLATE = "INSERT INTO `%s`(%s) VALUES(%s);\n";
 
+	public static final String UPDATE_USERNAME_BY_ID_SQL_TEMPLATE = "UPDATE %s SET username = AES_ENCRYPT('%s','%s') WHERE ID = %s;\n";
+
 	public static final String SHOW_TABLES = "show tables";
 
 }

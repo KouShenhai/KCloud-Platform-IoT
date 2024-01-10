@@ -26,47 +26,47 @@ import lombok.Data;
 public class Menu {
 
 	/**
-	 * ID
+	 * ID.
 	 */
 	private Long id;
 
 	/**
-	 * 名称
+	 * 名称.
 	 */
 	private String name;
 
 	/**
-	 * 父ID
+	 * 父ID.
 	 */
 	private Long pid;
 
 	/**
-	 * 图标
+	 * 图标.
 	 */
 	private String icon;
 
 	/**
-	 * 类型 0菜单 1按钮
+	 * 类型 0菜单 1按钮.
 	 */
 	private Integer type;
 
 	/**
-	 * 排序
+	 * 排序.
 	 */
 	private Integer sort;
 
 	/**
-	 * 路径
+	 * 路径.
 	 */
 	private String url;
 
 	/**
-	 * 权限标识
+	 * 权限标识.
 	 */
 	private String permission;
 
 	/**
-	 * 状态 0显示 1隐藏
+	 * 状态 0显示 1隐藏.
 	 */
 	private Integer visible;
 

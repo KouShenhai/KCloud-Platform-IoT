@@ -27,17 +27,17 @@ import java.lang.annotation.*;
 public @interface DataFilter {
 
 	/**
-	 * 别名
+	 * 别名.
 	 */
 	String alias();
 
 	/**
-	 * 用户ID
+	 * 用户ID.
 	 */
 	String userId() default "creator";
 
 	/**
-	 * 部门PATH
+	 * 部门PATH.
 	 */
 	String deptPath() default "dept_path";
 

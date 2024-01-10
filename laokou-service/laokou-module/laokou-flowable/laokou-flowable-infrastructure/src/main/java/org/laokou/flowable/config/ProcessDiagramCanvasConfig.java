@@ -47,22 +47,22 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 	private static final String PNG = "png";
 
 	/**
-	 * 定义走过流程连线颜色为绿色
+	 * 定义走过流程连线颜色为绿色.
 	 */
 	protected static final Color HIGHLIGHT_SEQUENCEFLOW_COLOR = Color.GREEN;
 
 	/**
-	 * 设置未走过流程的连接线颜色
+	 * 设置未走过流程的连接线颜色.
 	 */
 	protected static final Color CONNECTION_COLOR = Color.BLACK;
 
 	/**
-	 * 设置flows连接线字体颜色red
+	 * 设置flows连接线字体颜色red.
 	 */
 	protected static final Color LABEL_COLOR = new Color(0, 0, 0);
 
 	/**
-	 * 高亮显示task框颜色
+	 * 高亮显示task框颜色.
 	 */
 	protected static final Color HIGHLIGHT_COLOR = Color.GREEN;
 
@@ -76,7 +76,7 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 	}
 
 	/**
-	 * 重写绘制连线的方式,设置绘制颜色
+	 * 重写绘制连线的方式,设置绘制颜色.
 	 * @param xPoints x坐标
 	 * @param yPoints y坐标
 	 * @param conditional 判断条件

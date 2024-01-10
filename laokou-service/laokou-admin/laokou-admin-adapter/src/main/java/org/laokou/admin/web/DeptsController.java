@@ -102,7 +102,7 @@ public class DeptsController {
 	@GetMapping("{roleId}/ids")
 	@TraceLog
 	@Operation(summary = "部门管理", description = "部门IDS")
-	public Result<List<Long>> ids(@PathVariable(value = "roleId") Long roleId) {
+	public Result<List<Long>> ids(@PathVariable("roleId") Long roleId) {
 		return deptsServiceI.ids(new DeptIDSGetQry(roleId));
 	}
 

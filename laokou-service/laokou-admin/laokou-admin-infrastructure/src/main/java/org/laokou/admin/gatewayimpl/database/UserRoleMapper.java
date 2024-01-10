@@ -34,13 +34,6 @@ import static org.laokou.common.i18n.common.MybatisConstants.USER_ID;
 @Mapper
 public interface UserRoleMapper extends BatchMapper<UserRoleDO> {
 
-	/**
-	 * 根据用户ID查询IDS
-	 * @param userId 用户ID
-	 * @return List<Long>
-	 */
-	List<Long> getIdsByUserId(@Param(USER_ID) Long userId);
-
 	List<Long> getRoleIdsByUserId(@Param(USER_ID) Long userId);
 
 	void deleteUserRoleByUserId(@Param(USER_ID) Long userId);

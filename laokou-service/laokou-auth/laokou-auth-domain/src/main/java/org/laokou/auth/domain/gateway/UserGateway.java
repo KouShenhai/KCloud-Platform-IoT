@@ -26,7 +26,7 @@ import org.laokou.auth.domain.user.User;
 public interface UserGateway {
 
 	/**
-	 * 查询用户
+	 * 查询用户.
 	 * @param auth 认证
 	 * @return User
 	 */
