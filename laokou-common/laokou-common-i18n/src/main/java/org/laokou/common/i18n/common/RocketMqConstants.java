@@ -24,7 +24,8 @@ package org.laokou.common.i18n.common;
  */
 public final class RocketMqConstants {
 
-	private RocketMqConstants() {}
+	private RocketMqConstants() {
+	}
 
 	/**
 	 * 分布式链路Topic.

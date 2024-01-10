@@ -22,44 +22,45 @@ package org.laokou.common.i18n.common;
  */
 public final class NetworkConstants {
 
-    private NetworkConstants() {}
+	private NetworkConstants() {
+	}
 
-    /**
-     * IPV4正则表达式
-     */
-    public static final String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
+	/**
+	 * IPV4正则表达式
+	 */
+	public static final String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
 
-    /**
-     * IP参数
-     */
-    public static final String IP = "ip";
+	/**
+	 * IP参数
+	 */
+	public static final String IP = "ip";
 
-    /**
-     * http协议
-     */
-    public static final String HTTP_SCHEME = "http";
+	/**
+	 * http协议
+	 */
+	public static final String HTTP_SCHEME = "http";
 
-    /**
-     * https协议
-     */
-    public static final String HTTPS_SCHEME = "https";
+	/**
+	 * https协议
+	 */
+	public static final String HTTPS_SCHEME = "https";
 
-    /**
-     * www
-     */
-    public static final String WWW = "www";
+	/**
+	 * www
+	 */
+	public static final String WWW = "www";
 
-    public static final String LOCAL_IPV4 = "127.0.0.1";
+	public static final String LOCAL_IPV4 = "127.0.0.1";
 
-    public static final String LOCAL_IPV6 = "0:0:0:0:0:0:0:1";
+	public static final String LOCAL_IPV6 = "0:0:0:0:0:0:0:1";
 
-    /**
-     * 未知IP
-     */
-    public static final String UNKNOWN_IP = "unknown";
+	/**
+	 * 未知IP
+	 */
+	public static final String UNKNOWN_IP = "unknown";
 
-    public static final String LOCAL_DESC = "内网";
+	public static final String LOCAL_DESC = "内网";
 
-    public static final String HTTP_PROTOCOL = "http://";
+	public static final String HTTP_PROTOCOL = "http://";
 
 }

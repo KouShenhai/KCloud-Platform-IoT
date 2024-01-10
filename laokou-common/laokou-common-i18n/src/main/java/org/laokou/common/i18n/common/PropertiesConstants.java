@@ -22,20 +22,21 @@ package org.laokou.common.i18n.common;
  */
 public final class PropertiesConstants {
 
-    private PropertiesConstants() {}
+	private PropertiesConstants() {
+	}
 
-    /**
-     * 应用名称YAML配置
-     */
-    public static final String SPRING_APPLICATION_NAME = "spring.application.name";
+	/**
+	 * 应用名称YAML配置
+	 */
+	public static final String SPRING_APPLICATION_NAME = "spring.application.name";
 
-    public static final String XXL_JOB_PREFIX = "spring.xxl-job";
+	public static final String XXL_JOB_PREFIX = "spring.xxl-job";
 
-    public static final String DEFAULT_CONFIG_PREFIX = "spring.default-config";
+	public static final String DEFAULT_CONFIG_PREFIX = "spring.default-config";
 
-    /**
-     * OAuth2 configuration prefix
-     */
-    public static final String OAUTH2_AUTHORIZATION_SERVER_PREFIX = "spring.security.oauth2.authorization-server";
+	/**
+	 * OAuth2 configuration prefix
+	 */
+	public static final String OAUTH2_AUTHORIZATION_SERVER_PREFIX = "spring.security.oauth2.authorization-server";
 
 }

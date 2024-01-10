@@ -22,16 +22,17 @@ package org.laokou.common.i18n.common;
  */
 public final class IndexConstants {
 
-    private IndexConstants() {}
+	private IndexConstants() {
+	}
 
-    /**
-     * 资源索引
-     */
-    public static final String RESOURCE = "laokou_resource";
+	/**
+	 * 资源索引
+	 */
+	public static final String RESOURCE = "laokou_resource";
 
-    /**
-     * 分布式链路索引
-     */
-    public static final String TRACE = "laokou_trace";
+	/**
+	 * 分布式链路索引
+	 */
+	public static final String TRACE = "laokou_trace";
 
 }

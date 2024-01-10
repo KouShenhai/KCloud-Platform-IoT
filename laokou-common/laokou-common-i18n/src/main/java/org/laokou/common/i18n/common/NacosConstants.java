@@ -22,10 +22,11 @@ package org.laokou.common.i18n.common;
  */
 public final class NacosConstants {
 
-    private NacosConstants() {}
+	private NacosConstants() {
+	}
 
-    public static final String CLUSTER_CONFIG = "nacos.cluster";
+	public static final String CLUSTER_CONFIG = "nacos.cluster";
 
-    public static final int DEFAULT_PORT = 8848;
+	public static final int DEFAULT_PORT = 8848;
 
 }

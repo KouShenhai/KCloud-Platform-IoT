@@ -21,31 +21,33 @@ package org.laokou.common.i18n.common;
  * @author laokou
  */
 public final class TraceConstants {
-    private TraceConstants(){}
 
-    /**
-     * 用户名
-     */
-    public static final String USER_NAME = "user-name";
+	private TraceConstants() {
+	}
 
-    /**
-     * 链路ID
-     */
-    public static final String TRACE_ID = "trace-id";
+	/**
+	 * 用户名
+	 */
+	public static final String USER_NAME = "user-name";
 
-    /**
-     * 用户ID
-     */
-    public static final String USER_ID = "user-id";
+	/**
+	 * 链路ID
+	 */
+	public static final String TRACE_ID = "trace-id";
 
-    /**
-     * 租户ID
-     */
-    public static final String TENANT_ID = "tenant-id";
+	/**
+	 * 用户ID
+	 */
+	public static final String USER_ID = "user-id";
 
-    /**
-     * 域名
-     */
-    public static final String DOMAIN_NAME = "domain-name";
+	/**
+	 * 租户ID
+	 */
+	public static final String TENANT_ID = "tenant-id";
+
+	/**
+	 * 域名
+	 */
+	public static final String DOMAIN_NAME = "domain-name";
 
 }

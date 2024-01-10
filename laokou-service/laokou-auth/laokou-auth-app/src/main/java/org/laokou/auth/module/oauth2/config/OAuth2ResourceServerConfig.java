@@ -39,7 +39,8 @@ import static org.laokou.common.security.config.auto.OAuth2ResourceServerAutoCon
  */
 @Data
 @Configuration
-@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = OAUTH2_AUTHORIZATION_SERVER_PREFIX, name = ENABLED)
+@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = OAUTH2_AUTHORIZATION_SERVER_PREFIX,
+		name = ENABLED)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class OAuth2ResourceServerConfig {
 

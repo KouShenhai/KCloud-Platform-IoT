@@ -22,32 +22,33 @@ package org.laokou.common.i18n.common;
  */
 public final class MybatisConstants {
 
-    private MybatisConstants() {}
+	private MybatisConstants() {
+	}
 
-    public static final String PLACE_HOLDER = "$$";
+	public static final String PLACE_HOLDER = "$$";
 
-    public static final String ID = "id";
+	public static final String ID = "id";
 
-    public static final String CREATOR = "creator";
+	public static final String CREATOR = "creator";
 
-    public static final String EDITOR = "editor";
+	public static final String EDITOR = "editor";
 
-    public static final String CREATE_DATE = "createDate";
+	public static final String CREATE_DATE = "createDate";
 
-    public static final String UPDATE_DATE = "updateDate";
+	public static final String UPDATE_DATE = "updateDate";
 
-    public static final String DEL_FLAG = "delFlag";
+	public static final String DEL_FLAG = "delFlag";
 
-    public static final String VERSION = "version";
+	public static final String VERSION = "version";
 
-    public static final String DEPT_ID = "deptId";
+	public static final String DEPT_ID = "deptId";
 
-    public static final String DEPT_PATH = "deptPath";
+	public static final String DEPT_PATH = "deptPath";
 
-    public static final String TENANT_ID = "tenantId";
+	public static final String TENANT_ID = "tenantId";
 
-    public static final String SLOW_SQL = "slow-sql";
+	public static final String SLOW_SQL = "slow-sql";
 
-    public static final String USER_ID = "userId";
+	public static final String USER_ID = "userId";
 
 }

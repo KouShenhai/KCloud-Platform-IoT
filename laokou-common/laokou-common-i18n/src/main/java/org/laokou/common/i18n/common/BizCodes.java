@@ -23,7 +23,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "BizCode", description = "业务码")
 public final class BizCodes {
 
-	private BizCodes() {}
+	private BizCodes() {
+	}
 
 	@Schema(name = "IP_BLACK", description = "IP已列入黑名单")
 	public static final int IP_BLACK = 100001;

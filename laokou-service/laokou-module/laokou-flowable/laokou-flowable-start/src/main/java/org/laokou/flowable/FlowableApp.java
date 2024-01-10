@@ -32,7 +32,6 @@ import java.net.UnknownHostException;
 
 import static org.laokou.common.i18n.common.NetworkConstants.IP;
 
-
 /**
  * @author laokou
  */

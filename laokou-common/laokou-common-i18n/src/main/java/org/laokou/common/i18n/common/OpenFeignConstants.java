@@ -22,8 +22,9 @@ package org.laokou.common.i18n.common;
  */
 public final class OpenFeignConstants {
 
-    private OpenFeignConstants() {}
+	private OpenFeignConstants() {
+	}
 
-    public static final String SERVICE_LAOKOU_FLOWABLE = "laokou-flowable";
+	public static final String SERVICE_LAOKOU_FLOWABLE = "laokou-flowable";
 
 }

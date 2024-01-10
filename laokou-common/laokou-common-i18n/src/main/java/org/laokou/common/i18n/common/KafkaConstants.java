@@ -20,7 +20,8 @@ package org.laokou.common.i18n.common;
  */
 public final class KafkaConstants {
 
-	private KafkaConstants() {}
+	private KafkaConstants() {
+	}
 
 	public static final String LAOKOU_TRACE_TOPIC = "laokou_trace_topic";
 

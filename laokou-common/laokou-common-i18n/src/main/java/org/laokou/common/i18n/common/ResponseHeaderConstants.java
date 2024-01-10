@@ -22,12 +22,13 @@ package org.laokou.common.i18n.common;
  */
 public final class ResponseHeaderConstants {
 
-    private ResponseHeaderConstants() {}
+	private ResponseHeaderConstants() {
+	}
 
-    public static final String EXCEL_CONTENT_TYPE = "application/vnd.ms-excel";
+	public static final String EXCEL_CONTENT_TYPE = "application/vnd.ms-excel";
 
-    public static final String CONTENT_DISPOSITION = "Content-disposition";
+	public static final String CONTENT_DISPOSITION = "Content-disposition";
 
-    public static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
+	public static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
 }

@@ -22,7 +22,8 @@ import java.nio.charset.StandardCharsets;
  */
 public final class MqttConstants {
 
-	private MqttConstants() {}
+	private MqttConstants() {
+	}
 
 	public static final String WILL_TOPIC = "will_topic";
 

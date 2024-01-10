@@ -24,7 +24,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "StatusCode", description = "状态码")
 public final class StatusCodes {
 
-	private StatusCodes() {}
+	private StatusCodes() {
+	}
 
 	@Schema(name = "OK", description = "请求成功")
 	public static final int OK = 200;

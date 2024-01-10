@@ -22,19 +22,22 @@ package org.laokou.common.i18n.common;
  */
 public final class NumberConstants {
 
-    private NumberConstants() {}
+	private NumberConstants() {
+	}
 
-    /**
-     * 默认
-     */
-    public static final int DEFAULT = 0;
-    /**
-     * 成功
-     */
-    public static final int SUCCESS = 0;
+	/**
+	 * 默认
+	 */
+	public static final int DEFAULT = 0;
 
-    /**
-     * 失败
-     */
-    public static final int FAIL = 1;
+	/**
+	 * 成功
+	 */
+	public static final int SUCCESS = 0;
+
+	/**
+	 * 失败
+	 */
+	public static final int FAIL = 1;
+
 }
