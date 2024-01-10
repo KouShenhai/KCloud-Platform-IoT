@@ -60,7 +60,11 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.NacosConstants.CLUSTER_CONFIG;
+import static org.laokou.common.i18n.common.NetworkConstants.IPV4_REGEX;
+import static org.laokou.common.i18n.common.RouterConstants.SERVICE_HOST;
+import static org.laokou.common.i18n.common.RouterConstants.SERVICE_PORT;
+import static org.laokou.common.i18n.common.SysConstants.GRACEFUL_SHUTDOWN_URL;
 
 /**
  * Nacos路由负载均衡.
@@ -182,7 +186,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
 	private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> serviceInstances) {
 		if (serviceInstances.isEmpty()) {
-			log.warn("No servers available for service: " + this.serviceId);
+			log.warn("No servers available for service: {}", this.serviceId);
 			return new EmptyResponse();
 		}
 		try {
@@ -190,7 +194,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			List<ServiceInstance> instancesToChoose = serviceInstances;
 			if (StringUtils.isNotBlank(clusterName)) {
 				List<ServiceInstance> sameClusterInstances = serviceInstances.stream().filter(serviceInstance -> {
-					String cluster = serviceInstance.getMetadata().get("nacos.cluster");
+					String cluster = serviceInstance.getMetadata().get(CLUSTER_CONFIG);
 					return StringUtils.equals(cluster, clusterName);
 				}).collect(Collectors.toList());
 				if (!CollectionUtils.isEmpty(sameClusterInstances)) {
@@ -216,7 +220,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 * 根据IP和端口匹配服务节点.
 	 * @param instance 服务实例
 	 * @param headers 请求头
-	 * @return boolean
+	 * @return 匹配结果
 	 */
 	private boolean match(ServiceInstance instance, HttpHeaders headers) {
 		String host = ObjectUtil.requireNotNull(headers.get(SERVICE_HOST)).getFirst();

@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Lazy;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.Constant.HTTPS_SCHEME;
+import static org.laokou.common.i18n.common.NetworkConstants.HTTPS_SCHEME;
 
 /**
  * API文档配置.

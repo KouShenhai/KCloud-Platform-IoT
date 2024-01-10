@@ -39,6 +39,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.IndexConstants.TRACE;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.SysConstants.UNDEFINED;
 import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_LOGSTASH_CONSUMER_GROUP;
 import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_TRACE_TOPIC;
 
@@ -110,7 +113,7 @@ public class TraceConsumer {
 
 	private String getIndexName(LocalDate localDate) {
 		String ym = DateUtil.format(localDate, DateUtil.YYYYMM);
-		return TRACE_INDEX + UNDER + ym;
+		return TRACE + UNDER + ym;
 	}
 
 	private void log(boolean flag, LocalDate localDate) {
@@ -131,7 +134,7 @@ public class TraceConsumer {
 		String indexName = getIndexName(localDate);
 		try {
 			if (!elasticsearchTemplate.isIndexExists(indexName)) {
-				elasticsearchTemplate.createAsyncIndex(indexName, TRACE_INDEX, TraceIndex.class);
+				elasticsearchTemplate.createAsyncIndex(indexName, TRACE, TraceIndex.class);
 				return true;
 			}
 			else {

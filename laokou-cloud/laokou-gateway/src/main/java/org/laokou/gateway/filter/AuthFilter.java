@@ -23,9 +23,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.RsaUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;
@@ -65,11 +65,13 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
 
-import static org.laokou.common.i18n.common.Constant.*;
-import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
+import static org.laokou.common.i18n.common.OAuth2Constants.*;
+import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
+import static org.laokou.common.i18n.common.RequestHeaderConstants.AUTHORIZATION;
+import static org.laokou.common.i18n.common.RequestHeaderConstants.CHUNKED;
+import static org.laokou.common.i18n.common.StatusCodes.UNAUTHORIZED;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import static org.laokou.common.nacos.utils.ConfigUtil.URL_DATA_ID;
-import static org.laokou.gateway.constant.Constant.CHUNKED;
-import static org.laokou.gateway.constant.Constant.OAUTH2_URI;
 import static org.laokou.gateway.utils.RequestUtil.pathMatcher;
 
 /**
@@ -108,7 +110,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			}
 			// 表单提交
 			MediaType mediaType = request.getHeaders().getContentType();
-			if (OAUTH2_URI.contains(requestUri) && HttpMethod.POST.matches(request.getMethod().name())
+			if (requestUri.contains(TOKEN_URL) && HttpMethod.POST.matches(request.getMethod().name())
 					&& MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
 				return decode(exchange, chain);
 			}

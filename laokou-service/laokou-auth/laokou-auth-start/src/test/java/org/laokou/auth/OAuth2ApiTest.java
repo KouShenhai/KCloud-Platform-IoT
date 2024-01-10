@@ -42,8 +42,8 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.LOCAL_IP;
 import static org.laokou.common.i18n.common.Constant.RISK;
+import static org.laokou.common.i18n.common.NetworkConstants.LOCAL_IPV4;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -158,7 +158,7 @@ class OAuth2ApiTest {
 	}
 
 	private String getOAuthApiUrl() {
-		return getSchema(disabledSsl()) + LOCAL_IP + RISK + serverProperties.getPort() + "/oauth2/token";
+		return getSchema(disabledSsl()) + LOCAL_IPV4 + RISK + serverProperties.getPort() + "/oauth2/token";
 	}
 
 	private String getSchema(boolean disabled) {

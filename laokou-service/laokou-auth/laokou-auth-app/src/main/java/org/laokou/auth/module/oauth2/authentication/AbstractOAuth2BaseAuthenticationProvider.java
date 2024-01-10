@@ -73,12 +73,12 @@ import java.util.Optional;
 import java.util.Set;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
-import static org.laokou.auth.common.Constant.TENANT_ID;
-import static org.laokou.common.i18n.common.BizCode.LOGIN_SUCCEEDED;
+import static org.laokou.common.i18n.common.BizCodes.LOGIN_SUCCEEDED;
 import static org.laokou.common.i18n.common.Constant.*;
-import static org.laokou.common.i18n.common.ErrorCode.*;
-import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
+import static org.laokou.common.i18n.common.ErrorCodes.*;
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.StatusCodes.FORBIDDEN;
+import static org.laokou.common.i18n.common.TenantConstants.TENANT_ID;
 
 /**
  * @author laokou

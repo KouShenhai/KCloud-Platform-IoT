@@ -36,8 +36,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
-import static org.laokou.flowable.common.Constant.FLOWABLE;
+import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * @author laokou

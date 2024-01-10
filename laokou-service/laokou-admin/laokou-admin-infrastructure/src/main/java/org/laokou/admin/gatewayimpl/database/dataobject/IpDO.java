@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_IP;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_IP;
 
 /**
  * @author laokou

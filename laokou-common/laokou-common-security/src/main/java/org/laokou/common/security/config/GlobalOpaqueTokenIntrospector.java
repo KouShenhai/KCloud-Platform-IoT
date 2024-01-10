@@ -41,9 +41,9 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-import static org.laokou.common.i18n.common.BizCode.ACCOUNT_FORCE_KILL;
-import static org.laokou.common.i18n.common.Constant.FULL;
-import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
+import static org.laokou.common.i18n.common.BizCodes.ACCOUNT_FORCE_KILL;
+import static org.laokou.common.i18n.common.OAuth2Constants.FULL;
+import static org.laokou.common.i18n.common.StatusCodes.UNAUTHORIZED;
 
 /**
  * @author laokou

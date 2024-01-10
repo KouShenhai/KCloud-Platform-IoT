@@ -48,7 +48,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_USER;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_USER;
 
 /**
  * @author laokou

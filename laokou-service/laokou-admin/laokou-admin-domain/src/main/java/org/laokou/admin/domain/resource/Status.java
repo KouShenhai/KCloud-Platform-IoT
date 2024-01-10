@@ -24,40 +24,6 @@ import java.util.Map;
  */
 public interface Status {
 
-	/**
-	 * 待审批
-	 */
-	int PENDING_APPROVAL = 0;
 
-	/**
-	 * 审批中
-	 */
-	int IN_APPROVAL = 1;
-
-	/**
-	 * 驳回审批
-	 */
-	int REJECT_APPROVAL = -1;
-
-	/**
-	 * 通过审批
-	 */
-	int APPROVED = 2;
-
-	/**
-	 * 同意
-	 */
-	int PASS = 1;
-
-	/**
-	 * 驳回
-	 */
-	int REFUSE = 0;
-
-	/**
-	 * 说明
-	 */
-	Map<Integer, String> DESC_MAP = Map.of(REFUSE + 100, "驳回", PASS + 100, "同意", PENDING_APPROVAL, "待审批", IN_APPROVAL,
-			"审批中", APPROVED, "审批通过", REJECT_APPROVAL, "驳回审批");
 
 }

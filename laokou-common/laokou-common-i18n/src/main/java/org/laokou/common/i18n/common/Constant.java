@@ -97,11 +97,6 @@ public interface Constant {
 	String EQUAL = "=";
 
 	/**
-	 * 模糊
-	 */
-	String LIKE = "like";
-
-	/**
 	 * 分割参数
 	 */
 	String UNDER = "_";
@@ -122,19 +117,9 @@ public interface Constant {
 	String SINGLE_QUOT = "'";
 
 	/**
-	 * 空
-	 */
-	String EMPTY = "";
-
-	/**
 	 * 并
 	 */
 	String AND = "&";
-
-	/**
-	 * 或
-	 */
-	String OR = "or";
 
 	/**
 	 * 分割参数
@@ -182,178 +167,8 @@ public interface Constant {
 	long DEFAULT_TENANT = 0;
 
 	/**
-	 * RSA
-	 */
-	String ALGORITHM_RSA = "RSA";
-
-	/**
-	 * 本地网络描述
-	 */
-	String LOCAL_NETWORK_LABEL = "内网";
-
-	/**
-	 * 本地IP
-	 */
-	String LOCAL_IP = "127.0.0.1";
-
-	/**
-	 * IP未知
-	 */
-	String IP_UNKNOWN = "unknown";
-
-	/**
-	 * 本地网段
-	 */
-	String LOCAL_NETWORK_SEGMENT = "0:0:0:0:0:0:0:1";
-
-	/**
-	 * spring管理
-	 */
-	String SPRING = "spring";
-
-	/**
-	 * 开启
-	 */
-	String ENABLED = "enabled";
-
-	/**
-	 * 认证
-	 */
-	String AUTHORIZATION = "Authorization";
-
-	/**
-	 * 用户名
-	 */
-	String USERNAME = "username";
-
-	/**
-	 * 密码
-	 */
-	String PASSWORD = "password";
-
-	/**
-	 * 用户名
-	 */
-	String USER_NAME = "user-name";
-
-	/**
-	 * 链路ID
-	 */
-	String TRACE_ID = "trace-id";
-
-	/**
-	 * 用户ID
-	 */
-	String USER_ID = "user-id";
-
-	/**
-	 * 租户ID
-	 */
-	String TENANT_ID = "tenant-id";
-
-	/**
-	 * 服务IP
-	 */
-	String SERVICE_HOST = "service-host";
-
-	/**
-	 * 服务端口
-	 */
-	String SERVICE_PORT = "service-port";
-
-	/**
-	 * 优雅停机
-	 */
-	String GRACEFUL_SHUTDOWN_URL = "/graceful-shutdown";
-
-	/**
-	 * 域名
-	 */
-	String DOMAIN_NAME = "domain-name";
-
-	/**
-	 * 邮箱
-	 */
-	String MAIL = "mail";
-
-	/**
-	 * 手机
-	 */
-	String MOBILE = "mobile";
-
-	/**
-	 * 版本
-	 */
-	String VERSION = "3.2.1";
-
-	/**
-	 * IP参数
-	 */
-	String IP = "ip";
-
-	/**
-	 * https协议
-	 */
-	String HTTPS_SCHEME = "https";
-
-	/**
-	 * www域名前缀
-	 */
-	String WWW = "www";
-
-	/**
-	 * 应用名称YAML配置
-	 */
-	String SPRING_APPLICATION_NAME = "spring.application.name";
-
-	/**
-	 * IPV4正则表达式
-	 */
-	String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
-
-	/**
-	 * 资源索引
-	 */
-	String RESOURCE_INDEX = "laokou_resource";
-
-	/**
-	 * 分布式链路索引
-	 */
-	String TRACE_INDEX = "laokou_trace";
-
-	/**
-	 * undefined.
-	 */
-	String UNDEFINED = "undefined";
-
-	/**
 	 * 空日志信息提醒
 	 */
 	String EMPTY_LOG_MSG = "暂无信息";
-
-	/**
-	 * ws-key
-	 */
-	String WS_HEADER_NAME = "Upgrade";
-
-	/**
-	 * ws-value
-	 */
-	String WS_HEADER_VALUE = "websocket";
-
-	/**
-	 * 租户用户名
-	 */
-	String TENANT_USERNAME = "tenant";
-
-	/**
-	 * 租户密码
-	 */
-	String TENANT_PASSWORD = "tenant123";
-
-	/**
-	 * 所有
-	 */
-	String FULL = "full";
 
 }

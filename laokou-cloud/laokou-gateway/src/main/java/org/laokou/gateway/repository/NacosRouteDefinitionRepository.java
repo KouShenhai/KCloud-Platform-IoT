@@ -45,7 +45,7 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import static org.laokou.common.i18n.common.ErrorCode.ROUTE_NOT_EXIST;
+import static org.laokou.common.i18n.common.ErrorCodes.ROUTE_NOT_EXIST;
 import static org.laokou.common.nacos.utils.ConfigUtil.ROUTER_DATA_ID;
 
 /**

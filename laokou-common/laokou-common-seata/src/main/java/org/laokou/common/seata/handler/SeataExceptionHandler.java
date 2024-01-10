@@ -25,9 +25,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static org.laokou.common.i18n.common.ErrorCode.DISTRIBUTED_TRANSACTION_DOWNTIME;
-import static org.laokou.common.i18n.common.ErrorCode.DISTRIBUTED_TRANSACTION_TIMEOUT;
-import static org.laokou.common.i18n.common.StatusCode.INTERNAL_SERVER_ERROR;
+import static org.laokou.common.i18n.common.ErrorCodes.DISTRIBUTED_TRANSACTION_DOWNTIME;
+import static org.laokou.common.i18n.common.ErrorCodes.DISTRIBUTED_TRANSACTION_TIMEOUT;
+import static org.laokou.common.i18n.common.StatusCodes.INTERNAL_SERVER_ERROR;
 
 /**
  * @author laokou

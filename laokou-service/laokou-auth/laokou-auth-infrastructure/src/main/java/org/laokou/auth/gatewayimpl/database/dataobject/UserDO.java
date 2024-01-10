@@ -26,7 +26,7 @@ import org.laokou.common.mybatisplus.handler.JasyptTypeHandler;
 
 import java.io.Serial;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_USER;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_USER;
 
 /**
  * @author laokou

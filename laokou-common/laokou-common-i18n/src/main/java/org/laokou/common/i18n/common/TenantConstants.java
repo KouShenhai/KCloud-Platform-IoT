@@ -15,33 +15,28 @@
  *
  */
 
-package org.laokou.gateway.constant;
+package org.laokou.common.i18n.common;
 
 /**
- * 常量.
- *
  * @author laokou
  */
-public interface Constant {
+public final class TenantConstants {
 
-	/**
-	 * 认证授权地址.
-	 */
-	String OAUTH2_URI = "/auth/oauth2/token";
+    private TenantConstants() {}
 
-	/**
-	 * OAuth2错误信息.
-	 */
-	String ERROR_DESCRIPTION = "error_description";
+    /**
+     * 租户用户名
+     */
+    public static final String TENANT_USERNAME = "tenant";
 
-	/**
-	 * OAuth2错误码.
-	 */
-	String ERROR = "error";
+    /**
+     * 租户密码
+     */
+    public static final String TENANT_PASSWORD = "tenant123";
 
-	/**
-	 * 分块.
-	 */
-	String CHUNKED = "chunked";
+    /**
+     * 租户ID
+     */
+    public static final String TENANT_ID = "tenant_id";
 
 }

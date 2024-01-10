@@ -22,8 +22,8 @@ import org.laokou.common.i18n.utils.MessageUtil;
 
 import java.io.Serial;
 
-import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.StatusCode.OK;
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.StatusCodes.OK;
 
 /**
  * @author laokou

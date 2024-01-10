@@ -35,12 +35,12 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
-import static org.laokou.common.i18n.common.Constant.MAIL;
-import static org.laokou.common.i18n.common.ErrorCode.MAIL_ERROR;
-import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.ValCode.OAUTH2_CAPTCHA_REQUIRE;
-import static org.laokou.common.i18n.common.ValCode.OAUTH2_MAIL_REQUIRE;
+import static org.laokou.common.i18n.common.ErrorCodes.MAIL_ERROR;
+import static org.laokou.common.i18n.common.OAuth2Constants.MAIL;
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.ValCodes.OAUTH2_CAPTCHA_REQUIRE;
+import static org.laokou.common.i18n.common.ValCodes.OAUTH2_MAIL_REQUIRE;
 
 /**
  * @author laokou

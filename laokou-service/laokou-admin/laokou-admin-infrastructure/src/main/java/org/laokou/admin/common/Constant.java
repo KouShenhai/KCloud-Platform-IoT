@@ -20,14 +20,4 @@ package org.laokou.admin.common;
  */
 public interface Constant {
 
-	/**
-	 * 最大文件大小
-	 */
-	long MAX_FILE_SIZE = 100 * 1024 * 1024;
-
-	/**
-	 * 审批状态
-	 */
-	String AUDIT_STATUS = "auditStatus";
-
 }

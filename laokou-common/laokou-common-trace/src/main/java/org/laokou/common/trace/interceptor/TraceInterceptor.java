@@ -25,7 +25,7 @@ import org.apache.logging.log4j.ThreadContext;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.TraceConstants.*;
 
 /**
  * @author laokou

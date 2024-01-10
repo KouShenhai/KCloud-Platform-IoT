@@ -51,7 +51,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.laokou.common.i18n.common.Constant.TRACE_ID;
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_MESSAGE;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_MESSAGE;
 import static org.laokou.common.rocketmq.constant.MqConstant.*;
 
 /**

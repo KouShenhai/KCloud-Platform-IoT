@@ -20,10 +20,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.common.StatusCode;
+import org.laokou.common.i18n.common.StatusCodes;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.gateway.constant.Constant;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.gateway.exception.ExceptionEnum;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -49,7 +48,7 @@ import java.nio.charset.StandardCharsets;
 
 import static org.laokou.common.i18n.common.Constant.CHINESE_COMMA;
 import static org.laokou.common.i18n.common.Constant.DEFAULT;
-import static org.laokou.gateway.constant.Constant.OAUTH2_URI;
+import static org.laokou.common.i18n.common.OAuth2Constants.*;
 
 /**
  * @author laokou
@@ -67,7 +66,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 		String requestUri = request.getPath().pathWithinApplication().value();
 		// 表单提交
 		MediaType mediaType = request.getHeaders().getContentType();
-		if (OAUTH2_URI.contains(requestUri) && HttpMethod.POST.matches(request.getMethod().name())
+		if (requestUri.contains(TOKEN_URL) && HttpMethod.POST.matches(request.getMethod().name())
 				&& MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
 			return response(exchange, chain);
 		}
@@ -88,7 +87,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 				String contentType = getDelegate().getHeaders().getFirst(HttpHeaders.CONTENT_TYPE);
 				Assert.isTrue(ObjectUtil.isNotNull(contentType), "content type is null");
 				if (contentType.contains(MediaType.APPLICATION_JSON_VALUE)
-						&& ObjectUtil.requireNotNull(response.getStatusCode()).value() != StatusCode.OK
+						&& ObjectUtil.requireNotNull(response.getStatusCode()).value() != StatusCodes.OK
 						&& body instanceof Flux) {
 					Flux<? extends DataBuffer> flux = Flux.from(body);
 					return super.writeWith(flux.map(dataBuffer -> {
@@ -101,8 +100,8 @@ public class RespFilter implements GlobalFilter, Ordered {
 						String str = new String(content, StandardCharsets.UTF_8);
 						// str就是response的值
 						JsonNode node = JacksonUtil.readTree(str);
-						JsonNode msgNode = node.get(Constant.ERROR_DESCRIPTION);
-						JsonNode codeNode = node.get(Constant.ERROR);
+						JsonNode msgNode = node.get(ERROR_DESCRIPTION);
+						JsonNode codeNode = node.get(ERROR);
 						if (msgNode == null) {
 							return dataBufferFactory.wrap(new byte[0]);
 						}

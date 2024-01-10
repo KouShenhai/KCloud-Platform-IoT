@@ -32,6 +32,7 @@ import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.domain.user.SuperAdmin;
+import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
@@ -50,7 +51,6 @@ import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.core.env.Environment;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -68,7 +68,10 @@ import java.util.List;
 import java.util.Map;
 
 import static org.laokou.common.i18n.common.Constant.*;
-import static org.laokou.common.mybatisplus.constant.DsConstant.*;
+import static org.laokou.common.i18n.common.DatasourceConstants.*;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.TenantConstants.TENANT_PASSWORD;
+import static org.laokou.common.i18n.common.TenantConstants.TENANT_USERNAME;
 
 /**
  * @author laokou
@@ -76,6 +79,7 @@ import static org.laokou.common.mybatisplus.constant.DsConstant.*;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@SuppressWarnings("unchecked")
 public class TenantGatewayImpl implements TenantGateway {
 
 	private final TenantMapper tenantMapper;
@@ -89,8 +93,6 @@ public class TenantGatewayImpl implements TenantGateway {
 	private final TenantConvertor tenantConvertor;
 
 	private final DefaultConfigProperties defaultConfigProperties;
-
-	private final ThreadPoolTaskExecutor taskExecutor;
 
 	private final Environment env;
 
@@ -212,7 +214,8 @@ public class TenantGatewayImpl implements TenantGateway {
 		if (CollectionUtil.isEmpty(files)) {
 			return;
 		}
-		files.forEach(File::delete);
+		List<OptionCO> list = files.stream().map(i -> new OptionCO(i.getName(), i.delete() + EMPTY)).toList();
+		log.debug("删除结果：{}", StringUtil.collectionToDelimitedString(list, CHINESE_COMMA));
 	}
 
 	private List<String> getSql(long tenantId, long packageId) {

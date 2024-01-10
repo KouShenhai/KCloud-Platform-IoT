@@ -26,7 +26,8 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.TraceConstants.*;
+import static org.laokou.common.i18n.common.constants.Constants.EMPTY;
 
 /**
  * @author laokou

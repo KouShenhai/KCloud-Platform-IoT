@@ -17,7 +17,6 @@
 
 package org.laokou.admin.command.tenant.query;
 
-import com.baomidou.dynamic.datasource.annotation.Master;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.config.DefaultConfigProperties;
@@ -32,10 +31,10 @@ import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
 import java.util.Set;
 
 import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.NetworkConstants.WWW;
 
 /**
  * @author laokou

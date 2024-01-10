@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ResponseUtil;
-import org.laokou.common.i18n.common.StatusCode;
+import org.laokou.common.i18n.common.StatusCodes;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -29,7 +29,7 @@ public class OAuth2ExceptionHandler {
 	@SneakyThrows
 	public static void handleAccessDenied(HttpServletRequest request, HttpServletResponse response, Throwable ex) {
 		if (ex instanceof AccessDeniedException) {
-			ResponseUtil.response(response, StatusCode.FORBIDDEN, MessageUtil.getMessage(StatusCode.FORBIDDEN));
+			ResponseUtil.response(response, StatusCodes.FORBIDDEN, MessageUtil.getMessage(StatusCodes.FORBIDDEN));
 		}
 	}
 
@@ -42,7 +42,7 @@ public class OAuth2ExceptionHandler {
 			return;
 		}
 		if (ex instanceof InsufficientAuthenticationException) {
-			ResponseUtil.response(response, StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
+			ResponseUtil.response(response, StatusCodes.UNAUTHORIZED, MessageUtil.getMessage(StatusCodes.UNAUTHORIZED));
 		}
 	}
 

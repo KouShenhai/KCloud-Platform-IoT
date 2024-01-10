@@ -20,39 +20,4 @@ package org.laokou.common.mybatisplus.constant;
  */
 public interface DsConstant {
 
-	String BOOT_SYS_DICT = "boot_sys_dict";
-
-	String BOOT_SYS_MESSAGE = "boot_sys_message";
-
-	String BOOT_SYS_OSS = "boot_sys_oss";
-
-	String BOOT_SYS_USER = "boot_sys_user";
-
-	String BOOT_SYS_DEPT = "boot_sys_dept";
-
-	String BOOT_SYS_MENU = "boot_sys_menu";
-
-	String BOOT_SYS_TENANT = "boot_sys_tenant";
-
-	String BOOT_SYS_ROLE = "boot_sys_role";
-
-	String BOOT_SYS_SOURCE = "boot_sys_source";
-
-	String BOOT_SYS_PACKAGE = "boot_sys_package";
-
-	String BOOT_SYS_OPERATE_LOG = "boot_sys_operate_log";
-
-	String BOOT_SYS_LOGIN_LOG = "boot_sys_login_log";
-
-	String BOOT_SYS_RESOURCE = "boot_sys_resource";
-
-	String BOOT_SYS_SQL_LOG = "boot_sys_sql_log";
-
-	String BOOT_SYS_IP = "boot_sys_ip";
-
-	/**
-	 * 租户
-	 */
-	String TENANT = "#tenant";
-
 }

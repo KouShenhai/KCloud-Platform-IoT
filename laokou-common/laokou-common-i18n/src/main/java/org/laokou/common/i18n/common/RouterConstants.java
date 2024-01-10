@@ -15,16 +15,21 @@
  *
  */
 
-package org.laokou.flowable.common;
+package org.laokou.common.i18n.common;
 
 /**
  * @author laokou
  */
-public interface Constant {
+public final class RouterConstants {
 
-	/**
-	 * 流程
-	 */
-	String FLOWABLE = "flowable";
+    private RouterConstants() {}
+    /**
+     * 服务IP
+     */
+    public static final String SERVICE_HOST = "service-host";
 
+    /**
+     * 服务端口
+     */
+    public static final String SERVICE_PORT = "service-port";
 }

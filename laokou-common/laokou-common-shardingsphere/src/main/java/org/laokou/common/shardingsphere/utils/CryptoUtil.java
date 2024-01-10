@@ -36,7 +36,7 @@ import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-import static org.laokou.common.i18n.common.Constant.ALGORITHM_RSA;
+import static org.laokou.common.i18n.common.SysConstants.ALGORITHM_RSA;
 
 /**
  * Copyright 1999-2018 Alibaba Group Holding Ltd.

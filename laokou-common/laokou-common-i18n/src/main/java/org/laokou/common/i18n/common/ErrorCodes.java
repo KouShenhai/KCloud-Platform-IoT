@@ -23,69 +23,71 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author laokou
  */
 @Schema(name = "ErrorCode", description = "错误码")
-public interface ErrorCode {
+public final class ErrorCodes {
+
+	private ErrorCodes() {}
 
 	@Schema(name = "ROUTE_NOT_EXIST", description = "路由不存在")
-	int ROUTE_NOT_EXIST = 100999;
+	public static final int ROUTE_NOT_EXIST = 100999;
 
 	@Schema(name = "INVALID_REQUEST", description = "无效请求")
-	int INVALID_REQUEST = 200987;
+	public static final int INVALID_REQUEST = 200987;
 
 	@Schema(name = "GENERATE_ID_TOKEN_FAIL", description = "令牌生成器无法生成标识令牌")
-	int GENERATE_ID_TOKEN_FAIL = 200988;
+	public static final int GENERATE_ID_TOKEN_FAIL = 200988;
 
 	@Schema(name = "GENERATE_REFRESH_TOKEN_FAIL", description = "令牌生成器无法生成刷新令牌")
-	int GENERATE_REFRESH_TOKEN_FAIL = 200989;
+	public static final int GENERATE_REFRESH_TOKEN_FAIL = 200989;
 
 	@Schema(name = "GENERATE_ACCESS_TOKEN_FAIL", description = "令牌生成器无法生成访问令牌")
-	int GENERATE_ACCESS_TOKEN_FAIL = 200990;
+	public static final int GENERATE_ACCESS_TOKEN_FAIL = 200990;
 
 	@Schema(name = "REGISTERED_CLIENT_NOT_EXIST", description = "注册客户端不存在")
-	int REGISTERED_CLIENT_NOT_EXIST = 200991;
+	public static final int REGISTERED_CLIENT_NOT_EXIST = 200991;
 
 	@Schema(name = "INVALID_CLIENT", description = "无效客户端")
-	int INVALID_CLIENT = 200992;
+	public static final int INVALID_CLIENT = 200992;
 
 	@Schema(name = "INVALID_SCOPE", description = "无效作用域")
-	int INVALID_SCOPE = 200993;
+	public static final int INVALID_SCOPE = 200993;
 
 	@Schema(name = "MAIL_ERROR", description = "邮箱错误")
-	int MAIL_ERROR = 200994;
+	public static final int MAIL_ERROR = 200994;
 
 	@Schema(name = "MOBILE_ERROR", description = "手机号错误")
-	int MOBILE_ERROR = 200995;
+	public static final int MOBILE_ERROR = 200995;
 
 	@Schema(name = "ACCOUNT_DISABLE", description = "账号已锁定")
-	int ACCOUNT_DISABLE = 200996;
+	public static final int ACCOUNT_DISABLE = 200996;
 
 	@Schema(name = "CAPTCHA_EXPIRED", description = "验证码已过期")
-	int CAPTCHA_EXPIRED = 200997;
+	public static final int CAPTCHA_EXPIRED = 200997;
 
 	@Schema(name = "CAPTCHA_ERROR", description = "验证码错误")
-	int CAPTCHA_ERROR = 200998;
+	public static final int CAPTCHA_ERROR = 200998;
 
 	@Schema(name = "ACCOUNT_PASSWORD_ERROR", description = "账号或密码错误")
-	int ACCOUNT_PASSWORD_ERROR = 200999;
+	public static final int ACCOUNT_PASSWORD_ERROR = 200999;
 
 	@Schema(name = "AUTHORITY", description = "授权规则错误")
-	int AUTHORITY = 998995;
+	public static final int AUTHORITY = 998995;
 
 	@Schema(name = "SYSTEM_BLOCK", description = "系统规则错误")
-	int SYSTEM_BLOCK = 998996;
+	public static final int SYSTEM_BLOCK = 998996;
 
 	@Schema(name = "PARAM_FLOW", description = "热点参数已限流")
-	int PARAM_FLOW = 998997;
+	public static final int PARAM_FLOW = 998997;
 
 	@Schema(name = "DEGRADE", description = "已降级")
-	int DEGRADE = 998998;
+	public static final int DEGRADE = 998998;
 
 	@Schema(name = "REQUEST_FLOW", description = "请求已限流")
-	int REQUEST_FLOW = 998999;
+	public static final int REQUEST_FLOW = 998999;
 
 	@Schema(name = "DISTRIBUTED_TRANSACTION_DOWNTIME", description = "分布式事务未启动")
-	int DISTRIBUTED_TRANSACTION_DOWNTIME = 999998;
+	public static final int DISTRIBUTED_TRANSACTION_DOWNTIME = 999998;
 
 	@Schema(name = "DISTRIBUTED_TRANSACTION_TIMEOUT", description = "分布式事务已超时")
-	int DISTRIBUTED_TRANSACTION_TIMEOUT = 999999;
+	public static final int DISTRIBUTED_TRANSACTION_TIMEOUT = 999999;
 
 }

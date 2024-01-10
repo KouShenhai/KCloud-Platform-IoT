@@ -25,7 +25,7 @@ import org.laokou.common.sensitive.enums.Type;
 import java.lang.reflect.Field;
 
 import static org.laokou.common.i18n.common.Constant.AT;
-import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * @author laokou

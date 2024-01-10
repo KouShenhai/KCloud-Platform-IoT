@@ -39,7 +39,7 @@ import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
 
-import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
+import static org.laokou.common.i18n.common.StatusCodes.TOO_MANY_REQUESTS;
 
 /**
  * 分布式锁切面.

@@ -45,7 +45,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.laokou.common.i18n.common.Constant.COMMA;
-import static org.laokou.common.i18n.common.Constant.FULL;
+import static org.laokou.common.i18n.common.OAuth2Constants.FULL;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.*;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 

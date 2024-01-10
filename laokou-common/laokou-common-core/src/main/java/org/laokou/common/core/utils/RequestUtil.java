@@ -22,7 +22,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import static org.laokou.common.i18n.common.Constant.DOMAIN_NAME;
+import static org.laokou.common.i18n.common.TraceConstants.DOMAIN_NAME;
 
 /**
  * @author laokou

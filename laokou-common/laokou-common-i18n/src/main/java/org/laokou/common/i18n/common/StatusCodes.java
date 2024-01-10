@@ -22,36 +22,38 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author laokou
  */
 @Schema(name = "StatusCode", description = "状态码")
-public interface StatusCode {
+public final class StatusCodes {
+
+	private StatusCodes() {}
 
 	@Schema(name = "OK", description = "请求成功")
-	int OK = 200;
+	public static final int OK = 200;
 
 	@Schema(name = "BAD_REQUEST", description = "错误请求")
-	int BAD_REQUEST = 400;
+	public static final int BAD_REQUEST = 400;
 
 	@Schema(name = "UNAUTHORIZED", description = "登录状态已过期")
-	int UNAUTHORIZED = 401;
+	public static final int UNAUTHORIZED = 401;
 
 	@Schema(name = "FORBIDDEN", description = "访问拒绝，没有权限")
-	int FORBIDDEN = 403;
+	public static final int FORBIDDEN = 403;
 
 	@Schema(name = "NOT_FOUND", description = "无法找到请求的资源")
-	int NOT_FOUND = 404;
+	public static final int NOT_FOUND = 404;
 
 	@Schema(name = "TOO_MANY_REQUESTS", description = "请求太频繁")
-	int TOO_MANY_REQUESTS = 429;
+	public static final int TOO_MANY_REQUESTS = 429;
 
 	@Schema(name = "INTERNAL_SERVER_ERROR", description = "服务器内部错误，无法完成请求")
-	int INTERNAL_SERVER_ERROR = 500;
+	public static final int INTERNAL_SERVER_ERROR = 500;
 
 	@Schema(name = "BAD_GATEWAY", description = "错误网关")
-	int BAD_GATEWAY = 502;
+	public static final int BAD_GATEWAY = 502;
 
 	@Schema(name = "SERVICE_UNAVAILABLE", description = "服务正在维护")
-	int SERVICE_UNAVAILABLE = 503;
+	public static final int SERVICE_UNAVAILABLE = 503;
 
 	@Schema(name = "CUSTOM_SERVER_ERROR", description = "自定义服务器错误")
-	int CUSTOM_SERVER_ERROR = 512;
+	public static final int CUSTOM_SERVER_ERROR = 512;
 
 }

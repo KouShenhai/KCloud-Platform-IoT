@@ -31,7 +31,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Objects;
 
-import static org.laokou.common.i18n.common.Constant.ALGORITHM_RSA;
+import static org.laokou.common.i18n.common.SysConstants.ALGORITHM_RSA;
 
 /**
  * @author laokou

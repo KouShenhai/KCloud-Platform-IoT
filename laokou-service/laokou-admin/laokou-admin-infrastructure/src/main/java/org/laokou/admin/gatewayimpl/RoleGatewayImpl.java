@@ -45,7 +45,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_ROLE;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_ROLE;
 
 /**
  * @author laokou

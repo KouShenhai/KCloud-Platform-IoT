@@ -44,7 +44,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.Constant.DROP;
-import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 
 /**
  * @author laokou
