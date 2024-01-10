@@ -32,7 +32,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties.PREFIX;
+import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_AUTHORIZATION_SERVER_PREFIX;
 
 /**
  * OAuth 2.0 Authorization Server properties.
@@ -44,13 +44,8 @@ import static org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProp
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = PREFIX)
+@ConfigurationProperties(prefix = OAUTH2_AUTHORIZATION_SERVER_PREFIX)
 public final class OAuth2AuthorizationServerProperties implements InitializingBean {
-
-	/**
-	 * OAuth2 configuration prefix
-	 */
-	public static final String PREFIX = "spring.security.oauth2.authorization-server";
 
 	/**
 	 * Open or close

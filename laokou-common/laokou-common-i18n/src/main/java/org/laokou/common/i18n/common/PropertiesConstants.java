@@ -33,4 +33,9 @@ public final class PropertiesConstants {
 
     public static final String DEFAULT_CONFIG_PREFIX = "spring.default-config";
 
+    /**
+     * OAuth2 configuration prefix
+     */
+    public static final String OAUTH2_AUTHORIZATION_SERVER_PREFIX = "spring.security.oauth2.authorization-server";
+
 }

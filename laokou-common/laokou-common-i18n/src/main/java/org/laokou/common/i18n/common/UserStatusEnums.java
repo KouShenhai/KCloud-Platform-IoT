@@ -15,21 +15,22 @@
  *
  */
 
-package org.laokou.auth.domain.user;
+package org.laokou.common.i18n.common;
 
 /**
+ * 用户状态
+ *
  * @author laokou
  */
-
-public enum SuperAdmin {
+public enum UserStatusEnums {
 
 	/**
-	 * 否
+	 * 正常
 	 */
-	NO,
+	ENABLED,
 	/**
-	 * 是
+	 * 禁用
 	 */
-	YES
+	DISABLE
 
 }

@@ -27,6 +27,8 @@ import org.laokou.common.mybatisplus.handler.JasyptTypeHandler;
 import java.io.Serial;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_USER;
+import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
+import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
 
 /**
  * @author laokou
@@ -39,11 +41,10 @@ public class UserDO extends BaseDO {
 	@Serial
 	private static final long serialVersionUID = 1181289215379287683L;
 
-	@Schema(name = "username", description = "用户名", example = "admin")
-	@TableField(value = "username")
+	@Schema(name = USERNAME, description = "用户名", example = "admin")
 	private String username;
 
-	@Schema(name = "password", description = "密码", example = "123456")
+	@Schema(name = PASSWORD, description = "密码", example = "123456")
 	private String password;
 
 	@Schema(name = "superAdmin", description = "超级管理员标识 0否 1是", example = "1")

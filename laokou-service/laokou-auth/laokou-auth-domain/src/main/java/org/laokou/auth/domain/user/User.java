@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.common.UserStatusEnums;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -187,7 +188,7 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 	@Override
 	@JsonIgnore
 	public boolean isEnabled() {
-		return this.status == Status.ENABLED.ordinal();
+		return this.status == UserStatusEnums.ENABLED.ordinal();
 	}
 
 	/**

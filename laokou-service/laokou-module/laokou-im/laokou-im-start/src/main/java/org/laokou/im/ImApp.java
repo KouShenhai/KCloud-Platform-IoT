@@ -25,6 +25,7 @@ import org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurity
 import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.net.InetAddress;
 
@@ -38,6 +39,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 				ReactiveUserDetailsServiceAutoConfiguration.class })
 @EnableEncryptableProperties
 @EnableDiscoveryClient
+@EnableAsync
 public class ImApp {
 
 	@SneakyThrows
