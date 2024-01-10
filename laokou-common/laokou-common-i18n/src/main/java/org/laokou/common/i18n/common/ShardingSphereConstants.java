@@ -24,16 +24,17 @@ import java.util.regex.Pattern;
  */
 public final class ShardingSphereConstants {
 
-    private ShardingSphereConstants() {}
+	private ShardingSphereConstants() {
+	}
 
-    public static final String JDBC_TYPE = "jdbc:shardingsphere:";
+	public static final String JDBC_TYPE = "jdbc:shardingsphere:";
 
-    public static final String NACOS_TYPE = "nacos:";
+	public static final String NACOS_TYPE = "nacos:";
 
-    public static final String YAML_LOCATION = "bootstrap.yml";
+	public static final String YAML_LOCATION = "bootstrap.yml";
 
-    public static final String YAML_FORMAT = "yaml";
+	public static final String YAML_FORMAT = "yaml";
 
-    public static final Pattern ENC_PATTERN = Pattern.compile("^ENC\\((.*)\\)$");
+	public static final Pattern ENC_PATTERN = Pattern.compile("^ENC\\((.*)\\)$");
 
 }

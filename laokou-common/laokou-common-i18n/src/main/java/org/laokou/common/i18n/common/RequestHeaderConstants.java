@@ -22,14 +22,18 @@ package org.laokou.common.i18n.common;
  */
 public final class RequestHeaderConstants {
 
-    private RequestHeaderConstants() {}
+	private RequestHeaderConstants() {
+	}
 
-    /**
-     * 认证
-     */
-    public static final String AUTHORIZATION = "Authorization";
-    public static final String CHUNKED = "chunked";
-    public static final String UPGRADE = "Upgrade";
-    public static final String WEBSOCKET = "WebSocket";
+	/**
+	 * 认证
+	 */
+	public static final String AUTHORIZATION = "Authorization";
+
+	public static final String CHUNKED = "chunked";
+
+	public static final String UPGRADE = "Upgrade";
+
+	public static final String WEBSOCKET = "WebSocket";
 
 }

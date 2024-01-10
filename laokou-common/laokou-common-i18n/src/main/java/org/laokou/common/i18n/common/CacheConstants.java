@@ -27,26 +27,28 @@ package org.laokou.common.i18n.common;
  */
 // @formatter:on
 public final class CacheConstants {
-    private CacheConstants() {}
 
-    private static final String DEFAULT = "_10m_30m_1024";
+	private CacheConstants() {
+	}
 
-    public static final String OSS = "oss" + DEFAULT;
+	private static final String DEFAULT = "_10m_30m_1024";
 
-    public static final String DEPTS = "depts" + DEFAULT;
+	public static final String OSS = "oss" + DEFAULT;
 
-    public static final String DICTS = "dicts" + DEFAULT;
+	public static final String DEPTS = "depts" + DEFAULT;
 
-    public static final String MENUS = "menus" + DEFAULT;
+	public static final String DICTS = "dicts" + DEFAULT;
 
-    public static final String MESSAGES = "messages" + DEFAULT;
+	public static final String MENUS = "menus" + DEFAULT;
 
-    public static final String PACKAGES = "packages" + DEFAULT;
+	public static final String MESSAGES = "messages" + DEFAULT;
 
-    public static final String TENANTS = "tenants" + DEFAULT;
+	public static final String PACKAGES = "packages" + DEFAULT;
 
-    public static final String SOURCES = "sources" + DEFAULT;
+	public static final String TENANTS = "tenants" + DEFAULT;
 
-    public static final String USERS = "users" + DEFAULT;
+	public static final String SOURCES = "sources" + DEFAULT;
+
+	public static final String USERS = "users" + DEFAULT;
 
 }

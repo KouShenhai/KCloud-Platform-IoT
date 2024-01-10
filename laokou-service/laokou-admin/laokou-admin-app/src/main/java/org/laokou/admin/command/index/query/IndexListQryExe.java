@@ -44,8 +44,7 @@ public class IndexListQryExe {
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	public Result<Datas<IndexCO>> execute(IndexListQry qry) {
-		Map<String, String> indexNames = elasticsearchTemplate
-			.getIndexNames(new String[] { RESOURCE, TRACE });
+		Map<String, String> indexNames = elasticsearchTemplate.getIndexNames(new String[] { RESOURCE, TRACE });
 		if (MapUtil.isEmpty(indexNames)) {
 			return Result.of(Datas.of());
 		}

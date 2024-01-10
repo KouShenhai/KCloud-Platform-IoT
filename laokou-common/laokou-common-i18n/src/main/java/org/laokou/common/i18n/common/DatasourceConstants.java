@@ -22,60 +22,61 @@ package org.laokou.common.i18n.common;
  */
 public final class DatasourceConstants {
 
-    private DatasourceConstants() {}
+	private DatasourceConstants() {
+	}
 
-    /**
-     * 模糊
-     */
-    public static final String LIKE = "like";
+	/**
+	 * 模糊
+	 */
+	public static final String LIKE = "like";
 
-    /**
-     * 或
-     */
-    public static final String OR = "or";
+	/**
+	 * 或
+	 */
+	public static final String OR = "or";
 
-    /**
-     * 流程
-     */
-    public static final String FLOWABLE = "flowable";
+	/**
+	 * 流程
+	 */
+	public static final String FLOWABLE = "flowable";
 
-    public static final String BOOT_SYS_DICT = "boot_sys_dict";
+	public static final String BOOT_SYS_DICT = "boot_sys_dict";
 
-    public static final String BOOT_SYS_MESSAGE = "boot_sys_message";
+	public static final String BOOT_SYS_MESSAGE = "boot_sys_message";
 
-    public static final String BOOT_SYS_OSS = "boot_sys_oss";
+	public static final String BOOT_SYS_OSS = "boot_sys_oss";
 
-    public static final String BOOT_SYS_USER = "boot_sys_user";
+	public static final String BOOT_SYS_USER = "boot_sys_user";
 
-    public static final String BOOT_SYS_DEPT = "boot_sys_dept";
+	public static final String BOOT_SYS_DEPT = "boot_sys_dept";
 
-    public static final String BOOT_SYS_MENU = "boot_sys_menu";
+	public static final String BOOT_SYS_MENU = "boot_sys_menu";
 
-    public static final String BOOT_SYS_TENANT = "boot_sys_tenant";
+	public static final String BOOT_SYS_TENANT = "boot_sys_tenant";
 
-    public static final String BOOT_SYS_ROLE = "boot_sys_role";
+	public static final String BOOT_SYS_ROLE = "boot_sys_role";
 
-    public static final String BOOT_SYS_SOURCE = "boot_sys_source";
+	public static final String BOOT_SYS_SOURCE = "boot_sys_source";
 
-    public static final String BOOT_SYS_PACKAGE = "boot_sys_package";
+	public static final String BOOT_SYS_PACKAGE = "boot_sys_package";
 
-    public static final String BOOT_SYS_OPERATE_LOG = "boot_sys_operate_log";
+	public static final String BOOT_SYS_OPERATE_LOG = "boot_sys_operate_log";
 
-    public static final String BOOT_SYS_LOGIN_LOG = "boot_sys_login_log";
+	public static final String BOOT_SYS_LOGIN_LOG = "boot_sys_login_log";
 
-    public static final String BOOT_SYS_RESOURCE = "boot_sys_resource";
+	public static final String BOOT_SYS_RESOURCE = "boot_sys_resource";
 
-    public static final String BOOT_SYS_SQL_LOG = "boot_sys_sql_log";
+	public static final String BOOT_SYS_SQL_LOG = "boot_sys_sql_log";
 
-    public static final String BOOT_SYS_IP = "boot_sys_ip";
+	public static final String BOOT_SYS_IP = "boot_sys_ip";
 
-    /**
-     * 租户
-     */
-    public static final String TENANT = "#tenant";
+	/**
+	 * 租户
+	 */
+	public static final String TENANT = "#tenant";
 
-    public static final String INSERT_SQL_TEMPLATE = "INSERT INTO `%s`(%s) VALUES(%s);\n";
+	public static final String INSERT_SQL_TEMPLATE = "INSERT INTO `%s`(%s) VALUES(%s);\n";
 
-    public static final String SHOW_TABLES = "show tables";
+	public static final String SHOW_TABLES = "show tables";
 
 }

@@ -400,8 +400,7 @@ public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerato
 			// Draw highlighted activities
 			if (highLightedActivities.contains(flowNode.getId())) {
 
-				if (highLightedActivities.getLast().equals(flowNode.getId())
-						&& !"endenv".equals(flowNode.getId())) {
+				if (highLightedActivities.getLast().equals(flowNode.getId()) && !"endenv".equals(flowNode.getId())) {
 					String eventPrefix = "Event_";
 					if ((flowNode.getId().contains(eventPrefix))) {
 						drawHighLightEnd((ProcessDiagramCanvasConfig) processDiagramCanvas,

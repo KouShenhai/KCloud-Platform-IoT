@@ -22,26 +22,27 @@ package org.laokou.common.i18n.common;
  */
 public final class TenantConstants {
 
-    private TenantConstants() {}
+	private TenantConstants() {
+	}
 
-    /**
-     * 租户用户名
-     */
-    public static final String TENANT_USERNAME = "tenant";
+	/**
+	 * 租户用户名
+	 */
+	public static final String TENANT_USERNAME = "tenant";
 
-    /**
-     * 租户密码
-     */
-    public static final String TENANT_PASSWORD = "tenant123";
+	/**
+	 * 租户密码
+	 */
+	public static final String TENANT_PASSWORD = "tenant123";
 
-    /**
-     * 租户ID
-     */
-    public static final String TENANT_ID = "tenant_id";
+	/**
+	 * 租户ID
+	 */
+	public static final String TENANT_ID = "tenant_id";
 
-    /**
-     * 默认
-     */
-    public static final long DEFAULT = 0;
+	/**
+	 * 默认
+	 */
+	public static final long DEFAULT = 0;
 
 }

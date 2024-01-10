@@ -76,7 +76,8 @@ import static org.laokou.common.i18n.common.SysConstants.ENABLED;
  * @author laokou
  */
 @Configuration
-@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = OAUTH2_AUTHORIZATION_SERVER_PREFIX, name = ENABLED)
+@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = OAUTH2_AUTHORIZATION_SERVER_PREFIX,
+		name = ENABLED)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class OAuth2AuthorizationServerConfig {
 

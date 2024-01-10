@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.*;
 
 import static org.laokou.common.i18n.common.CacheConstants.MESSAGES;
 
-
 /**
  * @author laokou
  */

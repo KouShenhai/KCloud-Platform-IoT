@@ -142,7 +142,8 @@ public class DsUtil {
 				list = defaultTenantTables;
 			}
 			if (CollectionUtil.isNotEmpty(list)) {
-				throw new DataSourceException(String.format("表 %s 不存在", StringUtil.collectionToDelimitedString(list, DROP)));
+				throw new DataSourceException(
+						String.format("表 %s 不存在", StringUtil.collectionToDelimitedString(list, DROP)));
 			}
 		}
 		finally {

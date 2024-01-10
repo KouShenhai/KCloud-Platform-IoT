@@ -24,44 +24,45 @@ import lombok.Getter;
  */
 public enum AuditEnums {
 
-    /**
-     * 待审批
-     */
-    PENDING_APPROVAL(0,"待审批"),
+	/**
+	 * 待审批
+	 */
+	PENDING_APPROVAL(0, "待审批"),
 
-    /**
-     * 审批中
-     */
-    IN_APPROVAL(1,"审批中"),
+	/**
+	 * 审批中
+	 */
+	IN_APPROVAL(1, "审批中"),
 
-    /**
-     * 驳回审批
-     */
-    REJECT_APPROVAL(-1,"驳回审批"),
+	/**
+	 * 驳回审批
+	 */
+	REJECT_APPROVAL(-1, "驳回审批"),
 
-    /**
-     * 通过审批
-     */
-    APPROVED(2,"审批通过"),
+	/**
+	 * 通过审批
+	 */
+	APPROVED(2, "审批通过"),
 
-    /**
-     * 同意
-     */
-    PASS(1,"同意"),
+	/**
+	 * 同意
+	 */
+	PASS(1, "同意"),
 
-    /**
-     * 驳回
-     */
-    REFUSE(0,"驳回");
+	/**
+	 * 驳回
+	 */
+	REFUSE(0, "驳回");
 
-    @Getter
-    private final int value;
-    @Getter
-    private final String desc;
+	@Getter
+	private final int value;
 
-    private AuditEnums(int value, String desc) {
-        this.value = value;
-        this.desc = desc;
-    }
+	@Getter
+	private final String desc;
+
+	private AuditEnums(int value, String desc) {
+		this.value = value;
+		this.desc = desc;
+	}
 
 }

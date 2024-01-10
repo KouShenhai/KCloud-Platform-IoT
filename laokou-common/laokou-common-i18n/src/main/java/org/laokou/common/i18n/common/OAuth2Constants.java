@@ -22,70 +22,71 @@ package org.laokou.common.i18n.common;
  */
 public final class OAuth2Constants {
 
-    private OAuth2Constants() {}
+	private OAuth2Constants() {
+	}
 
-    /**
-     * 认证令牌.
-     */
-    public static final String ACCESS_TOKEN = "accessToken";
+	/**
+	 * 认证令牌.
+	 */
+	public static final String ACCESS_TOKEN = "accessToken";
 
-    /**
-     * 刷新令牌.
-     */
-    public static final String REFRESH_TOKEN = "refreshToken";
+	/**
+	 * 刷新令牌.
+	 */
+	public static final String REFRESH_TOKEN = "refreshToken";
 
-    /**
-     * 路径.
-     */
-    public static final String TOKEN_URL = "/oauth2/token";
+	/**
+	 * 路径.
+	 */
+	public static final String TOKEN_URL = "/oauth2/token";
 
-    /**
-     * 用户名.
-     */
-    public static final String USERNAME = "username";
+	/**
+	 * 用户名.
+	 */
+	public static final String USERNAME = "username";
 
-    /**
-     * 密码.
-     */
-    public static final String PASSWORD = "password";
+	/**
+	 * 密码.
+	 */
+	public static final String PASSWORD = "password";
 
-    /**
-     * 邮箱.
-     */
-    public static final String MAIL = "mail";
+	/**
+	 * 邮箱.
+	 */
+	public static final String MAIL = "mail";
 
-    /**
-     * 手机.
-     */
-    public static final String MOBILE = "mobile";
+	/**
+	 * 手机.
+	 */
+	public static final String MOBILE = "mobile";
 
-    /**
-     * 唯一标识.
-     */
-    public static final String UUID = "uuid";
+	/**
+	 * 唯一标识.
+	 */
+	public static final String UUID = "uuid";
 
-    /**
-     * 验证码.
-     */
-    public static final String CAPTCHA = "captcha";
+	/**
+	 * 验证码.
+	 */
+	public static final String CAPTCHA = "captcha";
 
-    /**
-     * 错误.
-     */
-    public static final String ERROR = "error";
+	/**
+	 * 错误.
+	 */
+	public static final String ERROR = "error";
 
-    /**
-     * 错误信息.
-     */
-    public static final String ERROR_DESCRIPTION = "error_description";
+	/**
+	 * 错误信息.
+	 */
+	public static final String ERROR_DESCRIPTION = "error_description";
 
-    /**
-     * 所有
-     */
-    public static final String FULL = "full";
+	/**
+	 * 所有
+	 */
+	public static final String FULL = "full";
 
+	public static final String REDIS_OAUTH2_AUTHORIZATION_KEY = "oauth2:authorization";
 
-    public static final String REDIS_OAUTH2_AUTHORIZATION_KEY = "oauth2:authorization";
+	public static final String ERROR_URL = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
-    public static final String ERROR_URL = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 }

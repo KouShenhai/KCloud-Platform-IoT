@@ -22,11 +22,12 @@ package org.laokou.common.i18n.common;
  */
 public final class AuditConstants {
 
-    private AuditConstants() {}
+	private AuditConstants() {
+	}
 
-    /**
-     * 审批状态
-     */
-    public static final String STATUS = "auditStatus";
+	/**
+	 * 审批状态
+	 */
+	public static final String STATUS = "auditStatus";
 
 }

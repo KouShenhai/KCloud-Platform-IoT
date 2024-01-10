@@ -36,7 +36,8 @@ public abstract class AbstractLock<T> implements Lock {
 	 * @throws InterruptedException 线程中断异常
 	 */
 	@Override
-	public Boolean tryLock(LockTypeEnums lockTypeEnums, String key, long expire, long timeout) throws InterruptedException {
+	public Boolean tryLock(LockTypeEnums lockTypeEnums, String key, long expire, long timeout)
+			throws InterruptedException {
 		return tryLock(getLock(lockTypeEnums, key), expire, timeout);
 	}
 

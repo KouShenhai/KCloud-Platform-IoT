@@ -37,7 +37,6 @@ import java.util.List;
 
 import static org.laokou.common.i18n.common.CacheConstants.SOURCES;
 
-
 /**
  * @author laokou
  */

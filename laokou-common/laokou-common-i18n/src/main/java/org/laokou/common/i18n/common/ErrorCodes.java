@@ -25,7 +25,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "ErrorCode", description = "错误码")
 public final class ErrorCodes {
 
-	private ErrorCodes() {}
+	private ErrorCodes() {
+	}
 
 	@Schema(name = "ROUTE_NOT_EXIST", description = "路由不存在")
 	public static final int ROUTE_NOT_EXIST = 100999;

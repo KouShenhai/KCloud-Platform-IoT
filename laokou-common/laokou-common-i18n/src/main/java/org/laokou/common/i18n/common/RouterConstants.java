@@ -22,19 +22,21 @@ package org.laokou.common.i18n.common;
  */
 public final class RouterConstants {
 
-    private RouterConstants() {}
-    /**
-     * 服务IP
-     */
-    public static final String SERVICE_HOST = "service-host";
+	private RouterConstants() {
+	}
 
-    /**
-     * 服务端口
-     */
-    public static final String SERVICE_PORT = "service-port";
+	/**
+	 * 服务IP
+	 */
+	public static final String SERVICE_HOST = "service-host";
 
-    public static final String GENERATED_NAME_PREFIX = "_genkey_";
+	/**
+	 * 服务端口
+	 */
+	public static final String SERVICE_PORT = "service-port";
 
-    public static final String DATA_ID = "router.json";
+	public static final String GENERATED_NAME_PREFIX = "_genkey_";
+
+	public static final String DATA_ID = "router.json";
 
 }

@@ -25,7 +25,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "ValCode", description = "校验码")
 public final class ValCodes {
 
-	private ValCodes(){}
+	private ValCodes() {
+	}
 
 	@Schema(name = "OAUTH2_UUID_REQUIRE", description = "UUID不能为空")
 	public static final String OAUTH2_UUID_REQUIRE = "oauth2.uuid.require";
