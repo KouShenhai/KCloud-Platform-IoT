@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.laokou.common.ratelimiter.enums.Type.IP;
+import static org.laokou.common.i18n.common.RateLimiterTypeEnums.IP;
 
 /**
  * @author laokou

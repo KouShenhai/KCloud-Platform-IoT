@@ -24,17 +24,15 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.laokou.admin.config.DefaultConfigProperties.PREFIX;
+import static org.laokou.common.i18n.common.PropertiesConstants.DEFAULT_CONFIG_PREFIX;
 
 /**
  * @author laokou
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = PREFIX)
+@ConfigurationProperties(prefix = DEFAULT_CONFIG_PREFIX)
 public class DefaultConfigProperties {
-
-	public static final String PREFIX = "spring.default-config";
 
 	private String definitionKey;
 

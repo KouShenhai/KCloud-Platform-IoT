@@ -77,13 +77,13 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 
 	/**
 	 * 重写绘制连线的方式,设置绘制颜色
-	 * @param xPoints
-	 * @param yPoints
-	 * @param conditional
-	 * @param isDefault
-	 * @param connectionType
+	 * @param xPoints x坐标
+	 * @param yPoints y坐标
+	 * @param conditional 判断条件
+	 * @param isDefault 是否默认
+	 * @param connectionType 连接方式
 	 * @param associationDirection
-	 * @param highLighted
+	 * @param highLighted 高亮
 	 * @param scaleFactor
 	 */
 	@Override

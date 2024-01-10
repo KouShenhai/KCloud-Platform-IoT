@@ -11,12 +11,12 @@ import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.jasypt.utils.AesUtil;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.Constant.SINGLE_QUOT;
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.StringConstants.SINGLE_QUOT;
 
 /**
  * @author laokou

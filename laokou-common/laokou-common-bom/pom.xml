@@ -426,7 +426,7 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-jasypt</artifactId>
+                <artifactId>laokou-common-crypto</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

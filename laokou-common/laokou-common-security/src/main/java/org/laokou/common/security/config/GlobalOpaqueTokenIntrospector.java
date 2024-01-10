@@ -23,7 +23,7 @@ import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.jasypt.utils.AesUtil;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
@@ -41,9 +41,9 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-import static org.laokou.common.i18n.common.BizCode.ACCOUNT_FORCE_KILL;
-import static org.laokou.common.i18n.common.Constant.FULL;
-import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
+import static org.laokou.common.i18n.common.BizCodes.ACCOUNT_FORCE_KILL;
+import static org.laokou.common.i18n.common.OAuth2Constants.FULL;
+import static org.laokou.common.i18n.common.StatusCodes.UNAUTHORIZED;
 
 /**
  * @author laokou

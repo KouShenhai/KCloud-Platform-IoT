@@ -34,7 +34,7 @@ import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_DICT;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_DICT;
 
 /**
  * @author laokou

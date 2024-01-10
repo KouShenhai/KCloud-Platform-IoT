@@ -18,7 +18,7 @@
 package org.laokou.gateway.exception;
 
 import lombok.Getter;
-import org.laokou.common.i18n.common.ErrorCode;
+import org.laokou.common.i18n.common.ErrorCodes;
 import org.laokou.common.i18n.utils.MessageUtil;
 
 /**
@@ -30,12 +30,12 @@ public enum ExceptionEnum {
 	/**
 	 * 无效客户端.
 	 */
-	INVALID_CLIENT(ErrorCode.INVALID_CLIENT, MessageUtil.getMessage(ErrorCode.INVALID_CLIENT)),
+	INVALID_CLIENT(ErrorCodes.INVALID_CLIENT, MessageUtil.getMessage(ErrorCodes.INVALID_CLIENT)),
 
 	/**
 	 * 无效请求.
 	 */
-	INVALID_REQUEST(ErrorCode.INVALID_REQUEST, MessageUtil.getMessage(ErrorCode.INVALID_REQUEST));
+	INVALID_REQUEST(ErrorCodes.INVALID_REQUEST, MessageUtil.getMessage(ErrorCodes.INVALID_REQUEST));
 
 	private final int code;
 

@@ -41,7 +41,7 @@ public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerato
 		this.prepareBpmnModel(bpmnModel);
 		DefaultProcessDiagramCanvas processDiagramCanvas = initProcessDiagramCanvas(bpmnModel, imageType,
 				activityFontName, labelFontName, annotationFontName, customClassLoader);
-		Iterator var13 = bpmnModel.getPools().iterator();
+		Iterator<?> var13 = bpmnModel.getPools().iterator();
 
 		while (var13.hasNext()) {
 			Pool process = (Pool) var13.next();
@@ -50,7 +50,7 @@ public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerato
 		}
 		var13 = bpmnModel.getProcesses().iterator();
 		Process process1;
-		Iterator subProcesses1;
+		Iterator<?> subProcesses1;
 		while (var13.hasNext()) {
 			process1 = (Process) var13.next();
 			subProcesses1 = process1.getLanes().iterator();
@@ -76,7 +76,7 @@ public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerato
 		}
 		var13 = bpmnModel.getProcesses().iterator();
 		label75: while (true) {
-			List subProcesses2;
+			List<?> subProcesses2;
 			do {
 				if (!var13.hasNext()) {
 					return processDiagramCanvas;
@@ -90,7 +90,7 @@ public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerato
 				subProcesses2 = process1.findFlowElementsOfType(SubProcess.class, true);
 			}
 			while (ObjectUtil.isNull(subProcesses2));
-			Iterator artifact3 = subProcesses2.iterator();
+			Iterator<?> artifact3 = subProcesses2.iterator();
 			while (true) {
 				GraphicInfo graphicInfo;
 				SubProcess subProcess1;
@@ -120,7 +120,7 @@ public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerato
 		double minY = 1.7976931348623157E308D;
 		double maxY = 0.0D;
 		GraphicInfo nrOfLanes;
-		for (Iterator flowNodes = bpmnModel.getPools().iterator(); flowNodes
+		for (Iterator<?> flowNodes = bpmnModel.getPools().iterator(); flowNodes
 			.hasNext(); maxY = nrOfLanes.getY() + nrOfLanes.getHeight()) {
 			Pool artifacts = (Pool) flowNodes.next();
 			nrOfLanes = bpmnModel.getGraphicInfo(artifacts.getId());
@@ -133,8 +133,8 @@ public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerato
 	}
 
 	private static ProcessNum getProcessNum1(double minX, double maxX, double minY, double maxY, BpmnModel bpmnModel,
-			List var23) {
-		Iterator var24 = var23.iterator();
+			List<?> var23) {
+		Iterator<?> var24 = var23.iterator();
 		label155: while (var24.hasNext()) {
 			FlowNode var26 = (FlowNode) var24.next();
 			GraphicInfo artifact = bpmnModel.getGraphicInfo(var26.getId());
@@ -150,7 +150,7 @@ public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerato
 			if (artifact.getY() < minY) {
 				minY = artifact.getY();
 			}
-			Iterator process = var26.getOutgoingFlows().iterator();
+			Iterator<?> process = var26.getOutgoingFlows().iterator();
 			while (true) {
 				List<?> l;
 				do {
@@ -400,7 +400,7 @@ public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerato
 			// Draw highlighted activities
 			if (highLightedActivities.contains(flowNode.getId())) {
 
-				if (highLightedActivities.get(highLightedActivities.size() - 1).equals(flowNode.getId())
+				if (highLightedActivities.getLast().equals(flowNode.getId())
 						&& !"endenv".equals(flowNode.getId())) {
 					String eventPrefix = "Event_";
 					if ((flowNode.getId().contains(eventPrefix))) {

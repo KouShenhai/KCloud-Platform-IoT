@@ -20,7 +20,7 @@ package org.laokou.common.elasticsearch.utils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.elasticsearch.enums.FieldType;
+import org.laokou.common.i18n.common.ElasticsearchFieldTypeEnums;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -38,7 +38,7 @@ public class Mapping implements Serializable {
 
 	private String field;
 
-	private FieldType type;
+	private ElasticsearchFieldTypeEnums type;
 
 	private String searchAnalyzer;
 

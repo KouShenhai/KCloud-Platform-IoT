@@ -34,7 +34,7 @@ public class DateUtil {
 	/**
 	 * yyyy-MM-dd HH:mm:ss
 	 */
-	public static final int YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS = 0;
+	public static final int YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS = 0;
 
 	/**
 	 * yyyyMMddHHmmss
@@ -49,7 +49,7 @@ public class DateUtil {
 	/**
 	 * yyyy-MM-dd
 	 */
-	public static final int YYYY_BAR_MM_BAR_DD = 3;
+	public static final int YYYY_ROD_MM_ROD_DD = 3;
 
 	/**
 	 * yyyy年MM月dd日
@@ -69,8 +69,8 @@ public class DateUtil {
 	/**
 	 * 时间格式
 	 */
-	private static final String[] TIME_PATTERNS = { Constant.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS,
-			Constant.YYYYMMDDHHMMSS, Constant.YYYYMM, Constant.YYYY_BAR_MM_BAR_DD, Constant.YYYY_TEXT_MM_TEXT_DD_TEXT,
+	private static final String[] TIME_PATTERNS = { Constant.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS,
+			Constant.YYYYMMDDHHMMSS, Constant.YYYYMM, Constant.YYYY_ROD_MM_ROD_DD, Constant.YYYY_TEXT_MM_TEXT_DD_TEXT,
 			Constant.YYYY_DOT_MM_DOT_DD };
 
 	/**
@@ -263,7 +263,7 @@ public class DateUtil {
 		/**
 		 * yyyy-MM-dd HH:mm:ss
 		 */
-		String YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS = "yyyy-MM-dd HH:mm:ss";
+		String YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS = "yyyy-MM-dd HH:mm:ss";
 
 		/**
 		 * yyyyMMddHHmmss
@@ -278,7 +278,7 @@ public class DateUtil {
 		/**
 		 * yyyy-MM-dd
 		 */
-		String YYYY_BAR_MM_BAR_DD = "yyyy-MM-dd";
+		String YYYY_ROD_MM_ROD_DD = "yyyy-MM-dd";
 
 		/**
 		 * yyyy年MM月dd日

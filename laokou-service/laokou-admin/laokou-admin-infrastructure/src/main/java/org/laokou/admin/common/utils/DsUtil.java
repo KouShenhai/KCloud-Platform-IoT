@@ -43,8 +43,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.Constant.DROP;
-import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.DatasourceConstants.SHOW_TABLES;
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.StringConstants.DROP;
 
 /**
  * @author laokou
@@ -59,8 +60,6 @@ public class DsUtil {
 	private final DynamicUtil dynamicUtil;
 
 	private final DefaultConfigProperties defaultConfigProperties;
-
-	private static final String SHOW_TABLES = "show tables";
 
 	public String loadDs(String sourceName) {
 		if (StringUtil.isEmpty(sourceName)) {
@@ -143,7 +142,7 @@ public class DsUtil {
 				list = defaultTenantTables;
 			}
 			if (CollectionUtil.isNotEmpty(list)) {
-				throw new DataSourceException(String.format("表 %s 不存在", String.join(DROP, list)));
+				throw new DataSourceException(String.format("表 %s 不存在", StringUtil.collectionToDelimitedString(list, DROP)));
 			}
 		}
 		finally {

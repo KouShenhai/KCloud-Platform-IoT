@@ -22,11 +22,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
-import org.laokou.common.mybatisplus.handler.JasyptTypeHandler;
+import org.laokou.common.mybatisplus.handler.CryptoTypeHandler;
 
 import java.io.Serial;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_USER;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_USER;
 
 /**
  * @author laokou
@@ -40,7 +40,6 @@ public class UserDO extends BaseDO {
 	private static final long serialVersionUID = 1181289215379287683L;
 
 	@Schema(name = "username", description = "用户名", example = "admin")
-	@TableField(value = "username")
 	private String username;
 
 	@Schema(name = "password", description = "密码", example = "123456")
@@ -53,14 +52,14 @@ public class UserDO extends BaseDO {
 	private String avatar;
 
 	@Schema(name = "mail", description = "邮箱", example = "2413176044@qq.com")
-	@TableField(value = "mail", typeHandler = JasyptTypeHandler.class)
+	@TableField(value = "mail", typeHandler = CryptoTypeHandler.class)
 	private String mail;
 
 	@Schema(name = "status", description = "用户状态 0正常 1锁定", example = "0")
 	private Integer status;
 
 	@Schema(name = "mobile", description = "手机号", example = "18974432500")
-	@TableField(value = "mobile", typeHandler = JasyptTypeHandler.class)
+	@TableField(value = "mobile", typeHandler = CryptoTypeHandler.class)
 	private String mobile;
 
 }

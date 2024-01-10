@@ -18,9 +18,9 @@
 package org.laokou.common.ratelimiter.driver.spi;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.laokou.common.ratelimiter.enums.Type;
+import org.laokou.common.i18n.common.RateLimiterTypeEnums;
 
-import static org.laokou.common.ratelimiter.enums.Type.PATH;
+import static org.laokou.common.i18n.common.RateLimiterTypeEnums.PATH;
 
 /**
  * @author laokou
@@ -33,7 +33,7 @@ public class PathKeyProvider implements org.laokou.common.ratelimiter.driver.spi
 	}
 
 	@Override
-	public Type accept() {
+	public RateLimiterTypeEnums accept() {
 		return PATH;
 	}
 

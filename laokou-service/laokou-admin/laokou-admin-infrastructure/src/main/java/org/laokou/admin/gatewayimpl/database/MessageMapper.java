@@ -23,6 +23,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
+import static org.laokou.common.i18n.common.MybatisConstants.USER_ID;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
@@ -32,7 +33,7 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 @Mapper
 public interface MessageMapper extends BatchMapper<MessageDO> {
 
-	IPage<MessageDO> getUnreadMessageListByUserIdAndType(IPage<MessageDO> page, @Param("userId") Long userId,
+	IPage<MessageDO> getUnreadMessageListByUserIdAndType(IPage<MessageDO> page, @Param(USER_ID) Long userId,
 			@Param("type") Integer type);
 
 	IPage<MessageDO> getMessageListFilter(IPage<MessageDO> page, @Param("title") String title,

@@ -39,7 +39,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.Constant.DEFAULT;
+import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 import static org.laokou.common.redis.utils.RedisUtil.NOT_EXPIRE;
 
 /**

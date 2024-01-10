@@ -59,7 +59,7 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import static org.laokou.common.i18n.common.Constant.UNDER;
+import static org.laokou.common.i18n.common.StringConstants.UNDER;
 
 /**
  * A {@link org.springframework.cache.CacheManager} implementation backed by Redisson

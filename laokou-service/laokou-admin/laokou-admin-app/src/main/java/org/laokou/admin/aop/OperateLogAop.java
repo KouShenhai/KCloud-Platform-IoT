@@ -42,9 +42,14 @@ import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.NumberConstants.FAIL;
+import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
+import static org.laokou.common.i18n.common.StringConstants.*;
 
 /**
  * @author laokou

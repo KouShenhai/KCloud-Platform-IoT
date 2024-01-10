@@ -55,7 +55,7 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 	 */
 	private static ObjectMapper objectMapper() {
 		ObjectMapper objectMapper = new ObjectMapper();
-		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
+		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
 		// Long类型转String类型
 		JavaTimeModule javaTimeModule = new JavaTimeModule();
 		javaTimeModule.addSerializer(Long.class, ToStringSerializer.instance);

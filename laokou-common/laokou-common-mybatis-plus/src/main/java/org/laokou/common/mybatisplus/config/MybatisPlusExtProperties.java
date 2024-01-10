@@ -35,8 +35,6 @@ import static com.baomidou.mybatisplus.core.toolkit.Constants.MYBATIS_PLUS;
 @ConfigurationProperties(prefix = MYBATIS_PLUS)
 public class MybatisPlusExtProperties {
 
-	public static final String SLOW_SQL = "slow-sql";
-
 	private SlowSql slowSql = new SlowSql();
 
 	private Tenant tenant = new Tenant();

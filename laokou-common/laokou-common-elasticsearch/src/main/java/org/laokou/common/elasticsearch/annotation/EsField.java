@@ -16,11 +16,12 @@
  */
 package org.laokou.common.elasticsearch.annotation;
 
-import org.laokou.common.elasticsearch.enums.FieldType;
+import org.laokou.common.i18n.common.ElasticsearchFieldTypeEnums;
 
 import java.lang.annotation.*;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.ElasticsearchFieldTypeEnums.KEYWORD;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -32,7 +33,7 @@ public @interface EsField {
 
 	String value();
 
-	FieldType type() default FieldType.KEYWORD;
+	ElasticsearchFieldTypeEnums type() default KEYWORD;
 
 	String searchAnalyzer() default EMPTY;
 

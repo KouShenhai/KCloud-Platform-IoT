@@ -23,7 +23,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
 
-import static org.laokou.common.i18n.common.Constant.SPRING;
+import static org.laokou.common.i18n.common.SysConstants.SPRING;
 
 /**
  * @author laokou

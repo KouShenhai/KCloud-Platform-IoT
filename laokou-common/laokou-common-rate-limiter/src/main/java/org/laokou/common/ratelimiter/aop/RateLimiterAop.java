@@ -36,8 +36,9 @@ import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
 
-import static org.laokou.common.i18n.common.Constant.UNDER;
-import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
+import static org.laokou.common.i18n.common.StatusCodes.TOO_MANY_REQUESTS;
+import static org.laokou.common.i18n.common.StringConstants.UNDER;
+import static org.laokou.common.i18n.common.SysConstants.RATE_LIMITER_KEY;
 
 /**
  * 请查看 RequestRateLimiterGatewayFilterFactory
@@ -49,8 +50,6 @@ import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
 @Slf4j
 @RequiredArgsConstructor
 public class RateLimiterAop {
-
-	private static final String KEY = "___%s_KEY___";
 
 	private final RedisUtil redisUtil;
 
@@ -71,7 +70,7 @@ public class RateLimiterAop {
 	}
 
 	private String getKey(String id) {
-		return "rate_limiter.{" + String.format(KEY, id) + "}.tokens";
+		return "rate_limiter.{" + String.format(RATE_LIMITER_KEY, id) + "}.tokens";
 	}
 
 }

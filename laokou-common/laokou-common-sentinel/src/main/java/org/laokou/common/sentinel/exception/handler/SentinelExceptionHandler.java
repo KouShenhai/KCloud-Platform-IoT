@@ -32,7 +32,7 @@ import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 
-import static org.laokou.common.i18n.common.ErrorCode.*;
+import static org.laokou.common.i18n.common.ErrorCodes.*;
 
 /**
  * @author laokou

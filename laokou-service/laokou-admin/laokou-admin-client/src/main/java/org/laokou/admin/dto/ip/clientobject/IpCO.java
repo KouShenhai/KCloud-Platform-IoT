@@ -22,7 +22,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
-import static org.laokou.common.i18n.common.Constant.IPV4_REGEX;
+import static org.laokou.common.i18n.common.NetworkConstants.IPV4_REGEX;
 
 /**
  * @author laokou

@@ -17,7 +17,7 @@
 
 package org.laokou.admin.common.utils;
 
-import org.laokou.admin.domain.message.Type;
+import org.laokou.common.i18n.common.MessageTypeEnums;
 import org.laokou.admin.dto.message.domainevent.MessageEvent;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
@@ -47,7 +47,7 @@ public class EventUtil {
 		event.setContent(content);
 		event.setTitle(title);
 		event.setInstanceId(instanceId);
-		event.setType(Type.REMIND.ordinal());
+		event.setType(MessageTypeEnums.REMIND.ordinal());
 		event.setReceiver(StringUtil.isEmpty(assignee) ? Collections.emptySet() : Collections.singleton(assignee));
 		return event;
 	}

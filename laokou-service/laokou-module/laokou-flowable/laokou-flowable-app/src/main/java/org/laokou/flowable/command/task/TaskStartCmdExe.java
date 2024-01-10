@@ -36,7 +36,7 @@ import org.laokou.flowable.dto.task.TaskStartCmd;
 import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.flowable.common.Constant.FLOWABLE;
+import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
  * @author laokou

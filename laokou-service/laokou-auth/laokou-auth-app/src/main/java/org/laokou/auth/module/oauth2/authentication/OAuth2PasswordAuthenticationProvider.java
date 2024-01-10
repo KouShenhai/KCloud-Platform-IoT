@@ -33,11 +33,9 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.common.Constant.CAPTCHA;
-import static org.laokou.auth.common.Constant.UUID;
-import static org.laokou.common.i18n.common.Constant.PASSWORD;
-import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.ValCode.*;
+import static org.laokou.common.i18n.common.OAuth2Constants.*;
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.ValCodes.*;
 
 /**
  * @author laokou

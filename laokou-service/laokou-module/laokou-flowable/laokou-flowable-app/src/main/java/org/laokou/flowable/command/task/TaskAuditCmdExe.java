@@ -39,7 +39,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static org.laokou.flowable.common.Constant.FLOWABLE;
+import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
  * @author laokou

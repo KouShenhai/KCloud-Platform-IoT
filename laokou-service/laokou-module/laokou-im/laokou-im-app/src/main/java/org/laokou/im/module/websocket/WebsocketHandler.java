@@ -47,7 +47,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.laokou.common.i18n.common.Constant.*;
+import static io.netty.handler.codec.http.HttpResponseStatus.UNAUTHORIZED;
+import static org.laokou.common.i18n.common.RequestHeaderConstants.*;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.MARK;
 
 /**
  * @author laokou
@@ -103,7 +106,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 	private void init(ChannelHandlerContext ctx, FullHttpRequest request) {
 		try {
-			if (request.decoderResult().isFailure() || !WS_HEADER_VALUE.equals(request.headers().get(WS_HEADER_NAME))) {
+			if (request.decoderResult().isFailure() || !WEBSOCKET.equals(request.headers().get(UPGRADE))) {
 				handleRequestError(ctx, HttpResponseStatus.BAD_REQUEST);
 				return;
 			}
@@ -114,13 +117,13 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 			String Authorization = getAuthorization(paramMap);
 			request.setUri(uri.substring(0, index));
 			if (StringUtil.isEmpty(Authorization)) {
-				handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
+				handleRequestError(ctx, UNAUTHORIZED);
 				return;
 			}
 			String userInfoKey = RedisKeyUtil.getUserInfoKey(Authorization);
 			reactiveRedisUtil.get(userInfoKey).subscribe(obj -> {
 				if (ObjectUtil.isNull(obj)) {
-					handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
+					handleRequestError(ctx, UNAUTHORIZED);
 					return;
 				}
 				User user = (User) obj;

@@ -17,7 +17,6 @@
 package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
-import org.laokou.common.i18n.common.Constant;
 
 import java.io.File;
 import java.util.Arrays;
@@ -25,7 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.COMMA;
+import static org.laokou.common.i18n.common.StringConstants.COMMA;
+import static org.laokou.common.i18n.common.StringConstants.DOT;
 
 /**
  * @author laokou
@@ -70,7 +70,7 @@ public class FileUtil {
 	 * 获取文件后缀
 	 */
 	public static String getFileExt(String fileName) {
-		return fileName.substring(fileName.lastIndexOf(Constant.DOT));
+		return fileName.substring(fileName.lastIndexOf(DOT));
 	}
 
 }

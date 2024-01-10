@@ -28,7 +28,7 @@ import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
 
 /**

@@ -23,9 +23,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
+
 import java.time.Instant;
 
-import static org.laokou.common.security.config.RedisOAuth2Authorization.KEY;
+import static org.laokou.common.i18n.common.OAuth2Constants.REDIS_OAUTH2_AUTHORIZATION_KEY;
 
 /**
  * 仿照 数据库表 oauth2_authorization <a href=
@@ -35,10 +36,8 @@ import static org.laokou.common.security.config.RedisOAuth2Authorization.KEY;
  * @author laokou
  */
 @Data
-@RedisHash(KEY)
+@RedisHash(REDIS_OAUTH2_AUTHORIZATION_KEY)
 public class RedisOAuth2Authorization extends Authorization {
-
-	public static final String KEY = "oauth2:authorization";
 
 	/**
 	 * ID

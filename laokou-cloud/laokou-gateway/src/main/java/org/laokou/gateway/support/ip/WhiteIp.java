@@ -32,7 +32,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.InetSocketAddress;
 
-import static org.laokou.common.i18n.common.BizCode.IP_WHITE;
+import static org.laokou.common.i18n.common.BizCodes.IP_WHITE;
 
 /**
  * @author laokou

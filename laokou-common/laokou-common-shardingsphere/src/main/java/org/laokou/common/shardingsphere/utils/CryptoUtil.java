@@ -36,7 +36,7 @@ import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-import static org.laokou.common.i18n.common.Constant.ALGORITHM_RSA;
+import static org.laokou.common.i18n.common.SysConstants.*;
 
 /**
  * Copyright 1999-2018 Alibaba Group Holding Ltd.
@@ -59,12 +59,6 @@ public class CryptoUtil {
 	public static final String DEFAULT_PUBLIC_KEY_STRING = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ4o6sn4WoPmbs7DR9mGQzuuUQM9erQTVPpwxIzB0ETYkyKffO097qXVRLA6KPmaV+/siWewR7vpfYYjWajw5KkCAwEAAQ==";
 
 	private static final String DEFAULT_PRIVATE_KEY_STRING = "MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAnijqyfhag+ZuzsNH2YZDO65RAz16tBNU+nDEjMHQRNiTIp987T3updVEsDoo+ZpX7+yJZ7BHu+l9hiNZqPDkqQIDAQABAkBgErbczRIewWFaE+GXTymUHUV01Gmu7XdXUhzy6+CZkIcEnyTpUgPilGUydiIyeiY8usvWKGjFWxLoKeJDY1wBAiEA5M9uqc9XpL5uitLWHiiq7pRxhnJb/B+wZyHqLVhCLekCIQCw9D/Fsx7vHRgymWYExHvCka7w5SyWUmNzQOOKjZUIwQIhAMqbo7JaF5GZzui+qTsrZ7C7YYtb2Hf414t7TJG6hV+BAiBXuZ7r+fL6A+h9HUNQVcAtI2AhGNxT4aBgAOlNRQd/gQIgCGqaZsOdnL9624SI1DwhBt4x24q3350pWwzgfl4Kbbo=";
-
-	public static final String PREFIX = "ENC(";
-
-	public static final String SUFFIX = ")";
-
-	public static final String PUBLIC_KEY = "public-key";
 
 	public static String decrypt(String cipherText) throws Exception {
 		return decrypt((String) null, cipherText);
@@ -212,11 +206,11 @@ public class CryptoUtil {
 		return keyPairs;
 	}
 
-	public static void main(String[] args) throws Exception {
-		String password = encrypt("laokou123");
-		String root = encrypt("root");
-		System.out.println(PREFIX + root + SUFFIX);
-		System.out.println(PREFIX + password + SUFFIX);
+	public static void main(String[] args) {
+		// String password = encrypt("laokou123");
+		// String root = encrypt("root");
+		// System.out.println(CRYPTO_PREFIX + root + CRYPTO_SUFFIX);
+		// System.out.println(CRYPTO_PREFIX + password + CRYPTO_SUFFIX);
 	}
 
 }

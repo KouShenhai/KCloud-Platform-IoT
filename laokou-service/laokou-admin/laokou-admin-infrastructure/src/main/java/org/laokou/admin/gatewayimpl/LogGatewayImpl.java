@@ -42,7 +42,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.*;
+import static org.laokou.common.i18n.common.DatasourceConstants.*;
 
 /**
  * @author laokou

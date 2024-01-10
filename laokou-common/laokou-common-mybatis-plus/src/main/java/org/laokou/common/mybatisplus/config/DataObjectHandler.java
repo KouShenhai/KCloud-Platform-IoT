@@ -21,11 +21,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 
-import static org.laokou.common.i18n.common.Constant.DEFAULT;
-import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.*;
-
+import static org.laokou.common.i18n.common.MybatisConstants.*;
+import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
 /**
  * @author laokou
  */

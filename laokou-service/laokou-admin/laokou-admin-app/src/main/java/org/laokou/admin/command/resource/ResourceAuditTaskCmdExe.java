@@ -43,11 +43,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.util.Objects;
-
-import static org.laokou.admin.common.Constant.AUDIT_STATUS;
-import static org.laokou.admin.domain.resource.Status.*;
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+import static org.laokou.common.i18n.common.AuditConstants.STATUS;
+import static org.laokou.common.i18n.common.AuditEnums.*;
+import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * @author laokou
@@ -76,26 +74,25 @@ public class ResourceAuditTaskCmdExe {
 		// 下一个审批人
 		String assignee = co.getAssignee();
 		// 审批状态
-		int auditStatus = Integer.parseInt(cmd.getValues().get(AUDIT_STATUS).toString());
+		int auditStatus = Integer.parseInt(cmd.getValues().get(STATUS).toString());
 		// 还有审批人，就是审批中，没有审批人就结束审批
-		int status = StringUtil.isNotEmpty(assignee) ? IN_APPROVAL
+		int status = StringUtil.isNotEmpty(assignee) ? IN_APPROVAL.getValue()
 				// 通过审批 或 驳回审批
-				: auditStatus == PASS ? APPROVED : REJECT_APPROVAL;
+				: auditStatus == PASS.getValue() ? APPROVED.getValue() : REJECT_APPROVAL.getValue();
 		// 修改审批状态，审批通过需要将审批通过内容更新至资源表
 		Long id = cmd.getBusinessKey();
 		int version = resourceMapper.getVersion(id, ResourceDO.class);
 		ResourceAuditDO resourceAuditDO = null;
-		if (status == APPROVED) {
+		if (status == APPROVED.getValue()) {
 			resourceAuditDO = resourceAuditMapper.getResourceAuditById(id);
 		}
 		boolean flag = updateResource(id, version, status, resourceAuditDO);
 		// 审批日志
 		domainEventPublisher.publish(toAuditLogEvent(cmd, auditStatus));
 		// 审批中，则发送审批通知消息
-		if (status == IN_APPROVAL) {
+		if (status == IN_APPROVAL.getValue()) {
 			publishMessage(assignee, cmd);
 		}
-		log.info("审批状态：{}，状态：{}，审批意见：{}", DESC_MAP.get(auditStatus + 100), DESC_MAP.get(status), cmd.getComment());
 		return Result.of(flag);
 	}
 

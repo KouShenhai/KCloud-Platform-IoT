@@ -24,7 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.NetworkConstants.LOCAL_DESC;
+import static org.laokou.common.i18n.common.StringConstants.*;
 
 /**
  * @author laokou
@@ -47,7 +48,7 @@ public class AddressUtil {
 
 	@SneakyThrows
 	public static String getRealAddress(String ip) {
-		return IpUtil.internalIp(ip) ? LOCAL_NETWORK_LABEL : addressFormat(SEARCHER.search(ip));
+		return IpUtil.internalIp(ip) ? LOCAL_DESC : addressFormat(SEARCHER.search(ip));
 	}
 
 	private static String addressFormat(String address) {

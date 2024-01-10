@@ -33,7 +33,8 @@ import org.laokou.common.security.utils.UserUtil;
 import org.laokou.flowable.dto.task.TaskTransferCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.flowable.common.Constant.FLOWABLE;
+import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
+
 
 /**
  * @author laokou

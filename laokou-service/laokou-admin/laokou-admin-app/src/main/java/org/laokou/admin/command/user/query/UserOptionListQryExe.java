@@ -26,14 +26,14 @@ import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.jasypt.utils.AesUtil;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_USER;
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_USER;
+import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * @author laokou

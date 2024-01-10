@@ -22,7 +22,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.PASSWORD;
+import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
 
 /**
  * @author laokou

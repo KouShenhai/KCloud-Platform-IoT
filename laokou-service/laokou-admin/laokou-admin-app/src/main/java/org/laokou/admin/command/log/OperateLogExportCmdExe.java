@@ -31,8 +31,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_OPERATE_LOG;
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_OPERATE_LOG;
+import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * @author laokou

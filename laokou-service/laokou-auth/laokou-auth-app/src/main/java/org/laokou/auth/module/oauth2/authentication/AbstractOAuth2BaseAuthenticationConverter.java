@@ -33,11 +33,11 @@ import org.springframework.util.MultiValueMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.laokou.auth.common.Constant.TENANT_ID;
-import static org.laokou.common.i18n.common.Constant.TRACE_ID;
-import static org.laokou.common.i18n.common.ErrorCode.INVALID_SCOPE;
-import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.ValCode.OAUTH2_TENANT_ID_REQUIRE;
+import static org.laokou.common.i18n.common.ErrorCodes.INVALID_SCOPE;
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.TenantConstants.TENANT_ID;
+import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
+import static org.laokou.common.i18n.common.ValCodes.OAUTH2_TENANT_ID_REQUIRE;
 
 /**
  * @author laokou

@@ -17,7 +17,7 @@
 
 package org.laokou.common.lock.annotation;
 
-import org.laokou.common.lock.enums.Type;
+import org.laokou.common.i18n.common.LockTypeEnums;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -51,6 +51,6 @@ public @interface Lock4j {
 	/**
 	 * 分布式锁类型.
 	 */
-	Type type() default Type.LOCK;
+	LockTypeEnums type() default LockTypeEnums.LOCK;
 
 }

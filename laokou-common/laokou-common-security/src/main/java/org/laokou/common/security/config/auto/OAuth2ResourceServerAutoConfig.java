@@ -43,7 +43,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import java.util.*;
 
 import static org.laokou.common.core.config.OAuth2ResourceServerProperties.PREFIX;
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
+import static org.laokou.common.i18n.common.StringConstants.TRUE;
+import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 
 /**
  * 关闭OAuth2,请在yml配置spring.oauth2.resource-server.enabled=false

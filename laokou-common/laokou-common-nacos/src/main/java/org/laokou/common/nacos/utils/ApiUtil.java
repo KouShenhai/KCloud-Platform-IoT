@@ -24,16 +24,17 @@ import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.nacos.proxy.ProtocolProxy;
 import org.laokou.common.nacos.clientobject.ConfigCO;
+import org.laokou.common.nacos.proxy.ProtocolProxy;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.OAuth2Constants.*;
+import static org.laokou.common.i18n.common.RouterConstants.DATA_ID;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -47,8 +48,6 @@ public class ApiUtil {
 	private final ProtocolProxy protocolProxy;
 
 	private final ConfigUtil configUtil;
-
-	private static final String ACCESS_TOKEN = "accessToken";
 
 	public String getToken() {
 		String tokenUri = protocolProxy.getTokenUri(nacosConfigProperties.getServerAddr());
@@ -70,7 +69,7 @@ public class ApiUtil {
 		String group = configUtil.getGroup();
 		String nameSpace = configUtil.getNameSpace();
 		Map<String, String> params = new HashMap<>(7);
-		params.put("dataId", ConfigUtil.ROUTER_DATA_ID);
+		params.put("dataId", DATA_ID);
 		params.put("group", group);
 		params.put("namespaceId", nameSpace);
 		params.put("tenant", nameSpace);

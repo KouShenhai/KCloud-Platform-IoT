@@ -21,7 +21,7 @@ import org.springframework.security.core.Authentication;
 
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.MOBILE;
+import static org.laokou.common.i18n.common.OAuth2Constants.MOBILE;
 
 /**
  * @author laokou

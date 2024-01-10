@@ -25,14 +25,12 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import static org.laokou.common.openfeign.constant.ServiceConstant.LAOKOU_FLOWABLE;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
-
+import static org.laokou.common.i18n.common.OpenFeignConstants.SERVICE_LAOKOU_FLOWABLE;
 /**
  * @author laokou
  */
-@FeignClient(contextId = "definitions", name = LAOKOU_FLOWABLE, path = "v1/definitions",
+@FeignClient(contextId = "definitions", name = SERVICE_LAOKOU_FLOWABLE, path = "v1/definitions",
 		fallbackFactory = DefinitionsFeignClientFallbackFactory.class)
 public interface DefinitionsFeignClient {
 

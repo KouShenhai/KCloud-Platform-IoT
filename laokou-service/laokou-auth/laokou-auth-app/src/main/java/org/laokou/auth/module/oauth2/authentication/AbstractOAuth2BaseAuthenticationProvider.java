@@ -37,7 +37,7 @@ import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.jasypt.utils.AesUtil;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -73,12 +73,15 @@ import java.util.Optional;
 import java.util.Set;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
-import static org.laokou.auth.common.Constant.TENANT_ID;
-import static org.laokou.common.i18n.common.BizCode.LOGIN_SUCCEEDED;
-import static org.laokou.common.i18n.common.Constant.*;
-import static org.laokou.common.i18n.common.ErrorCode.*;
-import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
+import static org.laokou.common.i18n.common.BizCodes.LOGIN_SUCCEEDED;
+import static org.laokou.common.i18n.common.ErrorCodes.*;
+import static org.laokou.common.i18n.common.NumberConstants.FAIL;
+import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
+import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.StatusCodes.FORBIDDEN;
+import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
+import static org.laokou.common.i18n.common.TenantConstants.TENANT_ID;
 
 /**
  * @author laokou
@@ -357,7 +360,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 默认数据源
 		String sourceName = MASTER;
 		try {
-			if (tenantId != DEFAULT_TENANT) {
+			if (tenantId != DEFAULT) {
 				// 租户数据源
 				Source source = sourceGateway.getSourceName(tenantId);
 				sourceName = source.getName();

@@ -36,6 +36,7 @@ import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.data.redis.core.ReactiveHashOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -45,8 +46,8 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import static org.laokou.common.i18n.common.ErrorCode.ROUTE_NOT_EXIST;
-import static org.laokou.common.nacos.utils.ConfigUtil.ROUTER_DATA_ID;
+import static org.laokou.common.i18n.common.ErrorCodes.ROUTE_NOT_EXIST;
+import static org.laokou.common.i18n.common.RouterConstants.DATA_ID;
 
 /**
  * <a href=
@@ -57,6 +58,7 @@ import static org.laokou.common.nacos.utils.ConfigUtil.ROUTER_DATA_ID;
 @Component
 @Slf4j
 @NonNullApi
+@Repository
 public class NacosRouteDefinitionRepository implements RouteDefinitionRepository, ApplicationEventPublisherAware {
 
 	private final ConfigUtil configUtil;
@@ -81,7 +83,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		// Spring Cloud Gateway 会按照 order 的值从小到大进行匹配，找到第一个匹配成功的路由进行处理。
 		String group = configUtil.getGroup();
 		ConfigService configService = configUtil.getConfigService();
-		configService.addListener(ROUTER_DATA_ID, group, new Listener() {
+		configService.addListener(DATA_ID, group, new Listener() {
 			@Override
 			public Executor getExecutor() {
 				return Executors.newSingleThreadExecutor();
@@ -141,7 +143,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			// pull nacos config info
 			String group = configUtil.getGroup();
 			ConfigService configService = configUtil.getConfigService();
-			String configInfo = configService.getConfig(ROUTER_DATA_ID, group, 5000);
+			String configInfo = configService.getConfig(DATA_ID, group, 5000);
 			return JacksonUtil.toList(configInfo, RouteDefinition.class);
 		}
 		catch (Exception e) {
