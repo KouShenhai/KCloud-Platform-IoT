@@ -66,7 +66,7 @@ import java.util.UUID;
 
 import static org.laokou.auth.common.Constant.LOGIN_PATTERN;
 import static org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties.PREFIX;
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.StringConstants.TRUE;
 import static org.laokou.common.i18n.common.SysConstants.ALGORITHM_RSA;
 import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 

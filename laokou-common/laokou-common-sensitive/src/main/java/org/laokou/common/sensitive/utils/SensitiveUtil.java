@@ -20,19 +20,16 @@ package org.laokou.common.sensitive.utils;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.sensitive.annotation.SensitiveField;
-import org.laokou.common.sensitive.enums.Type;
+import org.laokou.common.i18n.common.SensitiveTypeEnums;
 
 import java.lang.reflect.Field;
 
-import static org.laokou.common.i18n.common.Constant.AT;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.*;
 
 /**
  * @author laokou
  */
 public class SensitiveUtil {
-
-	private static final String FILL = "****";
 
 	public static void transform(Object obj) throws IllegalAccessException {
 		Field[] fields = obj.getClass().getDeclaredFields();
@@ -54,8 +51,8 @@ public class SensitiveUtil {
 		}
 	}
 
-	public static String format(Type type, String str) {
-		return switch (type) {
+	public static String format(SensitiveTypeEnums sensitiveTypeEnums, String str) {
+		return switch (sensitiveTypeEnums) {
 			case MAIL -> formatMail(str);
 			case MOBILE -> formatMobile(str);
 		};
@@ -71,7 +68,7 @@ public class SensitiveUtil {
 		}
 		String begin = mail.substring(0, 1);
 		String end = mail.substring(index);
-		return begin + FILL + end;
+		return begin + START_START + START_START + end;
 	}
 
 	private static String formatMobile(String mobile) {
@@ -84,7 +81,7 @@ public class SensitiveUtil {
 		}
 		String begin = mobile.substring(0, 3);
 		String end = mobile.substring(7);
-		return begin + FILL + end;
+		return begin + START_START + START_START + end;
 	}
 
 }

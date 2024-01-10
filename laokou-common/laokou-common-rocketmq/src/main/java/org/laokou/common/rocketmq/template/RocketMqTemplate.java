@@ -20,17 +20,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
-import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
-import org.laokou.common.rocketmq.constant.MqConstant;
+import org.laokou.common.i18n.common.RocketMqConstants;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.Constant.TRACE_ID;
+import static org.apache.rocketmq.client.producer.SendStatus.SEND_OK;
+import static org.laokou.common.i18n.common.StringConstants.NULL;
+import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
 
 /**
  * @author laokou
@@ -53,7 +54,7 @@ public class RocketMqTemplate implements InitializingBean {
 	 */
 	public <T> boolean sendSyncMessage(String topic, T payload, long timeout) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
-		return rocketMQTemplate.syncSend(topic, message, timeout).getSendStatus().equals(SendStatus.SEND_OK);
+		return rocketMQTemplate.syncSend(topic, message, timeout).getSendStatus().equals(SEND_OK);
 	}
 
 	/**
@@ -67,7 +68,7 @@ public class RocketMqTemplate implements InitializingBean {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
 		return rocketMQTemplate.syncSend(topic, message, timeout, delayLevel)
 			.getSendStatus()
-			.equals(SendStatus.SEND_OK);
+			.equals(SEND_OK);
 	}
 
 	/**
@@ -77,7 +78,7 @@ public class RocketMqTemplate implements InitializingBean {
 	 */
 	public <T> boolean sendSyncMessage(String topic, T payload) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
-		return rocketMQTemplate.syncSend(topic, message).getSendStatus().equals(SendStatus.SEND_OK);
+		return rocketMQTemplate.syncSend(topic, message).getSendStatus().equals(SEND_OK);
 	}
 
 	/**
@@ -165,7 +166,7 @@ public class RocketMqTemplate implements InitializingBean {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
 		return rocketMQTemplate.syncSendDelayTimeSeconds(topic, payload, delay)
 			.getSendStatus()
-			.equals(SendStatus.SEND_OK);
+			.equals(SEND_OK);
 	}
 
 	/**
@@ -175,7 +176,7 @@ public class RocketMqTemplate implements InitializingBean {
 	 */
 	public <T> boolean sendSyncOrderlyMessage(String topic, T payload, String id) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
-		return rocketMQTemplate.syncSendOrderly(topic, message, id).getSendStatus().equals(SendStatus.SEND_OK);
+		return rocketMQTemplate.syncSendOrderly(topic, message, id).getSendStatus().equals(SEND_OK);
 	}
 
 	/**
@@ -215,21 +216,21 @@ public class RocketMqTemplate implements InitializingBean {
 	 * @param topic
 	 * @param payload
 	 * @param transactionId
-	 * @return
+	 * @return 发送结果
 	 */
 	public <T> boolean sendTransactionMessage(String topic, T payload, Long transactionId) {
 		Message<T> message = MessageBuilder.withPayload(payload)
 			.setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId)
 			.build();
-		return rocketMQTemplate.sendMessageInTransaction(topic, message, null)
+		return rocketMQTemplate.sendMessageInTransaction(topic, message, NULL)
 			.getSendStatus()
-			.equals(SendStatus.SEND_OK);
+			.equals(SEND_OK);
 	}
 
 	/**
 	 * 转换并发送
-	 * @param topic
-	 * @param payload
+	 * @param topic 主题
+	 * @param payload 消息内容
 	 */
 	public <T> void convertAndSendMessage(String topic, T payload) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
@@ -250,7 +251,7 @@ public class RocketMqTemplate implements InitializingBean {
 	}
 
 	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message) {
-		rocketMQTemplate.asyncSend(String.format(MqConstant.TOPIC_TAG, topic, tag), message, new SendCallback() {
+		rocketMQTemplate.asyncSend(String.format(RocketMqConstants.TOPIC_TAG, topic, tag), message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("RocketMQ消息发送成功");

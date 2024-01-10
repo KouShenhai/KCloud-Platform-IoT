@@ -24,7 +24,7 @@ import org.springframework.util.AntPathMatcher;
 import java.util.Map;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * @author laokou

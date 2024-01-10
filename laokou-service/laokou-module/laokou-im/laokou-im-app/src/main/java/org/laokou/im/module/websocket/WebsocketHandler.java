@@ -48,9 +48,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.UNAUTHORIZED;
-import static org.laokou.common.i18n.common.Constant.MARK;
 import static org.laokou.common.i18n.common.RequestHeaderConstants.*;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.MARK;
 
 /**
  * @author laokou

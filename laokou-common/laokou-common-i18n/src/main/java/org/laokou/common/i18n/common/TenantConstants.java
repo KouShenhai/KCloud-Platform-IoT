@@ -39,4 +39,9 @@ public final class TenantConstants {
      */
     public static final String TENANT_ID = "tenant_id";
 
+    /**
+     * 默认
+     */
+    public static final long DEFAULT = 0;
+
 }

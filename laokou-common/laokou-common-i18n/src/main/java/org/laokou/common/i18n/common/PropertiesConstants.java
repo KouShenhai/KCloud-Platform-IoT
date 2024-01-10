@@ -29,4 +29,8 @@ public final class PropertiesConstants {
      */
     public static final String SPRING_APPLICATION_NAME = "spring.application.name";
 
+    public static final String XXL_JOB_PREFIX = "spring.xxl-job";
+
+    public static final String DEFAULT_CONFIG_PREFIX = "spring.default-config";
+
 }

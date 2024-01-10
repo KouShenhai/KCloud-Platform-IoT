@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
+import static org.laokou.common.i18n.common.SysConstants.APPLICATION;
 
 /**
  * @author laokou
@@ -37,7 +38,7 @@ public class PrometheusAutoConfig {
 	@Bean
 	MeterRegistryCustomizer<MeterRegistry> configurer() {
 		return (registry) -> registry.config()
-			.commonTags("application", environment.getProperty(SPRING_APPLICATION_NAME));
+			.commonTags(APPLICATION, environment.getProperty(SPRING_APPLICATION_NAME));
 	}
 
 }

@@ -24,8 +24,8 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
+import static org.laokou.common.i18n.common.MybatisConstants.TENANT_ID;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
-import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
 
 /**
  * @author laokou

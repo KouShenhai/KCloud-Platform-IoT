@@ -17,12 +17,12 @@
 
 package org.laokou.common.dynamic.router.utils;
 
+import static org.laokou.common.i18n.common.RouterConstants.GENERATED_NAME_PREFIX;
+
 /**
  * @author laokou
  */
 public class NameUtil {
-
-	private static final String GENERATED_NAME_PREFIX = "_genkey_";
 
 	public static String generateName(int i) {
 		return GENERATED_NAME_PREFIX + i;

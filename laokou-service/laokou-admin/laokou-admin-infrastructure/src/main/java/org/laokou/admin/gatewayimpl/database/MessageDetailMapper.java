@@ -21,6 +21,8 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
+import static org.laokou.common.i18n.common.MybatisConstants.USER_ID;
+
 /**
  * @author laokou
  */
@@ -28,6 +30,6 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface MessageDetailMapper extends BatchMapper<MessageDetailDO> {
 
-	Integer getUnreadMessageCountByUserId(@Param("userId") Long userId);
+	Integer getUnreadMessageCountByUserId(@Param(USER_ID) Long userId);
 
 }

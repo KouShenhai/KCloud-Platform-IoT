@@ -34,15 +34,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.DatasourceConstants.INSERT_SQL_TEMPLATE;
+import static org.laokou.common.i18n.common.StringConstants.*;
 
 /**
  * @author laokou
  */
 @Slf4j
 public class TableTemplate {
-
-	private static final String INSERT_SQL_TEMPLATE = "INSERT INTO `%s`(%s) VALUES(%s);\n";
 
 	public static List<String> getDynamicTables(String start, String end, String tableName) {
 		LocalDate date1 = toDate(start);

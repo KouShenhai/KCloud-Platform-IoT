@@ -31,11 +31,10 @@ import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
-import static org.laokou.common.i18n.common.Constant.COMMA;
-import static org.laokou.common.i18n.common.Constant.DEFAULT;
+import static org.laokou.common.i18n.common.StringConstants.COMMA;
+import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 
 /**
  * @author laokou

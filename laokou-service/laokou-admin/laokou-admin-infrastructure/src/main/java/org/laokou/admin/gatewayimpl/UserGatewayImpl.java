@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.UserGateway;
-import org.laokou.admin.domain.user.SuperAdmin;
+import org.laokou.common.i18n.common.SuperAdminEnums;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
@@ -38,7 +38,7 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.jasypt.utils.AesUtil;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -102,7 +102,7 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	public User getById(Long id) {
 		User user = userConvertor.convertEntity(userMapper.selectById(id));
-		if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
+		if (user.getSuperAdmin() == SuperAdminEnums.YES.ordinal()) {
 			user.setRoleIds(roleMapper.getRoleIds());
 		}
 		else {

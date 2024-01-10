@@ -24,9 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import static org.laokou.common.i18n.common.Constant.*;
 import static org.laokou.common.i18n.common.NetworkConstants.LOCAL_DESC;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.*;
 
 /**
  * @author laokou

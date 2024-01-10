@@ -19,12 +19,12 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.extension.plugins.handler.TableNameHandler;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
 
+import static org.laokou.common.i18n.common.MybatisConstants.PLACE_HOLDER;
+
 /**
  * @author laokou
  */
 public class DynamicTableNameHandler implements TableNameHandler {
-
-	public static final String PLACE_HOLDER = "$$";
 
 	@Override
 	public String dynamicTableName(String sql, String tableName) {

@@ -30,8 +30,8 @@ import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.laokou.common.i18n.common.Constant.TRACE_ID;
-import static org.laokou.common.rocketmq.constant.MqConstant.*;
+import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
+import static org.laokou.common.i18n.common.RocketMqConstants.*;
 
 /**
  * @author laokou

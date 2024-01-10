@@ -59,4 +59,33 @@ public final class SysConstants {
      */
     public static final String SPRING = "spring";
 
+    /**
+     * 空日志信息
+     */
+    public static final String EMPTY_LOG_MSG = "暂无信息";
+
+    public static final String ALGORITHM_AES = "aes";
+
+    public static final String AES_INSTANCE = "AES/CBC/PKCS5Padding";
+
+    public static final String COMMON_DATA_ID = "application-common.yaml";
+
+    public static final String APPLICATION = "application";
+
+    public static final String RATE_LIMITER_KEY = "___%s_KEY___";
+
+    public static final String REDIS_PROTOCOL_PREFIX = "redis://";
+
+    public static final String REDISS_PROTOCOL_PREFIX = "rediss://";
+
+    public static final String CRYPTO_PREFIX = "ENC(";
+
+    public static final String CRYPTO_SUFFIX = ")";
+
+    public static final String PUBLIC_KEY = "public-key";
+
+    public static final String ALL_PATTERNS = "/**";
+
+    public static final String EXCEL_SUFFIX = ".xlsx";
+
 }

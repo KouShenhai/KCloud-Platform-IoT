@@ -74,4 +74,8 @@ public final class DatasourceConstants {
      */
     public static final String TENANT = "#tenant";
 
+    public static final String INSERT_SQL_TEMPLATE = "INSERT INTO `%s`(%s) VALUES(%s);\n";
+
+    public static final String SHOW_TABLES = "show tables";
+
 }

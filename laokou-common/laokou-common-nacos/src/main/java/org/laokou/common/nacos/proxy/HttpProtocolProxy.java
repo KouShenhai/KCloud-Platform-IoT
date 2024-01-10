@@ -19,23 +19,21 @@ package org.laokou.common.nacos.proxy;
 
 import org.laokou.common.core.utils.RegexUtil;
 
-import static org.laokou.common.i18n.common.Constant.RISK;
+import static org.laokou.common.i18n.common.NacosConstants.DEFAULT_PORT;
+import static org.laokou.common.i18n.common.NetworkConstants.HTTP_PROTOCOL;
+import static org.laokou.common.i18n.common.StringConstants.RISK;
 
 /**
  * @author laokou
  */
 public class HttpProtocolProxy extends AbstractProtocolProxy {
 
-	private static final int PORT = 8848;
-
-	public static final String HTTP_PROTOCOL = "http://";
-
 	@Override
 	public String getTokenUri(String serverAddr) {
 		if (internalIp(serverAddr)) {
 			return HTTP_PROTOCOL.concat(serverAddr).concat(TOKEN_URI_SUFFIX);
 		}
-		return String.format("%s%s:%s", HTTP_PROTOCOL, serverAddr, PORT).concat(TOKEN_URI_SUFFIX);
+		return String.format("%s%s:%s", HTTP_PROTOCOL, serverAddr, DEFAULT_PORT).concat(TOKEN_URI_SUFFIX);
 	}
 
 	@Override
@@ -43,7 +41,7 @@ public class HttpProtocolProxy extends AbstractProtocolProxy {
 		if (internalIp(serverAddr)) {
 			return HTTP_PROTOCOL.concat(serverAddr).concat(CONFIG_URI_SUFFIX);
 		}
-		return String.format("%s%s:%s", HTTP_PROTOCOL, serverAddr, PORT).concat(CONFIG_URI_SUFFIX);
+		return String.format("%s%s:%s", HTTP_PROTOCOL, serverAddr, DEFAULT_PORT).concat(CONFIG_URI_SUFFIX);
 	}
 
 	@Override

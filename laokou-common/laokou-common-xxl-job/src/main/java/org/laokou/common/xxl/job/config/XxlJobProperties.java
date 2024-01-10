@@ -21,17 +21,15 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.xxl.job.config.XxlJobProperties.PREFIX;
+import static org.laokou.common.i18n.common.PropertiesConstants.XXL_JOB_PREFIX;
 
 /**
  * @author laokou
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = PREFIX)
+@ConfigurationProperties(prefix = XXL_JOB_PREFIX)
 public class XxlJobProperties {
-
-	public static final String PREFIX = "spring.xxl-job";
 
 	private Admin admin;
 

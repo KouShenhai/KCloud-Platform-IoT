@@ -25,7 +25,7 @@ import org.laokou.admin.dto.source.*;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.enums.Type;
+import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -35,7 +35,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.laokou.common.data.cache.config.CacheConstant.SOURCES;
+import static org.laokou.common.i18n.common.CacheConstants.SOURCES;
+
 
 /**
  * @author laokou
@@ -79,7 +80,7 @@ public class SourcesController {
 	@Operation(summary = "数据源管理", description = "修改数据源")
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@PreAuthorize("hasAuthority('sources:update')")
-	@DataCache(name = SOURCES, key = "#cmd.sourceCO.id", type = Type.DEL)
+	@DataCache(name = SOURCES, key = "#cmd.sourceCO.id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> update(@RequestBody SourceUpdateCmd cmd) {
 		return sourcesServiceI.update(cmd);
 	}
@@ -89,7 +90,7 @@ public class SourcesController {
 	@Operation(summary = "数据源管理", description = "删除数据源")
 	@OperateLog(module = "数据源管理", operation = "删除数据源")
 	@PreAuthorize("hasAuthority('sources:delete')")
-	@DataCache(name = SOURCES, key = "#id", type = Type.DEL)
+	@DataCache(name = SOURCES, key = "#id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return sourcesServiceI.deleteById(new SourceDeleteCmd(id));
 	}

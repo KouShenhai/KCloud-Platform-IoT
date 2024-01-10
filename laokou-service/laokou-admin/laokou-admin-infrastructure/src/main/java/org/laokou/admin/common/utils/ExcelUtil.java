@@ -42,6 +42,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
@@ -56,7 +57,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.ResponseHeaderConstants.*;
+import static org.laokou.common.i18n.common.StringConstants.DROP;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
+import static org.laokou.common.i18n.common.SysConstants.EXCEL_SUFFIX;
 
 /**
  * @author laokou
@@ -65,16 +70,6 @@ import static org.laokou.common.i18n.common.Constant.*;
 public class ExcelUtil {
 
 	private static final int DEFAULT_SIZE = 1000;
-
-	private static final String EXCEL_SUFFIX = ".xlsx";
-
-	private static final String CONTENT_TYPE_VALUE = "application/vnd.ms-excel";
-
-	private static final String CONTENT_DISPOSITION = "Content-disposition";
-
-	private static final String CONTENT_DISPOSITION_VALUE = "attachment;filename=";
-
-	private static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
 	public static <M, T> void doImport(InputStream inputStream, HttpServletResponse response, Class<M> clazz,
 			BiConsumer<M, T> consumer, MybatisUtil mybatisUtil) {
@@ -121,9 +116,9 @@ public class ExcelUtil {
 	private static void header(HttpServletResponse response) {
 		String fileName = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + EXCEL_SUFFIX;
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-		response.setContentType(CONTENT_TYPE_VALUE);
+		response.setContentType(EXCEL_CONTENT_TYPE);
 		response.setHeader(CONTENT_DISPOSITION,
-				CONTENT_DISPOSITION_VALUE + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + EXCEL_SUFFIX);
+				"attachment;filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + EXCEL_SUFFIX);
 		response.addHeader(ACCESS_CONTROL_EXPOSE_HEADERS, CONTENT_DISPOSITION);
 	}
 
@@ -185,7 +180,7 @@ public class ExcelUtil {
 			// 校验数据
 			Set<String> set = ValidatorUtil.validateEntity(data);
 			if (CollectionUtil.isNotEmpty(set)) {
-				ERRORS.add(template(index, String.join(DROP, set)));
+				ERRORS.add(template(index, StringUtil.collectionToDelimitedString(set, DROP)));
 				index++;
 			}
 			else {

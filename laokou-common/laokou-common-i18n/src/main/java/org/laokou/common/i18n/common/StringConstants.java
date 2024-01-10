@@ -33,4 +33,121 @@ public final class StringConstants {
 
     public static final String TRUE = "true";
 
+    /**
+     * false
+     */
+    public static final String FALSE = "false";
+
+    /**
+     * null.
+     */
+    public static final String NULL = null;
+
+    /**
+     * 分割参数
+     */
+    public static final String SLASH = "/";
+
+    /**
+     * 分割参数
+     */
+    public static final String ERECT = "|";
+
+    /**
+     * 分割参数
+     */
+    public static final String DROP = "、";
+
+    /**
+     * 分割参数
+     */
+    public static final String BACKSLASH = "\\";
+
+    /**
+     * 分割参数
+     */
+    public static final String STAR = "*";
+
+    /**
+     * 百分号
+     */
+    public static final String PERCENT = "%";
+
+    /**
+     * 分割参数
+     */
+    public static final String DOT = ".";
+
+    /**
+     * 分割参数
+     */
+    public static final String RISK = ":";
+
+    /**
+     * 分割参数
+     */
+    public static final String COMMA = ",";
+
+    /**
+     * 分割参数
+     */
+    public static final String CHINESE_COMMA = "，";
+
+    /**
+     * 左括号
+     */
+    public static final String LEFT = "(";
+
+    /**
+     * 右括号
+     */
+    public static final String RIGHT = ")";
+
+    /**
+     * 空格
+     */
+    public static final String SPACE = " ";
+
+    /**
+     * 等于
+     */
+    public static final String EQUAL = "=";
+
+    /**
+     * 分割参数
+     */
+    public static final String UNDER = "_";
+
+    /**
+     * 双引号
+     */
+    public static final String DOUBLE_QUOT = "\"";
+
+    /**
+     * 单引号
+     */
+    public static final String SINGLE_QUOT = "'";
+
+    /**
+     * 并
+     */
+    public static final String AND = "&";
+
+    /**
+     * 分割参数
+     */
+    public static final String MARK = "?";
+
+    /**
+     * 分割参数
+     */
+    public static final String ROD = "-";
+
+    /**
+     * 分割参数
+     */
+    public static final String DOLLAR = "$";
+
+    public static final String START_START = "**";
+
 }

@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.laokou.common.i18n.common.OAuth2Constants.*;
+import static org.laokou.common.i18n.common.RouterConstants.DATA_ID;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
@@ -68,7 +69,7 @@ public class ApiUtil {
 		String group = configUtil.getGroup();
 		String nameSpace = configUtil.getNameSpace();
 		Map<String, String> params = new HashMap<>(7);
-		params.put("dataId", ConfigUtil.ROUTER_DATA_ID);
+		params.put("dataId", DATA_ID);
 		params.put("group", group);
 		params.put("namespaceId", nameSpace);
 		params.put("tenant", nameSpace);

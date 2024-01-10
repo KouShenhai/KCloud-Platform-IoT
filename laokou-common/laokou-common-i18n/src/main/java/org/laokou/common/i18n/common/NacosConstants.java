@@ -26,4 +26,6 @@ public final class NacosConstants {
 
     public static final String CLUSTER_CONFIG = "nacos.cluster";
 
+    public static final int DEFAULT_PORT = 8848;
+
 }

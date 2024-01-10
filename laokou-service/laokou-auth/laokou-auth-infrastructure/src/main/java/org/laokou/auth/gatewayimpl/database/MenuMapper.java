@@ -23,6 +23,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static org.laokou.common.i18n.common.MybatisConstants.USER_ID;
+
 /**
  * @author laokou
  */
@@ -32,6 +34,6 @@ public interface MenuMapper {
 
 	List<String> getPermissions();
 
-	List<String> getPermissionsByUserId(@Param("userId") Long userId);
+	List<String> getPermissionsByUserId(@Param(USER_ID) Long userId);
 
 }

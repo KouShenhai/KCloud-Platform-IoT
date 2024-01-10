@@ -24,6 +24,14 @@ public final class RequestParamConstants {
 
     private RequestParamConstants(){}
 
+    public static final String NONCE = "nonce";
 
+    public static final String SIGN = "sign";
+
+    public static final String TIMESTAMP = "timestamp";
+
+    public static final String APP_KEY = "app-key";
+
+    public static final String APP_SECRET = "app-secret";
 
 }

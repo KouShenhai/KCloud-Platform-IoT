@@ -26,7 +26,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.*;
 
-import static org.laokou.common.i18n.common.Constant.COMMA;
+import static org.laokou.common.i18n.common.StringConstants.COMMA;
 
 /**
  * @author laokou

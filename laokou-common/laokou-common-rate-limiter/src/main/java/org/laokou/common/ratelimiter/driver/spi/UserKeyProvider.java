@@ -18,10 +18,10 @@
 package org.laokou.common.ratelimiter.driver.spi;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.laokou.common.ratelimiter.enums.Type;
+import org.laokou.common.i18n.common.RateLimiterTypeEnums;
 
 import static org.laokou.common.i18n.common.TraceConstants.USER_ID;
-import static org.laokou.common.ratelimiter.enums.Type.USER;
+import static org.laokou.common.i18n.common.RateLimiterTypeEnums.USER;
 
 /**
  * @author laokou
@@ -34,7 +34,7 @@ public class UserKeyProvider implements org.laokou.common.ratelimiter.driver.spi
 	}
 
 	@Override
-	public Type accept() {
+	public RateLimiterTypeEnums accept() {
 		return USER;
 	}
 

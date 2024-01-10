@@ -47,7 +47,7 @@ import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.Objects;
 
-import static org.laokou.common.i18n.common.Constant.RISK;
+import static org.laokou.common.i18n.common.StringConstants.RISK;
 
 /**
  * ES自动装配

@@ -18,12 +18,12 @@ package org.laokou.common.core.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.Constant;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
 import static org.laokou.common.i18n.common.NetworkConstants.*;
+import static org.laokou.common.i18n.common.StringConstants.COMMA;
 
 /**
  * IP工具类
@@ -53,7 +53,7 @@ public class IpUtil {
 		if (conditionNull(ip)) {
 			ip = request.getRemoteAddr();
 		}
-		return LOCAL_IPV6.equals(ip) ? LOCAL_IPV4 : ip.split(Constant.COMMA)[0];
+		return LOCAL_IPV6.equals(ip) ? LOCAL_IPV4 : ip.split(COMMA)[0];
 	}
 
 	public static boolean internalIp(String ip) {

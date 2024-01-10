@@ -60,5 +60,6 @@ public final class NetworkConstants {
 
     public static final String LOCAL_DESC = "内网";
 
+    public static final String HTTP_PROTOCOL = "http://";
 
 }

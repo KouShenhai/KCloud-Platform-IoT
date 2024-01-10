@@ -45,10 +45,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
-
-import static org.laokou.common.i18n.common.Constant.CHINESE_COMMA;
-import static org.laokou.common.i18n.common.Constant.DEFAULT;
 import static org.laokou.common.i18n.common.OAuth2Constants.*;
+import static org.laokou.common.i18n.common.StringConstants.CHINESE_COMMA;
+import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 
 /**
  * @author laokou

@@ -46,8 +46,8 @@ public class TraceIndex extends Index {
 	private String profile;
 
 	@ElasticsearchField
-	@DateTimeFormat(pattern = YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS)
-	@JsonFormat(pattern = YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
+	@DateTimeFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS)
+	@JsonFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
 	private LocalDateTime timestamp;
 
 	@ElasticsearchField

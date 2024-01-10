@@ -33,7 +33,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.common.jasypt.utils.AesUtil;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -46,10 +46,12 @@ import java.util.List;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.common.i18n.common.BizCodes.LOGIN_SUCCEEDED;
-import static org.laokou.common.i18n.common.Constant.*;
 import static org.laokou.common.i18n.common.ErrorCodes.ACCOUNT_DISABLE;
 import static org.laokou.common.i18n.common.ErrorCodes.ACCOUNT_PASSWORD_ERROR;
+import static org.laokou.common.i18n.common.NumberConstants.FAIL;
+import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
 import static org.laokou.common.i18n.common.StatusCodes.FORBIDDEN;
+import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 
 /**
  * @author laokou
@@ -72,7 +74,7 @@ public class UsersServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// 默认租户查询
-		Long tenantId = DEFAULT_TENANT;
+		Long tenantId = DEFAULT;
 		String type = AuthorizationGrantType.AUTHORIZATION_CODE.getValue();
 		User user = userGateway.getUserByUsername(new Auth(username, type, AesUtil.getKey()));
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();

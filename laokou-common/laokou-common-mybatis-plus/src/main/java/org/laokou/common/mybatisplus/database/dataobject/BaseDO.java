@@ -26,8 +26,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serial;
 import java.time.LocalDateTime;
 
+import static org.laokou.common.i18n.common.MybatisConstants.*;
 import static org.laokou.common.i18n.utils.DateUtil.Constant.DEFAULT_TIMEZONE;
-import static org.laokou.common.i18n.utils.DateUtil.Constant.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS;
+import static org.laokou.common.i18n.utils.DateUtil.Constant.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS;
 
 /**
  * @author laokou
@@ -35,26 +36,6 @@ import static org.laokou.common.i18n.utils.DateUtil.Constant.YYYY_BAR_MM_BAR_DD_
 @Data
 @Schema(name = "BaseDO", description = "映射基类")
 public class BaseDO extends AbstractDO {
-
-	public static final String ID = "id";
-
-	public static final String CREATOR = "creator";
-
-	public static final String EDITOR = "editor";
-
-	public static final String CREATE_DATE = "createDate";
-
-	public static final String UPDATE_DATE = "updateDate";
-
-	public static final String DEL_FLAG = "delFlag";
-
-	public static final String VERSION = "version";
-
-	public static final String DEPT_ID = "deptId";
-
-	public static final String DEPT_PATH = "deptPath";
-
-	public static final String TENANT_ID = "tenantId";
 
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;
@@ -73,14 +54,14 @@ public class BaseDO extends AbstractDO {
 
 	@Schema(name = CREATE_DATE, description = "创建时间")
 	@TableField(fill = FieldFill.INSERT)
-	@JsonFormat(pattern = YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
-	@DateTimeFormat(pattern = YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS)
+	@JsonFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
+	@DateTimeFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS)
 	private LocalDateTime createDate;
 
 	@Schema(name = UPDATE_DATE, description = "修改时间")
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	@JsonFormat(pattern = YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
-	@DateTimeFormat(pattern = YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS)
+	@JsonFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
+	@DateTimeFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS)
 	private LocalDateTime updateDate;
 
 	@Schema(name = DEL_FLAG, description = "删除标识 0未删除 1已删除")

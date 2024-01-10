@@ -45,10 +45,11 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import static com.baomidou.mybatisplus.core.toolkit.Constants.MYBATIS_PLUS;
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.MybatisConstants.SLOW_SQL;
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
+import static org.laokou.common.i18n.common.StringConstants.DOT;
+import static org.laokou.common.i18n.common.StringConstants.TRUE;
 import static org.laokou.common.i18n.common.SysConstants.ENABLED;
-import static org.laokou.common.mybatisplus.config.MybatisPlusExtProperties.SLOW_SQL;
 
 /**
  * mybatis-plus配置

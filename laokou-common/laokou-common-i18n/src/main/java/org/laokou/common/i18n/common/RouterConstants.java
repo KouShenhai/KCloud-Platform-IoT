@@ -32,4 +32,9 @@ public final class RouterConstants {
      * 服务端口
      */
     public static final String SERVICE_PORT = "service-port";
+
+    public static final String GENERATED_NAME_PREFIX = "_genkey_";
+
+    public static final String DATA_ID = "router.json";
+
 }

@@ -23,9 +23,9 @@ import net.sf.jsqlparser.expression.LongValue;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
-import java.util.Objects;
 import java.util.Set;
-import static org.laokou.common.i18n.common.Constant.DEFAULT_TENANT;
+
+import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 
 /**
  * @author laokou
@@ -51,7 +51,7 @@ public class GlobalTenantLineHandler implements TenantLineHandler {
 	private Long tenantId() {
 		Long tenantId = UserContextHolder.get().getTenantId();
 		if (ObjectUtil.isNull(tenantId)) {
-			return DEFAULT_TENANT;
+			return DEFAULT;
 		}
 		return tenantId;
 	}

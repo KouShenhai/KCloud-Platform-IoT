@@ -84,4 +84,8 @@ public final class OAuth2Constants {
      */
     public static final String FULL = "full";
 
+
+    public static final String REDIS_OAUTH2_AUTHORIZATION_KEY = "oauth2:authorization";
+
+    public static final String ERROR_URL = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 }

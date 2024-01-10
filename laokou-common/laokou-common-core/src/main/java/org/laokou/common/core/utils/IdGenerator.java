@@ -27,14 +27,13 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.laokou.common.i18n.common.Constant.AT;
+import static org.laokou.common.i18n.common.StringConstants.AT;
 
 /**
  *

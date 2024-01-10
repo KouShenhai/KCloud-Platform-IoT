@@ -31,7 +31,7 @@ import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
-import org.laokou.admin.domain.user.SuperAdmin;
+import org.laokou.common.i18n.common.SuperAdminEnums;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
@@ -40,6 +40,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.*;
+import org.laokou.common.i18n.common.NumberConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -47,7 +48,7 @@ import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.jasypt.utils.AesUtil;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.core.env.Environment;
@@ -67,11 +68,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.*;
 import static org.laokou.common.i18n.common.DatasourceConstants.*;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.TenantConstants.TENANT_PASSWORD;
-import static org.laokou.common.i18n.common.TenantConstants.TENANT_USERNAME;
+import static org.laokou.common.i18n.common.StringConstants.*;
+import static org.laokou.common.i18n.common.TenantConstants.*;
 
 /**
  * @author laokou
@@ -256,8 +255,8 @@ public class TenantGatewayImpl implements TenantGateway {
 			item.setUpdateDate(DateUtil.now());
 			item.setCreator(userId);
 			item.setEditor(userId);
-			item.setVersion(DEFAULT);
-			item.setDelFlag(DEFAULT);
+			item.setVersion(NumberConstants.DEFAULT);
+			item.setDelFlag(NumberConstants.DEFAULT);
 			item.setDeptId(deptId);
 			item.setDeptPath(deptPath);
 		});
@@ -271,16 +270,16 @@ public class TenantGatewayImpl implements TenantGateway {
 		userDO.setUsername(TENANT_USERNAME);
 		userDO.setTenantId(tenantId);
 		userDO.setPassword(passwordEncoder.encode(TENANT_PASSWORD));
-		userDO.setSuperAdmin(SuperAdmin.YES.ordinal());
+		userDO.setSuperAdmin(SuperAdminEnums.YES.ordinal());
 		userDO.setDeptId(deptId);
 		userDO.setDeptPath(deptPath);
 		userDO.setCreateDate(DateUtil.now());
 		userDO.setUpdateDate(DateUtil.now());
 		userDO.setCreator(userId);
 		userDO.setEditor(userId);
-		userDO.setVersion(DEFAULT);
-		userDO.setDelFlag(DEFAULT);
-		userDO.setStatus(DEFAULT);
+		userDO.setVersion(NumberConstants.DEFAULT);
+		userDO.setDelFlag(NumberConstants.DEFAULT);
+		userDO.setStatus(NumberConstants.DEFAULT);
 		return userDO;
 	}
 
@@ -298,8 +297,8 @@ public class TenantGatewayImpl implements TenantGateway {
 		deptDO.setUpdateDate(DateUtil.now());
 		deptDO.setCreator(userId);
 		deptDO.setEditor(userId);
-		deptDO.setVersion(DEFAULT);
-		deptDO.setDelFlag(DEFAULT);
+		deptDO.setVersion(NumberConstants.DEFAULT);
+		deptDO.setDelFlag(NumberConstants.DEFAULT);
 		return deptDO;
 	}
 

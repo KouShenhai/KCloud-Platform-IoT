@@ -38,10 +38,9 @@ import org.springframework.util.Assert;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.laokou.common.i18n.common.Constant.*;
 import static org.laokou.common.i18n.common.DatasourceConstants.LIKE;
 import static org.laokou.common.i18n.common.DatasourceConstants.OR;
+import static org.laokou.common.i18n.common.StringConstants.*;
 
 /**
  * @author laokou

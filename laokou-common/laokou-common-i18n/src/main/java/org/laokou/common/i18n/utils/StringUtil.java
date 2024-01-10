@@ -22,8 +22,8 @@ import org.springframework.util.StringUtils;
 import java.util.Collection;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.Constant.PERCENT;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.PERCENT;
 
 /**
  * @author laokou

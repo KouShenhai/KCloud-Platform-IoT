@@ -29,12 +29,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import static org.laokou.common.openfeign.constant.ServiceConstant.LAOKOU_FLOWABLE;
+import static org.laokou.common.i18n.common.OpenFeignConstants.SERVICE_LAOKOU_FLOWABLE;
 
 /**
  * @author laokou
  */
-@FeignClient(contextId = "tasks", name = LAOKOU_FLOWABLE, path = "v1/tasks",
+@FeignClient(contextId = "tasks", name = SERVICE_LAOKOU_FLOWABLE, path = "v1/tasks",
 		fallbackFactory = TasksFeignClientFallbackFactory.class)
 public interface TasksFeignClient {
 
