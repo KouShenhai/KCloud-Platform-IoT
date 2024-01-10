@@ -49,14 +49,14 @@ public class LogsController {
 	private final LogsServiceI logsServiceI;
 
 	@TraceLog
-	@PostMapping(value = "operate-list")
+	@PostMapping("operate-list")
 	@Operation(summary = "日志管理", description = "查询操作日志列表")
 	@PreAuthorize("hasAuthority('logs:operate-list')")
 	public Result<Datas<OperateLogCO>> operateList(@RequestBody OperateLogListQry qry) {
 		return logsServiceI.operateList(qry);
 	}
 
-	@PostMapping(value = "operate-export")
+	@PostMapping("operate-export")
 	@Operation(summary = "日志管理", description = "导出操作日志")
 	@PreAuthorize("hasAuthority('logs:operate-export')")
 	@OperateLog(module = "日志管理", operation = "导出操作日志")
@@ -66,14 +66,14 @@ public class LogsController {
 	}
 
 	@TraceLog
-	@PostMapping(value = "login-list")
+	@PostMapping("login-list")
 	@Operation(summary = "日志管理", description = "查询登录日志列表")
 	@PreAuthorize("hasAuthority('logs:login-list')")
 	public Result<Datas<LoginLogCO>> loginList(@RequestBody LoginLogListQry qry) {
 		return logsServiceI.loginList(qry);
 	}
 
-	@PostMapping(value = "login-export")
+	@PostMapping("login-export")
 	@Operation(summary = "日志管理", description = "导出登录日志")
 	@PreAuthorize("hasAuthority('logs:login-export')")
 	@OperateLog(module = "日志管理", operation = "导出登录日志")

@@ -52,27 +52,27 @@ public class ServerCO extends ClientObject {
 	private static final int OSHI_WAIT_SECOND = 1000;
 
 	/**
-	 * CPU相关信息
+	 * CPU相关信息.
 	 */
 	private Cpu cpu = new Cpu();
 
 	/**
-	 * 內存相关信息
+	 * 內存相关信息.
 	 */
 	private Mem mem = new Mem();
 
 	/**
-	 * JVM相关信息
+	 * JVM相关信息.
 	 */
 	private Jvm jvm = new Jvm();
 
 	/**
-	 * 服务器相关信息
+	 * 服务器相关信息.
 	 */
 	private Sys sys = new Sys();
 
 	/**
-	 * 磁盘相关信息
+	 * 磁盘相关信息.
 	 */
 	private List<SysFile> files = new LinkedList<>();
 
@@ -127,7 +127,7 @@ public class ServerCO extends ClientObject {
 	}
 
 	/**
-	 * 设置CPU信息
+	 * 设置CPU信息.
 	 */
 	private void setCpuInfo(CentralProcessor processor) {
 		// CPU信息
@@ -152,7 +152,7 @@ public class ServerCO extends ClientObject {
 	}
 
 	/**
-	 * 设置内存信息
+	 * 设置内存信息.
 	 */
 	private void setMemInfo(GlobalMemory memory) {
 		mem.setTotal(memory.getTotal());
@@ -161,7 +161,7 @@ public class ServerCO extends ClientObject {
 	}
 
 	/**
-	 * 设置服务器信息
+	 * 设置服务器信息.
 	 */
 	@SneakyThrows
 	private void setSysInfo() {
@@ -174,7 +174,7 @@ public class ServerCO extends ClientObject {
 	}
 
 	/**
-	 * 设置Java虚拟机
+	 * 设置Java虚拟机.
 	 */
 	private void setJvmInfo() {
 		Properties props = System.getProperties();
@@ -186,7 +186,7 @@ public class ServerCO extends ClientObject {
 	}
 
 	/**
-	 * 设置磁盘信息
+	 * 设置磁盘信息.
 	 */
 	private void setSysFiles(OperatingSystem os) {
 		FileSystem fileSystem = os.getFileSystem();
@@ -208,7 +208,7 @@ public class ServerCO extends ClientObject {
 	}
 
 	/**
-	 * 字节转换
+	 * 字节转换.
 	 * @param size 字节大小
 	 * @return 转换后值
 	 */
@@ -241,27 +241,27 @@ class Jvm implements Serializable {
 	private static final long serialVersionUID = 6661783699792848234L;
 
 	/**
-	 * 当前JVM占用的内存总数(M)
+	 * 当前JVM占用的内存总数(M).
 	 */
 	private double total;
 
 	/**
-	 * JVM最大可用内存总数(M)
+	 * JVM最大可用内存总数(M).
 	 */
 	private double max;
 
 	/**
-	 * JVM空闲内存(M)
+	 * JVM空闲内存(M).
 	 */
 	private double free;
 
 	/**
-	 * JDK版本
+	 * JDK版本.
 	 */
 	private String version;
 
 	/**
-	 * JDK路径
+	 * JDK路径.
 	 */
 	private String home;
 
@@ -294,14 +294,14 @@ class Jvm implements Serializable {
 	}
 
 	/**
-	 * 获取JDK名称
+	 * 获取JDK名称.
 	 */
 	public String getName() {
 		return ManagementFactory.getRuntimeMXBean().getVmName();
 	}
 
 	/**
-	 * JDK启动时间
+	 * JDK启动时间.
 	 */
 	public String getStartTime() {
 		long timestamp = ManagementFactory.getRuntimeMXBean().getStartTime();
@@ -310,7 +310,7 @@ class Jvm implements Serializable {
 	}
 
 	/**
-	 * JDK运行时间
+	 * JDK运行时间.
 	 */
 	public String getRunTime() {
 		long timestamp = ManagementFactory.getRuntimeMXBean().getStartTime();
@@ -331,32 +331,32 @@ class Cpu implements Serializable {
 	private static final long serialVersionUID = 8621293532430186793L;
 
 	/**
-	 * 核心数
+	 * 核心数.
 	 */
 	private int cpuNum;
 
 	/**
-	 * CPU总的使用率
+	 * CPU总的使用率.
 	 */
 	private double total;
 
 	/**
-	 * CPU系统总数
+	 * CPU系统总数.
 	 */
 	private double sys;
 
 	/**
-	 * CPU用户使用率
+	 * CPU用户使用率.
 	 */
 	private double used;
 
 	/**
-	 * CPU当前等待率
+	 * CPU当前等待率.
 	 */
 	private double wait;
 
 	/**
-	 * CPU当前空闲率
+	 * CPU当前空闲率.
 	 */
 	private double free;
 
@@ -389,17 +389,17 @@ class Mem implements Serializable {
 	private static final long serialVersionUID = 4618498208469144168L;
 
 	/**
-	 * 内存总量
+	 * 内存总量.
 	 */
 	private double total;
 
 	/**
-	 * 已用内存
+	 * 已用内存.
 	 */
 	private double used;
 
 	/**
-	 * 剩余内存
+	 * 剩余内存.
 	 */
 	private double free;
 
@@ -428,27 +428,27 @@ class Sys implements Serializable {
 	private static final long serialVersionUID = -2249049152299436233L;
 
 	/**
-	 * 服务器名称
+	 * 服务器名称.
 	 */
 	private String computerName;
 
 	/**
-	 * 服务器Ip
+	 * 服务器IP.
 	 */
 	private String computerIp;
 
 	/**
-	 * 项目路径
+	 * 项目路径.
 	 */
 	private String userDir;
 
 	/**
-	 * 操作系统
+	 * 操作系统.
 	 */
 	private String osName;
 
 	/**
-	 * 系统架构
+	 * 系统架构.
 	 */
 	private String osArch;
 
@@ -461,37 +461,37 @@ class SysFile implements Serializable {
 	private static final long serialVersionUID = 2307419364818519046L;
 
 	/**
-	 * 盘符路径
+	 * 盘符路径.
 	 */
 	private String dirName;
 
 	/**
-	 * 盘符类型
+	 * 盘符类型.
 	 */
 	private String sysTypeName;
 
 	/**
-	 * 文件类型
+	 * 文件类型.
 	 */
 	private String typeName;
 
 	/**
-	 * 总大小
+	 * 总大小.
 	 */
 	private String total;
 
 	/**
-	 * 剩余大小
+	 * 剩余大小.
 	 */
 	private String free;
 
 	/**
-	 * 已经使用量
+	 * 已经使用量.
 	 */
 	private String used;
 
 	/**
-	 * 资源的使用率
+	 * 资源的使用率.
 	 */
 	private double usage;
 

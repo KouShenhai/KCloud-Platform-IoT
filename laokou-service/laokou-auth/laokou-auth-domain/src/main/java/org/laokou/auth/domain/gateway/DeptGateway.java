@@ -27,9 +27,9 @@ import java.util.List;
 public interface DeptGateway {
 
 	/**
-	 * 查询部门PATHS
-	 * @param user
-	 * @return List<Long>
+	 * 查询部门PATHS.
+	 * @param user 用户参数
+	 * @return 查询用户所拥有的部门
 	 */
 	List<String> getDeptPaths(User user);
 

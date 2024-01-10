@@ -21,13 +21,11 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.LoginLogConvertor;
 import org.laokou.admin.domain.gateway.LogGateway;
 import org.laokou.admin.domain.log.LoginLog;
-import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.log.LoginLogListQry;
 import org.laokou.admin.dto.log.clientobject.LoginLogCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**

@@ -39,7 +39,7 @@ class ClusterApiTest extends CommonTest {
 
 	private final ServiceUtil serviceUtil;
 
-	public ClusterApiTest(WebApplicationContext webApplicationContext,
+	ClusterApiTest(WebApplicationContext webApplicationContext,
 			OAuth2AuthorizationService oAuth2AuthorizationService, ServiceUtil serviceUtil) {
 		super(webApplicationContext, oAuth2AuthorizationService);
 		this.serviceUtil = serviceUtil;

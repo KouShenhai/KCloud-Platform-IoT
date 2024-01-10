@@ -236,8 +236,7 @@ public class TenantGatewayImpl implements TenantGateway {
 		list.addAll(userSqlList);
 		list.addAll(deptSqlList);
 		list.addAll(menuSqlList);
-		list.add(String.format("UPDATE %s SET username = AES_ENCRYPT('%s','%s') WHERE ID = %s;\n", BOOT_SYS_USER,
-				TENANT_USERNAME, AesUtil.getKey(), userId));
+		list.add(getUpdateUsernameSql(userId));
 		return list;
 	}
 
@@ -300,6 +299,11 @@ public class TenantGatewayImpl implements TenantGateway {
 		deptDO.setVersion(NumberConstants.DEFAULT);
 		deptDO.setDelFlag(NumberConstants.DEFAULT);
 		return deptDO;
+	}
+
+	private String getUpdateUsernameSql(long userId) {
+		return String.format(UPDATE_USERNAME_BY_ID_SQL_TEMPLATE, BOOT_SYS_USER, TENANT_USERNAME, AesUtil.getKey(),
+				userId);
 	}
 
 }

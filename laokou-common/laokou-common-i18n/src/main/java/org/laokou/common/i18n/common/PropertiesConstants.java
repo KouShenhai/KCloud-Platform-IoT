@@ -39,4 +39,6 @@ public final class PropertiesConstants {
 	 */
 	public static final String OAUTH2_AUTHORIZATION_SERVER_PREFIX = "spring.security.oauth2.authorization-server";
 
+	public static final String WEBSOCKET_PREFIX = "spring.websocket";
+
 }

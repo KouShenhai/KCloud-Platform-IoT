@@ -48,7 +48,7 @@ public class DictsController {
 
 	private final DictsServiceI dictsServiceI;
 
-	@PostMapping(value = "list")
+	@PostMapping("list")
 	@TraceLog
 	@Operation(summary = "字典管理", description = "查询字典列表")
 	@PreAuthorize("hasAuthority('dicts:list')")
@@ -64,7 +64,7 @@ public class DictsController {
 	}
 
 	@TraceLog
-	@GetMapping(value = "{id}")
+	@GetMapping("{id}")
 	@Operation(summary = "字典管理", description = "查看字典")
 	@DataCache(name = DICTS, key = "#id")
 	public Result<DictCO> getById(@PathVariable("id") Long id) {
@@ -92,7 +92,7 @@ public class DictsController {
 	}
 
 	@TraceLog
-	@DeleteMapping(value = "{id}")
+	@DeleteMapping("{id}")
 	@Operation(summary = "字典管理", description = "删除字典")
 	@OperateLog(module = "字典管理", operation = "删除字典")
 	@PreAuthorize("hasAuthority('dicts:delete')")

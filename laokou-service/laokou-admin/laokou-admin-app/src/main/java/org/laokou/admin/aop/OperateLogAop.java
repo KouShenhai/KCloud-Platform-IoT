@@ -72,7 +72,7 @@ public class OperateLogAop {
 	}
 
 	/**
-	 * 处理完请求后执行
+	 * 处理完请求后执行.
 	 */
 	@AfterReturning(pointcut = "@annotation(org.laokou.admin.domain.annotation.OperateLog)")
 	public void doAfterReturning(JoinPoint joinPoint) {

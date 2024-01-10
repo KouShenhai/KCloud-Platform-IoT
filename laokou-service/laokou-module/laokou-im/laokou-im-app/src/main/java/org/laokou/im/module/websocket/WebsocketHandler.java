@@ -63,6 +63,9 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 	private final ReactiveRedisUtil reactiveRedisUtil;
 
+	/**
+	 * 建立连接的用户.
+	 */
 	public static final Cache<String, Channel> USER_CACHE;
 
 	static {

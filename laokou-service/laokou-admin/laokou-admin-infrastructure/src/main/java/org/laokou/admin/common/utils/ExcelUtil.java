@@ -134,17 +134,17 @@ public class ExcelUtil {
 		public static final int BATCH_COUNT = 1000;
 
 		/**
-		 * Temporary storage of data
+		 * Temporary storage of data.
 		 */
 		private final List<T> CACHED_DATA_LIST;
 
 		/**
-		 * 错误信息
+		 * 错误信息.
 		 */
 		private final List<String> ERRORS;
 
 		/**
-		 * Single handle the amount of data
+		 * Single handle the amount of data.
 		 */
 		private final int batchCount;
 
@@ -158,12 +158,11 @@ public class ExcelUtil {
 
 		private int index;
 
-		public DataListener(Class<M> clazz, BiConsumer<M, T> consumer, HttpServletResponse response,
-				MybatisUtil mybatisUtil) {
+		DataListener(Class<M> clazz, BiConsumer<M, T> consumer, HttpServletResponse response, MybatisUtil mybatisUtil) {
 			this(clazz, consumer, BATCH_COUNT, response, mybatisUtil);
 		}
 
-		public DataListener(Class<M> clazz, BiConsumer<M, T> consumer, int batchCount, HttpServletResponse response,
+		DataListener(Class<M> clazz, BiConsumer<M, T> consumer, int batchCount, HttpServletResponse response,
 				MybatisUtil mybatisUtil) {
 			this.batchCount = batchCount;
 			this.clazz = clazz;

@@ -36,49 +36,49 @@ import static org.laokou.common.i18n.common.OpenFeignConstants.SERVICE_LAOKOU_FL
 public interface DefinitionsFeignClient {
 
 	/**
-	 * 新增流程
+	 * 新增流程.
 	 * @param file 文件
-	 * @return Result<Boolean>
+	 * @return 执行结果
 	 */
 	@PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
 	Result<Boolean> insert(@RequestPart("file") MultipartFile file);
 
 	/**
-	 * 查询流程列表
+	 * 查询流程列表.
 	 * @param qry 查询参数
-	 * @return Result<Datas<DefinitionCO>>
+	 * @return 流程列表
 	 */
 	@PostMapping("list")
 	Result<Datas<DefinitionCO>> list(@RequestBody DefinitionListQry qry);
 
 	/**
-	 * 挂起流程
+	 * 挂起流程.
 	 * @param definitionId 定义ID
-	 * @return Result<Boolean>
+	 * @return 执行结果
 	 */
 	@PutMapping("{definitionId}/suspend")
 	Result<Boolean> suspend(@PathVariable("definitionId") String definitionId);
 
 	/**
-	 * 激活流程
+	 * 激活流程.
 	 * @param definitionId 定义ID
-	 * @return Result<Boolean>
+	 * @return 执行结果
 	 */
 	@PutMapping("{definitionId}/activate")
 	Result<Boolean> activate(@PathVariable("definitionId") String definitionId);
 
 	/**
-	 * 流程图
+	 * 流程图.
 	 * @param definitionId 定义ID
-	 * @return Result<String>
+	 * @return 查询结果
 	 */
 	@GetMapping("{definitionId}/diagram")
 	Result<String> diagram(@PathVariable("definitionId") String definitionId);
 
 	/**
-	 * 删除流程
+	 * 删除流程.
 	 * @param deploymentId 定义ID
-	 * @return Result<Boolean>
+	 * @return 执行结果
 	 */
 	@DeleteMapping("{deploymentId}")
 	Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId);

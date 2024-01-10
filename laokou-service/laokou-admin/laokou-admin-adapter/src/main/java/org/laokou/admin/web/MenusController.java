@@ -109,7 +109,7 @@ public class MenusController {
 	@TraceLog
 	@GetMapping("{roleId}/ids")
 	@Operation(summary = "菜单管理", description = "菜单树IDS")
-	public Result<List<Long>> ids(@PathVariable(value = "roleId") Long roleId) {
+	public Result<List<Long>> ids(@PathVariable("roleId") Long roleId) {
 		return menusServiceI.ids(new MenuIDSGetQry(roleId));
 	}
 

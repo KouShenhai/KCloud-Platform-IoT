@@ -27,11 +27,6 @@
         delete from boot_sys_user_role
         where user_id = #{userId}
     </delete>
-    <select id="getIdsByUserId" resultType="java.lang.Long">
-        select id
-        from boot_sys_user_role
-        where user_id = #{userId}
-    </select>
     <select id="getRoleIdsByUserId" resultType="java.lang.Long">
         select role_id
         from boot_sys_user_role

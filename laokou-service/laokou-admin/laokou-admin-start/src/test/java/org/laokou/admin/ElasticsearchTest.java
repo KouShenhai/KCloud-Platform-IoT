@@ -37,7 +37,7 @@ class ElasticsearchTest extends CommonTest {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
-	public ElasticsearchTest(WebApplicationContext webApplicationContext,
+	ElasticsearchTest(WebApplicationContext webApplicationContext,
 			OAuth2AuthorizationService oAuth2AuthorizationService, ElasticsearchTemplate elasticsearchTemplate) {
 		super(webApplicationContext, oAuth2AuthorizationService);
 		this.elasticsearchTemplate = elasticsearchTemplate;

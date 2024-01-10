@@ -48,7 +48,7 @@ class DefinitionsApiTest extends CommonTest {
 
 	private static final String API_PREFIX = "/v1/definitions/";
 
-	public DefinitionsApiTest(WebApplicationContext webApplicationContext,
+	DefinitionsApiTest(WebApplicationContext webApplicationContext,
 			OAuth2AuthorizationService oAuth2AuthorizationService) {
 		super(webApplicationContext, oAuth2AuthorizationService);
 	}
