@@ -62,10 +62,19 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 
 	private static final Logger log = LoggerFactory.getLogger(RocketMQAutoConfiguration.class);
 
+	/**
+	 * rocketmq模板名称.
+	 */
 	public static final String ROCKETMQ_TEMPLATE_DEFAULT_GLOBAL_NAME = "rocketMQTemplate";
 
+	/**
+	 * rocketmq默认生产者.
+	 */
 	public static final String PRODUCER_BEAN_NAME = "defaultMQProducer";
 
+	/**
+	 * rocketmq默认拉取消费者.
+	 */
 	public static final String CONSUMER_BEAN_NAME = "defaultLitePullConsumer";
 
 	private final Environment environment;
@@ -159,7 +168,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 	@Bean(destroyMethod = "destroy")
 	@Conditional(ProducerOrConsumerPropertyCondition.class)
 	@ConditionalOnMissingBean(name = ROCKETMQ_TEMPLATE_DEFAULT_GLOBAL_NAME)
-	public RocketMQTemplate rocketMQTemplate(RocketMQMessageConverter rocketMQMessageConverter) {
+	RocketMQTemplate rocketMQTemplate(RocketMQMessageConverter rocketMQMessageConverter) {
 		RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
 		if (applicationContext.containsBean(PRODUCER_BEAN_NAME)) {
 			rocketMQTemplate.setProducer((DefaultMQProducer) applicationContext.getBean(PRODUCER_BEAN_NAME));
@@ -173,7 +182,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 
 	static class ProducerOrConsumerPropertyCondition extends AnyNestedCondition {
 
-		public ProducerOrConsumerPropertyCondition() {
+		ProducerOrConsumerPropertyCondition() {
 			super(ConfigurationPhase.REGISTER_BEAN);
 		}
 

@@ -22,84 +22,84 @@ package org.laokou.common.redis.utils;
 public final class RedisKeyUtil {
 
 	/**
-	 * 验证码Key
+	 * 验证码Key.
 	 */
 	public static String getUserCaptchaKey(String uuid) {
 		return "user:captcha:" + uuid;
 	}
 
 	/**
-	 * 菜单树Key
+	 * 菜单树Key.
 	 */
 	public static String getMenuTreeKey(Long userId) {
 		return "menu:tree:" + userId;
 	}
 
 	/**
-	 * 用户信息Key
+	 * 用户信息Key.
 	 */
 	public static String getUserInfoKey(String token) {
 		return "user:info:" + token;
 	}
 
 	/**
-	 * 布隆过滤器Key
+	 * 布隆过滤器Key.
 	 */
 	public static String getBloomFilterKey() {
 		return "bloom:filter";
 	}
 
 	/**
-	 * OSS配置Key
+	 * OSS配置Key.
 	 */
 	public static String getOssConfigKey(Long tenantId) {
 		return "oss:config:" + tenantId;
 	}
 
 	/**
-	 * 手机验证码Key
+	 * 手机验证码Key.
 	 */
 	public static String getMobileCodeKey(String mobile) {
 		return getUserCaptchaKey(mobile);
 	}
 
 	/**
-	 * 邮箱验证码Key
+	 * 邮箱验证码Key.
 	 */
 	public static String getMailCodeKey(String mail) {
 		return getUserCaptchaKey(mail);
 	}
 
 	/**
-	 * 用户踢出Key
+	 * 用户踢出Key.
 	 */
 	public static String getUserKillKey(String token) {
 		return "user:kill:" + token;
 	}
 
 	/**
-	 * 接口幂等性Key
+	 * 接口幂等性Key.
 	 */
 	public static String getApiIdempotentKey(String token) {
 		return "api:idempotent:" + token;
 	}
 
 	/**
-	 * 动态路由Key
+	 * 动态路由Key.
 	 */
 	public static String getRouteDefinitionHashKey() {
 		return "route:definition";
 	}
 
 	/**
-	 * 租户域名Key
+	 * 租户域名Key.
 	 */
 	public static String getTenantDomainNameHashKey() {
 		return "tenant:domain-name";
 	}
 
 	/**
-	 * IP缓存Key
+	 * IP缓存Key.
 	 */
 	public static String getIpCacheHashKey(String type) {
 		return "ip:cache:" + type;

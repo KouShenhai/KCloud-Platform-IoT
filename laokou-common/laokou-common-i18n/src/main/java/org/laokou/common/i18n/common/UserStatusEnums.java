@@ -18,18 +18,18 @@
 package org.laokou.common.i18n.common;
 
 /**
- * 用户状态
+ * 用户状态.
  *
  * @author laokou
  */
 public enum UserStatusEnums {
 
 	/**
-	 * 正常
+	 * 正常.
 	 */
 	ENABLED,
 	/**
-	 * 禁用
+	 * 禁用.
 	 */
 	DISABLE
 

@@ -23,11 +23,11 @@ package org.laokou.common.i18n.common;
 public enum AlgorithmEnums {
 
 	/**
-	 * AES
+	 * AES.
 	 */
 	AES,
 	/**
-	 * MD5
+	 * MD5.
 	 */
 	MD5
 

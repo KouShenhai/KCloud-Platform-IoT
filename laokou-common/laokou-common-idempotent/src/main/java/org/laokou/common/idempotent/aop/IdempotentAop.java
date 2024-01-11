@@ -38,6 +38,8 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
+import static org.laokou.common.i18n.common.TraceConstants.REQUEST_ID;
+
 /**
  * @author laokou
  */
@@ -50,8 +52,6 @@ public class IdempotentAop {
 	private final RedisUtil redisUtil;
 
 	private static final DefaultRedisScript<Boolean> REDIS_SCRIPT;
-
-	public static final String REQUEST_ID = "request-id";
 
 	static {
 		try (InputStream inputStream = ResourceUtil.getResource("META-INF/scripts/idempotent.lua").getInputStream()) {

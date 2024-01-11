@@ -31,7 +31,7 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper extends BatchMapper<UserDO> {
 
 	/**
-	 * 根据用户名和租户ID查询用户
+	 * 根据用户名和租户ID查询用户.
 	 * @param username 用户名
 	 * @param type 登录类型
 	 * @return UserDO

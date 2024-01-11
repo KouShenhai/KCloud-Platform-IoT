@@ -28,7 +28,6 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.server.Ssl;
@@ -40,6 +39,8 @@ import javax.net.ssl.SSLEngine;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.util.concurrent.TimeUnit;
+
+import static org.laokou.common.i18n.common.SysConstants.TLS_PROTOCOL_VERSION;
 
 /**
  * @author laokou
@@ -88,7 +89,7 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		try (InputStream inputStream = ResourceUtil.getResource(path).getInputStream()) {
 			char[] passArray = password.toCharArray();
 			KeyStore keyStore = KeyStore.getInstance(type);
-			SSLContext sslContext = SSLContext.getInstance(HttpUtil.TLS_PROTOCOL_VERSION);
+			SSLContext sslContext = SSLContext.getInstance(TLS_PROTOCOL_VERSION);
 			keyStore.load(inputStream, passArray);
 			KeyManagerFactory keyManagerFactory = KeyManagerFactory
 				.getInstance(KeyManagerFactory.getDefaultAlgorithm());

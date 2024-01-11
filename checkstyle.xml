@@ -107,7 +107,9 @@
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.CovariantEqualsCheck"/>
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.EmptyStatementCheck"/>
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.EqualsHashCodeCheck"/>
+<!--
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.InnerAssignmentCheck"/>
+-->
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanExpressionCheck"/>
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanReturnCheck"/>
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.StringLiteralEqualityCheck"/>

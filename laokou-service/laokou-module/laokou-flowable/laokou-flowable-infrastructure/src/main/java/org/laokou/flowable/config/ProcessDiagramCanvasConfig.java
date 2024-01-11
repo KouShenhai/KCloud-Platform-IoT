@@ -82,9 +82,9 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 	 * @param conditional 判断条件
 	 * @param isDefault 是否默认
 	 * @param connectionType 连接方式
-	 * @param associationDirection
+	 * @param associationDirection 关联方向
 	 * @param highLighted 高亮
-	 * @param scaleFactor
+	 * @param scaleFactor 比例因子
 	 */
 	@Override
 	public void drawConnection(int[] xPoints, int[] yPoints, boolean conditional, boolean isDefault,
@@ -131,8 +131,8 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 	}
 
 	/**
-	 * 设置字体大小图标颜色
-	 * @param imageType
+	 * 设置字体大小图标颜色.
+	 * @param imageType 图像类型
 	 */
 	@Override
 	public void initialize(String imageType) {
@@ -203,10 +203,10 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 	}
 
 	/**
-	 * 设置连接线字体
-	 * @param text
-	 * @param graphicInfo
-	 * @param centered
+	 * 设置连接线字体.
+	 * @param text 内容
+	 * @param graphicInfo 图形信息
+	 * @param centered 集中
 	 */
 	@Override
 	public void drawLabel(String text, GraphicInfo graphicInfo, boolean centered) {
@@ -235,7 +235,7 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 					tX += (int) (graphicInfo.getWidth() / 2 - bb.getWidth() / 2);
 				}
 				tl.draw(g, (float) tX, textY);
-				textY += tl.getDescent() + tl.getLeading() + (interline - 1.0f) * tl.getAscent();
+				textY += (int) (tl.getDescent() + tl.getLeading() + (interline - 1.0f) * tl.getAscent());
 			}
 			// restore originals
 			g.setFont(originalFont);
@@ -244,11 +244,11 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 	}
 
 	/**
-	 * 高亮显示task框完成的
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
+	 * 高亮显示task框完成的.
+	 * @param x x坐标
+	 * @param y y坐标
+	 * @param width 长度
+	 * @param height 高度
 	 */
 	@Override
 	public void drawHighLight(int x, int y, int width, int height) {
@@ -263,11 +263,11 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 	}
 
 	/**
-	 * 自定义task框当前的位置
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
+	 * 自定义task框当前的位置.
+	 * @param x x坐标
+	 * @param y y坐标
+	 * @param width 长度
+	 * @param height 高度
 	 */
 	public void drawHighLightNow(int x, int y, int width, int height) {
 		Paint originalPaint = g.getPaint();
@@ -281,11 +281,11 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 	}
 
 	/**
-	 * 自定义结束节点
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
+	 * 自定义结束节点.
+	 * @param x x坐标
+	 * @param y y坐标
+	 * @param width 长度
+	 * @param height 高度
 	 */
 	public void drawHighLightEnd(int x, int y, int width, int height) {
 		Paint originalPaint = g.getPaint();
@@ -299,11 +299,11 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 	}
 
 	/**
-	 * task框自定义文字
-	 * @param name
-	 * @param graphicInfo
-	 * @param thickBorder
-	 * @param scaleFactor
+	 * task框自定义文字.
+	 * @param name 名字
+	 * @param graphicInfo 图形信息
+	 * @param thickBorder 厚边框
+	 * @param scaleFactor 比例因子
 	 */
 	@Override
 	protected void drawTask(String name, GraphicInfo graphicInfo, boolean thickBorder, double scaleFactor) {
@@ -346,10 +346,10 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 	protected static final Color EVENT_COLOR = new Color(255, 255, 255);
 
 	/**
-	 * 重写开始事件
-	 * @param graphicInfo
-	 * @param image
-	 * @param scaleFactor
+	 * 重写开始事件.
+	 * @param graphicInfo 图形信息
+	 * @param image 图片
+	 * @param scaleFactor 比例因子
 	 */
 	@Override
 	public void drawStartEvent(GraphicInfo graphicInfo, BufferedImage image, double scaleFactor) {
@@ -374,9 +374,9 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 	}
 
 	/**
-	 * 重写结束事件
-	 * @param graphicInfo
-	 * @param scaleFactor
+	 * 重写结束事件.
+	 * @param graphicInfo 图形信息
+	 * @param scaleFactor 比例因子
 	 */
 	@Override
 	public void drawNoneEndEvent(GraphicInfo graphicInfo, double scaleFactor) {

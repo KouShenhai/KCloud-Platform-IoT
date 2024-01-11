@@ -18,4 +18,4 @@
 /**
  * @author laokou
  */
-package org.laokou.common.mongodb.clientobject;
+package org.laokou.common.secret.aop;

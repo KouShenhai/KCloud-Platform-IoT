@@ -26,17 +26,17 @@ public final class NumberConstants {
 	}
 
 	/**
-	 * 默认
+	 * 默认.
 	 */
 	public static final int DEFAULT = 0;
 
 	/**
-	 * 成功
+	 * 成功.
 	 */
 	public static final int SUCCESS = 0;
 
 	/**
-	 * 失败
+	 * 失败.
 	 */
 	public static final int FAIL = 1;
 

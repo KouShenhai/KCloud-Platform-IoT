@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -38,14 +39,17 @@ public class PageQuery extends Query {
 	@Serial
 	private static final long serialVersionUID = 6412915892334241813L;
 
+	/**
+	 * 分页参数.
+	 */
 	public static final String PAGE_QUERY = "pageQuery";
 
-	@Min(value = 1)
+	@Min(1)
 	@Schema(name = "pageNum", description = "页码")
 	private Integer pageNum = 1;
 
 	@Schema(name = "pageSize", description = "条数")
-	@Min(value = 1)
+	@Min(1)
 	private Integer pageSize = 10;
 
 	@Schema(name = "pageIndex", description = "索引")

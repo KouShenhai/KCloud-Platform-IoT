@@ -46,13 +46,13 @@ import static org.laokou.common.i18n.common.ValCodes.OAUTH2_TENANT_ID_REQUIRE;
 public abstract class AbstractOAuth2BaseAuthenticationConverter implements AuthenticationConverter {
 
 	/**
-	 * 类型
+	 * 类型.
 	 * @return String
 	 */
 	abstract String getGrantType();
 
 	/**
-	 * 子类实现转换
+	 * 子类实现转换.
 	 * @param clientPrincipal 认证参数
 	 * @param additionalParameters 扩展参数
 	 */

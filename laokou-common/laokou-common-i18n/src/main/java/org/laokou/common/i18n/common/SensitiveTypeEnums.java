@@ -23,11 +23,11 @@ package org.laokou.common.i18n.common;
 public enum SensitiveTypeEnums {
 
 	/**
-	 * 手机号
+	 * 手机号.
 	 */
 	MOBILE,
 	/**
-	 * 邮箱
+	 * 邮箱.
 	 */
 	MAIL
 

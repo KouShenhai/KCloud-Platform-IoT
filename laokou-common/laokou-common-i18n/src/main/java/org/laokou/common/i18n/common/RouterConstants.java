@@ -26,17 +26,23 @@ public final class RouterConstants {
 	}
 
 	/**
-	 * 服务IP
+	 * 服务IP.
 	 */
 	public static final String SERVICE_HOST = "service-host";
 
 	/**
-	 * 服务端口
+	 * 服务端口.
 	 */
 	public static final String SERVICE_PORT = "service-port";
 
+	/**
+	 * 生成名称前缀.
+	 */
 	public static final String GENERATED_NAME_PREFIX = "_genkey_";
 
+	/**
+	 * 路由配置标识.
+	 */
 	public static final String DATA_ID = "router.json";
 
 }

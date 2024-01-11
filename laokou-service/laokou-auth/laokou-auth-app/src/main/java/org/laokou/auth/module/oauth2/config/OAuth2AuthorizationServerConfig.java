@@ -71,7 +71,7 @@ import static org.laokou.common.i18n.common.SysConstants.ALGORITHM_RSA;
 import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 
 /**
- * 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}
+ * 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}.
  *
  * @author laokou
  */
@@ -83,7 +83,7 @@ class OAuth2AuthorizationServerConfig {
 
 	// @formatter:off
 	/**
-	 * OAuth2AuthorizationServer核心配置
+	 * OAuth2AuthorizationServer核心配置.
 	 * @param http http
 	 * @param passwordAuthenticationProvider 密码认证Provider
 	 * @param mailAuthenticationProvider 邮箱认证Provider
@@ -138,7 +138,7 @@ class OAuth2AuthorizationServerConfig {
 	// @formatter:on
 
 	/**
-	 * 注册信息
+	 * 注册信息.
 	 * @param propertiesMapper 配置
 	 * @param jdbcTemplate JDBC模板
 	 * @return RegisteredClientRepository
@@ -153,7 +153,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 配置
+	 * 配置.
 	 * @param jwkSource 加密源
 	 * @return JwtEncoder
 	 */
@@ -175,9 +175,9 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 配置
+	 * 配置.
 	 * @param jwtEncoder 加密编码
-	 * @return OAuth2TokenGenerator<OAuth2Token>
+	 * @return Token令牌生成器
 	 */
 	@Bean
 	OAuth2TokenGenerator<OAuth2Token> tokenGenerator(JwtEncoder jwtEncoder) {
@@ -187,7 +187,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 配置
+	 * 配置.
 	 * @return AuthorizationServerSettings
 	 */
 	@Bean
@@ -198,7 +198,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 配置
+	 * 配置.
 	 * @param passwordEncoder 密码编码
 	 * @param usersServiceImpl 用户认证
 	 * @return AuthenticationProvider
@@ -212,7 +212,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 配置
+	 * 配置.
 	 * @param jdbcTemplate JDBC模板
 	 * @param registeredClientRepository 注册信息
 	 * @return OAuth2AuthorizationConsentService

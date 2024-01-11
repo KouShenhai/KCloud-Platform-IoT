@@ -33,7 +33,7 @@ import static org.laokou.common.i18n.common.StringConstants.DOT;
 public class FileUtil {
 
 	/**
-	 * 定义允许上传的文件扩展名
+	 * 定义允许上传的文件扩展名.
 	 */
 	private static final Map<String, String> EXT_MAP = new HashMap<>(3);
 
@@ -67,7 +67,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * 获取文件后缀
+	 * 获取文件后缀.
 	 */
 	public static String getFileExt(String fileName) {
 		return fileName.substring(fileName.lastIndexOf(DOT));

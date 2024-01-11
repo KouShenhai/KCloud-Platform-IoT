@@ -33,22 +33,49 @@ public final class CacheConstants {
 
 	private static final String DEFAULT = "_10m_30m_1024";
 
+	/**
+	 * 对象存储缓存配置.
+	 */
 	public static final String OSS = "oss" + DEFAULT;
 
+	/**
+	 * 部门缓存配置.
+	 */
 	public static final String DEPTS = "depts" + DEFAULT;
 
+	/**
+	 * 字典缓存配置.
+	 */
 	public static final String DICTS = "dicts" + DEFAULT;
 
+	/**
+	 * 菜单缓存配置.
+	 */
 	public static final String MENUS = "menus" + DEFAULT;
 
+	/**
+	 * 消息缓存配置.
+	 */
 	public static final String MESSAGES = "messages" + DEFAULT;
 
+	/**
+	 * 套餐缓存配置.
+	 */
 	public static final String PACKAGES = "packages" + DEFAULT;
 
+	/**
+	 * 租户缓存配置.
+	 */
 	public static final String TENANTS = "tenants" + DEFAULT;
 
+	/**
+	 * 数据源缓存配置.
+	 */
 	public static final String SOURCES = "sources" + DEFAULT;
 
+	/**
+	 * 用户缓存配置.
+	 */
 	public static final String USERS = "users" + DEFAULT;
 
 }

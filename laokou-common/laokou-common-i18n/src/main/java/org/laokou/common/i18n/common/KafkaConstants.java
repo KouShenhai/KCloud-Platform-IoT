@@ -23,8 +23,14 @@ public final class KafkaConstants {
 	private KafkaConstants() {
 	}
 
+	/**
+	 * 分布式链路主题.
+	 */
 	public static final String LAOKOU_TRACE_TOPIC = "laokou_trace_topic";
 
+	/**
+	 * 日志消费者组.
+	 */
 	public static final String LAOKOU_LOGSTASH_CONSUMER_GROUP = "laokou_logstash_consumer_group";
 
 }

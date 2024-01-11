@@ -34,7 +34,7 @@ public class RegexUtil {
 	private static final String NUMBER_REGEX = "^[0-9]*$";
 
 	/**
-	 * 邮箱验证
+	 * 邮箱验证.
 	 * @param mail 邮箱
 	 * @return 邮箱匹配结果
 	 */
@@ -47,7 +47,7 @@ public class RegexUtil {
 	}
 
 	/**
-	 * 数字验证
+	 * 数字验证.
 	 * @param number 数字
 	 * @return 数字匹配结果
 	 */
@@ -56,7 +56,7 @@ public class RegexUtil {
 	}
 
 	/**
-	 * 资源名验证
+	 * 资源名验证.
 	 * @param sourceName 自由名称
 	 * @return 资源名匹配结果
 	 */
@@ -65,7 +65,7 @@ public class RegexUtil {
 	}
 
 	/**
-	 * 手机号验证
+	 * 手机号验证.
 	 * @param mobile 手机号
 	 * @return 手机号匹配结果
 	 */

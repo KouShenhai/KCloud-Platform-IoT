@@ -32,7 +32,7 @@ import static org.laokou.common.i18n.common.MybatisConstants.TENANT_ID;
 public interface SourceMapper {
 
 	/**
-	 * 根据租户ID查询数据源
+	 * 根据租户ID查询数据源.
 	 * @param tenantId 租户ID
 	 * @return String
 	 */

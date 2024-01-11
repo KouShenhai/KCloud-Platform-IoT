@@ -27,7 +27,7 @@ import java.io.Serial;
 import java.util.List;
 
 /**
- * 搜索
+ * 搜索.
  *
  * @author laokou
  */
@@ -37,12 +37,12 @@ public class Search extends DTO {
 	@Serial
 	private static final long serialVersionUID = 8362710467533113506L;
 
-	@Min(value = 1)
+	@Min(1)
 	@Schema(name = "pageNum", description = "页码")
 	private Integer pageNum = 1;
 
 	@Schema(name = "pageSize", description = "条数")
-	@Min(value = 1)
+	@Min(1)
 	private Integer pageSize = 10;
 
 	@NotNull(message = "索引名称不能为空")
@@ -50,22 +50,22 @@ public class Search extends DTO {
 	private String[] indexNames;
 
 	/**
-	 * 分词搜索
+	 * 分词搜索.
 	 */
 	private List<Query> queryStringList;
 
 	/**
-	 * 排序
+	 * 排序.
 	 */
 	private List<Query> sortFieldList;
 
 	/**
-	 * or搜索-精准匹配
+	 * or搜索-精准匹配.
 	 */
 	private List<Query> orQueryList;
 
 	/**
-	 * 聚合字段
+	 * 聚合字段.
 	 */
 	private Aggregation aggregationKey;
 

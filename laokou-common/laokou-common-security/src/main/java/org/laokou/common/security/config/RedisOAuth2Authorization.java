@@ -31,7 +31,7 @@ import static org.laokou.common.i18n.common.OAuth2Constants.REDIS_OAUTH2_AUTHORI
 /**
  * 仿照 数据库表 oauth2_authorization <a href=
  * "https://docs.spring.io/spring-data/redis/reference/redis/redis-repositories/indexes.html">二级索引</a>
- * <a href="https://www.jdon.com/57902.html">用法</a>
+ * <a href="https://www.jdon.com/57902.html">用法</a>.
  *
  * @author laokou
  */
@@ -40,185 +40,185 @@ import static org.laokou.common.i18n.common.OAuth2Constants.REDIS_OAUTH2_AUTHORI
 public class RedisOAuth2Authorization extends Authorization {
 
 	/**
-	 * ID
+	 * ID.
 	 */
 	@Id
 	private String id;
 
 	/**
-	 * 客户端ID
+	 * 客户端ID.
 	 */
 	private String registeredClientId;
 
 	/**
-	 * 认证用户名
+	 * 认证用户名.
 	 */
 	private String principalName;
 
 	/**
-	 * 认证类型
+	 * 认证类型.
 	 */
 	private String authorizationGrantType;
 
 	/**
-	 * 认证范围
+	 * 认证范围.
 	 */
 	private String authorizedScopes;
 
 	/**
-	 * 认证信息
+	 * 认证信息.
 	 */
 	private String attributes;
 
 	/**
-	 * 认证状态
+	 * 认证状态.
 	 */
 	@Indexed
 	private String state;
 
 	/**
-	 * 授权码-值
+	 * 授权码-值.
 	 */
 	@Indexed
 	private String authorizationCodeValue;
 
 	/**
-	 * 授权码-签发时间
+	 * 授权码-签发时间.
 	 */
 	private Instant authorizationCodeIssuedAt;
 
 	/**
-	 * 授权码-过期时间
+	 * 授权码-过期时间.
 	 */
 	private Instant authorizationCodeExpiresAt;
 
 	/**
-	 * 授权码-元数据
+	 * 授权码-元数据.
 	 */
 	private String authorizationCodeMetadata;
 
 	/**
-	 * 令牌-值
+	 * 令牌-值.
 	 */
 	@Indexed
 	private String accessTokenValue;
 
 	/**
-	 * 令牌-签发时间
+	 * 令牌-签发时间.
 	 */
 	private Instant accessTokenIssuedAt;
 
 	/**
-	 * 令牌-过期时间
+	 * 令牌-过期时间.
 	 */
 	private Instant accessTokenExpiresAt;
 
 	/**
-	 * 令牌-元数据
+	 * 令牌-元数据.
 	 */
 	private String accessTokenMetadata;
 
 	/**
-	 * 令牌-类型
+	 * 令牌-类型.
 	 */
 	private String accessTokenType;
 
 	/**
-	 * 令牌-范围
+	 * 令牌-范围.
 	 */
 	private String accessTokenScopes;
 
 	/**
-	 * OID-值
+	 * OID-值.
 	 */
 	@Indexed
 	private String oidcIdTokenValue;
 
 	/**
-	 * OID-签发时间
+	 * OID-签发时间.
 	 */
 	private Instant oidcIdTokenIssuedAt;
 
 	/**
-	 * OID-过期时间
+	 * OID-过期时间.
 	 */
 	private Instant oidcIdTokenExpiresAt;
 
 	/**
-	 * OID-元数据
+	 * OID-元数据.
 	 */
 	private String oidcIdTokenMetadata;
 
 	/**
-	 * OID-属性
+	 * OID-属性.
 	 */
 	private String oidcIdTokenClaims;
 
 	/**
-	 * 刷新令牌-值
+	 * 刷新令牌-值.
 	 */
 	@Indexed
 	private String refreshTokenValue;
 
 	/**
-	 * 刷新令牌-签发时间
+	 * 刷新令牌-签发时间.
 	 */
 	private Instant refreshTokenIssuedAt;
 
 	/**
-	 * 刷新令牌-过期时间
+	 * 刷新令牌-过期时间.
 	 */
 	private Instant refreshTokenExpiresAt;
 
 	/**
-	 * 刷新令牌-元数据
+	 * 刷新令牌-元数据.
 	 */
 	private String refreshTokenMetadata;
 
 	/**
-	 * 用户码-值
+	 * 用户码-值.
 	 */
 	@Indexed
 	private String userCodeValue;
 
 	/**
-	 * 用户码-签发时间
+	 * 用户码-签发时间.
 	 */
 	private Instant userCodeIssuedAt;
 
 	/**
-	 * 用户码-过期时间
+	 * 用户码-过期时间.
 	 */
 	private Instant userCodeExpiresAt;
 
 	/**
-	 * 用户码-元数据
+	 * 用户码-元数据.
 	 */
 	private String userCodeMetadata;
 
 	/**
-	 * 设备码-值
+	 * 设备码-值.
 	 */
 	@Indexed
 	private String deviceCodeValue;
 
 	/**
-	 * 设备码-签发时间
+	 * 设备码-签发时间.
 	 */
 	private Instant deviceCodeIssuedAt;
 
 	/**
-	 * 设备码-过期时间
+	 * 设备码-过期时间.
 	 */
 	private Instant deviceCodeExpiresAt;
 
 	/**
-	 * 设备码-元数据
+	 * 设备码-元数据.
 	 */
 	private String deviceCodeMetadata;
 
 	/**
-	 * 过期时间-秒
+	 * 过期时间-秒.
 	 */
 	@TimeToLive
 	private Long ttl;

@@ -3,11 +3,11 @@ package org.laokou.common.i18n.common;
 public enum SuperAdminEnums {
 
 	/**
-	 * 否
+	 * 否.
 	 */
 	NO,
 	/**
-	 * 是
+	 * 是.
 	 */
 	YES
 

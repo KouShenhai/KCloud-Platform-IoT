@@ -41,7 +41,7 @@ import static org.laokou.common.i18n.common.StringConstants.UNDER;
 import static org.laokou.common.i18n.common.SysConstants.RATE_LIMITER_KEY;
 
 /**
- * 请查看 RequestRateLimiterGatewayFilterFactory
+ * 请查看 RequestRateLimiterGatewayFilterFactory.
  *
  * @author laokou
  */

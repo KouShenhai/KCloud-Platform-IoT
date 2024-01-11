@@ -26,7 +26,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.*;
 import static org.laokou.common.i18n.common.StringConstants.COMMA;
 
 /**
- * IP工具类
+ * IP工具类.
  *
  * @author laokou
  */
@@ -89,7 +89,7 @@ public class IpUtil {
 	}
 
 	/**
-	 * 将IPv4地址转换成字节
+	 * 将IPv4地址转换成字节.
 	 * @param text IPv4地址
 	 * @return byte 字节
 	 */
@@ -101,7 +101,8 @@ public class IpUtil {
 		byte[] bytes = new byte[4];
 		String[] elements = text.split("\\.", -1);
 		try {
-			long l, j;
+			long l;
+			long j;
 			switch (elements.length) {
 				case 1:
 					l = Long.parseLong(elements[0]);

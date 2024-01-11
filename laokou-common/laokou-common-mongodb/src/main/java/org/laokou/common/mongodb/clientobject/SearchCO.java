@@ -28,27 +28,27 @@ import java.util.List;
 public class SearchCO extends Query {
 
 	/**
-	 * 页码
+	 * 页码.
 	 */
 	private Integer pageNum = 1;
 
 	/**
-	 * 条数
+	 * 条数.
 	 */
 	private Integer pageSize = 10;
 
 	/**
-	 * 模糊条件查询
+	 * 模糊条件查询.
 	 */
 	private List<Search> likeSearchList;
 
 	/**
-	 * 表名
+	 * 表名.
 	 */
 	private String collectionName;
 
 	/**
-	 * 是否分页
+	 * 是否分页.
 	 */
 	private boolean needPage = false;
 

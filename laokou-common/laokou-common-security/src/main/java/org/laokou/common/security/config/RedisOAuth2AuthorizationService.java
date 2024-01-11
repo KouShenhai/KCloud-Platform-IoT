@@ -50,7 +50,7 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 
 /**
- * 仿照 JdbcOAuth2AuthorizationService
+ * 仿照 JdbcOAuth2AuthorizationService.
  *
  * @author laokou
  */

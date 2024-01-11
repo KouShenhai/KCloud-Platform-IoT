@@ -23,11 +23,11 @@ package org.laokou.common.i18n.common;
 public enum MessageReadEnums {
 
 	/**
-	 * 未读
+	 * 未读.
 	 */
 	NO,
 	/**
-	 * 已读
+	 * 已读.
 	 */
 	YES
 

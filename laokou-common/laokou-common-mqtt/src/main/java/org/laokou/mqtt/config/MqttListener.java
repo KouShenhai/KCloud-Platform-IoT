@@ -25,8 +25,8 @@ import org.eclipse.paho.mqttv5.common.MqttMessage;
 public interface MqttListener {
 
 	/**
-	 * 消息
-	 * @param message
+	 * 消息订阅.
+	 * @param message 消息
 	 */
 	void onMessage(MqttMessage message);
 

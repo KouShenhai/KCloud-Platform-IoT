@@ -23,22 +23,22 @@ package org.laokou.common.nacos.proxy;
 public interface ProtocolProxy {
 
 	/**
-	 * token_uri
-	 * @return string
-	 * @param serverAddr
+	 * token_uri.
+	 * @param serverAddr nacos地址
+	 * @return 令牌地址
 	 */
 	String getTokenUri(String serverAddr);
 
 	/**
-	 * config_uri
-	 * @param serverAddr
-	 * @return
+	 * config_uri.
+	 * @param serverAddr nacos地址
+	 * @return 配置地址
 	 */
 	String getConfigUri(String serverAddr);
 
 	/**
-	 * ssl
-	 * @return
+	 * ssl.
+	 * @return ssl开启结果
 	 */
 	boolean sslEnabled();
 

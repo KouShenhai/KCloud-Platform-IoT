@@ -22,11 +22,11 @@ package org.laokou.common.i18n.common;
 public enum CacheOperatorTypeEnums {
 
 	/**
-	 * 查询
+	 * 查询.
 	 */
 	GET,
 	/**
-	 * 删除
+	 * 删除.
 	 */
 	DEL
 

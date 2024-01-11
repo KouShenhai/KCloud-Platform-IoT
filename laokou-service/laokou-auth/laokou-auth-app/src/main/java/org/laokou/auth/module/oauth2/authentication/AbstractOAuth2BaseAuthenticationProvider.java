@@ -33,11 +33,11 @@ import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -115,7 +115,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	private static final OAuth2TokenType ID_TOKEN_TOKEN_TYPE = new OAuth2TokenType(OidcParameterNames.ID_TOKEN);
 
 	/**
-	 * 认证
+	 * 认证.
 	 */
 	@SneakyThrows
 	public Authentication authenticate(Authentication authentication) {
@@ -124,25 +124,27 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	}
 
 	/**
-	 * @see OAuth2AuthorizationCodeAuthenticationProvider#supports(Class) 是否支持认证（provider）
+	 * 类型支持.
 	 * @param authentication 类型
-	 * @return boolean
+	 * @return 支持结果
+	 * @see OAuth2AuthorizationCodeAuthenticationProvider#supports(Class)
+	 * 是否支持认证（provider）.
 	 */
 	abstract public boolean supports(Class<?> authentication);
 
 	/**
-	 * 认证
+	 * 认证.
 	 */
 	abstract Authentication principal(HttpServletRequest request) throws IOException;
 
 	/**
-	 * 认证类型
+	 * 认证类型.
 	 * @return AuthorizationGrantType
 	 */
 	abstract AuthorizationGrantType getGrantType();
 
 	/**
-	 * 获取令牌
+	 * 获取令牌.
 	 * @param authentication authentication
 	 * @param principal principal
 	 * @return Authentication
@@ -237,7 +239,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	}
 
 	/**
-	 * 获取用户信息
+	 * 获取用户信息.
 	 * @param username 登录名
 	 * @param password 密码
 	 * @param request 请求参数

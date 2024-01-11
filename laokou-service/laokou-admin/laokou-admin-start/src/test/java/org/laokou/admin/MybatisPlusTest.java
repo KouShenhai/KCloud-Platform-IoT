@@ -50,8 +50,8 @@ class MybatisPlusTest extends CommonTest {
 
 	private final MybatisUtil mybatisUtil;
 
-	MybatisPlusTest(WebApplicationContext webApplicationContext,
-			OAuth2AuthorizationService oAuth2AuthorizationService, DsUtil dsUtil, MybatisUtil mybatisUtil) {
+	MybatisPlusTest(WebApplicationContext webApplicationContext, OAuth2AuthorizationService oAuth2AuthorizationService,
+			DsUtil dsUtil, MybatisUtil mybatisUtil) {
 		super(webApplicationContext, oAuth2AuthorizationService);
 		this.dsUtil = dsUtil;
 		this.mybatisUtil = mybatisUtil;

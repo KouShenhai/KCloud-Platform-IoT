@@ -23,43 +23,43 @@ package org.laokou.common.i18n.common;
 public enum ElasticsearchFieldTypeEnums {
 
 	/**
-	 * 文本
+	 * 文本.
 	 */
 	TEXT,
 	/**
-	 * 文本
+	 * 文本.
 	 */
 	KEYWORD,
 	/**
-	 * 长整型
+	 * 长整型.
 	 */
 	LONG,
 	/**
-	 * 整型
+	 * 整型.
 	 */
 	INTEGER,
 	/**
-	 * 整型
+	 * 整型.
 	 */
 	SHORT,
 	/**
-	 * 字节
+	 * 字节.
 	 */
 	BYTE,
 	/**
-	 * 双浮点
+	 * 双浮点.
 	 */
 	DOUBLE,
 	/**
-	 * 双浮点
+	 * 双浮点.
 	 */
 	FLOAT,
 	/**
-	 * 日期
+	 * 日期.
 	 */
 	DATE,
 	/**
-	 * 布尔
+	 * 布尔.
 	 */
 	BOOLEAN
 

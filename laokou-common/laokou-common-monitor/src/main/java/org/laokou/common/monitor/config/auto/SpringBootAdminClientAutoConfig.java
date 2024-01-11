@@ -83,7 +83,8 @@ import java.util.List;
 import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
 
 /**
- * {@link SpringBootAdminClientAutoConfiguration}
+ * {@link SpringBootAdminClientAutoConfiguration}.
+ *
  * @author laokou
  */
 @Configuration(proxyBeanMethods = false)

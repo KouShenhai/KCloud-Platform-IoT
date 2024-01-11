@@ -32,9 +32,9 @@ public abstract class GlobalException extends RuntimeException {
 	@Serial
 	private static final long serialVersionUID = 4102669900127613541L;
 
-	private int code;
+	private final int code;
 
-	private String msg;
+	private final String msg;
 
 	protected GlobalException(int code) {
 		this.code = code;

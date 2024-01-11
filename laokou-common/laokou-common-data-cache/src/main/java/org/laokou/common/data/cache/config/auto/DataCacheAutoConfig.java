@@ -36,7 +36,7 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 public class DataCacheAutoConfig {
 
 	/**
-	 * redis 需要配置 notify-keyspace-events KEA
+	 * redis 需要配置 notify-keyspace-events KEA.
 	 */
 	@Bean
 	public RedisMessageListenerContainer redisMessageListenerContainer(
