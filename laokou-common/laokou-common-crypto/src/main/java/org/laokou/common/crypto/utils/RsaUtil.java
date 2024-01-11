@@ -35,6 +35,7 @@ import static org.laokou.common.i18n.common.SysConstants.ALGORITHM_RSA;
 
 /**
  * RSA加密与解密.
+ *
  * @author laokou
  */
 @Slf4j

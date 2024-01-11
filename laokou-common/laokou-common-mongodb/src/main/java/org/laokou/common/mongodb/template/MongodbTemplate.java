@@ -41,10 +41,9 @@ public class MongodbTemplate {
 	private final MongoTemplate mongoTemplate;
 
 	/**
-	 * 保存数据
+	 * 保存数据.
 	 * @param collectionName 集合名称
 	 * @param objData obj对象
-	 * @return
 	 */
 	public void insert(String collectionName, Object objData) {
 		mongoTemplate.save(objData, collectionName);

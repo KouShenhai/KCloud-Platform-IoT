@@ -24,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.idempotent.aop.IdempotentAop;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
@@ -42,7 +41,7 @@ import static org.laokou.common.i18n.common.TraceConstants.*;
 
 /**
  * openfeign关闭ssl {@link FeignAutoConfiguration} 开启MVC 请查看
- * {@link FeignClientsConfiguration} 默认开启，支持@RequestLine @Header @RequestPart
+ * {@link FeignClientsConfiguration} 默认开启，支持@RequestLine @Header @RequestPart.
  *
  * @author laokou
  */
@@ -90,7 +89,7 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 				idempotentKey = idempotentUtil.getIdempotentKey();
 				idMap.put(uniqueKey, idempotentKey);
 			}
-			template.header(IdempotentAop.REQUEST_ID, idempotentKey);
+			template.header(REQUEST_ID, idempotentKey);
 			msg = String.format("，请求ID：%s", idMap.get(uniqueKey));
 		}
 		log.info("OpenFeign分布式调用，令牌：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}" + msg, authorization, LogUtil.result(userId),

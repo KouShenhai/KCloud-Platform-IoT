@@ -65,4 +65,9 @@ public final class PropertiesConstants {
 	 */
 	public static final String OPENAPI_DOC_PREFIX = "openapi-doc";
 
+	/**
+	 * mqtt配置前缀.
+	 */
+	public static final String MQTT_PREFIX = "spring.mqtt";
+
 }

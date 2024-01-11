@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.shardingsphere.utils;
@@ -176,7 +176,8 @@ public class Base64Util {
 		byte[] result = new byte[3 * numGroups - missingBytesInLastGroup];
 
 		// Translate all full groups from base64 to byte array elements
-		int inCursor = 0, outCursor = 0;
+		int inCursor = 0;
+		int outCursor = 0;
 		for (int i = 0; i < numFullGroups; i++) {
 			int ch0 = base64toInt(s.charAt(inCursor++), alphaToInt);
 			int ch1 = base64toInt(s.charAt(inCursor++), alphaToInt);

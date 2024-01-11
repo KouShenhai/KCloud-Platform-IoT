@@ -15,4 +15,7 @@
  *
  */
 
+/**
+ * @author laokou
+ */
 package org.laokou.common.lock;

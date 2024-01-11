@@ -30,9 +30,7 @@ import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
 
 /**
- * 类名称：IdempotentUtils
- * <p>
- * 描述：幂等性工具
+ * 幂等性工具.
  *
  * @author why
  */
@@ -47,7 +45,7 @@ public class IdempotentUtil {
 	private static final ThreadLocal<Map<String, String>> REQUEST_ID = ThreadLocal.withInitial(HashMap::new);
 
 	/**
-	 * 得到幂等键
+	 * 得到幂等键.
 	 * @return {@link String }
 	 */
 	public String getIdempotentKey() {
@@ -62,7 +60,7 @@ public class IdempotentUtil {
 	}
 
 	/**
-	 * 判断幂等接口
+	 * 判断幂等接口.
 	 */
 	public static boolean isIdempotent() {
 		Boolean status = IS_IDEMPOTENT.get();
@@ -70,14 +68,14 @@ public class IdempotentUtil {
 	}
 
 	/**
-	 * 设置接口幂等 扩展方法: 用于开启子线程后设置子线程的幂等性状态, 以及定时任务等
+	 * 设置接口幂等 扩展方法: 用于开启子线程后设置子线程的幂等性状态, 以及定时任务等.
 	 */
 	public static void openIdempotent() {
 		IS_IDEMPOTENT.set(true);
 	}
 
 	/**
-	 * 清理 不被servlet管理的和开启子线程的需要手动清理
+	 * 清理 不被servlet管理的和开启子线程的需要手动清理.
 	 */
 	public static void cleanIdempotent() {
 		IS_IDEMPOTENT.remove();

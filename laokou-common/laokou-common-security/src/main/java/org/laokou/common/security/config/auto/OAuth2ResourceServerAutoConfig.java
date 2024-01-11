@@ -57,7 +57,8 @@ import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 @EnableWebSecurity
 @EnableMethodSecurity
 @AutoConfiguration(after = { OAuth2AuthorizationAutoConfig.class })
-@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = OAUTH2_RESOURCE_SERVER_PREFIX, name = ENABLED)
+@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = OAUTH2_RESOURCE_SERVER_PREFIX,
+		name = ENABLED)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class OAuth2ResourceServerAutoConfig {
 

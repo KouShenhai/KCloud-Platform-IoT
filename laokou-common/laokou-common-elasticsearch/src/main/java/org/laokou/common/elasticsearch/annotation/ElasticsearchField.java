@@ -19,7 +19,7 @@ package org.laokou.common.elasticsearch.annotation;
 import java.lang.annotation.*;
 
 /**
- * Elasticsearch注解
+ * Elasticsearch注解.
  *
  * @author laokou
  */
@@ -30,12 +30,12 @@ import java.lang.annotation.*;
 public @interface ElasticsearchField {
 
 	/**
-	 * 默认 keyword
+	 * 默认 keyword.
 	 */
 	String type() default "keyword";
 
 	/**
-	 * 0 not_analyzed 1 ik_smart 2.ik_max_word 3.ik-index(自定义分词器)
+	 * 0 not_analyzed 1 ik_smart 2.ik_max_word 3.ik-index(自定义分词器).
 	 */
 	int participle() default 0;
 

@@ -225,13 +225,13 @@ public class HttpUtil {
 	public static void disableSsl(HttpClientBuilder builder) {
 		SSLContext sslContext = sslContext();
 		SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactoryBuilder.create()
-				.setSslContext(sslContext)
-				.setHostnameVerifier(new TrustAllHostnames())
-				.build();
+			.setSslContext(sslContext)
+			.setHostnameVerifier(new TrustAllHostnames())
+			.build();
 		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = PoolingHttpClientConnectionManagerBuilder
-				.create()
-				.setSSLSocketFactory(sslConnectionSocketFactory)
-				.build();
+			.create()
+			.setSSLSocketFactory(sslConnectionSocketFactory)
+			.build();
 		builder.setConnectionManager(poolingHttpClientConnectionManager);
 	}
 

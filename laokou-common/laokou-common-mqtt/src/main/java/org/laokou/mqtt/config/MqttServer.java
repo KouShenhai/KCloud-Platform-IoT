@@ -42,6 +42,9 @@ public class MqttServer implements Server {
 
 	private volatile MqttClient client;
 
+	/**
+	 * 客户标识.
+	 */
 	public static final Long CLIENT_ID = IdGenerator.defaultSnowflakeId();
 
 	private final SpringMqttProperties springMqttProperties;

@@ -50,4 +50,9 @@ public final class TraceConstants {
 	 */
 	public static final String DOMAIN_NAME = "domain-name";
 
+	/**
+	 * 链路ID.
+	 */
+	public static final String REQUEST_ID = "request-id";
+
 }

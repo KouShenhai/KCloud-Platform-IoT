@@ -40,6 +40,7 @@ public class UserContextHolder {
 		clear();
 		USER_CONTEXT_HOLDER.set(user);
 	}
+
 	@Data
 	@NoArgsConstructor
 	public static class User {

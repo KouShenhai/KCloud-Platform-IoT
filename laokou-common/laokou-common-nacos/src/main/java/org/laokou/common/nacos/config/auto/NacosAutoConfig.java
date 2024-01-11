@@ -42,8 +42,7 @@ public class NacosAutoConfig {
 	private final Registration registration;
 
 	/**
-	 * 协议代理.
-	 * {@link NamingClientProxy}
+	 * 协议代理. {@link NamingClientProxy}
 	 * @param serverProperties server配置
 	 * @return ProtocolProxy
 	 */

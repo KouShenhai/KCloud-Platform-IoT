@@ -31,4 +31,3 @@ public enum CacheOperatorTypeEnums {
 	DEL
 
 }
-
