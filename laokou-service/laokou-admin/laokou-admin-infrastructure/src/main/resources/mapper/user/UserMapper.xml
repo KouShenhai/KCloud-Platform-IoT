@@ -75,7 +75,7 @@
     <select id="getOptionList" resultMap="user">
         select id
         ,`username`
-        from (select id,AES_DECRYPT(`username`, #{key}) as username,del_flag,`status` from boot_sys_user) as boot_sys_user
+        from (select id,AES_DECRYPT(`username`, #{key}) as username,del_flag,`status`,dept_path,creator from boot_sys_user) as boot_sys_user
         where del_flag = 0
         and `status` = 0
         order by id desc
@@ -87,7 +87,7 @@
         ,create_date
         ,avatar
         ,`status`
-        FROM (select id,AES_DECRYPT(username, #{key}) as username,super_admin,create_date,avatar,`status`,del_flag from boot_sys_user) as boot_sys_user
+        FROM (select id,AES_DECRYPT(username, #{key}) as username,super_admin,create_date,avatar,`status`,del_flag,dept_path,creator from boot_sys_user) as boot_sys_user
         where del_flag = 0
         and create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
         <if test="user.username != null and user.username != ''">
@@ -98,7 +98,7 @@
     </select>
     <select id="getUserListTotalFilter" resultType="java.lang.Integer">
         select count(1) as num
-        FROM (select AES_DECRYPT(`username`, #{key}) as username,del_flag,create_date from boot_sys_user) as boot_sys_user
+        FROM (select AES_DECRYPT(`username`, #{key}) as username,del_flag,create_date,dept_path,creator from boot_sys_user) as boot_sys_user
         where del_flag = 0
         and create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
         <if test="user.username != null and user.username != ''">
