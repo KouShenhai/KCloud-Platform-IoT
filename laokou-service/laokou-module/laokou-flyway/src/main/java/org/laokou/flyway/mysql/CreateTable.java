@@ -22,7 +22,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author laokou
@@ -52,32 +51,25 @@ public class CreateTable {
 			catch (Exception e) {
 				throw new RuntimeException("数据源连接失败，请检查相关配置");
 			}
+			Statement statement;
 			try {
-				Statement statement;
-				try {
-					statement = connection.createStatement();
-				}
-				catch (SQLException e) {
-					throw new RuntimeException(e);
-				}
-				try {
-					statement.executeUpdate(createDB(item));
-				}
-				catch (SQLException e) {
-					throw new RuntimeException(e);
-				}
+				statement = connection.createStatement();
 			}
-			finally {
-				if (Objects.nonNull(connection)) {
-					try {
-						connection.close();
-					}
-					catch (SQLException e) {
-						throw new RuntimeException(e);
-					}
-				}
+			catch (SQLException e) {
+				throw new RuntimeException(e);
 			}
-		});
+			try {
+				statement.executeUpdate(createDB(item));
+			}
+			catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
 	}
 
 	private static String createDB(String dbName) {

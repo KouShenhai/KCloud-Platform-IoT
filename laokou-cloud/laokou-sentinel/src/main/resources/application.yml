@@ -17,7 +17,7 @@ sentinel:
   dashboard:
     version: '@sentinel.version@'
 server:
-  port: 8081
+  port: 8972
   servlet:
     encoding:
       charset: UTF-8

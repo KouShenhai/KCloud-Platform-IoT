@@ -198,11 +198,17 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker.version}</version>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>${spring-boot-maven-plugin.version}</version>
                 <configuration>
-                    <fork>true</fork>
+                    <finalName>${project.artifactId}</finalName>
+                    <!-- main方法的地址 只需要修改这个地址-->
                     <mainClass>com.alibaba.csp.sentinel.dashboard.SentinelApp</mainClass>
                 </configuration>
                 <executions>
