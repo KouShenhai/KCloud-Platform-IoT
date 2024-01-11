@@ -17,6 +17,8 @@
 
 package org.laokou.common.i18n.common;
 
+import java.util.regex.Pattern;
+
 /**
  * @author laokou
  */
@@ -51,42 +53,93 @@ public final class SysConstants {
 	public static final String ALGORITHM_RSA = "RSA";
 
 	/**
-	 * 开启
+	 * 开启.
 	 */
 	public static final String ENABLED = "enabled";
 
 	/**
-	 * spring管理
+	 * spring管理.
 	 */
 	public static final String SPRING = "spring";
 
 	/**
-	 * 空日志信息
+	 * 空日志信息.
 	 */
 	public static final String EMPTY_LOG_MSG = "暂无信息";
 
+	/**
+	 * AES加密.
+	 */
 	public static final String ALGORITHM_AES = "aes";
 
+	/**
+	 * AES128对称加密算法.
+	 */
 	public static final String AES_INSTANCE = "AES/CBC/PKCS5Padding";
 
+	/**
+	 * 公共配置标识.
+	 */
 	public static final String COMMON_DATA_ID = "application-common.yaml";
 
+	/**
+	 * 应用.
+	 */
 	public static final String APPLICATION = "application";
 
+	/**
+	 * 限流key.
+	 */
 	public static final String RATE_LIMITER_KEY = "___%s_KEY___";
 
+	/**
+	 * redis未加密连接.
+	 */
 	public static final String REDIS_PROTOCOL_PREFIX = "redis://";
 
+	/**
+	 * redis加密连接.
+	 */
 	public static final String REDISS_PROTOCOL_PREFIX = "rediss://";
 
+	/**
+	 * 加密前缀.
+	 */
 	public static final String CRYPTO_PREFIX = "ENC(";
 
+	/**
+	 * 加密后缀.
+	 */
 	public static final String CRYPTO_SUFFIX = ")";
 
+	/**
+	 * 公共密钥key.
+	 */
 	public static final String PUBLIC_KEY = "public-key";
 
+	/**
+	 * 所有路径.
+	 */
 	public static final String ALL_PATTERNS = "/**";
 
+	/**
+	 * excel文件后缀.
+	 */
 	public static final String EXCEL_SUFFIX = ".xlsx";
+
+	/**
+	 * tls协议版本.
+	 */
+	public static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
+
+	/**
+	 * 带有下划线字段的正则表达式.
+	 */
+	public static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
+
+	/**
+	 * 空json.
+	 */
+	public static final String EMPTY_JSON = "{}";
 
 }

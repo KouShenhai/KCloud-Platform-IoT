@@ -15,22 +15,7 @@
  *
  */
 
-package org.laokou.common.i18n.common;
-
 /**
- * 用户状态.
- *
  * @author laokou
  */
-public enum UserStatusEnums {
-
-	/**
-	 * 正常.
-	 */
-	ENABLED,
-	/**
-	 * 禁用.
-	 */
-	DISABLE
-
-}
+package org.laokou.common.secret.aop;

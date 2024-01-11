@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.secret.aspect;
+package org.laokou.common.secret.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ import static org.laokou.common.i18n.common.RequestParamConstants.*;
 @Component
 @Aspect
 @Slf4j
-public class ApiSecretAspect {
+public class ApiSecretAop {
 
 	@Before("@annotation(org.laokou.common.secret.annotation.ApiSecret)")
 	public void doBefore() {

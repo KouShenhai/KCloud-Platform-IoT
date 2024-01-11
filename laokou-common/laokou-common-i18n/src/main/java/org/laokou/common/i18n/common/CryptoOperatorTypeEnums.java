@@ -23,12 +23,12 @@ package org.laokou.common.i18n.common;
 public enum CryptoOperatorTypeEnums {
 
 	/**
-	 * 加密
+	 * 加密.
 	 */
 	ENCRYPT,
 
 	/**
-	 * 解密
+	 * 解密.
 	 */
 	DECRYPT
 

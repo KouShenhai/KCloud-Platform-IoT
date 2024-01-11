@@ -26,27 +26,27 @@ public final class TraceConstants {
 	}
 
 	/**
-	 * 用户名
+	 * 用户名.
 	 */
 	public static final String USER_NAME = "user-name";
 
 	/**
-	 * 链路ID
+	 * 链路ID.
 	 */
 	public static final String TRACE_ID = "trace-id";
 
 	/**
-	 * 用户ID
+	 * 用户ID.
 	 */
 	public static final String USER_ID = "user-id";
 
 	/**
-	 * 租户ID
+	 * 租户ID.
 	 */
 	public static final String TENANT_ID = "tenant-id";
 
 	/**
-	 * 域名
+	 * 域名.
 	 */
 	public static final String DOMAIN_NAME = "domain-name";
 

@@ -6,7 +6,7 @@ package org.laokou.auth.common;
 public interface Constant {
 
 	/**
-	 * 登录
+	 * 登录.
 	 */
 	String LOGIN_PATTERN = "/login";
 

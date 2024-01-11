@@ -48,7 +48,7 @@ public class ValidatorUtil {
 	}
 
 	/**
-	 * 校验对象
+	 * 校验对象.
 	 * @param obj 待校验对象
 	 */
 	public static Set<String> validateEntity(Object obj) {

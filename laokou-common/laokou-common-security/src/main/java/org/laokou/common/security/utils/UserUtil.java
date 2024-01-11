@@ -58,7 +58,7 @@ public class UserUtil {
 	}
 
 	/**
-	 * 部门PATH
+	 * 部门PATH.
 	 * @return Long
 	 */
 	public static String getDeptPath() {

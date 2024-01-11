@@ -23,27 +23,27 @@ package org.laokou.common.i18n.common;
 public enum RateLimiterTypeEnums {
 
 	/**
-	 * 默认
+	 * 默认.
 	 */
 	DEFAULT,
 
 	/**
-	 * IP
+	 * IP.
 	 */
 	IP,
 
 	/**
-	 * 用户
+	 * 用户.
 	 */
 	USER,
 
 	/**
-	 * 租户
+	 * 租户.
 	 */
 	TENANT,
 
 	/**
-	 * 路径
+	 * 路径.
 	 */
 	PATH
 

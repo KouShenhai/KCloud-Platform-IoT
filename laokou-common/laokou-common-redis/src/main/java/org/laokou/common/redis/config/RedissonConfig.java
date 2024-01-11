@@ -54,7 +54,7 @@ public class RedissonConfig {
 	}
 
 	/**
-	 * redisson配置
+	 * redisson配置.
 	 * @param properties redis配置文件
 	 * @return RedissonClient
 	 */

@@ -26,19 +26,43 @@ public final class PropertiesConstants {
 	}
 
 	/**
-	 * 应用名称YAML配置
+	 * 应用名称yaml配置.
 	 */
 	public static final String SPRING_APPLICATION_NAME = "spring.application.name";
 
+	/**
+	 * xxl-job配置前缀.
+	 */
 	public static final String XXL_JOB_PREFIX = "spring.xxl-job";
 
+	/**
+	 * 默认配置前缀.
+	 */
 	public static final String DEFAULT_CONFIG_PREFIX = "spring.default-config";
 
 	/**
-	 * OAuth2 configuration prefix
+	 * OAuth2认证配置前缀.
 	 */
 	public static final String OAUTH2_AUTHORIZATION_SERVER_PREFIX = "spring.security.oauth2.authorization-server";
 
+	/**
+	 * OAuth2资源配置前缀.
+	 */
+	public static final String OAUTH2_RESOURCE_SERVER_PREFIX = "spring.security.oauth2.resource-server";
+
+	/**
+	 * websocket配置前缀.
+	 */
 	public static final String WEBSOCKET_PREFIX = "spring.websocket";
+
+	/**
+	 * 慢sql配置前缀.
+	 */
+	public static final String SLOW_SQL_PREFIX = "slow-sql";
+
+	/**
+	 * openapi-doc配置前缀.
+	 */
+	public static final String OPENAPI_DOC_PREFIX = "openapi-doc";
 
 }

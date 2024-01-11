@@ -50,6 +50,7 @@ import java.util.Map;
 import static org.laokou.common.i18n.common.NumberConstants.FAIL;
 import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
 import static org.laokou.common.i18n.common.StringConstants.*;
+import static org.laokou.common.i18n.common.SysConstants.EMPTY_JSON;
 
 /**
  * @author laokou
@@ -130,7 +131,7 @@ public class OperateLogAop {
 				obj = params.getFirst();
 			}
 			if (ObjectUtil.isNull(obj)) {
-				event.setRequestParams(JacksonUtil.EMPTY_JSON);
+				event.setRequestParams(EMPTY_JSON);
 			}
 			else {
 				String str = JacksonUtil.toJsonStr(obj);

@@ -26,41 +26,53 @@ public final class NetworkConstants {
 	}
 
 	/**
-	 * IPV4正则表达式
+	 * IPV4正则表达式.
 	 */
 	public static final String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
 
 	/**
-	 * IP参数
+	 * IP参数.
 	 */
 	public static final String IP = "ip";
 
 	/**
-	 * http协议
+	 * http.
 	 */
 	public static final String HTTP_SCHEME = "http";
 
 	/**
-	 * https协议
+	 * https.
 	 */
 	public static final String HTTPS_SCHEME = "https";
 
 	/**
-	 * www
+	 * www.
 	 */
 	public static final String WWW = "www";
 
+	/**
+	 * 本地IP-IPV4.
+	 */
 	public static final String LOCAL_IPV4 = "127.0.0.1";
 
+	/**
+	 * 本地IP-IPV6.
+	 */
 	public static final String LOCAL_IPV6 = "0:0:0:0:0:0:0:1";
 
 	/**
-	 * 未知IP
+	 * 未知IP.
 	 */
 	public static final String UNKNOWN_IP = "unknown";
 
+	/**
+	 * 本地IP描述.
+	 */
 	public static final String LOCAL_DESC = "内网";
 
+	/**
+	 * http协议.
+	 */
 	public static final String HTTP_PROTOCOL = "http://";
 
 }

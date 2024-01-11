@@ -42,14 +42,14 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.*;
 
-import static org.laokou.common.core.config.OAuth2ResourceServerProperties.PREFIX;
+import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_RESOURCE_SERVER_PREFIX;
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.StringConstants.TRUE;
 import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 
 /**
  * 关闭OAuth2,请在yml配置spring.oauth2.resource-server.enabled=false
- * 关闭security，请排除SecurityAutoConfiguration、ManagementWebSecurityAutoConfiguration
+ * 关闭security，请排除SecurityAutoConfiguration、ManagementWebSecurityAutoConfiguration.
  *
  * @author laokou
  */
@@ -57,7 +57,7 @@ import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 @EnableWebSecurity
 @EnableMethodSecurity
 @AutoConfiguration(after = { OAuth2AuthorizationAutoConfig.class })
-@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = PREFIX, name = ENABLED)
+@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = OAUTH2_RESOURCE_SERVER_PREFIX, name = ENABLED)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class OAuth2ResourceServerAutoConfig {
 

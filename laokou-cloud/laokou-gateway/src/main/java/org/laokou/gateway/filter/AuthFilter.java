@@ -231,7 +231,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		initURLMap();
 	}
 
-	private void initURLMap() {
+	private synchronized void initURLMap() {
 		uriMap = Optional.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
 				env.getProperty(SPRING_APPLICATION_NAME)))
 			.orElseGet(HashMap::new);

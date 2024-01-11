@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class ShutdownHolder {
 
 	/**
-	 * 请求计数器
+	 * 请求计数器。
 	 */
 	private static final AtomicLong REQUEST_COUNTER = new AtomicLong(0);
 

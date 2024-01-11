@@ -26,22 +26,22 @@ public final class TenantConstants {
 	}
 
 	/**
-	 * 租户用户名
+	 * 租户用户名.
 	 */
 	public static final String TENANT_USERNAME = "tenant";
 
 	/**
-	 * 租户密码
+	 * 租户密码.
 	 */
 	public static final String TENANT_PASSWORD = "tenant123";
 
 	/**
-	 * 租户ID
+	 * 租户ID.
 	 */
 	public static final String TENANT_ID = "tenant_id";
 
 	/**
-	 * 默认
+	 * 默认.
 	 */
 	public static final long DEFAULT = 0;
 

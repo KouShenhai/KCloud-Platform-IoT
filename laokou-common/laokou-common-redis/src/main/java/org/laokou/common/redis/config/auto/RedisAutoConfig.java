@@ -32,7 +32,7 @@ import static org.laokou.common.redis.config.GlobalJsonJacksonCodec.getJsonRedis
 import static org.laokou.common.redis.config.GlobalJsonJacksonCodec.getStringRedisSerializer;
 
 /**
- * Redis配置
+ * Redis配置.
  *
  * @author laokou
  */
@@ -42,8 +42,8 @@ import static org.laokou.common.redis.config.GlobalJsonJacksonCodec.getStringRed
 public class RedisAutoConfig {
 
 	/**
-	 * 自定义RedisTemplate
-	 * @return RedisTemplate<String, Object>
+	 * 自定义RedisTemplate.
+	 * @return RedisTemplate
 	 */
 	@Bean("redisTemplate")
 	@ConditionalOnMissingBean(RedisTemplate.class)

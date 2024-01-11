@@ -49,7 +49,7 @@ class OAuth2AuthorizationAutoConfig {
 	}
 
 	/**
-	 * 密码编码
+	 * 密码编码.
 	 * @return PasswordEncoder
 	 */
 	@Bean

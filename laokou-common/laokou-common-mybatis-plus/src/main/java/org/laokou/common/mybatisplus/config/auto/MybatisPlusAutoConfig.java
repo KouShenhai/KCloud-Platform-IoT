@@ -45,14 +45,14 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import static com.baomidou.mybatisplus.core.toolkit.Constants.MYBATIS_PLUS;
-import static org.laokou.common.i18n.common.MybatisConstants.SLOW_SQL;
+import static org.laokou.common.i18n.common.PropertiesConstants.SLOW_SQL_PREFIX;
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.StringConstants.DOT;
 import static org.laokou.common.i18n.common.StringConstants.TRUE;
 import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 
 /**
- * mybatis-plus配置
+ * mybatis-plus配置.
  *
  * @author laokou
  */
@@ -69,7 +69,7 @@ public class MybatisPlusAutoConfig {
 	}
 
 	@Bean
-	@ConditionalOnProperty(havingValue = TRUE, prefix = MYBATIS_PLUS + DOT + SLOW_SQL, name = ENABLED)
+	@ConditionalOnProperty(havingValue = TRUE, prefix = MYBATIS_PLUS + DOT + SLOW_SQL_PREFIX, name = ENABLED)
 	public ConfigurationCustomizer slowSqlConfigurationCustomizer(ConfigurableEnvironment environment,
 			MybatisPlusExtProperties mybatisPlusExtProperties) {
 		SlowSqlInterceptor slowSqlInterceptor = new SlowSqlInterceptor();
@@ -79,7 +79,7 @@ public class MybatisPlusAutoConfig {
 
 	/**
 	 * 注意: 使用多个功能需要注意顺序关系,建议使用如下顺序 - 多租户,动态表名 - 分页,乐观锁 - sql 性能规范,防止全表更新与删除 总结: 对 sql
-	 * 进行单次改造的优先放入,不对 sql 进行改造的最后放入
+	 * 进行单次改造的优先放入,不对 sql 进行改造的最后放入.
 	 */
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
@@ -135,7 +135,7 @@ public class MybatisPlusAutoConfig {
 	}
 
 	/**
-	 * 自定义sql注入器
+	 * 自定义sql注入器.
 	 */
 	@Bean
 	public MybatisPlusSqlInjector mybatisPlusSqlInjector() {
@@ -143,7 +143,7 @@ public class MybatisPlusAutoConfig {
 	}
 
 	/**
-	 * 解除每页500条限制
+	 * 解除每页500条限制.
 	 */
 	private PaginationInnerInterceptor paginationInnerInterceptor() {
 		PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();

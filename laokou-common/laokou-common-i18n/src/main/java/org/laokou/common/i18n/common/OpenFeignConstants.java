@@ -25,6 +25,9 @@ public final class OpenFeignConstants {
 	private OpenFeignConstants() {
 	}
 
+	/**
+	 * 工作流服务.
+	 */
 	public static final String SERVICE_LAOKOU_FLOWABLE = "laokou-flowable";
 
 }

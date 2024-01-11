@@ -26,7 +26,7 @@ public final class AuditConstants {
 	}
 
 	/**
-	 * 审批状态
+	 * 审批状态.
 	 */
 	public static final String STATUS = "auditStatus";
 

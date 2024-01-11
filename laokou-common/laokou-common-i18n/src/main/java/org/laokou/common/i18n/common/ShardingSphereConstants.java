@@ -27,14 +27,29 @@ public final class ShardingSphereConstants {
 	private ShardingSphereConstants() {
 	}
 
+	/**
+	 * shardingsphere jdbc type.
+	 */
 	public static final String JDBC_TYPE = "jdbc:shardingsphere:";
 
+	/**
+	 * nacos类型.
+	 */
 	public static final String NACOS_TYPE = "nacos:";
 
+	/**
+	 * yaml相对路径.
+	 */
 	public static final String YAML_LOCATION = "bootstrap.yml";
 
+	/**
+	 * yaml格式.
+	 */
 	public static final String YAML_FORMAT = "yaml";
 
+	/**
+	 * 加密正则表达式.
+	 */
 	public static final Pattern ENC_PATTERN = Pattern.compile("^ENC\\((.*)\\)$");
 
 }

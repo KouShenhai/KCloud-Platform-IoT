@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static org.laokou.common.core.config.OAuth2ResourceServerProperties.PREFIX;
+import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_RESOURCE_SERVER_PREFIX;
 
 // @formatter:off
 /**
@@ -36,10 +36,8 @@ import static org.laokou.common.core.config.OAuth2ResourceServerProperties.PREFI
 // @formatter:on
 @Data
 @Component
-@ConfigurationProperties(prefix = PREFIX)
+@ConfigurationProperties(prefix = OAUTH2_RESOURCE_SERVER_PREFIX)
 public class OAuth2ResourceServerProperties {
-
-	public static final String PREFIX = "spring.security.oauth2.resource-server";
 
 	private boolean enabled = true;
 
@@ -48,7 +46,7 @@ public class OAuth2ResourceServerProperties {
 	@Data
 	public static class RequestMatcher {
 
-		private Map<String, Set<String>> ignorePatterns = new HashMap<>();
+		private Map<String, Set<String>> ignorePatterns = new HashMap<>(0);
 
 	}
 

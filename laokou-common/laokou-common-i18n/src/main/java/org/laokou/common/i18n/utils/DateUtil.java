@@ -25,56 +25,56 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.Locale;
 
 /**
- * 日期处理
+ * 日期处理.
  *
  * @author laokou
  */
 public class DateUtil {
 
 	/**
-	 * yyyy-MM-dd HH:mm:ss
+	 * yyyy-MM-dd HH:mm:ss.
 	 */
 	public static final int YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS = 0;
 
 	/**
-	 * yyyyMMddHHmmss
+	 * yyyyMMddHHmmss.
 	 */
 	public static final int YYYYMMDDHHMMSS = 1;
 
 	/**
-	 * yyyyMM
+	 * yyyyMM.
 	 */
 	public static final int YYYYMM = 2;
 
 	/**
-	 * yyyy-MM-dd
+	 * yyyy-MM-dd.
 	 */
 	public static final int YYYY_ROD_MM_ROD_DD = 3;
 
 	/**
-	 * yyyy年MM月dd日
+	 * yyyy年MM月dd日.
 	 */
 	public static final int YYYY_TEXT_MM_TEXT_DD_TEXT = 4;
 
 	/**
-	 * yyyy.MM.dd
+	 * yyyy.MM.dd.
 	 */
 	public static final int YYYY_DOT_MM_DOT_DD = 5;
 
 	/**
-	 * 星期一
+	 * 星期一.
 	 */
 	public static final int MONDAY = 0;
 
 	/**
-	 * 时间格式
+	 * 时间格式.
 	 */
 	private static final String[] TIME_PATTERNS = { Constant.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS,
 			Constant.YYYYMMDDHHMMSS, Constant.YYYYMM, Constant.YYYY_ROD_MM_ROD_DD, Constant.YYYY_TEXT_MM_TEXT_DD_TEXT,
 			Constant.YYYY_DOT_MM_DOT_DD };
 
 	/**
-	 * 星期数组
+	 * 星期数组.
 	 */
 	private static final DayOfWeek[] WEEK_PATTERNS = { DayOfWeek.MONDAY };
 
@@ -120,7 +120,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 转换
+	 * 转换.
 	 * @param dateTime 时间
 	 * @param index 索引
 	 * @return LocalDateTime
@@ -132,7 +132,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 转换
+	 * 转换.
 	 * @param dateTime 日期
 	 * @param index 索引
 	 * @return LocalDateTime
@@ -144,7 +144,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 获取 前/后 x天 的时间
+	 * 获取 前/后 x天 的时间.
 	 * @param localDateTime 时间
 	 * @param days 天
 	 * @return LocalDateTime
@@ -158,7 +158,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 获取 前/后 x秒 的时间
+	 * 获取 前/后 x秒 的时间.
 	 * @param localDateTime 时间
 	 * @param seconds 秒
 	 * @return LocalDateTime
@@ -168,7 +168,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 获取 前/后 x月 的时间
+	 * 获取 前/后 x月 的时间.
 	 * @param localDateTime 时间
 	 * @param months 月
 	 * @return LocalDateTime
@@ -182,7 +182,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 获取 前/后 x年 的时间
+	 * 获取 前/后 x年 的时间.
 	 * @param localDateTime 时间
 	 * @param years 年
 	 * @return LocalDateTime
@@ -261,37 +261,37 @@ public class DateUtil {
 	public interface Constant {
 
 		/**
-		 * yyyy-MM-dd HH:mm:ss
+		 * yyyy-MM-dd HH:mm:ss.
 		 */
 		String YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS = "yyyy-MM-dd HH:mm:ss";
 
 		/**
-		 * yyyyMMddHHmmss
+		 * yyyyMMddHHmmss.
 		 */
 		String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
 		/**
-		 * yyyyMM
+		 * yyyyMM.
 		 */
 		String YYYYMM = "yyyyMM";
 
 		/**
-		 * yyyy-MM-dd
+		 * yyyy-MM-dd.
 		 */
 		String YYYY_ROD_MM_ROD_DD = "yyyy-MM-dd";
 
 		/**
-		 * yyyy年MM月dd日
+		 * yyyy年MM月dd日.
 		 */
 		String YYYY_TEXT_MM_TEXT_DD_TEXT = "yyyy年MM月dd日";
 
 		/**
-		 * yyyy.MM.dd
+		 * yyyy.MM.dd.
 		 */
 		String YYYY_DOT_MM_DOT_DD = "yyyy.MM.dd";
 
 		/**
-		 * GMT+8
+		 * GMT+8.
 		 */
 		String DEFAULT_TIMEZONE = "GMT+8";
 

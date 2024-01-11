@@ -25,10 +25,19 @@ public final class ResponseHeaderConstants {
 	private ResponseHeaderConstants() {
 	}
 
+	/**
+	 * excel类型.
+	 */
 	public static final String EXCEL_CONTENT_TYPE = "application/vnd.ms-excel";
 
+	/**
+	 * content disposition.
+	 */
 	public static final String CONTENT_DISPOSITION = "Content-disposition";
 
+	/**
+	 * access control expose headers.
+	 */
 	public static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
 }

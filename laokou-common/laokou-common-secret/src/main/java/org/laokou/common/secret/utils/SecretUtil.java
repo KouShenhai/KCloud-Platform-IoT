@@ -77,7 +77,7 @@ public class SecretUtil {
 	}
 
 	/**
-	 * MD5(appKey+appSecret+nonce+timestamp+params)
+	 * MD5(appKey+appSecret+nonce+timestamp+params).
 	 */
 	private static String sign(String appKey, String appSecret, String nonce, long timestamp, String params) {
 		String str = appKey.concat(appSecret).concat(nonce).concat(String.valueOf(timestamp)).concat(params);

@@ -25,8 +25,14 @@ public final class MqttConstants {
 	private MqttConstants() {
 	}
 
+	/**
+	 * 服务停止前的主题.
+	 */
 	public static final String WILL_TOPIC = "will_topic";
 
+	/**
+	 * 下线.
+	 */
 	public static final byte[] WILL_DATA = "offline".getBytes(StandardCharsets.UTF_8);
 
 }

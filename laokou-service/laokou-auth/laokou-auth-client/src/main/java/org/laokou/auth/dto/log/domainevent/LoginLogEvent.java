@@ -35,62 +35,62 @@ public class LoginLogEvent extends ApplicationEvent implements Serializable {
 	private static final long serialVersionUID = -325094951800650353L;
 
 	/**
-	 * 用户ID
+	 * 用户ID.
 	 */
 	private Long userId;
 
 	/**
-	 * 登录用户
+	 * 登录用户.
 	 */
 	private String username;
 
 	/**
-	 * ip地址
+	 * IP地址.
 	 */
 	private String ip;
 
 	/**
-	 * 操作地点
+	 * 操作地点.
 	 */
 	private String address;
 
 	/**
-	 * 浏览器
+	 * 浏览器.
 	 */
 	private String browser;
 
 	/**
-	 * 操作系统
+	 * 操作系统.
 	 */
 	private String os;
 
 	/**
-	 * 状态 0：成功 1：失败
+	 * 状态 0：成功 1：失败.
 	 */
 	private Integer status;
 
 	/**
-	 * 提示信息
+	 * 提示信息.
 	 */
 	private String message;
 
 	/**
-	 * 类型
+	 * 类型.
 	 */
 	private String type;
 
 	/**
-	 * 租户ID
+	 * 租户ID.
 	 */
 	private Long tenantId;
 
 	/**
-	 * 部门ID
+	 * 部门ID.
 	 */
 	private Long deptId;
 
 	/**
-	 * 部门PATH
+	 * 部门PATH.
 	 */
 	private String deptPath;
 

@@ -33,17 +33,17 @@ import java.lang.annotation.Documented;
 public @interface DataCache {
 
 	/**
-	 * 缓存名称
+	 * 缓存名称.
 	 */
 	String name();
 
 	/**
-	 * 缓存键
+	 * 缓存键.
 	 */
 	String key();
 
 	/**
-	 * 操作类型
+	 * 操作类型.
 	 */
 	CacheOperatorTypeEnums type() default CacheOperatorTypeEnums.GET;
 

@@ -48,7 +48,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_AUTHORIZA
 public final class OAuth2AuthorizationServerProperties implements InitializingBean {
 
 	/**
-	 * Open or close
+	 * Open or close.
 	 */
 	private boolean enabled = true;
 
@@ -210,7 +210,7 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 	public static class Registration {
 
 		/**
-		 * ID
+		 * ID.
 		 */
 		private String id;
 

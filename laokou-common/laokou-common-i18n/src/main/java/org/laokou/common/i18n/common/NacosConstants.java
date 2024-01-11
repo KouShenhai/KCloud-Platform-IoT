@@ -25,8 +25,14 @@ public final class NacosConstants {
 	private NacosConstants() {
 	}
 
+	/**
+	 * NACOS集群配置.
+	 */
 	public static final String CLUSTER_CONFIG = "nacos.cluster";
 
+	/**
+	 * NACOS默认端口.
+	 */
 	public static final int DEFAULT_PORT = 8848;
 
 }

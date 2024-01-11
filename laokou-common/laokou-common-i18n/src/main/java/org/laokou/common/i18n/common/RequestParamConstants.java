@@ -25,14 +25,29 @@ public final class RequestParamConstants {
 	private RequestParamConstants() {
 	}
 
+	/**
+	 * 随机字符.
+	 */
 	public static final String NONCE = "nonce";
 
+	/**
+	 * 签名（MD5）.
+	 */
 	public static final String SIGN = "sign";
 
+	/**
+	 * 时间戳.
+	 */
 	public static final String TIMESTAMP = "timestamp";
 
+	/**
+	 * 应用标识.
+	 */
 	public static final String APP_KEY = "app-key";
 
+	/**
+	 * 应用密钥.
+	 */
 	public static final String APP_SECRET = "app-secret";
 
 }

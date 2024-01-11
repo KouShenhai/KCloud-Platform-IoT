@@ -25,30 +25,64 @@ public final class MybatisConstants {
 	private MybatisConstants() {
 	}
 
+	/**
+	 * 分表标识符.
+	 */
 	public static final String PLACE_HOLDER = "$$";
 
+	/**
+	 * ID.
+	 */
 	public static final String ID = "id";
 
+	/**
+	 * 创建人.
+	 */
 	public static final String CREATOR = "creator";
 
+	/**
+	 * 编辑人.
+	 */
 	public static final String EDITOR = "editor";
 
+	/**
+	 * 创建时间.
+	 */
 	public static final String CREATE_DATE = "createDate";
 
+	/**
+	 * 修改时间.
+	 */
 	public static final String UPDATE_DATE = "updateDate";
 
+	/**
+	 * 删除标识.
+	 */
 	public static final String DEL_FLAG = "delFlag";
 
+	/**
+	 * 版本.
+	 */
 	public static final String VERSION = "version";
 
+	/**
+	 * 部门ID.
+	 */
 	public static final String DEPT_ID = "deptId";
 
+	/**
+	 * 部门PATH.
+	 */
 	public static final String DEPT_PATH = "deptPath";
 
+	/**
+	 * 租户ID.
+	 */
 	public static final String TENANT_ID = "tenantId";
 
-	public static final String SLOW_SQL = "slow-sql";
-
+	/**
+	 * 用户ID.
+	 */
 	public static final String USER_ID = "userId";
 
 }

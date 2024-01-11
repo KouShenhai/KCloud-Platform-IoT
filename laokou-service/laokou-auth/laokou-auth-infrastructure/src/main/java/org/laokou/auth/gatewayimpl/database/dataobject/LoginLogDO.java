@@ -36,42 +36,42 @@ public class LoginLogDO extends BaseDO {
 	private static final long serialVersionUID = 4289483981365827983L;
 
 	/**
-	 * 登录的用户名
+	 * 登录的用户名.
 	 */
 	private String username;
 
 	/**
-	 * 登录的IP地址
+	 * 登录的IP地址.
 	 */
 	private String ip;
 
 	/**
-	 * 登录的归属地
+	 * 登录的归属地.
 	 */
 	private String address;
 
 	/**
-	 * 登录的浏览器
+	 * 登录的浏览器.
 	 */
 	private String browser;
 
 	/**
-	 * 登录的操作系统
+	 * 登录的操作系统.
 	 */
 	private String os;
 
 	/**
-	 * 登录状态 0登录成功 1登录失败
+	 * 登录状态 0登录成功 1登录失败.
 	 */
 	private Integer status;
 
 	/**
-	 * 登录信息
+	 * 登录信息.
 	 */
 	private String message;
 
 	/**
-	 * 登录类型
+	 * 登录类型.
 	 */
 	private String type;
 

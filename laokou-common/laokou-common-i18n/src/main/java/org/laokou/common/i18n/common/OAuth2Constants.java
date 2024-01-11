@@ -81,12 +81,18 @@ public final class OAuth2Constants {
 	public static final String ERROR_DESCRIPTION = "error_description";
 
 	/**
-	 * 所有
+	 * 所有.
 	 */
 	public static final String FULL = "full";
 
+	/**
+	 * 存入redis的hash键.
+	 */
 	public static final String REDIS_OAUTH2_AUTHORIZATION_KEY = "oauth2:authorization";
 
+	/**
+	 * 错误地址.
+	 */
 	public static final String ERROR_URL = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
 }

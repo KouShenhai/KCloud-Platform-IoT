@@ -26,6 +26,20 @@ import java.util.Optional;
  */
 public class UserContextHolder {
 
+	private static final ThreadLocal<User> USER_CONTEXT_HOLDER = new InheritableThreadLocal<>();
+
+	public static void clear() {
+		USER_CONTEXT_HOLDER.remove();
+	}
+
+	public static User get() {
+		return Optional.ofNullable(USER_CONTEXT_HOLDER.get()).orElse(new User());
+	}
+
+	public static void set(User user) {
+		clear();
+		USER_CONTEXT_HOLDER.set(user);
+	}
 	@Data
 	@NoArgsConstructor
 	public static class User {
@@ -45,21 +59,6 @@ public class UserContextHolder {
 			this.sourceName = sourceName;
 		}
 
-	}
-
-	private static final ThreadLocal<User> USER_CONTEXT_HOLDER = new InheritableThreadLocal<>();
-
-	public static void set(User user) {
-		clear();
-		USER_CONTEXT_HOLDER.set(user);
-	}
-
-	public static void clear() {
-		USER_CONTEXT_HOLDER.remove();
-	}
-
-	public static User get() {
-		return Optional.ofNullable(USER_CONTEXT_HOLDER.get()).orElse(new User());
 	}
 
 }

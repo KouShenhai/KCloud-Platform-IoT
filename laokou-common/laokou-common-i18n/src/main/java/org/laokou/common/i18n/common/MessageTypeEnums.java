@@ -22,11 +22,11 @@ package org.laokou.common.i18n.common;
 public enum MessageTypeEnums {
 
 	/**
-	 * 通知
+	 * 通知.
 	 */
 	NOTICE,
 	/**
-	 * 提醒
+	 * 提醒.
 	 */
 	REMIND
 

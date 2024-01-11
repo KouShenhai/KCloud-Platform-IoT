@@ -26,14 +26,23 @@ public final class RequestHeaderConstants {
 	}
 
 	/**
-	 * 认证
+	 * 请求头-认证标识.
 	 */
 	public static final String AUTHORIZATION = "Authorization";
 
+	/**
+	 * chunked.
+	 */
 	public static final String CHUNKED = "chunked";
 
+	/**
+	 * Upgrade.
+	 */
 	public static final String UPGRADE = "Upgrade";
 
-	public static final String WEBSOCKET = "WebSocket";
+	/**
+	 * websocket.
+	 */
+	public static final String WEBSOCKET = "websocket";
 
 }

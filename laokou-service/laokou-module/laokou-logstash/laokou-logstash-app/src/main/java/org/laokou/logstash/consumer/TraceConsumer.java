@@ -62,9 +62,9 @@ public class TraceConsumer {
 	}
 
 	/**
-	 * 每个月最后一天的23：50：00创建下一个月的索引
+	 * 每个月最后一天的23：50：00创建下一个月的索引.
 	 */
-	@XxlJob(value = "traceJobHandler")
+	@XxlJob("traceJobHandler")
 	public void createTraceIndexJob() {
 		// 单个参数
 		String param = XxlJobHelper.getJobParam();

@@ -94,7 +94,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 	// @formatter:on
 
 	/**
-	 * 解密字段
+	 * 解密字段.
 	 * @param user 用户信息
 	 * @return UserDetail
 	 */

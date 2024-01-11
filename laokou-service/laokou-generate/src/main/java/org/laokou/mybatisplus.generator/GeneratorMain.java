@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.apache.ibatis.type.JdbcType.*;
+import static org.laokou.common.i18n.common.MybatisConstants.*;
 
 /**
  * @author Liukefu
@@ -38,7 +39,7 @@ import static org.apache.ibatis.type.JdbcType.*;
 public class GeneratorMain {
 
 	/**
-	 * 配置 生成代码的所有表
+	 * 配置 生成代码的所有表.
 	 */
 	private static final List<String> TABLES = List.of("boot_sys_dict", "boot_sys_dept");
 
@@ -49,22 +50,22 @@ public class GeneratorMain {
 	private static final String PASSWORD = "laokou123";
 
 	/**
-	 * 配置 父包名
+	 * 配置 父包名.
 	 */
 	private static final String PACKAGE_PATH = "org.laokou";
 
 	/**
-	 * 配置 模块名
+	 * 配置 模块名.
 	 */
 	private static final String MODULE_NAME = "sys";
 
 	/**
-	 * 输出目录
+	 * 输出目录.
 	 */
 	private static final String GENERATOR_PATH = "generator";
 
 	/**
-	 * 配置 代码输出目录
+	 * 配置 代码输出目录.
 	 */
 	private static String OUTPUT_DIR = "";
 
@@ -116,7 +117,7 @@ public class GeneratorMain {
 				// .addTableFills(new Property("update_date",
 				// FieldFill.INSERT_UPDATE))
 				.superClass(BaseDO.class)
-				.addSuperEntityColumns("id", "creator", "editor", "create_date", "update_date", "del_flag", "version")
+				.addSuperEntityColumns(ID, CREATOR, EDITOR, CREATE_DATE, UPDATE_DATE, DEL_FLAG, VERSION)
 				.enableLombok() // 开启lombok
 				.logicDeleteColumnName("delFlag")// 说明逻辑删除是哪个字段
 				.enableTableFieldAnnotation()// 属性加上注解说明

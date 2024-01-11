@@ -34,6 +34,7 @@ import java.util.Objects;
 import static org.laokou.common.i18n.common.SysConstants.ALGORITHM_RSA;
 
 /**
+ * RSA加密与解密.
  * @author laokou
  */
 @Slf4j
@@ -66,7 +67,7 @@ public class RsaUtil {
 	}
 
 	/**
-	 * base64解密
+	 * base64解密.
 	 * @param body 数据
 	 */
 	private static byte[] decryptBase64(String body) {
@@ -74,7 +75,7 @@ public class RsaUtil {
 	}
 
 	/**
-	 * base64加密
+	 * base64加密.
 	 * @param bodyBytes 数据
 	 */
 	private static String decryptBase64(byte[] bodyBytes) {
@@ -82,7 +83,7 @@ public class RsaUtil {
 	}
 
 	/**
-	 * 通过公钥加密
+	 * 通过公钥加密.
 	 * @param bodyBytes 加密字符
 	 * @param keyBytes 公钥
 	 */
@@ -96,7 +97,7 @@ public class RsaUtil {
 	}
 
 	/**
-	 * 通过私钥解密
+	 * 通过私钥解密.
 	 * @param bodyBytes 加密字符
 	 * @param keyBytes 私钥
 	 */

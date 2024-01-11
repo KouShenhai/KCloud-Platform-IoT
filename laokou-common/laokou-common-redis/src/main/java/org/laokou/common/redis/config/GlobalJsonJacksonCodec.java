@@ -42,6 +42,9 @@ import static com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping.NON_FINA
  */
 public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 
+	/**
+	 * 实例.
+	 */
 	public static final GlobalJsonJacksonCodec INSTANCE = new GlobalJsonJacksonCodec();
 
 	public GlobalJsonJacksonCodec() {
@@ -50,7 +53,7 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 
 	// @formatter:off
 	/**
-	 * 解决查询缓存转换异常的问题
+	 * 解决查询缓存转换异常的问题.
 	 * @return ObjectMapper
 	 */
 	private static ObjectMapper objectMapper() {

@@ -26,12 +26,12 @@ public final class IndexConstants {
 	}
 
 	/**
-	 * 资源索引
+	 * 资源索引.
 	 */
 	public static final String RESOURCE = "laokou_resource";
 
 	/**
-	 * 分布式链路索引
+	 * 分布式链路索引.
 	 */
 	public static final String TRACE = "laokou_trace";
 
