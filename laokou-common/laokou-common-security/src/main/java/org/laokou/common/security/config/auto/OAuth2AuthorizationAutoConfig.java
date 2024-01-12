@@ -34,7 +34,7 @@ import static org.springframework.data.redis.core.RedisKeyValueAdapter.EnableKey
  */
 @AutoConfiguration
 @EnableRedisRepositories(enableKeyspaceEvents = ON_STARTUP, basePackages = { "org.laokou.common.security.config" })
-class OAuth2AuthorizationAutoConfig {
+public class OAuth2AuthorizationAutoConfig {
 
 	/**
 	 * @param redisOAuth2AuthorizationRepository Redis缓存

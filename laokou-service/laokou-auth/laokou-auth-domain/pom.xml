@@ -12,16 +12,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-jose</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-core</artifactId>
+            <artifactId>laokou-common-security</artifactId>
         </dependency>
     </dependencies>
 

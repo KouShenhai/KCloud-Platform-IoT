@@ -64,12 +64,13 @@ public class CreateTable {
 			catch (SQLException e) {
 				throw new RuntimeException(e);
 			}
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
+			try {
+				connection.close();
+			}
+			catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+		});
 	}
 
 	private static String createDB(String dbName) {

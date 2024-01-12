@@ -14,12 +14,6 @@
         <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-auth-infrastructure</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.laokou</groupId>
-                    <artifactId>laokou-auth-domain</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.whvcse</groupId>

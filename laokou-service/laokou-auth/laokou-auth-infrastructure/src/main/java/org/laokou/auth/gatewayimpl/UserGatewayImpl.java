@@ -20,10 +20,10 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.domain.auth.Auth;
 import org.laokou.auth.domain.gateway.UserGateway;
-import org.laokou.auth.domain.user.User;
 import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.security.utils.User;
 import org.springframework.stereotype.Component;
 
 /**
