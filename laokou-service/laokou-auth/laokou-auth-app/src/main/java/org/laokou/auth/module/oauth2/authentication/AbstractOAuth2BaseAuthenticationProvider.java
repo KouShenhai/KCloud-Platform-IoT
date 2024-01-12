@@ -39,7 +39,7 @@ import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.security.utils.User;
+import org.laokou.common.security.domain.User;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

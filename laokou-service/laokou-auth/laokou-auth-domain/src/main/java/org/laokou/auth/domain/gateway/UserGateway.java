@@ -18,7 +18,7 @@
 package org.laokou.auth.domain.gateway;
 
 import org.laokou.auth.domain.auth.Auth;
-import org.laokou.common.security.utils.User;
+import org.laokou.common.security.domain.User;
 
 /**
  * @author laokou

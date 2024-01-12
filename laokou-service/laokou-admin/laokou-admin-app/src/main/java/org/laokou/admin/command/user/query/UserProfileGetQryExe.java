@@ -19,7 +19,7 @@ package org.laokou.admin.command.user.query;
 
 import org.laokou.admin.dto.user.UserProfileGetQry;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
-import org.laokou.common.security.utils.User;
+import org.laokou.common.security.domain.User;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;

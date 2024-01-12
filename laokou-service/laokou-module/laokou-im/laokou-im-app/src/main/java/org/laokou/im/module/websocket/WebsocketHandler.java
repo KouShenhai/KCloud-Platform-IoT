@@ -40,7 +40,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.security.utils.User;
+import org.laokou.common.security.domain.User;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
