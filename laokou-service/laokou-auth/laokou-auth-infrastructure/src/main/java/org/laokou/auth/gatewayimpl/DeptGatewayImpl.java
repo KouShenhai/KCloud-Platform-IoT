@@ -20,7 +20,7 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.gatewayimpl.database.DeptMapper;
-import org.laokou.common.security.utils.User;
+import org.laokou.common.security.domain.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

@@ -16,6 +16,7 @@
  */
 package org.laokou.common.security.utils;
 
+import org.laokou.common.security.domain.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

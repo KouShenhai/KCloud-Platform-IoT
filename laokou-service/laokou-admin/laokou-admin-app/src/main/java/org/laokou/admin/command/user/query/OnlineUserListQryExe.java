@@ -20,7 +20,7 @@ package org.laokou.admin.command.user.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.user.OnlineUserListQry;
 import org.laokou.admin.dto.user.clientobject.UserOnlineCO;
-import org.laokou.common.security.utils.User;
+import org.laokou.common.security.domain.User;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;

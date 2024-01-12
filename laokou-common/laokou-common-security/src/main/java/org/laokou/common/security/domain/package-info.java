@@ -15,22 +15,7 @@
  *
  */
 
-package org.laokou.auth.domain.gateway;
-
-import org.laokou.common.security.domain.User;
-
-import java.util.List;
-
 /**
  * @author laokou
  */
-public interface DeptGateway {
-
-	/**
-	 * 查询部门PATHS.
-	 * @param user 用户参数
-	 * @return 查询用户所拥有的部门
-	 */
-	List<String> getDeptPaths(User user);
-
-}
+package org.laokou.common.security.domain;
