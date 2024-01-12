@@ -23,9 +23,8 @@ import io.micrometer.common.lang.NonNullApi;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.common.exception.GatewayException;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
@@ -67,13 +66,10 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	private ApplicationEventPublisher applicationEventPublisher;
 
-	private final String ROUTER_ERROR;
-
 	public NacosRouteDefinitionRepository(ConfigUtil configUtil,
 			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
 		this.configUtil = configUtil;
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
-		this.ROUTER_ERROR = MessageUtil.getMessage(ROUTE_NOT_EXIST);
 	}
 
 	// @formatter:off
@@ -103,9 +99,14 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	@Override
 	public Flux<RouteDefinition> getRouteDefinitions() {
-		return reactiveHashOperations.entries(RedisKeyUtil.getRouteDefinitionHashKey())
-			.map(Map.Entry::getValue)
-			.switchIfEmpty(routeDefinitions());
+        Flux<RouteDefinition> routers = reactiveHashOperations.entries(RedisKeyUtil.getRouteDefinitionHashKey())
+                .mapNotNull(Map.Entry::getValue);
+        return routers.hasElements().flatMapMany(hasElement -> {
+            if (hasElement) {
+                return routers;
+            }
+            return routers();
+        });
 	}
 
 	@Override
@@ -123,22 +124,11 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		this.applicationEventPublisher = applicationEventPublisher;
 	}
 
-	private Flux<RouteDefinition> routeDefinitions() {
-		return Flux.fromIterable(pullRouterInfo())
-			.publishOn(Schedulers.boundedElastic())
-			.doOnNext(route -> reactiveHashOperations.putIfAbsent(RedisKeyUtil.getRouteDefinitionHashKey(), route.getId(), route)
-					.subscribe(success -> {
-						if (success) {
-							log.info("新增成功");
-						}
-						else {
-							log.error("新增失败，路由已存在");
-						}
-					}, error -> log.error("新增失败，错误信息：{}，详情见日志", LogUtil.result(error.getMessage()), error))
-			);
+	private Flux<RouteDefinition> routers() {
+		return Flux.fromIterable(pullRouters()).subscribeOn(Schedulers.boundedElastic()).doOnNext(router -> reactiveHashOperations.putIfAbsent(RedisKeyUtil.getRouteDefinitionHashKey(), router.getId(), router).subscribe());
 	}
 
-	private Collection<RouteDefinition> pullRouterInfo() {
+	private Collection<RouteDefinition> pullRouters() {
 		try {
 			// pull nacos config info
 			String group = configUtil.getGroup();
@@ -148,7 +138,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		}
 		catch (Exception e) {
 			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			throw new SystemException(ROUTER_ERROR);
+			throw new GatewayException(ROUTE_NOT_EXIST);
 		}
 	}
 	// @formatter:on
