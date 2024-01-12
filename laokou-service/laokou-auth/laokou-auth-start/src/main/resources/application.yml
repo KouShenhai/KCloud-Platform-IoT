@@ -101,9 +101,13 @@ spring:
               redirect-uris:
                 - http://127.0.0.1:8000
                 - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
               post-logout-redirect-uris:
                 - http://127.0.0.1:8000
                 - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
             # 客户端请求访问时需要授权同意
             require-authorization-consent: true
 

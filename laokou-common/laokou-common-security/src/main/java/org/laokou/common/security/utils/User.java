@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.auth.domain.user;
+package org.laokou.common.security.utils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

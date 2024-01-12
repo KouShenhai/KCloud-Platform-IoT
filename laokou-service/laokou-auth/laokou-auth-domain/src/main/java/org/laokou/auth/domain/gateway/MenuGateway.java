@@ -17,7 +17,7 @@
 
 package org.laokou.auth.domain.gateway;
 
-import org.laokou.auth.domain.user.User;
+import org.laokou.common.security.utils.User;
 
 import java.util.List;
 

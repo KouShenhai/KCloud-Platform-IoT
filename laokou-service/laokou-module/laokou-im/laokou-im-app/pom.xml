@@ -28,7 +28,13 @@
     <dependencies>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-auth-domain</artifactId>
+            <artifactId>laokou-common-security</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.laokou</groupId>
+                    <artifactId>laokou-common-mybatis-plus</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>

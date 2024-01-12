@@ -26,20 +26,18 @@ import org.laokou.auth.domain.gateway.LoginLogGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.log.LoginLog;
-import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IpUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.security.utils.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -50,8 +48,10 @@ import static org.laokou.common.i18n.common.ErrorCodes.ACCOUNT_DISABLE;
 import static org.laokou.common.i18n.common.ErrorCodes.ACCOUNT_PASSWORD_ERROR;
 import static org.laokou.common.i18n.common.NumberConstants.FAIL;
 import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
+import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
 import static org.laokou.common.i18n.common.StatusCodes.FORBIDDEN;
 import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
+import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
 
 /**
  * @author laokou
@@ -75,14 +75,14 @@ public class UsersServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// 默认租户查询
 		Long tenantId = DEFAULT;
-		String type = AuthorizationGrantType.AUTHORIZATION_CODE.getValue();
+		String type = AUTHORIZATION_CODE.getValue();
 		User user = userGateway.getUserByUsername(new Auth(username, type, AesUtil.getKey()));
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String ip = IpUtil.getIpAddr(request);
 		if (ObjectUtil.isNull(user)) {
 			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, new User(username, tenantId), type, ip);
 		}
-		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
+		String password = request.getParameter(PASSWORD);
 		String clientPassword = user.getPassword();
 		if (!passwordEncoder.matches(password, clientPassword)) {
 			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, user, type, ip);
