@@ -48,6 +48,3 @@ spring:
           - data-id: application-common-elasticsearch.yaml
             group: ${NACOS-GROUP}
             refresh: true
-          - data-id: application-common-kafka.yaml
-            group: ${NACOS-GROUP}
-            refresh: true

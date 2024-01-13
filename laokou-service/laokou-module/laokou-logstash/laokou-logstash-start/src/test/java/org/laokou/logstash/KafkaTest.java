@@ -19,12 +19,8 @@ package org.laokou.logstash;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import org.laokou.common.kafka.template.DefaultKafkaTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
-
-import static org.laokou.common.i18n.common.KafkaConstants.LAOKOU_TRACE_TOPIC;
 
 /**
  * @author laokou
@@ -35,11 +31,11 @@ import static org.laokou.common.i18n.common.KafkaConstants.LAOKOU_TRACE_TOPIC;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class KafkaTest {
 
-	private final DefaultKafkaTemplate defaultKafkaTemplate;
-
-	@Test
-	void kafkaSenderTest() {
-		defaultKafkaTemplate.send(LAOKOU_TRACE_TOPIC, "测试数据");
-	}
+//	private final DefaultKafkaTemplate defaultKafkaTemplate;
+//
+//	@Test
+//	void kafkaSenderTest() {
+//		defaultKafkaTemplate.send(LAOKOU_TRACE_TOPIC, "测试数据");
+//	}
 
 }
