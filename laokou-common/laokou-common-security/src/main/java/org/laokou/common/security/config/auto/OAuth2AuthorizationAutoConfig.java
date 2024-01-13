@@ -20,6 +20,7 @@ import org.laokou.common.security.config.RedisOAuth2AuthorizationRepository;
 import org.laokou.common.security.config.RedisOAuth2AuthorizationService;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -33,6 +34,7 @@ import static org.springframework.data.redis.core.RedisKeyValueAdapter.EnableKey
  * @author laokou
  */
 @AutoConfiguration
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @EnableRedisRepositories(enableKeyspaceEvents = ON_STARTUP, basePackages = { "org.laokou.common.security.config" })
 public class OAuth2AuthorizationAutoConfig {
 
