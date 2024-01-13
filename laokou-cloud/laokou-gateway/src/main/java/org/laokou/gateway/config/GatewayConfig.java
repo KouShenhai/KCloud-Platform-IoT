@@ -28,7 +28,6 @@ import org.springframework.cloud.gateway.support.ConfigurationService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-
 import java.util.List;
 
 /**
@@ -39,7 +38,7 @@ public class GatewayConfig {
 
 	@Bean
 	@Primary
-	@ConditionalOnMissingBean(name = "cachedCompositeRouteLocator")
+    @ConditionalOnMissingBean(name = "cachedCompositeRouteLocator")
 	public RouteLocator cachedCompositeRouteLocator(GatewayProperties properties,
 			List<GatewayFilterFactory> gatewayFilters, List<RoutePredicateFactory> predicates,
 			RouteDefinitionLocator routeDefinitionLocator, ConfigurationService configurationService) {

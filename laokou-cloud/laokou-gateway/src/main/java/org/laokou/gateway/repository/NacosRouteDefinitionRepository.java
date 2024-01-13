@@ -23,7 +23,7 @@ import io.micrometer.common.lang.NonNullApi;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.common.exception.GatewayException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -72,7 +72,6 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
 	}
 
-	// @formatter:off
 	@PostConstruct
 	public void init() throws NacosException {
 		// Spring Cloud Gateway 动态路由的 order 是路由匹配的顺序，值越小，优先级越高。当多个路由匹配同一个请求时
@@ -98,15 +97,9 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	}
 
 	@Override
+	// @formatter:off
 	public Flux<RouteDefinition> getRouteDefinitions() {
-        Flux<RouteDefinition> routers = reactiveHashOperations.entries(RedisKeyUtil.getRouteDefinitionHashKey())
-                .mapNotNull(Map.Entry::getValue);
-        return routers.hasElements().flatMapMany(hasElement -> {
-            if (hasElement) {
-                return routers;
-            }
-            return routers();
-        });
+        return reactiveHashOperations.entries(RedisKeyUtil.getRouteDefinitionHashKey()).mapNotNull(Map.Entry::getValue);
 	}
 
 	@Override
@@ -138,7 +131,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		}
 		catch (Exception e) {
 			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			throw new GatewayException(ROUTE_NOT_EXIST);
+			throw new SystemException(ROUTE_NOT_EXIST);
 		}
 	}
 	// @formatter:on

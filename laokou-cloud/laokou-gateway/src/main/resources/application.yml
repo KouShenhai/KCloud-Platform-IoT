@@ -89,8 +89,6 @@ spring:
         - veth.*
     # gateway
     gateway:
-        # false从redis拿，true从本地缓存拿 => 先redis里面获取然后写入到本地缓存，后面直接从本地缓存拿取
-        # enabled: false
       discovery:
         locator:
           # 关闭动态生成路由

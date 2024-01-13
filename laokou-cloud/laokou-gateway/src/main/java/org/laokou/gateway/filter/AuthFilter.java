@@ -24,10 +24,10 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.crypto.utils.RsaUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.crypto.utils.RsaUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.nacos.utils.ResponseUtil;
 import org.laokou.gateway.utils.I18nUtil;
@@ -57,10 +57,10 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
@@ -231,10 +231,10 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		initURLMap();
 	}
 
-	private synchronized void initURLMap() {
+	private void initURLMap() {
 		uriMap = Optional.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
 				env.getProperty(SPRING_APPLICATION_NAME)))
-			.orElseGet(HashMap::new);
+			.orElseGet(ConcurrentHashMap::new);
 	}
 
 }
