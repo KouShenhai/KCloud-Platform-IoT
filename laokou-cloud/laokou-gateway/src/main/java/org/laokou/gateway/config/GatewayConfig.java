@@ -38,7 +38,7 @@ public class GatewayConfig {
 
 	@Bean
 	@Primary
-    @ConditionalOnMissingBean(name = "cachedCompositeRouteLocator")
+	@ConditionalOnMissingBean(name = "cachedCompositeRouteLocator")
 	public RouteLocator cachedCompositeRouteLocator(GatewayProperties properties,
 			List<GatewayFilterFactory> gatewayFilters, List<RoutePredicateFactory> predicates,
 			RouteDefinitionLocator routeDefinitionLocator, ConfigurationService configurationService) {

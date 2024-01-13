@@ -26,15 +26,14 @@ import org.springframework.util.DigestUtils;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+import static org.laokou.common.i18n.common.RequestSecretConstants.APP_KEY;
+import static org.laokou.common.i18n.common.RequestSecretConstants.APP_SECRET;
+
 /**
  * @author laokou
  */
 @Component
 public class SecretUtil {
-
-	private static final String APP_KEY_VALUE = "laokou2023";
-
-	private static final String APP_SECRET_VALUE = "vb05f6c45d67340zaz95v7fa6d49v99zx";
 
 	private static final long TIMEOUT_MILLIS = 60 * 1000L;
 
@@ -52,10 +51,10 @@ public class SecretUtil {
 		if (StringUtil.isEmpty(timestamp)) {
 			throw new ApiException("timestamp不为空");
 		}
-		if (!APP_KEY_VALUE.equals(appKey)) {
+		if (!APP_KEY.equals(appKey)) {
 			throw new ApiException("appKey不存在");
 		}
-		if (!APP_SECRET_VALUE.equals(appSecret)) {
+		if (!APP_SECRET.equals(appSecret)) {
 			throw new ApiException("appSecret不存在");
 		}
 		long ts = Long.parseLong(timestamp);
