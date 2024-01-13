@@ -27,10 +27,11 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.laokou.flowable.dto.definition.DefinitionSuspendCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.flowable.common.Constant.FLOWABLE;
+import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
  * @author laokou
@@ -49,6 +50,7 @@ public class DefinitionSuspendCmdExe {
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			String definitionId = cmd.getDefinitionId();
 			final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+				.processDefinitionTenantId(UserUtil.getTenantId().toString())
 				.processDefinitionId(definitionId)
 				.singleResult();
 			if (!processDefinition.isSuspended()) {

@@ -11,11 +11,11 @@ import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.jasypt.utils.AesUtil;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * @author laokou
@@ -34,7 +34,7 @@ public class UserUpdateCmdExe {
 	public Result<Boolean> execute(UserUpdateCmd cmd) {
 		UserCO co = cmd.getUserCO();
 		// 用户表
-		int count = userMapper.getUserCount(toUserDO(co));
+		int count = userMapper.getUserCount(toUserDO(co), AesUtil.getKey());
 		if (count > 0) {
 			throw new SystemException("用户名已存在，请重新输入");
 		}
@@ -42,9 +42,7 @@ public class UserUpdateCmdExe {
 	}
 
 	private UserDO toUserDO(UserCO co) {
-		UserDO userDO = userConvertor.toDataObj(co);
-		userDO.setUsername(AesUtil.encrypt(co.getUsername()));
-		return userDO;
+		return userConvertor.toDataObj(co);
 	}
 
 	private User toUser(UserCO co) {

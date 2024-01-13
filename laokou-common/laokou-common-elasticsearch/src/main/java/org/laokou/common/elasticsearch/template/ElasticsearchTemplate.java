@@ -82,7 +82,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.*;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -102,7 +102,7 @@ public class ElasticsearchTemplate {
 	private static final String HIGHLIGHT_POST_TAGS = "</span>";
 
 	/**
-	 * 批量同步数据到ES
+	 * 批量同步数据到ES.
 	 * @param indexName 索引名称
 	 * @param jsonDataList 数据列表
 	 * @throws IOException IOException
@@ -148,7 +148,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 批量修改ES
+	 * 批量修改ES.
 	 * @param indexName 索引名称
 	 * @param jsonDataList 数据列表
 	 * @param clazz 类型
@@ -201,7 +201,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * ES修改数据
+	 * ES修改数据.
 	 * @param indexName 索引名称
 	 * @param id 主键
 	 * @param paramJson 参数JSON
@@ -242,7 +242,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 删除数据
+	 * 删除数据.
 	 * @param indexName 索引名称
 	 * @param id 主键
 	 * @return Boolean
@@ -272,7 +272,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 批量删除ES
+	 * 批量删除ES.
 	 * @param indexName 索引名称
 	 * @param ids id列表
 	 * @return Boolean
@@ -313,7 +313,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 组装删除操作
+	 * 组装删除操作.
 	 * @param indexName 索引名称
 	 * @param ids id列表
 	 * @return BulkRequest
@@ -330,7 +330,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 组装bulkUpdate
+	 * 组装bulkUpdate.
 	 * @param indexName 索引名称
 	 * @param jsonDataList 数据列表
 	 * @return BulkRequest
@@ -355,7 +355,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 根据主键查询ES
+	 * 根据主键查询ES.
 	 * @param indexName 索引名称
 	 * @param id 主键
 	 * @return String
@@ -381,7 +381,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 清空内容
+	 * 清空内容.
 	 * @param indexName 索引名称
 	 */
 	public Boolean deleteAll(String indexName) {
@@ -408,7 +408,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 批量数据保存到ES-异步
+	 * 批量数据保存到ES-异步.
 	 * @param indexName 索引名称
 	 * @param jsonDataList 数据列表
 	 */
@@ -453,7 +453,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 删除索引
+	 * 删除索引.
 	 * @param indexName 索引名称
 	 * @throws IOException IOException
 	 */
@@ -477,7 +477,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 异步删除索引
+	 * 异步删除索引.
 	 * @param indexName 索引名称
 	 */
 	public void deleteAsyncIndex(String indexName) {
@@ -508,7 +508,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 批量操作的Request
+	 * 批量操作的Request.
 	 * @param indexName 索引名称
 	 * @param jsonDataList json数据列表
 	 * @return BulkRequest
@@ -535,7 +535,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 创建ES索引
+	 * 创建ES索引.
 	 * @param indexName 索引名称
 	 * @param indexAlias 别名
 	 * @param clazz 类型
@@ -559,7 +559,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 异步创建ES索引
+	 * 异步创建ES索引.
 	 * @param indexName 索引名称
 	 * @param indexAlias 别名
 	 * @param clazz 类型
@@ -614,7 +614,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 数据同步到ES
+	 * 数据同步到ES.
 	 * @param id 主键
 	 * @param indexName 索引名称
 	 * @param jsonData json数据
@@ -645,7 +645,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 异步同步
+	 * 异步同步.
 	 * @param id 编号
 	 * @param indexName 索引名称
 	 * @param jsonData 数据
@@ -684,7 +684,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 判断索引是否存在
+	 * 判断索引是否存在.
 	 * @param indexName 索引名称
 	 * @return Boolean
 	 */
@@ -700,7 +700,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 创建索引设置相关配置信息
+	 * 创建索引设置相关配置信息.
 	 * @param indexName 索引名称
 	 * @param indexAlias 索引别名
 	 * @param fieldMappingList 数据列表
@@ -726,7 +726,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 配置ES别名
+	 * 配置ES别名.
 	 * @author laokou
 	 * @param alias 别名
 	 * @return XContentBuilder
@@ -744,7 +744,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 配置Mapping
+	 * 配置Mapping.
 	 * @param fieldMappingList 组装的实体类信息
 	 * @return XContentBuilder
 	 * @throws IOException IOException
@@ -786,7 +786,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 配置Settings
+	 * 配置Settings.
 	 * @return XContentBuilder
 	 * @throws IOException IOException
 	 */
@@ -826,9 +826,9 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 关键字高亮显示
+	 * 关键字高亮显示.
 	 * @param search 查询实体类
-	 * @return SearchVO
+	 * @return 高亮索引列表
 	 */
 	public Datas<Map<String, Object>> highlightSearchIndex(Search search) {
 		try {
@@ -859,7 +859,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 构建query
+	 * 构建query.
 	 * @param searchIndex 查询参数
 	 * @return BoolQueryBuilder
 	 */
@@ -900,7 +900,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 构建搜索
+	 * 构建搜索.
 	 * @param searchIndex 查询参数
 	 * @param isHighlightSearchFlag 是否高亮搜索
 	 * @param aggregationBuilder 聚合参数
@@ -966,7 +966,7 @@ public class ElasticsearchTemplate {
 	}
 
 	/**
-	 * 聚合查询
+	 * 聚合查询.
 	 * @param search 搜索
 	 * @return SearchVO
 	 * @throws IOException IOException

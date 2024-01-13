@@ -24,28 +24,26 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.laokou.admin.config.DefaultConfigProperties.PREFIX;
+import static org.laokou.common.i18n.common.PropertiesConstants.DEFAULT_CONFIG_PREFIX;
 
 /**
  * @author laokou
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = PREFIX)
+@ConfigurationProperties(prefix = DEFAULT_CONFIG_PREFIX)
 public class DefaultConfigProperties {
-
-	public static final String PREFIX = "spring.default-config";
 
 	private String definitionKey;
 
-	private Set<String> tenantTables = new HashSet<>();
+	private Set<String> tenantTables = new HashSet<>(0);
 
-	private Set<String> removeParams = new HashSet<>();
+	private Set<String> removeParams = new HashSet<>(0);
 
-	private Set<String> gracefulShutdownServices = new HashSet<>();
+	private Set<String> gracefulShutdownServices = new HashSet<>(0);
 
 	private String tenantPrefix;
 
-	private Set<String> domainNames;
+	private Set<String> domainNames = new HashSet<>(0);
 
 }

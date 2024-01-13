@@ -15,19 +15,19 @@
  */
 package io.seata.server.console.controller;
 
-import javax.annotation.Resource;
-
-import io.seata.server.console.param.GlobalSessionParam;
 import io.seata.console.result.PageResult;
-import io.seata.server.console.vo.GlobalSessionVO;
+import io.seata.server.console.param.GlobalSessionParam;
 import io.seata.server.console.service.GlobalSessionService;
+import io.seata.server.console.vo.GlobalSessionVO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 /**
- * Global Session Controller
+ * Global Session Controller.
  *
  * @author zhongxiang.wang
  */
@@ -39,7 +39,7 @@ public class GlobalSessionController {
 	private GlobalSessionService globalSessionService;
 
 	/**
-	 * Query all globalSession
+	 * Query all globalSession.
 	 * @param param param for query globalSession
 	 * @return the list of GlobalSessionVO
 	 */

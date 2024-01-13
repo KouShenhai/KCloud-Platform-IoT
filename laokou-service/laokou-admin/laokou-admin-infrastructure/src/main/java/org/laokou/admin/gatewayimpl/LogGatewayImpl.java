@@ -42,7 +42,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.*;
+import static org.laokou.common.i18n.common.DatasourceConstants.*;
 
 /**
  * @author laokou
@@ -65,7 +65,7 @@ public class LogGatewayImpl implements LogGateway {
 	@DataFilter(alias = BOOT_SYS_LOGIN_LOG)
 	@SneakyThrows
 	public Datas<LoginLog> loginList(LoginLog loginLog, PageQuery pageQuery) {
-		final PageQuery page = pageQuery.time().page().ignore();
+		PageQuery page = pageQuery.time().page().ignore();
 		LoginLogDO loginLogDO = loginLogConvertor.toDataObject(loginLog);
 		loginLogDO.setTenantId(UserContextHolder.get().getTenantId());
 		String sourceName = UserContextHolder.get().getSourceName();

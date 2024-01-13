@@ -19,12 +19,13 @@ package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.domain.gateway.DeptGateway;
-import org.laokou.auth.domain.user.SuperAdmin;
-import org.laokou.auth.domain.user.User;
 import org.laokou.auth.gatewayimpl.database.DeptMapper;
+import org.laokou.common.security.domain.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
 
 /**
  * @author laokou
@@ -39,7 +40,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	public List<String> getDeptPaths(User user) {
 		Long userId = user.getId();
 		Integer superAdmin = user.getSuperAdmin();
-		if (superAdmin == SuperAdmin.YES.ordinal()) {
+		if (superAdmin == YES.ordinal()) {
 			return deptMapper.getDeptPaths();
 		}
 		return deptMapper.getDeptPathsByUserId(userId);

@@ -15,6 +15,20 @@
  */
 package io.seata.server.console.impl.file;
 
+import io.seata.common.util.CollectionUtils;
+import io.seata.common.util.StringUtils;
+import io.seata.console.result.PageResult;
+import io.seata.core.lock.RowLock;
+import io.seata.server.console.param.GlobalLockParam;
+import io.seata.server.console.service.GlobalLockService;
+import io.seata.server.console.vo.GlobalLockVO;
+import io.seata.server.lock.LockerManagerFactory;
+import io.seata.server.session.BranchSession;
+import io.seata.server.session.GlobalSession;
+import io.seata.server.session.SessionHolder;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.stereotype.Component;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -22,27 +36,12 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import io.seata.common.util.CollectionUtils;
-import io.seata.common.util.StringUtils;
-import io.seata.server.console.param.GlobalLockParam;
-import io.seata.console.result.PageResult;
-import io.seata.server.console.vo.GlobalLockVO;
-import io.seata.core.lock.RowLock;
-import io.seata.server.console.service.GlobalLockService;
-import io.seata.server.lock.LockerManagerFactory;
-import io.seata.server.session.BranchSession;
-import io.seata.server.session.GlobalSession;
-import io.seata.server.session.SessionHolder;
-
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.stereotype.Component;
-
 import static io.seata.common.util.StringUtils.isBlank;
 import static io.seata.server.console.vo.GlobalLockVO.convert;
 import static java.util.Objects.isNull;
 
 /**
- * Global Lock File ServiceImpl
+ * Global Lock File ServiceImpl.
  *
  * @author zhongxiang.wang
  * @author miaoxueyu
@@ -72,7 +71,7 @@ public class GlobalLockFileServiceImpl implements GlobalLockService {
 	}
 
 	/**
-	 * filter with tableName and generate RowLock
+	 * filter with tableName and generate RowLock.
 	 * @param param the query param
 	 * @param branchSession the branch session
 	 * @return the RowLock list
@@ -95,7 +94,7 @@ public class GlobalLockFileServiceImpl implements GlobalLockService {
 	}
 
 	/**
-	 * check the param
+	 * check the param.
 	 * @param param the param
 	 */
 	private void checkParam(GlobalLockParam param) {
@@ -120,7 +119,7 @@ public class GlobalLockFileServiceImpl implements GlobalLockService {
 	}
 
 	/**
-	 * obtain the branch session condition
+	 * obtain the branch session condition.
 	 * @param param condition for query branch session
 	 * @return the filter condition
 	 */
@@ -138,7 +137,7 @@ public class GlobalLockFileServiceImpl implements GlobalLockService {
 	}
 
 	/**
-	 * obtain the global session condition
+	 * obtain the global session condition.
 	 * @param param condition for query global session
 	 * @return the filter condition
 	 */

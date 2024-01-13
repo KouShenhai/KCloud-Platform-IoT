@@ -33,17 +33,17 @@ import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
 public abstract class AbstractServer implements Server {
 
 	/**
-	 * 运行标记
+	 * 运行标记.
 	 */
 	private volatile boolean running;
 
 	/**
-	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源（对其他线程可见）
+	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源（对其他线程可见）.
 	 */
 	protected volatile EventLoopGroup boss;
 
 	/**
-	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源（对其他线程可见）
+	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源（对其他线程可见）.
 	 */
 	protected volatile EventLoopGroup work;
 
@@ -64,13 +64,13 @@ public abstract class AbstractServer implements Server {
 	}
 
 	/**
-	 * 初始化配置
+	 * 初始化配置.
 	 * @return AbstractBootstrap
 	 */
 	protected abstract AbstractBootstrap<?, ?> init();
 
 	/**
-	 * 启动(Bean单例存在资源竞争)
+	 * 启动(Bean单例存在资源竞争).
 	 */
 	@Override
 	public final synchronized void start() {
@@ -97,7 +97,7 @@ public abstract class AbstractServer implements Server {
 	}
 
 	/**
-	 * 关闭(Bean单例存在资源竞争)
+	 * 关闭(Bean单例存在资源竞争).
 	 */
 	@Override
 	public final synchronized void stop() {
@@ -114,7 +114,7 @@ public abstract class AbstractServer implements Server {
 	}
 
 	/**
-	 * 绑定
+	 * 绑定端口.
 	 */
 	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap, final int port) {
 		return bootstrap.bind(port).awaitUninterruptibly().addListener(future -> {

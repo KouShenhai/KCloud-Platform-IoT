@@ -16,16 +16,14 @@
  */
 package org.laokou.common.security.config;
 
-import com.baomidou.dynamic.datasource.annotation.Master;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.user.User;
+import org.laokou.common.security.domain.User;
 import org.laokou.common.core.holder.UserContextHolder;
-import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.jasypt.utils.AesUtil;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
@@ -43,7 +41,9 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-import static org.laokou.common.i18n.common.BizCode.ACCOUNT_FORCE_KILL;
+import static org.laokou.common.i18n.common.BizCodes.ACCOUNT_FORCE_KILL;
+import static org.laokou.common.i18n.common.OAuth2Constants.FULL;
+import static org.laokou.common.i18n.common.StatusCodes.UNAUTHORIZED;
 
 /**
  * @author laokou
@@ -57,8 +57,8 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
 	private final RedisUtil redisUtil;
 
+	// @formatter:off
 	@Override
-	@Master
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);
 		if (ObjectUtil.isNotNull(redisUtil.get(userKillKey))) {
@@ -71,48 +71,34 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 			// 解密
 			return decryptInfo((User) obj);
 		}
-		OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token,
-				OAuth2TokenType.ACCESS_TOKEN);
-		if (ObjectUtil.isNull(oAuth2Authorization)) {
-			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
-					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, new OAuth2TokenType(FULL));
+		if (ObjectUtil.isNull(authorization)) {
+			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED, MessageUtil.getMessage(UNAUTHORIZED));
 		}
-		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = oAuth2Authorization.getAccessToken();
-		if (ObjectUtil.isNull(accessToken) || !accessToken.isActive()) {
-			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
-					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
-		}
-		Instant expiresAt = oAuth2Authorization.getAccessToken().getToken().getExpiresAt();
+		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
+		Instant expiresAt = accessToken.getToken().getExpiresAt();
 		Instant nowAt = Instant.now();
 		long expireTime = ChronoUnit.SECONDS.between(nowAt, expiresAt);
-		long minTime = 10;
+		// 5秒后过期
+		long minTime = 5;
 		if (expireTime > minTime) {
 			Object principal = ((UsernamePasswordAuthenticationToken) Objects
-				.requireNonNull(oAuth2Authorization.getAttribute(Principal.class.getName()))).getPrincipal();
+				.requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
 			User user = (User) principal;
-			redisUtil.set(userInfoKey, user, expireTime);
+			redisUtil.set(userInfoKey, user, expireTime - 1);
 			// 解密
 			return decryptInfo(user);
 		}
-		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
-				MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
+		throw OAuth2ExceptionHandler.getException(UNAUTHORIZED, MessageUtil.getMessage(UNAUTHORIZED));
 	}
+	// @formatter:on
 
 	/**
-	 * 解密字段
+	 * 解密字段.
 	 * @param user 用户信息
 	 * @return UserDetail
 	 */
 	private User decryptInfo(User user) {
-		String username = user.getUsername();
-		if (StringUtil.isNotEmpty(username)) {
-			try {
-				user.setUsername(AesUtil.decrypt(username));
-			}
-			catch (Exception e) {
-				log.error("用户名解密失败，请使用AES加密");
-			}
-		}
 		String mail = user.getMail();
 		if (StringUtil.isNotEmpty(mail)) {
 			try {

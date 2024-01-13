@@ -13,17 +13,9 @@
 #  * See the License for the specific language governing permissions and
 #  * limitations under the License.
 #  */
-# 基础镜像
 FROM docker.io/tabatad/jdk21
-# 信息
 LABEL maintainer="laokou"
 LABEL description="laokou-monitor"
-# 开放端口
-EXPOSE 5000
-# 挂载
-VOLUME /data
-# 复制文件
 COPY laokou-monitor.jar app.jar
-RUN ln -snf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
-# 执行命令
-ENTRYPOINT java -Xms512m -Xmx512m -jar app.jar > app.log
+EXPOSE 5000
+CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1

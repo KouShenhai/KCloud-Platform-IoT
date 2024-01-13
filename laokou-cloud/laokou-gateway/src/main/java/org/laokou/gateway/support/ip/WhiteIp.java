@@ -32,7 +32,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.InetSocketAddress;
 
-import static org.laokou.common.i18n.common.BizCode.IP_WHITE;
+import static org.laokou.common.i18n.common.BizCodes.IP_WHITE;
 
 /**
  * @author laokou
@@ -53,8 +53,8 @@ public class WhiteIp implements Ip {
 		if (IpUtil.internalIp(hostAddress)) {
 			return chain.filter(exchange);
 		}
-		String ipCacheKey = RedisKeyUtil.getIpCacheKey(Label.WHITE.getName(), hostAddress);
-		return reactiveRedisUtil.hasKey(ipCacheKey).flatMap(r -> {
+		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(Label.WHITE.getName());
+		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
 			if (Boolean.FALSE.equals(r)) {
 				log.error("IP为{}被限制", hostAddress);
 				return ResponseUtil.response(exchange, Result.fail(IP_WHITE));

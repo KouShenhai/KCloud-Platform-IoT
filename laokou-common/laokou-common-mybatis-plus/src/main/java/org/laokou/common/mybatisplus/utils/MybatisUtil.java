@@ -30,7 +30,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
@@ -62,7 +61,7 @@ public class MybatisUtil {
 	}
 
 	/**
-	 * 批量新增
+	 * 批量新增.
 	 * @param dataList 集合
 	 * @param batchNum 每组多少条数据
 	 * @param clazz 类型

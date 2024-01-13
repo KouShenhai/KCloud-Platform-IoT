@@ -566,7 +566,7 @@ spring:
       eager: true #开启饥饿加载，直接初始化
       transport:
         port: 8769
-        dashboard: sentinel.laokou.org:8081
+        dashboard: sentinel.laokou.org:8972
 
 # actuator
 management:

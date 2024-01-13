@@ -15,10 +15,6 @@
  */
 package io.seata.server.coordinator;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import io.seata.common.DefaultValues;
 import io.seata.common.exception.NotSupportYetException;
 import io.seata.common.loader.EnhancedServiceLoader;
@@ -36,10 +32,13 @@ import io.seata.server.session.BranchSession;
 import io.seata.server.session.GlobalSession;
 import io.seata.server.session.SessionHelper;
 import io.seata.server.session.SessionHolder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static io.seata.common.ConfigurationKeys.ENABLE_PARALLEL_HANDLE_BRANCH_KEY;
 import static io.seata.common.ConfigurationKeys.XAER_NOTA_RETRY_TIMEOUT;
@@ -77,7 +76,7 @@ public class DefaultCore implements Core {
 	}
 
 	/**
-	 * get core
+	 * get core.
 	 * @param branchType the branchType
 	 * @return the core
 	 */
@@ -90,7 +89,7 @@ public class DefaultCore implements Core {
 	}
 
 	/**
-	 * only for mock
+	 * only for mock.
 	 * @param branchType the branchType
 	 * @param core the core
 	 */

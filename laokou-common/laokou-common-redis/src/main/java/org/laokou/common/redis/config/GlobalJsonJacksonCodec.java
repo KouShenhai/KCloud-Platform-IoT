@@ -30,7 +30,6 @@ import org.laokou.common.i18n.utils.DateUtil;
 import org.redisson.codec.JsonJacksonCodec;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.security.jackson2.CoreJackson2Module;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -43,6 +42,9 @@ import static com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping.NON_FINA
  */
 public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 
+	/**
+	 * 实例.
+	 */
 	public static final GlobalJsonJacksonCodec INSTANCE = new GlobalJsonJacksonCodec();
 
 	public GlobalJsonJacksonCodec() {
@@ -51,12 +53,12 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 
 	// @formatter:off
 	/**
-	 * 解决查询缓存转换异常的问题
+	 * 解决查询缓存转换异常的问题.
 	 * @return ObjectMapper
 	 */
 	private static ObjectMapper objectMapper() {
 		ObjectMapper objectMapper = new ObjectMapper();
-		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
+		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
 		// Long类型转String类型
 		JavaTimeModule javaTimeModule = new JavaTimeModule();
 		javaTimeModule.addSerializer(Long.class, ToStringSerializer.instance);
@@ -73,8 +75,6 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		// 自动查找并注册相关模块
 		objectMapper.findAndRegisterModules();
-		// Jackson Mixin
-		objectMapper.registerModule(new CoreJackson2Module());
 		return objectMapper;
 	}
 	// @formatter:on

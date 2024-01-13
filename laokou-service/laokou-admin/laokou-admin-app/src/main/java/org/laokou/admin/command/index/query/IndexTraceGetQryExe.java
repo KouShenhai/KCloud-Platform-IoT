@@ -27,8 +27,8 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.TRACE_INDEX;
-import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.ID;
+import static org.laokou.common.i18n.common.IndexConstants.TRACE;
+import static org.laokou.common.i18n.common.MybatisConstants.ID;
 
 /**
  * @author laokou
@@ -41,7 +41,7 @@ public class IndexTraceGetQryExe {
 
 	public Result<Map<String, Object>> execute(IndexTraceGetQry qry) {
 		Search search = new Search();
-		search.setIndexNames(new String[] { TRACE_INDEX });
+		search.setIndexNames(new String[] { TRACE });
 		search.setPageSize(1);
 		search.setPageNum(1);
 		search.setOrQueryList(Collections.singletonList(new Search.Query(ID, qry.getId())));

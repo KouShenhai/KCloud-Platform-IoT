@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.algorithm.template.select;
@@ -23,12 +23,12 @@ import java.util.Random;
 /**
  * @author laokou
  */
-public class RandomSelectAlgorithm<T> extends AbstractSelectAlgorithm<T> {
+public class RandomSelectAlgorithm extends AbstractSelectAlgorithm {
 
 	private final Random RANDOM = new Random(System.currentTimeMillis());
 
 	@Override
-	public T select(List<T> list, Object arg) {
+	public <T> T select(List<T> list, Object arg) {
 		int value = this.RANDOM.nextInt(list.size());
 		return list.get(value);
 	}

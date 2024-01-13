@@ -31,6 +31,9 @@ import static org.laokou.gateway.support.ip.IpProperties.PREFIX;
 @ConfigurationProperties(prefix = PREFIX)
 public class IpProperties {
 
+	/**
+	 * 黑/白名单配置前缀.
+	 */
 	public static final String PREFIX = "spring.cloud.gateway.ip";
 
 	private String label = Label.BLACK.getName();

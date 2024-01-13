@@ -32,7 +32,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.net.InetAddress;
 
-import static org.laokou.common.i18n.common.Constant.IP;
+import static org.laokou.common.i18n.common.NetworkConstants.IP;
 
 /**
  * @author laokou

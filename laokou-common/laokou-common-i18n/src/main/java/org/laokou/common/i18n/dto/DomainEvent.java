@@ -31,11 +31,11 @@ public abstract class DomainEvent extends ApplicationEvent implements Serializab
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
 
-	public DomainEvent(Object source, Clock clock) {
+	protected DomainEvent(Object source, Clock clock) {
 		super(source, clock);
 	}
 
-	public DomainEvent(Object source) {
+	protected DomainEvent(Object source) {
 		super(source);
 	}
 

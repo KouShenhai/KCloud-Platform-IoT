@@ -59,15 +59,15 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import static org.laokou.common.i18n.common.Constant.UNDER;
+import static org.laokou.common.i18n.common.StringConstants.UNDER;
 
 /**
  * A {@link org.springframework.cache.CacheManager} implementation backed by Redisson
  * instance.
  *
- * @see RedissonSpringCacheManager
  * @author Nikita Koksharov
  * @author laokou
+ * @see RedissonSpringCacheManager
  *
  */
 @Data
@@ -84,13 +84,13 @@ public class RedissonSpringExtCacheManager implements CacheManager, ResourceLoad
 	private boolean transactionAware = false;
 
 	/**
-	 * -- SETTER -- Set Codec instance shared between all Cache instances
+	 * -- SETTER -- Set Codec instance shared between all Cache instances.
 	 *
 	 */
 	private Codec codec;
 
 	/**
-	 * -- SETTER -- Set Redisson instance
+	 * -- SETTER -- Set Redisson instance.
 	 *
 	 */
 	private RedissonClient redisson;

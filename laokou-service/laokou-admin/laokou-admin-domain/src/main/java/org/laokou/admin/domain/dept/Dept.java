@@ -26,27 +26,27 @@ import lombok.Data;
 public class Dept {
 
 	/**
-	 * ID
+	 * ID.
 	 */
 	private Long id;
 
 	/**
-	 * 名称
+	 * 名称.
 	 */
 	private String name;
 
 	/**
-	 * 父ID
+	 * 父ID.
 	 */
 	private Long pid;
 
 	/**
-	 * 节点
+	 * 节点.
 	 */
 	private String path;
 
 	/**
-	 * 排序
+	 * 排序.
 	 */
 	private Integer sort;
 

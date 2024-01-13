@@ -25,7 +25,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.io.InputStream;
 import java.util.Collection;
@@ -33,6 +32,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Jackson工具类.
+ *
  * @author livk
  * @author laokou
  */
@@ -40,12 +41,10 @@ import java.util.Map;
 @UtilityClass
 public class JacksonUtil {
 
-	public static final String EMPTY_JSON = "{}";
-
 	private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new JavaTimeModule());
 
 	/**
-	 * json字符转Bean
+	 * json字符转Bean.
 	 * @param json json string
 	 * @param clazz class
 	 * @param <T> type
@@ -58,7 +57,7 @@ public class JacksonUtil {
 	}
 
 	/**
-	 * 创建JavaType
+	 * 创建JavaType.
 	 * @param clazz 类型
 	 * @return JavaType
 	 */
@@ -72,7 +71,7 @@ public class JacksonUtil {
 	}
 
 	/**
-	 * 序列化 为字符串
+	 * 序列化 为字符串.
 	 * @param obj obj
 	 * @return json
 	 */
@@ -82,7 +81,7 @@ public class JacksonUtil {
 	}
 
 	/**
-	 * 序列化 为字符串
+	 * 序列化 为字符串.
 	 * @param obj obj
 	 * @param isFormat 是否格式化
 	 * @return json
@@ -99,11 +98,11 @@ public class JacksonUtil {
 	}
 
 	/**
-	 * json to List
+	 * json to List.
 	 * @param json json数组
 	 * @param clazz 类型
 	 * @param <T> 泛型
-	 * @return List<T>
+	 * @return 对象集合
 	 */
 	@SneakyThrows
 	public <T> List<T> toList(String json, Class<T> clazz) {
@@ -115,11 +114,11 @@ public class JacksonUtil {
 	}
 
 	/**
-	 * Json反序列化Map
+	 * Json反序列化Map.
 	 * @param json json字符串
 	 * @param keyClass K Class
 	 * @param valueClass V Class
-	 * @return Map<K, V>
+	 * @return map
 	 */
 	@SneakyThrows
 	public <K, V> Map<K, V> toMap(String json, Class<K> keyClass, Class<V> valueClass) {
@@ -131,14 +130,25 @@ public class JacksonUtil {
 	}
 
 	/**
-	 * Map转对象
-	 * @param obj
-	 * @param clazz
-	 * @return
-	 * @param <T>
+	 * Map转对象.
+	 * @param obj 对象
+	 * @param clazz 类型
+	 * @param <T> 泛型
+	 * @return 对象
 	 */
 	public <T> T toValue(Object obj, Class<T> clazz) {
 		return MAPPER.convertValue(obj, clazz);
+	}
+
+	/**
+	 * Map转对象.
+	 * @param obj 对象
+	 * @param keyClass key类型
+	 * @param valueClass value类型
+	 * @return 对象
+	 */
+	public <T, K, V> T toMap(Object obj, Class<K> keyClass, Class<V> valueClass) {
+		return MAPPER.convertValue(obj, mapType(keyClass, valueClass));
 	}
 
 	@SneakyThrows

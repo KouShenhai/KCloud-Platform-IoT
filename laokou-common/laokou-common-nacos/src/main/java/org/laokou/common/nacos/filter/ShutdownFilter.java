@@ -37,9 +37,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
-import static org.laokou.common.i18n.common.Constant.GRACEFUL_SHUTDOWN_URL;
-import static org.laokou.common.i18n.common.StatusCode.SERVICE_UNAVAILABLE;
+import static org.laokou.common.i18n.common.StatusCodes.SERVICE_UNAVAILABLE;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.SysConstants.GRACEFUL_SHUTDOWN_URL;
 
 /**
  * @author laokou

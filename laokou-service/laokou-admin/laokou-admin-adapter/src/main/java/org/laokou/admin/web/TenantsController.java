@@ -19,6 +19,7 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.TenantsServiceI;
 import org.laokou.admin.domain.annotation.OperateLog;
@@ -26,17 +27,20 @@ import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.tenant.*;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.enums.Type;
+import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
+import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.laokou.common.data.cache.config.CacheConstant.TENANTS;
+import static org.laokou.common.i18n.common.CacheConstants.TENANTS;
+import static org.laokou.common.i18n.common.RateLimiterTypeEnums.IP;
+import static org.redisson.api.RateIntervalUnit.MINUTES;
 
 /**
  * @author laokou
@@ -80,7 +84,7 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "修改租户")
 	@OperateLog(module = "租户管理", operation = "修改租户")
 	@PreAuthorize("hasAuthority('tenants:update')")
-	@DataCache(name = TENANTS, key = "#cmd.tenantCO.id", type = Type.DEL)
+	@DataCache(name = TENANTS, key = "#cmd.tenantCO.id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> update(@RequestBody TenantUpdateCmd cmd) {
 		return tenantsServiceI.update(cmd);
 	}
@@ -90,7 +94,7 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "删除租户")
 	@OperateLog(module = "租户管理", operation = "删除租户")
 	@PreAuthorize("hasAuthority('tenants:delete')")
-	@DataCache(name = TENANTS, key = "#id", type = Type.DEL)
+	@DataCache(name = TENANTS, key = "#id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return tenantsServiceI.deleteById(new TenantDeleteCmd(id));
 	}
@@ -107,6 +111,15 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "解析域名查看ID")
 	public Result<Long> getIdByDomainName(HttpServletRequest request) {
 		return tenantsServiceI.getIdByDomainName(new TenantGetIDQry(request));
+	}
+
+	@GetMapping("{id}/download-datasource")
+	@PreAuthorize("hasAuthority('tenants:download-datasource')")
+	@Operation(summary = "租户管理", description = "下载数据库")
+	@OperateLog(module = "租户管理", operation = "下载数据库")
+	@RateLimiter(id = "DOWNLOAD_TENANT_DATASOURCE", rate = 5, interval = 10, unit = MINUTES, type = IP)
+	public void downloadDatasource(@PathVariable("id") Long id, HttpServletResponse response) {
+		tenantsServiceI.downloadDatasource(new TenantDownloadDatasourceCmd(id, response));
 	}
 
 }

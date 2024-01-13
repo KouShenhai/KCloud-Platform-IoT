@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 /**
- * 通知配置
+ * 通知配置.
  *
  * @author laokou
  */

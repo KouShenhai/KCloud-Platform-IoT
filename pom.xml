@@ -37,7 +37,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
         <spring-boot-maven-plugin.version>3.2.1</spring-boot-maven-plugin.version>
         <maven-surefire-plugin.version>3.2.2</maven-surefire-plugin.version>
         <!--spring-boot版本-->
@@ -61,9 +61,6 @@
         <docker.version>1.2.2</docker.version>
         <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
         <spring-javaformat-maven-plugin.version>0.0.40</spring-javaformat-maven-plugin.version>
-        <maven-checkstyle-plugin.failsOnError>true</maven-checkstyle-plugin.failsOnError>
-        <maven-checkstyle-plugin.failsOnViolation>true</maven-checkstyle-plugin.failsOnViolation>
-        <maven-checkstyle-plugin.includeTestSourceDirectory>true</maven-checkstyle-plugin.includeTestSourceDirectory>
         <native-maven-plugin.version>0.9.28</native-maven-plugin.version>
         <versions-maven-plugin.version>2.16.2</versions-maven-plugin.version>
     </properties>
@@ -201,6 +198,7 @@
                 <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
                 <MAIL-USERNAME>xxx</MAIL-USERNAME>
                 <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
+                <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -243,6 +241,7 @@
                 <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
                 <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
                 <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
+                <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
             </properties>
         </profile>
         <!-- 正式环境 -->
@@ -303,6 +302,8 @@
                 <MAIL-USERNAME>${MAIL_USERNAME:2413176044@qq.com}</MAIL-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->
                 <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
+                <!--suppress UnresolvedMavenProperty -->
+                <FILE-TEMP-PATH>${FILE_TEMP_PATH:/opt/temp}</FILE-TEMP-PATH>
             </properties>
         </profile>
     </profiles>
@@ -329,6 +330,25 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${maven-checkstyle-plugin.version}</version>
+                <configuration>
+                    <configLocation>checkstyle.xml</configLocation>
+                    <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                    <failOnViolation>true</failOnViolation>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <skip>true</skip>
+                    <linkXRef>false</linkXRef>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>checkstyle</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -339,6 +359,10 @@
                     <target>${maven.compiler.target}</target>
                     <encoding>UTF-8</encoding>
                     <compilerArgs>
+                        <arg>-Xlint:-options</arg>
+                        <arg>-Xlint:varargs</arg>
+                        <arg>-Xlint:rawtypes</arg>
+                        <arg>-Xlint:unchecked</arg>
                         <arg>-Xlint:deprecation</arg>
                         <arg>-parameters</arg>
                     </compilerArgs>

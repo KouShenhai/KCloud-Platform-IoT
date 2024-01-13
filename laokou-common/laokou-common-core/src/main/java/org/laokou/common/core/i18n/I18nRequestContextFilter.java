@@ -37,6 +37,9 @@ import java.io.IOException;
 @NonNullApi
 public final class I18nRequestContextFilter extends RequestContextFilter {
 
+	private I18nRequestContextFilter() {
+	}
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {

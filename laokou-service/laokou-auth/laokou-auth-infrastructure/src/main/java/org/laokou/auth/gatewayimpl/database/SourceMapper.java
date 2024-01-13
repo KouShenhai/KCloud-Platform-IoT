@@ -22,7 +22,7 @@ import org.apache.ibatis.annotations.Param;
 import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
 import org.springframework.stereotype.Repository;
 
-import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
+import static org.laokou.common.i18n.common.MybatisConstants.TENANT_ID;
 
 /**
  * @author laokou
@@ -32,7 +32,7 @@ import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID
 public interface SourceMapper {
 
 	/**
-	 * 根据租户ID查询数据源名称
+	 * 根据租户ID查询数据源.
 	 * @param tenantId 租户ID
 	 * @return String
 	 */

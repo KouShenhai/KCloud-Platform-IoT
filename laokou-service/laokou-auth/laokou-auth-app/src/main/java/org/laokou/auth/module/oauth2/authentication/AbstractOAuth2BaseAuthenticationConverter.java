@@ -33,11 +33,11 @@ import org.springframework.util.MultiValueMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.laokou.auth.common.Constant.TENANT_ID;
-import static org.laokou.common.i18n.common.Constant.TRACE_ID;
-import static org.laokou.common.i18n.common.ErrorCode.INVALID_SCOPE;
-import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.ValCode.OAUTH2_TENANT_ID_REQUIRE;
+import static org.laokou.common.i18n.common.ErrorCodes.INVALID_SCOPE;
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.TenantConstants.TENANT_ID;
+import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
+import static org.laokou.common.i18n.common.ValCodes.OAUTH2_TENANT_ID_REQUIRE;
 
 /**
  * @author laokou
@@ -46,13 +46,13 @@ import static org.laokou.common.i18n.common.ValCode.OAUTH2_TENANT_ID_REQUIRE;
 public abstract class AbstractOAuth2BaseAuthenticationConverter implements AuthenticationConverter {
 
 	/**
-	 * 类型
+	 * 类型.
 	 * @return String
 	 */
 	abstract String getGrantType();
 
 	/**
-	 * 子类实现转换
+	 * 子类实现转换.
 	 * @param clientPrincipal 认证参数
 	 * @param additionalParameters 扩展参数
 	 */
@@ -73,7 +73,7 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 		}
 		// 判断租户ID是否为空
 		String tenantId = request.getParameter(TENANT_ID);
-		log.info("租户ID：{}", tenantId);
+		// log.info("租户ID：{}", tenantId);
 		if (StringUtil.isEmpty(tenantId)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
@@ -90,7 +90,7 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 		Map<String, Object> additionalParameters = new HashMap<>(parameters.size());
 		parameters.forEach((key, value) -> {
 			if (!key.equals(OAuth2ParameterNames.GRANT_TYPE) && !key.equals(OAuth2ParameterNames.CLIENT_ID)) {
-				additionalParameters.put(key, value.get(0));
+				additionalParameters.put(key, value.getFirst());
 			}
 		});
 		return convert(clientPrincipal, additionalParameters);

@@ -27,7 +27,7 @@ import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * @author laokou

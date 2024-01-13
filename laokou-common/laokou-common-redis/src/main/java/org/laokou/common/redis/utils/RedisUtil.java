@@ -32,7 +32,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.Constant.DEFAULT;
+import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 
 /**
  * Redis工具类.
@@ -196,8 +196,20 @@ public class RedisUtil {
 		return redissonClient.getBucket(key).get();
 	}
 
+	public void hDel(String key) {
+		redissonClient.getMap(key).delete();
+	}
+
 	public boolean delete(String... key) {
 		return redissonClient.getKeys().delete(key) > 0;
+	}
+
+	public void hDel(String key, String field) {
+		redissonClient.getMap(key).remove(field);
+	}
+
+	public void hDel(String key, String... field) {
+		redissonClient.getMap(key).fastRemove(field);
 	}
 
 	public boolean hasKey(String key) {
@@ -240,8 +252,14 @@ public class RedisUtil {
 
 	public void hSet(String key, String field, Object value, long expire) {
 		RMap<String, Object> map = redissonClient.getMap(key);
-		map.expireIfNotSet(Duration.ofSeconds(expire));
+		map.expire(Duration.ofSeconds(expire));
 		map.put(field, value);
+	}
+
+	public void hSet(String key, Map<String, Object> map, long expire) {
+		RMap<String, Object> rMap = redissonClient.getMap(key);
+		rMap.expire(Duration.ofSeconds(expire));
+		rMap.putAll(map);
 	}
 
 	public void hSet(String key, String field, Object value) {

@@ -26,7 +26,7 @@ import org.laokou.admin.dto.oss.clientobject.FileCO;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.enums.Type;
+import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -35,7 +35,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import static org.laokou.common.data.cache.config.CacheConstant.OSS;
+import static org.laokou.common.i18n.common.CacheConstants.OSS;
 
 /**
  * @author laokou
@@ -87,7 +87,7 @@ public class OssController {
 	@Operation(summary = "存储管理", description = "修改存储")
 	@OperateLog(module = "存储管理", operation = "修改存储")
 	@PreAuthorize("hasAuthority('oss:update')")
-	@DataCache(name = OSS, key = "#cmd.ossCO.id", type = Type.DEL)
+	@DataCache(name = OSS, key = "#cmd.ossCO.id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> update(@RequestBody OssUpdateCmd cmd) {
 		return ossServiceI.update(cmd);
 	}
@@ -97,7 +97,7 @@ public class OssController {
 	@Operation(summary = "存储管理", description = "删除存储")
 	@OperateLog(module = "存储管理", operation = "删除存储")
 	@PreAuthorize("hasAuthority('oss:delete')")
-	@DataCache(name = OSS, key = "#id", type = Type.DEL)
+	@DataCache(name = OSS, key = "#id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return ossServiceI.deleteById(new OssDeleteCmd(id));
 	}

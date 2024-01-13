@@ -30,7 +30,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Component;
 
 /**
- * Branch Session Redis ServiceImpl
+ * Branch Session Redis ServiceImpl.
  *
  * @author zhongxiang.wang
  * @author doubleDimple

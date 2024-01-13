@@ -29,10 +29,11 @@ import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.laokou.flowable.dto.task.TaskTransferCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.flowable.common.Constant.FLOWABLE;
+import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
  * @author laokou
@@ -53,7 +54,10 @@ public class TaskTransferCmdExe {
 			String owner = cmd.getUserId().toString();
 			String assignee = cmd.getToUserId().toString();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
-			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+			Task task = taskService.createTaskQuery()
+				.taskTenantId(UserUtil.getTenantId().toString())
+				.taskId(taskId)
+				.singleResult();
 			if (ObjectUtil.isNull(task)) {
 				throw new FlowException("任务不存在");
 			}

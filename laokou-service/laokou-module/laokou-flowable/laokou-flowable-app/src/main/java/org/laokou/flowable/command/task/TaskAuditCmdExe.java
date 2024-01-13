@@ -31,6 +31,7 @@ import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.laokou.flowable.dto.task.TaskAuditCmd;
 import org.laokou.flowable.dto.task.clientobject.AuditCO;
 import org.laokou.flowable.gatewayimpl.database.TaskMapper;
@@ -38,7 +39,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static org.laokou.flowable.common.Constant.FLOWABLE;
+import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
  * @author laokou
@@ -61,7 +62,10 @@ public class TaskAuditCmdExe {
 			Map<String, Object> values = cmd.getValues();
 			String instanceId = cmd.getInstanceId();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
-			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+			Task task = taskService.createTaskQuery()
+				.taskTenantId(UserUtil.getTenantId().toString())
+				.taskId(taskId)
+				.singleResult();
 			if (ObjectUtil.isNull(task)) {
 				throw new FlowException("任务不存在");
 			}
@@ -70,7 +74,7 @@ public class TaskAuditCmdExe {
 			}
 			// 审批
 			audit(taskId, values);
-			return Result.of(new AuditCO(taskMapper.getAssigneeByInstanceId(instanceId)));
+			return Result.of(new AuditCO(taskMapper.getAssigneeByInstanceId(instanceId, UserUtil.getTenantId())));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

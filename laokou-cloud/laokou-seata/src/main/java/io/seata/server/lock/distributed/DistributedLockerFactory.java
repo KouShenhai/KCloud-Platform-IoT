@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Distributed locker factory
+ * Distributed locker factory.
  *
  * @author zhongxiang.wang
  */
@@ -37,7 +37,7 @@ public class DistributedLockerFactory {
 	private static volatile DistributedLocker DISTRIBUTED_LOCKER = null;
 
 	/**
-	 * Get the distributed locker by lockerType
+	 * Get the distributed locker by lockerType.
 	 * @param lockerType the locker type
 	 * @return the distributed locker
 	 */

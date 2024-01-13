@@ -25,14 +25,14 @@ import io.seata.core.event.GuavaEventBus;
  */
 public class EventBusManager {
 
-	private static class SingletonHolder {
-
-		private static EventBus INSTANCE = new GuavaEventBus("tc", true);
-
-	}
-
 	public static EventBus get() {
 		return SingletonHolder.INSTANCE;
+	}
+
+	private static class SingletonHolder {
+
+		private static final EventBus INSTANCE = new GuavaEventBus("tc", true);
+
 	}
 
 }

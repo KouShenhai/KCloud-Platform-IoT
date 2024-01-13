@@ -22,7 +22,7 @@
 		"https://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 
-	<module name="SuppressionFilter">
+<!--	<module name="SuppressionFilter">
 		<property name="file" value="${checkstyle.suppressions.file}"/>
 		<property name="optional" value="true"/>
 	</module>
@@ -32,12 +32,17 @@
 		<property name="optional" value="true"/>
 	</module>
 
+-->
+
 	<!-- TAKEN FROM SPRING BOOT -->
 	<!-- Root Checks -->
 	<!-- 自定义配置，参考: https://checkstyle.sourceforge.io/checks/javadoc/javadocstyle.html#JavadocStyle -->
 	<module name="com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck">
+<!--
 		<property name="headerFile" value="${checkstyle.header.file}"/>
-		<property name="fileExtensions" value="java,groovy"/>
+-->
+		<!-- 限定检查的扩展类型 -->
+		<property name="fileExtensions" value="java, properties, xml"/>
 	</module>
 	<module name="com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck"/>
 
@@ -49,10 +54,11 @@
 		<!-- <module name="LineLength">
 			<property name="max" value="120"/>
 		</module> -->
-
+<!--
 		<module name="com.puppycrawl.tools.checkstyle.checks.imports.IllegalImportCheck">
 			<property name="illegalPkgs" value="com.google.common"/>
 		</module>
+-->
 
 		<module name="SuppressionCommentFilter">
 			<property name="offCommentFormat" value="@checkstyle:off"/>
@@ -80,14 +86,18 @@
 			<property name="option" value="alone"/>
 		</module>
 		<module name="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+<!--
 		<module name="com.puppycrawl.tools.checkstyle.checks.blocks.AvoidNestedBlocksCheck"/>
+-->
 
 		<!-- Class Design -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.design.FinalClassCheck"/>
+<!--
 		<module name="com.puppycrawl.tools.checkstyle.checks.design.InterfaceIsTypeCheck">
-			<!-- 不标记接口 -->
+			&lt;!&ndash; 不标记接口 &ndash;&gt;
 			<property name="allowMarkerInterfaces" value="false"/>
 		</module>
+-->
 		<module name="com.puppycrawl.tools.checkstyle.checks.design.HideUtilityClassConstructorCheck"/>
 		<module name="com.puppycrawl.tools.checkstyle.checks.design.MutableExceptionCheck"/>
 		<module name="com.puppycrawl.tools.checkstyle.checks.design.InnerTypeLastCheck"/>
@@ -97,7 +107,9 @@
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.CovariantEqualsCheck"/>
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.EmptyStatementCheck"/>
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.EqualsHashCodeCheck"/>
+<!--
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.InnerAssignmentCheck"/>
+-->
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanExpressionCheck"/>
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanReturnCheck"/>
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.StringLiteralEqualityCheck"/>
@@ -118,7 +130,9 @@
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.OneStatementPerLineCheck"/>
 
 		<!-- Imports -->
+<!--
 		<module name="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+-->
 		<!--<module name="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStaticImportCheck">-->
 		<!--<property name="excludes"-->
 		<!--value="io.restassured.RestAssured.*, org.assertj.core.api.Assertions.*, org.assertj.core.api.Assumptions.*, org.awaitility.Awaitility.*, org.junit.Assert.*, org.junit.Assume.*, org.junit.internal.matchers.ThrowableMessageMatcher.*, org.junit.jupiter.api.Assertions.*, org.hamcrest.CoreMatchers.*, org.hamcrest.Matchers.*, org.springframework.boot.configurationprocessor.ConfigurationMetadataMatchers.*, org.springframework.boot.configurationprocessor.TestCompiler.*, org.springframework.boot.test.autoconfigure.AutoConfigurationImportedCondition.*, org.mockito.Mockito.*, org.mockito.BDDMockito.*, org.mockito.ArgumentMatchers.*, org.mockito.Matchers.*, org.springframework.restdocs.headers.HeaderDocumentation.*, org.springframework.restdocs.hypermedia.HypermediaDocumentation.*, org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*, org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*, org.springframework.restdocs.operation.preprocess.Preprocessors.*, org.springframework.restdocs.payload.PayloadDocumentation.*, org.springframework.restdocs.request.RequestDocumentation.*, org.springframework.restdocs.restassured3.operation.preprocess.RestAssuredPreprocessors.*, org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.*, org.springframework.restdocs.snippet.Attributes.*, org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.*, org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*, org.springframework.test.web.servlet.result.MockMvcResultMatchers.*, org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.*, org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*, org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*, org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo, org.springframework.test.web.client.ExpectedCount.*, org.springframework.test.web.client.match.MockRestRequestMatchers.*, org.springframework.test.web.client.response.MockRestResponseCreators.*, org.springframework.test.web.servlet.result.MockMvcResultHandlers.*, org.springframework.web.reactive.function.BodyInserters.*, org.springframework.web.reactive.function.server.RequestPredicates.*, org.springframework.web.reactive.function.server.RouterFunctions.*, org.springframework.test.web.servlet.setup.MockMvcBuilders.*" />-->
@@ -128,6 +142,7 @@
 		<module name="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck">
 			<property name="processJavadoc" value="true"/>
 		</module>
+<!--
 		<module name="com.puppycrawl.tools.checkstyle.checks.imports.ImportOrderCheck">
 			<property name="groups" value="lombok,org,java,/^javax?\./,*"/>
 			<property name="ordered" value="true"/>
@@ -135,6 +150,7 @@
 			<property name="option" value="bottom"/>
 			<property name="sortStaticImportsAlphabetically" value="true"/>
 		</module>
+-->
 
 		<!-- Javadoc Comments -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck">

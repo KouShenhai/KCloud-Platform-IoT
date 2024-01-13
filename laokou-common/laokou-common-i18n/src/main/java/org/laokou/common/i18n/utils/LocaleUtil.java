@@ -22,7 +22,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import java.util.Arrays;
 import java.util.Locale;
 
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.StringConstants.*;
 
 /**
  * @author laokou
@@ -45,7 +45,7 @@ public class LocaleUtil {
 
 	private static String getLanguage(String language) {
 		String[] array = language.split(COMMA);
-		return Arrays.stream(array).filter(i -> i.contains(BAR)).findFirst().orElse(EMPTY);
+		return Arrays.stream(array).filter(i -> i.contains(ROD)).findFirst().orElse(EMPTY);
 	}
 
 }

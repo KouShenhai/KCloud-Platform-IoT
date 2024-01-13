@@ -22,10 +22,10 @@ import java.math.RoundingMode;
 /**
  * @author laokou
  */
-public class BigDecimalUtil {
+public final class BigDecimalUtil {
 
 	/**
-	 * 默认除法运算精度
+	 * 默认除法运算精度.
 	 */
 	private static final int DEF_DIV_SCALE = 10;
 
@@ -110,7 +110,7 @@ public class BigDecimalUtil {
 	}
 
 	/**
-	 * 提供精确的类型转换(Float)
+	 * 提供精确的类型转换(Float).
 	 * @param v 需要被转换的数字
 	 * @return 返回转换结果
 	 */
@@ -120,7 +120,7 @@ public class BigDecimalUtil {
 	}
 
 	/**
-	 * 提供精确的类型转换(Int)不进行四舍五入
+	 * 提供精确的类型转换(Int)不进行四舍五入.
 	 * @param v 需要被转换的数字
 	 * @return 返回转换结果
 	 */
@@ -130,7 +130,7 @@ public class BigDecimalUtil {
 	}
 
 	/**
-	 * 提供精确的类型转换(Long)
+	 * 提供精确的类型转换(Long).
 	 * @param v 需要被转换的数字
 	 * @return 返回转换结果
 	 */
@@ -140,7 +140,7 @@ public class BigDecimalUtil {
 	}
 
 	/**
-	 * 返回两个数中大的一个值
+	 * 返回两个数中大的一个值.
 	 * @param v1 需要被对比的第一个数
 	 * @param v2 需要被对比的第二个数
 	 * @return 返回两个数中大的一个值
@@ -152,7 +152,7 @@ public class BigDecimalUtil {
 	}
 
 	/**
-	 * 返回两个数中小的一个值
+	 * 返回两个数中小的一个值.
 	 * @param v1 需要被对比的第一个数
 	 * @param v2 需要被对比的第二个数
 	 * @return 返回两个数中小的一个值
@@ -164,7 +164,7 @@ public class BigDecimalUtil {
 	}
 
 	/**
-	 * 精确对比两个数字
+	 * 精确对比两个数字.
 	 * @param v1 需要被对比的第一个数
 	 * @param v2 需要被对比的第二个数
 	 * @return 如果两个数一样则返回0，如果第一个数比第二个数大则返回1，反之返回-1

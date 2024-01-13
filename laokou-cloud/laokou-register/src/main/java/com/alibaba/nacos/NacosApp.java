@@ -24,8 +24,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * @version 2.2.0 Nacos starter.
  * @author nacos
+ * @version 2.2.0 Nacos starter
  */
 @SpringBootApplication(scanBasePackages = "com.alibaba.nacos")
 @ServletComponentScan

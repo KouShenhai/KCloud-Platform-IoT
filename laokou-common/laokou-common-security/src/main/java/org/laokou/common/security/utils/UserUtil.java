@@ -16,7 +16,7 @@
  */
 package org.laokou.common.security.utils;
 
-import org.laokou.auth.domain.user.User;
+import org.laokou.common.security.domain.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -58,7 +58,7 @@ public class UserUtil {
 	}
 
 	/**
-	 * 部门PATH
+	 * 部门PATH.
 	 * @return Long
 	 */
 	public static String getDeptPath() {

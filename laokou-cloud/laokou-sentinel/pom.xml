@@ -11,13 +11,13 @@
     <properties>
         <resource.delimiter>@</resource.delimiter>
         <!--sentinel版本-->
-        <sentinel.version>1.8.6</sentinel.version>
+        <sentinel.version>1.8.7</sentinel.version>
         <!--spring-boot版本-->
         <spring-boot.version>2.5.12</spring-boot.version>
         <!--curator版本-->
         <curator.version>5.5.0</curator.version>
         <!--log4j版本-->
-        <log4j.version>2.22.0</log4j.version>
+        <log4j.version>2.22.1</log4j.version>
         <!--commons-lang版本-->
         <commons-lang.version>2.6</commons-lang.version>
         <!--httpclient版本-->
@@ -29,11 +29,11 @@
         <!--system-rules版本-->
         <system-rules.version>1.19.0</system-rules.version>
         <!--apollo-openapi版本-->
-        <apollo-openapi.version>2.1.0</apollo-openapi.version>
+        <apollo-openapi.version>2.2.0</apollo-openapi.version>
         <!--httpcore-nio版本-->
         <httpcore-nio.version>4.4.16</httpcore-nio.version>
         <!--fastjson版本-->
-        <fastjson.version>2.0.43</fastjson.version>
+        <fastjson.version>2.0.45</fastjson.version>
     </properties>
 
     <dependencies>
@@ -63,6 +63,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -141,6 +147,10 @@
             <version>${system-rules.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -178,8 +188,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <source>17</source>
+                    <target>17</target>
                     <encoding>UTF-8</encoding>
                     <compilerArgs>
                         <arg>-Xlint:deprecation</arg>
@@ -188,11 +198,17 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker.version}</version>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>${spring-boot-maven-plugin.version}</version>
                 <configuration>
-                    <fork>true</fork>
+                    <finalName>${project.artifactId}</finalName>
+                    <!-- main方法的地址 只需要修改这个地址-->
                     <mainClass>com.alibaba.csp.sentinel.dashboard.SentinelApp</mainClass>
                 </configuration>
                 <executions>

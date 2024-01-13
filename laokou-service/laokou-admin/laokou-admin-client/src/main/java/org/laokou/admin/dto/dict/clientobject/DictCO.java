@@ -31,32 +31,32 @@ public class DictCO extends ClientObject {
 	private Long id;
 
 	/**
-	 * 标签
+	 * 标签.
 	 */
 	private String label;
 
 	/**
-	 * 类型
+	 * 类型.
 	 */
 	private String type;
 
 	/**
-	 * 值
+	 * 值.
 	 */
 	private String value;
 
 	/**
-	 * 备注
+	 * 备注.
 	 */
 	private String remark;
 
 	/**
-	 * 创建时间
+	 * 创建时间.
 	 */
 	private LocalDateTime createDate;
 
 	/**
-	 * 排序
+	 * 排序.
 	 */
 	private Integer sort;
 

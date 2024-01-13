@@ -45,19 +45,15 @@ import java.security.cert.X509Certificate;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.SysConstants.LINE_PATTERN;
+import static org.laokou.common.i18n.common.SysConstants.TLS_PROTOCOL_VERSION;
 
 /**
  * @author laokou
  */
 @Slf4j
 public class HttpUtil {
-
-	public static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
-
-	private static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
 
 	public static String doGet(String url, Map<String, String> params, Map<String, String> headers) {
 		return doGet(url, params, headers, false);
@@ -94,7 +90,7 @@ public class HttpUtil {
 			catch (Exception e) {
 				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
-			log.info("打印：{}", resultString);
+			// log.info("打印：{}", resultString);
 			return resultString;
 		}
 	}
@@ -127,7 +123,7 @@ public class HttpUtil {
 			catch (IOException e) {
 				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
-			log.info("打印：{}", resultString);
+			// log.info("打印：{}", resultString);
 			return resultString;
 		}
 	}
@@ -171,7 +167,7 @@ public class HttpUtil {
 			catch (IOException e) {
 				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
-			log.info("打印：{}", resultString);
+			// log.info("打印：{}", resultString);
 			return resultString;
 		}
 	}
@@ -204,13 +200,13 @@ public class HttpUtil {
 			catch (IOException e) {
 				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
-			log.info("打印：{}", resultString);
+			// log.info("打印：{}", resultString);
 			return resultString;
 		}
 	}
 
 	/**
-	 * 转换为驼峰json字符串
+	 * 转换为驼峰json字符串.
 	 */
 	public static String transformerUnderHumpData(String data) {
 		Matcher matcher = LINE_PATTERN.matcher(data.toLowerCase());
@@ -220,6 +216,36 @@ public class HttpUtil {
 		}
 		matcher.appendTail(sb);
 		return sb.toString();
+	}
+
+	/**
+	 * 单向认证.
+	 */
+	@SneakyThrows
+	public static void disableSsl(HttpClientBuilder builder) {
+		SSLContext sslContext = sslContext();
+		SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactoryBuilder.create()
+			.setSslContext(sslContext)
+			.setHostnameVerifier(new TrustAllHostnames())
+			.build();
+		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = PoolingHttpClientConnectionManagerBuilder
+			.create()
+			.setSSLSocketFactory(sslConnectionSocketFactory)
+			.build();
+		builder.setConnectionManager(poolingHttpClientConnectionManager);
+	}
+
+	@SneakyThrows
+	public static SSLContext sslContext() {
+		// X.509是密码学里公钥证书的格式标准，作为证书标准
+		X509TrustManager disabledTrustManager = new DisableValidationTrustManager();
+		// 信任库
+		TrustManager[] trustManagers = new TrustManager[] { disabledTrustManager };
+		// 怎么选择加密协议，请看 ProtocolVersion
+		// 为什么能找到对应的加密协议 请查看 SSLContextSpi
+		SSLContext sslContext = SSLContext.getInstance(TLS_PROTOCOL_VERSION);
+		sslContext.init(null, trustManagers, new SecureRandom());
+		return sslContext;
 	}
 
 	public static class DisableValidationTrustManager implements X509TrustManager {
@@ -248,36 +274,6 @@ public class HttpUtil {
 			return true;
 		}
 
-	}
-
-	/**
-	 * 单向认证
-	 */
-	@SneakyThrows
-	public static void disableSsl(HttpClientBuilder builder) {
-		SSLContext sslContext = sslContext();
-		SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactoryBuilder.create()
-			.setSslContext(sslContext)
-			.setHostnameVerifier(new TrustAllHostnames())
-			.build();
-		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = PoolingHttpClientConnectionManagerBuilder
-			.create()
-			.setSSLSocketFactory(sslConnectionSocketFactory)
-			.build();
-		builder.setConnectionManager(poolingHttpClientConnectionManager);
-	}
-
-	@SneakyThrows
-	public static SSLContext sslContext() {
-		// X.509是密码学里公钥证书的格式标准，作为证书标准
-		X509TrustManager disabledTrustManager = new DisableValidationTrustManager();
-		// 信任库
-		TrustManager[] trustManagers = new TrustManager[] { disabledTrustManager };
-		// 怎么选择加密协议，请看 ProtocolVersion
-		// 为什么能找到对应的加密协议 请查看 SSLContextSpi
-		SSLContext sslContext = SSLContext.getInstance(TLS_PROTOCOL_VERSION);
-		sslContext.init(null, trustManagers, new SecureRandom());
-		return sslContext;
 	}
 
 }

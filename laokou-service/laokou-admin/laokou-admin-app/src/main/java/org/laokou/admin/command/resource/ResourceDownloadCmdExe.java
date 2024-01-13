@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.resource;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,8 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+
 /**
  * @author laokou
  */
@@ -43,6 +46,7 @@ public class ResourceDownloadCmdExe {
 	private final ResourceMapper resourceMapper;
 
 	@SneakyThrows
+	@DS(TENANT)
 	public void executeVoid(ResourceDownloadCmd cmd) {
 		ResourceDO resourceDO = resourceMapper.selectById(cmd.getId());
 		HttpServletResponse response = cmd.getResponse();

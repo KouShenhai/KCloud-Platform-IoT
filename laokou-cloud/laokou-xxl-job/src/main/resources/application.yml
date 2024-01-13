@@ -16,6 +16,18 @@ server:
   servlet:
     context-path: /xxl-job-admin
   shutdown: graceful
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 256
+    # 每块buffer的空间大小
+    buffer-size: 1024
+    # 分配堆外内存
+    direct-buffers: true
+    accesslog:
+      enabled: true
 spring:
   application:
     name: @pom.artifactId@
@@ -54,7 +66,7 @@ spring:
         smtp:
           auth: true
           socketFactory:
-            class: javax.net.ssl.SSLSocketFactory
+            class: jakarta.net.ssl.SSLSocketFactory
           starttls:
             enable: true
             required: true
@@ -66,6 +78,10 @@ spring:
   web:
     resources:
       static-locations: classpath:/static/
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 0
+    clean-disabled: false
 xxl:
   job:
     access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe

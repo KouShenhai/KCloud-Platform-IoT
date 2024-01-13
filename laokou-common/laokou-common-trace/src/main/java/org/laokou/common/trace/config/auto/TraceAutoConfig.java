@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.trace.config.auto;
@@ -23,7 +23,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import static org.laokou.common.trace.constant.Constant.ALL_PATTERNS;
+import static org.laokou.common.i18n.common.SysConstants.ALL_PATTERNS;
 
 /**
  * @author laokou

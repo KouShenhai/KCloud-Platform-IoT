@@ -27,7 +27,7 @@ import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
-import org.laokou.admin.domain.message.Type;
+import org.laokou.common.i18n.common.MessageTypeEnums;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.MessageDetailMapper;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
@@ -50,9 +50,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.Constant.TRACE_ID;
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_MESSAGE;
-import static org.laokou.common.rocketmq.constant.MqConstant.*;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_MESSAGE;
+import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
+import static org.laokou.common.i18n.common.RocketMqConstants.*;
 
 /**
  * @author laokou
@@ -134,7 +134,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	private String getMessageTag(Integer type) {
-		return type == Type.NOTICE.ordinal() ? LAOKOU_NOTICE_MESSAGE_TAG : LAOKOU_REMIND_MESSAGE_TAG;
+		return type == MessageTypeEnums.NOTICE.ordinal() ? LAOKOU_NOTICE_MESSAGE_TAG : LAOKOU_REMIND_MESSAGE_TAG;
 	}
 
 	private MessageDetailDO toMessageDetailDO(Long messageId, String userId, User user) {

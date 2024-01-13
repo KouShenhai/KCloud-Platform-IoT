@@ -31,11 +31,12 @@ import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.laokou.flowable.dto.task.TaskStartCmd;
 import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.flowable.common.Constant.FLOWABLE;
+import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
  * @author laokou
@@ -59,6 +60,7 @@ public class TaskStartCmdExe {
 			String businessKey = cmd.getBusinessKey();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+				.processDefinitionTenantId(UserUtil.getTenantId().toString())
 				.processDefinitionKey(definitionKey)
 				.latestVersion()
 				.singleResult();
@@ -78,7 +80,8 @@ public class TaskStartCmdExe {
 	private StartCO start(String definitionKey, String businessKey, String instanceName) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
-				ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(definitionKey, businessKey);
+				ProcessInstance processInstance = runtimeService.startProcessInstanceByKeyAndTenantId(definitionKey,
+						businessKey, UserUtil.getTenantId().toString());
 				if (ObjectUtil.isNull(processInstance)) {
 					throw new FlowException("流程不存在");
 				}

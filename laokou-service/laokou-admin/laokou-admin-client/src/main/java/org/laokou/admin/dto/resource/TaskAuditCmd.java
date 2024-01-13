@@ -33,17 +33,17 @@ public class TaskAuditCmd extends CommonCommand {
 	private static final long serialVersionUID = -945627686622034109L;
 
 	/**
-	 * 任务ID
+	 * 任务ID.
 	 */
 	private String taskId;
 
 	/**
-	 * 实例ID
+	 * 实例ID.
 	 */
 	private String instanceId;
 
 	/**
-	 * 流程变量
+	 * 流程变量.
 	 */
 	private Map<String, Object> values;
 

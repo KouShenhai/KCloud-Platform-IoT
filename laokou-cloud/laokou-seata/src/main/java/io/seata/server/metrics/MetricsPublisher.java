@@ -31,7 +31,7 @@ public class MetricsPublisher {
 	private static final EventBus EVENT_BUS = EventBusManager.get();
 
 	/**
-	 * post end event
+	 * post end event.
 	 * @param globalSession the global session
 	 * @param retryGlobal the retry global
 	 * @param retryBranch the retry branch
@@ -42,7 +42,7 @@ public class MetricsPublisher {
 	}
 
 	/**
-	 * post end event (force specified state)
+	 * post end event (force specified state).
 	 * @param globalSession the global session
 	 * @param status the global status
 	 * @param retryGlobal the retry global

@@ -37,7 +37,7 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-jasypt</artifactId>
+            <artifactId>laokou-common-crypto</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.oshi</groupId>

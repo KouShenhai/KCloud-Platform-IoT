@@ -28,7 +28,7 @@ import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
 
 /**
@@ -59,9 +59,9 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	@Override
 	public String key(String uuid) {
 		String key = RedisKeyUtil.getUserCaptchaKey(uuid);
-		before(key);
+		// before(key);
 		key = DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
-		after(key);
+		// after(key);
 		return key;
 	}
 

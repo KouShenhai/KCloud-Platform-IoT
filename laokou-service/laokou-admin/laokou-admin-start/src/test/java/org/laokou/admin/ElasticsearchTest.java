@@ -33,18 +33,18 @@ import java.util.Map;
 @Slf4j
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class ElasticsearchTest extends CommonTest {
+class ElasticsearchTest extends CommonTest {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
-	public ElasticsearchTest(WebApplicationContext webApplicationContext,
+	ElasticsearchTest(WebApplicationContext webApplicationContext,
 			OAuth2AuthorizationService oAuth2AuthorizationService, ElasticsearchTemplate elasticsearchTemplate) {
 		super(webApplicationContext, oAuth2AuthorizationService);
 		this.elasticsearchTemplate = elasticsearchTemplate;
 	}
 
 	@Test
-	public void searchProperties() {
+	void searchProperties() {
 		Map<String, String> stringStringMap = elasticsearchTemplate.getIndexNames(new String[] { "laokou_resource" });
 		stringStringMap.forEach((k, v) -> log.info("key：{}，value：{}", k, v));
 		Map<String, Object> map = elasticsearchTemplate.getIndexProperties("laokou_resource_202110");

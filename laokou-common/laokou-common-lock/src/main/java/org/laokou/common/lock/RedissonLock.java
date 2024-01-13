@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.lock.enums.Type;
+import org.laokou.common.i18n.common.LockTypeEnums;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.redisson.api.RLock;
 
@@ -38,13 +38,13 @@ public class RedissonLock extends AbstractLock<RLock> {
 
 	/**
 	 * 获取锁.
-	 * @param type 锁类型
+	 * @param lockTypeEnums 锁类型
 	 * @param key 键
 	 * @return RLock
 	 */
 	@Override
-	public RLock getLock(Type type, String key) {
-		return switch (type) {
+	public RLock getLock(LockTypeEnums lockTypeEnums, String key) {
+		return switch (lockTypeEnums) {
 			case LOCK -> redisUtil.getLock(key);
 			case FAIR -> redisUtil.getFairLock(key);
 			case READ -> redisUtil.getReadLock(key);

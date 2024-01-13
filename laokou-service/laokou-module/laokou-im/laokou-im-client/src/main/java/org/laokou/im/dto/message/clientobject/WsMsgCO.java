@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.im.dto.message.clientobject;
@@ -33,7 +33,7 @@ public class WsMsgCO extends ClientObject {
 	private static final long serialVersionUID = -4930262464816447000L;
 
 	/**
-	 * 接收者
+	 * 接收者.
 	 */
 	private Set<String> receiver;
 

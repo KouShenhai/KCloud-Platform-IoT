@@ -29,9 +29,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties.PREFIX;
-import static org.laokou.common.i18n.common.Constant.ENABLED;
-import static org.laokou.common.i18n.common.Constant.TRUE;
+import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_AUTHORIZATION_SERVER_PREFIX;
+import static org.laokou.common.i18n.common.StringConstants.TRUE;
+import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 import static org.laokou.common.security.config.auto.OAuth2ResourceServerAutoConfig.customizer;
 
 /**
@@ -39,7 +39,8 @@ import static org.laokou.common.security.config.auto.OAuth2ResourceServerAutoCon
  */
 @Data
 @Configuration
-@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = PREFIX, name = ENABLED)
+@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = OAUTH2_AUTHORIZATION_SERVER_PREFIX,
+		name = ENABLED)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class OAuth2ResourceServerConfig {
 

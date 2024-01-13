@@ -25,6 +25,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static org.laokou.common.i18n.common.MybatisConstants.USER_ID;
+
 /**
  * @author laokou
  */
@@ -32,15 +34,8 @@ import java.util.List;
 @Mapper
 public interface UserRoleMapper extends BatchMapper<UserRoleDO> {
 
-	/**
-	 * 根据用户ID查询IDS
-	 * @param userId 用户ID
-	 * @return List<Long>
-	 */
-	List<Long> getIdsByUserId(@Param("userId") Long userId);
+	List<Long> getRoleIdsByUserId(@Param(USER_ID) Long userId);
 
-	List<Long> getRoleIdsByUserId(@Param("userId") Long userId);
-
-	void deleteUserRoleByUserId(@Param("userId") Long userId);
+	void deleteUserRoleByUserId(@Param(USER_ID) Long userId);
 
 }

@@ -25,7 +25,6 @@ import org.laokou.admin.domain.menu.Menu;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.menu.MenuTreeGetQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
-import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
@@ -33,7 +32,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
 
 /**
  * @author laokou
@@ -48,7 +48,7 @@ public class MenuTreeGetQryExe {
 
 	@DS(TENANT)
 	public Result<MenuCO> execute(MenuTreeGetQry qry) {
-		List<Menu> menuList = menuGateway.list(new User(SuperAdmin.YES.ordinal(), UserUtil.getTenantId()), null);
+		List<Menu> menuList = menuGateway.list(new User(YES.ordinal(), UserUtil.getTenantId()), null);
 		List<MenuCO> menus = menuConvertor.convertClientObjectList(menuList);
 		return Result.of(TreeUtil.buildTreeNode(menus, MenuCO.class));
 	}

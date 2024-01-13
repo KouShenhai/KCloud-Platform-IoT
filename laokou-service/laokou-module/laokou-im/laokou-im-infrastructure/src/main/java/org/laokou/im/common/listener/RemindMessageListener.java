@@ -30,9 +30,8 @@ import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.laokou.common.i18n.common.Constant.TENANT_ID;
-import static org.laokou.common.i18n.common.Constant.TRACE_ID;
-import static org.laokou.common.rocketmq.constant.MqConstant.*;
+import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
+import static org.laokou.common.i18n.common.RocketMqConstants.*;
 
 /**
  * @author laokou
@@ -52,7 +51,7 @@ public class RemindMessageListener implements RocketMQListener<MessageExt> {
 		try {
 			String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
 			String traceId = messageExt.getProperty(TRACE_ID);
-			ThreadContext.put(TENANT_ID, traceId);
+			ThreadContext.put(TRACE_ID, traceId);
 			log.info("接收到提醒消息：{}", message);
 			messageUtil.send(message);
 		}

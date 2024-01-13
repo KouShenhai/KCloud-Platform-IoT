@@ -35,8 +35,8 @@ import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+import static org.laokou.common.i18n.common.ValCodes.SYSTEM_ID_REQUIRE;
+import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * @author laokou

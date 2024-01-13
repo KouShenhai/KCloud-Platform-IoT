@@ -24,7 +24,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import java.sql.Connection;
 
 /**
- * The druid datasource provider
+ * The druid datasource provider.
  *
  * @author zhangsen
  * @author ggndnn

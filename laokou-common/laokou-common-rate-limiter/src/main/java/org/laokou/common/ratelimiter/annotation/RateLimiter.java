@@ -16,13 +16,13 @@
  */
 package org.laokou.common.ratelimiter.annotation;
 
-import org.laokou.common.ratelimiter.enums.Type;
+import org.laokou.common.i18n.common.RateLimiterTypeEnums;
 import org.redisson.api.RateIntervalUnit;
 import org.redisson.api.RateType;
 
 import java.lang.annotation.*;
 
-import static org.laokou.common.ratelimiter.enums.Type.DEFAULT;
+import static org.laokou.common.i18n.common.RateLimiterTypeEnums.DEFAULT;
 import static org.redisson.api.RateIntervalUnit.SECONDS;
 import static org.redisson.api.RateType.OVERALL;
 
@@ -35,32 +35,32 @@ import static org.redisson.api.RateType.OVERALL;
 public @interface RateLimiter {
 
 	/**
-	 * 标识
+	 * 标识.
 	 */
 	String id();
 
 	/**
-	 * 令牌速率
+	 * 令牌速率.
 	 */
 	long rate() default 1;
 
 	/**
-	 * 过期时间
+	 * 过期时间.
 	 */
 	long interval() default 1;
 
 	/**
-	 * 类型
+	 * 类型.
 	 */
-	Type type() default DEFAULT;
+	RateLimiterTypeEnums type() default DEFAULT;
 
 	/**
-	 * 单位
+	 * 单位.
 	 */
 	RateIntervalUnit unit() default SECONDS;
 
 	/**
-	 * 样式 OVERALL -> 所有实例共享 PER_CLIENT -> 单个实例共享
+	 * 样式 OVERALL -> 所有实例共享 PER_CLIENT -> 单个实例共享.
 	 */
 	RateType mode() default OVERALL;
 

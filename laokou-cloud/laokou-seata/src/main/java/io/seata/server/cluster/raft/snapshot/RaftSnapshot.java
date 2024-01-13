@@ -15,12 +15,13 @@
  */
 package io.seata.server.cluster.raft.snapshot;
 
-import java.io.Serializable;
 import io.seata.common.util.StringUtils;
 import io.seata.config.ConfigurationFactory;
 import io.seata.core.compressor.CompressorType;
 import io.seata.core.protocol.Version;
 import io.seata.core.serializer.SerializerType;
+
+import java.io.Serializable;
 
 import static io.seata.common.ConfigurationKeys.SERVER_RAFT_COMPRESSOR;
 import static io.seata.common.DefaultValues.DEFAULT_RAFT_COMPRESSOR;
@@ -119,11 +120,11 @@ public class RaftSnapshot implements Serializable {
 	public enum SnapshotType {
 
 		/**
-		 * session snapshot
+		 * session snapshot.
 		 */
 		session("session"),
 		/**
-		 * leader metadata snapshot
+		 * leader metadata snapshot.
 		 */
 		leader_metadata("leader_metadata");
 

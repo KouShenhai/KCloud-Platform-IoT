@@ -23,6 +23,7 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.netty.config.Server;
 import org.laokou.im.dto.message.clientobject.WsMsgCO;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -40,6 +41,7 @@ public class MessageUtil {
 
 	private final ThreadPoolTaskExecutor taskExecutor;
 
+	@Async
 	public void send(String message) {
 		if (StringUtil.isEmpty(message)) {
 			return;

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 每个属性对应的类型及分词器
+ * 每个属性对应的类型及分词器.
  *
  * @author laokou
  */

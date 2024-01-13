@@ -32,9 +32,10 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import static org.laokou.common.i18n.common.Constant.RISK;
+import static org.laokou.common.i18n.common.StringConstants.RISK;
+import static org.laokou.common.i18n.common.SysConstants.REDISS_PROTOCOL_PREFIX;
+import static org.laokou.common.i18n.common.SysConstants.REDIS_PROTOCOL_PREFIX;
 
 /**
  * @author livk
@@ -45,10 +46,6 @@ import static org.laokou.common.i18n.common.Constant.RISK;
 @EnableConfigurationProperties(RedisProperties.class)
 public class RedissonConfig {
 
-	private static final String REDIS_PROTOCOL_PREFIX = "redis://";
-
-	private static final String REDISS_PROTOCOL_PREFIX = "rediss://";
-
 	@Bean
 	public RBloomFilter<String> bloomFilter(RedissonClient redisson) {
 		RBloomFilter<String> bloomFilter = redisson.getBloomFilter(RedisKeyUtil.getBloomFilterKey());
@@ -57,7 +54,7 @@ public class RedissonConfig {
 	}
 
 	/**
-	 * redisson配置
+	 * redisson配置.
 	 * @param properties redis配置文件
 	 * @return RedissonClient
 	 */

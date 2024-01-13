@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.core.utils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,14 +28,13 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.laokou.common.i18n.common.Constant.AT;
+import static org.laokou.common.i18n.common.StringConstants.AT;
 
 /**
  *
@@ -52,7 +52,7 @@ import static org.laokou.common.i18n.common.Constant.AT;
 public class IdGenerator {
 
 	/**
-	 * 雪花算法
+	 * 雪花算法.
 	 */
 	private static final Snowflake INSTANCE;
 
@@ -66,7 +66,7 @@ public class IdGenerator {
 	}
 
 	/**
-	 * 默认雪花ID
+	 * 默认雪花ID.
 	 * @return long
 	 */
 	public static long defaultSnowflakeId() {
@@ -74,7 +74,7 @@ public class IdGenerator {
 	}
 
 	/**
-	 * 雪花ID生成时间
+	 * 雪花ID生成时间.
 	 * @param snowflakeId 雪花ID
 	 * @return LocalDateTime
 	 */
@@ -87,77 +87,77 @@ public class IdGenerator {
 	static class Snowflake {
 
 		/**
-		 * 起始的时间戳
+		 * 起始的时间戳.
 		 */
 		private final static long START_TIMESTAMP = 1480166465631L;
 
 		/**
-		 * 序列标识占用的位数
+		 * 序列标识占用的位数.
 		 */
 		private final static long SEQUENCE_BIT = 13;
 
 		/**
-		 * 机器标识占用的位数
+		 * 机器标识占用的位数.
 		 */
 		private final static long MACHINE_BIT = 5;
 
 		/**
-		 * 数据标识占用的位数
+		 * 数据标识占用的位数.
 		 */
 		private final static long DATACENTER_BIT = 5;
 
 		/**
-		 * 机器标识最大值
+		 * 机器标识最大值.
 		 */
 		private final static long MAX_MACHINE = ~(-1L << MACHINE_BIT);
 
 		/**
-		 * 数据标识最大值
+		 * 数据标识最大值.
 		 */
 		private final static long MAX_DATACENTER = ~(-1L << DATACENTER_BIT);
 
 		/**
-		 * 序列标识最大值
+		 * 序列标识最大值.
 		 */
 		private final static long MAX_SEQUENCE = ~(-1L << SEQUENCE_BIT);
 
 		/**
-		 * 机器标识向左移
+		 * 机器标识向左移.
 		 */
 		private final static long MACHINE_LEFT = SEQUENCE_BIT;
 
 		/**
-		 * 数据标识向左移
+		 * 数据标识向左移.
 		 */
 		private final static long DATACENTER_LEFT = SEQUENCE_BIT + MACHINE_BIT;
 
 		/**
-		 * 时间戳向左移
+		 * 时间戳向左移.
 		 */
 		private final static long TIMESTAMP_LEFT = SEQUENCE_BIT + MACHINE_BIT + DATACENTER_BIT;
 
 		/**
-		 * 机器标识ID
+		 * 机器标识ID.
 		 */
 		private final long MACHINE_ID;
 
 		/**
-		 * 数据标识ID
+		 * 数据标识ID.
 		 */
 		private final long DATACENTER_ID;
 
 		/**
-		 * IP地址
+		 * IP地址.
 		 */
 		private InetAddress inetAddress;
 
 		/**
-		 * 并发控制
+		 * 并发控制.
 		 */
 		private long sequence = 0L;
 
 		/**
-		 * 上一次生产ID时间戳
+		 * 上一次生产ID时间戳.
 		 */
 		private long lastTimeStamp = -1L;
 
@@ -174,11 +174,11 @@ public class IdGenerator {
 		}
 
 		/**
-		 * 根据指定的数据中心ID和机器标志ID生成指定的序列号
+		 * 根据指定的数据中心ID和机器标志ID生成指定的序列号.
 		 * @param dataCenterId 数据中心ID
 		 * @param machineId 机器标志ID
 		 */
-		public Snowflake(final long dataCenterId, final long machineId) {
+		Snowflake(final long dataCenterId, final long machineId) {
 			Assert.isTrue(machineId <= MAX_MACHINE && machineId >= 0,
 					String.format("MachineId can't be greater than %s or less than 0", MAX_MACHINE));
 			Assert.isTrue(dataCenterId <= MAX_DATACENTER && dataCenterId >= 0,
@@ -187,14 +187,14 @@ public class IdGenerator {
 			this.DATACENTER_ID = dataCenterId;
 		}
 
-		public Snowflake(InetAddress inetAddress) {
+		Snowflake(InetAddress inetAddress) {
 			this.inetAddress = inetAddress;
 			DATACENTER_ID = getDatacenterId();
 			MACHINE_ID = getMaxMachineId(DATACENTER_ID);
 		}
 
 		/**
-		 * 数据标识ID
+		 * 数据标识ID.
 		 */
 		private long getDatacenterId() {
 			long id = 0L;
@@ -222,7 +222,7 @@ public class IdGenerator {
 		}
 
 		/**
-		 * 机器标识ID
+		 * 机器标识ID.
 		 */
 		protected long getMaxMachineId(long datacenterId) {
 			StringBuilder mpid = new StringBuilder();
@@ -241,7 +241,7 @@ public class IdGenerator {
 		}
 
 		/**
-		 * 生产雪花ID
+		 * 生产雪花ID.
 		 */
 		public synchronized long nextId() {
 			long currTimeStamp = getNewTimeStamp();
@@ -293,7 +293,7 @@ public class IdGenerator {
 	}
 
 	/**
-	 * 高并发场景下System.currentTimeMillis()的性能问题的优化
+	 * 高并发场景下System.currentTimeMillis()的性能问题的优化.
 	 *
 	 * <p>
 	 * System.currentTimeMillis()的调用比new一个普通对象要耗时的多（具体耗时高出多少我还没测试过，有人说是100倍左右）
@@ -320,7 +320,7 @@ public class IdGenerator {
 	 * @author hubin
 	 * @since 2016-08-01
 	 */
-	public static class SystemClock {
+	public final static class SystemClock {
 
 		private final long period;
 

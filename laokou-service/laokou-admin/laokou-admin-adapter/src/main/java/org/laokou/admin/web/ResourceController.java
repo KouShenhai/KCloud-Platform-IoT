@@ -91,7 +91,7 @@ public class ResourceController {
 		return resourceServiceI.list(qry);
 	}
 
-	@GetMapping(value = "{id}")
+	@GetMapping("{id}")
 	@Operation(summary = "资源管理", description = "查看资源")
 	@TraceLog
 	@PreAuthorize("hasAuthority('resource:detail')")
@@ -99,7 +99,7 @@ public class ResourceController {
 		return resourceServiceI.getById(new ResourceGetQry(id));
 	}
 
-	@GetMapping(value = "{id}/download")
+	@GetMapping("{id}/download")
 	@Operation(summary = "资源管理", description = "下载资源")
 	@PreAuthorize("hasAuthority('resource:download')")
 	public void download(@PathVariable("id") Long id, HttpServletResponse response) {
@@ -126,7 +126,7 @@ public class ResourceController {
 		return resourceServiceI.update(cmd);
 	}
 
-	@DeleteMapping(value = "{id}")
+	@DeleteMapping("{id}")
 	@TraceLog
 	@Operation(summary = "资源管理", description = "删除资源")
 	@OperateLog(module = "资源管理", operation = "删除资源")
@@ -135,7 +135,7 @@ public class ResourceController {
 		return resourceServiceI.deleteById(new ResourceDeleteCmd(id));
 	}
 
-	@GetMapping(value = "{instanceId}/diagram")
+	@GetMapping("{instanceId}/diagram")
 	@TraceLog
 	@Operation(summary = "资源管理", description = "查看流程")
 	@PreAuthorize("hasAuthority('resource:diagram')")
@@ -144,7 +144,7 @@ public class ResourceController {
 	}
 
 	@TraceLog
-	@PostMapping(value = "task-list")
+	@PostMapping("task-list")
 	@Operation(summary = "资源管理", description = "查询任务列表")
 	@PreAuthorize("hasAuthority('resource:task-list')")
 	public Result<Datas<TaskCO>> taskList(@RequestBody ResourceTaskListQry qry) {
@@ -153,7 +153,7 @@ public class ResourceController {
 
 	@Idempotent
 	@TraceLog
-	@PostMapping(value = "audit-task")
+	@PostMapping("audit-task")
 	@Operation(summary = "资源管理", description = "审批任务")
 	@OperateLog(module = "资源管理", operation = "审批任务")
 	@PreAuthorize("hasAuthority('resource:audit-task')")
@@ -162,7 +162,7 @@ public class ResourceController {
 	}
 
 	@TraceLog
-	@GetMapping(value = "{id}/detail-task")
+	@GetMapping("{id}/detail-task")
 	@Operation(summary = "资源管理", description = "查看任务")
 	public Result<ResourceCO> detailTask(@PathVariable("id") Long id) {
 		return resourceServiceI.detailTask(new ResourceDetailTaskGetQry(id));
@@ -170,7 +170,7 @@ public class ResourceController {
 
 	@Idempotent
 	@TraceLog
-	@PostMapping(value = "resolve-task")
+	@PostMapping("resolve-task")
 	@Operation(summary = "资源管理", description = "处理任务")
 	@OperateLog(module = "资源管理", operation = "处理任务")
 	@PreAuthorize("hasAuthority('resource:resolve-task')")
@@ -180,7 +180,7 @@ public class ResourceController {
 
 	@Idempotent
 	@TraceLog
-	@PostMapping(value = "transfer-task")
+	@PostMapping("transfer-task")
 	@Operation(summary = "资源管理", description = "转办任务")
 	@OperateLog(module = "资源管理", operation = "转办任务")
 	@PreAuthorize("hasAuthority('resource:transfer-task')")
@@ -190,7 +190,7 @@ public class ResourceController {
 
 	@Idempotent
 	@TraceLog
-	@PostMapping(value = "delegate-task")
+	@PostMapping("delegate-task")
 	@Operation(summary = "资源管理", description = "委派任务")
 	@OperateLog(module = "资源管理", operation = "委派任务")
 	@PreAuthorize("hasAuthority('resource:delegate-task')")

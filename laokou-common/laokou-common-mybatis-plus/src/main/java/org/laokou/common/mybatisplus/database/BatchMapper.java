@@ -34,8 +34,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Objects;
-
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
@@ -43,12 +41,15 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 
+	/**
+	 * slf4j日志配置.
+	 */
 	Logger log = LoggerFactory.getLogger(BatchMapper.class);
 
 	int save(T entity);
 
 	/**
-	 * 批量插入
+	 * 批量插入.
 	 * @param entityList 数据集
 	 * @return int
 	 */
@@ -59,7 +60,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	int deleteByIdWithFill(T entity);
 
 	/**
-	 * 获取版本号
+	 * 获取版本号.
 	 * @param id ID
 	 * @param clazz 类型
 	 * @return int
@@ -82,7 +83,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	void execute(@Param("sql") String sql);
 
 	/**
-	 * 新增动态分表
+	 * 新增动态分表.
 	 */
 	default void insertDynamicTable(T t, String sql, String suffix) {
 		try {

@@ -22,11 +22,15 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.CaptchasServiceI;
 import org.laokou.auth.dto.captcha.CaptchaGetQry;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
+import org.redisson.api.RateIntervalUnit;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.laokou.common.i18n.common.RateLimiterTypeEnums.IP;
 
 /**
  * @author laokou
@@ -41,6 +45,7 @@ public class CaptchasController {
 
 	@TraceLog
 	@GetMapping("{uuid}")
+	@RateLimiter(id = "AUTH_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
 	@Operation(summary = "验证码", description = "获取验证码")
 	public Result<String> get(@PathVariable("uuid") String uuid) {
 		return captchasServiceI.get(new CaptchaGetQry(uuid));

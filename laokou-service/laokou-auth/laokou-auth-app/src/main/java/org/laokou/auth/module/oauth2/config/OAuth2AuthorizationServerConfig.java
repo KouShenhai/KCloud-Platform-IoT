@@ -36,14 +36,12 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
-import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
@@ -67,22 +65,25 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.laokou.auth.common.Constant.LOGIN_PATTERN;
-import static org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties.PREFIX;
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_AUTHORIZATION_SERVER_PREFIX;
+import static org.laokou.common.i18n.common.StringConstants.TRUE;
+import static org.laokou.common.i18n.common.SysConstants.ALGORITHM_RSA;
+import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 
 /**
- * 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}
+ * 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}.
  *
  * @author laokou
  */
 @Configuration
-@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = PREFIX, name = ENABLED)
+@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = OAUTH2_AUTHORIZATION_SERVER_PREFIX,
+		name = ENABLED)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class OAuth2AuthorizationServerConfig {
 
 	// @formatter:off
 	/**
-	 * OAuth2AuthorizationServer核心配置
+	 * OAuth2AuthorizationServer核心配置.
 	 * @param http http
 	 * @param passwordAuthenticationProvider 密码认证Provider
 	 * @param mailAuthenticationProvider 邮箱认证Provider
@@ -131,14 +132,13 @@ class OAuth2AuthorizationServerConfig {
 			.oidc(Customizer.withDefaults())
 			.authorizationService(authorizationService)
 			.authorizationServerSettings(authorizationServerSettings);
-		http.addFilterBefore(new OAuth2AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
-				.exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(LOGIN_PATTERN)));
-		return http.build();
+		return http.addFilterBefore(new OAuth2AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+				.exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(LOGIN_PATTERN))).build();
 	}
 	// @formatter:on
 
 	/**
-	 * 注册信息
+	 * 注册信息.
 	 * @param propertiesMapper 配置
 	 * @param jdbcTemplate JDBC模板
 	 * @return RegisteredClientRepository
@@ -153,7 +153,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 配置
+	 * 配置.
 	 * @param jwkSource 加密源
 	 * @return JwtEncoder
 	 */
@@ -175,9 +175,9 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 配置
+	 * 配置.
 	 * @param jwtEncoder 加密编码
-	 * @return OAuth2TokenGenerator<OAuth2Token>
+	 * @return Token令牌生成器
 	 */
 	@Bean
 	OAuth2TokenGenerator<OAuth2Token> tokenGenerator(JwtEncoder jwtEncoder) {
@@ -187,7 +187,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 配置
+	 * 配置.
 	 * @return AuthorizationServerSettings
 	 */
 	@Bean
@@ -198,29 +198,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 密码编码
-	 * @return PasswordEncoder
-	 */
-	@Bean
-	@ConditionalOnMissingBean(PasswordEncoder.class)
-	PasswordEncoder passwordEncoder() {
-		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-	}
-
-	/**
-	 * @param jdbcTemplate JDBC模板
-	 * @param registeredClientRepository 注册信息
-	 * @return OAuth2AuthorizationService
-	 */
-	@Bean
-	@ConditionalOnMissingBean(OAuth2AuthorizationService.class)
-	OAuth2AuthorizationService auth2AuthorizationService(JdbcTemplate jdbcTemplate,
-			RegisteredClientRepository registeredClientRepository) {
-		return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
-	}
-
-	/**
-	 * 配置
+	 * 配置.
 	 * @param passwordEncoder 密码编码
 	 * @param usersServiceImpl 用户认证
 	 * @return AuthenticationProvider
@@ -234,7 +212,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 配置
+	 * 配置.
 	 * @param jdbcTemplate JDBC模板
 	 * @param registeredClientRepository 注册信息
 	 * @return OAuth2AuthorizationConsentService

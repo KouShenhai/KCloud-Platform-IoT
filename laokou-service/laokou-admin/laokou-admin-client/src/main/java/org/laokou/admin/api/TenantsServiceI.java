@@ -30,9 +30,9 @@ import java.util.List;
 public interface TenantsServiceI {
 
 	/**
-	 * 租户下拉列表
+	 * 租户下拉列表.
 	 * @param qry 参数
-	 * @return Result<List<OptionCO>>
+	 * @return 下拉列表
 	 */
 	Result<List<OptionCO>> optionList(TenantOptionListQry qry);
 
@@ -47,5 +47,7 @@ public interface TenantsServiceI {
 	Result<TenantCO> getById(TenantGetQry qry);
 
 	Result<Long> getIdByDomainName(TenantGetIDQry qry);
+
+	void downloadDatasource(TenantDownloadDatasourceCmd cmd);
 
 }

@@ -19,7 +19,7 @@ package org.laokou.admin.command.logout;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.logout.LogoutCmd;
-import org.laokou.auth.domain.user.User;
+import org.laokou.common.security.domain.User;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;

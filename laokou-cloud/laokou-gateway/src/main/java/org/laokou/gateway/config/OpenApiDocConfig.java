@@ -23,14 +23,15 @@ import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.Constant.HTTPS_SCHEME;
+import static org.laokou.common.i18n.common.NetworkConstants.HTTPS_SCHEME;
 
 /**
- * API文档配置
+ * API文档配置.
  *
  * @author laokou
  */
@@ -38,7 +39,7 @@ import static org.laokou.common.i18n.common.Constant.HTTPS_SCHEME;
 public class OpenApiDocConfig {
 
 	@Bean
-	@Lazy(value = false)
+	@Lazy(false)
 	@SneakyThrows
 	public List<GroupedOpenApi> openApis(RouteDefinitionLocator locator, ServerProperties serverProperties) {
 		List<GroupedOpenApi> groups = new ArrayList<>();
@@ -48,7 +49,7 @@ public class OpenApiDocConfig {
 						String.format("HTTP不允许开启SSL，请检查URL为%s的路由", routeDefinition.getUri().toString()));
 			}
 			return routeDefinition.getId().matches("laokou-.*");
-		}).subscribe(routeDefinition -> {
+		}).subscribeOn(Schedulers.boundedElastic()).subscribe(routeDefinition -> {
 			String name = routeDefinition.getId().substring(7);
 			GroupedOpenApi.builder().pathsToMatch("/".concat(name).concat("/**")).group(name).build();
 		});

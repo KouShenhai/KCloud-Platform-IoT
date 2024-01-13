@@ -18,7 +18,7 @@ package io.seata.server.session;
 import io.seata.core.exception.TransactionException;
 
 /**
- * The Functional Interface Global session handler
+ * The Functional Interface Global session handler.
  *
  * @author wang.liang
  * @since 1.5.0

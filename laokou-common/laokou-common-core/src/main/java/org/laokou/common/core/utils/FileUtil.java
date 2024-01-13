@@ -17,7 +17,6 @@
 package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
-import org.laokou.common.i18n.common.Constant;
 
 import java.io.File;
 import java.util.Arrays;
@@ -25,7 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.COMMA;
+import static org.laokou.common.i18n.common.StringConstants.COMMA;
+import static org.laokou.common.i18n.common.StringConstants.DOT;
 
 /**
  * @author laokou
@@ -33,7 +33,7 @@ import static org.laokou.common.i18n.common.Constant.COMMA;
 public class FileUtil {
 
 	/**
-	 * 定义允许上传的文件扩展名
+	 * 定义允许上传的文件扩展名.
 	 */
 	private static final Map<String, String> EXT_MAP = new HashMap<>(3);
 
@@ -54,7 +54,7 @@ public class FileUtil {
 	}
 
 	@SneakyThrows
-	private static File createFile(String directory, String fileName) {
+	public static File createFile(String directory, String fileName) {
 		File directoryFile = new File(directory);
 		if (!directoryFile.exists()) {
 			directoryFile.mkdirs();
@@ -67,10 +67,10 @@ public class FileUtil {
 	}
 
 	/**
-	 * 获取文件后缀
+	 * 获取文件后缀.
 	 */
 	public static String getFileExt(String fileName) {
-		return fileName.substring(fileName.lastIndexOf(Constant.DOT));
+		return fileName.substring(fileName.lastIndexOf(DOT));
 	}
 
 }

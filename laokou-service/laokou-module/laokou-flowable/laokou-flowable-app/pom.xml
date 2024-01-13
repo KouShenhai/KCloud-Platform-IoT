@@ -15,6 +15,10 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-flowable-infrastructure</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-security</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

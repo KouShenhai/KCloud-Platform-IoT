@@ -21,7 +21,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 属性、类型、分词器
+ * 属性、类型、分词器.
  *
  * @author laokou
  */

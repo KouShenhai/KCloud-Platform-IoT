@@ -39,28 +39,17 @@ import java.io.LineNumberReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import static org.laokou.common.i18n.common.Constant.RISK;
-import static org.laokou.common.shardingsphere.utils.CryptoUtil.*;
+import static org.laokou.common.i18n.common.ShardingSphereConstants.*;
+import static org.laokou.common.i18n.common.StringConstants.RISK;
+import static org.laokou.common.i18n.common.SysConstants.*;
 
 /**
  * @author laokou
  */
 @Slf4j
 public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
-
-	private static final String SHARDING_SPHERE_JDBC = "jdbc:shardingsphere:";
-
-	private static final String NACOS_TYPE = "nacos:";
-
-	private static final String LOCATION = "bootstrap.yml";
-
-	private static final String FORMAT = "yaml";
-
-	private static final Pattern ENC_PATTERN = Pattern.compile("^ENC\\((.*)\\)$");
 
 	@Override
 	public boolean accept(String url) {
@@ -71,11 +60,11 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 	@Override
 	public byte[] getContent(String url) {
 		NacosConfigProperties properties = PropertyUtil.getProperties(NacosConfigProperties.PREFIX,
-				NacosConfigProperties.class, LOCATION, FORMAT);
+				NacosConfigProperties.class, YAML_LOCATION, YAML_FORMAT);
 		String group = properties.getGroup();
 		NacosConfigManager nacosConfigManager = new NacosConfigManager(properties);
 		ConfigService configService = nacosConfigManager.getConfigService();
-		String configPath = url.substring(SHARDING_SPHERE_JDBC.length());
+		String configPath = url.substring(JDBC_TYPE.length());
 		String dataId = configPath.substring(NACOS_TYPE.length());
 		Preconditions.checkArgument(!dataId.isEmpty(), "Nacos dataId is required in ShardingSphere driver URL.");
 		String configInfo = configService.getConfig(dataId, group, 5000);
@@ -90,13 +79,13 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 		List<String> strList = list.stream().filter(i -> i.startsWith(PUBLIC_KEY)).toList();
 		String publicKey = "";
 		if (CollectionUtil.isNotEmpty(strList)) {
-			publicKey = strList.get(0).substring(11).trim();
+			publicKey = strList.getFirst().substring(11).trim();
 		}
 		StringBuilder stringBuilder = new StringBuilder();
 		String finalPublicKey = publicKey;
 		list.forEach(item -> {
 			if (!item.startsWith(PUBLIC_KEY)) {
-				if (item.contains(PREFIX) && item.contains(SUFFIX)) {
+				if (item.contains(CRYPTO_PREFIX) && item.contains(CRYPTO_SUFFIX)) {
 					int index = item.indexOf(RISK);
 					String key = item.substring(0, index + 2);
 					String val = item.substring(index + 2).trim();
@@ -126,7 +115,7 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 	}
 
 	/**
-	 * 字符串解密
+	 * 字符串解密.
 	 */
 	private String decrypt(String publicKey, String cipherText) {
 		if (StringUtils.hasText(cipherText)) {

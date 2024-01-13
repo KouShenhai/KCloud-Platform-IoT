@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 
 /**
- * 消息转换器配置
+ * 消息转换器配置.
  *
  * @author laokou
  */

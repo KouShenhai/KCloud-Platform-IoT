@@ -27,6 +27,7 @@ import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.image.ProcessDiagramGenerator;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.laokou.flowable.config.ProcessDiagramGeneratorConfig;
 import org.laokou.flowable.dto.task.TaskDiagramGetQry;
 import org.springframework.stereotype.Component;
@@ -73,11 +74,13 @@ public class TaskDiagramGetQryExe {
 		String processDefinitionId;
 		// 获取当前的流程实例
 		final ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+			.processInstanceId(UserUtil.getTenantId().toString())
 			.processInstanceId(processInstanceId)
 			.singleResult();
 		// 如果流程已结束，则得到结束节点
 		if (null == processInstance) {
 			final HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery()
+				.processInstanceTenantId(UserUtil.getTenantId().toString())
 				.processInstanceId(processInstanceId)
 				.singleResult();
 			processDefinitionId = hpi.getProcessDefinitionId();
@@ -86,12 +89,14 @@ public class TaskDiagramGetQryExe {
 			// 没有结束，获取当前活动节点
 			// 根据流程实例id获取当前处于ActivityId集合
 			final ProcessInstance pi = runtimeService.createProcessInstanceQuery()
+				.processInstanceTenantId(UserUtil.getTenantId().toString())
 				.processInstanceId(processInstanceId)
 				.singleResult();
 			processDefinitionId = pi.getProcessDefinitionId();
 		}
 		// 获取活动节点
 		final List<HistoricActivityInstance> highLightedFlowList = historyService.createHistoricActivityInstanceQuery()
+			.activityTenantId(UserUtil.getTenantId().toString())
 			.processInstanceId(processInstanceId)
 			.orderByHistoricActivityInstanceStartTime()
 			.asc()

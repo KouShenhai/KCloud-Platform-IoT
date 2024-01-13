@@ -37,10 +37,9 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.Constant.DEFAULT;
-import static org.laokou.common.i18n.common.Constant.STAR;
+import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 import static org.laokou.common.redis.utils.RedisUtil.NOT_EXPIRE;
 
 /**
@@ -97,14 +96,10 @@ public class IpGatewayImpl implements IpGateway {
 		if (CollectionUtil.isEmpty(list)) {
 			return false;
 		}
-		Set<String> keys = redisUtil.keys(RedisKeyUtil.getIpCacheKey(label, STAR));
-		if (CollectionUtil.isNotEmpty(keys)) {
-			redisUtil.delete(keys.toArray(String[]::new));
-		}
-		list.forEach(item -> {
-			String ipCacheKey = RedisKeyUtil.getIpCacheKey(label, item.getValue());
-			redisUtil.set(ipCacheKey, DEFAULT, NOT_EXPIRE);
-		});
+		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(label);
+		redisUtil.hDel(ipCacheHashKey);
+		redisUtil.hSet(ipCacheHashKey, list.stream().collect(Collectors.toMap(IpDO::getValue, val -> DEFAULT)),
+				NOT_EXPIRE);
 		return true;
 	}
 

@@ -31,7 +31,6 @@ import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.laokou.admin.domain.resource.Resource;
-import org.laokou.admin.domain.resource.Status;
 import org.laokou.admin.dto.resource.TaskStartCmd;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
@@ -61,8 +60,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.Constant.*;
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_RESOURCE;
+import static org.laokou.common.i18n.common.AuditEnums.PENDING_APPROVAL;
+import static org.laokou.common.i18n.common.IndexConstants.RESOURCE;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_RESOURCE;
+import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
+import static org.laokou.common.i18n.common.StringConstants.UNDER;
 
 /**
  * @author laokou
@@ -168,7 +170,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		log.info("开始任务分布式事务 XID：{}", RootContext.getXID());
 		insertResourceAudit(resource);
 		StartCO co = startTask(resource);
-		int status = Status.PENDING_APPROVAL;
+		int status = PENDING_APPROVAL.getValue();
 		updateResourceStatus(resource, status, version, co.getInstanceId());
 		publishMessage(resource, co.getInstanceId());
 		return true;
@@ -207,7 +209,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private void createIndex(List<String> list) {
 		list.forEach(ym -> {
 			try {
-				elasticsearchTemplate.createIndex(index(ym), RESOURCE_INDEX, ResourceIndex.class);
+				elasticsearchTemplate.createIndex(index(ym), RESOURCE, ResourceIndex.class);
 			}
 			catch (Exception e) {
 				log.error("索引创建失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
@@ -259,7 +261,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	private String index(String ym) {
-		return RESOURCE_INDEX + UNDER + ym;
+		return RESOURCE + UNDER + ym;
 	}
 
 	private void syncBefore() {

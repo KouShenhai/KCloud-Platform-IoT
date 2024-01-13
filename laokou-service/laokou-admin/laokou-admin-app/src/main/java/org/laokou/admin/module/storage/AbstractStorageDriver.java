@@ -54,13 +54,13 @@ public abstract class AbstractStorageDriver<O> implements StorageDriver<O> {
 	}
 
 	/**
-	 * 获取连接对象
+	 * 获取连接对象.
 	 * @return O
 	 */
 	protected abstract O getObj();
 
 	/**
-	 * 文件后缀
+	 * 文件后缀.
 	 */
 	public String getFileExt(String fileName) {
 		return FileUtil.getFileExt(fileName);

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,7 +27,6 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 /**
  * @author laokou
@@ -39,14 +39,17 @@ public class PageQuery extends Query {
 	@Serial
 	private static final long serialVersionUID = 6412915892334241813L;
 
+	/**
+	 * 分页参数.
+	 */
 	public static final String PAGE_QUERY = "pageQuery";
 
-	@Min(value = 1)
+	@Min(1)
 	@Schema(name = "pageNum", description = "页码")
 	private Integer pageNum = 1;
 
 	@Schema(name = "pageSize", description = "条数")
-	@Min(value = 1)
+	@Min(1)
 	private Integer pageSize = 10;
 
 	@Schema(name = "pageIndex", description = "索引")
@@ -85,8 +88,8 @@ public class PageQuery extends Query {
 			throw new SystemException("结束时间不为空");
 		}
 		int twoYearOfDays = 730;
-		LocalDateTime startDate = DateUtil.parseTime(startTime, DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
-		LocalDateTime endDate = DateUtil.parseTime(endTime, DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
+		LocalDateTime startDate = DateUtil.parseTime(startTime, DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
+		LocalDateTime endDate = DateUtil.parseTime(endTime, DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
 		LocalDateTime minDate = LocalDateTime.of(2021, 12, 31, 23, 59, 59);
 		LocalDateTime maxDate = LocalDateTime.of(2100, 1, 1, 0, 0, 0);
 		if (DateUtil.isAfter(startDate, endDate)) {

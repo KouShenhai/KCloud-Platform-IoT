@@ -47,7 +47,7 @@ public class IpsController {
 
 	private final IpsServiceI ipsServiceI;
 
-	@PostMapping(value = "black/list")
+	@PostMapping("black/list")
 	@TraceLog
 	@Operation(summary = "黑名单", description = "查询IP列表")
 	@PreAuthorize("hasAuthority('ips:black-list')")
@@ -66,7 +66,7 @@ public class IpsController {
 	}
 
 	@TraceLog
-	@DeleteMapping(value = "black/{id}")
+	@DeleteMapping("black/{id}")
 	@Operation(summary = "黑名单", description = "删除IP")
 	@OperateLog(module = "黑名单", operation = "删除IP")
 	@PreAuthorize("hasAuthority('ips:delete-black')")
@@ -74,7 +74,7 @@ public class IpsController {
 		return ipsServiceI.deleteById(new IpDeleteCmd(id));
 	}
 
-	@PostMapping(value = "white/list")
+	@PostMapping("white/list")
 	@TraceLog
 	@Operation(summary = "白名单", description = "查询IP列表")
 	@PreAuthorize("hasAuthority('ips:white-list')")
@@ -93,7 +93,7 @@ public class IpsController {
 	}
 
 	@TraceLog
-	@DeleteMapping(value = "white/{id}")
+	@DeleteMapping("white/{id}")
 	@Operation(summary = "白名单", description = "删除IP")
 	@OperateLog(module = "白名单", operation = "删除IP")
 	@PreAuthorize("hasAuthority('ips:delete-white')")
@@ -102,7 +102,7 @@ public class IpsController {
 	}
 
 	@TraceLog
-	@GetMapping(value = "white/refresh/{label}")
+	@GetMapping("white/refresh/{label}")
 	@Operation(summary = "白名单", description = "刷新IP")
 	@OperateLog(module = "白名单", operation = "刷新IP")
 	@PreAuthorize("hasAuthority('ips:refresh-white')")
@@ -112,7 +112,7 @@ public class IpsController {
 	}
 
 	@TraceLog
-	@GetMapping(value = "black/refresh/{label}")
+	@GetMapping("black/refresh/{label}")
 	@Operation(summary = "黑名单", description = "刷新IP")
 	@OperateLog(module = "黑名单", operation = "刷新IP")
 	@PreAuthorize("hasAuthority('ips:refresh-black')")

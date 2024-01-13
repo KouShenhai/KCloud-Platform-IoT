@@ -18,7 +18,7 @@
 package org.laokou.auth.domain.gateway;
 
 import org.laokou.auth.domain.auth.Auth;
-import org.laokou.auth.domain.user.User;
+import org.laokou.common.security.domain.User;
 
 /**
  * @author laokou
@@ -26,7 +26,7 @@ import org.laokou.auth.domain.user.User;
 public interface UserGateway {
 
 	/**
-	 * 查询用户
+	 * 查询用户.
 	 * @param auth 认证
 	 * @return User
 	 */

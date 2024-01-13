@@ -24,12 +24,10 @@ import io.micrometer.common.lang.NonNullApi;
 import jakarta.validation.constraints.NotNull;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.Assert;
-
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
-
-import static org.laokou.common.i18n.common.Constant.EMPTY;
 
 /**
  * @author Liukefu
@@ -48,7 +46,7 @@ public final class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEng
 		customFiles.forEach((customFile) -> {
 			String s = customFile.getFileName();
 			List<String> split = List.of(s.split("\\."));
-			String path = rootPath + File.separator + split.get(0).toLowerCase();
+			String path = rootPath + File.separator + split.getFirst().toLowerCase();
 			String fileName = String.format(path + File.separator + entityNameTmp + "%s", customFile.getFileName());
 			this.outputFile(new File(fileName), objectMap, customFile.getTemplatePath(), customFile.isFileOverride());
 		});

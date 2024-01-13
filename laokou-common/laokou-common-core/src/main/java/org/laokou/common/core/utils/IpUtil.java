@@ -18,17 +18,15 @@ package org.laokou.common.core.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.Constant;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
-import java.util.Objects;
-
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.NetworkConstants.*;
+import static org.laokou.common.i18n.common.StringConstants.COMMA;
 
 /**
- * IP工具类
+ * IP工具类.
  *
  * @author laokou
  */
@@ -37,7 +35,7 @@ public class IpUtil {
 
 	public static String getIpAddr(HttpServletRequest request) {
 		if (ObjectUtil.isNull(request)) {
-			return IP_UNKNOWN;
+			return UNKNOWN_IP;
 		}
 		String ip = request.getHeader("x-forwarded-for");
 		if (conditionNull(ip)) {
@@ -55,19 +53,19 @@ public class IpUtil {
 		if (conditionNull(ip)) {
 			ip = request.getRemoteAddr();
 		}
-		return LOCAL_NETWORK_SEGMENT.equals(ip) ? LOCAL_IP : ip.split(Constant.COMMA)[0];
+		return LOCAL_IPV6.equals(ip) ? LOCAL_IPV4 : ip.split(COMMA)[0];
 	}
 
 	public static boolean internalIp(String ip) {
-		if (LOCAL_NETWORK_SEGMENT.equals(ip)) {
+		if (LOCAL_IPV6.equals(ip)) {
 			return true;
 		}
 		byte[] bytes = textToNumericFormatV4(ip);
-		return ObjectUtil.isNotNull(bytes) && (internalIp(bytes) || LOCAL_IP.equals(ip));
+		return ObjectUtil.isNotNull(bytes) && (internalIp(bytes) || LOCAL_IPV4.equals(ip));
 	}
 
 	private static boolean conditionNull(String ip) {
-		return StringUtil.isEmpty(ip) || IP_UNKNOWN.equalsIgnoreCase(ip);
+		return StringUtil.isEmpty(ip) || UNKNOWN_IP.equalsIgnoreCase(ip);
 	}
 
 	private static boolean internalIp(byte[] addr) {
@@ -91,7 +89,7 @@ public class IpUtil {
 	}
 
 	/**
-	 * 将IPv4地址转换成字节
+	 * 将IPv4地址转换成字节.
 	 * @param text IPv4地址
 	 * @return byte 字节
 	 */
@@ -103,7 +101,8 @@ public class IpUtil {
 		byte[] bytes = new byte[4];
 		String[] elements = text.split("\\.", -1);
 		try {
-			long l, j;
+			long l;
+			long j;
 			switch (elements.length) {
 				case 1:
 					l = Long.parseLong(elements[0]);

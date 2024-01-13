@@ -21,7 +21,7 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.laokou.report.api.ReportServiceI;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.Constant.VERSION;
+import static org.laokou.common.i18n.common.SysConstants.VERSION;
 
 /**
  * @author laokou

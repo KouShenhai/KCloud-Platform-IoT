@@ -27,7 +27,7 @@ import org.laokou.common.i18n.common.exception.FeignException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -41,17 +41,17 @@ public class TasksFeignClientFallback implements TasksFeignClient {
 
 	@Override
 	public Result<AuditCO> audit(TaskAuditCmd cmd) {
-		throw new FeignException("流程审批失败");
+		throw new FeignException("审批流程失败");
 	}
 
 	@Override
 	public Result<Boolean> resolve(TaskResolveCmd cmd) {
-		throw new FeignException("流程处理失败");
+		throw new FeignException("处理流程失败");
 	}
 
 	@Override
 	public Result<StartCO> start(TaskStartCmd cmd) {
-		throw new FeignException("流程启动失败");
+		throw new FeignException("启动流程失败");
 	}
 
 	@Override
@@ -61,12 +61,12 @@ public class TasksFeignClientFallback implements TasksFeignClient {
 
 	@Override
 	public Result<Boolean> transfer(TaskTransferCmd cmd) {
-		throw new FeignException("流程转办失败");
+		throw new FeignException("转办流程失败");
 	}
 
 	@Override
 	public Result<Boolean> delegate(TaskDelegateCmd cmd) {
-		throw new FeignException("流程委派失败");
+		throw new FeignException("委派流程失败");
 	}
 
 	@Override

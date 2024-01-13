@@ -18,7 +18,7 @@ package org.laokou.common.core.utils;
 
 import java.util.regex.Pattern;
 
-import static org.laokou.common.i18n.common.Constant.IPV4_REGEX;
+import static org.laokou.common.i18n.common.NetworkConstants.IPV4_REGEX;
 
 /**
  * @author laokou
@@ -34,9 +34,9 @@ public class RegexUtil {
 	private static final String NUMBER_REGEX = "^[0-9]*$";
 
 	/**
-	 * 邮箱验证
+	 * 邮箱验证.
 	 * @param mail 邮箱
-	 * @return boolean
+	 * @return 邮箱匹配结果
 	 */
 	public static boolean mailRegex(String mail) {
 		return Pattern.matches(MAIL_REGEX, mail);
@@ -47,27 +47,27 @@ public class RegexUtil {
 	}
 
 	/**
-	 * 数字验证
-	 * @param number
-	 * @return
+	 * 数字验证.
+	 * @param number 数字
+	 * @return 数字匹配结果
 	 */
 	public static boolean numberRegex(String number) {
 		return Pattern.matches(NUMBER_REGEX, number);
 	}
 
 	/**
-	 * 资源名验证
+	 * 资源名验证.
 	 * @param sourceName 自由名称
-	 * @return
+	 * @return 资源名匹配结果
 	 */
 	public static boolean sourceRegex(String sourceName) {
 		return Pattern.matches(SOURCE_REGEX, sourceName);
 	}
 
 	/**
-	 * 手机号验证
+	 * 手机号验证.
 	 * @param mobile 手机号
-	 * @return
+	 * @return 手机号匹配结果
 	 */
 	public static boolean mobileRegex(String mobile) {
 		return Pattern.matches(MOBILE_REGEX, mobile);

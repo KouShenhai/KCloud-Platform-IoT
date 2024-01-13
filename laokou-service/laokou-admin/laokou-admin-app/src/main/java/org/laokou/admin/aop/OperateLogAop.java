@@ -42,9 +42,15 @@ import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.NumberConstants.FAIL;
+import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
+import static org.laokou.common.i18n.common.StringConstants.*;
+import static org.laokou.common.i18n.common.SysConstants.EMPTY_JSON;
 
 /**
  * @author laokou
@@ -67,7 +73,7 @@ public class OperateLogAop {
 	}
 
 	/**
-	 * 处理完请求后执行
+	 * 处理完请求后执行.
 	 */
 	@AfterReturning(pointcut = "@annotation(org.laokou.admin.domain.annotation.OperateLog)")
 	public void doAfterReturning(JoinPoint joinPoint) {
@@ -125,7 +131,7 @@ public class OperateLogAop {
 				obj = params.getFirst();
 			}
 			if (ObjectUtil.isNull(obj)) {
-				event.setRequestParams(JacksonUtil.EMPTY_JSON);
+				event.setRequestParams(EMPTY_JSON);
 			}
 			else {
 				String str = JacksonUtil.toJsonStr(obj);

@@ -35,11 +35,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
-import static org.laokou.common.i18n.common.Constant.UNDER;
+import static org.laokou.common.i18n.common.StringConstants.UNDER;
 
 /**
  * @author laokou
@@ -77,7 +75,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 		Assert.isTrue(ObjectUtil.isNotNull(logDO), "logDO is null");
 		logDO.setCreator(event.getUserId());
 		logDO.setEditor(event.getUserId());
-		loginLogMapper.insertDynamicTable(logDO, TableTemplate.getLoginLogSqlScript(DateUtil.now()),
+		loginLogMapper.insertDynamicTable(logDO, TableTemplate.getCreateLoginLogTableSqlScript(DateUtil.now()),
 				UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
 	}
 

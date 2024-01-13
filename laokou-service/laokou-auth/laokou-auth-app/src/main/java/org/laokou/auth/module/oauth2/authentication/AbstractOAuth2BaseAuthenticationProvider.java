@@ -28,17 +28,18 @@ import org.laokou.auth.domain.auth.Auth;
 import org.laokou.auth.domain.gateway.*;
 import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.domain.source.Source;
-import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IpUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.common.jasypt.utils.AesUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.security.domain.User;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -66,15 +67,21 @@ import java.io.IOException;
 import java.security.Principal;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
-import static org.laokou.auth.common.Constant.TENANT_ID;
-import static org.laokou.common.i18n.common.BizCode.LOGIN_SUCCEEDED;
-import static org.laokou.common.i18n.common.Constant.*;
-import static org.laokou.common.i18n.common.ErrorCode.*;
-import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
+import static org.laokou.common.i18n.common.BizCodes.LOGIN_SUCCEEDED;
+import static org.laokou.common.i18n.common.ErrorCodes.*;
+import static org.laokou.common.i18n.common.NumberConstants.FAIL;
+import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
+import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.StatusCodes.FORBIDDEN;
+import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
+import static org.laokou.common.i18n.common.TenantConstants.TENANT_ID;
 
 /**
  * @author laokou
@@ -108,7 +115,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	private static final OAuth2TokenType ID_TOKEN_TOKEN_TYPE = new OAuth2TokenType(OidcParameterNames.ID_TOKEN);
 
 	/**
-	 * 认证
+	 * 认证.
 	 */
 	@SneakyThrows
 	public Authentication authenticate(Authentication authentication) {
@@ -117,25 +124,27 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	}
 
 	/**
-	 * @see OAuth2AuthorizationCodeAuthenticationProvider#supports(Class) 是否支持认证（provider）
+	 * 类型支持.
 	 * @param authentication 类型
-	 * @return boolean
+	 * @return 支持结果
+	 * @see OAuth2AuthorizationCodeAuthenticationProvider#supports(Class)
+	 * 是否支持认证（provider）.
 	 */
 	abstract public boolean supports(Class<?> authentication);
 
 	/**
-	 * 认证
+	 * 认证.
 	 */
 	abstract Authentication principal(HttpServletRequest request) throws IOException;
 
 	/**
-	 * 认证类型
+	 * 认证类型.
 	 * @return AuthorizationGrantType
 	 */
 	abstract AuthorizationGrantType getGrantType();
 
 	/**
-	 * 获取令牌
+	 * 获取令牌.
 	 * @param authentication authentication
 	 * @param principal principal
 	 * @return Authentication
@@ -230,7 +239,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	}
 
 	/**
-	 * 获取用户信息
+	 * 获取用户信息.
 	 * @param username 登录名
 	 * @param password 密码
 	 * @param request 请求参数
@@ -256,20 +265,29 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			// 初始化（多数据源切换）
 			String sourceName = getSourceName(tenantId);
 			// 加密
-			String encryptName = AesUtil.encrypt(username);
+			String encryptName;
+			boolean passwordFlag = false;
+			// 密码登录无需二次加密
+			if (PASSWORD.equals(type)) {
+				encryptName = username;
+				passwordFlag = true;
+			}
+			else {
+				encryptName = AesUtil.encrypt(username);
+			}
 			User user;
 			try {
 				// 多租户查询（多数据源）
-				user = userGateway.getUserByUsername(new Auth(encryptName, type));
+				user = userGateway.getUserByUsername(new Auth(encryptName, type, AesUtil.getKey()));
 			}
 			catch (BadSqlGrammarException e) {
-				log.error("表 boot_sys_user 不存在，错误信息", e);
+				log.error("表 boot_sys_user 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "表 boot_sys_user 不存在");
 			}
 			if (ObjectUtil.isNull(user)) {
 				throw authenticationException(ACCOUNT_PASSWORD_ERROR, new User(username, tenantId), type, ip);
 			}
-			if (PASSWORD.equals(type)) {
+			if (passwordFlag) {
 				// 验证密码
 				String clientPassword = user.getPassword();
 				if (!passwordEncoder.matches(password, clientPassword)) {
@@ -286,7 +304,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 				permissionsList = menuGateway.getPermissions(user);
 			}
 			catch (BadSqlGrammarException e) {
-				log.error("表 boot_sys_menu 不存在，错误信息", e);
+				log.error("表 boot_sys_menu 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "表 boot_sys_menu 不存在");
 			}
 			if (CollectionUtil.isEmpty(permissionsList)) {
@@ -298,7 +316,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 				deptPaths = deptGateway.getDeptPaths(user);
 			}
 			catch (BadSqlGrammarException e) {
-				log.error("表 boot_sys_dept 不存在，错误信息", e);
+				log.error("表 boot_sys_dept 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "表 boot_sys_dept 不存在");
 			}
 			user.setDeptPaths(deptPaths);
@@ -334,7 +352,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	private OAuth2AuthenticationException authenticationException(int code, User user, String type, String ip) {
 		String message = MessageUtil.getMessage(code);
-		log.error("登录失败，状态码：{}，错误信息：{}", code, message);
+		// log.error("登录失败，状态码：{}，错误信息：{}", code, message);
 		loginLogGateway.publish(new LoginLog(user.getId(), user.getUsername(), type, user.getTenantId(), FAIL, message,
 				ip, user.getDeptId(), user.getDeptPath()));
 		throw OAuth2ExceptionHandler.getException(code, message);
@@ -344,7 +362,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 默认数据源
 		String sourceName = MASTER;
 		try {
-			if (tenantId != DEFAULT_TENANT) {
+			if (tenantId != DEFAULT) {
 				// 租户数据源
 				Source source = sourceGateway.getSourceName(tenantId);
 				sourceName = source.getName();
@@ -384,7 +402,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			Class.forName(properties.getDriverClassName());
 		}
 		catch (Exception e) {
-			log.error("加载数据源驱动失败，错误信息", e);
+			log.error("加载数据源驱动失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "加载数据源驱动失败");
 		}
 		try {
@@ -394,7 +412,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 					properties.getPassword());
 		}
 		catch (Exception e) {
-			log.error("数据源连接超时，错误信息", e);
+			log.error("数据源连接超时，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "数据源连接超时");
 		}
 		finally {

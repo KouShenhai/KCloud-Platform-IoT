@@ -32,10 +32,10 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-import static org.laokou.common.i18n.common.Constant.TRUE;
+import static org.laokou.common.i18n.common.StringConstants.TRUE;
 
 /**
- * 跨域配置
+ * 跨域配置.
  *
  * @author laokou
  */

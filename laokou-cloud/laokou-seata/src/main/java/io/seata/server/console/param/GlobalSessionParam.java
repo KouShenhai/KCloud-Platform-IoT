@@ -15,12 +15,12 @@
  */
 package io.seata.server.console.param;
 
-import java.io.Serializable;
-
 import io.seata.console.param.BaseParam;
 
+import java.io.Serializable;
+
 /**
- * Global session param
+ * Global session param.
  *
  * @author zhongxiang.wang
  */
@@ -29,27 +29,27 @@ public class GlobalSessionParam extends BaseParam implements Serializable {
 	private static final long serialVersionUID = 115488252809011284L;
 
 	/**
-	 * the xid
+	 * the xid.
 	 */
 	private String xid;
 
 	/**
-	 * the application id
+	 * the application id.
 	 */
 	private String applicationId;
 
 	/**
-	 * the global session status
+	 * the global session status.
 	 */
 	private Integer status;
 
 	/**
-	 * the transaction name
+	 * the transaction name.
 	 */
 	private String transactionName;
 
 	/**
-	 * if with branch true: with branch session false: no branch session
+	 * if with branch true: with branch session false: no branch session.
 	 */
 	private boolean withBranch;
 

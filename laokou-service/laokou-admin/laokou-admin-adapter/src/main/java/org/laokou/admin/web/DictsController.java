@@ -25,7 +25,7 @@ import org.laokou.admin.dto.dict.*;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.enums.Type;
+import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.laokou.common.data.cache.config.CacheConstant.DICTS;
+import static org.laokou.common.i18n.common.CacheConstants.DICTS;
 
 /**
  * @author laokou
@@ -48,7 +48,7 @@ public class DictsController {
 
 	private final DictsServiceI dictsServiceI;
 
-	@PostMapping(value = "list")
+	@PostMapping("list")
 	@TraceLog
 	@Operation(summary = "字典管理", description = "查询字典列表")
 	@PreAuthorize("hasAuthority('dicts:list')")
@@ -64,7 +64,7 @@ public class DictsController {
 	}
 
 	@TraceLog
-	@GetMapping(value = "{id}")
+	@GetMapping("{id}")
 	@Operation(summary = "字典管理", description = "查看字典")
 	@DataCache(name = DICTS, key = "#id")
 	public Result<DictCO> getById(@PathVariable("id") Long id) {
@@ -86,17 +86,17 @@ public class DictsController {
 	@Operation(summary = "字典管理", description = "修改字典")
 	@OperateLog(module = "字典管理", operation = "修改字典")
 	@PreAuthorize("hasAuthority('dicts:update')")
-	@DataCache(name = DICTS, key = "#cmd.dictCO.id", type = Type.DEL)
+	@DataCache(name = DICTS, key = "#cmd.dictCO.id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> update(@RequestBody DictUpdateCmd cmd) {
 		return dictsServiceI.update(cmd);
 	}
 
 	@TraceLog
-	@DeleteMapping(value = "{id}")
+	@DeleteMapping("{id}")
 	@Operation(summary = "字典管理", description = "删除字典")
 	@OperateLog(module = "字典管理", operation = "删除字典")
 	@PreAuthorize("hasAuthority('dicts:delete')")
-	@DataCache(name = DICTS, key = "#id", type = Type.DEL)
+	@DataCache(name = DICTS, key = "#id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return dictsServiceI.deleteById(new DictDeleteCmd(id));
 	}

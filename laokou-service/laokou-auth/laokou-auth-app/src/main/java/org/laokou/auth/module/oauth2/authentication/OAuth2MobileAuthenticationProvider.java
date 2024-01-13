@@ -26,8 +26,6 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.sensitive.enums.Type;
-import org.laokou.common.sensitive.utils.SensitiveUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -37,12 +35,12 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
-import static org.laokou.common.i18n.common.Constant.MOBILE;
-import static org.laokou.common.i18n.common.ErrorCode.MOBILE_ERROR;
-import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.ValCode.OAUTH2_CAPTCHA_REQUIRE;
-import static org.laokou.common.i18n.common.ValCode.OAUTH2_MOBILE_REQUIRE;
+import static org.laokou.common.i18n.common.ErrorCodes.MOBILE_ERROR;
+import static org.laokou.common.i18n.common.OAuth2Constants.MOBILE;
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.ValCodes.OAUTH2_CAPTCHA_REQUIRE;
+import static org.laokou.common.i18n.common.ValCodes.OAUTH2_MOBILE_REQUIRE;
 
 /**
  * @author laokou
@@ -68,13 +66,13 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 	@Override
 	Authentication principal(HttpServletRequest request) {
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
-		log.info("验证码：{}", code);
+		// log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
 		}
 		String mobile = request.getParameter(MOBILE);
-		log.info("手机：{}", SensitiveUtil.format(Type.MOBILE, mobile));
+		// log.info("手机：{}", SensitiveUtil.format(Type.MOBILE, mobile));
 		if (StringUtil.isEmpty(mobile)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_MOBILE_REQUIRE));

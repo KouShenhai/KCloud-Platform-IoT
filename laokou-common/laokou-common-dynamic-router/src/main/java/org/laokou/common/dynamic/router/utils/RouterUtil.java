@@ -40,9 +40,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-import static org.laokou.common.i18n.common.Constant.SPRING_APPLICATION_NAME;
+import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 
 /**
  * @author laokou
@@ -89,15 +88,15 @@ public class RouterUtil {
 			String toPrettyFormat = GsonUtil.toPrettyFormat(routeDefinitions);
 			co.setContent(toPrettyFormat);
 			apiUtil.doConfigInfo(co, token);
-			log.info("服务路由已添加并发布");
+			// log.info("服务路由已添加并发布");
 		}
 		else {
-			log.info("服务路由已存在，无需添加");
+			log.error("服务路由已存在，无需添加");
 		}
 	}
 
 	private String getRouter(Map<String, Object> dataMap) throws IOException, TemplateException {
-		try (InputStream inputStream = ResourceUtil.getResource("init_router.json").getInputStream()) {
+		try (InputStream inputStream = ResourceUtil.getResource("scripts/init_router.json").getInputStream()) {
 			byte[] bytes = inputStream.readAllBytes();
 			String template = new String(bytes, StandardCharsets.UTF_8);
 			return TemplateUtil.getContent(template, dataMap);

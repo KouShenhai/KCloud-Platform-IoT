@@ -48,31 +48,31 @@ public class DefinitionsController {
 		return definitionsServiceI.insert(new DefinitionInsertCmd(file));
 	}
 
-	@PostMapping(value = "list")
+	@PostMapping("list")
 	@Operation(summary = "流程定义", description = "查询流程列表")
 	public Result<Datas<DefinitionCO>> list(@RequestBody DefinitionListQry qry) {
 		return definitionsServiceI.list(qry);
 	}
 
-	@GetMapping(value = "{definitionId}/diagram")
+	@GetMapping("{definitionId}/diagram")
 	@Operation(summary = "流程定义", description = "流程图")
 	public Result<String> diagram(@PathVariable("definitionId") String definitionId) {
 		return definitionsServiceI.diagram(new DefinitionDiagramGetQry(definitionId));
 	}
 
-	@DeleteMapping(value = "{deploymentId}")
+	@DeleteMapping("{deploymentId}")
 	@Operation(summary = "流程定义", description = "删除流程")
 	public Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId) {
 		return definitionsServiceI.delete(new DefinitionDeleteCmd(deploymentId));
 	}
 
-	@PutMapping(value = "{definitionId}/suspend")
+	@PutMapping("{definitionId}/suspend")
 	@Operation(summary = "流程定义", description = "挂起流程")
 	public Result<Boolean> suspend(@PathVariable("definitionId") String definitionId) {
 		return definitionsServiceI.suspend(new DefinitionSuspendCmd(definitionId));
 	}
 
-	@PutMapping(value = "{definitionId}/activate")
+	@PutMapping("{definitionId}/activate")
 	@Operation(summary = "流程定义", description = "激活流程")
 	public Result<Boolean> activate(@PathVariable("definitionId") String definitionId) {
 		return definitionsServiceI.activate(new DefinitionActivateCmd(definitionId));

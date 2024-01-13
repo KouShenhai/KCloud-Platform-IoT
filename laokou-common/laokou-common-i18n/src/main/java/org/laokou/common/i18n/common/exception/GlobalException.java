@@ -17,10 +17,11 @@
 package org.laokou.common.i18n.common.exception;
 
 import lombok.Data;
-import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 
 import java.io.Serial;
+
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 
 /**
  * @author laokou
@@ -31,23 +32,23 @@ public abstract class GlobalException extends RuntimeException {
 	@Serial
 	private static final long serialVersionUID = 4102669900127613541L;
 
-	private int code;
+	private final int code;
 
-	private String msg;
+	private final String msg;
 
-	public GlobalException(int code) {
+	protected GlobalException(int code) {
 		this.code = code;
 		this.msg = MessageUtil.getMessage(code);
 	}
 
-	public GlobalException(int code, String msg) {
+	protected GlobalException(int code, String msg) {
 		this.code = code;
 		this.msg = msg;
 	}
 
-	public GlobalException(String msg) {
+	protected GlobalException(String msg) {
 		super(msg);
-		this.code = StatusCode.CUSTOM_SERVER_ERROR;
+		this.code = CUSTOM_SERVER_ERROR;
 		this.msg = msg;
 	}
 

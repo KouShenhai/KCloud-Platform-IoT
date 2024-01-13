@@ -15,12 +15,12 @@
  */
 package io.seata.server.console.param;
 
-import java.io.Serializable;
-
 import io.seata.console.param.BaseParam;
 
+import java.io.Serializable;
+
 /**
- * Global lock param
+ * Global lock param.
  *
  * @author zhongxiang.wang
  */
@@ -29,32 +29,32 @@ public class GlobalLockParam extends BaseParam implements Serializable {
 	private static final long serialVersionUID = 615412528070131284L;
 
 	/**
-	 * the xid
+	 * the xid.
 	 */
 	private String xid;
 
 	/**
-	 * the table name
+	 * the table name.
 	 */
 	private String tableName;
 
 	/**
-	 * the transaction id
+	 * the transaction id.
 	 */
 	private String transactionId;
 
 	/**
-	 * the branch id
+	 * the branch id.
 	 */
 	private String branchId;
 
 	/**
-	 * the primary Key
+	 * the primary Key.
 	 */
 	private String pk;
 
 	/**
-	 * the resourceId
+	 * the resourceId.
 	 */
 	private String resourceId;
 

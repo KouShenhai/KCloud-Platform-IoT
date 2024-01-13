@@ -15,6 +15,7 @@
  */
 package org.laokou.admin.domain.gateway;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -33,5 +34,7 @@ public interface TenantGateway {
 	Boolean update(Tenant tenant);
 
 	Boolean deleteById(Long id);
+
+	void download(Long id, HttpServletResponse response);
 
 }

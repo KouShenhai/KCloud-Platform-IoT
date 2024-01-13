@@ -33,7 +33,6 @@ import io.netty.util.ReferenceCountUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -41,13 +40,17 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.security.domain.User;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.laokou.common.i18n.common.Constant.*;
+import static io.netty.handler.codec.http.HttpResponseStatus.UNAUTHORIZED;
+import static org.laokou.common.i18n.common.RequestHeaderConstants.*;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.MARK;
 
 /**
  * @author laokou
@@ -58,12 +61,11 @@ import static org.laokou.common.i18n.common.Constant.*;
 @RequiredArgsConstructor
 public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
-	private static final String WS_HEADER_NAME = "Upgrade";
-
-	private static final String WS_HEADER_VALUE = "websocket";
-
 	private final ReactiveRedisUtil reactiveRedisUtil;
 
+	/**
+	 * 建立连接的用户.
+	 */
 	public static final Cache<String, Channel> USER_CACHE;
 
 	static {
@@ -88,14 +90,13 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 	@Override
 	public void handlerAdded(ChannelHandlerContext ctx) {
-		log.info("建立连接：{}", ctx.channel().id().asLongText());
+		// log.info("建立连接：{}", ctx.channel().id().asLongText());
 	}
 
 	@Override
 	public void handlerRemoved(ChannelHandlerContext ctx) {
 		// 移除channel
-		String channelId = ctx.channel().id().asLongText();
-		log.info("断开连接：{}", channelId);
+		// log.info("断开连接：{}", ctx.channel().id().asLongText());
 	}
 
 	private String getAuthorization(Map<String, String> paramMap) {
@@ -108,7 +109,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 	private void init(ChannelHandlerContext ctx, FullHttpRequest request) {
 		try {
-			if (request.decoderResult().isFailure() || !WS_HEADER_VALUE.equals(request.headers().get(WS_HEADER_NAME))) {
+			if (request.decoderResult().isFailure() || !WEBSOCKET.equals(request.headers().get(UPGRADE))) {
 				handleRequestError(ctx, HttpResponseStatus.BAD_REQUEST);
 				return;
 			}
@@ -119,13 +120,13 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 			String Authorization = getAuthorization(paramMap);
 			request.setUri(uri.substring(0, index));
 			if (StringUtil.isEmpty(Authorization)) {
-				handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
+				handleRequestError(ctx, UNAUTHORIZED);
 				return;
 			}
 			String userInfoKey = RedisKeyUtil.getUserInfoKey(Authorization);
 			reactiveRedisUtil.get(userInfoKey).subscribe(obj -> {
 				if (ObjectUtil.isNull(obj)) {
-					handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
+					handleRequestError(ctx, UNAUTHORIZED);
 					return;
 				}
 				User user = (User) obj;

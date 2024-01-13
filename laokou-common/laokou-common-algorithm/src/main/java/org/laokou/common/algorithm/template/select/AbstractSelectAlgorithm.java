@@ -19,19 +19,9 @@ package org.laokou.common.algorithm.template.select;
 
 import org.laokou.common.algorithm.template.Algorithm;
 
-import java.util.List;
-
 /**
  * @author laokou
  */
-public abstract class AbstractSelectAlgorithm<T> implements Algorithm {
-
-	/**
-	 * 选择算法
-	 * @param list
-	 * @param arg
-	 * @return
-	 */
-	public abstract T select(List<T> list, Object arg);
+public abstract class AbstractSelectAlgorithm implements Algorithm {
 
 }

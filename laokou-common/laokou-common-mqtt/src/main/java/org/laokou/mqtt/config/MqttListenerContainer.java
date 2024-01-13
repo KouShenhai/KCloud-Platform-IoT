@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 可参考 RocketMQ 实现
+ * 可参考 RocketMQ 实现.
  *
  * @author laokou
  */

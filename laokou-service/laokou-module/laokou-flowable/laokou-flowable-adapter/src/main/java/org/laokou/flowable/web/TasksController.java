@@ -42,34 +42,34 @@ public class TasksController {
 
 	private final TasksServiceI tasksServiceI;
 
-	@PostMapping(value = "list")
+	@PostMapping("list")
 	@Operation(summary = "流程任务", description = "查询任务列表")
 	public Result<Datas<TaskCO>> list(@RequestBody TaskListQry qry) {
 		return tasksServiceI.list(qry);
 	}
 
 	@Idempotent
-	@PostMapping(value = "audit")
+	@PostMapping("audit")
 	@Operation(summary = "流程任务", description = "审批任务")
 	public Result<AuditCO> audit(@RequestBody TaskAuditCmd cmd) {
 		return tasksServiceI.audit(cmd);
 	}
 
 	@Idempotent
-	@PostMapping(value = "resolve")
+	@PostMapping("resolve")
 	@Operation(summary = "流程任务", description = "处理任务")
 	public Result<Boolean> resolve(@RequestBody TaskResolveCmd cmd) {
 		return tasksServiceI.resolve(cmd);
 	}
 
 	@Idempotent
-	@PostMapping(value = "start")
+	@PostMapping("start")
 	@Operation(summary = "流程任务", description = "开始任务")
 	public Result<StartCO> start(@RequestBody TaskStartCmd cmd) {
 		return tasksServiceI.start(cmd);
 	}
 
-	@GetMapping(value = "{instanceId}/diagram")
+	@GetMapping("{instanceId}/diagram")
 	@Operation(summary = "流程任务", description = "流程图")
 	public Result<String> diagram(@PathVariable("instanceId") String instanceId) {
 		return tasksServiceI.diagram(new TaskDiagramGetQry(instanceId));

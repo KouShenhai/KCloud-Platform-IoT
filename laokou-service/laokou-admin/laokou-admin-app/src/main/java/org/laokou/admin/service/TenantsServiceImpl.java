@@ -19,6 +19,7 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.TenantsServiceI;
+import org.laokou.admin.command.tenant.TenantDownloadDatasourceCmdExe;
 import org.laokou.admin.command.tenant.query.TenantGetIDQryExe;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.tenant.*;
@@ -56,6 +57,8 @@ public class TenantsServiceImpl implements TenantsServiceI {
 
 	private final TenantGetIDQryExe tenantGetIDQryExe;
 
+	private final TenantDownloadDatasourceCmdExe tenantDownloadDatasourceCmdExe;
+
 	@Override
 	public Result<List<OptionCO>> optionList(TenantOptionListQry qry) {
 		return tenantOptionListQryExe.execute(qry);
@@ -89,6 +92,11 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	@Override
 	public Result<Long> getIdByDomainName(TenantGetIDQry qry) {
 		return tenantGetIDQryExe.execute(qry);
+	}
+
+	@Override
+	public void downloadDatasource(TenantDownloadDatasourceCmd cmd) {
+		tenantDownloadDatasourceCmdExe.executeVoid(cmd);
 	}
 
 }

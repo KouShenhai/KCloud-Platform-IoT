@@ -96,22 +96,32 @@
             AND `name` <![CDATA[ <> ]]> '修改菜单'
             AND `name` <![CDATA[ <> ]]> '新增菜单'
             AND `name` <![CDATA[ <> ]]> '删除菜单'
-            and `name` <![CDATA[ <> ]]> '在线用户'
             AND `name` not LIKE '%租户%'
+            and `name` not like '%索引%'
             AND `name` not LIKE '%套餐%'
             AND `name` not LIKE '%数据源%'
-            AND `name` not LIKE '%同步%'
-            AND `name` not like '%搜索%'
-            AND `name` not like '%音频%'
-            AND `name` not like '%视频%'
-            AND `name` not like '%图片%'
-            AND `name` not like '%资源%'
             AND `name` not like '%事务%'
             AND `name` not like '%配置%'
-            AND `name` not like '%任务%'
             and `name` not like '%文档%'
             and `name` not like '%监控%'
-            and `name` not like '%流程%'
+            and `name` not like '%IP%'
+            and `name` not like '%调度%'
+            and `name` not like '%集群%'
         order by sort desc
+    </select>
+    <select id="getTenantMenuListByPackageId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
+        select a.id
+             ,a.pid
+             ,a.`name`
+             ,a.icon
+             ,a.url
+             ,a.`type`
+             ,a.permission
+             ,a.visible
+             ,a.sort
+        from boot_sys_menu a
+        join boot_sys_package_menu b on b.menu_id = a.id
+        where a.del_flag = 0
+            and b.package_id = #{packageId}
     </select>
 </mapper>

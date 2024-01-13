@@ -60,10 +60,14 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.NacosConstants.CLUSTER_CONFIG;
+import static org.laokou.common.i18n.common.NetworkConstants.IPV4_REGEX;
+import static org.laokou.common.i18n.common.RouterConstants.SERVICE_HOST;
+import static org.laokou.common.i18n.common.RouterConstants.SERVICE_PORT;
+import static org.laokou.common.i18n.common.SysConstants.GRACEFUL_SHUTDOWN_URL;
 
 /**
- * Nacos路由负载均衡 see original.
+ * Nacos路由负载均衡.
  * {@link com.alibaba.cloud.nacos.loadbalancer.NacosLoadBalancerClientConfiguration}
  * {@link org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer}
  *
@@ -88,6 +92,9 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 */
 	public static String ipv6;
 
+	/**
+	 * 初始化.
+	 */
 	@PostConstruct
 	public void init() {
 		String ip = nacosDiscoveryProperties.getIp();
@@ -99,6 +106,11 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		}
 	}
 
+	/**
+	 * 根据IP类型过滤服务实例.
+	 * @param instances 服务实例
+	 * @return 服务实例列表
+	 */
 	private List<ServiceInstance> filterInstanceByIpType(List<ServiceInstance> instances) {
 		if (StringUtils.isNotEmpty(ipv6)) {
 			List<ServiceInstance> ipv6InstanceList = new ArrayList<>();
@@ -134,6 +146,11 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		this.nacosDiscoveryProperties = nacosDiscoveryProperties;
 	}
 
+	/**
+	 * 路由负载均衡.
+	 * @param request 请求
+	 * @return 服务实例（响应式）
+	 */
 	@Override
 	public Mono<Response<ServiceInstance>> choose(Request request) {
 		return serviceInstanceListSupplierProvider.getIfAvailable(NoopServiceInstanceListSupplier::new)
@@ -142,6 +159,12 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			.mapNotNull(instances -> choose(instances, request));
 	}
 
+	/**
+	 * 路由负载均衡.
+	 * @param instances 服务实例列表
+	 * @param request 请求
+	 * @return 服务实例响应体
+	 */
 	private Response<ServiceInstance> choose(List<ServiceInstance> instances, Request<?> request) {
 		// IP优先
 		if (request.getContext() instanceof RequestDataContext context) {
@@ -163,7 +186,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
 	private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> serviceInstances) {
 		if (serviceInstances.isEmpty()) {
-			log.warn("No servers available for service: " + this.serviceId);
+			log.warn("No servers available for service: {}", this.serviceId);
 			return new EmptyResponse();
 		}
 		try {
@@ -171,7 +194,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			List<ServiceInstance> instancesToChoose = serviceInstances;
 			if (StringUtils.isNotBlank(clusterName)) {
 				List<ServiceInstance> sameClusterInstances = serviceInstances.stream().filter(serviceInstance -> {
-					String cluster = serviceInstance.getMetadata().get("nacos.cluster");
+					String cluster = serviceInstance.getMetadata().get(CLUSTER_CONFIG);
 					return StringUtils.equals(cluster, clusterName);
 				}).collect(Collectors.toList());
 				if (!CollectionUtils.isEmpty(sameClusterInstances)) {
@@ -193,6 +216,12 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		}
 	}
 
+	/**
+	 * 根据IP和端口匹配服务节点.
+	 * @param instance 服务实例
+	 * @param headers 请求头
+	 * @return 匹配结果
+	 */
 	private boolean match(ServiceInstance instance, HttpHeaders headers) {
 		String host = ObjectUtil.requireNotNull(headers.get(SERVICE_HOST)).getFirst();
 		String port = ObjectUtil.requireNotNull(headers.get(SERVICE_PORT)).getFirst();

@@ -26,8 +26,6 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.sensitive.enums.Type;
-import org.laokou.common.sensitive.utils.SensitiveUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -37,12 +35,12 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
-import static org.laokou.common.i18n.common.Constant.MAIL;
-import static org.laokou.common.i18n.common.ErrorCode.MAIL_ERROR;
-import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.ValCode.OAUTH2_CAPTCHA_REQUIRE;
-import static org.laokou.common.i18n.common.ValCode.OAUTH2_MAIL_REQUIRE;
+import static org.laokou.common.i18n.common.ErrorCodes.MAIL_ERROR;
+import static org.laokou.common.i18n.common.OAuth2Constants.MAIL;
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.ValCodes.OAUTH2_CAPTCHA_REQUIRE;
+import static org.laokou.common.i18n.common.ValCodes.OAUTH2_MAIL_REQUIRE;
 
 /**
  * @author laokou
@@ -69,13 +67,13 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 	Authentication principal(HttpServletRequest request) {
 		// 判断验证码
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
-		log.info("验证码：{}", code);
+		// log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
 		}
 		String mail = request.getParameter(MAIL);
-		log.info("邮箱：{}", SensitiveUtil.format(Type.MAIL, mail));
+		// log.info("邮箱：{}", SensitiveUtil.format(Type.MAIL, mail));
 		if (StringUtil.isEmpty(mail)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));

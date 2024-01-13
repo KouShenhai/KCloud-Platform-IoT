@@ -19,6 +19,7 @@ package org.apache.rocketmq.spring.autoconfigure;
 
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.apache.rocketmq.client.AccessChannel;
 import org.apache.rocketmq.client.MQAdmin;
 import org.apache.rocketmq.client.consumer.DefaultLitePullConsumer;
@@ -32,7 +33,6 @@ import org.apache.rocketmq.spring.support.RocketMQUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.*;
@@ -57,18 +57,27 @@ import org.springframework.util.StringUtils;
 		RocketMQTransactionConfiguration.class, RocketMQListenerConfiguration.class })
 @AutoConfigureAfter({ MessageConverterConfiguration.class })
 @AutoConfigureBefore({ RocketMQTransactionConfiguration.class })
+@RequiredArgsConstructor
 public class RocketMQAutoConfiguration implements ApplicationContextAware {
 
 	private static final Logger log = LoggerFactory.getLogger(RocketMQAutoConfiguration.class);
 
+	/**
+	 * rocketmq模板名称.
+	 */
 	public static final String ROCKETMQ_TEMPLATE_DEFAULT_GLOBAL_NAME = "rocketMQTemplate";
 
+	/**
+	 * rocketmq默认生产者.
+	 */
 	public static final String PRODUCER_BEAN_NAME = "defaultMQProducer";
 
+	/**
+	 * rocketmq默认拉取消费者.
+	 */
 	public static final String CONSUMER_BEAN_NAME = "defaultLitePullConsumer";
 
-	@Autowired
-	private Environment environment;
+	private final Environment environment;
 
 	private ApplicationContext applicationContext;
 
@@ -159,7 +168,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 	@Bean(destroyMethod = "destroy")
 	@Conditional(ProducerOrConsumerPropertyCondition.class)
 	@ConditionalOnMissingBean(name = ROCKETMQ_TEMPLATE_DEFAULT_GLOBAL_NAME)
-	public RocketMQTemplate rocketMQTemplate(RocketMQMessageConverter rocketMQMessageConverter) {
+	RocketMQTemplate rocketMQTemplate(RocketMQMessageConverter rocketMQMessageConverter) {
 		RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
 		if (applicationContext.containsBean(PRODUCER_BEAN_NAME)) {
 			rocketMQTemplate.setProducer((DefaultMQProducer) applicationContext.getBean(PRODUCER_BEAN_NAME));
@@ -173,7 +182,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 
 	static class ProducerOrConsumerPropertyCondition extends AnyNestedCondition {
 
-		public ProducerOrConsumerPropertyCondition() {
+		ProducerOrConsumerPropertyCondition() {
 			super(ConfigurationPhase.REGISTER_BEAN);
 		}
 

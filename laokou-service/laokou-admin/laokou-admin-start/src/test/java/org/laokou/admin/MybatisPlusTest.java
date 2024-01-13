@@ -34,7 +34,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -42,7 +42,7 @@ import static org.laokou.common.i18n.common.Constant.EMPTY;
 @Slf4j
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class MybatisPlusTest extends CommonTest {
+class MybatisPlusTest extends CommonTest {
 
 	private static final String DS_NAME = "test";
 
@@ -50,15 +50,15 @@ public class MybatisPlusTest extends CommonTest {
 
 	private final MybatisUtil mybatisUtil;
 
-	public MybatisPlusTest(WebApplicationContext webApplicationContext,
-			OAuth2AuthorizationService oAuth2AuthorizationService, DsUtil dsUtil, MybatisUtil mybatisUtil) {
+	MybatisPlusTest(WebApplicationContext webApplicationContext, OAuth2AuthorizationService oAuth2AuthorizationService,
+			DsUtil dsUtil, MybatisUtil mybatisUtil) {
 		super(webApplicationContext, oAuth2AuthorizationService);
 		this.dsUtil = dsUtil;
 		this.mybatisUtil = mybatisUtil;
 	}
 
 	@Test
-	public void mybatisPlusBatchSaveTest() {
+	void mybatisPlusBatchSaveTest() {
 		// 新增数据源
 		addDs();
 		// 测试一百万数据
@@ -83,7 +83,7 @@ public class MybatisPlusTest extends CommonTest {
 		HikariCpConfig hikariCpConfig = new HikariCpConfig();
 		hikariCpConfig.setConnectionTimeout(180000L);
 		properties.setHikari(hikariCpConfig);
-		dsUtil.addDs(DS_NAME, properties, false);
+		dsUtil.addDs(DS_NAME, properties);
 	}
 
 }

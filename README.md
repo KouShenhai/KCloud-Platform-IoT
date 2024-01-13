@@ -73,12 +73,12 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | Spring Boot                 | 3.2.1         |
 | Spring Cloud                | 2023.0.0      |
 | Spring Cloud Alibaba        | 2022.0.0.0    |
-| Spring Boot Admin           | 3.2.0         |
+| Spring Boot Admin           | 3.2.1         |
 | Spring Authorization Server | 1.2.1         |
 | Mybatis Plus                | 3.5.5         |
 | Nacos                       | 2.2.4         |
 | Seata                       | 2.0.0         |
-| Sentinel                    | 1.8.6         |
+| Sentinel                    | 1.8.7         |
 | Mysql                       | 8.0.33        |
 | Redis                       | 7.0.11        |
 | Elasticsearch               | 8.6.2         |
@@ -91,7 +91,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | Kafka                       | 3.6.0         |
 | EMQX                        | 5.3.0         |
 | Postgresql                  | 16.1          |
-
+| Flyway                      | 10.3.0        |
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
@@ -117,6 +117,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 - 对象转换：MapStruct
 - 数据库：Mysql & Postgresql
 - 工作流：Flowable
+- 数据库迁移：Flyway
 
 #### 🌴 项目结构
 ~~~
@@ -142,7 +143,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
         └── laokou-common-dubbo                    --- 远程调用组件   
         └── laokou-common-nacos                    --- 注册发现组件  
         └── laokou-common-netty                    --- 网络通讯组件  
-        └── laokou-common-jasypt                   --- 加密解密组件  
+        └── laokou-common-crypto                   --- 加密解密组件  
         └── laokou-common-secret                   --- 接口验签组件  
         └── laokou-common-monitor                  --- 服务监控组件  
         └── laokou-common-xxl-job                  --- 任务调度组件  

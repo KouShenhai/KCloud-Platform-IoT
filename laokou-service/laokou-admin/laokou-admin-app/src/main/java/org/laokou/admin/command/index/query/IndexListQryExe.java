@@ -31,8 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.RESOURCE_INDEX;
-import static org.laokou.common.i18n.common.Constant.TRACE_INDEX;
+import static org.laokou.common.i18n.common.IndexConstants.RESOURCE;
+import static org.laokou.common.i18n.common.IndexConstants.TRACE;
 
 /**
  * @author laokou
@@ -44,8 +44,7 @@ public class IndexListQryExe {
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	public Result<Datas<IndexCO>> execute(IndexListQry qry) {
-		Map<String, String> indexNames = elasticsearchTemplate
-			.getIndexNames(new String[] { RESOURCE_INDEX, TRACE_INDEX });
+		Map<String, String> indexNames = elasticsearchTemplate.getIndexNames(new String[] { RESOURCE, TRACE });
 		if (MapUtil.isEmpty(indexNames)) {
 			return Result.of(Datas.of());
 		}

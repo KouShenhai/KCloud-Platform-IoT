@@ -24,7 +24,7 @@ import org.laokou.common.kafka.template.DefaultKafkaTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
-import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_TRACE_TOPIC;
+import static org.laokou.common.i18n.common.KafkaConstants.LAOKOU_TRACE_TOPIC;
 
 /**
  * @author laokou
@@ -33,12 +33,12 @@ import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_TRACE_TOPIC;
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class KafkaTest {
+class KafkaTest {
 
 	private final DefaultKafkaTemplate defaultKafkaTemplate;
 
 	@Test
-	public void kafkaSenderTest() {
+	void kafkaSenderTest() {
 		defaultKafkaTemplate.send(LAOKOU_TRACE_TOPIC, "测试数据");
 	}
 

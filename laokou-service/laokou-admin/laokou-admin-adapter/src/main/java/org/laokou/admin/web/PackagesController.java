@@ -25,7 +25,7 @@ import org.laokou.admin.dto.packages.*;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.enums.Type;
+import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.laokou.common.data.cache.config.CacheConstant.PACKAGES;
+import static org.laokou.common.i18n.common.CacheConstants.PACKAGES;
 
 /**
  * @author laokou
@@ -79,7 +79,7 @@ public class PackagesController {
 	@Operation(summary = "套餐管理", description = "修改套餐")
 	@OperateLog(module = "套餐管理", operation = "修改套餐")
 	@PreAuthorize("hasAuthority('packages:update')")
-	@DataCache(name = PACKAGES, key = "#cmd.packageCO.id", type = Type.DEL)
+	@DataCache(name = PACKAGES, key = "#cmd.packageCO.id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> update(@RequestBody PackageUpdateCmd cmd) {
 		return packagesServiceI.update(cmd);
 	}
@@ -89,7 +89,7 @@ public class PackagesController {
 	@Operation(summary = "套餐管理", description = "删除套餐")
 	@OperateLog(module = "套餐管理", operation = "删除套餐")
 	@PreAuthorize("hasAuthority('packages:delete')")
-	@DataCache(name = PACKAGES, key = "#id", type = Type.DEL)
+	@DataCache(name = PACKAGES, key = "#id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return packagesServiceI.deleteById(new PackageDeleteCmd(id));
 	}

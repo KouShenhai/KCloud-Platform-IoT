@@ -28,7 +28,7 @@ import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import static org.laokou.common.i18n.common.StatusCode.SERVICE_UNAVAILABLE;
+import static org.laokou.common.i18n.common.StatusCodes.SERVICE_UNAVAILABLE;
 
 /**
  * @author laokou

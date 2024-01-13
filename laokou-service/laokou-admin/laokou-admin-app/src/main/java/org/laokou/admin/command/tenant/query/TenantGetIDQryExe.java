@@ -17,7 +17,6 @@
 
 package org.laokou.admin.command.tenant.query;
 
-import com.baomidou.dynamic.datasource.annotation.Master;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.config.DefaultConfigProperties;
@@ -32,10 +31,12 @@ import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.NetworkConstants.WWW;
+import static org.laokou.common.i18n.common.StringConstants.BACKSLASH;
+import static org.laokou.common.i18n.common.StringConstants.DOT;
+import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 
 /**
  * @author laokou
@@ -53,18 +54,18 @@ public class TenantGetIDQryExe {
 	public Result<Long> execute(TenantGetIDQry qry) {
 		String domainName = RequestUtil.getDomainName(qry.getRequest());
 		if (RegexUtil.ipRegex(domainName)) {
-			return Result.of(DEFAULT_TENANT);
+			return Result.of(DEFAULT);
 		}
 		String[] split = domainName.split(BACKSLASH + DOT);
 		if (split.length < 3 || WWW.equals(split[0])) {
-			return Result.of(DEFAULT_TENANT);
+			return Result.of(DEFAULT);
 		}
 		Set<String> domainNames = defaultConfigProperties.getDomainNames();
 		// 租户域名
 		if (domainNames.parallelStream().anyMatch(domainName::contains)) {
 			return Result.of(getTenantCache(split[0]));
 		}
-		return Result.of(DEFAULT_TENANT);
+		return Result.of(DEFAULT);
 	}
 
 	private Long getTenantCache(String str) {
@@ -80,7 +81,7 @@ public class TenantGetIDQryExe {
 			redisUtil.hSet(tenantDomainNameHashKey, str, id, RedisUtil.HOUR_ONE_EXPIRE);
 			return id;
 		}
-		return DEFAULT_TENANT;
+		return DEFAULT;
 	}
 
 }

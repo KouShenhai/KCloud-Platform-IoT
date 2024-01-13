@@ -20,21 +20,22 @@ package org.laokou.admin.command.user.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.user.OnlineUserListQry;
 import org.laokou.admin.dto.user.clientobject.UserOnlineCO;
-import org.laokou.auth.domain.user.User;
+import org.laokou.common.security.domain.User;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
-import static org.laokou.common.i18n.common.Constant.STAR;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.StringConstants.STAR;
 
 /**
  * @author laokou
@@ -70,8 +71,10 @@ public class OnlineUserListQryExe {
 		String userInfoKeyPrefix = getUserKeyPrefix();
 		for (String key : keys) {
 			User user = (User) redisUtil.get(key);
-			String username = AesUtil.decrypt(user.getUsername());
-			if (StringUtil.isEmpty(keyword) || username.contains(keyword)) {
+			String username = user.getUsername();
+			Long tenantId = user.getTenantId();
+			if (ObjectUtil.equals(tenantId, UserUtil.getTenantId())
+					&& (StringUtil.isEmpty(keyword) || username.contains(keyword))) {
 				UserOnlineCO co = new UserOnlineCO();
 				co.setUsername(username);
 				co.setToken(key.substring(userInfoKeyPrefix.length()));

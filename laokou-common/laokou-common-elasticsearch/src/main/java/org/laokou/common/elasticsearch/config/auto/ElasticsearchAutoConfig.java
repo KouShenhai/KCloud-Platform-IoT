@@ -47,10 +47,10 @@ import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.Objects;
 
-import static org.laokou.common.i18n.common.Constant.RISK;
+import static org.laokou.common.i18n.common.StringConstants.RISK;
 
 /**
- * ES自动装配
+ * ES自动装配.
  *
  * @author laokou
  */
@@ -64,6 +64,15 @@ public class ElasticsearchAutoConfig {
 	@ConditionalOnMissingBean(RestClientBuilderCustomizer.class)
 	RestClientBuilderCustomizer defaultRestClientBuilderCustomizer(ElasticsearchProperties properties) {
 		return new DefaultRestClientBuilderCustomizer(properties);
+	}
+
+	@Bean(name = "restHighLevelClient", destroyMethod = "close")
+	@ConditionalOnMissingBean(RestHighLevelClient.class)
+	@ConditionalOnClass(RestClientBuilder.class)
+	@Deprecated
+	public RestHighLevelClient restHighLevelClient(RestClientBuilder elasticsearchRestClientBuilder) {
+		return new RestHighLevelClientBuilder(elasticsearchRestClientBuilder.build()).setApiCompatibilityMode(true)
+			.build();
 	}
 
 	@Bean("elasticsearchRestClientBuilder")
@@ -203,14 +212,5 @@ public class ElasticsearchAutoConfig {
 	// new JacksonJsonpMapper());
 	// return new ElasticsearchClient(transport);
 	// }
-
-	@Bean(name = "restHighLevelClient", destroyMethod = "close")
-	@ConditionalOnMissingBean(RestHighLevelClient.class)
-	@ConditionalOnClass(RestClientBuilder.class)
-	@Deprecated
-	public RestHighLevelClient restHighLevelClient(RestClientBuilder elasticsearchRestClientBuilder) {
-		return new RestHighLevelClientBuilder(elasticsearchRestClientBuilder.build()).setApiCompatibilityMode(true)
-			.build();
-	}
 
 }

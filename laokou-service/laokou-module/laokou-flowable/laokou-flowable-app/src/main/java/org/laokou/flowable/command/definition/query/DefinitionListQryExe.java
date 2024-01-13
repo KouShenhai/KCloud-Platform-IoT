@@ -25,6 +25,7 @@ import org.flowable.engine.repository.ProcessDefinitionQuery;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.laokou.flowable.dto.definition.DefinitionListQry;
 import org.laokou.flowable.dto.definition.clientobject.DefinitionCO;
 import org.springframework.stereotype.Component;
@@ -32,7 +33,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.flowable.common.Constant.FLOWABLE;
+import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
  * @author laokou
@@ -48,6 +49,7 @@ public class DefinitionListQryExe {
 			String name = qry.getName();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery()
+				.processDefinitionTenantId(UserUtil.getTenantId().toString())
 				.latestVersion()
 				.orderByProcessDefinitionKey()
 				.asc();

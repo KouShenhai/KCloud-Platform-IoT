@@ -18,12 +18,13 @@ package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.domain.gateway.MenuGateway;
-import org.laokou.auth.domain.user.SuperAdmin;
-import org.laokou.auth.domain.user.User;
 import org.laokou.auth.gatewayimpl.database.MenuMapper;
+import org.laokou.common.security.domain.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
 
 /**
  * @author laokou
@@ -38,7 +39,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	public List<String> getPermissions(User user) {
 		Long userId = user.getId();
 		Integer superAdmin = user.getSuperAdmin();
-		if (superAdmin == SuperAdmin.YES.ordinal()) {
+		if (superAdmin == YES.ordinal()) {
 			return menuMapper.getPermissions();
 		}
 		return menuMapper.getPermissionsByUserId(userId);

@@ -24,52 +24,52 @@ import java.io.InputStream;
 public interface StorageDriver<O> {
 
 	/**
-	 * 创建bucket
-	 * @param obj
+	 * 创建bucket.
+	 * @param obj 连接对象
 	 */
 	void createBucket(O obj);
 
 	/**
-	 * 上传文件
-	 * @param obj
-	 * @param readLimit
-	 * @param fileSize
-	 * @param fileName
-	 * @param inputStream
-	 * @param contentType
+	 * 上传文件.
+	 * @param obj 连接对象
+	 * @param readLimit 读取时间
+	 * @param fileSize 文件大小
+	 * @param fileName 文件名
+	 * @param inputStream 输入流
+	 * @param contentType 类型
 	 */
 	void putObject(O obj, int readLimit, long fileSize, String fileName, InputStream inputStream, String contentType);
 
 	/**
-	 * 获取地址
-	 * @param obj
-	 * @param fileName
-	 * @return
+	 * 获取地址.
+	 * @param obj 连接对象
+	 * @param fileName 文件名
+	 * @return 上传成功的链接
 	 */
 	String getUrl(O obj, String fileName);
 
 	/**
-	 * 上传文件
-	 * @param fileName
-	 * @param inputStream
-	 * @param contentType
-	 * @param fileSize
-	 * @param readLimit
-	 * @return
+	 * 上传文件.
+	 * @param fileName 文件名
+	 * @param inputStream 输入流
+	 * @param contentType 类型
+	 * @param fileSize 文件大小
+	 * @param readLimit 读取时间
+	 * @return 上传成功的链接
 	 */
 	String upload(int readLimit, long fileSize, String fileName, InputStream inputStream, String contentType);
 
 	/**
-	 * 获取文件名称
-	 * @param fileName
-	 * @return
+	 * 获取文件名称.
+	 * @param fileName 文件名
+	 * @return 文件名称
 	 */
 	String getFileName(String fileName);
 
 	/**
-	 * 获取文件后缀
-	 * @param fileName
-	 * @return
+	 * 获取文件后缀.
+	 * @param fileName 文件名
+	 * @return 文件后缀
 	 */
 	String getFileExt(String fileName);
 

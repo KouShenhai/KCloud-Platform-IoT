@@ -27,7 +27,7 @@ import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.dto.user.clientobject.UserOnlineCO;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.enums.Type;
+import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -35,7 +35,7 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import static org.laokou.common.data.cache.config.CacheConstant.USERS;
+import static org.laokou.common.i18n.common.CacheConstants.USERS;
 
 /**
  * @author laokou
@@ -53,7 +53,7 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "修改用户")
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@PreAuthorize("hasAuthority('users:update')")
-	@DataCache(name = USERS, key = "#cmd.userCO.id", type = Type.DEL)
+	@DataCache(name = USERS, key = "#cmd.userCO.id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> update(@RequestBody UserUpdateCmd cmd) {
 		return usersServiceI.update(cmd);
 	}
@@ -144,7 +144,7 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "删除用户")
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@PreAuthorize("hasAuthority('users:delete')")
-	@DataCache(name = USERS, key = "#id", type = Type.DEL)
+	@DataCache(name = USERS, key = "#id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return usersServiceI.deleteById(new UserDeleteCmd(id));
 	}

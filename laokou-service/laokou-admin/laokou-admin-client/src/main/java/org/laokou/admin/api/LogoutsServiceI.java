@@ -24,9 +24,9 @@ import org.laokou.common.i18n.dto.Result;
 public interface LogoutsServiceI {
 
 	/**
-	 * 注销
+	 * 注销.
 	 * @param cmd 指令
-	 * @return Result<Boolean>
+	 * @return 注册结果
 	 */
 	Result<Boolean> logout(LogoutCmd cmd);
 

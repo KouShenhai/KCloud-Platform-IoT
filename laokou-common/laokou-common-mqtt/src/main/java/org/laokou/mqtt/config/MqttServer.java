@@ -29,8 +29,8 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.laokou.mqtt.constant.Constant.WILL_DATA;
-import static org.laokou.mqtt.constant.Constant.WILL_TOPIC;
+import static org.laokou.common.i18n.common.MqttConstants.WILL_DATA;
+import static org.laokou.common.i18n.common.MqttConstants.WILL_TOPIC;
 
 /**
  * @author laokou
@@ -42,6 +42,9 @@ public class MqttServer implements Server {
 
 	private volatile MqttClient client;
 
+	/**
+	 * 客户标识.
+	 */
 	public static final Long CLIENT_ID = IdGenerator.defaultSnowflakeId();
 
 	private final SpringMqttProperties springMqttProperties;

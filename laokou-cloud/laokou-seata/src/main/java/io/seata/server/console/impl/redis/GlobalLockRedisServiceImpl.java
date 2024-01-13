@@ -38,7 +38,7 @@ import static io.seata.core.constants.RedisKeyConstants.DEFAULT_REDIS_SEATA_ROW_
 import static io.seata.core.constants.RedisKeyConstants.SPLIT;
 
 /**
- * Global Lock Redis Service Impl
+ * Global Lock Redis Service Impl.
  *
  * @author zhongxiang.wang
  * @author doubleDimple
