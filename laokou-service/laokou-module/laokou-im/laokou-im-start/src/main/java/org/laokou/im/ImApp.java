@@ -18,7 +18,6 @@ package org.laokou.im;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
-import org.laokou.common.security.config.auto.OAuth2AuthorizationAutoConfig;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.actuate.autoconfigure.security.reactive.ReactiveManagementWebSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -36,7 +35,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
  * @author laokou
  */
 @SpringBootApplication(scanBasePackages = "org.laokou",
-		exclude = { ReactiveSecurityAutoConfiguration.class, OAuth2AuthorizationAutoConfig.class,
+		exclude = { ReactiveSecurityAutoConfiguration.class,
 				ReactiveManagementWebSecurityAutoConfiguration.class,
 				ReactiveUserDetailsServiceAutoConfiguration.class })
 @EnableEncryptableProperties
