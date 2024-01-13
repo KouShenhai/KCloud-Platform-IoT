@@ -26,7 +26,7 @@ import org.laokou.common.secret.utils.SecretUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 
-import static org.laokou.common.i18n.common.RequestParamConstants.*;
+import static org.laokou.common.i18n.common.RequestHeaderConstants.*;
 
 /**
  * @author laokou

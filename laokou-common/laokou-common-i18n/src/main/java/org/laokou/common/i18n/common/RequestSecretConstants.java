@@ -20,34 +20,24 @@ package org.laokou.common.i18n.common;
 /**
  * @author laokou
  */
-public final class RequestParamConstants {
+public final class RequestSecretConstants {
 
-	private RequestParamConstants() {
+	private RequestSecretConstants() {
 	}
 
 	/**
-	 * 随机字符.
+	 * 应用Key.
 	 */
-	public static final String NONCE = "nonce";
-
-	/**
-	 * 签名（MD5）.
-	 */
-	public static final String SIGN = "sign";
-
-	/**
-	 * 时间戳.
-	 */
-	public static final String TIMESTAMP = "timestamp";
-
-	/**
-	 * 应用标识.
-	 */
-	public static final String APP_KEY = "app-key";
+	public static final String APP_KEY = "laokou2023";
 
 	/**
 	 * 应用密钥.
 	 */
-	public static final String APP_SECRET = "app-secret";
+	public static final String APP_SECRET = "vb05f6c45d67340zaz95v7fa6d49v99zx";
+
+	/**
+	 * 路由密钥.
+	 */
+	public static final String ROUTER_SECRET = "68747470733a2f2f636f6e73742e6e65742e636e2f";
 
 }
