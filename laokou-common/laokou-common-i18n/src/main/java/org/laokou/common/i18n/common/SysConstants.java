@@ -152,4 +152,24 @@ public final class SysConstants {
 	 */
 	public static final String DEFAULT_PASSWORD = "laokou123";
 
+	/**
+	 * 服务没通过健康检查.
+	 */
+	public static final String SERVICE_DOWN_STATUS = "DOWN";
+
+	/**
+	 * 服务离线.
+	 */
+	public static final String SERVICE_OFFLINE_STATUS = "OFFLINE";
+
+	/**
+	 * 服务上线.
+	 */
+	public static final String SERVICE_UP_STATUS = "UP";
+
+	/**
+	 * 服务未知异常.
+	 */
+	public static final String SERVICE_UNKNOWN_STATUS = "UNKNOWN";
+
 }
