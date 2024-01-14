@@ -21,9 +21,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class JobScheduleHelper {
 
-	private static Logger logger = LoggerFactory.getLogger(JobScheduleHelper.class);
+	private static final Logger logger = LoggerFactory.getLogger(JobScheduleHelper.class);
 
-	private static JobScheduleHelper instance = new JobScheduleHelper();
+	private static final JobScheduleHelper instance = new JobScheduleHelper();
 
 	public static JobScheduleHelper getInstance() {
 		return instance;
@@ -39,7 +39,7 @@ public class JobScheduleHelper {
 
 	private volatile boolean ringThreadToStop = false;
 
-	private volatile static Map<Integer, List<Integer>> ringData = new ConcurrentHashMap<>();
+	private static final Map<Integer, List<Integer>> ringData = new ConcurrentHashMap<>();
 
 	public void start() {
 
@@ -90,7 +90,7 @@ public class JobScheduleHelper {
 						List<XxlJobInfo> scheduleList = XxlJobAdminConfig.getAdminConfig()
 							.getXxlJobInfoDao()
 							.scheduleJobQuery(nowTime + PRE_READ_MS, preReadCount);
-						if (scheduleList != null && scheduleList.size() > 0) {
+						if (scheduleList != null && !scheduleList.isEmpty()) {
 							// 2、push time-ring
 							for (XxlJobInfo jobInfo : scheduleList) {
 
@@ -192,7 +192,7 @@ public class JobScheduleHelper {
 								}
 							}
 							try {
-								conn.setAutoCommit(connAutoCommit);
+								conn.setAutoCommit(Boolean.TRUE.equals(connAutoCommit));
 							}
 							catch (SQLException e) {
 								if (!scheduleThreadToStop) {
@@ -276,9 +276,9 @@ public class JobScheduleHelper {
 						}
 
 						// ring trigger
-						logger.debug(">>>>>>>>>>> xxl-job, time-ring beat : " + nowSecond + " = "
-								+ Arrays.asList(ringItemData));
-						if (ringItemData.size() > 0) {
+						logger.debug(
+								">>>>>>>>>>> xxl-job, time-ring beat : " + nowSecond + " = " + List.of(ringItemData));
+						if (!ringItemData.isEmpty()) {
 							// do trigger
 							for (int jobId : ringItemData) {
 								// do trigger
@@ -320,15 +320,10 @@ public class JobScheduleHelper {
 
 	private void pushTimeRing(int ringSecond, int jobId) {
 		// push async ring
-		List<Integer> ringItemData = ringData.get(ringSecond);
-		if (ringItemData == null) {
-			ringItemData = new ArrayList<Integer>();
-			ringData.put(ringSecond, ringItemData);
-		}
+		List<Integer> ringItemData = ringData.computeIfAbsent(ringSecond, k -> new ArrayList<>());
 		ringItemData.add(jobId);
 
-		logger.debug(
-				">>>>>>>>>>> xxl-job, schedule push time-ring : " + ringSecond + " = " + Arrays.asList(ringItemData));
+		logger.debug(">>>>>>>>>>> xxl-job, schedule push time-ring : " + ringSecond + " = " + List.of(ringItemData));
 	}
 
 	public void toStop() {
@@ -355,9 +350,9 @@ public class JobScheduleHelper {
 		// if has ring data
 		boolean hasRingData = false;
 		if (!ringData.isEmpty()) {
-			for (int second : ringData.keySet()) {
-				List<Integer> tmpData = ringData.get(second);
-				if (tmpData != null && tmpData.size() > 0) {
+			for (Map.Entry<Integer, List<Integer>> entry : ringData.entrySet()) {
+				List<Integer> tmpData = ringData.get(entry.getKey());
+				if (tmpData != null && !tmpData.isEmpty()) {
 					hasRingData = true;
 					break;
 				}
@@ -398,15 +393,14 @@ public class JobScheduleHelper {
 	public static Date generateNextValidTime(XxlJobInfo jobInfo, Date fromTime) throws Exception {
 		ScheduleTypeEnum scheduleTypeEnum = ScheduleTypeEnum.match(jobInfo.getScheduleType(), null);
 		if (ScheduleTypeEnum.CRON == scheduleTypeEnum) {
-			Date nextValidTime = new CronExpression(jobInfo.getScheduleConf()).getNextValidTimeAfter(fromTime);
-			return nextValidTime;
+			return new CronExpression(jobInfo.getScheduleConf()).getNextValidTimeAfter(fromTime);
 		}
 		else if (ScheduleTypeEnum.FIX_RATE == scheduleTypeEnum /*
 																 * || ScheduleTypeEnum.
 																 * FIX_DELAY ==
 																 * scheduleTypeEnum
 																 */) {
-			return new Date(fromTime.getTime() + Integer.valueOf(jobInfo.getScheduleConf()) * 1000);
+			return new Date(fromTime.getTime() + Integer.parseInt(jobInfo.getScheduleConf()) * 1000L);
 		}
 		return null;
 	}

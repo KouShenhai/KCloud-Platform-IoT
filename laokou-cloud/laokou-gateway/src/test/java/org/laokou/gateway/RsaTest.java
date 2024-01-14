@@ -29,10 +29,10 @@ import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
 @Slf4j
 public class RsaTest {
 
-    public static void main(String[] args) {
-        String publicKey = RsaUtil.getPublicKey();
-        System.out.println(RsaUtil.encryptByPublicKey(DEFAULT_USERNAME, publicKey));
-        System.out.println(RsaUtil.encryptByPublicKey(DEFAULT_PASSWORD, publicKey));
-    }
+	public static void main(String[] args) {
+		String publicKey = RsaUtil.getPublicKey();
+		System.out.println(RsaUtil.encryptByPublicKey(DEFAULT_USERNAME, publicKey));
+		System.out.println(RsaUtil.encryptByPublicKey(DEFAULT_PASSWORD, publicKey));
+	}
 
 }

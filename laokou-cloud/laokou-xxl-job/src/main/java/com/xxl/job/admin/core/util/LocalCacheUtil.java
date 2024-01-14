@@ -1,5 +1,6 @@
 package com.xxl.job.admin.core.util;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -10,7 +11,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class LocalCacheUtil {
 
-	private static ConcurrentMap<String, LocalCacheData> cacheRepository = new ConcurrentHashMap<String, LocalCacheData>(); // 类型建议用抽象父类，兼容性更好；
+	private static final ConcurrentMap<String, LocalCacheData> CACHE_REPOSITORY = new ConcurrentHashMap<>(); // 类型建议用抽象父类，兼容性更好；
 
 	private static class LocalCacheData {
 
@@ -68,7 +69,7 @@ public class LocalCacheUtil {
 		cleanTimeoutCache();
 
 		// set new cache
-		if (key == null || key.trim().length() == 0) {
+		if (key == null || key.trim().isEmpty()) {
 			return false;
 		}
 		if (val == null) {
@@ -79,7 +80,7 @@ public class LocalCacheUtil {
 		}
 		long timeoutTime = System.currentTimeMillis() + cacheTime;
 		LocalCacheData localCacheData = new LocalCacheData(key, val, timeoutTime);
-		cacheRepository.put(localCacheData.getKey(), localCacheData);
+		CACHE_REPOSITORY.put(localCacheData.getKey(), localCacheData);
 		return true;
 	}
 
@@ -89,10 +90,10 @@ public class LocalCacheUtil {
 	 * @return
 	 */
 	public static boolean remove(String key) {
-		if (key == null || key.trim().length() == 0) {
+		if (key == null || key.trim().isEmpty()) {
 			return false;
 		}
-		cacheRepository.remove(key);
+		CACHE_REPOSITORY.remove(key);
 		return true;
 	}
 
@@ -102,10 +103,10 @@ public class LocalCacheUtil {
 	 * @return
 	 */
 	public static Object get(String key) {
-		if (key == null || key.trim().length() == 0) {
+		if (key == null || key.trim().isEmpty()) {
 			return null;
 		}
-		LocalCacheData localCacheData = cacheRepository.get(key);
+		LocalCacheData localCacheData = CACHE_REPOSITORY.get(key);
 		if (localCacheData != null && System.currentTimeMillis() < localCacheData.getTimeoutTime()) {
 			return localCacheData.getVal();
 		}
@@ -117,18 +118,16 @@ public class LocalCacheUtil {
 
 	/**
 	 * clean timeout cache
-	 * @return
 	 */
-	public static boolean cleanTimeoutCache() {
-		if (!cacheRepository.keySet().isEmpty()) {
-			for (String key : cacheRepository.keySet()) {
-				LocalCacheData localCacheData = cacheRepository.get(key);
+	public static void cleanTimeoutCache() {
+		if (!CACHE_REPOSITORY.keySet().isEmpty()) {
+			for (Map.Entry<String, LocalCacheData> entry : CACHE_REPOSITORY.entrySet()) {
+				LocalCacheData localCacheData = entry.getValue();
 				if (localCacheData != null && System.currentTimeMillis() >= localCacheData.getTimeoutTime()) {
-					cacheRepository.remove(key);
+					CACHE_REPOSITORY.remove(entry.getKey());
 				}
 			}
 		}
-		return true;
 	}
 
 }

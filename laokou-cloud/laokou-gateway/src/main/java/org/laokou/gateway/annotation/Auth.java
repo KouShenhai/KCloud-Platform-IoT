@@ -26,8 +26,8 @@ import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Auth {
 
-    String username() default DEFAULT_USERNAME;
+	String username() default DEFAULT_USERNAME;
 
-    String password() default DEFAULT_PASSWORD;
+	String password() default DEFAULT_PASSWORD;
 
 }

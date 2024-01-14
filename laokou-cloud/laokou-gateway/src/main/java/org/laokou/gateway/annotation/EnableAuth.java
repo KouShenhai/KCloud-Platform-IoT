@@ -25,4 +25,6 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import(ApiFilter.class)
-public @interface EnableAuth { }
+public @interface EnableAuth {
+
+}
