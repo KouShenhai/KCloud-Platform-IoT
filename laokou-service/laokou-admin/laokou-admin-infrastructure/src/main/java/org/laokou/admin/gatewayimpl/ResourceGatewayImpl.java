@@ -35,7 +35,7 @@ import org.laokou.admin.dto.resource.TaskStartCmd;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
 import org.laokou.admin.gatewayimpl.database.ResourceMapper;
-import org.laokou.admin.gatewayimpl.database.dataindex.ResourceIndex;
+import org.laokou.admin.gatewayimpl.database.dataobject.ResourceIndex;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
