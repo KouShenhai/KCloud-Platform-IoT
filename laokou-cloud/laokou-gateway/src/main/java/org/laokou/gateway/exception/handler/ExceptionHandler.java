@@ -44,6 +44,7 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 	@Override
 	public Mono<Void> handle(ServerWebExchange exchange, Throwable e) {
 		try {
+			// 国际化
 			I18nUtil.set(exchange);
 			if (e instanceof NotFoundException) {
 				log.error("服务正在维护，请联系管理员，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);

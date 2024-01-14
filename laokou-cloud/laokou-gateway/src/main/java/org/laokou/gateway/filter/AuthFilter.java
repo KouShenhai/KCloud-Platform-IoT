@@ -30,7 +30,6 @@ import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
-import org.laokou.gateway.utils.I18nUtil;
 import org.laokou.gateway.utils.ReactiveRequestUtil;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -99,37 +98,30 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		try {
-			// 国际化
-			I18nUtil.set(exchange);
-			// 获取request对象
-			ServerHttpRequest request = exchange.getRequest();
-			// 获取uri
-			String requestURL = getRequestURL(request);
-			// 请求放行，无需验证权限
-			if (pathMatcher(getMethodName(request), requestURL, urlMap)) {
-				// 无需验证权限的URL，需要将令牌置空
-				return chain
-					.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
-			}
-			// 表单提交
-			MediaType mediaType = getContentType(request);
-			if (requestURL.contains(TOKEN_URL) && POST.matches(getMethodName(request))
-					&& APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
-				return decode(exchange, chain);
-			}
-			// 获取token
-			String token = ReactiveRequestUtil.getParamValue(request, AUTHORIZATION);
-			if (StringUtil.isEmpty(token)) {
-				return ReactiveResponseUtil.response(exchange, Result.fail(UNAUTHORIZED));
-			}
-			// 增加令牌
+		// 获取request对象
+		ServerHttpRequest request = exchange.getRequest();
+		// 获取uri
+		String requestURL = getRequestURL(request);
+		// 请求放行，无需验证权限
+		if (pathMatcher(getMethodName(request), requestURL, urlMap)) {
+			// 无需验证权限的URL，需要将令牌置空
 			return chain
-				.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, token).build()).build());
+				.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
 		}
-		finally {
-			I18nUtil.reset();
+		// 表单提交
+		MediaType mediaType = getContentType(request);
+		if (requestURL.contains(TOKEN_URL) && POST.matches(getMethodName(request))
+				&& APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
+			return decode(exchange, chain);
 		}
+		// 获取token
+		String token = ReactiveRequestUtil.getParamValue(request, AUTHORIZATION);
+		if (StringUtil.isEmpty(token)) {
+			return ReactiveResponseUtil.response(exchange, Result.fail(UNAUTHORIZED));
+		}
+		// 增加令牌
+		return chain.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, token).build()).build());
+
 	}
 
 	@Override
