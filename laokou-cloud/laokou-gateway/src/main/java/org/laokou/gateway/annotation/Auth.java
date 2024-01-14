@@ -22,6 +22,10 @@ import java.lang.annotation.*;
 import static org.laokou.common.i18n.common.SysConstants.DEFAULT_PASSWORD;
 import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
 
+/**
+ * API认证注解.
+ * @author laokou
+ */
 @Documented
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
