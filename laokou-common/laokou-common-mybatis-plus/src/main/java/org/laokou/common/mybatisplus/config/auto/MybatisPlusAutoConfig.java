@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.mybatisplus.config.auto;
 
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;

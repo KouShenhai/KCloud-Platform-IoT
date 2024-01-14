@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.security.config.auto;
 
 import org.laokou.common.security.config.RedisOAuth2AuthorizationRepository;

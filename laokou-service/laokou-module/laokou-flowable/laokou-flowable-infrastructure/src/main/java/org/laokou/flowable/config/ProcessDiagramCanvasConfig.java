@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.flowable.config;
 
 import org.flowable.bpmn.model.AssociationDirection;

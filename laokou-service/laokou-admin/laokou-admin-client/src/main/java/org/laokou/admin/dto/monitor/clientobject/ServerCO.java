@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.dto.monitor.clientobject;
 
 import lombok.Data;

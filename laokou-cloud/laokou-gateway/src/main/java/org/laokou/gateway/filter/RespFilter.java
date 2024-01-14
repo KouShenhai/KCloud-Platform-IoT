@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.gateway.filter;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -79,6 +80,8 @@ public class RespFilter implements GlobalFilter, Ordered {
 
 	/**
 	 * OAuth2响应.
+	 * @param chain 链式过滤器
+	 * @param exchange 服务器对象
 	 */
 	private Mono<Void> response(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerHttpResponse response = exchange.getResponse();

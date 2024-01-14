@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.gateway.config;
 
 import lombok.extern.slf4j.Slf4j;

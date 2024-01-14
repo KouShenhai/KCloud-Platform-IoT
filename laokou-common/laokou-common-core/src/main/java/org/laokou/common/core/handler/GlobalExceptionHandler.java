@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.core.handler;
 
 import jakarta.validation.ValidationException;

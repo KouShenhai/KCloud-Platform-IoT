@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.elasticsearch.utils;
 
 import org.laokou.common.elasticsearch.annotation.EsField;

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.im.module.websocket;
 
 import com.github.benmanes.caffeine.cache.Cache;
@@ -100,11 +101,11 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	}
 
 	private String getAuthorization(Map<String, String> paramMap) {
-		String Authorization = paramMap.getOrDefault(AUTHORIZATION, EMPTY);
-		if (StringUtil.isNotEmpty(Authorization)) {
-			return Authorization.substring(7);
+		String authorization = paramMap.getOrDefault(AUTHORIZATION, EMPTY);
+		if (StringUtil.isNotEmpty(authorization)) {
+			return authorization.substring(7);
 		}
-		return Authorization;
+		return authorization;
 	}
 
 	private void init(ChannelHandlerContext ctx, FullHttpRequest request) {
@@ -117,13 +118,13 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 			int index = uri.indexOf(MARK);
 			String param = uri.substring(index + 1);
 			Map<String, String> paramMap = MapUtil.parseParamMap(param);
-			String Authorization = getAuthorization(paramMap);
+			String authorization = getAuthorization(paramMap);
 			request.setUri(uri.substring(0, index));
-			if (StringUtil.isEmpty(Authorization)) {
+			if (StringUtil.isEmpty(authorization)) {
 				handleRequestError(ctx, UNAUTHORIZED);
 				return;
 			}
-			String userInfoKey = RedisKeyUtil.getUserInfoKey(Authorization);
+			String userInfoKey = RedisKeyUtil.getUserInfoKey(authorization);
 			reactiveRedisUtil.get(userInfoKey).subscribe(obj -> {
 				if (ObjectUtil.isNull(obj)) {
 					handleRequestError(ctx, UNAUTHORIZED);

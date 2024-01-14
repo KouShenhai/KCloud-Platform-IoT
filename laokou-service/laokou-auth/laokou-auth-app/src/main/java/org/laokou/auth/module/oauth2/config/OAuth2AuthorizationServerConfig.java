@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.auth.module.oauth2.config;
 
 import com.nimbusds.jose.jwk.JWKSet;

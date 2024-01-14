@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.gatewayimpl.database;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;

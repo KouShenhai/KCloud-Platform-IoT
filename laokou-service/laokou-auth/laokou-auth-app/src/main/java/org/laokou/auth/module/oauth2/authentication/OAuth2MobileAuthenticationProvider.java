@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.auth.module.oauth2.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;

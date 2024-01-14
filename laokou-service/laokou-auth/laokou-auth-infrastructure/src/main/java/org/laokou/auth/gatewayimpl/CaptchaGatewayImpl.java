@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;

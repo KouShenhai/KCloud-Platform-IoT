@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.redis.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;

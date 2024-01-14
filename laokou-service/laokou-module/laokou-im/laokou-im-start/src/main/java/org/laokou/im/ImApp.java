@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.im;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;

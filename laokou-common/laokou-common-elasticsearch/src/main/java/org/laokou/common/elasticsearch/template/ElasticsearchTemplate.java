@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.elasticsearch.template;
 
 import lombok.RequiredArgsConstructor;
@@ -1047,12 +1048,12 @@ public class ElasticsearchTemplate {
 		String provided_name = indexSetting.get("provided_name");
 		String refresh_interval = indexSetting.get("refresh_interval");
 		String created = indexSetting.get("version.created");
-		String _tier_preference = indexSetting.get("routing.allocation.include._tier_preference");
+		String tier_preference = indexSetting.get("routing.allocation.include._tier_preference");
 		Map<String, Object> map1 = toMap(indexSetting, "analysis.analyzer");
 		Map<String, Object> map2 = toMap(indexSetting, "analysis.filter");
 		SettingsCO.Analysis analysis = new SettingsCO.Analysis(map1, map2);
 		SettingsCO.Version version = new SettingsCO.Version(created);
-		SettingsCO.Include include = new SettingsCO.Include(_tier_preference);
+		SettingsCO.Include include = new SettingsCO.Include(tier_preference);
 		SettingsCO.Allocation allocation = new SettingsCO.Allocation(include);
 		SettingsCO.Routing routing = new SettingsCO.Routing(allocation);
 		SettingsCO.Index index = new SettingsCO.Index(uuid, creation_date, number_of_replicas, number_of_shards,

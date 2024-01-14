@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.idempotent.annotation;
 
 import java.lang.annotation.*;

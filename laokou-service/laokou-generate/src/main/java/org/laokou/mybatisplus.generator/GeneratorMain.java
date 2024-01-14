@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.mybatisplus.generator;
 
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
@@ -67,16 +68,17 @@ public class GeneratorMain {
 	/**
 	 * 配置 代码输出目录.
 	 */
-	private static String OUTPUT_DIR = "";
+	private final static String OUTPUT_DIR = "";
 
 	public static void main(String[] args) {
 		// 默认生成到 KCloud-Platform-Alibaba
-		if (StringUtil.isEmpty(OUTPUT_DIR)) {
-			OUTPUT_DIR = Objects.requireNonNull(GeneratorMain.class.getClassLoader().getResource("")).getPath();
-			OUTPUT_DIR = OUTPUT_DIR.substring(0, OUTPUT_DIR.length() - 15) + File.separator + "src" + File.separator
+		String outputDir = OUTPUT_DIR;
+		if (StringUtil.isEmpty(outputDir)) {
+			outputDir = Objects.requireNonNull(GeneratorMain.class.getClassLoader().getResource("")).getPath();
+			outputDir = outputDir.substring(0, outputDir.length() - 15) + File.separator + "src" + File.separator
 					+ "main" + File.separator + "java";
-			File srcFolder = new File(OUTPUT_DIR);
-			OUTPUT_DIR = srcFolder.getAbsolutePath();
+			File srcFolder = new File(outputDir);
+			outputDir = srcFolder.getAbsolutePath();
 		}
 
 		FastAutoGenerator.create(URL, USERNAME, PASSWORD).globalConfig(builder -> {

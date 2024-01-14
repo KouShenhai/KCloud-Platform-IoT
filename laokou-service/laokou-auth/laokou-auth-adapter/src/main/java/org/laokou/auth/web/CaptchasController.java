@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.auth.web;
 
 import io.swagger.v3.oas.annotations.Operation;

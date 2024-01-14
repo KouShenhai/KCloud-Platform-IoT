@@ -42,6 +42,12 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	 */
 	Integer updateUser(@Param("userDO") UserDO userDO);
 
+	/**
+	 *
+	 * @param userDO
+	 * @param key
+	 * @return
+	 */
 	Integer insertUser(@Param("userDO") UserDO userDO, @Param("key") String key);
 
 	/**
@@ -59,9 +65,22 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	List<UserDO> getUserListFilter(@Param("user") UserDO user, @Param(PAGE_QUERY) PageQuery pageQuery,
 			@Param("key") String key);
 
+	/**
+	 *
+	 * @param user
+	 * @param pageQuery
+	 * @param key
+	 * @return
+	 */
 	Integer getUserListTotalFilter(@Param("user") UserDO user, @Param(PAGE_QUERY) PageQuery pageQuery,
 			@Param("key") String key);
 
+	/**
+	 *
+	 * @param user
+	 * @param key
+	 * @return
+	 */
 	Integer getUserCount(@Param("user") UserDO user, @Param("key") String key);
 
 }

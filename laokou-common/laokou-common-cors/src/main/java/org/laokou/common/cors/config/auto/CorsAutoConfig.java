@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.cors.config.auto;
 
 import lombok.extern.slf4j.Slf4j;

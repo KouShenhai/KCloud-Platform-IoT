@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.auth.module.oauth2.authentication;
 
 import com.baomidou.dynamic.datasource.creator.DataSourceProperty;

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.redis.config;
 
 import org.laokou.common.i18n.utils.ObjectUtil;

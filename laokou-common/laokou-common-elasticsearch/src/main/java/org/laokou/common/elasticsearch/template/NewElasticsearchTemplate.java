@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.elasticsearch.template;
 
 import lombok.RequiredArgsConstructor;

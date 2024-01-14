@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.auth.gatewayimpl.database.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;

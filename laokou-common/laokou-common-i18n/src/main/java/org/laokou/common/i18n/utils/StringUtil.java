@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.i18n.utils;
 
 import org.springframework.lang.Nullable;

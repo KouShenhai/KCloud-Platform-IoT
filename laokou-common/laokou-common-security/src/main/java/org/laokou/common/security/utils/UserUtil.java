@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.security.utils;
 
 import org.laokou.common.security.domain.User;
