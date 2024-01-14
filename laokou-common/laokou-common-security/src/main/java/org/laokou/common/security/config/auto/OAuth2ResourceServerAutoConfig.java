@@ -46,6 +46,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_RESOURCE_
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.StringConstants.TRUE;
 import static org.laokou.common.i18n.common.SysConstants.ENABLED;
+import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
  * 关闭OAuth2,请在yml配置spring.oauth2.resource-server.enabled=false
@@ -63,7 +64,7 @@ import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 public class OAuth2ResourceServerAutoConfig {
 
 	@Bean
-	@Order(Ordered.HIGHEST_PRECEDENCE + 1000)
+	@Order(HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
 	SecurityFilterChain resourceFilterChain(GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector,
 			Environment env, OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http)

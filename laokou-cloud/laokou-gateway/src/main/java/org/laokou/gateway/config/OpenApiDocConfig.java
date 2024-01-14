@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.NetworkConstants.HTTPS_SCHEME;
+import static org.laokou.common.i18n.common.StringConstants.SLASH;
+import static org.laokou.common.i18n.common.SysConstants.ALL_PATTERNS;
 
 /**
  * API文档配置.
@@ -51,7 +53,7 @@ public class OpenApiDocConfig {
 			return routeDefinition.getId().matches("laokou-.*");
 		}).subscribeOn(Schedulers.boundedElastic()).subscribe(routeDefinition -> {
 			String name = routeDefinition.getId().substring(7);
-			GroupedOpenApi.builder().pathsToMatch("/".concat(name).concat("/**")).group(name).build();
+			GroupedOpenApi.builder().pathsToMatch(SLASH.concat(name).concat(ALL_PATTERNS)).group(name).build();
 		});
 		return groups;
 	}

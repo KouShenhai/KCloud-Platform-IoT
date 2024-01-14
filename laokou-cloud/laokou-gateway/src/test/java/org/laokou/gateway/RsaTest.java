@@ -15,25 +15,24 @@
  *
  */
 
-package org.laokou.gateway.utils;
+package org.laokou.gateway;
 
-import org.laokou.common.i18n.utils.LocaleUtil;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.server.ServerWebExchange;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.crypto.utils.RsaUtil;
+
+import static org.laokou.common.i18n.common.SysConstants.DEFAULT_PASSWORD;
+import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
 
 /**
  * @author laokou
  */
-public class I18nUtil {
+@Slf4j
+public class RsaTest {
 
-	public static void set(ServerWebExchange exchange) {
-		String language = ReactiveRequestUtil.getParamValue(exchange.getRequest(), HttpHeaders.ACCEPT_LANGUAGE);
-		LocaleContextHolder.setLocale(LocaleUtil.toLocale(language), true);
-	}
-
-	public static void reset() {
-		LocaleContextHolder.resetLocaleContext();
-	}
+    public static void main(String[] args) {
+        String publicKey = RsaUtil.getPublicKey();
+        System.out.println(RsaUtil.encryptByPublicKey(DEFAULT_USERNAME, publicKey));
+        System.out.println(RsaUtil.encryptByPublicKey(DEFAULT_PASSWORD, publicKey));
+    }
 
 }

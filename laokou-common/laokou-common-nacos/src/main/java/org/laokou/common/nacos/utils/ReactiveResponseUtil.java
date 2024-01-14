@@ -30,7 +30,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author laokou
  */
-public class ResponseUtil {
+public class ReactiveResponseUtil {
 
 	public static Mono<Void> response(ServerWebExchange exchange, Object data) {
 		DataBuffer buffer = exchange.getResponse()

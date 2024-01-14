@@ -31,9 +31,6 @@ import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.core.io.buffer.DataBufferUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -44,10 +41,16 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.StandardCharsets;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.laokou.common.i18n.common.OAuth2Constants.*;
 import static org.laokou.common.i18n.common.StringConstants.CHINESE_COMMA;
 import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
+import static org.laokou.gateway.utils.ReactiveRequestUtil.*;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
  * @author laokou
@@ -62,11 +65,11 @@ public class RespFilter implements GlobalFilter, Ordered {
 		// 获取request对象
 		ServerHttpRequest request = exchange.getRequest();
 		// 获取uri
-		String requestUri = request.getPath().pathWithinApplication().value();
+		String requestURL = getRequestURL(request);
 		// 表单提交
-		MediaType mediaType = request.getHeaders().getContentType();
-		if (requestUri.contains(TOKEN_URL) && HttpMethod.POST.matches(request.getMethod().name())
-				&& MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
+		MediaType mediaType = getContentType(request);
+		if (requestURL.contains(TOKEN_URL) && POST.matches(getMethodName(request))
+				&& APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
 			return response(exchange, chain);
 		}
 		else {
@@ -83,20 +86,20 @@ public class RespFilter implements GlobalFilter, Ordered {
 		ServerHttpResponseDecorator serverHttpResponseDecorator = new ServerHttpResponseDecorator(response) {
 			@Override
 			public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
-				String contentType = getDelegate().getHeaders().getFirst(HttpHeaders.CONTENT_TYPE);
+				String contentType = getDelegate().getHeaders().getFirst(CONTENT_TYPE);
 				Assert.isTrue(ObjectUtil.isNotNull(contentType), "content type is null");
-				if (contentType.contains(MediaType.APPLICATION_JSON_VALUE)
+				if (contentType.contains(APPLICATION_JSON_VALUE)
 						&& ObjectUtil.requireNotNull(response.getStatusCode()).value() != StatusCodes.OK
 						&& body instanceof Flux) {
 					Flux<? extends DataBuffer> flux = Flux.from(body);
 					return super.writeWith(flux.map(dataBuffer -> {
 						// 修改状态码
-						response.setStatusCode(HttpStatus.OK);
+						response.setStatusCode(OK);
 						byte[] content = new byte[dataBuffer.readableByteCount()];
 						dataBuffer.read(content);
 						// 释放内容
 						DataBufferUtils.release(dataBuffer);
-						String str = new String(content, StandardCharsets.UTF_8);
+						String str = new String(content, UTF_8);
 						// str就是response的值
 						JsonNode node = JacksonUtil.readTree(str);
 						JsonNode msgNode = node.get(ERROR_DESCRIPTION);
@@ -123,7 +126,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 
 	@Override
 	public int getOrder() {
-		return Ordered.HIGHEST_PRECEDENCE + 1500;
+		return HIGHEST_PRECEDENCE + 1500;
 	}
 
 	private ExceptionEnum getException(String code) {

@@ -18,6 +18,7 @@ package org.laokou.gateway;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
+import org.laokou.gateway.annotation.EnableAuth;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration;
@@ -34,6 +35,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 /**
  * @author laokou
  */
+@EnableAuth
 @SpringBootApplication(scanBasePackages = "org.laokou",
 		exclude = { RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
 @EnableConfigurationProperties

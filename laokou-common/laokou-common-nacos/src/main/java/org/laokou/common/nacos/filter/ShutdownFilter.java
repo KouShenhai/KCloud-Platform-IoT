@@ -29,6 +29,7 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
@@ -76,10 +77,10 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 		if (open()) {
-			return org.laokou.common.nacos.utils.ResponseUtil.response(exchange,
+			return ReactiveResponseUtil.response(exchange,
 					JacksonUtil.toJsonStr(Result.of(EMPTY)));
 		}
-		return org.laokou.common.nacos.utils.ResponseUtil.response(exchange,
+		return ReactiveResponseUtil.response(exchange,
 				JacksonUtil.toJsonStr(Result.fail(SERVICE_UNAVAILABLE)));
 	}
 

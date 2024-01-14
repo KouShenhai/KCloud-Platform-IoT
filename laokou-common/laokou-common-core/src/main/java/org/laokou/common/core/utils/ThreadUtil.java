@@ -18,8 +18,10 @@
 package org.laokou.common.core.utils;
 
 import org.laokou.common.i18n.utils.ObjectUtil;
+
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * @author laokou
@@ -30,7 +32,7 @@ public class ThreadUtil {
 		if (ObjectUtil.isNotNull(executorService) && !executorService.isShutdown()) {
 			executorService.shutdown();
 			try {
-				if (!executorService.awaitTermination(timeout, TimeUnit.SECONDS)) {
+				if (!executorService.awaitTermination(timeout, SECONDS)) {
 					executorService.shutdownNow();
 				}
 			}

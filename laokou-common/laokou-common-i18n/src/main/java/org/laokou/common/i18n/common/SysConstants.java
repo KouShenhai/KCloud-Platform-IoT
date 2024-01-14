@@ -142,4 +142,14 @@ public final class SysConstants {
 	 */
 	public static final String EMPTY_JSON = "{}";
 
+	/**
+	 * 默认账号.
+	 */
+	public static final String DEFAULT_USERNAME = "laokou";
+
+	/**
+	 * 默认密码.
+	 */
+	public static final String DEFAULT_PASSWORD = "laokou123";
+
 }

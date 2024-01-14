@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.gateway.utils.RequestUtil;
+import org.laokou.gateway.utils.ReactiveRequestUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -31,6 +31,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import static org.laokou.common.i18n.common.TraceConstants.*;
+import static org.laokou.gateway.utils.ReactiveRequestUtil.getHost;
 
 /**
  * 分布式请求链路.
@@ -46,11 +47,11 @@ public class TraceFilter implements GlobalFilter, Ordered {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		try {
 			ServerHttpRequest request = exchange.getRequest();
-			String host = request.getURI().getHost();
-			String userId = RequestUtil.getParamValue(request, USER_ID);
-			String tenantId = RequestUtil.getParamValue(request, TENANT_ID);
-			String username = RequestUtil.getParamValue(request, USER_NAME);
-			String traceId = RequestUtil.getParamValue(request, TRACE_ID);
+			String host = getHost(request);
+			String userId = ReactiveRequestUtil.getParamValue(request, USER_ID);
+			String tenantId = ReactiveRequestUtil.getParamValue(request, TENANT_ID);
+			String username = ReactiveRequestUtil.getParamValue(request, USER_NAME);
+			String traceId = ReactiveRequestUtil.getParamValue(request, TRACE_ID);
 			ThreadContext.put(TRACE_ID, traceId);
 			ThreadContext.put(USER_ID, userId);
 			ThreadContext.put(TENANT_ID, tenantId);
@@ -77,7 +78,7 @@ public class TraceFilter implements GlobalFilter, Ordered {
 
 	@Override
 	public int getOrder() {
-		return Ordered.HIGHEST_PRECEDENCE + 800;
+		return HIGHEST_PRECEDENCE + 800;
 	}
 
 }

@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.nacos.utils.ResponseUtil;
+import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -57,7 +57,7 @@ public class BlackIp implements Ip {
 		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
 			if (Boolean.TRUE.equals(r)) {
 				log.error("IP为{}已列入黑名单", hostAddress);
-				return ResponseUtil.response(exchange, Result.fail(IP_BLACK));
+				return ReactiveResponseUtil.response(exchange, Result.fail(IP_BLACK));
 			}
 			return chain.filter(exchange);
 		});

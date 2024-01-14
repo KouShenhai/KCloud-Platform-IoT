@@ -45,4 +45,9 @@ public final class RouterConstants {
 	 */
 	public static final String DATA_ID = "router.json";
 
+	/**
+	 * API路径前缀.
+	 */
+	public static final String API_URL_PREFIX = "/v1/routers";
+
 }

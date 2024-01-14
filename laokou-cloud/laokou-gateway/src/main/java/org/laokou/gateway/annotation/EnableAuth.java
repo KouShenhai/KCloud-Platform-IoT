@@ -14,26 +14,15 @@
  * limitations under the License.
  *
  */
+package org.laokou.gateway.annotation;
 
-package org.laokou.gateway.utils;
+import org.laokou.gateway.filter.ApiFilter;
+import org.springframework.context.annotation.Import;
 
-import org.laokou.common.i18n.utils.LocaleUtil;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.server.ServerWebExchange;
+import java.lang.annotation.*;
 
-/**
- * @author laokou
- */
-public class I18nUtil {
-
-	public static void set(ServerWebExchange exchange) {
-		String language = ReactiveRequestUtil.getParamValue(exchange.getRequest(), HttpHeaders.ACCEPT_LANGUAGE);
-		LocaleContextHolder.setLocale(LocaleUtil.toLocale(language), true);
-	}
-
-	public static void reset() {
-		LocaleContextHolder.resetLocaleContext();
-	}
-
-}
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import(ApiFilter.class)
+public @interface EnableAuth { }
