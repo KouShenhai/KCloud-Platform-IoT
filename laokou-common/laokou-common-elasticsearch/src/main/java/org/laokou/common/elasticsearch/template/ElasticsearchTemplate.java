@@ -842,9 +842,9 @@ public class ElasticsearchTemplate {
 			for (SearchHit hit : hits) {
 				Map<String, Object> sourceData = hit.getSourceAsMap();
 				Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-				for (String key : highlightFields.keySet()) {
-					sourceData.put(key, highlightFields.get(key).getFragments()[0].string());
-				}
+                for (Map.Entry<String, HighlightField> entry : highlightFields.entrySet()) {
+                    sourceData.put(entry.getKey(), entry.getValue().getFragments()[0].string());
+                }
 				data.add(sourceData);
 			}
 			Datas<Map<String, Object>> datas = new Datas<>();
