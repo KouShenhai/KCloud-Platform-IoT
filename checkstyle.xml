@@ -232,5 +232,11 @@
 		<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.TypecastParenPadCheck"/>
 		<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
 		<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
+
+		<!-- 代码质量 -->
+		<!-- 圈复杂度 -->
+		<module name="CyclomaticComplexity">
+			<property name="max" value="40"/>
+		</module>
 	</module>
 </module>
