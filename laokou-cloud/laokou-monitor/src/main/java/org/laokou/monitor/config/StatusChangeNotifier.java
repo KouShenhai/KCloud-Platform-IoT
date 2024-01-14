@@ -26,6 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import static org.laokou.common.i18n.common.SysConstants.*;
+
 /**
  * 通知配置.
  *
@@ -47,18 +49,16 @@ public class StatusChangeNotifier extends AbstractStatusChangeNotifier {
 				String status = eventStatus.getStatusInfo().getStatus();
 				switch (status) {
 					// 健康检查没通过
-					case "DOWN" -> log.info("健康检查没通过");
+					case SERVICE_DOWN_STATUS -> log.info("健康检查没通过");
 
 					// 服务离线
-					case "OFFLINE" -> log.info("服务离线");
+					case SERVICE_OFFLINE_STATUS -> log.info("服务离线");
 
 					// 服务上线
-					case "UP" -> log.info("服务上线");
+					case SERVICE_UP_STATUS -> log.info("服务上线");
 
 					// 服务未知异常
-					case "UNKNOWN" -> log.error("服务未知异常");
-					default -> {
-					}
+					case SERVICE_UNKNOWN_STATUS -> log.error("服务未知异常");
 				}
 			}
 		});
