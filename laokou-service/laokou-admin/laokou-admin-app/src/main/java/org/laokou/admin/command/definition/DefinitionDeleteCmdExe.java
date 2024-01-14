@@ -19,7 +19,7 @@ package org.laokou.admin.command.definition;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.definition.DefinitionDeleteCmd;
-import org.laokou.admin.gatewayimpl.feign.DefinitionsFeignClient;
+import org.laokou.admin.gatewayimpl.rpc.DefinitionsFeignClient;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 

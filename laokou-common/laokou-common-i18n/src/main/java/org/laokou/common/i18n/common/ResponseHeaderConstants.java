@@ -36,6 +36,11 @@ public final class ResponseHeaderConstants {
 	public static final String CONTENT_DISPOSITION = "Content-disposition";
 
 	/**
+	 * stream类型.
+	 */
+	public static final String STREAM_CONTENT_TYPE = "application/octet-stream";
+
+	/**
 	 * access control expose headers.
 	 */
 	public static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";

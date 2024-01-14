@@ -25,6 +25,7 @@ import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDeta
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import java.net.InetAddress;
 
@@ -37,6 +38,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 		exclude = { RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
 @EnableConfigurationProperties
 @EnableEncryptableProperties
+@EnableAspectJAutoProxy
 @EnableDiscoveryClient
 public class GatewayApp {
 

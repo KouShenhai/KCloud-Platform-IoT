@@ -35,8 +35,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
  * @author laokou
  */
 @SpringBootApplication(scanBasePackages = "org.laokou",
-		exclude = { ReactiveSecurityAutoConfiguration.class,
-				ReactiveManagementWebSecurityAutoConfiguration.class,
+		exclude = { ReactiveSecurityAutoConfiguration.class, ReactiveManagementWebSecurityAutoConfiguration.class,
 				ReactiveUserDetailsServiceAutoConfiguration.class })
 @EnableEncryptableProperties
 @EnableDiscoveryClient

@@ -25,7 +25,7 @@ import org.laokou.admin.dto.message.MessageInsertCmd;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.dto.message.domainevent.MessageEvent;
 import org.laokou.admin.dto.resource.clientobject.AssigneeCO;
-import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
+import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;

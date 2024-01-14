@@ -15,11 +15,11 @@
  *
  */
 
-package org.laokou.admin.gatewayimpl.feign.fallback;
+package org.laokou.admin.gatewayimpl.rpc.fallback;
 
 import org.laokou.admin.dto.definition.DefinitionListQry;
 import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
-import org.laokou.admin.gatewayimpl.feign.DefinitionsFeignClient;
+import org.laokou.admin.gatewayimpl.rpc.DefinitionsFeignClient;
 import org.laokou.common.i18n.common.exception.FeignException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;

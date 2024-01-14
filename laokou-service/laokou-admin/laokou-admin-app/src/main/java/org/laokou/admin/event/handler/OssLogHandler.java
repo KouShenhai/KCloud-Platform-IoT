@@ -28,7 +28,11 @@ import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author laokou
@@ -41,19 +45,24 @@ public class OssLogHandler implements ApplicationListener<OssLogEvent> {
 
 	private final OssLogMapper ossLogMapper;
 
+	private final ThreadPoolTaskExecutor taskExecutor;
+
 	@Override
+	@Async
 	public void onApplicationEvent(OssLogEvent event) {
 		String sourceName = UserContextHolder.get().getSourceName();
-		try {
-			DynamicDataSourceContextHolder.push(sourceName);
-			execute(event);
-		}
-		catch (Exception e) {
-			log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+		CompletableFuture.runAsync(() -> {
+			try {
+				DynamicDataSourceContextHolder.push(sourceName);
+				execute(event);
+			}
+			catch (Exception e) {
+				log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			}
+			finally {
+				DynamicDataSourceContextHolder.clear();
+			}
+		}, taskExecutor);
 	}
 
 	private void execute(OssLogEvent event) {
