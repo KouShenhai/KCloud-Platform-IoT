@@ -27,19 +27,19 @@ import java.util.Optional;
  */
 public class UserContextHolder {
 
-	private static final ThreadLocal<User> USER_HOLDER = new TransmittableThreadLocal<>();
+	private static final ThreadLocal<User> USER_LOCAL = new TransmittableThreadLocal<>();
 
 	public static void clear() {
-		USER_HOLDER.remove();
+		USER_LOCAL.remove();
 	}
 
 	public static User get() {
-		return Optional.ofNullable(USER_HOLDER.get()).orElse(new User());
+		return Optional.ofNullable(USER_LOCAL.get()).orElse(new User());
 	}
 
 	public static void set(User user) {
 		clear();
-		USER_HOLDER.set(user);
+		USER_LOCAL.set(user);
 	}
 
 	@Data

@@ -22,18 +22,18 @@ package org.laokou.common.mybatisplus.context;
  */
 public class DynamicTableSuffixContextHolder {
 
-	private static final ThreadLocal<String> TABLE_SUFFIX_HOLDER = new InheritableThreadLocal<>();
+	private static final ThreadLocal<String> TABLE_SUFFIX_LOCAL = new InheritableThreadLocal<>();
 
 	public static void set(String suffix) {
-		TABLE_SUFFIX_HOLDER.set(suffix);
+		TABLE_SUFFIX_LOCAL.set(suffix);
 	}
 
 	public static void clear() {
-		TABLE_SUFFIX_HOLDER.remove();
+		TABLE_SUFFIX_LOCAL.remove();
 	}
 
 	public static String get() {
-		return TABLE_SUFFIX_HOLDER.get();
+		return TABLE_SUFFIX_LOCAL.get();
 	}
 
 }
