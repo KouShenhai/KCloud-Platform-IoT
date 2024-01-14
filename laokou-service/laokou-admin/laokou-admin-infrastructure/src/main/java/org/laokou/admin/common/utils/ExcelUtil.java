@@ -60,7 +60,6 @@ import java.util.function.BiConsumer;
 import static org.laokou.common.i18n.common.ResponseHeaderConstants.*;
 import static org.laokou.common.i18n.common.StringConstants.DROP;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
 import static org.laokou.common.i18n.common.SysConstants.EXCEL_SUFFIX;
 
 /**
@@ -156,8 +155,6 @@ public class ExcelUtil {
 
 		private final BiConsumer<M, T> consumer;
 
-		private int index;
-
 		DataListener(Class<M> clazz, BiConsumer<M, T> consumer, HttpServletResponse response, MybatisUtil mybatisUtil) {
 			this(clazz, consumer, BATCH_COUNT, response, mybatisUtil);
 		}
@@ -169,18 +166,17 @@ public class ExcelUtil {
 			this.response = response;
 			this.ERRORS = new ArrayList<>();
 			this.CACHED_DATA_LIST = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
-			this.index = DEFAULT;
 			this.mybatisUtil = mybatisUtil;
 			this.consumer = consumer;
 		}
 
 		@Override
 		public void invoke(T data, AnalysisContext context) {
+			int currentRowNum = context.readRowHolder().getRowIndex() + 1;
 			// 校验数据
 			Set<String> set = ValidatorUtil.validateEntity(data);
 			if (CollectionUtil.isNotEmpty(set)) {
-				ERRORS.add(template(index, StringUtil.collectionToDelimitedString(set, DROP)));
-				index++;
+				ERRORS.add(template(currentRowNum, StringUtil.collectionToDelimitedString(set, DROP)));
 			}
 			else {
 				CACHED_DATA_LIST.add(data);
@@ -189,6 +185,11 @@ public class ExcelUtil {
 					CACHED_DATA_LIST.clear();
 				}
 			}
+		}
+
+		@Override
+		public void onException(Exception exception, AnalysisContext context) {
+			log.error("Excel导入异常，错误信息：{}，详情见日志", LogUtil.result(exception.getMessage()));
 		}
 
 		@SneakyThrows
@@ -216,8 +217,8 @@ public class ExcelUtil {
 			}
 		}
 
-		private String template(int index, String msg) {
-			return String.format("第%s行，%s", index, msg);
+		private String template(int num, String msg) {
+			return String.format("第%s行，%s", num, msg);
 		}
 
 	}

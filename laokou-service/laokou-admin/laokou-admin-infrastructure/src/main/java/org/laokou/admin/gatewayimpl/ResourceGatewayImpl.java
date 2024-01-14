@@ -38,7 +38,7 @@ import org.laokou.admin.gatewayimpl.database.ResourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataindex.ResourceIndex;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
-import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
+import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.JacksonUtil;

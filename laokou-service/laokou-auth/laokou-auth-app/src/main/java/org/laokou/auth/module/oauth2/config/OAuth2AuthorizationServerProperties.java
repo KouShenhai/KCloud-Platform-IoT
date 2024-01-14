@@ -60,7 +60,7 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 	/**
 	 * Registered clients of the Authorization Server.
 	 */
-	private final Map<String, Client> client = new HashMap<>();
+	private final Map<String, Client> client = new HashMap<>(0);
 
 	/**
 	 * Authorization Server endpoints.
@@ -232,12 +232,12 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 		/**
 		 * Client authentication method(s) that the client may use.
 		 */
-		private Set<String> clientAuthenticationMethods = new HashSet<>();
+		private Set<String> clientAuthenticationMethods = new HashSet<>(0);
 
 		/**
 		 * Authorization grant type(s) that the client may use.
 		 */
-		private Set<String> authorizationGrantTypes = new HashSet<>();
+		private Set<String> authorizationGrantTypes = new HashSet<>(0);
 
 		/**
 		 * Redirect URI(s) that the client may use in redirect-based flows.
@@ -247,12 +247,12 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 		/**
 		 * Redirect URI(s) that the client may use for logout.
 		 */
-		private Set<String> postLogoutRedirectUris = new HashSet<>();
+		private Set<String> postLogoutRedirectUris = new HashSet<>(0);
 
 		/**
 		 * Scope(s) that the client may use.
 		 */
-		private Set<String> scopes = new HashSet<>();
+		private Set<String> scopes = new HashSet<>(0);
 
 	}
 

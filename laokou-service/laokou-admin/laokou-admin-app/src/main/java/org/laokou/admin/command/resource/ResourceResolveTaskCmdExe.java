@@ -25,7 +25,7 @@ import org.laokou.admin.common.event.DomainEventPublisher;
 import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.dto.resource.ResourceResolveTaskCmd;
 import org.laokou.admin.dto.resource.TaskResolveCmd;
-import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
+import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;

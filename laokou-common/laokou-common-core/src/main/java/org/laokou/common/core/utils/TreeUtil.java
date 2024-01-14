@@ -105,7 +105,7 @@ public class TreeUtil {
 		private String path;
 
 		@Schema(name = "children", description = "子节点")
-		private List<T> children = new ArrayList<>();
+		private List<T> children = new ArrayList<>(16);
 
 	}
 

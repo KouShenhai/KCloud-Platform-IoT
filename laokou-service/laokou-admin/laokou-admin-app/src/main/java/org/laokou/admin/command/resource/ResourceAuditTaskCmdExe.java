@@ -32,7 +32,7 @@ import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
 import org.laokou.admin.gatewayimpl.database.ResourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
-import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
+import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;

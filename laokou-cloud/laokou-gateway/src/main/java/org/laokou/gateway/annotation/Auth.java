@@ -14,26 +14,8 @@
  * limitations under the License.
  *
  */
+package org.laokou.gateway.annotation;
 
-package org.laokou.admin.command.resource.query;
-
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.resource.ResourceDiagramGetQry;
-import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
-
-/**
- * @author laokou
- */
-@Component
-@RequiredArgsConstructor
-public class ResourceDiagramGetQryExe {
-
-	private final TasksFeignClient tasksFeignClient;
-
-	public Result<String> execute(ResourceDiagramGetQry qry) {
-		return tasksFeignClient.diagram(qry.getInstanceId());
-	}
+public @interface Auth {
 
 }

@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.gatewayimpl.feign;
+package org.laokou.admin.gatewayimpl.rpc;
 
 import org.laokou.admin.dto.resource.*;
 import org.laokou.admin.dto.resource.clientobject.AssigneeCO;
 import org.laokou.admin.dto.resource.clientobject.AuditCO;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
-import org.laokou.admin.gatewayimpl.feign.factory.TasksFeignClientFallbackFactory;
+import org.laokou.admin.gatewayimpl.rpc.factory.TasksFeignClientFallbackFactory;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.cloud.openfeign.FeignClient;

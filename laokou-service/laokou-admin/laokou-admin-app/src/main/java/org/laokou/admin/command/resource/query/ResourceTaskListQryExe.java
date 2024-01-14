@@ -22,7 +22,7 @@ import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.dto.resource.ResourceTaskListQry;
 import org.laokou.admin.dto.resource.TaskListQry;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
-import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
+import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;

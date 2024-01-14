@@ -15,11 +15,11 @@
  *
  */
 
-package org.laokou.admin.gatewayimpl.feign;
+package org.laokou.admin.gatewayimpl.rpc;
 
 import org.laokou.admin.dto.definition.DefinitionListQry;
 import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
-import org.laokou.admin.gatewayimpl.feign.factory.DefinitionsFeignClientFallbackFactory;
+import org.laokou.admin.gatewayimpl.rpc.factory.DefinitionsFeignClientFallbackFactory;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.cloud.openfeign.FeignClient;

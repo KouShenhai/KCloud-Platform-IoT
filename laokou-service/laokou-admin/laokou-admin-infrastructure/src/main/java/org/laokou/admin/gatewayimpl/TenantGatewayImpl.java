@@ -31,7 +31,6 @@ import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
-import org.laokou.common.i18n.common.SuperAdminEnums;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
@@ -40,7 +39,9 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.*;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.NumberConstants;
+import org.laokou.common.i18n.common.SuperAdminEnums;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -48,7 +49,6 @@ import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.core.env.Environment;
@@ -62,13 +62,15 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.laokou.common.i18n.common.DatasourceConstants.*;
+import static org.laokou.common.i18n.common.ResponseHeaderConstants.CONTENT_DISPOSITION;
+import static org.laokou.common.i18n.common.ResponseHeaderConstants.STREAM_CONTENT_TYPE;
 import static org.laokou.common.i18n.common.StringConstants.*;
 import static org.laokou.common.i18n.common.TenantConstants.*;
 
@@ -145,10 +147,9 @@ public class TenantGatewayImpl implements TenantGateway {
 		String fileName = "kcloud_platform_alibaba_tenant.sql";
 		String fileExt = FileUtil.getFileExt(fileName);
 		String name = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + fileExt;
-		response.setContentType("application/octet-stream");
-		response.setCharacterEncoding("utf-8");
-		response.setHeader("Content-disposition",
-				"attachment;filename=" + StandardCharsets.UTF_8.encode(fileName + ".zip"));
+		response.setContentType(STREAM_CONTENT_TYPE);
+		response.setCharacterEncoding(UTF_8);
+		response.setHeader(CONTENT_DISPOSITION, "attachment;filename=" + UTF_8.encode(fileName + ".zip"));
 		TenantDO tenantDO = tenantMapper.selectById(id);
 		Assert.isTrue(ObjectUtil.isNotNull(tenantDO), "tenantDO is null");
 		try (ServletOutputStream outputStream = response.getOutputStream()) {

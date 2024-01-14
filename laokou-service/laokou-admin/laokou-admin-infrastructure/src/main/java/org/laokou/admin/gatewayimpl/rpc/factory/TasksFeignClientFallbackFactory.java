@@ -15,7 +15,21 @@
  *
  */
 
+package org.laokou.admin.gatewayimpl.rpc.factory;
+
+import org.laokou.admin.gatewayimpl.rpc.fallback.TasksFeignClientFallback;
+import org.springframework.cloud.openfeign.FallbackFactory;
+import org.springframework.stereotype.Component;
+
 /**
  * @author laokou
  */
-package org.laokou.admin.gatewayimpl.feign;
+@Component
+public class TasksFeignClientFallbackFactory implements FallbackFactory<TasksFeignClientFallback> {
+
+	@Override
+	public TasksFeignClientFallback create(Throwable throwable) {
+		return new TasksFeignClientFallback();
+	}
+
+}

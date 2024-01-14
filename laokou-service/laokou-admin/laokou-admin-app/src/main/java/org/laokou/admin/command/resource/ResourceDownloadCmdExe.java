@@ -32,9 +32,11 @@ import org.springframework.stereotype.Component;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.ResponseHeaderConstants.CONTENT_DISPOSITION;
+import static org.laokou.common.i18n.common.ResponseHeaderConstants.STREAM_CONTENT_TYPE;
 
 /**
  * @author laokou
@@ -50,10 +52,9 @@ public class ResourceDownloadCmdExe {
 	public void executeVoid(ResourceDownloadCmd cmd) {
 		ResourceDO resourceDO = resourceMapper.selectById(cmd.getId());
 		HttpServletResponse response = cmd.getResponse();
-		response.setContentType("application/octet-stream");
-		response.setCharacterEncoding("utf-8");
-		response.setHeader("Content-disposition",
-				"attachment;filename=" + StandardCharsets.UTF_8.encode(resourceDO.getTitle()));
+		response.setContentType(STREAM_CONTENT_TYPE);
+		response.setCharacterEncoding(UTF_8);
+		response.setHeader(CONTENT_DISPOSITION, "attachment;filename=" + UTF_8.encode(resourceDO.getTitle()));
 		try (ServletOutputStream outputStream = response.getOutputStream()) {
 			URL u = URI.create(resourceDO.getUrl()).toURL();
 			HttpURLConnection conn = (HttpURLConnection) u.openConnection();
