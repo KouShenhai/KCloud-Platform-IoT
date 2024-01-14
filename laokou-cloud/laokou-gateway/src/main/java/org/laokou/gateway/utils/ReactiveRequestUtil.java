@@ -18,6 +18,7 @@ package org.laokou.gateway.utils;
 
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.AntPathMatcher;
 
@@ -29,7 +30,7 @@ import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 /**
  * @author laokou
  */
-public class RequestUtil {
+public class ReactiveRequestUtil {
 
 	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
@@ -43,17 +44,37 @@ public class RequestUtil {
 		return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
 	}
 
-	public static boolean pathMatcher(String requestMethod, String requestUri, Map<String, Set<String>> uriMap) {
-		Set<String> uris = uriMap.get(requestMethod);
-		if (CollectionUtil.isEmpty(uris)) {
+	public static String getRequestURL(ServerHttpRequest request) {
+		return request.getPath().pathWithinApplication().value();
+	}
+
+	public static String getHost(ServerHttpRequest request) {
+		return request.getURI().getHost();
+	}
+
+	public static MediaType getContentType(ServerHttpRequest request) {
+		return request.getHeaders().getContentType();
+	}
+
+	public static String getMethodName(ServerHttpRequest request) {
+		return request.getMethod().name();
+	}
+
+	public static boolean pathMatcher(String requestMethod, String requestURL, Map<String, Set<String>> urlMap) {
+		Set<String> urls = urlMap.get(requestMethod);
+		if (CollectionUtil.isEmpty(urls)) {
 			return false;
 		}
-		for (String url : uris) {
-			if (ANT_PATH_MATCHER.match(url, requestUri)) {
+		for (String url : urls) {
+			if (ANT_PATH_MATCHER.match(url, requestURL)) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	public static boolean pathMatcher(String requestURL, String url) {
+		return ANT_PATH_MATCHER.match(url, requestURL);
 	}
 
 }

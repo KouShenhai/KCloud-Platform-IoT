@@ -29,9 +29,9 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;
-import org.laokou.common.nacos.utils.ResponseUtil;
+import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.laokou.gateway.utils.I18nUtil;
-import org.laokou.gateway.utils.RequestUtil;
+import org.laokou.gateway.utils.ReactiveRequestUtil;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -42,7 +42,6 @@ import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ReactiveHttpOutputMessage;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -72,7 +71,12 @@ import static org.laokou.common.i18n.common.RequestHeaderConstants.CHUNKED;
 import static org.laokou.common.i18n.common.StatusCodes.UNAUTHORIZED;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import static org.laokou.common.i18n.common.SysConstants.COMMON_DATA_ID;
-import static org.laokou.gateway.utils.RequestUtil.pathMatcher;
+import static org.laokou.gateway.utils.ReactiveRequestUtil.*;
+import static org.springframework.http.HttpHeaders.CONTENT_LENGTH;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
+import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
 
 /**
  * 认证Filter.
@@ -89,7 +93,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	private final OAuth2ResourceServerProperties oAuth2ResourceServerProperties;
 
-	private volatile Map<String, Set<String>> uriMap;
+	private volatile Map<String, Set<String>> urlMap;
 
 	private final ConfigUtil configUtil;
 
@@ -101,23 +105,23 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			// 获取request对象
 			ServerHttpRequest request = exchange.getRequest();
 			// 获取uri
-			String requestUri = request.getPath().pathWithinApplication().value();
+			String requestURL = getRequestURL(request);
 			// 请求放行，无需验证权限
-			if (pathMatcher(request.getMethod().name(), requestUri, uriMap)) {
+			if (pathMatcher(getMethodName(request), requestURL, urlMap)) {
 				// 无需验证权限的URL，需要将令牌置空
 				return chain
 					.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
 			}
 			// 表单提交
-			MediaType mediaType = request.getHeaders().getContentType();
-			if (requestUri.contains(TOKEN_URL) && HttpMethod.POST.matches(request.getMethod().name())
-					&& MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
+			MediaType mediaType = getContentType(request);
+			if (requestURL.contains(TOKEN_URL) && POST.matches(getMethodName(request))
+					&& APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
 				return decode(exchange, chain);
 			}
 			// 获取token
-			String token = RequestUtil.getParamValue(request, AUTHORIZATION);
+			String token = ReactiveRequestUtil.getParamValue(request, AUTHORIZATION);
 			if (StringUtil.isEmpty(token)) {
-				return ResponseUtil.response(exchange, Result.fail(UNAUTHORIZED));
+				return ReactiveResponseUtil.response(exchange, Result.fail(UNAUTHORIZED));
 			}
 			// 增加令牌
 			return chain
@@ -146,8 +150,8 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 				String.class);
 		HttpHeaders headers = new HttpHeaders();
 		headers.putAll(exchange.getRequest().getHeaders());
-		headers.remove(HttpHeaders.CONTENT_LENGTH);
-		headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+		headers.remove(CONTENT_LENGTH);
+		headers.set(CONTENT_TYPE, APPLICATION_FORM_URLENCODED_VALUE);
 		CachedBodyOutputMessage outputMessage = new CachedBodyOutputMessage(exchange, headers);
 		return bodyInserter.insert(outputMessage, new BodyInserterContext()).then(Mono.defer(() -> {
 			ServerHttpRequest decorator = requestDecorator(exchange, headers, outputMessage);
@@ -232,7 +236,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	}
 
 	private void initURLMap() {
-		uriMap = Optional.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
+		urlMap = Optional.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
 				env.getProperty(SPRING_APPLICATION_NAME)))
 			.orElseGet(ConcurrentHashMap::new);
 	}

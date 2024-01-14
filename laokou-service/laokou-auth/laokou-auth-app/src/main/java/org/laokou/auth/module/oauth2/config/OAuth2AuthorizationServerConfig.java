@@ -69,6 +69,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_AUTHORIZA
 import static org.laokou.common.i18n.common.StringConstants.TRUE;
 import static org.laokou.common.i18n.common.SysConstants.ALGORITHM_RSA;
 import static org.laokou.common.i18n.common.SysConstants.ENABLED;
+import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
  * 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}.
@@ -94,7 +95,7 @@ class OAuth2AuthorizationServerConfig {
 	 * @throws Exception Exception
 	 */
 	@Bean
-	@Order(Ordered.HIGHEST_PRECEDENCE)
+	@Order(HIGHEST_PRECEDENCE)
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
 			OAuth2PasswordAuthenticationProvider passwordAuthenticationProvider,
 			OAuth2MailAuthenticationProvider mailAuthenticationProvider,

@@ -42,7 +42,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.gateway.utils.RequestUtil;
+import org.laokou.gateway.utils.ReactiveRequestUtil;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.*;
@@ -169,7 +169,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		// IP优先
 		if (request.getContext() instanceof RequestDataContext context) {
 			String path = context.getClientRequest().getUrl().getPath();
-			if (RequestUtil.pathMatcher(HttpMethod.GET.name(), path,
+			if (ReactiveRequestUtil.pathMatcher(HttpMethod.GET.name(), path,
 					Map.of(HttpMethod.GET.name(), Collections.singleton(GRACEFUL_SHUTDOWN_URL)))) {
 				HttpHeaders headers = context.getClientRequest().getHeaders();
 				ServiceInstance serviceInstance = instances.stream()

@@ -16,6 +16,18 @@
  */
 package org.laokou.gateway.annotation;
 
+import java.lang.annotation.*;
+
+import static org.laokou.common.i18n.common.SysConstants.DEFAULT_PASSWORD;
+import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
+
+@Documented
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface Auth {
+
+    String username() default DEFAULT_USERNAME;
+
+    String password() default DEFAULT_PASSWORD;
 
 }

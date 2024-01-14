@@ -67,7 +67,7 @@ public class IpFilter implements GlobalFilter, Ordered {
 
 	@Override
 	public int getOrder() {
-		return Ordered.HIGHEST_PRECEDENCE + 1000;
+		return HIGHEST_PRECEDENCE + 1000;
 	}
 
 	private Mono<Void> validate(ServerWebExchange exchange, String label, GatewayFilterChain chain) {
