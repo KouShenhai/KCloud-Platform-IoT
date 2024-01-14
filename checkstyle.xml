@@ -214,6 +214,14 @@
 					  value="Please use AssertJ imports."/>
 			<property name="ignoreComments" value="true"/>
 		</module>
+		<module name="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck">
+			<property name="format" value="printStackTrace"/>
+			<property name="message" value="禁止直接打印堆栈信息，请改用日志API"/>
+		</module>
+		<module name="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck">
+			<property name="format" value="System\.out\.println"/>
+			<property name="message" value="禁止控制台打印，请改用日志API"/>
+		</module>
 		<module name="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpCheck">
 			<property name="format" value="[ \t]+$"/>
 			<property name="illegalPattern" value="true"/>

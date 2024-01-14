@@ -212,11 +212,4 @@ public class CryptoUtil {
 		return keyPairs;
 	}
 
-	public static void main(String[] args) {
-		// String password = encrypt("laokou123");
-		// String root = encrypt("root");
-		// System.out.println(CRYPTO_PREFIX + root + CRYPTO_SUFFIX);
-		// System.out.println(CRYPTO_PREFIX + password + CRYPTO_SUFFIX);
-	}
-
 }

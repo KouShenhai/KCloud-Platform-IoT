@@ -17,6 +17,7 @@
 
 package org.laokou.admin;
 
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.concurrent.*;
@@ -25,6 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author laokou
  */
+@Slf4j
 public class ThreadTest {
 
 	public static void main(String[] args) {
@@ -35,11 +37,11 @@ public class ThreadTest {
 		for (int i = 0; i < len; i++) {
 			CompletableFuture.runAsync(() -> {
 				int val = atomic.incrementAndGet();
-				System.out.println("子线程运行完毕，" + Thread.currentThread().getName() + "，val = " + val);
+				log.info("子线程运行完毕，" + Thread.currentThread().getName() + "，val = " + val);
 			}, threadPoolExecutor);
 		}
-		System.out.println("主线程运行完毕");
-		System.out.println("执行关闭线程池");
+		log.info("主线程运行完毕");
+		log.info("执行关闭线程池");
 		shutdown(threadPoolExecutor);
 	}
 

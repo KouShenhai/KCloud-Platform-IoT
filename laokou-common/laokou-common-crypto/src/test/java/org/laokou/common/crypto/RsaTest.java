@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.gateway;
+package org.laokou.common.crypto;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.crypto.utils.RsaUtil;
@@ -31,8 +31,8 @@ public class RsaTest {
 
 	public static void main(String[] args) {
 		String publicKey = RsaUtil.getPublicKey();
-		System.out.println(RsaUtil.encryptByPublicKey(DEFAULT_USERNAME, publicKey));
-		System.out.println(RsaUtil.encryptByPublicKey(DEFAULT_PASSWORD, publicKey));
+		log.info(RsaUtil.encryptByPublicKey(DEFAULT_USERNAME, publicKey));
+		log.info(RsaUtil.encryptByPublicKey(DEFAULT_PASSWORD, publicKey));
 	}
 
 }

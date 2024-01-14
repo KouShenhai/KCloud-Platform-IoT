@@ -128,7 +128,6 @@ public class NewElasticsearchTemplate {
 	// }
 	// log.info("索引【{}】批量修改更新成功，共新增[{}]个，修改[{}]个",indexName,createCount,updateCount);
 	// } catch (IOException e) {
-	// e.printStackTrace();
 	// log.error("索引【{}】批量修改更新出现异常",indexName);
 	// return false;
 	// }
@@ -169,7 +168,6 @@ public class NewElasticsearchTemplate {
 	// log.info("索引[{}]主键[{}]，无变化",indexName, id);
 	// }
 	// } catch (IOException e) {
-	// e.printStackTrace();
 	// log.error("索引[{}]主键【{}】，更新异常:[{}]",indexName, id,e);
 	// }
 	// return true;
@@ -199,7 +197,6 @@ public class NewElasticsearchTemplate {
 	// log.info("索引【{}】主键【{}】删除成功",indexName, id);
 	// }
 	// } catch (IOException e) {
-	// e.printStackTrace();
 	// log.error("删除索引【{}】出现异常[{}]",indexName,e);
 	// }
 	// return true;
@@ -240,7 +237,6 @@ public class NewElasticsearchTemplate {
 	// }
 	// log.info("批量删除索引[{}]成功，共删除[{}]个",indexName,deleteCount);
 	// } catch (IOException e) {
-	// e.printStackTrace();
 	// log.error("删除索引：【{}】出现异常:{}",indexName,e);
 	// }
 	// return true;
@@ -310,7 +306,6 @@ public class NewElasticsearchTemplate {
 	// log.info("索引【{}】主键【{}】，查询结果：【{}】",indexName,id,resultJson);
 	// return resultJson;
 	// } catch (IOException e) {
-	// e.printStackTrace();
 	// log.error("索引【{}】主键[{}]，查询异常：{}",indexName,id,e);
 	// return null;
 	// }
@@ -338,7 +333,6 @@ public class NewElasticsearchTemplate {
 	// }
 	// log.info("索引【{}】删除成功",indexName);
 	// } catch (IOException e) {
-	// e.printStackTrace();
 	// log.error("删除索引[{}]，出现异常[{}]",indexName,e);
 	// }
 	// return true;
