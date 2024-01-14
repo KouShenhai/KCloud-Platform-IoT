@@ -276,8 +276,8 @@ public class JobScheduleHelper {
 						}
 
 						// ring trigger
-						logger.debug(">>>>>>>>>>> xxl-job, time-ring beat : " + nowSecond + " = "
-								+ List.of(ringItemData));
+						logger.debug(
+								">>>>>>>>>>> xxl-job, time-ring beat : " + nowSecond + " = " + List.of(ringItemData));
 						if (!ringItemData.isEmpty()) {
 							// do trigger
 							for (int jobId : ringItemData) {
@@ -320,11 +320,10 @@ public class JobScheduleHelper {
 
 	private void pushTimeRing(int ringSecond, int jobId) {
 		// push async ring
-        List<Integer> ringItemData = ringData.computeIfAbsent(ringSecond, k -> new ArrayList<>());
-        ringItemData.add(jobId);
+		List<Integer> ringItemData = ringData.computeIfAbsent(ringSecond, k -> new ArrayList<>());
+		ringItemData.add(jobId);
 
-		logger.debug(
-				">>>>>>>>>>> xxl-job, schedule push time-ring : " + ringSecond + " = " + List.of(ringItemData));
+		logger.debug(">>>>>>>>>>> xxl-job, schedule push time-ring : " + ringSecond + " = " + List.of(ringItemData));
 	}
 
 	public void toStop() {
@@ -394,7 +393,7 @@ public class JobScheduleHelper {
 	public static Date generateNextValidTime(XxlJobInfo jobInfo, Date fromTime) throws Exception {
 		ScheduleTypeEnum scheduleTypeEnum = ScheduleTypeEnum.match(jobInfo.getScheduleType(), null);
 		if (ScheduleTypeEnum.CRON == scheduleTypeEnum) {
-            return new CronExpression(jobInfo.getScheduleConf()).getNextValidTimeAfter(fromTime);
+			return new CronExpression(jobInfo.getScheduleConf()).getNextValidTimeAfter(fromTime);
 		}
 		else if (ScheduleTypeEnum.FIX_RATE == scheduleTypeEnum /*
 																 * || ScheduleTypeEnum.
