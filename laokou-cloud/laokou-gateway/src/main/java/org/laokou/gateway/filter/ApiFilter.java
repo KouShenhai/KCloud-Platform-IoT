@@ -59,56 +59,57 @@ public class ApiFilter implements WebFilter {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-		return requestMappingHandlerMapping.getHandler(exchange)
-			.switchIfEmpty(chain.filter(exchange))
-			.flatMap(handler -> {
-				ServerHttpRequest request = exchange.getRequest();
-				String requestURL = ReactiveRequestUtil.getRequestURL(request);
-				if (ReactiveRequestUtil.pathMatcher(requestURL, API_PATTERN)) {
-					if (handler instanceof HandlerMethod handlerMethod) {
-						if (handlerMethod.hasMethodAnnotation(Auth.class)) {
-							Auth auth = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Auth.class);
-							Assert.isTrue(ObjectUtil.isNotNull(auth), "@Auth is null");
-							return validate(exchange, request, auth, chain);
+		try {
+			// 国际化
+			I18nUtil.set(exchange);
+			return requestMappingHandlerMapping.getHandler(exchange)
+				.switchIfEmpty(chain.filter(exchange))
+				.flatMap(handler -> {
+					ServerHttpRequest request = exchange.getRequest();
+					String requestURL = ReactiveRequestUtil.getRequestURL(request);
+					if (ReactiveRequestUtil.pathMatcher(requestURL, API_PATTERN)) {
+						if (handler instanceof HandlerMethod handlerMethod) {
+							if (handlerMethod.hasMethodAnnotation(Auth.class)) {
+								Auth auth = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Auth.class);
+								Assert.isTrue(ObjectUtil.isNotNull(auth), "@Auth is null");
+								return validate(exchange, request, auth, chain);
+							}
 						}
 					}
-				}
-				return chain.filter(exchange);
-			});
-	}
-
-	private Mono<Void> validate(ServerWebExchange exchange, ServerHttpRequest request, Auth auth,
-			WebFilterChain chain) {
-		try {
-			I18nUtil.set(exchange);
-			String username = ReactiveRequestUtil.getParamValue(request, USERNAME);
-			String password = ReactiveRequestUtil.getParamValue(request, PASSWORD);
-			if (StringUtil.isEmpty(username)) {
-				return ReactiveResponseUtil.response(exchange,
-						Result.fail(ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE)));
-			}
-			if (StringUtil.isEmpty(password)) {
-				return ReactiveResponseUtil.response(exchange,
-						Result.fail(ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE)));
-			}
-			try {
-				String privateKey = RsaUtil.getPrivateKey();
-				username = RsaUtil.decryptByPrivateKey(username, privateKey);
-				password = RsaUtil.decryptByPrivateKey(password, privateKey);
-			}
-			catch (Exception e) {
-				return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
-			}
-			String pwd = auth.password();
-			String name = auth.username();
-			if (!name.equals(username) || !pwd.equals(password)) {
-				return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
-			}
-			return chain.filter(exchange);
+					return chain.filter(exchange);
+				});
 		}
 		finally {
 			I18nUtil.reset();
 		}
+	}
+
+	private Mono<Void> validate(ServerWebExchange exchange, ServerHttpRequest request, Auth auth,
+			WebFilterChain chain) {
+		String username = ReactiveRequestUtil.getParamValue(request, USERNAME);
+		String password = ReactiveRequestUtil.getParamValue(request, PASSWORD);
+		if (StringUtil.isEmpty(username)) {
+			return ReactiveResponseUtil.response(exchange,
+					Result.fail(ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE)));
+		}
+		if (StringUtil.isEmpty(password)) {
+			return ReactiveResponseUtil.response(exchange,
+					Result.fail(ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE)));
+		}
+		try {
+			String privateKey = RsaUtil.getPrivateKey();
+			username = RsaUtil.decryptByPrivateKey(username, privateKey);
+			password = RsaUtil.decryptByPrivateKey(password, privateKey);
+		}
+		catch (Exception e) {
+			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
+		}
+		String pwd = auth.password();
+		String name = auth.username();
+		if (!name.equals(username) || !pwd.equals(password)) {
+			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
+		}
+		return chain.filter(exchange);
 	}
 
 }

@@ -40,9 +40,9 @@ public class IdempotentUtil {
 
 	private final RedisUtil redisUtil;
 
-	private static final ThreadLocal<Boolean> IS_IDEMPOTENT = new ThreadLocal<>();
+	private static final ThreadLocal<Boolean> IS_IDEMPOTENT_LOCAL = new ThreadLocal<>();
 
-	private static final ThreadLocal<Map<String, String>> REQUEST_ID = ThreadLocal.withInitial(HashMap::new);
+	private static final ThreadLocal<Map<String, String>> REQUEST_ID_LOCAL = ThreadLocal.withInitial(HashMap::new);
 
 	/**
 	 * 得到幂等键.
@@ -56,14 +56,14 @@ public class IdempotentUtil {
 	}
 
 	public static Map<String, String> getRequestId() {
-		return REQUEST_ID.get();
+		return REQUEST_ID_LOCAL.get();
 	}
 
 	/**
 	 * 判断幂等接口.
 	 */
 	public static boolean isIdempotent() {
-		Boolean status = IS_IDEMPOTENT.get();
+		Boolean status = IS_IDEMPOTENT_LOCAL.get();
 		return ObjectUtil.isNotNull(status) && status;
 	}
 
@@ -71,15 +71,15 @@ public class IdempotentUtil {
 	 * 设置接口幂等 扩展方法: 用于开启子线程后设置子线程的幂等性状态, 以及定时任务等.
 	 */
 	public static void openIdempotent() {
-		IS_IDEMPOTENT.set(true);
+		IS_IDEMPOTENT_LOCAL.set(true);
 	}
 
 	/**
 	 * 清理 不被servlet管理的和开启子线程的需要手动清理.
 	 */
 	public static void cleanIdempotent() {
-		IS_IDEMPOTENT.remove();
-		REQUEST_ID.remove();
+		IS_IDEMPOTENT_LOCAL.remove();
+		REQUEST_ID_LOCAL.remove();
 	}
 
 }

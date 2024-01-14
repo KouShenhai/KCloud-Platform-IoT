@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.gateway.support.ip.Ip;
 import org.laokou.gateway.support.ip.IpProperties;
 import org.laokou.gateway.support.ip.Label;
-import org.laokou.gateway.utils.I18nUtil;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -51,17 +50,11 @@ public class IpFilter implements GlobalFilter, Ordered {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		try {
-			I18nUtil.set(exchange);
-			if (ipProperties.isEnabled()) {
-				return validate(exchange, ipProperties.getLabel(), chain);
-			}
-			else {
-				return chain.filter(exchange);
-			}
+		if (ipProperties.isEnabled()) {
+			return validate(exchange, ipProperties.getLabel(), chain);
 		}
-		finally {
-			I18nUtil.reset();
+		else {
+			return chain.filter(exchange);
 		}
 	}
 
