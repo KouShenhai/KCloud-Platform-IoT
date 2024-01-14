@@ -47,7 +47,7 @@
         order by id desc
     </select>
 
-    <select id="handleResourceIndex" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.admin.gatewayimpl.database.dataindex.ResourceIndex">
+    <select id="handleResourceIndex" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.admin.gatewayimpl.database.dataobject.ResourceIndex">
         select id
             , title
             , code

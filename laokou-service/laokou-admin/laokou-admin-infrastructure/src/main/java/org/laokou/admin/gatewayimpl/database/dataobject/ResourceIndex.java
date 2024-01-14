@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.gatewayimpl.database.dataindex;
+package org.laokou.admin.gatewayimpl.database.dataobject;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
