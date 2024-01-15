@@ -64,7 +64,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	}
 
 	/**
-	 * 获取动态路由
+	 * 获取动态路由.
 	 * @return 动态路由
 	 */
 	@Override

@@ -153,7 +153,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	}
 
 	/**
-	 * 解密
+	 * 解密.
 	 * @return 解密结果
 	 */
 	private Function<String, Mono<String>> decrypt() {
@@ -183,7 +183,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	}
 
 	/**
-	 * 构建请求装饰器
+	 * 构建请求装饰器.
 	 * @param exchange 服务网络交换机
 	 * @param headers 请求头
 	 * @param outputMessage 输出消息
@@ -216,7 +216,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	}
 
 	/**
-	 * 订阅nacos消息通知，用于实时更新白名单URL
+	 * 订阅nacos消息通知，用于实时更新白名单URL.
 	 */
 	@PostConstruct
 	@SneakyThrows

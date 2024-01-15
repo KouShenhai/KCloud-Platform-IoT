@@ -48,7 +48,7 @@ public class WhiteIp implements Ip {
 	private final RemoteAddressResolver remoteAddressResolver;
 
 	/**
-	 * 校验IP并响应（白名单）
+	 * 校验IP并响应（白名单）.
 	 * @param exchange 服务网络交换机
 	 * @param chain 链式过滤器
 	 * @return 响应结果

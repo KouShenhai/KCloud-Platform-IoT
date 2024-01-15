@@ -33,12 +33,12 @@ import static org.laokou.common.i18n.common.PropertiesConstants.IP_PREFIX;
 public class IpProperties {
 
 	/**
-	 * 标签，默认黑名单
+	 * 标签，默认黑名单.
 	 */
 	private String label = Label.BLACK.getName();
 
 	/**
-	 * 黑/白名单开关，默认不开启
+	 * 黑/白名单开关，默认不开启.
 	 */
 	private boolean enabled = false;
 

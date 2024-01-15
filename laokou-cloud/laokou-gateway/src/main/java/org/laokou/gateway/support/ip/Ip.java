@@ -28,7 +28,7 @@ import reactor.core.publisher.Mono;
 public interface Ip {
 
 	/**
-	 * 校验IP并响应
+	 * 校验IP并响应.
 	 * @param exchange 服务网络交换机
 	 * @param chain 链式过滤器
 	 * @return 响应结果

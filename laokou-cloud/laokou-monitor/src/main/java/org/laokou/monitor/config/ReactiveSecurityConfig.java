@@ -40,6 +40,7 @@ import javax.net.ssl.SSLException;
 import java.net.URI;
 
 /**
+ * 响应式认证配置.
  * <a href=
  * "https://github.com/codecentric/spring-boot-admin/blob/master/spring-boot-admin-samples/spring-boot-admin-sample-reactive/src/main/java/de/codecentric/boot/admin/SpringBootAdminReactiveApplication.java">...</a>
  *
@@ -48,6 +49,11 @@ import java.net.URI;
 @Configuration(proxyBeanMethods = false)
 public class ReactiveSecurityConfig {
 
+	/**
+	 * 自定义请求客户端（关闭ssl认证）.
+	 * @return 请求客户端
+	 * @throws SSLException ssl异常
+	 */
 	@Bean
 	public ClientHttpConnector customHttpClient() throws SSLException {
 		// http://docs.spring-boot-admin.com/current/security.html

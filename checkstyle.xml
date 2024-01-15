@@ -243,7 +243,7 @@
 		<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck">
 			<!-- 自定义配置，参考: https://checkstyle.sourceforge.io/checks/javadoc/javadocstyle.html#JavadocStyle -->
 			<!-- 解决“Checkstyle: Javadoc 首句应以句号结尾。” 使其支持中文标点符号 -->
-			<property name="checkFirstSentence" value="false"/>
+			<property name="checkFirstSentence" value="true"/>
 			<property name="endOfSentenceFormat" value="([.?!。？！][ \t\n\r\f&lt;])|([.?!。？！]$)"/>
 		</module>
 		<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.NonEmptyAtclauseDescriptionCheck"/>

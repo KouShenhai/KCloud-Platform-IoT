@@ -134,7 +134,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 	}
 
 	/**
-	 * 通过编码获取自定义异常
+	 * 通过编码获取自定义异常.
 	 * @param code 编码
 	 * @return 自定义异常
 	 */

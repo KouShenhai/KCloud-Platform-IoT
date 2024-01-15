@@ -29,7 +29,7 @@ import org.springframework.web.server.ServerWebExchange;
 public class I18nUtil {
 
 	/**
-	 * 请求头数据写入本地线程
+	 * 请求头数据写入本地线程.
 	 * @param exchange 服务网络交换机
 	 */
 	public static void set(ServerWebExchange exchange) {
@@ -38,7 +38,7 @@ public class I18nUtil {
 	}
 
 	/**
-	 * 清空本地线程，防止内存溢出
+	 * 清空本地线程，防止内存溢出.
 	 */
 	public static void reset() {
 		LocaleContextHolder.resetLocaleContext();
