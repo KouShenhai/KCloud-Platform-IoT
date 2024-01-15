@@ -165,4 +165,14 @@ public final class StringConstants {
 	 */
 	public static final String ZERO = "0";
 
+	/**
+	 * 属性常量.
+	 */
+	public static final String PROPERTIES = "properties";
+
+	/**
+	 * 注解常量.
+	 */
+	public static final String ANNOTATION = "annotation";
+
 }

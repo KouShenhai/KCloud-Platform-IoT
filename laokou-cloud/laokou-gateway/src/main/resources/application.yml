@@ -119,6 +119,11 @@ spring:
       httpserver:
         # 关闭netty日志
         wiretap: false
+      router:
+        auth:
+          username: laokou
+          password: laokou123
+          type: annotation
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml

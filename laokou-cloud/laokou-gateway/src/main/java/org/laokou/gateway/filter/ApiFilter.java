@@ -26,6 +26,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.laokou.gateway.annotation.Auth;
+import org.laokou.gateway.config.GatewayExtProperties;
 import org.laokou.gateway.utils.I18nUtil;
 import org.laokou.gateway.utils.ReactiveRequestUtil;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -43,6 +44,7 @@ import static org.laokou.common.i18n.common.ErrorCodes.ACCOUNT_PASSWORD_ERROR;
 import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
 import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
 import static org.laokou.common.i18n.common.RouterConstants.API_URL_PREFIX;
+import static org.laokou.common.i18n.common.StringConstants.*;
 import static org.laokou.common.i18n.common.ValCodes.OAUTH2_PASSWORD_REQUIRE;
 import static org.laokou.common.i18n.common.ValCodes.OAUTH2_USERNAME_REQUIRE;
 
@@ -58,6 +60,8 @@ public class ApiFilter implements WebFilter {
 	private static final String API_PATTERN = API_URL_PREFIX + ALL_PATTERN;
 
 	private final RequestMappingHandlerMapping requestMappingHandlerMapping;
+
+	private final GatewayExtProperties gatewayExtProperties;
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
@@ -117,8 +121,18 @@ public class ApiFilter implements WebFilter {
 			// 账号或密码错误
 			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
 		}
-		String pwd = auth.password();
-		String name = auth.username();
+		String pwd = EMPTY;
+		String name = EMPTY;
+		String type = gatewayExtProperties.getType();
+		if (ANNOTATION.equals(type)) {
+			pwd = auth.password();
+			name = auth.username();
+		} else if (PROPERTIES.equals(type)){
+			pwd = gatewayExtProperties.getPassword();
+			name = gatewayExtProperties.getUsername();
+		}
+		Assert.isTrue(StringUtil.isNotEmpty(name), "username config is empty");
+		Assert.isTrue(StringUtil.isNotEmpty(pwd), "password config is empty");
 		if (!name.equals(username) || !pwd.equals(password)) {
 			// 账号或密码错误
 			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));

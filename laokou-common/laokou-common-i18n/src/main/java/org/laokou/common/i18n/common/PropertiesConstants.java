@@ -75,4 +75,9 @@ public final class PropertiesConstants {
 	 */
 	public static final String IP_PREFIX = "spring.cloud.gateway.ip";
 
+	/**
+	 * 路由认证配置前缀.
+	 */
+	public static final String ROUTER_AUTH_PREFIX = "spring.cloud.gateway.router.auth";
+
 }
