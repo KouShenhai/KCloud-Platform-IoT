@@ -160,4 +160,9 @@ public final class StringConstants {
 	 */
 	public static final String START_START = "**";
 
+	/**
+	 * 零.
+	 */
+	public static final String ZERO = "0";
+
 }

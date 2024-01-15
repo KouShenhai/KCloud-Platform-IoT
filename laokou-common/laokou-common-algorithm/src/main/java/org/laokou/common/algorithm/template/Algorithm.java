@@ -26,6 +26,13 @@ import java.util.List;
  */
 public interface Algorithm {
 
+	/**
+	 * 负载均衡算法.
+	 * @param list 集合
+	 * @param arg 参数
+	 * @return 实例
+	 * @param <T> 泛型
+	 */
 	<T> T select(List<T> list, Object arg);
 
 }

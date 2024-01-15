@@ -39,12 +39,15 @@ import reactor.netty.http.client.HttpClient;
 import javax.net.ssl.SSLException;
 import java.net.URI;
 
+// @formatter:off
 /**
- * 响应式认证配置. <a href=
- * "https://github.com/codecentric/spring-boot-admin/blob/master/spring-boot-admin-samples/spring-boot-admin-sample-reactive/src/main/java/de/codecentric/boot/admin/SpringBootAdminReactiveApplication.java">...</a>
+ * 响应式认证配置.
+ * <a href="https://github.com/codecentric/spring-boot-admin/blob/master/spring-boot-admin-samples/spring-boot-admin-sample-reactive/src/main/java/de/codecentric/boot/admin/SpringBootAdminReactiveApplication.java">...</a>
  *
  * @author laokou
  */
+// @formatter:on
+
 @Configuration(proxyBeanMethods = false)
 public class ReactiveSecurityConfig {
 

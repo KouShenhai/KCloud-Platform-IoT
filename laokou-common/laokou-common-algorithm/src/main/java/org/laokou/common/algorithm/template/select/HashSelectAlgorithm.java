@@ -20,10 +20,18 @@ package org.laokou.common.algorithm.template.select;
 import java.util.List;
 
 /**
+ * 负载均衡-哈希算法.
  * @author laokou
  */
 public class HashSelectAlgorithm extends AbstractSelectAlgorithm {
 
+	/**
+	 * 哈希算法.
+	 * @param list 集合
+	 * @param arg 参数
+	 * @return 实例
+	 * @param <T> 泛型
+	 */
 	@Override
 	public <T> T select(List<T> list, Object arg) {
 		int value = arg.hashCode() % list.size();

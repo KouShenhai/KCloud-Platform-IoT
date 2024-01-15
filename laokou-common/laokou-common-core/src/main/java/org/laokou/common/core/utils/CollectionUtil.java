@@ -29,18 +29,35 @@ import java.util.List;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
+ * 集合工具类.
  * @author laokou
  */
 public class CollectionUtil {
 
+	/**
+	 * 判断集合不为空.
+	 * @param collection 集合
+	 * @return 判断结果
+	 */
 	public static boolean isNotEmpty(Collection<?> collection) {
 		return !isEmpty(collection);
 	}
 
+	/**
+	 * 判断集合为空.
+	 * @param collection 集合
+	 * @return 判断结果
+	 */
 	public static boolean isEmpty(Collection<?> collection) {
 		return CollectionUtils.isEmpty(collection);
 	}
 
+	/**
+	 * 集合转字符串.
+	 * @param list 集合
+	 * @param on 分隔符
+	 * @return 字符串
+	 */
 	public static String toStr(List<String> list, String on) {
 		if (list.isEmpty()) {
 			return EMPTY;
@@ -48,6 +65,12 @@ public class CollectionUtil {
 		return Joiner.on(on).skipNulls().join(list);
 	}
 
+	/**
+	 * 字符串转集合.
+	 * @param str 字符串
+	 * @param on 分隔符
+	 * @return 集合
+	 */
 	public static List<String> toList(String str, String on) {
 		if (StringUtil.isEmpty(str)) {
 			return new ArrayList<>(0);
