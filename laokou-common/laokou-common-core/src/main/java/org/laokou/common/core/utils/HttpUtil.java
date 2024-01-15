@@ -51,6 +51,7 @@ import static org.laokou.common.i18n.common.SysConstants.LINE_PATTERN;
 import static org.laokou.common.i18n.common.SysConstants.TLS_PROTOCOL_VERSION;
 
 /**
+ * http客户端工具类.
  * @author laokou
  */
 @Slf4j
@@ -220,7 +221,7 @@ public class HttpUtil {
 	}
 
 	/**
-	 * 单向认证.
+	 * 关闭ssl校验.
 	 */
 	@SneakyThrows
 	public static void disableSsl(HttpClientBuilder builder) {

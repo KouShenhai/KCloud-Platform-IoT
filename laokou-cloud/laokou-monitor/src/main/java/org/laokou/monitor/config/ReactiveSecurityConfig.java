@@ -52,7 +52,7 @@ import java.net.URI;
 public class ReactiveSecurityConfig {
 
 	/**
-	 * 自定义请求客户端（关闭ssl认证）.
+	 * 自定义请求客户端（关闭ssl校验）.
 	 * @return 请求客户端
 	 * @throws SSLException ssl异常
 	 */
