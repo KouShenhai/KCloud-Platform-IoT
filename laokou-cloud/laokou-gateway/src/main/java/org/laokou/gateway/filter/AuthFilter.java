@@ -153,7 +153,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	}
 
 	/**
-	 * 解密.
+	 * 账号/密码 解密.
 	 * @return 解密结果
 	 */
 	private Function<String, Mono<String>> decrypt() {

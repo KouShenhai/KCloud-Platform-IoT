@@ -99,10 +99,12 @@ public class ApiFilter implements WebFilter {
 		String username = ReactiveRequestUtil.getParamValue(request, USERNAME);
 		String password = ReactiveRequestUtil.getParamValue(request, PASSWORD);
 		if (StringUtil.isEmpty(username)) {
+			// 账号不能为空
 			return ReactiveResponseUtil.response(exchange,
 					Result.fail(ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE)));
 		}
 		if (StringUtil.isEmpty(password)) {
+			// 密码不能为空
 			return ReactiveResponseUtil.response(exchange,
 					Result.fail(ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE)));
 		}
@@ -112,11 +114,13 @@ public class ApiFilter implements WebFilter {
 			password = RsaUtil.decryptByPrivateKey(password, privateKey);
 		}
 		catch (Exception e) {
+			// 账号或密码错误
 			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
 		}
 		String pwd = auth.password();
 		String name = auth.username();
 		if (!name.equals(username) || !pwd.equals(password)) {
+			// 账号或密码错误
 			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
 		}
 		return chain.filter(exchange);

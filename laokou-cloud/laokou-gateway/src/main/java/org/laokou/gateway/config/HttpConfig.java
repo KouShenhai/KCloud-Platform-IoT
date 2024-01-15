@@ -33,6 +33,11 @@ import org.springframework.http.converter.HttpMessageConverter;
 @Configuration
 public class HttpConfig {
 
+	/**
+	 * 构建消息转换器.
+	 * @param converters 转换器
+	 * @return 消息转换器
+	 */
 	@Bean
 	@ConditionalOnMissingBean(HttpMessageConverters.class)
 	public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {

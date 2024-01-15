@@ -30,17 +30,26 @@ public enum Label {
 	/**
 	 * 白名单.
 	 */
-	WHITE("white"),
+	WHITE("white", "白名单"),
 
 	/**
 	 * 黑名单.
 	 */
-	BLACK("black");
+	BLACK("black", "黑名单");
 
-	private final String name;
+	/**
+	 * 值.
+	 */
+	private final String value;
 
-	Label(String name) {
-		this.name = name;
+	/**
+	 * 备注.
+	 */
+	private final String desc;
+
+	Label(String value, String desc) {
+		this.value = value;
+		this.desc = desc;
 	}
 
 	public static Label getInstance(String code) {

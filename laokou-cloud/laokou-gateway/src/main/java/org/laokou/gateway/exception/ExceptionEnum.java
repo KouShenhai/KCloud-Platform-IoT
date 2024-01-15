@@ -39,8 +39,14 @@ public enum ExceptionEnum {
 	 */
 	INVALID_REQUEST(ErrorCodes.INVALID_REQUEST, MessageUtil.getMessage(ErrorCodes.INVALID_REQUEST));
 
+	/**
+	 * 编码.
+	 */
 	private final int code;
 
+	/**
+	 * 信息.
+	 */
 	private final String msg;
 
 	ExceptionEnum(int code, String msg) {
