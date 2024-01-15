@@ -62,6 +62,12 @@ public class ReactiveSecurityConfig {
 		return new ReactorClientHttpConnector(httpClient);
 	}
 
+	/**
+	 * 响应式认证配置.
+	 * @param http http对象
+	 * @param adminServerProperties admin配置
+	 * @return 认证配置
+	 */
 	@Bean
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
 	SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http,
@@ -83,12 +89,22 @@ public class ReactiveSecurityConfig {
 			.build();
 	}
 
+	/**
+	 * 构建服务注销成功处理器.
+	 * @param uri uri地址
+	 * @return 服务注销成功处理器
+	 */
 	private ServerLogoutSuccessHandler logoutSuccessHandler(String uri) {
 		RedirectServerLogoutSuccessHandler successHandler = new RedirectServerLogoutSuccessHandler();
 		successHandler.setLogoutSuccessUrl(URI.create(uri));
 		return successHandler;
 	}
 
+	/**
+	 * 构建服务认证成功处理器.
+	 * @param uri uri地址
+	 * @return 服务认证成功处理器
+	 */
 	private ServerAuthenticationSuccessHandler loginSuccessHandler(String uri) {
 		RedirectServerAuthenticationSuccessHandler successHandler = new RedirectServerAuthenticationSuccessHandler();
 		successHandler.setLocation(URI.create(uri));
