@@ -54,6 +54,7 @@ import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
+ * 拦截请求响应的过滤器.
  * @author laokou
  */
 @Component
@@ -132,6 +133,11 @@ public class RespFilter implements GlobalFilter, Ordered {
 		return HIGHEST_PRECEDENCE + 1500;
 	}
 
+	/**
+	 * 通过编码获取自定义异常
+	 * @param code 编码
+	 * @return 自定义异常
+	 */
 	private ExceptionEnum getException(String code) {
 		return ObjectUtil.requireNotNull(ExceptionEnum.getInstance(code.toUpperCase()));
 	}

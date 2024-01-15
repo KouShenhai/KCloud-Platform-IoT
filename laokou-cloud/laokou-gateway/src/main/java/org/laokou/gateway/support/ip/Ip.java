@@ -22,10 +22,17 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
+ * IP抽象类.
  * @author laokou
  */
 public interface Ip {
 
+	/**
+	 * 校验IP并响应
+	 * @param exchange 服务网络交换机
+	 * @param chain 链式过滤器
+	 * @return 响应结果
+	 */
 	Mono<Void> validate(ServerWebExchange exchange, GatewayFilterChain chain);
 
 }

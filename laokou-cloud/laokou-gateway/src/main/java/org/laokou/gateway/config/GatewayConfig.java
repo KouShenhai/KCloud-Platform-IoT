@@ -31,6 +31,7 @@ import org.springframework.context.annotation.Primary;
 import java.util.List;
 
 /**
+ * 网关配置.
  * @author laokou
  */
 @Configuration

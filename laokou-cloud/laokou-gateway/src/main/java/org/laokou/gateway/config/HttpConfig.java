@@ -39,6 +39,10 @@ public class HttpConfig {
 		return new HttpMessageConverters(converters.orderedStream().toList());
 	}
 
+	/**
+	 * 注入远程地址解析器.
+	 * @return 地址解析器
+	 */
 	@Bean
 	public RemoteAddressResolver remoteAddressResolver() {
 		return new RemoteAddressResolver() {

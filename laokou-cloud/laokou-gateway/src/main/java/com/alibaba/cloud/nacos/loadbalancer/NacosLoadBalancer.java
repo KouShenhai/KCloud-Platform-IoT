@@ -67,7 +67,7 @@ import static org.laokou.common.i18n.common.RouterConstants.SERVICE_PORT;
 import static org.laokou.common.i18n.common.SysConstants.GRACEFUL_SHUTDOWN_URL;
 
 /**
- * Nacos路由负载均衡.
+ * nacos路由负载均衡.
  * {@link com.alibaba.cloud.nacos.loadbalancer.NacosLoadBalancerClientConfiguration}
  * {@link org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer}
  *

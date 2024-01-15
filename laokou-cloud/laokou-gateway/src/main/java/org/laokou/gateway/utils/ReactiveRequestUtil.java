@@ -29,12 +29,19 @@ import java.util.Set;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
+ * 响应式请求工具类.
  * @author laokou
  */
 public class ReactiveRequestUtil {
 
 	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
+	/**
+	 * 获取参数值.
+	 * @param request 请求对象
+	 * @param paramName 请求参数名称
+	 * @return 参数值
+	 */
 	public static String getParamValue(ServerHttpRequest request, String paramName) {
 		// 从header中获取
 		String paramValue = request.getHeaders().getFirst(paramName);
@@ -45,22 +52,49 @@ public class ReactiveRequestUtil {
 		return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
 	}
 
+	/**
+	 * 获取请求路径URL.
+	 * @param request 请求对象
+	 * @return 路径URL
+	 */
 	public static String getRequestURL(ServerHttpRequest request) {
 		return request.getPath().pathWithinApplication().value();
 	}
 
+	/**
+	 * 获取主机.
+	 * @param request 请求对象
+	 * @return 主机
+	 */
 	public static String getHost(ServerHttpRequest request) {
 		return request.getURI().getHost();
 	}
 
+	/**
+	 * 获取请求格式.
+	 * @param request 请求对象
+	 * @return 请求格式
+	 */
 	public static MediaType getContentType(ServerHttpRequest request) {
 		return request.getHeaders().getContentType();
 	}
 
+	/**
+	 * 获取请求方法.
+	 * @param request 请求对象
+	 * @return 请求方法
+	 */
 	public static String getMethodName(ServerHttpRequest request) {
 		return request.getMethod().name();
 	}
 
+	/**
+	 * 路径匹配.
+	 * @param requestMethod 请求方法
+	 * @param requestURL 请求路径URL
+	 * @param urlMap url集合
+	 * @return 匹配结果
+	 */
 	public static boolean pathMatcher(String requestMethod, String requestURL, Map<String, Set<String>> urlMap) {
 		Set<String> urls = urlMap.get(requestMethod);
 		if (CollectionUtil.isEmpty(urls)) {
@@ -74,6 +108,12 @@ public class ReactiveRequestUtil {
 		return false;
 	}
 
+	/**
+	 * 路径匹配.
+	 * @param requestURL 请求路径URL
+	 * @param url 路径URL
+	 * @return 匹配结果
+	 */
 	public static boolean pathMatcher(String requestURL, String url) {
 		return ANT_PATH_MATCHER.match(url, requestURL);
 	}

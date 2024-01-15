@@ -33,8 +33,8 @@ import java.util.List;
 import java.util.Properties;
 
 /**
+ * Nacos服务工具类.
  * <a href="https://github.com/alibaba/spring-cloud-alibaba/wiki/Nacos-discovery">...</a>
- *
  * @author laokou
  */
 @Component
@@ -48,18 +48,36 @@ public class ServiceUtil {
 
 	private final DiscoveryClient nacosDiscoveryClient;
 
+	/**
+	 * 查询服务列表.
+	 * @return 服务列表
+	 */
 	public List<String> getServices() {
 		return nacosDiscoveryClient.getServices();
 	}
 
+	/**
+	 * 查询服务实例列表.
+	 * @param serviceId 服务ID
+	 * @return 服务实例列表
+	 */
 	public List<ServiceInstance> getInstances(String serviceId) {
 		return nacosDiscoveryClient.getInstances(serviceId);
 	}
 
+	/**
+	 * 通过负载均衡获取服务实例.
+	 * @param serviceId 服务ID
+	 * @return 服务实例
+	 */
 	public ServiceInstance getInstance(String serviceId) {
 		return loadBalancerClient.choose(serviceId);
 	}
 
+	/**
+	 * 查看命名服务.
+	 * @return 命令服务
+	 */
 	@SneakyThrows
 	private NamingService getNamingService() {
 		Properties properties = new Properties();
@@ -70,24 +88,50 @@ public class ServiceUtil {
 		return NacosFactory.createNamingService(properties);
 	}
 
+	/**
+	 * 注册实例.
+	 * @param serviceName 服务名称
+	 * @param ip 服务IP
+	 * @param port 服务端口
+	 */
 	@SneakyThrows
 	public void registerInstance(String serviceName, String ip, int port) {
 		NamingService namingService = getNamingService();
 		namingService.registerInstance(serviceName, ip, port);
 	}
 
+	/**
+	 * 注册服务.
+	 * @param serviceName 服务名称
+	 * @param group 服务分组
+	 * @param ip 服务IP
+	 * @param port 服务端口
+	 */
 	@SneakyThrows
 	public void registerInstance(String serviceName, String group, String ip, int port) {
 		NamingService namingService = getNamingService();
 		namingService.registerInstance(serviceName, group, ip, port);
 	}
 
+	/**
+	 * 注销服务.
+	 * @param serviceName 服务名称
+	 * @param ip 服务IP
+	 * @param port 服务端口
+	 */
 	@SneakyThrows
 	public void deregisterInstance(String serviceName, String ip, int port) {
 		NamingService namingService = getNamingService();
 		namingService.deregisterInstance(serviceName, ip, port);
 	}
 
+	/**
+	 * 注销服务.
+	 * @param serviceName 服务名称
+	 * @param group 服务分组
+	 * @param ip 服务IP
+	 * @param port 服务端口
+	 */
 	@SneakyThrows
 	public void deregisterInstance(String serviceName, String group, String ip, int port) {
 		NamingService namingService = getNamingService();

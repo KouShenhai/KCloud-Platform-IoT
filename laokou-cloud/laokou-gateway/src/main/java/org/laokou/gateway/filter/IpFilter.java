@@ -32,6 +32,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
+ * IP过滤器.
  * see {@link RemoteAddrRoutePredicateFactory}.
  *
  * @author laokou
@@ -63,6 +64,13 @@ public class IpFilter implements GlobalFilter, Ordered {
 		return HIGHEST_PRECEDENCE + 1000;
 	}
 
+	/**
+	 * 校验IP并响应.
+	 * @param exchange 服务网络交换机
+	 * @param label 标签
+	 * @param chain 链式过滤器
+	 * @return 响应结果
+	 */
 	private Mono<Void> validate(ServerWebExchange exchange, String label, GatewayFilterChain chain) {
 		Label instance = Label.getInstance(label.toUpperCase());
 		return switch (instance) {

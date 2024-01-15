@@ -26,6 +26,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 查询流程列表执行器.
  * @author laokou
  */
 @Component
@@ -34,6 +35,11 @@ public class DefinitionListQryExe {
 
 	private final DefinitionsFeignClient definitionsFeignClient;
 
+	/**
+	 * 执行查询流程列表.
+	 * @param qry 查询流程列表参数
+	 * @return 流程列表
+	 */
 	public Result<Datas<DefinitionCO>> execute(DefinitionListQry qry) {
 		return definitionsFeignClient.list(qry);
 	}

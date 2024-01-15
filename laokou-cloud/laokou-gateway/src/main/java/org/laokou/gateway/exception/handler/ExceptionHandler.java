@@ -35,6 +35,7 @@ import reactor.core.publisher.Mono;
 import static org.laokou.common.i18n.common.StatusCodes.*;
 
 /**
+ * 全局异常处理器.
  * @author laokou
  */
 @Component
@@ -42,6 +43,12 @@ import static org.laokou.common.i18n.common.StatusCodes.*;
 @NonNullApi
 public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 
+	/**
+	 * 处理异常并响应.
+	 * @param exchange 服务器网络交换机
+	 * @param e 异常
+	 * @return 响应结果
+	 */
 	@Override
 	public Mono<Void> handle(ServerWebExchange exchange, Throwable e) {
 		try {

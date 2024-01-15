@@ -44,6 +44,7 @@ import static org.laokou.common.i18n.common.RateLimiterTypeEnums.IP;
 import static org.redisson.api.RateIntervalUnit.MINUTES;
 
 /**
+ * 租户管理.
  * @author laokou
  */
 @RestController

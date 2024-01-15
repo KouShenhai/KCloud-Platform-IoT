@@ -55,13 +55,14 @@ public interface UsersServiceI {
 
 	/**
 	 * 在线用户查询.
-	 * @param qry 查询
+	 * @param qry 在线用户参数
 	 * @return 在线用户
 	 */
 	Result<Datas<UserOnlineCO>> onlineList(OnlineUserListQry qry);
 
 	/**
 	 * 用户基本信息.
+	 * @param qry 用户信息参数
 	 * @return 用户信息
 	 */
 	Result<UserProfileCO> getProfile(UserProfileGetQry qry);
@@ -70,6 +71,7 @@ public interface UsersServiceI {
 
 	/**
 	 * 用户下拉列表.
+	 * @param qry 用户下拉列表参数
 	 * @return 下拉列表
 	 */
 	Result<List<OptionCO>> optionList(UserOptionListQry qry);

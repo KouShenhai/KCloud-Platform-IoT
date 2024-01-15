@@ -47,6 +47,7 @@ import static org.laokou.common.i18n.common.ValCodes.OAUTH2_PASSWORD_REQUIRE;
 import static org.laokou.common.i18n.common.ValCodes.OAUTH2_USERNAME_REQUIRE;
 
 /**
+ * API过滤器.
  * @author laokou
  */
 @NonNullApi
@@ -84,6 +85,14 @@ public class ApiFilter implements WebFilter {
 		}
 	}
 
+	/**
+	 * 校验账号和密码
+	 * @param exchange 服务网络交换机
+	 * @param request 请求对象
+	 * @param auth auth注解
+	 * @param chain 链式过滤器
+	 * @return 响应结果
+	 */
 	private Mono<Void> validate(ServerWebExchange exchange, ServerHttpRequest request, Auth auth,
 			WebFilterChain chain) {
 		String username = ReactiveRequestUtil.getParamValue(request, USERNAME);

@@ -34,7 +34,7 @@ import static org.laokou.common.i18n.common.TraceConstants.*;
 import static org.laokou.gateway.utils.ReactiveRequestUtil.getHost;
 
 /**
- * 分布式请求链路.
+ * 分布式请求链路过滤器.
  *
  * @author laokou
  */

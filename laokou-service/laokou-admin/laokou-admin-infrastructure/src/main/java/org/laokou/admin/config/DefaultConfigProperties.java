@@ -27,6 +27,7 @@ import java.util.Set;
 import static org.laokou.common.i18n.common.PropertiesConstants.DEFAULT_CONFIG_PREFIX;
 
 /**
+ * 默认配置.
  * @author laokou
  */
 @Data
@@ -34,16 +35,34 @@ import static org.laokou.common.i18n.common.PropertiesConstants.DEFAULT_CONFIG_P
 @ConfigurationProperties(prefix = DEFAULT_CONFIG_PREFIX)
 public class DefaultConfigProperties {
 
+	/**
+	 * 定义key.
+	 */
 	private String definitionKey;
 
+	/**
+	 * 租户表集合.
+	 */
 	private Set<String> tenantTables = new HashSet<>(0);
 
+	/**
+	 * 请求参数移除列表.
+	 */
 	private Set<String> removeParams = new HashSet<>(0);
 
+	/**
+	 * 优雅停机服务列表.
+	 */
 	private Set<String> gracefulShutdownServices = new HashSet<>(0);
 
+	/**
+	 * 租户前缀.
+	 */
 	private String tenantPrefix;
 
+	/**
+	 * 域名列表.
+	 */
 	private Set<String> domainNames = new HashSet<>(0);
 
 }

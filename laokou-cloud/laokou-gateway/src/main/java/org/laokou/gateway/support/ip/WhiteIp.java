@@ -35,6 +35,7 @@ import java.net.InetSocketAddress;
 import static org.laokou.common.i18n.common.BizCodes.IP_WHITE;
 
 /**
+ * 白名单IP.
  * @author laokou
  */
 @Slf4j
@@ -46,6 +47,12 @@ public class WhiteIp implements Ip {
 
 	private final RemoteAddressResolver remoteAddressResolver;
 
+	/**
+	 * 校验IP并响应（白名单）
+	 * @param exchange 服务网络交换机
+	 * @param chain 链式过滤器
+	 * @return 响应结果
+	 */
 	@Override
 	public Mono<Void> validate(ServerWebExchange exchange, GatewayFilterChain chain) {
 		InetSocketAddress remoteAddress = remoteAddressResolver.resolve(exchange);

@@ -22,6 +22,7 @@ import org.laokou.common.i18n.common.ErrorCodes;
 import org.laokou.common.i18n.utils.MessageUtil;
 
 /**
+ * 拦截响应的异常枚举.
  * @author laokou
  */
 @Getter

@@ -70,4 +70,9 @@ public final class PropertiesConstants {
 	 */
 	public static final String MQTT_PREFIX = "spring.mqtt";
 
+	/**
+	 * 黑/白名单配置前缀.
+	 */
+	public static final String IP_PREFIX = "spring.cloud.gateway.ip";
+
 }

@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
+ * 服务实例列表执行器.
  * @author laokou
  */
 @Component
@@ -37,10 +38,20 @@ public class ClusterInstanceListQryExe {
 
 	private final ServiceUtil serviceUtil;
 
+	/**
+	 * 执行查询服务实例列表.
+	 * @param qry 查询服务实例列表参数
+	 * @return 服务实例列表
+	 */
 	public Result<Datas<ClusterInstanceCO>> execute(ClusterInstanceListQry qry) {
 		return Result.of(getDatas(qry));
 	}
 
+	/**
+	 * 服务实例列表分页.
+	 * @param qry 查询服务实例列表参数
+	 * @return 分页结果
+	 */
 	private Datas<ClusterInstanceCO> getDatas(ClusterInstanceListQry qry) {
 		Integer pageNum = qry.getPageNum();
 		Integer pageSize = qry.getPageSize();
@@ -54,6 +65,12 @@ public class ClusterInstanceListQryExe {
 					.toList());
 	}
 
+	/**
+	 * 构建服务实例视图.
+	 * @param instance 服务实例
+	 * @param router 路由ID
+	 * @return 服务实例视图
+	 */
 	private ClusterInstanceCO build(ServiceInstance instance, String router) {
 		ClusterInstanceCO co = new ClusterInstanceCO();
 		co.setHost(instance.getHost());

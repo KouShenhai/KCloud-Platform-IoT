@@ -19,6 +19,10 @@ package org.laokou.gateway.support.ip;
 
 import lombok.Getter;
 
+/**
+ * 标签枚举.
+ * @author laokou
+ */
 @Getter
 public enum Label {
 

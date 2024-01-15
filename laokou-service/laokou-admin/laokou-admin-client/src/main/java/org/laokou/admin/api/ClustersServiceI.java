@@ -25,12 +25,23 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 
 /**
+ * 集群管理.
  * @author laokou
  */
 public interface ClustersServiceI {
 
+	/**
+	 * 查询服务列表.
+	 * @param qry 服务列表查询参数
+	 * @return 服务列表
+	 */
 	Result<Datas<ClusterServiceCO>> serviceList(ClusterServiceListQry qry);
 
+	/**
+	 * 查询服务实例列表.
+	 * @param qry 服务实例查询参数
+	 * @return 服务实例列表
+	 */
 	Result<Datas<ClusterInstanceCO>> instanceList(ClusterInstanceListQry qry);
 
 }

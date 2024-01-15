@@ -21,23 +21,25 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.gateway.support.ip.IpProperties.PREFIX;
+import static org.laokou.common.i18n.common.PropertiesConstants.IP_PREFIX;
 
 /**
+ * IP配置.
  * @author laokou
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = PREFIX)
+@ConfigurationProperties(prefix = IP_PREFIX)
 public class IpProperties {
 
 	/**
-	 * 黑/白名单配置前缀.
+	 * 标签，默认黑名单
 	 */
-	public static final String PREFIX = "spring.cloud.gateway.ip";
-
 	private String label = Label.BLACK.getName();
 
+	/**
+	 * 黑/白名单开关，默认不开启
+	 */
 	private boolean enabled = false;
 
 }
