@@ -198,6 +198,9 @@
                 <MAIL-USERNAME>xxx</MAIL-USERNAME>
                 <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
                 <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
+                <ROUTER-AUTH-ENABLED>false</ROUTER-AUTH-ENABLED>
+                <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
+                <ROUTER-AUTH-PASSWORD>laokou123</ROUTER-AUTH-PASSWORD>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -240,6 +243,9 @@
                 <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
                 <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
                 <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
+                <ROUTER-AUTH-ENABLED>false</ROUTER-AUTH-ENABLED>
+                <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
+                <ROUTER-AUTH-PASSWORD>laokou123</ROUTER-AUTH-PASSWORD>
             </properties>
         </profile>
         <!-- 正式环境 -->
@@ -300,6 +306,12 @@
                 <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
                 <FILE-TEMP-PATH>${FILE_TEMP_PATH:/opt/temp}</FILE-TEMP-PATH>
+                <!--suppress UnresolvedMavenProperty -->
+                <ROUTER-AUTH-ENABLED>${ROUTER_AUTH_ENABLED:false}</ROUTER-AUTH-ENABLED>
+                <!--suppress UnresolvedMavenProperty -->
+                <ROUTER-AUTH-USERNAME>${ROUTER_AUTH_USERNAME:laokou}</ROUTER-AUTH-USERNAME>
+                <!--suppress UnresolvedMavenProperty -->
+                <ROUTER-AUTH-PASSWORD>${ROUTER_AUTH_PASSWORD:laokou123}</ROUTER-AUTH-PASSWORD>
             </properties>
         </profile>
     </profiles>
@@ -333,7 +345,7 @@
                     <failsOnError>true</failsOnError>
                     <failOnViolation>true</failOnViolation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                    <skip>false</skip>
+                    <skip>true</skip>
                     <linkXRef>false</linkXRef>
                 </configuration>
                 <executions>

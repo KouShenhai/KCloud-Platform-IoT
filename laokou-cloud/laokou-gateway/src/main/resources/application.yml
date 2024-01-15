@@ -121,9 +121,9 @@ spring:
         wiretap: false
       router:
         auth:
-          username: ${ROUTER_AUTH_USERNAME:laokou}
-          password: ${ROUTER_AUTH_PASSWORD:laokou123}
-          enabled: ${ROUTER_AUTH_ENABLED:false}
+          username: @ROUTER-AUTH-USERNAME@
+          password: @ROUTER-AUTH-PASSWORD@
+          enabled: @ROUTER-AUTH-ENABLED@
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml

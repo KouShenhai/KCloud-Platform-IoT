@@ -36,7 +36,7 @@ public class IpProperties {
 	/**
 	 * 标签，默认黑名单.
 	 */
-	private String label = Label.BLACK.getName();
+	private String label = Label.BLACK.getValue();
 
 	/**
 	 * 黑/白名单开关，默认不开启.
