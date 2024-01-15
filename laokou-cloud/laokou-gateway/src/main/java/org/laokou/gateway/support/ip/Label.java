@@ -21,6 +21,7 @@ import lombok.Getter;
 
 /**
  * 标签枚举.
+ *
  * @author laokou
  */
 @Getter

@@ -26,6 +26,7 @@ import org.laokou.common.i18n.dto.Result;
 
 /**
  * 集群管理.
+ *
  * @author laokou
  */
 public interface ClustersServiceI {

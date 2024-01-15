@@ -24,6 +24,7 @@ import org.laokou.common.i18n.dto.Result;
 
 /**
  * 流程定义.
+ *
  * @author laokou
  */
 public interface DefinitionsServiceI {

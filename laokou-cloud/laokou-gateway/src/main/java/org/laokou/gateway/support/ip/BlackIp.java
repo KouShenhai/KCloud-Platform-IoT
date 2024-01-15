@@ -36,6 +36,7 @@ import static org.laokou.common.i18n.common.BizCodes.IP_BLACK;
 
 /**
  * 黑名单IP.
+ *
  * @author laokou
  */
 @Slf4j

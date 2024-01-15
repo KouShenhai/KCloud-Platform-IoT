@@ -23,6 +23,7 @@ import reactor.core.publisher.Mono;
 
 /**
  * IP抽象类.
+ *
  * @author laokou
  */
 public interface Ip {

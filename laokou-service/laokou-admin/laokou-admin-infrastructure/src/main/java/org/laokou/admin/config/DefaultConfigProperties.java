@@ -28,6 +28,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.DEFAULT_CONFIG_P
 
 /**
  * 默认配置.
+ *
  * @author laokou
  */
 @Data

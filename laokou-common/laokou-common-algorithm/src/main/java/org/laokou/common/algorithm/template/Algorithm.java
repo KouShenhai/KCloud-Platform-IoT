@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * 算法接口.
+ *
  * @author laokou
  */
 public interface Algorithm {

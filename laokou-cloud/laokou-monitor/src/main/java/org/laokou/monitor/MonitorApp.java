@@ -31,6 +31,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 
 /**
  * 监控启动类.
+ *
  * @author laokou
  */
 @SpringBootApplication

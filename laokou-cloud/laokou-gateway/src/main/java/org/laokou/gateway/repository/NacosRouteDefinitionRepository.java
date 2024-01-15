@@ -41,8 +41,7 @@ import static org.laokou.common.i18n.common.ErrorCodes.ROUTE_NOT_EXIST;
 import static org.laokou.common.i18n.common.RouterConstants.DATA_ID;
 
 /**
- * nacos动态路由缓存库
- * <a href=
+ * nacos动态路由缓存库 <a href=
  * "https://github.com/alibaba/spring-cloud-alibaba/blob/2.2.x/spring-cloud-alibaba-examples/nacos-example/nacos-config-example/src/main/java/com/alibaba/cloud/examples/example/ConfigListenerExample.java">...</a>
  *
  * @author laokou

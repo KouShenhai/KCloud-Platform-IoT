@@ -34,11 +34,11 @@ import java.util.concurrent.Executor;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class AsyncConfig implements AsyncConfigurer {
 
-    private final ThreadPoolTaskExecutor taskExecutor;
+	private final ThreadPoolTaskExecutor taskExecutor;
 
-    @Override
-    public Executor getAsyncExecutor() {
-        return TtlExecutors.getTtlExecutorService(taskExecutor.getThreadPoolExecutor());
-    }
+	@Override
+	public Executor getAsyncExecutor() {
+		return TtlExecutors.getTtlExecutorService(taskExecutor.getThreadPoolExecutor());
+	}
 
 }

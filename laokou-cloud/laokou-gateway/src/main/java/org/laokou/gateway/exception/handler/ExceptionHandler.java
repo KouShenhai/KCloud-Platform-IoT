@@ -36,6 +36,7 @@ import static org.laokou.common.i18n.common.StatusCodes.*;
 
 /**
  * 全局异常处理器.
+ *
  * @author laokou
  */
 @Component

@@ -45,6 +45,7 @@ import static org.redisson.api.RateIntervalUnit.MINUTES;
 
 /**
  * 租户管理.
+ *
  * @author laokou
  */
 @RestController

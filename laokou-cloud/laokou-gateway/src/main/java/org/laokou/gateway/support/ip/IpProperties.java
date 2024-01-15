@@ -25,6 +25,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.IP_PREFIX;
 
 /**
  * IP配置.
+ *
  * @author laokou
  */
 @Data

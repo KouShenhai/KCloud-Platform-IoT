@@ -43,7 +43,6 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	Integer updateUser(@Param("userDO") UserDO userDO);
 
 	/**
-	 *
 	 * @param userDO
 	 * @param key
 	 * @return
@@ -66,7 +65,6 @@ public interface UserMapper extends BatchMapper<UserDO> {
 			@Param("key") String key);
 
 	/**
-	 *
 	 * @param user
 	 * @param pageQuery
 	 * @param key
@@ -76,7 +74,6 @@ public interface UserMapper extends BatchMapper<UserDO> {
 			@Param("key") String key);
 
 	/**
-	 *
 	 * @param user
 	 * @param key
 	 * @return

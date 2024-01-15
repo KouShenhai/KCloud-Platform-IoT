@@ -32,6 +32,7 @@ import java.util.List;
 
 /**
  * 网关配置.
+ *
  * @author laokou
  */
 @Configuration

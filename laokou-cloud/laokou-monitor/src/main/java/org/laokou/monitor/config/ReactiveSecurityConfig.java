@@ -40,8 +40,7 @@ import javax.net.ssl.SSLException;
 import java.net.URI;
 
 /**
- * 响应式认证配置.
- * <a href=
+ * 响应式认证配置. <a href=
  * "https://github.com/codecentric/spring-boot-admin/blob/master/spring-boot-admin-samples/spring-boot-admin-sample-reactive/src/main/java/de/codecentric/boot/admin/SpringBootAdminReactiveApplication.java">...</a>
  *
  * @author laokou

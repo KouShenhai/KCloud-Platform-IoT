@@ -48,6 +48,7 @@ import static org.laokou.common.i18n.common.ValCodes.OAUTH2_USERNAME_REQUIRE;
 
 /**
  * API过滤器.
+ *
  * @author laokou
  */
 @NonNullApi

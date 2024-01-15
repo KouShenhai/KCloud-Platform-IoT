@@ -24,6 +24,7 @@ import org.springframework.web.server.ServerWebExchange;
 
 /**
  * I18n工具类.
+ *
  * @author laokou
  */
 public class I18nUtil {

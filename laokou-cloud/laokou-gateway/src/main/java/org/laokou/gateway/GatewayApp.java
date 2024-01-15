@@ -35,6 +35,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 
 /**
  * 网关启动类.
+ *
  * @author laokou
  */
 @EnableAuth

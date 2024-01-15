@@ -33,6 +33,7 @@ import static org.laokou.common.i18n.common.RouterConstants.API_URL_PREFIX;
 
 /**
  * 路由管理.
+ *
  * @author laokou
  */
 @RestController

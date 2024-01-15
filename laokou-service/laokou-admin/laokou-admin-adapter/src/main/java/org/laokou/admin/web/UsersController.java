@@ -40,6 +40,7 @@ import static org.laokou.common.i18n.common.CacheConstants.USERS;
 
 /**
  * 用户管理.
+ *
  * @author laokou
  */
 @RestController

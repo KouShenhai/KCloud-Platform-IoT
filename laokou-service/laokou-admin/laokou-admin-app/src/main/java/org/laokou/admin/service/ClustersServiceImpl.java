@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 集群管理.
+ *
  * @author laokou
  */
 @Service

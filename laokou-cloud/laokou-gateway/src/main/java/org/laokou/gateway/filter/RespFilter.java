@@ -55,6 +55,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
  * 拦截请求响应的过滤器.
+ *
  * @author laokou
  */
 @Component

@@ -36,6 +36,7 @@ import java.util.Map;
 
 /**
  * 索引管理.
+ *
  * @author laokou
  */
 @RestController

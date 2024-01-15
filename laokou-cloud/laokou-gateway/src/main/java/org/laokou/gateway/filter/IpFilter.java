@@ -32,8 +32,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * IP过滤器.
- * see {@link RemoteAddrRoutePredicateFactory}.
+ * IP过滤器. see {@link RemoteAddrRoutePredicateFactory}.
  *
  * @author laokou
  */

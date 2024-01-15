@@ -24,6 +24,7 @@ import java.lang.annotation.*;
 
 /**
  * 认证开关注解.
+ *
  * @author laokou
  */
 @Documented
