@@ -44,7 +44,6 @@ import static org.laokou.common.i18n.common.ErrorCodes.ACCOUNT_PASSWORD_ERROR;
 import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
 import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
 import static org.laokou.common.i18n.common.RouterConstants.API_URL_PREFIX;
-import static org.laokou.common.i18n.common.StringConstants.*;
 import static org.laokou.common.i18n.common.ValCodes.OAUTH2_PASSWORD_REQUIRE;
 import static org.laokou.common.i18n.common.ValCodes.OAUTH2_USERNAME_REQUIRE;
 
@@ -121,18 +120,15 @@ public class ApiFilter implements WebFilter {
 			// 账号或密码错误
 			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
 		}
-		String pwd = EMPTY;
-		String name = EMPTY;
-		String type = gatewayExtProperties.getType();
-		if (ANNOTATION.equals(type)) {
-			pwd = auth.password();
-			name = auth.username();
-		} else if (PROPERTIES.equals(type)){
+		String pwd;
+		String name;
+		if (gatewayExtProperties.isEnabled()){
 			pwd = gatewayExtProperties.getPassword();
 			name = gatewayExtProperties.getUsername();
+		} else {
+			pwd = auth.password();
+			name = auth.username();
 		}
-		Assert.isTrue(StringUtil.isNotEmpty(name), "username config is empty");
-		Assert.isTrue(StringUtil.isNotEmpty(pwd), "password config is empty");
 		if (!name.equals(username) || !pwd.equals(password)) {
 			// 账号或密码错误
 			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));

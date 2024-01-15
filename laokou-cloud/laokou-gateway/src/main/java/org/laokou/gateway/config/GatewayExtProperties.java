@@ -22,7 +22,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.PropertiesConstants.ROUTER_AUTH_PREFIX;
-import static org.laokou.common.i18n.common.StringConstants.ANNOTATION;
 import static org.laokou.common.i18n.common.SysConstants.DEFAULT_PASSWORD;
 import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
 
@@ -35,8 +34,19 @@ import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
 @ConfigurationProperties(prefix = ROUTER_AUTH_PREFIX)
 public class GatewayExtProperties {
 
-    private String type = ANNOTATION;
+    /**
+     * false读取注解，true读取配置文件.
+     */
+    private boolean enabled = false;
+
+    /**
+     * 用户名.
+     */
     private String username = DEFAULT_USERNAME;
+
+    /**
+     * 密码.
+     */
     private String password = DEFAULT_PASSWORD;
 
 }
