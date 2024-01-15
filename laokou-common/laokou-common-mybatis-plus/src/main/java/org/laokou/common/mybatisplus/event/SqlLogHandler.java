@@ -17,6 +17,7 @@
 
 package org.laokou.common.mybatisplus.event;
 
+import com.alibaba.ttl.threadpool.TtlExecutors;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ import org.laokou.common.mybatisplus.database.SqlLogMapper;
 import org.laokou.common.mybatisplus.database.dataobject.SqlLogDO;
 import org.laokou.common.mybatisplus.handler.SqlLogEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -37,6 +39,7 @@ import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 /**
  * @author laokou
  */
+@Async
 @Slf4j
 @Component
 @NonNullApi

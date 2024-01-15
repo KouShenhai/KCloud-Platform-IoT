@@ -20,6 +20,7 @@ package org.laokou.common.algorithm.template;
 import java.util.List;
 
 /**
+ * 算法接口.
  * @author laokou
  */
 public interface Algorithm {

@@ -17,6 +17,7 @@
 
 package org.laokou.auth.event.handler;
 
+import com.alibaba.ttl.threadpool.TtlExecutors;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,7 @@ import static org.laokou.common.i18n.common.StringConstants.UNDER;
 /**
  * @author laokou
  */
+@Async
 @Slf4j
 @Component
 @NonNullApi
@@ -53,7 +55,6 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 	private final ThreadPoolTaskExecutor taskExecutor;
 
 	@Override
-	@Async
 	public void onApplicationEvent(LoginLogEvent event) {
 		String sourceName = UserContextHolder.get().getSourceName();
 		CompletableFuture.runAsync(() -> {
@@ -67,7 +68,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
-		}, taskExecutor);
+		}, TtlExecutors.getTtlExecutorService(taskExecutor.getThreadPoolExecutor()));
 	}
 
 	private void execute(LoginLogEvent event) {

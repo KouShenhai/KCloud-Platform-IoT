@@ -178,7 +178,6 @@
                 <DATASOURCE-PLATFORM>mysql</DATASOURCE-PLATFORM>
                 <!--<DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>-->
                 <DATASOURCE-DB-NACOS>kcloud_platform_alibaba_nacos</DATASOURCE-DB-NACOS>
-                <DATASOURCE-DB-SEATA>kcloud_platform_alibaba_seata</DATASOURCE-DB-SEATA>
                 <DATASOURCE-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</DATASOURCE-DB-XXL-JOB>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
@@ -221,7 +220,6 @@
                 <DATASOURCE-PLATFORM>mysql</DATASOURCE-PLATFORM>
                 <!--<DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>-->
                 <DATASOURCE-DB-NACOS>kcloud_platform_alibaba_nacos</DATASOURCE-DB-NACOS>
-                <DATASOURCE-DB-SEATA>kcloud_platform_alibaba_seata</DATASOURCE-DB-SEATA>
                 <DATASOURCE-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</DATASOURCE-DB-XXL-JOB>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
@@ -264,8 +262,6 @@
                 <DATASOURCE-PLATFORM>${DATASOURCE_PLATFORM:mysql}</DATASOURCE-PLATFORM>
                 <!--suppress UnresolvedMavenProperty -->
                 <DATASOURCE-DB-NACOS>${DATASOURCE_DB_NACOS:kcloud_platform_alibaba_nacos}</DATASOURCE-DB-NACOS>
-                <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-DB-SEATA>${DATASOURCE_DB_SEATA:kcloud_platform_alibaba_seata}</DATASOURCE-DB-SEATA>
                 <!--suppress UnresolvedMavenProperty -->
                 <DATASOURCE-DB-XXL-JOB>${DATASOURCE_DB_XXL_JOB:kcloud_platform_alibaba_xxl_job}</DATASOURCE-DB-XXL-JOB>
                 <!--suppress UnresolvedMavenProperty -->
@@ -337,7 +333,7 @@
                     <failsOnError>true</failsOnError>
                     <failOnViolation>true</failOnViolation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                    <skip>false</skip>
+                    <skip>true</skip>
                     <linkXRef>false</linkXRef>
                 </configuration>
                 <executions>

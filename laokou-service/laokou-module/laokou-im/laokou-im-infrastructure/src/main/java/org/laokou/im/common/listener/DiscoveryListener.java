@@ -27,6 +27,7 @@ import org.laokou.common.nacos.utils.ServiceUtil;
 import org.laokou.im.config.WebsocketProperties;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
@@ -35,6 +36,7 @@ import java.net.InetAddress;
  * @author laokou
  */
 @Data
+@Async
 @Component
 @NonNullApi
 @RequiredArgsConstructor
