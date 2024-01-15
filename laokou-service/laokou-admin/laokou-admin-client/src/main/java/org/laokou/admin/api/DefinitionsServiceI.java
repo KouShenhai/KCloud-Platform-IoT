@@ -44,14 +44,14 @@ public interface DefinitionsServiceI {
 	Result<Datas<DefinitionCO>> list(DefinitionListQry qry);
 
 	/**
-	 * 查看流程图
+	 * 查看流程图.
 	 * @param qry 流程图查看参数
 	 * @return 流程图
 	 */
 	Result<String> diagram(DefinitionDiagramGetQry qry);
 
 	/**
-	 * 删除流程
+	 * 删除流程.
 	 * @param cmd 删除流程参数
 	 * @return 执行删除结果
 	 */
