@@ -95,7 +95,7 @@
         <!--swagger-annotations-jakarta版本-->
         <swagger-annotations-jakarta.version>2.2.20</swagger-annotations-jakarta.version>
         <!--disruptor版本-->
-        <disruptor.version>3.4.4</disruptor.version>
+        <disruptor.version>4.0.0</disruptor.version>
         <!--dubbo版本-->
         <dubbo.version>3.3.0-beta.1</dubbo.version>
         <!--lombok-mapstruct-binding版本-->
