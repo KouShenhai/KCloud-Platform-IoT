@@ -37,10 +37,12 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.factory.rewrite.CachedBodyOutputMessage;
+import org.springframework.cloud.gateway.filter.factory.rewrite.ModifyRequestBodyGatewayFilterFactory;
 import org.springframework.cloud.gateway.support.BodyInserterContext;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ReactiveHttpOutputMessage;
@@ -64,6 +66,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
 
+import static org.laokou.common.core.utils.MapUtil.toUriMap;
 import static org.laokou.common.i18n.common.OAuth2Constants.*;
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.RequestHeaderConstants.AUTHORIZATION;
@@ -132,6 +135,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	/**
 	 * OAuth2解密.
+	 * see {@link ModifyRequestBodyGatewayFilterFactory}
 	 * @param chain chain
 	 * @param exchange exchange
 	 * @return 响应式
@@ -149,7 +153,18 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		return bodyInserter.insert(outputMessage, new BodyInserterContext()).then(Mono.defer(() -> {
 			ServerHttpRequest decorator = requestDecorator(exchange, headers, outputMessage);
 			return chain.filter(exchange.mutate().request(decorator).build());
-		}));
+		})).onErrorResume((Function<Throwable, Mono<Void>>) throwable -> release(outputMessage, throwable));
+	}
+
+	/**
+	 * 释放缓存.
+	 * @param outputMessage 输出消息
+	 * @param throwable 异常
+	 * @return 释放结果
+	 */
+	private Mono<Void> release(CachedBodyOutputMessage outputMessage,
+								 Throwable throwable) {
+		return outputMessage.getBody().map(DataBufferUtils::release).then(Mono.error(throwable));
 	}
 
 	/**

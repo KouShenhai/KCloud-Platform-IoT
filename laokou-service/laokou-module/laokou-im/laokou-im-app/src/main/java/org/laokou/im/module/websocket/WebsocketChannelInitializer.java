@@ -55,8 +55,6 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 
 	private static final String WEBSOCKET_PATH = "/ws";
 
-	private static final int MAX_CONTENT_LENGTH = 655350;
-
 	@Override
 	@SneakyThrows
 	protected void initChannel(NioSocketChannel channel) {
@@ -70,14 +68,14 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		pipeline.addLast(new IdleStateHandler(60, 0, 0, TimeUnit.SECONDS));
 		// HTTP解码器
 		pipeline.addLast(new HttpServerCodec());
+		// 最大内容长度
+		pipeline.addLast(new HttpObjectAggregator(65536));
 		// 块状方式写入
 		pipeline.addLast(new ChunkedWriteHandler());
-		// 最大内容长度
-		pipeline.addLast(new HttpObjectAggregator(MAX_CONTENT_LENGTH));
-		// 自定义处理器
-		pipeline.addLast(websocketHandler);
 		// websocket协议
 		pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH));
+		// 自定义处理器
+		pipeline.addLast(websocketHandler);
 	}
 
 	@SneakyThrows

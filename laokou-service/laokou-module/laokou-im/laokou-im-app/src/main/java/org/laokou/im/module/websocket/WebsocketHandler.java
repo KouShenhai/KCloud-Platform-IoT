@@ -30,6 +30,7 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.util.ReferenceCountUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -82,6 +83,9 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 		if (msg instanceof FullHttpRequest request) {
 			init(ctx, request);
 		}
+		if (msg instanceof WebSocketFrame webSocketFrame) {
+			System.out.println(webSocketFrame);
+		}
 		super.channelRead(ctx, msg);
 	}
 
@@ -101,11 +105,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	}
 
 	private String getAuthorization(Map<String, String> paramMap) {
-		String authorization = paramMap.getOrDefault(AUTHORIZATION, EMPTY);
-		if (StringUtil.isNotEmpty(authorization)) {
-			return authorization.substring(7);
-		}
-		return authorization;
+        return paramMap.getOrDefault(AUTHORIZATION, EMPTY);
 	}
 
 	private void init(ChannelHandlerContext ctx, FullHttpRequest request) {
