@@ -23,9 +23,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
-import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
-import io.netty.handler.timeout.IdleStateHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ResourceUtil;
@@ -35,10 +33,8 @@ import org.springframework.stereotype.Component;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLEngine;
 import java.io.InputStream;
 import java.security.KeyStore;
-import java.util.concurrent.TimeUnit;
 
 import static org.laokou.common.i18n.common.SysConstants.TLS_PROTOCOL_VERSION;
 
@@ -59,19 +55,19 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 	@SneakyThrows
 	protected void initChannel(NioSocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
-		SSLEngine sslEngine = sslContext().createSSLEngine();
-		sslEngine.setNeedClientAuth(false);
-		sslEngine.setUseClientMode(false);
-		// TLS
-		pipeline.addLast(new SslHandler(sslEngine));
+//		SSLEngine sslEngine = sslContext().createSSLEngine();
+//		sslEngine.setNeedClientAuth(false);
+//		sslEngine.setUseClientMode(false);
+//		// TLS
+//		pipeline.addLast(new SslHandler(sslEngine));
 		// 心跳检测
-		pipeline.addLast(new IdleStateHandler(60, 0, 0, TimeUnit.SECONDS));
+		//pipeline.addLast(new IdleStateHandler(60, 0, 0, TimeUnit.SECONDS));
 		// HTTP解码器
 		pipeline.addLast(new HttpServerCodec());
+        // 块状方式写入
+        pipeline.addLast(new ChunkedWriteHandler());
 		// 最大内容长度
-		pipeline.addLast(new HttpObjectAggregator(65536));
-		// 块状方式写入
-		pipeline.addLast(new ChunkedWriteHandler());
+		pipeline.addLast(new HttpObjectAggregator(8192));
 		// websocket协议
 		pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH));
 		// 自定义处理器

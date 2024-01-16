@@ -30,23 +30,19 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.util.ReferenceCountUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.security.domain.User;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.UNAUTHORIZED;
@@ -78,19 +74,18 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	}
 
 	@Override
-	@SneakyThrows
-	public void channelRead(ChannelHandlerContext ctx, Object msg) {
-		if (msg instanceof FullHttpRequest request) {
-			init(ctx, request);
-		}
-		if (msg instanceof WebSocketFrame webSocketFrame) {
-			System.out.println(webSocketFrame);
-		}
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		super.channelRead(ctx, msg);
 	}
 
 	@Override
-	protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) {
+	protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
+		System.out.println("ccccccc ->" + frame.text());
+		System.out.println(ctx.channel().isActive());
+		System.out.println(ctx.channel().isOpen());
+		System.out.println(ctx.channel().isRegistered());
+		System.out.println(ctx.channel().isWritable());
+		ctx.channel().writeAndFlush(new TextWebSocketFrame("2222222222"));
 	}
 
 	@Override
@@ -124,17 +119,29 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 				handleRequestError(ctx, UNAUTHORIZED);
 				return;
 			}
-			String userInfoKey = RedisKeyUtil.getUserInfoKey(authorization);
-			reactiveRedisUtil.get(userInfoKey).subscribe(obj -> {
-				if (ObjectUtil.isNull(obj)) {
-					handleRequestError(ctx, UNAUTHORIZED);
-					return;
-				}
-				User user = (User) obj;
-				Channel channel = ctx.channel();
-				String userId = user.getId().toString();
-				USER_CACHE.put(userId, channel);
-			});
+			Channel channel = ctx.channel();
+			USER_CACHE.put("1", channel);
+			System.out.println(USER_CACHE.getIfPresent("1").id().asLongText());
+			Objects.requireNonNull(USER_CACHE.getIfPresent("1")).writeAndFlush("3333");
+			Objects.requireNonNull(USER_CACHE.getIfPresent("1")).writeAndFlush("3333");
+			Objects.requireNonNull(USER_CACHE.getIfPresent("1")).writeAndFlush("3333");
+			Objects.requireNonNull(USER_CACHE.getIfPresent("1")).writeAndFlush("3333");
+			Objects.requireNonNull(USER_CACHE.getIfPresent("1")).writeAndFlush("3333");
+			Objects.requireNonNull(USER_CACHE.getIfPresent("1")).writeAndFlush("3333");
+
+
+
+//			String userInfoKey = RedisKeyUtil.getUserInfoKey(authorization);
+//			reactiveRedisUtil.get(userInfoKey).subscribe(obj -> {
+//				if (ObjectUtil.isNull(obj)) {
+//					handleRequestError(ctx, UNAUTHORIZED);
+//					return;
+//				}
+//				User user = (User) obj;
+//				Channel channel = ctx.channel();
+//				String userId = user.getId().toString();
+//				USER_CACHE.put(userId, channel);
+//			});
 		}
 		catch (Exception e) {
 			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
