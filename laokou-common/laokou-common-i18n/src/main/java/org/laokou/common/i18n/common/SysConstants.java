@@ -177,4 +177,9 @@ public final class SysConstants {
 	 */
 	public static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
 
+	/**
+	 * websocket路径
+	 */
+	public static final String WEBSOCKET_PATH = "/ws";
+
 }

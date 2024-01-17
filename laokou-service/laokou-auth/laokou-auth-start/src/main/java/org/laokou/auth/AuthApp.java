@@ -20,6 +20,7 @@ package org.laokou.auth;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.nacos.filter.ShutdownFilter;
+import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerAutoConfiguration;
@@ -45,6 +46,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @EnableEncryptableProperties
 @EnableDiscoveryClient
 @EnableAsync
+@EnableRedisRepository
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 public class AuthApp {
 

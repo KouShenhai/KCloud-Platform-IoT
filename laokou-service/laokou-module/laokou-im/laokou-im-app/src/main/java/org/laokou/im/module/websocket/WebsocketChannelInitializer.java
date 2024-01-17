@@ -23,7 +23,10 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
+import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
+import io.netty.handler.timeout.IdleStateHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ResourceUtil;
@@ -33,10 +36,13 @@ import org.springframework.stereotype.Component;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
 import java.io.InputStream;
 import java.security.KeyStore;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.laokou.common.i18n.common.SysConstants.TLS_PROTOCOL_VERSION;
+import static org.laokou.common.i18n.common.SysConstants.WEBSOCKET_PATH;
 
 /**
  * @author laokou
@@ -49,25 +55,25 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 
 	private final ServerProperties serverProperties;
 
-	private static final String WEBSOCKET_PATH = "/ws";
-
 	@Override
 	@SneakyThrows
 	protected void initChannel(NioSocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
-//		SSLEngine sslEngine = sslContext().createSSLEngine();
-//		sslEngine.setNeedClientAuth(false);
-//		sslEngine.setUseClientMode(false);
-//		// TLS
-//		pipeline.addLast(new SslHandler(sslEngine));
+		SSLEngine sslEngine = sslContext().createSSLEngine();
+		sslEngine.setNeedClientAuth(false);
+		sslEngine.setUseClientMode(false);
+		// TLS
+		pipeline.addLast(new SslHandler(sslEngine));
 		// 心跳检测
-		//pipeline.addLast(new IdleStateHandler(60, 0, 0, TimeUnit.SECONDS));
+		pipeline.addLast(new IdleStateHandler(60, 0, 0, SECONDS));
 		// HTTP解码器
 		pipeline.addLast(new HttpServerCodec());
+		// 数据压缩
+		pipeline.addLast(new WebSocketServerCompressionHandler());
         // 块状方式写入
         pipeline.addLast(new ChunkedWriteHandler());
 		// 最大内容长度
-		pipeline.addLast(new HttpObjectAggregator(8192));
+		pipeline.addLast(new HttpObjectAggregator(65536));
 		// websocket协议
 		pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH));
 		// 自定义处理器

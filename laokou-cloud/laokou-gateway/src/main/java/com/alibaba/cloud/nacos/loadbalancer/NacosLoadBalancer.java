@@ -169,9 +169,9 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 * @return 服务实例响应体
 	 */
 	private Response<ServiceInstance> choose(List<ServiceInstance> instances, Request<?> request) {
-		// IP优先
 		if (request.getContext() instanceof RequestDataContext context) {
 			String path = context.getClientRequest().getUrl().getPath();
+			// IP优先（优雅停机）
 			if (ReactiveRequestUtil.pathMatcher(HttpMethod.GET.name(), path,
 					Map.of(HttpMethod.GET.name(), Collections.singleton(GRACEFUL_SHUTDOWN_URL)))) {
 				HttpHeaders headers = context.getClientRequest().getHeaders();

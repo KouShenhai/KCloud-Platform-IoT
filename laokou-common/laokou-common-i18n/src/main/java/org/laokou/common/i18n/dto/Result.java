@@ -71,6 +71,13 @@ public class Result<T> extends DTO {
 		return result;
 	}
 
+	public static <T> Result<T> of(int code, String msg) {
+		Result<T> result = new Result<>();
+		result.setCode(code);
+		result.setMsg(msg);
+		return result;
+	}
+
 	public static <T> Result<T> fail(int code, String msg) {
 		Result<T> result = new Result<>();
 		result.setCode(code);

@@ -38,7 +38,6 @@ import static org.laokou.common.redis.config.GlobalJsonJacksonCodec.getStringRed
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnClass(LettuceConnectionFactory.class)
 public class RedisAutoConfig {
 
