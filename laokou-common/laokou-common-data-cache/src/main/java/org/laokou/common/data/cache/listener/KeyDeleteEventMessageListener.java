@@ -30,6 +30,8 @@ import org.springframework.data.redis.listener.Topic;
 import org.springframework.lang.Nullable;
 
 /**
+ * key删除事件监听器.
+ *
  * @author laokou
  */
 @Setter

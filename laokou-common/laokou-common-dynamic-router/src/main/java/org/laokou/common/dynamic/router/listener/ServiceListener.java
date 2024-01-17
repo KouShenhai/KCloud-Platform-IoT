@@ -22,11 +22,15 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.dynamic.router.utils.RouterUtil;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
+ * 服务监听.
+ *
  * @author laokou
  */
+@Async
 @Component
 @NonNullApi
 @RequiredArgsConstructor

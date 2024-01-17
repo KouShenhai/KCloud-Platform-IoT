@@ -34,7 +34,7 @@ import static org.laokou.common.i18n.common.TraceConstants.*;
 import static org.laokou.gateway.utils.ReactiveRequestUtil.getHost;
 
 /**
- * 分布式请求链路.
+ * 分布式请求链路过滤器.
  *
  * @author laokou
  */
@@ -57,8 +57,8 @@ public class TraceFilter implements GlobalFilter, Ordered {
 			ThreadContext.put(TENANT_ID, tenantId);
 			ThreadContext.put(USER_NAME, username);
 			// 获取uri
-			String requestUri = request.getPath().pathWithinApplication().value();
-			log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}，主机：{}", requestUri, LogUtil.result(userId),
+			String requestURL = ReactiveRequestUtil.getRequestURL(request);
+			log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}，主机：{}", requestURL, LogUtil.result(userId),
 					LogUtil.result(username), LogUtil.result(tenantId), LogUtil.result(traceId), host);
 			return chain.filter(exchange.mutate()
 				.request(request.mutate()

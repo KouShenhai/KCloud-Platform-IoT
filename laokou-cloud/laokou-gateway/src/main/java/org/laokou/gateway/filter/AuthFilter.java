@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.gateway.filter;
 
 import com.alibaba.nacos.api.config.ConfigService;
@@ -36,10 +37,12 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.factory.rewrite.CachedBodyOutputMessage;
+import org.springframework.cloud.gateway.filter.factory.rewrite.ModifyRequestBodyGatewayFilterFactory;
 import org.springframework.cloud.gateway.support.BodyInserterContext;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ReactiveHttpOutputMessage;
@@ -78,7 +81,7 @@ import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
 
 /**
- * 认证Filter.
+ * 认证过滤器.
  *
  * @author laokou
  */
@@ -130,7 +133,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	}
 
 	/**
-	 * OAuth2解密.
+	 * OAuth2解密. see {@link ModifyRequestBodyGatewayFilterFactory}
 	 * @param chain chain
 	 * @param exchange exchange
 	 * @return 响应式
@@ -148,9 +151,23 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		return bodyInserter.insert(outputMessage, new BodyInserterContext()).then(Mono.defer(() -> {
 			ServerHttpRequest decorator = requestDecorator(exchange, headers, outputMessage);
 			return chain.filter(exchange.mutate().request(decorator).build());
-		}));
+		})).onErrorResume((Function<Throwable, Mono<Void>>) throwable -> release(outputMessage, throwable));
 	}
 
+	/**
+	 * 释放缓存.
+	 * @param outputMessage 输出消息
+	 * @param throwable 异常
+	 * @return 释放结果
+	 */
+	private Mono<Void> release(CachedBodyOutputMessage outputMessage, Throwable throwable) {
+		return outputMessage.getBody().map(DataBufferUtils::release).then(Mono.error(throwable));
+	}
+
+	/**
+	 * 账号/密码 解密.
+	 * @return 解密结果
+	 */
 	private Function<String, Mono<String>> decrypt() {
 		return s -> {
 			// 获取请求密码并解密
@@ -177,6 +194,13 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		};
 	}
 
+	/**
+	 * 构建请求装饰器.
+	 * @param exchange 服务网络交换机
+	 * @param headers 请求头
+	 * @param outputMessage 输出消息
+	 * @return 请求装饰器
+	 */
 	private ServerHttpRequestDecorator requestDecorator(ServerWebExchange exchange, HttpHeaders headers,
 			CachedBodyOutputMessage outputMessage) {
 		return new ServerHttpRequestDecorator(exchange.getRequest()) {
@@ -203,6 +227,9 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		};
 	}
 
+	/**
+	 * 订阅nacos消息通知，用于实时更新白名单URL.
+	 */
 	@PostConstruct
 	@SneakyThrows
 	public void initURL() {

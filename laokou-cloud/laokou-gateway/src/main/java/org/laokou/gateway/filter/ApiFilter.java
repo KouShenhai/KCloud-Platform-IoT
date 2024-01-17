@@ -26,6 +26,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.laokou.gateway.annotation.Auth;
+import org.laokou.gateway.config.GatewayExtProperties;
 import org.laokou.gateway.utils.I18nUtil;
 import org.laokou.gateway.utils.ReactiveRequestUtil;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -47,6 +48,8 @@ import static org.laokou.common.i18n.common.ValCodes.OAUTH2_PASSWORD_REQUIRE;
 import static org.laokou.common.i18n.common.ValCodes.OAUTH2_USERNAME_REQUIRE;
 
 /**
+ * API过滤器.
+ *
  * @author laokou
  */
 @NonNullApi
@@ -56,6 +59,8 @@ public class ApiFilter implements WebFilter {
 	private static final String API_PATTERN = API_URL_PREFIX + ALL_PATTERN;
 
 	private final RequestMappingHandlerMapping requestMappingHandlerMapping;
+
+	private final GatewayExtProperties gatewayExtProperties;
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
@@ -84,15 +89,25 @@ public class ApiFilter implements WebFilter {
 		}
 	}
 
+	/**
+	 * 校验账号和密码.
+	 * @param exchange 服务网络交换机
+	 * @param request 请求对象
+	 * @param auth auth注解
+	 * @param chain 链式过滤器
+	 * @return 响应结果
+	 */
 	private Mono<Void> validate(ServerWebExchange exchange, ServerHttpRequest request, Auth auth,
 			WebFilterChain chain) {
 		String username = ReactiveRequestUtil.getParamValue(request, USERNAME);
 		String password = ReactiveRequestUtil.getParamValue(request, PASSWORD);
 		if (StringUtil.isEmpty(username)) {
+			// 账号不能为空
 			return ReactiveResponseUtil.response(exchange,
 					Result.fail(ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE)));
 		}
 		if (StringUtil.isEmpty(password)) {
+			// 密码不能为空
 			return ReactiveResponseUtil.response(exchange,
 					Result.fail(ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE)));
 		}
@@ -102,11 +117,21 @@ public class ApiFilter implements WebFilter {
 			password = RsaUtil.decryptByPrivateKey(password, privateKey);
 		}
 		catch (Exception e) {
+			// 账号或密码错误
 			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
 		}
-		String pwd = auth.password();
-		String name = auth.username();
+		String pwd;
+		String name;
+		if (gatewayExtProperties.isEnabled()) {
+			pwd = gatewayExtProperties.getPassword();
+			name = gatewayExtProperties.getUsername();
+		}
+		else {
+			pwd = auth.password();
+			name = auth.username();
+		}
 		if (!name.equals(username) || !pwd.equals(password)) {
+			// 账号或密码错误
 			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
 		}
 		return chain.filter(exchange);

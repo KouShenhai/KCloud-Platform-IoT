@@ -14,11 +14,14 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.idempotent.annotation;
 
 import java.lang.annotation.*;
 
 /**
+ * 幂等性.
+ *
  * @author laokou
  */
 @Target({ ElementType.METHOD })

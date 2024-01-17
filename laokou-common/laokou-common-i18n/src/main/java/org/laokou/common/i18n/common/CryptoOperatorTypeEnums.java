@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * 加密操作类型枚举.
+ *
  * @author laokou
  */
 public enum CryptoOperatorTypeEnums {

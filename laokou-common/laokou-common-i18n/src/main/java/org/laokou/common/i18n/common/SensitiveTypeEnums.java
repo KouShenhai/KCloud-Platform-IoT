@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * 敏感词过滤类型常量.
+ *
  * @author laokou
  */
 public enum SensitiveTypeEnums {

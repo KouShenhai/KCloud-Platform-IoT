@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 对象集合.
+ *
  * @author laokou
  */
 @Data

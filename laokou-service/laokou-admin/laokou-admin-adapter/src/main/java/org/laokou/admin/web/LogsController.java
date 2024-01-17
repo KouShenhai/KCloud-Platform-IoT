@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.web;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,6 +39,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 日志管理.
+ *
  * @author laokou
  */
 @RestController

@@ -30,6 +30,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.laokou.common.data.cache.config;
 
 import io.micrometer.common.lang.NonNullApi;
@@ -62,8 +63,8 @@ import java.util.concurrent.ConcurrentMap;
 import static org.laokou.common.i18n.common.StringConstants.UNDER;
 
 /**
- * A {@link org.springframework.cache.CacheManager} implementation backed by Redisson
- * instance.
+ * 数据缓存扩展管理类. A {@link org.springframework.cache.CacheManager} implementation backed by
+ * Redisson instance.
  *
  * @author Nikita Koksharov
  * @author laokou

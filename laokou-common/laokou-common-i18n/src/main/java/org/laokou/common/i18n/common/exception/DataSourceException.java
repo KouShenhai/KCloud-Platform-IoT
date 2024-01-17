@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.common.exception;
 
 /**
+ * 数据源异常.
+ *
  * @author laokou
  */
 public final class DataSourceException extends GlobalException {

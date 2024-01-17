@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.elasticsearch.annotation;
 
 import java.lang.annotation.*;

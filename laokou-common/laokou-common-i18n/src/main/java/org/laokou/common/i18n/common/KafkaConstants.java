@@ -13,9 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.laokou.common.i18n.common;
 
 /**
+ * kafka消息常量.
+ *
  * @author laokou
  */
 public final class KafkaConstants {

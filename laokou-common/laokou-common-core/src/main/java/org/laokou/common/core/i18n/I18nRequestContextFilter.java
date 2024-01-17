@@ -32,6 +32,8 @@ import org.springframework.web.filter.RequestContextFilter;
 import java.io.IOException;
 
 /**
+ * 上下文请求拦截器（国际化）.
+ *
  * @author laokou
  */
 @NonNullApi
@@ -57,6 +59,11 @@ public final class I18nRequestContextFilter extends RequestContextFilter {
 		}
 	}
 
+	/**
+	 * 往国际化本地线程变量写入初始化上下文请求的值.
+	 * @param request 请求对象
+	 * @param requestAttributes 请求属性
+	 */
 	private void initContextHolders(HttpServletRequest request, ServletRequestAttributes requestAttributes) {
 		String language = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
 		LocaleContextHolder.setLocale(LocaleUtil.toLocale(language), true);
@@ -66,6 +73,9 @@ public final class I18nRequestContextFilter extends RequestContextFilter {
 		}
 	}
 
+	/**
+	 * 注销国际化本地线程变量.
+	 */
 	private void resetContextHolders() {
 		LocaleContextHolder.resetLocaleContext();
 		RequestContextHolder.resetRequestAttributes();

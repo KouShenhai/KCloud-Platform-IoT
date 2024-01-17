@@ -22,6 +22,8 @@ import org.laokou.common.i18n.common.CryptoOperatorTypeEnums;
 import java.lang.annotation.*;
 
 /**
+ * AES加密.
+ *
  * @author laokou
  */
 @Target({ ElementType.FIELD })

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.web;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,6 +44,8 @@ import static org.laokou.common.i18n.common.RateLimiterTypeEnums.IP;
 import static org.redisson.api.RateIntervalUnit.MINUTES;
 
 /**
+ * 租户管理.
+ *
  * @author laokou
  */
 @RestController

@@ -14,10 +14,12 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.flowable;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.laokou.common.nacos.filter.ShutdownFilter;
+import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -35,6 +37,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 /**
  * @author laokou
  */
+@EnableRedisRepository
 @SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
 @EnableDiscoveryClient
 @EnableEncryptableProperties

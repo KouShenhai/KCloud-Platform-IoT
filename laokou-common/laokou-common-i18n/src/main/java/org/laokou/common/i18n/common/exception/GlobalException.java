@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.i18n.common.exception;
 
 import lombok.Data;
@@ -24,6 +25,8 @@ import java.io.Serial;
 import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 
 /**
+ * 全局异常.
+ *
  * @author laokou
  */
 @Data

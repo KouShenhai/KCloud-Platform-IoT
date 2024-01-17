@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.auth.module.oauth2.config;
 
 import com.nimbusds.jose.jwk.JWKSet;
@@ -29,7 +30,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerJwtAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -189,6 +189,7 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 配置.
+	 * @param propertiesMapper 属性映射器
 	 * @return AuthorizationServerSettings
 	 */
 	@Bean

@@ -67,7 +67,7 @@ import static org.laokou.common.i18n.common.RouterConstants.SERVICE_PORT;
 import static org.laokou.common.i18n.common.SysConstants.GRACEFUL_SHUTDOWN_URL;
 
 /**
- * Nacos路由负载均衡.
+ * nacos路由负载均衡.
  * {@link com.alibaba.cloud.nacos.loadbalancer.NacosLoadBalancerClientConfiguration}
  * {@link org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer}
  *
@@ -84,6 +84,9 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
 	private final NacosDiscoveryProperties nacosDiscoveryProperties;
 
+	/**
+	 * IPV6常量.
+	 */
 	private static final String IPV6_KEY = "IPv6";
 
 	/**
@@ -166,9 +169,9 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 * @return 服务实例响应体
 	 */
 	private Response<ServiceInstance> choose(List<ServiceInstance> instances, Request<?> request) {
-		// IP优先
 		if (request.getContext() instanceof RequestDataContext context) {
 			String path = context.getClientRequest().getUrl().getPath();
+			// IP优先（优雅停机）
 			if (ReactiveRequestUtil.pathMatcher(HttpMethod.GET.name(), path,
 					Map.of(HttpMethod.GET.name(), Collections.singleton(GRACEFUL_SHUTDOWN_URL)))) {
 				HttpHeaders headers = context.getClientRequest().getHeaders();
@@ -184,6 +187,11 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		return getInstanceResponse(instances);
 	}
 
+	/**
+	 * 服务实例响应.
+	 * @param serviceInstances 服务实例
+	 * @return 响应结果
+	 */
 	private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> serviceInstances) {
 		if (serviceInstances.isEmpty()) {
 			log.warn("No servers available for service: {}", this.serviceId);

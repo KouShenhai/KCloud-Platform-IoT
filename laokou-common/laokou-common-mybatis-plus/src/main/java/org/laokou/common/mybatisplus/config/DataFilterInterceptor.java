@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.mybatisplus.config;
 
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;

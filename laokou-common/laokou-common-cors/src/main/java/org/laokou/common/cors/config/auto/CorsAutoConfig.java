@@ -14,13 +14,13 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.cors.config.auto;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -30,6 +30,8 @@ import static org.laokou.common.i18n.common.SysConstants.ALL_PATTERNS;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
+ * 跨域配置.
+ *
  * @author laokou
  */
 @AutoConfiguration

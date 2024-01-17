@@ -20,6 +20,8 @@ package org.laokou.common.i18n.utils;
 import java.util.Objects;
 
 /**
+ * 对象工具类.
+ *
  * @author laokou
  */
 public class ObjectUtil {
@@ -36,10 +38,21 @@ public class ObjectUtil {
 		return Objects.equals(o1, o2);
 	}
 
+	/**
+	 * 哈希码.
+	 * @param args 参数
+	 * @return 哈希码
+	 */
 	public static int hash(Object... args) {
 		return Objects.hash(args);
 	}
 
+	/**
+	 * 对象不允许为空.
+	 * @param obj 对象
+	 * @param <T> 泛型
+	 * @return 对象
+	 */
 	public static <T> T requireNotNull(T obj) {
 		if (obj == null) {
 			throw new NullPointerException();

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.gateway.repository;
 
 import com.alibaba.nacos.api.config.ConfigService;
@@ -40,7 +41,7 @@ import static org.laokou.common.i18n.common.ErrorCodes.ROUTE_NOT_EXIST;
 import static org.laokou.common.i18n.common.RouterConstants.DATA_ID;
 
 /**
- * <a href=
+ * nacos动态路由缓存库 <a href=
  * "https://github.com/alibaba/spring-cloud-alibaba/blob/2.2.x/spring-cloud-alibaba-examples/nacos-example/nacos-config-example/src/main/java/com/alibaba/cloud/examples/example/ConfigListenerExample.java">...</a>
  *
  * @author laokou
@@ -61,6 +62,10 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
 	}
 
+	/**
+	 * 获取动态路由.
+	 * @return 动态路由
+	 */
 	@Override
 	public Flux<RouteDefinition> getRouteDefinitions() {
 		return reactiveHashOperations.entries(RedisKeyUtil.getRouteDefinitionHashKey())
@@ -83,15 +88,27 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		return Mono.empty();
 	}
 
+	/**
+	 * 同步nacos动态路由配置到redis.
+	 * @return 同步结果
+	 */
 	public Flux<Boolean> syncRouters() {
 		return Flux.fromIterable(pullRouters())
 			.flatMap(router -> reactiveHashOperations.putIfAbsent(RedisKeyUtil.getRouteDefinitionHashKey(), router.getId(), router));
 	}
 
+	/**
+	 * 删除所有动态路由.
+	 * @return 删除结果
+	 */
 	public Mono<Boolean> deleteRouters() {
 		return reactiveHashOperations.delete(RedisKeyUtil.getRouteDefinitionHashKey());
 	}
 
+	/**
+	 * 拉取nacos动态路由配置.
+	 * @return 拉取结果
+	 */
 	private Collection<RouteDefinition> pullRouters() {
 		try {
 			// pull nacos config info

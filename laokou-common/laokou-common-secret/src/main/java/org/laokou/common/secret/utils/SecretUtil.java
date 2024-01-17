@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.secret.utils;
 
 import org.laokou.common.core.utils.IdGenerator;
@@ -77,6 +78,11 @@ public class SecretUtil {
 
 	/**
 	 * MD5(appKey+appSecret+nonce+timestamp+params).
+	 * @param appKey aap标识
+	 * @param appSecret app密钥
+	 * @param nonce 随机字符
+	 * @param params 参数
+	 * @param timestamp 时间戳
 	 */
 	private static String sign(String appKey, String appSecret, String nonce, long timestamp, String params) {
 		String str = appKey.concat(appSecret).concat(nonce).concat(String.valueOf(timestamp)).concat(params);

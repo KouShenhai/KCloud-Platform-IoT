@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.common.event;
 
 import lombok.extern.slf4j.Slf4j;

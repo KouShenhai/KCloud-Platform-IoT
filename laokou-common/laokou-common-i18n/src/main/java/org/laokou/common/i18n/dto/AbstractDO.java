@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.dto;
 
 /**
+ * 抽象DO.
+ *
  * @author laokou
  */
 public abstract class AbstractDO extends DTO {

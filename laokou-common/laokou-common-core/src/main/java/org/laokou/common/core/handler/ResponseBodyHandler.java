@@ -34,6 +34,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
+ * 请求响应拦截处理器.
+ *
  * @author laokou
  */
 @Slf4j

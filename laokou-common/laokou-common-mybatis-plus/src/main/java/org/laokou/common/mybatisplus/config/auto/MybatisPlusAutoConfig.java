@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.mybatisplus.config.auto;
 
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
@@ -80,6 +81,7 @@ public class MybatisPlusAutoConfig {
 	/**
 	 * 注意: 使用多个功能需要注意顺序关系,建议使用如下顺序 - 多租户,动态表名 - 分页,乐观锁 - sql 性能规范,防止全表更新与删除 总结: 对 sql
 	 * 进行单次改造的优先放入,不对 sql 进行改造的最后放入.
+	 * @param mybatisPlusExtProperties mybatis配置
 	 */
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
+ * 集群管理.
+ *
  * @author laokou
  */
 @Service
@@ -39,11 +42,21 @@ public class ClustersServiceImpl implements ClustersServiceI {
 
 	private final ClusterInstanceListQryExe clusterInstanceListQryExe;
 
+	/**
+	 * 查询服务列表.
+	 * @param qry 服务列表查询参数
+	 * @return 服务列表
+	 */
 	@Override
 	public Result<Datas<ClusterServiceCO>> serviceList(ClusterServiceListQry qry) {
 		return clusterServiceListQryExe.execute(qry);
 	}
 
+	/**
+	 * 查询服务实例列表.
+	 * @param qry 服务实例查询参数
+	 * @return 服务实例列表
+	 */
 	@Override
 	public Result<Datas<ClusterInstanceCO>> instanceList(ClusterInstanceListQry qry) {
 		return clusterInstanceListQryExe.execute(qry);

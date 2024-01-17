@@ -43,7 +43,7 @@ class UriTest {
 				Map.of("GET", List.of("/ttt=laokou-admin,laokou-gateway", "/tts=laokou-gateway")));
 		map.forEach((k, v) -> map.put(k,
 				v.stream().filter(i -> i.contains(str)).map(i -> i.substring(0, i.indexOf("="))).toList()));
-		System.out.println(JacksonUtil.toJsonStr(map));
+		log.info(JacksonUtil.toJsonStr(map));
 	}
 
 }

@@ -24,6 +24,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 查看流程图执行器.
+ *
  * @author laokou
  */
 @Component
@@ -32,6 +34,11 @@ public class DefinitionDiagramGetQryExe {
 
 	private final DefinitionsFeignClient definitionsFeignClient;
 
+	/**
+	 * 执行查看流程图.
+	 * @param qry 查看流程图参数
+	 * @return 流程图
+	 */
 	public Result<String> execute(DefinitionDiagramGetQry qry) {
 		return definitionsFeignClient.diagram(qry.getDefinitionId());
 	}

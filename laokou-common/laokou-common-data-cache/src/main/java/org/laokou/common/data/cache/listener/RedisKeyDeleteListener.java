@@ -24,6 +24,8 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Component;
 
 /**
+ * 监听key检出事件.
+ *
  * @author laokou
  */
 @Component

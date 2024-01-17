@@ -15,24 +15,18 @@
  *
  */
 
-package org.laokou.gateway;
+package org.laokou.common.ratelimiter.driver.spi;
 
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.crypto.utils.RsaUtil;
-
-import static org.laokou.common.i18n.common.SysConstants.DEFAULT_PASSWORD;
-import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
+import jakarta.servlet.http.HttpServletRequest;
+import org.laokou.common.i18n.common.RateLimiterTypeEnums;
 
 /**
  * @author laokou
  */
-@Slf4j
-public class RsaTest {
+public interface KeyProvider {
 
-	public static void main(String[] args) {
-		String publicKey = RsaUtil.getPublicKey();
-		System.out.println(RsaUtil.encryptByPublicKey(DEFAULT_USERNAME, publicKey));
-		System.out.println(RsaUtil.encryptByPublicKey(DEFAULT_PASSWORD, publicKey));
-	}
+	String resolve(HttpServletRequest request);
+
+	RateLimiterTypeEnums accept();
 
 }

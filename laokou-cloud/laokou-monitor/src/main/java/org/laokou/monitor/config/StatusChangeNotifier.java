@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.monitor.config;
 
 import de.codecentric.boot.admin.server.domain.entities.Instance;
@@ -42,6 +43,12 @@ public class StatusChangeNotifier extends AbstractStatusChangeNotifier {
 		super(instanceRepository);
 	}
 
+	/**
+	 * 通知消息.
+	 * @param event 事件
+	 * @param instance 实例
+	 * @return 消息
+	 */
 	@Override
 	protected Mono<Void> doNotify(InstanceEvent event, Instance instance) {
 		return Mono.fromRunnable(() -> {

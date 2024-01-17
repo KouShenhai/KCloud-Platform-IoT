@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
@@ -50,15 +51,32 @@ import static org.laokou.common.i18n.common.SysConstants.LINE_PATTERN;
 import static org.laokou.common.i18n.common.SysConstants.TLS_PROTOCOL_VERSION;
 
 /**
+ * http客户端工具类.
+ *
  * @author laokou
  */
 @Slf4j
 public class HttpUtil {
 
+	/**
+	 * get请求.
+	 * @param url 链接
+	 * @param params 参数
+	 * @param headers 请求头
+	 * @return 响应结果
+	 */
 	public static String doGet(String url, Map<String, String> params, Map<String, String> headers) {
 		return doGet(url, params, headers, false);
 	}
 
+	/**
+	 * get请求.
+	 * @param url 链接
+	 * @param params 参数
+	 * @param headers 请求头
+	 * @param disableSsl ssl开关
+	 * @return 响应结果
+	 */
 	@SneakyThrows
 	public static String doGet(String url, Map<String, String> params, Map<String, String> headers,
 			boolean disableSsl) {
@@ -95,6 +113,14 @@ public class HttpUtil {
 		}
 	}
 
+	/**
+	 * 表单提交.
+	 * @param url 链接
+	 * @param params 参数
+	 * @param headers 请求头
+	 * @param disableSsl ssl开关
+	 * @return 响应结果
+	 */
 	@SneakyThrows
 	public static String doFormDataPost(String url, Map<String, String> params, Map<String, String> headers,
 			boolean disableSsl) {
@@ -128,10 +154,25 @@ public class HttpUtil {
 		}
 	}
 
+	/**
+	 * 表单提交.
+	 * @param url 链接
+	 * @param params 参数
+	 * @param headers 请求头
+	 * @return 响应结果
+	 */
 	public static String doFormUrlencodedPost(String url, Map<String, String> params, Map<String, String> headers) {
 		return doFormUrlencodedPost(url, params, headers, false);
 	}
 
+	/**
+	 * post请求.
+	 * @param url 链接
+	 * @param params 参数
+	 * @param headers 请求头
+	 * @param disableSsl ssl开关
+	 * @return 响应结果
+	 */
 	@SneakyThrows
 	public static String doFormUrlencodedPost(String url, Map<String, String> params, Map<String, String> headers,
 			boolean disableSsl) {
@@ -172,10 +213,25 @@ public class HttpUtil {
 		}
 	}
 
+	/**
+	 * post请求（json）.
+	 * @param url 链接
+	 * @param param 参数
+	 * @param headers 请求头
+	 * @return 响应结果
+	 */
 	public static String doJsonPost(String url, Object param, Map<String, String> headers) {
 		return doJsonPost(url, param, headers, false);
 	}
 
+	/**
+	 * post请求（json）.
+	 * @param url 链接
+	 * @param param 参数
+	 * @param headers 请求头
+	 * @param disableSsl ssl开关
+	 * @return 响应结果
+	 */
 	@SneakyThrows
 	public static String doJsonPost(String url, Object param, Map<String, String> headers, boolean disableSsl) {
 		// 创建HttpClient对象
@@ -207,6 +263,8 @@ public class HttpUtil {
 
 	/**
 	 * 转换为驼峰json字符串.
+	 * @param data 数据
+	 * @return 驼峰json字符串
 	 */
 	public static String transformerUnderHumpData(String data) {
 		Matcher matcher = LINE_PATTERN.matcher(data.toLowerCase());
@@ -219,7 +277,8 @@ public class HttpUtil {
 	}
 
 	/**
-	 * 单向认证.
+	 * 关闭ssl校验.
+	 * @param builder 构建器
 	 */
 	@SneakyThrows
 	public static void disableSsl(HttpClientBuilder builder) {
@@ -235,6 +294,10 @@ public class HttpUtil {
 		builder.setConnectionManager(poolingHttpClientConnectionManager);
 	}
 
+	/**
+	 * ssl上下文.
+	 * @return ssl上下文
+	 */
 	@SneakyThrows
 	public static SSLContext sslContext() {
 		// X.509是密码学里公钥证书的格式标准，作为证书标准

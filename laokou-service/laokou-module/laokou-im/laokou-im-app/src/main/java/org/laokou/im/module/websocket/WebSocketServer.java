@@ -32,7 +32,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.netty.config.AbstractServer;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
 
-import static org.laokou.im.module.websocket.WebsocketHandler.USER_CACHE;
+import static org.laokou.im.module.websocket.WebsocketHandler.getChannel;
 
 /**
  * @author laokou
@@ -73,7 +73,7 @@ public class WebSocketServer extends AbstractServer {
 
 	@Override
 	public void send(String clientId, Object obj) {
-		Channel channel = USER_CACHE.getIfPresent(clientId);
+		Channel channel = getChannel(clientId);
 		if (ObjectUtil.isNotNull(channel)) {
 			channel.writeAndFlush(obj);
 		}

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.module.storage;
 
 import io.micrometer.common.lang.NonNullApi;
@@ -61,6 +62,7 @@ public abstract class AbstractStorageDriver<O> implements StorageDriver<O> {
 
 	/**
 	 * 文件后缀.
+	 * @param fileName 文件名称
 	 */
 	public String getFileExt(String fileName) {
 		return FileUtil.getFileExt(fileName);

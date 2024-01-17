@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * open feign常量.
+ *
  * @author laokou
  */
 public final class OpenFeignConstants {

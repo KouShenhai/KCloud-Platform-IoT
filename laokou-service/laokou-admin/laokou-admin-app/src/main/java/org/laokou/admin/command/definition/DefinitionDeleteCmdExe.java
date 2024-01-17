@@ -24,6 +24,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 删除流程执行器.
+ *
  * @author laokou
  */
 @Component
@@ -32,6 +34,11 @@ public class DefinitionDeleteCmdExe {
 
 	private final DefinitionsFeignClient definitionsFeignClient;
 
+	/**
+	 * 执行删除流程.
+	 * @param cmd 删除流程参数
+	 * @return 执行删除结果
+	 */
 	public Result<Boolean> execute(DefinitionDeleteCmd cmd) {
 		return definitionsFeignClient.delete(cmd.getDeploymentId());
 	}

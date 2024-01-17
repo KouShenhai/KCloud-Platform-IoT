@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * 限流类型常量.
+ *
  * @author laokou
  */
 public enum RateLimiterTypeEnums {

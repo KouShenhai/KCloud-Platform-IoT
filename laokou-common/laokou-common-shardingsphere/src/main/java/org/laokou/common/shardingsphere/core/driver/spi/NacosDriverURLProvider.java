@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import static com.alibaba.cloud.nacos.NacosDiscoveryProperties.PREFIX;
 import static org.laokou.common.i18n.common.ShardingSphereConstants.*;
 import static org.laokou.common.i18n.common.StringConstants.RISK;
 import static org.laokou.common.i18n.common.SysConstants.*;
@@ -59,8 +60,8 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 	@SneakyThrows
 	@Override
 	public byte[] getContent(String url) {
-		NacosConfigProperties properties = PropertyUtil.getProperties(NacosConfigProperties.PREFIX,
-				NacosConfigProperties.class, YAML_LOCATION, YAML_FORMAT);
+		NacosConfigProperties properties = PropertyUtil.getProperties(PREFIX, NacosConfigProperties.class,
+				YAML_LOCATION, YAML_FORMAT);
 		String group = properties.getGroup();
 		NacosConfigManager nacosConfigManager = new NacosConfigManager(properties);
 		ConfigService configService = nacosConfigManager.getConfigService();
@@ -116,6 +117,8 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 
 	/**
 	 * 字符串解密.
+	 * @param cipherText 加密字符串
+	 * @param publicKey 公钥
 	 */
 	private String decrypt(String publicKey, String cipherText) {
 		if (StringUtils.hasText(cipherText)) {

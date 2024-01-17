@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.laokou.common.i18n.common;
 
 import java.nio.charset.StandardCharsets;
 
 /**
+ * mqtt消息常量.
+ *
  * @author laokou
  */
 public final class MqttConstants {

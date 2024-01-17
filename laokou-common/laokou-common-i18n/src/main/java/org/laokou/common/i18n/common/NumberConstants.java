@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * 数字常量.
+ *
  * @author laokou
  */
 public final class NumberConstants {

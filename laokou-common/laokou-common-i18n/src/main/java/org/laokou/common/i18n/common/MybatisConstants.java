@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * mybatis常量.
+ *
  * @author laokou
  */
 public final class MybatisConstants {

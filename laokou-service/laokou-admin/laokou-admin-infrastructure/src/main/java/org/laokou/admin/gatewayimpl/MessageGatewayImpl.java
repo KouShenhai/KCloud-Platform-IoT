@@ -51,6 +51,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_MESSAGE;
+import static org.laokou.common.i18n.common.SysConstants.DEFAULT_MESSAGE;
 import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
 import static org.laokou.common.i18n.common.RocketMqConstants.*;
 
@@ -63,8 +64,6 @@ import static org.laokou.common.i18n.common.RocketMqConstants.*;
 public class MessageGatewayImpl implements MessageGateway {
 
 	private final MessageMapper messageMapper;
-
-	private static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
 
 	private final RocketMqTemplate rocketMqTemplate;
 

@@ -5,6 +5,8 @@ import lombok.Data;
 import java.io.Serial;
 
 /**
+ * 公共指令.
+ *
  * @author laokou
  */
 @Data

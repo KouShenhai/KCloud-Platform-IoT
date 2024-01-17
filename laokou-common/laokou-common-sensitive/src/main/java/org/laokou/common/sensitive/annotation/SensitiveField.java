@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.sensitive.annotation;
 
 import org.laokou.common.i18n.common.SensitiveTypeEnums;

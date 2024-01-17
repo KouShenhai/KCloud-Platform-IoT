@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.core.handler;
 
 import jakarta.validation.ValidationException;
@@ -29,6 +30,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
+ * 全局异常统一处理.
+ *
  * @author laokou
  */
 @Slf4j
@@ -37,6 +40,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Component
 public class GlobalExceptionHandler {
 
+	/**
+	 * 异常处理并响应.
+	 * @param ex 异常
+	 * @return 响应结果
+	 */
 	@ExceptionHandler({ FeignException.class, SystemException.class, ApiException.class, FlowException.class,
 			DataSourceException.class, GatewayException.class })
 	public Result<?> handle(GlobalException ex) {
@@ -44,6 +52,11 @@ public class GlobalExceptionHandler {
 		return Result.fail(ex.getCode(), ex.getMsg());
 	}
 
+	/**
+	 * 异常处理并响应.
+	 * @param ex 异常
+	 * @return 响应结果
+	 */
 	@ExceptionHandler({ MethodArgumentNotValidException.class, ValidationException.class })
 	public Result<?> handle(Exception ex) {
 		if (ex instanceof MethodArgumentNotValidException mane) {

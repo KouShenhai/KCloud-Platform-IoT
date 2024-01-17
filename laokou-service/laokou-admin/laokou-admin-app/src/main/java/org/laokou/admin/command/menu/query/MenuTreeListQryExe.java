@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.command.menu.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;

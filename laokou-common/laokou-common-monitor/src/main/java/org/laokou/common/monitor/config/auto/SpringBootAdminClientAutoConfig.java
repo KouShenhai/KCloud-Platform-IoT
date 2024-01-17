@@ -29,6 +29,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.laokou.common.monitor.config.auto;
 
 import de.codecentric.boot.admin.client.config.ClientProperties;
@@ -83,7 +84,7 @@ import java.util.List;
 import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
 
 /**
- * {@link SpringBootAdminClientAutoConfiguration}.
+ * spring boot admin 自动装配. {@link SpringBootAdminClientAutoConfiguration}.
  *
  * @author laokou
  */

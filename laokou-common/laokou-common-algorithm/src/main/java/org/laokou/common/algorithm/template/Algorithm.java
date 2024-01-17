@@ -20,10 +20,19 @@ package org.laokou.common.algorithm.template;
 import java.util.List;
 
 /**
+ * 算法接口.
+ *
  * @author laokou
  */
 public interface Algorithm {
 
+	/**
+	 * 负载均衡算法.
+	 * @param list 集合
+	 * @param arg 参数
+	 * @return 实例
+	 * @param <T> 泛型
+	 */
 	<T> T select(List<T> list, Object arg);
 
 }

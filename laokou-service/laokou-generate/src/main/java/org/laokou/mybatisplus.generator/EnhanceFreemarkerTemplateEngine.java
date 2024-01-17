@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.mybatisplus.generator;
 
 import com.baomidou.mybatisplus.generator.config.OutputFile;

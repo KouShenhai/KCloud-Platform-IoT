@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.prometheus.config.auto;
 
 import io.micrometer.core.instrument.MeterRegistry;

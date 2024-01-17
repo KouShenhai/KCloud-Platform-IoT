@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.core.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +34,11 @@ import static org.laokou.common.i18n.common.StringConstants.COMMA;
 @Slf4j
 public class IpUtil {
 
+	/**
+	 * 解析IP地址.
+	 * @param request 请求对象
+	 * @return IP地址
+	 */
 	public static String getIpAddr(HttpServletRequest request) {
 		if (ObjectUtil.isNull(request)) {
 			return UNKNOWN_IP;
@@ -56,6 +62,11 @@ public class IpUtil {
 		return LOCAL_IPV6.equals(ip) ? LOCAL_IPV4 : ip.split(COMMA)[0];
 	}
 
+	/**
+	 * 判断内部IP.
+	 * @param ip IP地址
+	 * @return 判断结果
+	 */
 	public static boolean internalIp(String ip) {
 		if (LOCAL_IPV6.equals(ip)) {
 			return true;
@@ -64,10 +75,20 @@ public class IpUtil {
 		return ObjectUtil.isNotNull(bytes) && (internalIp(bytes) || LOCAL_IPV4.equals(ip));
 	}
 
+	/**
+	 * 判断IP不存在或未知.
+	 * @param ip IP地址
+	 * @return 判断结果
+	 */
 	private static boolean conditionNull(String ip) {
 		return StringUtil.isEmpty(ip) || UNKNOWN_IP.equalsIgnoreCase(ip);
 	}
 
+	/**
+	 * 判断内部IP.
+	 * @param addr 字节数组
+	 * @return 判断结果
+	 */
 	private static boolean internalIp(byte[] addr) {
 		final byte b0 = addr[0];
 		final byte b1 = addr[1];
@@ -91,7 +112,7 @@ public class IpUtil {
 	/**
 	 * 将IPv4地址转换成字节.
 	 * @param text IPv4地址
-	 * @return byte 字节
+	 * @return 字节
 	 */
 	public static byte[] textToNumericFormatV4(String text) {
 		if (text.isEmpty()) {

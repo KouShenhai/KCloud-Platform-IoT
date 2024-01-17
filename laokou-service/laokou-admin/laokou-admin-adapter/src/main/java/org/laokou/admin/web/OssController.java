@@ -38,6 +38,8 @@ import org.springframework.web.multipart.MultipartFile;
 import static org.laokou.common.i18n.common.CacheConstants.OSS;
 
 /**
+ * 存储管理.
+ *
  * @author laokou
  */
 @RestController

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.i18n.utils;
 
 import org.springframework.lang.Nullable;
@@ -26,6 +27,8 @@ import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import static org.laokou.common.i18n.common.StringConstants.PERCENT;
 
 /**
+ * 字符串工具类.
+ *
  * @author laokou
  */
 public class StringUtil {

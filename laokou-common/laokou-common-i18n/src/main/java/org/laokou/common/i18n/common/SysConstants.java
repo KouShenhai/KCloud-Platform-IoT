@@ -172,4 +172,14 @@ public final class SysConstants {
 	 */
 	public static final String SERVICE_UNKNOWN_STATUS = "UNKNOWN";
 
+	/**
+	 * 默认消息.
+	 */
+	public static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
+
+	/**
+	 * websocket路径.
+	 */
+	public static final String WEBSOCKET_PATH = "/ws";
+
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.i18n.utils;
 
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -78,6 +79,11 @@ public class DateUtil {
 	 */
 	private static final DayOfWeek[] WEEK_PATTERNS = { DayOfWeek.MONDAY };
 
+	/**
+	 * 时间格式.
+	 * @param index 索引
+	 * @return 时间格式
+	 */
 	public static String getTimePattern(int index) {
 		if (index >= TIME_PATTERNS.length || index < 0) {
 			throw new SystemException("时间格式不存在");
@@ -85,6 +91,11 @@ public class DateUtil {
 		return TIME_PATTERNS[index];
 	}
 
+	/**
+	 * 星期格式.
+	 * @param index 索引
+	 * @return 星球格式
+	 */
 	public static DayOfWeek getWeekPattern(int index) {
 		if (index >= WEEK_PATTERNS.length || index < 0) {
 			throw new SystemException("星期格式不存在");
@@ -92,38 +103,73 @@ public class DateUtil {
 		return WEEK_PATTERNS[index];
 	}
 
+	/**
+	 * 时间格式化.
+	 * @param localDateTime 时间
+	 * @param index 索引
+	 * @return 字符串
+	 */
 	public static String format(LocalDateTime localDateTime, int index) {
 		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter(index);
 		return localDateTime.format(dateTimeFormatter);
 	}
 
+	/**
+	 * 日期格式化.
+	 * @param localDate 日期
+	 * @param index 索引
+	 * @return 字符串
+	 */
 	public static String format(LocalDate localDate, int index) {
 		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter(index);
 		return localDate.format(dateTimeFormatter);
 	}
 
+	/**
+	 * 格式化配置.
+	 * @param index 索引
+	 * @return 格式化配置
+	 */
 	public static DateTimeFormatter getDateTimeFormatter(int index) {
 		String timePattern = getTimePattern(index);
 		return DateTimeFormatter.ofPattern(timePattern);
 	}
 
+	/**
+	 * 判断 d1 在 d2 后.
+	 * @param localDateTime1 时间1
+	 * @param localDateTime2 时间2
+	 * @return 判断结果
+	 */
 	public static boolean isAfter(LocalDateTime localDateTime1, LocalDateTime localDateTime2) {
 		return localDateTime1.isAfter(localDateTime2);
 	}
 
+	/**
+	 * 判断 d1 在 d2 前.
+	 * @param localDateTime1 时间1
+	 * @param localDateTime2 时间2
+	 * @return 判断结果
+	 */
 	public static boolean isBefore(LocalDateTime localDateTime1, LocalDateTime localDateTime2) {
 		return localDateTime1.isBefore(localDateTime2);
 	}
 
+	/**
+	 * 判断 d1 在 d2 前.
+	 * @param localDate1 日期1
+	 * @param localDate2 日期2
+	 * @return 判断结果
+	 */
 	public static boolean isBefore(LocalDate localDate1, LocalDate localDate2) {
 		return localDate1.isBefore(localDate2);
 	}
 
 	/**
-	 * 转换.
+	 * 字符串转换时间.
 	 * @param dateTime 时间
 	 * @param index 索引
-	 * @return LocalDateTime
+	 * @return 时间
 	 */
 	public static LocalDateTime parseTime(String dateTime, int index) {
 		String timePattern = getTimePattern(index);
@@ -132,10 +178,10 @@ public class DateUtil {
 	}
 
 	/**
-	 * 转换.
+	 * 字符串转换日期.
 	 * @param dateTime 日期
 	 * @param index 索引
-	 * @return LocalDateTime
+	 * @return 日期
 	 */
 	public static LocalDate parseDate(String dateTime, int index) {
 		String timePattern = getTimePattern(index);
@@ -147,12 +193,18 @@ public class DateUtil {
 	 * 获取 前/后 x天 的时间.
 	 * @param localDateTime 时间
 	 * @param days 天
-	 * @return LocalDateTime
+	 * @return 时间
 	 */
 	public static LocalDateTime plusDays(LocalDateTime localDateTime, long days) {
 		return localDateTime.plusDays(days);
 	}
 
+	/**
+	 * 日期 前/后 x天 的日期.
+	 * @param localDate 日期
+	 * @param days 天
+	 * @return 日期
+	 */
 	public static LocalDate plusDays(LocalDate localDate, long days) {
 		return localDate.plusDays(days);
 	}
@@ -161,7 +213,7 @@ public class DateUtil {
 	 * 获取 前/后 x秒 的时间.
 	 * @param localDateTime 时间
 	 * @param seconds 秒
-	 * @return LocalDateTime
+	 * @return 时间
 	 */
 	public static LocalDateTime plusSeconds(LocalDateTime localDateTime, long seconds) {
 		return localDateTime.plusSeconds(seconds);
@@ -171,12 +223,18 @@ public class DateUtil {
 	 * 获取 前/后 x月 的时间.
 	 * @param localDateTime 时间
 	 * @param months 月
-	 * @return LocalDateTime
+	 * @return 时间
 	 */
 	public static LocalDateTime plusMonths(LocalDateTime localDateTime, long months) {
 		return localDateTime.plusMonths(months);
 	}
 
+	/**
+	 * 获取 前/后 x月 的日期.
+	 * @param localDate 日期
+	 * @param months 月
+	 * @return 日期
+	 */
 	public static LocalDate plusMonths(LocalDate localDate, long months) {
 		return localDate.plusMonths(months);
 	}
@@ -185,47 +243,95 @@ public class DateUtil {
 	 * 获取 前/后 x年 的时间.
 	 * @param localDateTime 时间
 	 * @param years 年
-	 * @return LocalDateTime
+	 * @return 时间
 	 */
 	public static LocalDateTime plusYears(LocalDateTime localDateTime, long years) {
 		return localDateTime.plusYears(years);
 	}
 
+	/**
+	 * 现在时间.
+	 * @return 时间
+	 */
 	public static LocalDateTime now() {
 		return LocalDateTime.now();
 	}
 
+	/**
+	 * 现在日期.
+	 * @return 日期
+	 */
 	public static LocalDate nowDate() {
 		return LocalDate.now();
 	}
 
+	/**
+	 * 时间戳转时间.
+	 * @param timestamp 时间戳
+	 * @return 时间
+	 */
 	public static LocalDateTime getLocalDateTimeOfTimestamp(long timestamp) {
 		Instant instant = Instant.ofEpochMilli(timestamp);
 		ZoneId zoneId = ZoneId.systemDefault();
 		return LocalDateTime.ofInstant(instant, zoneId);
 	}
 
+	/**
+	 * 时间转时间戳.
+	 * @param localDateTime 时间
+	 * @return 时间戳
+	 */
 	public static long getTimestampOfLocalDateTime(LocalDateTime localDateTime) {
 		ZoneId zoneId = ZoneId.systemDefault();
 		return localDateTime.atZone(zoneId).toInstant().toEpochMilli();
 	}
 
+	/**
+	 * 开始时间到结束时间相差多少天.
+	 * @param start 开始时间
+	 * @param end 结束时间
+	 * @return 天
+	 */
 	public static long getDays(LocalDateTime start, LocalDateTime end) {
 		return Duration.between(start, end).toDays();
 	}
 
+	/**
+	 * 开始日期到结束日期相差多少天.
+	 * @param start 开始日期
+	 * @param end 结束日期
+	 * @return 天
+	 */
 	public static long getDays(LocalDate start, LocalDate end) {
 		return Period.between(start, end).getDays();
 	}
 
+	/**
+	 * 开始时间到结束时间相差多少小时.
+	 * @param start 开始时间
+	 * @param end 结束时间
+	 * @return 小时
+	 */
 	public static long getHours(LocalDateTime start, LocalDateTime end) {
 		return Duration.between(start, end).toHours();
 	}
 
+	/**
+	 * 开始日期到结束日期相差多少月.
+	 * @param start 开始日期
+	 * @param end 结束日期
+	 * @return 月
+	 */
 	public static long getMonths(LocalDate start, LocalDate end) {
 		return Period.between(start, end).getMonths();
 	}
 
+	/**
+	 * 开始日期到结束日期相差多少年.
+	 * @param start 开始日期
+	 * @param end 结束日期
+	 * @return 年
+	 */
 	public static long getYears(LocalDate start, LocalDate end) {
 		return Period.between(start, end).getYears();
 	}
@@ -234,26 +340,59 @@ public class DateUtil {
 		return localDate.with(TemporalAdjusters.nextOrSame(getWeekPattern(index)));
 	}
 
+	/**
+	 * 开始时间到结束时间相差多少分钟.
+	 * @param start 开始时间
+	 * @param end 结束时间
+	 * @return 分钟
+	 */
 	public static long getMinutes(LocalDateTime start, LocalDateTime end) {
 		return Duration.between(start, end).toMinutes();
 	}
 
+	/**
+	 * 开始时间到结束时间相差多少秒.
+	 * @param start 开始时间
+	 * @param end 结束时间
+	 * @return 秒
+	 */
 	public static long getSeconds(LocalDateTime start, LocalDateTime end) {
 		return Duration.between(start, end).toSeconds();
 	}
 
+	/**
+	 * 开始时间到结束时间相差多少毫秒.
+	 * @param start 开始时间
+	 * @param end 结束时间
+	 * @return 毫秒
+	 */
 	public static long getMillis(LocalDateTime start, LocalDateTime end) {
 		return Duration.between(start, end).toMillis();
 	}
 
+	/**
+	 * 根据日期获取该月的第一天.
+	 * @param localDate 日期
+	 * @return 该月的第一天
+	 */
 	public static LocalDate getFirstDayOfMonth(LocalDate localDate) {
 		return localDate.with(TemporalAdjusters.firstDayOfMonth());
 	}
 
+	/**
+	 * 根据日期获取这该月的最后一天.
+	 * @param localDate 日期
+	 * @return 该月的最后一天
+	 */
 	public static LocalDate getLastDayOfMonth(LocalDate localDate) {
 		return localDate.with(TemporalAdjusters.lastDayOfMonth());
 	}
 
+	/**
+	 * 获取日期在该周的文本格式.
+	 * @param localDate 日期
+	 * @return 文本格式
+	 */
 	public static String getDayOfWeekText(LocalDate localDate) {
 		return localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
 	}

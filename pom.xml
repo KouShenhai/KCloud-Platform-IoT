@@ -178,7 +178,6 @@
                 <DATASOURCE-PLATFORM>mysql</DATASOURCE-PLATFORM>
                 <!--<DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>-->
                 <DATASOURCE-DB-NACOS>kcloud_platform_alibaba_nacos</DATASOURCE-DB-NACOS>
-                <DATASOURCE-DB-SEATA>kcloud_platform_alibaba_seata</DATASOURCE-DB-SEATA>
                 <DATASOURCE-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</DATASOURCE-DB-XXL-JOB>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
@@ -199,6 +198,9 @@
                 <MAIL-USERNAME>xxx</MAIL-USERNAME>
                 <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
                 <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
+                <ROUTER-AUTH-ENABLED>false</ROUTER-AUTH-ENABLED>
+                <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
+                <ROUTER-AUTH-PASSWORD>laokou123</ROUTER-AUTH-PASSWORD>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -221,7 +223,6 @@
                 <DATASOURCE-PLATFORM>mysql</DATASOURCE-PLATFORM>
                 <!--<DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>-->
                 <DATASOURCE-DB-NACOS>kcloud_platform_alibaba_nacos</DATASOURCE-DB-NACOS>
-                <DATASOURCE-DB-SEATA>kcloud_platform_alibaba_seata</DATASOURCE-DB-SEATA>
                 <DATASOURCE-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</DATASOURCE-DB-XXL-JOB>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
@@ -242,6 +243,9 @@
                 <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
                 <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
                 <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
+                <ROUTER-AUTH-ENABLED>false</ROUTER-AUTH-ENABLED>
+                <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
+                <ROUTER-AUTH-PASSWORD>laokou123</ROUTER-AUTH-PASSWORD>
             </properties>
         </profile>
         <!-- 正式环境 -->
@@ -264,8 +268,6 @@
                 <DATASOURCE-PLATFORM>${DATASOURCE_PLATFORM:mysql}</DATASOURCE-PLATFORM>
                 <!--suppress UnresolvedMavenProperty -->
                 <DATASOURCE-DB-NACOS>${DATASOURCE_DB_NACOS:kcloud_platform_alibaba_nacos}</DATASOURCE-DB-NACOS>
-                <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-DB-SEATA>${DATASOURCE_DB_SEATA:kcloud_platform_alibaba_seata}</DATASOURCE-DB-SEATA>
                 <!--suppress UnresolvedMavenProperty -->
                 <DATASOURCE-DB-XXL-JOB>${DATASOURCE_DB_XXL_JOB:kcloud_platform_alibaba_xxl_job}</DATASOURCE-DB-XXL-JOB>
                 <!--suppress UnresolvedMavenProperty -->
@@ -304,6 +306,12 @@
                 <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
                 <FILE-TEMP-PATH>${FILE_TEMP_PATH:/opt/temp}</FILE-TEMP-PATH>
+                <!--suppress UnresolvedMavenProperty -->
+                <ROUTER-AUTH-ENABLED>${ROUTER_AUTH_ENABLED:false}</ROUTER-AUTH-ENABLED>
+                <!--suppress UnresolvedMavenProperty -->
+                <ROUTER-AUTH-USERNAME>${ROUTER_AUTH_USERNAME:laokou}</ROUTER-AUTH-USERNAME>
+                <!--suppress UnresolvedMavenProperty -->
+                <ROUTER-AUTH-PASSWORD>${ROUTER_AUTH_PASSWORD:laokou123}</ROUTER-AUTH-PASSWORD>
             </properties>
         </profile>
     </profiles>

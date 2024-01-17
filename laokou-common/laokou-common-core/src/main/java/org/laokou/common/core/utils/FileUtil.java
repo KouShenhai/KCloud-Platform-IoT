@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
@@ -28,6 +29,8 @@ import static org.laokou.common.i18n.common.StringConstants.COMMA;
 import static org.laokou.common.i18n.common.StringConstants.DOT;
 
 /**
+ * 文件工具类.
+ *
  * @author laokou
  */
 public class FileUtil {
@@ -47,12 +50,24 @@ public class FileUtil {
 		EXT_MAP.put("video", ".mp4,.MP4,.AVI,.mov,.rmvb,.rm,.FLV,.mp4,.3GP,.flv");
 	}
 
-	public static boolean checkFileExt(String type, String fileExt) {
+	/**
+	 * 校验文件扩展名.
+	 * @param type 类型
+	 * @param fileExt 文件扩展名
+	 * @return 校验结果
+	 */
+	public static boolean validateFileExt(String type, String fileExt) {
 		String extValue = EXT_MAP.get(type);
 		List<String> extList = Arrays.asList(extValue.split(COMMA));
 		return extList.contains(fileExt);
 	}
 
+	/**
+	 * 创建目录及文件.
+	 * @param directory 目录
+	 * @param fileName 文件名
+	 * @return 创建后的文件对象
+	 */
 	@SneakyThrows
 	public static File createFile(String directory, String fileName) {
 		File directoryFile = new File(directory);
@@ -67,7 +82,9 @@ public class FileUtil {
 	}
 
 	/**
-	 * 获取文件后缀.
+	 * 获取文件扩展名.
+	 * @param fileName 文件名称
+	 * @return 文件扩展名
 	 */
 	public static String getFileExt(String fileName) {
 		return fileName.substring(fileName.lastIndexOf(DOT));

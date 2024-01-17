@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.crypto.annotation;
 
 import org.laokou.common.i18n.common.AlgorithmEnums;
@@ -23,6 +24,8 @@ import java.lang.annotation.*;
 import static org.laokou.common.i18n.common.AlgorithmEnums.AES;
 
 /**
+ * 加密.
+ *
  * @author laokou
  */
 @Target({ ElementType.METHOD })

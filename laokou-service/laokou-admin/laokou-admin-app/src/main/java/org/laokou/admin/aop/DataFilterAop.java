@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.aop;
 
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,8 @@ import static org.laokou.common.i18n.common.StringConstants.*;
 import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
 
 /**
+ * 数据权限切面.
+ *
  * @author laokou
  */
 @Aspect
@@ -73,6 +76,9 @@ public class DataFilterAop {
 
 	/**
 	 * 获取数据过滤的SQL.
+	 * @param point 切面对象
+	 * @param user 用户
+	 * @return 拼接的SQL
 	 */
 	private String getSqlFilter(User user, JoinPoint point) {
 		MethodSignature signature = (MethodSignature) point.getSignature();
@@ -113,9 +119,8 @@ public class DataFilterAop {
 			.append(user.getId())
 			.append(DOUBLE_QUOT);
 		sqlFilter.append(RIGHT);
-		String sql = sqlFilter.toString();
 		// after(sql);
-		return sql;
+		return sqlFilter.toString();
 	}
 
 	private void after(String sql) {

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.security.config.auto;
 
 import jakarta.validation.constraints.NotNull;
@@ -27,7 +28,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
@@ -41,6 +41,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_RESOURCE_SERVER_PREFIX;
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
@@ -96,7 +97,7 @@ public class OAuth2ResourceServerAutoConfig {
 		Map<String, Set<String>> uriMap = Optional
 			.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
 					env.getProperty(SPRING_APPLICATION_NAME)))
-			.orElseGet(HashMap::new);
+			.orElseGet(ConcurrentHashMap::new);
 		return request -> request.requestMatchers(HttpMethod.GET,
 				Optional.ofNullable(uriMap.get(HttpMethod.GET.name())).orElseGet(HashSet::new).toArray(String[]::new))
 			.permitAll()

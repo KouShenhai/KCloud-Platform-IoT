@@ -49,36 +49,70 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 
 	private final DefinitionTemplateCmdExe definitionTemplateCmdExe;
 
+	/**
+	 * 新增流程.
+	 * @param cmd 新增流程参数
+	 * @return 执行新增结果
+	 */
 	@Override
 	public Result<Boolean> insert(DefinitionInsertCmd cmd) {
 		return definitionInsertCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 查询流程列表.
+	 * @param qry 查询流程列表参数
+	 * @return 流程列表
+	 */
 	@Override
 	public Result<Datas<DefinitionCO>> list(DefinitionListQry qry) {
 		return definitionListQryExe.execute(qry);
 	}
 
+	/**
+	 * 查看流程图.
+	 * @param qry 流程图查看参数
+	 * @return 流程图
+	 */
 	@Override
 	public Result<String> diagram(DefinitionDiagramGetQry qry) {
 		return definitionDiagramGetQryExe.execute(qry);
 	}
 
+	/**
+	 * 删除流程.
+	 * @param cmd 删除流程参数
+	 * @return 执行删除结果
+	 */
 	@Override
 	public Result<Boolean> delete(DefinitionDeleteCmd cmd) {
 		return definitionDeleteCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 挂起流程.
+	 * @param cmd 挂起流程参数
+	 * @return 执行挂起结果
+	 */
 	@Override
 	public Result<Boolean> suspend(DefinitionSuspendCmd cmd) {
 		return definitionSuspendCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 激活流程.
+	 * @param cmd 激活流程参数
+	 * @return 执行激活结果
+	 */
 	@Override
 	public Result<Boolean> activate(DefinitionActiveCmd cmd) {
 		return definitionActiveCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 下载流程模板.
+	 * @param qry 下载流程模板参数
+	 */
 	@Override
 	public void template(DefinitionTemplateCmd qry) {
 		definitionTemplateCmdExe.executeVoid(qry);

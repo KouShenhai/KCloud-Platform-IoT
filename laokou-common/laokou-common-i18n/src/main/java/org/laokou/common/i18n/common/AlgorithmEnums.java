@@ -14,9 +14,12 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.i18n.common;
 
 /**
+ * 加密算法类型.
+ *
  * @author laokou
  */
 

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.nacos.utils;
 
 import org.laokou.common.core.utils.JacksonUtil;

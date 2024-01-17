@@ -35,6 +35,8 @@ import java.net.InetSocketAddress;
 import static org.laokou.common.i18n.common.BizCodes.IP_BLACK;
 
 /**
+ * 黑名单IP.
+ *
  * @author laokou
  */
 @Slf4j
@@ -46,6 +48,12 @@ public class BlackIp implements Ip {
 
 	private final RemoteAddressResolver remoteAddressResolver;
 
+	/**
+	 * 校验IP并响应（黑名单）.
+	 * @param exchange 服务网络交换机
+	 * @param chain 链式过滤器
+	 * @return 响应结果
+	 */
 	@Override
 	public Mono<Void> validate(ServerWebExchange exchange, GatewayFilterChain chain) {
 		InetSocketAddress remoteAddress = remoteAddressResolver.resolve(exchange);
@@ -53,7 +61,7 @@ public class BlackIp implements Ip {
 		if (IpUtil.internalIp(hostAddress)) {
 			return chain.filter(exchange);
 		}
-		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(Label.BLACK.getName());
+		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(Label.BLACK.getValue());
 		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
 			if (Boolean.TRUE.equals(r)) {
 				log.error("IP为{}已列入黑名单", hostAddress);

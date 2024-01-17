@@ -29,12 +29,6 @@
         "_genkey_0": "/${name}/(?<path>.*)",
         "_genkey_1": "/$\\{path}"
       }
-    },
-    {
-      "name": "IpWhite",
-      "args": {
-        "sources": "127.0.0.1"
-      }
     }
   ],
   "metadata": {

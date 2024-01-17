@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.elasticsearch.annotation;
 
 import org.laokou.common.i18n.common.ElasticsearchFieldTypeEnums;
@@ -24,6 +25,8 @@ import static org.laokou.common.i18n.common.ElasticsearchFieldTypeEnums.KEYWORD;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
+ * es注解.
+ *
  * @author laokou
  */
 @Documented

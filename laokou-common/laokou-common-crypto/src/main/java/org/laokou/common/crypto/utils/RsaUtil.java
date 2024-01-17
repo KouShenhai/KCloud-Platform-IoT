@@ -14,12 +14,14 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.crypto.utils;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.utils.Base64;
 import org.laokou.common.core.utils.ResourceUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 import javax.crypto.Cipher;
 import java.io.InputStream;
@@ -29,7 +31,6 @@ import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Objects;
 
 import static org.laokou.common.i18n.common.SysConstants.ALGORITHM_RSA;
 
@@ -41,35 +42,56 @@ import static org.laokou.common.i18n.common.SysConstants.ALGORITHM_RSA;
 @Slf4j
 public class RsaUtil {
 
+	/**
+	 * 根据私钥解密.
+	 * @param body 数据
+	 * @param key 私钥
+	 * @return 解密后的字符串
+	 */
 	@SneakyThrows
 	public static String decryptByPrivateKey(String body, String key) {
 		byte[] bytes = decryptByPrivateKey(decryptBase64(body), decryptBase64(key));
-		return new String(Objects.requireNonNull(bytes), StandardCharsets.UTF_8);
+		return new String(ObjectUtil.requireNotNull(bytes), StandardCharsets.UTF_8);
 	}
 
+	/**
+	 * 根据公钥加密.
+	 * @param body 数据
+	 * @param key 公钥
+	 * @return 加密后的字符串
+	 */
 	@SneakyThrows
 	public static String encryptByPublicKey(String body, String key) {
 		byte[] bytes = encryptByPublicKey(body.getBytes(StandardCharsets.UTF_8), decryptBase64(key));
 		return decryptBase64(bytes);
 	}
 
+	/**
+	 * 获取私钥.
+	 * @return 私钥
+	 */
 	@SneakyThrows
 	public static String getPrivateKey() {
 		try (InputStream inputStream = ResourceUtil.getResource("/conf/privateKey.scr").getInputStream()) {
-			return new String(Objects.requireNonNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
+			return new String(ObjectUtil.requireNotNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
 		}
 	}
 
+	/**
+	 * 获取公钥.
+	 * @return 公钥
+	 */
 	@SneakyThrows
 	public static String getPublicKey() {
 		try (InputStream inputStream = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream()) {
-			return new String(Objects.requireNonNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
+			return new String(ObjectUtil.requireNotNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
 		}
 	}
 
 	/**
 	 * base64解密.
 	 * @param body 数据
+	 * @return 解密后的字符串
 	 */
 	private static byte[] decryptBase64(String body) {
 		return Base64.decodeBase64(body);
@@ -78,15 +100,17 @@ public class RsaUtil {
 	/**
 	 * base64加密.
 	 * @param bodyBytes 数据
+	 * @return 加密后的字符串
 	 */
 	private static String decryptBase64(byte[] bodyBytes) {
 		return Base64.encodeBase64String(bodyBytes);
 	}
 
 	/**
-	 * 通过公钥加密.
+	 * 根据公钥加密.
 	 * @param bodyBytes 加密字符
 	 * @param keyBytes 公钥
+	 * @return 加密后的字符串
 	 */
 	private static byte[] encryptByPublicKey(byte[] bodyBytes, byte[] keyBytes) throws Exception {
 		X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
@@ -98,9 +122,10 @@ public class RsaUtil {
 	}
 
 	/**
-	 * 通过私钥解密.
+	 * 根据私钥解密.
 	 * @param bodyBytes 加密字符
 	 * @param keyBytes 私钥
+	 * @return 解密后的字符串
 	 */
 	private static byte[] decryptByPrivateKey(byte[] bodyBytes, byte[] keyBytes) throws Exception {
 		PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);

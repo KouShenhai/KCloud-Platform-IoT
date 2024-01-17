@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
@@ -28,14 +29,17 @@ import static org.laokou.common.i18n.common.NetworkConstants.LOCAL_DESC;
 import static org.laokou.common.i18n.common.StringConstants.*;
 
 /**
+ * IP所属位置解析.
+ *
  * @author laokou
  */
 @Slf4j
 public class AddressUtil {
 
+	/**
+	 * IP搜索器.
+	 */
 	private static final Searcher SEARCHER;
-
-	private static final String IGNORE = "0";
 
 	static {
 		try (InputStream inputStream = ResourceUtil.getResource("ip2region.xdb").getInputStream()) {
@@ -46,15 +50,25 @@ public class AddressUtil {
 		}
 	}
 
+	/**
+	 * 根据IP获取所属位置.
+	 * @param ip IP
+	 * @return 所属位置
+	 */
 	@SneakyThrows
 	public static String getRealAddress(String ip) {
 		return IpUtil.internalIp(ip) ? LOCAL_DESC : addressFormat(SEARCHER.search(ip));
 	}
 
+	/**
+	 * 位置格式化.
+	 * @param address 所属位置
+	 * @return 格式化后的位置
+	 */
 	private static String addressFormat(String address) {
 		StringBuilder stringBuilder = new StringBuilder(address.length());
 		String[] info = address.split(BACKSLASH + ERECT);
-		Arrays.stream(info).forEach(str -> stringBuilder.append(IGNORE.equals(str) ? EMPTY : str + SPACE));
+		Arrays.stream(info).forEach(str -> stringBuilder.append(ZERO.equals(str) ? EMPTY : str + SPACE));
 		return stringBuilder.toString().trim();
 	}
 

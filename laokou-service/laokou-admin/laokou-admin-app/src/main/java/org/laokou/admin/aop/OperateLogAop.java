@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -53,6 +54,8 @@ import static org.laokou.common.i18n.common.StringConstants.*;
 import static org.laokou.common.i18n.common.SysConstants.EMPTY_JSON;
 
 /**
+ * 操作日志切面.
+ *
  * @author laokou
  */
 @Component
@@ -74,12 +77,18 @@ public class OperateLogAop {
 
 	/**
 	 * 处理完请求后执行.
+	 * @param joinPoint 切面对象
 	 */
 	@AfterReturning(pointcut = "@annotation(org.laokou.admin.domain.annotation.OperateLog)")
 	public void doAfterReturning(JoinPoint joinPoint) {
 		handleLog(joinPoint, null);
 	}
 
+	/**
+	 * 异常处理。
+	 * @param joinPoint 切面对象
+	 * @param e 异常
+	 */
 	@AfterThrowing(pointcut = "@annotation(org.laokou.admin.domain.annotation.OperateLog)", throwing = "e")
 	public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
 		handleLog(joinPoint, e);

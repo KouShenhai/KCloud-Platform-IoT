@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * 消息读取枚举.
+ *
  * @author laokou
  */
 public enum MessageReadEnums {

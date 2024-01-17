@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.openfeign.config.auto;
 
 import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;

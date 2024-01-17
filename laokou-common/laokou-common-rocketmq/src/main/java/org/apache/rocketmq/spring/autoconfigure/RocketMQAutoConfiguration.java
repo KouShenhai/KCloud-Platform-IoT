@@ -60,7 +60,7 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class RocketMQAutoConfiguration implements ApplicationContextAware {
 
-	private static final Logger log = LoggerFactory.getLogger(RocketMQAutoConfiguration.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RocketMQAutoConfiguration.class);
 
 	/**
 	 * rocketmq模板名称.
@@ -89,9 +89,9 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 	@PostConstruct
 	public void checkProperties() {
 		String nameServer = environment.getProperty("rocketmq.name-server", String.class);
-		log.debug("rocketmq.nameServer = {}", nameServer);
+		LOG.debug("rocketmq.nameServer = {}", nameServer);
 		if (nameServer == null) {
-			log.warn(
+			LOG.warn(
 					"The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!");
 		}
 	}
@@ -129,7 +129,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 		producer.setUseTLS(producerConfig.isTlsEnable());
 		producer.setNamespace(producerConfig.getNamespace());
 		producer.setInstanceName(producerConfig.getInstanceName());
-		log.info(String.format("a producer (%s) init on namesrv %s", groupName, nameServer));
+		LOG.info(String.format("a producer (%s) init on namesrv %s", groupName, nameServer));
 		return producer;
 	}
 
@@ -161,7 +161,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 		litePullConsumer.setCustomizedTraceTopic(consumerConfig.getCustomizedTraceTopic());
 		litePullConsumer.setNamespace(consumerConfig.getNamespace());
 		litePullConsumer.setInstanceName(consumerConfig.getInstanceName());
-		log.info(String.format("a pull consumer(%s sub %s) init on namesrv %s", groupName, topicName, nameServer));
+		LOG.info(String.format("a pull consumer(%s sub %s) init on namesrv %s", groupName, topicName, nameServer));
 		return litePullConsumer;
 	}
 

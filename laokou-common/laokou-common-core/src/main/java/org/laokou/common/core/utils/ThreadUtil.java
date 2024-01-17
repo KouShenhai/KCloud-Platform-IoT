@@ -24,10 +24,17 @@ import java.util.concurrent.ExecutorService;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
+ * 线程池工具类.
+ *
  * @author laokou
  */
 public class ThreadUtil {
 
+	/**
+	 * 关闭线程池.
+	 * @param executorService 执行器.
+	 * @param timeout 超时时间
+	 */
 	public static void shutdown(ExecutorService executorService, int timeout) {
 		if (ObjectUtil.isNotNull(executorService) && !executorService.isShutdown()) {
 			executorService.shutdown();

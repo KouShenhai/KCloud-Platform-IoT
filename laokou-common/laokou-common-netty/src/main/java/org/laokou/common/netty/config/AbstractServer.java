@@ -115,6 +115,8 @@ public abstract class AbstractServer implements Server {
 
 	/**
 	 * 绑定端口.
+	 * @param bootstrap 启动类
+	 * @param port 端口
 	 */
 	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap, final int port) {
 		return bootstrap.bind(port).awaitUninterruptibly().addListener(future -> {

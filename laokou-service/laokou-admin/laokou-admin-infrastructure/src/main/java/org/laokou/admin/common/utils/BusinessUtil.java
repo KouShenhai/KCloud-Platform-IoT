@@ -28,7 +28,7 @@ public class BusinessUtil {
 
 	public static void checkResource(Resource resource) {
 		String fileExt = FileUtil.getFileExt(resource.getUrl());
-		if (!FileUtil.checkFileExt(resource.getCode(), fileExt)) {
+		if (!FileUtil.validateFileExt(resource.getCode(), fileExt)) {
 			throw new SystemException("资源格式错误");
 		}
 	}

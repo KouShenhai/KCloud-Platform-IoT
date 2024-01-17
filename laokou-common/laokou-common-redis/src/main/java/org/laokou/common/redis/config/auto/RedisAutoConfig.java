@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.redis.config.auto;
 
 import org.laokou.common.redis.utils.RedisUtil;
@@ -21,7 +22,6 @@ import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -37,12 +37,12 @@ import static org.laokou.common.redis.config.GlobalJsonJacksonCodec.getStringRed
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnClass(LettuceConnectionFactory.class)
 public class RedisAutoConfig {
 
 	/**
 	 * 自定义RedisTemplate.
+	 * @param lettuceConnectionFactory 工厂
 	 * @return RedisTemplate
 	 */
 	@Bean("redisTemplate")

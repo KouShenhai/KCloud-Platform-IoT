@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.data.cache.annotation;
 
 import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
@@ -25,6 +26,8 @@ import java.lang.annotation.Target;
 import java.lang.annotation.Documented;
 
 /**
+ * 数据缓存.
+ *
  * @author laokou
  */
 @Target({ ElementType.METHOD })

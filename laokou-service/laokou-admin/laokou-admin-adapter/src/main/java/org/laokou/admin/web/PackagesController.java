@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.web;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,6 +39,8 @@ import java.util.List;
 import static org.laokou.common.i18n.common.CacheConstants.PACKAGES;
 
 /**
+ * 套餐管理.
+ *
  * @author laokou
  */
 @RestController

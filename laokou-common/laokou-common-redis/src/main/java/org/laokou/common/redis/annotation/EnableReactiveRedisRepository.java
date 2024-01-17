@@ -14,21 +14,18 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.elasticsearch.constant;
 
-/**
- * @author laokou
- */
-public interface EsConstant {
+package org.laokou.common.redis.annotation;
 
-	/**
-	 * 自定义分词器.
-	 */
-	Integer IK_INDEX = 3;
+import org.laokou.common.redis.config.auto.ReactiveRedisAutoConfig;
+import org.springframework.context.annotation.Import;
 
-	/**
-	 * 无分词器.
-	 */
-	Integer NOT_ANALYZED = 0;
+import java.lang.annotation.*;
+
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import(ReactiveRedisAutoConfig.class)
+public @interface EnableReactiveRedisRepository {
 
 }

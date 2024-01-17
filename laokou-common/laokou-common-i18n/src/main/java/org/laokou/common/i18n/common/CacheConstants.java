@@ -19,6 +19,7 @@ package org.laokou.common.i18n.common;
 
 // @formatter:off
 /**
+ * 缓存常量.
  * @author laokou
  * 格式 			=> name_ttl_maxIdleTime_maxSize
  * name 		=> 缓存名称

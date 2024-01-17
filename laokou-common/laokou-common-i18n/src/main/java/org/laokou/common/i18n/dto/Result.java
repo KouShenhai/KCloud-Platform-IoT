@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,6 +27,8 @@ import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 import static org.laokou.common.i18n.common.StatusCodes.OK;
 
 /**
+ * 响应格式.
+ *
  * @author laokou
  */
 @Data
@@ -67,6 +70,13 @@ public class Result<T> extends DTO {
 		result.setData(data);
 		result.setCode(OK);
 		result.setMsg(MessageUtil.getMessage(OK));
+		return result;
+	}
+
+	public static <T> Result<T> of(int code, String msg) {
+		Result<T> result = new Result<>();
+		result.setCode(code);
+		result.setMsg(msg);
 		return result;
 	}
 

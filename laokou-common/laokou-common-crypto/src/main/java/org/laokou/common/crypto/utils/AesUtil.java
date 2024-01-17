@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.crypto.utils;
 
 import lombok.SneakyThrows;
@@ -34,6 +35,8 @@ import java.nio.charset.StandardCharsets;
 import static org.laokou.common.i18n.common.SysConstants.*;
 
 /**
+ * AES加密工具类.
+ *
  * @author laokou
  */
 public class AesUtil {
@@ -53,14 +56,27 @@ public class AesUtil {
 		}
 	}
 
+	/**
+	 * 获取加密密钥.
+	 * @return 加密密钥
+	 */
 	public static String getKey() {
 		return KEY;
 	}
 
+	/**
+	 * 获取加密密钥.
+	 * @return 加密密钥
+	 */
 	private static byte[] getSecretKey() {
 		return SECRET_KEY;
 	}
 
+	/**
+	 * 加密.
+	 * @param data 数据
+	 * @return 加密后的字符串
+	 */
 	@SneakyThrows
 	public static String encrypt(String data) {
 		SecretKeySpec secretKeySpec = new SecretKeySpec(getSecretKey(), ALGORITHM_AES);
@@ -70,6 +86,11 @@ public class AesUtil {
 		return Base64.encodeBase64String(bytes);
 	}
 
+	/**
+	 * 解密.
+	 * @param data 数据
+	 * @return 解密后的字符串
+	 */
 	@SneakyThrows
 	public static String decrypt(String data) {
 		SecretKeySpec secretKeySpec = new SecretKeySpec(getSecretKey(), ALGORITHM_AES);
@@ -79,6 +100,11 @@ public class AesUtil {
 		return new String(cipher.doFinal(bytes), StandardCharsets.UTF_8);
 	}
 
+	/**
+	 * 对象属性加密/解密.
+	 * @param obj 对象
+	 * @throws IllegalAccessException 异常
+	 */
 	public static void transform(Object obj) throws IllegalAccessException {
 		Field[] fields = obj.getClass().getDeclaredFields();
 		for (Field field : fields) {

@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * 属性常量.
+ *
  * @author laokou
  */
 public final class PropertiesConstants {
@@ -69,5 +71,15 @@ public final class PropertiesConstants {
 	 * mqtt配置前缀.
 	 */
 	public static final String MQTT_PREFIX = "spring.mqtt";
+
+	/**
+	 * 黑/白名单配置前缀.
+	 */
+	public static final String IP_PREFIX = "spring.cloud.gateway.ip";
+
+	/**
+	 * 路由认证配置前缀.
+	 */
+	public static final String ROUTER_AUTH_PREFIX = "spring.cloud.gateway.router.auth";
 
 }

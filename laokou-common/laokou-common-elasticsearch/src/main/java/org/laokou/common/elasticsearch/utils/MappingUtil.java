@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.elasticsearch.utils;
 
 import org.laokou.common.elasticsearch.annotation.EsField;
@@ -24,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * es映射工具类.
+ *
  * @author laokou
  */
 public class MappingUtil {

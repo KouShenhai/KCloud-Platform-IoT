@@ -22,6 +22,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 /**
+ * kafka发送消息模板.
+ *
  * @author laokou
  */
 @Component
@@ -30,6 +32,11 @@ public class DefaultKafkaTemplate {
 
 	private final KafkaTemplate<String, String> kafkaTemplate;
 
+	/**
+	 * 发送消息.
+	 * @param topic 主题
+	 * @param payload 内容
+	 */
 	public void send(String topic, String payload) {
 		kafkaTemplate.send(topic, payload);
 	}

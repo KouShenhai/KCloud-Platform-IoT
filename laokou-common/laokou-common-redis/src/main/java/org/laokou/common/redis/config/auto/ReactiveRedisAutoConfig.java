@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.redis.config.auto;
 
 import org.laokou.common.redis.config.RedissonConfig;
@@ -23,7 +24,6 @@ import org.redisson.api.RedissonReactiveClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
@@ -40,7 +40,6 @@ import static org.laokou.common.redis.config.GlobalJsonJacksonCodec.getStringRed
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
 @ConditionalOnClass({ RedissonConfig.class, ReactiveRedisConnectionFactory.class, ReactiveRedisTemplate.class,
 		Flux.class })
 public class ReactiveRedisAutoConfig {

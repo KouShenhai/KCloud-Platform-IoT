@@ -22,6 +22,8 @@ import org.laokou.common.i18n.common.ErrorCodes;
 import org.laokou.common.i18n.utils.MessageUtil;
 
 /**
+ * 拦截响应的异常枚举.
+ *
  * @author laokou
  */
 @Getter
@@ -37,8 +39,14 @@ public enum ExceptionEnum {
 	 */
 	INVALID_REQUEST(ErrorCodes.INVALID_REQUEST, MessageUtil.getMessage(ErrorCodes.INVALID_REQUEST));
 
+	/**
+	 * 编码.
+	 */
 	private final int code;
 
+	/**
+	 * 信息.
+	 */
 	private final String msg;
 
 	ExceptionEnum(int code, String msg) {

@@ -25,18 +25,37 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
+ * 模板工具类.
+ *
  * @author laokou
  */
 public class TemplateUtil extends FreeMarkerTemplateUtils {
 
+	/**
+	 * 模板配置.
+	 */
 	private static final Configuration CONFIGURATION = new Configuration(
 			Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
 
+	/**
+	 * 根据模板获取内容.
+	 * @param template 模板
+	 * @param params 参数
+	 * @return 内容
+	 * @throws IOException 异常
+	 * @throws TemplateException 异常
+	 */
 	public static String getContent(String template, Map<String, Object> params) throws IOException, TemplateException {
 		Template temp = getTemplate(template);
 		return FreeMarkerTemplateUtils.processTemplateIntoString(temp, params);
 	}
 
+	/**
+	 * 获取模板.
+	 * @param template 模板名称
+	 * @return 模板
+	 * @throws IOException 异常
+	 */
 	private static Template getTemplate(String template) throws IOException {
 		return new Template("template", template, CONFIGURATION);
 	}

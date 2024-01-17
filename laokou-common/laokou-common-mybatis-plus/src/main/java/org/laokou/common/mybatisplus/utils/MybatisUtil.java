@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.mybatisplus.utils;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
@@ -65,6 +66,10 @@ public class MybatisUtil {
 	 * @param dataList 集合
 	 * @param batchNum 每组多少条数据
 	 * @param clazz 类型
+	 * @param <T> 泛型
+	 * @param <M> mapper泛型
+	 * @param consumer 函数
+	 * @param ds 数据源名称
 	 */
 	@SneakyThrows
 	public <T, M> void batch(List<T> dataList, int batchNum, Class<M> clazz, String ds, BiConsumer<M, T> consumer) {

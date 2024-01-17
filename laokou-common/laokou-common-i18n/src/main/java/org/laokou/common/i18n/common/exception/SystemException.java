@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.common.exception;
 
 /**
+ * 系统异常.
+ *
  * @author laokou
  */
 public final class SystemException extends GlobalException {

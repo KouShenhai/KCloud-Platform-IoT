@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.laokou.common.i18n.dto;
 
 import java.util.List;
 
 /**
+ * 对象转换器.
+ *
  * @author laokou
  */
 public interface Convertor<C, E, D> {

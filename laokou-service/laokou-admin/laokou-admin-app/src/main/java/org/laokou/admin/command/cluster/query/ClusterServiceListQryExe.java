@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * 查询服务列表执行器.
+ *
  * @author laokou
  */
 @Component
@@ -41,10 +43,20 @@ public class ClusterServiceListQryExe {
 
 	private final DefaultConfigProperties defaultConfigProperties;
 
+	/**
+	 * 执行查询服务列表.
+	 * @param qry 查询服务列表参数
+	 * @return 服务列表
+	 */
 	public Result<Datas<ClusterServiceCO>> execute(ClusterServiceListQry qry) {
 		return Result.of(getDatas(qry));
 	}
 
+	/**
+	 * 服务列表分页.
+	 * @param qry 查询服务列表参数
+	 * @return 分页结果
+	 */
 	private Datas<ClusterServiceCO> getDatas(ClusterServiceListQry qry) {
 		Integer pageNum = qry.getPageNum();
 		Integer pageSize = qry.getPageSize();

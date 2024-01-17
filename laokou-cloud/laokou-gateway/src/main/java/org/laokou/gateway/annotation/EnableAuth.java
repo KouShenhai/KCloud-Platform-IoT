@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.gateway.annotation;
 
 import org.laokou.gateway.filter.ApiFilter;
@@ -21,6 +22,11 @@ import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
+/**
+ * 认证开关注解.
+ *
+ * @author laokou
+ */
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

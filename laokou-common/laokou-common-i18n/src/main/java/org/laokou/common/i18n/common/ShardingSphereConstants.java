@@ -20,6 +20,8 @@ package org.laokou.common.i18n.common;
 import java.util.regex.Pattern;
 
 /**
+ * sharding sphere 常量.
+ *
  * @author laokou
  */
 public final class ShardingSphereConstants {

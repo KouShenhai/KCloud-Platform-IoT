@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * 字符串常量.
+ *
  * @author laokou
  */
 public final class StringConstants {
@@ -159,5 +161,10 @@ public final class StringConstants {
 	 * 分割参数.
 	 */
 	public static final String START_START = "**";
+
+	/**
+	 * 零.
+	 */
+	public static final String ZERO = "0";
 
 }

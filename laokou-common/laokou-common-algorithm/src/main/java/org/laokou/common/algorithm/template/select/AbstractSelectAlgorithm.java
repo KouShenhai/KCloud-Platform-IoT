@@ -20,6 +20,8 @@ package org.laokou.common.algorithm.template.select;
 import org.laokou.common.algorithm.template.Algorithm;
 
 /**
+ * 负载均衡算法抽象.
+ *
  * @author laokou
  */
 public abstract class AbstractSelectAlgorithm implements Algorithm {

@@ -14,45 +14,32 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.im.module.websocket;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.HttpResponseStatus;
-import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import io.netty.util.ReferenceCountUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.redis.utils.ReactiveRedisUtil;
+import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.domain.User;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-import static io.netty.handler.codec.http.HttpResponseStatus.UNAUTHORIZED;
-import static org.laokou.common.i18n.common.RequestHeaderConstants.*;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.StringConstants.MARK;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.laokou.common.i18n.common.StatusCodes.UNAUTHORIZED;
+import static org.laokou.common.redis.utils.RedisUtil.HOUR_ONE_EXPIRE;
 
 /**
+ * websocket自定义处理器.
+ *
  * @author laokou
  */
 @Component
@@ -61,31 +48,40 @@ import static org.laokou.common.i18n.common.StringConstants.MARK;
 @RequiredArgsConstructor
 public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
-	private final ReactiveRedisUtil reactiveRedisUtil;
+	private final RedisUtil redisUtil;
 
 	/**
-	 * 建立连接的用户.
+	 * 建立连接的用户集合.
 	 */
-	public static final Cache<String, Channel> USER_CACHE;
+	private static final Cache<String, Channel> CLIENT_CACHE = Caffeine.newBuilder()
+		.expireAfterAccess(HOUR_ONE_EXPIRE, SECONDS)
+		.initialCapacity(500)
+		.build();
 
-	static {
-		USER_CACHE = Caffeine.newBuilder()
-			.expireAfterAccess(RedisUtil.HOUR_ONE_EXPIRE, TimeUnit.SECONDS)
-			.initialCapacity(500)
-			.build();
+	/**
+	 * 根据客户ID获取通道.
+	 * @param clientId 客户ID
+	 * @return 通道
+	 */
+	public static Channel getChannel(String clientId) {
+		return CLIENT_CACHE.getIfPresent(clientId);
 	}
 
 	@Override
-	@SneakyThrows
-	public void channelRead(ChannelHandlerContext ctx, Object msg) {
-		if (msg instanceof FullHttpRequest request) {
-			init(ctx, request);
+	protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
+		Channel channel = ctx.channel();
+		String authorization = frame.text();
+		String userInfoKey = RedisKeyUtil.getUserInfoKey(authorization);
+		Object obj = redisUtil.get(userInfoKey);
+		if (obj != null) {
+			User user = (User) obj;
+			Long id = user.getId();
+			CLIENT_CACHE.put(id.toString(), channel);
 		}
-		super.channelRead(ctx, msg);
-	}
-
-	@Override
-	protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) {
+		else {
+			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
+			ctx.close();
+		}
 	}
 
 	@Override
@@ -95,60 +91,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 	@Override
 	public void handlerRemoved(ChannelHandlerContext ctx) {
-		// 移除channel
 		// log.info("断开连接：{}", ctx.channel().id().asLongText());
-	}
-
-	private String getAuthorization(Map<String, String> paramMap) {
-		String Authorization = paramMap.getOrDefault(AUTHORIZATION, EMPTY);
-		if (StringUtil.isNotEmpty(Authorization)) {
-			return Authorization.substring(7);
-		}
-		return Authorization;
-	}
-
-	private void init(ChannelHandlerContext ctx, FullHttpRequest request) {
-		try {
-			if (request.decoderResult().isFailure() || !WEBSOCKET.equals(request.headers().get(UPGRADE))) {
-				handleRequestError(ctx, HttpResponseStatus.BAD_REQUEST);
-				return;
-			}
-			String uri = request.uri();
-			int index = uri.indexOf(MARK);
-			String param = uri.substring(index + 1);
-			Map<String, String> paramMap = MapUtil.parseParamMap(param);
-			String Authorization = getAuthorization(paramMap);
-			request.setUri(uri.substring(0, index));
-			if (StringUtil.isEmpty(Authorization)) {
-				handleRequestError(ctx, UNAUTHORIZED);
-				return;
-			}
-			String userInfoKey = RedisKeyUtil.getUserInfoKey(Authorization);
-			reactiveRedisUtil.get(userInfoKey).subscribe(obj -> {
-				if (ObjectUtil.isNull(obj)) {
-					handleRequestError(ctx, UNAUTHORIZED);
-					return;
-				}
-				User user = (User) obj;
-				Channel channel = ctx.channel();
-				String userId = user.getId().toString();
-				USER_CACHE.put(userId, channel);
-			});
-		}
-		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-		}
-	}
-
-	private void handleRequestError(ChannelHandlerContext ctx, HttpResponseStatus httpResponseStatus) {
-		DefaultFullHttpResponse defaultFullHttpResponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,
-				httpResponseStatus);
-		ByteBuf byteBuf = Unpooled.copiedBuffer(httpResponseStatus.toString(), StandardCharsets.UTF_8);
-		defaultFullHttpResponse.content().writeBytes(byteBuf);
-		// 释放资源
-		ReferenceCountUtil.release(byteBuf);
-		ctx.channel().writeAndFlush(defaultFullHttpResponse);
-		ctx.close();
 	}
 
 }

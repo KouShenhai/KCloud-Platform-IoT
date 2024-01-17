@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.gateway.filter;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -53,6 +54,8 @@ import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
+ * 拦截请求响应的过滤器.
+ *
  * @author laokou
  */
 @Component
@@ -79,6 +82,8 @@ public class RespFilter implements GlobalFilter, Ordered {
 
 	/**
 	 * OAuth2响应.
+	 * @param chain 链式过滤器
+	 * @param exchange 服务器对象
 	 */
 	private Mono<Void> response(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerHttpResponse response = exchange.getResponse();
@@ -129,6 +134,11 @@ public class RespFilter implements GlobalFilter, Ordered {
 		return HIGHEST_PRECEDENCE + 1500;
 	}
 
+	/**
+	 * 通过编码获取自定义异常.
+	 * @param code 编码
+	 * @return 自定义异常
+	 */
 	private ExceptionEnum getException(String code) {
 		return ObjectUtil.requireNotNull(ExceptionEnum.getInstance(code.toUpperCase()));
 	}

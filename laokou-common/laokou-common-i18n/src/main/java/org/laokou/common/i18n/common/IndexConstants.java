@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * es索引常量.
+ *
  * @author laokou
  */
 public final class IndexConstants {

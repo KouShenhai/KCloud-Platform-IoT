@@ -30,7 +30,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_RESOURCE_
 // @formatter:off
 /**
  * @author laokou
- * 格式 -> 路径=服务（多个服务用逗号,隔开）
+ * 格式 -> 路径=服务名（多个服务用逗号,隔开）
  * 举例 -> /actuator/**=laokou-admin,laokou-gateway
  */
 // @formatter:on

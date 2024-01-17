@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.i18n.utils;
 
 import jakarta.validation.ConstraintViolation;
@@ -28,7 +29,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * <a href=
+ * 校验工具类. <a href=
  * "https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#section-validating-bean-constraints">...</a>
  *
  * @author laokou

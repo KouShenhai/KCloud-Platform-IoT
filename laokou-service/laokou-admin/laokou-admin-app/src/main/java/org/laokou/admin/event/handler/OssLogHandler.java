@@ -17,6 +17,7 @@
 
 package org.laokou.admin.event.handler;
 
+import com.alibaba.ttl.threadpool.TtlExecutors;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ import java.util.concurrent.CompletableFuture;
 /**
  * @author laokou
  */
+@Async
 @Slf4j
 @Component
 @NonNullApi
@@ -48,7 +50,6 @@ public class OssLogHandler implements ApplicationListener<OssLogEvent> {
 	private final ThreadPoolTaskExecutor taskExecutor;
 
 	@Override
-	@Async
 	public void onApplicationEvent(OssLogEvent event) {
 		String sourceName = UserContextHolder.get().getSourceName();
 		CompletableFuture.runAsync(() -> {
@@ -62,7 +63,7 @@ public class OssLogHandler implements ApplicationListener<OssLogEvent> {
 			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
-		}, taskExecutor);
+		}, TtlExecutors.getTtlExecutorService(taskExecutor.getThreadPoolExecutor()));
 	}
 
 	private void execute(OssLogEvent event) {

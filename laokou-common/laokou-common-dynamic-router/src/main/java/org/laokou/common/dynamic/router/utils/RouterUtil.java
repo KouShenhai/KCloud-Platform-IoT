@@ -44,6 +44,8 @@ import java.util.Map;
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 
 /**
+ * 路由工具类.
+ *
  * @author laokou
  */
 @Slf4j
@@ -55,6 +57,9 @@ public class RouterUtil {
 
 	private final ApiUtil apiUtil;
 
+	/**
+	 * 初始化路由.
+	 */
 	@SneakyThrows
 	public void initRouter() {
 		String appId = env.getProperty(SPRING_APPLICATION_NAME);
@@ -95,6 +100,13 @@ public class RouterUtil {
 		}
 	}
 
+	/**
+	 * 获取模板解析路由配置.
+	 * @param dataMap map对象
+	 * @return 路由配置
+	 * @throws IOException 异常
+	 * @throws TemplateException 异常
+	 */
 	private String getRouter(Map<String, Object> dataMap) throws IOException, TemplateException {
 		try (InputStream inputStream = ResourceUtil.getResource("scripts/init_router.json").getInputStream()) {
 			byte[] bytes = inputStream.readAllBytes();

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.redis.config;
 
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -56,6 +57,7 @@ public class RedissonConfig {
 	/**
 	 * redisson配置.
 	 * @param properties redis配置文件
+	 * @param taskExecutor 线程池
 	 * @return RedissonClient
 	 */
 	@Bean(destroyMethod = "shutdown")

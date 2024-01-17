@@ -28,6 +28,8 @@ import java.util.Map;
 import static org.springframework.util.StringUtils.tokenizeToStringArray;
 
 /**
+ * 路由过滤器配置.
+ *
  * @author Spencer Gibb
  */
 @Data

@@ -23,15 +23,24 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.server.ServerWebExchange;
 
 /**
+ * I18n工具类.
+ *
  * @author laokou
  */
 public class I18nUtil {
 
+	/**
+	 * 请求头数据写入本地线程.
+	 * @param exchange 服务网络交换机
+	 */
 	public static void set(ServerWebExchange exchange) {
 		String language = ReactiveRequestUtil.getParamValue(exchange.getRequest(), HttpHeaders.ACCEPT_LANGUAGE);
 		LocaleContextHolder.setLocale(LocaleUtil.toLocale(language), true);
 	}
 
+	/**
+	 * 清空本地线程，防止内存溢出.
+	 */
 	public static void reset() {
 		LocaleContextHolder.resetLocaleContext();
 	}

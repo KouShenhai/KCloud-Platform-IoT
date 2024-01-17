@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.dto.log.domainevent;
 
 import io.swagger.v3.oas.annotations.media.Schema;

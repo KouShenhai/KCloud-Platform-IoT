@@ -24,6 +24,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 新增流程执行器.
+ *
  * @author laokou
  */
 @Component
@@ -32,6 +34,11 @@ public class DefinitionInsertCmdExe {
 
 	private final DefinitionsFeignClient definitionsFeignClient;
 
+	/**
+	 * 执行新增流程.
+	 * @param cmd 新增流程参数
+	 * @return 执行新增结果
+	 */
 	public Result<Boolean> execute(DefinitionInsertCmd cmd) {
 		return definitionsFeignClient.insert(cmd.getFile());
 	}

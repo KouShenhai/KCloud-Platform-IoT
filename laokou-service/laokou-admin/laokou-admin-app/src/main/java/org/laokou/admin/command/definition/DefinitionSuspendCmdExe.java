@@ -32,6 +32,11 @@ public class DefinitionSuspendCmdExe {
 
 	private final DefinitionsFeignClient definitionsFeignClient;
 
+	/**
+	 * 挂起流程.
+	 * @param cmd 挂起流程参数
+	 * @return 执行挂起结果
+	 */
 	public Result<Boolean> execute(DefinitionSuspendCmd cmd) {
 		return definitionsFeignClient.suspend(cmd.getDefinitionId());
 	}

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.gateway.config;
 
 import org.springframework.beans.factory.ObjectProvider;
@@ -32,12 +33,21 @@ import org.springframework.http.converter.HttpMessageConverter;
 @Configuration
 public class HttpConfig {
 
+	/**
+	 * 构建消息转换器.
+	 * @param converters 转换器
+	 * @return 消息转换器
+	 */
 	@Bean
 	@ConditionalOnMissingBean(HttpMessageConverters.class)
 	public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {
 		return new HttpMessageConverters(converters.orderedStream().toList());
 	}
 
+	/**
+	 * 注入远程地址解析器.
+	 * @return 地址解析器
+	 */
 	@Bean
 	public RemoteAddressResolver remoteAddressResolver() {
 		return new RemoteAddressResolver() {

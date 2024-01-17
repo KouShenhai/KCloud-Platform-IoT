@@ -21,10 +21,17 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
+ * gson工具类.
+ *
  * @author laokou
  */
 public class GsonUtil {
 
+	/**
+	 * 对象转为gson字符串.
+	 * @param obj 对象
+	 * @return gson字符串
+	 */
 	public static String toPrettyFormat(Object obj) {
 		// 关闭html转义
 		Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();

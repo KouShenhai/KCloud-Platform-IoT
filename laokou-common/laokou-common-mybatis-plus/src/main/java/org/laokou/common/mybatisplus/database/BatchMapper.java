@@ -44,7 +44,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	/**
 	 * slf4j日志配置.
 	 */
-	Logger log = LoggerFactory.getLogger(BatchMapper.class);
+	Logger LOG = LoggerFactory.getLogger(BatchMapper.class);
 
 	int save(T entity);
 
@@ -84,6 +84,9 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 
 	/**
 	 * 新增动态分表.
+	 * @param t 插入的数据
+	 * @param sql 建表sql
+	 * @param suffix 分表的表名后缀
 	 */
 	default void insertDynamicTable(T t, String sql, String suffix) {
 		try {
@@ -92,7 +95,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 			this.insert(t);
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			LOG.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			this.execute(sql);
 			this.insert(t);
 		}
@@ -137,7 +140,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 			return this.insert(t) > 0;
 		}
 		catch (Exception e) {
-			log.error("错误信息", e);
+			LOG.error("错误信息", e);
 			return false;
 		}
 	}

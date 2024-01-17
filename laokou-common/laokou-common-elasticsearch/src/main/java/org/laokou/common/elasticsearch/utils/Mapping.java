@@ -26,6 +26,8 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
+ * es映射.
+ *
  * @author laokou
  */
 @Data

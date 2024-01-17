@@ -27,10 +27,21 @@ import org.springframework.core.io.Resource;
 import java.util.List;
 
 /**
+ * properties工具类.
+ *
  * @author laokou
  */
 public class PropertyUtil {
 
+	/**
+	 * 从nacos获取配置文件并转为属性.
+	 * @param bindName 配置前缀
+	 * @param clazz 类
+	 * @param location 文件名称
+	 * @param format 格式
+	 * @param <T> 泛型
+	 * @return 属性
+	 */
 	@SneakyThrows
 	public static <T> T getProperties(String bindName, Class<T> clazz, String location, String format) {
 		StandardEnvironment environment = new StandardEnvironment();

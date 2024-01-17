@@ -25,6 +25,8 @@ import org.laokou.common.i18n.dto.ClientObject;
 import java.util.Map;
 
 /**
+ * 配置.
+ *
  * @author laokou
  */
 @Data

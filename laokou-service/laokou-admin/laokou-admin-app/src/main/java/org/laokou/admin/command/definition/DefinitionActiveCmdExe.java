@@ -24,6 +24,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 激活流程执行器.
+ *
  * @author laokou
  */
 @Component
@@ -32,6 +34,11 @@ public class DefinitionActiveCmdExe {
 
 	private final DefinitionsFeignClient definitionsFeignClient;
 
+	/**
+	 * 激活流程.
+	 * @param cmd 激活流程参数
+	 * @return 执行激活结果
+	 */
 	public Result<Boolean> execute(DefinitionActiveCmd cmd) {
 		return definitionsFeignClient.activate(cmd.getDefinitionId());
 	}

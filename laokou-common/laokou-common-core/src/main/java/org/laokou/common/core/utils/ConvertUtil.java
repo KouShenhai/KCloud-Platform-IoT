@@ -25,11 +25,20 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 对象属性复制工具类.
+ *
  * @author laokou
  */
 @Slf4j
 public class ConvertUtil extends BeanUtils {
 
+	/**
+	 * 复制对象.
+	 * @param source 源对象
+	 * @param target 目标对象
+	 * @param <T> 泛型
+	 * @return 目标对象
+	 */
 	public static <T> T sourceToTarget(Object source, Class<T> target) {
 		if (ObjectUtil.isNull(source)) {
 			return null;
@@ -45,6 +54,13 @@ public class ConvertUtil extends BeanUtils {
 		return targetObject;
 	}
 
+	/**
+	 * 复制集合.
+	 * @param sourceList 源集合
+	 * @param target 目标对象
+	 * @param <T> 泛型
+	 * @return 目标集合
+	 */
 	public static <T> List<T> sourceToTarget(Collection<?> sourceList, Class<T> target) {
 		if (CollectionUtil.isEmpty(sourceList)) {
 			return Collections.emptyList();

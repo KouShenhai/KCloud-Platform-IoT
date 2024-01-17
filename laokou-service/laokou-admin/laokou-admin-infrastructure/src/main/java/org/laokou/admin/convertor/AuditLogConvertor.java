@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.convertor;
 
 import org.laokou.admin.domain.resource.AuditLog;

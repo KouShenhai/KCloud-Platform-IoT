@@ -25,6 +25,8 @@ import java.util.Locale;
 import static org.laokou.common.i18n.common.StringConstants.*;
 
 /**
+ * 本地工具类.
+ *
  * @author laokou
  */
 public class LocaleUtil {

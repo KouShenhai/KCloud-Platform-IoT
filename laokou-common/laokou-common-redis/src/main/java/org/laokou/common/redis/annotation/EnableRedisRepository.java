@@ -15,7 +15,17 @@
  *
  */
 
-/**
- * @author laokou
- */
-package org.laokou.common.elasticsearch.constant;
+package org.laokou.common.redis.annotation;
+
+import org.laokou.common.redis.config.auto.RedisAutoConfig;
+import org.springframework.context.annotation.Import;
+
+import java.lang.annotation.*;
+
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import(RedisAutoConfig.class)
+public @interface EnableRedisRepository {
+
+}
