@@ -37,7 +37,7 @@ public final class RequestHeaderConstants {
 	@Schema(name = "UPGRADE", description = "Upgrade")
 	public static final String UPGRADE = "Upgrade";
 
-	@Schema(name = "WEBSOCKET", description = "Websocket")
+	@Schema(name = "WEBSOCKET", description = "WebSocket")
 	public static final String WEBSOCKET = "websocket";
 
 	@Schema(name = "NONCE", description = "随机字符")

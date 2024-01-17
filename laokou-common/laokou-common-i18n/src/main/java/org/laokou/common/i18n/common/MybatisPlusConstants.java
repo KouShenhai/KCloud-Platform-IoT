@@ -34,34 +34,34 @@ public final class MybatisPlusConstants {
 	@Schema(name = "ID", description = "ID")
 	public static final String ID = "id";
 
-	@Schema(name = "CREATOR",description = "创建人")
+	@Schema(name = "CREATOR", description = "创建人")
 	public static final String CREATOR = "creator";
 
-	@Schema(name = "EDITOR",description = "编辑人")
+	@Schema(name = "EDITOR", description = "编辑人")
 	public static final String EDITOR = "editor";
 
-	@Schema(name = "CREATE_DATE",description = "创建时间")
+	@Schema(name = "CREATE_DATE", description = "创建时间")
 	public static final String CREATE_DATE = "createDate";
 
-	@Schema(name = "UPDATE_DATE",description = "修改时间")
+	@Schema(name = "UPDATE_DATE", description = "修改时间")
 	public static final String UPDATE_DATE = "updateDate";
 
-	@Schema(name = "DEL_FLAG",description = "删除标识")
+	@Schema(name = "DEL_FLAG", description = "删除标识")
 	public static final String DEL_FLAG = "delFlag";
 
-	@Schema(name = "VERSION",description = "版本")
+	@Schema(name = "VERSION", description = "版本")
 	public static final String VERSION = "version";
 
-	@Schema(name = "DEPT_ID",description = "部门ID")
+	@Schema(name = "DEPT_ID", description = "部门ID")
 	public static final String DEPT_ID = "deptId";
 
-	@Schema(name = "DEPT_PATH",description = "部门PATH")
+	@Schema(name = "DEPT_PATH", description = "部门PATH")
 	public static final String DEPT_PATH = "deptPath";
 
-	@Schema(name = "TENANT_ID",description = "租户ID")
+	@Schema(name = "TENANT_ID", description = "租户ID")
 	public static final String TENANT_ID = "tenantId";
 
-	@Schema(name = "USER_ID",description = "用户ID")
+	@Schema(name = "USER_ID", description = "用户ID")
 	public static final String USER_ID = "userId";
 
 }

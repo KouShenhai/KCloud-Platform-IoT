@@ -4,17 +4,17 @@
     {
       "name": "spring.websocket.port",
       "type": "java.lang.Integer",
-      "description": "websocket端口."
+      "description": "WebSocket端口."
     },
     {
       "name": "spring.websocket.app-name",
       "type": "java.lang.String",
-      "description": "websocket应用名称."
+      "description": "WebSocket应用名称."
     },
     {
       "name": "spring.websocket.pool-name",
       "type": "java.lang.String",
-      "description": "websocket线程名称."
+      "description": "WebSocket线程名称."
     }
   ]
 }

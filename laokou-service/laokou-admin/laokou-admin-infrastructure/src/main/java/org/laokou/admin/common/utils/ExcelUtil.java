@@ -60,7 +60,7 @@ import java.util.function.BiConsumer;
 import static org.laokou.common.i18n.common.ResponseHeaderConstants.*;
 import static org.laokou.common.i18n.common.StringConstants.DROP;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.SysConstants.EXCEL_SUFFIX;
+import static org.laokou.common.i18n.common.SysConstants.EXCEL_EXT;
 
 /**
  * @author laokou
@@ -113,11 +113,11 @@ public class ExcelUtil {
 	}
 
 	private static void header(HttpServletResponse response) {
-		String fileName = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + EXCEL_SUFFIX;
+		String fileName = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + EXCEL_EXT;
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType(EXCEL_CONTENT_TYPE);
 		response.setHeader(CONTENT_DISPOSITION,
-				"attachment;filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + EXCEL_SUFFIX);
+				"attachment;filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + EXCEL_EXT);
 		response.addHeader(ACCESS_CONTROL_EXPOSE_HEADERS, CONTENT_DISPOSITION);
 	}
 

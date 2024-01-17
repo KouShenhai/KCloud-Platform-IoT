@@ -17,34 +17,27 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 租户常量.
- *
  * @author laokou
  */
+@Schema(name = "TenantConstants", description = "租户变量")
 public final class TenantConstants {
 
 	private TenantConstants() {
 	}
 
-	/**
-	 * 租户用户名.
-	 */
+	@Schema(name = "TENANT_USERNAME", description = "默认租户用户名")
 	public static final String TENANT_USERNAME = "tenant";
 
-	/**
-	 * 租户密码.
-	 */
+	@Schema(name = "TENANT_PASSWORD", description = "默认租户密码")
 	public static final String TENANT_PASSWORD = "tenant123";
 
-	/**
-	 * 租户ID.
-	 */
+	@Schema(name = "TENANT_ID", description = "租户ID")
 	public static final String TENANT_ID = "tenant_id";
 
-	/**
-	 * 默认.
-	 */
+	@Schema(name = "DEFAULT", description = "默认租户ID")
 	public static final long DEFAULT = 0;
 
 }

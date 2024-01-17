@@ -43,7 +43,7 @@ public final class PropertiesConstants {
 	@Schema(name = "OAUTH2_RESOURCE_SERVER_PREFIX", description = "OAuth2资源配置前缀")
 	public static final String OAUTH2_RESOURCE_SERVER_PREFIX = "spring.security.oauth2.resource-server";
 
-	@Schema(name = "WEBSOCKET_PREFIX", description = "Websocket配置前缀")
+	@Schema(name = "WEBSOCKET_PREFIX", description = "WebSocket配置前缀")
 	public static final String WEBSOCKET_PREFIX = "spring.websocket";
 
 	@Schema(name = "SLOW_SQL_PREFIX", description = "慢SQL配置前缀")

@@ -17,41 +17,32 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.regex.Pattern;
 
 /**
- * sharding sphere 常量.
- *
  * @author laokou
  */
+@Schema(name = "ShardingSphereConstants", description = "ShardingSphere常量")
 public final class ShardingSphereConstants {
 
 	private ShardingSphereConstants() {
 	}
 
-	/**
-	 * shardingsphere jdbc type.
-	 */
+	@Schema(name = "JDBC_TYPE", description = "JDBC类型")
 	public static final String JDBC_TYPE = "jdbc:shardingsphere:";
 
-	/**
-	 * nacos类型.
-	 */
+	@Schema(name = "NACOS_TYPE", description = "Nacos类型")
 	public static final String NACOS_TYPE = "nacos:";
 
-	/**
-	 * yaml相对路径.
-	 */
+	@Schema(name = "YAML_LOCATION", description = "YAML路径")
 	public static final String YAML_LOCATION = "bootstrap.yml";
 
-	/**
-	 * yaml格式.
-	 */
+	@Schema(name = "YAML_FORMAT", description = "YAML格式")
 	public static final String YAML_FORMAT = "yaml";
 
-	/**
-	 * 加密正则表达式.
-	 */
+	@Schema(name = "ENC_PATTERN", description = "加密正则表达式")
 	public static final Pattern ENC_PATTERN = Pattern.compile("^ENC\\((.*)\\)$");
 
 }
