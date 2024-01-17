@@ -28,6 +28,7 @@ import java.util.concurrent.Executor;
 
 /**
  * 异步配置.
+ *
  * @author laokou
  */
 @Configuration

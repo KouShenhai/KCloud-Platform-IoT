@@ -26,16 +26,26 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import static org.laokou.common.i18n.common.TraceConstants.DOMAIN_NAME;
 
 /**
+ * 请求工具类.
  * @author laokou
  */
 public class RequestUtil {
 
+	/**
+	 * 获取请求对象.
+	 * @return 请求对象
+	 */
 	public static HttpServletRequest getHttpServletRequest() {
 		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
 		Assert.notNull(requestAttributes, "requestAttributes not be null");
 		return ((ServletRequestAttributes) requestAttributes).getRequest();
 	}
 
+	/**
+	 * 根据请求获取域名.
+	 * @param request 请求对象
+	 * @return 域名
+	 */
 	public static String getDomainName(HttpServletRequest request) {
 		return request.getHeader(DOMAIN_NAME);
 	}

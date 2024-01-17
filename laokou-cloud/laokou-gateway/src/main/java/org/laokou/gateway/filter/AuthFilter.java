@@ -66,7 +66,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
 
-import static org.laokou.common.core.utils.MapUtil.toUriMap;
 import static org.laokou.common.i18n.common.OAuth2Constants.*;
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.RequestHeaderConstants.AUTHORIZATION;
@@ -134,8 +133,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	}
 
 	/**
-	 * OAuth2解密.
-	 * see {@link ModifyRequestBodyGatewayFilterFactory}
+	 * OAuth2解密. see {@link ModifyRequestBodyGatewayFilterFactory}
 	 * @param chain chain
 	 * @param exchange exchange
 	 * @return 响应式
@@ -162,8 +160,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 * @param throwable 异常
 	 * @return 释放结果
 	 */
-	private Mono<Void> release(CachedBodyOutputMessage outputMessage,
-								 Throwable throwable) {
+	private Mono<Void> release(CachedBodyOutputMessage outputMessage, Throwable throwable) {
 		return outputMessage.getBody().map(DataBufferUtils::release).then(Mono.error(throwable));
 	}
 

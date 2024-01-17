@@ -42,8 +42,7 @@ import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
 @Component
 @RequiredArgsConstructor
 @RocketMQMessageListener(consumerGroup = LAOKOU_REMIND_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC,
-		selectorExpression = LAOKOU_REMIND_MESSAGE_TAG, messageModel = BROADCASTING,
-		consumeMode = CONCURRENTLY)
+		selectorExpression = LAOKOU_REMIND_MESSAGE_TAG, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
 public class RemindMessageListener implements RocketMQListener<MessageExt> {
 
 	private final MessageUtil messageUtil;

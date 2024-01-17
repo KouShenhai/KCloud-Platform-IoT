@@ -25,4 +25,6 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import(RedisAutoConfig.class)
-public @interface EnableRedisRepository { }
+public @interface EnableRedisRepository {
+
+}

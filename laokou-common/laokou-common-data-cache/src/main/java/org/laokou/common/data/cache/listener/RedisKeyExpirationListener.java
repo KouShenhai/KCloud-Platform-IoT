@@ -25,6 +25,7 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Component;
 
 /**
+ * 监听key过期事件.
  * @author laokou
  */
 @Slf4j

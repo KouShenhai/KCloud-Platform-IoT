@@ -122,10 +122,11 @@ public class ApiFilter implements WebFilter {
 		}
 		String pwd;
 		String name;
-		if (gatewayExtProperties.isEnabled()){
+		if (gatewayExtProperties.isEnabled()) {
 			pwd = gatewayExtProperties.getPassword();
 			name = gatewayExtProperties.getUsername();
-		} else {
+		}
+		else {
 			pwd = auth.password();
 			name = auth.username();
 		}

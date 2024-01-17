@@ -27,6 +27,7 @@ import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
 
 /**
  * 网关扩展属性配置.
+ *
  * @author laokou
  */
 @Data
@@ -34,19 +35,19 @@ import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
 @ConfigurationProperties(prefix = ROUTER_AUTH_PREFIX)
 public class GatewayExtProperties {
 
-    /**
-     * false读取注解，true读取配置文件.
-     */
-    private boolean enabled = false;
+	/**
+	 * false读取注解，true读取配置文件.
+	 */
+	private boolean enabled = false;
 
-    /**
-     * 用户名.
-     */
-    private String username = DEFAULT_USERNAME;
+	/**
+	 * 用户名.
+	 */
+	private String username = DEFAULT_USERNAME;
 
-    /**
-     * 密码.
-     */
-    private String password = DEFAULT_PASSWORD;
+	/**
+	 * 密码.
+	 */
+	private String password = DEFAULT_PASSWORD;
 
 }

@@ -70,8 +70,8 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		pipeline.addLast(new HttpServerCodec());
 		// 数据压缩
 		pipeline.addLast(new WebSocketServerCompressionHandler());
-        // 块状方式写入
-        pipeline.addLast(new ChunkedWriteHandler());
+		// 块状方式写入
+		pipeline.addLast(new ChunkedWriteHandler());
 		// 最大内容长度
 		pipeline.addLast(new HttpObjectAggregator(65536));
 		// websocket协议

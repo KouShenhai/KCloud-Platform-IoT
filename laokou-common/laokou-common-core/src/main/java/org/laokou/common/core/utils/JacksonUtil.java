@@ -42,14 +42,17 @@ import java.util.Map;
 @UtilityClass
 public class JacksonUtil {
 
+	/**
+	 * 映射器配置.
+	 */
 	private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new JavaTimeModule());
 
 	/**
 	 * json字符转Bean.
-	 * @param json json string
-	 * @param clazz class
-	 * @param <T> type
-	 * @return T
+	 * @param json json json字符串
+	 * @param clazz class 类
+	 * @param <T> type 类型
+	 * @return Bean
 	 */
 	@SneakyThrows
 	public <T> T toBean(String json, Class<T> clazz) {
@@ -60,21 +63,29 @@ public class JacksonUtil {
 	/**
 	 * 创建JavaType.
 	 * @param clazz 类型
+	 * @param <T> 泛型
 	 * @return JavaType
 	 */
 	public <T> JavaType javaType(Class<T> clazz) {
 		return MAPPER.getTypeFactory().constructType(clazz);
 	}
 
+	/**
+	 * 流转为Bean.
+	 * @param inputStream 流
+	 * @param clazz 类
+	 * @param <T> 泛型
+	 * @return Bean
+	 */
 	@SneakyThrows
 	public <T> T toBean(InputStream inputStream, Class<T> clazz) {
 		return MAPPER.readValue(inputStream, javaType(clazz));
 	}
 
 	/**
-	 * 序列化 为字符串.
-	 * @param obj obj
-	 * @return json
+	 * 序列化为json字符串.
+	 * @param obj 对象
+	 * @return json字符串
 	 */
 	@SneakyThrows
 	public String toJsonStr(Object obj) {
@@ -82,10 +93,10 @@ public class JacksonUtil {
 	}
 
 	/**
-	 * 序列化 为字符串.
-	 * @param obj obj
+	 * 序列化为字符串.
+	 * @param obj 对象
 	 * @param isFormat 是否格式化
-	 * @return json
+	 * @return json字符串
 	 */
 	@SneakyThrows
 	public String toJsonStr(Object obj, boolean isFormat) {
@@ -99,7 +110,7 @@ public class JacksonUtil {
 	}
 
 	/**
-	 * json to List.
+	 * json字符串转对象集合.
 	 * @param json json数组
 	 * @param clazz 类型
 	 * @param <T> 泛型
@@ -117,8 +128,10 @@ public class JacksonUtil {
 	/**
 	 * Json反序列化Map.
 	 * @param json json字符串
-	 * @param keyClass K Class
-	 * @param valueClass V Class
+	 * @param keyClass K 键类
+	 * @param valueClass V 值类
+	 * @param <K> 键泛型
+	 * @param <V> 值泛型
 	 * @return map
 	 */
 	@SneakyThrows
@@ -126,6 +139,14 @@ public class JacksonUtil {
 		return MAPPER.readValue(json, mapType(keyClass, valueClass));
 	}
 
+	/**
+	 * 创建mapType.
+	 * @param keyClass 键类
+	 * @param valueClass 值类
+	 * @param <K> 键泛型
+	 * @param <V> 值泛型
+	 * @return MapType
+	 */
 	public <K, V> MapType mapType(Class<K> keyClass, Class<V> valueClass) {
 		return MAPPER.getTypeFactory().constructMapType(Map.class, keyClass, valueClass);
 	}
@@ -144,14 +165,22 @@ public class JacksonUtil {
 	/**
 	 * Map转对象.
 	 * @param obj 对象
-	 * @param keyClass key类型
-	 * @param valueClass value类型
+	 * @param keyClass 键类
+	 * @param valueClass 值类
+	 * @param <K> 键泛型
+	 * @param <T> 泛型
+	 * @param <V> 值泛型
 	 * @return 对象
 	 */
 	public <T, K, V> T toMap(Object obj, Class<K> keyClass, Class<V> valueClass) {
 		return MAPPER.convertValue(obj, mapType(keyClass, valueClass));
 	}
 
+	/**
+	 * json字符串转树节点.
+	 * @param json json字符串
+	 * @return 树节点
+	 */
 	@SneakyThrows
 	public JsonNode readTree(String json) {
 		return MAPPER.readTree(json);

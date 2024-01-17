@@ -30,6 +30,7 @@ import static org.laokou.common.i18n.common.StringConstants.DOT;
 
 /**
  * 文件工具类.
+ *
  * @author laokou
  */
 public class FileUtil {

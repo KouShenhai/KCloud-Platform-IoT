@@ -26,6 +26,7 @@ import java.util.List;
 
 /**
  * 对象属性复制工具类.
+ *
  * @author laokou
  */
 @Slf4j

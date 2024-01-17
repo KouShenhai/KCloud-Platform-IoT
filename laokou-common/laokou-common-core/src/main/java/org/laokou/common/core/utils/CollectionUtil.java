@@ -30,6 +30,7 @@ import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * 集合工具类.
+ *
  * @author laokou
  */
 public class CollectionUtil {

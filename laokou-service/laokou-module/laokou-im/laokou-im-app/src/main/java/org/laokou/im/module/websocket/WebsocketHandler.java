@@ -39,6 +39,7 @@ import static org.laokou.common.redis.utils.RedisUtil.HOUR_ONE_EXPIRE;
 
 /**
  * websocket自定义处理器
+ *
  * @author laokou
  */
 @Component
@@ -53,9 +54,9 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	 * 建立连接的用户集合.
 	 */
 	private static final Cache<String, Channel> CLIENT_CACHE = Caffeine.newBuilder()
-			.expireAfterAccess(HOUR_ONE_EXPIRE, SECONDS)
-			.initialCapacity(500)
-			.build();
+		.expireAfterAccess(HOUR_ONE_EXPIRE, SECONDS)
+		.initialCapacity(500)
+		.build();
 
 	/**
 	 * 根据客户ID获取通道
@@ -76,7 +77,8 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 			User user = (User) obj;
 			Long id = user.getId();
 			CLIENT_CACHE.put(id.toString(), channel);
-		} else {
+		}
+		else {
 			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
 			ctx.close();
 		}

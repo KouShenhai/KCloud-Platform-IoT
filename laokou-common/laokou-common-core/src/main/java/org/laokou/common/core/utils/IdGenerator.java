@@ -76,7 +76,7 @@ public class IdGenerator {
 	/**
 	 * 雪花ID生成时间.
 	 * @param snowflakeId 雪花ID
-	 * @return LocalDateTime
+	 * @return 时间
 	 */
 	public static LocalDateTime getLocalDateTime(long snowflakeId) {
 		// 第一段 时间戳部分 (反推 -> 右移left + start)
@@ -222,7 +222,9 @@ public class IdGenerator {
 		}
 
 		/**
-		 * 机器标识ID.
+		 * 最大机器标识ID.
+		 * @param datacenterId 机器标识ID
+		 * @return 最大机器标识ID
 		 */
 		protected long getMaxMachineId(long datacenterId) {
 			StringBuilder mpid = new StringBuilder();
@@ -242,6 +244,7 @@ public class IdGenerator {
 
 		/**
 		 * 生产雪花ID.
+		 * @return 雪花ID
 		 */
 		public synchronized long nextId() {
 			long currTimeStamp = getNewTimeStamp();

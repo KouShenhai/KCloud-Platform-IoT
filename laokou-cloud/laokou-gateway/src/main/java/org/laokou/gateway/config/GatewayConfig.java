@@ -41,12 +41,14 @@ public class GatewayConfig {
 
 	/**
 	 *
-	 * 去除本地路由缓存，重载路由配置.
-	 * see {@link GatewayAutoConfiguration#cachedCompositeRouteLocator(List)}
+	 * 去除本地路由缓存，重载路由配置. see
+	 * {@link GatewayAutoConfiguration#cachedCompositeRouteLocator(List)}
 	 * @param properties 网关路由配置
 	 * @param gatewayFilters 网关拦截器
-	 * @param predicates 断言 => 输入类型是 Spring Framework ServerWebExchange,可以匹配HTTP请求中的任何内容，例如请求头或参数
-	 * @param routeDefinitionLocator 网关路由元数据（从redis读取） see {@link org.laokou.gateway.repository.NacosRouteDefinitionRepository}
+	 * @param predicates 断言 => 输入类型是 Spring Framework
+	 * ServerWebExchange,可以匹配HTTP请求中的任何内容，例如请求头或参数
+	 * @param routeDefinitionLocator 网关路由元数据（从redis读取） see
+	 * {@link org.laokou.gateway.repository.NacosRouteDefinitionRepository}
 	 * @param configurationService 路由配置发布事件
 	 * @return 路由配置
 	 */

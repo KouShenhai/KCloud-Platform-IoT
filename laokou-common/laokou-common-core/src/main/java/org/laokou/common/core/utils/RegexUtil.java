@@ -22,16 +22,29 @@ import java.util.regex.Pattern;
 import static org.laokou.common.i18n.common.NetworkConstants.IPV4_REGEX;
 
 /**
+ * 正则表达式工具类.
  * @author laokou
  */
 public class RegexUtil {
 
+	/**
+	 * 邮箱正则表达式.
+	 */
 	private static final String MAIL_REGEX = "^[A-Za-z0-9-_\\u4e00-\\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
 
+	/**
+	 * 手机号正则表达式.
+	 */
 	private static final String MOBILE_REGEX = "^((13[0-9])|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[0-9])|(18[0-9])|(19[1,8,9]))\\d{8}$";
 
+	/**
+	 * 数据源名称正则表达式.
+	 */
 	private static final String SOURCE_REGEX = "^[a-zA-Z]+_+([0-9]+)+$";
 
+	/**
+	 * 数字正则表达式.
+	 */
 	private static final String NUMBER_REGEX = "^[0-9]*$";
 
 	/**
@@ -43,6 +56,11 @@ public class RegexUtil {
 		return Pattern.matches(MAIL_REGEX, mail);
 	}
 
+	/**
+	 * IP验证.
+	 * @param ip IP地址
+	 * @return IP匹配结果
+	 */
 	public static boolean ipRegex(String ip) {
 		return Pattern.matches(IPV4_REGEX, ip);
 	}
@@ -57,9 +75,9 @@ public class RegexUtil {
 	}
 
 	/**
-	 * 资源名验证.
+	 * 数据源名称验证.
 	 * @param sourceName 自由名称
-	 * @return 资源名匹配结果
+	 * @return 数据源名称匹配结果
 	 */
 	public static boolean sourceRegex(String sourceName) {
 		return Pattern.matches(SOURCE_REGEX, sourceName);

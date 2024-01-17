@@ -21,6 +21,7 @@ import org.springframework.util.ObjectUtils;
 
 /**
  * 数据工具类.
+ *
  * @author laokou
  */
 public class ArrayUtil {

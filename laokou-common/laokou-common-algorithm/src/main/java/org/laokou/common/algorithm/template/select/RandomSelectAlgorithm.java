@@ -21,7 +21,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * 负载均衡-随机算法
+ * 负载均衡-随机算法.
+ *
  * @author laokou
  */
 public class RandomSelectAlgorithm extends AbstractSelectAlgorithm {
@@ -32,11 +33,11 @@ public class RandomSelectAlgorithm extends AbstractSelectAlgorithm {
 	private final Random RANDOM = new Random(System.currentTimeMillis());
 
 	/**
-	 * 随机算法
+	 * 随机算法.
 	 * @param list 集合
 	 * @param arg 参数
-	 * @return 实例
 	 * @param <T> 泛型
+	 * @return 实例
 	 */
 	@Override
 	public <T> T select(List<T> list, Object arg) {

@@ -21,7 +21,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 负载均衡-轮询算法
+ * 负载均衡-轮询算法.
+ *
  * @author laokou
  */
 public class PollSelectAlgorithm extends AbstractSelectAlgorithm {
@@ -35,8 +36,8 @@ public class PollSelectAlgorithm extends AbstractSelectAlgorithm {
 	 * 轮询算法.
 	 * @param list 集合
 	 * @param arg 参数
-	 * @return 实例
 	 * @param <T> 泛型
+	 * @return 实例
 	 */
 	@Override
 	public <T> T select(List<T> list, Object arg) {

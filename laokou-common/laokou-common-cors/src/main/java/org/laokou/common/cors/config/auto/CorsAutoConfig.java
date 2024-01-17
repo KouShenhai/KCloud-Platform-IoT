@@ -30,6 +30,7 @@ import static org.laokou.common.i18n.common.SysConstants.ALL_PATTERNS;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
+ * 跨域配置.
  * @author laokou
  */
 @AutoConfiguration

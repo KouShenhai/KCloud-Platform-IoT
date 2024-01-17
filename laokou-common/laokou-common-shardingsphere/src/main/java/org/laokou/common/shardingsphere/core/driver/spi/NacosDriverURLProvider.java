@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import static com.alibaba.cloud.nacos.NacosDiscoveryProperties.PREFIX;
 import static org.laokou.common.i18n.common.ShardingSphereConstants.*;
 import static org.laokou.common.i18n.common.StringConstants.RISK;
 import static org.laokou.common.i18n.common.SysConstants.*;
@@ -59,7 +60,7 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 	@SneakyThrows
 	@Override
 	public byte[] getContent(String url) {
-		NacosConfigProperties properties = PropertyUtil.getProperties(NacosConfigProperties.PREFIX,
+		NacosConfigProperties properties = PropertyUtil.getProperties(PREFIX,
 				NacosConfigProperties.class, YAML_LOCATION, YAML_FORMAT);
 		String group = properties.getGroup();
 		NacosConfigManager nacosConfigManager = new NacosConfigManager(properties);

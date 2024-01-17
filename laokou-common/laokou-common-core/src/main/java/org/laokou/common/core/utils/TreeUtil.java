@@ -30,23 +30,49 @@ import java.util.*;
 import static org.laokou.common.i18n.common.StringConstants.COMMA;
 
 /**
+ * 树节菜单工具类.
  * @author laokou
  */
 @Data
 public class TreeUtil {
 
+	/**
+	 * 顶级菜单节点.
+	 * @param name 名称
+	 * @param <T> 泛型
+	 * @return 顶级菜单节点
+	 */
 	public static <T> TreeNode<T> rootRootNode(String name) {
 		return new TreeNode<>(0L, name, null, "0", new ArrayList<>(0));
 	}
 
+	/**
+	 * 顶级菜单节点.
+	 * @param <T> 泛型
+	 * @return 顶级菜单节点
+	 */
 	public static <T> TreeNode<T> rootRootNode() {
 		return rootRootNode("根节点");
 	}
 
+	/**
+	 * 构建树节点.
+	 * @param treeNodes 菜单列表
+	 * @param clazz 类
+	 * @param <T> 泛型
+	 * @return 树节点
+	 */
 	public static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, Class<T> clazz) {
 		return buildTreeNode(treeNodes, ConvertUtil.sourceToTarget(rootRootNode(), clazz));
 	}
 
+	/**
+	 * 构建树节点.
+	 * @param treeNodes 菜单列表
+	 * @param rootNode 顶级节点
+	 * @param <T> 泛型
+	 * @return 树节点
+	 */
 	public static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, T rootNode) {
 		if (ObjectUtil.isNull(rootNode)) {
 			throw new SystemException("请构造根节点");
@@ -68,6 +94,12 @@ public class TreeUtil {
 		return rootNode;
 	}
 
+	/**
+	 * 构建树菜单列表.
+	 * @param treeNodes 菜单列表
+	 * @param <T> 泛型
+	 * @return 树菜单列表
+	 */
 	public static <T extends TreeNode<T>> List<T> buildTreeNode(List<T> treeNodes) {
 		List<T> nodes = new ArrayList<>(treeNodes.size());
 		// list转map

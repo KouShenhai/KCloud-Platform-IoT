@@ -22,6 +22,7 @@ import java.math.RoundingMode;
 
 /**
  * 大数工具类.
+ *
  * @author laokou
  */
 public final class BigDecimalUtil {
