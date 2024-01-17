@@ -24,6 +24,7 @@ import org.springframework.util.ResourceUtils;
 
 /**
  * 资源解析工具类.
+ *
  * @author laokou
  */
 public class ResourceUtil extends ResourceUtils {

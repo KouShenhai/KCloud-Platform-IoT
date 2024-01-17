@@ -21,6 +21,7 @@ import java.util.Objects;
 
 /**
  * 对象工具类.
+ *
  * @author laokou
  */
 public class ObjectUtil {

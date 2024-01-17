@@ -20,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * mqtt消息常量.
+ *
  * @author laokou
  */
 public final class MqttConstants {

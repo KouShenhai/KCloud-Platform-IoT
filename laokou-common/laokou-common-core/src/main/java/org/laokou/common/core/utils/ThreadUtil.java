@@ -25,6 +25,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * 线程池工具类.
+ *
  * @author laokou
  */
 public class ThreadUtil {

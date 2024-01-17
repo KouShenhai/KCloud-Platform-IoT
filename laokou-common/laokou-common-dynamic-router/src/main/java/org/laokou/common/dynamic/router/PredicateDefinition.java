@@ -30,6 +30,7 @@ import static org.springframework.util.StringUtils.tokenizeToStringArray;
 
 /**
  * 谓语定义配置.
+ *
  * @author Spencer Gibb
  */
 @Data

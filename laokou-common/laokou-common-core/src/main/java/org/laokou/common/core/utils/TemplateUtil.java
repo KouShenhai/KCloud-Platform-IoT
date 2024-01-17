@@ -26,6 +26,7 @@ import java.util.Map;
 
 /**
  * 模板工具类.
+ *
  * @author laokou
  */
 public class TemplateUtil extends FreeMarkerTemplateUtils {

@@ -42,6 +42,7 @@ import static org.laokou.common.i18n.common.TraceConstants.REQUEST_ID;
 
 /**
  * 幂等性Aop.
+ *
  * @author laokou
  */
 @Aspect

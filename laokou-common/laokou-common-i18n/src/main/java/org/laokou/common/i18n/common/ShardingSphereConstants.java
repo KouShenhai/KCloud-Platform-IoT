@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 
 /**
  * sharding sphere 常量.
+ *
  * @author laokou
  */
 public final class ShardingSphereConstants {

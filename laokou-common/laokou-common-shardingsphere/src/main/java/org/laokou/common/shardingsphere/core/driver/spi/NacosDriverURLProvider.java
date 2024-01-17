@@ -60,8 +60,8 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 	@SneakyThrows
 	@Override
 	public byte[] getContent(String url) {
-		NacosConfigProperties properties = PropertyUtil.getProperties(PREFIX,
-				NacosConfigProperties.class, YAML_LOCATION, YAML_FORMAT);
+		NacosConfigProperties properties = PropertyUtil.getProperties(PREFIX, NacosConfigProperties.class,
+				YAML_LOCATION, YAML_FORMAT);
 		String group = properties.getGroup();
 		NacosConfigManager nacosConfigManager = new NacosConfigManager(properties);
 		ConfigService configService = nacosConfigManager.getConfigService();

@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * 对象转换器.
+ *
  * @author laokou
  */
 public interface Convertor<C, E, D> {

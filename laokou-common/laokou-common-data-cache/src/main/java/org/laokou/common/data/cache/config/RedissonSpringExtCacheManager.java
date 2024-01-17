@@ -63,9 +63,8 @@ import java.util.concurrent.ConcurrentMap;
 import static org.laokou.common.i18n.common.StringConstants.UNDER;
 
 /**
- * 数据缓存扩展管理类.
- * A {@link org.springframework.cache.CacheManager} implementation backed by Redisson
- * instance.
+ * 数据缓存扩展管理类. A {@link org.springframework.cache.CacheManager} implementation backed by
+ * Redisson instance.
  *
  * @author Nikita Koksharov
  * @author laokou

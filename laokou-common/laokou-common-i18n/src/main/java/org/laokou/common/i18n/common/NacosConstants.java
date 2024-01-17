@@ -19,6 +19,7 @@ package org.laokou.common.i18n.common;
 
 /**
  * nacos常量.
+ *
  * @author laokou
  */
 public final class NacosConstants {

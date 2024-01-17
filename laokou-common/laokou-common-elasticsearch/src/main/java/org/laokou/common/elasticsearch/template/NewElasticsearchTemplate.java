@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * es配置.
+ *
  * @author laokou
  */
 @Slf4j

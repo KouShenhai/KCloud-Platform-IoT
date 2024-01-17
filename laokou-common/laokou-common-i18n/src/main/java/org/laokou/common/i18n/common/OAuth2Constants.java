@@ -19,6 +19,7 @@ package org.laokou.common.i18n.common;
 
 /**
  * OAuth2常量.
+ *
  * @author laokou
  */
 public final class OAuth2Constants {

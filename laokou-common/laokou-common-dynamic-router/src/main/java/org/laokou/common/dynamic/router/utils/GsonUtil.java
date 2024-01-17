@@ -22,6 +22,7 @@ import com.google.gson.GsonBuilder;
 
 /**
  * gson工具类.
+ *
  * @author laokou
  */
 public class GsonUtil {

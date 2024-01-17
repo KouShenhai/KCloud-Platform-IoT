@@ -21,6 +21,7 @@ import java.lang.annotation.*;
 
 /**
  * 幂等性.
+ *
  * @author laokou
  */
 @Target({ ElementType.METHOD })

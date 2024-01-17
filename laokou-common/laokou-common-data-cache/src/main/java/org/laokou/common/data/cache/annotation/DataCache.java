@@ -27,6 +27,7 @@ import java.lang.annotation.Documented;
 
 /**
  * 数据缓存.
+ *
  * @author laokou
  */
 @Target({ ElementType.METHOD })

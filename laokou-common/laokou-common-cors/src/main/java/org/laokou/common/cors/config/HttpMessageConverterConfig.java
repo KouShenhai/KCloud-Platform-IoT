@@ -42,6 +42,7 @@ import static org.laokou.common.i18n.utils.DateUtil.Constant.DEFAULT_TIMEZONE;
 
 /**
  * 消息转换器配置.
+ *
  * @author laokou
  */
 @Configuration

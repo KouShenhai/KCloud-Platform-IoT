@@ -23,6 +23,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IPV4_REGEX;
 
 /**
  * 正则表达式工具类.
+ *
  * @author laokou
  */
 public class RegexUtil {

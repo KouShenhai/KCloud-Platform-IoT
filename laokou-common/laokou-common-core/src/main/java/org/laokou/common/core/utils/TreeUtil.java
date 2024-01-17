@@ -31,6 +31,7 @@ import static org.laokou.common.i18n.common.StringConstants.COMMA;
 
 /**
  * 树节菜单工具类.
+ *
  * @author laokou
  */
 @Data

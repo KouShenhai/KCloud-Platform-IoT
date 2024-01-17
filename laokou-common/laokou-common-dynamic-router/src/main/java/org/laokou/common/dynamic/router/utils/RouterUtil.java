@@ -45,6 +45,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATI
 
 /**
  * 路由工具类.
+ *
  * @author laokou
  */
 @Slf4j

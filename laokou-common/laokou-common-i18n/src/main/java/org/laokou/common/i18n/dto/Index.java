@@ -21,6 +21,7 @@ import java.io.Serial;
 
 /**
  * 索引.
+ *
  * @author laokou
  */
 public abstract class Index extends DTO {

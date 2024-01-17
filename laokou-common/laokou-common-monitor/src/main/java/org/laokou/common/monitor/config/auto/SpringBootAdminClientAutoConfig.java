@@ -84,8 +84,7 @@ import java.util.List;
 import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
 
 /**
- * spring boot admin 自动装配.
- * {@link SpringBootAdminClientAutoConfiguration}.
+ * spring boot admin 自动装配. {@link SpringBootAdminClientAutoConfiguration}.
  *
  * @author laokou
  */

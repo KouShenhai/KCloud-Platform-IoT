@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * 效验码.
+ *
  * @author laokou
  */
 @Schema(name = "ValCode", description = "校验码")

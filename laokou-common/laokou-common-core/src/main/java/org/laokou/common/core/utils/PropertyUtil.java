@@ -28,6 +28,7 @@ import java.util.List;
 
 /**
  * properties工具类.
+ *
  * @author laokou
  */
 public class PropertyUtil {

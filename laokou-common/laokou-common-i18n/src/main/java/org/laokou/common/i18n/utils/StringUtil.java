@@ -28,6 +28,7 @@ import static org.laokou.common.i18n.common.StringConstants.PERCENT;
 
 /**
  * 字符串工具类.
+ *
  * @author laokou
  */
 public class StringUtil {

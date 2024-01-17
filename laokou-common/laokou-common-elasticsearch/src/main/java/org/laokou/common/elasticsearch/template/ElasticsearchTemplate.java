@@ -88,6 +88,7 @@ import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * es配置.
+ *
  * @author laokou
  */
 @Slf4j

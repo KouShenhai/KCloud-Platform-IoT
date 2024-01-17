@@ -30,6 +30,7 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
 /**
  * 数据缓存自动装配类.
+ *
  * @author laokou
  */
 @AutoConfiguration(after = { RedisAutoConfig.class })
@@ -38,7 +39,7 @@ public class DataCacheAutoConfig {
 
 	/**
 	 * redis 需要配置 notify-keyspace-events KEA.
-	 * @param lettuceConnectionFactory  工厂
+	 * @param lettuceConnectionFactory 工厂
 	 */
 	@Bean
 	public RedisMessageListenerContainer redisMessageListenerContainer(

@@ -28,6 +28,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * 响应工具类.
+ *
  * @author laokou
  */
 public class ResponseUtil {

@@ -26,6 +26,7 @@ import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * es注解.
+ *
  * @author laokou
  */
 @Documented

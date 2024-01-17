@@ -27,6 +27,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 服务监听.
+ *
  * @author laokou
  */
 @Async

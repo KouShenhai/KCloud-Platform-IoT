@@ -36,6 +36,7 @@ import static org.laokou.common.i18n.common.StringConstants.*;
 
 /**
  * map工具类.
+ *
  * @author laokou
  */
 public class MapUtil {

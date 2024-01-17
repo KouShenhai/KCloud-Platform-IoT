@@ -36,6 +36,7 @@ import static org.laokou.common.i18n.common.SysConstants.*;
 
 /**
  * AES加密工具类.
+ *
  * @author laokou
  */
 public class AesUtil {

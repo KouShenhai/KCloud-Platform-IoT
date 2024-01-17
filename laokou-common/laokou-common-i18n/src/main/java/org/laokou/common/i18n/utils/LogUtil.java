@@ -22,6 +22,7 @@ import static org.laokou.common.i18n.common.SysConstants.EMPTY_LOG_MSG;
 
 /**
  * 日志工具类.
+ *
  * @author laokou
  */
 public class LogUtil {

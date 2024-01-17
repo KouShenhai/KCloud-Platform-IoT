@@ -23,6 +23,7 @@ import java.lang.annotation.*;
 
 /**
  * AES加密.
+ *
  * @author laokou
  */
 @Target({ ElementType.FIELD })

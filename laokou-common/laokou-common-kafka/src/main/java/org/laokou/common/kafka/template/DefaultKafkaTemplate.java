@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * kafka发送消息模板.
+ *
  * @author laokou
  */
 @Component

@@ -27,6 +27,7 @@ import static org.laokou.common.i18n.common.TraceConstants.DOMAIN_NAME;
 
 /**
  * 请求工具类.
+ *
  * @author laokou
  */
 public class RequestUtil {

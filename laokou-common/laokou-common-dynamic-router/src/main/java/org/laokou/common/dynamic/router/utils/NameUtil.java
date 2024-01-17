@@ -21,6 +21,7 @@ import static org.laokou.common.i18n.common.RouterConstants.GENERATED_NAME_PREFI
 
 /**
  * 路由名称工具类.
+ *
  * @author laokou
  */
 public class NameUtil {

@@ -22,8 +22,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import java.nio.charset.StandardCharsets;
 
 /**
- * 国际化消息工具类.
- * <a href=
+ * 国际化消息工具类. <a href=
  * "https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#context-functionality-messagesource">...</a>
  *
  * @author laokou

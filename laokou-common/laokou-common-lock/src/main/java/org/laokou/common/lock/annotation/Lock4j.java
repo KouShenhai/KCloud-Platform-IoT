@@ -27,6 +27,7 @@ import java.lang.annotation.Target;
 
 /**
  * 分布式式锁注解.
+ *
  * @author laokou
  */
 @Target({ ElementType.METHOD })

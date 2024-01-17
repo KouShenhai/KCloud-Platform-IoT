@@ -19,6 +19,7 @@ package org.laokou.common.i18n.common;
 
 /**
  * 网络常量.
+ *
  * @author laokou
  */
 public final class NetworkConstants {

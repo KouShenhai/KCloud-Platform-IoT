@@ -18,6 +18,7 @@ package org.laokou.common.i18n.common;
 
 /**
  * kafka消息常量.
+ *
  * @author laokou
  */
 public final class KafkaConstants {
