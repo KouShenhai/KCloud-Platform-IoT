@@ -17,15 +17,24 @@
 
 package org.laokou.common.i18n.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 抽象DO.
- *
  * @author laokou
  */
+@Schema(name = "AbstractDO", description = "抽象DO")
 public abstract class AbstractDO extends DTO {
 
+	/**
+	 * 获取版本号.
+	 * @return 版本号
+	 */
 	abstract public Integer getVersion();
 
+	/**
+	 * 写入ID.
+	 * @param id ID
+	 */
 	abstract public void setId(Long id);
 
 }

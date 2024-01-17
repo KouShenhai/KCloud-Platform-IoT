@@ -17,11 +17,12 @@
 
 package org.laokou.common.i18n.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 认证.
- *
  * @author laokou
  */
+@Schema(name = "Authorization", description = "认证")
 public abstract class Authorization extends DTO {
 
 }

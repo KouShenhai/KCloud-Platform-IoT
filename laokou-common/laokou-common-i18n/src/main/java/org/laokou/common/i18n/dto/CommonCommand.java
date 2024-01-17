@@ -1,15 +1,13 @@
 package org.laokou.common.i18n.dto;
 
-import lombok.Data;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serial;
 
 /**
- * 公共指令.
- *
  * @author laokou
  */
-@Data
+@Schema(name = "CommonCommand", description = "客户端通用命令请求")
 public class CommonCommand extends Command {
 
 	@Serial

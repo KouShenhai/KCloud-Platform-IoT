@@ -16,31 +16,77 @@
 
 package org.laokou.common.i18n.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.List;
 
 /**
- * 对象转换器.
- *
  * @author laokou
  */
+@Schema(name = "Convertor", description = "对象转换器")
 public interface Convertor<C, E, D> {
 
+	/**
+	 * ClientObject 转 Domain.
+	 * @param c ClientObject
+	 * @return Domain
+	 */
 	E toEntity(C c);
 
+	/**
+	 * Domain 转 DataObject.
+	 * @param e Domain
+	 * @return DataObject
+	 */
 	D toDataObject(E e);
 
+	/**
+	 * ClientObject 转 DataObject.
+	 * @param c ClientObject
+	 * @return DataObject
+	 */
 	D toDataObj(C c);
 
+	/**
+	 * DataObject 转 Domain.
+	 * @param d DataObject
+	 * @return Domain
+	 */
 	E convertEntity(D d);
 
+	/**
+	 * DataObject List 转 Domain List.
+	 * @param list DataObject List
+	 * @return Domain List
+	 */
 	List<E> convertEntityList(List<D> list);
 
+	/**
+	 * DataObject 转 ClientObject.
+	 * @param d DataObject
+	 * @return ClientObject
+	 */
 	C convertClientObj(D d);
 
+	/**
+	 * DataObject List 转 ClientObject List.
+	 * @param list DataObject List
+	 * @return ClientObject List
+	 */
 	List<C> convertClientObjList(List<D> list);
 
+	/**
+	 * Domain 转 ClientObject.
+	 * @param e Domain
+	 * @return ClientObject
+	 */
 	C convertClientObject(E e);
 
+	/**
+	 * Domain List 转 ClientObject List.
+	 * @param list Domain List
+	 * @return ClientObject List
+	 */
 	List<C> convertClientObjectList(List<E> list);
 
 }
