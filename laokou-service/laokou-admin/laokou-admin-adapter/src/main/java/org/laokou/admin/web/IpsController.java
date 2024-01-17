@@ -37,8 +37,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * IP管理.
- *
  * @author laokou
  */
 @RestController

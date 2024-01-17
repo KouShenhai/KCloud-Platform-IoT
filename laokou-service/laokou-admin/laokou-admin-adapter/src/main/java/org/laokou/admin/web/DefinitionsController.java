@@ -37,8 +37,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 /**
- * 流程定义.
- *
  * @author laokou
  */
 @RestController

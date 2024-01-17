@@ -39,8 +39,6 @@ import java.util.List;
 import static org.laokou.common.i18n.common.CacheConstants.PACKAGES;
 
 /**
- * 套餐管理.
- *
  * @author laokou
  */
 @RestController

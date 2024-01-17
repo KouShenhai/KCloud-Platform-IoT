@@ -35,8 +35,6 @@ import org.springframework.web.bind.annotation.*;
 import static org.laokou.common.i18n.common.CacheConstants.MESSAGES;
 
 /**
- * 消息管理.
- *
  * @author laokou
  */
 @RestController

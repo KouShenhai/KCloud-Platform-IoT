@@ -47,8 +47,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 资源管理.
- *
  * @author laokou
  */
 @RestController

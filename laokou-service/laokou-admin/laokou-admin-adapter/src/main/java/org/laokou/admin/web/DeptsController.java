@@ -37,8 +37,6 @@ import java.util.List;
 import static org.laokou.common.i18n.common.CacheConstants.DEPTS;
 
 /**
- * 部门管理.
- *
  * @author laokou
  */
 @RestController
