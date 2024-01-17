@@ -82,7 +82,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.*;
 
-import static org.laokou.common.i18n.common.ElasticsearchConstants.IK_INDEX;
+import static org.laokou.common.i18n.common.ElasticsearchConstants.IK_ANALYZED;
 import static org.laokou.common.i18n.common.ElasticsearchConstants.NOT_ANALYZED;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
@@ -775,7 +775,7 @@ public class ElasticsearchTemplate {
 					mapping.startObject(field).field("type", dataType).endObject();
 				}
 			}
-			else if (IK_INDEX.equals(participle)) {
+			else if (IK_ANALYZED.equals(participle)) {
 				mapping.startObject(field)
 					.field("type", dataType)
 					.field("eager_global_ordinals", true)

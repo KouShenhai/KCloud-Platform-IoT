@@ -16,24 +16,21 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * kafka消息常量.
- *
  * @author laokou
  */
+@Schema(name = "KafkaConstants", description = "Kafka消息常量")
 public final class KafkaConstants {
 
 	private KafkaConstants() {
 	}
 
-	/**
-	 * 分布式链路主题.
-	 */
+	@Schema(name = "LAOKOU_TRACE_TOPIC", description = "分布式链路主题")
 	public static final String LAOKOU_TRACE_TOPIC = "laokou_trace_topic";
 
-	/**
-	 * 日志消费者组.
-	 */
+	@Schema(name = "LAOKOU_LOGSTASH_CONSUMER_GROUP", description = "日志存储消费者组")
 	public static final String LAOKOU_LOGSTASH_CONSUMER_GROUP = "laokou_logstash_consumer_group";
 
 }

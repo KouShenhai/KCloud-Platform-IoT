@@ -22,13 +22,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * @author laokou
  */
-@Schema(name = "CacheOperatorTypeEnums",description = "缓存操作类型枚举")
+@Schema(name = "CacheOperatorTypeEnums", description = "缓存操作类型枚举")
 public enum CacheOperatorTypeEnums {
 
-	@Schema(name = "GET",description = "查询")
+	@Schema(name = "GET", description = "查询")
 	GET,
 
-	@Schema(name = "DEL",description = "删除")
+	@Schema(name = "DEL", description = "删除")
 	DEL
 
 }

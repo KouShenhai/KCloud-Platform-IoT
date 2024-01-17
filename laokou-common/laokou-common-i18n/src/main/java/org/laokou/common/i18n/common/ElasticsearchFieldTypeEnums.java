@@ -17,52 +17,42 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * es属性类型常量.
- *
  * @author laokou
  */
+@Schema(name = "ElasticsearchFieldTypeEnums", description = "Elasticsearch属性类型枚举")
 public enum ElasticsearchFieldTypeEnums {
 
-	/**
-	 * 文本.
-	 */
+	@Schema(name = "TEXT", description = "文本")
 	TEXT,
-	/**
-	 * 文本.
-	 */
+
+	@Schema(name = "KEYWORD", description = "文本")
 	KEYWORD,
-	/**
-	 * 长整型.
-	 */
+
+	@Schema(name = "LONG", description = "长整型")
 	LONG,
-	/**
-	 * 整型.
-	 */
+
+	@Schema(name = "INTEGER", description = "整型")
 	INTEGER,
-	/**
-	 * 整型.
-	 */
+
+	@Schema(name = "SHORT", description = "整形")
 	SHORT,
-	/**
-	 * 字节.
-	 */
+
+	@Schema(name = "BYTE", description = "字节")
 	BYTE,
-	/**
-	 * 双浮点.
-	 */
+
+	@Schema(name = "DOUBLE", description = "双浮点数")
 	DOUBLE,
-	/**
-	 * 双浮点.
-	 */
+
+	@Schema(name = "FLOAT", description = "单浮点数")
 	FLOAT,
-	/**
-	 * 日期.
-	 */
+
+	@Schema(name = "DATE", description = "时间")
 	DATE,
-	/**
-	 * 布尔.
-	 */
+
+	@Schema(name = "BOOLEAN", description = "布尔")
 	BOOLEAN
 
 }

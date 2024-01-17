@@ -17,24 +17,21 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * es常量.
- *
  * @author laokou
  */
+@Schema(name = "ElasticsearchConstants", description = "Elasticsearch变量")
 public final class ElasticsearchConstants {
 
 	private ElasticsearchConstants() {
 	}
 
-	/**
-	 * 自定义分词器.
-	 */
-	public static final Integer IK_INDEX = 3;
+	@Schema(name = "IK_ANALYZED", description = "ik分词器")
+	public static final Integer IK_ANALYZED = 3;
 
-	/**
-	 * 无分词器.
-	 */
+	@Schema(name = "NOT_ANALYZED", description = "无分词器")
 	public static final Integer NOT_ANALYZED = 0;
 
 }

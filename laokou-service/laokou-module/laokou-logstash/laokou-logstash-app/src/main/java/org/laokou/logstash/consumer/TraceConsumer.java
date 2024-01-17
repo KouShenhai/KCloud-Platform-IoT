@@ -38,7 +38,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.IndexConstants.TRACE;
+import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.TRACE;
 import static org.laokou.common.i18n.common.StringConstants.*;
 import static org.laokou.common.i18n.common.SysConstants.EMPTY_LOG_MSG;
 import static org.laokou.common.i18n.common.SysConstants.UNDEFINED;

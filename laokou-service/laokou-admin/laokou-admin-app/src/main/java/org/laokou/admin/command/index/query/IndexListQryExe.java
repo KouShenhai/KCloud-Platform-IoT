@@ -31,8 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.IndexConstants.RESOURCE;
-import static org.laokou.common.i18n.common.IndexConstants.TRACE;
+import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.RESOURCE;
+import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.TRACE;
 
 /**
  * @author laokou

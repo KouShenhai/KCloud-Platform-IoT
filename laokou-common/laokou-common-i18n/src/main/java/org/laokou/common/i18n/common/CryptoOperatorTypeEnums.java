@@ -17,21 +17,18 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 加密操作类型枚举.
- *
  * @author laokou
  */
+@Schema(name = "CryptoOperatorTypeEnums", description = "加密操作类型枚举")
 public enum CryptoOperatorTypeEnums {
 
-	/**
-	 * 加密.
-	 */
+	@Schema(name = "ENCRYPT", description = "加密")
 	ENCRYPT,
 
-	/**
-	 * 解密.
-	 */
+	@Schema(name = "DECRYPT", description = "解密")
 	DECRYPT
 
 }

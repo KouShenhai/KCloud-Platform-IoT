@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.IndexConstants.TRACE;
+import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.TRACE;
 
 /**
  * @author laokou

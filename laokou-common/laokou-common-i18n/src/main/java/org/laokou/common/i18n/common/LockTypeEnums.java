@@ -17,37 +17,27 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 分布式锁类型枚举.
- *
  * @author laokou
  */
-
+@Schema(name = "LockTypeEnums", description = "分布式锁类型枚举")
 public enum LockTypeEnums {
 
-	/**
-	 * 普通锁.
-	 */
+	@Schema(name = "LOCK", description = "普通锁")
 	LOCK,
 
-	/**
-	 * 公平锁.
-	 */
+	@Schema(name = "FAIR", description = "公平锁")
 	FAIR,
 
-	/**
-	 * 读锁.
-	 */
+	@Schema(name = "READ", description = "读锁")
 	READ,
 
-	/**
-	 * 写锁.
-	 */
+	@Schema(name = "WRITE", description = "写锁")
 	WRITE,
 
-	/**
-	 * 强一致性锁 => 主从延迟.
-	 */
+	@Schema(name = "FENCED", description = "强一致性锁(可以解决主从延迟)")
 	FENCED
 
 }

@@ -17,24 +17,21 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * es索引常量.
- *
  * @author laokou
  */
-public final class IndexConstants {
+@Schema(name = "ElasticsearchIndexConstants", description = "Elasticsearch索引常量")
+public final class ElasticsearchIndexConstants {
 
-	private IndexConstants() {
+	private ElasticsearchIndexConstants() {
 	}
 
-	/**
-	 * 资源索引.
-	 */
+	@Schema(name = "RESOURCE", description = "资源索引")
 	public static final String RESOURCE = "laokou_resource";
 
-	/**
-	 * 分布式链路索引.
-	 */
+	@Schema(name = "TRACE", description = "分布式链路索引")
 	public static final String TRACE = "laokou_trace";
 
 }
