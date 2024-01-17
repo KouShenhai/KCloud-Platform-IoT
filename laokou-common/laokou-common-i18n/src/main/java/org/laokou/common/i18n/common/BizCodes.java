@@ -19,6 +19,7 @@ package org.laokou.common.i18n.common;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
+ * 业务码.
  * @author laokou
  */
 @Schema(name = "BizCode", description = "业务码")

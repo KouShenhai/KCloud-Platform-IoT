@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * es映射工具类.
  * @author laokou
  */
 public class MappingUtil {

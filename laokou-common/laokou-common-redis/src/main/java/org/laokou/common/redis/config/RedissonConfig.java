@@ -57,6 +57,7 @@ public class RedissonConfig {
 	/**
 	 * redisson配置.
 	 * @param properties redis配置文件
+	 * @param taskExecutor 线程池
 	 * @return RedissonClient
 	 */
 	@Bean(destroyMethod = "shutdown")

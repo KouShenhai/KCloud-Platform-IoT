@@ -29,6 +29,7 @@ import java.io.Serial;
 import java.time.LocalDateTime;
 
 /**
+ * 分页参数.
  * @author laokou
  */
 @Data

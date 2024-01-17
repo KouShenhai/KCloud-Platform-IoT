@@ -18,7 +18,7 @@
 package org.laokou.common.i18n.common;
 
 /**
- * 队列常量值.
+ * rocketmq消息常量.
  *
  * @author laokou
  */

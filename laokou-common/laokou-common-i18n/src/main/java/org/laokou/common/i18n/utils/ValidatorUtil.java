@@ -29,6 +29,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * 校验工具类.
  * <a href=
  * "https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#section-validating-bean-constraints">...</a>
  *

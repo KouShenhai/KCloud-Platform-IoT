@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.common.exception;
 
 /**
+ * Feign调用异常.
+ *
  * @author laokou
  */
 public final class FeignException extends GlobalException {

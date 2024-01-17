@@ -20,6 +20,7 @@ package org.laokou.common.i18n.common;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
+ * 状态码.
  * @author laokou
  */
 @Schema(name = "StatusCode", description = "状态码")

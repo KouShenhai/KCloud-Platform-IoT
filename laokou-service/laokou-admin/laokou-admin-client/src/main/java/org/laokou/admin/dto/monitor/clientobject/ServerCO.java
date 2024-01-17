@@ -129,6 +129,7 @@ public class ServerCO extends ClientObject {
 
 	/**
 	 * 设置CPU信息.
+	 * @param processor 处理器
 	 */
 	private void setCpuInfo(CentralProcessor processor) {
 		// CPU信息
@@ -154,6 +155,7 @@ public class ServerCO extends ClientObject {
 
 	/**
 	 * 设置内存信息.
+	 * @param memory 内存
 	 */
 	private void setMemInfo(GlobalMemory memory) {
 		mem.setTotal(memory.getTotal());
@@ -188,6 +190,7 @@ public class ServerCO extends ClientObject {
 
 	/**
 	 * 设置磁盘信息.
+	 * @param os 操作系统
 	 */
 	private void setSysFiles(OperatingSystem os) {
 		FileSystem fileSystem = os.getFileSystem();

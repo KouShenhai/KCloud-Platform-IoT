@@ -69,7 +69,6 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.elasticsearch.clientobject.SettingsCO;
-import org.laokou.common.elasticsearch.constant.EsConstant;
 import org.laokou.common.elasticsearch.utils.FieldMapping;
 import org.laokou.common.elasticsearch.utils.FieldMappingUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -83,9 +82,12 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.*;
 
+import static org.laokou.common.i18n.common.ElasticsearchConstants.IK_INDEX;
+import static org.laokou.common.i18n.common.ElasticsearchConstants.NOT_ANALYZED;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
+ * es配置.
  * @author laokou
  */
 @Slf4j
@@ -761,7 +763,7 @@ public class ElasticsearchTemplate {
 			String dataType = fieldMapping.getType();
 			Integer participle = fieldMapping.getParticiple();
 			// 设置分词规则
-			if (EsConstant.NOT_ANALYZED.equals(participle)) {
+			if (NOT_ANALYZED.equals(participle)) {
 				if ("date".equals(dataType)) {
 					mapping.startObject(field)
 						.field("type", dataType)
@@ -772,7 +774,7 @@ public class ElasticsearchTemplate {
 					mapping.startObject(field).field("type", dataType).endObject();
 				}
 			}
-			else if (EsConstant.IK_INDEX.equals(participle)) {
+			else if (IK_INDEX.equals(participle)) {
 				mapping.startObject(field)
 					.field("type", dataType)
 					.field("eager_global_ordinals", true)
@@ -1003,6 +1005,11 @@ public class ElasticsearchTemplate {
 		return datas;
 	}
 
+	/**
+	 * 根据别名获取索引.
+	 * @param indexAliasNames 索引别名数组
+	 * @return 索引
+	 */
 	public Map<String, String> getIndexNames(String[] indexAliasNames) {
 		try {
 			GetAliasesRequest getAliasesRequest = new GetAliasesRequest(indexAliasNames);
@@ -1020,6 +1027,11 @@ public class ElasticsearchTemplate {
 		}
 	}
 
+	/**
+	 * 根据名称获取索引属性.
+	 * @param indexName 索引名称
+	 * @return 索引属性
+	 */
 	public Map<String, Object> getIndexProperties(String indexName) {
 		try {
 			GetIndexRequest getIndexRequest = new GetIndexRequest(indexName);
@@ -1038,6 +1050,12 @@ public class ElasticsearchTemplate {
 		}
 	}
 
+	/**
+	 * 构建co对象.
+	 * @param indexName 索引名称
+	 * @param settings 索引配置
+	 * @return co对象
+	 */
 	private SettingsCO toCO(String indexName, Map<String, Settings> settings) {
 		SettingsCO co = new SettingsCO();
 		Settings indexSetting = settings.get(indexName).getAsGroups().get("index");
@@ -1062,6 +1080,12 @@ public class ElasticsearchTemplate {
 		return co;
 	}
 
+	/**
+	 * 索引配置转为map.
+	 * @param indexSetting 索引配置
+	 * @param key 键
+	 * @return map对象
+	 */
 	private Map<String, Object> toMap(Settings indexSetting, String key) {
 		Map<String, Settings> settingsMap = indexSetting.getAsSettings(key).getAsGroups();
 		if (MapUtil.isEmpty(settingsMap)) {

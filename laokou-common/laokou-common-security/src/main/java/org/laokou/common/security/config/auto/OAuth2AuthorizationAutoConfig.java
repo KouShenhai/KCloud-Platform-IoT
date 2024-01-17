@@ -40,7 +40,9 @@ import static org.springframework.data.redis.core.RedisKeyValueAdapter.EnableKey
 public class OAuth2AuthorizationAutoConfig {
 
 	/**
+	 * 认证配置.
 	 * @param redisOAuth2AuthorizationRepository Redis缓存
+	 * @param registeredClientRepository 注册客户端
 	 * @return OAuth2AuthorizationService
 	 */
 	@Bean
@@ -53,7 +55,7 @@ public class OAuth2AuthorizationAutoConfig {
 
 	/**
 	 * 密码编码.
-	 * @return PasswordEncoder
+	 * @return 密码编码器
 	 */
 	@Bean
 	@ConditionalOnMissingBean(PasswordEncoder.class)

@@ -20,10 +20,16 @@ package org.laokou.common.dynamic.router.utils;
 import static org.laokou.common.i18n.common.RouterConstants.GENERATED_NAME_PREFIX;
 
 /**
+ * 路由名称工具类.
  * @author laokou
  */
 public class NameUtil {
 
+	/**
+	 * 路由生成名称.
+	 * @param i 索引
+	 * @return 路由生成名称
+	 */
 	public static String generateName(int i) {
 		return GENERATED_NAME_PREFIX + i;
 	}

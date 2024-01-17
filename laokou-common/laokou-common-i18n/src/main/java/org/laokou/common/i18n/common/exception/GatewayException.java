@@ -18,6 +18,8 @@
 package org.laokou.common.i18n.common.exception;
 
 /**
+ * 网关异常.
+ *
  * @author laokou
  */
 public final class GatewayException extends GlobalException {

@@ -34,6 +34,7 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	 * 根据用户名和租户ID查询用户.
 	 * @param username 用户名
 	 * @param type 登录类型
+	 * @param key 密钥
 	 * @return UserDO
 	 */
 	UserDO getUserByUsername(@Param("username") String username, @Param("type") String type, @Param("key") String key);

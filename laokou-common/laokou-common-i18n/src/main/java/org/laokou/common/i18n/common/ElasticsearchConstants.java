@@ -15,21 +15,25 @@
  *
  */
 
-package org.laokou.common.elasticsearch.constant;
+package org.laokou.common.i18n.common;
 
 /**
+ * es常量.
  * @author laokou
  */
-public interface EsConstant {
+public final class ElasticsearchConstants {
+
+	private ElasticsearchConstants() {
+	}
 
 	/**
 	 * 自定义分词器.
 	 */
-	Integer IK_INDEX = 3;
+	public static final Integer IK_INDEX = 3;
 
 	/**
 	 * 无分词器.
 	 */
-	Integer NOT_ANALYZED = 0;
+	public static final Integer NOT_ANALYZED = 0;
 
 }

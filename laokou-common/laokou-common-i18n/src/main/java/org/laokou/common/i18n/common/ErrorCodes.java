@@ -20,6 +20,7 @@ package org.laokou.common.i18n.common;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
+ * 错误码.
  * @author laokou
  */
 @Schema(name = "ErrorCode", description = "错误码")

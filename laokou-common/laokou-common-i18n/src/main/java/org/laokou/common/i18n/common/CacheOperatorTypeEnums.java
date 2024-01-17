@@ -18,6 +18,7 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * 缓存操作类型枚举.
  * @author laokou
  */
 public enum CacheOperatorTypeEnums {

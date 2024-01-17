@@ -189,6 +189,7 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 配置.
+	 * @param propertiesMapper 属性映射器
 	 * @return AuthorizationServerSettings
 	 */
 	@Bean

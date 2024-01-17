@@ -84,6 +84,9 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 
 	/**
 	 * 新增动态分表.
+	 * @param t 插入的数据
+	 * @param sql 建表sql
+	 * @param suffix 分表的表名后缀
 	 */
 	default void insertDynamicTable(T t, String sql, String suffix) {
 		try {

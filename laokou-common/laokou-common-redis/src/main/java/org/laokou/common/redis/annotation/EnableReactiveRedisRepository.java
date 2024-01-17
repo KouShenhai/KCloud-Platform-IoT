@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.redis.annotation;
 
 import org.laokou.common.redis.config.auto.ReactiveRedisAutoConfig;

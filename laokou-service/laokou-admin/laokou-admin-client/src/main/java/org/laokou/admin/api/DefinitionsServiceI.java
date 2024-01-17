@@ -72,7 +72,7 @@ public interface DefinitionsServiceI {
 	Result<Boolean> activate(DefinitionActiveCmd cmd);
 
 	/**
-	 * 下载流程模板
+	 * 下载流程模板。
 	 * @param qry 下载流程模板参数
 	 */
 	void template(DefinitionTemplateCmd qry);

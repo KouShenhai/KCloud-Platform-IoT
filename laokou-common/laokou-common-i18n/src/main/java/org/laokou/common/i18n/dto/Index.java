@@ -20,6 +20,7 @@ package org.laokou.common.i18n.dto;
 import java.io.Serial;
 
 /**
+ * 索引.
  * @author laokou
  */
 public abstract class Index extends DTO {

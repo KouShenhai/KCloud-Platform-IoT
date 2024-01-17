@@ -18,6 +18,7 @@
 package org.laokou.common.i18n.dto;
 
 /**
+ * 认证.
  * @author laokou
  */
 public abstract class Authorization extends DTO {

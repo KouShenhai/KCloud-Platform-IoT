@@ -24,6 +24,7 @@ import java.io.Serializable;
 import java.time.Clock;
 
 /**
+ * 领域事件.
  * @author laokou
  */
 public abstract class DomainEvent extends ApplicationEvent implements Serializable {

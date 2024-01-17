@@ -38,7 +38,7 @@ import static org.laokou.common.i18n.common.StatusCodes.UNAUTHORIZED;
 import static org.laokou.common.redis.utils.RedisUtil.HOUR_ONE_EXPIRE;
 
 /**
- * websocket自定义处理器
+ * websocket自定义处理器.
  *
  * @author laokou
  */
@@ -59,7 +59,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 		.build();
 
 	/**
-	 * 根据客户ID获取通道
+	 * 根据客户ID获取通道.
 	 * @param clientId 客户ID
 	 * @return 通道
 	 */

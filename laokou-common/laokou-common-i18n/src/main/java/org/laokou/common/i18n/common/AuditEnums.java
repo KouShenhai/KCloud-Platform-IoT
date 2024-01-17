@@ -20,8 +20,11 @@ package org.laokou.common.i18n.common;
 import lombok.Getter;
 
 /**
+ * 审批状态枚举类.
+ *
  * @author laokou
  */
+@Getter
 public enum AuditEnums {
 
 	/**
@@ -54,10 +57,8 @@ public enum AuditEnums {
 	 */
 	REFUSE(0, "驳回");
 
-	@Getter
 	private final int value;
 
-	@Getter
 	private final String desc;
 
 	AuditEnums(int value, String desc) {

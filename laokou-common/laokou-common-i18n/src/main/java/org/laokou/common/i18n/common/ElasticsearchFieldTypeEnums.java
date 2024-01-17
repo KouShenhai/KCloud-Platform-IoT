@@ -18,6 +18,7 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * es属性类型常量.
  * @author laokou
  */
 public enum ElasticsearchFieldTypeEnums {

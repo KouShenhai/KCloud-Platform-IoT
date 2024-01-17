@@ -27,6 +27,7 @@ import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 import static org.laokou.common.i18n.common.StatusCodes.OK;
 
 /**
+ * 响应格式.
  * @author laokou
  */
 @Data

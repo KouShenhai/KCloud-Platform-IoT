@@ -117,6 +117,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	/**
 	 * 认证.
+	 * @param authentication 认证对象
 	 */
 	@SneakyThrows
 	public Authentication authenticate(Authentication authentication) {
@@ -135,6 +136,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	/**
 	 * 认证.
+	 * @param request 请求对象
 	 */
 	abstract Authentication principal(HttpServletRequest request) throws IOException;
 

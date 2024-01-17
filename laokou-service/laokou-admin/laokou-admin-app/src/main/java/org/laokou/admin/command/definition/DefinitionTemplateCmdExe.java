@@ -45,7 +45,7 @@ public class DefinitionTemplateCmdExe {
 	private static final String TEMPLATE_PATH = "/templates";
 
 	/**
-	 * 执行下载流程模板
+	 * 执行下载流程模板.
 	 * @param cmd 下载流程模板参数
 	 */
 	@SneakyThrows

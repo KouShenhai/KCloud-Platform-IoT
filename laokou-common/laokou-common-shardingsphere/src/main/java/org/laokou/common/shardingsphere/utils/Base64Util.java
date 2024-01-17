@@ -208,6 +208,8 @@ public class Base64Util {
 	 *
 	 * @throw IllegalArgumentException or ArrayOutOfBoundsException if c is not in the
 	 * Base64 Alphabet.
+	 * @param c 字符
+	 * @param alphaToInt 阿尔法转为int
 	 */
 	private static int base64toInt(char c, byte[] alphaToInt) {
 		int result = alphaToInt[c];

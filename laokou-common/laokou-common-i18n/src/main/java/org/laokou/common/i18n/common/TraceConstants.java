@@ -18,6 +18,7 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * 分布式链路常量.
  * @author laokou
  */
 public final class TraceConstants {

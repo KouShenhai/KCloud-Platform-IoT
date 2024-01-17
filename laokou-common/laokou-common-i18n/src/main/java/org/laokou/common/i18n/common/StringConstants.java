@@ -18,6 +18,7 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * 字符串常量.
  * @author laokou
  */
 public final class StringConstants {

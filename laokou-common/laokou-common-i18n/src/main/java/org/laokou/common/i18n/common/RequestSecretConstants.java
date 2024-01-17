@@ -18,6 +18,7 @@
 package org.laokou.common.i18n.common;
 
 /**
+ * 请求密钥常量.
  * @author laokou
  */
 public final class RequestSecretConstants {

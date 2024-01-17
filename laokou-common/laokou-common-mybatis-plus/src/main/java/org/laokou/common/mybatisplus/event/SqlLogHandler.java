@@ -17,7 +17,6 @@
 
 package org.laokou.common.mybatisplus.event;
 
-import com.alibaba.ttl.threadpool.TtlExecutors;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;

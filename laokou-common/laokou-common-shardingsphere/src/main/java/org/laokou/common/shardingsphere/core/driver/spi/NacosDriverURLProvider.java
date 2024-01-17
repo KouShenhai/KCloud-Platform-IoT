@@ -117,6 +117,8 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 
 	/**
 	 * 字符串解密.
+	 * @param cipherText 加密字符串
+	 * @param publicKey 公钥
 	 */
 	private String decrypt(String publicKey, String cipherText) {
 		if (StringUtils.hasText(cipherText)) {
