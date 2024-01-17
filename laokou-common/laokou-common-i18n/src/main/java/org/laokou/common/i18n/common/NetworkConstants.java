@@ -17,64 +17,45 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 网络常量.
- *
  * @author laokou
  */
+@Schema(name = "NetworkConstants", description = "网络常量")
 public final class NetworkConstants {
 
 	private NetworkConstants() {
 	}
 
-	/**
-	 * IPV4正则表达式.
-	 */
+	@Schema(name = "IPV4_REGEX", description = "IPV4正则表达式")
 	public static final String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
 
-	/**
-	 * IP参数.
-	 */
+	@Schema(name = "IP", description = "IP参数")
 	public static final String IP = "ip";
 
-	/**
-	 * http.
-	 */
+	@Schema(name = "HTTP_SCHEME", description = "http协议")
 	public static final String HTTP_SCHEME = "http";
 
-	/**
-	 * https.
-	 */
+	@Schema(name = "", description = "https协议")
 	public static final String HTTPS_SCHEME = "https";
 
-	/**
-	 * www.
-	 */
+	@Schema(name = "WWW", description = "www三级域名")
 	public static final String WWW = "www";
 
-	/**
-	 * 本地IP-IPV4.
-	 */
+	@Schema(name = "LOCAL_IPV4", description = "本地IP-IPV4")
 	public static final String LOCAL_IPV4 = "127.0.0.1";
 
-	/**
-	 * 本地IP-IPV6.
-	 */
+	@Schema(name = "LOCAL_IPV6", description = "本地IP-IPV6")
 	public static final String LOCAL_IPV6 = "0:0:0:0:0:0:0:1";
 
-	/**
-	 * 未知IP.
-	 */
+	@Schema(name = "UNKNOWN_IP", description = "未知IP")
 	public static final String UNKNOWN_IP = "unknown";
 
-	/**
-	 * 本地IP描述.
-	 */
+	@Schema(name = "LOCAL_DESC", description = "本地IP描述")
 	public static final String LOCAL_DESC = "内网";
 
-	/**
-	 * http协议.
-	 */
+	@Schema(name = "HTTP_PROTOCOL", description = "http协议")
 	public static final String HTTP_PROTOCOL = "http://";
 
 }

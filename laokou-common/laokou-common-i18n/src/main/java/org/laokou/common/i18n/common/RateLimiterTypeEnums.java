@@ -17,36 +17,27 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 限流类型常量.
- *
  * @author laokou
  */
+@Schema(name = "RateLimiterTypeEnums", description = "限流类型枚举")
 public enum RateLimiterTypeEnums {
 
-	/**
-	 * 默认.
-	 */
+	@Schema(name = "DEFAULT", description = "默认")
 	DEFAULT,
 
-	/**
-	 * IP.
-	 */
+	@Schema(name = "IP", description = "IP")
 	IP,
 
-	/**
-	 * 用户.
-	 */
+	@Schema(name = "USER", description = "用户")
 	USER,
 
-	/**
-	 * 租户.
-	 */
+	@Schema(name = "TENANT", description = "租户")
 	TENANT,
 
-	/**
-	 * 路径.
-	 */
+	@Schema(name = "PATH", description = "路径")
 	PATH
 
 }

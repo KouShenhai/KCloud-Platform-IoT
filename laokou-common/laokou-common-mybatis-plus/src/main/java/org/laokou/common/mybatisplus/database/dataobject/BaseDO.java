@@ -27,7 +27,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serial;
 import java.time.LocalDateTime;
 
-import static org.laokou.common.i18n.common.MybatisConstants.*;
+import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
 import static org.laokou.common.i18n.utils.DateUtil.Constant.DEFAULT_TIMEZONE;
 import static org.laokou.common.i18n.utils.DateUtil.Constant.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS;
 

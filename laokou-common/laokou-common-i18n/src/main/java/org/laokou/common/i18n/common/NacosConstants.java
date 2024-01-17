@@ -17,24 +17,21 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * nacos常量.
- *
  * @author laokou
  */
+@Schema(name = "NacosConstants", description = "Nacos变量")
 public final class NacosConstants {
 
 	private NacosConstants() {
 	}
 
-	/**
-	 * NACOS集群配置.
-	 */
+	@Schema(name = "CLUSTER_CONFIG", description = "Nacos集群配置")
 	public static final String CLUSTER_CONFIG = "nacos.cluster";
 
-	/**
-	 * NACOS默认端口.
-	 */
+	@Schema(name = "DEFAULT_PORT", description = "Nacos默认端口")
 	public static final int DEFAULT_PORT = 8848;
 
 }

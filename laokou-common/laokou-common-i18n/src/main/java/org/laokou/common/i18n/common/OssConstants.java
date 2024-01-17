@@ -17,17 +17,18 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * @author laokou
  */
+@Schema(name = "OssConstants", description = "对象存储常量")
 public final class OssConstants {
 
 	private OssConstants() {
 	}
 
-	/**
-	 * zip压缩包扩展类型.
-	 */
+	@Schema(name = "ZIP_EXT", description = "ZIP压缩包扩展类型")
 	public static final String ZIP_EXT = ".zip";
 
 }

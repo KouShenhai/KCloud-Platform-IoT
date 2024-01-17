@@ -30,7 +30,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Schema(name = "ClusterServiceListQry", description = "查询服务列表参数")
 public class ClusterServiceListQry extends PageQuery {
 
-	@Schema(name = "id", description = "标识")
+	@Schema(name = "id", description = "ID")
 	private String id;
 
 }

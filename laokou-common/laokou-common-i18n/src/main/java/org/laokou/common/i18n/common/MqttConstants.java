@@ -16,26 +16,22 @@
 
 package org.laokou.common.i18n.common;
 
-import java.nio.charset.StandardCharsets;
+import io.swagger.v3.oas.annotations.media.Schema;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
- * mqtt消息常量.
- *
  * @author laokou
  */
+@Schema(name = "MqttConstants", description = "MQTT消息常量")
 public final class MqttConstants {
 
 	private MqttConstants() {
 	}
 
-	/**
-	 * 服务停止前的主题.
-	 */
+	@Schema(name = "WILL_TOPIC", description = "服务停止前的消息主题")
 	public static final String WILL_TOPIC = "will_topic";
 
-	/**
-	 * 下线.
-	 */
-	public static final byte[] WILL_DATA = "offline".getBytes(StandardCharsets.UTF_8);
+	@Schema(name = "WILL_DATA", description = "服务下线")
+	public static final byte[] WILL_DATA = "offline".getBytes(UTF_8);
 
 }

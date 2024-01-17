@@ -17,84 +17,57 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * OAuth2常量.
- *
  * @author laokou
  */
+@Schema(name = "OAuth2Constants", description = "OAuth2常量")
 public final class OAuth2Constants {
 
 	private OAuth2Constants() {
 	}
 
-	/**
-	 * 认证令牌.
-	 */
+	@Schema(name = "ACCESS_TOKEN", description = "认证令牌")
 	public static final String ACCESS_TOKEN = "accessToken";
 
-	/**
-	 * 刷新令牌.
-	 */
+	@Schema(name = "REFRESH_TOKEN", description = "刷新令牌")
 	public static final String REFRESH_TOKEN = "refreshToken";
 
-	/**
-	 * 路径.
-	 */
+	@Schema(name = "TOKEN_URL", description = "令牌路径")
 	public static final String TOKEN_URL = "/oauth2/token";
 
-	/**
-	 * 用户名.
-	 */
+	@Schema(name = "USERNAME", description = "用户名")
 	public static final String USERNAME = "username";
 
-	/**
-	 * 密码.
-	 */
+	@Schema(name = "PASSWORD", description = "密码")
 	public static final String PASSWORD = "password";
 
-	/**
-	 * 邮箱.
-	 */
+	@Schema(name = "MAIL", description = "邮箱")
 	public static final String MAIL = "mail";
 
-	/**
-	 * 手机.
-	 */
+	@Schema(name = "MOBILE", description = "手机")
 	public static final String MOBILE = "mobile";
 
-	/**
-	 * 唯一标识.
-	 */
+	@Schema(name = "UUID", description = "唯一标识")
 	public static final String UUID = "uuid";
 
-	/**
-	 * 验证码.
-	 */
+	@Schema(name = "CAPTCHA", description = "验证码")
 	public static final String CAPTCHA = "captcha";
 
-	/**
-	 * 错误.
-	 */
+	@Schema(name = "ERROR", description = "错误")
 	public static final String ERROR = "error";
 
-	/**
-	 * 错误信息.
-	 */
+	@Schema(name = "ERROR_DESCRIPTION", description = "错误信息")
 	public static final String ERROR_DESCRIPTION = "error_description";
 
-	/**
-	 * 所有.
-	 */
+	@Schema(name = "FULL", description = "所有")
 	public static final String FULL = "full";
 
-	/**
-	 * 存入redis的hash键.
-	 */
+	@Schema(name = "REDIS_OAUTH2_AUTHORIZATION_KEY", description = "存入Redis的Hash键")
 	public static final String REDIS_OAUTH2_AUTHORIZATION_KEY = "oauth2:authorization";
 
-	/**
-	 * 错误地址.
-	 */
+	@Schema(name = "ERROR_URL", description = "错误地址")
 	public static final String ERROR_URL = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
 }

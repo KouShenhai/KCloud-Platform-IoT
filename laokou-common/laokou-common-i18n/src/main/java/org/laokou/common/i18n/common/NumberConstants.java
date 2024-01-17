@@ -17,29 +17,24 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 数字常量.
- *
  * @author laokou
  */
+@Schema(name = "NumberConstants", description = "数字常量")
 public final class NumberConstants {
 
 	private NumberConstants() {
 	}
 
-	/**
-	 * 默认.
-	 */
+	@Schema(name = "DEFAULT", description = "默认")
 	public static final int DEFAULT = 0;
 
-	/**
-	 * 成功.
-	 */
+	@Schema(name = "SUCCESS", description = "成功")
 	public static final int SUCCESS = 0;
 
-	/**
-	 * 失败.
-	 */
+	@Schema(name = "FAIL", description = "失败")
 	public static final int FAIL = 1;
 
 }

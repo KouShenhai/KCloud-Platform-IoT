@@ -17,29 +17,21 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 请求密钥常量.
- *
  * @author laokou
  */
+@Schema(name = "RequestSecretConstants", description = "请求密钥常量")
 public final class RequestSecretConstants {
 
 	private RequestSecretConstants() {
 	}
 
-	/**
-	 * 应用Key.
-	 */
+	@Schema(name = "APP_KEY", description = "应用Key")
 	public static final String APP_KEY = "laokou2023";
 
-	/**
-	 * 应用密钥.
-	 */
+	@Schema(name = "APP_SECRET", description = "应用密钥")
 	public static final String APP_SECRET = "vb05f6c45d67340zaz95v7fa6d49v99zx";
-
-	/**
-	 * 路由密钥.
-	 */
-	public static final String ROUTER_SECRET = "68747470733a2f2f636f6e73742e6e65742e636e2f";
 
 }
