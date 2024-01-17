@@ -22,6 +22,7 @@ import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.mqtt.annotation.MqttMessageListener;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -32,9 +33,10 @@ import java.util.Map;
  *
  * @author laokou
  */
+@Async
 @Component
 @NonNullApi
-public final class MqttListenerContainer implements ApplicationListener<ApplicationReadyEvent>, MqttStrategy {
+public class MqttListenerContainer implements ApplicationListener<ApplicationReadyEvent>, MqttStrategy {
 
 	private final Map<String, MqttListener> MAP = new HashMap<>();
 
