@@ -17,21 +17,18 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 加密算法类型.
- *
  * @author laokou
  */
-
+@Schema(name = "AlgorithmEnums", description = "加密算法类型枚举")
 public enum AlgorithmEnums {
 
-	/**
-	 * AES.
-	 */
+	@Schema(name = "AES", description = "AES加密算法")
 	AES,
-	/**
-	 * MD5.
-	 */
+
+	@Schema(name = "MD5", description = "MD5摘要算法")
 	MD5
 
 }

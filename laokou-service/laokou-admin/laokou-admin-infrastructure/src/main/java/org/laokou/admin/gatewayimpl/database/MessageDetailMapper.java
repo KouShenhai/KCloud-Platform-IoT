@@ -22,7 +22,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
-import static org.laokou.common.i18n.common.MybatisConstants.USER_ID;
+import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
 
 /**
  * @author laokou

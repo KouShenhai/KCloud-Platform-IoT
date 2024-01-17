@@ -17,154 +17,99 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 字符串常量.
- *
  * @author laokou
  */
+@Schema(name = "StringConstants", description = "字符串常量")
 public final class StringConstants {
 
 	private StringConstants() {
 	}
 
-	/**
-	 * 空字符串.
-	 */
+	@Schema(name = "EMPTY", description = "空字符串")
 	public static final String EMPTY = "";
 
-	/**
-	 * 艾特符号.
-	 */
+	@Schema(name = "AT", description = "@")
 	public static final String AT = "@";
 
-	/**
-	 * true.
-	 */
+	@Schema(name = "TRUE", description = "TRUE")
 	public static final String TRUE = "true";
 
-	/**
-	 * false.
-	 */
+	@Schema(name = "FALSE", description = "FALSE")
 	public static final String FALSE = "false";
 
-	/**
-	 * null.
-	 */
+	@Schema(name = "NULL", description = "NULL")
 	public static final String NULL = null;
 
-	/**
-	 * 分割参数.
-	 */
+	@Schema(name = "SLASH", description = "分割参数")
 	public static final String SLASH = "/";
 
-	/**
-	 * 分割参数.
-	 */
+	@Schema(name = "ERECT", description = "分割参数")
 	public static final String ERECT = "|";
 
-	/**
-	 * 分割参数.
-	 */
+	@Schema(name = "DROP", description = "分割参数")
 	public static final String DROP = "、";
 
-	/**
-	 * 分割参数.
-	 */
+	@Schema(name = "BACKSLASH", description = "分割参数")
 	public static final String BACKSLASH = "\\";
 
-	/**
-	 * 分割参数.
-	 */
+	@Schema(name = "STAR", description = "分割参数")
 	public static final String STAR = "*";
 
-	/**
-	 * 百分号.
-	 */
+	@Schema(name = "PERCENT", description = "百分号")
 	public static final String PERCENT = "%";
 
-	/**
-	 * 分割参数.
-	 */
+	@Schema(name = "DOT", description = "分割参数")
 	public static final String DOT = ".";
 
-	/**
-	 * 分割参数.
-	 */
+	@Schema(name = "RISK", description = "分割参数")
 	public static final String RISK = ":";
 
-	/**
-	 * 分割参数.
-	 */
+	@Schema(name = "COMMA", description = "分割参数")
 	public static final String COMMA = ",";
 
-	/**
-	 * 分割参数.
-	 */
+	@Schema(name = "CHINESE_COMMA", description = "分割参数")
 	public static final String CHINESE_COMMA = "，";
 
-	/**
-	 * 左括号.
-	 */
+	@Schema(name = "LEFT", description = "左括号")
 	public static final String LEFT = "(";
 
-	/**
-	 * 右括号.
-	 */
+	@Schema(name = "RIGHT", description = "右括号")
 	public static final String RIGHT = ")";
 
-	/**
-	 * 空格.
-	 */
+	@Schema(name = "SPACE", description = "空格")
 	public static final String SPACE = " ";
 
-	/**
-	 * 等于.
-	 */
+	@Schema(name = "EQUAL", description = "等于")
 	public static final String EQUAL = "=";
 
-	/**
-	 * 分割参数.
-	 */
+	@Schema(name = "UNDER", description = "分割参数")
 	public static final String UNDER = "_";
 
-	/**
-	 * 双引号.
-	 */
+	@Schema(name = "DOUBLE_QUOT", description = "双引号")
 	public static final String DOUBLE_QUOT = "\"";
 
-	/**
-	 * 单引号.
-	 */
+	@Schema(name = "SINGLE_QUOT", description = "单引号")
 	public static final String SINGLE_QUOT = "'";
 
-	/**
-	 * 并.
-	 */
+	@Schema(name = "AND", description = "并")
 	public static final String AND = "&";
 
-	/**
-	 * 分割参数.
-	 */
+	@Schema(name = "MARK", description = "分割参数")
 	public static final String MARK = "?";
 
-	/**
-	 * 分割参数.
-	 */
+	@Schema(name = "ROD", description = "分割参数")
 	public static final String ROD = "-";
 
-	/**
-	 * 分割参数.
-	 */
+	@Schema(name = "DOLLAR", description = "分割参数")
 	public static final String DOLLAR = "$";
 
-	/**
-	 * 分割参数.
-	 */
+	@Schema(name = "START_START", description = "分割参数")
 	public static final String START_START = "**";
 
-	/**
-	 * 零.
-	 */
+	@Schema(name = "ZERO", description = "零")
 	public static final String ZERO = "0";
 
 }

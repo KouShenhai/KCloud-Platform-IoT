@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.apache.ibatis.type.JdbcType.*;
-import static org.laokou.common.i18n.common.MybatisConstants.*;
+import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
 
 /**
  * @author Liukefu

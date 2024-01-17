@@ -17,44 +17,33 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 分布式链路常量.
- *
  * @author laokou
  */
+@Schema(name = "TraceConstants", description = "分布式链路常量")
 public final class TraceConstants {
 
 	private TraceConstants() {
 	}
 
-	/**
-	 * 用户名.
-	 */
+	@Schema(name = "USER_NAME",description = "用户名")
 	public static final String USER_NAME = "user-name";
 
-	/**
-	 * 链路ID.
-	 */
+	@Schema(name = "TRACE_ID",description = "分布式链路ID")
 	public static final String TRACE_ID = "trace-id";
 
-	/**
-	 * 用户ID.
-	 */
+	@Schema(name = "USER_ID",description = "用户ID")
 	public static final String USER_ID = "user-id";
 
-	/**
-	 * 租户ID.
-	 */
+	@Schema(name = "TENANT_ID",description = "租户ID")
 	public static final String TENANT_ID = "tenant-id";
 
-	/**
-	 * 域名.
-	 */
+	@Schema(name = "DOMAIN_NAME",description = "域名")
 	public static final String DOMAIN_NAME = "domain-name";
 
-	/**
-	 * 链路ID.
-	 */
+	@Schema(name = "REQUEST_ID",description = "请求ID")
 	public static final String REQUEST_ID = "request-id";
 
 }

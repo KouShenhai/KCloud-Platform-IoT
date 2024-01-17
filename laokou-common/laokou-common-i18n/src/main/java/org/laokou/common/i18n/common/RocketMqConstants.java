@@ -17,44 +17,33 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * rocketmq消息常量.
- *
  * @author laokou
  */
+@Schema(name = "RocketMqConstants", description = "RocketMQ消息常量")
 public final class RocketMqConstants {
 
 	private RocketMqConstants() {
 	}
 
-	/**
-	 * 分布式链路Topic.
-	 */
+	@Schema(name = "LAOKOU_MESSAGE_TOPIC", description = "分布式链路主题")
 	public static final String LAOKOU_MESSAGE_TOPIC = "laokou_message_topic";
 
-	/**
-	 * 通知消息Tag.
-	 */
+	@Schema(name = "LAOKOU_NOTICE_MESSAGE_TAG", description = "通知消息标签")
 	public static final String LAOKOU_NOTICE_MESSAGE_TAG = "notice";
 
-	/**
-	 * 提醒消息Tag.
-	 */
+	@Schema(name = "LAOKOU_REMIND_MESSAGE_TAG", description = "提醒消息标签")
 	public static final String LAOKOU_REMIND_MESSAGE_TAG = "remind";
 
-	/**
-	 * 提醒消息消费者组.
-	 */
+	@Schema(name = "LAOKOU_REMIND_MESSAGE_CONSUMER_GROUP", description = "提醒消息消费者组")
 	public static final String LAOKOU_REMIND_MESSAGE_CONSUMER_GROUP = "laokou_remind_message_consumer_group";
 
-	/**
-	 * 通知消息消费者组.
-	 */
+	@Schema(name = "LAOKOU_NOTICE_MESSAGE_CONSUMER_GROUP", description = "通知消息消费者组")
 	public static final String LAOKOU_NOTICE_MESSAGE_CONSUMER_GROUP = "laokou_notice_message_consumer_group";
 
-	/**
-	 * 分隔符.
-	 */
+	@Schema(name = "TOPIC_TAG", description = "主题与标签的分隔符")
 	public static final String TOPIC_TAG = "%s:%s";
 
 }

@@ -17,11 +17,12 @@
 
 package org.laokou.common.i18n.common.exception;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 系统异常.
- *
  * @author laokou
  */
+@Schema(name = "SystemException", description = "系统异常")
 public final class SystemException extends GlobalException {
 
 	public SystemException(int code) {

@@ -17,37 +17,31 @@
 
 package org.laokou.admin.domain.dept;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
+ * 部门.
+ *
  * @author laokou
  */
 @Data
+@Schema(name = "Dept", description = "部门")
 public class Dept {
 
-	/**
-	 * ID.
-	 */
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	/**
-	 * 名称.
-	 */
+	@Schema(name = "name", description = "名称")
 	private String name;
 
-	/**
-	 * 父ID.
-	 */
+	@Schema(name = "pid", description = "父ID")
 	private Long pid;
 
-	/**
-	 * 节点.
-	 */
+	@Schema(name = "path", description = "路径")
 	private String path;
 
-	/**
-	 * 排序.
-	 */
+	@Schema(name = "sort", description = "排序")
 	private Integer sort;
 
 }

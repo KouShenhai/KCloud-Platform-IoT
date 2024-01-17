@@ -17,20 +17,18 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 敏感词过滤类型常量.
- *
  * @author laokou
  */
+@Schema(name = "SensitiveTypeEnums", description = "铭感词类型枚举")
 public enum SensitiveTypeEnums {
 
-	/**
-	 * 手机号.
-	 */
+	@Schema(name = "MOBILE", description = "手机号")
 	MOBILE,
-	/**
-	 * 邮箱.
-	 */
+
+	@Schema(name = "MAIL", description = "邮箱")
 	MAIL
 
 }

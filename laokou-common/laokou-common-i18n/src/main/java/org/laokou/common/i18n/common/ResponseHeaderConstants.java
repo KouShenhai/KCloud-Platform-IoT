@@ -17,34 +17,27 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 响应头常量.
- *
  * @author laokou
  */
+@Schema(name = "ResponseHeaderConstants", description = "响应头常量")
 public final class ResponseHeaderConstants {
 
 	private ResponseHeaderConstants() {
 	}
 
-	/**
-	 * excel类型.
-	 */
+	@Schema(name = "EXCEL_CONTENT_TYPE", description = "Excel类型")
 	public static final String EXCEL_CONTENT_TYPE = "application/vnd.ms-excel";
 
-	/**
-	 * content disposition.
-	 */
+	@Schema(name = "CONTENT_DISPOSITION", description = "Content Disposition")
 	public static final String CONTENT_DISPOSITION = "Content-disposition";
 
-	/**
-	 * stream类型.
-	 */
+	@Schema(name = "STREAM_CONTENT_TYPE", description = "Steam类型")
 	public static final String STREAM_CONTENT_TYPE = "application/octet-stream";
 
-	/**
-	 * access control expose headers.
-	 */
+	@Schema(name = "ACCESS_CONTROL_EXPOSE_HEADERS", description = "Access Control Expose Headers")
 	public static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
 }

@@ -17,20 +17,18 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 消息读取枚举.
- *
  * @author laokou
  */
+@Schema(name = "MessageReadEnums", description = "消息读取枚举")
 public enum MessageReadEnums {
 
-	/**
-	 * 未读.
-	 */
+	@Schema(name = "NO", description = "未读")
 	NO,
-	/**
-	 * 已读.
-	 */
+
+	@Schema(name = "YES", description = "已读")
 	YES
 
 }

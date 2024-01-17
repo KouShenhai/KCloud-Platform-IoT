@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
-import static org.laokou.common.i18n.common.MybatisConstants.*;
+import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
 import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
 
 /**

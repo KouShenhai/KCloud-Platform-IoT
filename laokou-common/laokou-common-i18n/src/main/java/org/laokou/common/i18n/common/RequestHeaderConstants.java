@@ -17,64 +17,42 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 请求头常量.
- *
  * @author laokou
  */
+@Schema(name = "RequestHeaderConstants", description = "请求头常量")
 public final class RequestHeaderConstants {
 
 	private RequestHeaderConstants() {
 	}
 
-	/**
-	 * 请求头-认证标识.
-	 */
+	@Schema(name = "AUTHORIZATION", description = "认证标识")
 	public static final String AUTHORIZATION = "Authorization";
 
-	/**
-	 * chunked.
-	 */
+	@Schema(name = "CHUNKED", description = "Chunked")
 	public static final String CHUNKED = "chunked";
 
-	/**
-	 * Upgrade.
-	 */
+	@Schema(name = "UPGRADE", description = "Upgrade")
 	public static final String UPGRADE = "Upgrade";
 
-	/**
-	 * websocket.
-	 */
+	@Schema(name = "WEBSOCKET", description = "WebSocket")
 	public static final String WEBSOCKET = "websocket";
 
-	/**
-	 * 随机字符.
-	 */
+	@Schema(name = "NONCE", description = "随机字符")
 	public static final String NONCE = "nonce";
 
-	/**
-	 * 签名（MD5）.
-	 */
+	@Schema(name = "SIGN", description = "签名（MD5）")
 	public static final String SIGN = "sign";
 
-	/**
-	 * 时间戳.
-	 */
+	@Schema(name = "TIMESTAMP", description = "时间戳")
 	public static final String TIMESTAMP = "timestamp";
 
-	/**
-	 * 应用标识.
-	 */
+	@Schema(name = "APP_KEY", description = "应用标识")
 	public static final String APP_KEY = "app-key";
 
-	/**
-	 * 应用密钥.
-	 */
+	@Schema(name = "APP_SECRET", description = "应用密钥")
 	public static final String APP_SECRET = "app-secret";
-
-	/**
-	 * 路由标识.
-	 */
-	public static final String ROUTER_KEY = "router-key";
 
 }

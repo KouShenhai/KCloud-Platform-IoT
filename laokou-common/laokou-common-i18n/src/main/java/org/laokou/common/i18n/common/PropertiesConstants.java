@@ -17,69 +17,48 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 属性常量.
- *
  * @author laokou
  */
+@Schema(name = "PropertiesConstants", description = "Properties常量")
 public final class PropertiesConstants {
 
 	private PropertiesConstants() {
 	}
 
-	/**
-	 * 应用名称yaml配置.
-	 */
+	@Schema(name = "SPRING_APPLICATION_NAME", description = "应用名称")
 	public static final String SPRING_APPLICATION_NAME = "spring.application.name";
 
-	/**
-	 * xxl-job配置前缀.
-	 */
+	@Schema(name = "XXL_JOB_PREFIX", description = "XXL-JOB配置前缀")
 	public static final String XXL_JOB_PREFIX = "spring.xxl-job";
 
-	/**
-	 * 默认配置前缀.
-	 */
+	@Schema(name = "DEFAULT_CONFIG_PREFIX", description = "默认配置前缀")
 	public static final String DEFAULT_CONFIG_PREFIX = "spring.default-config";
 
-	/**
-	 * OAuth2认证配置前缀.
-	 */
+	@Schema(name = "OAUTH2_AUTHORIZATION_SERVER_PREFIX", description = "OAuth2认证配置前缀")
 	public static final String OAUTH2_AUTHORIZATION_SERVER_PREFIX = "spring.security.oauth2.authorization-server";
 
-	/**
-	 * OAuth2资源配置前缀.
-	 */
+	@Schema(name = "OAUTH2_RESOURCE_SERVER_PREFIX", description = "OAuth2资源配置前缀")
 	public static final String OAUTH2_RESOURCE_SERVER_PREFIX = "spring.security.oauth2.resource-server";
 
-	/**
-	 * websocket配置前缀.
-	 */
+	@Schema(name = "WEBSOCKET_PREFIX", description = "WebSocket配置前缀")
 	public static final String WEBSOCKET_PREFIX = "spring.websocket";
 
-	/**
-	 * 慢sql配置前缀.
-	 */
+	@Schema(name = "SLOW_SQL_PREFIX", description = "慢SQL配置前缀")
 	public static final String SLOW_SQL_PREFIX = "slow-sql";
 
-	/**
-	 * openapi-doc配置前缀.
-	 */
+	@Schema(name = "OPENAPI_DOC_PREFIX", description = "OpenApi-Doc配置前缀")
 	public static final String OPENAPI_DOC_PREFIX = "openapi-doc";
 
-	/**
-	 * mqtt配置前缀.
-	 */
+	@Schema(name = "MQTT_PREFIX", description = "MQTT配置前缀")
 	public static final String MQTT_PREFIX = "spring.mqtt";
 
-	/**
-	 * 黑/白名单配置前缀.
-	 */
+	@Schema(name = "IP_PREFIX", description = "黑/白名单配置前缀")
 	public static final String IP_PREFIX = "spring.cloud.gateway.ip";
 
-	/**
-	 * 路由认证配置前缀.
-	 */
+	@Schema(name = "ROUTER_AUTH_PREFIX", description = "路由认证配置前缀")
 	public static final String ROUTER_AUTH_PREFIX = "spring.cloud.gateway.router.auth";
 
 }

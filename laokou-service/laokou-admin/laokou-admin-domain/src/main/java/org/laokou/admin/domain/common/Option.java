@@ -17,16 +17,22 @@
 
 package org.laokou.admin.domain.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
+ * 下拉框.
+ *
  * @author laokou
  */
 @Data
+@Schema(name = "Option", description = "下拉框")
 public class Option {
 
+	@Schema(name = "label", description = "标签")
 	private String label;
 
+	@Schema(name = "value", description = "值")
 	private String value;
 
 }

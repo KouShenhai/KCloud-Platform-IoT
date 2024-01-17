@@ -17,11 +17,12 @@
 
 package org.laokou.common.i18n.common.exception;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 工作流程异常.
- *
  * @author laokou
  */
+@Schema(name = "FlowException", description = "工作流程异常")
 public final class FlowException extends GlobalException {
 
 	public FlowException(int code) {

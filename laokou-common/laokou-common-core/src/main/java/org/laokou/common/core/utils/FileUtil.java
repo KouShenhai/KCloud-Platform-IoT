@@ -20,10 +20,15 @@ package org.laokou.common.core.utils;
 import lombok.SneakyThrows;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import static org.laokou.common.i18n.common.StringConstants.COMMA;
 import static org.laokou.common.i18n.common.StringConstants.DOT;
@@ -88,6 +93,19 @@ public class FileUtil {
 	 */
 	public static String getFileExt(String fileName) {
 		return fileName.substring(fileName.lastIndexOf(DOT));
+	}
+
+	/**
+	 * 下载zip压缩包.
+	 * @param file 文件
+	 * @param os 输出流
+	 * @throws IOException 异常
+	 */
+	public static void zip(File file, OutputStream os) throws IOException {
+		try (ZipOutputStream zos = new ZipOutputStream(os); FileInputStream fis = new FileInputStream(file)) {
+			zos.putNextEntry(new ZipEntry(file.getName()));
+			zos.write(fis.readAllBytes());
+		}
 	}
 
 }

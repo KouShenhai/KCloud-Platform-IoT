@@ -17,24 +17,18 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * es索引常量.
- *
  * @author laokou
  */
-public final class IndexConstants {
+@Schema(name = "OssConstants", description = "对象存储常量")
+public final class OssConstants {
 
-	private IndexConstants() {
+	private OssConstants() {
 	}
 
-	/**
-	 * 资源索引.
-	 */
-	public static final String RESOURCE = "laokou_resource";
-
-	/**
-	 * 分布式链路索引.
-	 */
-	public static final String TRACE = "laokou_trace";
+	@Schema(name = "ZIP_EXT", description = "ZIP压缩包扩展类型")
+	public static final String ZIP_EXT = ".zip";
 
 }

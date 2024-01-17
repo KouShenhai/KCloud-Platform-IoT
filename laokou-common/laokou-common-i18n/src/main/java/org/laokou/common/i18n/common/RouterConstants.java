@@ -17,39 +17,30 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 路由常量.
- *
  * @author laokou
  */
+@Schema(name = "RouterConstants", description = "路由常量")
 public final class RouterConstants {
 
 	private RouterConstants() {
 	}
 
-	/**
-	 * 服务IP.
-	 */
+	@Schema(name = "SERVICE_HOST", description = "服务IP")
 	public static final String SERVICE_HOST = "service-host";
 
-	/**
-	 * 服务端口.
-	 */
+	@Schema(name = "SERVICE_PORT", description = "服务端口")
 	public static final String SERVICE_PORT = "service-port";
 
-	/**
-	 * 生成名称前缀.
-	 */
+	@Schema(name = "GENERATED_NAME_PREFIX", description = "生成名称前缀")
 	public static final String GENERATED_NAME_PREFIX = "_genkey_";
 
-	/**
-	 * 路由配置标识.
-	 */
+	@Schema(name = "DATA_ID", description = "Nacos配置标识")
 	public static final String DATA_ID = "router.json";
 
-	/**
-	 * API路径前缀.
-	 */
+	@Schema(name = "API_URL_PREFIX", description = "Api路径前缀")
 	public static final String API_URL_PREFIX = "/v1/routers";
 
 }

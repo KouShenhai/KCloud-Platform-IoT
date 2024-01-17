@@ -22,7 +22,7 @@ import org.apache.ibatis.annotations.Param;
 import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
 import org.springframework.stereotype.Repository;
 
-import static org.laokou.common.i18n.common.MybatisConstants.TENANT_ID;
+import static org.laokou.common.i18n.common.MybatisPlusConstants.TENANT_ID;
 
 /**
  * @author laokou

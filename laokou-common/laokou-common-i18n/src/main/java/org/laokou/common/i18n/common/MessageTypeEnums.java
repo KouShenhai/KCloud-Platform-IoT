@@ -17,20 +17,18 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 消息类型枚举.
- *
  * @author laokou
  */
+@Schema(name = "MessageTypeEnums", description = "消息类型枚举")
 public enum MessageTypeEnums {
 
-	/**
-	 * 通知.
-	 */
+	@Schema(name = "NOTICE", description = "通知")
 	NOTICE,
-	/**
-	 * 提醒.
-	 */
+
+	@Schema(name = "REMIND", description = "提醒")
 	REMIND
 
 }

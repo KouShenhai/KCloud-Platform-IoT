@@ -15,26 +15,23 @@
  *
  */
 
-package org.laokou.common.i18n.common.exception;
+package org.laokou.common.i18n.common;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * @author laokou
  */
-@Schema(name = "DataSourceException", description = "数据源异常")
-public final class DataSourceException extends GlobalException {
+@Schema(name = "ElasticsearchIndexConstants", description = "Elasticsearch索引常量")
+public final class ElasticsearchIndexConstants {
 
-	public DataSourceException(int code) {
-		super(code);
+	private ElasticsearchIndexConstants() {
 	}
 
-	public DataSourceException(int code, String msg) {
-		super(code, msg);
-	}
+	@Schema(name = "RESOURCE", description = "资源索引")
+	public static final String RESOURCE = "laokou_resource";
 
-	public DataSourceException(String msg) {
-		super(msg);
-	}
+	@Schema(name = "TRACE", description = "分布式链路索引")
+	public static final String TRACE = "laokou_trace";
 
 }

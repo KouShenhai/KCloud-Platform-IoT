@@ -21,17 +21,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
-import jodd.io.ZipUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
-import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
@@ -57,7 +54,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -69,9 +65,11 @@ import java.util.Map;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.laokou.common.i18n.common.DatasourceConstants.*;
+import static org.laokou.common.i18n.common.OssConstants.ZIP_EXT;
 import static org.laokou.common.i18n.common.ResponseHeaderConstants.CONTENT_DISPOSITION;
 import static org.laokou.common.i18n.common.ResponseHeaderConstants.STREAM_CONTENT_TYPE;
-import static org.laokou.common.i18n.common.StringConstants.*;
+import static org.laokou.common.i18n.common.StringConstants.COMMA;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import static org.laokou.common.i18n.common.TenantConstants.*;
 
 /**
@@ -149,15 +147,13 @@ public class TenantGatewayImpl implements TenantGateway {
 		String name = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + fileExt;
 		response.setContentType(STREAM_CONTENT_TYPE);
 		response.setCharacterEncoding(UTF_8);
-		response.setHeader(CONTENT_DISPOSITION, "attachment;filename=" + UTF_8.encode(fileName + ".zip"));
+		response.setHeader(CONTENT_DISPOSITION, "attachment;filename=" + UTF_8.encode(fileName + ZIP_EXT));
 		TenantDO tenantDO = tenantMapper.selectById(id);
 		Assert.isTrue(ObjectUtil.isNotNull(tenantDO), "tenantDO is null");
 		try (ServletOutputStream outputStream = response.getOutputStream()) {
 			File file = writeTempFile(fileName, name, id, tenantDO.getPackageId());
-			File zipFile = zipTempFile(file);
-			List<File> list = List.of(file, zipFile);
-			IOUtils.copy(new FileInputStream(zipFile), outputStream);
-			deleteTempFile(list);
+			FileUtil.zip(file, outputStream);
+			deleteTempFile(file);
 		}
 	}
 
@@ -205,17 +201,10 @@ public class TenantGatewayImpl implements TenantGateway {
 		return file;
 	}
 
-	@SneakyThrows
-	private File zipTempFile(File file) {
-		return ZipUtil.zip(file);
-	}
-
-	private void deleteTempFile(List<File> files) {
-		if (CollectionUtil.isEmpty(files)) {
-			return;
+	private void deleteTempFile(File file) {
+		if (file.exists()) {
+			log.info("删除结果：{}", file.delete());
 		}
-		List<OptionCO> list = files.stream().map(i -> new OptionCO(i.getName(), i.delete() + EMPTY)).toList();
-		log.debug("删除结果：{}", StringUtil.collectionToDelimitedString(list, CHINESE_COMMA));
 	}
 
 	private List<String> getSql(long tenantId, long packageId) {

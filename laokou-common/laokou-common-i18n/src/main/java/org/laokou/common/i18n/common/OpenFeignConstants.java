@@ -17,19 +17,18 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * open feign常量.
- *
  * @author laokou
  */
+@Schema(name = "OpenFeignConstants", description = "OpenFeign常量")
 public final class OpenFeignConstants {
 
 	private OpenFeignConstants() {
 	}
 
-	/**
-	 * 工作流服务.
-	 */
-	public static final String SERVICE_LAOKOU_FLOWABLE = "laokou-flowable";
+	@Schema(name = "LAOKOU_FLOWABLE_SERVICE", description = "工作流服务")
+	public static final String LAOKOU_FLOWABLE_SERVICE = "laokou-flowable";
 
 }

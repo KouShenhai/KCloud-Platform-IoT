@@ -17,20 +17,18 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 用户状态常量.
- *
  * @author laokou
  */
+@Schema(name = "UserStatusEnums", description = "用户状态常量")
 public enum UserStatusEnums {
 
-	/**
-	 * 正常.
-	 */
+	@Schema(name = "ENABLED", description = "正常")
 	ENABLED,
-	/**
-	 * 禁用.
-	 */
+
+	@Schema(name = "DISABLE", description = "禁用")
 	DISABLE
 
 }

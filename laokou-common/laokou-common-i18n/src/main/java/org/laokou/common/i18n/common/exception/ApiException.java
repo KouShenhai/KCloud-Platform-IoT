@@ -17,11 +17,12 @@
 
 package org.laokou.common.i18n.common.exception;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * API异常.
- *
  * @author laokou
  */
+@Schema(name = "ApiException", description = "API异常")
 public final class ApiException extends GlobalException {
 
 	public ApiException(int code) {
