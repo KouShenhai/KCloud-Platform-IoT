@@ -17,53 +17,38 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 /**
- * 审批状态枚举类.
- *
  * @author laokou
  */
 @Getter
+@Schema(name = "AuditEnums", description = "审批状态枚举类")
 public enum AuditEnums {
 
-	/**
-	 * 待审批.
-	 */
-	PENDING_APPROVAL(0, "待审批"),
+	@Schema(name = "PENDING_APPROVAL", description = "待审批")
+	PENDING_APPROVAL(0),
 
-	/**
-	 * 审批中.
-	 */
-	IN_APPROVAL(1, "审批中"),
+	@Schema(name = "IN_APPROVAL", description = "审批中")
+	IN_APPROVAL(1),
 
-	/**
-	 * 驳回审批.
-	 */
-	REJECT_APPROVAL(-1, "驳回审批"),
+	@Schema(name = "REJECT_APPROVAL", description = "驳回审批")
+	REJECT_APPROVAL(-1),
 
-	/**
-	 * 通过审批.
-	 */
-	APPROVED(2, "审批通过"),
+	@Schema(name = "APPROVED", description = "审批通过")
+	APPROVED(2),
 
-	/**
-	 * 同意.
-	 */
-	PASS(1, "同意"),
+	@Schema(name = "PASS", description = "同意")
+	PASS(1),
 
-	/**
-	 * 驳回.
-	 */
-	REFUSE(0, "驳回");
+	@Schema(name = "REFUSE", description = "驳回")
+	REFUSE(0);
 
 	private final int value;
 
-	private final String desc;
-
-	AuditEnums(int value, String desc) {
+	AuditEnums(int value) {
 		this.value = value;
-		this.desc = desc;
 	}
 
 }

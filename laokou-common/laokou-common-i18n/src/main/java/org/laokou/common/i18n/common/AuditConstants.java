@@ -17,19 +17,18 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 审批常量.
- *
  * @author laokou
  */
+@Schema(name = "AuditConstants", description = "审批常量")
 public final class AuditConstants {
 
 	private AuditConstants() {
 	}
 
-	/**
-	 * 审批状态.
-	 */
+	@Schema(name = "STATUS", description = "审批状态")
 	public static final String STATUS = "auditStatus";
 
 }

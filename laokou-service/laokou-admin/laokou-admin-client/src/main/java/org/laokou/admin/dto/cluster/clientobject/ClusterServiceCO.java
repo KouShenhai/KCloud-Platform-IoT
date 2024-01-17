@@ -17,19 +17,24 @@
 
 package org.laokou.admin.dto.cluster.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
+ * 集群服务.
+ *
  * @author laokou
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "ClusterServiceCO", description = "集群服务")
 public class ClusterServiceCO extends ClientObject {
 
+	@Schema(name = "id", description = "标识")
 	private String id;
 
 }

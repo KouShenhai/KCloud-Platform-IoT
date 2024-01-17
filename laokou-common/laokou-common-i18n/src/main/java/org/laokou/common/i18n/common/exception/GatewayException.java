@@ -17,11 +17,12 @@
 
 package org.laokou.common.i18n.common.exception;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 网关异常.
- *
  * @author laokou
  */
+@Schema(name = "GatewayException", description = "网关异常")
 public final class GatewayException extends GlobalException {
 
 	public GatewayException(int code) {

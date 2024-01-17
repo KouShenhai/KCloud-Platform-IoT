@@ -17,23 +17,30 @@
 
 package org.laokou.admin.dto.cluster.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
+ * 集群服务实例.
+ *
  * @author laokou
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "ClusterInstanceCO", description = "集群服务实例")
 public class ClusterInstanceCO extends ClientObject {
 
+	@Schema(name = "router", description = "路由")
 	private String router;
 
+	@Schema(name = "host", description = "主机")
 	private String host;
 
+	@Schema(name = "port", description = "端口")
 	private Integer port;
 
 }

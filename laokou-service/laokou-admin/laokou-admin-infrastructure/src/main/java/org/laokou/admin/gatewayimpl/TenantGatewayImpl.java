@@ -202,7 +202,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	private void deleteTempFile(File file) {
-		if (file.exists()) {;
+		if (file.exists()) {
 			log.info("删除结果：{}", file.delete());
 		}
 	}

@@ -17,20 +17,18 @@
 
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 缓存操作类型枚举.
- *
  * @author laokou
  */
+@Schema(name = "CacheOperatorTypeEnums",description = "缓存操作类型枚举")
 public enum CacheOperatorTypeEnums {
 
-	/**
-	 * 查询.
-	 */
+	@Schema(name = "GET",description = "查询")
 	GET,
-	/**
-	 * 删除.
-	 */
+
+	@Schema(name = "DEL",description = "删除")
 	DEL
 
 }

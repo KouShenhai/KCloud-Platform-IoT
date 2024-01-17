@@ -17,14 +17,19 @@
 
 package org.laokou.admin.domain.annotation;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.lang.annotation.*;
 
 /**
+ * 数据权限注解.
+ *
  * @author laokou
  */
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Schema(name = "", description = "")
 public @interface DataFilter {
 
 	/**

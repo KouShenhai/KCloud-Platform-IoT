@@ -17,11 +17,12 @@
 
 package org.laokou.common.i18n.common.exception;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * Feign调用异常.
- *
  * @author laokou
  */
+@Schema(name = "FeignException", description = "远程调用异常")
 public final class FeignException extends GlobalException {
 
 	public FeignException(int code) {

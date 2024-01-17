@@ -22,11 +22,12 @@ package org.laokou.common.i18n.common;
  */
 public final class OssConstants {
 
-    private OssConstants() {}
+	private OssConstants() {
+	}
 
-    /**
-     * zip压缩包扩展类型
-     */
-    public static final String ZIP_EXT = ".zip";
+	/**
+	 * zip压缩包扩展类型.
+	 */
+	public static final String ZIP_EXT = ".zip";
 
 }

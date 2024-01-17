@@ -17,11 +17,12 @@
 
 package org.laokou.common.i18n.common.exception;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 数据源异常.
- *
  * @author laokou
  */
+@Schema(name = "DataSourceException", description = "数据源异常")
 public final class DataSourceException extends GlobalException {
 
 	public DataSourceException(int code) {
