@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.definition;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 
@@ -24,8 +25,10 @@ import org.laokou.common.i18n.dto.PageQuery;
  * @author laokou
  */
 @Data
+@Schema(name = "DefinitionListQry", description = "流程列表查询参数")
 public class DefinitionListQry extends PageQuery {
 
+	@Schema(name = "name", description = "流程名称")
 	private String name;
 
 }

@@ -18,6 +18,7 @@
 package org.laokou.admin.dto.definition;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,9 +31,11 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "DefinitionTemplateCmd", description = "下载流程模板命令请求")
 public class DefinitionTemplateCmd extends CommonCommand {
 
 	@JsonIgnore
+	@Schema(name = "response", description = "响应")
 	private HttpServletResponse response;
 
 }

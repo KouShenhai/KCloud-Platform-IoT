@@ -22,12 +22,10 @@ import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 
 /**
- * 查询集群服务实例列表参数.
- *
  * @author laokou
  */
 @Data
-@Schema(name = "ClusterInstanceListQry", description = "查询集群服务实例参数")
+@Schema(name = "ClusterInstanceListQry", description = "集群服务实例查询参数")
 public class ClusterInstanceListQry extends PageQuery {
 
 	@Schema(name = "serviceId", description = "服务ID")

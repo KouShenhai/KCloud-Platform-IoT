@@ -24,8 +24,6 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
- * 集群服务.
- *
  * @author laokou
  */
 @Data
@@ -34,7 +32,7 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Schema(name = "ClusterServiceCO", description = "集群服务")
 public class ClusterServiceCO extends ClientObject {
 
-	@Schema(name = "id", description = "标识")
+	@Schema(name = "id", description = "ID")
 	private String id;
 
 }
