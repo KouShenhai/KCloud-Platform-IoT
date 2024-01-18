@@ -72,9 +72,9 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	}
 
 	/**
-	 * 获取动态路由（避免集群中网关频繁调用Redis，还是得走本地缓存）. see
+	 * 获取动态路由（避免集群中网关频繁调用Redis，还是得走本地缓存）.
 	 * {@link org.springframework.cloud.gateway.config.GatewayAutoConfiguration#cachedCompositeRouteLocator(List)}
-	 * see {@link CachingRouteLocator}
+	 * {@link CachingRouteLocator}
 	 * @return 动态路由
 	 */
 	@Override
@@ -100,7 +100,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	}
 
 	/**
-	 * 同步nacos动态路由配置到redis.
+	 * 同步Nacos动态路由配置到Redis.
 	 * @return 同步结果
 	 */
 	public Flux<Boolean> syncRouters() {

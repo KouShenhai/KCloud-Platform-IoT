@@ -26,8 +26,10 @@ import org.laokou.common.i18n.utils.StringUtil;
  * @author laokou
  */
 @Data
+@Schema(name = "OperateLogListQry", description = "操作日志列表查询参数")
 public class OperateLogListQry extends PageQuery {
 
+	@Schema(name = "status", description = "操作状态 0成功 1失败")
 	private Integer status;
 
 	@Schema(name = "moduleName", description = "操作的模块名称")

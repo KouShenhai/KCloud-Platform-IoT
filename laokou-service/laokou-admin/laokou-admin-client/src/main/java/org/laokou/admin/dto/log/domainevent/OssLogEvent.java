@@ -16,6 +16,7 @@
 
 package org.laokou.admin.dto.log.domainevent;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.dto.DomainEvent;
@@ -27,17 +28,22 @@ import java.io.Serial;
  */
 @Getter
 @Setter
+@Schema(name = "OssLogEvent", description = "OSS日志事件")
 public class OssLogEvent extends DomainEvent {
 
 	@Serial
 	private static final long serialVersionUID = 3776732013732856552L;
 
+	@Schema(name = "md5", description = "文件的MD5标识")
 	private String md5;
 
+	@Schema(name = "url", description = "文件的URL")
 	private String url;
 
+	@Schema(name = "name", description = "文件名称")
 	private String name;
 
+	@Schema(name = "size", description = "文件大小")
 	private Long size;
 
 	public OssLogEvent(Object source) {

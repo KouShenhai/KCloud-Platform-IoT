@@ -29,6 +29,7 @@ import java.io.Serial;
  */
 @Getter
 @Setter
+@Schema(name = "OperateLogEvent", description = "操作日志事件")
 public class OperateLogEvent extends DomainEvent {
 
 	@Serial
