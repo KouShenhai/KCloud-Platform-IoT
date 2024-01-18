@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.message;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 
@@ -24,8 +25,10 @@ import org.laokou.common.i18n.dto.PageQuery;
  * @author laokou
  */
 @Data
+@Schema(name = "MessageUnreadListQry", description = "未读消息列表查询参数")
 public class MessageUnreadListQry extends PageQuery {
 
+	@Schema(name = "type", description = "消息类型 0通知 1提醒")
 	private Integer type;
 
 }

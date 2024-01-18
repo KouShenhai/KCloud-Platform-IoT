@@ -17,11 +17,14 @@
 
 package org.laokou.admin.dto.monitor.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.BigDecimalUtil;
-import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.dto.ClientObject;
+import org.laokou.common.i18n.utils.DateUtil;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.CentralProcessor.TickType;
@@ -33,7 +36,6 @@ import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.time.LocalDateTime;
@@ -44,7 +46,9 @@ import java.util.Properties;
 /**
  * @author laokou
  */
-@Data
+@Setter
+@Getter
+@Schema(name = "ServerCO", description = "服务器")
 public class ServerCO extends ClientObject {
 
 	@Serial
@@ -52,70 +56,20 @@ public class ServerCO extends ClientObject {
 
 	private static final int OSHI_WAIT_SECOND = 1000;
 
-	/**
-	 * CPU相关信息.
-	 */
+	@Schema(name = "cpu", description = "CPU相关信息")
 	private Cpu cpu = new Cpu();
 
-	/**
-	 * 內存相关信息.
-	 */
+	@Schema(name = "mem", description = "內存相关信息")
 	private Mem mem = new Mem();
 
-	/**
-	 * JVM相关信息.
-	 */
+	@Schema(name = "jvm", description = "JVM相关信息")
 	private Jvm jvm = new Jvm();
 
-	/**
-	 * 服务器相关信息.
-	 */
+	@Schema(name = "sys", description = "服务器相关信息")
 	private Sys sys = new Sys();
 
-	/**
-	 * 磁盘相关信息.
-	 */
+	@Schema(name = "files", description = "磁盘相关信息")
 	private List<SysFile> files = new LinkedList<>();
-
-	public Cpu getCpu() {
-		return cpu;
-	}
-
-	public void setCpu(Cpu cpu) {
-		this.cpu = cpu;
-	}
-
-	public Mem getMem() {
-		return mem;
-	}
-
-	public void setMem(Mem mem) {
-		this.mem = mem;
-	}
-
-	public Jvm getJvm() {
-		return jvm;
-	}
-
-	public void setJvm(Jvm jvm) {
-		this.jvm = jvm;
-	}
-
-	public Sys getSys() {
-		return sys;
-	}
-
-	public void setSys(Sys sys) {
-		this.sys = sys;
-	}
-
-	public List<SysFile> getFiles() {
-		return files;
-	}
-
-	public void setFiles(List<SysFile> files) {
-		this.files = files;
-	}
 
 	public void copyTo() {
 		SystemInfo si = new SystemInfo();
@@ -239,34 +193,27 @@ public class ServerCO extends ClientObject {
 }
 
 @Data
-class Jvm implements Serializable {
+@Schema(name = "Jvm", description = "JVM")
+class Jvm extends ClientObject {
 
 	@Serial
 	private static final long serialVersionUID = 6661783699792848234L;
 
-	/**
-	 * 当前JVM占用的内存总数(M).
-	 */
+	@Schema(name = "total", description = "当前JVM占用的内存总数(M)")
 	private double total;
 
-	/**
-	 * JVM最大可用内存总数(M).
-	 */
+	@Schema(name = "max", description = "JVM最大可用内存总数(M)")
 	private double max;
 
-	/**
-	 * JVM空闲内存(M).
-	 */
+	@Schema(name = "free", description = "JVM空闲内存(M)")
 	private double free;
 
-	/**
-	 * JDK版本.
-	 */
+	@Getter
+	@Schema(name = "version", description = "JDK版本")
 	private String version;
 
-	/**
-	 * JDK路径.
-	 */
+	@Getter
+	@Schema(name = "home", description = "JDK路径")
 	private String home;
 
 	public double getTotal() {
@@ -283,14 +230,6 @@ class Jvm implements Serializable {
 
 	public double getUsed() {
 		return BigDecimalUtil.divide(total - free, (1024 * 1024), 2);
-	}
-
-	public String getVersion() {
-		return version;
-	}
-
-	public String getHome() {
-		return home;
 	}
 
 	public double getUsage() {
@@ -329,39 +268,28 @@ class Jvm implements Serializable {
 }
 
 @Data
-class Cpu implements Serializable {
+@Schema(name = "Cpu", description = "CPU")
+class Cpu extends ClientObject {
 
 	@Serial
 	private static final long serialVersionUID = 8621293532430186793L;
 
-	/**
-	 * 核心数.
-	 */
+	@Schema(name = "cpuNum", description = "核心数")
 	private int cpuNum;
 
-	/**
-	 * CPU总的使用率.
-	 */
+	@Schema(name = "total", description = "CPU总的使用率")
 	private double total;
 
-	/**
-	 * CPU系统总数.
-	 */
+	@Schema(name = "sys", description = "CPU系统总数")
 	private double sys;
 
-	/**
-	 * CPU用户使用率.
-	 */
+	@Schema(name = "used", description = "CPU用户使用率")
 	private double used;
 
-	/**
-	 * CPU当前等待率.
-	 */
+	@Schema(name = "wait", description = "CPU当前等待率")
 	private double wait;
 
-	/**
-	 * CPU当前空闲率.
-	 */
+	@Schema(name = "free", description = "CPU当前空闲率")
 	private double free;
 
 	public double getTotal() {
@@ -387,24 +315,19 @@ class Cpu implements Serializable {
 }
 
 @Data
-class Mem implements Serializable {
+@Schema(name = "Mem", description = "内存")
+class Mem extends ClientObject {
 
 	@Serial
 	private static final long serialVersionUID = 4618498208469144168L;
 
-	/**
-	 * 内存总量.
-	 */
+	@Schema(name = "total", description = "内存总量")
 	private double total;
 
-	/**
-	 * 已用内存.
-	 */
+	@Schema(name = "used", description = "已用内存")
 	private double used;
 
-	/**
-	 * 剩余内存.
-	 */
+	@Schema(name = "free", description = "剩余内存")
 	private double free;
 
 	public double getTotal() {
@@ -426,77 +349,55 @@ class Mem implements Serializable {
 }
 
 @Data
-class Sys implements Serializable {
+@Schema(name = "Sys", description = "系统")
+class Sys extends ClientObject {
 
 	@Serial
 	private static final long serialVersionUID = -2249049152299436233L;
 
-	/**
-	 * 服务器名称.
-	 */
+	@Schema(name = "computerName", description = "服务器名称")
 	private String computerName;
 
-	/**
-	 * 服务器IP.
-	 */
+	@Schema(name = "computerIp", description = "服务器IP")
 	private String computerIp;
 
-	/**
-	 * 项目路径.
-	 */
+	@Schema(name = "userDir", description = "项目路径")
 	private String userDir;
 
-	/**
-	 * 操作系统.
-	 */
+	@Schema(name = "osName", description = "操作系统")
 	private String osName;
 
-	/**
-	 * 系统架构.
-	 */
+	@Schema(name = "osArch", description = "系统架构")
 	private String osArch;
 
 }
 
 @Data
-class SysFile implements Serializable {
+@Schema(name = "SysFile", description = "系统文件")
+class SysFile extends ClientObject {
 
 	@Serial
 	private static final long serialVersionUID = 2307419364818519046L;
 
-	/**
-	 * 盘符路径.
-	 */
+	@Schema(name = "dirName", description = "盘符路径")
 	private String dirName;
 
-	/**
-	 * 盘符类型.
-	 */
+	@Schema(name = "sysTypeName", description = "盘符类型")
 	private String sysTypeName;
 
-	/**
-	 * 文件类型.
-	 */
+	@Schema(name = "typeName", description = "文件类型")
 	private String typeName;
 
-	/**
-	 * 总大小.
-	 */
+	@Schema(name = "total", description = "总大小")
 	private String total;
 
-	/**
-	 * 剩余大小.
-	 */
+	@Schema(name = "free", description = "剩余大小")
 	private String free;
 
-	/**
-	 * 已经使用量.
-	 */
+	@Schema(name = "used", description = "已经使用量")
 	private String used;
 
-	/**
-	 * 资源的使用率.
-	 */
+	@Schema(name = "usage", description = "资源的使用率")
 	private double usage;
 
 }

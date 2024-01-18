@@ -18,8 +18,8 @@
 package org.laokou.admin.command.monitor.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.monitor.MonitorCacheGetQry;
-import org.laokou.admin.dto.monitor.clientobject.CacheCO;
+import org.laokou.admin.dto.monitor.MonitorRedisCacheGetQry;
+import org.laokou.admin.dto.monitor.clientobject.RedisCacheCO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
@@ -33,8 +33,8 @@ public class MonitorCacheGetQryExe {
 
 	private final RedisUtil redisUtil;
 
-	public Result<CacheCO> execute(MonitorCacheGetQry qry) {
-		CacheCO cacheCO = new CacheCO();
+	public Result<RedisCacheCO> execute(MonitorRedisCacheGetQry qry) {
+		RedisCacheCO cacheCO = new RedisCacheCO();
 		cacheCO.setCommandStats(redisUtil.getCommandStatus());
 		cacheCO.setInfo(redisUtil.getInfo());
 		cacheCO.setKeysSize(redisUtil.getKeysSize());

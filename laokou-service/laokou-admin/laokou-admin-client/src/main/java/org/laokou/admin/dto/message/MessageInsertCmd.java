@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.message;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,8 +30,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "MessageInsertCmd", description = "新增消息命令请求")
 public class MessageInsertCmd extends CommonCommand {
 
+	@Schema(name = "messageCO", description = "消息")
 	private MessageCO messageCO;
 
 }

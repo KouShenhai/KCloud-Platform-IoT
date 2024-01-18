@@ -20,7 +20,6 @@ package org.laokou.admin.command.message;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.MessageReadEnums;
 import org.laokou.admin.dto.message.MessageReadCmd;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.gatewayimpl.database.MessageDetailMapper;
@@ -35,6 +34,7 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.MessageReadEnums.YES;
 
 /**
  * @author laokou
@@ -53,16 +53,16 @@ public class MessageReadCmdExe {
 	@DS(TENANT)
 	public Result<MessageCO> execute(MessageReadCmd cmd) {
 		Long detailId = cmd.getDetailId();
-		updateFlag(detailId);
+		updateReadFlag(detailId);
 		MessageDO list = messageMapper.getMessageByDetailId(detailId);
 		return Result.of(ConvertUtil.sourceToTarget(list, MessageCO.class));
 	}
 
-	private void updateFlag(Long id) {
+	private void updateReadFlag(Long id) {
 		MessageDetailDO messageDetailDO = new MessageDetailDO();
 		messageDetailDO.setId(id);
 		// 0未读 1已读
-		messageDetailDO.setReadFlag(MessageReadEnums.YES.ordinal());
+		messageDetailDO.setReadFlag(YES.ordinal());
 		messageDetailDO.setVersion(messageDetailMapper.getVersion(id, MessageDetailDO.class));
 		transactionalUtil.defaultExecuteWithoutResult(rollback -> {
 			try {
