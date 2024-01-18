@@ -17,6 +17,7 @@
 
 package org.laokou.admin.domain.gateway;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.admin.domain.dept.Dept;
 
 import java.util.List;
@@ -24,18 +25,49 @@ import java.util.List;
 /**
  * @author laokou
  */
+@Schema(name = "DeptGateway", description = "部门网关")
 public interface DeptGateway {
 
+	/**
+	 * 查询部门列表.
+	 * @param dept 部门对象
+	 * @return 部门列表
+	 */
 	List<Dept> list(Dept dept);
 
+	/**
+	 * 新增部门.
+	 * @param dept 部门对象
+	 * @return 新增结果
+	 */
 	Boolean insert(Dept dept);
 
+	/**
+	 * 修改部门.
+	 * @param dept 部门对象
+	 * @return 修改结果
+	 */
 	Boolean update(Dept dept);
 
+	/**
+	 * 根据角色IDS查询部门IDS.
+	 * @param roleId 角色IDS
+	 * @return 部门IDS
+	 */
 	List<Long> getDeptIds(Long roleId);
 
+	/**
+	 * 根据ID删除部门.
+	 * @param id ID
+	 * @return 删除结果
+	 */
 	Boolean deleteById(Long id);
 
+	/**
+	 * 根据ID查看部门.
+	 * @param id ID
+	 * @return 部门
+	 */
 	Dept getById(Long id);
 
 }

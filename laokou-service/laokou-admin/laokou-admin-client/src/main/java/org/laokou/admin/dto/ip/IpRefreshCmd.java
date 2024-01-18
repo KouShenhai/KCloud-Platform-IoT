@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.ip;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,8 +29,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "IpRefreshCmd", description = "刷新IP命令请求")
 public class IpRefreshCmd extends CommonCommand {
 
+	@Schema(name = "label", description = "标签")
 	private String label;
 
 }

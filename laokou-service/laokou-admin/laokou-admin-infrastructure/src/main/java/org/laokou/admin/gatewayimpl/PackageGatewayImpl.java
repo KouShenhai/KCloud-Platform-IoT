@@ -75,7 +75,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	@Override
-	@DataFilter(alias = BOOT_SYS_PACKAGE)
+	@DataFilter(tableAlias = BOOT_SYS_PACKAGE)
 	public Datas<Package> list(Package pack, PageQuery pageQuery) {
 		IPage<PackageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<PackageDO> newPage = packageMapper.getPackageListFilter(page, pack.getName(), pageQuery);

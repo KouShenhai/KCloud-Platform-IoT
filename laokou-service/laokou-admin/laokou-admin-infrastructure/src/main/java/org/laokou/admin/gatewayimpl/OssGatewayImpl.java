@@ -56,7 +56,7 @@ public class OssGatewayImpl implements OssGateway {
 	private final OssConvertor ossConvertor;
 
 	@Override
-	@DataFilter(alias = BOOT_SYS_OSS)
+	@DataFilter(tableAlias = BOOT_SYS_OSS)
 	public Datas<Oss> list(Oss oss, PageQuery pageQuery) {
 		IPage<OssDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<OssDO> newPage = ossMapper.getOssListByFilter(page, oss.getName(), pageQuery);

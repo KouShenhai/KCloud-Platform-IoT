@@ -29,18 +29,22 @@ import java.io.Serial;
  */
 @Data
 @TableName("boot_sys_oss_log")
-@Schema(name = "OssLogDO", description = "存储日志")
+@Schema(name = "OssLogDO", description = "OSS日志")
 public class OssLogDO extends BaseDO {
 
 	@Serial
 	private static final long serialVersionUID = -5956984981904163817L;
 
+	@Schema(name = "md5", description = "文件的MD5标识")
 	private String md5;
 
+	@Schema(name = "url", description = "文件的URL")
 	private String url;
 
+	@Schema(name = "name", description = "文件名称")
 	private String name;
 
+	@Schema(name = "size", description = "文件大小")
 	private Long size;
 
 }

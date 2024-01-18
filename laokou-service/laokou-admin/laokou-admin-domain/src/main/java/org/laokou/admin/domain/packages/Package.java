@@ -17,6 +17,7 @@
 
 package org.laokou.admin.domain.packages;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
@@ -25,12 +26,16 @@ import java.util.List;
  * @author laokou
  */
 @Data
+@Schema(name = "Package", description = "套餐")
 public class Package {
 
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
+	@Schema(name = "name", description = "套餐名称")
 	private String name;
 
+	@Schema(name = "menuIds", description = "菜单IDS")
 	private List<Long> menuIds;
 
 }

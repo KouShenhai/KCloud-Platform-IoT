@@ -62,7 +62,7 @@ public class LogGatewayImpl implements LogGateway {
 	private final OperateLogConvertor operateLogConvertor;
 
 	@Override
-	@DataFilter(alias = BOOT_SYS_LOGIN_LOG)
+	@DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
 	@SneakyThrows
 	public Datas<LoginLog> loginList(LoginLog loginLog, PageQuery pageQuery) {
 		PageQuery page = pageQuery.time().page().ignore();
@@ -97,7 +97,7 @@ public class LogGatewayImpl implements LogGateway {
 	}
 
 	@Override
-	@DataFilter(alias = BOOT_SYS_OPERATE_LOG)
+	@DataFilter(tableAlias = BOOT_SYS_OPERATE_LOG)
 	public Datas<OperateLog> operateList(OperateLog operateLog, PageQuery pageQuery) {
 		IPage<OperateLogDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<OperateLogDO> newPage = operateLogMapper.getOperateListFilter(page, operateLog.getModuleName(),

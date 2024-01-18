@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.dept;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.common.i18n.dto.CommonCommand;
@@ -25,8 +26,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
+@Schema(name = "DeptInsertCmd", description = "新增部门命令请求")
 public class DeptInsertCmd extends CommonCommand {
 
+	@Schema(name = "deptCO", description = "部门")
 	private DeptCO deptCO;
 
 }

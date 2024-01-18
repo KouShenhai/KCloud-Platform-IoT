@@ -32,11 +32,9 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import static org.laokou.common.i18n.common.CacheConstants.MESSAGES;
+import static org.laokou.common.i18n.common.CacheNameConstants.MESSAGES;
 
 /**
- * 消息管理.
- *
  * @author laokou
  */
 @RestController

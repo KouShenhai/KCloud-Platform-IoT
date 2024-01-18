@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.dict;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.common.i18n.dto.CommonCommand;
@@ -25,8 +26,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
+@Schema(name = "DictInsertCmd", description = "新增字典命令请求")
 public class DictInsertCmd extends CommonCommand {
 
+	@Schema(name = "dictCO", description = "字典")
 	private DictCO dictCO;
 
 }

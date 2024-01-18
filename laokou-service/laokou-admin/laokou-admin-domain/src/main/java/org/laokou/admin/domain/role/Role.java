@@ -17,6 +17,7 @@
 
 package org.laokou.admin.domain.role;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
@@ -25,16 +26,22 @@ import java.util.List;
  * @author laokou
  */
 @Data
+@Schema(name = "Role", description = "角色")
 public class Role {
 
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
+	@Schema(name = "name", description = "角色名称")
 	private String name;
 
+	@Schema(name = "sort", description = "角色排序")
 	private Integer sort;
 
+	@Schema(name = "menuIds", description = "菜单IDS")
 	private List<Long> menuIds;
 
+	@Schema(name = "deptIds", description = "部门IDS")
 	private List<Long> deptIds;
 
 }

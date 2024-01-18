@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
  * @author laokou
  */
 @Data
+@Schema(name = "OperateLogCO", description = "操作日志")
 public class OperateLogCO extends ClientObject {
 
 	@Schema(name = "name", description = "操作名称")

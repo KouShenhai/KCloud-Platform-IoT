@@ -24,7 +24,7 @@ public class Datas<T> extends DTO {
 	private List<T> records;
 
 	/**
-	 * 构建空对象集合
+	 * 构建空对象集合.
 	 * @param <T> 泛型
 	 * @return 空对象集合
 	 */

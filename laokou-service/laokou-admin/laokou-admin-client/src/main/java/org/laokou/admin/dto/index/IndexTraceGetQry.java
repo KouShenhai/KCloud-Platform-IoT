@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.index;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,8 +29,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "IndexTraceGetQry", description = "查询分布式链路索引命令请求")
 public class IndexTraceGetQry extends CommonCommand {
 
+	@Schema(name = "id", description = "ID")
 	private String id;
 
 }

@@ -17,6 +17,7 @@
 
 package org.laokou.admin.domain.ip;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,12 +28,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "Ip", description = "IP")
 public class Ip {
 
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
+	@Schema(name = "value", description = "值")
 	private String value;
 
+	@Schema(name = "label", description = "标签")
 	private String label;
 
 	public Ip(String label) {

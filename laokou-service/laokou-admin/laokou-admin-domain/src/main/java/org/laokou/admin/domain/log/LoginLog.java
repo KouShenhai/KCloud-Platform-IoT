@@ -17,6 +17,7 @@
 
 package org.laokou.admin.domain.log;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -25,51 +26,34 @@ import java.time.LocalDateTime;
  * @author laokou
  */
 @Data
+@Schema(name = "LoginLog", description = "登录日志")
 public class LoginLog {
 
-	/**
-	 * 登录的用户名.
-	 */
+	@Schema(name = "username", description = "登录的用户名")
 	private String username;
 
-	/**
-	 * 登录的IP地址.
-	 */
+	@Schema(name = "ip", description = "登录的IP地址")
 	private String ip;
 
-	/**
-	 * 登录的归属地.
-	 */
+	@Schema(name = "address", description = "登录的归属地")
 	private String address;
 
-	/**
-	 * 登录的浏览器.
-	 */
+	@Schema(name = "browser", description = "登录的浏览器")
 	private String browser;
 
-	/**
-	 * 登录的操作系统.
-	 */
+	@Schema(name = "os", description = "登录的操作系统")
 	private String os;
 
-	/**
-	 * 登录状态 0登录成功 1登录失败.
-	 */
+	@Schema(name = "status", description = "登录状态 0登录成功 1登录失败")
 	private Integer status;
 
-	/**
-	 * 登录信息.
-	 */
+	@Schema(name = "message", description = "登录信息")
 	private String message;
 
-	/**
-	 * 登录类型.
-	 */
+	@Schema(name = "type", description = "登录类型")
 	private String type;
 
-	/**
-	 * 登录时间.
-	 */
+	@Schema(name = "createDate", description = "创建时间")
 	private LocalDateTime createDate;
 
 }

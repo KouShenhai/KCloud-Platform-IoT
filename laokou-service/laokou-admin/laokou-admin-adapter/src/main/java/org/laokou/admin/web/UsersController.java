@@ -36,11 +36,9 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import static org.laokou.common.i18n.common.CacheConstants.USERS;
+import static org.laokou.common.i18n.common.CacheNameConstants.USERS;
 
 /**
- * 用户管理.
- *
  * @author laokou
  */
 @RestController

@@ -17,13 +17,14 @@
 
 package org.laokou.common.i18n.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serial;
 
 /**
- * 索引.
- *
  * @author laokou
  */
+@Schema(name = "Index", description = "索引")
 public abstract class Index extends DTO {
 
 	@Serial

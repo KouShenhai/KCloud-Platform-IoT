@@ -28,11 +28,10 @@ import java.io.Serial;
 import java.util.List;
 
 /**
- * 搜索.
- *
  * @author laokou
  */
 @Data
+@Schema(name = "Search", description = "搜索")
 public class Search extends DTO {
 
 	@Serial
@@ -42,43 +41,39 @@ public class Search extends DTO {
 	@Schema(name = "pageNum", description = "页码")
 	private Integer pageNum = 1;
 
-	@Schema(name = "pageSize", description = "条数")
 	@Min(1)
+	@Schema(name = "pageSize", description = "条数")
 	private Integer pageSize = 10;
 
 	@NotNull(message = "索引名称不能为空")
 	@Schema(name = "indexNames", description = "索引名称")
 	private String[] indexNames;
 
-	/**
-	 * 分词搜索.
-	 */
+	@Schema(name = "queryStringList", description = "分词搜索集合")
 	private List<Query> queryStringList;
 
-	/**
-	 * 排序.
-	 */
+	@Schema(name = "sortFieldList", description = "排序属性集合")
 	private List<Query> sortFieldList;
 
-	/**
-	 * or搜索-精准匹配.
-	 */
+	@Schema(name = "orQueryList", description = "or查询集合")
 	private List<Query> orQueryList;
 
-	/**
-	 * 聚合字段.
-	 */
+	@Schema(name = "aggregationKey", description = "聚合字段")
 	private Aggregation aggregationKey;
 
 	@Data
 	@AllArgsConstructor
 	@NoArgsConstructor
+	@Schema(name = "Aggregation", description = "聚合")
 	public static class Aggregation {
 
+		@Schema(name = "groupKey", description = "分组Key")
 		private String groupKey;
 
+		@Schema(name = "field", description = "属性")
 		private String field;
 
+		@Schema(name = "script", description = "脚本")
 		private String script;
 
 	}
@@ -86,10 +81,13 @@ public class Search extends DTO {
 	@Data
 	@AllArgsConstructor
 	@NoArgsConstructor
+	@Schema(name = "Query", description = "查询")
 	public static class Query {
 
+		@Schema(name = "field", description = "属性")
 		private String field;
 
+		@Schema(name = "value", description = "值")
 		private String value;
 
 	}

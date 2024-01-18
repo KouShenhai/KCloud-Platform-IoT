@@ -24,8 +24,6 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
- * 集群服务实例.
- *
  * @author laokou
  */
 @Data

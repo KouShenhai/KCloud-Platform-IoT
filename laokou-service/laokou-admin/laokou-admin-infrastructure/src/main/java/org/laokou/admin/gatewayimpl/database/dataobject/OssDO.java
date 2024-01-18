@@ -29,31 +29,31 @@ import java.io.Serial;
  */
 @Data
 @TableName("boot_sys_oss")
-@Schema(name = "OssDO", description = "存储")
+@Schema(name = "OssDO", description = "OSS")
 public class OssDO extends BaseDO {
 
 	@Serial
 	private static final long serialVersionUID = 7064643286240062439L;
 
-	@Schema(name = "name", description = "名称")
+	@Schema(name = "name", description = "OSS名称")
 	private String name;
 
-	@Schema(name = "endpoint", description = "终端地址")
+	@Schema(name = "endpoint", description = "OSS的终端地址")
 	private String endpoint;
 
-	@Schema(name = "region", description = "区域")
+	@Schema(name = "region", description = "OSS的区域")
 	private String region;
 
-	@Schema(name = "accessKey", description = "访问密钥")
+	@Schema(name = "accessKey", description = "OSS的访问密钥")
 	private String accessKey;
 
-	@Schema(name = "secretKey", description = "用户密钥")
+	@Schema(name = "secretKey", description = "OSS的用户密钥")
 	private String secretKey;
 
-	@Schema(name = "bucketName", description = "桶名")
+	@Schema(name = "bucketName", description = "OSS的桶名")
 	private String bucketName;
 
-	@Schema(name = "pathStyleAccessEnabled", description = "路径样式访问 0未启用 1已开启")
+	@Schema(name = "pathStyleAccessEnabled", description = "路径样式访问 1已开启 0未启用")
 	private Integer pathStyleAccessEnabled;
 
 }

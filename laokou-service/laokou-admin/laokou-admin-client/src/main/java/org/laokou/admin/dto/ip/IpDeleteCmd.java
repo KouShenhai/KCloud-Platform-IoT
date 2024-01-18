@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.ip;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,8 +29,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "IpDeleteCmd", description = "删除IP命令请求")
 public class IpDeleteCmd extends CommonCommand {
 
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
 }

@@ -21,7 +21,6 @@ import lombok.Setter;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 import java.io.Serial;
-import java.time.Clock;
 
 /**
  * @author laokou
@@ -43,10 +42,6 @@ public class OssLogEvent extends DomainEvent {
 
 	public OssLogEvent(Object source) {
 		super(source);
-	}
-
-	public OssLogEvent(Object source, Clock clock) {
-		super(source, clock);
 	}
 
 }

@@ -36,11 +36,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.CacheConstants.DICTS;
+import static org.laokou.common.i18n.common.CacheNameConstants.DICTS;
 
 /**
- * 字典管理.
- *
  * @author laokou
  */
 @RestController

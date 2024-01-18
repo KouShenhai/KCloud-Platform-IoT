@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.user.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
@@ -26,14 +27,19 @@ import java.time.LocalDateTime;
  * @author laokou
  */
 @Data
+@Schema(name = "UserOnlineCO", description = "在线用户")
 public class UserOnlineCO extends ClientObject {
 
+	@Schema(name = "token", description = "令牌")
 	private String token;
 
+	@Schema(name = "username", description = "用户名")
 	private String username;
 
+	@Schema(name = "loginIp", description = "登录IP")
 	private String loginIp;
 
+	@Schema(name = "loginDate", description = "登录时间")
 	private LocalDateTime loginDate;
 
 }

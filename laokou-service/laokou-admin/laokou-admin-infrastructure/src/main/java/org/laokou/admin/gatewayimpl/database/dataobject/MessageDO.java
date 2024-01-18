@@ -35,13 +35,13 @@ public class MessageDO extends BaseDO {
 	@Serial
 	private static final long serialVersionUID = -8162940421790076067L;
 
-	@Schema(name = "title", description = "标题")
+	@Schema(name = "title", description = "消息标题")
 	private String title;
 
-	@Schema(name = "content", description = "内容")
+	@Schema(name = "content", description = "消息内容")
 	private String content;
 
-	@Schema(name = "type", description = "类型 0通知 1提醒")
+	@Schema(name = "type", description = "消息类型 0通知 1提醒")
 	private Integer type;
 
 }

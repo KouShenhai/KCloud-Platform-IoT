@@ -17,6 +17,7 @@
 
 package org.laokou.admin.domain.gateway;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.admin.domain.message.Message;
 import org.laokou.admin.domain.user.User;
 import org.laokou.common.i18n.dto.Datas;
@@ -25,12 +26,30 @@ import org.laokou.common.i18n.dto.PageQuery;
 /**
  * @author laokou
  */
+@Schema(name = "MessageGateway", description = "消息网关")
 public interface MessageGateway {
 
+	/**
+	 * 查询消息列表.
+	 * @param message 消息对象
+	 * @param pageQuery 分页参数
+	 * @return 消息列表
+	 */
 	Datas<Message> list(Message message, PageQuery pageQuery);
 
+	/**
+	 * 新增消息.
+	 * @param message 消息对象
+	 * @param user 用户对象
+	 * @return 新增结果
+	 */
 	Boolean insert(Message message, User user);
 
+	/**
+	 * 根据ID查看消息.
+	 * @param id ID
+	 * @return 消息
+	 */
 	Message getById(Long id);
 
 }

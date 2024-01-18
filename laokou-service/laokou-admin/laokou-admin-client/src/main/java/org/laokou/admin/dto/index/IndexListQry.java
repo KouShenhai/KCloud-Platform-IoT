@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.index;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 
@@ -24,8 +25,10 @@ import org.laokou.common.i18n.dto.PageQuery;
  * @author laokou
  */
 @Data
+@Schema(name = "IndexListQry", description = "索引列表查询参数")
 public class IndexListQry extends PageQuery {
 
+	@Schema(name = "indexName", description = "索引名称")
 	private String indexName;
 
 }

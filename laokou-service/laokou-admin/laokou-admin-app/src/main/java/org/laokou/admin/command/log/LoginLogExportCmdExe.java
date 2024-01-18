@@ -43,7 +43,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.*;
 @RequiredArgsConstructor
 public class LoginLogExportCmdExe {
 
-	@DataFilter(alias = BOOT_SYS_LOGIN_LOG)
+	@DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
 	public void executeVoid(LoginLogExportCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(UserContextHolder.get().getSourceName());

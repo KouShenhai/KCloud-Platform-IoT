@@ -46,7 +46,7 @@ public final class DatasourceConstants {
 	@Schema(name = "BOOT_SYS_MESSAGE", description = "消息表")
 	public static final String BOOT_SYS_MESSAGE = "boot_sys_message";
 
-	@Schema(name = "BOOT_SYS_OSS", description = "对象存储表")
+	@Schema(name = "BOOT_SYS_OSS", description = "OSS表")
 	public static final String BOOT_SYS_OSS = "boot_sys_oss";
 
 	@Schema(name = "BOOT_SYS_USER", description = "用户表")

@@ -93,7 +93,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private final EventUtil eventUtil;
 
 	@Override
-	@DataFilter(alias = BOOT_SYS_RESOURCE)
+	@DataFilter(tableAlias = BOOT_SYS_RESOURCE)
 	public Datas<Resource> list(Resource resource, PageQuery pageQuery) {
 		IPage<ResourceDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		ResourceDO resourceDO = resourceConvertor.toDataObject(resource);

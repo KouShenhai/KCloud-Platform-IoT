@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl.database.dataobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,12 +29,16 @@ import org.laokou.common.i18n.dto.AbstractDO;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "TestDO", description = "测试")
 public class TestDO extends AbstractDO {
 
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
+	@Schema(name = "name", description = "名称")
 	private String name;
 
+	@Schema(name = "tenantId", description = "租户ID")
 	private Long tenantId;
 
 	@Override

@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.user.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
@@ -27,25 +28,34 @@ import java.util.List;
  * @author laokou
  */
 @Data
+@Schema(name = "UserProfileCO", description = "用户信息")
 public class UserProfileCO extends ClientObject {
 
 	@Serial
 	private static final long serialVersionUID = 5297753219988591611L;
 
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
+	@Schema(name = "avatar", description = "头像")
 	private String avatar;
 
+	@Schema(name = "username", description = "用户名")
 	private String username;
 
+	@Schema(name = "mobile", description = "手机号")
 	private String mobile;
 
+	@Schema(name = "mail", description = "邮箱")
 	private String mail;
 
+	@Schema(name = "permissionList", description = "菜单权限标识集合")
 	private List<String> permissionList;
 
+	@Schema(name = "tenantId", description = "租户ID")
 	private Long tenantId;
 
+	@Schema(name = "superAdmin", description = "超级管理员标识 0否 1是")
 	private Integer superAdmin;
 
 }

@@ -83,7 +83,7 @@ public class DictGatewayImpl implements DictGateway {
 	}
 
 	@Override
-	@DataFilter(alias = BOOT_SYS_DICT)
+	@DataFilter(tableAlias = BOOT_SYS_DICT)
 	public Datas<Dict> list(Dict dict, PageQuery pageQuery) {
 		IPage<DictDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<DictDO> newPage = dictMapper.getDictListFilter(page, dict.getType(), dict.getLabel(), pageQuery);

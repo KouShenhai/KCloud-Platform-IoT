@@ -85,18 +85,18 @@ public class DataFilterAop {
 		Method method = signature.getMethod();
 		DataFilter dataFilter = AnnotationUtils.findAnnotation(method, DataFilter.class);
 		Assert.isTrue(ObjectUtil.isNotNull(dataFilter), "@DataFilter is null");
-		String alias = dataFilter.alias();
+		String tableAlias = dataFilter.tableAlias();
 		String deptPathColumn = dataFilter.deptPath();
-		String userIdColumn = dataFilter.userId();
+		String creatorColumn = dataFilter.creator();
 		List<String> deptPaths = user.getDeptPaths();
 		StringBuilder sqlFilter = new StringBuilder(300);
-		if (StringUtil.isNotEmpty(alias)) {
-			alias += DOT;
+		if (StringUtil.isNotEmpty(tableAlias)) {
+			tableAlias += DOT;
 		}
 		sqlFilter.append(LEFT);
 		if (CollectionUtil.isNotEmpty(deptPaths)) {
 			for (String deptPath : deptPaths) {
-				sqlFilter.append(alias)
+				sqlFilter.append(tableAlias)
 					.append(deptPathColumn)
 					.append(SPACE)
 					.append(LIKE)
@@ -110,8 +110,8 @@ public class DataFilterAop {
 					.append(SPACE);
 			}
 		}
-		sqlFilter.append(alias)
-			.append(userIdColumn)
+		sqlFilter.append(tableAlias)
+			.append(creatorColumn)
 			.append(SPACE)
 			.append(EQUAL)
 			.append(SPACE)

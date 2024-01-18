@@ -22,29 +22,21 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.lang.annotation.*;
 
 /**
- * 数据权限注解.
- *
  * @author laokou
  */
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Schema(name = "", description = "")
+@Schema(name = "DataFilter", description = "数据权限注解")
 public @interface DataFilter {
 
-	/**
-	 * 别名.
-	 */
-	String alias();
+	@Schema(name = "tableAlias", description = "数据表别名")
+	String tableAlias();
 
-	/**
-	 * 用户ID.
-	 */
-	String userId() default "creator";
+	@Schema(name = "creator", description = "创建人")
+	String creator() default "creator";
 
-	/**
-	 * 部门PATH.
-	 */
+	@Schema(name = "deptPath", description = "部门PATH")
 	String deptPath() default "dept_path";
 
 }

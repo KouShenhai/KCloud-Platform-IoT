@@ -30,14 +30,19 @@ import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 @Schema(name = "ResourceAuditDO", description = "资源审批")
 public class ResourceAuditDO extends BaseDO {
 
+	@Schema(name = "resourceId", description = "资源ID")
 	private Long resourceId;
 
+	@Schema(name = "title", description = "资源名称")
 	private String title;
 
+	@Schema(name = "url", description = "资源的URL")
 	private String url;
 
+	@Schema(name = "code", description = "资源类型 audio音频 video视频  image图片")
 	private String code;
 
+	@Schema(name = "remark", description = "资源备注")
 	private String remark;
 
 }

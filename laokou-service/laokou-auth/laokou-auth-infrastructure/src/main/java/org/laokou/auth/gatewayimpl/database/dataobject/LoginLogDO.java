@@ -18,6 +18,7 @@
 package org.laokou.auth.gatewayimpl.database.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
@@ -31,49 +32,34 @@ import static org.laokou.common.i18n.common.MybatisPlusConstants.PLACE_HOLDER;
  */
 @Data
 @TableName(BOOT_SYS_LOGIN_LOG + PLACE_HOLDER)
+@Schema(name = "LoginLogDO", description = "登录日志")
 public class LoginLogDO extends BaseDO {
 
 	@Serial
 	private static final long serialVersionUID = 4289483981365827983L;
 
-	/**
-	 * 登录的用户名.
-	 */
+	@Schema(name = "username", description = "登录的用户名")
 	private String username;
 
-	/**
-	 * 登录的IP地址.
-	 */
+	@Schema(name = "ip", description = "登录的IP地址")
 	private String ip;
 
-	/**
-	 * 登录的归属地.
-	 */
+	@Schema(name = "address", description = "登录的归属地")
 	private String address;
 
-	/**
-	 * 登录的浏览器.
-	 */
+	@Schema(name = "browser", description = "登录的浏览器")
 	private String browser;
 
-	/**
-	 * 登录的操作系统.
-	 */
+	@Schema(name = "os", description = "登录的操作系统")
 	private String os;
 
-	/**
-	 * 登录状态 0登录成功 1登录失败.
-	 */
+	@Schema(name = "status", description = "登录状态 0登录成功 1登录失败")
 	private Integer status;
 
-	/**
-	 * 登录信息.
-	 */
+	@Schema(name = "message", description = "登录信息")
 	private String message;
 
-	/**
-	 * 登录类型.
-	 */
+	@Schema(name = "type", description = "登录类型")
 	private String type;
 
 }

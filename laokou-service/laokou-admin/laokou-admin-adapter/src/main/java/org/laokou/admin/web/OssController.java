@@ -35,15 +35,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import static org.laokou.common.i18n.common.CacheConstants.OSS;
+import static org.laokou.common.i18n.common.CacheNameConstants.OSS;
 
 /**
- * 存储管理.
- *
  * @author laokou
  */
 @RestController
-@Tag(name = "OssController", description = "存储管理")
+@Tag(name = "OssController", description = "OSS管理")
 @RequiredArgsConstructor
 @RequestMapping("v1/oss")
 public class OssController {
@@ -52,7 +50,7 @@ public class OssController {
 
 	@TraceLog
 	@PostMapping("list")
-	@Operation(summary = "存储管理", description = "查询存储列表")
+	@Operation(summary = "OSS管理", description = "查询OSS列表")
 	@PreAuthorize("hasAuthority('oss:list')")
 	public Result<Datas<OssCO>> list(@RequestBody OssListQry qry) {
 		return ossServiceI.list(qry);
@@ -60,8 +58,8 @@ public class OssController {
 
 	@TraceLog
 	@PostMapping("upload")
-	@Operation(summary = "存储管理", description = "上传文件")
-	@OperateLog(module = "存储管理", operation = "上传文件")
+	@Operation(summary = "OSS管理", description = "上传文件")
+	@OperateLog(module = "OSS管理", operation = "上传文件")
 	public Result<FileCO> upload(@RequestPart("file") MultipartFile file) {
 		return ossServiceI.upload(new OssUploadCmd(file));
 	}
@@ -69,8 +67,8 @@ public class OssController {
 	@Idempotent
 	@TraceLog
 	@PostMapping
-	@Operation(summary = "存储管理", description = "新增存储")
-	@OperateLog(module = "存储管理", operation = "新增存储")
+	@Operation(summary = "OSS管理", description = "新增OSS")
+	@OperateLog(module = "OSS管理", operation = "新增OSS")
 	@PreAuthorize("hasAuthority('oss:insert')")
 	public Result<Boolean> insert(@RequestBody OssInsertCmd cmd) {
 		return ossServiceI.insert(cmd);
@@ -78,7 +76,7 @@ public class OssController {
 
 	@TraceLog
 	@GetMapping("{id}")
-	@Operation(summary = "存储管理", description = "查看存储")
+	@Operation(summary = "OSS管理", description = "查看OSS")
 	@DataCache(name = OSS, key = "#id")
 	public Result<OssCO> getById(@PathVariable("id") Long id) {
 		return ossServiceI.getById(new OssGetQry(id));
@@ -86,8 +84,8 @@ public class OssController {
 
 	@TraceLog
 	@PutMapping
-	@Operation(summary = "存储管理", description = "修改存储")
-	@OperateLog(module = "存储管理", operation = "修改存储")
+	@Operation(summary = "OSS管理", description = "修改OSS")
+	@OperateLog(module = "OSS管理", operation = "修改OSS")
 	@PreAuthorize("hasAuthority('oss:update')")
 	@DataCache(name = OSS, key = "#cmd.ossCO.id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> update(@RequestBody OssUpdateCmd cmd) {
@@ -96,8 +94,8 @@ public class OssController {
 
 	@TraceLog
 	@DeleteMapping("{id}")
-	@Operation(summary = "存储管理", description = "删除存储")
-	@OperateLog(module = "存储管理", operation = "删除存储")
+	@Operation(summary = "OSS管理", description = "删除OSS")
+	@OperateLog(module = "OSS管理", operation = "删除OSS")
 	@PreAuthorize("hasAuthority('oss:delete')")
 	@DataCache(name = OSS, key = "#id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {

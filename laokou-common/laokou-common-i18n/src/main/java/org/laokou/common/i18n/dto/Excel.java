@@ -17,11 +17,12 @@
 
 package org.laokou.common.i18n.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * excel.
- *
  * @author laokou
  */
+@Schema(name = "Excel", description = "Excel")
 public abstract class Excel extends DTO {
 
 }

@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.dict.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
@@ -26,38 +27,28 @@ import java.time.LocalDateTime;
  * @author laokou
  */
 @Data
+@Schema(name = "DictCO", description = "字典")
 public class DictCO extends ClientObject {
 
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	/**
-	 * 标签.
-	 */
+	@Schema(name = "label", description = "字典标签")
 	private String label;
 
-	/**
-	 * 类型.
-	 */
+	@Schema(name = "type", description = "字典类型")
 	private String type;
 
-	/**
-	 * 值.
-	 */
+	@Schema(name = "value", description = "字典值")
 	private String value;
 
-	/**
-	 * 备注.
-	 */
+	@Schema(name = "remark", description = "字典备注")
 	private String remark;
 
-	/**
-	 * 创建时间.
-	 */
+	@Schema(name = "createDate", description = "创建时间")
 	private LocalDateTime createDate;
 
-	/**
-	 * 排序.
-	 */
+	@Schema(name = "sort", description = "字典排序")
 	private Integer sort;
 
 }

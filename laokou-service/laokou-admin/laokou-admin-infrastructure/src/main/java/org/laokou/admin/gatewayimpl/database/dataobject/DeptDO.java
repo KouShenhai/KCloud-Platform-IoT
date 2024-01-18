@@ -35,16 +35,16 @@ public class DeptDO extends BaseDO {
 	@Serial
 	private static final long serialVersionUID = 5119306834026407994L;
 
-	@Schema(name = "pid", description = "父ID", example = "0")
+	@Schema(name = "pid", description = "部门父节点ID", example = "0")
 	private Long pid;
 
-	@Schema(name = "name", description = "名称", example = "老寇云集团")
+	@Schema(name = "name", description = "部门名称", example = "老寇云集团")
 	private String name;
 
 	@Schema(name = "path", description = "部门节点")
 	private String path;
 
-	@Schema(name = "sort", description = "排序", example = "1")
+	@Schema(name = "sort", description = "部门排序", example = "1")
 	private Integer sort;
 
 }

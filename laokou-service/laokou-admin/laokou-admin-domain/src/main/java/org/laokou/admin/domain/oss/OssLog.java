@@ -17,6 +17,7 @@
 
 package org.laokou.admin.domain.oss;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,14 +28,19 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "OssLog", description = "OSS日志")
 public class OssLog {
 
+	@Schema(name = "md5", description = "文件的MD5标识")
 	private String md5;
 
+	@Schema(name = "url", description = "文件的URL")
 	private String url;
 
+	@Schema(name = "name", description = "文件名称")
 	private String name;
 
+	@Schema(name = "size", description = "文件大小")
 	private Long size;
 
 }

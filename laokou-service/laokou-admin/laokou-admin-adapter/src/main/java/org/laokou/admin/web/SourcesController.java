@@ -36,11 +36,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.CacheConstants.SOURCES;
+import static org.laokou.common.i18n.common.CacheNameConstants.SOURCES;
 
 /**
- * 数据源管理.
- *
  * @author laokou
  */
 @RestController

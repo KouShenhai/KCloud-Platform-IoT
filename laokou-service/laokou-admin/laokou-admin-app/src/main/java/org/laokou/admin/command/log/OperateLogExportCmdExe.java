@@ -42,7 +42,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 public class OperateLogExportCmdExe {
 
 	@DS(TENANT)
-	@DataFilter(alias = BOOT_SYS_OPERATE_LOG)
+	@DataFilter(tableAlias = BOOT_SYS_OPERATE_LOG)
 	public void executeVoid(OperateLogExportCmd cmd) {
 		OperateLogMapper operateLogMapper = SpringContextUtil.getBean(OperateLogMapper.class);
 		ExcelUtil.doExport(Collections.emptyList(), cmd.getResponse(), buildOperateLog(cmd), cmd, operateLogMapper,

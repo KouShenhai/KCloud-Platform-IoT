@@ -27,12 +27,10 @@ import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 import static org.laokou.common.i18n.common.StatusCodes.OK;
 
 /**
- * 响应格式.
- *
  * @author laokou
  */
 @Data
-@Schema(name = "Result", description = "响应")
+@Schema(name = "Result", description = "请求响应统一格式")
 public class Result<T> extends DTO {
 
 	@Serial

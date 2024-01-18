@@ -39,13 +39,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.CacheConstants.TENANTS;
+import static org.laokou.common.i18n.common.CacheNameConstants.TENANTS;
 import static org.laokou.common.i18n.common.RateLimiterTypeEnums.IP;
 import static org.redisson.api.RateIntervalUnit.MINUTES;
 
 /**
- * 租户管理.
- *
  * @author laokou
  */
 @RestController

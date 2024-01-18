@@ -112,7 +112,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	@DataFilter(alias = BOOT_SYS_USER)
+	@DataFilter(tableAlias = BOOT_SYS_USER)
 	@SneakyThrows
 	public Datas<User> list(User user, PageQuery pageQuery) {
 		UserDO userDO = userConvertor.toDataObject(user);

@@ -41,7 +41,7 @@ public class MessageDetailDO extends BaseDO {
 	@Schema(name = "userId", description = "用户ID")
 	private Long userId;
 
-	@Schema(name = "readFlag", description = "已读标识 0未读 1已读")
+	@Schema(name = "readFlag", description = "消息已读标识 0未读 1已读")
 	private Integer readFlag;
 
 }
