@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ public final class SysConstants {
 	}
 
 	@Schema(name = "VERSION", description = "版本")
-	public static final String VERSION = "3.2.1";
+	public static final String VERSION = "3.2.2";
 
 	@Schema(name = "GRACEFUL_SHUTDOWN_URL", description = "优雅停机URL")
 	public static final String GRACEFUL_SHUTDOWN_URL = "/graceful-shutdown";
