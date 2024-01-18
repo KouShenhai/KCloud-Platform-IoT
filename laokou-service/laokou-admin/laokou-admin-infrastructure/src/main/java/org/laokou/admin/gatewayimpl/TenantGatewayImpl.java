@@ -103,7 +103,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	@Override
-	@DataFilter(alias = BOOT_SYS_TENANT)
+	@DataFilter(tableAlias = BOOT_SYS_TENANT)
 	public Datas<Tenant> list(Tenant tenant, PageQuery pageQuery) {
 		IPage<TenantDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<TenantDO> newPage = tenantMapper.getTenantListFilter(page, tenant.getName(), pageQuery);

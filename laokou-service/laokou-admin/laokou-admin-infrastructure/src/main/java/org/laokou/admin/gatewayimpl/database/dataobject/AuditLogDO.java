@@ -41,7 +41,7 @@ public class AuditLogDO extends BaseDO {
 	@Schema(name = "approver", description = "审批人")
 	private String approver;
 
-	@Schema(name = "status", description = "审批状态 -1驳回审批 1通过审批")
+	@Schema(name = "status", description = "审批状态 0驳回审批 1通过审批")
 	private Integer status;
 
 	@Schema(name = "comment", description = "审批意见")

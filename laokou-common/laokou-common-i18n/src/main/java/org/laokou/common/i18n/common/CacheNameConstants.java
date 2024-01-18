@@ -30,15 +30,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 // @formatter:on
 
 @Schema(name = "CacheConstants", description = "缓存名称变量")
-public final class CacheConstants {
+public final class CacheNameConstants {
 
-	private CacheConstants() {
+	private CacheNameConstants() {
 	}
 
 	@Schema(name = "DEFAULT", description = "默认缓存配置")
 	private static final String DEFAULT = "_10m_30m_1024";
 
-	@Schema(name = "OSS", description = "对象存储缓存配置")
+	@Schema(name = "OSS", description = "OSS缓存配置")
 	public static final String OSS = "oss" + DEFAULT;
 
 	@Schema(name = "DEPTS", description = "部门缓存配置")

@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.CacheConstants.MENUS;
+import static org.laokou.common.i18n.common.CacheNameConstants.MENUS;
 
 /**
  * @author laokou

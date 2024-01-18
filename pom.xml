@@ -60,7 +60,7 @@
         <docker.registry.name>koushenhai</docker.registry.name>
         <docker.version>1.2.2</docker.version>
         <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
-        <spring-javaformat-maven-plugin.version>0.0.40</spring-javaformat-maven-plugin.version>
+        <spring-javaformat-maven-plugin.version>0.0.41</spring-javaformat-maven-plugin.version>
         <native-maven-plugin.version>0.9.28</native-maven-plugin.version>
         <versions-maven-plugin.version>2.16.2</versions-maven-plugin.version>
     </properties>
@@ -125,6 +125,11 @@
         </dependencies>
     </dependencyManagement>
     <repositories>
+        <repository>
+            <id>springsource-milestones</id>
+            <name>SpringSource Milestones Proxy</name>
+            <url>https://oss.sonatype.org/content/repositories/springsource-milestones</url>
+        </repository>
         <repository>
             <id>spring-release</id>
             <name>Spring Release</name>
@@ -332,7 +337,7 @@
             <plugin>
                 <groupId>io.spring.javaformat</groupId>
                 <artifactId>spring-javaformat-maven-plugin</artifactId>
-                <version>${spring-javaformat-maven-plugin.version}</version>
+                <version>0.0.41</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -345,7 +350,7 @@
                     <failsOnError>true</failsOnError>
                     <failOnViolation>true</failOnViolation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                    <skip>true</skip>
+                    <skip>false</skip>
                     <linkXRef>false</linkXRef>
                 </configuration>
                 <executions>

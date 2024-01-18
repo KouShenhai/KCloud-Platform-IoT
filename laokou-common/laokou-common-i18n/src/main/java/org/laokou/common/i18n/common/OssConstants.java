@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * @author laokou
  */
-@Schema(name = "OssConstants", description = "对象存储常量")
+@Schema(name = "OssConstants", description = "OSS常量")
 public final class OssConstants {
 
 	private OssConstants() {

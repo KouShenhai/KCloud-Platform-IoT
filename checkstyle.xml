@@ -54,12 +54,12 @@
 	</module>
 	<module name="com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck"/>
 
-	<!-- 每行不超过300个字符,默认为80 -->
+	<!-- 每行不超过1000个字符,默认为80 -->
 	<module name="LineLength">
 		<property name="fileExtensions" value="java" />
 		<!--可以忽略检查的行-->
 		<property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://|@respbody" />
-		<property name="max" value="300" />
+		<property name="max" value="1000" />
 	</module>
 
 	<!-- 文件长度检查不要超过2500行 -->

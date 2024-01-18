@@ -29,13 +29,11 @@ import java.io.Serial;
 import java.time.LocalDateTime;
 
 /**
- * 分页参数.
- *
  * @author laokou
  */
 @Data
 @NoArgsConstructor
-@Schema(name = "PageQuery", description = "分页")
+@Schema(name = "PageQuery", description = "分页查询参数")
 public class PageQuery extends Query {
 
 	@Serial
@@ -66,10 +64,10 @@ public class PageQuery extends Query {
 	@Schema(name = "endTime", description = "结束时间")
 	private String endTime;
 
-	@Schema(name = "ignore", description = "是否忽略")
+	@Schema(name = "ignore", description = "忽略数据权限")
 	private boolean ignore;
 
-	@Schema(name = "lastId", description = "上一次ID，用于深度分页")
+	@Schema(name = "lastId", description = "上一次ID，可以用于深度分页")
 	private Long lastId;
 
 	public PageQuery(Integer pageNum, Integer pageSize) {
@@ -84,12 +82,13 @@ public class PageQuery extends Query {
 
 	public PageQuery time() {
 		if (ObjectUtil.isNull(this.startTime)) {
-			throw new SystemException("开始时间不为空");
+			throw new SystemException("开始时间不能为空");
 		}
 		if (ObjectUtil.isNull(this.endTime)) {
-			throw new SystemException("结束时间不为空");
+			throw new SystemException("结束时间不能为空");
 		}
-		int twoYearOfDays = 730;
+		// 三年
+		int twoYearOfDays = 1095;
 		LocalDateTime startDate = DateUtil.parseTime(startTime, DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
 		LocalDateTime endDate = DateUtil.parseTime(endTime, DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
 		LocalDateTime minDate = LocalDateTime.of(2021, 12, 31, 23, 59, 59);
@@ -98,7 +97,7 @@ public class PageQuery extends Query {
 			throw new SystemException("结束时间必须大于开始时间");
 		}
 		if (DateUtil.getDays(startDate, endDate) > twoYearOfDays) {
-			throw new SystemException("开始时间和结束时间间隔不能超过两年");
+			throw new SystemException("开始时间和结束时间间隔不能超过三年");
 		}
 		if (DateUtil.isBefore(startDate, minDate) || DateUtil.isAfter(endDate, maxDate)) {
 			throw new SystemException("开始时间和结束时间只允许在2022-01-01 ~ 2099-12-31范围之内");

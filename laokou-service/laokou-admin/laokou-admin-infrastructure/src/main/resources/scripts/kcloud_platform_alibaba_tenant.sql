@@ -34,7 +34,7 @@ CREATE TABLE `boot_sys_audit_log`  (
                                        `tenant_id` bigint NOT NULL DEFAULT 0 COMMENT '租户ID',
                                        `business_id` bigint NOT NULL COMMENT '业务ID',
                                        `approver` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '审批人',
-                                       `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '审批状态 -1驳回审批 1通过审批',
+                                       `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '审批状态 0驳回审批 1通过审批',
                                        `comment` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '审批意见',
                                        PRIMARY KEY (`id`) USING BTREE,
                                        INDEX `idx_business_id_type`(`business_id` ASC) USING BTREE COMMENT '业务编号_索引'

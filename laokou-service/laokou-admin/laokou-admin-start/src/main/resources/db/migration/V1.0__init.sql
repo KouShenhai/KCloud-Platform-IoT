@@ -34,7 +34,7 @@ CREATE TABLE `boot_sys_audit_log`  (
                                        `tenant_id` bigint NOT NULL DEFAULT 0 COMMENT '租户ID',
                                        `business_id` bigint NOT NULL COMMENT '业务ID',
                                        `approver` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '审批人',
-                                       `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '审批状态 -1驳回审批 1通过审批',
+                                       `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '审批状态 0驳回审批 1通过审批',
                                        `comment` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '审批意见',
                                        PRIMARY KEY (`id`) USING BTREE,
                                        INDEX `idx_business_id_type`(`business_id` ASC) USING BTREE COMMENT '业务编号_索引'
@@ -25474,15 +25474,15 @@ CREATE TABLE `boot_sys_oss`  (
                                  `dept_id` bigint NOT NULL DEFAULT 0 COMMENT '部门ID',
                                  `dept_path` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '部门PATH',
                                  `tenant_id` bigint NOT NULL DEFAULT 0 COMMENT '租户ID',
-                                 `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '存储名称',
-                                 `endpoint` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '存储的终端地址',
-                                 `region` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '存储的区域',
-                                 `access_key` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '存储的访问密钥',
-                                 `secret_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '存储的用户密钥',
-                                 `bucket_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '存储的桶名',
+                                 `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'OSS名称',
+                                 `endpoint` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'OSS的终端地址',
+                                 `region` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'OSS的区域',
+                                 `access_key` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'OSS的访问密钥',
+                                 `secret_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'OSS的用户密钥',
+                                 `bucket_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'OSS的桶名',
                                  `path_style_access_enabled` tinyint(1) NOT NULL DEFAULT 0 COMMENT '路径样式访问 1已开启 0未启用',
                                  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '存储' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'OSS' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for boot_sys_oss_log
@@ -25504,7 +25504,7 @@ CREATE TABLE `boot_sys_oss_log`  (
                                      `url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件的URL',
                                      `size` bigint NOT NULL COMMENT '文件大小',
                                      PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '存储日志' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'OSS日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for boot_sys_package

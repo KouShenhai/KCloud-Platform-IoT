@@ -101,7 +101,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	@Override
-	@DataFilter(alias = BOOT_SYS_ROLE)
+	@DataFilter(tableAlias = BOOT_SYS_ROLE)
 	public Datas<Role> list(Role role, PageQuery pageQuery) {
 		IPage<RoleDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<RoleDO> newPage = roleMapper.getRoleListFilter(page, role.getName(), pageQuery);

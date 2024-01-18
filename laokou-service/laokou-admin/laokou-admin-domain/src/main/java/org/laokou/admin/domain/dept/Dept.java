@@ -21,8 +21,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
- * 部门.
- *
  * @author laokou
  */
 @Data
@@ -35,7 +33,7 @@ public class Dept {
 	@Schema(name = "name", description = "名称")
 	private String name;
 
-	@Schema(name = "pid", description = "父ID")
+	@Schema(name = "pid", description = "父节点ID")
 	private Long pid;
 
 	@Schema(name = "path", description = "路径")

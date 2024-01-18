@@ -17,6 +17,7 @@
 
 package org.laokou.admin.domain.dict;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -25,38 +26,28 @@ import java.time.LocalDateTime;
  * @author laokou
  */
 @Data
+@Schema(name = "Dict", description = "字典")
 public class Dict {
 
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	/**
-	 * 标签.
-	 */
+	@Schema(name = "label", description = "标签")
 	private String label;
 
-	/**
-	 * 类型.
-	 */
+	@Schema(name = "type", description = "类型")
 	private String type;
 
-	/**
-	 * 值.
-	 */
+	@Schema(name = "value", description = "值")
 	private String value;
 
-	/**
-	 * 备注.
-	 */
+	@Schema(name = "remark", description = "备注")
 	private String remark;
 
-	/**
-	 * 创建时间.
-	 */
+	@Schema(name = "createDate", description = "创建时间")
 	private LocalDateTime createDate;
 
-	/**
-	 * 排序.
-	 */
+	@Schema(name = "sort", description = "排序")
 	private Integer sort;
 
 }

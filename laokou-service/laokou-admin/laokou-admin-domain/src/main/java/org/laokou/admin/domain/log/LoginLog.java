@@ -17,6 +17,7 @@
 
 package org.laokou.admin.domain.log;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -25,11 +26,13 @@ import java.time.LocalDateTime;
  * @author laokou
  */
 @Data
+@Schema(name = "LoginLog", description = "登录日志")
 public class LoginLog {
 
 	/**
 	 * 登录的用户名.
 	 */
+	@Schema(name = "", description = "")
 	private String username;
 
 	/**

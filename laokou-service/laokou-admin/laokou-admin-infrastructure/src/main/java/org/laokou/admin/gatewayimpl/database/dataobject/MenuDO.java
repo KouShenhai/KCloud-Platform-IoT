@@ -35,7 +35,7 @@ public class MenuDO extends BaseDO {
 	@Serial
 	private static final long serialVersionUID = 6351930810565072011L;
 
-	@Schema(name = "pid", description = "父ID", example = "0")
+	@Schema(name = "pid", description = "父节点ID", example = "0")
 	private Long pid;
 
 	@Schema(name = "name", description = "名称", example = "用户管理")

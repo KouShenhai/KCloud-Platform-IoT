@@ -17,6 +17,7 @@
 
 package org.laokou.common.i18n.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.context.ApplicationEvent;
 
 import java.io.Serial;
@@ -24,10 +25,9 @@ import java.io.Serializable;
 import java.time.Clock;
 
 /**
- * 领域事件.
- *
  * @author laokou
  */
+@Schema(name = "DomainEvent", description = "领域事件")
 public abstract class DomainEvent extends ApplicationEvent implements Serializable {
 
 	@Serial

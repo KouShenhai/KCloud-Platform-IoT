@@ -16,6 +16,7 @@
 
 package org.laokou.admin.domain.gateway;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.admin.domain.user.User;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -23,20 +24,57 @@ import org.laokou.common.i18n.dto.PageQuery;
 /**
  * @author laokou
  */
+@Schema(name = "UserGateway", description = "用户网关")
 public interface UserGateway {
 
+	/**
+	 * 新增用户
+	 * @param user 用户对象
+	 * @return 新增结果
+	 */
 	Boolean insert(User user);
 
+	/**
+	 * 修改用户
+	 * @param user 用户对象
+	 * @return 修改结果
+	 */
 	Boolean update(User user);
 
+	/**
+	 * 根据ID删除用户
+	 * @param id ID
+	 * @return 删除结果
+	 */
 	Boolean deleteById(Long id);
 
+	/**
+	 * 重置密码
+	 * @param user 用户对象
+	 * @return 重置结果
+	 */
 	Boolean resetPassword(User user);
 
+	/**
+	 * 修改用户信息
+	 * @param user 用户对象
+	 * @return 修改结果
+	 */
 	Boolean updateInfo(User user);
 
+	/**
+	 * 根据ID查看用户
+	 * @param id ID
+	 * @return 用户
+	 */
 	User getById(Long id);
 
+	/**
+	 * 查询用户列表
+	 * @param user 用户对象
+	 * @param pageQuery 分页参数
+	 * @return 用户列表
+	 */
 	Datas<User> list(User user, PageQuery pageQuery);
 
 }

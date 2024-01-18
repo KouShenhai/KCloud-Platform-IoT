@@ -17,6 +17,7 @@
 
 package org.laokou.admin.domain.gateway;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.admin.domain.log.LoginLog;
 import org.laokou.admin.domain.log.OperateLog;
 import org.laokou.common.i18n.dto.Datas;
@@ -25,10 +26,23 @@ import org.laokou.common.i18n.dto.PageQuery;
 /**
  * @author laokou
  */
+@Schema(name = "LogGateway", description = "日志网关")
 public interface LogGateway {
 
+	/**
+	 * 查询登录日志列表
+	 * @param loginLog 登录日志对象
+	 * @param pageQuery 分页参数
+	 * @return 登录日志列表
+	 */
 	Datas<LoginLog> loginList(LoginLog loginLog, PageQuery pageQuery);
 
+	/**
+	 * 查询操作日志列表
+	 * @param operateLog 操作日志对象
+	 * @param pageQuery 分页参数
+	 * @return 操作日志列表
+	 */
 	Datas<OperateLog> operateList(OperateLog operateLog, PageQuery pageQuery);
 
 }

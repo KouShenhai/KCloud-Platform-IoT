@@ -74,7 +74,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	private final MybatisUtil mybatisUtil;
 
 	@Override
-	@DataFilter(alias = BOOT_SYS_MESSAGE)
+	@DataFilter(tableAlias = BOOT_SYS_MESSAGE)
 	public Datas<Message> list(Message message, PageQuery pageQuery) {
 		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<MessageDO> newPage = messageMapper.getMessageListFilter(page, message.getTitle(), pageQuery);

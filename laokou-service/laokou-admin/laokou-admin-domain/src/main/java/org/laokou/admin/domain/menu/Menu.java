@@ -17,6 +17,7 @@
 
 package org.laokou.admin.domain.menu;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -35,9 +36,7 @@ public class Menu {
 	 */
 	private String name;
 
-	/**
-	 * 父ID.
-	 */
+	@Schema(name = "pid", description = "父节点ID")
 	private Long pid;
 
 	/**

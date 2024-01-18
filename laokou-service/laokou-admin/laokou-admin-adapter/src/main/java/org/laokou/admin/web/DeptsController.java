@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.CacheConstants.DEPTS;
+import static org.laokou.common.i18n.common.CacheNameConstants.DEPTS;
 
 /**
  * @author laokou

@@ -25,8 +25,12 @@ import org.laokou.common.i18n.common.exception.GatewayException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
+import org.springframework.cloud.gateway.route.CachingRouteLocator;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.data.redis.core.ReactiveHashOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -35,26 +39,31 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import static org.laokou.common.i18n.common.ErrorCodes.ROUTE_NOT_EXIST;
 import static org.laokou.common.i18n.common.RouterConstants.DATA_ID;
 
+// @formatter:off
 /**
- * nacos动态路由缓存库 <a href=
- * "https://github.com/alibaba/spring-cloud-alibaba/blob/2.2.x/spring-cloud-alibaba-examples/nacos-example/nacos-config-example/src/main/java/com/alibaba/cloud/examples/example/ConfigListenerExample.java">...</a>
+ * nacos动态路由缓存库.
+ * <a href="https://github.com/alibaba/spring-cloud-alibaba/blob/2.2.x/spring-cloud-alibaba-examples/nacos-example/nacos-config-example/src/main/java/com/alibaba/cloud/examples/example/ConfigListenerExample.java">nacos拉取配置</a>
  *
  * @author laokou
  */
+// @formatter:on
 @Component
 @Slf4j
 @NonNullApi
 @Repository
-public class NacosRouteDefinitionRepository implements RouteDefinitionRepository {
+public class NacosRouteDefinitionRepository implements RouteDefinitionRepository, ApplicationEventPublisherAware {
 
 	private final ConfigUtil configUtil;
 
 	private final ReactiveHashOperations<String, String, RouteDefinition> reactiveHashOperations;
+
+	private ApplicationEventPublisher applicationEventPublisher;
 
 	public NacosRouteDefinitionRepository(ConfigUtil configUtil,
 			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
@@ -63,7 +72,9 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	}
 
 	/**
-	 * 获取动态路由.
+	 * 获取动态路由（避免集群中网关频繁调用Redis，还是得走本地缓存）. see
+	 * {@link org.springframework.cloud.gateway.config.GatewayAutoConfiguration#cachedCompositeRouteLocator(List)}
+	 * see {@link CachingRouteLocator}
 	 * @return 动态路由
 	 */
 	@Override
@@ -94,7 +105,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 */
 	public Flux<Boolean> syncRouters() {
 		return Flux.fromIterable(pullRouters())
-			.flatMap(router -> reactiveHashOperations.putIfAbsent(RedisKeyUtil.getRouteDefinitionHashKey(), router.getId(), router));
+			.flatMap(router -> reactiveHashOperations.putIfAbsent(RedisKeyUtil.getRouteDefinitionHashKey(), router.getId(), router)).doFinally(c -> refreshEvent());
 	}
 
 	/**
@@ -102,7 +113,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * @return 删除结果
 	 */
 	public Mono<Boolean> deleteRouters() {
-		return reactiveHashOperations.delete(RedisKeyUtil.getRouteDefinitionHashKey());
+		return reactiveHashOperations.delete(RedisKeyUtil.getRouteDefinitionHashKey()).doFinally(c -> refreshEvent());
 	}
 
 	/**
@@ -121,6 +132,19 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			throw new GatewayException(ROUTE_NOT_EXIST);
 		}
+	}
+
+	@Override
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+		this.applicationEventPublisher = applicationEventPublisher;
+	}
+
+	/**
+	 * 刷新事件
+	 */
+	private void refreshEvent() {
+		// 刷新事件
+		applicationEventPublisher.publishEvent(new RefreshRoutesEvent(this));
 	}
 	// @formatter:on
 
