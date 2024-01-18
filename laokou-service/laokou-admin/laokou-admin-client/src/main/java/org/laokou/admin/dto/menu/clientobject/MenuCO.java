@@ -28,28 +28,29 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
+@Schema(name = "MenuCO", description = "菜单")
 public class MenuCO extends TreeUtil.TreeNode<MenuCO> {
 
 	@Serial
 	private static final long serialVersionUID = 9057183259302756376L;
 
-	@Schema(name = "permission", description = "图标")
+	@Schema(name = "permission", description = "菜单图标")
 	private String icon;
 
-	@Schema(name = "permission", description = "类型 0菜单 1按钮")
+	@Schema(name = "permission", description = "菜单类型 0菜单 1按钮")
 	@NotNull(message = "菜单类型不为空")
 	private Integer type;
 
-	@Schema(name = "permission", description = "排序")
+	@Schema(name = "permission", description = "菜单排序")
 	private Integer sort;
 
-	@Schema(name = "permission", description = "路径")
+	@Schema(name = "permission", description = "菜单URL")
 	private String url;
 
-	@Schema(name = "permission", description = "权限标识")
+	@Schema(name = "permission", description = "菜单权限标识")
 	private String permission;
 
-	@Schema(name = "visible", description = "状态 0显示 1隐藏")
+	@Schema(name = "visible", description = "菜单状态 0显示 1隐藏")
 	private Integer visible;
 
 }

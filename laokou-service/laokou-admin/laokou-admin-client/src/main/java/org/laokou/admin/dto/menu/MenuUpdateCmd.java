@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.menu;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.common.i18n.dto.CommonCommand;
@@ -25,8 +26,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
+@Schema(name = "MenuUpdateCmd", description = "修改菜单命令请求")
 public class MenuUpdateCmd extends CommonCommand {
 
+	@Schema(name = "menuCO", description = "菜单")
 	private MenuCO menuCO;
 
 }

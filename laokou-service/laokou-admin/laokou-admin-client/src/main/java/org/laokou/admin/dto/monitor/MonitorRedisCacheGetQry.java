@@ -15,28 +15,17 @@
  *
  */
 
-package org.laokou.admin.dto.monitor.clientobject;
+package org.laokou.admin.dto.monitor;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.i18n.dto.ClientObject;
-
-import java.io.Serial;
-import java.util.List;
-import java.util.Map;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
-public class CacheCO extends ClientObject {
-
-	@Serial
-	private static final long serialVersionUID = 9153324620769020304L;
-
-	private Long keysSize;
-
-	private Map<String, String> info;
-
-	private List<Map<String, String>> commandStats;
+@Schema(name = "MonitorCacheGetQry", description = "监控Redis缓存信息")
+public class MonitorRedisCacheGetQry extends CommonCommand {
 
 }

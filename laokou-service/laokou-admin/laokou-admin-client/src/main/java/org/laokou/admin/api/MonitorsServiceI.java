@@ -17,9 +17,9 @@
 
 package org.laokou.admin.api;
 
-import org.laokou.admin.dto.monitor.MonitorCacheGetQry;
+import org.laokou.admin.dto.monitor.MonitorRedisCacheGetQry;
 import org.laokou.admin.dto.monitor.MonitorServerGetQry;
-import org.laokou.admin.dto.monitor.clientobject.CacheCO;
+import org.laokou.admin.dto.monitor.clientobject.RedisCacheCO;
 import org.laokou.admin.dto.monitor.clientobject.ServerCO;
 import org.laokou.common.i18n.dto.Result;
 
@@ -28,7 +28,7 @@ import org.laokou.common.i18n.dto.Result;
  */
 public interface MonitorsServiceI {
 
-	Result<CacheCO> cache(MonitorCacheGetQry qry);
+	Result<RedisCacheCO> cache(MonitorRedisCacheGetQry qry);
 
 	Result<ServerCO> server(MonitorServerGetQry qry);
 

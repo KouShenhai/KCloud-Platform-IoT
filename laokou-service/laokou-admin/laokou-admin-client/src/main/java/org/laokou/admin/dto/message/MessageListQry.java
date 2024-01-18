@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.message;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -25,8 +26,10 @@ import org.laokou.common.i18n.utils.StringUtil;
  * @author laokou
  */
 @Data
+@Schema(name = "MessageListQry", description = "消息列表查询参数")
 public class MessageListQry extends PageQuery {
 
+	@Schema(name = "title", description = "消息标题")
 	private String title;
 
 	public void setTitle(String title) {

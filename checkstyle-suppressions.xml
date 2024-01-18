@@ -25,5 +25,5 @@
     <suppress files="[\\/]laokou-common[\\/]" checks="HideUtilityClassConstructorCheck" />
     <suppress files="[\\/]laokou-release[\\/]" checks="HideUtilityClassConstructorCheck" />
     <suppress files="[\\/]laokou-service[\\/]" checks="HideUtilityClassConstructorCheck" />
-    <suppress files=".*" checks="LineLength" />
+    <suppress files="[\\/]org[\\/]laokou[\\/]admin[\\/]convertor[\\/]" checks="[a-zA-Z0-9]*" />
 </suppressions>

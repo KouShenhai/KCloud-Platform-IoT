@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.message;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,8 +29,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "MessageReadCmd", description = "读取消息命令请求")
 public class MessageReadCmd extends CommonCommand {
 
+	@Schema(name = "detailId", description = "详细ID")
 	private Long detailId;
 
 }

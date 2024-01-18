@@ -18,6 +18,7 @@
 package org.laokou.admin.dto.log;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
 
@@ -25,9 +26,11 @@ import lombok.Data;
  * @author laokou
  */
 @Data
+@Schema(name = "OperateLogExportCmd", description = "导出操作日志命令请求")
 public class OperateLogExportCmd extends OperateLogListQry {
 
 	@JsonIgnore
+	@Schema(name = "response", description = "响应")
 	private HttpServletResponse response;
 
 }

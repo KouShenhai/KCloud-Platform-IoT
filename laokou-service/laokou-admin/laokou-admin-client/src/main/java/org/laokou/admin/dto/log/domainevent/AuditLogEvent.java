@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.log.domainevent;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.dto.DomainEvent;
@@ -28,17 +29,22 @@ import java.io.Serial;
  */
 @Setter
 @Getter
+@Schema(name = "AuditLogEvent", description = "审批日志事件")
 public class AuditLogEvent extends DomainEvent {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
 
+	@Schema(name = "businessId", description = "业务ID")
 	private Long businessId;
 
+	@Schema(name = "status", description = "审批状态 0驳回审批 1通过审批")
 	private Integer status;
 
+	@Schema(name = "approver", description = "审批人")
 	private String approver;
 
+	@Schema(name = "comment", description = "审批意见")
 	private String comment;
 
 	public AuditLogEvent(Object source) {
