@@ -33,7 +33,7 @@ public @interface DataFilter {
 	@Schema(name = "tableAlias", description = "数据表别名")
 	String tableAlias();
 
-	@Schema(name = "creator", description = "创建者")
+	@Schema(name = "creator", description = "创建人")
 	String creator() default "creator";
 
 	@Schema(name = "deptPath", description = "部门PATH")

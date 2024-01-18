@@ -17,22 +17,29 @@
 
 package org.laokou.admin.domain.tenant;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
  * @author laokou
  */
 @Data
+@Schema(name = "Tenant", description = "租户")
 public class Tenant {
 
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
+	@Schema(name = "name", description = "租户名称")
 	private String name;
 
+	@Schema(name = "label", description = "租户标签")
 	private String label;
 
+	@Schema(name = "sourceId", description = "数据源ID")
 	private Long sourceId;
 
+	@Schema(name = "packageId", description = "套餐ID")
 	private Long packageId;
 
 }

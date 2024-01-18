@@ -24,49 +24,34 @@ import lombok.Data;
  * @author laokou
  */
 @Data
+@Schema(name = "Menu", description = "菜单")
 public class Menu {
 
-	/**
-	 * ID.
-	 */
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	/**
-	 * 名称.
-	 */
+	@Schema(name = "name", description = "菜单名称")
 	private String name;
 
-	@Schema(name = "pid", description = "父节点ID")
+	@Schema(name = "pid", description = "菜单父节点ID")
 	private Long pid;
 
-	/**
-	 * 图标.
-	 */
+	@Schema(name = "icon", description = "菜单图标")
 	private String icon;
 
-	/**
-	 * 类型 0菜单 1按钮.
-	 */
+	@Schema(name = "type", description = "菜单类型 0菜单 1按钮")
 	private Integer type;
 
-	/**
-	 * 排序.
-	 */
+	@Schema(name = "sort", description = "菜单排序")
 	private Integer sort;
 
-	/**
-	 * 路径.
-	 */
+	@Schema(name = "url", description = "菜单URL")
 	private String url;
 
-	/**
-	 * 权限标识.
-	 */
+	@Schema(name = "permission", description = "菜单权限标识")
 	private String permission;
 
-	/**
-	 * 状态 0显示 1隐藏.
-	 */
+	@Schema(name = "visible", description = "菜单状态 0显示 1隐藏")
 	private Integer visible;
 
 }

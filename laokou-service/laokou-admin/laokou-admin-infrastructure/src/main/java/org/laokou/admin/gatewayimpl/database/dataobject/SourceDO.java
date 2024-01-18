@@ -38,16 +38,16 @@ public class SourceDO extends BaseDO {
 	@Schema(name = "name", description = "数据源名称")
 	private String name;
 
-	@Schema(name = "driverClassName", description = "数据源驱动")
+	@Schema(name = "driverClassName", description = "数据源的驱动名称")
 	private String driverClassName;
 
-	@Schema(name = "url", description = "数据源连接")
+	@Schema(name = "url", description = "数据源的连接信息")
 	private String url;
 
-	@Schema(name = "username", description = "数据源用户名")
+	@Schema(name = "username", description = "数据源的用户名")
 	private String username;
 
-	@Schema(name = "password", description = "数据源密码")
+	@Schema(name = "password", description = "数据源的密码")
 	private String password;
 
 }

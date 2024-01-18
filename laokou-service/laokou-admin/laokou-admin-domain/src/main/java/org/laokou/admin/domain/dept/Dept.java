@@ -30,16 +30,16 @@ public class Dept {
 	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	@Schema(name = "name", description = "名称")
+	@Schema(name = "name", description = "部门名称")
 	private String name;
 
-	@Schema(name = "pid", description = "父节点ID")
+	@Schema(name = "pid", description = "部门父节点ID")
 	private Long pid;
 
-	@Schema(name = "path", description = "路径")
+	@Schema(name = "path", description = "部门节点")
 	private String path;
 
-	@Schema(name = "sort", description = "排序")
+	@Schema(name = "sort", description = "部门排序")
 	private Integer sort;
 
 }

@@ -32,22 +32,22 @@ public class Dict {
 	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	@Schema(name = "label", description = "标签")
+	@Schema(name = "label", description = "字典标签")
 	private String label;
 
-	@Schema(name = "type", description = "类型")
+	@Schema(name = "type", description = "字典类型")
 	private String type;
 
-	@Schema(name = "value", description = "值")
+	@Schema(name = "value", description = "字典值")
 	private String value;
 
-	@Schema(name = "remark", description = "备注")
+	@Schema(name = "remark", description = "字典类型")
 	private String remark;
 
 	@Schema(name = "createDate", description = "创建时间")
 	private LocalDateTime createDate;
 
-	@Schema(name = "sort", description = "排序")
+	@Schema(name = "sort", description = "字典排序")
 	private Integer sort;
 
 }

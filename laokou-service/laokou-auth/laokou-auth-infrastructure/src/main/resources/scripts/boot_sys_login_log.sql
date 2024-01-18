@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `boot_sys_login_log_${suffix}`(
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `creator` bigint DEFAULT '0' COMMENT '创建者',
+  `creator` bigint DEFAULT '0' COMMENT '创建人',
   `editor` bigint DEFAULT '0' COMMENT '编辑人',
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',

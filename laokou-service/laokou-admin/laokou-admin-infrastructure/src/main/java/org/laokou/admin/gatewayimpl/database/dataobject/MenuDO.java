@@ -35,28 +35,28 @@ public class MenuDO extends BaseDO {
 	@Serial
 	private static final long serialVersionUID = 6351930810565072011L;
 
-	@Schema(name = "pid", description = "父节点ID", example = "0")
+	@Schema(name = "pid", description = "菜单父节点ID", example = "0")
 	private Long pid;
 
-	@Schema(name = "name", description = "名称", example = "用户管理")
+	@Schema(name = "name", description = "菜单名称", example = "用户管理")
 	private String name;
 
-	@Schema(name = "url", description = "路径", example = "/v1/users/profile")
+	@Schema(name = "url", description = "菜单URL", example = "/v1/users/profile")
 	private String url;
 
-	@Schema(name = "permission", description = "权限标识", example = "users:list")
+	@Schema(name = "permission", description = "菜单权限标识", example = "users:list")
 	private String permission;
 
-	@Schema(name = "icon", description = "图标", example = "user")
+	@Schema(name = "icon", description = "菜单图标", example = "user")
 	private String icon;
 
-	@Schema(name = "sort", description = "排序", example = "1")
+	@Schema(name = "sort", description = "菜单排序", example = "1")
 	private Integer sort;
 
-	@Schema(name = "type", description = "类型 0菜单 1按钮", example = "0")
+	@Schema(name = "type", description = "菜单类型 0菜单 1按钮", example = "0")
 	private Integer type;
 
-	@Schema(name = "visible", description = "状态 0显示 1隐藏", example = "0")
+	@Schema(name = "visible", description = "菜单状态 0显示 1隐藏", example = "0")
 	private Integer visible;
 
 }

@@ -53,7 +53,7 @@ public class OssDO extends BaseDO {
 	@Schema(name = "bucketName", description = "OSS的桶名")
 	private String bucketName;
 
-	@Schema(name = "pathStyleAccessEnabled", description = "路径样式访问 0未启用 1已开启")
+	@Schema(name = "pathStyleAccessEnabled", description = "路径样式访问 1已开启 0未启用")
 	private Integer pathStyleAccessEnabled;
 
 }

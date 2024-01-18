@@ -31,10 +31,13 @@ import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_SQL_LOG
 @Schema(name = "SqlLogDO", description = "SQL日志")
 public final class SqlLogDO extends BaseDO {
 
+	@Schema(name = "appName", description = "应用名称")
 	private String appName;
 
+	@Schema(name = "dsl", description = "查询语句")
 	private String dsl;
 
+	@Schema(name = "costTime", description = "消耗时间")
 	private Long costTime;
 
 }

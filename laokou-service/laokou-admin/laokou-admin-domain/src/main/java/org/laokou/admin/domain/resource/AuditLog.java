@@ -17,6 +17,7 @@
 
 package org.laokou.admin.domain.resource;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -25,16 +26,22 @@ import java.time.LocalDateTime;
  * @author laokou
  */
 @Data
+@Schema(name = "AuditLog", description = "审批日志")
 public class AuditLog {
 
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
+	@Schema(name = "status", description = "审批状态 0驳回审批 1通过审批")
 	private Integer status;
 
+	@Schema(name = "approver", description = "审批人")
 	private String approver;
 
+	@Schema(name = "comment", description = "审批意见")
 	private String comment;
 
+	@Schema(name = "createDate", description = "创建时间")
 	private LocalDateTime createDate;
 
 }

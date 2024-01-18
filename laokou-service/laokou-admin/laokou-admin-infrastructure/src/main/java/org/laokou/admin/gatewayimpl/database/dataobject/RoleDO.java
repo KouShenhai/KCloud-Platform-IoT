@@ -35,10 +35,10 @@ public class RoleDO extends BaseDO {
 	@Serial
 	private static final long serialVersionUID = 6034156236048273668L;
 
-	@Schema(name = "name", description = "名称", example = "管理员")
+	@Schema(name = "name", description = "角色名称", example = "管理员")
 	private String name;
 
-	@Schema(name = "sort", description = "排序", example = "1")
+	@Schema(name = "sort", description = "角色排序", example = "1")
 	private Integer sort;
 
 }
