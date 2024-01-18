@@ -30,7 +30,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 public interface LogGateway {
 
 	/**
-	 * 查询登录日志列表
+	 * 查询登录日志列表.
 	 * @param loginLog 登录日志对象
 	 * @param pageQuery 分页参数
 	 * @return 登录日志列表
@@ -38,7 +38,7 @@ public interface LogGateway {
 	Datas<LoginLog> loginList(LoginLog loginLog, PageQuery pageQuery);
 
 	/**
-	 * 查询操作日志列表
+	 * 查询操作日志列表.
 	 * @param operateLog 操作日志对象
 	 * @param pageQuery 分页参数
 	 * @return 操作日志列表

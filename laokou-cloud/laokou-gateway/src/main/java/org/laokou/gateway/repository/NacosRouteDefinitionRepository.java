@@ -135,12 +135,12 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	}
 
 	@Override
-    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+	public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
 		this.applicationEventPublisher = applicationEventPublisher;
 	}
 
 	/**
-	 * 刷新事件
+	 * 刷新事件.
 	 */
 	private void refreshEvent() {
 		// 刷新事件

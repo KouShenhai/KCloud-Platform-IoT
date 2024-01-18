@@ -29,7 +29,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 public interface PackageGateway {
 
 	/**
-	 * 新增套餐
+	 * 新增套餐.
 	 * @param pack 套餐对象
 	 * @param user 用户对象
 	 * @return 新增结果
@@ -37,7 +37,7 @@ public interface PackageGateway {
 	Boolean insert(Package pack, User user);
 
 	/**
-	 * 修改套餐
+	 * 修改套餐.
 	 * @param pack 套餐对象
 	 * @param user 用户对象
 	 * @return 修改结果
@@ -45,7 +45,7 @@ public interface PackageGateway {
 	Boolean update(Package pack, User user);
 
 	/**
-	 * 查询套餐列表
+	 * 查询套餐列表.
 	 * @param pack 套餐对象
 	 * @param pageQuery 分页参数
 	 * @return 套餐列表
@@ -53,14 +53,14 @@ public interface PackageGateway {
 	Datas<Package> list(Package pack, PageQuery pageQuery);
 
 	/**
-	 * 根据ID查看套餐
+	 * 根据ID查看套餐.
 	 * @param id ID
 	 * @return 套餐
 	 */
 	Package getById(Long id);
 
 	/**
-	 * 根据ID删除套餐
+	 * 根据ID删除套餐.
 	 * @param id ID
 	 * @return 删除结果
 	 */

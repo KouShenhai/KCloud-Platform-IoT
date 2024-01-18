@@ -28,7 +28,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 public interface ResourceGateway {
 
 	/**
-	 * 查询资源列表
+	 * 查询资源列表.
 	 * @param resource 资源对象
 	 * @param pageQuery 分页参数
 	 * @return 资源列表
@@ -36,34 +36,34 @@ public interface ResourceGateway {
 	Datas<Resource> list(Resource resource, PageQuery pageQuery);
 
 	/**
-	 * 根据ID查看资源
+	 * 根据ID查看资源.
 	 * @param id ID
 	 * @return 资源
 	 */
 	Resource getById(Long id);
 
 	/**
-	 * 新增资源
+	 * 新增资源.
 	 * @param resource 资源对象
 	 * @return 新增结果
 	 */
 	Boolean insert(Resource resource);
 
 	/**
-	 * 修改资源
+	 * 修改资源.
 	 * @param resource 资源对象
 	 * @return 修改结果
 	 */
 	Boolean update(Resource resource);
 
 	/**
-	 * 同步资源
+	 * 同步资源.
 	 * @return 同步结果
 	 */
 	Boolean sync();
 
 	/**
-	 * 根据ID删除资源
+	 * 根据ID删除资源.
 	 * @param id ID
 	 * @return 删除结果
 	 */

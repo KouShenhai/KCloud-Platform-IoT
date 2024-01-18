@@ -23,7 +23,6 @@ import lombok.Setter;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 import java.io.Serial;
-import java.time.Clock;
 
 /**
  * @author laokou
@@ -76,10 +75,6 @@ public class OperateLogEvent extends DomainEvent {
 
 	public OperateLogEvent(Object source) {
 		super(source);
-	}
-
-	public OperateLogEvent(Object source, Clock clock) {
-		super(source, clock);
 	}
 
 }

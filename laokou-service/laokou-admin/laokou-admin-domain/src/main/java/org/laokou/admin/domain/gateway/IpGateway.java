@@ -29,21 +29,21 @@ import org.laokou.common.i18n.dto.PageQuery;
 public interface IpGateway {
 
 	/**
-	 * 新增IP
+	 * 新增IP.
 	 * @param ip IP对象
 	 * @return 新增结果
 	 */
 	Boolean insert(Ip ip);
 
 	/**
-	 * 根据ID删除IP
+	 * 根据ID删除IP.
 	 * @param id ID
 	 * @return 删除结果
 	 */
 	Boolean deleteById(Long id);
 
 	/**
-	 * 查询IP列表
+	 * 查询IP列表.
 	 * @param ip IP对象
 	 * @param pageQuery 分页参数
 	 * @return IP列表
@@ -51,7 +51,7 @@ public interface IpGateway {
 	Datas<Ip> list(Ip ip, PageQuery pageQuery);
 
 	/**
-	 * 刷新IP至缓存
+	 * 刷新IP至缓存.
 	 * @param ip IP对象
 	 * @return 刷新结果
 	 */

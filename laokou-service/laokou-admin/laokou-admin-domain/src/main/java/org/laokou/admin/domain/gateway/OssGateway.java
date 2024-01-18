@@ -29,7 +29,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 public interface OssGateway {
 
 	/**
-	 * 查询OSS列表
+	 * 查询OSS列表.
 	 * @param oss OSS对象
 	 * @param pageQuery 分页参数
 	 * @return OSS
@@ -37,35 +37,35 @@ public interface OssGateway {
 	Datas<Oss> list(Oss oss, PageQuery pageQuery);
 
 	/**
-	 * 根据ID查看OSS
+	 * 根据ID查看OSS.
 	 * @param id ID
 	 * @return OSS
 	 */
 	Oss getById(Long id);
 
 	/**
-	 * 新增OSS
+	 * 新增OSS.
 	 * @param oss OSS对象
 	 * @return 新增结果
 	 */
 	Boolean insert(Oss oss);
 
 	/**
-	 * 修改OSS
+	 * 修改OSS.
 	 * @param oss OSS对象
 	 * @return 修改结果
 	 */
 	Boolean update(Oss oss);
 
 	/**
-	 * 根据ID删除OSS
+	 * 根据ID删除OSS.
 	 * @param id ID
 	 * @return 删除结果
 	 */
 	Boolean deleteById(Long id);
 
 	/**
-	 * 推送OSS日志
+	 * 推送OSS日志.
 	 * @param ossLog OSS日志对象
 	 */
 	void publish(OssLog ossLog);

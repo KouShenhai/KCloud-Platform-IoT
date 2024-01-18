@@ -30,7 +30,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 public interface MessageGateway {
 
 	/**
-	 * 查询消息列表
+	 * 查询消息列表.
 	 * @param message 消息对象
 	 * @param pageQuery 分页参数
 	 * @return 消息列表
@@ -38,7 +38,7 @@ public interface MessageGateway {
 	Datas<Message> list(Message message, PageQuery pageQuery);
 
 	/**
-	 * 新增消息
+	 * 新增消息.
 	 * @param message 消息对象
 	 * @param user 用户对象
 	 * @return 新增结果
@@ -46,7 +46,7 @@ public interface MessageGateway {
 	Boolean insert(Message message, User user);
 
 	/**
-	 * 根据ID查看消息
+	 * 根据ID查看消息.
 	 * @param id ID
 	 * @return 消息
 	 */

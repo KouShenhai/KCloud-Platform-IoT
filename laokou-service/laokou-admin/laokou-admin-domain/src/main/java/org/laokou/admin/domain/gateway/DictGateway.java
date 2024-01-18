@@ -28,35 +28,35 @@ import org.laokou.common.i18n.dto.PageQuery;
 public interface DictGateway {
 
 	/**
-	 * 新增字典
+	 * 新增字典.
 	 * @param dict 字典对象
 	 * @return 新增结果
 	 */
 	Boolean insert(Dict dict);
 
 	/**
-	 * 修改字典
+	 * 修改字典.
 	 * @param dict 字典对象
 	 * @return 修改结果
 	 */
 	Boolean update(Dict dict);
 
 	/**
-	 * 根据ID查看字典
+	 * 根据ID查看字典.
 	 * @param id ID
 	 * @return 字典
 	 */
 	Dict getById(Long id);
 
 	/**
-	 * 根据ID删除字典
+	 * 根据ID删除字典.
 	 * @param id ID
 	 * @return 删除结果
 	 */
 	Boolean deleteById(Long id);
 
 	/**
-	 * 查询字典列表
+	 * 查询字典列表.
 	 * @param dict 字典对象
 	 * @param pageQuery 分页参数
 	 * @return 字典列表

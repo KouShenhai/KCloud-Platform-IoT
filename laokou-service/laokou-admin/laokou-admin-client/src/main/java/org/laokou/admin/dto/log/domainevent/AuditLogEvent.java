@@ -22,7 +22,6 @@ import lombok.Setter;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 import java.io.Serial;
-import java.time.Clock;
 
 /**
  * @author laokou
@@ -41,10 +40,6 @@ public class AuditLogEvent extends DomainEvent {
 	private String approver;
 
 	private String comment;
-
-	public AuditLogEvent(Object source, Clock clock) {
-		super(source, clock);
-	}
 
 	public AuditLogEvent(Object source) {
 		super(source);

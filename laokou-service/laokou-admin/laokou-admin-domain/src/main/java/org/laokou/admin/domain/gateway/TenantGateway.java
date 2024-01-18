@@ -29,14 +29,14 @@ import org.laokou.common.i18n.dto.PageQuery;
 public interface TenantGateway {
 
 	/**
-	 * 新增租户
+	 * 新增租户.
 	 * @param tenant 租户对象
 	 * @return 新增结果
 	 */
 	Boolean insert(Tenant tenant);
 
 	/**
-	 * 查询租户列表
+	 * 查询租户列表.
 	 * @param tenant 租户对象
 	 * @param pageQuery 分页参数
 	 * @return 租户列表
@@ -44,28 +44,28 @@ public interface TenantGateway {
 	Datas<Tenant> list(Tenant tenant, PageQuery pageQuery);
 
 	/**
-	 * 根据ID查看租户
+	 * 根据ID查看租户.
 	 * @param id ID
 	 * @return 租户
 	 */
 	Tenant getById(Long id);
 
 	/**
-	 * 修改租户
+	 * 修改租户.
 	 * @param tenant 租户对象
 	 * @return 修改结果
 	 */
 	Boolean update(Tenant tenant);
 
 	/**
-	 * 根据ID删除租户
+	 * 根据ID删除租户.
 	 * @param id ID
 	 * @return 删除结果
 	 */
 	Boolean deleteById(Long id);
 
 	/**
-	 * 下载数据库压缩包
+	 * 下载数据库压缩包.
 	 * @param id ID
 	 * @param response 响应对象
 	 */

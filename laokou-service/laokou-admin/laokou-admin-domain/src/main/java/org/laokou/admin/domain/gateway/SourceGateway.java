@@ -28,7 +28,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 public interface SourceGateway {
 
 	/**
-	 * 查询数据源列表
+	 * 查询数据源列表.
 	 * @param source 数据源对象
 	 * @param pageQuery 分页参数
 	 * @return 数据源列表
@@ -36,28 +36,28 @@ public interface SourceGateway {
 	Datas<Source> list(Source source, PageQuery pageQuery);
 
 	/**
-	 * 根据ID查看数据源
+	 * 根据ID查看数据源.
 	 * @param id ID
 	 * @return 数据源
 	 */
 	Source getById(Long id);
 
 	/**
-	 * 新增数据源
+	 * 新增数据源.
 	 * @param source 数据源对象
 	 * @return 新增结果
 	 */
 	Boolean insert(Source source);
 
 	/**
-	 * 修改数据源
+	 * 修改数据源.
 	 * @param source 数据源对象
 	 * @return 修改结果
 	 */
 	Boolean update(Source source);
 
 	/**
-	 * 根据ID删除数据源
+	 * 根据ID删除数据源.
 	 * @param id ID
 	 * @return 删除结果
 	 */
