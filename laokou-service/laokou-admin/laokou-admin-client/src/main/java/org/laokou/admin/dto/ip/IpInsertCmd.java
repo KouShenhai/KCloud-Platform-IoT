@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.ip;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import lombok.Data;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
@@ -26,9 +27,11 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
+@Schema(name = "IpInsertCmd", description = "新增IP命令请求")
 public class IpInsertCmd extends CommonCommand {
 
 	@Valid
+	@Schema(name = "ipCO", description = "IP")
 	private IpCO ipCO;
 
 }

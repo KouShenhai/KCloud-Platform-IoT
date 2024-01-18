@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.ip;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 
@@ -24,8 +25,10 @@ import org.laokou.common.i18n.dto.PageQuery;
  * @author laokou
  */
 @Data
+@Schema(name = "IpListQry", description = "IP列表查询参数")
 public class IpListQry extends PageQuery {
 
+	@Schema(name = "label", description = "标签")
 	private String label;
 
 }

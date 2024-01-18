@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.ip.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
@@ -28,15 +29,19 @@ import static org.laokou.common.i18n.common.NetworkConstants.IPV4_REGEX;
  * @author laokou
  */
 @Data
+@Schema(name = "IpCO", description = "IP")
 public class IpCO extends ClientObject {
 
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
 	@NotBlank(message = "IP不能为空")
+	@Schema(name = "value", description = "值")
 	@Pattern(regexp = IPV4_REGEX, message = "IP错误")
 	private String value;
 
 	@NotBlank(message = "标签不能为空")
+	@Schema(name = "label", description = "标签")
 	private String label;
 
 }
