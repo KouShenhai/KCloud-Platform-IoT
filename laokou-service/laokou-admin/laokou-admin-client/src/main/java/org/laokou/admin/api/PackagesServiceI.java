@@ -26,20 +26,51 @@ import org.laokou.common.i18n.dto.Result;
 import java.util.List;
 
 /**
+ * 套餐管理.
  * @author laokou
  */
 public interface PackagesServiceI {
 
+	/**
+	 * 新增套餐
+	 * @param cmd 新增套餐参数
+	 * @return 新增结果
+	 */
 	Result<Boolean> insert(PackageInsertCmd cmd);
 
+	/**
+	 * 修改套餐
+	 * @param cmd 修改套餐参数
+	 * @return 修改结果
+	 */
 	Result<Boolean> update(PackageUpdateCmd cmd);
 
+	/**
+	 * 根据ID删除套餐
+	 * @param cmd 根据ID删除套餐参数
+	 * @return 删除结果
+	 */
 	Result<Boolean> deleteById(PackageDeleteCmd cmd);
 
+	/**
+	 * 查询套餐列表
+	 * @param qry 查询套餐列表参数
+	 * @return 套餐列表
+	 */
 	Result<Datas<PackageCO>> list(PackageListQry qry);
 
+	/**
+	 * 根据ID查看套餐
+	 * @param qry 根据ID查看套餐参数
+	 * @return 套餐
+	 */
 	Result<PackageCO> getById(PackageGetQry qry);
 
+	/**
+	 * 查询套餐下拉框选择项列表
+	 * @param qry 查询套餐下拉框选择项列表参数
+	 * @return 套餐下拉框选择项列表
+	 */
 	Result<List<OptionCO>> optionList(PackageOptionListQry qry);
 
 }

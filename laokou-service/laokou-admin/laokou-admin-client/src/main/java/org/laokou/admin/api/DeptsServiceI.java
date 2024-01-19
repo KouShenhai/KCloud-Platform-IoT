@@ -30,30 +30,30 @@ import java.util.List;
 public interface DeptsServiceI {
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查看部门树
+	 * @param qry 查看部门树参数
+	 * @return 部门树
 	 */
 	Result<DeptCO> tree(DeptTreeGetQry qry);
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询部门列表
+	 * @param qry 查询部门列表参数
+	 * @return 部门列表
 	 */
 	Result<List<DeptCO>> list(DeptListQry qry);
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 新增部门
+	 * @param cmd 新增部门参数
+	 * @return 新增结果
 	 */
 	Result<Boolean> insert(DeptInsertCmd cmd);
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 修改部门
+	 * @param cmd 修改部门参数
+	 * @return 修改参数
 	 */
 	Result<Boolean> update(DeptUpdateCmd cmd);
 

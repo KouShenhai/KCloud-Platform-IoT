@@ -26,16 +26,37 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 
 /**
+ * IP管理.
  * @author laokou
  */
 public interface IpsServiceI {
 
+	/**
+	 * 新增IP
+	 * @param cmd 新增IP参数
+	 * @return 新增结果
+	 */
 	Result<Boolean> insert(IpInsertCmd cmd);
 
+	/**
+	 * 根据ID删除IP
+	 * @param cmd 根据IP删除IP参数
+	 * @return 删除结果
+	 */
 	Result<Boolean> deleteById(IpDeleteCmd cmd);
 
+	/**
+	 * 查询IP列表
+	 * @param qry 查询IP列表参数
+	 * @return IP列表
+	 */
 	Result<Datas<IpCO>> list(IpListQry qry);
 
+	/**
+	 * 刷新IP至Redis
+	 * @param cmd 刷新IP至Redis参数
+	 * @return 刷新结果
+	 */
 	Result<Boolean> refresh(IpRefreshCmd cmd);
 
 }

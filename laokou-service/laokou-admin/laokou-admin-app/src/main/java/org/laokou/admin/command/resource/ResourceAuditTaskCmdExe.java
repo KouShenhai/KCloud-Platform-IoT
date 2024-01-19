@@ -48,7 +48,7 @@ import static org.laokou.common.i18n.common.AuditEnums.*;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
- * 资源审批任务流程执行器.
+ * 审批资源任务流程执行器.
  * @author laokou
  */
 @Slf4j
@@ -67,8 +67,8 @@ public class ResourceAuditTaskCmdExe {
 	private final EventUtil eventUtil;
 
 	/**
-	 * 执行资源审批任务流程
-	 * @param cmd 资源审批任务流程参数
+	 * 执行审批资源任务流程
+	 * @param cmd 审批资源任务流程参数
 	 * @return 执行审批结果
 	 */
 	@DS(TENANT)
@@ -105,7 +105,7 @@ public class ResourceAuditTaskCmdExe {
 	/**
 	 * 推送审批消息
 	 * @param assignee 执行人
-	 * @param cmd 资源审批任务流程参数
+	 * @param cmd 审批资源任务流程参数
 	 */
 	@Async
 	public void publishMessage(String assignee, ResourceAuditTaskCmd cmd) {
@@ -138,7 +138,7 @@ public class ResourceAuditTaskCmdExe {
 
 	/**
 	 * 转换为审批日志事件
-	 * @param cmd 资源审批任务流程参数
+	 * @param cmd 审批资源任务流程参数
 	 * @param auditStatus 审批状态
 	 * @return 审批日志事件
 	 */

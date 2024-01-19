@@ -39,7 +39,7 @@ public class ResourceSearchGetQryExe {
 	/**
 	 * 执行搜索资源
 	 * @param qry 搜索资源参数
-	 * @return 资源
+	 * @return 搜索结果
 	 */
 	public Result<Datas<Map<String, Object>>> execute(ResourceSearchGetQry qry) {
 		return Result.of(elasticsearchTemplate.highlightSearchIndex(qry.getSearch()));

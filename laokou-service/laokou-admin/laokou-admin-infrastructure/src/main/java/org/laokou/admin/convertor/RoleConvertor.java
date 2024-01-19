@@ -26,6 +26,7 @@ import org.mapstruct.Mapper;
 import static org.laokou.common.i18n.common.SysConstants.SPRING;
 
 /**
+ * 角色转换器.
  * @author laokou
  */
 @Mapper(componentModel = SPRING)

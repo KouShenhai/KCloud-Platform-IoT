@@ -28,16 +28,37 @@ import org.laokou.common.i18n.dto.Result;
 import java.util.Map;
 
 /**
+ * 索引管理.
  * @author laokou
  */
 public interface IndexsServiceI {
 
+	/**
+	 * 查询索引列表
+	 * @param qry 查询索引列表参数
+	 * @return 索引列表
+	 */
 	Result<Datas<IndexCO>> list(IndexListQry qry);
 
+	/**
+	 * 根据索引名称查看索引信息
+	 * @param qry 根据索引名称查看索引信息参数
+	 * @return 索引信息
+	 */
 	Result<Map<String, Object>> info(IndexGetQry qry);
 
+	/**
+	 * 查询分布式链路索引列表
+	 * @param qry 查询分布式链路索引列表参数
+	 * @return 分布式链路索引列表
+	 */
 	Result<Datas<Map<String, Object>>> traceList(IndexTraceListQry qry);
 
+	/**
+	 * 根据ID查看分布式链路索引
+	 * @param qry 根据ID查看分布式链路索引参数
+	 * @return 分布式链路索引
+	 */
 	Result<Map<String, Object>> getTraceById(IndexTraceGetQry qry);
 
 }

@@ -32,7 +32,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
- * 资源委派任务流程执行器.
+ * 委派资源任务流程执行器.
  * @author laokou
  */
 @Slf4j
@@ -47,8 +47,8 @@ public class ResourceDelegateTaskCmdExe {
 	private final EventUtil eventUtil;
 
 	/**
-	 * 执行资源委派任务流程
-	 * @param cmd 资源委派任务流程参数
+	 * 执行委派资源任务流程
+	 * @param cmd 委派资源任务流程参数
 	 * @return 执行委派结果
 	 */
 	@GlobalTransactional(rollbackFor = Exception.class)
@@ -64,7 +64,7 @@ public class ResourceDelegateTaskCmdExe {
 
 	/**
 	 * 推送委派消息
-	 * @param cmd 资源委派任务流程参数
+	 * @param cmd 委派资源任务流程参数
 	 */
 	@Async
 	public void publishMessage(ResourceDelegateTaskCmd cmd) {
@@ -73,9 +73,9 @@ public class ResourceDelegateTaskCmdExe {
 	}
 
 	/**
-	 * 转换为任务委派命令请求
-	 * @param cmd 资源委派任务流程参数
-	 * @return 任务委派命令请求
+	 * 转换为委派任务流程命令请求
+	 * @param cmd 委派资源任务流程参数
+	 * @return 委派任务流程命令请求
 	 */
 	private TaskDelegateCmd toCmd(ResourceDelegateTaskCmd cmd) {
 		TaskDelegateCmd c = new TaskDelegateCmd();

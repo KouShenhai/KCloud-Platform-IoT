@@ -22,6 +22,7 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.core.utils.FileUtil;
 
 /**
+ * 业务工具类.
  * @author laokou
  */
 public class BusinessUtil {
