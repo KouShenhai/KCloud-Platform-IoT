@@ -39,6 +39,11 @@ public class SourceOptionListQryExe {
 
 	private final SourceMapper sourceMapper;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<List<OptionCO>> execute(SourceOptionListQry qry) {
 		List<SourceDO> list = sourceMapper.selectList(Wrappers.lambdaQuery(SourceDO.class)
 			.select(SourceDO::getId, SourceDO::getName)

@@ -71,6 +71,10 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 		}, TtlExecutors.getTtlExecutorService(taskExecutor.getThreadPoolExecutor()));
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	private void execute(LoginLogEvent event) {
 		LoginLogDO logDO = ConvertUtil.sourceToTarget(event, LoginLogDO.class);
 		Assert.isTrue(ObjectUtil.isNotNull(logDO), "logDO is null");

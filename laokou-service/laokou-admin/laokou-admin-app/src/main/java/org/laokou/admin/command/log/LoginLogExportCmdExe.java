@@ -37,12 +37,17 @@ import java.util.List;
 import static org.laokou.common.i18n.common.DatasourceConstants.*;
 
 /**
+ * 导出登录日志执行器.
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
 public class LoginLogExportCmdExe {
 
+	/**
+	 * 执行导出登录日志.
+	 * @param cmd 导出登录日志参数
+	 */
 	@DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
 	public void executeVoid(LoginLogExportCmd cmd) {
 		try {
@@ -59,6 +64,11 @@ public class LoginLogExportCmdExe {
 		}
 	}
 
+	/**
+	 * 构建登录日志数据对象.
+	 * @param cmd 导出登录日志参数
+	 * @return 登录日志数据模型
+	 */
 	private LoginLogDO buildLoginLog(LoginLogExportCmd cmd) {
 		LoginLogDO loginLogDO = new LoginLogDO();
 		loginLogDO.setTenantId(UserUtil.getTenantId());

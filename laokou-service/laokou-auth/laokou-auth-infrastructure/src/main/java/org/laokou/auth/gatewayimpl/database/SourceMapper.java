@@ -34,7 +34,7 @@ public interface SourceMapper {
 	/**
 	 * 根据租户ID查询数据源.
 	 * @param tenantId 租户ID
-	 * @return String
+	 * @return 数据源
 	 */
 	SourceDO getSourceByTenantId(@Param(TENANT_ID) Long tenantId);
 

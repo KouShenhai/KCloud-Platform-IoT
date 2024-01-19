@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.resource;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
 
@@ -27,6 +28,7 @@ import java.util.Map;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class TaskAuditCmd extends CommonCommand {
 
 	@Serial
@@ -35,16 +37,19 @@ public class TaskAuditCmd extends CommonCommand {
 	/**
 	 * 任务ID.
 	 */
+	@Schema(name = "", description = "")
 	private String taskId;
 
 	/**
 	 * 实例ID.
 	 */
+	@Schema(name = "", description = "")
 	private String instanceId;
 
 	/**
 	 * 流程变量.
 	 */
+	@Schema(name = "", description = "")
 	private Map<String, Object> values;
 
 }

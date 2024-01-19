@@ -36,6 +36,11 @@ public class PackageGetQryExe {
 
 	private final PackageConvertor packageConvertor;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<PackageCO> execute(PackageGetQry qry) {
 		return Result.of(packageConvertor.convertClientObject(packageGateway.getById(qry.getId())));
 	}

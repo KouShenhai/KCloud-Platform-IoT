@@ -66,6 +66,10 @@ public class OssLogHandler implements ApplicationListener<OssLogEvent> {
 		}, TtlExecutors.getTtlExecutorService(taskExecutor.getThreadPoolExecutor()));
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	private void execute(OssLogEvent event) {
 		OssLogDO ossLogDO = ConvertUtil.sourceToTarget(event, OssLogDO.class);
 		ossLogMapper.insertTable(ossLogDO);

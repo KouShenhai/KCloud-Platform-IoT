@@ -15,9 +15,13 @@
  *
  */
 
-package org.laokou.admin.command.resource.query;
+package org.laokou.admin.command.monitor.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dto.monitor.MonitorRedisCacheGetQry;
+import org.laokou.admin.dto.monitor.clientobject.RedisCacheCO;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,6 +29,21 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class ResourceTakGetQryExe {
+public class MonitorRedisCacheGetQryExe {
+
+	private final RedisUtil redisUtil;
+
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
+	public Result<RedisCacheCO> execute(MonitorRedisCacheGetQry qry) {
+		RedisCacheCO cacheCO = new RedisCacheCO();
+		cacheCO.setCommandStats(redisUtil.getCommandStatus());
+		cacheCO.setInfo(redisUtil.getInfo());
+		cacheCO.setKeysSize(redisUtil.getKeysSize());
+		return Result.of(cacheCO);
+	}
 
 }

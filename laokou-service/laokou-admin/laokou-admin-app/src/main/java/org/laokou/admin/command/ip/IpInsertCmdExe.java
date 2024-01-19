@@ -25,6 +25,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 新增IP执行器.
  * @author laokou
  */
 @Component
@@ -35,6 +36,11 @@ public class IpInsertCmdExe {
 
 	private final IpConvertor ipConvertor;
 
+	/**
+	 * 执行新增IP.
+	 * @param cmd 新增IP参数
+	 * @return 执行新增结果
+	 */
 	public Result<Boolean> execute(IpInsertCmd cmd) {
 		return Result.of(ipGateway.insert(ipConvertor.toEntity(cmd.getIpCO())));
 	}

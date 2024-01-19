@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查看消息执行器.
  * @author laokou
  */
 @Component
@@ -38,6 +39,11 @@ public class MessageGetQryExe {
 
 	private final MessageGateway messageGateway;
 
+	/**
+	 * 执行查看消息.
+	 * @param qry 查看消息参数
+	 * @return 消息
+	 */
 	@DS(TENANT)
 	public Result<MessageCO> execute(MessageGetQry qry) {
 		Message message = messageGateway.getById(qry.getId());

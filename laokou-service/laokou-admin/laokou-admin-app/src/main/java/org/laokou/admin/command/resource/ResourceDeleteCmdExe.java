@@ -32,6 +32,11 @@ public class ResourceDeleteCmdExe {
 
 	private final ResourceGateway resourceGateway;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	public Result<Boolean> execute(ResourceDeleteCmd cmd) {
 		return Result.of(resourceGateway.deleteById(cmd.getId()));
 	}

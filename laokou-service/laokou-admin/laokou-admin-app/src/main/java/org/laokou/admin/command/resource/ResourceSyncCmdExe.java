@@ -35,6 +35,11 @@ public class ResourceSyncCmdExe {
 
 	private final ResourceGateway resourceGateway;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(ResourceSyncCmd cmd) {
 		return Result.of(resourceGateway.sync());

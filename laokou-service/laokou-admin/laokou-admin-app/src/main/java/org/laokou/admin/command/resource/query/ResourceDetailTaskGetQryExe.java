@@ -38,6 +38,11 @@ public class ResourceDetailTaskGetQryExe {
 
 	private final ResourceAuditMapper resourceAuditMapper;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@DS(TENANT)
 	public Result<ResourceCO> execute(ResourceDetailTaskGetQry qry) {
 		ResourceAuditDO resourceAuditDO = resourceAuditMapper.getResourceAuditById(qry.getId());

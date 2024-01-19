@@ -31,6 +31,7 @@ import java.util.Map;
 import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.TRACE;
 
 /**
+ * 查询分布式链路索引列表执行器.
  * @author laokou
  */
 @Component
@@ -41,6 +42,11 @@ public class IndexTraceListQryExe {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
+	/**
+	 * 执行查询分布式链路索引列表.
+	 * @param qry 查询分布式链路索引列表参数
+	 * @return 分布式链路索引列表
+	 */
 	public Result<Datas<Map<String, Object>>> execute(IndexTraceListQry qry) {
 		Search search = new Search();
 		search.setIndexNames(new String[] { TRACE });

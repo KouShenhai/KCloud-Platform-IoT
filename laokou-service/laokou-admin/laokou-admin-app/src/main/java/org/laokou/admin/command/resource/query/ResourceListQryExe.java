@@ -42,6 +42,11 @@ public class ResourceListQryExe {
 
 	private final ResourceConvertor resourceConvertor;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@DS(TENANT)
 	public Result<Datas<ResourceCO>> execute(ResourceListQry qry) {
 		Resource resource = ConvertUtil.sourceToTarget(qry, Resource.class);

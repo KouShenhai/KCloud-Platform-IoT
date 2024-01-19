@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.user;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
 
@@ -24,10 +25,13 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class UserStatusUpdateCmd extends CommonCommand {
 
+	@Schema(name = "", description = "")
 	private Long id;
 
+	@Schema(name = "", description = "")
 	private Integer status;
 
 }

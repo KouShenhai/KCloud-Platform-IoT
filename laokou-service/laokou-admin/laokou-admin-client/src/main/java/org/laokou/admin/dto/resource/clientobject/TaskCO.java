@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.resource.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
@@ -27,29 +28,40 @@ import java.time.LocalDateTime;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class TaskCO extends ClientObject {
 
 	@Serial
 	private static final long serialVersionUID = -8942395421885937298L;
 
+	@Schema(name = "", description = "")
 	private String taskId;
 
+	@Schema(name = "", description = "")
 	private String taskName;
 
+	@Schema(name = "", description = "")
 	private String definitionId;
 
+	@Schema(name = "", description = "")
 	private String instanceId;
 
+	@Schema(name = "", description = "")
 	private LocalDateTime createDate;
 
+	@Schema(name = "", description = "")
 	private String definitionKey;
 
+	@Schema(name = "", description = "")
 	private String name;
 
+	@Schema(name = "", description = "")
 	private String username;
 
+	@Schema(name = "", description = "")
 	private String instanceName;
 
+	@Schema(name = "", description = "")
 	private String businessKey;
 
 }

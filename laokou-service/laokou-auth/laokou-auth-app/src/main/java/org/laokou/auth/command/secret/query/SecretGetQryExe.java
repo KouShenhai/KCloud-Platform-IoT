@@ -28,6 +28,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecretGetQryExe {
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<String> execute(SecretGetQry qry) {
 		return Result.of(RsaUtil.getPublicKey());
 	}

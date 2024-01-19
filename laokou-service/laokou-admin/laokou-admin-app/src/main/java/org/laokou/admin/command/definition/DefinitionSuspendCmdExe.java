@@ -24,6 +24,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 挂起流程执行器.
  * @author laokou
  */
 @Component
@@ -33,7 +34,7 @@ public class DefinitionSuspendCmdExe {
 	private final DefinitionsFeignClient definitionsFeignClient;
 
 	/**
-	 * 挂起流程.
+	 * 执行挂起流程.
 	 * @param cmd 挂起流程参数
 	 * @return 执行挂起结果
 	 */

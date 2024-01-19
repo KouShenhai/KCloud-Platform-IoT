@@ -71,7 +71,7 @@ public class UserCO extends ClientObject {
 	@Schema(name = "createDate", description = "创建时间")
 	private LocalDateTime createDate;
 
-	@Schema(name = "superAdmin", description = "用户状态 0正常 1锁定")
+	@Schema(name = "superAdmin", description = "超级管理员标识 0否 1是")
 	private Integer superAdmin;
 
 }

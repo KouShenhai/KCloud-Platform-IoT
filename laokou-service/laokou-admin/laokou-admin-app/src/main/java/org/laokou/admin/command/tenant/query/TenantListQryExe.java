@@ -39,6 +39,11 @@ public class TenantListQryExe {
 
 	private final TenantConvertor tenantConvertor;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<Datas<TenantCO>> execute(TenantListQry qry) {
 		Tenant tenant = ConvertUtil.sourceToTarget(qry, Tenant.class);
 		Datas<Tenant> newPage = tenantGateway.list(tenant, qry);

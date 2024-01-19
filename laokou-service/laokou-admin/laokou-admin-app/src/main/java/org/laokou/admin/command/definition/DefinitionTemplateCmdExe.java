@@ -34,6 +34,7 @@ import java.nio.charset.StandardCharsets;
 import static org.laokou.common.i18n.common.StringConstants.SLASH;
 
 /**
+ * 下载流程模板执行器.
  * @author laokou
  */
 @Component
@@ -42,7 +43,7 @@ public class DefinitionTemplateCmdExe {
 
 	private static final String TEMPLATE_NAME = "audit.bpmn20.xml";
 
-	private static final String TEMPLATE_PATH = "/templates";
+	private static final String TEMPLATE_LOCATION = "/templates";
 
 	/**
 	 * 执行下载流程模板.
@@ -54,7 +55,7 @@ public class DefinitionTemplateCmdExe {
 		response.setContentType(ContentType.APPLICATION_OCTET_STREAM.getMimeType());
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=".concat(TEMPLATE_NAME));
-		try (InputStream inputStream = ResourceUtil.getResource(TEMPLATE_PATH + SLASH + TEMPLATE_NAME).getInputStream();
+		try (InputStream inputStream = ResourceUtil.getResource(TEMPLATE_LOCATION + SLASH + TEMPLATE_NAME).getInputStream();
 				ServletOutputStream outputStream = response.getOutputStream()) {
 			IOUtils.write(inputStream.readAllBytes(), outputStream);
 		}

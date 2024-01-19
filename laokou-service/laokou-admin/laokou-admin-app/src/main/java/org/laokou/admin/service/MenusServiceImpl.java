@@ -55,46 +55,91 @@ public class MenusServiceImpl implements MenusServiceI {
 
 	private final MenuTenantTreeGetQryExe menuTenantTreeGetQryExe;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<MenuCO> treeList(MenuTreeListQry qry) {
 		return menuTreeListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<List<MenuCO>> list(MenuListQry qry) {
 		return menuListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<MenuCO> getById(MenuGetQry qry) {
 		return menuGetQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> update(MenuUpdateCmd cmd) {
 		return menuUpdateCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> insert(MenuInsertCmd cmd) {
 		return menuInsertCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> deleteById(MenuDeleteCmd cmd) {
 		return menuDeleteCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<MenuCO> tree(MenuTreeGetQry qry) {
 		return menuTreeGetQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<List<Long>> ids(MenuIDSGetQry qry) {
 		return menuIDSGetQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<MenuCO> tenantTree(MenuTenantTreeGetQry qry) {
 		return menuTenantTreeGetQryExe.execute(qry);

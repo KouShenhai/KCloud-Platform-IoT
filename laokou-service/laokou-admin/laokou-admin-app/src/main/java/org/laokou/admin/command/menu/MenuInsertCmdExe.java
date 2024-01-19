@@ -33,6 +33,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 新增树菜单执行器.
  * @author laokou
  */
 @Component
@@ -45,6 +46,11 @@ public class MenuInsertCmdExe {
 
 	private final MenuMapper menuMapper;
 
+	/**
+	 * 执行新增菜单.
+	 * @param cmd 新增菜单参数
+	 * @return 执行新增结果
+	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(MenuInsertCmd cmd) {
 		MenuCO co = cmd.getMenuCO();

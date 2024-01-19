@@ -25,10 +25,10 @@ import org.laokou.admin.domain.source.Source;
 import org.laokou.admin.dto.source.SourceUpdateCmd;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Component;
 
@@ -47,12 +47,21 @@ public class SourceUpdateCmdExe {
 
 	private final SourceConvertor sourceConvertor;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	public Result<Boolean> execute(SourceUpdateCmd cmd) {
 		Source source = sourceConvertor.toEntity(cmd.getSourceCO());
 		validate(source);
 		return Result.of(sourceGateway.update(source));
 	}
 
+	/**
+	 *
+	 * @param source
+	 */
 	private void validate(Source source) {
 		Long id = source.getId();
 		String name = source.getName();

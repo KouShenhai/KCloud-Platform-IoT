@@ -42,6 +42,11 @@ public class RoleListQryExe {
 
 	private final RoleConvertor roleConvertor;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@DS(TENANT)
 	public Result<Datas<RoleCO>> execute(RoleListQry qry) {
 		Role role = ConvertUtil.sourceToTarget(qry, Role.class);

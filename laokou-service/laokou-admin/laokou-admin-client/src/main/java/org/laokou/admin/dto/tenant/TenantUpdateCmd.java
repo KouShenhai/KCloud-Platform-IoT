@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.tenant;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.common.i18n.dto.CommonCommand;
@@ -25,6 +26,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class TenantUpdateCmd extends CommonCommand {
 
 	private TenantCO tenantCO;

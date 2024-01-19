@@ -35,6 +35,11 @@ public class CaptchaGetQryExe {
 
 	private final CaptchaGateway captchaGateway;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<String> execute(CaptchaGetQry qry) {
 		String uuid = qry.getUuid();
 		Captcha captcha = generate();
@@ -44,6 +49,10 @@ public class CaptchaGetQryExe {
 		return Result.of(base64);
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	private Captcha generate() {
 		// 三个参数分别为宽、高、位数
 		Captcha captcha = new GifCaptcha(130, 48, 4);

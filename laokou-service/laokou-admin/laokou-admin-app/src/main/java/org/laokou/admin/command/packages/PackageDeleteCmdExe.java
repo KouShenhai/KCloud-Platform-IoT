@@ -32,6 +32,11 @@ public class PackageDeleteCmdExe {
 
 	private final PackageGateway packageGateway;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	public Result<Boolean> execute(PackageDeleteCmd cmd) {
 		return Result.of(packageGateway.deleteById(cmd.getId()));
 	}

@@ -45,6 +45,11 @@ public class ResourceDelegateTaskCmdExe {
 
 	private final EventUtil eventUtil;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(ResourceDelegateTaskCmd cmd) {
 		log.info("资源委派任务分布式事务 XID：{}", RootContext.getXID());

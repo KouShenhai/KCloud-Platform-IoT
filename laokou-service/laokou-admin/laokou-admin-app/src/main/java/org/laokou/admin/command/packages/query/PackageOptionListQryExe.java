@@ -38,6 +38,10 @@ public class PackageOptionListQryExe {
 
 	private final PackageMapper packageMapper;
 
+	/**
+	 *
+	 * @return
+	 */
 	public Result<List<OptionCO>> execute() {
 		List<PackageDO> list = packageMapper.selectList(Wrappers.lambdaQuery(PackageDO.class)
 			.select(PackageDO::getId, PackageDO::getName)

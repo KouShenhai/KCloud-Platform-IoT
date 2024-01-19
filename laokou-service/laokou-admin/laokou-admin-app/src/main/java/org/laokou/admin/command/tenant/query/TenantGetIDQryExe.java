@@ -51,6 +51,11 @@ public class TenantGetIDQryExe {
 
 	private final RedisUtil redisUtil;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<Long> execute(TenantGetIDQry qry) {
 		String domainName = RequestUtil.getDomainName(qry.getRequest());
 		if (RegexUtil.ipRegex(domainName)) {

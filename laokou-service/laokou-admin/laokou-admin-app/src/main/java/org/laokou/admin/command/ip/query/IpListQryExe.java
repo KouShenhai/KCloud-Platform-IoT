@@ -28,6 +28,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 查询IP列表执行器.
  * @author laokou
  */
 @Component
@@ -38,6 +39,11 @@ public class IpListQryExe {
 
 	private final IpConvertor ipConvertor;
 
+	/**
+	 * 查询IP列表.
+	 * @param qry 查询IP列表参数
+	 * @return IP列表
+	 */
 	public Result<Datas<IpCO>> execute(IpListQry qry) {
 		Datas<Ip> page = ipGateway.list(new Ip(qry.getLabel()), qry);
 		Datas<IpCO> datas = new Datas<>();

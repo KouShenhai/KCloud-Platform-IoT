@@ -23,7 +23,7 @@ import org.laokou.admin.dto.monitor.MonitorRedisCacheGetQry;
 import org.laokou.admin.dto.monitor.MonitorServerGetQry;
 import org.laokou.admin.dto.monitor.clientobject.RedisCacheCO;
 import org.laokou.admin.dto.monitor.clientobject.ServerCO;
-import org.laokou.admin.command.monitor.query.MonitorCacheGetQryExe;
+import org.laokou.admin.command.monitor.query.MonitorRedisCacheGetQryExe;
 import org.laokou.admin.command.monitor.query.MonitorServerGetQryExe;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
@@ -35,15 +35,25 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MonitorsServiceImpl implements MonitorsServiceI {
 
-	private final MonitorCacheGetQryExe monitorCacheGetQryExe;
+	private final MonitorRedisCacheGetQryExe monitorRedisCacheGetQryExe;
 
 	private final MonitorServerGetQryExe monitorServerGetQryExe;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<RedisCacheCO> cache(MonitorRedisCacheGetQry qry) {
-		return monitorCacheGetQryExe.execute(qry);
+		return monitorRedisCacheGetQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<ServerCO> server(MonitorServerGetQry qry) {
 		return monitorServerGetQryExe.execute(qry);

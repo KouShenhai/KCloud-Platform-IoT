@@ -28,6 +28,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class MonitorServerGetQryExe {
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<ServerCO> execute(MonitorServerGetQry qry) {
 		ServerCO serverCO = new ServerCO();
 		serverCO.copyTo();

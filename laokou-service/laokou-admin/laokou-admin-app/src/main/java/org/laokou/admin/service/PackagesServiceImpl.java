@@ -53,31 +53,61 @@ public class PackagesServiceImpl implements PackagesServiceI {
 
 	private final PackageOptionListQryExe packageOptionListQryExe;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> insert(PackageInsertCmd cmd) {
 		return packageInsertCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> update(PackageUpdateCmd cmd) {
 		return packageUpdateCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> deleteById(PackageDeleteCmd cmd) {
 		return packageDeleteCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Datas<PackageCO>> list(PackageListQry qry) {
 		return packageListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<PackageCO> getById(PackageGetQry qry) {
 		return packageGetQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<List<OptionCO>> optionList(PackageOptionListQry qry) {
 		return packageOptionListQryExe.execute();

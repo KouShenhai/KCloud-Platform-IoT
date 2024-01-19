@@ -33,6 +33,11 @@ public class TokenGetQryExe {
 
 	private final IdempotentUtil idempotentUtil;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<TokenCO> execute(TokenGetQry qry) {
 		return Result.of(new TokenCO(idempotentUtil.getIdempotentKey()));
 	}

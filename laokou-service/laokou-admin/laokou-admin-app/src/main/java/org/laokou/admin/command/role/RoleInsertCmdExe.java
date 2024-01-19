@@ -48,6 +48,11 @@ public class RoleInsertCmdExe {
 
 	private final RoleConvertor roleConvertor;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(RoleInsertCmd cmd) {
 		RoleCO co = cmd.getRoleCO();

@@ -37,6 +37,11 @@ public class RoleDeleteCmdExe {
 
 	private final RoleGateway roleGateway;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(RoleDeleteCmd cmd) {
 		return Result.of(roleGateway.deleteById(cmd.getId()));

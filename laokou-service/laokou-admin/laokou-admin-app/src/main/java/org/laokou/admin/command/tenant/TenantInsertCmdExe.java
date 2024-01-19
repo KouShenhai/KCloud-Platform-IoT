@@ -35,6 +35,11 @@ public class TenantInsertCmdExe {
 
 	private final TenantConvertor tenantConvertor;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	public Result<Boolean> execute(TenantInsertCmd cmd) {
 		return Result.of(tenantGateway.insert(tenantConvertor.toEntity(cmd.getTenantCO())));
 	}

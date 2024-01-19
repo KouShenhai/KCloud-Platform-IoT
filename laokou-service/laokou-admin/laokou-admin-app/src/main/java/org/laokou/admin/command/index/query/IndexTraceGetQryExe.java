@@ -31,6 +31,7 @@ import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.TRACE;
 import static org.laokou.common.i18n.common.MybatisPlusConstants.ID;
 
 /**
+ * 查看分布式链路索引执行器.
  * @author laokou
  */
 @Component
@@ -39,6 +40,11 @@ public class IndexTraceGetQryExe {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
+	/**
+	 * 执行查看分布式链路索引.
+	 * @param qry 查看分布式链路索引
+	 * @return 分布式链路索引
+	 */
 	public Result<Map<String, Object>> execute(IndexTraceGetQry qry) {
 		Search search = new Search();
 		search.setIndexNames(new String[] { TRACE });

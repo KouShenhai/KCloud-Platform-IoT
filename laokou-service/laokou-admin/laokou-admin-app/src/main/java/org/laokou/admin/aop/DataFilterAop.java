@@ -119,12 +119,14 @@ public class DataFilterAop {
 			.append(user.getId())
 			.append(DOUBLE_QUOT);
 		sqlFilter.append(RIGHT);
-		// after(sql);
-		return sqlFilter.toString();
+		return afterAndResult(sqlFilter.toString());
 	}
 
-	private void after(String sql) {
-		log.info("获取拼接后的SQL:{}", sql);
+	private String afterAndResult(String sql) {
+		if (log.isDebugEnabled()) {
+			log.debug("获取拼接后的SQL:{}", sql);
+		}
+		return sql;
 	}
 
 }

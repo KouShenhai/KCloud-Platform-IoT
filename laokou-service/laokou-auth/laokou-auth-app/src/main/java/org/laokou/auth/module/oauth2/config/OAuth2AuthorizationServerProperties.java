@@ -72,10 +72,17 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 		validate();
 	}
 
+	/**
+	 *
+	 */
 	public void validate() {
 		getClient().values().forEach(this::validateClient);
 	}
 
+	/**
+	 *
+	 * @param client
+	 */
 	private void validateClient(Client client) {
 		if (StringUtil.isEmpty(client.getRegistration().getClientId())) {
 			throw new IllegalStateException("Client id must not be empty.");

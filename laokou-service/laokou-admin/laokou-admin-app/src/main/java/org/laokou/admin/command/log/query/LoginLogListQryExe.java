@@ -29,6 +29,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 查询登录日志列表执行器.
  * @author laokou
  */
 @Component
@@ -39,6 +40,11 @@ public class LoginLogListQryExe {
 
 	private final LoginLogConvertor loginLogConvertor;
 
+	/**
+	 * 执行查询登录日志列表.
+	 * @param qry 查询登录日志列表参数
+	 * @return 登录日志列表
+	 */
 	public Result<Datas<LoginLogCO>> execute(LoginLogListQry qry) {
 		LoginLog loginLog = ConvertUtil.sourceToTarget(qry, LoginLog.class);
 		Datas<LoginLog> newPage = logGateway.loginList(loginLog, qry);

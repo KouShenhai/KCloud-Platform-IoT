@@ -35,6 +35,11 @@ public class SourceGetQryExe {
 
 	private final SourceGateway sourceGateway;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<SourceCO> execute(SourceGetQry qry) {
 		Source source = sourceGateway.getById(qry.getId());
 		return Result.of(ConvertUtil.sourceToTarget(source, SourceCO.class));

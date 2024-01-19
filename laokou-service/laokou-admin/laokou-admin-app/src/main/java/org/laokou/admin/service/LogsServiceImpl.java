@@ -48,21 +48,39 @@ public class LogsServiceImpl implements LogsServiceI {
 
 	private final LoginLogExportCmdExe loginLogExportCmdExe;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Datas<OperateLogCO>> operateList(OperateLogListQry qry) {
 		return operateLogListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 */
 	@Override
 	public void operateExport(OperateLogExportCmd cmd) {
 		operateLogExportCmdExe.executeVoid(cmd);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Datas<LoginLogCO>> loginList(LoginLogListQry qry) {
 		return loginLogListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 */
 	@Override
 	public void loginExport(LoginLogExportCmd cmd) {
 		loginLogExportCmdExe.executeVoid(cmd);

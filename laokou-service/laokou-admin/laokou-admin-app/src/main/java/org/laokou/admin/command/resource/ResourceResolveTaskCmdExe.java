@@ -44,6 +44,11 @@ public class ResourceResolveTaskCmdExe {
 
 	private final DomainEventPublisher domainEventPublisher;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(ResourceResolveTaskCmd cmd) {
 		log.info("资源处理任务分布式事务 XID：{}", RootContext.getXID());

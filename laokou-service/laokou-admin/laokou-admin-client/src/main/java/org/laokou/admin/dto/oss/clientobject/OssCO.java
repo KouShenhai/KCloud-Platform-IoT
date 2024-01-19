@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.oss.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
@@ -24,22 +25,31 @@ import org.laokou.common.i18n.dto.ClientObject;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class OssCO extends ClientObject {
 
+	@Schema(name = "", description = "")
 	private Long id;
 
+	@Schema(name = "", description = "")
 	private String name;
 
+	@Schema(name = "", description = "")
 	private String endpoint;
 
+	@Schema(name = "", description = "")
 	private String region;
 
+	@Schema(name = "", description = "")
 	private String accessKey;
 
+	@Schema(name = "", description = "")
 	private String secretKey;
 
+	@Schema(name = "", description = "")
 	private String bucketName;
 
+	@Schema(name = "", description = "")
 	private Integer pathStyleAccessEnabled;
 
 }

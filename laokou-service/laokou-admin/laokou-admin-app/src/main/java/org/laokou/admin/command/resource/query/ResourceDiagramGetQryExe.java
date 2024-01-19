@@ -32,6 +32,11 @@ public class ResourceDiagramGetQryExe {
 
 	private final TasksFeignClient tasksFeignClient;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<String> execute(ResourceDiagramGetQry qry) {
 		return tasksFeignClient.diagram(qry.getInstanceId());
 	}

@@ -76,11 +76,21 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	private final ResourceSearchGetQryExe resourceSearchGetQryExe;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<List<AuditLogCO>> auditLog(ResourceAuditLogListQry qry) {
 		return resourceAuditLogListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> sync(ResourceSyncCmd cmd) {
 		return resourceSyncCmdExe.execute(cmd);

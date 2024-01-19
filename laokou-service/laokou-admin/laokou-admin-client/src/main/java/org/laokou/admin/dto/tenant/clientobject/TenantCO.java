@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.tenant.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
@@ -26,19 +27,25 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class TenantCO extends ClientObject {
 
 	@Serial
 	private static final long serialVersionUID = -5244147777398551087L;
 
+	@Schema(name = "", description = "")
 	private Long id;
 
+	@Schema(name = "", description = "")
 	private String name;
 
+	@Schema(name = "", description = "")
 	private String label;
 
+	@Schema(name = "", description = "")
 	private Long sourceId;
 
+	@Schema(name = "", description = "")
 	private Long packageId;
 
 }

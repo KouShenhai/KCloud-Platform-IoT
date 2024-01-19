@@ -42,6 +42,11 @@ public class RoleOptionListQryExe {
 
 	private final RoleMapper roleMapper;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@DS(TENANT)
 	public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
 		List<RoleDO> list = roleMapper.selectList(

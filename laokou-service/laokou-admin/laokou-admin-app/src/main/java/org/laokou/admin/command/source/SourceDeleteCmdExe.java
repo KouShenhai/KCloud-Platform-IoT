@@ -32,6 +32,11 @@ public class SourceDeleteCmdExe {
 
 	private final SourceGateway sourceGateway;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	public Result<Boolean> execute(SourceDeleteCmd cmd) {
 		return Result.of(sourceGateway.deleteById(cmd.getId()));
 	}

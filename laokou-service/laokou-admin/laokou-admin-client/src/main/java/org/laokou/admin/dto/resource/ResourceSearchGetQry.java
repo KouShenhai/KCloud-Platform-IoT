@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.resource;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
@@ -26,9 +27,11 @@ import org.laokou.common.i18n.dto.Search;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class ResourceSearchGetQry extends CommonCommand {
 
 	@Valid
+	@Schema(name = "", description = "")
 	private Search search;
 
 }

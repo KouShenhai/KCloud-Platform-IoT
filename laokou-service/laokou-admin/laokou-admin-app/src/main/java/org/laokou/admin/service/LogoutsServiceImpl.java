@@ -33,6 +33,11 @@ public class LogoutsServiceImpl implements LogoutsServiceI {
 
 	private final LogoutCmdExe logoutCmdExe;
 
+	/**
+	 *
+	 * @param cmd 指令
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> logout(LogoutCmd cmd) {
 		return logoutCmdExe.execute(cmd);

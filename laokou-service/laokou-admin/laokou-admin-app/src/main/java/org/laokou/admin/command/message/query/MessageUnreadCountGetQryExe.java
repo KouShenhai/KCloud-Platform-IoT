@@ -28,6 +28,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查看未读消息数执行器.
  * @author laokou
  */
 @Component
@@ -36,6 +37,11 @@ public class MessageUnreadCountGetQryExe {
 
 	private final MessageDetailMapper messageDetailMapper;
 
+	/**
+	 * 执行查看未读消息数.
+	 * @param qry 查看未读消息数参数
+	 * @return 未读消息数
+	 */
 	@DS(TENANT)
 	public Result<Integer> execute(MessageUnreadCountGetQry qry) {
 		return Result.of(messageDetailMapper.getUnreadMessageCountByUserId(UserUtil.getUserId()));

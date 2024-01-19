@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.resource;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -25,14 +26,19 @@ import org.laokou.common.i18n.utils.StringUtil;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class ResourceListQry extends PageQuery {
 
+	@Schema(name = "", description = "")
 	private Long id;
 
+	@Schema(name = "", description = "")
 	private Integer status;
 
+	@Schema(name = "", description = "")
 	private String code;
 
+	@Schema(name = "", description = "")
 	private String title;
 
 	public void setTitle(String title) {

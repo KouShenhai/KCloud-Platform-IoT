@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.resource.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
@@ -26,16 +27,22 @@ import java.time.LocalDateTime;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class AuditLogCO extends ClientObject {
 
+	@Schema(name = "", description = "")
 	private Long id;
 
+	@Schema(name = "", description = "")
 	private Integer status;
 
+	@Schema(name = "", description = "")
 	private String approver;
 
+	@Schema(name = "", description = "")
 	private String comment;
 
+	@Schema(name = "", description = "")
 	private LocalDateTime createDate;
 
 }

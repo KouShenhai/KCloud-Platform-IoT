@@ -63,6 +63,11 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	private final UserListQryExe userListQryExe;
 
+	/**
+	 *
+	 * @param cmd 指定
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> update(UserUpdateCmd cmd) {
 		return userUpdateCmdExe.execute(cmd);

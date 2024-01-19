@@ -35,6 +35,11 @@ public class OssDeleteCmdExe {
 
 	private final OssGateway ossGateway;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(OssDeleteCmd cmd) {
 		return Result.of(ossGateway.deleteById(cmd.getId()));

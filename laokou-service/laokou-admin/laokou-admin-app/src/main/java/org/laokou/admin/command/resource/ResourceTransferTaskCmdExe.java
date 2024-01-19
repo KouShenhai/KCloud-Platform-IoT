@@ -45,6 +45,11 @@ public class ResourceTransferTaskCmdExe {
 
 	private final EventUtil eventUtil;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(ResourceTransferTaskCmd cmd) {
 		log.info("资源转办任务分布式事务 XID：{}", RootContext.getXID());

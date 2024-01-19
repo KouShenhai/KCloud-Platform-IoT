@@ -32,6 +32,11 @@ public class TenantDeleteCmdExe {
 
 	private final TenantGateway tenantGateway;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	public Result<Boolean> execute(TenantDeleteCmd cmd) {
 		return Result.of(tenantGateway.deleteById(cmd.getId()));
 	}

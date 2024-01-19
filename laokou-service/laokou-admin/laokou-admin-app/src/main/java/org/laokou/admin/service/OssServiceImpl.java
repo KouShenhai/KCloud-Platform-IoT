@@ -48,6 +48,11 @@ public class OssServiceImpl implements OssServiceI {
 
 	private final OssGetQryExe ossGetQryExe;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> insert(OssInsertCmd cmd) {
 		return ossInsertCmdExe.execute(cmd);

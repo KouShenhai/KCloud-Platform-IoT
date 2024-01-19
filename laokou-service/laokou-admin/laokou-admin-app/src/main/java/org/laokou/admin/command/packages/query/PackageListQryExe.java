@@ -39,6 +39,11 @@ public class PackageListQryExe {
 
 	private final PackageConvertor packageConvertor;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<Datas<PackageCO>> execute(PackageListQry qry) {
 		Package pack = ConvertUtil.sourceToTarget(qry, Package.class);
 		Datas<Package> newPage = packageGateway.list(pack, qry);

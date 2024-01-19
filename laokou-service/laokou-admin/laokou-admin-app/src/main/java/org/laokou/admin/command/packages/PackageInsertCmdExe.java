@@ -36,11 +36,20 @@ public class PackageInsertCmdExe {
 
 	private final PackageGateway packageGateway;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	public Result<Boolean> execute(PackageInsertCmd cmd) {
 		Package pack = ConvertUtil.sourceToTarget(cmd.getPackageCO(), Package.class);
 		return Result.of(packageGateway.insert(pack, toUser()));
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	private User toUser() {
 		return ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
 	}

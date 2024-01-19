@@ -54,6 +54,7 @@ public class MessageHandler implements ApplicationListener<MessageEvent> {
 		MessageCO co = ConvertUtil.sourceToTarget(event, MessageCO.class);
 		Assert.isTrue(ObjectUtil.isNotNull(co), "MessageCO is null");
 		if (CollectionUtil.isEmpty(co.getReceiver())) {
+			// 远程调用获取当前任务执行人
 			AssigneeCO result = FeignUtil.result(tasksFeignClient.assignee(event.getInstanceId()));
 			co.setReceiver(Collections.singleton(result.getAssignee()));
 		}

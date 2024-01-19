@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.role.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
@@ -27,19 +28,25 @@ import java.util.List;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class RoleCO extends ClientObject {
 
 	@Serial
 	private static final long serialVersionUID = -3805903746359810600L;
 
+	@Schema(name = "", description = "")
 	private Long id;
 
+	@Schema(name = "", description = "")
 	private String name;
 
+	@Schema(name = "", description = "")
 	private Integer sort;
 
+	@Schema(name = "", description = "")
 	private List<Long> menuIds;
 
+	@Schema(name = "", description = "")
 	private List<Long> deptIds;
 
 }

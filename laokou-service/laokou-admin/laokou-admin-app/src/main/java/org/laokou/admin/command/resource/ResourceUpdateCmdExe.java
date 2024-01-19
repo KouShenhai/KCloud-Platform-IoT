@@ -40,6 +40,11 @@ public class ResourceUpdateCmdExe {
 
 	private final ResourceConvertor resourceConvertor;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(ResourceUpdateCmd cmd) {
 		Resource resource = resourceConvertor.toEntity(cmd.getResourceCO());

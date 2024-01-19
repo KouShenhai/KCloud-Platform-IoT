@@ -34,6 +34,11 @@ public class TenantGetQryExe {
 
 	private final TenantGateway tenantGateway;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<TenantCO> execute(TenantGetQry qry) {
 		return Result.of(ConvertUtil.sourceToTarget(tenantGateway.getById(qry.getId()), TenantCO.class));
 	}

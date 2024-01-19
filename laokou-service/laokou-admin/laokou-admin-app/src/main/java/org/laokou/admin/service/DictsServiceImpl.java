@@ -53,31 +53,61 @@ public class DictsServiceImpl implements DictsServiceI {
 
 	private final DictListQryExe dictListQryExe;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> insert(DictInsertCmd cmd) {
 		return dictInsertCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> update(DictUpdateCmd cmd) {
 		return dictUpdateCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> deleteById(DictDeleteCmd cmd) {
 		return dictDeleteCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<DictCO> getById(DictGetQry qry) {
 		return dictGetQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<List<OptionCO>> optionList(DictOptionListQry qry) {
 		return dictOptionListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Datas<DictCO>> list(DictListQry qry) {
 		return dictListQryExe.execute(qry);

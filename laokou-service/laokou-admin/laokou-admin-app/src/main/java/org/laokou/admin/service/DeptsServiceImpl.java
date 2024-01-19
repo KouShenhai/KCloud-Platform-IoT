@@ -54,36 +54,71 @@ public class DeptsServiceImpl implements DeptsServiceI {
 
 	private final DeptIDSGetQryExe deptIDSGetQryExe;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<DeptCO> tree(DeptTreeGetQry qry) {
 		return deptTreeGetQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<List<DeptCO>> list(DeptListQry qry) {
 		return deptListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> insert(DeptInsertCmd cmd) {
 		return deptInsertCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> update(DeptUpdateCmd cmd) {
 		return deptUpdateCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> deleteById(DeptDeleteCmd cmd) {
 		return deptDeleteCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<DeptCO> getById(DeptGetQry qry) {
 		return deptGetQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<List<Long>> ids(DeptIDSGetQry qry) {
 		return deptIDSGetQryExe.execute(qry);

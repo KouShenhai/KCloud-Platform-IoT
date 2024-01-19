@@ -62,6 +62,11 @@ public class OnlineUserListQryExe {
 		return RedisKeyUtil.getUserInfoKey(EMPTY);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	private Datas<UserOnlineCO> getDatas(OnlineUserListQry qry) {
 		Set<String> keys = getKeys();
 		String keyword = qry.getUsername();

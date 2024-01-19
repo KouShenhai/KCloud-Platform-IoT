@@ -35,7 +35,7 @@ public class DefinitionActiveCmdExe {
 	private final DefinitionsFeignClient definitionsFeignClient;
 
 	/**
-	 * 激活流程.
+	 * 执行激活流程.
 	 * @param cmd 激活流程参数
 	 * @return 执行激活结果
 	 */

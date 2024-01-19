@@ -66,6 +66,10 @@ public class OperateLogHandler implements ApplicationListener<OperateLogEvent> {
 		}, TtlExecutors.getTtlExecutorService(taskExecutor.getThreadPoolExecutor()));
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	private void execute(OperateLogEvent event) {
 		OperateLogDO operateLogDO = ConvertUtil.sourceToTarget(event, OperateLogDO.class);
 		operateLogMapper.insertTable(operateLogDO);

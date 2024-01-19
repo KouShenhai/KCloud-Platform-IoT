@@ -32,6 +32,7 @@ import java.util.List;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查询部门列表执行器.
  * @author laokou
  */
 @Component
@@ -42,6 +43,11 @@ public class DeptListQryExe {
 
 	private final DeptConvertor deptConvertor;
 
+	/**
+	 * 执行查询部门列表.
+	 * @param qry 查询部门列表参数
+	 * @return 部门列表
+	 */
 	@DS(TENANT)
 	public Result<List<DeptCO>> execute(DeptListQry qry) {
 		Dept dept = new Dept();

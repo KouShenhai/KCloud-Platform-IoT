@@ -43,12 +43,21 @@ public class SourceInsertCmdExe {
 
 	private final SourceConvertor sourceConvertor;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	public Result<Boolean> execute(SourceInsertCmd cmd) {
 		Source source = sourceConvertor.toEntity(cmd.getSourceCO());
 		validate(source);
 		return Result.of(sourceGateway.insert(source));
 	}
 
+	/**
+	 *
+	 * @param source
+	 */
 	private void validate(Source source) {
 		String name = source.getName();
 		boolean sourceRegex = RegexUtil.sourceRegex(name);

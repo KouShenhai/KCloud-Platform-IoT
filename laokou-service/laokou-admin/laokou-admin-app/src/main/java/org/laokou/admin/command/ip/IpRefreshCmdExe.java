@@ -25,6 +25,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * IP刷新至Redis执行器.
  * @author laokou
  */
 @Component
@@ -33,6 +34,11 @@ public class IpRefreshCmdExe {
 
 	private final IpGateway ipGateway;
 
+	/**
+	 * 执行IP刷新至Redis.
+	 * @param cmd IP刷新至Redis参数
+	 * @return 执行刷新结果
+	 */
 	public Result<Boolean> execute(IpRefreshCmd cmd) {
 		return Result.of(ipGateway.refresh(new Ip(cmd.getLabel())));
 	}

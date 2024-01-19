@@ -36,6 +36,7 @@ import static org.laokou.common.i18n.common.ValCodes.SYSTEM_ID_REQUIRE;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 删除菜单执行器.
  * @author laokou
  */
 @Component
@@ -48,6 +49,11 @@ public class MenuUpdateCmdExe {
 
 	private final MenuMapper menuMapper;
 
+	/**
+	 * 执行删除菜单.
+	 * @param cmd 删除菜单参数
+	 * @return 执行删除结果
+	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(MenuUpdateCmd cmd) {
 		MenuCO co = cmd.getMenuCO();

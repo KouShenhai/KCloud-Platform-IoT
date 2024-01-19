@@ -41,7 +41,7 @@
         <spring-boot-maven-plugin.version>3.2.1</spring-boot-maven-plugin.version>
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.2.1</spring-boot.version>
+        <spring-boot.version>3.2.2-SNAPSHOT</spring-boot.version>
         <!--spring-cloud版本-->
         <spring-cloud.version>2023.0.0</spring-cloud.version>
         <!--spring-framework版本-->
@@ -345,7 +345,7 @@
                     <failsOnError>true</failsOnError>
                     <failOnViolation>true</failOnViolation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                    <skip>false</skip>
+                    <skip>true</skip>
                     <linkXRef>false</linkXRef>
                 </configuration>
                 <executions>

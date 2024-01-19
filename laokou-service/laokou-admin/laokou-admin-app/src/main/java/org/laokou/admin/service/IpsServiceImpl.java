@@ -47,21 +47,41 @@ public class IpsServiceImpl implements IpsServiceI {
 
 	private final IpRefreshCmdExe ipRefreshCmdExe;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> insert(IpInsertCmd cmd) {
 		return ipInsertCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> deleteById(IpDeleteCmd cmd) {
 		return ipDeleteCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Datas<IpCO>> list(IpListQry qry) {
 		return ipListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> refresh(IpRefreshCmd cmd) {
 		return ipRefreshCmdExe.execute(cmd);

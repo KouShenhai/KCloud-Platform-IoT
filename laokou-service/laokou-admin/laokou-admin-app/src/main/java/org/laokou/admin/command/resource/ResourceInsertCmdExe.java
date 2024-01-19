@@ -40,6 +40,11 @@ public class ResourceInsertCmdExe {
 
 	private final ResourceConvertor resourceConvertor;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(ResourceInsertCmd cmd) {
 		Resource resource = resourceConvertor.toEntity(cmd.getResourceCO());

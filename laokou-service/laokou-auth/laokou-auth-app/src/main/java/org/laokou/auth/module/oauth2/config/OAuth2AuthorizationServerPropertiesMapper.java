@@ -36,9 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Maps
+ * Maps to Authorization Server types.
  * {@link org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerProperties}
- * to Authorization Server types.
  *
  * @author Steve Riesenberg
  * @author laokou
@@ -49,6 +48,10 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 
 	private final OAuth2AuthorizationServerProperties properties;
 
+	/**
+	 *
+	 * @return
+	 */
 	AuthorizationServerSettings asAuthorizationServerSettings() {
 		PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
 		OAuth2AuthorizationServerProperties.Endpoint endpoint = this.properties.getEndpoint();
@@ -68,6 +71,10 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 		return builder.build();
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	List<RegisteredClient> asRegisteredClients() {
 		List<RegisteredClient> registeredClients = new ArrayList<>();
 		this.properties.getClient()
@@ -75,6 +82,12 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 		return registeredClients;
 	}
 
+	/**
+	 *
+	 * @param registrationId
+	 * @param client
+	 * @return
+	 */
 	private RegisteredClient getRegisteredClient(String registrationId,
 			OAuth2AuthorizationServerProperties.Client client) {
 		OAuth2AuthorizationServerProperties.Registration registration = client.getRegistration();
@@ -104,6 +117,12 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 		return builder.build();
 	}
 
+	/**
+	 *
+	 * @param client
+	 * @param map
+	 * @return
+	 */
 	private ClientSettings getClientSettings(OAuth2AuthorizationServerProperties.Client client, PropertyMapper map) {
 		ClientSettings.Builder builder = ClientSettings.builder();
 		map.from(client::isRequireProofKey).to(builder::requireProofKey);
@@ -116,6 +135,12 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 		return builder.build();
 	}
 
+	/**
+	 *
+	 * @param client
+	 * @param map
+	 * @return
+	 */
 	private TokenSettings getTokenSettings(OAuth2AuthorizationServerProperties.Client client, PropertyMapper map) {
 		OAuth2AuthorizationServerProperties.Token token = client.getToken();
 		TokenSettings.Builder builder = TokenSettings.builder();
@@ -132,6 +157,11 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 		return builder.build();
 	}
 
+	/**
+	 *
+	 * @param signingAlgorithm
+	 * @return
+	 */
 	private JwsAlgorithm jwsAlgorithm(String signingAlgorithm) {
 		String name = signingAlgorithm.toUpperCase();
 		JwsAlgorithm jwsAlgorithm = SignatureAlgorithm.from(name);
@@ -141,6 +171,11 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 		return jwsAlgorithm;
 	}
 
+	/**
+	 *
+	 * @param signatureAlgorithm
+	 * @return
+	 */
 	private SignatureAlgorithm signatureAlgorithm(String signatureAlgorithm) {
 		return SignatureAlgorithm.from(signatureAlgorithm.toUpperCase());
 	}

@@ -65,6 +65,11 @@ public class ResourceAuditTaskCmdExe {
 
 	private final EventUtil eventUtil;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@DS(TENANT)
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(ResourceAuditTaskCmd cmd) {

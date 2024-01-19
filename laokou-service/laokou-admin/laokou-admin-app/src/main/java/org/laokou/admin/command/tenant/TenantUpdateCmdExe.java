@@ -36,6 +36,11 @@ public class TenantUpdateCmdExe {
 
 	private final TenantConvertor tenantConvertor;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	public Result<Boolean> execute(TenantUpdateCmd cmd) {
 		Tenant tenant = tenantConvertor.toEntity(cmd.getTenantCO());
 		return Result.of(tenantGateway.update(tenant));

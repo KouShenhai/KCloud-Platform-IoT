@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.source.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
@@ -24,18 +25,25 @@ import org.laokou.common.i18n.dto.ClientObject;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class SourceCO extends ClientObject {
 
+	@Schema(name = "", description = "")
 	private Long id;
 
+	@Schema(name = "", description = "")
 	private String name;
 
+	@Schema(name = "", description = "")
 	private String driverClassName;
 
+	@Schema(name = "", description = "")
 	private String username;
 
+	@Schema(name = "", description = "")
 	private String password;
 
+	@Schema(name = "", description = "")
 	private String url;
 
 }

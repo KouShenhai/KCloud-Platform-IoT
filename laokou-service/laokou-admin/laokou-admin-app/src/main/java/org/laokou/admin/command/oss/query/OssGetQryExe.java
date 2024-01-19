@@ -39,6 +39,11 @@ public class OssGetQryExe {
 
 	private final OssConvertor ossConvertor;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@DS(TENANT)
 	public Result<OssCO> execute(OssGetQry qry) {
 		return Result.of(ossConvertor.convertClientObject(ossGateway.getById(qry.getId())));

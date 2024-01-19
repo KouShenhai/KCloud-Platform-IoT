@@ -59,12 +59,22 @@ public class StorageFactory {
 		return new AmazonS3StorageDriver(getOssConfig(tenantId));
 	}
 
+	/**
+	 *
+	 * @param tenantId
+	 * @return
+	 */
 	private OssCO getOssConfig(Long tenantId) {
 		Algorithm algorithm = new PollSelectAlgorithm();
 		OssDO ossDO = algorithm.select(getOssCache(tenantId), EMPTY);
 		return ossConvertor.convertClientObj(ossDO);
 	}
 
+	/**
+	 *
+	 * @param tenantId
+	 * @return
+	 */
 	private List<OssDO> getOssCache(Long tenantId) {
 		String ossConfigKey = RedisKeyUtil.getOssConfigKey(tenantId);
 		List<Object> objList = redisUtil.lGetAll(ossConfigKey);

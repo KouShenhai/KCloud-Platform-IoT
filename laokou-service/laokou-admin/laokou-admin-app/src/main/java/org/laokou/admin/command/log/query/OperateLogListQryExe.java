@@ -32,6 +32,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查询操作日志列表执行器.
  * @author laokou
  */
 @Component
@@ -42,6 +43,11 @@ public class OperateLogListQryExe {
 
 	private final OperateLogConvertor operateLogConvertor;
 
+	/**
+	 * 执行查询操作日志列表.
+	 * @param qry 查询操作日志列表参数
+	 * @return 操作日志列表
+	 */
 	@DS(TENANT)
 	public Result<Datas<OperateLogCO>> execute(OperateLogListQry qry) {
 		OperateLog operateLog = ConvertUtil.sourceToTarget(qry, OperateLog.class);

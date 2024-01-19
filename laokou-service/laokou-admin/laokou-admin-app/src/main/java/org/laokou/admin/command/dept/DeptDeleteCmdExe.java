@@ -27,6 +27,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 删除部门执行器.
  * @author laokou
  */
 @Component
@@ -35,6 +36,11 @@ public class DeptDeleteCmdExe {
 
 	private final DeptGateway deptGateway;
 
+	/**
+	 * 执行删除部门.
+	 * @param cmd 删除部门参数
+	 * @return 执行删除结果
+	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(DeptDeleteCmd cmd) {
 		return Result.of(deptGateway.deleteById(cmd.getId()));

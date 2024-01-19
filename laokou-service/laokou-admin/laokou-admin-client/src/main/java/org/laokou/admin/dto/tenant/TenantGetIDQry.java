@@ -17,6 +17,8 @@
 
 package org.laokou.admin.dto.tenant;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,8 +31,11 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "", description = "")
 public class TenantGetIDQry extends CommonCommand {
 
+	@JsonIgnore
+	@Schema(name = "", description = "")
 	private HttpServletRequest request;
 
 }

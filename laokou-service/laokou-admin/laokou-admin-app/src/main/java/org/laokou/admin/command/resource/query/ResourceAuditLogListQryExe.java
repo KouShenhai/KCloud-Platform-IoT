@@ -43,6 +43,11 @@ public class ResourceAuditLogListQryExe {
 
 	private final AuditLogConvertor auditLogConvertor;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@DS(TENANT)
 	public Result<List<AuditLogCO>> execute(ResourceAuditLogListQry qry) {
 		List<AuditLogDO> list = auditLogMapper.selectList(Wrappers.lambdaQuery(AuditLogDO.class)

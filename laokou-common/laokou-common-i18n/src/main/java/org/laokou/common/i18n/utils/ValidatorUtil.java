@@ -17,7 +17,6 @@
 
 package org.laokou.common.i18n.utils;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -31,12 +30,12 @@ import java.util.stream.Collectors;
 
 // @formatter:off
 /**
+ * 校验工具类.
  * <a href="https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#section-validating-bean-constraints">校验相关代码及文档</a>.
  * @author laokou
  */
 // @formatter:on
 
-@Schema(name = "ValidatorUtil", description = "校验工具类")
 public class ValidatorUtil {
 
 	private static final ReloadableResourceBundleMessageSource VALIDATE_BUNDLE_MESSAGE_SOURCE;

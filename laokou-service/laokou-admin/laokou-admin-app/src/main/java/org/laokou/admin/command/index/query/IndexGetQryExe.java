@@ -26,6 +26,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
+ * 查看索引执行器.
  * @author laokou
  */
 @Component
@@ -34,6 +35,11 @@ public class IndexGetQryExe {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
+	/**
+	 * 执行查看索引.
+	 * @param qry 查看索引参数
+	 * @return 索引
+	 */
 	public Result<Map<String, Object>> execute(IndexGetQry qry) {
 		return Result.of(elasticsearchTemplate.getIndexProperties(qry.getIndexName()));
 	}

@@ -17,12 +17,14 @@
 
 package org.laokou.admin.dto.resource;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class TaskTransferCmd extends TaskDelegateCmd {
 
 }

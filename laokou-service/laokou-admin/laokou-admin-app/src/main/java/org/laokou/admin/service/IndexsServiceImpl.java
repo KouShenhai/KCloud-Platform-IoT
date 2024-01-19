@@ -49,21 +49,41 @@ public class IndexsServiceImpl implements IndexsServiceI {
 
 	private final IndexTraceGetQryExe indexTraceGetQryExe;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Datas<IndexCO>> list(IndexListQry qry) {
 		return indexListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Map<String, Object>> info(IndexGetQry qry) {
 		return indexGetQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Datas<Map<String, Object>>> traceList(IndexTraceListQry qry) {
 		return indexTraceListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Map<String, Object>> getTraceById(IndexTraceGetQry qry) {
 		return indexTraceGetQryExe.execute(qry);

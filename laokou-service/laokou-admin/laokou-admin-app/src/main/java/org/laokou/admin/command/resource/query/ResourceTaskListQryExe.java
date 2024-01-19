@@ -43,6 +43,11 @@ public class ResourceTaskListQryExe {
 
 	private final DefaultConfigProperties defaultConfigProperties;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<Datas<TaskCO>> execute(ResourceTaskListQry qry) {
 		Datas<TaskCO> result = FeignUtil.result(tasksFeignClient.list(toQry(qry)));
 		List<TaskCO> records = result.getRecords();
@@ -53,6 +58,11 @@ public class ResourceTaskListQryExe {
 		return Result.of(result);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	private TaskListQry toQry(ResourceTaskListQry qry) {
 		TaskListQry taskListQry = new TaskListQry();
 		taskListQry.setName(qry.getName());

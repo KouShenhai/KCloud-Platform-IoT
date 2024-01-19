@@ -39,6 +39,11 @@ public class TenantOptionListQryExe {
 
 	private final TenantMapper tenantMapper;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<List<OptionCO>> execute(TenantOptionListQry qry) {
 		List<TenantDO> list = tenantMapper.selectList(Wrappers.lambdaQuery(TenantDO.class)
 			.select(TenantDO::getId, TenantDO::getName)

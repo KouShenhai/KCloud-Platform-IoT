@@ -35,12 +35,17 @@ import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_OPERATE
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 导出操作日志执行器.
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
 public class OperateLogExportCmdExe {
 
+	/**
+	 * 执行导出操作日志.
+	 * @param cmd 导出操作日志参数
+	 */
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_OPERATE_LOG)
 	public void executeVoid(OperateLogExportCmd cmd) {
@@ -49,6 +54,11 @@ public class OperateLogExportCmdExe {
 				OperateLogExcel.class);
 	}
 
+	/**
+	 * 构建操作日志数据对象.
+	 * @param cmd 导出操作日志参数
+	 * @return 操作日志数据对象
+	 */
 	private OperateLogDO buildOperateLog(OperateLogExportCmd cmd) {
 		OperateLogDO operateLogDO = new OperateLogDO();
 		operateLogDO.setTenantId(UserUtil.getTenantId());

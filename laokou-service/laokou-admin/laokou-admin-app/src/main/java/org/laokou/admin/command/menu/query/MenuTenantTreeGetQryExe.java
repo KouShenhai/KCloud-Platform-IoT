@@ -33,6 +33,7 @@ import java.util.List;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查看租户树菜单执行器.
  * @author laokou
  */
 @Component
@@ -43,6 +44,11 @@ public class MenuTenantTreeGetQryExe {
 
 	private final MenuConvertor menuConvertor;
 
+	/**
+	 * 执行查看租户树菜单.
+	 * @param qry 查看租户树菜单参数
+	 * @return 租户树菜单
+	 */
 	@DS(TENANT)
 	public Result<MenuCO> execute(MenuTenantTreeGetQry qry) {
 		List<Menu> list = menuGateway.getTenantMenuList();

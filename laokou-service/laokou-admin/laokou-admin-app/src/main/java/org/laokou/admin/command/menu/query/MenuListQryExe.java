@@ -33,6 +33,7 @@ import java.util.List;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查询菜单列表执行器.
  * @author laokou
  */
 @Component
@@ -43,6 +44,11 @@ public class MenuListQryExe {
 
 	private final MenuConvertor menuConvertor;
 
+	/**
+	 * 执行查询菜单列表.
+	 * @param qry 查询菜单列表参数
+	 * @return 菜单列表
+	 */
 	@DS(TENANT)
 	public Result<List<MenuCO>> execute(MenuListQry qry) {
 		Menu menu = new Menu();

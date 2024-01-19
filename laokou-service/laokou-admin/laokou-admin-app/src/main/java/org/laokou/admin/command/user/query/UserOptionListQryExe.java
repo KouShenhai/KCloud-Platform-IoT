@@ -44,6 +44,11 @@ public class UserOptionListQryExe {
 
 	private final UserMapper userMapper;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_USER)
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
@@ -55,6 +60,11 @@ public class UserOptionListQryExe {
 		return Result.of(options);
 	}
 
+	/**
+	 *
+	 * @param userDO
+	 * @return
+	 */
 	private OptionCO option(UserDO userDO) {
 		OptionCO oc = new OptionCO();
 		oc.setLabel(userDO.getUsername());

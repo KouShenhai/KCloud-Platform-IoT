@@ -50,31 +50,61 @@ public class MessagesServiceImpl implements MessagesServiceI {
 
 	private final MessageUnreadCountGetQryExe messageUnreadCountGetQryExe;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> insert(MessageInsertCmd cmd) {
 		return messageInsertCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Datas<MessageCO>> list(MessageListQry qry) {
 		return messageListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<MessageCO> read(MessageReadCmd cmd) {
 		return messageReadCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<MessageCO> getById(MessageGetQry qry) {
 		return messageGetQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Datas<MessageCO>> unreadList(MessageUnreadListQry qry) {
 		return messageUnreadListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Integer> unreadCount(MessageUnreadCountGetQry qry) {
 		return messageUnreadCountGetQryExe.execute(qry);

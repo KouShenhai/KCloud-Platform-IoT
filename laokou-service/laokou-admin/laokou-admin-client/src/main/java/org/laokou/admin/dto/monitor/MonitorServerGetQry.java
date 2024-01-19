@@ -25,7 +25,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "MonitorServerGetQry", description = "监控服务器信息")
+@Schema(name = "MonitorServerGetQry", description = "查看服务器监控命令请求")
 public class MonitorServerGetQry extends CommonCommand {
 
 }

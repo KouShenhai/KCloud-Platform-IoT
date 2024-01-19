@@ -18,6 +18,7 @@
 package org.laokou.admin.dto.oss;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,9 +31,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "", description = "")
 public class OssUploadCmd extends CommonCommand {
 
 	@JsonIgnore
+	@Schema(name = "", description = "")
 	private MultipartFile file;
 
 }

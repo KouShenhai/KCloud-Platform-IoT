@@ -53,6 +53,11 @@ public class SourcesServiceImpl implements SourcesServiceI {
 
 	private final SourceOptionListQryExe sourceOptionListQryExe;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> insert(SourceInsertCmd cmd) {
 		return sourceInsertCmdExe.execute(cmd);

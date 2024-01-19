@@ -18,6 +18,7 @@
 package org.laokou.admin.dto.tenant;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,11 +31,14 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "", description = "")
 public class TenantDownloadDatasourceCmd extends CommonCommand {
 
+	@Schema(name = "", description = "")
 	private Long id;
 
 	@JsonIgnore
+	@Schema(name = "", description = "")
 	private HttpServletResponse response;
 
 }

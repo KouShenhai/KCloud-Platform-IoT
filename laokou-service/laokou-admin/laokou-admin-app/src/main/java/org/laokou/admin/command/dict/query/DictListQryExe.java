@@ -32,6 +32,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查询部门列表执行器.
  * @author laokou
  */
 @Component
@@ -42,6 +43,11 @@ public class DictListQryExe {
 
 	private final DictConvertor dictConvertor;
 
+	/**
+	 * 执行查询部门列表.
+	 * @param qry 查询部门列表参数
+	 * @return 部门列表
+	 */
 	@DS(TENANT)
 	public Result<Datas<DictCO>> execute(DictListQry qry) {
 		Dict dict = ConvertUtil.sourceToTarget(qry, Dict.class);

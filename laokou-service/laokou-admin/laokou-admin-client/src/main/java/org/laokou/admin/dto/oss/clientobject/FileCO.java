@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.oss.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,10 +29,13 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "", description = "")
 public class FileCO extends ClientObject {
 
+	@Schema(name = "", description = "")
 	private String url;
 
+	@Schema(name = "", description = "")
 	private String md5;
 
 }

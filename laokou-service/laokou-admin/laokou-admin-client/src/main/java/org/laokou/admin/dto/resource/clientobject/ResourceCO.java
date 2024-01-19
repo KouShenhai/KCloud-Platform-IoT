@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.resource.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -27,26 +28,34 @@ import org.laokou.common.i18n.dto.ClientObject;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class ResourceCO extends ClientObject {
 
+	@Schema(name = "", description = "")
 	private Long id;
 
 	@NotBlank(message = "标题不能为空")
+	@Schema(name = "", description = "")
 	private String title;
 
 	@NotBlank(message = "资源地址不能为空")
+	@Schema(name = "", description = "")
 	@URL(message = "资源地址错误", regexp = "^(http|https)://([\\w.]+)(:([0-9]+))?(/.*)$")
 	private String url;
 
 	@NotNull(message = "状态不能为空")
+	@Schema(name = "", description = "")
 	private Integer status;
 
 	@NotBlank(message = "编码不能为空")
+	@Schema(name = "", description = "")
 	private String code;
 
 	@NotBlank(message = "备注不能为空")
+	@Schema(name = "", description = "")
 	private String remark;
 
+	@Schema(name = "", description = "")
 	private String instanceId;
 
 }

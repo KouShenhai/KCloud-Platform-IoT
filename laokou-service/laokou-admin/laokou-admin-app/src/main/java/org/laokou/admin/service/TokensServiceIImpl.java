@@ -34,6 +34,11 @@ public class TokensServiceIImpl implements TokensServiceI {
 
 	private final TokenGetQryExe tokenGetQryExe;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<TokenCO> generate(TokenGetQry qry) {
 		return tokenGetQryExe.execute(qry);

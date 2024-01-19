@@ -35,6 +35,7 @@ import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.RESOURCE
 import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.TRACE;
 
 /**
+ * 查询索引列表执行器.
  * @author laokou
  */
 @Component
@@ -43,6 +44,11 @@ public class IndexListQryExe {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
+	/**
+	 * 执行查询索引列表.
+	 * @param qry 查询索引列表参数
+	 * @return 索引列表
+	 */
 	public Result<Datas<IndexCO>> execute(IndexListQry qry) {
 		Map<String, String> indexNames = elasticsearchTemplate.getIndexNames(new String[] { RESOURCE, TRACE });
 		if (MapUtil.isEmpty(indexNames)) {

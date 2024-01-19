@@ -47,6 +47,10 @@ public class ResourceDownloadCmdExe {
 
 	private final ResourceMapper resourceMapper;
 
+	/**
+	 *
+	 * @param cmd
+	 */
 	@SneakyThrows
 	@DS(TENANT)
 	public void executeVoid(ResourceDownloadCmd cmd) {

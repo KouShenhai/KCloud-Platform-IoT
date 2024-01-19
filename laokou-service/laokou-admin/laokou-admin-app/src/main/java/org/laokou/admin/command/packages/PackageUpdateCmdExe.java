@@ -36,6 +36,11 @@ public class PackageUpdateCmdExe {
 
 	private final PackageGateway packageGateway;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	public Result<Boolean> execute(PackageUpdateCmd cmd) {
 		Package pack = ConvertUtil.sourceToTarget(cmd.getPackageCO(), Package.class);
 		return Result.of(packageGateway.update(pack, toUser()));

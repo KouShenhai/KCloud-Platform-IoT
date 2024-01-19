@@ -39,6 +39,11 @@ public class SourceListQryExe {
 
 	private final SourceConvertor sourceConvertor;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<Datas<SourceCO>> execute(SourceListQry qry) {
 		Source source = ConvertUtil.sourceToTarget(qry, Source.class);
 		Datas<Source> newPage = sourceGateway.list(source, qry);

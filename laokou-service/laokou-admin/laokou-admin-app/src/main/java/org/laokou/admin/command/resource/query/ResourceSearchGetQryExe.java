@@ -35,6 +35,11 @@ public class ResourceSearchGetQryExe {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<Datas<Map<String, Object>>> execute(ResourceSearchGetQry qry) {
 		return Result.of(elasticsearchTemplate.highlightSearchIndex(qry.getSearch()));
 	}

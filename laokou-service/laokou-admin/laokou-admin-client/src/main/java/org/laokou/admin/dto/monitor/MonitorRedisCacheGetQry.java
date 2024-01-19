@@ -25,7 +25,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "MonitorCacheGetQry", description = "监控Redis缓存信息")
+@Schema(name = "MonitorCacheGetQry", description = "查看Redis缓存监控命令请求")
 public class MonitorRedisCacheGetQry extends CommonCommand {
 
 }
