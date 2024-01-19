@@ -39,6 +39,7 @@ import static org.laokou.common.i18n.common.ValCodes.SYSTEM_ID_REQUIRE;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 修改角色执行器.
  * @author laokou
  */
 @Component
@@ -52,9 +53,9 @@ public class RoleUpdateCmdExe {
 	private final RoleConvertor roleConvertor;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行修改角色
+	 * @param cmd 修改角色参数
+	 * @return 执行修改结果
 	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(RoleUpdateCmd cmd) {
@@ -71,6 +72,10 @@ public class RoleUpdateCmdExe {
 		return Result.of(roleGateway.update(roleConvertor.toEntity(co), toUser()));
 	}
 
+	/**
+	 * 转换为用户领域
+	 * @return 用户领域
+     */
 	private User toUser() {
 		return ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
 	}

@@ -28,6 +28,7 @@ import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**
+ * 新增套餐执行器.
  * @author laokou
  */
 @Component
@@ -37,9 +38,9 @@ public class PackageInsertCmdExe {
 	private final PackageGateway packageGateway;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行新增套餐.
+	 * @param cmd 新增套餐参数
+	 * @return 执行新增结果
 	 */
 	public Result<Boolean> execute(PackageInsertCmd cmd) {
 		Package pack = ConvertUtil.sourceToTarget(cmd.getPackageCO(), Package.class);
@@ -47,8 +48,8 @@ public class PackageInsertCmdExe {
 	}
 
 	/**
-	 *
-	 * @return
+	 * 转换成用户领域.
+	 * @return 用户领域
 	 */
 	private User toUser() {
 		return ConvertUtil.sourceToTarget(UserUtil.user(), User.class);

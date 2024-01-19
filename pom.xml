@@ -345,7 +345,7 @@
                     <failsOnError>true</failsOnError>
                     <failOnViolation>true</failOnViolation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                    <skip>true</skip>
+                    <skip>false</skip>
                     <linkXRef>false</linkXRef>
                 </configuration>
                 <executions>

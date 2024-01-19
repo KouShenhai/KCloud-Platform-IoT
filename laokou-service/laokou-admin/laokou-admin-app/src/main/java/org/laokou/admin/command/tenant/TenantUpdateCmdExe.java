@@ -26,6 +26,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 修改租户执行器
  * @author laokou
  */
 @Component
@@ -37,9 +38,9 @@ public class TenantUpdateCmdExe {
 	private final TenantConvertor tenantConvertor;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行修改租户
+	 * @param cmd 修改租户参数
+	 * @return 执行修改结果
 	 */
 	public Result<Boolean> execute(TenantUpdateCmd cmd) {
 		Tenant tenant = tenantConvertor.toEntity(cmd.getTenantCO());

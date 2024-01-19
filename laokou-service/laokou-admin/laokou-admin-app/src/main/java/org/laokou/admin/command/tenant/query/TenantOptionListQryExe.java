@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 查询租户下拉框选择项列表执行器.
  * @author laokou
  */
 @Component
@@ -40,9 +41,9 @@ public class TenantOptionListQryExe {
 	private final TenantMapper tenantMapper;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行查询租户下拉框选择项列表
+	 * @param qry 查询租户下拉框选择项列表参数
+	 * @return 租户下拉框选择项列表
 	 */
 	public Result<List<OptionCO>> execute(TenantOptionListQry qry) {
 		List<TenantDO> list = tenantMapper.selectList(Wrappers.lambdaQuery(TenantDO.class)

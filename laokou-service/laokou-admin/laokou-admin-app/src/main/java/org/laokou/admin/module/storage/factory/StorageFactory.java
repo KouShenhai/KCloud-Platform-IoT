@@ -42,6 +42,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
+ * OSS工厂.
  * @author laokou
  */
 @Component

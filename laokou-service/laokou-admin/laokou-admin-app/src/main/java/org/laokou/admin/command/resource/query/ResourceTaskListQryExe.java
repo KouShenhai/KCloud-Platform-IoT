@@ -33,6 +33,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
+ * 查询资源任务列表执行器.
  * @author laokou
  */
 @Component
@@ -44,9 +45,9 @@ public class ResourceTaskListQryExe {
 	private final DefaultConfigProperties defaultConfigProperties;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行查询资源任务列表
+	 * @param qry 查询资源任务列表参数
+	 * @return 资源任务列表
 	 */
 	public Result<Datas<TaskCO>> execute(ResourceTaskListQry qry) {
 		Datas<TaskCO> result = FeignUtil.result(tasksFeignClient.list(toQry(qry)));
@@ -59,9 +60,9 @@ public class ResourceTaskListQryExe {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 转换成任务列表查询参数
+	 * @param qry 查询资源任务列表参数
+	 * @return 任务列表命令请求
 	 */
 	private TaskListQry toQry(ResourceTaskListQry qry) {
 		TaskListQry taskListQry = new TaskListQry();

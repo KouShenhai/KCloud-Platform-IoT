@@ -38,6 +38,7 @@ import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import static org.laokou.common.i18n.common.StringConstants.STAR;
 
 /**
+ * 查询在线用户列表执行器.
  * @author laokou
  */
 @Component
@@ -63,9 +64,9 @@ public class OnlineUserListQryExe {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行查询在线用户列表
+	 * @param qry 查询在线用户列表参数
+	 * @return 在线用户列表
 	 */
 	private Datas<UserOnlineCO> getDatas(OnlineUserListQry qry) {
 		Set<String> keys = getKeys();

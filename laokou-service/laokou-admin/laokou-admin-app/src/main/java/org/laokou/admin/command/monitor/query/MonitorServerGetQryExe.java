@@ -23,15 +23,16 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 查看服务器监控执行器.
  * @author laokou
  */
 @Component
 public class MonitorServerGetQryExe {
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行查看服务器监控.
+	 * @param qry 查看服务器监控参数
+	 * @return 服务器监控
 	 */
 	public Result<ServerCO> execute(MonitorServerGetQry qry) {
 		ServerCO serverCO = new ServerCO();

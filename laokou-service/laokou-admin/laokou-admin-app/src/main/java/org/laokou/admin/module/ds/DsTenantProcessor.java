@@ -27,6 +27,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 租户拦截器.
  * @author laokou
  */
 @Component

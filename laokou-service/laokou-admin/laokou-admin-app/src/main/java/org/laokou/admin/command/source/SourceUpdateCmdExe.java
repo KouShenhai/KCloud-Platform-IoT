@@ -35,6 +35,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.ValCodes.SYSTEM_ID_REQUIRE;
 
 /**
+ * 修改数据源执行器
  * @author laokou
  */
 @Component
@@ -48,9 +49,9 @@ public class SourceUpdateCmdExe {
 	private final SourceConvertor sourceConvertor;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行修改数据源
+	 * @param cmd 修改数据源
+	 * @return 执行修改结果
 	 */
 	public Result<Boolean> execute(SourceUpdateCmd cmd) {
 		Source source = sourceConvertor.toEntity(cmd.getSourceCO());

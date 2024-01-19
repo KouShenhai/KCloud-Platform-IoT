@@ -25,6 +25,7 @@ import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.springframework.stereotype.Component;
 
 /**
+ * 查看令牌执行器.
  * @author laokou
  */
 @Component
@@ -34,9 +35,9 @@ public class TokenGetQryExe {
 	private final IdempotentUtil idempotentUtil;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行查看令牌
+	 * @param qry 查看令牌参数
+	 * @return 令牌
 	 */
 	public Result<TokenCO> execute(TokenGetQry qry) {
 		return Result.of(new TokenCO(idempotentUtil.getIdempotentKey()));

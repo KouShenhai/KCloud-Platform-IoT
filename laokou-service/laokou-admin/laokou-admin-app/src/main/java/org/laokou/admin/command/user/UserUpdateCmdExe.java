@@ -35,6 +35,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 修改用户执行器.
  * @author laokou
  */
 @Component
@@ -47,6 +48,11 @@ public class UserUpdateCmdExe {
 
 	private final UserConvertor userConvertor;
 
+	/**
+	 * 执行修改用户
+	 * @param cmd 修改用户参数
+	 * @return 执行修改结果
+	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(UserUpdateCmd cmd) {
 		UserCO co = cmd.getUserCO();
@@ -58,10 +64,20 @@ public class UserUpdateCmdExe {
 		return Result.of(userGateway.update(toUser(co)));
 	}
 
+	/**
+	 * 转换为用户数据模型
+	 * @param co 用户对象
+	 * @return 用户数据模型
+	 */
 	private UserDO toUserDO(UserCO co) {
 		return userConvertor.toDataObj(co);
 	}
 
+	/**
+	 * 转换为用户领域
+	 * @param co 用户对象
+	 * @return 用户领域
+	 */
 	private User toUser(UserCO co) {
 		User user = userConvertor.toEntity(co);
 		user.setTenantId(UserUtil.getTenantId());

@@ -25,6 +25,7 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
 /**
+ * 查看Redis缓存监控执行器.
  * @author laokou
  */
 @Component
@@ -34,9 +35,9 @@ public class MonitorRedisCacheGetQryExe {
 	private final RedisUtil redisUtil;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行查看Redis缓存监控.
+	 * @param qry 查看Redis缓存监控参数
+	 * @return Redis缓存监控
 	 */
 	public Result<RedisCacheCO> execute(MonitorRedisCacheGetQry qry) {
 		RedisCacheCO cacheCO = new RedisCacheCO();

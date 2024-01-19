@@ -24,6 +24,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 删除租户执行器.
  * @author laokou
  */
 @Component
@@ -33,9 +34,9 @@ public class TenantDeleteCmdExe {
 	private final TenantGateway tenantGateway;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行删除租户
+	 * @param cmd 删除租户参数
+	 * @return 执行删除结果
 	 */
 	public Result<Boolean> execute(TenantDeleteCmd cmd) {
 		return Result.of(tenantGateway.deleteById(cmd.getId()));

@@ -29,6 +29,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 查询套餐列表执行器.
  * @author laokou
  */
 @Component
@@ -40,9 +41,9 @@ public class PackageListQryExe {
 	private final PackageConvertor packageConvertor;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行查询套餐列表.
+	 * @param qry 查询套餐列表
+	 * @return 套餐列表
 	 */
 	public Result<Datas<PackageCO>> execute(PackageListQry qry) {
 		Package pack = ConvertUtil.sourceToTarget(qry, Package.class);

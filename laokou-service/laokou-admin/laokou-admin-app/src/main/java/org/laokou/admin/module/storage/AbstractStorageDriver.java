@@ -27,6 +27,7 @@ import org.laokou.common.i18n.utils.LogUtil;
 import java.io.InputStream;
 
 /**
+ * OSS抽象.
  * @author laokou
  */
 @Slf4j

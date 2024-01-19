@@ -24,22 +24,58 @@ import org.laokou.common.i18n.dto.Result;
 import java.util.List;
 
 /**
+ * 部门管理.
  * @author laokou
  */
 public interface DeptsServiceI {
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	Result<DeptCO> tree(DeptTreeGetQry qry);
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	Result<List<DeptCO>> list(DeptListQry qry);
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	Result<Boolean> insert(DeptInsertCmd cmd);
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	Result<Boolean> update(DeptUpdateCmd cmd);
 
+	/**
+	 * 根据ID删除部门
+	 * @param cmd 根据ID删除部门参数
+	 * @return 删除结果
+	 */
 	Result<Boolean> deleteById(DeptDeleteCmd cmd);
 
+	/**
+	 * 查看ID查看部门
+	 * @param qry 查看ID查看部门参数
+	 * @return 部门
+	 */
 	Result<DeptCO> getById(DeptGetQry qry);
 
+	/**
+	 * 根据角色ID查看部门IDS
+	 * @param qry 根据角色ID查看部门IDS参数
+	 * @return 部门IDS
+	 */
 	Result<List<Long>> ids(DeptIDSGetQry qry);
 
 }

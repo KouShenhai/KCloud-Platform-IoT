@@ -31,6 +31,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
+ * 资源处理任务流程执行器
  * @author laokou
  */
 @Slf4j
@@ -45,9 +46,9 @@ public class ResourceResolveTaskCmdExe {
 	private final DomainEventPublisher domainEventPublisher;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行资源处理任务流程
+	 * @param cmd 资源处理任务流程参数
+	 * @return 执行处理结果
 	 */
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(ResourceResolveTaskCmd cmd) {
@@ -60,6 +61,10 @@ public class ResourceResolveTaskCmdExe {
 		return result;
 	}
 
+	/**
+	 * 推送处理消息
+	 * @param cmd 资源处理任务流程参数
+	 */
 	@Async
 	public void publishMessage(ResourceResolveTaskCmd cmd) {
 		domainEventPublisher.publish(

@@ -44,6 +44,7 @@ import static org.laokou.common.i18n.common.SysConstants.MAX_FILE_SIZE;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * OSS上传文件执行器
  * @author laokou
  */
 @Slf4j
@@ -57,10 +58,20 @@ public class OssUploadCmdExe {
 
 	private final OssGateway ossGateway;
 
+	/**
+	 * 执行OSS上传文件.
+	 * @param cmd OSS上传文件参数
+	 * @return 执行上传文件结果
+	 */
 	public Result<FileCO> execute(OssUploadCmd cmd) {
 		return Result.of(upload(cmd.getFile()));
 	}
 
+	/**
+	 * 上传文件.
+	 * @param file 文件
+	 * @return 上传结果
+	 */
 	@SneakyThrows
 	@DS(TENANT)
 	private FileCO upload(MultipartFile file) {
@@ -79,10 +90,14 @@ public class OssUploadCmdExe {
 		}
 		String url = storageFactory.build(UserUtil.getTenantId())
 			.upload(limitRead, fileSize, fileName, new ByteArrayInputStream(bos.toByteArray()), contentType);
-		after(new OssLog(md5, url, fileName, fileSize));
-		return new FileCO(url, md5);
+		return afterAndResult(new OssLog(md5, url, fileName, fileSize));
 	}
 
+	/**
+	 * 转为字节流，用来缓存输入流，便于二次使用
+	 * @param inputStream 输入流
+	 * @return 字节输出流
+	 */
 	@SneakyThrows
 	private ByteArrayOutputStream getCacheStream(InputStream inputStream) {
 		// 缓存流
@@ -91,19 +106,33 @@ public class OssUploadCmdExe {
 		return bos;
 	}
 
+	/**
+	 * 上传前校验.
+	 * @param file 文件
+	 * @param fileSize 文件大小
+	 */
 	private void before(MultipartFile file, long fileSize) {
 		if (file.isEmpty()) {
 			throw new SystemException("文件不能为空");
 		}
-		log.info("文件上传前，校验文件大小");
+		if (log.isDebugEnabled()) {
+			log.debug("文件上传前，校验文件大小");
+		}
 		if (fileSize > MAX_FILE_SIZE) {
 			throw new SystemException("单个文件上传不能超过100M，请重新选择文件并上传");
 		}
 	}
 
-	private void after(OssLog ossLog) {
-		log.info("文件上传后，存入日志");
+	/**
+	 * 上传文件后写入日志并返回.
+	 * @param ossLog OSS日志对象
+	 */
+	private FileCO afterAndResult(OssLog ossLog) {
+		if (log.isDebugEnabled()) {
+			log.debug("文件上传后，存入日志");
+		}
 		ossGateway.publish(ossLog);
+		return new FileCO(ossLog.getUrl(), ossLog.getMd5());
 	}
 
 }

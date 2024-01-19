@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查看OSS执行器.
  * @author laokou
  */
 @Component
@@ -40,9 +41,9 @@ public class OssGetQryExe {
 	private final OssConvertor ossConvertor;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行查看OSS
+	 * @param qry 查看OSS参数
+	 * @return OSS
 	 */
 	@DS(TENANT)
 	public Result<OssCO> execute(OssGetQry qry) {

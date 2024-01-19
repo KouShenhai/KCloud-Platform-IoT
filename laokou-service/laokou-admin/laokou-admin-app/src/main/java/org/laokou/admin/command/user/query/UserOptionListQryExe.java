@@ -36,6 +36,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_USER;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查询用户下拉框选择项列表执行器.
  * @author laokou
  */
 @Component
@@ -45,9 +46,9 @@ public class UserOptionListQryExe {
 	private final UserMapper userMapper;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行查询用户下拉框选择项列表.
+	 * @param qry 查询用户下拉框选择项列表参数
+	 * @return 用户下拉框选择项列表
 	 */
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_USER)
@@ -61,9 +62,9 @@ public class UserOptionListQryExe {
 	}
 
 	/**
-	 *
-	 * @param userDO
-	 * @return
+	 * 转换为用户下拉框选择项视图.
+	 * @param userDO 用户对象
+	 * @return 下拉框命令请求
 	 */
 	private OptionCO option(UserDO userDO) {
 		OptionCO oc = new OptionCO();

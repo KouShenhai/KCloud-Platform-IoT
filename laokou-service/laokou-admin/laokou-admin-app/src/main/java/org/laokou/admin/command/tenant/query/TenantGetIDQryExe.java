@@ -39,6 +39,7 @@ import static org.laokou.common.i18n.common.StringConstants.DOT;
 import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 
 /**
+ * 根据域名查看租户ID执行器
  * @author laokou
  */
 @Component
@@ -52,9 +53,9 @@ public class TenantGetIDQryExe {
 	private final RedisUtil redisUtil;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行根据域名查看租户ID
+	 * @param qry 查看租户ID参数
+	 * @return 租户ID
 	 */
 	public Result<Long> execute(TenantGetIDQry qry) {
 		String domainName = RequestUtil.getDomainName(qry.getRequest());
@@ -73,6 +74,11 @@ public class TenantGetIDQryExe {
 		return Result.of(DEFAULT);
 	}
 
+	/**
+	 * 根据域名从Redis获取租户ID
+	 * @param str 域名
+	 * @return 租户ID
+	 */
 	private Long getTenantCache(String str) {
 		String tenantDomainNameHashKey = RedisKeyUtil.getTenantDomainNameHashKey();
 		Object o = redisUtil.hGet(tenantDomainNameHashKey, str);
