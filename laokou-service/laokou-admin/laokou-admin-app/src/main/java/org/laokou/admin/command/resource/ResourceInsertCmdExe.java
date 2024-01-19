@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 新增资源执行器
  * @author laokou
  */
 @Component
@@ -41,9 +42,9 @@ public class ResourceInsertCmdExe {
 	private final ResourceConvertor resourceConvertor;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行新增资源
+	 * @param cmd 新增资源参数
+	 * @return 执行新增参数
 	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(ResourceInsertCmd cmd) {

@@ -25,15 +25,25 @@ import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**
+ * 查看用户信息执行器.
  * @author laokou
  */
 @Component
 public class UserProfileGetQryExe {
 
+	/**
+	 * 执行查看用户信息
+	 * @param qry 查看用户信息参数
+	 * @return 用户信息
+	 */
 	public Result<UserProfileCO> execute(UserProfileGetQry qry) {
 		return Result.of(convert());
 	}
 
+	/**
+	 * 转换为用户信息视图
+	 * @return 用户信息视图
+	 */
 	private UserProfileCO convert() {
 		User user = UserUtil.user();
 		UserProfileCO co = new UserProfileCO();

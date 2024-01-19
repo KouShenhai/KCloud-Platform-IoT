@@ -31,6 +31,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 新增数据源执行器.
  * @author laokou
  */
 @Component
@@ -44,9 +45,9 @@ public class SourceInsertCmdExe {
 	private final SourceConvertor sourceConvertor;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行新增数据源
+	 * @param cmd 新增数据源参数
+	 * @return 执行新增结果
 	 */
 	public Result<Boolean> execute(SourceInsertCmd cmd) {
 		Source source = sourceConvertor.toEntity(cmd.getSourceCO());
@@ -55,8 +56,8 @@ public class SourceInsertCmdExe {
 	}
 
 	/**
-	 *
-	 * @param source
+	 * 校验数据源填写信息
+	 * @param source 数据源对象
 	 */
 	private void validate(Source source) {
 		String name = source.getName();

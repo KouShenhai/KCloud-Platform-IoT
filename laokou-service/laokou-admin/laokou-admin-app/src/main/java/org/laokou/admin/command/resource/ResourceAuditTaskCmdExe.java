@@ -48,6 +48,7 @@ import static org.laokou.common.i18n.common.AuditEnums.*;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 审批资源任务流程执行器.
  * @author laokou
  */
 @Slf4j
@@ -66,9 +67,9 @@ public class ResourceAuditTaskCmdExe {
 	private final EventUtil eventUtil;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行审批资源任务流程
+	 * @param cmd 审批资源任务流程参数
+	 * @return 执行审批结果
 	 */
 	@DS(TENANT)
 	@GlobalTransactional(rollbackFor = Exception.class)
@@ -101,12 +102,25 @@ public class ResourceAuditTaskCmdExe {
 		return Result.of(flag);
 	}
 
+	/**
+	 * 推送审批消息
+	 * @param assignee 执行人
+	 * @param cmd 审批资源任务流程参数
+	 */
 	@Async
 	public void publishMessage(String assignee, ResourceAuditTaskCmd cmd) {
 		domainEventPublisher
 			.publish(eventUtil.toAuditMessageEvent(assignee, cmd.getBusinessKey(), cmd.getInstanceName(), null));
 	}
 
+	/**
+	 * 修改资源.
+	 * @param id ID
+	 * @param version 版本
+	 * @param status 状态
+	 * @param resourceAuditDO 资源审批对象
+	 * @return 修改结果
+	 */
 	private Boolean updateResource(Long id, int version, int status, ResourceAuditDO resourceAuditDO) {
 		ResourceDO resourceDO;
 		if (ObjectUtil.isNotNull(resourceAuditDO)) {
@@ -122,6 +136,12 @@ public class ResourceAuditTaskCmdExe {
 		return resourceMapper.updateById(resourceDO) > 0;
 	}
 
+	/**
+	 * 转换为审批日志事件
+	 * @param cmd 审批资源任务流程参数
+	 * @param auditStatus 审批状态
+	 * @return 审批日志事件
+	 */
 	private AuditLogEvent toAuditLogEvent(ResourceAuditTaskCmd cmd, int auditStatus) {
 		AuditLogEvent event = new AuditLogEvent(this);
 		event.setApprover(UserUtil.getUserName());

@@ -24,6 +24,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 删除资源执行器.
  * @author laokou
  */
 @Component
@@ -33,9 +34,9 @@ public class ResourceDeleteCmdExe {
 	private final ResourceGateway resourceGateway;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行删除资源
+	 * @param cmd 删除资源参数
+	 * @return 执行删除结果
 	 */
 	public Result<Boolean> execute(ResourceDeleteCmd cmd) {
 		return Result.of(resourceGateway.deleteById(cmd.getId()));

@@ -37,6 +37,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 import static org.laokou.common.i18n.common.MessageReadEnums.YES;
 
 /**
+ * 读取消息执行器.
  * @author laokou
  */
 @Slf4j
@@ -50,6 +51,11 @@ public class MessageReadCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	/**
+	 * 执行读取消息.
+	 * @param cmd 读取消息参数
+	 * @return 消息
+	 */
 	@DS(TENANT)
 	public Result<MessageCO> execute(MessageReadCmd cmd) {
 		Long detailId = cmd.getDetailId();
@@ -58,6 +64,10 @@ public class MessageReadCmdExe {
 		return Result.of(ConvertUtil.sourceToTarget(list, MessageCO.class));
 	}
 
+	/**
+	 * 修改读取标识.
+	 * @param id ID
+	 */
 	private void updateReadFlag(Long id) {
 		MessageDetailDO messageDetailDO = new MessageDetailDO();
 		messageDetailDO.setId(id);

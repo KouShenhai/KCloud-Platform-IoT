@@ -32,6 +32,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
+ * 转办资源任务流程执行器
  * @author laokou
  */
 @Slf4j
@@ -46,9 +47,9 @@ public class ResourceTransferTaskCmdExe {
 	private final EventUtil eventUtil;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行转办资源任务流程
+	 * @param cmd 转办资源任务流程参数
+	 * @return 执行转办结果
 	 */
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(ResourceTransferTaskCmd cmd) {
@@ -61,12 +62,21 @@ public class ResourceTransferTaskCmdExe {
 		return result;
 	}
 
+	/**
+	 * 推送转办消息
+	 * @param cmd 转办资源任务流程参数
+	 */
 	@Async
 	public void publishMessage(ResourceTransferTaskCmd cmd) {
 		domainEventPublisher.publish(eventUtil.toAuditMessageEvent(cmd.getUserId().toString(), cmd.getBusinessKey(),
 				cmd.getInstanceName(), null));
 	}
 
+	/**
+	 * 转换为任务转办命令请求
+	 * @param cmd 资源转办任务流程参数
+	 * @return 任务转办命令请求
+	 */
 	private TaskTransferCmd toCmd(ResourceTransferTaskCmd cmd) {
 		TaskTransferCmd c = new TaskTransferCmd();
 		c.setTaskId(cmd.getTaskId());

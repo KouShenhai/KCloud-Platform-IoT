@@ -24,6 +24,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 删除套餐执行器.
  * @author laokou
  */
 @Component
@@ -33,9 +34,9 @@ public class PackageDeleteCmdExe {
 	private final PackageGateway packageGateway;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行删除套餐.
+	 * @param cmd 删除套餐参数
+	 * @return 执行删除结果
 	 */
 	public Result<Boolean> execute(PackageDeleteCmd cmd) {
 		return Result.of(packageGateway.deleteById(cmd.getId()));

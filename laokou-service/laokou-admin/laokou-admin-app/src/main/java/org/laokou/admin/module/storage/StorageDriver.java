@@ -20,6 +20,7 @@ package org.laokou.admin.module.storage;
 import java.io.InputStream;
 
 /**
+ * OSS对外操作接口.
  * @author laokou
  */
 public interface StorageDriver<O> {

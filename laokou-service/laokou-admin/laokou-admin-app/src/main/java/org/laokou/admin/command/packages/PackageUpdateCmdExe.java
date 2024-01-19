@@ -28,6 +28,7 @@ import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**
+ * 修改套餐执行器.
  * @author laokou
  */
 @Component
@@ -37,9 +38,9 @@ public class PackageUpdateCmdExe {
 	private final PackageGateway packageGateway;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行修改套餐.
+	 * @param cmd 修改套餐参数
+	 * @return 执行修改结果
 	 */
 	public Result<Boolean> execute(PackageUpdateCmd cmd) {
 		Package pack = ConvertUtil.sourceToTarget(cmd.getPackageCO(), Package.class);

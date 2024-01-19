@@ -29,6 +29,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 查询数据源列表执行器
  * @author laokou
  */
 @Component
@@ -40,9 +41,9 @@ public class SourceListQryExe {
 	private final SourceConvertor sourceConvertor;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行查询数据源列表
+	 * @param qry 查询数据源列表参数
+	 * @return 数据源列表
 	 */
 	public Result<Datas<SourceCO>> execute(SourceListQry qry) {
 		Source source = ConvertUtil.sourceToTarget(qry, Source.class);

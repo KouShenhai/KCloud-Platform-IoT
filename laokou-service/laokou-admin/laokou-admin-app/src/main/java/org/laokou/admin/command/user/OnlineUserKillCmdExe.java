@@ -26,6 +26,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
 
 /**
+ * 强踢在线用户执行器.
  * @author laokou
  */
 @Component
@@ -34,6 +35,11 @@ public class OnlineUserKillCmdExe {
 
 	private final RedisUtil redisUtil;
 
+	/**
+	 * 执行强踢在线用户
+	 * @param cmd 强踢在线用户参数
+	 * @return 执行强踢结果
+	 */
 	public Result<Boolean> execute(OnlineUserKillCmd cmd) {
 		String token = cmd.getToken();
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);

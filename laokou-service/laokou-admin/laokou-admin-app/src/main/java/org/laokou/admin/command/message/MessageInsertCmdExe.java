@@ -33,6 +33,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 新增消息执行器.
  * @author laokou
  */
 @Component
@@ -43,15 +44,29 @@ public class MessageInsertCmdExe {
 
 	private final MessageConvertor messageConvertor;
 
+	/**
+	 * 执行新增消息.
+	 * @param cmd 新增消息参数
+	 * @return 执行新增结果
+	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(MessageInsertCmd cmd) {
 		return Result.of(messageGateway.insert(toMessage(cmd.getMessageCO()), toUser()));
 	}
 
+	/**
+	 * 转换成用户领域.
+	 * @return 用户领域
+	 */
 	private User toUser() {
 		return ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
 	}
 
+	/**
+	 * 转换成消息领域.
+	 * @param co 客户端消息通信对象
+	 * @return 消息领域
+	 */
 	private Message toMessage(MessageCO co) {
 		return messageConvertor.toEntity(co);
 	}

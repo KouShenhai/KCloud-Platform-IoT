@@ -37,6 +37,7 @@ import org.springframework.util.Assert;
 import java.util.Collections;
 
 /**
+ * 消息处理.
  * @author laokou
  */
 @Slf4j

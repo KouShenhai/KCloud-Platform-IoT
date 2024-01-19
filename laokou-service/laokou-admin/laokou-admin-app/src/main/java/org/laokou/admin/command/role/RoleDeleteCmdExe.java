@@ -28,6 +28,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 删除角色执行器
  * @author laokou
  */
 @Slf4j
@@ -38,9 +39,9 @@ public class RoleDeleteCmdExe {
 	private final RoleGateway roleGateway;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行删除角色
+	 * @param cmd 删除角色参数
+	 * @return 执行删除结果
 	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(RoleDeleteCmd cmd) {

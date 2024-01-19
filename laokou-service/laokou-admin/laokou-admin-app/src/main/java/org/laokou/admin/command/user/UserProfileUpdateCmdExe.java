@@ -41,6 +41,7 @@ import static org.laokou.common.i18n.common.ValCodes.SYSTEM_ID_REQUIRE;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 修改用户信息执行器.
  * @author laokou
  */
 @Component
@@ -51,6 +52,11 @@ public class UserProfileUpdateCmdExe {
 
 	private final UserMapper userMapper;
 
+	/**
+	 * 执行修改用户信息
+	 * @param cmd 修改用户信息参数
+	 * @return 执行修改结果
+	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(UserProfileUpdateCmd cmd) {
 		UserProfileCO co = cmd.getUserProfileCO();
@@ -59,6 +65,11 @@ public class UserProfileUpdateCmdExe {
 		return Result.of(userGateway.updateInfo(toUser(co)));
 	}
 
+	/**
+	 * 转换为用户领域
+	 * @param co 用户信息对象
+	 * @return 用户领域
+	 */
 	private User toUser(UserProfileCO co) {
 		User user = ConvertUtil.sourceToTarget(co, User.class);
 		Assert.isTrue(ObjectUtil.isNotNull(user), "user is null");
@@ -66,11 +77,19 @@ public class UserProfileUpdateCmdExe {
 		return user;
 	}
 
+	/**
+	 * 将邮箱和手机加密
+	 * @param co 用户信息对象
+	 */
 	private void encrypt(UserProfileCO co) {
 		co.setMobile(AesUtil.encrypt(co.getMobile()));
 		co.setMail(AesUtil.encrypt(co.getMail()));
 	}
 
+	/**
+	 * 验证用户邮箱和手机号
+	 * @param co 用户信息对象
+	 */
 	private void validate(UserProfileCO co) {
 		if (ObjectUtil.isNull(co.getId())) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));

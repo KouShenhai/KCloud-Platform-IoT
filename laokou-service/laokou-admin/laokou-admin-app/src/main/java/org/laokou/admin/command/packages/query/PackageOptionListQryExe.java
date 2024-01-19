@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 查询套餐下拉框选择项列表执行器.
  * @author laokou
  */
 @Component
@@ -39,8 +40,8 @@ public class PackageOptionListQryExe {
 	private final PackageMapper packageMapper;
 
 	/**
-	 *
-	 * @return
+	 * 执行查询套餐下拉框选择项列表.
+	 * @return 套餐下拉框选择项列表
 	 */
 	public Result<List<OptionCO>> execute() {
 		List<PackageDO> list = packageMapper.selectList(Wrappers.lambdaQuery(PackageDO.class)

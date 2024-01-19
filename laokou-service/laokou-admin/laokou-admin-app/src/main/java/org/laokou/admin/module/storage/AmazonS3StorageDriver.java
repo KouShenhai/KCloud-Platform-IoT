@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 /**
+ * OSS Amazon S3协议.
  * @author laokou
  */
 public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {

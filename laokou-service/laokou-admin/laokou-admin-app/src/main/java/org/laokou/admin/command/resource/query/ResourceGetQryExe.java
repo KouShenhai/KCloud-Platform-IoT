@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查看资源执行器.
  * @author laokou
  */
 @Component
@@ -40,9 +41,9 @@ public class ResourceGetQryExe {
 	private final ResourceConvertor resourceConvertor;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行查看资源.
+	 * @param qry 查看资源参数
+	 * @return 资源
 	 */
 	@DS(TENANT)
 	public Result<ResourceCO> execute(ResourceGetQry qry) {

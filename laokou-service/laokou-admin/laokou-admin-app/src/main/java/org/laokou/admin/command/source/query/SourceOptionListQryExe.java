@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 查询数据源下拉框选择项列表执行器
  * @author laokou
  */
 @Component
@@ -40,9 +41,9 @@ public class SourceOptionListQryExe {
 	private final SourceMapper sourceMapper;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行查询数据源下拉框选择项列表
+	 * @param qry 查询数据源下拉框选择项列表参数
+	 * @return 数据源下拉框选择项列表
 	 */
 	public Result<List<OptionCO>> execute(SourceOptionListQry qry) {
 		List<SourceDO> list = sourceMapper.selectList(Wrappers.lambdaQuery(SourceDO.class)

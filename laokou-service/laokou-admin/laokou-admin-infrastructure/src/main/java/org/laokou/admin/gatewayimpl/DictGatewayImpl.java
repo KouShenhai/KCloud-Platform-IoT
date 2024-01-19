@@ -50,6 +50,11 @@ public class DictGatewayImpl implements DictGateway {
 
 	private final DictConvertor dictConvertor;
 
+	/**
+	 *
+	 * @param dict 字典对象
+	 * @return
+	 */
 	@Override
 	public Boolean insert(Dict dict) {
 		DictDO dictDO = dictConvertor.toDataObject(dict);

@@ -27,16 +27,35 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 
 /**
+ * 日志管理.
  * @author laokou
  */
 public interface LogsServiceI {
 
+	/**
+	 * 查询操作日志列表
+	 * @param qry 查询操作日志列表参数
+	 * @return 操作日志列表
+	 */
 	Result<Datas<OperateLogCO>> operateList(OperateLogListQry qry);
 
+	/**
+	 * 导出操作日志
+	 * @param cmd 导出操作日志参数
+	 */
 	void operateExport(OperateLogExportCmd cmd);
 
+	/**
+	 * 查询登录日志列表
+	 * @param qry 查询登录日志列表参数
+	 * @return 登录日志列表
+	 */
 	Result<Datas<LoginLogCO>> loginList(LoginLogListQry qry);
 
+	/**
+	 * 导出登录日志
+	 * @param cmd 导出登录日志参数
+	 */
 	void loginExport(LoginLogExportCmd cmd);
 
 }

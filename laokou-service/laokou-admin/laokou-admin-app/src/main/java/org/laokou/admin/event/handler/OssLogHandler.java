@@ -36,6 +36,7 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.CompletableFuture;
 
 /**
+ * OSS日志处理.
  * @author laokou
  */
 @Async

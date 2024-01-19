@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 重置用户密码执行器
  * @author laokou
  */
 @Component
@@ -37,11 +38,21 @@ public class UserPasswordResetCmdExe {
 
 	private final UserGateway userGateway;
 
+	/**
+	 * 执行重置用户密码.
+	 * @param cmd 重置用户密码参数
+	 * @return 执行重置结果
+	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(UserPasswordResetCmd cmd) {
 		return Result.of(userGateway.resetPassword(toUser(cmd)));
 	}
 
+	/**
+	 * 转换为用户领域.
+	 * @param cmd 重置用户密码参数
+	 * @return 用户领域
+	 */
 	private User toUser(UserPasswordResetCmd cmd) {
 		User user = new User(cmd.getId(), cmd.getPassword());
 		user.setEditor(UserUtil.getUserId());

@@ -26,6 +26,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 查看套餐执行器.
  * @author laokou
  */
 @Component
@@ -37,9 +38,9 @@ public class PackageGetQryExe {
 	private final PackageConvertor packageConvertor;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行查看套餐.
+	 * @param qry 查看套餐参数
+	 * @return 套餐
 	 */
 	public Result<PackageCO> execute(PackageGetQry qry) {
 		return Result.of(packageConvertor.convertClientObject(packageGateway.getById(qry.getId())));

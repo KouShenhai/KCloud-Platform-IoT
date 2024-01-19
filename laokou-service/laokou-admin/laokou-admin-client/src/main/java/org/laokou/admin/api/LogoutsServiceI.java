@@ -21,14 +21,15 @@ import org.laokou.admin.dto.logout.LogoutCmd;
 import org.laokou.common.i18n.dto.Result;
 
 /**
+ * 退出登录.
  * @author laokou
  */
 public interface LogoutsServiceI {
 
 	/**
-	 * 注销.
-	 * @param cmd 指令
-	 * @return 注册结果
+	 * 退出登录.
+	 * @param cmd 退出登录参数
+	 * @return 退出结果
 	 */
 	Result<Boolean> logout(LogoutCmd cmd);
 

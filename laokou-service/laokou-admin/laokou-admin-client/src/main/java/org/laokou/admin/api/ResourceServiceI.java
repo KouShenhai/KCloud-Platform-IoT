@@ -30,42 +30,127 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 资源管理.
  * @author laokou
  */
 public interface ResourceServiceI {
 
+	/**
+	 * 查询审批日志列表.
+	 * @param qry 查询审批日志列表参数
+	 * @return 审批日志列表
+	 */
 	Result<List<AuditLogCO>> auditLog(ResourceAuditLogListQry qry);
 
+	/**
+	 * 同步资源
+	 * @param cmd 同步资源参数
+	 * @return 同步结果
+	 */
 	Result<Boolean> sync(ResourceSyncCmd cmd);
 
+	/**
+	 * 上传资源文件
+	 * @param cmd 上传资源文件参数
+	 * @return 文件对象
+	 */
 	Result<FileCO> upload(OssUploadCmd cmd);
 
+	/**
+	 * 查询资源列表.
+	 * @param qry 查询资源列表参数
+	 * @return 资源列表
+	 */
 	Result<Datas<ResourceCO>> list(ResourceListQry qry);
 
+	/**
+	 * 根据ID查看资源
+	 * @param qry 根据ID查看资源参数
+	 * @return 资源
+	 */
 	Result<ResourceCO> getById(ResourceGetQry qry);
 
+	/**
+	 * 下载资源
+	 * @param cmd 下载资源参数
+	 */
 	void download(ResourceDownloadCmd cmd);
 
+	/**
+	 * 新增资源
+	 * @param cmd 新增资源
+	 * @return 新增结果
+	 */
 	Result<Boolean> insert(ResourceInsertCmd cmd);
 
+	/**
+	 * 修改资源
+	 * @param cmd 修改资源
+	 * @return 修改结果
+	 */
 	Result<Boolean> update(ResourceUpdateCmd cmd);
 
+	/**
+	 * 根据ID删除资源
+	 * @param cmd 根据ID删除资源参数
+	 * @return 删除结果
+	 */
 	Result<Boolean> deleteById(ResourceDeleteCmd cmd);
 
+	/**
+	 * 查看资源流程图.
+	 * @param qry 查看资源流程图参数
+	 * @return 流程图
+	 */
 	Result<String> diagram(ResourceDiagramGetQry qry);
 
+	/**
+	 * 查询资源审批任务流程列表
+	 * @param qry 查询资源审批任务流程列表参数
+	 * @return 资源审批任务流程列表
+	 */
 	Result<Datas<TaskCO>> taskList(ResourceTaskListQry qry);
 
+	/**
+	 * 审批资源任务流程
+	 * @param cmd 审批资源任务流程参数
+	 * @return 审批结果
+	 */
 	Result<Boolean> auditTask(ResourceAuditTaskCmd cmd);
 
+	/**
+	 * 查看资源任务流程详情
+	 * @param qry 查看资源任务流程详情参数
+	 * @return 资源任务流程详情
+	 */
 	Result<ResourceCO> detailTask(ResourceDetailTaskGetQry qry);
 
+	/**
+	 * 处理资源任务流程
+	 * @param cmd 处理资源任务流程参数
+	 * @return 处理结果
+	 */
 	Result<Boolean> resolveTask(ResourceResolveTaskCmd cmd);
 
+	/**
+	 * 转办资源任务流程
+	 * @param cmd 转办资源任务流程参数
+	 * @return 转办结果
+	 */
 	Result<Boolean> transferTask(ResourceTransferTaskCmd cmd);
 
+	/**
+	 * 委派资源任务流程
+	 * @param cmd 委派资源任务流程参数
+	 * @return 委派结果
+	 */
 	Result<Boolean> delegateTask(ResourceDelegateTaskCmd cmd);
 
+	/**
+	 * 搜索资源
+	 * @param qry 搜索资源参数
+	 * @return 搜索结果
+	 */
 	Result<Datas<Map<String, Object>>> search(ResourceSearchGetQry qry);
 
 }

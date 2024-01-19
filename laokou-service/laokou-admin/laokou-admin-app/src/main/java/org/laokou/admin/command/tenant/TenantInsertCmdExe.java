@@ -25,6 +25,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 新增租户执行器.
  * @author laokou
  */
 @Component
@@ -36,9 +37,9 @@ public class TenantInsertCmdExe {
 	private final TenantConvertor tenantConvertor;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 执行新增租户
+	 * @param cmd 新增租户参数
+	 * @return 执行新增结果
 	 */
 	public Result<Boolean> execute(TenantInsertCmd cmd) {
 		return Result.of(tenantGateway.insert(tenantConvertor.toEntity(cmd.getTenantCO())));
