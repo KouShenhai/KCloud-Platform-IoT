@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,12 +59,22 @@ public class StorageFactory {
 		return new AmazonS3StorageDriver(getOssConfig(tenantId));
 	}
 
+	/**
+	 *
+	 * @param tenantId
+	 * @return
+	 */
 	private OssCO getOssConfig(Long tenantId) {
 		Algorithm algorithm = new PollSelectAlgorithm();
 		OssDO ossDO = algorithm.select(getOssCache(tenantId), EMPTY);
 		return ossConvertor.convertClientObj(ossDO);
 	}
 
+	/**
+	 *
+	 * @param tenantId
+	 * @return
+	 */
 	private List<OssDO> getOssCache(Long tenantId) {
 		String ossConfigKey = RedisKeyUtil.getOssConfigKey(tenantId);
 		List<Object> objList = redisUtil.lGetAll(ossConfigKey);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,12 +37,17 @@ import java.util.List;
 import static org.laokou.common.i18n.common.DatasourceConstants.*;
 
 /**
+ * 导出登录日志执行器.
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
 public class LoginLogExportCmdExe {
 
+	/**
+	 * 执行导出登录日志.
+	 * @param cmd 导出登录日志参数
+	 */
 	@DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
 	public void executeVoid(LoginLogExportCmd cmd) {
 		try {
@@ -59,6 +64,11 @@ public class LoginLogExportCmdExe {
 		}
 	}
 
+	/**
+	 * 构建登录日志数据对象.
+	 * @param cmd 导出登录日志参数
+	 * @return 登录日志数据模型
+	 */
 	private LoginLogDO buildLoginLog(LoginLogExportCmd cmd) {
 		LoginLogDO loginLogDO = new LoginLogDO();
 		loginLogDO.setTenantId(UserUtil.getTenantId());

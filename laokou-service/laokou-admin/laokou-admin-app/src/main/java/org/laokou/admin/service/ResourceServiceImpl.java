@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,11 +76,21 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	private final ResourceSearchGetQryExe resourceSearchGetQryExe;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<List<AuditLogCO>> auditLog(ResourceAuditLogListQry qry) {
 		return resourceAuditLogListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> sync(ResourceSyncCmd cmd) {
 		return resourceSyncCmdExe.execute(cmd);

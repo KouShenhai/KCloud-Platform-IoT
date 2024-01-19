@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 新增IP执行器.
  * @author laokou
  */
 @Component
@@ -35,6 +36,11 @@ public class IpInsertCmdExe {
 
 	private final IpConvertor ipConvertor;
 
+	/**
+	 * 执行新增IP.
+	 * @param cmd 新增IP参数
+	 * @return 执行新增结果
+	 */
 	public Result<Boolean> execute(IpInsertCmd cmd) {
 		return Result.of(ipGateway.insert(ipConvertor.toEntity(cmd.getIpCO())));
 	}

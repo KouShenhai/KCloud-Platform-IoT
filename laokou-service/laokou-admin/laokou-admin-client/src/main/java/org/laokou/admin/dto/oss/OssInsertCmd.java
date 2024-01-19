@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.oss;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.common.i18n.dto.CommonCommand;
@@ -25,8 +26,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class OssInsertCmd extends CommonCommand {
 
+	@Schema(name = "", description = "")
 	private OssCO ossCO;
 
 }

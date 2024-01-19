@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.TRACE;
 import static org.laokou.common.i18n.common.MybatisPlusConstants.ID;
 
 /**
+ * 查看分布式链路索引执行器.
  * @author laokou
  */
 @Component
@@ -39,6 +40,11 @@ public class IndexTraceGetQryExe {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
+	/**
+	 * 执行查看分布式链路索引.
+	 * @param qry 查看分布式链路索引
+	 * @return 分布式链路索引
+	 */
 	public Result<Map<String, Object>> execute(IndexTraceGetQry qry) {
 		Search search = new Search();
 		search.setIndexNames(new String[] { TRACE });

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,11 +31,11 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper extends BatchMapper<UserDO> {
 
 	/**
-	 * 根据用户名和租户ID查询用户.
+	 * 根据用户名和登录类型查看用户.
 	 * @param username 用户名
 	 * @param type 登录类型
 	 * @param key 密钥
-	 * @return UserDO
+	 * @return 用户
 	 */
 	UserDO getUserByUsername(@Param("username") String username, @Param("type") String type, @Param("key") String key);
 

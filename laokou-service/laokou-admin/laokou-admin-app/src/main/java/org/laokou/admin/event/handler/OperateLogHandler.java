@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,6 +66,10 @@ public class OperateLogHandler implements ApplicationListener<OperateLogEvent> {
 		}, TtlExecutors.getTtlExecutorService(taskExecutor.getThreadPoolExecutor()));
 	}
 
+	/**
+	 *
+	 * @param event
+	 */
 	private void execute(OperateLogEvent event) {
 		OperateLogDO operateLogDO = ConvertUtil.sourceToTarget(event, OperateLogDO.class);
 		operateLogMapper.insertTable(operateLogDO);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,6 +54,7 @@ public class MessageHandler implements ApplicationListener<MessageEvent> {
 		MessageCO co = ConvertUtil.sourceToTarget(event, MessageCO.class);
 		Assert.isTrue(ObjectUtil.isNotNull(co), "MessageCO is null");
 		if (CollectionUtil.isEmpty(co.getReceiver())) {
+			// 远程调用获取当前任务执行人
 			AssigneeCO result = FeignUtil.result(tasksFeignClient.assignee(event.getInstanceId()));
 			co.setReceiver(Collections.singleton(result.getAssignee()));
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,11 @@ public class TenantUpdateCmdExe {
 
 	private final TenantConvertor tenantConvertor;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	public Result<Boolean> execute(TenantUpdateCmd cmd) {
 		Tenant tenant = tenantConvertor.toEntity(cmd.getTenantCO());
 		return Result.of(tenantGateway.update(tenant));

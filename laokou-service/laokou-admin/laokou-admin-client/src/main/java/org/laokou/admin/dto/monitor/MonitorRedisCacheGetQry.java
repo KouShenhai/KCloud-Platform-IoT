@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "MonitorCacheGetQry", description = "监控Redis缓存信息")
+@Schema(name = "MonitorCacheGetQry", description = "查看Redis缓存监控命令请求")
 public class MonitorRedisCacheGetQry extends CommonCommand {
 
 }

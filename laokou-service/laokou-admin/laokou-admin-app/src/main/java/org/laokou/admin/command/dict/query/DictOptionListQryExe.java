@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ import java.util.List;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查询字典下拉框选择项列表执行器.
  * @author laokou
  */
 @Component
@@ -43,6 +44,11 @@ public class DictOptionListQryExe {
 
 	private final DictMapper dictMapper;
 
+	/**
+	 * 执行查询字典下拉框选择项列表.
+	 * @param qry 查询字典下拉框选择项列表参数
+	 * @return 字典下拉框选择项列表
+	 */
 	@DS(TENANT)
 	public Result<List<OptionCO>> execute(DictOptionListQry qry) {
 		List<DictDO> list = dictMapper.selectList(Wrappers.lambdaQuery(DictDO.class)

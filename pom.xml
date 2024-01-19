@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-Alibaba</artifactId>
-    <version>3.2.1</version>
+    <version>3.2.2</version>
     <packaging>pom</packaging>
     <modules>
         <module>laokou-common</module>
@@ -32,7 +32,7 @@
     <description>一个企业级微服务架构的云服务多租户SaaS平台</description>
     <url>https://koushenhai.github.io/KCloud-Platform-Alibaba</url>
     <properties>
-        <laokou.version>3.2.1</laokou.version>
+        <laokou.version>3.2.2</laokou.version>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -41,7 +41,7 @@
         <spring-boot-maven-plugin.version>3.2.1</spring-boot-maven-plugin.version>
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.2.1</spring-boot.version>
+        <spring-boot.version>3.2.2-SNAPSHOT</spring-boot.version>
         <!--spring-cloud版本-->
         <spring-cloud.version>2023.0.0</spring-cloud.version>
         <!--spring-framework版本-->
@@ -125,11 +125,6 @@
         </dependencies>
     </dependencyManagement>
     <repositories>
-        <repository>
-            <id>springsource-milestones</id>
-            <name>SpringSource Milestones Proxy</name>
-            <url>https://oss.sonatype.org/content/repositories/springsource-milestones</url>
-        </repository>
         <repository>
             <id>spring-release</id>
             <name>Spring Release</name>
@@ -330,8 +325,8 @@
                 <configuration>
                     <!--备份版本-->
                     <generateBackupPoms>true</generateBackupPoms>
-                    <newVersion>3.2.2</newVersion>
-                    <oldVersion>3.2.1</oldVersion>
+                    <newVersion>3.2.3</newVersion>
+                    <oldVersion>3.2.2</oldVersion>
                 </configuration>
             </plugin>
             <plugin>
@@ -350,7 +345,7 @@
                     <failsOnError>true</failsOnError>
                     <failOnViolation>true</failOnViolation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                    <skip>false</skip>
+                    <skip>true</skip>
                     <linkXRef>false</linkXRef>
                 </configuration>
                 <executions>

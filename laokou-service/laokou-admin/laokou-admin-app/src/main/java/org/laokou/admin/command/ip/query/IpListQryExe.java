@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 查询IP列表执行器.
  * @author laokou
  */
 @Component
@@ -38,6 +39,11 @@ public class IpListQryExe {
 
 	private final IpConvertor ipConvertor;
 
+	/**
+	 * 查询IP列表.
+	 * @param qry 查询IP列表参数
+	 * @return IP列表
+	 */
 	public Result<Datas<IpCO>> execute(IpListQry qry) {
 		Datas<Ip> page = ipGateway.list(new Ip(qry.getLabel()), qry);
 		Datas<IpCO> datas = new Datas<>();

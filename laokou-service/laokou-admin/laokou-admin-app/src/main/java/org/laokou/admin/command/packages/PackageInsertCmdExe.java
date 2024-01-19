@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,11 +36,20 @@ public class PackageInsertCmdExe {
 
 	private final PackageGateway packageGateway;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	public Result<Boolean> execute(PackageInsertCmd cmd) {
 		Package pack = ConvertUtil.sourceToTarget(cmd.getPackageCO(), Package.class);
 		return Result.of(packageGateway.insert(pack, toUser()));
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	private User toUser() {
 		return ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -85,7 +85,7 @@ class OAuth2AuthorizationServerConfig {
 	// @formatter:off
 	/**
 	 * OAuth2AuthorizationServer核心配置.
-	 * @param http http
+	 * @param http http配置
 	 * @param passwordAuthenticationProvider 密码认证Provider
 	 * @param mailAuthenticationProvider 邮箱认证Provider
 	 * @param mobileAuthenticationProvider 手机号认证Provider
@@ -163,11 +163,20 @@ class OAuth2AuthorizationServerConfig {
 		return new NimbusJwtEncoder(jwkSource);
 	}
 
+	/**
+	 *
+	 * @param jwkSource
+	 * @return
+	 */
 	@Bean
 	JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
 		return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	@Bean
 	JWKSource<SecurityContext> jwkSource() {
 		RSAKey rsaKey = getRsaKey();
@@ -226,6 +235,10 @@ class OAuth2AuthorizationServerConfig {
 		return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	private RSAKey getRsaKey() {
 		KeyPair keyPair = generateRsaKey();
 		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
@@ -233,6 +246,10 @@ class OAuth2AuthorizationServerConfig {
 		return (new RSAKey.Builder(publicKey)).privateKey(privateKey).keyID(UUID.randomUUID().toString()).build();
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	private KeyPair generateRsaKey() {
 		try {
 			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM_RSA);

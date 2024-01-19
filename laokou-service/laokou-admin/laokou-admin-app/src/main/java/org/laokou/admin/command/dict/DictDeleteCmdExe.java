@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 删除字典执行器.
  * @author laokou
  */
 @Slf4j
@@ -37,6 +38,11 @@ public class DictDeleteCmdExe {
 
 	private final DictGateway dictGateway;
 
+	/**
+	 * 执行删除字典.
+	 * @param cmd 删除字典参数
+	 * @return 执行删除结果
+	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(DictDeleteCmd cmd) {
 		return Result.of(dictGateway.deleteById(cmd.getId()));

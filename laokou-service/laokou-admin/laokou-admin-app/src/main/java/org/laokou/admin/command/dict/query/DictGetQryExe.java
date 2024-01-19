@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查看字典执行器.
  * @author laokou
  */
 @Component
@@ -39,6 +40,11 @@ public class DictGetQryExe {
 
 	private final DictConvertor dictConvertor;
 
+	/**
+	 * 执行查看字典.
+	 * @param qry 查看字典参数
+	 * @return 字典
+	 */
 	@DS(TENANT)
 	public Result<DictCO> execute(DictGetQry qry) {
 		return Result.of(dictConvertor.convertClientObject(dictGateway.getById(qry.getId())));

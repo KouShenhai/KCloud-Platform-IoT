@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,6 +43,11 @@ public class ResourceTaskListQryExe {
 
 	private final DefaultConfigProperties defaultConfigProperties;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<Datas<TaskCO>> execute(ResourceTaskListQry qry) {
 		Datas<TaskCO> result = FeignUtil.result(tasksFeignClient.list(toQry(qry)));
 		List<TaskCO> records = result.getRecords();
@@ -53,6 +58,11 @@ public class ResourceTaskListQryExe {
 		return Result.of(result);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	private TaskListQry toQry(ResourceTaskListQry qry) {
 		TaskListQry taskListQry = new TaskListQry();
 		taskListQry.setName(qry.getName());

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,11 @@ public class TenantOptionListQryExe {
 
 	private final TenantMapper tenantMapper;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<List<OptionCO>> execute(TenantOptionListQry qry) {
 		List<TenantDO> list = tenantMapper.selectList(Wrappers.lambdaQuery(TenantDO.class)
 			.select(TenantDO::getId, TenantDO::getName)

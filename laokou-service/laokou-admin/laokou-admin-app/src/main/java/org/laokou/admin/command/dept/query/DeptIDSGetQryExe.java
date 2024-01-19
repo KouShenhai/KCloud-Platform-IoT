@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import java.util.List;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查看部门IDS执行器.
  * @author laokou
  */
 @Component
@@ -37,6 +38,11 @@ public class DeptIDSGetQryExe {
 
 	private final DeptGateway deptGateway;
 
+	/**
+	 * 执行查看部门IDS.
+	 * @param qry 查看部门IDS参数
+	 * @return 部门IDS
+	 */
 	@DS(TENANT)
 	public Result<List<Long>> execute(DeptIDSGetQry qry) {
 		return Result.of(deptGateway.getDeptIds(qry.getRoleId()));

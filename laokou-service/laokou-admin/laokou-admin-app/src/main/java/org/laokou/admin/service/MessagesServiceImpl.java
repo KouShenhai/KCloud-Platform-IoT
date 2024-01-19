@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,31 +50,61 @@ public class MessagesServiceImpl implements MessagesServiceI {
 
 	private final MessageUnreadCountGetQryExe messageUnreadCountGetQryExe;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<Boolean> insert(MessageInsertCmd cmd) {
 		return messageInsertCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Datas<MessageCO>> list(MessageListQry qry) {
 		return messageListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@Override
 	public Result<MessageCO> read(MessageReadCmd cmd) {
 		return messageReadCmdExe.execute(cmd);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<MessageCO> getById(MessageGetQry qry) {
 		return messageGetQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Datas<MessageCO>> unreadList(MessageUnreadListQry qry) {
 		return messageUnreadListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Integer> unreadCount(MessageUnreadCountGetQry qry) {
 		return messageUnreadCountGetQryExe.execute(qry);

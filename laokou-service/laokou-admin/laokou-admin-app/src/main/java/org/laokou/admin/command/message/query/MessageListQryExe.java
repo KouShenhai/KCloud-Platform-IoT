@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查询消息列表执行器.
  * @author laokou
  */
 @Component
@@ -39,6 +40,11 @@ public class MessageListQryExe {
 
 	private final MessageGateway messageGateway;
 
+	/**
+	 * 执行查询消息列表.
+	 * @param qry 查询消息列表参数
+	 * @return 消息列表
+	 */
 	@DS(TENANT)
 	public Result<Datas<MessageCO>> execute(MessageListQry qry) {
 		Message message = ConvertUtil.sourceToTarget(qry, Message.class);

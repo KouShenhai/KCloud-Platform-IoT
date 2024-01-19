@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * 删除IP执行器.
  * @author laokou
  */
 @Component
@@ -32,6 +33,11 @@ public class IpDeleteCmdExe {
 
 	private final IpGateway ipGateway;
 
+	/**
+	 * 执行删除IP.
+	 * @param cmd 删除IP参数
+	 * @return 执行删除结果
+	 */
 	public Result<Boolean> execute(IpDeleteCmd cmd) {
 		return Result.of(ipGateway.deleteById(cmd.getId()));
 	}

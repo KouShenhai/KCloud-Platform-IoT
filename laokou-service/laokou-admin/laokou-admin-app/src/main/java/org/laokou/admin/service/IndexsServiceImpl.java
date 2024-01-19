@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,21 +49,41 @@ public class IndexsServiceImpl implements IndexsServiceI {
 
 	private final IndexTraceGetQryExe indexTraceGetQryExe;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Datas<IndexCO>> list(IndexListQry qry) {
 		return indexListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Map<String, Object>> info(IndexGetQry qry) {
 		return indexGetQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Datas<Map<String, Object>>> traceList(IndexTraceListQry qry) {
 		return indexTraceListQryExe.execute(qry);
 	}
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@Override
 	public Result<Map<String, Object>> getTraceById(IndexTraceGetQry qry) {
 		return indexTraceGetQryExe.execute(qry);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,15 @@ public abstract class AbstractStorageDriver<O> implements StorageDriver<O> {
 
 	protected OssCO co;
 
+	/**
+	 *
+	 * @param limitRead 读取时间
+	 * @param fileSize 文件大小
+	 * @param fileName 文件名
+	 * @param inputStream 输入流
+	 * @param contentType 类型
+	 * @return
+	 */
 	public String upload(int limitRead, long fileSize, String fileName, InputStream inputStream, String contentType) {
 		try {
 			// 修改文件名
@@ -56,7 +65,7 @@ public abstract class AbstractStorageDriver<O> implements StorageDriver<O> {
 
 	/**
 	 * 获取连接对象.
-	 * @return O
+	 * @return
 	 */
 	protected abstract O getObj();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -119,12 +119,14 @@ public class DataFilterAop {
 			.append(user.getId())
 			.append(DOUBLE_QUOT);
 		sqlFilter.append(RIGHT);
-		// after(sql);
-		return sqlFilter.toString();
+		return afterAndResult(sqlFilter.toString());
 	}
 
-	private void after(String sql) {
-		log.info("获取拼接后的SQL:{}", sql);
+	private String afterAndResult(String sql) {
+		if (log.isDebugEnabled()) {
+			log.debug("获取拼接后的SQL:{}", sql);
+		}
+		return sql;
 	}
 
 }

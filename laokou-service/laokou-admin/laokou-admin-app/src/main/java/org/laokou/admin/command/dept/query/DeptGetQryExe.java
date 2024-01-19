@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查看部门执行器.
  * @author laokou
  */
 @Component
@@ -39,6 +40,11 @@ public class DeptGetQryExe {
 
 	private final DeptConvertor deptConvertor;
 
+	/**
+	 * 执行查看部门.
+	 * @param qry 查看部门参数
+	 * @return 部门
+	 */
 	@DS(TENANT)
 	public Result<DeptCO> execute(DeptGetQry qry) {
 		return Result.of(deptConvertor.convertClientObject(deptGateway.getById(qry.getId())));

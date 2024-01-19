@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ import org.springframework.stereotype.Component;
 import java.security.Principal;
 
 /**
+ * 退出登录执行器.
  * @author laokou
  */
 @Component
@@ -44,6 +45,11 @@ public class LogoutCmdExe {
 
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 
+	/**
+	 * 执行退出登录.
+	 * @param cmd 退出登录参数
+	 * @return 执行退出结果
+	 */
 	public Result<Boolean> execute(LogoutCmd cmd) {
 		String token = cmd.getToken();
 		if (StringUtil.isEmpty(token)) {
@@ -70,20 +76,36 @@ public class LogoutCmdExe {
 		return Result.of(true);
 	}
 
+	/**
+	 * 移除令牌.
+	 * @param authorization 认证对象
+	 */
 	private void removeToken(OAuth2Authorization authorization) {
 		oAuth2AuthorizationService.remove(authorization);
 	}
 
+	/**
+	 * 删除用户信息Key.
+	 * @param token 令牌
+	 */
 	private void deleteUserInfoKey(String token) {
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
 		redisUtil.delete(userInfoKey);
 	}
 
+	/**
+	 * 删除用户强踢Key.
+	 * @param token 令牌
+	 */
 	private void deleteUserKillKey(String token) {
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);
 		redisUtil.delete(userKillKey);
 	}
 
+	/**
+	 * 删除树菜单Key.
+	 * @param userId 用户ID
+	 */
 	private void deleteMenuTreeKey(Long userId) {
 		String resourceTreeKey = RedisKeyUtil.getMenuTreeKey(userId);
 		redisUtil.delete(resourceTreeKey);

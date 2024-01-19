@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,10 +25,10 @@ import org.laokou.admin.domain.source.Source;
 import org.laokou.admin.dto.source.SourceUpdateCmd;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Component;
 
@@ -47,12 +47,21 @@ public class SourceUpdateCmdExe {
 
 	private final SourceConvertor sourceConvertor;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	public Result<Boolean> execute(SourceUpdateCmd cmd) {
 		Source source = sourceConvertor.toEntity(cmd.getSourceCO());
 		validate(source);
 		return Result.of(sourceGateway.update(source));
 	}
 
+	/**
+	 *
+	 * @param source
+	 */
 	private void validate(Source source) {
 		Long id = source.getId();
 		String name = source.getName();

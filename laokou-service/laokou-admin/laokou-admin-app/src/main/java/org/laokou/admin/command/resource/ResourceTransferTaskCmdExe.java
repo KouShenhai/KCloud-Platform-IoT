@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,6 +45,11 @@ public class ResourceTransferTaskCmdExe {
 
 	private final EventUtil eventUtil;
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(ResourceTransferTaskCmd cmd) {
 		log.info("资源转办任务分布式事务 XID：{}", RootContext.getXID());

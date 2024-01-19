@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,6 +43,10 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 		this.co = co;
 	}
 
+	/**
+	 *
+	 * @param amazonS3 连接对象
+	 */
 	@Override
 	public void createBucket(AmazonS3 amazonS3) {
 		String bucketName = co.getBucketName();
@@ -52,6 +56,15 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 		}
 	}
 
+	/**
+	 *
+	 * @param amazonS3 连接对象
+	 * @param readLimit 读取时间
+	 * @param fileSize 文件大小
+	 * @param fileName 文件名
+	 * @param inputStream 输入流
+	 * @param contentType 类型
+	 */
 	@Override
 	public void putObject(AmazonS3 amazonS3, int readLimit, long fileSize, String fileName, InputStream inputStream,
 			String contentType) {
@@ -65,6 +78,12 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 		amazonS3.putObject(putObjectRequest);
 	}
 
+	/**
+	 *
+	 * @param amazonS3 连接对象
+	 * @param fileName 文件名
+	 * @return
+	 */
 	@Override
 	public String getUrl(AmazonS3 amazonS3, String fileName) {
 		String bucketName = co.getBucketName();
@@ -72,11 +91,20 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 		return url.toString();
 	}
 
+	/**
+	 *
+	 * @param fileName 文件名
+	 * @return
+	 */
 	@Override
 	public String getFileName(String fileName) {
 		return DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + getFileExt(fileName);
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	@NotNull
 	@Override
 	protected AmazonS3 getObj() {

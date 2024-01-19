@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
+ * 查看消息执行器.
  * @author laokou
  */
 @Component
@@ -38,6 +39,11 @@ public class MessageGetQryExe {
 
 	private final MessageGateway messageGateway;
 
+	/**
+	 * 执行查看消息.
+	 * @param qry 查看消息参数
+	 * @return 消息
+	 */
 	@DS(TENANT)
 	public Result<MessageCO> execute(MessageGetQry qry) {
 		Message message = messageGateway.getById(qry.getId());

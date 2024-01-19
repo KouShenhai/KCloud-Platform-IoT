@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
+ * IP刷新至Redis执行器.
  * @author laokou
  */
 @Component
@@ -33,6 +34,11 @@ public class IpRefreshCmdExe {
 
 	private final IpGateway ipGateway;
 
+	/**
+	 * 执行IP刷新至Redis.
+	 * @param cmd IP刷新至Redis参数
+	 * @return 执行刷新结果
+	 */
 	public Result<Boolean> execute(IpRefreshCmd cmd) {
 		return Result.of(ipGateway.refresh(new Ip(cmd.getLabel())));
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,6 +44,11 @@ public class UserOptionListQryExe {
 
 	private final UserMapper userMapper;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_USER)
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
@@ -55,6 +60,11 @@ public class UserOptionListQryExe {
 		return Result.of(options);
 	}
 
+	/**
+	 *
+	 * @param userDO
+	 * @return
+	 */
 	private OptionCO option(UserDO userDO) {
 		OptionCO oc = new OptionCO();
 		oc.setLabel(userDO.getUsername());

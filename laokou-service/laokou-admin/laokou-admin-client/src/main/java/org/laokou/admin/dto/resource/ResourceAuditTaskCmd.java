@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.resource;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
 
@@ -26,20 +27,28 @@ import java.util.Map;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class ResourceAuditTaskCmd extends CommonCommand {
 
+	@Schema(name = "", description = "")
 	private Long businessKey;
 
+	@Schema(name = "", description = "")
 	private String taskId;
 
+	@Schema(name = "", description = "")
 	private String taskName;
 
+	@Schema(name = "", description = "")
 	private String instanceId;
 
+	@Schema(name = "", description = "")
 	private String instanceName;
 
+	@Schema(name = "", description = "")
 	private String comment;
 
+	@Schema(name = "", description = "")
 	private Map<String, Object> values;
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
+ * 查看索引执行器.
  * @author laokou
  */
 @Component
@@ -34,6 +35,11 @@ public class IndexGetQryExe {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
+	/**
+	 * 执行查看索引.
+	 * @param qry 查看索引参数
+	 * @return 索引
+	 */
 	public Result<Map<String, Object>> execute(IndexGetQry qry) {
 		return Result.of(elasticsearchTemplate.getIndexProperties(qry.getIndexName()));
 	}

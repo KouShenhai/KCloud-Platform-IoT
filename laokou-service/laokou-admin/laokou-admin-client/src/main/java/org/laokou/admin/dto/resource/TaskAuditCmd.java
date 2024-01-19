@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.resource;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
 
@@ -27,6 +28,7 @@ import java.util.Map;
  * @author laokou
  */
 @Data
+@Schema(name = "", description = "")
 public class TaskAuditCmd extends CommonCommand {
 
 	@Serial
@@ -35,16 +37,19 @@ public class TaskAuditCmd extends CommonCommand {
 	/**
 	 * 任务ID.
 	 */
+	@Schema(name = "", description = "")
 	private String taskId;
 
 	/**
 	 * 实例ID.
 	 */
+	@Schema(name = "", description = "")
 	private String instanceId;
 
 	/**
 	 * 流程变量.
 	 */
+	@Schema(name = "", description = "")
 	private Map<String, Object> values;
 
 }

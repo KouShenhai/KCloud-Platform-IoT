@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ public class DefinitionActiveCmdExe {
 	private final DefinitionsFeignClient definitionsFeignClient;
 
 	/**
-	 * 激活流程.
+	 * 执行激活流程.
 	 * @param cmd 激活流程参数
 	 * @return 执行激活结果
 	 */

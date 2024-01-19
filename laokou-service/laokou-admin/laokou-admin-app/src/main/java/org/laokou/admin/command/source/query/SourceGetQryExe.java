@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,11 @@ public class SourceGetQryExe {
 
 	private final SourceGateway sourceGateway;
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	public Result<SourceCO> execute(SourceGetQry qry) {
 		Source source = sourceGateway.getById(qry.getId());
 		return Result.of(ConvertUtil.sourceToTarget(source, SourceCO.class));

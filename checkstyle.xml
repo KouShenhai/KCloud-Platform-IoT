@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,15 +42,18 @@
 
 -->
 
+	<module name="SuppressionFilter">
+		<property name="file" value="checkstyle-suppressions.xml"/>
+		<property name="optional" value="true"/>
+	</module>
+
 	<!-- TAKEN FROM SPRING BOOT -->
 	<!-- Root Checks -->
 	<!-- 自定义配置，参考: https://checkstyle.sourceforge.io/checks/javadoc/javadocstyle.html#JavadocStyle -->
 	<module name="com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck">
-<!--
-		<property name="headerFile" value="${checkstyle.header.file}"/>
--->
+		<property name="headerFile" value="checkstyle-header.txt"/>
 		<!-- 限定检查的扩展类型 -->
-		<property name="fileExtensions" value="java, properties, xml"/>
+		<property name="fileExtensions" value="java"/>
 	</module>
 	<module name="com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck"/>
 
