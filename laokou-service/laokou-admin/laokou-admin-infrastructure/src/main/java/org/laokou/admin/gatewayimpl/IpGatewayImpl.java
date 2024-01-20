@@ -43,6 +43,7 @@ import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 import static org.laokou.common.redis.utils.RedisUtil.NOT_EXPIRE;
 
 /**
+ * IP管理.
  * @author laokou
  */
 @Slf4j
@@ -58,11 +59,21 @@ public class IpGatewayImpl implements IpGateway {
 
 	private final RedisUtil redisUtil;
 
+	/**
+	 * 新增IP
+	 * @param ip IP对象
+	 * @return 新增结果
+	 */
 	@Override
 	public Boolean insert(Ip ip) {
 		return insertIp(ipConvertor.toDataObject(ip));
 	}
 
+	/**
+	 * 根据ID删除IP
+	 * @param id ID
+	 * @return 删除结果
+	 */
 	@Override
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
@@ -77,6 +88,12 @@ public class IpGatewayImpl implements IpGateway {
 		});
 	}
 
+	/**
+	 * 查询IP列表
+	 * @param ip IP对象
+	 * @param pageQuery 分页参数
+	 * @return IP列表
+	 */
 	@Override
 	public Datas<Ip> list(Ip ip, PageQuery pageQuery) {
 		IPage<IpDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
@@ -88,6 +105,11 @@ public class IpGatewayImpl implements IpGateway {
 		return datas;
 	}
 
+	/**
+	 * 刷新IP至Redis
+	 * @param ip IP对象
+	 * @return 刷新结果
+	 */
 	@Override
 	public Boolean refresh(Ip ip) {
 		String label = ip.getLabel();
@@ -103,6 +125,11 @@ public class IpGatewayImpl implements IpGateway {
 		return true;
 	}
 
+	/**
+	 * 新增IP
+	 * @param ipDO IP数据模型
+	 * @return 新增结果
+	 */
 	private Boolean insertIp(IpDO ipDO) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {

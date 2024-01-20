@@ -26,24 +26,65 @@ import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.laokou.flowable.dto.task.clientobject.TaskCO;
 
 /**
+ *
  * @author laokou
  */
 public interface TasksServiceI {
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	Result<Datas<TaskCO>> list(TaskListQry qry);
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	Result<AuditCO> audit(TaskAuditCmd cmd);
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	Result<Boolean> resolve(TaskResolveCmd cmd);
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	Result<StartCO> start(TaskStartCmd cmd);
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	Result<String> diagram(TaskDiagramGetQry qry);
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	Result<Boolean> transfer(TaskTransferCmd cmd);
 
+	/**
+	 *
+	 * @param cmd
+	 * @return
+	 */
 	Result<Boolean> delegate(TaskDelegateCmd cmd);
 
+	/**
+	 *
+	 * @param qry
+	 * @return
+	 */
 	Result<AssigneeCO> assignee(TaskAssigneeGetQry qry);
 
 }

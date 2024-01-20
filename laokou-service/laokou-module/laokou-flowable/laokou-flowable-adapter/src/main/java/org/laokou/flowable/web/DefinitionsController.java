@@ -55,7 +55,7 @@ public class DefinitionsController {
 	}
 
 	@GetMapping("{definitionId}/diagram")
-	@Operation(summary = "流程定义", description = "流程图")
+	@Operation(summary = "流程定义", description = "查看流程图")
 	public Result<String> diagram(@PathVariable("definitionId") String definitionId) {
 		return definitionsServiceI.diagram(new DefinitionDiagramGetQry(definitionId));
 	}

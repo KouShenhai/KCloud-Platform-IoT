@@ -48,6 +48,7 @@ import java.util.List;
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_ROLE;
 
 /**
+ * 角色管理.
  * @author laokou
  */
 @Slf4j
@@ -67,12 +68,24 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	private final RoleConvertor roleConvertor;
 
+	/**
+	 * 新增角色
+	 * @param role 角色对象
+	 * @param user 用户对象
+	 * @return 新增结果
+	 */
 	@Override
 	public Boolean insert(Role role, User user) {
 		RoleDO roleDO = roleConvertor.toDataObject(role);
 		return insertRole(roleDO, role, user);
 	}
 
+	/**
+	 * 修改角色
+	 * @param role 角色对象
+	 * @param user 用户对象
+	 * @return 修改结果
+	 */
 	@Override
 	public Boolean update(Role role, User user) {
 		Long id = role.getId();
@@ -81,11 +94,21 @@ public class RoleGatewayImpl implements RoleGateway {
 		return updateRole(roleDO, role, user);
 	}
 
+	/**
+	 * 根据ID查看角色
+	 * @param id ID
+	 * @return 角色
+	 */
 	@Override
 	public Role getById(Long id) {
 		return roleConvertor.convertEntity(roleMapper.selectById(id));
 	}
 
+	/**
+	 * 根据ID删除角色
+	 * @param id ID
+	 * @return 删除结果
+	 */
 	@Override
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
@@ -100,6 +123,12 @@ public class RoleGatewayImpl implements RoleGateway {
 		});
 	}
 
+	/**
+	 * 查询角色列表
+	 * @param role 角色对象
+	 * @param pageQuery 分页参数
+	 * @return 角色列表
+	 */
 	@Override
 	@DataFilter(tableAlias = BOOT_SYS_ROLE)
 	public Datas<Role> list(Role role, PageQuery pageQuery) {
@@ -111,6 +140,13 @@ public class RoleGatewayImpl implements RoleGateway {
 		return datas;
 	}
 
+	/**
+	 * 新增角色
+	 * @param roleDO 角色数据模型
+	 * @param role 角色对象
+	 * @param user 用户对象
+	 * @return 新增结果
+	 */
 	private Boolean insertRole(RoleDO roleDO, Role role, User user) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -128,6 +164,13 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	}
 
+	/**
+	 * 修改角色
+	 * @param roleDO 角色数据模型
+ 	 * @param role 角色对象
+	 * @param user 用户对象
+	 * @return 修改结果
+	 */
 	private Boolean updateRole(RoleDO roleDO, Role role, User user) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -144,16 +187,34 @@ public class RoleGatewayImpl implements RoleGateway {
 		});
 	}
 
+	/**
+	 * 修改角色菜单
+	 * @param roleId 角色ID
+	 * @param menuIds 菜单IDS
+	 * @param user 用户对象
+	 */
 	private void updateRoleMenu(Long roleId, List<Long> menuIds, User user) {
 		roleMenuMapper.deleteRoleMenuByRoleId(roleId);
 		insertRoleMenu(roleId, menuIds, user);
 	}
 
+	/**
+	 * 修改角色部门
+	 * @param roleId 角色ID
+	 * @param deptIds 部门IDS
+	 * @param user 用户对象
+	 */
 	private void updateRoleDept(Long roleId, List<Long> deptIds, User user) {
 		roleDeptMapper.deleteRoleDeptByRoleId(roleId);
 		insertRoleDept(roleId, deptIds, user);
 	}
 
+	/**
+	 * 新增角色菜单
+	 * @param roleId 角色ID
+	 * @param menuIds 菜单IDS
+	 * @param user 用户对象
+	 */
 	private void insertRoleMenu(Long roleId, List<Long> menuIds, User user) {
 		if (CollectionUtil.isNotEmpty(menuIds)) {
 			List<RoleMenuDO> list = menuIds.parallelStream().map(menuId -> toRoleMenuDO(roleId, menuId, user)).toList();
@@ -162,6 +223,12 @@ public class RoleGatewayImpl implements RoleGateway {
 		}
 	}
 
+	/**
+	 * 新增角色部门
+	 * @param roleId 角色ID
+	 * @param deptIds 部门IDS
+	 * @param user 用户对象
+	 */
 	private void insertRoleDept(Long roleId, List<Long> deptIds, User user) {
 		if (CollectionUtil.isNotEmpty(deptIds)) {
 			List<RoleDeptDO> list = deptIds.parallelStream().map(deptId -> toRoleDeptDO(roleId, deptId, user)).toList();
@@ -170,6 +237,13 @@ public class RoleGatewayImpl implements RoleGateway {
 		}
 	}
 
+	/**
+	 * 转换为角色菜单数据模型
+	 * @param roleId 角色ID
+	 * @param menuId 菜单ID
+	 * @param user 用户对象
+	 * @return 角色菜单数据模型
+	 */
 	private RoleMenuDO toRoleMenuDO(Long roleId, Long menuId, User user) {
 		RoleMenuDO roleMenuDO = new RoleMenuDO();
 		roleMenuDO.setRoleId(roleId);
@@ -182,6 +256,13 @@ public class RoleGatewayImpl implements RoleGateway {
 		return roleMenuDO;
 	}
 
+	/**
+	 * 转换为角色部门数据模型
+	 * @param roleId 角色ID
+	 * @param deptId 部门ID
+	 * @param user 用户对象
+	 * @return 角色部门数据模型
+	 */
 	private RoleDeptDO toRoleDeptDO(Long roleId, Long deptId, User user) {
 		RoleDeptDO roleDeptDO = new RoleDeptDO();
 		roleDeptDO.setRoleId(roleId);

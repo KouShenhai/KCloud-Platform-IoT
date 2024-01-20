@@ -37,6 +37,7 @@ import static org.laokou.common.i18n.common.StringConstants.COMMA;
 import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 
 /**
+ * 部门管理.
  * @author laokou
  */
 @Slf4j
@@ -50,12 +51,22 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	private final DeptConvertor deptConvertor;
 
+	/**
+	 * 查询部门列表
+	 * @param dept 部门对象
+	 * @return 部门列表
+	 */
 	@Override
 	public List<Dept> list(Dept dept) {
 		DeptDO deptDO = deptConvertor.toDataObject(dept);
 		return deptConvertor.convertEntityList(deptMapper.getDeptList(deptDO));
 	}
 
+	/**
+	 * 新增部门
+	 * @param dept 部门对象
+	 * @return 新增结果
+	 */
 	@Override
 	public Boolean insert(Dept dept) {
 		DeptDO deptDO = deptConvertor.toDataObject(dept);
@@ -64,6 +75,11 @@ public class DeptGatewayImpl implements DeptGateway {
 		return insertDept(deptDO);
 	}
 
+	/**
+	 * 修改部门
+	 * @param dept 部门对象
+	 * @return 修改结果
+	 */
 	@Override
 	public Boolean update(Dept dept) {
 		DeptDO deptDO = deptConvertor.toDataObject(dept);
@@ -75,11 +91,21 @@ public class DeptGatewayImpl implements DeptGateway {
 		return updateDept(deptDO, dept.getPath(), deptDO.getPath(), deptChildrenList);
 	}
 
+	/**
+	 * 根据角色ID查看部门IDS
+	 * @param roleId 角色IDS
+	 * @return 部门IDS
+	 */
 	@Override
 	public List<Long> getDeptIds(Long roleId) {
 		return deptMapper.getDeptIdsByRoleId(roleId);
 	}
 
+	/**
+	 * 根据ID删除部门
+	 * @param id ID
+	 * @return 删除结果
+	 */
 	@Override
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
@@ -94,11 +120,24 @@ public class DeptGatewayImpl implements DeptGateway {
 		});
 	}
 
+	/**
+	 * 根据ID查看部门
+	 * @param id ID
+	 * @return 部门
+	 */
 	@Override
 	public Dept getById(Long id) {
 		return deptConvertor.convertEntity(deptMapper.selectById(id));
 	}
 
+	/**
+	 * 修改部门
+	 * @param deptDO 部门数据模型
+	 * @param oldPath 旧部门PATH
+	 * @param newPath 新部门PATH
+	 * @param deptChildrenList 部门子节点列表
+	 * @return 修改结果
+	 */
 	public Boolean updateDept(DeptDO deptDO, String oldPath, String newPath, List<DeptDO> deptChildrenList) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -114,6 +153,11 @@ public class DeptGatewayImpl implements DeptGateway {
 		});
 	}
 
+	/**
+	 * 新增部门
+	 * @param deptDO 部门数据模型
+	 * @return 新增结果
+	 */
 	private Boolean insertDept(DeptDO deptDO) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -127,6 +171,12 @@ public class DeptGatewayImpl implements DeptGateway {
 		});
 	}
 
+	/**
+	 * 修改部门子节点
+	 * @param oldPath 旧部门PATH
+	 * @param newPath 新部门PATH
+	 * @param deptChildrenList 部门子节点列表
+	 */
 	private void updateDeptChildren(String oldPath, String newPath, List<DeptDO> deptChildrenList) {
 		if (CollectionUtil.isNotEmpty(deptChildrenList)) {
 			deptChildrenList.forEach(deptChild -> {
@@ -136,6 +186,12 @@ public class DeptGatewayImpl implements DeptGateway {
 		}
 	}
 
+	/**
+	 * 查看部门PATH
+	 * @param pid 部门父节点ID
+	 * @param id ID
+	 * @return 部门PATH
+	 */
 	private String getPath(Long pid, Long id) {
 		String path = deptMapper.getDeptPathByPid(pid);
 		return StringUtil.isNotEmpty(path) ? path + COMMA + id : DEFAULT + COMMA + id;

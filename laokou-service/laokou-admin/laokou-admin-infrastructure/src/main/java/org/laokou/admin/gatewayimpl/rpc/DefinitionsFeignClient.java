@@ -40,14 +40,14 @@ public interface DefinitionsFeignClient {
 	/**
 	 * 新增流程.
 	 * @param file 文件
-	 * @return 执行结果
+	 * @return 新增结果
 	 */
 	@PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
 	Result<Boolean> insert(@RequestPart("file") MultipartFile file);
 
 	/**
-	 * 查询流程列表.
-	 * @param qry 查询参数
+	 * 查询任务流程列表.
+	 * @param qry 查询任务流程列表参数
 	 * @return 流程列表
 	 */
 	@PostMapping("list")
@@ -56,7 +56,7 @@ public interface DefinitionsFeignClient {
 	/**
 	 * 挂起流程.
 	 * @param definitionId 定义ID
-	 * @return 执行结果
+	 * @return 挂起结果
 	 */
 	@PutMapping("{definitionId}/suspend")
 	Result<Boolean> suspend(@PathVariable("definitionId") String definitionId);
@@ -64,15 +64,15 @@ public interface DefinitionsFeignClient {
 	/**
 	 * 激活流程.
 	 * @param definitionId 定义ID
-	 * @return 执行结果
+	 * @return 激活结果
 	 */
 	@PutMapping("{definitionId}/activate")
 	Result<Boolean> activate(@PathVariable("definitionId") String definitionId);
 
 	/**
-	 * 流程图.
+	 * 查看流程图.
 	 * @param definitionId 定义ID
-	 * @return 查询结果
+	 * @return 流程图
 	 */
 	@GetMapping("{definitionId}/diagram")
 	Result<String> diagram(@PathVariable("definitionId") String definitionId);
@@ -80,7 +80,7 @@ public interface DefinitionsFeignClient {
 	/**
 	 * 删除流程.
 	 * @param deploymentId 定义ID
-	 * @return 执行结果
+	 * @return 删除结果
 	 */
 	@DeleteMapping("{deploymentId}")
 	Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId);

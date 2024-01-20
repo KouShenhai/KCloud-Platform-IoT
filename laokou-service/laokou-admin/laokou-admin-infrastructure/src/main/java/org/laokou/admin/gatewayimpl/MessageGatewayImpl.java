@@ -56,6 +56,7 @@ import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
 import static org.laokou.common.i18n.common.RocketMqConstants.*;
 
 /**
+ * 消息管理.
  * @author laokou
  */
 @Slf4j
@@ -73,6 +74,12 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	private final MybatisUtil mybatisUtil;
 
+	/**
+	 * 查询消息列表
+	 * @param message 消息对象
+	 * @param pageQuery 分页参数
+	 * @return 消息列表
+	 */
 	@Override
 	@DataFilter(tableAlias = BOOT_SYS_MESSAGE)
 	public Datas<Message> list(Message message, PageQuery pageQuery) {
@@ -84,6 +91,12 @@ public class MessageGatewayImpl implements MessageGateway {
 		return datas;
 	}
 
+	/**
+	 * 新增消息
+	 * @param message 消息对象
+	 * @param user 用户对象
+	 * @return 新增结果
+	 */
 	@Override
 	public Boolean insert(Message message, User user) {
 		insertMessage(messageConvertor.toDataObject(message), message, user);
@@ -92,11 +105,21 @@ public class MessageGatewayImpl implements MessageGateway {
 		return true;
 	}
 
+	/**
+	 * 根据ID查看消息
+	 * @param id ID
+	 * @return 消息
+	 */
 	@Override
 	public Message getById(Long id) {
 		return messageConvertor.convertEntity(messageMapper.selectById(id));
 	}
 
+	/**
+	 * 推送消息
+	 * @param receiver 接收人集合
+	 * @param type 类型
+	 */
 	private void pushMessage(Set<String> receiver, Integer type) {
 		if (CollectionUtil.isEmpty(receiver)) {
 			return;
@@ -108,6 +131,12 @@ public class MessageGatewayImpl implements MessageGateway {
 				ThreadContext.get(TRACE_ID));
 	}
 
+	/**
+	 * 新增消息
+	 * @param messageDO 消息数据模型
+	 * @param message 消息对象
+	 * @param user 用户对象
+	 */
 	private void insertMessage(MessageDO messageDO, Message message, User user) {
 		transactionalUtil.defaultExecuteWithoutResult(rollback -> {
 			try {
@@ -122,6 +151,12 @@ public class MessageGatewayImpl implements MessageGateway {
 		});
 	}
 
+	/**
+	 * 新增消息详情
+	 * @param messageId 消息ID
+	 * @param receiver 接收人列表
+	 * @param user 用户对象
+	 */
 	private void insertMessageDetail(Long messageId, Set<String> receiver, User user) {
 		if (CollectionUtil.isNotEmpty(receiver)) {
 			List<MessageDetailDO> list = receiver.parallelStream()
@@ -132,10 +167,22 @@ public class MessageGatewayImpl implements MessageGateway {
 		}
 	}
 
+	/**
+	 * 查看消息标签
+	 * @param type 消息类型
+	 * @return 消息标签
+	 */
 	private String getMessageTag(Integer type) {
 		return type == MessageTypeEnums.NOTICE.ordinal() ? LAOKOU_NOTICE_MESSAGE_TAG : LAOKOU_REMIND_MESSAGE_TAG;
 	}
 
+	/**
+	 * 转换消息详情数据模型
+	 * @param messageId 消息ID
+	 * @param userId 用户ID
+	 * @param user 用户对象
+	 * @return 消息详情数据模型
+	 */
 	private MessageDetailDO toMessageDetailDO(Long messageId, String userId, User user) {
 		MessageDetailDO messageDetailDO = new MessageDetailDO();
 		messageDetailDO.setUserId(Long.parseLong(userId));

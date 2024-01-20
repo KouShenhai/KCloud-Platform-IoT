@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.*;
  * @author laokou
  */
 @RestController
-@Tag(name = "TasksController", description = "流程任务")
+@Tag(name = "TasksController", description = "任务流程")
 @RequiredArgsConstructor
 @RequestMapping("v1/tasks")
 public class TasksController {
@@ -43,54 +43,54 @@ public class TasksController {
 	private final TasksServiceI tasksServiceI;
 
 	@PostMapping("list")
-	@Operation(summary = "流程任务", description = "查询任务列表")
+	@Operation(summary = "任务流程", description = "查询任务流程列表")
 	public Result<Datas<TaskCO>> list(@RequestBody TaskListQry qry) {
 		return tasksServiceI.list(qry);
 	}
 
 	@Idempotent
 	@PostMapping("audit")
-	@Operation(summary = "流程任务", description = "审批任务")
+	@Operation(summary = "任务流程", description = "审批任务流程")
 	public Result<AuditCO> audit(@RequestBody TaskAuditCmd cmd) {
 		return tasksServiceI.audit(cmd);
 	}
 
 	@Idempotent
 	@PostMapping("resolve")
-	@Operation(summary = "流程任务", description = "处理任务")
+	@Operation(summary = "任务流程", description = "处理任务流程")
 	public Result<Boolean> resolve(@RequestBody TaskResolveCmd cmd) {
 		return tasksServiceI.resolve(cmd);
 	}
 
 	@Idempotent
 	@PostMapping("start")
-	@Operation(summary = "流程任务", description = "开始任务")
+	@Operation(summary = "任务流程", description = "开始任务流程")
 	public Result<StartCO> start(@RequestBody TaskStartCmd cmd) {
 		return tasksServiceI.start(cmd);
 	}
 
 	@GetMapping("{instanceId}/diagram")
-	@Operation(summary = "流程任务", description = "流程图")
+	@Operation(summary = "任务流程", description = "查看流程图")
 	public Result<String> diagram(@PathVariable("instanceId") String instanceId) {
 		return tasksServiceI.diagram(new TaskDiagramGetQry(instanceId));
 	}
 
 	@Idempotent
 	@PostMapping("transfer")
-	@Operation(summary = "流程任务", description = "转办任务")
+	@Operation(summary = "任务流程", description = "转办任务流程")
 	public Result<Boolean> transfer(@RequestBody TaskTransferCmd cmd) {
 		return tasksServiceI.transfer(cmd);
 	}
 
 	@Idempotent
 	@PostMapping("delegate")
-	@Operation(summary = "流程任务", description = "委派任务")
+	@Operation(summary = "任务流程", description = "委派任务流程")
 	public Result<Boolean> delegate(@RequestBody TaskDelegateCmd cmd) {
 		return tasksServiceI.delegate(cmd);
 	}
 
 	@GetMapping("{instanceId}/assignee")
-	@Operation(summary = "流程任务", description = "流程人员")
+	@Operation(summary = "任务流程", description = "流程人员")
 	public Result<AssigneeCO> assignee(@PathVariable("instanceId") String instanceId) {
 		return tasksServiceI.assignee(new TaskAssigneeGetQry(instanceId));
 	}

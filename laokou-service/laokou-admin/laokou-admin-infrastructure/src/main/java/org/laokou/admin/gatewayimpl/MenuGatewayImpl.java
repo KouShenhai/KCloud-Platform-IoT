@@ -34,6 +34,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
+ * 菜单管理.
  * @author laokou
  */
 @Slf4j
@@ -47,11 +48,22 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	private final MenuConvertor menuConvertor;
 
+	/**
+	 * 查询菜单列表
+	 * @param user 用户对象
+	 * @param type 类型
+	 * @return 菜单列表
+	 */
 	@Override
 	public List<Menu> list(User user, Integer type) {
 		return menuConvertor.convertEntityList(getMenuList(type, user));
 	}
 
+	/**
+	 * 修改菜单
+	 * @param menu 菜单对象
+	 * @return 修改结果
+	 */
 	@Override
 	public Boolean update(Menu menu) {
 		MenuDO menuDO = menuConvertor.toDataObject(menu);
@@ -59,12 +71,22 @@ public class MenuGatewayImpl implements MenuGateway {
 		return updateMenu(menuDO);
 	}
 
+	/**
+	 * 新增菜单
+	 * @param menu 菜单对象
+	 * @return 新增结果
+	 */
 	@Override
 	public Boolean insert(Menu menu) {
 		MenuDO menuDO = menuConvertor.toDataObject(menu);
 		return insertMenu(menuDO);
 	}
 
+	/**
+	 * 根据ID删除菜单
+	 * @param id ID
+	 * @return 删除结果
+	 */
 	@Override
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
@@ -79,27 +101,53 @@ public class MenuGatewayImpl implements MenuGateway {
 		});
 	}
 
+	/**
+	 * 根据ID查看菜单
+	 * @param id ID
+	 * @return 菜单
+	 */
 	@Override
 	public Menu getById(Long id) {
 		return menuConvertor.convertEntity(menuMapper.selectById(id));
 	}
 
+	/**
+	 * 根据角色ID查看菜单IDS
+	 * @param roleId 角色ID
+	 * @return 菜单IDS
+	 */
 	@Override
 	public List<Long> getIdsByRoleId(Long roleId) {
 		return menuMapper.getMenuIdsByRoleId(roleId);
 	}
 
+	/**
+	 * 根据租户ID查询菜单列表
+	 * @param menu 菜单对象
+	 * @param tenantId 租户ID
+	 * @return 菜单列表
+	 */
 	@Override
 	public List<Menu> list(Menu menu, Long tenantId) {
 		List<MenuDO> list = menuMapper.getMenuListLikeName(null, menu.getName());
 		return menuConvertor.convertEntityList(list);
 	}
 
+	/**
+	 * 查询租户菜单列表
+	 * @return 租户菜单列表
+	 */
 	@Override
 	public List<Menu> getTenantMenuList() {
 		return menuConvertor.convertEntityList(menuMapper.getTenantMenuList());
 	}
 
+	/**
+	 * 查询菜单列表
+	 * @param type 菜单类型 0菜单 1按钮
+	 * @param user 用户对象
+	 * @return 菜单列表
+	 */
 	private List<MenuDO> getMenuList(Integer type, User user) {
 		Long userId = user.getId();
 		Integer superAdmin = user.getSuperAdmin();
@@ -109,6 +157,11 @@ public class MenuGatewayImpl implements MenuGateway {
 		return menuMapper.getMenuListByUserId(type, userId);
 	}
 
+	/**
+	 * 修改菜单
+	 * @param menuDO 菜单数据模型
+	 * @return 修改结果
+	 */
 	private Boolean updateMenu(MenuDO menuDO) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -122,6 +175,11 @@ public class MenuGatewayImpl implements MenuGateway {
 		});
 	}
 
+	/**
+	 * 新增菜单
+	 * @param menuDO 菜单数据模型
+	 * @return 新增结果
+	 */
 	private Boolean insertMenu(MenuDO menuDO) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {

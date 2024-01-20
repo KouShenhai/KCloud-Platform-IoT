@@ -67,6 +67,7 @@ import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
 import static org.laokou.common.i18n.common.StringConstants.UNDER;
 
 /**
+ * 资源管理.
  * @author laokou
  */
 @Slf4j
@@ -92,6 +93,12 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private final EventUtil eventUtil;
 
+	/**
+	 * 查询资源列表
+	 * @param resource 资源对象
+	 * @param pageQuery 分页参数
+	 * @return 资源列表
+	 */
 	@Override
 	@DataFilter(tableAlias = BOOT_SYS_RESOURCE)
 	public Datas<Resource> list(Resource resource, PageQuery pageQuery) {
@@ -104,23 +111,42 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		return datas;
 	}
 
+	/**
+	 * 根据ID查看资源
+	 * @param id ID
+	 * @return 资源
+	 */
 	@Override
 	public Resource getById(Long id) {
 		return resourceConvertor.convertEntity(resourceMapper.selectById(id));
 	}
 
+	/**
+	 * 新增资源
+	 * @param resource 资源对象
+	 * @return 新增结果
+	 */
 	@Override
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Boolean insert(Resource resource) {
 		return insertResource(resource);
 	}
 
+	/**
+	 * 修改资源
+	 * @param resource 资源对象
+	 * @return 修改结果
+	 */
 	@Override
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Boolean update(Resource resource) {
 		return updateResource(resource, resourceMapper.getVersion(resource.getId(), ResourceDO.class));
 	}
 
+	/**
+	 * 同步索引
+	 * @return 同步结果
+	 */
 	@Override
 	@SneakyThrows
 	public Boolean sync() {
@@ -141,6 +167,11 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		return true;
 	}
 
+	/**
+	 * 根据ID删除资源
+	 * @param id ID
+	 * @return 删除结果
+	 */
 	@Override
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(rollback -> {
@@ -155,10 +186,20 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		});
 	}
 
+	/**
+	 * 修改资源
+	 * @param resource 资源对象
+	 * @return 修改结果
+	 */
 	private Boolean insertResource(Resource resource) {
 		return updateResource(insertTable(resource), DEFAULT);
 	}
 
+	/**
+	 * 新增资源
+	 * @param resource 资源对象
+	 * @return 新增结果
+	 */
 	private Resource insertTable(Resource resource) {
 		ResourceDO resourceDO = resourceConvertor.toDataObject(resource);
 		resourceMapper.insertTable(resourceDO);
@@ -166,22 +207,38 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		return resource;
 	}
 
+	/**
+	 * 修改资源
+	 * @param resource 资源对象
+	 * @param version 版本号
+	 * @return 修改结果
+	 */
 	private Boolean updateResource(Resource resource, Integer version) {
 		log.info("开始任务分布式事务 XID：{}", RootContext.getXID());
 		insertResourceAudit(resource);
 		StartCO co = startTask(resource);
 		int status = PENDING_APPROVAL.getValue();
 		updateResourceStatus(resource, status, version, co.getInstanceId());
-		publishMessage(resource, co.getInstanceId());
+		publishMessageEvent(resource, co.getInstanceId());
 		return true;
 	}
 
+	/**
+	 * 推送消息事件
+	 * @param resource 资源对象
+	 * @param instanceId 实例ID
+	 */
 	@Async
-	public void publishMessage(Resource resource, String instanceId) {
+	public void publishMessageEvent(Resource resource, String instanceId) {
 		domainEventPublisher
 			.publish(eventUtil.toAuditMessageEvent(null, resource.getId(), resource.getTitle(), instanceId));
 	}
 
+	/**
+	 * 开始任务流程
+	 * @param resource 资源对象
+	 * @return 开始结果
+	 */
 	private StartCO startTask(Resource resource) {
 		TaskStartCmd cmd = new TaskStartCmd();
 		cmd.setBusinessKey(resource.getId().toString());
@@ -190,6 +247,13 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		return FeignUtil.result(tasksFeignClient.start(cmd));
 	}
 
+	/**
+	 * 修改资源状态
+	 * @param resource 资源对象
+	 * @param status 状态
+	 * @param version 版本号
+	 * @param instanceId 实例ID
+	 */
 	private void updateResourceStatus(Resource resource, int status, Integer version, String instanceId) {
 		ResourceDO resourceDO = new ResourceDO();
 		resourceDO.setId(resource.getId());
@@ -199,6 +263,10 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		resourceMapper.updateById(resourceDO);
 	}
 
+	/**
+	 * 新增资源审批
+	 * @param resource 资源对象
+	 */
 	private void insertResourceAudit(Resource resource) {
 		ResourceAuditDO resourceAuditDO = ConvertUtil.sourceToTarget(resource, ResourceAuditDO.class);
 		Assert.isTrue(ObjectUtil.isNotNull(resourceAuditDO), "resource audit is null");
@@ -206,6 +274,10 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		resourceAuditMapper.insertTable(resourceAuditDO);
 	}
 
+	/**
+	 * 创建索引
+	 * @param list 索引名称列表
+	 */
 	private void createIndex(List<String> list) {
 		list.forEach(ym -> {
 			try {
@@ -218,6 +290,10 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		});
 	}
 
+	/**
+	 * 删除索引
+	 * @param list 索引名称列表
+	 */
 	private void deleteIndex(List<String> list) {
 		list.forEach(ym -> {
 			try {
@@ -230,6 +306,9 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		});
 	}
 
+	/**
+	 * 同步索引
+	 */
 	private void syncIndex() {
 		int chunkSize = 5000;
 		List<ResourceIndex> list = Collections.synchronizedList(new ArrayList<>(chunkSize));
@@ -245,6 +324,10 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		}
 	}
 
+	/**
+	 * 同步索引
+	 * @param list 资源索引列表
+	 */
 	private void syncIndex(List<ResourceIndex> list) {
 		Map<String, List<ResourceIndex>> listMap = list.stream().collect(Collectors.groupingBy(ResourceIndex::getYm));
 		listMap.forEach((k, v) -> {
@@ -260,14 +343,25 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		list.clear();
 	}
 
+	/**
+	 * 拼接索引
+	 * @param ym 年月
+	 * @return 索引
+	 */
 	private String index(String ym) {
 		return RESOURCE + UNDER + ym;
 	}
 
+	/**
+	 * 同步前
+	 */
 	private void syncBefore() {
 		log.info("开始同步数据");
 	}
 
+	/**
+	 * 同步后
+	 */
 	private void syncAfter() {
 		log.info("结束同步数据");
 	}

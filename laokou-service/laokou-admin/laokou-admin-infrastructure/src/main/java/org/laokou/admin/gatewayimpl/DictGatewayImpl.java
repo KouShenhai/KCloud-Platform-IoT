@@ -37,6 +37,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_DICT;
 
 /**
+ * 字典管理.
  * @author laokou
  */
 @Slf4j
@@ -51,9 +52,9 @@ public class DictGatewayImpl implements DictGateway {
 	private final DictConvertor dictConvertor;
 
 	/**
-	 *
+	 * 新增字典
 	 * @param dict 字典对象
-	 * @return
+	 * @return 新增结果
 	 */
 	@Override
 	public Boolean insert(Dict dict) {
@@ -61,6 +62,11 @@ public class DictGatewayImpl implements DictGateway {
 		return insertDict(dictDO);
 	}
 
+	/**
+	 * 修改字典
+	 * @param dict 字典对象
+	 * @return 修改结果
+	 */
 	@Override
 	public Boolean update(Dict dict) {
 		DictDO dictDO = dictConvertor.toDataObject(dict);
@@ -68,11 +74,21 @@ public class DictGatewayImpl implements DictGateway {
 		return updateDict(dictDO);
 	}
 
+	/**
+	 * 根据ID查看字典
+	 * @param id ID
+	 * @return 字典
+	 */
 	@Override
 	public Dict getById(Long id) {
 		return dictConvertor.convertEntity(dictMapper.selectById(id));
 	}
 
+	/**
+	 * 根据ID删除字典
+	 * @param id ID
+	 * @return 删除结果
+	 */
 	@Override
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
@@ -87,6 +103,12 @@ public class DictGatewayImpl implements DictGateway {
 		});
 	}
 
+	/**
+	 * 查询字典列表
+	 * @param dict 字典对象
+	 * @param pageQuery 分页参数
+	 * @return 字典列表
+	 */
 	@Override
 	@DataFilter(tableAlias = BOOT_SYS_DICT)
 	public Datas<Dict> list(Dict dict, PageQuery pageQuery) {
@@ -98,6 +120,11 @@ public class DictGatewayImpl implements DictGateway {
 		return datas;
 	}
 
+	/**
+	 * 新增字典
+	 * @param dictDO 字典数据模型
+	 * @return 新增结果
+	 */
 	private Boolean insertDict(DictDO dictDO) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -111,6 +138,11 @@ public class DictGatewayImpl implements DictGateway {
 		});
 	}
 
+	/**
+	 * 修改字典
+	 * @param dictDO 字典数据模型
+	 * @return 修改结果
+	 */
 	private Boolean updateDict(DictDO dictDO) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {

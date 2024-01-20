@@ -73,12 +73,12 @@ import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import static org.laokou.common.i18n.common.TenantConstants.*;
 
 /**
+ * 租户管理.
  * @author laokou
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@SuppressWarnings("unchecked")
 public class TenantGatewayImpl implements TenantGateway {
 
 	private final TenantMapper tenantMapper;
@@ -95,6 +95,11 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private final Environment env;
 
+	/**
+	 * 新增租户.
+	 * @param tenant 租户对象
+	 * @return 新增结果
+	 */
 	@Override
 	public Boolean insert(Tenant tenant) {
 		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
@@ -102,6 +107,12 @@ public class TenantGatewayImpl implements TenantGateway {
 		return insertTenant(tenantDO);
 	}
 
+	/**
+	 * 查询租户列表
+	 * @param tenant 租户对象
+	 * @param pageQuery 分页参数
+	 * @return 租户列表
+	 */
 	@Override
 	@DataFilter(tableAlias = BOOT_SYS_TENANT)
 	public Datas<Tenant> list(Tenant tenant, PageQuery pageQuery) {
@@ -113,11 +124,21 @@ public class TenantGatewayImpl implements TenantGateway {
 		return datas;
 	}
 
+	/**
+	 * 根据ID查看租户
+	 * @param id ID
+	 * @return 租户
+	 */
 	@Override
 	public Tenant getById(Long id) {
 		return tenantConvertor.convertEntity(tenantMapper.selectById(id));
 	}
 
+	/**
+	 * 修改租户
+	 * @param tenant 租户对象
+	 * @return 修改结果
+	 */
 	@Override
 	public Boolean update(Tenant tenant) {
 		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
@@ -125,6 +146,11 @@ public class TenantGatewayImpl implements TenantGateway {
 		return updateTenant(tenantDO);
 	}
 
+	/**
+	 * 根据ID删除租户
+	 * @param id ID
+	 * @return 删除结果
+	 */
 	@Override
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
@@ -139,6 +165,11 @@ public class TenantGatewayImpl implements TenantGateway {
 		});
 	}
 
+	/**
+	 * 下载租户数据库压缩包
+	 * @param id ID
+	 * @param response 响应对象
+	 */
 	@Override
 	@SneakyThrows
 	public void download(Long id, HttpServletResponse response) {
@@ -157,6 +188,11 @@ public class TenantGatewayImpl implements TenantGateway {
 		}
 	}
 
+	/**
+	 * 新增租户
+	 * @param tenantDO 租户数据模型
+	 * @return 新增结果
+	 */
 	private Boolean insertTenant(TenantDO tenantDO) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -170,6 +206,11 @@ public class TenantGatewayImpl implements TenantGateway {
 		});
 	}
 
+	/**
+	 * 修改租户
+	 * @param tenantDO 租户数据模型
+	 * @return 修改结果
+	 */
 	private Boolean updateTenant(TenantDO tenantDO) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -183,6 +224,14 @@ public class TenantGatewayImpl implements TenantGateway {
 		});
 	}
 
+	/**
+	 * SQL写入本地文件
+	 * @param fileName SQL文件名称
+	 * @param name 写入文件名称
+	 * @param tenantId 租户ID
+	 * @param packageId 套餐ID
+	 * @return 文件对象
+	 */
 	@SneakyThrows
 	private File writeTempFile(String fileName, String name, long tenantId, long packageId) {
 		String tempPath = env.getProperty("file.temp-path");
@@ -201,12 +250,22 @@ public class TenantGatewayImpl implements TenantGateway {
 		return file;
 	}
 
+	/**
+	 * 删除临时文件
+	 * @param file 文件对象
+	 */
 	private void deleteTempFile(File file) {
 		if (file.exists()) {
 			log.info("删除结果：{}", file.delete());
 		}
 	}
 
+	/**
+	 * 查询菜单、用户和部门列表转换为SQL语句列表
+	 * @param tenantId 租户ID
+	 * @param packageId 套餐ID
+	 * @return SQL语句列表
+	 */
 	private List<String> getSql(long tenantId, long packageId) {
 		long userId = IdGenerator.defaultSnowflakeId();
 		long deptId = IdGenerator.defaultSnowflakeId();
@@ -230,12 +289,26 @@ public class TenantGatewayImpl implements TenantGateway {
 		return list;
 	}
 
+	/**
+	 * 查询菜单列表转换为Map列表
+	 * @param menuList 菜单数据模型列表
+	 * @return Map列表
+	 */
 	private List<Map<String, String>> getMenuMapList(List<MenuDO> menuList) {
 		List<Map<String, String>> menuMapList = new ArrayList<>(menuList.size());
 		menuList.forEach(item -> menuMapList.add(JacksonUtil.toMap(item, String.class, String.class)));
 		return menuMapList;
 	}
 
+	/**
+	 * 查询菜单列表
+	 * @param tenantId 租户ID
+	 * @param userId 用户ID
+	 * @param deptId 部门ID
+	 * @param deptPath 部门PATH
+	 * @param packageId 套餐ID
+	 * @return 菜单列表
+	 */
 	private List<MenuDO> getMenuList(long tenantId, long userId, long deptId, String deptPath, long packageId) {
 		List<MenuDO> menuList = menuMapper.getTenantMenuListByPackageId(packageId);
 		menuList.forEach(item -> {
@@ -252,6 +325,14 @@ public class TenantGatewayImpl implements TenantGateway {
 		return menuList;
 	}
 
+	/**
+	 * 构建用户数据模型
+	 * @param tenantId 租户ID
+	 * @param userId 用户ID
+	 * @param deptId 部门ID
+	 * @param deptPath 部门PATH
+	 * @return 用户数据模型
+	 */
 	private UserDO getUser(long tenantId, long userId, long deptId, String deptPath) {
 		// 初始化超级管理员
 		UserDO userDO = new UserDO();
@@ -272,6 +353,14 @@ public class TenantGatewayImpl implements TenantGateway {
 		return userDO;
 	}
 
+	/**
+	 * 构建部门数据模型
+	 * @param tenantId 租户ID
+	 * @param userId 用户ID
+	 * @param deptId 部门ID
+	 * @param deptPath 部门PATH
+	 * @return 部门数据模型
+	 */
 	private DeptDO getDept(long tenantId, long userId, long deptId, String deptPath) {
 		DeptDO deptDO = new DeptDO();
 		deptDO.setId(deptId);
@@ -291,6 +380,11 @@ public class TenantGatewayImpl implements TenantGateway {
 		return deptDO;
 	}
 
+	/**
+	 * 构建修改用户SQL
+	 * @param userId 用户ID
+	 * @return 修改用户SQL
+	 */
 	private String getUpdateUsernameSql(long userId) {
 		return String.format(UPDATE_USERNAME_BY_ID_SQL_TEMPLATE, BOOT_SYS_USER, TENANT_USERNAME, AesUtil.getKey(),
 				userId);
