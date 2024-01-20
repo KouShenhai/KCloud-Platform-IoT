@@ -28,37 +28,37 @@ import java.time.LocalDateTime;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "TaskCO", description = "任务流程")
 public class TaskCO extends ClientObject {
 
 	@Serial
 	private static final long serialVersionUID = -8942395421885937298L;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "taskId", description = "任务ID")
 	private String taskId;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "taskName", description = "任务名称")
 	private String taskName;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "definitionId", description = "定义ID")
 	private String definitionId;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "instanceId", description = "实例ID")
 	private String instanceId;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "createDate", description = "创建时间")
 	private LocalDateTime createDate;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "definitionKey", description = "定义Key")
 	private String definitionKey;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "name", description = "流程名称")
 	private String name;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "username", description = "流程执行人")
 	private String username;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "instanceName", description = "实例名称")
 	private String instanceName;
 
 	@Schema(name = "", description = "")

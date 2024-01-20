@@ -24,7 +24,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
- * 查看资源流程图执行器.
+ * 查看资源任务流程图执行器.
  * @author laokou
  */
 @Component
@@ -34,8 +34,8 @@ public class ResourceDiagramGetQryExe {
 	private final TasksFeignClient tasksFeignClient;
 
 	/**
-	 * 执行查看资源流程图.
-	 * @param qry 查看资源流程图
+	 * 执行查看资源任务流程图.
+	 * @param qry 查看资源任务流程图
 	 * @return 资源流程图
 	 */
 	public Result<String> execute(ResourceDiagramGetQry qry) {

@@ -25,7 +25,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "RoleOptionListQry", description = "查询角色下拉框选择项列表命令请求")
 public class RoleOptionListQry extends CommonCommand {
 
 }

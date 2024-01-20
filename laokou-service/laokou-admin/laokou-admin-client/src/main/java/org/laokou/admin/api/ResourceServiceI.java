@@ -98,8 +98,8 @@ public interface ResourceServiceI {
 	Result<Boolean> deleteById(ResourceDeleteCmd cmd);
 
 	/**
-	 * 查看资源流程图.
-	 * @param qry 查看资源流程图参数
+	 * 查看资源任务流程图.
+	 * @param qry 查看资源任务流程图参数
 	 * @return 流程图
 	 */
 	Result<String> diagram(ResourceDiagramGetQry qry);

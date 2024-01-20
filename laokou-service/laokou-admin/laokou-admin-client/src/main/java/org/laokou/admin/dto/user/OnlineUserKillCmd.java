@@ -25,10 +25,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "OnlineUserKillCmd", description = "强踢在线用户命令请求")
 public class OnlineUserKillCmd extends CommonCommand {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "token", description = "令牌")
 	private String token;
 
 }

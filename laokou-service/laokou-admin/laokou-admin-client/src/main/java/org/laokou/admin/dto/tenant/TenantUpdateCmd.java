@@ -26,9 +26,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "TenantUpdateCmd", description = "修改租户命令请求")
 public class TenantUpdateCmd extends CommonCommand {
 
+	@Schema(name = "tenantCO", description = "租户")
 	private TenantCO tenantCO;
 
 }

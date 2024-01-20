@@ -31,31 +31,31 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Schema(name = "", description = "")
 public class ResourceCO extends ClientObject {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	@NotBlank(message = "标题不能为空")
-	@Schema(name = "", description = "")
+	@NotBlank(message = "名称不能为空")
+	@Schema(name = "title", description = "资源名称")
 	private String title;
 
 	@NotBlank(message = "资源地址不能为空")
-	@Schema(name = "", description = "")
+	@Schema(name = "url", description = "资源的URL")
 	@URL(message = "资源地址错误", regexp = "^(http|https)://([\\w.]+)(:([0-9]+))?(/.*)$")
 	private String url;
 
 	@NotNull(message = "状态不能为空")
-	@Schema(name = "", description = "")
+	@Schema(name = "status", description = "资源审批状态 0待审批 1审批中 -1驳回审批 2通过审批")
 	private Integer status;
 
 	@NotBlank(message = "编码不能为空")
-	@Schema(name = "", description = "")
+	@Schema(name = "code", description = "资源类型 audio音频 video视频  image图片")
 	private String code;
 
 	@NotBlank(message = "备注不能为空")
-	@Schema(name = "", description = "")
+	@Schema(name = "remark", description = "资源备注")
 	private String remark;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "instanceId", description = "实例ID")
 	private String instanceId;
 
 }

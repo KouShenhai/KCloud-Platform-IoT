@@ -26,7 +26,7 @@ import org.laokou.common.i18n.utils.StringUtil;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "", description = "OSS列表查询参数")
 public class OssListQry extends PageQuery {
 
 	@Schema(name = "", description = "")

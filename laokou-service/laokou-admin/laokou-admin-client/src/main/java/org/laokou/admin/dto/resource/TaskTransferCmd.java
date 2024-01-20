@@ -24,7 +24,7 @@ import lombok.Data;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "TaskTransferCmd", description = "转办任务流程命令请求")
 public class TaskTransferCmd extends TaskDelegateCmd {
 
 }

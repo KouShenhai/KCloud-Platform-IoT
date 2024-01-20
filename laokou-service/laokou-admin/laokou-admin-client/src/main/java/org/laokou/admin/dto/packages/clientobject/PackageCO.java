@@ -27,16 +27,16 @@ import java.util.List;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "PackageCO", description = "套餐")
 public class PackageCO extends ClientObject {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "name", description = "套餐名称")
 	private String name;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "menuIds", description = "菜单IDS")
 	private List<Long> menuIds;
 
 }

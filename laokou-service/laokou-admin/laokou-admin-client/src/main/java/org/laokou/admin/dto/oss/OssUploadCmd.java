@@ -31,11 +31,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "", description = "")
+@Schema(name = "OssUploadCmd", description = "上传文件")
 public class OssUploadCmd extends CommonCommand {
 
 	@JsonIgnore
-	@Schema(name = "", description = "")
+	@Schema(name = "file", description = "文件")
 	private MultipartFile file;
 
 }

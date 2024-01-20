@@ -26,10 +26,10 @@ import org.laokou.common.i18n.utils.StringUtil;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "TenantListQry", description = "租户列表查询参数")
 public class TenantListQry extends PageQuery {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "name", description = "租户名称")
 	private String name;
 
 	public void setName(String name) {

@@ -27,11 +27,11 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "ResourceInsertCmd", description = "新增资源命令请求")
 public class ResourceInsertCmd extends CommonCommand {
 
 	@Valid
-	@Schema(name = "", description = "")
+	@Schema(name = "resourceCO", description = "资源")
 	private ResourceCO resourceCO;
 
 }

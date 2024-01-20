@@ -29,13 +29,13 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "", description = "")
+@Schema(name = "FileCO", description = "文件")
 public class FileCO extends ClientObject {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "url", description = "文件的URL")
 	private String url;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "md5", description = "文件的MD5标识")
 	private String md5;
 
 }

@@ -25,7 +25,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "SourceOptionListQry", description = "查询数据源下拉框选择项列表命令请求")
 public class SourceOptionListQry extends CommonCommand {
 
 }

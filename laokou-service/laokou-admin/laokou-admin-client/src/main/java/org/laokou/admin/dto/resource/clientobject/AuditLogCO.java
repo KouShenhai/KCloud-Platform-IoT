@@ -27,22 +27,22 @@ import java.time.LocalDateTime;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "AuditLogCO", description = "审批日志")
 public class AuditLogCO extends ClientObject {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "status", description = "审批状态 0驳回审批 1通过审批")
 	private Integer status;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "approver", description = "审批人")
 	private String approver;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "comment", description = "审批意见")
 	private String comment;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "createDate", description = "创建时间")
 	private LocalDateTime createDate;
 
 }

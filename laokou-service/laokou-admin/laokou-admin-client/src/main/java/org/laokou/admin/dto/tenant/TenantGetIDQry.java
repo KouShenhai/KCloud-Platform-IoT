@@ -31,11 +31,11 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "", description = "")
+@Schema(name = "TenantGetIDQry", description = "查看租户ID命令请求")
 public class TenantGetIDQry extends CommonCommand {
 
 	@JsonIgnore
-	@Schema(name = "", description = "")
+	@Schema(name = "request", description = "响应")
 	private HttpServletRequest request;
 
 }

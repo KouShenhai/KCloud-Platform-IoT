@@ -27,25 +27,25 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "TenantCO", description = "租户")
 public class TenantCO extends ClientObject {
 
 	@Serial
 	private static final long serialVersionUID = -5244147777398551087L;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "name", description = "租户名称")
 	private String name;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "label", description = "租户标签")
 	private String label;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "sourceId", description = "数据源ID")
 	private Long sourceId;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "packageId", description = "套餐ID")
 	private Long packageId;
 
 }

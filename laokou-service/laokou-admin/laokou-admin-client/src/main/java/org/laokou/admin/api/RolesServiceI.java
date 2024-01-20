@@ -26,20 +26,51 @@ import org.laokou.common.i18n.dto.Result;
 import java.util.List;
 
 /**
+ * 角色管理.
  * @author laokou
  */
 public interface RolesServiceI {
 
+	/**
+	 * 查询角色列表
+	 * @param qry 查询角色列表
+	 * @return 角色列表
+	 */
 	Result<Datas<RoleCO>> list(RoleListQry qry);
 
+	/**
+	 * 查询角色下拉框选择项列表
+	 * @param qry 查询角色下拉框选择项列表参数
+	 * @return 角色下拉框选择项列表
+	 */
 	Result<List<OptionCO>> optionList(RoleOptionListQry qry);
 
+	/**
+	 * 根据ID查看角色
+	 * @param qry 根据ID查看角色
+	 * @return 角色
+	 */
 	Result<RoleCO> getById(RoleGetQry qry);
 
+	/**
+	 * 新增角色
+	 * @param cmd 新增角色参数
+	 * @return 新增结果
+	 */
 	Result<Boolean> insert(RoleInsertCmd cmd);
 
+	/**
+	 * 修改角色
+	 * @param cmd 修改角色参数
+	 * @return 修改结果
+	 */
 	Result<Boolean> update(RoleUpdateCmd cmd);
 
+	/**
+	 * 根据ID删除角色
+	 * @param cmd 根据ID删除角色参数
+	 * @return 删除结果
+	 */
 	Result<Boolean> deleteById(RoleDeleteCmd cmd);
 
 }
