@@ -37,6 +37,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_SOURCE;
 
 /**
+ * 数据源管理.
  * @author laokou
  */
 @Slf4j
@@ -50,6 +51,12 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	private final SourceConvertor sourceConvertor;
 
+	/**
+	 * 查询数据源列表
+	 * @param source 数据源对象
+	 * @param pageQuery 分页参数
+	 * @return 数据源列表
+	 */
 	@Override
 	@DataFilter(tableAlias = BOOT_SYS_SOURCE)
 	public Datas<Source> list(Source source, PageQuery pageQuery) {
@@ -61,17 +68,32 @@ public class SourceGatewayImpl implements SourceGateway {
 		return datas;
 	}
 
+	/**
+	 * 根据ID查看数据源
+	 * @param id ID
+	 * @return 数据源
+	 */
 	@Override
 	public Source getById(Long id) {
 		return sourceConvertor.convertEntity(sourceMapper.selectById(id));
 	}
 
+	/**
+	 * 新增数据源
+	 * @param source 数据源对象
+	 * @return 新增结果
+	 */
 	@Override
 	public Boolean insert(Source source) {
 		SourceDO sourceDO = sourceConvertor.toDataObject(source);
 		return insertSource(sourceDO);
 	}
 
+	/**
+	 * 修改数据源
+	 * @param source 数据源对象
+	 * @return 修改结果
+	 */
 	@Override
 	public Boolean update(Source source) {
 		SourceDO sourceDO = sourceConvertor.toDataObject(source);
@@ -79,6 +101,11 @@ public class SourceGatewayImpl implements SourceGateway {
 		return updateSource(sourceDO);
 	}
 
+	/**
+	 * 根据ID删除数据源
+	 * @param id ID
+	 * @return 删除结果
+	 */
 	@Override
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
@@ -93,6 +120,11 @@ public class SourceGatewayImpl implements SourceGateway {
 		});
 	}
 
+	/**
+	 * 修改数据源
+	 * @param sourceDO 数据源数据模型
+	 * @return 修改结果
+	 */
 	private Boolean updateSource(SourceDO sourceDO) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -106,6 +138,11 @@ public class SourceGatewayImpl implements SourceGateway {
 		});
 	}
 
+	/**
+	 * 新增数据源
+	 * @param sourceDO 数据源数据模型
+	 * @return 新增结果
+	 */
 	private Boolean insertSource(SourceDO sourceDO) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {

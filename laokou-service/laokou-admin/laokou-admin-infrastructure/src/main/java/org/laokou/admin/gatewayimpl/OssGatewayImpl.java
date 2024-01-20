@@ -40,6 +40,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_OSS;
 
 /**
+ * OSS管理.
  * @author laokou
  */
 @Slf4j
@@ -55,6 +56,12 @@ public class OssGatewayImpl implements OssGateway {
 
 	private final OssConvertor ossConvertor;
 
+	/**
+	 * 查询OSS列表
+	 * @param oss OSS对象
+	 * @param pageQuery 分页参数
+	 * @return OSS列表
+	 */
 	@Override
 	@DataFilter(tableAlias = BOOT_SYS_OSS)
 	public Datas<Oss> list(Oss oss, PageQuery pageQuery) {
@@ -66,17 +73,32 @@ public class OssGatewayImpl implements OssGateway {
 		return datas;
 	}
 
+	/**
+	 * 根据ID查看OSS
+	 * @param id ID
+	 * @return OSS
+	 */
 	@Override
 	public Oss getById(Long id) {
 		return ossConvertor.convertEntity(ossMapper.selectById(id));
 	}
 
+	/**
+	 * 新增OSS
+	 * @param oss OSS对象
+	 * @return 新增结果
+	 */
 	@Override
 	public Boolean insert(Oss oss) {
 		OssDO ossDO = ossConvertor.toDataObject(oss);
 		return insertOss(ossDO);
 	}
 
+	/**
+	 * 修改OSS
+	 * @param oss OSS对象
+	 * @return 修改结果
+	 */
 	@Override
 	public Boolean update(Oss oss) {
 		OssDO ossDO = ossConvertor.toDataObject(oss);
@@ -84,6 +106,11 @@ public class OssGatewayImpl implements OssGateway {
 		return updateOss(ossDO);
 	}
 
+	/**
+	 * 根据ID删除OSS
+	 * @param id ID
+	 * @return 删除结果
+	 */
 	@Override
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
@@ -98,11 +125,20 @@ public class OssGatewayImpl implements OssGateway {
 		});
 	}
 
+	/**
+	 * 推送OSS日志事件
+	 * @param ossLog OSS日志对象
+	 */
 	@Override
 	public void publish(OssLog ossLog) {
 		domainEventPublisher.publish(getEvent(ossLog));
 	}
 
+	/**
+	 * 转换OSS日志事件
+	 * @param ossLog OSS日志对象
+	 * @return OSS日志事件
+	 */
 	private OssLogEvent getEvent(OssLog ossLog) {
 		OssLogEvent event = new OssLogEvent(this);
 		event.setMd5(ossLog.getMd5());
@@ -112,6 +148,11 @@ public class OssGatewayImpl implements OssGateway {
 		return event;
 	}
 
+	/**
+	 * 新增OSS
+	 * @param ossDO OSS数据模型
+	 * @return 新增结果
+	 */
 	private Boolean insertOss(OssDO ossDO) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -125,6 +166,11 @@ public class OssGatewayImpl implements OssGateway {
 		});
 	}
 
+	/**
+	 * 修改OSS
+	 * @param ossDO OSS数据模型
+	 * @return 修改结果
+	 */
 	private Boolean updateOss(OssDO ossDO) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {

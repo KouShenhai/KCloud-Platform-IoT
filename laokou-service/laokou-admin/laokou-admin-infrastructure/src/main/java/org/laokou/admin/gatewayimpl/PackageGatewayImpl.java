@@ -45,6 +45,7 @@ import java.util.List;
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_PACKAGE;
 
 /**
+ * 套餐管理.
  * @author laokou
  */
 @Slf4j
@@ -62,11 +63,23 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	private final MybatisUtil mybatisUtil;
 
+	/**
+	 * 新增套餐
+	 * @param pack 套餐对象
+	 * @param user 用户对象
+	 * @return 新增结果
+	 */
 	@Override
 	public Boolean insert(Package pack, User user) {
 		return insertPackage(packageConvertor.toDataObject(pack), pack, user);
 	}
 
+	/**
+	 * 修改套餐
+	 * @param pack 套餐对象
+	 * @param user 用户对象
+	 * @return 修改结果
+	 */
 	@Override
 	public Boolean update(Package pack, User user) {
 		PackageDO packageDO = packageConvertor.toDataObject(pack);
@@ -74,6 +87,12 @@ public class PackageGatewayImpl implements PackageGateway {
 		return updatePackage(packageDO, pack, user);
 	}
 
+	/**
+	 * 查询套餐列表
+	 * @param pack 套餐对象
+	 * @param pageQuery 分页参数
+	 * @return 套餐列表
+	 */
 	@Override
 	@DataFilter(tableAlias = BOOT_SYS_PACKAGE)
 	public Datas<Package> list(Package pack, PageQuery pageQuery) {
@@ -85,6 +104,11 @@ public class PackageGatewayImpl implements PackageGateway {
 		return datas;
 	}
 
+	/**
+	 * 根据ID查看套餐
+	 * @param id ID
+	 * @return 套餐
+	 */
 	@Override
 	public Package getById(Long id) {
 		Package pack = packageConvertor.convertEntity(packageMapper.selectById(id));
@@ -92,6 +116,11 @@ public class PackageGatewayImpl implements PackageGateway {
 		return pack;
 	}
 
+	/**
+	 * 根据ID删除套餐
+	 * @param id ID
+	 * @return 删除结果
+	 */
 	@Override
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
@@ -106,6 +135,13 @@ public class PackageGatewayImpl implements PackageGateway {
 		});
 	}
 
+	/**
+	 * 新增套餐
+	 * @param packageDO 套餐数据模型
+	 * @param pack 套餐对象
+	 * @param user 用户对象
+	 * @return 新增结果
+	 */
 	private Boolean insertPackage(PackageDO packageDO, Package pack, User user) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -121,6 +157,13 @@ public class PackageGatewayImpl implements PackageGateway {
 		});
 	}
 
+	/**
+	 * 修改套餐
+	 * @param packageDO 套餐数据模型
+	 * @param pack 套餐对象
+	 * @param user 用户对象
+	 * @return 修改结果
+	 */
 	private Boolean updatePackage(PackageDO packageDO, Package pack, User user) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -136,11 +179,23 @@ public class PackageGatewayImpl implements PackageGateway {
 		});
 	}
 
+	/**
+	 * 修改套餐菜单
+	 * @param packageId 套餐ID
+	 * @param menuIds 菜单ID
+	 * @param user 用户对象
+	 */
 	private void updatePackageMenu(Long packageId, List<Long> menuIds, User user) {
 		packageMenuMapper.deletePackageMenuByPackageId(packageId);
 		insertPackageMenu(packageId, menuIds, user);
 	}
 
+	/**
+	 * 新增套餐菜单
+	 * @param packageId 套餐ID
+	 * @param menuIds 菜单ID
+	 * @param user 用户对象
+	 */
 	private void insertPackageMenu(Long packageId, List<Long> menuIds, User user) {
 		if (CollectionUtil.isNotEmpty(menuIds)) {
 			List<PackageMenuDO> list = menuIds.parallelStream()
@@ -150,6 +205,13 @@ public class PackageGatewayImpl implements PackageGateway {
 		}
 	}
 
+	/**
+	 * 转换套餐菜单数据模型
+	 * @param packageId 套餐ID
+	 * @param menuId 菜单ID
+	 * @param user 用户对象
+	 * @return 套餐菜单数据模型
+	 */
 	private PackageMenuDO toPackageMenuDO(Long packageId, Long menuId, User user) {
 		PackageMenuDO packageMenuDO = new PackageMenuDO();
 		packageMenuDO.setMenuId(menuId);

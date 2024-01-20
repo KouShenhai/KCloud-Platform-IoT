@@ -42,39 +42,39 @@ import static org.laokou.common.i18n.common.OpenFeignConstants.LAOKOU_FLOWABLE_S
 public interface TasksFeignClient {
 
 	/**
-	 * 查询任务列表.
-	 * @param qry 查询参数
+	 * 查询任务流程列表.
+	 * @param qry 查询任务流程列表参数
 	 * @return 任务列表
 	 */
 	@PostMapping("list")
 	Result<Datas<TaskCO>> list(@RequestBody TaskListQry qry);
 
 	/**
-	 * 审批任务.
-	 * @param cmd 审批参数
-	 * @return 审批任务结果
+	 * 审批任务流程.
+	 * @param cmd 审批任务流程参数
+	 * @return 审批结果
 	 */
 	@PostMapping("audit")
 	Result<AuditCO> audit(@RequestBody TaskAuditCmd cmd);
 
 	/**
-	 * 处理任务.
-	 * @param cmd 处理参数
-	 * @return 处理任务结果
+	 * 处理任务流程.
+	 * @param cmd 处理任务流程参数
+	 * @return 处理结果
 	 */
 	@PostMapping("resolve")
 	Result<Boolean> resolve(@RequestBody TaskResolveCmd cmd);
 
 	/**
-	 * 开始任务.
-	 * @param cmd 参数
-	 * @return 开始任务结果
+	 * 开始任务流程.
+	 * @param cmd 开始任务流程参数
+	 * @return 开始结果
 	 */
 	@PostMapping("start")
 	Result<StartCO> start(@RequestBody TaskStartCmd cmd);
 
 	/**
-	 * 流程图.
+	 * 查看任务流程图.
 	 * @param instanceId 实例ID
 	 * @return 流程图
 	 */
@@ -82,25 +82,25 @@ public interface TasksFeignClient {
 	Result<String> diagram(@PathVariable("instanceId") String instanceId);
 
 	/**
-	 * 转办任务.
-	 * @param cmd 转办参数
-	 * @return 转办任务结果
+	 * 转办任务流程.
+	 * @param cmd 转办任务流程参数
+	 * @return 转办结果
 	 */
 	@PostMapping("transfer")
 	Result<Boolean> transfer(@RequestBody TaskTransferCmd cmd);
 
 	/**
-	 * 委派任务.
-	 * @param cmd 委派参数
-	 * @return 委派任务结果
+	 * 委派任务流程.
+	 * @param cmd 委派任务流程参数
+	 * @return 委派结果
 	 */
 	@PostMapping("delegate")
 	Result<Boolean> delegate(@RequestBody TaskDelegateCmd cmd);
 
 	/**
-	 * 流程人员.
+	 * 查看流程人员ID.
 	 * @param instanceId 流程ID
-	 * @return 操作流程人员
+	 * @return 流程人员ID
 	 */
 	@GetMapping("{instanceId}/assignee")
 	Result<AssigneeCO> assignee(@PathVariable("instanceId") String instanceId);
