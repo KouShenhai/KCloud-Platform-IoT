@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 资源管理.
  * @author laokou
  */
 @Service
@@ -77,9 +78,9 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	private final ResourceSearchGetQryExe resourceSearchGetQryExe;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询审批日志列表
+	 * @param qry 查询审批日志列表参数
+	 * @return 审批日志列表
 	 */
 	@Override
 	public Result<List<AuditLogCO>> auditLog(ResourceAuditLogListQry qry) {
@@ -87,85 +88,159 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 同步资源
+	 * @param cmd 同步资源参数
+	 * @return 同步结果
 	 */
 	@Override
 	public Result<Boolean> sync(ResourceSyncCmd cmd) {
 		return resourceSyncCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 上传资源文件
+	 * @param cmd 上传资源文件参数
+	 * @return 文件对象
+	 */
 	@Override
 	public Result<FileCO> upload(OssUploadCmd cmd) {
 		return ossUploadCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 查询资源列表
+	 * @param qry 查询资源列表参数
+	 * @return 资源列表
+	 */
 	@Override
 	public Result<Datas<ResourceCO>> list(ResourceListQry qry) {
 		return resourceListQryExe.execute(qry);
 	}
 
+	/**
+	 * 根据ID查看资源
+	 * @param qry 根据ID查看资源参数
+	 * @return 资源
+	 */
 	@Override
 	public Result<ResourceCO> getById(ResourceGetQry qry) {
 		return resourceGetQryExe.execute(qry);
 	}
 
+	/**
+	 * 下载资源
+	 * @param cmd 下载资源参数
+	 */
 	@Override
 	public void download(ResourceDownloadCmd cmd) {
 		resourceDownloadCmdExe.executeVoid(cmd);
 	}
 
+	/**
+	 * 新增资源
+	 * @param cmd 新增资源
+	 * @return 新增结果
+	 */
 	@Override
 	public Result<Boolean> insert(ResourceInsertCmd cmd) {
 		return resourceInsertCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 修改资源
+	 * @param cmd 修改资源
+	 * @return 修改结果
+	 */
 	@Override
 	public Result<Boolean> update(ResourceUpdateCmd cmd) {
 		return resourceUpdateCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 根据ID删除资源
+	 * @param cmd 根据ID删除资源参数
+	 * @return 删除结果
+	 */
 	@Override
 	public Result<Boolean> deleteById(ResourceDeleteCmd cmd) {
 		return resourceDeleteCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 查看资源任务流程图
+	 * @param qry 查看资源任务流程图参数
+	 * @return 流程图
+	 */
 	@Override
 	public Result<String> diagram(ResourceDiagramGetQry qry) {
 		return resourceDiagramGetQryExe.execute(qry);
 	}
 
+	/**
+	 * 查询资源审批任务流程列表
+	 * @param qry 查询资源审批任务流程列表参数
+	 * @return 资源审批任务流程列表
+	 */
 	@Override
 	public Result<Datas<TaskCO>> taskList(ResourceTaskListQry qry) {
 		return resourceTaskListQryExe.execute(qry);
 	}
 
+	/**
+	 * 审批资源任务流程
+	 * @param cmd 审批资源任务流程参数
+	 * @return 审批结果
+	 */
 	@Override
 	public Result<Boolean> auditTask(ResourceAuditTaskCmd cmd) {
 		return resourceAuditTaskCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 查看资源任务流程详情
+	 * @param qry 查看资源任务流程详情参数
+	 * @return 资源任务流程详情
+	 */
 	@Override
 	public Result<ResourceCO> detailTask(ResourceDetailTaskGetQry qry) {
 		return resourceDetailTaskGetQryExe.execute(qry);
 	}
 
+	/**
+	 * 处理资源任务流程
+	 * @param cmd 处理资源任务流程参数
+	 * @return 处理结果
+	 */
 	@Override
 	public Result<Boolean> resolveTask(ResourceResolveTaskCmd cmd) {
 		return resourceResolveTaskCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 转办资源任务流程
+	 * @param cmd 转办资源任务流程参数
+	 * @return 转办结果
+	 */
 	@Override
 	public Result<Boolean> transferTask(ResourceTransferTaskCmd cmd) {
 		return resourceTransferTaskCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 委派资源任务流程
+	 * @param cmd 委派资源任务流程参数
+	 * @return 委派结果
+	 */
 	@Override
 	public Result<Boolean> delegateTask(ResourceDelegateTaskCmd cmd) {
 		return resourceDelegateTaskCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 搜索资源
+	 * @param qry 搜索资源参数
+	 * @return 搜索结果
+	 */
 	@Override
 	public Result<Datas<Map<String, Object>>> search(ResourceSearchGetQry qry) {
 		return resourceSearchGetQryExe.execute(qry);

@@ -34,6 +34,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * 部门管理.
  * @author laokou
  */
 @Service
@@ -55,9 +56,9 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	private final DeptIDSGetQryExe deptIDSGetQryExe;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查看部门树
+	 * @param qry 查看部门树参数
+	 * @return 部门树
 	 */
 	@Override
 	public Result<DeptCO> tree(DeptTreeGetQry qry) {
@@ -65,9 +66,9 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询部门列表
+	 * @param qry 查询部门列表参数
+	 * @return 部门列表
 	 */
 	@Override
 	public Result<List<DeptCO>> list(DeptListQry qry) {
@@ -75,9 +76,9 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 新增部门
+	 * @param cmd 新增部门参数
+	 * @return 新增结果
 	 */
 	@Override
 	public Result<Boolean> insert(DeptInsertCmd cmd) {
@@ -85,9 +86,9 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 修改部门
+	 * @param cmd 修改部门参数
+	 * @return 修改结果
 	 */
 	@Override
 	public Result<Boolean> update(DeptUpdateCmd cmd) {
@@ -95,9 +96,9 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 根据ID删除部门
+	 * @param cmd 根据ID删除部门参数
+	 * @return 删除结果
 	 */
 	@Override
 	public Result<Boolean> deleteById(DeptDeleteCmd cmd) {
@@ -105,9 +106,9 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 根据ID查看部门
+	 * @param qry 根据ID查看部门参数
+	 * @return 部门
 	 */
 	@Override
 	public Result<DeptCO> getById(DeptGetQry qry) {
@@ -115,9 +116,9 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 根据角色ID查看部门IDS
+	 * @param qry 根据角色ID查看部门IDS参数
+	 * @return 部门IDS
 	 */
 	@Override
 	public Result<List<Long>> ids(DeptIDSGetQry qry) {

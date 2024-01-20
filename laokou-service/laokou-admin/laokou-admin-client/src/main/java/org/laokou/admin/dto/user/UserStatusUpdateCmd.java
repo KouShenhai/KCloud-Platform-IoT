@@ -25,13 +25,13 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "UserStatusUpdateCmd", description = "修改用户状态命令请求")
 public class UserStatusUpdateCmd extends CommonCommand {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "status", description = "用户状态 0正常 1锁定")
 	private Integer status;
 
 }

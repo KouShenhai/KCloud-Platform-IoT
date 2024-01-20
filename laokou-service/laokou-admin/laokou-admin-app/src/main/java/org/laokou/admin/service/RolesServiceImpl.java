@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * 角色管理.
  * @author laokou
  */
 @Service
@@ -53,31 +54,61 @@ public class RolesServiceImpl implements RolesServiceI {
 
 	private final RoleDeleteCmdExe roleDeleteCmdExe;
 
+	/**
+	 * 查询角色列表.
+	 * @param qry 查询角色列表
+	 * @return 查询角色列表
+	 */
 	@Override
 	public Result<Datas<RoleCO>> list(RoleListQry qry) {
 		return roleListQryExe.execute(qry);
 	}
 
+	/**
+	 * 查询角色下拉框选择项列表
+	 * @param qry 查询角色下拉框选择项列表参数
+	 * @return 角色下拉框选择项列表
+	 */
 	@Override
 	public Result<List<OptionCO>> optionList(RoleOptionListQry qry) {
 		return roleOptionListQryExe.execute(qry);
 	}
 
+	/**
+	 * 根据ID查看角色
+	 * @param qry 根据ID查看角色
+	 * @return 角色
+	 */
 	@Override
 	public Result<RoleCO> getById(RoleGetQry qry) {
 		return roleGetQryExe.execute(qry);
 	}
 
+	/**
+	 * 新增角色
+	 * @param cmd 新增角色参数
+	 * @return 新增结果
+	 */
 	@Override
 	public Result<Boolean> insert(RoleInsertCmd cmd) {
 		return roleInsertCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 修改角色
+	 * @param cmd 修改角色参数
+	 * @return 修改结果
+	 */
 	@Override
 	public Result<Boolean> update(RoleUpdateCmd cmd) {
 		return roleUpdateCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 根据ID删除角色
+	 * @param cmd 根据ID删除角色参数
+	 * @return 删除结果
+	 */
 	@Override
 	public Result<Boolean> deleteById(RoleDeleteCmd cmd) {
 		return roleDeleteCmdExe.execute(cmd);

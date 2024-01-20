@@ -33,6 +33,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
+ * IP管理.
  * @author laokou
  */
 @Service
@@ -48,9 +49,9 @@ public class IpsServiceImpl implements IpsServiceI {
 	private final IpRefreshCmdExe ipRefreshCmdExe;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 新增IP
+	 * @param cmd 新增IP参数
+	 * @return 新增IP
 	 */
 	@Override
 	public Result<Boolean> insert(IpInsertCmd cmd) {
@@ -58,9 +59,9 @@ public class IpsServiceImpl implements IpsServiceI {
 	}
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 根据IP删除IP
+	 * @param cmd 根据IP删除IP参数
+	 * @return 删除结果
 	 */
 	@Override
 	public Result<Boolean> deleteById(IpDeleteCmd cmd) {
@@ -68,9 +69,9 @@ public class IpsServiceImpl implements IpsServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询IP列表
+	 * @param qry 查询IP列表参数
+	 * @return IP列表
 	 */
 	@Override
 	public Result<Datas<IpCO>> list(IpListQry qry) {
@@ -78,9 +79,9 @@ public class IpsServiceImpl implements IpsServiceI {
 	}
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 刷新IP至Redis
+	 * @param cmd 刷新IP至Redis参数
+	 * @return 刷新结果
 	 */
 	@Override
 	public Result<Boolean> refresh(IpRefreshCmd cmd) {

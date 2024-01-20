@@ -45,7 +45,7 @@ public interface MenusServiceI {
 
 	/**
 	 * 根据ID查看菜单
-	 * @param qry 根据ID查看菜单
+	 * @param qry 根据ID查看菜单参数
 	 * @return 菜单
 	 */
 	Result<MenuCO> getById(MenuGetQry qry);

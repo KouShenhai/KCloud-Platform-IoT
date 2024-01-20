@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 /**
+ * 索引管理.
  * @author laokou
  */
 @Service
@@ -50,9 +51,9 @@ public class IndexsServiceImpl implements IndexsServiceI {
 	private final IndexTraceGetQryExe indexTraceGetQryExe;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询索引列表
+	 * @param qry 查询索引列表参数
+	 * @return 索引列表
 	 */
 	@Override
 	public Result<Datas<IndexCO>> list(IndexListQry qry) {
@@ -60,9 +61,9 @@ public class IndexsServiceImpl implements IndexsServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 根据索引名称查看索引信息
+	 * @param qry 根据索引名称查看索引信息参数
+	 * @return 索引信息
 	 */
 	@Override
 	public Result<Map<String, Object>> info(IndexGetQry qry) {
@@ -70,9 +71,9 @@ public class IndexsServiceImpl implements IndexsServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询分布式链路索引列表
+	 * @param qry 查询分布式链路索引列表参数
+	 * @return 分布式链路索引列表
 	 */
 	@Override
 	public Result<Datas<Map<String, Object>>> traceList(IndexTraceListQry qry) {
@@ -80,9 +81,9 @@ public class IndexsServiceImpl implements IndexsServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 根据ID查看分布式链路索引
+	 * @param qry 根据ID查看分布式链路索引参数
+	 * @return 分布式链路索引
 	 */
 	@Override
 	public Result<Map<String, Object>> getTraceById(IndexTraceGetQry qry) {

@@ -25,10 +25,10 @@ import org.laokou.common.i18n.dto.PageQuery;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "OnlineUserListQry", description = "在线用户列表查询参数")
 public class OnlineUserListQry extends PageQuery {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "username", description = "用户名")
 	private String username;
 
 }

@@ -47,21 +47,21 @@ public interface SourcesServiceI {
 
 	/**
 	 * 根据ID删除数据源
-	 * @param cmd 根据ID删除数据源
+	 * @param cmd 根据ID删除数据源参数
 	 * @return 删除结果
 	 */
 	Result<Boolean> deleteById(SourceDeleteCmd cmd);
 
 	/**
 	 * 根据ID查看数据源
-	 * @param qry 根据ID查看数据源
+	 * @param qry 根据ID查看数据源参数
 	 * @return 数据源
 	 */
 	Result<SourceCO> getById(SourceGetQry qry);
 
 	/**
 	 * 查询数据源列表
-	 * @param qry 查询数据源列表
+	 * @param qry 查询数据源列表参数
 	 * @return 数据源列表
 	 */
 	Result<Datas<SourceCO>> list(SourceListQry qry);

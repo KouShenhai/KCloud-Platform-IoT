@@ -26,6 +26,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
+ * 令牌管理.
  * @author laokou
  */
 @Service
@@ -35,9 +36,9 @@ public class TokensServiceIImpl implements TokensServiceI {
 	private final TokenGetQryExe tokenGetQryExe;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 生成令牌.
+	 * @param qry 生成令牌参数
+	 * @return 令牌
 	 */
 	@Override
 	public Result<TokenCO> generate(TokenGetQry qry) {

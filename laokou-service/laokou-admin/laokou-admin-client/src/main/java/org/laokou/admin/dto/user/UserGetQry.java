@@ -29,10 +29,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "", description = "")
+@Schema(name = "UserGetQry", description = "查看用户命令请求")
 public class UserGetQry extends CommonCommand {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
 }

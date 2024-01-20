@@ -30,6 +30,7 @@ import static org.laokou.common.i18n.common.OpenFeignConstants.LAOKOU_FLOWABLE_S
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 /**
+ * 定义流程.
  * @author laokou
  */
 @FeignClient(contextId = "definitions", name = LAOKOU_FLOWABLE_SERVICE, path = "v1/definitions",

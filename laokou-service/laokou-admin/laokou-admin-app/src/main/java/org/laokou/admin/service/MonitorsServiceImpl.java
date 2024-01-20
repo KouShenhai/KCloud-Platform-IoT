@@ -29,6 +29,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
+ * 监控管理.
  * @author laokou
  */
 @Service
@@ -40,9 +41,9 @@ public class MonitorsServiceImpl implements MonitorsServiceI {
 	private final MonitorServerGetQryExe monitorServerGetQryExe;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查看缓存监控
+	 * @param qry 查看缓存监控参数
+	 * @return 缓存监控
 	 */
 	@Override
 	public Result<RedisCacheCO> cache(MonitorRedisCacheGetQry qry) {
@@ -50,9 +51,9 @@ public class MonitorsServiceImpl implements MonitorsServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查看服务器监控
+	 * @param qry 查看服务器监控参数
+	 * @return 服务器监控
 	 */
 	@Override
 	public Result<ServerCO> server(MonitorServerGetQry qry) {
