@@ -26,10 +26,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "PackageInsertCmd", description = "新增套餐命令请求")
 public class PackageInsertCmd extends CommonCommand {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "packageCO", description = "套餐")
 	private PackageCO packageCO;
 
 }

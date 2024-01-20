@@ -29,10 +29,10 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "", description = "")
+@Schema(name = "AssigneeCO", description = "执行人")
 public class AssigneeCO extends ClientObject {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "assignee", description = "执行人")
 	private String assignee;
 
 }

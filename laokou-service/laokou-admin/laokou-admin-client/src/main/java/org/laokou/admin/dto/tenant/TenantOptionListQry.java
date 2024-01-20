@@ -25,7 +25,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "TenantOptionListQry", description = "查询租户下拉框选择项列表命令请求")
 public class TenantOptionListQry extends CommonCommand {
 
 }

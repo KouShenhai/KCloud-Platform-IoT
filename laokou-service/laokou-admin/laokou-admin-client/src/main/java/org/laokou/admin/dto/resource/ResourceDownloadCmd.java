@@ -31,14 +31,14 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "", description = "")
+@Schema(name = "ResourceDownloadCmd", description = "下载资源任务流程命令请求")
 public class ResourceDownloadCmd extends CommonCommand {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
 	@JsonIgnore
-	@Schema(name = "", description = "")
+	@Schema(name = "response", description = "响应")
 	private HttpServletResponse response;
 
 }

@@ -28,28 +28,19 @@ import java.util.Map;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "TaskAuditCmd", description = "审批任务流程命令请求")
 public class TaskAuditCmd extends CommonCommand {
 
 	@Serial
 	private static final long serialVersionUID = -945627686622034109L;
 
-	/**
-	 * 任务ID.
-	 */
-	@Schema(name = "", description = "")
+	@Schema(name = "taskId", description = "任务ID")
 	private String taskId;
 
-	/**
-	 * 实例ID.
-	 */
-	@Schema(name = "", description = "")
+	@Schema(name = "instanceId", description = "实例ID")
 	private String instanceId;
 
-	/**
-	 * 流程变量.
-	 */
-	@Schema(name = "", description = "")
+	@Schema(name = "values", description = "流程变量")
 	private Map<String, Object> values;
 
 }

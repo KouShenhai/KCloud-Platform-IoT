@@ -22,10 +22,16 @@ import org.laokou.admin.dto.token.clientobject.TokenCO;
 import org.laokou.common.i18n.dto.Result;
 
 /**
+ * 令牌管理.
  * @author laokou
  */
 public interface TokensServiceI {
 
+	/**
+	 * 生成令牌.
+	 * @param qry 生成令牌参数
+	 * @return 令牌
+	 */
 	Result<TokenCO> generate(TokenGetQry qry);
 
 }

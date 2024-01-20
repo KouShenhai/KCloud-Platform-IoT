@@ -26,10 +26,10 @@ import org.laokou.common.i18n.utils.StringUtil;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "RoleListQry", description = "角色列表查询参数")
 public class RoleListQry extends PageQuery {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "name", description = "角色名称")
 	private String name;
 
 	public void setName(String name) {

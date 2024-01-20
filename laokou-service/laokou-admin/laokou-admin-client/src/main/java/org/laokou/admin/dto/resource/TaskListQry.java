@@ -26,16 +26,16 @@ import org.laokou.common.i18n.utils.StringUtil;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "TaskListQry", description = "任务列表查询参数")
 public class TaskListQry extends PageQuery {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "name", description = "流程名称")
 	private String name;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "userId", description = "用户ID")
 	private Long userId;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "key", description = "定义key")
 	private String key;
 
 	public void setName(String name) {

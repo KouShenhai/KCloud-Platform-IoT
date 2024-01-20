@@ -26,10 +26,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "SourceUpdateCmd", description = "修改数据源命令请求")
 public class SourceUpdateCmd extends CommonCommand {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "sourceCO", description = "数据源")
 	private SourceCO sourceCO;
 
 }

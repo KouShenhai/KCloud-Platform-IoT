@@ -27,28 +27,28 @@ import java.util.Map;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "ResourceAuditTaskCmd", description = "审批资源任务流程命令请求")
 public class ResourceAuditTaskCmd extends CommonCommand {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "businessKey", description = "业务Key")
 	private Long businessKey;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "taskId", description = "任务ID")
 	private String taskId;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "taskName", description = "任务名称")
 	private String taskName;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "instanceId", description = "实例ID")
 	private String instanceId;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "instanceName", description = "实例名称")
 	private String instanceName;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "comment", description = "审批意见")
 	private String comment;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "values", description = "流程变量")
 	private Map<String, Object> values;
 
 }

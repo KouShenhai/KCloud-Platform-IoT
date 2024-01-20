@@ -28,25 +28,25 @@ import java.util.List;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "RoleCO", description = "角色")
 public class RoleCO extends ClientObject {
 
 	@Serial
 	private static final long serialVersionUID = -3805903746359810600L;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "name", description = "角色名称")
 	private String name;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "sort", description = "角色排序")
 	private Integer sort;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "menuIds", description = "菜单IDS")
 	private List<Long> menuIds;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "deptIds", description = "部门IDS")
 	private List<Long> deptIds;
 
 }

@@ -25,31 +25,31 @@ import org.laokou.common.i18n.dto.ClientObject;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "OssCO", description = "OSS")
 public class OssCO extends ClientObject {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "name", description = "OSS名称")
 	private String name;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "endpoint", description = "OSS的终端地址")
 	private String endpoint;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "region", description = "OSS的区域")
 	private String region;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "accessKey", description = "OSS的访问密钥")
 	private String accessKey;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "secretKey", description = "OSS的用户密钥")
 	private String secretKey;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "bucketName", description = "OSS的桶名")
 	private String bucketName;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "pathStyleAccessEnabled", description = "路径样式访问 1已开启 0未启用")
 	private Integer pathStyleAccessEnabled;
 
 }

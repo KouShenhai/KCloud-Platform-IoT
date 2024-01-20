@@ -25,25 +25,25 @@ import org.laokou.common.i18n.dto.ClientObject;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "SourceCO", description = "数据源")
 public class SourceCO extends ClientObject {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "name", description = "数据源名称")
 	private String name;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "driverClassName", description = "数据源的驱动名称")
 	private String driverClassName;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "username", description = "数据源的用户名")
 	private String username;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "password", description = "数据源的密码")
 	private String password;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "url", description = "数据源的连接信息")
 	private String url;
 
 }

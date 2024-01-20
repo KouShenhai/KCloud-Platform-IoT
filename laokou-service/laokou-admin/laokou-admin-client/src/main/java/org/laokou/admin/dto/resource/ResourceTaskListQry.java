@@ -25,10 +25,10 @@ import org.laokou.common.i18n.dto.PageQuery;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "ResourceTaskListQry", description = "资源任务流程列表查询参数")
 public class ResourceTaskListQry extends PageQuery {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "name", description = "流程名称")
 	private String name;
 
 }

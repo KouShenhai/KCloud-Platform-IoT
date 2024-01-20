@@ -25,16 +25,16 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "TaskDelegateCmd", description = "委派任务流程命令请求")
 public class TaskDelegateCmd extends CommonCommand {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "taskId", description = "任务ID")
 	private String taskId;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "userId", description = "用户ID")
 	private Long userId;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "toUserId", description = "被委派用户ID")
 	private Long toUserId;
 
 }

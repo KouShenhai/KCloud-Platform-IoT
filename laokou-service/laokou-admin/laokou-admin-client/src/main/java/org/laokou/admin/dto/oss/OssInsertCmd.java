@@ -26,10 +26,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "OssInsertCmd", description = "新增OSS命令请求")
 public class OssInsertCmd extends CommonCommand {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "ossCO", description = "OSS")
 	private OssCO ossCO;
 
 }

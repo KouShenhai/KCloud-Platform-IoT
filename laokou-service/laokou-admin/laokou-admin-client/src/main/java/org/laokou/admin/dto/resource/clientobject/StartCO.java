@@ -29,10 +29,10 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "", description = "")
+@Schema(name = "StartCO", description = "开始流程")
 public class StartCO extends ClientObject {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "instanceId", description = "实例ID")
 	private String instanceId;
 
 }

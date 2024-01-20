@@ -27,11 +27,11 @@ import org.laokou.common.i18n.dto.Search;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "ResourceSearchGetQry", description = "搜索资源命令请求")
 public class ResourceSearchGetQry extends CommonCommand {
 
 	@Valid
-	@Schema(name = "", description = "")
+	@Schema(name = "search", description = "搜索")
 	private Search search;
 
 }
