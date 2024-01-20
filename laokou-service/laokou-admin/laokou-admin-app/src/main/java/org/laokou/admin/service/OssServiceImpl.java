@@ -30,6 +30,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
+ * OSS管理.
  * @author laokou
  */
 @Service
@@ -49,35 +50,60 @@ public class OssServiceImpl implements OssServiceI {
 	private final OssGetQryExe ossGetQryExe;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 新增OSS
+	 * @param cmd 新增OSS参数
+	 * @return 新增结果
 	 */
 	@Override
 	public Result<Boolean> insert(OssInsertCmd cmd) {
 		return ossInsertCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 修改OSS
+	 * @param cmd 修改OSS参数
+	 * @return 修改结果
+	 */
 	@Override
 	public Result<Boolean> update(OssUpdateCmd cmd) {
 		return ossUpdateCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 根据ID删除OSS
+	 * @param cmd 根据ID删除OSS参数
+	 * @return 删除结果
+	 */
 	@Override
 	public Result<Boolean> deleteById(OssDeleteCmd cmd) {
 		return ossDeleteCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 根据ID查看OSS
+	 * @param qry 根据ID查看OSS参数
+	 * @return OSS
+	 */
 	@Override
 	public Result<OssCO> getById(OssGetQry qry) {
 		return ossGetQryExe.execute(qry);
 	}
 
+	/**
+	 * 查询OSS列表
+	 * @param qry 查询OSS列表参数
+	 * @return OSS列表
+	 */
 	@Override
 	public Result<Datas<OssCO>> list(OssListQry qry) {
 		return ossListQryExe.execute(qry);
 	}
 
+	/**
+	 * 上传文件
+	 * @param cmd 上传文件参数
+	 * @return 文件对象
+	 */
 	@Override
 	public Result<FileCO> upload(OssUploadCmd cmd) {
 		return ossUploadCmdExe.execute(cmd);

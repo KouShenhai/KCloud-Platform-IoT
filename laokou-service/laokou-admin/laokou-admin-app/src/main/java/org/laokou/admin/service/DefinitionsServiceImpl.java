@@ -29,6 +29,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
+ * 定义流程.
  * @author laokou
  */
 @Service

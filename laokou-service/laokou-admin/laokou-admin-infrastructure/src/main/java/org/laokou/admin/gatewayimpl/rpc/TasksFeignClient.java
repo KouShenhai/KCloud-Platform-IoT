@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import static org.laokou.common.i18n.common.OpenFeignConstants.LAOKOU_FLOWABLE_SERVICE;
 
 /**
+ * 任务流程.
  * @author laokou
  */
 @FeignClient(contextId = "tasks", name = LAOKOU_FLOWABLE_SERVICE, path = "v1/tasks",

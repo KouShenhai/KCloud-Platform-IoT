@@ -25,6 +25,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
+ * 退出登录.
  * @author laokou
  */
 @Service
@@ -34,9 +35,9 @@ public class LogoutsServiceImpl implements LogoutsServiceI {
 	private final LogoutCmdExe logoutCmdExe;
 
 	/**
-	 *
-	 * @param cmd 指令
-	 * @return
+	 * 退出登录
+	 * @param cmd 退出登录参数
+	 * @return 退出结果
 	 */
 	@Override
 	public Result<Boolean> logout(LogoutCmd cmd) {

@@ -34,6 +34,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
+ * 日志管理.
  * @author laokou
  */
 @Service
@@ -49,9 +50,9 @@ public class LogsServiceImpl implements LogsServiceI {
 	private final LoginLogExportCmdExe loginLogExportCmdExe;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询操作日志列表
+	 * @param qry 查询操作日志列表参数
+	 * @return 操作日志列表
 	 */
 	@Override
 	public Result<Datas<OperateLogCO>> operateList(OperateLogListQry qry) {
@@ -59,8 +60,8 @@ public class LogsServiceImpl implements LogsServiceI {
 	}
 
 	/**
-	 *
-	 * @param cmd
+	 * 导出操作日志
+	 * @param cmd 导出操作日志参数
 	 */
 	@Override
 	public void operateExport(OperateLogExportCmd cmd) {
@@ -68,9 +69,9 @@ public class LogsServiceImpl implements LogsServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询登录日志列表
+	 * @param qry 查询登录日志列表参数
+	 * @return 登录日志列表
 	 */
 	@Override
 	public Result<Datas<LoginLogCO>> loginList(LoginLogListQry qry) {
@@ -78,8 +79,8 @@ public class LogsServiceImpl implements LogsServiceI {
 	}
 
 	/**
-	 *
-	 * @param cmd
+	 * 导出登录日志
+	 * @param cmd 导出登录日志参数
 	 */
 	@Override
 	public void loginExport(LoginLogExportCmd cmd) {

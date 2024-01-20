@@ -25,7 +25,7 @@ import org.laokou.common.i18n.dto.PageQuery;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "UserOptionListQry", description = "用户下拉框选择项列表查询参数")
 public class UserOptionListQry extends PageQuery {
 
 }

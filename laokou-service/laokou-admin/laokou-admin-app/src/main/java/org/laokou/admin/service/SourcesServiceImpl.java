@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * 数据源管理.
  * @author laokou
  */
 @Service
@@ -54,35 +55,60 @@ public class SourcesServiceImpl implements SourcesServiceI {
 	private final SourceOptionListQryExe sourceOptionListQryExe;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 新增数据源
+	 * @param cmd 新增数据源参数
+	 * @return 新增结果
 	 */
 	@Override
 	public Result<Boolean> insert(SourceInsertCmd cmd) {
 		return sourceInsertCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 修改数据源
+	 * @param cmd 修改数据源参数
+	 * @return 修改结果
+	 */
 	@Override
 	public Result<Boolean> update(SourceUpdateCmd cmd) {
 		return sourceUpdateCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 根据ID删除数据源
+	 * @param cmd 根据ID删除数据源参数
+	 * @return 删除结果
+	 */
 	@Override
 	public Result<Boolean> deleteById(SourceDeleteCmd cmd) {
 		return sourceDeleteCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 根据ID查看数据源
+	 * @param qry 根据ID查看数据源参数
+	 * @return 数据源
+	 */
 	@Override
 	public Result<SourceCO> getById(SourceGetQry qry) {
 		return sourceGetQryExe.execute(qry);
 	}
 
+	/**
+	 * 查询数据源列表
+	 * @param qry 查询数据源列表参数
+	 * @return 数据源列表
+	 */
 	@Override
 	public Result<Datas<SourceCO>> list(SourceListQry qry) {
 		return sourceListQryExe.execute(qry);
 	}
 
+	/**
+	 * 查询数据源下拉框选择项列表
+	 * @param qry 查询数据源下拉框选择项列表参数
+	 * @return 数据源下拉框选择项列表
+	 */
 	@Override
 	public Result<List<OptionCO>> optionList(SourceOptionListQry qry) {
 		return sourceOptionListQryExe.execute(qry);

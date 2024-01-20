@@ -25,13 +25,13 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "UserPasswordResetCmd", description = "重置密码命令请求")
 public class UserPasswordResetCmd extends CommonCommand {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	@Schema(name = "", description = "")
+	@Schema(name = "password", description = "密码")
 	private String password;
 
 }

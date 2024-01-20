@@ -65,8 +65,8 @@ public interface DeptsServiceI {
 	Result<Boolean> deleteById(DeptDeleteCmd cmd);
 
 	/**
-	 * 查看ID查看部门
-	 * @param qry 查看ID查看部门参数
+	 * 根据ID查看部门
+	 * @param qry 根据ID查看部门参数
 	 * @return 部门
 	 */
 	Result<DeptCO> getById(DeptGetQry qry);

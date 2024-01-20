@@ -26,10 +26,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Schema(name = "", description = "")
+@Schema(name = "UserInsertCmd", description = "新增用户命令请求")
 public class UserInsertCmd extends CommonCommand {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "userCO", description = "用户")
 	private UserCO userCO;
 
 }

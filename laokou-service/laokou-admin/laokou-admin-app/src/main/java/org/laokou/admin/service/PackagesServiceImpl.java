@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * 套餐管理.
  * @author laokou
  */
 @Service
@@ -54,9 +55,9 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	private final PackageOptionListQryExe packageOptionListQryExe;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 新增套餐
+	 * @param cmd 新增套餐参数
+	 * @return 新增结果
 	 */
 	@Override
 	public Result<Boolean> insert(PackageInsertCmd cmd) {
@@ -64,9 +65,9 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	}
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 修改套餐
+	 * @param cmd 修改套餐参数
+	 * @return 修改结果
 	 */
 	@Override
 	public Result<Boolean> update(PackageUpdateCmd cmd) {
@@ -74,9 +75,9 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	}
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 根据ID删除套餐
+	 * @param cmd 根据ID删除套餐参数
+	 * @return 删除结果
 	 */
 	@Override
 	public Result<Boolean> deleteById(PackageDeleteCmd cmd) {
@@ -84,9 +85,9 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询套餐列表
+	 * @param qry 查询套餐列表参数
+	 * @return 套餐列表
 	 */
 	@Override
 	public Result<Datas<PackageCO>> list(PackageListQry qry) {
@@ -94,9 +95,9 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 根据ID查看套餐
+	 * @param qry 根据ID查看套餐参数
+	 * @return 套餐
 	 */
 	@Override
 	public Result<PackageCO> getById(PackageGetQry qry) {
@@ -104,9 +105,9 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询套餐下拉框选择项列表
+	 * @param qry 查询套餐下拉框选择项列表参数
+	 * @return 套餐下拉框选择项列表
 	 */
 	@Override
 	public Result<List<OptionCO>> optionList(PackageOptionListQry qry) {

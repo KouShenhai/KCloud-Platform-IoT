@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * 字典管理.
  * @author laokou
  */
 @Service
@@ -54,9 +55,9 @@ public class DictsServiceImpl implements DictsServiceI {
 	private final DictListQryExe dictListQryExe;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 新增字典
+	 * @param cmd 新增字典参数
+	 * @return 新增结果
 	 */
 	@Override
 	public Result<Boolean> insert(DictInsertCmd cmd) {
@@ -64,9 +65,9 @@ public class DictsServiceImpl implements DictsServiceI {
 	}
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 修改字典
+	 * @param cmd 修改字典参数
+	 * @return 修改结果
 	 */
 	@Override
 	public Result<Boolean> update(DictUpdateCmd cmd) {
@@ -74,9 +75,9 @@ public class DictsServiceImpl implements DictsServiceI {
 	}
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 根据ID删除字典
+	 * @param cmd 根据ID删除字典参数
+	 * @return 删除字典
 	 */
 	@Override
 	public Result<Boolean> deleteById(DictDeleteCmd cmd) {
@@ -84,9 +85,9 @@ public class DictsServiceImpl implements DictsServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 根据ID查看字典
+	 * @param qry 根据ID查看字典参数
+	 * @return 字典
 	 */
 	@Override
 	public Result<DictCO> getById(DictGetQry qry) {
@@ -94,9 +95,9 @@ public class DictsServiceImpl implements DictsServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询字典下拉框选择项列表
+	 * @param qry 查询字典下拉框选择项列表参数
+	 * @return 字典下拉框选择项列表
 	 */
 	@Override
 	public Result<List<OptionCO>> optionList(DictOptionListQry qry) {
@@ -104,9 +105,9 @@ public class DictsServiceImpl implements DictsServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询字典列表
+	 * @param qry 查询字典列表参数
+	 * @return 字典列表
 	 */
 	@Override
 	public Result<Datas<DictCO>> list(DictListQry qry) {

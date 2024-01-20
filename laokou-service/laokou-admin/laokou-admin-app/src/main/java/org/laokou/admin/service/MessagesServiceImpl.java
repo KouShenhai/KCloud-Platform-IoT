@@ -32,6 +32,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
+ * 消息管理.
  * @author laokou
  */
 @Service
@@ -51,9 +52,9 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	private final MessageUnreadCountGetQryExe messageUnreadCountGetQryExe;
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 新增消息
+	 * @param cmd 新增消息参数
+	 * @return 新增结果
 	 */
 	@Override
 	public Result<Boolean> insert(MessageInsertCmd cmd) {
@@ -61,9 +62,9 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询消息列表
+	 * @param qry 查询消息列表参数
+	 * @return 消息列表
 	 */
 	@Override
 	public Result<Datas<MessageCO>> list(MessageListQry qry) {
@@ -71,9 +72,9 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	}
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 读取消息
+	 * @param cmd 读取消息参数
+	 * @return 读取结果
 	 */
 	@Override
 	public Result<MessageCO> read(MessageReadCmd cmd) {
@@ -81,9 +82,9 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 根据ID查看消息
+	 * @param qry 根据ID查看消息参数
+	 * @return 消息
 	 */
 	@Override
 	public Result<MessageCO> getById(MessageGetQry qry) {
@@ -91,9 +92,9 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询未读消息列表
+	 * @param qry 查询未读消息列表参数
+	 * @return 未读消息列表
 	 */
 	@Override
 	public Result<Datas<MessageCO>> unreadList(MessageUnreadListQry qry) {
@@ -101,9 +102,9 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	}
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查看未读消息数
+	 * @param qry 查看未读消息数参数
+	 * @return 未读消息数
 	 */
 	@Override
 	public Result<Integer> unreadCount(MessageUnreadCountGetQry qry) {

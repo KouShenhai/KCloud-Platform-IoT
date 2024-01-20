@@ -51,6 +51,7 @@ import java.util.concurrent.CompletableFuture;
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_USER;
 
 /**
+ * 用户管理.
  * @author laokou
  */
 @Slf4j
@@ -74,31 +75,61 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final ThreadPoolTaskExecutor taskExecutor;
 
+	/**
+	 * 新增用户
+	 * @param user 用户对象
+	 * @return 新增结果
+	 */
 	@Override
 	public Boolean insert(User user) {
 		return insertUser(getInsertUserDO(user), user);
 	}
 
+	/**
+	 * 修改用户
+	 * @param user 用户对象
+	 * @return 修改结果
+	 */
 	@Override
 	public Boolean update(User user) {
 		return updateUser(getUpdateUserDO(user), user);
 	}
 
+	/**
+	 * 根据ID删除用户
+	 * @param id ID
+	 * @return 删除结果
+	 */
 	@Override
 	public Boolean deleteById(Long id) {
 		return deleteUserById(id);
 	}
 
+	/**
+	 * 重置密码
+	 * @param user 用户对象
+	 * @return 重置结果
+	 */
 	@Override
 	public Boolean resetPassword(User user) {
 		return updateUser(getResetPasswordDO(user));
 	}
 
+	/**
+	 * 修改用户信息
+	 * @param user 用户对象
+	 * @return 修改结果
+	 */
 	@Override
 	public Boolean updateInfo(User user) {
 		return updateUser(getUpdateUserDO(user));
 	}
 
+	/**
+	 * 根据ID查看用户
+	 * @param id ID
+	 * @return 用户
+	 */
 	@Override
 	public User getById(Long id) {
 		User user = userConvertor.convertEntity(userMapper.selectById(id));
@@ -111,6 +142,12 @@ public class UserGatewayImpl implements UserGateway {
 		return user;
 	}
 
+	/**
+	 * 查询用户列表
+	 * @param user 用户对象
+	 * @param pageQuery 分页参数
+	 * @return 用户列表
+	 */
 	@Override
 	@DataFilter(tableAlias = BOOT_SYS_USER)
 	@SneakyThrows
@@ -128,6 +165,12 @@ public class UserGatewayImpl implements UserGateway {
 		return datas;
 	}
 
+	/**
+	 * 修改用户
+	 * @param userDO 用户数据模型
+	 * @param user 用户对象
+	 * @return 修改结果
+	 */
 	private Boolean updateUser(UserDO userDO, User user) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -144,10 +187,20 @@ public class UserGatewayImpl implements UserGateway {
 		});
 	}
 
+	/**
+	 * 删除用户角色
+	 * @param user 用户对象
+	 */
 	private void deleteUserRole(User user) {
 		userRoleMapper.deleteUserRoleByUserId(user.getId());
 	}
 
+	/**
+	 * 新增用户
+	 * @param userDO 用户数据模型
+	 * @param user 用户对象
+	 * @return 新增结果
+	 */
 	private Boolean insertUser(UserDO userDO, User user) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -163,6 +216,11 @@ public class UserGatewayImpl implements UserGateway {
 		});
 	}
 
+	/**
+	 * 查看用户数据模型（新增用户）
+	 * @param user 用户对象
+	 * @return 用户数据模型（新增用户）
+	 */
 	private UserDO getInsertUserDO(User user) {
 		UserDO userDO = userConvertor.toDataObject(user);
 		userDO.setId(IdGenerator.defaultSnowflakeId());
@@ -170,6 +228,11 @@ public class UserGatewayImpl implements UserGateway {
 		return userDO;
 	}
 
+	/**
+	 * 查看用户模型（修改用户）
+	 * @param user 用户对象
+	 * @return 用户模型（修改用户）
+	 */
 	private UserDO getUpdateUserDO(User user) {
 		UserDO userDO = userConvertor.toDataObject(user);
 		userDO.setEditor(user.getEditor());
@@ -178,12 +241,22 @@ public class UserGatewayImpl implements UserGateway {
 		return userDO;
 	}
 
+	/**
+	 * 查看用户数据模型（重置密码）
+	 * @param user 用户对象
+	 * @return 用户数据模型（重置密码）
+	 */
 	private UserDO getResetPasswordDO(User user) {
 		UserDO updateUserDO = getUpdateUserDO(user);
 		updateUserDO.setPassword(passwordEncoder.encode(updateUserDO.getPassword()));
 		return updateUserDO;
 	}
 
+	/**
+	 * 新增用户角色（批量）
+	 * @param roleIds 角色IDS
+	 * @param userDO 用户数据模型
+	 */
 	private void insertUserRole(List<Long> roleIds, UserDO userDO) {
 		if (CollectionUtil.isNotEmpty(roleIds)) {
 			List<UserRoleDO> list = roleIds.parallelStream().map(roleId -> toUserRoleDO(userDO, roleId)).toList();
@@ -191,6 +264,11 @@ public class UserGatewayImpl implements UserGateway {
 		}
 	}
 
+	/**
+	 * 修改用户
+	 * @param userDO 用户数据模型
+	 * @return 修改结果
+	 */
 	private Boolean updateUser(UserDO userDO) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -204,6 +282,11 @@ public class UserGatewayImpl implements UserGateway {
 		});
 	}
 
+	/**
+	 * 根据ID删除用户
+	 * @param id ID
+	 * @return 删除结果
+	 */
 	private Boolean deleteUserById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -217,6 +300,12 @@ public class UserGatewayImpl implements UserGateway {
 		});
 	}
 
+	/**
+	 * 转换为用户角色数据模型
+	 * @param userDO 用户数据模型
+	 * @param roleId 角色ID
+	 * @return 用户角色数据模型
+	 */
 	private UserRoleDO toUserRoleDO(UserDO userDO, Long roleId) {
 		UserRoleDO userRoleDO = new UserRoleDO();
 		userRoleDO.setId(IdGenerator.defaultSnowflakeId());

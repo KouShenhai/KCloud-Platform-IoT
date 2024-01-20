@@ -37,6 +37,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * 租户管理.
  * @author laokou
  */
 @Service
@@ -59,41 +60,80 @@ public class TenantsServiceImpl implements TenantsServiceI {
 
 	private final TenantDownloadDatasourceCmdExe tenantDownloadDatasourceCmdExe;
 
+	/**
+	 * 查询租户下拉框选择项列表
+	 * @param qry 查询租户下拉框选择项列表参数
+	 * @return 租户下拉框选择项列表
+	 */
 	@Override
 	public Result<List<OptionCO>> optionList(TenantOptionListQry qry) {
 		return tenantOptionListQryExe.execute(qry);
 	}
 
+	/**
+	 * 新增租户
+	 * @param cmd 新增租户参数
+	 * @return 新增结果
+	 */
 	@Override
 	public Result<Boolean> insert(TenantInsertCmd cmd) {
 		return tenantInsertCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 修改租户
+	 * @param cmd 修改租户参数
+	 * @return 修改结果
+	 */
 	@Override
 	public Result<Boolean> update(TenantUpdateCmd cmd) {
 		return tenantUpdateCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 根据ID删除租户
+	 * @param cmd 根据ID删除租户
+	 * @return 删除结果
+	 */
 	@Override
 	public Result<Boolean> deleteById(TenantDeleteCmd cmd) {
 		return tenantDeleteCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 查询租户列表
+	 * @param qry 查询租户列表参数
+	 * @return 租户列表
+	 */
 	@Override
 	public Result<Datas<TenantCO>> list(TenantListQry qry) {
 		return tenantListQryExe.execute(qry);
 	}
 
+	/**
+	 * 根据ID查看租户
+	 * @param qry 根据ID查看租户
+	 * @return 租户
+	 */
 	@Override
 	public Result<TenantCO> getById(TenantGetQry qry) {
 		return tenantGetQryExe.execute(qry);
 	}
 
+	/**
+	 * 根据域名查看租户ID
+	 * @param qry 根据域名查看租户ID
+	 * @return
+	 */
 	@Override
 	public Result<Long> getIdByDomainName(TenantGetIDQry qry) {
 		return tenantGetIDQryExe.execute(qry);
 	}
 
+	/**
+	 * 下载租户数据源压缩包.
+	 * @param cmd 下载租户数据源压缩包参数
+	 */
 	@Override
 	public void downloadDatasource(TenantDownloadDatasourceCmd cmd) {
 		tenantDownloadDatasourceCmdExe.executeVoid(cmd);
