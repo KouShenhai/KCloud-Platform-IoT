@@ -23,6 +23,8 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 import static org.laokou.common.i18n.common.OAuth2Constants.ERROR_URL;
 
 /**
+ * OAuth2异常处理器.
+ *
  * @author laokou
  */
 public class OAuth2ExceptionHandler {
@@ -34,10 +36,6 @@ public class OAuth2ExceptionHandler {
 
 	public static OAuth2AuthenticationException getException(int errorCode, String description) {
 		return getException(String.valueOf(errorCode), description, ERROR_URL);
-	}
-
-	public static OAuth2AuthenticationException getException(String errorCode, String description) {
-		return getException(errorCode, description, ERROR_URL);
 	}
 
 }

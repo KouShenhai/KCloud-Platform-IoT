@@ -25,6 +25,8 @@ import java.util.Map;
 import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
 
 /**
+ * 密码令牌.
+ *
  * @author laokou
  */
 public class OAuth2PasswordAuthenticationToken extends AbstractOAuth2BaseAuthenticationToken {

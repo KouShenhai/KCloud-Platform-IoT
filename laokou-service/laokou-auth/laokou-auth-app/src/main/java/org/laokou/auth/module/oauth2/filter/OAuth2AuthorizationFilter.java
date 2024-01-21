@@ -31,6 +31,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import static org.laokou.common.i18n.common.StatusCodes.SERVICE_UNAVAILABLE;
 
 /**
+ * 认证过滤器.
+ *
  * @author laokou
  */
 @Slf4j

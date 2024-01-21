@@ -24,6 +24,8 @@ import org.springframework.security.oauth2.server.authorization.authentication.O
 import java.util.Map;
 
 /**
+ * 抽象令牌.
+ *
  * @author laokou
  */
 public abstract class AbstractOAuth2BaseAuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {

@@ -25,6 +25,8 @@ import java.util.Map;
 import static org.laokou.common.i18n.common.OAuth2Constants.MAIL;
 
 /**
+ * 邮箱令牌.
+ *
  * @author laokou
  */
 public class OAuth2MailAuthenticationToken extends AbstractOAuth2BaseAuthenticationToken {

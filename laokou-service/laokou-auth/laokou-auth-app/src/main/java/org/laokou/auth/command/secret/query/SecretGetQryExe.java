@@ -23,14 +23,17 @@ import org.laokou.common.crypto.utils.RsaUtil;
 import org.springframework.stereotype.Component;
 
 /**
+ * 获取密钥执行器.
+ *
  * @author laokou
  */
 @Component
 public class SecretGetQryExe {
 
 	/**
-	 * @param qry
-	 * @return
+	 * 执行获取密钥.
+	 * @param qry 获取密钥参数
+	 * @return 密钥
 	 */
 	public Result<String> execute(SecretGetQry qry) {
 		return Result.of(RsaUtil.getPublicKey());

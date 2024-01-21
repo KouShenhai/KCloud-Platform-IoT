@@ -25,6 +25,8 @@ import java.util.Map;
 import static org.laokou.common.i18n.common.OAuth2Constants.MOBILE;
 
 /**
+ * 手机号令牌.
+ *
  * @author laokou
  */
 public class OAuth2MobileAuthenticationToken extends AbstractOAuth2BaseAuthenticationToken {

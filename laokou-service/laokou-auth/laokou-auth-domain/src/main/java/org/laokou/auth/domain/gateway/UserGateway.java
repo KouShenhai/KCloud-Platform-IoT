@@ -21,14 +21,16 @@ import org.laokou.auth.domain.auth.Auth;
 import org.laokou.common.security.domain.User;
 
 /**
+ * 用户.
+ *
  * @author laokou
  */
 public interface UserGateway {
 
 	/**
-	 * 查询用户.
-	 * @param auth 认证
-	 * @return User
+	 * 根据用户名查看用户信息.
+	 * @param auth 认证对象
+	 * @return 用户信息
 	 */
 	User getUserByUsername(Auth auth);
 

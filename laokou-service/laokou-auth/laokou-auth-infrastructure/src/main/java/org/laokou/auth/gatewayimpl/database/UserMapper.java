@@ -24,6 +24,8 @@ import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 /**
+ * 用户.
+ *
  * @author laokou
  */
 @Mapper
@@ -31,11 +33,11 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper extends BatchMapper<UserDO> {
 
 	/**
-	 * 根据用户名和登录类型查看用户.
+	 * 根据用户名和登录类型查看用户信息.
 	 * @param username 用户名
-	 * @param type 登录类型
+	 * @param type 登录类型 mail邮箱 mobile手机号 password密码 authorization_code授权码
 	 * @param key 密钥
-	 * @return 用户
+	 * @return 用户信息
 	 */
 	UserDO getUserByUsername(@Param("username") String username, @Param("type") String type, @Param("key") String key);
 

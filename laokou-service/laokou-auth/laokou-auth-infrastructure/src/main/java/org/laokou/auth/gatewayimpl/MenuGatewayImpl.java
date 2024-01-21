@@ -28,6 +28,8 @@ import java.util.List;
 import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
 
 /**
+ * 菜单.
+ *
  * @author laokou
  */
 @Component
@@ -36,6 +38,11 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	private final MenuMapper menuMapper;
 
+	/**
+	 * 查看菜单权限标识集合.
+	 * @param user 用户对象
+	 * @return 菜单权限标识集合
+	 */
 	@Override
 	public List<String> getPermissions(User user) {
 		Long userId = user.getId();

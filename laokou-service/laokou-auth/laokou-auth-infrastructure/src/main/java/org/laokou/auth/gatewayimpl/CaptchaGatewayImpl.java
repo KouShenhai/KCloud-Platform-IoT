@@ -33,6 +33,8 @@ import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
 
 /**
+ * 验证码.
+ *
  * @author laokou
  */
 @Slf4j
@@ -42,11 +44,22 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	private final RedisUtil redisUtil;
 
+	/**
+	 * 写入Redis.
+	 * @param uuid 唯一标识
+	 * @param code 验证码
+	 */
 	@Override
 	public void set(String uuid, String code) {
 		setValue(uuid, code);
 	}
 
+	/**
+	 * 校验验证码.
+	 * @param uuid 唯一标识
+	 * @param code 验证码
+	 * @return 校验结果
+	 */
 	@Override
 	public Boolean validate(String uuid, String code) {
 		// 获取验证码
@@ -57,6 +70,11 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 		return code.equalsIgnoreCase(captcha);
 	}
 
+	/**
+	 * 获取key（MD5加密）.
+	 * @param uuid 唯一标识
+	 * @return key
+	 */
 	@Override
 	public String key(String uuid) {
 		String key = RedisKeyUtil.getUserCaptchaKey(uuid);
@@ -66,6 +84,11 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 		return key;
 	}
 
+	/**
+	 * 从Redis根据唯一标识查看验证码.
+	 * @param uuid 唯一标识
+	 * @return 验证码
+	 */
 	private String get(String uuid) {
 		String key = key(uuid);
 		Object captcha = redisUtil.get(key);
@@ -75,16 +98,29 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 		return ObjectUtil.isNotNull(captcha) ? captcha.toString() : EMPTY;
 	}
 
+	/**
+	 * 写入Redis.
+	 * @param uuid 唯一标识
+	 * @param code 验证码
+	 */
 	private void setValue(String uuid, String code) {
 		String key = key(uuid);
 		// 保存五分钟
 		redisUtil.set(key, code, MINUTE_FIVE_EXPIRE);
 	}
 
+	/**
+	 * MD5加密前.
+	 * @param key key
+	 */
 	private void before(String key) {
 		log.info("MD5加密前：{}", key);
 	}
 
+	/**
+	 * MD5加密后.
+	 * @param key key
+	 */
 	private void after(String key) {
 		log.info("MD5加密后：{}", key);
 	}

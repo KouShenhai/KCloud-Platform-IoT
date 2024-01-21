@@ -17,6 +17,7 @@
 
 package org.laokou.auth.domain.auth;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,12 +30,16 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "Auth", description = "认证")
 public class Auth implements Serializable {
 
+	@Schema(name = "username", description = "用户名")
 	private String username;
 
+	@Schema(name = "type", description = "登录类型 mail邮箱 mobile手机号 password密码 authorization_code授权码")
 	private String type;
 
+	@Schema(name = "key", description = "密钥Key")
 	private String key;
 
 }

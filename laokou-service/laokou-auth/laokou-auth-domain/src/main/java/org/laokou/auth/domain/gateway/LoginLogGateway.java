@@ -20,12 +20,14 @@ package org.laokou.auth.domain.gateway;
 import org.laokou.auth.domain.log.LoginLog;
 
 /**
+ * 登录日志
+ *
  * @author laokou
  */
 public interface LoginLogGateway {
 
 	/**
-	 * 发布登录日志.
+	 * 推送登录日志.
 	 * @param loginLog 登录日志领域
 	 */
 	void publish(LoginLog loginLog);

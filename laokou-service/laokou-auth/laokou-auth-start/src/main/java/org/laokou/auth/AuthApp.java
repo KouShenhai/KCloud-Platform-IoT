@@ -37,6 +37,8 @@ import java.net.InetAddress;
 import static org.laokou.common.i18n.common.NetworkConstants.IP;
 
 /**
+ * 启动类.
+ *
  * @author laokou
  */
 @SpringBootApplication(scanBasePackages = "org.laokou",

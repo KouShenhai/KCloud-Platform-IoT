@@ -17,22 +17,29 @@
 
 package org.laokou.auth.domain.source;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
  * @author laokou
  */
 @Data
+@Schema(name = "Source", description = "数据源")
 public class Source {
 
+	@Schema(name = "name", description = "数据源名称")
 	private String name;
 
+	@Schema(name = "driverClassName", description = "数据源的驱动名称")
 	private String driverClassName;
 
+	@Schema(name = "username", description = "数据源的用户名")
 	private String username;
 
+	@Schema(name = "password", description = "数据源的密码")
 	private String password;
 
+	@Schema(name = "url", description = "数据源的连接信息")
 	private String url;
 
 }

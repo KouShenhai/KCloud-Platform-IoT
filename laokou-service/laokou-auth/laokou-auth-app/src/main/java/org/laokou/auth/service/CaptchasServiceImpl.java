@@ -25,6 +25,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
+ * 验证码.
+ *
  * @author laokou
  */
 @Service
@@ -33,6 +35,11 @@ public class CaptchasServiceImpl implements CaptchasServiceI {
 
 	private final CaptchaGetQryExe captchaGetQryExe;
 
+	/**
+	 * 获取验证码.
+	 * @param qry 获取验证码参数
+	 * @return 验证码
+	 */
 	@Override
 	public Result<String> get(CaptchaGetQry qry) {
 		return captchaGetQryExe.execute(qry);

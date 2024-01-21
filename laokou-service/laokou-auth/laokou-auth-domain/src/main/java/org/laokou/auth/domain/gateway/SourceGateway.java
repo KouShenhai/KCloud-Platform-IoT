@@ -20,15 +20,17 @@ package org.laokou.auth.domain.gateway;
 import org.laokou.auth.domain.source.Source;
 
 /**
+ * 数据源.
+ *
  * @author laokou
  */
 public interface SourceGateway {
 
 	/**
-	 * 查询数据源名称.
+	 * 根据租户ID查看数据源.
 	 * @param tenantId 租户ID
-	 * @return 数据源对象
+	 * @return 数据源
 	 */
-	Source getSourceName(Long tenantId);
+	Source getSourceByTenantId(Long tenantId);
 
 }

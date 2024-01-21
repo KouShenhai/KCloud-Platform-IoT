@@ -25,6 +25,8 @@ import org.springframework.stereotype.Repository;
 import static org.laokou.common.i18n.common.MybatisPlusConstants.TENANT_ID;
 
 /**
+ * 数据源.
+ *
  * @author laokou
  */
 @Repository

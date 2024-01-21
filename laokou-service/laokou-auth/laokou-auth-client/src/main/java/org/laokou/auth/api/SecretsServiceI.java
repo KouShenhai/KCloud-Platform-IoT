@@ -21,10 +21,17 @@ import org.laokou.auth.dto.secret.SecretGetQry;
 import org.laokou.common.i18n.dto.Result;
 
 /**
+ * 密钥.
+ *
  * @author laokou
  */
 public interface SecretsServiceI {
 
+	/**
+	 * 获取密钥.
+	 * @param qry 获取密钥参数
+	 * @return 密钥
+	 */
 	Result<String> get(SecretGetQry qry);
 
 }

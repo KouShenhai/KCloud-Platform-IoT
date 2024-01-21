@@ -54,6 +54,8 @@ import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
 
 /**
+ * 用户认证.
+ *
  * @author laokou
  */
 @Slf4j
@@ -71,6 +73,12 @@ public class UsersServiceImpl implements UserDetailsService {
 
 	private final LoginLogGateway loginLogGateway;
 
+	/**
+	 * 获取用户信息.
+	 * @param username 用户名
+	 * @return 用户信息
+	 * @throws UsernameNotFoundException 异常
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// 默认租户查询

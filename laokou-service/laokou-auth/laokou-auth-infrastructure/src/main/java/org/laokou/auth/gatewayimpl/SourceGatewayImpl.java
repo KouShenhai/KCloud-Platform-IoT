@@ -27,6 +27,8 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.stereotype.Component;
 
 /**
+ * 数据源.
+ *
  * @author laokou
  */
 @Component
@@ -35,8 +37,13 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	private final SourceMapper sourceMapper;
 
+	/**
+	 * 根据租户ID查看数据源
+	 * @param tenantId 租户ID
+	 * @return 数据源
+	 */
 	@Override
-	public Source getSourceName(Long tenantId) {
+	public Source getSourceByTenantId(Long tenantId) {
 		return toSource(sourceMapper.getSourceByTenantId(tenantId));
 	}
 
