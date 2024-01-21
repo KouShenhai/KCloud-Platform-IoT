@@ -38,6 +38,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_SOURCE;
 
 /**
  * 数据源管理.
+ *
  * @author laokou
  */
 @Slf4j
@@ -52,7 +53,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	private final SourceConvertor sourceConvertor;
 
 	/**
-	 * 查询数据源列表
+	 * 查询数据源列表.
 	 * @param source 数据源对象
 	 * @param pageQuery 分页参数
 	 * @return 数据源列表
@@ -69,7 +70,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	}
 
 	/**
-	 * 根据ID查看数据源
+	 * 根据ID查看数据源.
 	 * @param id ID
 	 * @return 数据源
 	 */
@@ -79,7 +80,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	}
 
 	/**
-	 * 新增数据源
+	 * 新增数据源.
 	 * @param source 数据源对象
 	 * @return 新增结果
 	 */
@@ -90,7 +91,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	}
 
 	/**
-	 * 修改数据源
+	 * 修改数据源.
 	 * @param source 数据源对象
 	 * @return 修改结果
 	 */
@@ -102,7 +103,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	}
 
 	/**
-	 * 根据ID删除数据源
+	 * 根据ID删除数据源.
 	 * @param id ID
 	 * @return 删除结果
 	 */
@@ -121,7 +122,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	}
 
 	/**
-	 * 修改数据源
+	 * 修改数据源.
 	 * @param sourceDO 数据源数据模型
 	 * @return 修改结果
 	 */
@@ -139,7 +140,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	}
 
 	/**
-	 * 新增数据源
+	 * 新增数据源.
 	 * @param sourceDO 数据源数据模型
 	 * @return 新增结果
 	 */

@@ -30,6 +30,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 查看OSS执行器.
+ *
  * @author laokou
  */
 @Component
@@ -41,7 +42,7 @@ public class OssGetQryExe {
 	private final OssConvertor ossConvertor;
 
 	/**
-	 * 执行查看OSS
+	 * 执行查看OSS.
 	 * @param qry 查看OSS参数
 	 * @return OSS
 	 */

@@ -34,6 +34,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
+ * 查询任务流程列表执行器.
+ *
  * @author laokou
  */
 @Component
@@ -42,6 +44,11 @@ public class TaskListQryExe {
 
 	private final TaskMapper taskMapper;
 
+	/**
+	 * 查询任务流程列表.
+	 * @param qry 查询任务流程列表参数
+	 * @return 任务流程列表
+	 */
 	public Result<Datas<TaskCO>> execute(TaskListQry qry) {
 		try {
 			String key = qry.getKey();

@@ -147,7 +147,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	}
 
 	public NacosLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
-							 String serviceId, NacosDiscoveryProperties nacosDiscoveryProperties) {
+			String serviceId, NacosDiscoveryProperties nacosDiscoveryProperties) {
 		this.serviceId = serviceId;
 		this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
 		this.nacosDiscoveryProperties = nacosDiscoveryProperties;
@@ -191,7 +191,9 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			if (grayEnabled(headers)) {
 				String version = RegexUtil.find(path, URL_VERSION_REGEX);
 				if (StringUtils.isNotEmpty(version)) {
-					instances = instances.stream().filter(item -> item.getMetadata().getOrDefault(VERSION, EMPTY).equals(version)).toList();
+					instances = instances.stream()
+						.filter(item -> item.getMetadata().getOrDefault(VERSION, EMPTY).equals(version))
+						.toList();
 				}
 			}
 		}
@@ -236,7 +238,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	}
 
 	/**
-	 * 判断服务灰度路由
+	 * 判断服务灰度路由.
 	 * @param headers 请求头
 	 * @return 判断结果
 	 */

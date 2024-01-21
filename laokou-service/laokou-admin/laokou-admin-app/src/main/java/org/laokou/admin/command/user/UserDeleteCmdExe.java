@@ -27,7 +27,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
- * 删除用户执行器
+ * 删除用户执行器.
+ *
  * @author laokou
  */
 @Component
@@ -37,7 +38,7 @@ public class UserDeleteCmdExe {
 	private final UserGateway userGateway;
 
 	/**
-	 * 执行删除用户
+	 * 执行删除用户.
 	 * @param cmd 删除用户参数
 	 * @return 执行删除结果
 	 */

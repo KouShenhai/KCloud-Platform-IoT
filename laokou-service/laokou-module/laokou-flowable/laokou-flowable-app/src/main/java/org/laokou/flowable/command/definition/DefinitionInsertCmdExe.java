@@ -38,6 +38,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
+ * 新增流程执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -51,6 +53,11 @@ public class DefinitionInsertCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	/**
+	 * 执行新增流程.
+	 * @param cmd 新增流程参数
+	 * @return 新增结果
+	 */
 	@SneakyThrows
 	public Result<Boolean> execute(DefinitionInsertCmd cmd) {
 		try {
@@ -75,6 +82,13 @@ public class DefinitionInsertCmdExe {
 		}
 	}
 
+	/**
+	 * 部署流程.
+	 * @param key key
+	 * @param name 名称
+	 * @param bpmnModel 模型
+	 * @return 部署结果
+	 */
 	private Boolean deploy(String key, String name, BpmnModel bpmnModel) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {

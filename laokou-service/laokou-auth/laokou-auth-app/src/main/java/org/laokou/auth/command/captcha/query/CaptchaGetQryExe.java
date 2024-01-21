@@ -27,6 +27,8 @@ import org.springframework.stereotype.Component;
 import java.awt.*;
 
 /**
+ * 获取验证码执行器.
+ *
  * @author laokou
  */
 @Component
@@ -36,9 +38,9 @@ public class CaptchaGetQryExe {
 	private final CaptchaGateway captchaGateway;
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 执行获取验证码.
+	 * @param qry 获取验证码参数
+	 * @return 验证码
 	 */
 	public Result<String> execute(CaptchaGetQry qry) {
 		String uuid = qry.getUuid();
@@ -50,8 +52,8 @@ public class CaptchaGetQryExe {
 	}
 
 	/**
-	 *
-	 * @return
+	 * 生成验证码.
+	 * @return 验证码
 	 */
 	private Captcha generate() {
 		// 三个参数分别为宽、高、位数

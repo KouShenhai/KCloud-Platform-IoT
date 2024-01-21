@@ -22,6 +22,8 @@ import org.flowable.spring.boot.EngineConfigurationConfigurer;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * Flowable配置.
+ *
  * @author laokou
  */
 @Configuration

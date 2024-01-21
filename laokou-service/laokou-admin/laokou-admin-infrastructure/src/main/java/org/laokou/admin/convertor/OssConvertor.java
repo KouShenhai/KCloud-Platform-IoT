@@ -27,6 +27,7 @@ import static org.laokou.common.i18n.common.SysConstants.SPRING;
 
 /**
  * OSS转换器.
+ *
  * @author laokou
  */
 @Mapper(componentModel = SPRING)

@@ -27,6 +27,8 @@ import org.laokou.common.security.domain.User;
 import org.springframework.stereotype.Component;
 
 /**
+ * 用户.
+ *
  * @author laokou
  */
 @Component
@@ -35,6 +37,11 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final UserMapper userMapper;
 
+	/**
+	 * 根据用户名查看用户信息.
+	 * @param auth 认证对象
+	 * @return 用户信息
+	 */
 	@Override
 	public User getUserByUsername(Auth auth) {
 		UserDO userDO = userMapper.getUserByUsername(auth.getUsername(), auth.getType(), auth.getKey());

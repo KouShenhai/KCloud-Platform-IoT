@@ -27,8 +27,8 @@ import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
-import org.laokou.common.i18n.common.MessageTypeEnums;
 import org.laokou.admin.domain.user.User;
+import org.laokou.admin.dto.message.clientobject.MsgCO;
 import org.laokou.admin.gatewayimpl.database.MessageDetailMapper;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
@@ -36,6 +36,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.common.MessageTypeEnums;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -44,19 +45,19 @@ import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
-import org.laokou.im.dto.message.clientobject.WsMsgCO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_MESSAGE;
+import static org.laokou.common.i18n.common.RocketMqConstants.*;
 import static org.laokou.common.i18n.common.SysConstants.DEFAULT_MESSAGE;
 import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
-import static org.laokou.common.i18n.common.RocketMqConstants.*;
 
 /**
  * 消息管理.
+ *
  * @author laokou
  */
 @Slf4j
@@ -75,7 +76,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	private final MybatisUtil mybatisUtil;
 
 	/**
-	 * 查询消息列表
+	 * 查询消息列表.
 	 * @param message 消息对象
 	 * @param pageQuery 分页参数
 	 * @return 消息列表
@@ -92,7 +93,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	/**
-	 * 新增消息
+	 * 新增消息.
 	 * @param message 消息对象
 	 * @param user 用户对象
 	 * @return 新增结果
@@ -106,7 +107,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	/**
-	 * 根据ID查看消息
+	 * 根据ID查看消息.
 	 * @param id ID
 	 * @return 消息
 	 */
@@ -116,7 +117,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	/**
-	 * 推送消息
+	 * 推送消息.
 	 * @param receiver 接收人集合
 	 * @param type 类型
 	 */
@@ -124,7 +125,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		if (CollectionUtil.isEmpty(receiver)) {
 			return;
 		}
-		WsMsgCO co = new WsMsgCO();
+		MsgCO co = new MsgCO();
 		co.setMsg(DEFAULT_MESSAGE);
 		co.setReceiver(receiver);
 		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(type), JacksonUtil.toJsonStr(co),
@@ -132,7 +133,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	/**
-	 * 新增消息
+	 * 新增消息.
 	 * @param messageDO 消息数据模型
 	 * @param message 消息对象
 	 * @param user 用户对象
@@ -152,7 +153,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	/**
-	 * 新增消息详情
+	 * 新增消息详情.
 	 * @param messageId 消息ID
 	 * @param receiver 接收人列表
 	 * @param user 用户对象
@@ -168,7 +169,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	/**
-	 * 查看消息标签
+	 * 查看消息标签.
 	 * @param type 消息类型
 	 * @return 消息标签
 	 */
@@ -177,7 +178,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	/**
-	 * 转换消息详情数据模型
+	 * 转换消息详情数据模型.
 	 * @param messageId 消息ID
 	 * @param userId 用户ID
 	 * @param user 用户对象

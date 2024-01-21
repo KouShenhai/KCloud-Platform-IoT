@@ -28,6 +28,8 @@ import java.util.List;
 import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
 
 /**
+ * 部门.
+ *
  * @author laokou
  */
 @Component
@@ -36,6 +38,11 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	private final DeptMapper deptMapper;
 
+	/**
+	 * 查看部门PATHS.
+	 * @param user 用户对象
+	 * @return 部门PATHS
+	 */
 	@Override
 	public List<String> getDeptPaths(User user) {
 		Long userId = user.getId();

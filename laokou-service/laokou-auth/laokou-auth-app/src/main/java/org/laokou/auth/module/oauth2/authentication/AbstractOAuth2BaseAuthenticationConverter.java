@@ -41,14 +41,16 @@ import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
 import static org.laokou.common.i18n.common.ValCodes.OAUTH2_TENANT_ID_REQUIRE;
 
 /**
+ * 抽象认证转换器.
+ *
  * @author laokou
  */
 @Slf4j
 public abstract class AbstractOAuth2BaseAuthenticationConverter implements AuthenticationConverter {
 
 	/**
-	 * 类型.
-	 * @return String
+	 * 获取认证类型.
+	 * @return 认证类型
 	 */
 	abstract String getGrantType();
 

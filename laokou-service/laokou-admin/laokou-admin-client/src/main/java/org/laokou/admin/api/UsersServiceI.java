@@ -29,6 +29,7 @@ import java.util.List;
 
 /**
  * 用户管理.
+ *
  * @author laokou
  */
 public interface UsersServiceI {
@@ -83,35 +84,35 @@ public interface UsersServiceI {
 	Result<List<OptionCO>> optionList(UserOptionListQry qry);
 
 	/**
-	 * 修改用户状态
+	 * 修改用户状态.
 	 * @param cmd 修改用户状态参数
 	 * @return 修改结果
 	 */
 	Result<Boolean> updateStatus(UserStatusUpdateCmd cmd);
 
 	/**
-	 * 重置密码
+	 * 重置密码.
 	 * @param cmd 重置密码参数
 	 * @return 重置结果
 	 */
 	Result<Boolean> resetPassword(UserPasswordResetCmd cmd);
 
 	/**
-	 * 根据ID查看用户
+	 * 根据ID查看用户.
 	 * @param qry 根据ID查看用户参数
 	 * @return 用户
 	 */
 	Result<UserCO> getById(UserGetQry qry);
 
 	/**
-	 * 根据ID删除用户
+	 * 根据ID删除用户.
 	 * @param cmd 根据ID删除用户参数
 	 * @return 删除结果
 	 */
 	Result<Boolean> deleteById(UserDeleteCmd cmd);
 
 	/**
-	 * 查询用户列表
+	 * 查询用户列表.
 	 * @param qry 查询用户列表参数
 	 * @return 用户列表
 	 */

@@ -39,6 +39,8 @@ import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 import static org.laokou.common.i18n.common.ValCodes.*;
 
 /**
+ * 密码处理器.
+ *
  * @author laokou
  */
 @Component

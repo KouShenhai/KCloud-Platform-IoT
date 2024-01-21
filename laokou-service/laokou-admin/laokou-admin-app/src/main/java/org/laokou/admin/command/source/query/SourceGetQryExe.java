@@ -27,7 +27,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
- * 查看数据源执行器
+ * 查看数据源执行器.
+ *
  * @author laokou
  */
 @Component
@@ -37,7 +38,7 @@ public class SourceGetQryExe {
 	private final SourceGateway sourceGateway;
 
 	/**
-	 * 执行查看数据源
+	 * 执行查看数据源.
 	 * @param qry 查看数据源参数
 	 * @return 数据源
 	 */

@@ -28,12 +28,21 @@ import org.springframework.stereotype.Repository;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
+ * 套餐.
+ *
  * @author laokou
  */
 @Mapper
 @Repository
 public interface PackageMapper extends BatchMapper<PackageDO> {
 
+	/**
+	 * 查询套餐列表.
+	 * @param page 分页参数
+	 * @param name 套餐名称
+	 * @param pageQuery 分页参数
+	 * @return 套餐列表
+	 */
 	IPage<PackageDO> getPackageListFilter(IPage<PackageDO> page, @Param("name") String name,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 

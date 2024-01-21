@@ -22,14 +22,16 @@ import org.laokou.common.security.domain.User;
 import java.util.List;
 
 /**
+ * 菜单.
+ *
  * @author laokou
  */
 public interface MenuGateway {
 
 	/**
-	 * 查询权限标识.
-	 * @param user 用参数
-	 * @return 权限标识集合
+	 * 查询菜单权限标识集合.
+	 * @param user 用户对象
+	 * @return 菜单权限标识集合
 	 */
 	List<String> getPermissions(User user);
 

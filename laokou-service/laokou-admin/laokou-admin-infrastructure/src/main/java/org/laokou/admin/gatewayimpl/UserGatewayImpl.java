@@ -52,6 +52,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_USER;
 
 /**
  * 用户管理.
+ *
  * @author laokou
  */
 @Slf4j
@@ -76,7 +77,7 @@ public class UserGatewayImpl implements UserGateway {
 	private final ThreadPoolTaskExecutor taskExecutor;
 
 	/**
-	 * 新增用户
+	 * 新增用户.
 	 * @param user 用户对象
 	 * @return 新增结果
 	 */
@@ -86,7 +87,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 修改用户
+	 * 修改用户.
 	 * @param user 用户对象
 	 * @return 修改结果
 	 */
@@ -96,7 +97,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 根据ID删除用户
+	 * 根据ID删除用户.
 	 * @param id ID
 	 * @return 删除结果
 	 */
@@ -106,7 +107,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 重置密码
+	 * 重置密码.
 	 * @param user 用户对象
 	 * @return 重置结果
 	 */
@@ -116,7 +117,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 修改用户信息
+	 * 修改用户信息.
 	 * @param user 用户对象
 	 * @return 修改结果
 	 */
@@ -126,7 +127,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 根据ID查看用户
+	 * 根据ID查看用户.
 	 * @param id ID
 	 * @return 用户
 	 */
@@ -143,7 +144,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 查询用户列表
+	 * 查询用户列表.
 	 * @param user 用户对象
 	 * @param pageQuery 分页参数
 	 * @return 用户列表
@@ -166,7 +167,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 修改用户
+	 * 修改用户.
 	 * @param userDO 用户数据模型
 	 * @param user 用户对象
 	 * @return 修改结果
@@ -188,7 +189,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 删除用户角色
+	 * 删除用户角色.
 	 * @param user 用户对象
 	 */
 	private void deleteUserRole(User user) {
@@ -196,7 +197,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 新增用户
+	 * 新增用户.
 	 * @param userDO 用户数据模型
 	 * @param user 用户对象
 	 * @return 新增结果
@@ -217,7 +218,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 查看用户数据模型（新增用户）
+	 * 查看用户数据模型（新增用户）.
 	 * @param user 用户对象
 	 * @return 用户数据模型（新增用户）
 	 */
@@ -229,7 +230,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 查看用户模型（修改用户）
+	 * 查看用户模型（修改用户）.
 	 * @param user 用户对象
 	 * @return 用户模型（修改用户）
 	 */
@@ -242,7 +243,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 查看用户数据模型（重置密码）
+	 * 查看用户数据模型（重置密码）.
 	 * @param user 用户对象
 	 * @return 用户数据模型（重置密码）
 	 */
@@ -253,7 +254,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 新增用户角色（批量）
+	 * 新增用户角色（批量）.
 	 * @param roleIds 角色IDS
 	 * @param userDO 用户数据模型
 	 */
@@ -265,7 +266,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 修改用户
+	 * 修改用户.
 	 * @param userDO 用户数据模型
 	 * @return 修改结果
 	 */
@@ -283,7 +284,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 根据ID删除用户
+	 * 根据ID删除用户.
 	 * @param id ID
 	 * @return 删除结果
 	 */
@@ -301,7 +302,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	/**
-	 * 转换为用户角色数据模型
+	 * 转换为用户角色数据模型.
 	 * @param userDO 用户数据模型
 	 * @param roleId 角色ID
 	 * @return 用户角色数据模型

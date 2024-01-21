@@ -35,7 +35,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.ValCodes.SYSTEM_ID_REQUIRE;
 
 /**
- * 修改数据源执行器
+ * 修改数据源执行器.
+ *
  * @author laokou
  */
 @Component
@@ -49,7 +50,7 @@ public class SourceUpdateCmdExe {
 	private final SourceConvertor sourceConvertor;
 
 	/**
-	 * 执行修改数据源
+	 * 执行修改数据源.
 	 * @param cmd 修改数据源
 	 * @return 执行修改结果
 	 */
@@ -60,8 +61,8 @@ public class SourceUpdateCmdExe {
 	}
 
 	/**
-	 *
-	 * @param source
+	 * 校验数据源.
+	 * @param source 数据源对象
 	 */
 	private void validate(Source source) {
 		Long id = source.getId();

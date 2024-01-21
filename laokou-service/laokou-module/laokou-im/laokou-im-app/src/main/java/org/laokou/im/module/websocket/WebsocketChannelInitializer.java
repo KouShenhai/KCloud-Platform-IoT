@@ -45,6 +45,8 @@ import static org.laokou.common.i18n.common.SysConstants.TLS_PROTOCOL_VERSION;
 import static org.laokou.common.i18n.common.SysConstants.WEBSOCKET_PATH;
 
 /**
+ * WebSocket处理类.
+ *
  * @author laokou
  */
 @Component

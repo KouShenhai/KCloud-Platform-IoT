@@ -26,7 +26,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
- * 查看租户执行器
+ * 查看租户执行器.
+ *
  * @author laokou
  */
 @Component
@@ -36,7 +37,7 @@ public class TenantGetQryExe {
 	private final TenantGateway tenantGateway;
 
 	/**
-	 * 执行查看租户
+	 * 执行查看租户.
 	 * @param qry 查看租户参数
 	 * @return 租户
 	 */

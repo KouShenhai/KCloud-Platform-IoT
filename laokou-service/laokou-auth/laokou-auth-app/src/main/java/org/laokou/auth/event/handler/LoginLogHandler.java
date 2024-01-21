@@ -41,6 +41,8 @@ import java.util.concurrent.CompletableFuture;
 import static org.laokou.common.i18n.common.StringConstants.UNDER;
 
 /**
+ * 登录日志处理器.
+ *
  * @author laokou
  */
 @Async
@@ -71,10 +73,6 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 		}, TtlExecutors.getTtlExecutorService(taskExecutor.getThreadPoolExecutor()));
 	}
 
-	/**
-	 *
-	 * @param event
-	 */
 	private void execute(LoginLogEvent event) {
 		LoginLogDO logDO = ConvertUtil.sourceToTarget(event, LoginLogDO.class);
 		Assert.isTrue(ObjectUtil.isNotNull(logDO), "logDO is null");

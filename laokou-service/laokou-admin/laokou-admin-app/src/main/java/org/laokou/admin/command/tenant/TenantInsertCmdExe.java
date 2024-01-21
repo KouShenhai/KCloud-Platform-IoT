@@ -26,6 +26,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 新增租户执行器.
+ *
  * @author laokou
  */
 @Component
@@ -37,7 +38,7 @@ public class TenantInsertCmdExe {
 	private final TenantConvertor tenantConvertor;
 
 	/**
-	 * 执行新增租户
+	 * 执行新增租户.
 	 * @param cmd 新增租户参数
 	 * @return 执行新增结果
 	 */

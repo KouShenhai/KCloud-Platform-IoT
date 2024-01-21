@@ -17,90 +17,63 @@
 
 package org.laokou.auth.dto.log.domainevent;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.Clock;
 
 /**
  * @author laokou
  */
 @Setter
 @Getter
+@Schema(name = "LoginLogEvent", description = "登录日志事件")
 public class LoginLogEvent extends ApplicationEvent implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -325094951800650353L;
 
-	/**
-	 * 用户ID.
-	 */
+	@Schema(name = "userId", description = "用户ID")
 	private Long userId;
 
-	/**
-	 * 登录用户.
-	 */
+	@Schema(name = "username", description = "登录的用户名")
 	private String username;
 
-	/**
-	 * IP地址.
-	 */
+	@Schema(name = "ip", description = "登录的IP地址")
 	private String ip;
 
-	/**
-	 * 操作地点.
-	 */
+	@Schema(name = "address", description = "登录的归属地")
 	private String address;
 
-	/**
-	 * 浏览器.
-	 */
+	@Schema(name = "browser", description = "登录的浏览器")
 	private String browser;
 
-	/**
-	 * 操作系统.
-	 */
+	@Schema(name = "os", description = "登录的操作系统")
 	private String os;
 
-	/**
-	 * 状态 0：成功 1：失败.
-	 */
+	@Schema(name = "status", description = "登录状态 0登录成功 1登录失败")
 	private Integer status;
 
-	/**
-	 * 提示信息.
-	 */
+	@Schema(name = "message", description = "登录信息")
 	private String message;
 
-	/**
-	 * 类型.
-	 */
+	@Schema(name = "type", description = "登录类型")
 	private String type;
 
-	/**
-	 * 租户ID.
-	 */
-	private Long tenantId;
-
-	/**
-	 * 部门ID.
-	 */
+	@Schema(name = "deptId", description = "部门ID")
 	private Long deptId;
 
-	/**
-	 * 部门PATH.
-	 */
+	@Schema(name = "tenantId", description = "租户ID")
+	private Long tenantId;
+
+	@Schema(name = "deptPath", description = "部门PATH")
 	private String deptPath;
 
 	public LoginLogEvent(Object source) {
 		super(source);
-	}
-
-	public LoginLogEvent(Object source, Clock clock) {
-		super(source, clock);
 	}
 
 }

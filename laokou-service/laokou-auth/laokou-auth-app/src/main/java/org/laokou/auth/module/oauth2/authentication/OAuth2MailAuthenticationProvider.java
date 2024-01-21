@@ -44,6 +44,8 @@ import static org.laokou.common.i18n.common.ValCodes.OAUTH2_CAPTCHA_REQUIRE;
 import static org.laokou.common.i18n.common.ValCodes.OAUTH2_MAIL_REQUIRE;
 
 /**
+ * 邮箱处理器.
+ *
  * @author laokou
  */
 @Slf4j

@@ -29,6 +29,8 @@ import static org.laokou.common.i18n.common.MybatisPlusConstants.TENANT_ID;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
+ * 数据源.
+ *
  * @author laokou
  */
 @Mapper
@@ -38,17 +40,24 @@ public interface SourceMapper extends BatchMapper<SourceDO> {
 	/**
 	 * 根据名称查询数据源.
 	 * @param name 数据源名称
-	 * @return SourceDO
+	 * @return 数据源
 	 */
 	SourceDO getSourceByName(@Param("name") String name);
 
+	/**
+	 * 查询数据源列表.
+	 * @param page 分页参数
+	 * @param name 数据源名称
+	 * @param pageQuery 分页参数
+	 * @return 数据源列表
+	 */
 	IPage<SourceDO> getSourceListFilter(IPage<SourceDO> page, @Param("name") String name,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 	/**
-	 * 根据租户ID查询数据源.
+	 * 根据租户ID查看数据源.
 	 * @param tenantId 租户ID
-	 * @return String
+	 * @return 数据源
 	 */
 	SourceDO getSourceByTenantId(@Param(TENANT_ID) Long tenantId);
 

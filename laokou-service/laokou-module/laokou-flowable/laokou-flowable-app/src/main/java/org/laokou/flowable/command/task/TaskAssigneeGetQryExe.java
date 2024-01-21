@@ -30,6 +30,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
+ * 查看任务流程执行人员执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -39,6 +41,11 @@ public class TaskAssigneeGetQryExe {
 
 	private final TaskMapper taskMapper;
 
+	/**
+	 * 执行查看任务流程执行人员.
+	 * @param qry 查看任务流程执行人员参数
+	 * @return 执行人员
+	 */
 	public Result<AssigneeCO> execute(TaskAssigneeGetQry qry) {
 		try {
 			DynamicDataSourceContextHolder.push(FLOWABLE);

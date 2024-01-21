@@ -43,6 +43,7 @@ import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * OSS工厂.
+ *
  * @author laokou
  */
 @Component
@@ -61,9 +62,9 @@ public class StorageFactory {
 	}
 
 	/**
-	 *
-	 * @param tenantId
-	 * @return
+	 * 根据负载均衡选择OSS配置.
+	 * @param tenantId 租户ID
+	 * @return OSS配置
 	 */
 	private OssCO getOssConfig(Long tenantId) {
 		Algorithm algorithm = new PollSelectAlgorithm();
@@ -72,9 +73,9 @@ public class StorageFactory {
 	}
 
 	/**
-	 *
-	 * @param tenantId
-	 * @return
+	 * 查询OSS列表.
+	 * @param tenantId 租户ID
+	 * @return OSS列表
 	 */
 	private List<OssDO> getOssCache(Long tenantId) {
 		String ossConfigKey = RedisKeyUtil.getOssConfigKey(tenantId);

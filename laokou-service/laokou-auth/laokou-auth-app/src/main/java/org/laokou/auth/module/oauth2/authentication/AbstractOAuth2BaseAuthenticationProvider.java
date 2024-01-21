@@ -85,6 +85,8 @@ import static org.laokou.common.i18n.common.TenantConstants.TENANT_ID;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 
 /**
+ * 抽象认证处理器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -141,16 +143,16 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	abstract Authentication principal(HttpServletRequest request) throws IOException;
 
 	/**
-	 * 认证类型.
-	 * @return AuthorizationGrantType
+	 * 获取认证类型.
+	 * @return 认证类型
 	 */
 	abstract AuthorizationGrantType getGrantType();
 
 	/**
 	 * 获取令牌.
-	 * @param authentication authentication
-	 * @param principal principal
-	 * @return Authentication
+	 * @param authentication 认证对象
+	 * @param principal 认证对象
+	 * @return 令牌
 	 */
 	protected Authentication authenticate(Authentication authentication, Authentication principal) {
 		try {
@@ -248,7 +250,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	 * @param request 请求参数
 	 * @param captcha 验证码
 	 * @param uuid 唯一标识
-	 * @return UsernamePasswordAuthenticationToken
+	 * @return 用户信息
 	 */
 	protected UsernamePasswordAuthenticationToken authenticationToken(String username, String password,
 			HttpServletRequest request, String captcha, String uuid) {
@@ -361,13 +363,18 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		throw OAuth2ExceptionHandler.getException(code, message);
 	}
 
+	/**
+	 * 根据租户ID查看数据源名称.
+	 * @param tenantId 租户ID
+	 * @return 数据源名称
+	 */
 	private String getSourceName(Long tenantId) {
 		// 默认数据源
 		String sourceName = MASTER;
 		try {
 			if (tenantId != DEFAULT) {
 				// 租户数据源
-				Source source = sourceGateway.getSourceName(tenantId);
+				Source source = sourceGateway.getSourceByTenantId(tenantId);
 				sourceName = source.getName();
 				if (!dynamicUtil.getDataSources().containsKey(sourceName)) {
 					DataSourceProperty properties = properties(source);
@@ -389,6 +396,11 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		return hikariDataSourceCreator.createDataSource(properties);
 	}
 
+	/**
+	 * 构建数据源属性配置.
+	 * @param source 数据源
+	 * @return 数据源属性配置
+	 */
 	private DataSourceProperty properties(Source source) {
 		DataSourceProperty properties = new DataSourceProperty();
 		properties.setUsername(source.getUsername());
@@ -398,6 +410,10 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		return properties;
 	}
 
+	/**
+	 * 验证码数据源.
+	 * @param properties 数据源属性配置
+	 */
 	@SneakyThrows
 	private void validate(DataSourceProperty properties) {
 		Connection connection = null;

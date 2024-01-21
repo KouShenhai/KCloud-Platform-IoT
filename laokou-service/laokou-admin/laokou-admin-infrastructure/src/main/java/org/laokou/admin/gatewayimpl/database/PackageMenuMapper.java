@@ -26,16 +26,26 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
+ * 套餐菜单.
+ *
  * @author laokou
  */
 @Mapper
 @Repository
 public interface PackageMenuMapper extends BatchMapper<PackageMenuDO> {
 
-	List<Long> getIdsByPackageId(@Param("packageId") Long packageId);
-
+	/**
+	 * 根据套餐ID查看菜单IDS.
+	 * @param packageId 套餐ID
+	 * @return 菜单IDS
+	 */
 	List<Long> getMenuIdsByPackageId(@Param("packageId") Long packageId);
 
+	/**
+	 * 根据套餐ID删除套餐菜单.
+	 * @param packageId 套餐ID
+	 * @return 删除结果
+	 */
 	Integer deletePackageMenuByPackageId(@Param("packageId") Long packageId);
 
 }

@@ -35,6 +35,7 @@ import java.util.List;
 
 /**
  * 菜单管理.
+ *
  * @author laokou
  */
 @Slf4j
@@ -49,7 +50,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	private final MenuConvertor menuConvertor;
 
 	/**
-	 * 查询菜单列表
+	 * 查询菜单列表.
 	 * @param user 用户对象
 	 * @param type 类型
 	 * @return 菜单列表
@@ -60,7 +61,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	/**
-	 * 修改菜单
+	 * 修改菜单.
 	 * @param menu 菜单对象
 	 * @return 修改结果
 	 */
@@ -72,7 +73,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	/**
-	 * 新增菜单
+	 * 新增菜单.
 	 * @param menu 菜单对象
 	 * @return 新增结果
 	 */
@@ -83,7 +84,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	/**
-	 * 根据ID删除菜单
+	 * 根据ID删除菜单.
 	 * @param id ID
 	 * @return 删除结果
 	 */
@@ -102,7 +103,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	/**
-	 * 根据ID查看菜单
+	 * 根据ID查看菜单.
 	 * @param id ID
 	 * @return 菜单
 	 */
@@ -112,7 +113,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	/**
-	 * 根据角色ID查看菜单IDS
+	 * 根据角色ID查看菜单IDS.
 	 * @param roleId 角色ID
 	 * @return 菜单IDS
 	 */
@@ -122,7 +123,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	/**
-	 * 根据租户ID查询菜单列表
+	 * 根据租户ID查询菜单列表.
 	 * @param menu 菜单对象
 	 * @param tenantId 租户ID
 	 * @return 菜单列表
@@ -134,7 +135,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	/**
-	 * 查询租户菜单列表
+	 * 查询租户菜单列表.
 	 * @return 租户菜单列表
 	 */
 	@Override
@@ -143,7 +144,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	/**
-	 * 查询菜单列表
+	 * 查询菜单列表.
 	 * @param type 菜单类型 0菜单 1按钮
 	 * @param user 用户对象
 	 * @return 菜单列表
@@ -158,7 +159,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	/**
-	 * 修改菜单
+	 * 修改菜单.
 	 * @param menuDO 菜单数据模型
 	 * @return 修改结果
 	 */
@@ -176,7 +177,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	/**
-	 * 新增菜单
+	 * 新增菜单.
 	 * @param menuDO 菜单数据模型
 	 * @return 新增结果
 	 */

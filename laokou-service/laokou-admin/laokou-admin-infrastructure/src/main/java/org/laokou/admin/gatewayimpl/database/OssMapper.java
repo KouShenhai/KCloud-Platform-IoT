@@ -30,12 +30,21 @@ import java.util.List;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
+ * OSS.
+ *
  * @author laokou
  */
 @Repository
 @Mapper
 public interface OssMapper extends BatchMapper<OssDO> {
 
+	/**
+	 * 查询OSS列表.
+	 * @param page 分页参数
+	 * @param name OSS名称
+	 * @param pageQuery 分页参数
+	 * @return OSS列表
+	 */
 	IPage<OssDO> getOssListByFilter(IPage<OssDO> page, @Param("name") String name,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 

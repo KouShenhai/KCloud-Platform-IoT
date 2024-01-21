@@ -39,6 +39,7 @@ import static org.laokou.common.i18n.common.StringConstants.STAR;
 
 /**
  * 查询在线用户列表执行器.
+ *
  * @author laokou
  */
 @Component
@@ -64,7 +65,7 @@ public class OnlineUserListQryExe {
 	}
 
 	/**
-	 * 执行查询在线用户列表
+	 * 执行查询在线用户列表.
 	 * @param qry 查询在线用户列表参数
 	 * @return 在线用户列表
 	 */

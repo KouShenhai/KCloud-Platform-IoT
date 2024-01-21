@@ -32,6 +32,7 @@ import java.util.List;
 
 /**
  * 查询租户下拉框选择项列表执行器.
+ *
  * @author laokou
  */
 @Component
@@ -41,7 +42,7 @@ public class TenantOptionListQryExe {
 	private final TenantMapper tenantMapper;
 
 	/**
-	 * 执行查询租户下拉框选择项列表
+	 * 执行查询租户下拉框选择项列表.
 	 * @param qry 查询租户下拉框选择项列表参数
 	 * @return 租户下拉框选择项列表
 	 */

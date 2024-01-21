@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 查看任务流程图执行器.
+ *
  * @author laokou
  */
 @Component
@@ -58,6 +60,11 @@ public class TaskDiagramGetQryExe {
 
 	private final ProcessEngine processEngine;
 
+	/**
+	 * 执行查看任务流程图.
+	 * @param qry 查看任务流程图参数
+	 * @return 流程图
+	 */
 	@SneakyThrows
 	public Result<String> execute(TaskDiagramGetQry qry) {
 		try (InputStream inputStream = getInputStream(qry.getInstanceId());
@@ -70,18 +77,23 @@ public class TaskDiagramGetQryExe {
 		}
 	}
 
-	private InputStream getInputStream(String processInstanceId) {
+	/**
+	 * 获取流程图输入流.
+	 * @param instanceId 实例ID
+	 * @return 输入流
+	 */
+	private InputStream getInputStream(String instanceId) {
 		String processDefinitionId;
 		// 获取当前的流程实例
 		final ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
 			.processInstanceId(UserUtil.getTenantId().toString())
-			.processInstanceId(processInstanceId)
+			.processInstanceId(instanceId)
 			.singleResult();
 		// 如果流程已结束，则得到结束节点
 		if (null == processInstance) {
 			final HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery()
 				.processInstanceTenantId(UserUtil.getTenantId().toString())
-				.processInstanceId(processInstanceId)
+				.processInstanceId(instanceId)
 				.singleResult();
 			processDefinitionId = hpi.getProcessDefinitionId();
 		}
@@ -90,14 +102,14 @@ public class TaskDiagramGetQryExe {
 			// 根据流程实例id获取当前处于ActivityId集合
 			final ProcessInstance pi = runtimeService.createProcessInstanceQuery()
 				.processInstanceTenantId(UserUtil.getTenantId().toString())
-				.processInstanceId(processInstanceId)
+				.processInstanceId(instanceId)
 				.singleResult();
 			processDefinitionId = pi.getProcessDefinitionId();
 		}
 		// 获取活动节点
 		final List<HistoricActivityInstance> highLightedFlowList = historyService.createHistoricActivityInstanceQuery()
 			.activityTenantId(UserUtil.getTenantId().toString())
-			.processInstanceId(processInstanceId)
+			.processInstanceId(instanceId)
 			.orderByHistoricActivityInstanceStartTime()
 			.asc()
 			.list();

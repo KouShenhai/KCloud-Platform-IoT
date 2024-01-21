@@ -27,47 +27,48 @@ import java.util.List;
 
 /**
  * 数据源管理.
+ *
  * @author laokou
  */
 public interface SourcesServiceI {
 
 	/**
-	 * 新增数据源
+	 * 新增数据源.
 	 * @param cmd 新增数据源参数
 	 * @return 新增结果
 	 */
 	Result<Boolean> insert(SourceInsertCmd cmd);
 
 	/**
-	 * 修改数据源
+	 * 修改数据源.
 	 * @param cmd 修改数据源参数
 	 * @return 修改结果
 	 */
 	Result<Boolean> update(SourceUpdateCmd cmd);
 
 	/**
-	 * 根据ID删除数据源
+	 * 根据ID删除数据源.
 	 * @param cmd 根据ID删除数据源参数
 	 * @return 删除结果
 	 */
 	Result<Boolean> deleteById(SourceDeleteCmd cmd);
 
 	/**
-	 * 根据ID查看数据源
+	 * 根据ID查看数据源.
 	 * @param qry 根据ID查看数据源参数
 	 * @return 数据源
 	 */
 	Result<SourceCO> getById(SourceGetQry qry);
 
 	/**
-	 * 查询数据源列表
+	 * 查询数据源列表.
 	 * @param qry 查询数据源列表参数
 	 * @return 数据源列表
 	 */
 	Result<Datas<SourceCO>> list(SourceListQry qry);
 
 	/**
-	 * 查询数据源下拉框选择项列表
+	 * 查询数据源下拉框选择项列表.
 	 * @param qry 查询数据源下拉框选择项列表参数
 	 * @return 数据源下拉框选择项列表
 	 */

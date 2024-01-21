@@ -40,6 +40,8 @@ import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
+ * 查看流程图执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -49,6 +51,11 @@ public class DefinitionDiagramGetQryExe {
 
 	private final RepositoryService repositoryService;
 
+	/**
+	 * 执行查看流程图.
+	 * @param qry 查看流程图参数
+	 * @return 流程图
+	 */
 	public Result<String> execute(DefinitionDiagramGetQry qry) {
 		try {
 			DynamicDataSourceContextHolder.push(FLOWABLE);

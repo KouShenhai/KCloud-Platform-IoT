@@ -31,12 +31,13 @@ import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * 任务流程.
+ *
  * @author laokou
  */
 public class TasksFeignClientFallback implements TasksFeignClient {
 
 	/**
-	 * 查询任务流程列表
+	 * 查询任务流程列表.
 	 * @param qry 查询任务流程列表参数
 	 * @return 任务流程列表
 	 */
@@ -46,7 +47,7 @@ public class TasksFeignClientFallback implements TasksFeignClient {
 	}
 
 	/**
-	 * 审批任务流程
+	 * 审批任务流程.
 	 * @param cmd 审批任务流程参数
 	 * @return 审批结果
 	 */
@@ -56,7 +57,7 @@ public class TasksFeignClientFallback implements TasksFeignClient {
 	}
 
 	/**
-	 * 处理任务流程
+	 * 处理任务流程.
 	 * @param cmd 处理任务流程参数
 	 * @return 处理结果
 	 */
@@ -66,7 +67,7 @@ public class TasksFeignClientFallback implements TasksFeignClient {
 	}
 
 	/**
-	 * 开始任务流程
+	 * 开始任务流程.
 	 * @param cmd 开始任务流程参数
 	 * @return 开始结果
 	 */
@@ -76,7 +77,7 @@ public class TasksFeignClientFallback implements TasksFeignClient {
 	}
 
 	/**
-	 * 查看流程图
+	 * 查看流程图.
 	 * @param instanceId 实例ID
 	 * @return 流程图
 	 */
@@ -86,7 +87,7 @@ public class TasksFeignClientFallback implements TasksFeignClient {
 	}
 
 	/**
-	 * 转办任务流程
+	 * 转办任务流程.
 	 * @param cmd 转办任务流程参数
 	 * @return 转办结果
 	 */
@@ -106,7 +107,7 @@ public class TasksFeignClientFallback implements TasksFeignClient {
 	}
 
 	/**
-	 * 查看流程人员ID
+	 * 查看流程人员ID.
 	 * @param instanceId 流程ID
 	 * @return 流程人员ID
 	 */

@@ -24,12 +24,18 @@ import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 /**
+ * 角色菜单.
+ *
  * @author laokou
  */
 @Repository
 @Mapper
 public interface RoleMenuMapper extends BatchMapper<RoleMenuDO> {
 
+	/**
+	 * 根据角色ID删除角色菜单.
+	 * @param roleId 角色ID
+	 */
 	void deleteRoleMenuByRoleId(@Param("roleId") Long roleId);
 
 }

@@ -37,6 +37,7 @@ import java.util.Map;
 
 /**
  * 资源管理.
+ *
  * @author laokou
  */
 @Service
@@ -78,7 +79,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	private final ResourceSearchGetQryExe resourceSearchGetQryExe;
 
 	/**
-	 * 查询审批日志列表
+	 * 查询审批日志列表.
 	 * @param qry 查询审批日志列表参数
 	 * @return 审批日志列表
 	 */
@@ -88,7 +89,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 同步资源
+	 * 同步资源.
 	 * @param cmd 同步资源参数
 	 * @return 同步结果
 	 */
@@ -98,7 +99,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 上传资源文件
+	 * 上传资源文件.
 	 * @param cmd 上传资源文件参数
 	 * @return 文件对象
 	 */
@@ -108,7 +109,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 查询资源列表
+	 * 查询资源列表.
 	 * @param qry 查询资源列表参数
 	 * @return 资源列表
 	 */
@@ -118,7 +119,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 根据ID查看资源
+	 * 根据ID查看资源.
 	 * @param qry 根据ID查看资源参数
 	 * @return 资源
 	 */
@@ -128,7 +129,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 下载资源
+	 * 下载资源.
 	 * @param cmd 下载资源参数
 	 */
 	@Override
@@ -137,7 +138,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 新增资源
+	 * 新增资源.
 	 * @param cmd 新增资源
 	 * @return 新增结果
 	 */
@@ -147,7 +148,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 修改资源
+	 * 修改资源.
 	 * @param cmd 修改资源
 	 * @return 修改结果
 	 */
@@ -157,7 +158,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 根据ID删除资源
+	 * 根据ID删除资源.
 	 * @param cmd 根据ID删除资源参数
 	 * @return 删除结果
 	 */
@@ -167,7 +168,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 查看资源任务流程图
+	 * 查看资源任务流程图.
 	 * @param qry 查看资源任务流程图参数
 	 * @return 流程图
 	 */
@@ -177,7 +178,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 查询资源审批任务流程列表
+	 * 查询资源审批任务流程列表.
 	 * @param qry 查询资源审批任务流程列表参数
 	 * @return 资源审批任务流程列表
 	 */
@@ -187,7 +188,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 审批资源任务流程
+	 * 审批资源任务流程.
 	 * @param cmd 审批资源任务流程参数
 	 * @return 审批结果
 	 */
@@ -197,7 +198,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 查看资源任务流程详情
+	 * 查看资源任务流程详情.
 	 * @param qry 查看资源任务流程详情参数
 	 * @return 资源任务流程详情
 	 */
@@ -207,7 +208,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 处理资源任务流程
+	 * 处理资源任务流程.
 	 * @param cmd 处理资源任务流程参数
 	 * @return 处理结果
 	 */
@@ -217,7 +218,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 转办资源任务流程
+	 * 转办资源任务流程.
 	 * @param cmd 转办资源任务流程参数
 	 * @return 转办结果
 	 */
@@ -227,7 +228,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 委派资源任务流程
+	 * 委派资源任务流程.
 	 * @param cmd 委派资源任务流程参数
 	 * @return 委派结果
 	 */
@@ -237,7 +238,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 搜索资源
+	 * 搜索资源.
 	 * @param qry 搜索资源参数
 	 * @return 搜索结果
 	 */

@@ -36,6 +36,7 @@ import java.util.List;
 
 /**
  * 角色管理.
+ *
  * @author laokou
  */
 @Service
@@ -65,7 +66,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	/**
-	 * 查询角色下拉框选择项列表
+	 * 查询角色下拉框选择项列表.
 	 * @param qry 查询角色下拉框选择项列表参数
 	 * @return 角色下拉框选择项列表
 	 */
@@ -75,7 +76,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	/**
-	 * 根据ID查看角色
+	 * 根据ID查看角色.
 	 * @param qry 根据ID查看角色
 	 * @return 角色
 	 */
@@ -85,7 +86,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	/**
-	 * 新增角色
+	 * 新增角色.
 	 * @param cmd 新增角色参数
 	 * @return 新增结果
 	 */
@@ -95,7 +96,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	/**
-	 * 修改角色
+	 * 修改角色.
 	 * @param cmd 修改角色参数
 	 * @return 修改结果
 	 */
@@ -105,7 +106,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	/**
-	 * 根据ID删除角色
+	 * 根据ID删除角色.
 	 * @param cmd 根据ID删除角色参数
 	 * @return 删除结果
 	 */

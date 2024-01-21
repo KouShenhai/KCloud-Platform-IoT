@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * OSS管理.
+ *
  * @author laokou
  */
 @Service
@@ -50,7 +51,7 @@ public class OssServiceImpl implements OssServiceI {
 	private final OssGetQryExe ossGetQryExe;
 
 	/**
-	 * 新增OSS
+	 * 新增OSS.
 	 * @param cmd 新增OSS参数
 	 * @return 新增结果
 	 */
@@ -60,7 +61,7 @@ public class OssServiceImpl implements OssServiceI {
 	}
 
 	/**
-	 * 修改OSS
+	 * 修改OSS.
 	 * @param cmd 修改OSS参数
 	 * @return 修改结果
 	 */
@@ -70,7 +71,7 @@ public class OssServiceImpl implements OssServiceI {
 	}
 
 	/**
-	 * 根据ID删除OSS
+	 * 根据ID删除OSS.
 	 * @param cmd 根据ID删除OSS参数
 	 * @return 删除结果
 	 */
@@ -80,7 +81,7 @@ public class OssServiceImpl implements OssServiceI {
 	}
 
 	/**
-	 * 根据ID查看OSS
+	 * 根据ID查看OSS.
 	 * @param qry 根据ID查看OSS参数
 	 * @return OSS
 	 */
@@ -90,7 +91,7 @@ public class OssServiceImpl implements OssServiceI {
 	}
 
 	/**
-	 * 查询OSS列表
+	 * 查询OSS列表.
 	 * @param qry 查询OSS列表参数
 	 * @return OSS列表
 	 */
@@ -100,7 +101,7 @@ public class OssServiceImpl implements OssServiceI {
 	}
 
 	/**
-	 * 上传文件
+	 * 上传文件.
 	 * @param cmd 上传文件参数
 	 * @return 文件对象
 	 */

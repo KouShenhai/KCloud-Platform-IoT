@@ -43,7 +43,7 @@
         from boot_sys_dept
         where id = #{pid}
     </select>
-    <select id="selectDeptChildrenListByLikePath"
+    <select id="getDeptChildrenListByLikePath"
             resultType="org.laokou.admin.gatewayimpl.database.dataobject.DeptDO">
         select id
              ,path

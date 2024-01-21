@@ -33,6 +33,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 查询部门列表执行器.
+ *
  * @author laokou
  */
 @Component

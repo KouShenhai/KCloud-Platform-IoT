@@ -26,64 +26,65 @@ import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.laokou.flowable.dto.task.clientobject.TaskCO;
 
 /**
+ * 任务流程.
  *
  * @author laokou
  */
 public interface TasksServiceI {
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查询任务流程列表.
+	 * @param qry 查询任务流程列表参数
+	 * @return 任务流程列表
 	 */
 	Result<Datas<TaskCO>> list(TaskListQry qry);
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 审批任务流程.
+	 * @param cmd 审批任务流程参数
+	 * @return 审批结果
 	 */
 	Result<AuditCO> audit(TaskAuditCmd cmd);
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 处理任务流程.
+	 * @param cmd 处理任务流程参数
+	 * @return 处理结果
 	 */
 	Result<Boolean> resolve(TaskResolveCmd cmd);
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 开始任务流程.
+	 * @param cmd 开始任务流程
+	 * @return 开始结果
 	 */
 	Result<StartCO> start(TaskStartCmd cmd);
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查看任务流程图.
+	 * @param qry 查看任务流程图参数
+	 * @return 流程图
 	 */
 	Result<String> diagram(TaskDiagramGetQry qry);
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 转办任务流程.
+	 * @param cmd 转办任务流程参数
+	 * @return 转办结果
 	 */
 	Result<Boolean> transfer(TaskTransferCmd cmd);
 
 	/**
-	 *
-	 * @param cmd
-	 * @return
+	 * 委派任务流程.
+	 * @param cmd 委派任务流程
+	 * @return 委派结果
 	 */
 	Result<Boolean> delegate(TaskDelegateCmd cmd);
 
 	/**
-	 *
-	 * @param qry
-	 * @return
+	 * 查看执行人员.
+	 * @param qry 查看执行人员参数
+	 * @return 执行人员
 	 */
 	Result<AssigneeCO> assignee(TaskAssigneeGetQry qry);
 

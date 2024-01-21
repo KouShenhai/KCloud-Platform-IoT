@@ -47,7 +47,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	Logger LOG = LoggerFactory.getLogger(BatchMapper.class);
 
 	/**
-	 * 新增一条数据
+	 * 新增一条数据.
 	 * @param entity 一条模型数据
 	 * @return 新增结果
 	 */
@@ -79,7 +79,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	}
 
 	/**
-	 * 查询列表（游标）
+	 * 查询列表（游标）.
 	 * @param tables 表集合
 	 * @param param 参数
 	 * @param handler 回调处理器
@@ -89,7 +89,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 	/**
-	 * 查看总数（游标）
+	 * 查看总数（游标）.
 	 * @param tables 表集合
 	 * @param param 参数
 	 * @param pageQuery 分页查询参数
@@ -99,7 +99,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 	/**
-	 * SQL执行器
+	 * SQL执行器.
 	 * @param sql SQL语句
 	 */
 	@Update("${sql}")
@@ -128,7 +128,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	}
 
 	/**
-	 * 根据ID动态删除（分表）
+	 * 根据ID动态删除（分表）.
 	 * @param id ID
 	 * @param suffix 分表的表名后缀
 	 * @return 删除结果
@@ -144,7 +144,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	}
 
 	/**
-	 * 查看动态版本号
+	 * 查看动态版本号.
 	 * @param id ID
 	 * @param clazz 类
 	 * @param suffix 分表的表名后缀
@@ -161,7 +161,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	}
 
 	/**
-	 * 根据ID动态获取表名
+	 * 根据ID动态获取表名.
 	 * @param clazz 类
 	 * @param id ID
 	 * @param suffix 分表的表名后缀
@@ -179,7 +179,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	}
 
 	/**
-	 * 新增一条数据（动态生成雪花算法ID）
+	 * 新增一条数据（动态生成雪花算法ID）.
 	 * @param t 一条模型数据
 	 * @return 新增结果
 	 */

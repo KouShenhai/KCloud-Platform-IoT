@@ -46,6 +46,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.*;
 
 /**
  * 日志管理.
+ *
  * @author laokou
  */
 @Component
@@ -63,7 +64,7 @@ public class LogGatewayImpl implements LogGateway {
 	private final OperateLogConvertor operateLogConvertor;
 
 	/**
-	 * 查询登录日志列表
+	 * 查询登录日志列表.
 	 * @param loginLog 登录日志对象
 	 * @param pageQuery 分页参数
 	 * @return 登录日志列表
@@ -104,7 +105,7 @@ public class LogGatewayImpl implements LogGateway {
 	}
 
 	/**
-	 * 查询操作日志列表
+	 * 查询操作日志列表.
 	 * @param operateLog 操作日志对象
 	 * @param pageQuery 分页参数
 	 * @return 操作日志列表

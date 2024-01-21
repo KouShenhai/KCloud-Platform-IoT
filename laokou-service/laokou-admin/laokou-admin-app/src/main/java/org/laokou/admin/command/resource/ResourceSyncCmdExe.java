@@ -28,6 +28,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 同步资源执行器.
+ *
  * @author laokou
  */
 @Component
@@ -37,7 +38,7 @@ public class ResourceSyncCmdExe {
 	private final ResourceGateway resourceGateway;
 
 	/**
-	 * 执行同步资源
+	 * 执行同步资源.
 	 * @param cmd 同步资源参数
 	 * @return 执行同步结果
 	 */

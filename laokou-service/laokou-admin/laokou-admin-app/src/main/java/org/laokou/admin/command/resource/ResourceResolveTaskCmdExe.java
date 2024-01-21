@@ -31,7 +31,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
- * 处理资源任务流程执行器
+ * 处理资源任务流程执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -46,7 +47,7 @@ public class ResourceResolveTaskCmdExe {
 	private final DomainEventPublisher domainEventPublisher;
 
 	/**
-	 * 执行处理资源任务流程
+	 * 执行处理资源任务流程.
 	 * @param cmd 处理资源任务流程参数
 	 * @return 执行处理结果
 	 */
@@ -62,7 +63,7 @@ public class ResourceResolveTaskCmdExe {
 	}
 
 	/**
-	 * 推送处理消息
+	 * 推送处理消息.
 	 * @param cmd 处理资源任务流程参数
 	 */
 	@Async

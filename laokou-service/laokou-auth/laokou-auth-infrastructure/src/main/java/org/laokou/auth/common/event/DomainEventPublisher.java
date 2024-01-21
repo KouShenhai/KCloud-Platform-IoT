@@ -23,12 +23,18 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
 /**
+ * 领域事件推送器.
+ *
  * @author laokou
  */
 @Component
 @Slf4j
 public class DomainEventPublisher {
 
+	/**
+	 * 推送事件.
+	 * @param event 事件
+	 */
 	public void publish(ApplicationEvent event) {
 		SpringContextUtil.publishEvent(event);
 	}

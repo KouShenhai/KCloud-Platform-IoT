@@ -37,6 +37,7 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * OSS日志处理.
+ *
  * @author laokou
  */
 @Async
@@ -67,10 +68,6 @@ public class OssLogHandler implements ApplicationListener<OssLogEvent> {
 		}, TtlExecutors.getTtlExecutorService(taskExecutor.getThreadPoolExecutor()));
 	}
 
-	/**
-	 *
-	 * @param event
-	 */
 	private void execute(OssLogEvent event) {
 		OssLogDO ossLogDO = ConvertUtil.sourceToTarget(event, OssLogDO.class);
 		ossLogMapper.insertTable(ossLogDO);

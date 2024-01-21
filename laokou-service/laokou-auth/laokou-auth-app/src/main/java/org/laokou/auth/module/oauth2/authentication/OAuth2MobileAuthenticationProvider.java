@@ -44,6 +44,8 @@ import static org.laokou.common.i18n.common.ValCodes.OAUTH2_CAPTCHA_REQUIRE;
 import static org.laokou.common.i18n.common.ValCodes.OAUTH2_MOBILE_REQUIRE;
 
 /**
+ * 手机号处理器.
+ *
  * @author laokou
  */
 @Slf4j

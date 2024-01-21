@@ -29,18 +29,39 @@ import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
+ * 消息.
+ *
  * @author laokou
  */
 @Repository
 @Mapper
 public interface MessageMapper extends BatchMapper<MessageDO> {
 
+	/**
+	 * 根据用户ID和Type查询未读消息列表.
+	 * @param page 分页参数
+	 * @param userId 用户ID
+	 * @param type 类型
+	 * @return 未读消息列表
+	 */
 	IPage<MessageDO> getUnreadMessageListByUserIdAndType(IPage<MessageDO> page, @Param(USER_ID) Long userId,
 			@Param("type") Integer type);
 
+	/**
+	 * 查询消息列表.
+	 * @param page 分页参数
+	 * @param title 消息标题
+	 * @param pageQuery 分页参数
+	 * @return 消息列表
+	 */
 	IPage<MessageDO> getMessageListFilter(IPage<MessageDO> page, @Param("title") String title,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
+	/**
+	 * 根据详情ID查看消息.
+	 * @param detailId 详情ID
+	 * @return 消息
+	 */
 	MessageDO getMessageByDetailId(@Param("detailId") Long detailId);
 
 }

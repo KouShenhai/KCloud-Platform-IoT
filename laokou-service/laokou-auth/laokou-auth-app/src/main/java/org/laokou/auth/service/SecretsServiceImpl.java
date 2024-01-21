@@ -25,6 +25,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
+ * 密钥.
+ *
  * @author laokou
  */
 @Service
@@ -33,6 +35,11 @@ public class SecretsServiceImpl implements SecretsServiceI {
 
 	private final SecretGetQryExe secretGetQryExe;
 
+	/**
+	 * 获取密钥.
+	 * @param qry 获取密钥参数
+	 * @return 密钥
+	 */
 	@Override
 	public Result<String> get(SecretGetQry qry) {
 		return secretGetQryExe.execute(qry);

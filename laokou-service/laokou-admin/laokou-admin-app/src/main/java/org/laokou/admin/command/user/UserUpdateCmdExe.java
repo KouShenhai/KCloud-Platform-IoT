@@ -36,6 +36,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 修改用户执行器.
+ *
  * @author laokou
  */
 @Component
@@ -49,7 +50,7 @@ public class UserUpdateCmdExe {
 	private final UserConvertor userConvertor;
 
 	/**
-	 * 执行修改用户
+	 * 执行修改用户.
 	 * @param cmd 修改用户参数
 	 * @return 执行修改结果
 	 */
@@ -65,7 +66,7 @@ public class UserUpdateCmdExe {
 	}
 
 	/**
-	 * 转换为用户数据模型
+	 * 转换为用户数据模型.
 	 * @param co 用户对象
 	 * @return 用户数据模型
 	 */
@@ -74,7 +75,7 @@ public class UserUpdateCmdExe {
 	}
 
 	/**
-	 * 转换为用户领域
+	 * 转换为用户领域.
 	 * @param co 用户对象
 	 * @return 用户领域
 	 */

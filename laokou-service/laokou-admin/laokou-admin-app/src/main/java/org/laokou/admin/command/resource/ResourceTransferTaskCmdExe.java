@@ -32,7 +32,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
- * 转办资源任务流程执行器
+ * 转办资源任务流程执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -47,7 +48,7 @@ public class ResourceTransferTaskCmdExe {
 	private final EventUtil eventUtil;
 
 	/**
-	 * 执行转办资源任务流程
+	 * 执行转办资源任务流程.
 	 * @param cmd 转办资源任务流程参数
 	 * @return 执行转办结果
 	 */
@@ -63,7 +64,7 @@ public class ResourceTransferTaskCmdExe {
 	}
 
 	/**
-	 * 推送转办消息
+	 * 推送转办消息.
 	 * @param cmd 转办资源任务流程参数
 	 */
 	@Async
@@ -73,7 +74,7 @@ public class ResourceTransferTaskCmdExe {
 	}
 
 	/**
-	 * 转换为任务转办命令请求
+	 * 转换为任务转办命令请求.
 	 * @param cmd 资源转办任务流程参数
 	 * @return 任务转办命令请求
 	 */

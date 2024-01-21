@@ -46,6 +46,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_PACKAGE
 
 /**
  * 套餐管理.
+ *
  * @author laokou
  */
 @Slf4j
@@ -64,7 +65,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	private final MybatisUtil mybatisUtil;
 
 	/**
-	 * 新增套餐
+	 * 新增套餐.
 	 * @param pack 套餐对象
 	 * @param user 用户对象
 	 * @return 新增结果
@@ -75,7 +76,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	/**
-	 * 修改套餐
+	 * 修改套餐.
 	 * @param pack 套餐对象
 	 * @param user 用户对象
 	 * @return 修改结果
@@ -88,7 +89,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	/**
-	 * 查询套餐列表
+	 * 查询套餐列表.
 	 * @param pack 套餐对象
 	 * @param pageQuery 分页参数
 	 * @return 套餐列表
@@ -105,7 +106,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	/**
-	 * 根据ID查看套餐
+	 * 根据ID查看套餐.
 	 * @param id ID
 	 * @return 套餐
 	 */
@@ -117,7 +118,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	/**
-	 * 根据ID删除套餐
+	 * 根据ID删除套餐.
 	 * @param id ID
 	 * @return 删除结果
 	 */
@@ -136,7 +137,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	/**
-	 * 新增套餐
+	 * 新增套餐.
 	 * @param packageDO 套餐数据模型
 	 * @param pack 套餐对象
 	 * @param user 用户对象
@@ -158,7 +159,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	/**
-	 * 修改套餐
+	 * 修改套餐.
 	 * @param packageDO 套餐数据模型
 	 * @param pack 套餐对象
 	 * @param user 用户对象
@@ -180,7 +181,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	/**
-	 * 修改套餐菜单
+	 * 修改套餐菜单.
 	 * @param packageId 套餐ID
 	 * @param menuIds 菜单ID
 	 * @param user 用户对象
@@ -191,7 +192,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	/**
-	 * 新增套餐菜单
+	 * 新增套餐菜单.
 	 * @param packageId 套餐ID
 	 * @param menuIds 菜单ID
 	 * @param user 用户对象
@@ -206,7 +207,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	/**
-	 * 转换套餐菜单数据模型
+	 * 转换套餐菜单数据模型.
 	 * @param packageId 套餐ID
 	 * @param menuId 菜单ID
 	 * @param user 用户对象

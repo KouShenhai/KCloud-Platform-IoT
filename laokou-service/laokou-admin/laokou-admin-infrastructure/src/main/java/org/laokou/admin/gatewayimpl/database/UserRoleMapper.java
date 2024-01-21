@@ -28,14 +28,25 @@ import java.util.List;
 import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
 
 /**
+ * 用户角色.
+ *
  * @author laokou
  */
 @Repository
 @Mapper
 public interface UserRoleMapper extends BatchMapper<UserRoleDO> {
 
+	/**
+	 * 根据用户ID查询角色IDS.
+	 * @param userId 用户ID
+	 * @return 角色IDS
+	 */
 	List<Long> getRoleIdsByUserId(@Param(USER_ID) Long userId);
 
+	/**
+	 * 根据用户ID删除用户角色.
+	 * @param userId 用户ID
+	 */
 	void deleteUserRoleByUserId(@Param(USER_ID) Long userId);
 
 }

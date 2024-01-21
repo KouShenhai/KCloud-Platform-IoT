@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.dto.task;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
 
@@ -24,8 +25,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
+@Schema(name = "TaskResolveCmd", description = "处理任务流程命令请求")
 public class TaskResolveCmd extends CommonCommand {
 
+	@Schema(name = "taskId", description = "任务ID")
 	private String taskId;
 
 }

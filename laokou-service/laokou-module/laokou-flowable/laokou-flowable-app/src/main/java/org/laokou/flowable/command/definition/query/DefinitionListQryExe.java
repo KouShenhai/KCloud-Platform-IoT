@@ -36,6 +36,8 @@ import java.util.List;
 import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
+ * 查询流程列表执行器.
+ *
  * @author laokou
  */
 @Component
@@ -44,6 +46,11 @@ public class DefinitionListQryExe {
 
 	private final RepositoryService repositoryService;
 
+	/**
+	 * 执行查询流程列表.
+	 * @param qry 查询流程列表参数
+	 * @return 流程列表
+	 */
 	public Result<Datas<DefinitionCO>> execute(DefinitionListQry qry) {
 		try {
 			String name = qry.getName();
@@ -72,6 +79,11 @@ public class DefinitionListQryExe {
 		}
 	}
 
+	/**
+	 * 转换为定义流程命令请求.
+	 * @param definition 流程对象
+	 * @return 定义流程命令请求
+	 */
 	private DefinitionCO toDefinitionCO(ProcessDefinition definition) {
 		DefinitionCO co = new DefinitionCO();
 		co.setDefinitionId(definition.getId());

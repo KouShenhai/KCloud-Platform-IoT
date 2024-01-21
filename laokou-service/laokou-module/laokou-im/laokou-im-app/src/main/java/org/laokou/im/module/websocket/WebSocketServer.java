@@ -35,6 +35,8 @@ import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
 import static org.laokou.im.module.websocket.WebsocketHandler.getChannel;
 
 /**
+ * WebSocket服务器配置.
+ *
  * @author laokou
  */
 @Slf4j

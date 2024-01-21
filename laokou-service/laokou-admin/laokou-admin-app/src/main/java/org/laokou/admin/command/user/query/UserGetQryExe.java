@@ -31,6 +31,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 查看用户执行器.
+ *
  * @author laokou
  */
 @Component
@@ -42,7 +43,7 @@ public class UserGetQryExe {
 	private final UserConvertor userConvertor;
 
 	/**
-	 * 执行查看用户
+	 * 执行查看用户.
 	 * @param qry 查看用户参数
 	 * @return 用户
 	 */

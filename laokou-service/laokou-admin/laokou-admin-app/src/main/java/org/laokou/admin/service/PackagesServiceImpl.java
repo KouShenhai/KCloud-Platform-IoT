@@ -36,6 +36,7 @@ import java.util.List;
 
 /**
  * 套餐管理.
+ *
  * @author laokou
  */
 @Service
@@ -55,7 +56,7 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	private final PackageOptionListQryExe packageOptionListQryExe;
 
 	/**
-	 * 新增套餐
+	 * 新增套餐.
 	 * @param cmd 新增套餐参数
 	 * @return 新增结果
 	 */
@@ -65,7 +66,7 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	}
 
 	/**
-	 * 修改套餐
+	 * 修改套餐.
 	 * @param cmd 修改套餐参数
 	 * @return 修改结果
 	 */
@@ -75,7 +76,7 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	}
 
 	/**
-	 * 根据ID删除套餐
+	 * 根据ID删除套餐.
 	 * @param cmd 根据ID删除套餐参数
 	 * @return 删除结果
 	 */
@@ -85,7 +86,7 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	}
 
 	/**
-	 * 查询套餐列表
+	 * 查询套餐列表.
 	 * @param qry 查询套餐列表参数
 	 * @return 套餐列表
 	 */
@@ -95,7 +96,7 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	}
 
 	/**
-	 * 根据ID查看套餐
+	 * 根据ID查看套餐.
 	 * @param qry 根据ID查看套餐参数
 	 * @return 套餐
 	 */
@@ -105,7 +106,7 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	}
 
 	/**
-	 * 查询套餐下拉框选择项列表
+	 * 查询套餐下拉框选择项列表.
 	 * @param qry 查询套餐下拉框选择项列表参数
 	 * @return 套餐下拉框选择项列表
 	 */

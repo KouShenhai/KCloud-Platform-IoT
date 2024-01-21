@@ -44,7 +44,8 @@ import static org.laokou.common.i18n.common.SysConstants.MAX_FILE_SIZE;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
- * OSS上传文件执行器
+ * OSS上传文件执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -94,7 +95,7 @@ public class OssUploadCmdExe {
 	}
 
 	/**
-	 * 转为字节流，用来缓存输入流，便于二次使用
+	 * 转为字节流，用来缓存输入流，便于二次使用.
 	 * @param inputStream 输入流
 	 * @return 字节输出流
 	 */

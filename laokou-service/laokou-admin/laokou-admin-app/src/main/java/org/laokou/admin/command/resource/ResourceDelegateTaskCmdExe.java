@@ -33,6 +33,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 委派资源任务流程执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -47,7 +48,7 @@ public class ResourceDelegateTaskCmdExe {
 	private final EventUtil eventUtil;
 
 	/**
-	 * 执行委派资源任务流程
+	 * 执行委派资源任务流程.
 	 * @param cmd 委派资源任务流程参数
 	 * @return 执行委派结果
 	 */
@@ -63,7 +64,7 @@ public class ResourceDelegateTaskCmdExe {
 	}
 
 	/**
-	 * 推送委派消息
+	 * 推送委派消息.
 	 * @param cmd 委派资源任务流程参数
 	 */
 	@Async
@@ -73,7 +74,7 @@ public class ResourceDelegateTaskCmdExe {
 	}
 
 	/**
-	 * 转换为委派任务流程命令请求
+	 * 转换为委派任务流程命令请求.
 	 * @param cmd 委派资源任务流程参数
 	 * @return 委派任务流程命令请求
 	 */

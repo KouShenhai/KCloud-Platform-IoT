@@ -64,7 +64,6 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.List;
 import java.util.UUID;
 
-import static org.laokou.auth.common.Constant.LOGIN_PATTERN;
 import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_AUTHORIZATION_SERVER_PREFIX;
 import static org.laokou.common.i18n.common.StringConstants.TRUE;
 import static org.laokou.common.i18n.common.SysConstants.ALGORITHM_RSA;
@@ -72,7 +71,7 @@ import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
- * 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}.
+ * 认证服务器配置. 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}.
  *
  * @author laokou
  */
@@ -81,6 +80,11 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 		name = ENABLED)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class OAuth2AuthorizationServerConfig {
+
+	/**
+	 * 登录URL.
+	 */
+	private static final String LOGIN_URL = "/login";
 
 	// @formatter:off
 	/**
@@ -91,8 +95,8 @@ class OAuth2AuthorizationServerConfig {
 	 * @param mobileAuthenticationProvider 手机号认证Provider
 	 * @param authorizationServerSettings OAuth2配置
 	 * @param authorizationService 认证配置
-	 * @return SecurityFilterChain
-	 * @throws Exception Exception
+	 * @return 认证过滤器
+	 * @throws Exception 异常
 	 */
 	@Bean
 	@Order(HIGHEST_PRECEDENCE)
@@ -134,15 +138,15 @@ class OAuth2AuthorizationServerConfig {
 			.authorizationService(authorizationService)
 			.authorizationServerSettings(authorizationServerSettings);
 		return http.addFilterBefore(new OAuth2AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
-				.exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(LOGIN_PATTERN))).build();
+				.exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(LOGIN_URL))).build();
 	}
 	// @formatter:on
 
 	/**
-	 * 注册信息.
+	 * 构造注册信息.
 	 * @param propertiesMapper 配置
 	 * @param jdbcTemplate JDBC模板
-	 * @return RegisteredClientRepository
+	 * @return 注册信息
 	 */
 	@Bean
 	@ConditionalOnMissingBean(RegisteredClientRepository.class)
@@ -154,9 +158,9 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 配置.
-	 * @param jwkSource 加密源
-	 * @return JwtEncoder
+	 * jwt编码器.
+	 * @param jwkSource jwk来源
+	 * @return jwt编码器
 	 */
 	@Bean
 	JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
@@ -164,9 +168,9 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 *
-	 * @param jwkSource
-	 * @return
+	 * jwt解码器.
+	 * @param jwkSource jwk来源
+	 * @return jwt解码器
 	 */
 	@Bean
 	JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
@@ -174,8 +178,8 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 *
-	 * @return
+	 * 获取jwk来源.
+	 * @return jwk来源
 	 */
 	@Bean
 	JWKSource<SecurityContext> jwkSource() {
@@ -185,9 +189,9 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 配置.
+	 * 构建令牌生成器.
 	 * @param jwtEncoder 加密编码
-	 * @return Token令牌生成器
+	 * @return 令牌生成器
 	 */
 	@Bean
 	OAuth2TokenGenerator<OAuth2Token> tokenGenerator(JwtEncoder jwtEncoder) {
@@ -197,9 +201,9 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 配置.
+	 * 认证端点配置.
 	 * @param propertiesMapper 属性映射器
-	 * @return AuthorizationServerSettings
+	 * @return 认证端点配置
 	 */
 	@Bean
 	@ConditionalOnMissingBean(AuthorizationServerSettings.class)
@@ -209,10 +213,10 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 配置.
-	 * @param passwordEncoder 密码编码
-	 * @param usersServiceImpl 用户认证
-	 * @return AuthenticationProvider
+	 * 单点登录配置.
+	 * @param passwordEncoder 密码编码器
+	 * @param usersServiceImpl 用户认证对象
+	 * @return 单点登录配置
 	 */
 	@Bean
 	AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder, UsersServiceImpl usersServiceImpl) {
@@ -223,10 +227,10 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 配置.
+	 * 认证授权配置.
 	 * @param jdbcTemplate JDBC模板
 	 * @param registeredClientRepository 注册信息
-	 * @return OAuth2AuthorizationConsentService
+	 * @return 认证授权配置
 	 */
 	@Bean
 	@ConditionalOnMissingBean(OAuth2AuthorizationConsentService.class)
@@ -236,8 +240,8 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 *
-	 * @return
+	 * 获取RSA加密Key.
+	 * @return RSA加密Key
 	 */
 	private RSAKey getRsaKey() {
 		KeyPair keyPair = generateRsaKey();
@@ -247,8 +251,8 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 *
-	 * @return
+	 * 生成RSA加密Key.
+	 * @return 生成结果
 	 */
 	private KeyPair generateRsaKey() {
 		try {

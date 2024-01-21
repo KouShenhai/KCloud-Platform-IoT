@@ -36,6 +36,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
+ * 转办任务流程执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -47,6 +49,11 @@ public class TaskTransferCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	/**
+	 * 执行转办任务流程.
+	 * @param cmd 转办任务流程参数
+	 * @return 转办结果
+	 */
 	public Result<Boolean> execute(TaskTransferCmd cmd) {
 		try {
 			log.info("转办流程分布式事务 XID：{}", RootContext.getXID());
@@ -71,6 +78,13 @@ public class TaskTransferCmdExe {
 		}
 	}
 
+	/**
+	 * 转办任务流程.
+	 * @param taskId 任务ID
+	 * @param owner 当前操作人
+	 * @param assignee 被执行人
+	 * @return 转办结果
+	 */
 	private Boolean transfer(String taskId, String owner, String assignee) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {

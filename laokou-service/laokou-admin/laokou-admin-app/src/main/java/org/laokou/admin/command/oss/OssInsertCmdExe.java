@@ -29,6 +29,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 新增OSS执行器.
+ *
  * @author laokou
  */
 @Component
@@ -40,7 +41,7 @@ public class OssInsertCmdExe {
 	private final OssConvertor ossConvertor;
 
 	/**
-	 * 执行新增OSS
+	 * 执行新增OSS.
 	 * @param cmd 新增OSS参数
 	 * @return 执行新增结果
 	 */

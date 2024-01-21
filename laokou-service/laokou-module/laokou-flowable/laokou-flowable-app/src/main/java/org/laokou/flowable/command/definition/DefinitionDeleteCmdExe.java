@@ -31,6 +31,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
+ * 删除流程执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -42,6 +44,11 @@ public class DefinitionDeleteCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	/**
+	 * 执行删除流程.
+	 * @param cmd 删除流程参数
+	 * @return 删除结果
+	 */
 	public Result<Boolean> execute(DefinitionDeleteCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(FLOWABLE);

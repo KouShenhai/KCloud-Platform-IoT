@@ -17,6 +17,7 @@
 
 package org.laokou.im.config;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -29,12 +30,16 @@ import static org.laokou.common.i18n.common.PropertiesConstants.WEBSOCKET_PREFIX
 @Data
 @Component
 @ConfigurationProperties(prefix = WEBSOCKET_PREFIX)
+@Schema(name = "WebsocketProperties", description = "WebSocket属性配置")
 public class WebsocketProperties {
 
+	@Schema(name = "port", description = "端口")
 	private int port;
 
+	@Schema(name = "appName", description = "应用名称")
 	private String appName;
 
+	@Schema(name = "poolName", description = "线程池名称")
 	private String poolName;
 
 }

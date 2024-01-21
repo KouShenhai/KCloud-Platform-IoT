@@ -35,6 +35,8 @@ import java.net.UnknownHostException;
 import static org.laokou.common.i18n.common.NetworkConstants.IP;
 
 /**
+ * 启动类.
+ *
  * @author laokou
  */
 @EnableRedisRepository

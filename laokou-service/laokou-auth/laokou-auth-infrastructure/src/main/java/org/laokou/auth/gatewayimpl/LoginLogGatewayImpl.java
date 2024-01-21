@@ -30,6 +30,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 /**
+ * 登录日志.
+ *
  * @author laokou
  */
 @Component
@@ -38,16 +40,29 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 
 	private final DomainEventPublisher domainEventPublisher;
 
+	/**
+	 * 推送登录日志.
+	 * @param loginLog 登录日志领域
+	 */
 	@Override
 	public void publish(LoginLog loginLog) {
 		domainEventPublisher.publish(getEvent(loginLog));
 	}
 
+	/**
+	 * 获取浏览器信息.
+	 * @return 浏览器信息
+	 */
 	private UserAgent getUserAgent() {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		return UserAgent.parseUserAgentString(request.getHeader(HttpHeaders.USER_AGENT));
 	}
 
+	/**
+	 * 构造登录日志事件.
+	 * @param loginLog 登录日志对象
+	 * @return 登录日志事件
+	 */
 	private LoginLogEvent getEvent(LoginLog loginLog) {
 		UserAgent userAgent = getUserAgent();
 		// 获取客户端操作系统

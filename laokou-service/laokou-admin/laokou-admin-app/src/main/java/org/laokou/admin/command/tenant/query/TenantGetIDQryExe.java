@@ -39,7 +39,8 @@ import static org.laokou.common.i18n.common.StringConstants.DOT;
 import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 
 /**
- * 根据域名查看租户ID执行器
+ * 根据域名查看租户ID执行器.
+ *
  * @author laokou
  */
 @Component
@@ -53,7 +54,7 @@ public class TenantGetIDQryExe {
 	private final RedisUtil redisUtil;
 
 	/**
-	 * 执行根据域名查看租户ID
+	 * 执行根据域名查看租户ID.
 	 * @param qry 查看租户ID参数
 	 * @return 租户ID
 	 */
@@ -75,7 +76,7 @@ public class TenantGetIDQryExe {
 	}
 
 	/**
-	 * 根据域名从Redis获取租户ID
+	 * 根据域名从Redis获取租户ID.
 	 * @param str 域名
 	 * @return 租户ID
 	 */

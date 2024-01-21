@@ -34,6 +34,7 @@ import java.util.List;
 
 /**
  * 用户管理.
+ *
  * @author laokou
  */
 @Service
@@ -65,7 +66,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	private final UserListQryExe userListQryExe;
 
 	/**
-	 * 修改用户
+	 * 修改用户.
 	 * @param cmd 修改用户参数
 	 * @return 修改结果
 	 */
@@ -75,7 +76,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	/**
-	 * 新增用户
+	 * 新增用户.
 	 * @param cmd 新增用户参数
 	 * @return 新增结果
 	 */
@@ -85,7 +86,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	/**
-	 * 强踢在线用户
+	 * 强踢在线用户.
 	 * @param cmd 强踢在线用户参数
 	 * @return 强踢结果
 	 */
@@ -95,7 +96,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	/**
-	 * 查询在线用户列表
+	 * 查询在线用户列表.
 	 * @param qry 查询在线用户列表参数
 	 * @return 在线用户列表
 	 */
@@ -105,7 +106,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	/**
-	 * 查看用户信息
+	 * 查看用户信息.
 	 * @param qry 查看用户信息参数
 	 * @return 用户信息
 	 */
@@ -115,7 +116,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	/**
-	 * 修改用户信息
+	 * 修改用户信息.
 	 * @param cmd 修改用户信息参数
 	 * @return 修改结果
 	 */
@@ -125,7 +126,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	/**
-	 * 查询用户下拉框选择项列表
+	 * 查询用户下拉框选择项列表.
 	 * @param qry 查询用户下拉框选择项列表参数
 	 * @return 用户下拉框选择项列表
 	 */
@@ -135,7 +136,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	/**
-	 * 修改用户状态
+	 * 修改用户状态.
 	 * @param cmd 修改用户状态参数
 	 * @return 修改结果
 	 */
@@ -145,7 +146,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	/**
-	 * 重置密码
+	 * 重置密码.
 	 * @param cmd 重置密码参数
 	 * @return 重置结果
 	 */
@@ -155,7 +156,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	/**
-	 * 根据ID查看用户
+	 * 根据ID查看用户.
 	 * @param qry 根据ID查看用户参数
 	 * @return 用户
 	 */
@@ -165,7 +166,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	/**
-	 * 根据ID删除用户
+	 * 根据ID删除用户.
 	 * @param cmd 根据ID删除用户参数
 	 * @return 删除结果
 	 */
@@ -175,9 +176,9 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	/**
-	 * 查询用户列表
+	 * 查询用户列表.
 	 * @param qry 查询用户列表参数
-	 * @return
+	 * @return 用户列表
 	 */
 	@Override
 	public Result<Datas<UserCO>> list(UserListQry qry) {

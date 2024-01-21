@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.dto.task.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,8 +29,10 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "AssigneeCO", description = "查看执行人员命令请求")
 public class AssigneeCO extends ClientObject {
 
+	@Schema(name = "assignee", description = "执行人员")
 	private String assignee;
 
 }

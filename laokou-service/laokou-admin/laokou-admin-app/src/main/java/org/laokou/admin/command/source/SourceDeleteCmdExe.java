@@ -24,7 +24,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
- * 删除数据源执行器
+ * 删除数据源执行器.
+ *
  * @author laokou
  */
 @Component
@@ -34,7 +35,7 @@ public class SourceDeleteCmdExe {
 	private final SourceGateway sourceGateway;
 
 	/**
-	 * 执行删除数据源
+	 * 执行删除数据源.
 	 * @param cmd 删除数据源参数
 	 * @return 执行删除结果
 	 */

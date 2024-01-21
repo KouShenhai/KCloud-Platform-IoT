@@ -23,6 +23,7 @@ import org.laokou.common.i18n.dto.Result;
 
 /**
  * 令牌管理.
+ *
  * @author laokou
  */
 public interface TokensServiceI {

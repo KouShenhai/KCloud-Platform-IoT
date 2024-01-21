@@ -26,14 +26,25 @@ import java.util.List;
 import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
 
 /**
+ * 部门.
+ *
  * @author laokou
  */
 @Repository
 @Mapper
 public interface DeptMapper {
 
+	/**
+	 * 查看部门PATHS.
+	 * @return 部门PATHS
+	 */
 	List<String> getDeptPaths();
 
+	/**
+	 * 根据用户ID查看部门PATHS.
+	 * @param userId 用户ID
+	 * @return 部门PATHS
+	 */
 	List<String> getDeptPathsByUserId(@Param(USER_ID) Long userId);
 
 }

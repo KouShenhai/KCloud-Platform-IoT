@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 日志管理.
+ *
  * @author laokou
  */
 @Service
@@ -50,7 +51,7 @@ public class LogsServiceImpl implements LogsServiceI {
 	private final LoginLogExportCmdExe loginLogExportCmdExe;
 
 	/**
-	 * 查询操作日志列表
+	 * 查询操作日志列表.
 	 * @param qry 查询操作日志列表参数
 	 * @return 操作日志列表
 	 */
@@ -60,7 +61,7 @@ public class LogsServiceImpl implements LogsServiceI {
 	}
 
 	/**
-	 * 导出操作日志
+	 * 导出操作日志.
 	 * @param cmd 导出操作日志参数
 	 */
 	@Override
@@ -69,7 +70,7 @@ public class LogsServiceImpl implements LogsServiceI {
 	}
 
 	/**
-	 * 查询登录日志列表
+	 * 查询登录日志列表.
 	 * @param qry 查询登录日志列表参数
 	 * @return 登录日志列表
 	 */
@@ -79,7 +80,7 @@ public class LogsServiceImpl implements LogsServiceI {
 	}
 
 	/**
-	 * 导出登录日志
+	 * 导出登录日志.
 	 * @param cmd 导出登录日志参数
 	 */
 	@Override

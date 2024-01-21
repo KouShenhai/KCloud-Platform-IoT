@@ -32,6 +32,7 @@ import java.util.List;
 
 /**
  * 菜单管理.
+ *
  * @author laokou
  */
 @Service
@@ -57,7 +58,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	private final MenuTenantTreeGetQryExe menuTenantTreeGetQryExe;
 
 	/**
-	 * 查看树形菜单列表（用户）
+	 * 查看树形菜单列表（用户）.
 	 * @param qry 查看树形菜单列表（用户）参数
 	 * @return 树形菜单列表（用户）
 	 */
@@ -67,7 +68,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	}
 
 	/**
-	 * 查询菜单列表
+	 * 查询菜单列表.
 	 * @param qry 查询菜单列表参数
 	 * @return 菜单列表
 	 */
@@ -77,7 +78,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	}
 
 	/**
-	 * 根据ID查看菜单
+	 * 根据ID查看菜单.
 	 * @param qry 根据ID查看菜单参数
 	 * @return 菜单
 	 */
@@ -87,7 +88,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	}
 
 	/**
-	 * 修改菜单
+	 * 修改菜单.
 	 * @param cmd 修改菜单参数
 	 * @return 修改结果
 	 */
@@ -97,7 +98,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	}
 
 	/**
-	 * 新增菜单
+	 * 新增菜单.
 	 * @param cmd 新增菜单参数
 	 * @return 新增结果
 	 */
@@ -107,7 +108,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	}
 
 	/**
-	 * 根据ID删除菜单
+	 * 根据ID删除菜单.
 	 * @param cmd 根据ID删除菜单参数
 	 * @return 删除菜单
 	 */
@@ -117,7 +118,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	}
 
 	/**
-	 * 查看树菜单
+	 * 查看树菜单.
 	 * @param qry 查看树菜单参数
 	 * @return 树菜单
 	 */
@@ -127,7 +128,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	}
 
 	/**
-	 * 根据角色ID查看菜单IDS
+	 * 根据角色ID查看菜单IDS.
 	 * @param qry 根据角色ID查看菜单IDS参数
 	 * @return 菜单IDS
 	 */
@@ -137,7 +138,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	}
 
 	/**
-	 * 查看租户菜单树
+	 * 查看租户菜单树.
 	 * @param qry 查看租户菜单树参数
 	 * @return 租户菜单树
 	 */

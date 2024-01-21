@@ -17,6 +17,7 @@
 
 package org.laokou.auth.dto.secret;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
 
@@ -24,6 +25,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
+@Schema(name = "SecretGetQry", description = "查看密钥命令请求")
 public class SecretGetQry extends CommonCommand {
 
 }

@@ -18,7 +18,7 @@
 package org.laokou.admin.command.definition;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.definition.DefinitionActiveCmd;
+import org.laokou.admin.dto.definition.DefinitionActivateCmd;
 import org.laokou.admin.gatewayimpl.rpc.DefinitionsFeignClient;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class DefinitionActiveCmdExe {
+public class DefinitionActivateCmdExe {
 
 	private final DefinitionsFeignClient definitionsFeignClient;
 
@@ -39,7 +39,7 @@ public class DefinitionActiveCmdExe {
 	 * @param cmd 激活流程参数
 	 * @return 执行激活结果
 	 */
-	public Result<Boolean> execute(DefinitionActiveCmd cmd) {
+	public Result<Boolean> execute(DefinitionActivateCmd cmd) {
 		return definitionsFeignClient.activate(cmd.getDefinitionId());
 	}
 

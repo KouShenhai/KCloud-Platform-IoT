@@ -32,6 +32,8 @@ import org.laokou.flowable.dto.task.clientobject.TaskCO;
 import org.springframework.stereotype.Service;
 
 /**
+ * 任务流程.
+ *
  * @author laokou
  */
 @Service
@@ -54,41 +56,81 @@ public class TasksServiceImpl implements TasksServiceI {
 
 	private final TaskDiagramGetQryExe taskDiagramGetQryExe;
 
+	/**
+	 * 查询任务流程列表.
+	 * @param qry 查询任务流程列表参数
+	 * @return 任务流程列表
+	 */
 	@Override
 	public Result<Datas<TaskCO>> list(TaskListQry qry) {
 		return taskListQryExe.execute(qry);
 	}
 
+	/**
+	 * 审批任务流程.
+	 * @param cmd 审批任务流程参数
+	 * @return 审批结果
+	 */
 	@Override
 	public Result<AuditCO> audit(TaskAuditCmd cmd) {
 		return taskAuditCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 处理任务流程.
+	 * @param cmd 处理任务流程参数
+	 * @return 处理结果
+	 */
 	@Override
 	public Result<Boolean> resolve(TaskResolveCmd cmd) {
 		return taskResolveCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 开始任务流程.
+	 * @param cmd 开始任务流程
+	 * @return 开始结果
+	 */
 	@Override
 	public Result<StartCO> start(TaskStartCmd cmd) {
 		return taskStartCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 查看任务流程图.
+	 * @param qry 查看任务流程图参数
+	 * @return 流程图
+	 */
 	@Override
 	public Result<String> diagram(TaskDiagramGetQry qry) {
 		return taskDiagramGetQryExe.execute(qry);
 	}
 
+	/**
+	 * 转办任务流程.
+	 * @param cmd 转办任务流程参数
+	 * @return 转办结果
+	 */
 	@Override
 	public Result<Boolean> transfer(TaskTransferCmd cmd) {
 		return taskTransferCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 委派任务流程.
+	 * @param cmd 委派任务流程
+	 * @return 委派结果
+	 */
 	@Override
 	public Result<Boolean> delegate(TaskDelegateCmd cmd) {
 		return taskDelegateCmdExe.execute(cmd);
 	}
 
+	/**
+	 * 查看执行人员.
+	 * @param qry 查看执行人员参数
+	 * @return 执行人员
+	 */
 	@Override
 	public Result<AssigneeCO> assignee(TaskAssigneeGetQry qry) {
 		return taskAssigneeGetQryExe.execute(qry);

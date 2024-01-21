@@ -80,8 +80,8 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 	}
 
 	/**
-	 *
-	 * @param client
+	 * 校验客户端.
+	 * @param client 客户端
 	 */
 	private void validateClient(Client client) {
 		if (StringUtil.isEmpty(client.getRegistration().getClientId())) {

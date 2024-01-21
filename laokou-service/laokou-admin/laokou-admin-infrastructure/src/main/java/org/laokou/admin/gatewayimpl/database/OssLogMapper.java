@@ -23,6 +23,8 @@ import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 /**
+ * OSS日志.
+ *
  * @author laokou
  */
 @Repository

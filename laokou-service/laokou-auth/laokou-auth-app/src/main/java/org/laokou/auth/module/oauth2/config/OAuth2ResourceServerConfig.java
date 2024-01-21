@@ -35,6 +35,8 @@ import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 import static org.laokou.common.security.config.auto.OAuth2ResourceServerAutoConfig.customizer;
 
 /**
+ * 资源服务器配置.
+ *
  * @author laokou
  */
 @Data
@@ -45,13 +47,13 @@ import static org.laokou.common.security.config.auto.OAuth2ResourceServerAutoCon
 class OAuth2ResourceServerConfig {
 
 	/**
-	 * 不拦截拦截静态资源 如果您不想要警告消息并且需要性能优化，则可以为静态资源引入第二个过滤器链
-	 * <a href="https://github.com/spring-projects/spring-security/issues/10938">...</a>
+	 * 不拦截拦截静态资源 如果您不想要警告消息并且需要性能优化，则可以为静态资源引入第二个过滤器链.
+	 * <a href="https://github.com/spring-projects/spring-security/issues/10938">优化配置</a>
 	 * @param http http配置
 	 * @param oAuth2ResourceServerProperties OAuth2配置文件
 	 * @param env 环境配置
-	 * @return defaultSecurityFilterChain
-	 * @throws Exception Exception
+	 * @return 认证过滤器
+	 * @throws Exception 异常
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,

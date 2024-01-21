@@ -20,8 +20,18 @@ package org.laokou.auth.api;
 import org.laokou.auth.dto.captcha.CaptchaGetQry;
 import org.laokou.common.i18n.dto.Result;
 
+/**
+ * 验证码.
+ *
+ * @author laokou
+ */
 public interface CaptchasServiceI {
 
+	/**
+	 * 获取验证码.
+	 * @param qry 获取验证码参数
+	 * @return 验证码
+	 */
 	Result<String> get(CaptchaGetQry qry);
 
 }

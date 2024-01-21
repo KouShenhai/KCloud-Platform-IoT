@@ -33,6 +33,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 消息管理.
+ *
  * @author laokou
  */
 @Service
@@ -52,7 +53,7 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	private final MessageUnreadCountGetQryExe messageUnreadCountGetQryExe;
 
 	/**
-	 * 新增消息
+	 * 新增消息.
 	 * @param cmd 新增消息参数
 	 * @return 新增结果
 	 */
@@ -62,7 +63,7 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	}
 
 	/**
-	 * 查询消息列表
+	 * 查询消息列表.
 	 * @param qry 查询消息列表参数
 	 * @return 消息列表
 	 */
@@ -72,7 +73,7 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	}
 
 	/**
-	 * 读取消息
+	 * 读取消息.
 	 * @param cmd 读取消息参数
 	 * @return 读取结果
 	 */
@@ -82,7 +83,7 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	}
 
 	/**
-	 * 根据ID查看消息
+	 * 根据ID查看消息.
 	 * @param qry 根据ID查看消息参数
 	 * @return 消息
 	 */
@@ -92,7 +93,7 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	}
 
 	/**
-	 * 查询未读消息列表
+	 * 查询未读消息列表.
 	 * @param qry 查询未读消息列表参数
 	 * @return 未读消息列表
 	 */
@@ -102,7 +103,7 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	}
 
 	/**
-	 * 查看未读消息数
+	 * 查看未读消息数.
 	 * @param qry 查看未读消息数参数
 	 * @return 未读消息数
 	 */

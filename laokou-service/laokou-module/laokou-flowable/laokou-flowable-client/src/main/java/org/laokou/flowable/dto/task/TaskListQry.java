@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.dto.task;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -25,12 +26,16 @@ import org.laokou.common.i18n.utils.StringUtil;
  * @author laokou
  */
 @Data
+@Schema(name = "TaskListQry", description = "任务流程列表查询参数")
 public class TaskListQry extends PageQuery {
 
+	@Schema(name = "name", description = "流程名称")
 	private String name;
 
+	@Schema(name = "userId", description = "用户ID")
 	private Long userId;
 
+	@Schema(name = "key", description = "定义key")
 	private String key;
 
 	public void setName(String name) {

@@ -22,6 +22,7 @@ import org.laokou.common.i18n.dto.Result;
 
 /**
  * 退出登录.
+ *
  * @author laokou
  */
 public interface LogoutsServiceI {

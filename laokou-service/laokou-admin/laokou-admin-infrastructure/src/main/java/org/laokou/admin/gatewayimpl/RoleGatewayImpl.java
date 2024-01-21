@@ -49,6 +49,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_ROLE;
 
 /**
  * 角色管理.
+ *
  * @author laokou
  */
 @Slf4j
@@ -69,7 +70,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	private final RoleConvertor roleConvertor;
 
 	/**
-	 * 新增角色
+	 * 新增角色.
 	 * @param role 角色对象
 	 * @param user 用户对象
 	 * @return 新增结果
@@ -81,7 +82,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	/**
-	 * 修改角色
+	 * 修改角色.
 	 * @param role 角色对象
 	 * @param user 用户对象
 	 * @return 修改结果
@@ -95,7 +96,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	/**
-	 * 根据ID查看角色
+	 * 根据ID查看角色.
 	 * @param id ID
 	 * @return 角色
 	 */
@@ -105,7 +106,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	/**
-	 * 根据ID删除角色
+	 * 根据ID删除角色.
 	 * @param id ID
 	 * @return 删除结果
 	 */
@@ -124,7 +125,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	/**
-	 * 查询角色列表
+	 * 查询角色列表.
 	 * @param role 角色对象
 	 * @param pageQuery 分页参数
 	 * @return 角色列表
@@ -141,7 +142,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	/**
-	 * 新增角色
+	 * 新增角色.
 	 * @param roleDO 角色数据模型
 	 * @param role 角色对象
 	 * @param user 用户对象
@@ -165,9 +166,9 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	/**
-	 * 修改角色
+	 * 修改角色.
 	 * @param roleDO 角色数据模型
- 	 * @param role 角色对象
+	 * @param role 角色对象
 	 * @param user 用户对象
 	 * @return 修改结果
 	 */
@@ -188,7 +189,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	/**
-	 * 修改角色菜单
+	 * 修改角色菜单.
 	 * @param roleId 角色ID
 	 * @param menuIds 菜单IDS
 	 * @param user 用户对象
@@ -199,7 +200,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	/**
-	 * 修改角色部门
+	 * 修改角色部门.
 	 * @param roleId 角色ID
 	 * @param deptIds 部门IDS
 	 * @param user 用户对象
@@ -210,7 +211,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	/**
-	 * 新增角色菜单
+	 * 新增角色菜单.
 	 * @param roleId 角色ID
 	 * @param menuIds 菜单IDS
 	 * @param user 用户对象
@@ -224,7 +225,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	/**
-	 * 新增角色部门
+	 * 新增角色部门.
 	 * @param roleId 角色ID
 	 * @param deptIds 部门IDS
 	 * @param user 用户对象
@@ -238,7 +239,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	/**
-	 * 转换为角色菜单数据模型
+	 * 转换为角色菜单数据模型.
 	 * @param roleId 角色ID
 	 * @param menuId 菜单ID
 	 * @param user 用户对象
@@ -257,7 +258,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	/**
-	 * 转换为角色部门数据模型
+	 * 转换为角色部门数据模型.
 	 * @param roleId 角色ID
 	 * @param deptId 部门ID
 	 * @param user 用户对象

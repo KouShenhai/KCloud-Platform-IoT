@@ -57,7 +57,7 @@ public class User {
 	@Schema(name = "editor", description = "编辑人")
 	private Long editor;
 
-	@Schema(name = "", description = "部门ID")
+	@Schema(name = "deptId", description = "部门ID")
 	private Long deptId;
 
 	@Schema(name = "version", description = "版本号")

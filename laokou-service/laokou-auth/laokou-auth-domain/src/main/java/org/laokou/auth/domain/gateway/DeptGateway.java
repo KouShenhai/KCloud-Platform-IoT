@@ -22,14 +22,16 @@ import org.laokou.common.security.domain.User;
 import java.util.List;
 
 /**
+ * 部门.
+ *
  * @author laokou
  */
 public interface DeptGateway {
 
 	/**
-	 * 查询部门PATHS.
-	 * @param user 用户参数
-	 * @return 查询用户所拥有的部门
+	 * 查询部门PATHS列表.
+	 * @param user 用户对象
+	 * @return 部门PATHS列表
 	 */
 	List<String> getDeptPaths(User user);
 

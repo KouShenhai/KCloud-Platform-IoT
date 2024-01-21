@@ -34,6 +34,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 新增部门执行器.
+ *
  * @author laokou
  */
 @Component

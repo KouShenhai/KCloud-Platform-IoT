@@ -24,6 +24,8 @@ import java.util.Map;
 import static org.laokou.common.i18n.common.OAuth2Constants.MOBILE;
 
 /**
+ * 手机号转换器.
+ *
  * @author laokou
  */
 public class OAuth2MobileAuthenticationConverter extends AbstractOAuth2BaseAuthenticationConverter {

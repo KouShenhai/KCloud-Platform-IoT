@@ -34,6 +34,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
+ * 挂起流程执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -45,6 +47,11 @@ public class DefinitionSuspendCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	/**
+	 * 执行挂起流程.
+	 * @param cmd 挂起流程参数
+	 * @return 挂起结果
+	 */
 	public Result<Boolean> execute(DefinitionSuspendCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(FLOWABLE);
@@ -65,6 +72,11 @@ public class DefinitionSuspendCmdExe {
 		}
 	}
 
+	/**
+	 * 挂起流程.
+	 * @param definitionId 定义ID
+	 * @return 挂起结果
+	 */
 	private Boolean suspend(String definitionId) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {

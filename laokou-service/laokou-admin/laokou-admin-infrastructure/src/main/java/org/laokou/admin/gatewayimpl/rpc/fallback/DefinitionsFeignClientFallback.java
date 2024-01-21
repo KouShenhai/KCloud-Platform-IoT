@@ -27,12 +27,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 定义流程.
+ *
  * @author laokou
  */
 public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
 
 	/**
-	 * 新增流程
+	 * 新增流程.
 	 * @param file 文件
 	 * @return 新增结果
 	 */
@@ -42,7 +43,7 @@ public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
 	}
 
 	/**
-	 * 查询任务流程列表
+	 * 查询任务流程列表.
 	 * @param qry 查询任务流程列表参数
 	 * @return 任务流程列表
 	 */
@@ -52,7 +53,7 @@ public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
 	}
 
 	/**
-	 * 挂起流程
+	 * 挂起流程.
 	 * @param definitionId 定义ID
 	 * @return 挂起结果
 	 */
@@ -62,7 +63,7 @@ public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
 	}
 
 	/**
-	 * 激活流程
+	 * 激活流程.
 	 * @param definitionId 定义ID
 	 * @return 激活结果
 	 */
@@ -72,7 +73,7 @@ public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
 	}
 
 	/**
-	 * 查看流程图
+	 * 查看流程图.
 	 * @param definitionId 定义ID
 	 * @return 流程图
 	 */
@@ -82,7 +83,7 @@ public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
 	}
 
 	/**
-	 * 删除流程
+	 * 删除流程.
 	 * @param deploymentId 定义ID
 	 * @return 删除结果
 	 */

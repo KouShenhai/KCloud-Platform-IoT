@@ -42,6 +42,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 修改用户信息执行器.
+ *
  * @author laokou
  */
 @Component
@@ -53,7 +54,7 @@ public class UserProfileUpdateCmdExe {
 	private final UserMapper userMapper;
 
 	/**
-	 * 执行修改用户信息
+	 * 执行修改用户信息.
 	 * @param cmd 修改用户信息参数
 	 * @return 执行修改结果
 	 */
@@ -66,7 +67,7 @@ public class UserProfileUpdateCmdExe {
 	}
 
 	/**
-	 * 转换为用户领域
+	 * 转换为用户领域.
 	 * @param co 用户信息对象
 	 * @return 用户领域
 	 */
@@ -78,7 +79,7 @@ public class UserProfileUpdateCmdExe {
 	}
 
 	/**
-	 * 将邮箱和手机加密
+	 * 将邮箱和手机加密.
 	 * @param co 用户信息对象
 	 */
 	private void encrypt(UserProfileCO co) {
@@ -87,7 +88,7 @@ public class UserProfileUpdateCmdExe {
 	}
 
 	/**
-	 * 验证用户邮箱和手机号
+	 * 验证用户邮箱和手机号.
 	 * @param co 用户信息对象
 	 */
 	private void validate(UserProfileCO co) {

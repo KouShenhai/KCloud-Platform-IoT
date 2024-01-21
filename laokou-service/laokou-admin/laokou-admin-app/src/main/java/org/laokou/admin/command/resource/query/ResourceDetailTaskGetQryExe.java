@@ -31,6 +31,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 查看资源任务详情执行器.
+ *
  * @author laokou
  */
 @Component
@@ -46,7 +47,7 @@ public class ResourceDetailTaskGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<ResourceCO> execute(ResourceDetailTaskGetQry qry) {
-		ResourceAuditDO resourceAuditDO = resourceAuditMapper.getResourceAuditById(qry.getId());
+		ResourceAuditDO resourceAuditDO = resourceAuditMapper.getResourceAuditByResourceId(qry.getId());
 		return Result.of(ConvertUtil.sourceToTarget(resourceAuditDO, ResourceCO.class));
 	}
 

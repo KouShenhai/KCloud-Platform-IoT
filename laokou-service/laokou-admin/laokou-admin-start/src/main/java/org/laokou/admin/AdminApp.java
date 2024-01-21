@@ -40,6 +40,8 @@ import java.net.InetAddress;
 import static org.laokou.common.i18n.common.NetworkConstants.IP;
 
 /**
+ * 启动类.
+ *
  * @author laokou
  */
 @SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")

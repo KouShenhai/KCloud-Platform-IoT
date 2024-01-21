@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.dto.definition;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,8 +29,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "DefinitionDeleteCmd", description = "删除流程命令请求")
 public class DefinitionDeleteCmd extends CommonCommand {
 
+	@Schema(name = "deploymentId", description = "部署ID")
 	private String deploymentId;
 
 }

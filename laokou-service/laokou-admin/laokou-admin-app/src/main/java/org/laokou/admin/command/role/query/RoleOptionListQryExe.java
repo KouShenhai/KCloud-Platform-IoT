@@ -34,7 +34,8 @@ import java.util.List;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
- * 查询角色下拉框选择项列表执行器
+ * 查询角色下拉框选择项列表执行器.
+ *
  * @author laokou
  */
 @Component
@@ -44,7 +45,7 @@ public class RoleOptionListQryExe {
 	private final RoleMapper roleMapper;
 
 	/**
-	 * 执行查询角色下拉框选择项列表
+	 * 执行查询角色下拉框选择项列表.
 	 * @param qry 查询角色下拉框选择项列表参数
 	 * @return 角色下拉框选择项列表
 	 */

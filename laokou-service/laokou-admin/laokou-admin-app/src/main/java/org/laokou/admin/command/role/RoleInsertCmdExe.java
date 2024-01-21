@@ -36,7 +36,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
- * 新增角色执行器
+ * 新增角色执行器.
+ *
  * @author laokou
  */
 @Component
@@ -50,7 +51,7 @@ public class RoleInsertCmdExe {
 	private final RoleConvertor roleConvertor;
 
 	/**
-	 * 执行新增角色
+	 * 执行新增角色.
 	 * @param cmd 新增角色参数
 	 * @return 执行新增结果
 	 */
@@ -65,7 +66,7 @@ public class RoleInsertCmdExe {
 	}
 
 	/**
-	 * 转换为用户领域
+	 * 转换为用户领域.
 	 * @return 用户领域
 	 */
 	private User toUser() {

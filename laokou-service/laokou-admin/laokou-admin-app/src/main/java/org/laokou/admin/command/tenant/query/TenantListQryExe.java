@@ -29,7 +29,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
- * 查询租户列表执行器
+ * 查询租户列表执行器.
+ *
  * @author laokou
  */
 @Component
@@ -41,7 +42,7 @@ public class TenantListQryExe {
 	private final TenantConvertor tenantConvertor;
 
 	/**
-	 * 执行查询租户列表
+	 * 执行查询租户列表.
 	 * @param qry 查询租户列表参数
 	 * @return 租户列表
 	 */

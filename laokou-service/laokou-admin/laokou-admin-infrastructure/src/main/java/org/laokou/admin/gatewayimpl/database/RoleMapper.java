@@ -30,15 +30,28 @@ import java.util.List;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
+ * 角色.
+ *
  * @author laokou
  */
 @Repository
 @Mapper
 public interface RoleMapper extends BatchMapper<RoleDO> {
 
+	/**
+	 * 查询角色列表.
+	 * @param page 分页参数
+	 * @param name 角色名称
+	 * @param pageQuery 分页参数
+	 * @return 角色列表
+	 */
 	IPage<RoleDO> getRoleListFilter(IPage<RoleDO> page, @Param("name") String name,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
+	/**
+	 * 查看角色IDS.
+	 * @return 角色IDS
+	 */
 	List<Long> getRoleIds();
 
 }

@@ -32,6 +32,7 @@ import static org.laokou.common.i18n.common.MybatisPlusConstants.ID;
 
 /**
  * 查看分布式链路索引执行器.
+ *
  * @author laokou
  */
 @Component

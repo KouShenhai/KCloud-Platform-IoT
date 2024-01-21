@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.dto.definition;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 
@@ -26,11 +27,13 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
+@Schema(name = "DefinitionListQry", description = "流程列表查询参数")
 public class DefinitionListQry extends PageQuery {
 
 	@Serial
 	private static final long serialVersionUID = -818653141079850719L;
 
+	@Schema(name = "name", description = "流程名称")
 	private String name;
 
 }

@@ -39,6 +39,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
+ * 任务开始执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -52,6 +54,11 @@ public class TaskStartCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	/**
+	 * 执行开始任务流程.
+	 * @param cmd 开始任务流程参数
+	 * @return 开始结果
+	 */
 	public Result<StartCO> execute(TaskStartCmd cmd) {
 		try {
 			log.info("开始流程分布式事务 XID：{}", RootContext.getXID());
@@ -77,6 +84,13 @@ public class TaskStartCmdExe {
 		}
 	}
 
+	/**
+	 * 执行开始任务流程.
+	 * @param definitionKey 定义Key
+	 * @param businessKey 业务Key
+	 * @param instanceName 实例名称
+	 * @return 开始结果
+	 */
 	private StartCO start(String definitionKey, String businessKey, String instanceName) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
