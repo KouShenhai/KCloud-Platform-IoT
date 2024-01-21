@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.dto.definition.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
@@ -24,31 +25,22 @@ import org.laokou.common.i18n.dto.ClientObject;
  * @author laokou
  */
 @Data
+@Schema(name = "DefinitionCO", description = "流程定义")
 public class DefinitionCO extends ClientObject {
 
-	/**
-	 * 定义ID.
-	 */
+	@Schema(name = "definitionId", description = "定义ID")
 	private String definitionId;
 
-	/**
-	 * 流程名称.
-	 */
+	@Schema(name = "processName", description = "流程名称")
 	private String processName;
 
-	/**
-	 * 流程KEY.
-	 */
+	@Schema(name = "processKey", description = "流程Key")
 	private String processKey;
 
-	/**
-	 * 部署ID.
-	 */
+	@Schema(name = "deploymentId", description = "部署ID")
 	private String deploymentId;
 
-	/**
-	 * 流程状态 0激活 1挂起.
-	 */
+	@Schema(name = "isSuspended", description = "流程状态 0激活 1挂起")
 	private Boolean isSuspended;
 
 }

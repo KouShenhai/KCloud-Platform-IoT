@@ -37,6 +37,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
+ * 处理任务流程执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -48,6 +50,11 @@ public class TaskResolveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	/**
+	 * 执行处理任务流程.
+	 * @param cmd 处理任务流程参数
+	 * @return 执行结果
+	 */
 	public Result<Boolean> execute(TaskResolveCmd cmd) {
 		try {
 			log.info("处理流程分布式事务 XID：{}", RootContext.getXID());
@@ -70,6 +77,11 @@ public class TaskResolveCmdExe {
 		}
 	}
 
+	/**
+	 * 处理任务流程.
+	 * @param taskId 任务ID
+	 * @return 处理结果
+	 */
 	private Boolean resolve(String taskId) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {

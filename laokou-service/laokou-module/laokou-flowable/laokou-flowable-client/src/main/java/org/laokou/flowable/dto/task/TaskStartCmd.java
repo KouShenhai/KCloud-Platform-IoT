@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.dto.task;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
 
@@ -24,12 +25,16 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
+@Schema(name = "TaskStartCmd", description = "开始任务流程命令请求")
 public class TaskStartCmd extends CommonCommand {
 
+	@Schema(name = "definitionKey", description = "定义Key")
 	private String definitionKey;
 
+	@Schema(name = "businessKey", description = "业务Key")
 	private String businessKey;
 
+	@Schema(name = "instanceName", description = "实例名称")
 	private String instanceName;
 
 }

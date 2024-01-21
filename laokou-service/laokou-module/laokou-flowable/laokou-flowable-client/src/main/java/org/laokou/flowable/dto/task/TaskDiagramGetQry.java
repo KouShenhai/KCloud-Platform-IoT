@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.dto.task;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,8 +29,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "TaskDiagramGetQry", description = "查看任务流程图")
 public class TaskDiagramGetQry extends CommonCommand {
 
+	@Schema(name = "instanceId", description = "实例ID")
 	private String instanceId;
 
 }

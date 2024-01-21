@@ -28,7 +28,7 @@ import org.laokou.common.i18n.dto.Result;
 public interface CaptchasServiceI {
 
 	/**
-	 * 获取验证码
+	 * 获取验证码.
 	 * @param qry 获取验证码参数
 	 * @return 验证码
 	 */

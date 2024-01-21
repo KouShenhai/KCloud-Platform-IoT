@@ -97,7 +97,7 @@ public class DefinitionsController {
 	@OperateLog(module = "流程定义", operation = "激活流程")
 	@PreAuthorize("hasAuthority('definitions:activate')")
 	public Result<Boolean> activate(@PathVariable("definitionId") String definitionId) {
-		return definitionsServiceI.activate(new DefinitionActiveCmd(definitionId));
+		return definitionsServiceI.activate(new DefinitionActivateCmd(definitionId));
 	}
 
 	@GetMapping("template")

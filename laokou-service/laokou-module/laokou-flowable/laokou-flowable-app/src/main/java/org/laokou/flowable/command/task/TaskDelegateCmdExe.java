@@ -36,6 +36,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
+ * 委派任务流程执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -47,6 +49,11 @@ public class TaskDelegateCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	/**
+	 * 执行委派任务流程.
+	 * @param cmd 委派任务流程参数
+	 * @return 委派结果
+	 */
 	public Result<Boolean> execute(TaskDelegateCmd cmd) {
 		try {
 			log.info("委派流程分布式事务 XID：{}", RootContext.getXID());
@@ -71,6 +78,13 @@ public class TaskDelegateCmdExe {
 		}
 	}
 
+	/**
+	 * 委派任务流程.
+	 * @param taskId 任务ID
+	 * @param owner 当前执行人
+	 * @param deleteReason 委派人员
+	 * @return 委派结果
+	 */
 	private Boolean delegate(String taskId, String owner, String deleteReason) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {

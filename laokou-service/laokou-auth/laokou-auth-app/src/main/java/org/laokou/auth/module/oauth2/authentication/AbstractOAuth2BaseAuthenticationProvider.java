@@ -364,7 +364,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	}
 
 	/**
-	 * 根据租户ID查看数据源名称
+	 * 根据租户ID查看数据源名称.
 	 * @param tenantId 租户ID
 	 * @return 数据源名称
 	 */

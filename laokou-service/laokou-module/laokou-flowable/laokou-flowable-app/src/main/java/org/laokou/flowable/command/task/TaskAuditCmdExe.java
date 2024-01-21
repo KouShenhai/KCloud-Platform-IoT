@@ -42,6 +42,8 @@ import java.util.Map;
 import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 
 /**
+ * 审批任务流程执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -55,6 +57,11 @@ public class TaskAuditCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	/**
+	 * 执行审批任务流程.
+	 * @param cmd 审批任务流程参数
+	 * @return 审批结果
+	 */
 	public Result<AuditCO> execute(TaskAuditCmd cmd) {
 		try {
 			log.info("审批流程分布式事务 XID：{}", RootContext.getXID());
@@ -81,6 +88,11 @@ public class TaskAuditCmdExe {
 		}
 	}
 
+	/**
+	 * 审批任务流程.
+	 * @param taskId 任务ID
+	 * @param values 流程变量
+	 */
 	private void audit(String taskId, Map<String, Object> values) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {

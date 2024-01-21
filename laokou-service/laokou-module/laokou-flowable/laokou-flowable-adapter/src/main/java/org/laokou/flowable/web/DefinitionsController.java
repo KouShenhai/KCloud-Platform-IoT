@@ -26,9 +26,10 @@ import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.flowable.api.DefinitionsServiceI;
 import org.laokou.flowable.dto.definition.*;
 import org.laokou.flowable.dto.definition.clientobject.DefinitionCO;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 /**
  * @author laokou
@@ -42,7 +43,7 @@ public class DefinitionsController {
 	private final DefinitionsServiceI definitionsServiceI;
 
 	@Idempotent
-	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
 	@Operation(summary = "流程定义", description = "新增流程")
 	public Result<Boolean> insert(@RequestPart("file") MultipartFile file) {
 		return definitionsServiceI.insert(new DefinitionInsertCmd(file));

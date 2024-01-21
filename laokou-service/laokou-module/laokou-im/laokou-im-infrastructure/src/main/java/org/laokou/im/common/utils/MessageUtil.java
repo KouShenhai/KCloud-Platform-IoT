@@ -23,7 +23,7 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.netty.config.Server;
-import org.laokou.im.dto.message.clientobject.WsMsgCO;
+import org.laokou.im.dto.message.clientobject.MsgCO;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
@@ -49,7 +49,7 @@ public class MessageUtil {
 		if (StringUtil.isEmpty(message)) {
 			return;
 		}
-		WsMsgCO msgDTO = JacksonUtil.toBean(message, WsMsgCO.class);
+		MsgCO msgDTO = JacksonUtil.toBean(message, MsgCO.class);
 		String msg = msgDTO.getMsg();
 		Set<String> receiver = msgDTO.getReceiver();
 		TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.of(OK, msg)));

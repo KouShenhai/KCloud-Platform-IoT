@@ -47,7 +47,7 @@ import static org.laokou.common.security.config.auto.OAuth2ResourceServerAutoCon
 class OAuth2ResourceServerConfig {
 
 	/**
-	 * 不拦截拦截静态资源 如果您不想要警告消息并且需要性能优化，则可以为静态资源引入第二个过滤器链
+	 * 不拦截拦截静态资源 如果您不想要警告消息并且需要性能优化，则可以为静态资源引入第二个过滤器链.
 	 * <a href="https://github.com/spring-projects/spring-security/issues/10938">优化配置</a>
 	 * @param http http配置
 	 * @param oAuth2ResourceServerProperties OAuth2配置文件

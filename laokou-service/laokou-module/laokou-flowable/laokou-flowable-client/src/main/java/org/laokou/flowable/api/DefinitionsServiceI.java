@@ -23,43 +23,51 @@ import org.laokou.flowable.dto.definition.*;
 import org.laokou.flowable.dto.definition.clientobject.DefinitionCO;
 
 /**
+ * 定义流程.
+ *
  * @author laokou
  */
 public interface DefinitionsServiceI {
 
 	/**
-	 * @param cmd
-	 * @return
+	 * 新增流程.
+	 * @param cmd 新增流程参数
+	 * @return 新增结果
 	 */
 	Result<Boolean> insert(DefinitionInsertCmd cmd);
 
 	/**
-	 * @param qry
-	 * @return
+	 * 查询流程列表.
+	 * @param qry 查询流程列表参数
+	 * @return 流程列表
 	 */
 	Result<Datas<DefinitionCO>> list(DefinitionListQry qry);
 
 	/**
-	 * @param qry
-	 * @return
+	 * 查看流程图.
+	 * @param qry 查看流程图参数
+	 * @return 流程图
 	 */
 	Result<String> diagram(DefinitionDiagramGetQry qry);
 
 	/**
-	 * @param cmd
-	 * @return
+	 * 删除流程.
+	 * @param cmd 删除流程参数
+	 * @return 流程图
 	 */
 	Result<Boolean> delete(DefinitionDeleteCmd cmd);
 
 	/**
-	 * @param cmd
-	 * @return
+	 * 挂起流程.
+	 * @param cmd 挂起流程参数
+	 * @return 挂起结果
 	 */
 	Result<Boolean> suspend(DefinitionSuspendCmd cmd);
 
 	/**
-	 * @param cmd
-	 * @return
+	 * 激活流程.
+	 * @param cmd 激活流程参数
+	 * @return 激活结果
 	 */
 	Result<Boolean> activate(DefinitionActivateCmd cmd);
 

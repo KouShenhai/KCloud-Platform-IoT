@@ -17,12 +17,14 @@
 
 package org.laokou.flowable.dto.task;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
  * @author laokou
  */
 @Data
+@Schema(name = "TaskTransferCmd", description = "转办任务流程命令请求")
 public class TaskTransferCmd extends TaskDelegateCmd {
 
 }

@@ -37,9 +37,6 @@ public class LoginLog {
 	@Schema(name = "username", description = "登录的用户名")
 	private String username;
 
-	@Schema(name = "ip", description = "登录的IP地址")
-	private String ip;
-
 	@Schema(name = "type", description = "登录类型")
 	private String type;
 
@@ -51,6 +48,9 @@ public class LoginLog {
 
 	@Schema(name = "message", description = "登录信息")
 	private String message;
+
+	@Schema(name = "ip", description = "登录的IP地址")
+	private String ip;
 
 	@Schema(name = "deptId", description = "部门ID")
 	private Long deptId;

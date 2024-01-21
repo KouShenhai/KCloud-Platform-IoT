@@ -39,6 +39,8 @@ import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
 
 /**
+ * Flowable流程图配置.
+ *
  * @author laokou
  */
 public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {

@@ -15,25 +15,29 @@
  *
  */
 
-package org.laokou.flowable.config;
+package org.laokou.im.dto.message.clientobject;
 
-import org.flowable.spring.SpringProcessEngineConfiguration;
-import org.flowable.spring.boot.EngineConfigurationConfigurer;
-import org.springframework.context.annotation.Configuration;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import org.laokou.common.i18n.dto.ClientObject;
+
+import java.io.Serial;
+import java.util.Set;
 
 /**
- * Flowable配置.
- *
  * @author laokou
  */
-@Configuration
-public class FlowableConfig implements EngineConfigurationConfigurer<SpringProcessEngineConfiguration> {
+@Data
+@Schema(name = "MsgCO", description = "消息")
+public class MsgCO extends ClientObject {
 
-	@Override
-	public void configure(SpringProcessEngineConfiguration engineConfiguration) {
-		engineConfiguration.setActivityFontName("宋体");
-		engineConfiguration.setLabelFontName("宋体");
-		engineConfiguration.setAnnotationFontName("宋体");
-	}
+	@Serial
+	private static final long serialVersionUID = -4930262464816447000L;
+
+	@Schema(name = "receiver", description = "接收者集合")
+	private Set<String> receiver;
+
+	@Schema(name = "msg", description = "消息")
+	private String msg;
 
 }

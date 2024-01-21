@@ -15,28 +15,24 @@
  *
  */
 
-package org.laokou.im.dto.message.clientobject;
+package org.laokou.admin.dto.definition;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.laokou.common.i18n.dto.ClientObject;
-
-import java.io.Serial;
-import java.util.Set;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
-public class WsMsgCO extends ClientObject {
+@AllArgsConstructor
+@NoArgsConstructor
+@Schema(name = "DefinitionActivateCmd", description = "激活流程命令请求")
+public class DefinitionActivateCmd extends CommonCommand {
 
-	@Serial
-	private static final long serialVersionUID = -4930262464816447000L;
-
-	/**
-	 * 接收者.
-	 */
-	private Set<String> receiver;
-
-	private String msg;
+	@Schema(name = "definitionId", description = "定义ID")
+	private String definitionId;
 
 }

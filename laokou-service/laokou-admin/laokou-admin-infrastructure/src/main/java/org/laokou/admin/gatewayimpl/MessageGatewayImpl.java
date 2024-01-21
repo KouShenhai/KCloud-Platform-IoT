@@ -27,8 +27,8 @@ import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
-import org.laokou.common.i18n.common.MessageTypeEnums;
 import org.laokou.admin.domain.user.User;
+import org.laokou.admin.dto.message.clientobject.MsgCO;
 import org.laokou.admin.gatewayimpl.database.MessageDetailMapper;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
@@ -36,6 +36,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.common.MessageTypeEnums;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -44,16 +45,15 @@ import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
-import org.laokou.im.dto.message.clientobject.WsMsgCO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_MESSAGE;
+import static org.laokou.common.i18n.common.RocketMqConstants.*;
 import static org.laokou.common.i18n.common.SysConstants.DEFAULT_MESSAGE;
 import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
-import static org.laokou.common.i18n.common.RocketMqConstants.*;
 
 /**
  * 消息管理.
@@ -125,7 +125,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		if (CollectionUtil.isEmpty(receiver)) {
 			return;
 		}
-		WsMsgCO co = new WsMsgCO();
+		MsgCO co = new MsgCO();
 		co.setMsg(DEFAULT_MESSAGE);
 		co.setReceiver(receiver);
 		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(type), JacksonUtil.toJsonStr(co),

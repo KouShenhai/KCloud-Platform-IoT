@@ -47,7 +47,7 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 
 	private final DefinitionSuspendCmdExe definitionSuspendCmdExe;
 
-	private final DefinitionActiveCmdExe definitionActiveCmdExe;
+	private final DefinitionActivateCmdExe definitionActivateCmdExe;
 
 	private final DefinitionTemplateCmdExe definitionTemplateCmdExe;
 
@@ -107,8 +107,8 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 	 * @return 执行激活结果
 	 */
 	@Override
-	public Result<Boolean> activate(DefinitionActiveCmd cmd) {
-		return definitionActiveCmdExe.execute(cmd);
+	public Result<Boolean> activate(DefinitionActivateCmd cmd) {
+		return definitionActivateCmdExe.execute(cmd);
 	}
 
 	/**

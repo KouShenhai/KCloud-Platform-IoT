@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.dto.definition;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,8 +30,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(name = "DefinitionInsertCmd", description = "新增流程命令请求")
 public class DefinitionInsertCmd extends CommonCommand {
 
+	@Schema(name = "file", description = "流程图XML文件")
 	private MultipartFile file;
 
 }

@@ -25,14 +25,14 @@ package org.laokou.auth.domain.gateway;
 public interface CaptchaGateway {
 
 	/**
-	 * 写入Redis
+	 * 写入Redis.
 	 * @param uuid 唯一标识
 	 * @param code 验证码
 	 */
 	void set(String uuid, String code);
 
 	/**
-	 * 校验验证码
+	 * 校验验证码.
 	 * @param uuid 唯一标识
 	 * @param code 验证码
 	 * @return 校验结果
@@ -40,7 +40,7 @@ public interface CaptchaGateway {
 	Boolean validate(String uuid, String code);
 
 	/**
-	 * 获取key
+	 * 获取key.
 	 * @param uuid 唯一标识
 	 * @return key
 	 */

@@ -82,7 +82,7 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 class OAuth2AuthorizationServerConfig {
 
 	/**
-	 * 登录URL
+	 * 登录URL.
 	 */
 	private static final String LOGIN_URL = "/login";
 
@@ -168,7 +168,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * jwt解码器
+	 * jwt解码器.
 	 * @param jwkSource jwk来源
 	 * @return jwt解码器
 	 */
@@ -178,7 +178,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 获取jwk来源
+	 * 获取jwk来源.
 	 * @return jwk来源
 	 */
 	@Bean
@@ -240,7 +240,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 获取RSA加密Key
+	 * 获取RSA加密Key.
 	 * @return RSA加密Key
 	 */
 	private RSAKey getRsaKey() {
@@ -251,7 +251,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 生成RSA加密Key
+	 * 生成RSA加密Key.
 	 * @return 生成结果
 	 */
 	private KeyPair generateRsaKey() {

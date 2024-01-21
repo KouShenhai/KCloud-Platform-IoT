@@ -20,7 +20,7 @@ package org.laokou.auth.domain.gateway;
 import org.laokou.auth.domain.log.LoginLog;
 
 /**
- * 登录日志
+ * 登录日志.
  *
  * @author laokou
  */

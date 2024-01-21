@@ -17,8 +17,8 @@ assignees: 'KouShenhai'
 
 **开发环境**
 - JDK版本：
- - SpringBoot版本：
- - SpringCloud版本：
+- SpringBoot版本：
+- SpringCloud版本：
 
 **补充内容**
 

@@ -39,7 +39,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	private final DeptMapper deptMapper;
 
 	/**
-	 * 查看部门PATHS
+	 * 查看部门PATHS.
 	 * @param user 用户对象
 	 * @return 部门PATHS
 	 */

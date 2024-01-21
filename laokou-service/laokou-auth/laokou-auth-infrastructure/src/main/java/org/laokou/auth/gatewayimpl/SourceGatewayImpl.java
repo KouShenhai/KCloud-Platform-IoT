@@ -38,7 +38,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	private final SourceMapper sourceMapper;
 
 	/**
-	 * 根据租户ID查看数据源
+	 * 根据租户ID查看数据源.
 	 * @param tenantId 租户ID
 	 * @return 数据源
 	 */

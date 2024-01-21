@@ -69,7 +69,7 @@ public interface DefinitionsServiceI {
 	 * @param cmd 激活流程参数
 	 * @return 执行激活结果
 	 */
-	Result<Boolean> activate(DefinitionActiveCmd cmd);
+	Result<Boolean> activate(DefinitionActivateCmd cmd);
 
 	/**
 	 * 下载流程模板.

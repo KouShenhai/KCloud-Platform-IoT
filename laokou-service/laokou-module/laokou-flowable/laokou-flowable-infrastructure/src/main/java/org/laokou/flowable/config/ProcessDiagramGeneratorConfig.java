@@ -30,6 +30,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * Flowable流程图生成器配置.
+ *
  * @author laokou
  */
 public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerator {
