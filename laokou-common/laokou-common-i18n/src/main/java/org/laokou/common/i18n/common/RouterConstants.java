@@ -34,6 +34,9 @@ public final class RouterConstants {
 	@Schema(name = "SERVICE_PORT", description = "服务端口")
 	public static final String SERVICE_PORT = "service-port";
 
+	@Schema(name = "SERVICE-GRAY", description = "服务灰度")
+	public static final String SERVICE_GRAY = "service-gray";
+
 	@Schema(name = "GENERATED_NAME_PREFIX", description = "生成名称前缀")
 	public static final String GENERATED_NAME_PREFIX = "_genkey_";
 

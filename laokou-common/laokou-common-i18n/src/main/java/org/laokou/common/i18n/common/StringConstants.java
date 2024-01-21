@@ -112,4 +112,7 @@ public final class StringConstants {
 	@Schema(name = "ZERO", description = "零")
 	public static final String ZERO = "0";
 
+	@Schema(name = "VERSION", description = "版本")
+	public static final String VERSION = "version";
+
 }
