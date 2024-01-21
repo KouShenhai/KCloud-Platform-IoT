@@ -26,12 +26,19 @@ import org.springframework.stereotype.Repository;
 import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
 
 /**
+ * 消息详情.
+ *
  * @author laokou
  */
 @Repository
 @Mapper
 public interface MessageDetailMapper extends BatchMapper<MessageDetailDO> {
 
+	/**
+	 * 根据用户ID查看未读消息数.
+	 * @param userId 用户ID
+	 * @return 未读消息数
+	 */
 	Integer getUnreadMessageCountByUserId(@Param(USER_ID) Long userId);
 
 }

@@ -32,17 +32,34 @@ import java.util.List;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
+ * 资源.
+ *
  * @author laokou
  */
 @Repository
 @Mapper
 public interface ResourceMapper extends BatchMapper<ResourceDO> {
 
+	/**
+	 * 查询资源列表.
+	 * @param page 分页参数
+	 * @param resourceDO 资源数据模型
+	 * @param pageQuery 分页参数
+	 * @return 资源列表
+	 */
 	IPage<ResourceDO> getResourceListFilter(IPage<ResourceDO> page, @Param("resource") ResourceDO resourceDO,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
+	/**
+	 * 处理资源索引.
+	 * @param handler 处理器
+	 */
 	void handleResourceIndex(ResultHandler<ResourceIndex> handler);
 
+	/**
+	 * 查询资源时间列表.
+	 * @return 资源时间列表
+	 */
 	List<String> getResourceTime();
 
 }

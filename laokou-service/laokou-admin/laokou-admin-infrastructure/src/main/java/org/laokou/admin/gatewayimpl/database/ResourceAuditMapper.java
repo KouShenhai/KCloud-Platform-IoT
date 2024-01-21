@@ -24,12 +24,19 @@ import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 /**
+ * 资源审批.
+ *
  * @author laokou
  */
 @Repository
 @Mapper
 public interface ResourceAuditMapper extends BatchMapper<ResourceAuditDO> {
 
-	ResourceAuditDO getResourceAuditById(@Param("resourceId") Long resourceId);
+	/**
+	 * 根据资源ID查看资源审批.
+	 * @param resourceId 资源ID
+	 * @return 资源审批
+	 */
+	ResourceAuditDO getResourceAuditByResourceId(@Param("resourceId") Long resourceId);
 
 }

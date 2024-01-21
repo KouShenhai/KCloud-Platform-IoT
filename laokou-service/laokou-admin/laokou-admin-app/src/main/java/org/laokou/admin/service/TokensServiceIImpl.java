@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 令牌管理.
+ *
  * @author laokou
  */
 @Service

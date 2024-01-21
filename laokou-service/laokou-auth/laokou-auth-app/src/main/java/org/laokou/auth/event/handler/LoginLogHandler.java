@@ -72,7 +72,6 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 	}
 
 	/**
-	 *
 	 * @param event
 	 */
 	private void execute(LoginLogEvent event) {

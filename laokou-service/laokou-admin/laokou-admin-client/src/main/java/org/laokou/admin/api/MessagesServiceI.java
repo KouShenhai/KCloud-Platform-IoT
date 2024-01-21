@@ -24,47 +24,48 @@ import org.laokou.common.i18n.dto.Result;
 
 /**
  * 消息管理.
+ *
  * @author laokou
  */
 public interface MessagesServiceI {
 
 	/**
-	 * 新增消息
+	 * 新增消息.
 	 * @param cmd 新增消息参数
 	 * @return 新增结果
 	 */
 	Result<Boolean> insert(MessageInsertCmd cmd);
 
 	/**
-	 * 查询消息列表
+	 * 查询消息列表.
 	 * @param qry 查询消息列表参数
 	 * @return 消息列表
 	 */
 	Result<Datas<MessageCO>> list(MessageListQry qry);
 
 	/**
-	 * 读取消息
+	 * 读取消息.
 	 * @param cmd 读取消息参数
 	 * @return 消息
 	 */
 	Result<MessageCO> read(MessageReadCmd cmd);
 
 	/**
-	 * 根据ID查看消息
+	 * 根据ID查看消息.
 	 * @param qry 根据ID查看消息参数
 	 * @return 消息
 	 */
 	Result<MessageCO> getById(MessageGetQry qry);
 
 	/**
-	 * 查询未读消息列表
+	 * 查询未读消息列表.
 	 * @param qry 查询未读消息列表参数
 	 * @return 未读消息列表
 	 */
 	Result<Datas<MessageCO>> unreadList(MessageUnreadListQry qry);
 
 	/**
-	 * 查看未读消息数
+	 * 查看未读消息数.
 	 * @param qry 查看未读消息数参数
 	 * @return 未读消息数
 	 */

@@ -40,6 +40,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 修改角色执行器.
+ *
  * @author laokou
  */
 @Component
@@ -53,7 +54,7 @@ public class RoleUpdateCmdExe {
 	private final RoleConvertor roleConvertor;
 
 	/**
-	 * 执行修改角色
+	 * 执行修改角色.
 	 * @param cmd 修改角色参数
 	 * @return 执行修改结果
 	 */
@@ -73,9 +74,9 @@ public class RoleUpdateCmdExe {
 	}
 
 	/**
-	 * 转换为用户领域
+	 * 转换为用户领域.
 	 * @return 用户领域
-     */
+	 */
 	private User toUser() {
 		return ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
 	}

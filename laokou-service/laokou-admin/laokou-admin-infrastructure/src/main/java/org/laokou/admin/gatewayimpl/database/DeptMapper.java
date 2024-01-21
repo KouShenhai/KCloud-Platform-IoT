@@ -26,18 +26,40 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
+ * 部门.
+ *
  * @author laokou
  */
 @Repository
 @Mapper
 public interface DeptMapper extends BatchMapper<DeptDO> {
 
+	/**
+	 * 查询部门列表.
+	 * @param deptDO 部门数据模型
+	 * @return 部门列表
+	 */
 	List<DeptDO> getDeptList(@Param("deptDO") DeptDO deptDO);
 
+	/**
+	 * 根据角色ID查看部门.
+	 * @param roleId 角色ID
+	 * @return 部门
+	 */
 	List<Long> getDeptIdsByRoleId(@Param("roleId") Long roleId);
 
+	/**
+	 * 根据部门父节点ID查看部门.
+	 * @param pid 部门子节点ID
+	 * @return 部门
+	 */
 	String getDeptPathByPid(@Param("pid") Long pid);
 
-	List<DeptDO> selectDeptChildrenListByLikePath(@Param("path") String path);
+	/**
+	 * 根据PATH模糊查询部门子节点列表.
+	 * @param path 部门PATH
+	 * @return 部门子节点列表
+	 */
+	List<DeptDO> getDeptChildrenListByLikePath(@Param("path") String path);
 
 }

@@ -41,6 +41,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_OSS;
 
 /**
  * OSS管理.
+ *
  * @author laokou
  */
 @Slf4j
@@ -57,7 +58,7 @@ public class OssGatewayImpl implements OssGateway {
 	private final OssConvertor ossConvertor;
 
 	/**
-	 * 查询OSS列表
+	 * 查询OSS列表.
 	 * @param oss OSS对象
 	 * @param pageQuery 分页参数
 	 * @return OSS列表
@@ -74,7 +75,7 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	/**
-	 * 根据ID查看OSS
+	 * 根据ID查看OSS.
 	 * @param id ID
 	 * @return OSS
 	 */
@@ -84,7 +85,7 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	/**
-	 * 新增OSS
+	 * 新增OSS.
 	 * @param oss OSS对象
 	 * @return 新增结果
 	 */
@@ -95,7 +96,7 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	/**
-	 * 修改OSS
+	 * 修改OSS.
 	 * @param oss OSS对象
 	 * @return 修改结果
 	 */
@@ -107,7 +108,7 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	/**
-	 * 根据ID删除OSS
+	 * 根据ID删除OSS.
 	 * @param id ID
 	 * @return 删除结果
 	 */
@@ -126,7 +127,7 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	/**
-	 * 推送OSS日志事件
+	 * 推送OSS日志事件.
 	 * @param ossLog OSS日志对象
 	 */
 	@Override
@@ -135,7 +136,7 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	/**
-	 * 转换OSS日志事件
+	 * 转换OSS日志事件.
 	 * @param ossLog OSS日志对象
 	 * @return OSS日志事件
 	 */
@@ -149,7 +150,7 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	/**
-	 * 新增OSS
+	 * 新增OSS.
 	 * @param ossDO OSS数据模型
 	 * @return 新增结果
 	 */
@@ -167,7 +168,7 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	/**
-	 * 修改OSS
+	 * 修改OSS.
 	 * @param ossDO OSS数据模型
 	 * @return 修改结果
 	 */

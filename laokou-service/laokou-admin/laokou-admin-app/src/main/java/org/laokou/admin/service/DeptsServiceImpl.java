@@ -35,6 +35,7 @@ import java.util.List;
 
 /**
  * 部门管理.
+ *
  * @author laokou
  */
 @Service
@@ -56,7 +57,7 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	private final DeptIDSGetQryExe deptIDSGetQryExe;
 
 	/**
-	 * 查看部门树
+	 * 查看部门树.
 	 * @param qry 查看部门树参数
 	 * @return 部门树
 	 */
@@ -66,7 +67,7 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	/**
-	 * 查询部门列表
+	 * 查询部门列表.
 	 * @param qry 查询部门列表参数
 	 * @return 部门列表
 	 */
@@ -76,7 +77,7 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	/**
-	 * 新增部门
+	 * 新增部门.
 	 * @param cmd 新增部门参数
 	 * @return 新增结果
 	 */
@@ -86,7 +87,7 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	/**
-	 * 修改部门
+	 * 修改部门.
 	 * @param cmd 修改部门参数
 	 * @return 修改结果
 	 */
@@ -96,7 +97,7 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	/**
-	 * 根据ID删除部门
+	 * 根据ID删除部门.
 	 * @param cmd 根据ID删除部门参数
 	 * @return 删除结果
 	 */
@@ -106,7 +107,7 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	/**
-	 * 根据ID查看部门
+	 * 根据ID查看部门.
 	 * @param qry 根据ID查看部门参数
 	 * @return 部门
 	 */
@@ -116,7 +117,7 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	/**
-	 * 根据角色ID查看部门IDS
+	 * 根据角色ID查看部门IDS.
 	 * @param qry 根据角色ID查看部门IDS参数
 	 * @return 部门IDS
 	 */

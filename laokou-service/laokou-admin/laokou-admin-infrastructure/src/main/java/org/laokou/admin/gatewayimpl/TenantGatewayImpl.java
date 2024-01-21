@@ -74,6 +74,7 @@ import static org.laokou.common.i18n.common.TenantConstants.*;
 
 /**
  * 租户管理.
+ *
  * @author laokou
  */
 @Slf4j
@@ -108,7 +109,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * 查询租户列表
+	 * 查询租户列表.
 	 * @param tenant 租户对象
 	 * @param pageQuery 分页参数
 	 * @return 租户列表
@@ -125,7 +126,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * 根据ID查看租户
+	 * 根据ID查看租户.
 	 * @param id ID
 	 * @return 租户
 	 */
@@ -135,7 +136,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * 修改租户
+	 * 修改租户.
 	 * @param tenant 租户对象
 	 * @return 修改结果
 	 */
@@ -147,7 +148,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * 根据ID删除租户
+	 * 根据ID删除租户.
 	 * @param id ID
 	 * @return 删除结果
 	 */
@@ -166,7 +167,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * 下载租户数据库压缩包
+	 * 下载租户数据库压缩包.
 	 * @param id ID
 	 * @param response 响应对象
 	 */
@@ -189,7 +190,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * 新增租户
+	 * 新增租户.
 	 * @param tenantDO 租户数据模型
 	 * @return 新增结果
 	 */
@@ -207,7 +208,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * 修改租户
+	 * 修改租户.
 	 * @param tenantDO 租户数据模型
 	 * @return 修改结果
 	 */
@@ -225,7 +226,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * SQL写入本地文件
+	 * SQL写入本地文件.
 	 * @param fileName SQL文件名称
 	 * @param name 写入文件名称
 	 * @param tenantId 租户ID
@@ -251,7 +252,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * 删除临时文件
+	 * 删除临时文件.
 	 * @param file 文件对象
 	 */
 	private void deleteTempFile(File file) {
@@ -261,7 +262,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * 查询菜单、用户和部门列表转换为SQL语句列表
+	 * 查询菜单、用户和部门列表转换为SQL语句列表.
 	 * @param tenantId 租户ID
 	 * @param packageId 套餐ID
 	 * @return SQL语句列表
@@ -290,7 +291,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * 查询菜单列表转换为Map列表
+	 * 查询菜单列表转换为Map列表.
 	 * @param menuList 菜单数据模型列表
 	 * @return Map列表
 	 */
@@ -301,7 +302,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * 查询菜单列表
+	 * 查询菜单列表.
 	 * @param tenantId 租户ID
 	 * @param userId 用户ID
 	 * @param deptId 部门ID
@@ -326,7 +327,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * 构建用户数据模型
+	 * 构建用户数据模型.
 	 * @param tenantId 租户ID
 	 * @param userId 用户ID
 	 * @param deptId 部门ID
@@ -354,7 +355,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * 构建部门数据模型
+	 * 构建部门数据模型.
 	 * @param tenantId 租户ID
 	 * @param userId 用户ID
 	 * @param deptId 部门ID
@@ -381,7 +382,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	/**
-	 * 构建修改用户SQL
+	 * 构建修改用户SQL.
 	 * @param userId 用户ID
 	 * @return 修改用户SQL
 	 */

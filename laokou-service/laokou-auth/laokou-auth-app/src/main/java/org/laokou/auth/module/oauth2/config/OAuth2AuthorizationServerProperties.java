@@ -80,7 +80,6 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 	}
 
 	/**
-	 *
 	 * @param client
 	 */
 	private void validateClient(Client client) {

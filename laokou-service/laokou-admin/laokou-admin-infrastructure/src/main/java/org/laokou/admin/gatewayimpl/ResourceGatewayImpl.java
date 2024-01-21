@@ -68,6 +68,7 @@ import static org.laokou.common.i18n.common.StringConstants.UNDER;
 
 /**
  * 资源管理.
+ *
  * @author laokou
  */
 @Slf4j
@@ -94,7 +95,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private final EventUtil eventUtil;
 
 	/**
-	 * 查询资源列表
+	 * 查询资源列表.
 	 * @param resource 资源对象
 	 * @param pageQuery 分页参数
 	 * @return 资源列表
@@ -112,7 +113,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 根据ID查看资源
+	 * 根据ID查看资源.
 	 * @param id ID
 	 * @return 资源
 	 */
@@ -122,7 +123,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 新增资源
+	 * 新增资源.
 	 * @param resource 资源对象
 	 * @return 新增结果
 	 */
@@ -133,7 +134,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 修改资源
+	 * 修改资源.
 	 * @param resource 资源对象
 	 * @return 修改结果
 	 */
@@ -144,7 +145,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 同步索引
+	 * 同步索引.
 	 * @return 同步结果
 	 */
 	@Override
@@ -168,7 +169,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 根据ID删除资源
+	 * 根据ID删除资源.
 	 * @param id ID
 	 * @return 删除结果
 	 */
@@ -187,7 +188,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 修改资源
+	 * 修改资源.
 	 * @param resource 资源对象
 	 * @return 修改结果
 	 */
@@ -196,7 +197,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 新增资源
+	 * 新增资源.
 	 * @param resource 资源对象
 	 * @return 新增结果
 	 */
@@ -208,7 +209,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 修改资源
+	 * 修改资源.
 	 * @param resource 资源对象
 	 * @param version 版本号
 	 * @return 修改结果
@@ -224,7 +225,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 推送消息事件
+	 * 推送消息事件.
 	 * @param resource 资源对象
 	 * @param instanceId 实例ID
 	 */
@@ -235,7 +236,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 开始任务流程
+	 * 开始任务流程.
 	 * @param resource 资源对象
 	 * @return 开始结果
 	 */
@@ -248,7 +249,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 修改资源状态
+	 * 修改资源状态.
 	 * @param resource 资源对象
 	 * @param status 状态
 	 * @param version 版本号
@@ -264,7 +265,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 新增资源审批
+	 * 新增资源审批.
 	 * @param resource 资源对象
 	 */
 	private void insertResourceAudit(Resource resource) {
@@ -275,7 +276,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 创建索引
+	 * 创建索引.
 	 * @param list 索引名称列表
 	 */
 	private void createIndex(List<String> list) {
@@ -291,7 +292,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 删除索引
+	 * 删除索引.
 	 * @param list 索引名称列表
 	 */
 	private void deleteIndex(List<String> list) {
@@ -307,7 +308,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 同步索引
+	 * 同步索引.
 	 */
 	private void syncIndex() {
 		int chunkSize = 5000;
@@ -325,7 +326,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 同步索引
+	 * 同步索引.
 	 * @param list 资源索引列表
 	 */
 	private void syncIndex(List<ResourceIndex> list) {
@@ -344,7 +345,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 拼接索引
+	 * 拼接索引.
 	 * @param ym 年月
 	 * @return 索引
 	 */
@@ -353,14 +354,14 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	/**
-	 * 同步前
+	 * 同步前.
 	 */
 	private void syncBefore() {
 		log.info("开始同步数据");
 	}
 
 	/**
-	 * 同步后
+	 * 同步后.
 	 */
 	private void syncAfter() {
 		log.info("结束同步数据");

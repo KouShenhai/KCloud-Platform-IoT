@@ -28,12 +28,22 @@ import org.springframework.stereotype.Repository;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
+ * 字典.
+ *
  * @author laokou
  */
 @Repository
 @Mapper
 public interface DictMapper extends BatchMapper<DictDO> {
 
+	/**
+	 * 查询字典列表.
+	 * @param page 分页参数
+	 * @param type 类型
+	 * @param label 标签
+	 * @param pageQuery 分页参数
+	 * @return 字典列表
+	 */
 	IPage<DictDO> getDictListFilter(IPage<DictDO> page, @Param("type") String type, @Param("label") String label,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 

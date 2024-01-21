@@ -28,6 +28,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 删除OSS执行器.
+ *
  * @author laokou
  */
 @Component
@@ -37,7 +38,7 @@ public class OssDeleteCmdExe {
 	private final OssGateway ossGateway;
 
 	/**
-	 * 执行删除OSS
+	 * 执行删除OSS.
 	 * @param cmd 删除OSS参数
 	 * @return 执行删除结果
 	 */

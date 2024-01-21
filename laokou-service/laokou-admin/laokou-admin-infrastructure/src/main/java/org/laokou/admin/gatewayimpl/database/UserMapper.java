@@ -29,6 +29,8 @@ import java.util.List;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
+ * 用户.
+ *
  * @author laokou
  */
 @Repository
@@ -37,8 +39,8 @@ public interface UserMapper extends BatchMapper<UserDO> {
 
 	/**
 	 * 修改用户.
-	 * @param userDO 用户
-	 * @return int
+	 * @param userDO 用户对象
+	 * @return 修改结果
 	 */
 	Integer updateUser(@Param("userDO") UserDO userDO);
 
@@ -51,16 +53,16 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	Integer insertUser(@Param("userDO") UserDO userDO, @Param("key") String key);
 
 	/**
-	 * 根据租户ID查询下拉列表.
+	 * 查询用户下拉框选择项列表.
 	 * @param key 密钥
 	 * @param pageQuery 分页参数
-	 * @return 用户列表
+	 * @return 用户下拉框选择项列表
 	 */
 	List<UserDO> getOptionList(@Param(PAGE_QUERY) PageQuery pageQuery, @Param("key") String key);
 
 	/**
 	 * 查询用户列表.
-	 * @param user 用户参数
+	 * @param user 用户对象
 	 * @param pageQuery 分页参数
 	 * @param key 密钥
 	 * @return 用户列表
@@ -69,8 +71,8 @@ public interface UserMapper extends BatchMapper<UserDO> {
 			@Param("key") String key);
 
 	/**
-	 * 用户总数.
-	 * @param user 用户
+	 * 查看用户总数.
+	 * @param user 用户对象
 	 * @param pageQuery 分页参数
 	 * @param key 密钥
 	 * @return 用户总数
@@ -80,7 +82,7 @@ public interface UserMapper extends BatchMapper<UserDO> {
 
 	/**
 	 * 判断用户名重复.
-	 * @param user 用户
+	 * @param user 用户对象
 	 * @param key 密钥
 	 * @return 判断结果
 	 */

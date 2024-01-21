@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 查看服务器监控执行器.
+ *
  * @author laokou
  */
 @Component

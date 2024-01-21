@@ -25,19 +25,20 @@ import org.laokou.common.i18n.dto.Result;
 
 /**
  * 监控管理.
+ *
  * @author laokou
  */
 public interface MonitorsServiceI {
 
 	/**
-	 * 查看缓存监控
+	 * 查看缓存监控.
 	 * @param qry 查看缓存监控参数
 	 * @return 缓存监控
 	 */
 	Result<RedisCacheCO> cache(MonitorRedisCacheGetQry qry);
 
 	/**
-	 * 查看服务器监控
+	 * 查看服务器监控.
 	 * @param qry 查看服务器监控参数
 	 * @return 服务器监控
 	 */

@@ -32,6 +32,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 查询消息列表执行器.
+ *
  * @author laokou
  */
 @Component

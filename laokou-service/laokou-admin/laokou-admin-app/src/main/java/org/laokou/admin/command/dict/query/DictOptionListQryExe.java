@@ -36,6 +36,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 查询字典下拉框选择项列表执行器.
+ *
  * @author laokou
  */
 @Component

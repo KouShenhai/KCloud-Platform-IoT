@@ -39,7 +39,8 @@ import static org.laokou.common.i18n.common.ResponseHeaderConstants.CONTENT_DISP
 import static org.laokou.common.i18n.common.ResponseHeaderConstants.STREAM_CONTENT_TYPE;
 
 /**
- * 资源下载执行器
+ * 资源下载执行器.
+ *
  * @author laokou
  */
 @Component
@@ -49,7 +50,7 @@ public class ResourceDownloadCmdExe {
 	private final ResourceMapper resourceMapper;
 
 	/**
-	 * 执行资源下载
+	 * 执行资源下载.
 	 * @param cmd 执行下载结果
 	 */
 	@SneakyThrows

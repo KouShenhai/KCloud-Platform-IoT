@@ -37,6 +37,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 删除菜单执行器.
+ *
  * @author laokou
  */
 @Component

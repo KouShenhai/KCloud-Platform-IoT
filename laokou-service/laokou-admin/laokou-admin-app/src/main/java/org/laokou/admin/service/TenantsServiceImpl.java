@@ -38,6 +38,7 @@ import java.util.List;
 
 /**
  * 租户管理.
+ *
  * @author laokou
  */
 @Service
@@ -61,7 +62,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	private final TenantDownloadDatasourceCmdExe tenantDownloadDatasourceCmdExe;
 
 	/**
-	 * 查询租户下拉框选择项列表
+	 * 查询租户下拉框选择项列表.
 	 * @param qry 查询租户下拉框选择项列表参数
 	 * @return 租户下拉框选择项列表
 	 */
@@ -71,7 +72,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	}
 
 	/**
-	 * 新增租户
+	 * 新增租户.
 	 * @param cmd 新增租户参数
 	 * @return 新增结果
 	 */
@@ -81,7 +82,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	}
 
 	/**
-	 * 修改租户
+	 * 修改租户.
 	 * @param cmd 修改租户参数
 	 * @return 修改结果
 	 */
@@ -91,7 +92,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	}
 
 	/**
-	 * 根据ID删除租户
+	 * 根据ID删除租户.
 	 * @param cmd 根据ID删除租户
 	 * @return 删除结果
 	 */
@@ -101,7 +102,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	}
 
 	/**
-	 * 查询租户列表
+	 * 查询租户列表.
 	 * @param qry 查询租户列表参数
 	 * @return 租户列表
 	 */
@@ -111,7 +112,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	}
 
 	/**
-	 * 根据ID查看租户
+	 * 根据ID查看租户.
 	 * @param qry 根据ID查看租户
 	 * @return 租户
 	 */
@@ -121,9 +122,9 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	}
 
 	/**
-	 * 根据域名查看租户ID
+	 * 根据域名查看租户ID.
 	 * @param qry 根据域名查看租户ID
-	 * @return
+	 * @return 租户ID
 	 */
 	@Override
 	public Result<Long> getIdByDomainName(TenantGetIDQry qry) {

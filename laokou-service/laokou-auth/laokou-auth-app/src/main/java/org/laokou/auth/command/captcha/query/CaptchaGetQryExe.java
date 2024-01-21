@@ -36,7 +36,6 @@ public class CaptchaGetQryExe {
 	private final CaptchaGateway captchaGateway;
 
 	/**
-	 *
 	 * @param qry
 	 * @return
 	 */
@@ -50,7 +49,6 @@ public class CaptchaGetQryExe {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	private Captcha generate() {

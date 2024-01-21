@@ -49,7 +49,6 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 	private final OAuth2AuthorizationServerProperties properties;
 
 	/**
-	 *
 	 * @return
 	 */
 	AuthorizationServerSettings asAuthorizationServerSettings() {
@@ -72,7 +71,6 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	List<RegisteredClient> asRegisteredClients() {
@@ -83,7 +81,6 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 	}
 
 	/**
-	 *
 	 * @param registrationId
 	 * @param client
 	 * @return
@@ -118,7 +115,6 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 	}
 
 	/**
-	 *
 	 * @param client
 	 * @param map
 	 * @return
@@ -136,7 +132,6 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 	}
 
 	/**
-	 *
 	 * @param client
 	 * @param map
 	 * @return
@@ -158,7 +153,6 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 	}
 
 	/**
-	 *
 	 * @param signingAlgorithm
 	 * @return
 	 */
@@ -172,7 +166,6 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 	}
 
 	/**
-	 *
 	 * @param signatureAlgorithm
 	 * @return
 	 */

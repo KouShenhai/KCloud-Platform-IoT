@@ -30,6 +30,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 查看资源执行器.
+ *
  * @author laokou
  */
 @Component

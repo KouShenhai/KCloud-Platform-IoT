@@ -36,6 +36,7 @@ import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.TRACE;
 
 /**
  * 查询索引列表执行器.
+ *
  * @author laokou
  */
 @Component

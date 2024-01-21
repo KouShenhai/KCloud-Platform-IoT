@@ -28,6 +28,7 @@ import java.io.InputStream;
 
 /**
  * OSS抽象.
+ *
  * @author laokou
  */
 @Slf4j
@@ -37,13 +38,13 @@ public abstract class AbstractStorageDriver<O> implements StorageDriver<O> {
 	protected OssCO co;
 
 	/**
-	 *
+	 * 上传文件.
 	 * @param limitRead 读取时间
 	 * @param fileSize 文件大小
 	 * @param fileName 文件名
 	 * @param inputStream 输入流
 	 * @param contentType 类型
-	 * @return
+	 * @return 文件对象
 	 */
 	public String upload(int limitRead, long fileSize, String fileName, InputStream inputStream, String contentType) {
 		try {
@@ -66,7 +67,7 @@ public abstract class AbstractStorageDriver<O> implements StorageDriver<O> {
 
 	/**
 	 * 获取连接对象.
-	 * @return
+	 * @return 连接对象
 	 */
 	protected abstract O getObj();
 

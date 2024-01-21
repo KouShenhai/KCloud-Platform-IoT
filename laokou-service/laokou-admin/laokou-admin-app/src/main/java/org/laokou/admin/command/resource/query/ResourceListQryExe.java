@@ -33,6 +33,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 查询资源列表执行器.
+ *
  * @author laokou
  */
 @Component
@@ -44,7 +45,7 @@ public class ResourceListQryExe {
 	private final ResourceConvertor resourceConvertor;
 
 	/**
-	 * 执行查询资源列表
+	 * 执行查询资源列表.
 	 * @param qry 查询资源列表参数
 	 * @return 资源列表
 	 */

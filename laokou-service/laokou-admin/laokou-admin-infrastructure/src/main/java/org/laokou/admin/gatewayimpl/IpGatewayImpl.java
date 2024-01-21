@@ -44,6 +44,7 @@ import static org.laokou.common.redis.utils.RedisUtil.NOT_EXPIRE;
 
 /**
  * IP管理.
+ *
  * @author laokou
  */
 @Slf4j
@@ -60,7 +61,7 @@ public class IpGatewayImpl implements IpGateway {
 	private final RedisUtil redisUtil;
 
 	/**
-	 * 新增IP
+	 * 新增IP.
 	 * @param ip IP对象
 	 * @return 新增结果
 	 */
@@ -70,7 +71,7 @@ public class IpGatewayImpl implements IpGateway {
 	}
 
 	/**
-	 * 根据ID删除IP
+	 * 根据ID删除IP.
 	 * @param id ID
 	 * @return 删除结果
 	 */
@@ -89,7 +90,7 @@ public class IpGatewayImpl implements IpGateway {
 	}
 
 	/**
-	 * 查询IP列表
+	 * 查询IP列表.
 	 * @param ip IP对象
 	 * @param pageQuery 分页参数
 	 * @return IP列表
@@ -106,7 +107,7 @@ public class IpGatewayImpl implements IpGateway {
 	}
 
 	/**
-	 * 刷新IP至Redis
+	 * 刷新IP至Redis.
 	 * @param ip IP对象
 	 * @return 刷新结果
 	 */
@@ -126,7 +127,7 @@ public class IpGatewayImpl implements IpGateway {
 	}
 
 	/**
-	 * 新增IP
+	 * 新增IP.
 	 * @param ipDO IP数据模型
 	 * @return 新增结果
 	 */

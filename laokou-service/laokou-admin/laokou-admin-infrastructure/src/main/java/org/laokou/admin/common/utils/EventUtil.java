@@ -26,6 +26,7 @@ import java.util.Collections;
 
 /**
  * 消息事件工具类.
+ *
  * @author laokou
  */
 @Component

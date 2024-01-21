@@ -33,6 +33,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 查询OSS列表执行器.
+ *
  * @author laokou
  */
 @Component
@@ -44,7 +45,7 @@ public class OssListQryExe {
 	private final OssConvertor ossConvertor;
 
 	/**
-	 * 执行查询OSS列表
+	 * 执行查询OSS列表.
 	 * @param qry 查询OSS列表参数
 	 * @return OSS列表
 	 */

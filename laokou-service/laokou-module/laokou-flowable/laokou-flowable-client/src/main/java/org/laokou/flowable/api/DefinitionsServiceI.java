@@ -23,48 +23,41 @@ import org.laokou.flowable.dto.definition.*;
 import org.laokou.flowable.dto.definition.clientobject.DefinitionCO;
 
 /**
- *
  * @author laokou
  */
 public interface DefinitionsServiceI {
 
 	/**
-	 *
 	 * @param cmd
 	 * @return
 	 */
 	Result<Boolean> insert(DefinitionInsertCmd cmd);
 
 	/**
-	 *
 	 * @param qry
 	 * @return
 	 */
 	Result<Datas<DefinitionCO>> list(DefinitionListQry qry);
 
 	/**
-	 *
 	 * @param qry
 	 * @return
 	 */
 	Result<String> diagram(DefinitionDiagramGetQry qry);
 
 	/**
-	 *
 	 * @param cmd
 	 * @return
 	 */
 	Result<Boolean> delete(DefinitionDeleteCmd cmd);
 
 	/**
-	 *
 	 * @param cmd
 	 * @return
 	 */
 	Result<Boolean> suspend(DefinitionSuspendCmd cmd);
 
 	/**
-	 *
 	 * @param cmd
 	 * @return
 	 */

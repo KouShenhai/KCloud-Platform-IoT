@@ -29,6 +29,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 删除树菜单执行器.
+ *
  * @author laokou
  */
 @Slf4j

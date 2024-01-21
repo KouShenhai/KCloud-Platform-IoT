@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 领域事件推送.
+ *
  * @author laokou
  */
 @Component

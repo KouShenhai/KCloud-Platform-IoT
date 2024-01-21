@@ -40,6 +40,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 查询树菜单列表执行器.
+ *
  * @author laokou
  */
 @Component

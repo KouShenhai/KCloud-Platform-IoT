@@ -32,6 +32,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 新增数据源执行器.
+ *
  * @author laokou
  */
 @Component
@@ -45,7 +46,7 @@ public class SourceInsertCmdExe {
 	private final SourceConvertor sourceConvertor;
 
 	/**
-	 * 执行新增数据源
+	 * 执行新增数据源.
 	 * @param cmd 新增数据源参数
 	 * @return 执行新增结果
 	 */
@@ -56,7 +57,7 @@ public class SourceInsertCmdExe {
 	}
 
 	/**
-	 * 校验数据源填写信息
+	 * 校验数据源填写信息.
 	 * @param source 数据源对象
 	 */
 	private void validate(Source source) {

@@ -30,6 +30,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 查看角色执行器.
+ *
  * @author laokou
  */
 @Component
@@ -41,7 +42,7 @@ public class RoleGetQryExe {
 	private final RoleConvertor roleConvertor;
 
 	/**
-	 * 执行查看角色
+	 * 执行查看角色.
 	 * @param qry 查看角色参数
 	 * @return 角色
 	 */

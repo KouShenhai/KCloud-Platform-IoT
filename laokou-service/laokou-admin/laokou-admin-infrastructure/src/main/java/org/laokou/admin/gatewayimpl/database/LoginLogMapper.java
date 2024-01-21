@@ -29,15 +29,31 @@ import java.util.List;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
+ * 登录日志.
+ *
  * @author laokou
  */
 @Repository
 @Mapper
 public interface LoginLogMapper extends BatchMapper<LoginLogDO> {
 
+	/**
+	 * 查询登录日志列表.
+	 * @param tables 表集合
+	 * @param loginLogDO 登录日志数据模型
+	 * @param pageQuery 分页参数
+	 * @return 登录日志列表
+	 */
 	List<LoginLogDO> getLoginLogListFilter(@Param("tables") List<String> tables, @Param("log") LoginLogDO loginLogDO,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
+	/**
+	 * 查看登录日志总数.
+	 * @param tables 表集合
+	 * @param loginLogDO 登录日志数据模型
+	 * @param pageQuery 分页参数
+	 * @return 登录日志总数
+	 */
 	Integer getLoginLogCountFilter(@Param("tables") List<String> tables, @Param("log") LoginLogDO loginLogDO,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 

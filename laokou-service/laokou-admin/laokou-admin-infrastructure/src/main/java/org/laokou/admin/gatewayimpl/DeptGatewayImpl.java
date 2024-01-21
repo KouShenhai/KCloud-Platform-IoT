@@ -38,6 +38,7 @@ import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 
 /**
  * 部门管理.
+ *
  * @author laokou
  */
 @Slf4j
@@ -52,7 +53,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	private final DeptConvertor deptConvertor;
 
 	/**
-	 * 查询部门列表
+	 * 查询部门列表.
 	 * @param dept 部门对象
 	 * @return 部门列表
 	 */
@@ -63,7 +64,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	/**
-	 * 新增部门
+	 * 新增部门.
 	 * @param dept 部门对象
 	 * @return 新增结果
 	 */
@@ -76,7 +77,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	/**
-	 * 修改部门
+	 * 修改部门.
 	 * @param dept 部门对象
 	 * @return 修改结果
 	 */
@@ -87,12 +88,12 @@ public class DeptGatewayImpl implements DeptGateway {
 		deptDO.setVersion(dep.getVersion());
 		deptDO.setPath(getPath(deptDO.getPid(), deptDO.getId()));
 		// 获取所有子节点
-		List<DeptDO> deptChildrenList = deptMapper.selectDeptChildrenListByLikePath(dep.getPath());
+		List<DeptDO> deptChildrenList = deptMapper.getDeptChildrenListByLikePath(dep.getPath());
 		return updateDept(deptDO, dept.getPath(), deptDO.getPath(), deptChildrenList);
 	}
 
 	/**
-	 * 根据角色ID查看部门IDS
+	 * 根据角色ID查看部门IDS.
 	 * @param roleId 角色IDS
 	 * @return 部门IDS
 	 */
@@ -102,7 +103,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	/**
-	 * 根据ID删除部门
+	 * 根据ID删除部门.
 	 * @param id ID
 	 * @return 删除结果
 	 */
@@ -121,7 +122,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	/**
-	 * 根据ID查看部门
+	 * 根据ID查看部门.
 	 * @param id ID
 	 * @return 部门
 	 */
@@ -131,7 +132,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	/**
-	 * 修改部门
+	 * 修改部门.
 	 * @param deptDO 部门数据模型
 	 * @param oldPath 旧部门PATH
 	 * @param newPath 新部门PATH
@@ -154,7 +155,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	/**
-	 * 新增部门
+	 * 新增部门.
 	 * @param deptDO 部门数据模型
 	 * @return 新增结果
 	 */
@@ -172,7 +173,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	/**
-	 * 修改部门子节点
+	 * 修改部门子节点.
 	 * @param oldPath 旧部门PATH
 	 * @param newPath 新部门PATH
 	 * @param deptChildrenList 部门子节点列表
@@ -187,7 +188,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	/**
-	 * 查看部门PATH
+	 * 查看部门PATH.
 	 * @param pid 部门父节点ID
 	 * @param id ID
 	 * @return 部门PATH

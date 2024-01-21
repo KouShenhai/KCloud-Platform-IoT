@@ -38,6 +38,7 @@ import static org.laokou.common.i18n.common.MessageReadEnums.YES;
 
 /**
  * 读取消息执行器.
+ *
  * @author laokou
  */
 @Slf4j

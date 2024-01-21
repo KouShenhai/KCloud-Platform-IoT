@@ -28,12 +28,22 @@ import org.springframework.stereotype.Repository;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
+ * 操作日志.
+ *
  * @author laokou
  */
 @Repository
 @Mapper
 public interface OperateLogMapper extends BatchMapper<OperateLogDO> {
 
+	/**
+	 * 查询操作日志列表.
+	 * @param page 分页参数
+	 * @param moduleName 模块名称
+	 * @param status 状态
+	 * @param pageQuery 分页参数
+	 * @return 操作日志列表
+	 */
 	IPage<OperateLogDO> getOperateListFilter(IPage<OperateLogDO> page, @Param("moduleName") String moduleName,
 			@Param("status") Integer status, @Param(PAGE_QUERY) PageQuery pageQuery);
 

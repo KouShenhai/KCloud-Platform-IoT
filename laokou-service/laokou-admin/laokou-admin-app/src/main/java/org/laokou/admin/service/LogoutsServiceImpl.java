@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 退出登录.
+ *
  * @author laokou
  */
 @Service
@@ -35,7 +36,7 @@ public class LogoutsServiceImpl implements LogoutsServiceI {
 	private final LogoutCmdExe logoutCmdExe;
 
 	/**
-	 * 退出登录
+	 * 退出登录.
 	 * @param cmd 退出登录参数
 	 * @return 退出结果
 	 */

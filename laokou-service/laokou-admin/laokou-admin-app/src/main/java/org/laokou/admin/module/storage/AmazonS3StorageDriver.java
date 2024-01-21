@@ -36,6 +36,7 @@ import java.net.URL;
 
 /**
  * OSS Amazon S3协议.
+ *
  * @author laokou
  */
 public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
@@ -45,7 +46,6 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 	}
 
 	/**
-	 *
 	 * @param amazonS3 连接对象
 	 */
 	@Override
@@ -58,7 +58,6 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 	}
 
 	/**
-	 *
 	 * @param amazonS3 连接对象
 	 * @param readLimit 读取时间
 	 * @param fileSize 文件大小
@@ -80,10 +79,10 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 	}
 
 	/**
-	 *
+	 * 查看URL.
 	 * @param amazonS3 连接对象
 	 * @param fileName 文件名
-	 * @return
+	 * @return URL
 	 */
 	@Override
 	public String getUrl(AmazonS3 amazonS3, String fileName) {
@@ -93,9 +92,9 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 	}
 
 	/**
-	 *
+	 * 查看文件名。
 	 * @param fileName 文件名
-	 * @return
+	 * @return 文件名
 	 */
 	@Override
 	public String getFileName(String fileName) {
@@ -103,8 +102,8 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 	}
 
 	/**
-	 *
-	 * @return
+	 * 获取AmazonS3连接.
+	 * @return AmazonS3对象
 	 */
 	@NotNull
 	@Override

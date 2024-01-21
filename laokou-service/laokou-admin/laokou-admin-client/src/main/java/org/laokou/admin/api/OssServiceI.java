@@ -25,47 +25,48 @@ import org.laokou.common.i18n.dto.Result;
 
 /**
  * OSS管理.
+ *
  * @author laokou
  */
 public interface OssServiceI {
 
 	/**
-	 * 新增OSS
+	 * 新增OSS.
 	 * @param cmd 新增OSS参数
 	 * @return 新增结果
 	 */
 	Result<Boolean> insert(OssInsertCmd cmd);
 
 	/**
-	 * 修改OSS
+	 * 修改OSS.
 	 * @param cmd 修改OSS参数
 	 * @return 修改结果
 	 */
 	Result<Boolean> update(OssUpdateCmd cmd);
 
 	/**
-	 * 根据ID删除OSS
+	 * 根据ID删除OSS.
 	 * @param cmd 根据ID删除OSS参数
 	 * @return 删除结果
 	 */
 	Result<Boolean> deleteById(OssDeleteCmd cmd);
 
 	/**
-	 * 根据ID查看OSS
+	 * 根据ID查看OSS.
 	 * @param qry 根据ID查看OSS参数
 	 * @return OSS
 	 */
 	Result<OssCO> getById(OssGetQry qry);
 
 	/**
-	 * 查询OSS列表
+	 * 查询OSS列表.
 	 * @param qry 查询OSS列表参数
 	 * @return OSS列表
 	 */
 	Result<Datas<OssCO>> list(OssListQry qry);
 
 	/**
-	 * 上传文件
+	 * 上传文件.
 	 * @param cmd 上传文件参数
 	 * @return 文件对象
 	 */

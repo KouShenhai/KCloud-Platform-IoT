@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 查询用户列表执行器.
+ *
  * @author laokou
  */
 @Component
@@ -40,7 +41,7 @@ public class UserListQryExe {
 	private final UserConvertor userConvertor;
 
 	/**
-	 * 执行查询用户列表
+	 * 执行查询用户列表.
 	 * @param qry 查询用户列表参数
 	 * @return 用户列表
 	 */

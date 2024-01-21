@@ -164,7 +164,6 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 *
 	 * @param jwkSource
 	 * @return
 	 */
@@ -174,7 +173,6 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	@Bean
@@ -236,7 +234,6 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	private RSAKey getRsaKey() {
@@ -247,7 +244,6 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	private KeyPair generateRsaKey() {

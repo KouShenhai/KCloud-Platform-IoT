@@ -51,7 +51,7 @@ public class RegexUtil {
 	private static final String NUMBER_REGEX = "^[0-9]*$";
 
 	/**
-	 * URL版本正则表达式
+	 * URL版本正则表达式.
 	 */
 	public static final String URL_VERSION_REGEX = "/(v\\d+)/";
 
@@ -101,7 +101,7 @@ public class RegexUtil {
 	}
 
 	/**
-	 * 根据正则表达式获取值
+	 * 根据正则表达式获取值.
 	 * @param input 输入值
 	 * @param regex 正则表达式
 	 * @return 值

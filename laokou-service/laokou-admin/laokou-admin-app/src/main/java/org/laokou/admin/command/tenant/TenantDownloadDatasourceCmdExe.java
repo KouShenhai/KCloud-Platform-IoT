@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 下载租户数据库压缩包执行器.
+ *
  * @author laokou
  */
 @Component
@@ -33,7 +34,7 @@ public class TenantDownloadDatasourceCmdExe {
 	private final TenantGateway tenantGateway;
 
 	/**
-	 * 执行下载租户数据库压缩包
+	 * 执行下载租户数据库压缩包.
 	 * @param cmd 下载租户数据库压缩包参数
 	 */
 	public void executeVoid(TenantDownloadDatasourceCmd cmd) {

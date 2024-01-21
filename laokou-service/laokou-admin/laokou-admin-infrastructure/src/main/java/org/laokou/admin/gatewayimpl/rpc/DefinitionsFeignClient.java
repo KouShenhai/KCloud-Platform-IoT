@@ -31,6 +31,7 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 /**
  * 定义流程.
+ *
  * @author laokou
  */
 @FeignClient(contextId = "definitions", name = LAOKOU_FLOWABLE_SERVICE, path = "v1/definitions",

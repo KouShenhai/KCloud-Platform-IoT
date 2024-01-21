@@ -27,7 +27,8 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * 搜索资源执行器
+ * 搜索资源执行器.
+ *
  * @author laokou
  */
 @Component
@@ -37,7 +38,7 @@ public class ResourceSearchGetQryExe {
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	/**
-	 * 执行搜索资源
+	 * 执行搜索资源.
 	 * @param qry 搜索资源参数
 	 * @return 搜索结果
 	 */

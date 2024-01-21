@@ -34,6 +34,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * IP管理.
+ *
  * @author laokou
  */
 @Service
@@ -49,7 +50,7 @@ public class IpsServiceImpl implements IpsServiceI {
 	private final IpRefreshCmdExe ipRefreshCmdExe;
 
 	/**
-	 * 新增IP
+	 * 新增IP.
 	 * @param cmd 新增IP参数
 	 * @return 新增IP
 	 */
@@ -59,7 +60,7 @@ public class IpsServiceImpl implements IpsServiceI {
 	}
 
 	/**
-	 * 根据IP删除IP
+	 * 根据IP删除IP.
 	 * @param cmd 根据IP删除IP参数
 	 * @return 删除结果
 	 */
@@ -69,7 +70,7 @@ public class IpsServiceImpl implements IpsServiceI {
 	}
 
 	/**
-	 * 查询IP列表
+	 * 查询IP列表.
 	 * @param qry 查询IP列表参数
 	 * @return IP列表
 	 */
@@ -79,7 +80,7 @@ public class IpsServiceImpl implements IpsServiceI {
 	}
 
 	/**
-	 * 刷新IP至Redis
+	 * 刷新IP至Redis.
 	 * @param cmd 刷新IP至Redis参数
 	 * @return 刷新结果
 	 */

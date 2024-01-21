@@ -28,15 +28,28 @@ import org.springframework.stereotype.Repository;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
+ * 租户.
+ *
  * @author laokou
  */
 @Mapper
 @Repository
 public interface TenantMapper extends BatchMapper<TenantDO> {
 
+	/**
+	 * 查询租户列表.
+	 * @param page 分页参数
+	 * @param name 租户名称
+	 * @param pageQuery 分页参数
+	 * @return 租户列表
+	 */
 	IPage<TenantDO> getTenantListFilter(IPage<TenantDO> page, @Param("name") String name,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
+	/**
+	 * 查看最大标签数字.
+	 * @return 最大标签数字
+	 */
 	Integer maxLabelNum();
 
 }

@@ -49,6 +49,7 @@ import static org.laokou.common.i18n.common.StringConstants.DROP;
 
 /**
  * 数据源工具类.
+ *
  * @author laokou
  */
 @Slf4j
@@ -63,7 +64,7 @@ public class DsUtil {
 	private final DefaultConfigProperties defaultConfigProperties;
 
 	/**
-	 * 根据数据源名称加载数据源至本地内存
+	 * 根据数据源名称加载数据源至本地内存.
 	 * @param sourceName 数据源名称
 	 * @return 数据源名称
 	 */

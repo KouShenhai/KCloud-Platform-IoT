@@ -29,7 +29,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
- * 重置用户密码执行器
+ * 重置用户密码执行器.
+ *
  * @author laokou
  */
 @Component

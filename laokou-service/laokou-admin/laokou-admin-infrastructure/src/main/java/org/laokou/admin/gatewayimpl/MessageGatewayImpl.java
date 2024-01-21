@@ -57,6 +57,7 @@ import static org.laokou.common.i18n.common.RocketMqConstants.*;
 
 /**
  * 消息管理.
+ *
  * @author laokou
  */
 @Slf4j
@@ -75,7 +76,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	private final MybatisUtil mybatisUtil;
 
 	/**
-	 * 查询消息列表
+	 * 查询消息列表.
 	 * @param message 消息对象
 	 * @param pageQuery 分页参数
 	 * @return 消息列表
@@ -92,7 +93,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	/**
-	 * 新增消息
+	 * 新增消息.
 	 * @param message 消息对象
 	 * @param user 用户对象
 	 * @return 新增结果
@@ -106,7 +107,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	/**
-	 * 根据ID查看消息
+	 * 根据ID查看消息.
 	 * @param id ID
 	 * @return 消息
 	 */
@@ -116,7 +117,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	/**
-	 * 推送消息
+	 * 推送消息.
 	 * @param receiver 接收人集合
 	 * @param type 类型
 	 */
@@ -132,7 +133,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	/**
-	 * 新增消息
+	 * 新增消息.
 	 * @param messageDO 消息数据模型
 	 * @param message 消息对象
 	 * @param user 用户对象
@@ -152,7 +153,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	/**
-	 * 新增消息详情
+	 * 新增消息详情.
 	 * @param messageId 消息ID
 	 * @param receiver 接收人列表
 	 * @param user 用户对象
@@ -168,7 +169,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	/**
-	 * 查看消息标签
+	 * 查看消息标签.
 	 * @param type 消息类型
 	 * @return 消息标签
 	 */
@@ -177,7 +178,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	/**
-	 * 转换消息详情数据模型
+	 * 转换消息详情数据模型.
 	 * @param messageId 消息ID
 	 * @param userId 用户ID
 	 * @param user 用户对象

@@ -26,6 +26,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 查看令牌执行器.
+ *
  * @author laokou
  */
 @Component
@@ -35,7 +36,7 @@ public class TokenGetQryExe {
 	private final IdempotentUtil idempotentUtil;
 
 	/**
-	 * 执行查看令牌
+	 * 执行查看令牌.
 	 * @param qry 查看令牌参数
 	 * @return 令牌
 	 */

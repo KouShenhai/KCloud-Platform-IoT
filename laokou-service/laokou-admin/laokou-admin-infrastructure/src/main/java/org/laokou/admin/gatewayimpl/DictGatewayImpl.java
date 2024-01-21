@@ -38,6 +38,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_DICT;
 
 /**
  * 字典管理.
+ *
  * @author laokou
  */
 @Slf4j
@@ -52,7 +53,7 @@ public class DictGatewayImpl implements DictGateway {
 	private final DictConvertor dictConvertor;
 
 	/**
-	 * 新增字典
+	 * 新增字典.
 	 * @param dict 字典对象
 	 * @return 新增结果
 	 */
@@ -63,7 +64,7 @@ public class DictGatewayImpl implements DictGateway {
 	}
 
 	/**
-	 * 修改字典
+	 * 修改字典.
 	 * @param dict 字典对象
 	 * @return 修改结果
 	 */
@@ -75,7 +76,7 @@ public class DictGatewayImpl implements DictGateway {
 	}
 
 	/**
-	 * 根据ID查看字典
+	 * 根据ID查看字典.
 	 * @param id ID
 	 * @return 字典
 	 */
@@ -85,7 +86,7 @@ public class DictGatewayImpl implements DictGateway {
 	}
 
 	/**
-	 * 根据ID删除字典
+	 * 根据ID删除字典.
 	 * @param id ID
 	 * @return 删除结果
 	 */
@@ -104,7 +105,7 @@ public class DictGatewayImpl implements DictGateway {
 	}
 
 	/**
-	 * 查询字典列表
+	 * 查询字典列表.
 	 * @param dict 字典对象
 	 * @param pageQuery 分页参数
 	 * @return 字典列表
@@ -121,7 +122,7 @@ public class DictGatewayImpl implements DictGateway {
 	}
 
 	/**
-	 * 新增字典
+	 * 新增字典.
 	 * @param dictDO 字典数据模型
 	 * @return 新增结果
 	 */
@@ -139,7 +140,7 @@ public class DictGatewayImpl implements DictGateway {
 	}
 
 	/**
-	 * 修改字典
+	 * 修改字典.
 	 * @param dictDO 字典数据模型
 	 * @return 修改结果
 	 */

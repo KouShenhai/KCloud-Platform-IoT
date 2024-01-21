@@ -49,6 +49,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 审批资源任务流程执行器.
+ *
  * @author laokou
  */
 @Slf4j
@@ -67,7 +68,7 @@ public class ResourceAuditTaskCmdExe {
 	private final EventUtil eventUtil;
 
 	/**
-	 * 执行审批资源任务流程
+	 * 执行审批资源任务流程.
 	 * @param cmd 审批资源任务流程参数
 	 * @return 执行审批结果
 	 */
@@ -90,7 +91,7 @@ public class ResourceAuditTaskCmdExe {
 		int version = resourceMapper.getVersion(id, ResourceDO.class);
 		ResourceAuditDO resourceAuditDO = null;
 		if (status == APPROVED.getValue()) {
-			resourceAuditDO = resourceAuditMapper.getResourceAuditById(id);
+			resourceAuditDO = resourceAuditMapper.getResourceAuditByResourceId(id);
 		}
 		boolean flag = updateResource(id, version, status, resourceAuditDO);
 		// 审批日志
@@ -103,7 +104,7 @@ public class ResourceAuditTaskCmdExe {
 	}
 
 	/**
-	 * 推送审批消息
+	 * 推送审批消息.
 	 * @param assignee 执行人
 	 * @param cmd 审批资源任务流程参数
 	 */
@@ -137,7 +138,7 @@ public class ResourceAuditTaskCmdExe {
 	}
 
 	/**
-	 * 转换为审批日志事件
+	 * 转换为审批日志事件.
 	 * @param cmd 审批资源任务流程参数
 	 * @param auditStatus 审批状态
 	 * @return 审批日志事件
