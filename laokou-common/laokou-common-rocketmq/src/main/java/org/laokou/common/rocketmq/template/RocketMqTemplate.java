@@ -24,10 +24,8 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.laokou.common.i18n.common.RocketMqConstants;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.client.producer.SendStatus.SEND_OK;
@@ -40,11 +38,9 @@ import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class RocketMqTemplate implements InitializingBean {
+public class RocketMqTemplate {
 
 	private final RocketMQTemplate rocketMQTemplate;
-
-	private final ThreadPoolTaskExecutor taskExecutor;
 
 	/**
 	 * 同步发送.
@@ -261,11 +257,6 @@ public class RocketMqTemplate implements InitializingBean {
 	public <T> Object sendAndReceiveMessage(String topic, T payload, Class<?> clazz) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
 		return rocketMQTemplate.sendAndReceive(topic, message, clazz);
-	}
-
-	@Override
-	public void afterPropertiesSet() {
-		rocketMQTemplate.setAsyncSenderExecutor(taskExecutor.getThreadPoolExecutor());
 	}
 
 	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message) {

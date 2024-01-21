@@ -123,4 +123,7 @@ public final class SysConstants {
 	@Schema(name = "WEBSOCKET_PATH", description = "WebSocket路径")
 	public static final String WEBSOCKET_PATH = "/ws";
 
+	@Schema(name = "THREAD_POOL_TASK_EXECUTOR_NAME", description = "线程池名称")
+	public static final String THREAD_POOL_TASK_EXECUTOR_NAME = "ttlTaskExecutor";
+
 }

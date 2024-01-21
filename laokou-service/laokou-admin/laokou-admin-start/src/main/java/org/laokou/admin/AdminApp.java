@@ -20,6 +20,7 @@ package org.laokou.admin;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
+import org.laokou.common.core.annotation.EnableTask;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.security.annotation.EnableSecurity;
@@ -32,7 +33,6 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.net.InetAddress;
@@ -51,10 +51,10 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @EnableEncryptableProperties
 @EnableFeignClients
 @EnableDubbo
-@EnableAsync
 @EnableRedisRepository
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 @EnableSecurity
+@EnableTask
 public class AdminApp {
 
 	@SneakyThrows

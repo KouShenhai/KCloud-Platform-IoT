@@ -25,12 +25,14 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
+
 /**
  * 服务监听.
  *
  * @author laokou
  */
-@Async
+@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 @Component
 @NonNullApi
 @RequiredArgsConstructor

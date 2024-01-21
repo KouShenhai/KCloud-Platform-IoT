@@ -19,6 +19,7 @@ package org.laokou.auth;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
+import org.laokou.common.core.annotation.EnableTask;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.springframework.boot.WebApplicationType;
@@ -29,7 +30,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.net.InetAddress;
@@ -47,8 +47,8 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @EnableConfigurationProperties
 @EnableEncryptableProperties
 @EnableDiscoveryClient
-@EnableAsync
 @EnableRedisRepository
+@EnableTask
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 public class AuthApp {
 

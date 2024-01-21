@@ -29,7 +29,6 @@ import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,12 +56,11 @@ public class RedissonConfig {
 	/**
 	 * redisson配置.
 	 * @param properties redis配置文件
-	 * @param taskExecutor 线程池
 	 * @return RedissonClient
 	 */
 	@Bean(destroyMethod = "shutdown")
 	@ConditionalOnMissingBean(RedissonClient.class)
-	public RedissonClient redisClient(ThreadPoolTaskExecutor taskExecutor, RedisProperties properties) {
+	public RedissonClient redisClient(RedisProperties properties) {
 		Config config = new Config();
 		int timeout = (int) properties.getTimeout().toMillis();
 		int connectTimeout = (int) properties.getConnectTimeout().toMillis();
@@ -91,7 +89,6 @@ public class RedissonConfig {
 				.setConnectTimeout(connectTimeout)
 				.setTimeout(timeout);
 		}
-		config.setExecutor(taskExecutor.getThreadPoolExecutor());
 		// 使用json序列化方式
 		config.setCodec(GlobalJsonJacksonCodec.INSTANCE);
 		return Redisson.create(config);

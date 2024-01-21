@@ -30,8 +30,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 import static org.laokou.common.i18n.common.StatusCodes.OK;
+import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * @author laokou
@@ -42,9 +44,9 @@ public class MessageUtil {
 
 	private final Server websocketServer;
 
-	private final ThreadPoolTaskExecutor taskExecutor;
+	private final Executor ttlTaskExecutor;
 
-	@Async
+	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void send(String message) {
 		if (StringUtil.isEmpty(message)) {
 			return;
@@ -55,7 +57,7 @@ public class MessageUtil {
 		TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.of(OK, msg)));
 		receiver.parallelStream()
 			.forEach(clientId -> CompletableFuture.runAsync(() -> websocketServer.send(clientId, webSocketFrame),
-					taskExecutor));
+					ttlTaskExecutor));
 	}
 
 }

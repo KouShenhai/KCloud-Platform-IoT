@@ -18,6 +18,7 @@
 package org.laokou.flowable;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import org.laokou.common.core.annotation.EnableTask;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.security.annotation.EnableSecurity;
@@ -45,6 +46,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @EnableEncryptableProperties
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 @EnableSecurity
+@EnableTask
 public class FlowableApp {
 
 	public static void main(String[] args) throws UnknownHostException {

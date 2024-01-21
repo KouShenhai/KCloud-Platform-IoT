@@ -41,6 +41,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.*;
 
@@ -57,7 +58,7 @@ public class LogGatewayImpl implements LogGateway {
 
 	private final LoginLogMapper loginLogMapper;
 
-	private final ThreadPoolTaskExecutor taskExecutor;
+	private final Executor ttlTaskExecutor;
 
 	private final LoginLogConvertor loginLogConvertor;
 
@@ -87,7 +88,7 @@ public class LogGatewayImpl implements LogGateway {
 			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
-		}, taskExecutor);
+		}, ttlTaskExecutor);
 		CompletableFuture<Integer> c2 = CompletableFuture.supplyAsync(() -> {
 			try {
 				DynamicDataSourceContextHolder.push(sourceName);
@@ -96,7 +97,7 @@ public class LogGatewayImpl implements LogGateway {
 			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
-		}, taskExecutor);
+		}, ttlTaskExecutor);
 		CompletableFuture.allOf(c1, c2).join();
 		Datas<LoginLog> datas = new Datas<>();
 		datas.setTotal(c2.get());

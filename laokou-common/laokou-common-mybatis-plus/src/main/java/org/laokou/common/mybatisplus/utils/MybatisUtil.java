@@ -27,12 +27,12 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.laokou.common.i18n.common.exception.DataSourceException;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
@@ -47,7 +47,7 @@ import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 @Component
 public class MybatisUtil {
 
-	private final ThreadPoolTaskExecutor taskExecutor;
+	private final Executor ttlTaskExecutor;
 
 	private final SqlSessionFactory sqlSessionFactory;
 
@@ -87,7 +87,7 @@ public class MybatisUtil {
 		}
 		List<CompletableFuture<Void>> futures = partition.stream()
 			.map(item -> CompletableFuture
-				.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds, cyclicBarrier), taskExecutor))
+				.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds, cyclicBarrier), ttlTaskExecutor))
 			.toList();
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {
