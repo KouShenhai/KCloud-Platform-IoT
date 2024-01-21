@@ -91,7 +91,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | Kafka                       | 3.6.0         |
 | EMQX                        | 5.3.0         |
 | Postgresql                  | 16.1          |
-| Flyway                      | 10.3.0        |
+| Flyway                      | 10.6.0        |
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
