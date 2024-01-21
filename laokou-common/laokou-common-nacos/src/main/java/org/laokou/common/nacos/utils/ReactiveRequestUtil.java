@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.gateway.utils;
+package org.laokou.common.nacos.utils;
 
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.utils.StringUtil;

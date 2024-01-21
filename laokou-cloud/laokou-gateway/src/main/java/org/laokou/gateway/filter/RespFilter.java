@@ -46,7 +46,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.laokou.common.i18n.common.OAuth2Constants.*;
 import static org.laokou.common.i18n.common.StringConstants.CHINESE_COMMA;
 import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
-import static org.laokou.gateway.utils.ReactiveRequestUtil.*;
+import static org.laokou.common.nacos.utils.ReactiveRequestUtil.*;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpStatus.OK;
