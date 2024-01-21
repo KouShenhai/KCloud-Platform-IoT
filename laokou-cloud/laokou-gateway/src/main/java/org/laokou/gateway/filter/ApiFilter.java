@@ -28,7 +28,7 @@ import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.laokou.gateway.annotation.Auth;
 import org.laokou.gateway.config.GatewayExtProperties;
 import org.laokou.gateway.utils.I18nUtil;
-import org.laokou.gateway.utils.ReactiveRequestUtil;
+import org.laokou.common.nacos.utils.ReactiveRequestUtil;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.Assert;

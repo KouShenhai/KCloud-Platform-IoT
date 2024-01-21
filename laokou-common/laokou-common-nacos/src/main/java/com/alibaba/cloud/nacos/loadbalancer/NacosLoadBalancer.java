@@ -44,7 +44,7 @@ import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.gateway.utils.ReactiveRequestUtil;
+import org.laokou.common.nacos.utils.ReactiveRequestUtil;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.*;

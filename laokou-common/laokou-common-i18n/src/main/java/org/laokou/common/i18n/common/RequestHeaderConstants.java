@@ -34,12 +34,6 @@ public final class RequestHeaderConstants {
 	@Schema(name = "CHUNKED", description = "Chunked")
 	public static final String CHUNKED = "chunked";
 
-	@Schema(name = "UPGRADE", description = "Upgrade")
-	public static final String UPGRADE = "Upgrade";
-
-	@Schema(name = "WEBSOCKET", description = "WebSocket")
-	public static final String WEBSOCKET = "websocket";
-
 	@Schema(name = "NONCE", description = "随机字符")
 	public static final String NONCE = "nonce";
 

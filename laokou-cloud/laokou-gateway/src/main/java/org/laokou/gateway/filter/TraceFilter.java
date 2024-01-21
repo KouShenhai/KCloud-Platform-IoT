@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.gateway.utils.ReactiveRequestUtil;
+import org.laokou.common.nacos.utils.ReactiveRequestUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -31,7 +31,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import static org.laokou.common.i18n.common.TraceConstants.*;
-import static org.laokou.gateway.utils.ReactiveRequestUtil.getHost;
+import static org.laokou.common.nacos.utils.ReactiveRequestUtil.getHost;
 
 /**
  * 分布式请求链路过滤器.

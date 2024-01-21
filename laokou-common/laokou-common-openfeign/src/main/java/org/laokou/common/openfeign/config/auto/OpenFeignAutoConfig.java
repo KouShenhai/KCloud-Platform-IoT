@@ -36,16 +36,21 @@ import java.util.Map;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.laokou.common.i18n.common.RequestHeaderConstants.AUTHORIZATION;
+import static org.laokou.common.i18n.common.RouterConstants.SERVICE_GRAY;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import static org.laokou.common.i18n.common.StringConstants.UNDER;
 import static org.laokou.common.i18n.common.TraceConstants.*;
 
+// @formatter:off
 /**
- * openfeign关闭ssl {@link FeignAutoConfiguration} 开启MVC 请查看
- * {@link FeignClientsConfiguration} 默认开启，支持@RequestLine @Header @RequestPart.
+ * openfeign关闭ssl {@link FeignAutoConfiguration}
+ * 开启MVC 请查看 {@link FeignClientsConfiguration}
+ * 默认开启，支持@RequestLine @Header @RequestPart.
  *
  * @author laokou
  */
+// @formatter:on
+
 @Slf4j
 @AutoConfiguration(before = SentinelFeignAutoConfiguration.class)
 @Import(FeignClientsConfiguration.class)
@@ -59,6 +64,12 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 		return Logger.Level.NONE;
 	}
 
+	// @formatter:off
+	/**
+	 * Feign灰度路由请查看源码 OkHttpFeignLoadBalancerConfiguration > FeignBlockingLoadBalancerClient > ReactiveLoadBalancer(响应式变阻塞式) > NacosLoadBalancer.
+	 * @param template 请求模板
+	 */
+	// @formatter:on
 	@Override
 	public void apply(RequestTemplate template) {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
@@ -67,11 +78,13 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 		String userId = request.getHeader(USER_ID);
 		String username = request.getHeader(USER_NAME);
 		String tenantId = request.getHeader(TENANT_ID);
+		String serviceGray = request.getHeader(SERVICE_GRAY);
 		template.header(TRACE_ID, traceId);
 		template.header(AUTHORIZATION, authorization);
 		template.header(USER_ID, userId);
 		template.header(USER_NAME, username);
 		template.header(TENANT_ID, tenantId);
+		template.header(SERVICE_GRAY, serviceGray);
 		final boolean idempotent = IdempotentUtil.isIdempotent();
 		String msg = EMPTY;
 		if (idempotent) {
@@ -93,8 +106,9 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 			template.header(REQUEST_ID, idempotentKey);
 			msg = String.format("，请求ID：%s", idMap.get(uniqueKey));
 		}
-		log.info("OpenFeign分布式调用，令牌：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}" + msg, authorization, LogUtil.result(userId),
-				LogUtil.result(username), LogUtil.result(tenantId), LogUtil.result(traceId));
+		log.info("OpenFeign分布式调用，令牌：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}，灰度路由：{}" + msg, authorization,
+				LogUtil.result(userId), LogUtil.result(username), LogUtil.result(tenantId), LogUtil.result(traceId),
+				LogUtil.result(serviceGray));
 	}
 
 	@Bean
