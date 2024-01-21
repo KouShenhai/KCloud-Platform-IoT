@@ -29,7 +29,6 @@ import org.laokou.common.mybatisplus.database.dataobject.SqlLogDO;
 import org.laokou.common.mybatisplus.handler.SqlLogEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import java.util.concurrent.CompletableFuture;
