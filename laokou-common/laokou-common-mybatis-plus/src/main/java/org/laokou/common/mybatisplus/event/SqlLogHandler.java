@@ -33,12 +33,15 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
+import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * @author laokou
  */
-@Async
+@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 @Slf4j
 @Component
 @NonNullApi
@@ -47,7 +50,7 @@ public class SqlLogHandler implements ApplicationListener<SqlLogEvent> {
 
 	private final SqlLogMapper sqlLogMapper;
 
-	private final ThreadPoolTaskExecutor taskExecutor;
+	private final Executor ttlTaskExecutor;
 
 	@Override
 	public void onApplicationEvent(SqlLogEvent event) {
@@ -58,7 +61,7 @@ public class SqlLogHandler implements ApplicationListener<SqlLogEvent> {
 			catch (Exception e) {
 				log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
-		}, taskExecutor);
+		}, ttlTaskExecutor);
 	}
 
 	private void execute(SqlLogEvent event) {

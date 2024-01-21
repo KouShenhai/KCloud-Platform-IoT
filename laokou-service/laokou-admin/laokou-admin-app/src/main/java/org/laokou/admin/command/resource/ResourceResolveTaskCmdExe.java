@@ -30,6 +30,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
+
 /**
  * 处理资源任务流程执行器.
  *
@@ -66,7 +68,7 @@ public class ResourceResolveTaskCmdExe {
 	 * 推送处理消息.
 	 * @param cmd 处理资源任务流程参数
 	 */
-	@Async
+	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void publishMessage(ResourceResolveTaskCmd cmd) {
 		domainEventPublisher.publish(
 				eventUtil.toAuditMessageEvent(null, cmd.getBusinessKey(), cmd.getInstanceName(), cmd.getInstanceId()));

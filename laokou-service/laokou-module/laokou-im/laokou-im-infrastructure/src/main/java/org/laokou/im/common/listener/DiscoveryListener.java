@@ -32,11 +32,13 @@ import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
 
+import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
+
 /**
  * @author laokou
  */
 @Data
-@Async
+@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 @Component
 @NonNullApi
 @RequiredArgsConstructor

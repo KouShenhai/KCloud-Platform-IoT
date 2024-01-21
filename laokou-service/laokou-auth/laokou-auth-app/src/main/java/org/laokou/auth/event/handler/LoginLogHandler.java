@@ -33,19 +33,20 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 import static org.laokou.common.i18n.common.StringConstants.UNDER;
+import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * 登录日志处理器.
  *
  * @author laokou
  */
-@Async
+@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 @Slf4j
 @Component
 @NonNullApi
@@ -54,7 +55,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 
 	private final LoginLogMapper loginLogMapper;
 
-	private final ThreadPoolTaskExecutor taskExecutor;
+	private final Executor ttlTaskExecutor;
 
 	@Override
 	public void onApplicationEvent(LoginLogEvent event) {
@@ -70,7 +71,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
-		}, TtlExecutors.getTtlExecutorService(taskExecutor.getThreadPoolExecutor()));
+		}, ttlTaskExecutor);
 	}
 
 	private void execute(LoginLogEvent event) {

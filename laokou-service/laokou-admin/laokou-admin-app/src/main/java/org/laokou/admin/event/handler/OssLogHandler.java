@@ -34,13 +34,16 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+
+import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * OSS日志处理.
  *
  * @author laokou
  */
-@Async
+@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 @Slf4j
 @Component
 @NonNullApi
@@ -49,7 +52,7 @@ public class OssLogHandler implements ApplicationListener<OssLogEvent> {
 
 	private final OssLogMapper ossLogMapper;
 
-	private final ThreadPoolTaskExecutor taskExecutor;
+	private final Executor ttlTaskExecutor;
 
 	@Override
 	public void onApplicationEvent(OssLogEvent event) {
@@ -65,7 +68,7 @@ public class OssLogHandler implements ApplicationListener<OssLogEvent> {
 			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
-		}, TtlExecutors.getTtlExecutorService(taskExecutor.getThreadPoolExecutor()));
+		}, ttlTaskExecutor);
 	}
 
 	private void execute(OssLogEvent event) {

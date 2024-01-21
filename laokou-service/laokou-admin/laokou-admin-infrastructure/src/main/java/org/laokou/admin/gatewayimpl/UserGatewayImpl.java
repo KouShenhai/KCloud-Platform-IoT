@@ -24,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.UserGateway;
-import org.laokou.common.i18n.common.SuperAdminEnums;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
@@ -33,20 +32,21 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.i18n.common.SuperAdminEnums;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_USER;
 
@@ -74,7 +74,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final ThreadPoolTaskExecutor taskExecutor;
+	private final Executor ttlTaskExecutor;
 
 	/**
 	 * 新增用户.
@@ -156,9 +156,9 @@ public class UserGatewayImpl implements UserGateway {
 		UserDO userDO = userConvertor.toDataObject(user);
 		final PageQuery page = pageQuery.page();
 		CompletableFuture<List<UserDO>> c1 = CompletableFuture
-			.supplyAsync(() -> userMapper.getUserListFilter(userDO, page, AesUtil.getKey()), taskExecutor);
+			.supplyAsync(() -> userMapper.getUserListFilter(userDO, page, AesUtil.getKey()), ttlTaskExecutor);
 		CompletableFuture<Integer> c2 = CompletableFuture
-			.supplyAsync(() -> userMapper.getUserListTotalFilter(userDO, page, AesUtil.getKey()), taskExecutor);
+			.supplyAsync(() -> userMapper.getUserListTotalFilter(userDO, page, AesUtil.getKey()), ttlTaskExecutor);
 		CompletableFuture.allOf(c1, c2).join();
 		Datas<User> datas = new Datas<>();
 		datas.setTotal(c2.get());

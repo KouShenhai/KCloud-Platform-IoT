@@ -32,13 +32,14 @@ import java.nio.charset.StandardCharsets;
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
 import static org.laokou.common.i18n.common.RocketMqConstants.*;
+import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
 
 /**
  * @author laokou
  */
 @Slf4j
-@Async
+@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 @Component
 @RequiredArgsConstructor
 @RocketMQMessageListener(consumerGroup = LAOKOU_REMIND_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC,
