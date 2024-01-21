@@ -40,8 +40,10 @@ import com.alibaba.cloud.nacos.util.InetIPv6Utils;
 import com.alibaba.nacos.client.naming.utils.CollectionUtils;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.gateway.utils.ReactiveRequestUtil;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
@@ -51,6 +53,7 @@ import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBal
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.util.Assert;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
@@ -60,10 +63,11 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static org.laokou.common.core.utils.RegexUtil.URL_VERSION_REGEX;
 import static org.laokou.common.i18n.common.NacosConstants.CLUSTER_CONFIG;
 import static org.laokou.common.i18n.common.NetworkConstants.IPV4_REGEX;
-import static org.laokou.common.i18n.common.RouterConstants.SERVICE_HOST;
-import static org.laokou.common.i18n.common.RouterConstants.SERVICE_PORT;
+import static org.laokou.common.i18n.common.RouterConstants.*;
+import static org.laokou.common.i18n.common.StringConstants.*;
 import static org.laokou.common.i18n.common.SysConstants.GRACEFUL_SHUTDOWN_URL;
 
 /**
@@ -143,7 +147,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	}
 
 	public NacosLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
-			String serviceId, NacosDiscoveryProperties nacosDiscoveryProperties) {
+							 String serviceId, NacosDiscoveryProperties nacosDiscoveryProperties) {
 		this.serviceId = serviceId;
 		this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
 		this.nacosDiscoveryProperties = nacosDiscoveryProperties;
@@ -170,17 +174,24 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 */
 	private Response<ServiceInstance> choose(List<ServiceInstance> instances, Request<?> request) {
 		if (request.getContext() instanceof RequestDataContext context) {
-			String path = context.getClientRequest().getUrl().getPath();
 			// IP优先（优雅停机）
+			String path = context.getClientRequest().getUrl().getPath();
+			HttpHeaders headers = context.getClientRequest().getHeaders();
 			if (ReactiveRequestUtil.pathMatcher(HttpMethod.GET.name(), path,
 					Map.of(HttpMethod.GET.name(), Collections.singleton(GRACEFUL_SHUTDOWN_URL)))) {
-				HttpHeaders headers = context.getClientRequest().getHeaders();
 				ServiceInstance serviceInstance = instances.stream()
 					.filter(instance -> match(instance, headers))
 					.findFirst()
 					.orElse(null);
 				if (ObjectUtil.isNotNull(serviceInstance)) {
 					return new DefaultResponse(serviceInstance);
+				}
+			}
+			// 服务灰度路由
+			if (grayEnabled(headers)) {
+				String version = RegexUtil.find(path, URL_VERSION_REGEX);
+				if (StringUtils.isNotEmpty(version)) {
+					instances = instances.stream().filter(item -> item.getMetadata().getOrDefault(VERSION, EMPTY).equals(version)).toList();
 				}
 			}
 		}
@@ -225,15 +236,27 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	}
 
 	/**
+	 * 判断服务灰度路由
+	 * @param headers 请求头
+	 * @return 判断结果
+	 */
+	private boolean grayEnabled(HttpHeaders headers) {
+		String gray = headers.getFirst(SERVICE_GRAY);
+		return ObjectUtil.equals(TRUE, gray);
+	}
+
+	/**
 	 * 根据IP和端口匹配服务节点.
 	 * @param instance 服务实例
 	 * @param headers 请求头
 	 * @return 匹配结果
 	 */
 	private boolean match(ServiceInstance instance, HttpHeaders headers) {
-		String host = ObjectUtil.requireNotNull(headers.get(SERVICE_HOST)).getFirst();
-		String port = ObjectUtil.requireNotNull(headers.get(SERVICE_PORT)).getFirst();
-		return host.equals(instance.getHost()) && Integer.parseInt(port) == instance.getPort();
+		String host = headers.getFirst(SERVICE_HOST);
+		String port = headers.getFirst(SERVICE_PORT);
+		Assert.isTrue(StringUtil.isNotEmpty(host), "service-host is empty");
+		Assert.isTrue(StringUtil.isNotEmpty(port), "service-port is empty");
+		return ObjectUtil.equals(host, instance.getHost()) && Integer.parseInt(port) == instance.getPort();
 	}
 
 }

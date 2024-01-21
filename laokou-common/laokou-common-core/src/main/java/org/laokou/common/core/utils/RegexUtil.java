@@ -17,9 +17,11 @@
 
 package org.laokou.common.core.utils;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.laokou.common.i18n.common.NetworkConstants.IPV4_REGEX;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * 正则表达式工具类.
@@ -47,6 +49,11 @@ public class RegexUtil {
 	 * 数字正则表达式.
 	 */
 	private static final String NUMBER_REGEX = "^[0-9]*$";
+
+	/**
+	 * URL版本正则表达式
+	 */
+	public static final String URL_VERSION_REGEX = "/(v\\d+)/";
 
 	/**
 	 * 邮箱验证.
@@ -91,6 +98,21 @@ public class RegexUtil {
 	 */
 	public static boolean mobileRegex(String mobile) {
 		return Pattern.matches(MOBILE_REGEX, mobile);
+	}
+
+	/**
+	 * 根据正则表达式获取值
+	 * @param input 输入值
+	 * @param regex 正则表达式
+	 * @return 值
+	 */
+	public static String find(String input, String regex) {
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(input);
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+		return EMPTY;
 	}
 
 }
