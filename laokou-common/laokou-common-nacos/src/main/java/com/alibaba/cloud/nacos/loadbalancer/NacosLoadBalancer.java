@@ -188,7 +188,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 				}
 			}
 			// 服务灰度路由
-			if (grayEnabled(headers)) {
+			if (isGray(headers)) {
 				String version = RegexUtil.find(path, URL_VERSION_REGEX);
 				if (StringUtils.isNotEmpty(version)) {
 					instances = instances.stream()
@@ -242,7 +242,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 * @param headers 请求头
 	 * @return 判断结果
 	 */
-	private boolean grayEnabled(HttpHeaders headers) {
+	private boolean isGray(HttpHeaders headers) {
 		String gray = headers.getFirst(SERVICE_GRAY);
 		return ObjectUtil.equals(TRUE, gray);
 	}
