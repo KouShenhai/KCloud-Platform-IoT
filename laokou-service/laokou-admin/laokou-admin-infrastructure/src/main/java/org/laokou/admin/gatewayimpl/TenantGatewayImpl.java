@@ -38,7 +38,6 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.NumberConstants;
-import org.laokou.common.i18n.common.SuperAdminEnums;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -70,6 +69,7 @@ import static org.laokou.common.i18n.common.ResponseHeaderConstants.CONTENT_DISP
 import static org.laokou.common.i18n.common.ResponseHeaderConstants.STREAM_CONTENT_TYPE;
 import static org.laokou.common.i18n.common.StringConstants.COMMA;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
 import static org.laokou.common.i18n.common.TenantConstants.*;
 
 /**
@@ -341,7 +341,7 @@ public class TenantGatewayImpl implements TenantGateway {
 		userDO.setUsername(TENANT_USERNAME);
 		userDO.setTenantId(tenantId);
 		userDO.setPassword(passwordEncoder.encode(TENANT_PASSWORD));
-		userDO.setSuperAdmin(SuperAdminEnums.YES.ordinal());
+		userDO.setSuperAdmin(YES.ordinal());
 		userDO.setDeptId(deptId);
 		userDO.setDeptPath(deptPath);
 		userDO.setCreateDate(DateUtil.now());

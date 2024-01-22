@@ -25,8 +25,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
-
 /**
  * 菜单.
  *
@@ -46,8 +44,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	@Override
 	public List<String> getPermissions(User user) {
 		Long userId = user.getId();
-		Integer superAdmin = user.getSuperAdmin();
-		if (superAdmin == YES.ordinal()) {
+		if (user.isSuperAdmin()) {
 			return menuMapper.getPermissions();
 		}
 		return menuMapper.getPermissionsByUserId(userId);

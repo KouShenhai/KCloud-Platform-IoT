@@ -25,8 +25,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
-
 /**
  * 部门.
  *
@@ -46,8 +44,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	@Override
 	public List<String> getDeptPaths(User user) {
 		Long userId = user.getId();
-		Integer superAdmin = user.getSuperAdmin();
-		if (superAdmin == YES.ordinal()) {
+		if (user.isSuperAdmin()) {
 			return deptMapper.getDeptPaths();
 		}
 		return deptMapper.getDeptPathsByUserId(userId);

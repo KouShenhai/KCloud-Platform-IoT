@@ -33,7 +33,6 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.crypto.utils.AesUtil;
-import org.laokou.common.i18n.common.SuperAdminEnums;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -134,7 +133,7 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	public User getById(Long id) {
 		User user = userConvertor.convertEntity(userMapper.selectById(id));
-		if (user.getSuperAdmin() == SuperAdminEnums.YES.ordinal()) {
+		if (user.isSuperAdmin()) {
 			user.setRoleIds(roleMapper.getRoleIds());
 		}
 		else {
