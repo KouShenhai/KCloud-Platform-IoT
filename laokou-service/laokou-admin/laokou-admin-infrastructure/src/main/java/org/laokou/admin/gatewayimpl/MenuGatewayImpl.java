@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.admin.domain.menu.Menu;
-import org.laokou.common.i18n.common.SuperAdminEnums;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
@@ -151,8 +150,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	 */
 	private List<MenuDO> getMenuList(Integer type, User user) {
 		Long userId = user.getId();
-		Integer superAdmin = user.getSuperAdmin();
-		if (superAdmin == SuperAdminEnums.YES.ordinal()) {
+		if (user.isSuperAdmin()) {
 			return menuMapper.getMenuListLikeName(type, null);
 		}
 		return menuMapper.getMenuListByUserId(type, userId);

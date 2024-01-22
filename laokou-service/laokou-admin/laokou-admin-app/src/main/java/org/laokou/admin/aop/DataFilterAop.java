@@ -24,12 +24,12 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.admin.domain.annotation.DataFilter;
-import org.laokou.common.security.domain.User;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.security.domain.User;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
@@ -42,7 +42,6 @@ import java.util.List;
 import static org.laokou.common.i18n.common.DatasourceConstants.LIKE;
 import static org.laokou.common.i18n.common.DatasourceConstants.OR;
 import static org.laokou.common.i18n.common.StringConstants.*;
-import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
 
 /**
  * 数据权限切面.
@@ -61,7 +60,7 @@ public class DataFilterAop {
 		if (param instanceof PageQuery pageQuery) {
 			User user = UserUtil.user();
 			// 超级管理员不过滤数据
-			if (user.getSuperAdmin() == YES.ordinal()) {
+			if (user.isSuperAdmin()) {
 				return;
 			}
 			try {

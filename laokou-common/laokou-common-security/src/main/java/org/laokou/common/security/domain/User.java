@@ -35,6 +35,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
 import static org.laokou.common.i18n.common.UserStatusEnums.ENABLED;
 
 /**
@@ -177,6 +178,10 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 		result = 31 * result + mail.hashCode();
 		result = 31 * result + mobile.hashCode();
 		return result;
+	}
+
+	public boolean isSuperAdmin() {
+		return this.superAdmin == YES.ordinal();
 	}
 
 	@Override
