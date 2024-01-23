@@ -180,7 +180,8 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 		return result;
 	}
 
-	public boolean isSuperAdmin() {
+	@JsonIgnore
+	public boolean isSuperAdministrator() {
 		return this.superAdmin == YES.ordinal();
 	}
 

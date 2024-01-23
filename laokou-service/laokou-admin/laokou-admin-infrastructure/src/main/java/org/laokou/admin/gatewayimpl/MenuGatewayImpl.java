@@ -150,7 +150,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	 */
 	private List<MenuDO> getMenuList(Integer type, User user) {
 		Long userId = user.getId();
-		if (user.isSuperAdmin()) {
+		if (user.isSuperAdministrator()) {
 			return menuMapper.getMenuListLikeName(type, null);
 		}
 		return menuMapper.getMenuListByUserId(type, userId);
