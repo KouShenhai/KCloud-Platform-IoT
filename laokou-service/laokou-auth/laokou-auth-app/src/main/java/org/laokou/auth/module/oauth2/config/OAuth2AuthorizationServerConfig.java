@@ -48,11 +48,9 @@ import org.springframework.security.oauth2.server.authorization.client.JdbcRegis
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
-import org.springframework.security.oauth2.server.authorization.oidc.web.authentication.OidcClientRegistrationAuthenticationConverter;
-import org.springframework.security.oauth2.server.authorization.oidc.web.authentication.OidcLogoutAuthenticationConverter;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.token.*;
-import org.springframework.security.oauth2.server.authorization.web.authentication.*;
+import org.springframework.security.oauth2.server.authorization.web.authentication.DelegatingAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -101,9 +99,9 @@ class OAuth2AuthorizationServerConfig {
 	@Bean
 	@Order(HIGHEST_PRECEDENCE)
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
-			OAuth2PasswordAuthenticationProvider passwordAuthenticationProvider,
-			OAuth2MailAuthenticationProvider mailAuthenticationProvider,
-			OAuth2MobileAuthenticationProvider mobileAuthenticationProvider,
+			AuthenticationProvider passwordAuthenticationProvider,
+			AuthenticationProvider mailAuthenticationProvider,
+			AuthenticationProvider mobileAuthenticationProvider,
 			AuthorizationServerSettings authorizationServerSettings,
 			OAuth2AuthorizationService authorizationService) throws Exception {
 		// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/configuration-model.html
@@ -113,24 +111,7 @@ class OAuth2AuthorizationServerConfig {
 			.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(new DelegatingAuthenticationConverter(List.of(
 						new OAuth2MailAuthenticationConverter(),
 						new OAuth2PasswordAuthenticationConverter(),
-						new OAuth2DeviceCodeAuthenticationConverter(),
-						new OAuth2MobileAuthenticationConverter(),
-						new OAuth2AuthorizationCodeAuthenticationConverter(),
-						new OAuth2ClientCredentialsAuthenticationConverter(),
-						new OAuth2RefreshTokenAuthenticationConverter(),
-						new OAuth2TokenIntrospectionAuthenticationConverter(),
-						new OAuth2TokenRevocationAuthenticationConverter(),
-						new PublicClientAuthenticationConverter(),
-						new OidcLogoutAuthenticationConverter(),
-						new OidcClientRegistrationAuthenticationConverter(),
-						new ClientSecretBasicAuthenticationConverter(),
-						new ClientSecretPostAuthenticationConverter(),
-						new OAuth2AuthorizationConsentAuthenticationConverter(),
-						new OAuth2DeviceAuthorizationConsentAuthenticationConverter(),
-						new OAuth2DeviceAuthorizationRequestAuthenticationConverter(),
-						new OAuth2DeviceVerificationAuthenticationConverter(),
-						new JwtClientAssertionAuthenticationConverter(),
-						new OAuth2AuthorizationCodeRequestAuthenticationConverter())))
+						new OAuth2MobileAuthenticationConverter())))
 				.authenticationProvider(passwordAuthenticationProvider)
 				.authenticationProvider(mobileAuthenticationProvider)
 				.authenticationProvider(mailAuthenticationProvider))

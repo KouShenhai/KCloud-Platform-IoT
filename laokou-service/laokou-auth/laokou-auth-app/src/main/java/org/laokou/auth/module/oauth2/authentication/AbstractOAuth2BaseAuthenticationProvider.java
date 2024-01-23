@@ -40,7 +40,7 @@ import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.security.domain.User;
+import org.laokou.common.security.utils.UserDetail;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -262,10 +262,10 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			// 验证验证码
 			Boolean validate = captchaGateway.validate(uuid, captcha);
 			if (ObjectUtil.isNull(validate)) {
-				throw authenticationException(CAPTCHA_EXPIRED, new User(username, tenantId), type, ip);
+				throw authenticationException(CAPTCHA_EXPIRED, new UserDetail(username, tenantId), type, ip);
 			}
 			if (!validate) {
-				throw authenticationException(CAPTCHA_ERROR, new User(username, tenantId), type, ip);
+				throw authenticationException(CAPTCHA_ERROR, new UserDetail(username, tenantId), type, ip);
 			}
 			// 初始化（多数据源切换）
 			String sourceName = getSourceName(tenantId);
@@ -280,62 +280,62 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			else {
 				encryptName = AesUtil.encrypt(username);
 			}
-			User user;
+			UserDetail userDetail;
 			try {
 				// 多租户查询（多数据源）
-				user = userGateway.getUserByUsername(new Auth(encryptName, type, AesUtil.getKey()));
+				userDetail = userGateway.getUserByUsername(new Auth(encryptName, type, AesUtil.getKey()));
 			}
 			catch (BadSqlGrammarException e) {
 				log.error("表 boot_sys_user 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "表 boot_sys_user 不存在");
 			}
-			if (ObjectUtil.isNull(user)) {
-				throw authenticationException(ACCOUNT_PASSWORD_ERROR, new User(username, tenantId), type, ip);
+			if (ObjectUtil.isNull(userDetail)) {
+				throw authenticationException(ACCOUNT_PASSWORD_ERROR, new UserDetail(username, tenantId), type, ip);
 			}
 			if (passwordFlag) {
 				// 验证密码
-				String clientPassword = user.getPassword();
+				String clientPassword = userDetail.getPassword();
 				if (!passwordEncoder.matches(password, clientPassword)) {
-					throw authenticationException(ACCOUNT_PASSWORD_ERROR, user, type, ip);
+					throw authenticationException(ACCOUNT_PASSWORD_ERROR, userDetail, type, ip);
 				}
 			}
 			// 是否锁定
-			if (!user.isEnabled()) {
-				throw authenticationException(ACCOUNT_DISABLE, user, type, ip);
+			if (!userDetail.isEnabled()) {
+				throw authenticationException(ACCOUNT_DISABLE, userDetail, type, ip);
 			}
 			List<String> permissionsList;
 			try {
 				// 权限标识列表
-				permissionsList = menuGateway.getPermissions(user);
+				permissionsList = menuGateway.getPermissions(userDetail);
 			}
 			catch (BadSqlGrammarException e) {
 				log.error("表 boot_sys_menu 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "表 boot_sys_menu 不存在");
 			}
 			if (CollectionUtil.isEmpty(permissionsList)) {
-				throw authenticationException(FORBIDDEN, user, type, ip);
+				throw authenticationException(FORBIDDEN, userDetail, type, ip);
 			}
 			List<String> deptPaths;
 			try {
 				// 部门列表
-				deptPaths = deptGateway.getDeptPaths(user);
+				deptPaths = deptGateway.getDeptPaths(userDetail);
 			}
 			catch (BadSqlGrammarException e) {
 				log.error("表 boot_sys_dept 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "表 boot_sys_dept 不存在");
 			}
-			user.setDeptPaths(deptPaths);
-			user.setPermissionList(permissionsList);
+			userDetail.setDeptPaths(deptPaths);
+			userDetail.setPermissionList(permissionsList);
 			// 数据源
-			user.setSourceName(sourceName);
+			userDetail.setSourceName(sourceName);
 			// 登录IP
-			user.setLoginIp(ip);
+			userDetail.setLoginIp(ip);
 			// 登录时间
-			user.setLoginDate(DateUtil.now());
+			userDetail.setLoginDate(DateUtil.now());
 			// 登录成功
-			loginLogGateway.publish(new LoginLog(user.getId(), username, type, tenantId, SUCCESS,
-					MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, user.getDeptId(), user.getDeptPath()));
-			return new UsernamePasswordAuthenticationToken(user, encryptName, user.getAuthorities());
+			loginLogGateway.publish(new LoginLog(userDetail.getId(), username, type, tenantId, SUCCESS,
+					MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, userDetail.getDeptId(), userDetail.getDeptPath()));
+			return new UsernamePasswordAuthenticationToken(userDetail, encryptName, userDetail.getAuthorities());
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
@@ -355,11 +355,11 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		throw OAuth2ExceptionHandler.getException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
 	}
 
-	private OAuth2AuthenticationException authenticationException(int code, User user, String type, String ip) {
+	private OAuth2AuthenticationException authenticationException(int code, UserDetail userDetail, String type, String ip) {
 		String message = MessageUtil.getMessage(code);
 		// log.error("登录失败，状态码：{}，错误信息：{}", code, message);
-		loginLogGateway.publish(new LoginLog(user.getId(), user.getUsername(), type, user.getTenantId(), FAIL, message,
-				ip, user.getDeptId(), user.getDeptPath()));
+		loginLogGateway.publish(new LoginLog(userDetail.getId(), userDetail.getUsername(), type, userDetail.getTenantId(), FAIL, message,
+				ip, userDetail.getDeptId(), userDetail.getDeptPath()));
 		throw OAuth2ExceptionHandler.getException(code, message);
 	}
 

@@ -43,8 +43,8 @@ import static org.laokou.common.i18n.common.ValCodes.*;
  *
  * @author laokou
  */
-@Component
 @Slf4j
+@Component("passwordAuthenticationProvider")
 public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
 	public OAuth2PasswordAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway,
@@ -91,7 +91,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE));
 		}
-		// 获取用户信息,并认证信息
+		// 获取用户信息，并认证信息
 		return super.authenticationToken(username, password, request, captcha, uuid);
 	}
 

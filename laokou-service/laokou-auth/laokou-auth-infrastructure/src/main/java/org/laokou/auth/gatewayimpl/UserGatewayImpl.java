@@ -23,7 +23,7 @@ import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.security.domain.User;
+import org.laokou.common.security.utils.UserDetail;
 import org.springframework.stereotype.Component;
 
 /**
@@ -43,9 +43,9 @@ public class UserGatewayImpl implements UserGateway {
 	 * @return 用户信息
 	 */
 	@Override
-	public User getUserByUsername(Auth auth) {
+	public UserDetail getUserByUsername(Auth auth) {
 		UserDO userDO = userMapper.getUserByUsername(auth.getUsername(), auth.getType(), auth.getKey());
-		return ConvertUtil.sourceToTarget(userDO, User.class);
+		return ConvertUtil.sourceToTarget(userDO, UserDetail.class);
 	}
 
 }

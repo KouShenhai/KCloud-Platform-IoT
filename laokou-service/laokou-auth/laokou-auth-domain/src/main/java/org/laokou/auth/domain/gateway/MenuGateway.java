@@ -17,7 +17,7 @@
 
 package org.laokou.auth.domain.gateway;
 
-import org.laokou.common.security.domain.User;
+import org.laokou.common.security.utils.UserDetail;
 
 import java.util.List;
 
@@ -30,9 +30,9 @@ public interface MenuGateway {
 
 	/**
 	 * 查询菜单权限标识集合.
-	 * @param user 用户对象
+	 * @param userDetail 用户对象
 	 * @return 菜单权限标识集合
 	 */
-	List<String> getPermissions(User user);
+	List<String> getPermissions(UserDetail userDetail);
 
 }

@@ -49,7 +49,7 @@ import static org.laokou.common.i18n.common.ValCodes.OAUTH2_MAIL_REQUIRE;
  * @author laokou
  */
 @Slf4j
-@Component
+@Component("mailAuthenticationProvider")
 public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
 	public OAuth2MailAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway,

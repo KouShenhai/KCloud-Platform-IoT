@@ -19,7 +19,7 @@ package org.laokou.admin.command.user.query;
 
 import org.laokou.admin.dto.user.UserProfileGetQry;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
-import org.laokou.common.security.domain.User;
+import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -46,16 +46,16 @@ public class UserProfileGetQryExe {
 	 * @return 用户信息视图
 	 */
 	private UserProfileCO convert() {
-		User user = UserUtil.user();
+		UserDetail userDetail = UserUtil.user();
 		UserProfileCO co = new UserProfileCO();
-		co.setId(user.getId());
-		co.setAvatar(user.getAvatar());
-		co.setUsername(user.getUsername());
-		co.setMobile(user.getMobile());
-		co.setMail(user.getMail());
-		co.setPermissionList(user.getPermissionList());
-		co.setTenantId(user.getTenantId());
-		co.setSuperAdmin(user.getSuperAdmin());
+		co.setId(userDetail.getId());
+		co.setAvatar(userDetail.getAvatar());
+		co.setUsername(userDetail.getUsername());
+		co.setMobile(userDetail.getMobile());
+		co.setMail(userDetail.getMail());
+		co.setPermissionList(userDetail.getPermissionList());
+		co.setTenantId(userDetail.getTenantId());
+		co.setSuperAdmin(userDetail.getSuperAdmin());
 		return co;
 	}
 

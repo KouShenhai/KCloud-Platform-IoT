@@ -49,7 +49,7 @@ import static org.laokou.common.i18n.common.ValCodes.OAUTH2_MOBILE_REQUIRE;
  * @author laokou
  */
 @Slf4j
-@Component
+@Component("mobileAuthenticationProvider")
 public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
 	public OAuth2MobileAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway,

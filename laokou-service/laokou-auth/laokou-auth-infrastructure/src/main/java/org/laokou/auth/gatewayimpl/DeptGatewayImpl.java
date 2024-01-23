@@ -20,7 +20,7 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.gatewayimpl.database.DeptMapper;
-import org.laokou.common.security.domain.User;
+import org.laokou.common.security.utils.UserDetail;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -38,13 +38,13 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	/**
 	 * 查看部门PATHS.
-	 * @param user 用户对象
+	 * @param userDetail 用户对象
 	 * @return 部门PATHS
 	 */
 	@Override
-	public List<String> getDeptPaths(User user) {
-		Long userId = user.getId();
-		if (user.isSuperAdministrator()) {
+	public List<String> getDeptPaths(UserDetail userDetail) {
+		Long userId = userDetail.getId();
+		if (userDetail.isSuperAdministrator()) {
 			return deptMapper.getDeptPaths();
 		}
 		return deptMapper.getDeptPathsByUserId(userId);

@@ -30,7 +30,7 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.security.domain.User;
+import org.laokou.common.security.utils.UserDetail;
 import org.springframework.stereotype.Component;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -74,8 +74,8 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(authorization);
 		Object obj = redisUtil.get(userInfoKey);
 		if (obj != null) {
-			User user = (User) obj;
-			Long id = user.getId();
+			UserDetail userDetail = (UserDetail) obj;
+			Long id = userDetail.getId();
 			CLIENT_CACHE.put(id.toString(), channel);
 		}
 		else {

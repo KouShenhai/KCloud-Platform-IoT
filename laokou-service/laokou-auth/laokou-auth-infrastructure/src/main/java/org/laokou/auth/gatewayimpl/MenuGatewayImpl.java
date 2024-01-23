@@ -20,7 +20,7 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.gatewayimpl.database.MenuMapper;
-import org.laokou.common.security.domain.User;
+import org.laokou.common.security.utils.UserDetail;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -38,13 +38,13 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	/**
 	 * 查看菜单权限标识集合.
-	 * @param user 用户对象
+	 * @param userDetail 用户对象
 	 * @return 菜单权限标识集合
 	 */
 	@Override
-	public List<String> getPermissions(User user) {
-		Long userId = user.getId();
-		if (user.isSuperAdministrator()) {
+	public List<String> getPermissions(UserDetail userDetail) {
+		Long userId = userDetail.getId();
+		if (userDetail.isSuperAdministrator()) {
 			return menuMapper.getPermissions();
 		}
 		return menuMapper.getPermissionsByUserId(userId);

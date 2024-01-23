@@ -19,7 +19,7 @@ package org.laokou.common.security.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.security.domain.User;
+import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -70,7 +70,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		Object obj = redisUtil.get(userInfoKey);
 		if (ObjectUtil.isNotNull(obj)) {
 			// 解密
-			return decryptInfo((User) obj);
+			return decryptInfo((UserDetail) obj);
 		}
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, new OAuth2TokenType(FULL));
 		if (ObjectUtil.isNull(authorization)) {
@@ -85,10 +85,10 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		if (expireTime > minTime) {
 			Object principal = ((UsernamePasswordAuthenticationToken) Objects
 				.requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
-			User user = (User) principal;
-			redisUtil.set(userInfoKey, user, expireTime - 1);
+			UserDetail userDetail = (UserDetail) principal;
+			redisUtil.set(userInfoKey, userDetail, expireTime - 1);
 			// 解密
-			return decryptInfo(user);
+			return decryptInfo(userDetail);
 		}
 		throw OAuth2ExceptionHandler.getException(UNAUTHORIZED, MessageUtil.getMessage(UNAUTHORIZED));
 	}
@@ -96,40 +96,40 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
 	/**
 	 * 解密字段.
-	 * @param user 用户信息
+	 * @param userDetail 用户信息
 	 * @return UserDetail
 	 */
-	private User decryptInfo(User user) {
-		String mail = user.getMail();
+	private UserDetail decryptInfo(UserDetail userDetail) {
+		String mail = userDetail.getMail();
 		if (StringUtil.isNotEmpty(mail)) {
 			try {
-				user.setMail(AesUtil.decrypt(mail));
+				userDetail.setMail(AesUtil.decrypt(mail));
 			}
 			catch (Exception e) {
 				log.error("邮箱解密失败，请使用AES加密");
 			}
 		}
-		String mobile = user.getMobile();
+		String mobile = userDetail.getMobile();
 		if (StringUtil.isNotEmpty(mail)) {
 			try {
-				user.setMobile(AesUtil.decrypt(mobile));
+				userDetail.setMobile(AesUtil.decrypt(mobile));
 			}
 			catch (Exception e) {
 				log.error("手机号解密失败，请使用AES加密");
 			}
 		}
 		// 写入当前线程
-		UserContextHolder.set(convert(user));
-		return user;
+		UserContextHolder.set(convert(userDetail));
+		return userDetail;
 	}
 
-	private UserContextHolder.User convert(User user) {
+	private UserContextHolder.User convert(UserDetail userDetail) {
 		UserContextHolder.User u = new UserContextHolder.User();
-		u.setId(user.getId());
-		u.setSourceName(user.getSourceName());
-		u.setDeptPath(user.getDeptPath());
-		u.setDeptId(user.getDeptId());
-		u.setTenantId(user.getTenantId());
+		u.setId(userDetail.getId());
+		u.setSourceName(userDetail.getSourceName());
+		u.setDeptPath(userDetail.getDeptPath());
+		u.setDeptId(userDetail.getDeptId());
+		u.setTenantId(userDetail.getTenantId());
 		return u;
 	}
 

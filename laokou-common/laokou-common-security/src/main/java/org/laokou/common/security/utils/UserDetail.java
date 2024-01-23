@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.security.domain;
+package org.laokou.common.security.utils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -46,9 +46,9 @@ import static org.laokou.common.i18n.common.UserStatusEnums.ENABLED;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "User", description = "用户")
+@Schema(name = "UserDetail", description = "用户详细信息")
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
-public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializable {
+public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
@@ -101,7 +101,7 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 	@Schema(name = "loginDate", description = "登录时间")
 	private LocalDateTime loginDate;
 
-	public User(String username, Long tenantId) {
+	public UserDetail(String username, Long tenantId) {
 		this.username = username;
 		this.tenantId = tenantId;
 	}
@@ -114,7 +114,7 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 		if (ObjectUtil.isNull(o) || getClass() != o.getClass()) {
 			return false;
 		}
-		User that = (User) o;
+		UserDetail that = (UserDetail) o;
 		if (!id.equals(that.id)) {
 			return false;
 		}
@@ -182,15 +182,13 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 
 	@JsonIgnore
 	public boolean isSuperAdministrator() {
-		return this.superAdmin == YES.ordinal();
+		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
 	}
 
 	@Override
 	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Set<GrantedAuthority> authorities = new HashSet<>(this.permissionList.size());
-		authorities.addAll(this.permissionList.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet()));
-		return authorities;
+		return this.permissionList.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
 	}
 
 	@Override
@@ -214,7 +212,7 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 	@Override
 	@JsonIgnore
 	public boolean isEnabled() {
-		return this.status == ENABLED.ordinal();
+		return ObjectUtil.equals(ENABLED.ordinal(), this.status);
 	}
 
 	/**

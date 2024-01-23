@@ -19,7 +19,7 @@ package org.laokou.admin.command.logout;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.logout.LogoutCmd;
-import org.laokou.common.security.domain.User;
+import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -60,12 +60,12 @@ public class LogoutCmdExe {
 		if (ObjectUtil.isNull(authorization)) {
 			return Result.of(true);
 		}
-		User user = (User) ((UsernamePasswordAuthenticationToken) ObjectUtil
+		UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) ObjectUtil
 			.requireNotNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
-		if (ObjectUtil.isNull(user)) {
+		if (ObjectUtil.isNull(userDetail)) {
 			return Result.of(true);
 		}
-		Long userId = user.getId();
+		Long userId = userDetail.getId();
 		// 删除token
 		removeToken(authorization);
 		// 删除菜单key

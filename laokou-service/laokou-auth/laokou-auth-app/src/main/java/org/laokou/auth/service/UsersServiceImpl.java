@@ -33,7 +33,7 @@ import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.security.domain.User;
+import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -84,46 +84,46 @@ public class UsersServiceImpl implements UserDetailsService {
 		// 默认租户查询
 		Long tenantId = DEFAULT;
 		String type = AUTHORIZATION_CODE.getValue();
-		User user = userGateway.getUserByUsername(new Auth(username, type, AesUtil.getKey()));
+		UserDetail userDetail = userGateway.getUserByUsername(new Auth(username, type, AesUtil.getKey()));
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String ip = IpUtil.getIpAddr(request);
-		if (ObjectUtil.isNull(user)) {
-			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, new User(username, tenantId), type, ip);
+		if (ObjectUtil.isNull(userDetail)) {
+			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, new UserDetail(username, tenantId), type, ip);
 		}
 		String password = request.getParameter(PASSWORD);
-		String clientPassword = user.getPassword();
+		String clientPassword = userDetail.getPassword();
 		if (!passwordEncoder.matches(password, clientPassword)) {
-			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, user, type, ip);
+			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, userDetail, type, ip);
 		}
 		// 是否锁定
-		if (!user.isEnabled()) {
-			throw usernameNotFoundException(ACCOUNT_DISABLE, user, type, ip);
+		if (!userDetail.isEnabled()) {
+			throw usernameNotFoundException(ACCOUNT_DISABLE, userDetail, type, ip);
 		}
 		// 权限标识列表
-		List<String> permissionsList = menuGateway.getPermissions(user);
+		List<String> permissionsList = menuGateway.getPermissions(userDetail);
 		if (CollectionUtil.isEmpty(permissionsList)) {
-			throw usernameNotFoundException(FORBIDDEN, user, type, ip);
+			throw usernameNotFoundException(FORBIDDEN, userDetail, type, ip);
 		}
-		List<String> deptPaths = deptGateway.getDeptPaths(user);
-		user.setDeptPaths(deptPaths);
-		user.setPermissionList(permissionsList);
+		List<String> deptPaths = deptGateway.getDeptPaths(userDetail);
+		userDetail.setDeptPaths(deptPaths);
+		userDetail.setPermissionList(permissionsList);
 		// 登录IP
-		user.setLoginIp(IpUtil.getIpAddr(request));
+		userDetail.setLoginIp(IpUtil.getIpAddr(request));
 		// 登录时间
-		user.setLoginDate(DateUtil.now());
+		userDetail.setLoginDate(DateUtil.now());
 		// 默认数据库
-		user.setSourceName(MASTER);
+		userDetail.setSourceName(MASTER);
 		// 登录成功
-		loginLogGateway.publish(new LoginLog(user.getId(), username, type, tenantId, SUCCESS,
-				MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, user.getDeptId(), user.getDeptPath()));
-		return user;
+		loginLogGateway.publish(new LoginLog(userDetail.getId(), username, type, tenantId, SUCCESS,
+				MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, userDetail.getDeptId(), userDetail.getDeptPath()));
+		return userDetail;
 	}
 
-	private UsernameNotFoundException usernameNotFoundException(int code, User user, String type, String ip) {
+	private UsernameNotFoundException usernameNotFoundException(int code, UserDetail userDetail, String type, String ip) {
 		String message = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, message);
-		loginLogGateway.publish(new LoginLog(user.getId(), user.getUsername(), type, user.getTenantId(), FAIL, message,
-				ip, user.getDeptId(), user.getDeptPath()));
+		loginLogGateway.publish(new LoginLog(userDetail.getId(), userDetail.getUsername(), type, userDetail.getTenantId(), FAIL, message,
+				ip, userDetail.getDeptId(), userDetail.getDeptPath()));
 		throw new UsernameNotFoundException(message);
 	}
 
