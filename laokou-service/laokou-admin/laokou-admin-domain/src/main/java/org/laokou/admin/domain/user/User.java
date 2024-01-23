@@ -17,6 +17,7 @@
 
 package org.laokou.admin.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -101,7 +102,8 @@ public class User {
 	public User() {
 	}
 
-	public boolean isSuperAdmin() {
+	@JsonIgnore
+	public boolean isSuperAdministrator() {
 		return this.superAdmin == YES.ordinal();
 	}
 

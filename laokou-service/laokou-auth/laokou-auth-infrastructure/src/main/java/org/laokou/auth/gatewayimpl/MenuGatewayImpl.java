@@ -44,7 +44,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	@Override
 	public List<String> getPermissions(User user) {
 		Long userId = user.getId();
-		if (user.isSuperAdmin()) {
+		if (user.isSuperAdministrator()) {
 			return menuMapper.getPermissions();
 		}
 		return menuMapper.getPermissionsByUserId(userId);

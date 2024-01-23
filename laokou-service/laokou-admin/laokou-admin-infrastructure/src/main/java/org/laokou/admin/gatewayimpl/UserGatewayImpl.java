@@ -133,7 +133,7 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	public User getById(Long id) {
 		User user = userConvertor.convertEntity(userMapper.selectById(id));
-		if (user.isSuperAdmin()) {
+		if (user.isSuperAdministrator()) {
 			user.setRoleIds(roleMapper.getRoleIds());
 		}
 		else {

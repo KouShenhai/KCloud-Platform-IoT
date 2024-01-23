@@ -44,7 +44,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	@Override
 	public List<String> getDeptPaths(User user) {
 		Long userId = user.getId();
-		if (user.isSuperAdmin()) {
+		if (user.isSuperAdministrator()) {
 			return deptMapper.getDeptPaths();
 		}
 		return deptMapper.getDeptPathsByUserId(userId);

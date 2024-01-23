@@ -60,7 +60,7 @@ public class DataFilterAop {
 		if (param instanceof PageQuery pageQuery) {
 			User user = UserUtil.user();
 			// 超级管理员不过滤数据
-			if (user.isSuperAdmin()) {
+			if (user.isSuperAdministrator()) {
 				return;
 			}
 			try {
