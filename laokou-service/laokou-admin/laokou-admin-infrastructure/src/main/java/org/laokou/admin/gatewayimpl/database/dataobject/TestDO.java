@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl.database.dataobject;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +30,7 @@ import org.laokou.common.i18n.dto.AbstractDO;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@TableName("test")
 @Schema(name = "TestDO", description = "测试")
 public class TestDO extends AbstractDO {
 

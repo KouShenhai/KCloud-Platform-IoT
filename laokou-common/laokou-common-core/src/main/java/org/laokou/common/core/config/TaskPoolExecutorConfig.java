@@ -19,13 +19,17 @@ package org.laokou.common.core.config;
 
 import com.alibaba.ttl.threadpool.TtlExecutors;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
+import org.springframework.core.task.VirtualThreadTaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
 
+import static org.laokou.common.i18n.common.StringConstants.TRUE;
 import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
@@ -39,7 +43,13 @@ import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUT
 public class TaskPoolExecutorConfig {
 
 	@Bean(THREAD_POOL_TASK_EXECUTOR_NAME)
-	public Executor ttlTaskExecutor(SpringTaskExecutionProperties springTaskExecutionProperties) {
+	public Executor ttlTaskExecutor(SpringTaskExecutionProperties springTaskExecutionProperties, Environment environment) {
+		String threadNamePrefix = springTaskExecutionProperties.getThreadNamePrefix();
+		String enabled = environment.getProperty("spring.threads.virtual.enabled");
+		if (ObjectUtil.equals(TRUE, enabled)) {
+			// 虚拟线程
+			return new VirtualThreadTaskExecutor(threadNamePrefix);
+		}
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 		// 核心池大小
 		executor.setCorePoolSize(springTaskExecutionProperties.getPool().getCoreSize());
@@ -53,7 +63,7 @@ public class TaskPoolExecutorConfig {
 		// 线程空闲时间
 		executor.setKeepAliveSeconds((int) springTaskExecutionProperties.getPool().getKeepAlive().toSeconds());
 		// 线程名字前缀
-		executor.setThreadNamePrefix(springTaskExecutionProperties.getThreadNamePrefix());
+		executor.setThreadNamePrefix(threadNamePrefix);
 		executor.initialize();
 		return TtlExecutors.getTtlExecutorService(executor.getThreadPoolExecutor());
 	}
