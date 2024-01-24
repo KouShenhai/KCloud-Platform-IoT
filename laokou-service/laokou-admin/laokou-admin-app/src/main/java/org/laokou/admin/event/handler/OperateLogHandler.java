@@ -50,7 +50,7 @@ public class OperateLogHandler implements ApplicationListener<OperateLogEvent> {
 
 	private final OperateLogMapper operateLogMapper;
 
-	private final Executor ttlTaskExecutor;
+	private final Executor executor;
 
 	@Override
 	public void onApplicationEvent(OperateLogEvent event) {
@@ -66,7 +66,7 @@ public class OperateLogHandler implements ApplicationListener<OperateLogEvent> {
 			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
-		}, ttlTaskExecutor);
+		}, executor);
 	}
 
 	private void execute(OperateLogEvent event) {

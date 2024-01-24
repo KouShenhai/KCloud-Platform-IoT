@@ -15,27 +15,7 @@
  *
  */
 
-package org.laokou.admin.gatewayimpl.database.dataobject;
-
-import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import org.laokou.common.mybatisplus.repository.BaseDO;
-
-import java.io.Serial;
-
 /**
  * @author laokou
  */
-@Data
-@TableName("boot_sys_role_dept")
-@Schema(name = "RoleDeptDO", description = "角色部门")
-public class RoleDeptDO extends BaseDO {
-
-	@Serial
-	private static final long serialVersionUID = 8958375447263625932L;
-
-	@Schema(name = "roleId", description = "角色ID")
-	private Long roleId;
-
-}
+package org.laokou.auth.domain.user;

@@ -14,18 +14,22 @@
  * limitations under the License.
  *
  */
+package org.laokou.common.mybatisplus.repository;
 
-package org.laokou.common.core.annotation;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import org.laokou.common.core.config.TaskPoolExecutorConfig;
-import org.springframework.context.annotation.Import;
+/**
+ * @author laokou
+ */
+@Schema(name = "CrudMapper", description = "CRUD Mapper")
+public interface CrudMapper<ID, V, DO> extends BaseMapper<DO> {
 
-import java.lang.annotation.*;
-
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import(TaskPoolExecutorConfig.class)
-public @interface EnableTask {
+    /**
+     * 查看版本号.
+     * @param id ID
+     * @return 版本号
+     */
+    V selectVersion(ID id);
 
 }

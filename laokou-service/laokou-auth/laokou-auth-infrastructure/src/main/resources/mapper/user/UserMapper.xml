@@ -20,9 +20,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.auth.gatewayimpl.database.UserMapper">
 
-    <select id="getUserByUsername" resultType="org.laokou.auth.gatewayimpl.database.dataobject.UserDO">
-        SELECT `id`
-        ,`username`
+    <sql id="aes_decrypt_username">
+        aes_decrypt(`username`, #{publicKey})
+    </sql>
+
+    <select id="selectByConditions" resultType="org.laokou.auth.gatewayimpl.database.dataobject.UserDO">
+        select `id`
+        ,<include refid="aes_decrypt_username"/> as username
         ,`password`
         ,`avatar`
         ,`super_admin` as superAdmin
@@ -32,15 +36,15 @@
         ,`dept_id` as deptId
         ,`dept_path` as deptPath
         ,`tenant_id` as tenantId
-        FROM (select id,AES_DECRYPT(`username`, #{key}) as username,`password`,`avatar`,`super_admin`,`status`,`mail`,`mobile`,`dept_id`,`dept_path`,`tenant_id`,del_flag from boot_sys_user) as boot_sys_user
+        from boot_sys_user
         where del_flag = 0
-        <if test="type != null and (type == 'authorization_code' or type == 'password') and (username != null and username != '')">
-            and `username` = #{username}
+        <if test="type != null and (loginType == 'authorization_code' or loginType == 'password') and username != null and username != ''">
+            and <include refid="aes_decrypt_username"/> = #{username}
         </if>
-        <if test="type != null and type == 'mail' and username != null and username != ''">
+        <if test="type != null and loginType == 'mail' and username != null and username != ''">
             and `mail` = #{username}
         </if>
-        <if test="type != null and type == 'mobile' and username != null and username != ''">
+        <if test="type != null and loginType == 'mobile' and username != null and username != ''">
             and `mobile` = #{username}
         </if>
         limit 1

@@ -57,7 +57,7 @@ public class LogGatewayImpl implements LogGateway {
 
 	private final LoginLogMapper loginLogMapper;
 
-	private final Executor ttlTaskExecutor;
+	private final Executor executor;
 
 	private final LoginLogConvertor loginLogConvertor;
 
@@ -87,7 +87,7 @@ public class LogGatewayImpl implements LogGateway {
 			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
-		}, ttlTaskExecutor);
+		}, executor);
 		CompletableFuture<Integer> c2 = CompletableFuture.supplyAsync(() -> {
 			try {
 				DynamicDataSourceContextHolder.push(sourceName);
@@ -96,7 +96,7 @@ public class LogGatewayImpl implements LogGateway {
 			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
-		}, ttlTaskExecutor);
+		}, executor);
 		CompletableFuture.allOf(c1, c2).join();
 		Datas<LoginLog> datas = new Datas<>();
 		datas.setTotal(c2.get());

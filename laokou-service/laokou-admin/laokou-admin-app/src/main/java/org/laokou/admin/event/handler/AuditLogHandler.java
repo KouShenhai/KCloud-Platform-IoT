@@ -50,7 +50,7 @@ public class AuditLogHandler implements ApplicationListener<AuditLogEvent> {
 
 	private final AuditLogMapper auditLogMapper;
 
-	private final Executor ttlTaskExecutor;
+	private final Executor executor;
 
 	@Override
 	public void onApplicationEvent(AuditLogEvent event) {
@@ -66,7 +66,7 @@ public class AuditLogHandler implements ApplicationListener<AuditLogEvent> {
 			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
-		}, ttlTaskExecutor);
+		}, executor);
 	}
 
 	private void execute(AuditLogEvent event) {

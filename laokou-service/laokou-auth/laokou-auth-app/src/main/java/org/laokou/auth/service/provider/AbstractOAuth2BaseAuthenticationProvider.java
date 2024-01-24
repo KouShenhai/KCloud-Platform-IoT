@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.module.oauth2.authentication;
+package org.laokou.auth.service.provider;
 
 import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
 import com.baomidou.dynamic.datasource.creator.hikaricp.HikariDataSourceCreator;
@@ -29,6 +29,7 @@ import org.laokou.auth.domain.auth.Auth;
 import org.laokou.auth.domain.gateway.*;
 import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.domain.source.Source;
+import org.laokou.auth.module.oauth2.authentication.AbstractOAuth2BaseAuthenticationToken;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IpUtil;

@@ -18,12 +18,11 @@
 package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.domain.auth.Auth;
+import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.domain.gateway.UserGateway;
+import org.laokou.auth.domain.user.User;
 import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.security.utils.UserDetail;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,16 +35,17 @@ import org.springframework.stereotype.Component;
 public class UserGatewayImpl implements UserGateway {
 
 	private final UserMapper userMapper;
+	private final UserConvertor userConvertor;
 
 	/**
-	 * 根据用户名查看用户信息.
-	 * @param auth 认证对象
+	 * 查看用户信息.
+	 * @param user 用户对象
 	 * @return 用户信息
 	 */
 	@Override
-	public UserDetail getUserByUsername(Auth auth) {
-		UserDO userDO = userMapper.getUserByUsername(auth.getUsername(), auth.getType(), auth.getKey());
-		return ConvertUtil.sourceToTarget(userDO, UserDetail.class);
+	public User findOne(User user) {
+		UserDO userDO = userMapper.selectByConditions(user.getUsername(), user.getLoginType(), user.getPublicKey());
+		return userConvertor.convertEntity(userDO);
 	}
 
 }

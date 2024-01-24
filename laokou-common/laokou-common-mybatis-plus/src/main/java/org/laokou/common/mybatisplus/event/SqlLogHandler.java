@@ -49,7 +49,7 @@ public class SqlLogHandler implements ApplicationListener<SqlLogEvent> {
 
 	private final SqlLogMapper sqlLogMapper;
 
-	private final Executor ttlTaskExecutor;
+	private final Executor executor;
 
 	@Override
 	public void onApplicationEvent(SqlLogEvent event) {
@@ -60,7 +60,7 @@ public class SqlLogHandler implements ApplicationListener<SqlLogEvent> {
 			catch (Exception e) {
 				log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
-		}, ttlTaskExecutor);
+		}, executor);
 	}
 
 	private void execute(SqlLogEvent event) {

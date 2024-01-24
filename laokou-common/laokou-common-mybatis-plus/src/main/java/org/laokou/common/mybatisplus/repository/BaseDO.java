@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.mybatisplus.database.dataobject;
+package org.laokou.common.mybatisplus.repository;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;

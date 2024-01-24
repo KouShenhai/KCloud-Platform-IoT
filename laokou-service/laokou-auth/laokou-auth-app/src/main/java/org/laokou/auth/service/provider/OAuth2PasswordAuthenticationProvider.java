@@ -15,14 +15,13 @@
  *
  */
 
-package org.laokou.auth.module.oauth2.authentication;
+package org.laokou.auth.service.provider;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.auth.domain.gateway.*;
-import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.auth.module.oauth2.authentication.OAuth2PasswordAuthenticationToken;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
@@ -36,24 +35,21 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.ErrorCodes.MAIL_ERROR;
-import static org.laokou.common.i18n.common.OAuth2Constants.MAIL;
+import static org.laokou.common.i18n.common.OAuth2Constants.*;
 import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.ValCodes.OAUTH2_CAPTCHA_REQUIRE;
-import static org.laokou.common.i18n.common.ValCodes.OAUTH2_MAIL_REQUIRE;
+import static org.laokou.common.i18n.common.ValCodes.*;
 
 /**
- * 邮箱处理器.
+ * 密码处理器.
  *
  * @author laokou
  */
 @Slf4j
-@Component("mailAuthenticationProvider")
-public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
+@Component("passwordAuthenticationProvider")
+public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-	public OAuth2MailAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway,
-			PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway,
+	public OAuth2PasswordAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway,
+			DeptGateway deptGateway, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway,
 			OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
 			SourceGateway sourceGateway, RedisUtil redisUtil, DynamicUtil dynamicUtil,
 			LoginLogGateway loginLogGateway) {
@@ -63,35 +59,46 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 
 	@Override
 	public boolean supports(Class<?> authentication) {
-		return OAuth2MailAuthenticationToken.class.isAssignableFrom(authentication);
+		return OAuth2PasswordAuthenticationToken.class.isAssignableFrom(authentication);
 	}
 
 	@Override
 	Authentication principal(HttpServletRequest request) {
-		// 判断验证码
-		String code = request.getParameter(OAuth2ParameterNames.CODE);
-		// log.info("验证码：{}", code);
-		if (StringUtil.isEmpty(code)) {
+		// 判断UUID是否为空
+		String uuid = request.getParameter(UUID);
+		// log.info("UUID：{}", uuid);
+		if (StringUtil.isEmpty(uuid)) {
+			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
+					ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
+		}
+		// 判断验证码是否为空
+		String captcha = request.getParameter(CAPTCHA);
+		// log.info("验证码：{}", captcha);
+		if (StringUtil.isEmpty(captcha)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
 		}
-		String mail = request.getParameter(MAIL);
-		// log.info("邮箱：{}", SensitiveUtil.format(Type.MAIL, mail));
-		if (StringUtil.isEmpty(mail)) {
+		// 验证账号是否为空
+		String username = request.getParameter(OAuth2ParameterNames.USERNAME);
+		// log.info("账号：{}", username);
+		if (StringUtil.isEmpty(username)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
-					ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));
+					ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE));
 		}
-		boolean isMail = RegexUtil.mailRegex(mail);
-		if (!isMail) {
-			throw OAuth2ExceptionHandler.getException(MAIL_ERROR, MessageUtil.getMessage(MAIL_ERROR));
+		// 验证密码是否为空
+		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
+		// log.info("密码：{}", password);
+		if (StringUtil.isEmpty(password)) {
+			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
+					ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE));
 		}
-		// 获取用户信息,并认证信息
-		return super.authenticationToken(mail, EMPTY, request, code, mail);
+		// 获取用户信息，并认证信息
+		return super.authenticationToken(username, password, request, captcha, uuid);
 	}
 
 	@Override
 	AuthorizationGrantType getGrantType() {
-		return new AuthorizationGrantType(MAIL);
+		return new AuthorizationGrantType(PASSWORD);
 	}
 
 }

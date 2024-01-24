@@ -50,7 +50,7 @@ public class OssLogHandler implements ApplicationListener<OssLogEvent> {
 
 	private final OssLogMapper ossLogMapper;
 
-	private final Executor ttlTaskExecutor;
+	private final Executor executor;
 
 	@Override
 	public void onApplicationEvent(OssLogEvent event) {
@@ -66,7 +66,7 @@ public class OssLogHandler implements ApplicationListener<OssLogEvent> {
 			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
-		}, ttlTaskExecutor);
+		}, executor);
 	}
 
 	private void execute(OssLogEvent event) {

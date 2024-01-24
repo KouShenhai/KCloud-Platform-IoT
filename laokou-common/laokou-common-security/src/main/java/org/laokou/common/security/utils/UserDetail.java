@@ -21,8 +21,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,11 +32,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import static lombok.AccessLevel.PRIVATE;
+import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
+import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
+import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
 import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
 import static org.laokou.common.i18n.common.UserStatusEnums.ENABLED;
 
@@ -44,19 +52,17 @@ import static org.laokou.common.i18n.common.UserStatusEnums.ENABLED;
  * @author laokou
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "UserDetail", description = "用户详细信息")
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
-public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Serializable {
+public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2AuthenticatedPrincipal {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
 
-	@Schema(name = "id", description = "ID")
-	private Long id;
-
-	@Schema(name = "username", description = "用户名")
+	@Schema(name = USERNAME, description = "用户名")
 	private String username;
 
 	@Schema(name = "avatar", description = "头像")
@@ -74,22 +80,22 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 	@Schema(name = "mobile", description = "手机号")
 	private String mobile;
 
-	@Schema(name = "password", description = "密码")
+	@Schema(name = PASSWORD, description = "密码")
 	private transient String password;
 
-	@Schema(name = "deptId", description = "部门ID")
+	@Schema(name = DEPT_ID, description = "部门ID")
 	private Long deptId;
 
-	@Schema(name = "deptPath", description = "部门PATH")
+	@Schema(name = DEPT_PATH, description = "部门PATH")
 	private String deptPath;
 
 	@Schema(name = "deptPaths", description = "部门PATH集合")
-	private List<String> deptPaths;
+	private Set<String> deptPaths;
 
-	@Schema(name = "permissionList", description = "菜单权限标识集合")
-	private List<String> permissionList;
+	@Schema(name = "permissions", description = "菜单权限标识集合")
+	private Set<String> permissions;
 
-	@Schema(name = "tenantId", description = "租户ID")
+	@Schema(name = TENANT_ID, description = "租户ID")
 	private Long tenantId;
 
 	@Schema(name = "sourceName", description = "数据源名称")
@@ -100,11 +106,6 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 
 	@Schema(name = "loginDate", description = "登录时间")
 	private LocalDateTime loginDate;
-
-	public UserDetail(String username, Long tenantId) {
-		this.username = username;
-		this.tenantId = tenantId;
-	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -139,7 +140,7 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 		if (!deptPaths.equals(that.deptPaths)) {
 			return false;
 		}
-		if (!permissionList.equals(that.permissionList)) {
+		if (!permissions.equals(that.permissions)) {
 			return false;
 		}
 		if (!tenantId.equals(that.tenantId)) {
@@ -170,7 +171,7 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 		result = 31 * result + deptId.hashCode();
 		result = 31 * result + deptPath.hashCode();
 		result = 31 * result + deptPaths.hashCode();
-		result = 31 * result + permissionList.hashCode();
+		result = 31 * result + permissions.hashCode();
 		result = 31 * result + tenantId.hashCode();
 		result = 31 * result + sourceName.hashCode();
 		result = 31 * result + loginIp.hashCode();
@@ -188,7 +189,7 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 	@Override
 	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.permissionList.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+		return this.permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
 	}
 
 	@Override

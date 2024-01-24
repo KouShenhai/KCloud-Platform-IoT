@@ -25,6 +25,10 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-mybatis-plus</artifactId>
             <exclusions>
                 <exclusion>

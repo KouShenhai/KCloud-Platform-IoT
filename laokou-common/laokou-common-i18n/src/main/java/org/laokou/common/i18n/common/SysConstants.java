@@ -124,6 +124,6 @@ public final class SysConstants {
 	public static final String WEBSOCKET_PATH = "/ws";
 
 	@Schema(name = "THREAD_POOL_TASK_EXECUTOR_NAME", description = "线程池名称")
-	public static final String THREAD_POOL_TASK_EXECUTOR_NAME = "ttlTaskExecutor";
+	public static final String THREAD_POOL_TASK_EXECUTOR_NAME = "executor";
 
 }

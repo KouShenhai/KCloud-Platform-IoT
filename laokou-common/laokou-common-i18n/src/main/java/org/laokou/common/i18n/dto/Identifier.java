@@ -14,32 +14,16 @@
  * limitations under the License.
  *
  */
-
-package org.laokou.auth.domain.auth;
+package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Schema(name = "Auth", description = "认证")
-public class Auth implements Serializable {
+@Schema(name = "Identifier", description = "标识")
+public abstract class Identifier<ID> implements Entity {
 
-	@Schema(name = "username", description = "用户名")
-	private String username;
-
-	@Schema(name = "type", description = "登录类型 mail邮箱 mobile手机号 password密码 authorization_code授权码")
-	private String type;
-
-	@Schema(name = "key", description = "密钥Key")
-	private String key;
+    protected ID id;
 
 }

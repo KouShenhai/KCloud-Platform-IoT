@@ -15,7 +15,12 @@
  *
  */
 
+package org.laokou.auth.dto.user.clientobject;
+
+import org.laokou.common.i18n.dto.ClientObject;
+
 /**
  * @author laokou
  */
-package org.laokou.auth.domain.auth;
+public class UserCO extends ClientObject {
+}

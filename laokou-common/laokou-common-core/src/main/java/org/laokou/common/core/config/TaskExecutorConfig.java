@@ -40,10 +40,10 @@ import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUT
 @EnableAsync
 @AutoConfiguration
 @RequiredArgsConstructor
-public class TaskPoolExecutorConfig {
+public class TaskExecutorConfig {
 
 	@Bean(THREAD_POOL_TASK_EXECUTOR_NAME)
-	public Executor ttlTaskExecutor(SpringTaskExecutionProperties springTaskExecutionProperties, Environment environment) {
+	public Executor executor(SpringTaskExecutionProperties springTaskExecutionProperties, Environment environment) {
 		String threadNamePrefix = springTaskExecutionProperties.getThreadNamePrefix();
 		String enabled = environment.getProperty("spring.threads.virtual.enabled");
 		if (ObjectUtil.equals(TRUE, enabled)) {

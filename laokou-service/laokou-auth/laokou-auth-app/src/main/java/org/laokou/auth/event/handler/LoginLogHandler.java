@@ -54,7 +54,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 
 	private final LoginLogMapper loginLogMapper;
 
-	private final Executor ttlTaskExecutor;
+	private final Executor executor;
 
 	@Override
 	public void onApplicationEvent(LoginLogEvent event) {
@@ -70,7 +70,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
-		}, ttlTaskExecutor);
+		}, executor);
 	}
 
 	private void execute(LoginLogEvent event) {

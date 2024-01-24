@@ -20,8 +20,10 @@ package org.laokou.auth.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
+
+import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
 
 /**
  * 用户.
@@ -30,15 +32,15 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface UserMapper extends BatchMapper<UserDO> {
+public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 
 	/**
 	 * 根据用户名和登录类型查看用户信息.
 	 * @param username 用户名
-	 * @param type 登录类型 mail邮箱 mobile手机号 password密码 authorization_code授权码
-	 * @param key 密钥
+	 * @param loginType 登录类型 mail邮箱 mobile手机号 password密码 authorization_code授权码
+	 * @param publicKey 密钥
 	 * @return 用户信息
 	 */
-	UserDO getUserByUsername(@Param("username") String username, @Param("type") String type, @Param("key") String key);
+	UserDO selectByConditions(@Param(USERNAME) String username, @Param("loginType") String loginType, @Param("publicKey") String publicKey);
 
 }

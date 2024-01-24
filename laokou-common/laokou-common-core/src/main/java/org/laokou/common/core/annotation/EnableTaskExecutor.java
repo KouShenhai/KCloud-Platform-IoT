@@ -15,27 +15,17 @@
  *
  */
 
-package org.laokou.admin.gatewayimpl.database.dataobject;
+package org.laokou.common.core.annotation;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import org.laokou.common.mybatisplus.repository.BaseDO;
+import org.laokou.common.core.config.TaskExecutorConfig;
+import org.springframework.context.annotation.Import;
 
-import java.io.Serial;
+import java.lang.annotation.*;
 
-/**
- * @author laokou
- */
-@Data
-@TableName("boot_sys_role_dept")
-@Schema(name = "RoleDeptDO", description = "角色部门")
-public class RoleDeptDO extends BaseDO {
-
-	@Serial
-	private static final long serialVersionUID = 8958375447263625932L;
-
-	@Schema(name = "roleId", description = "角色ID")
-	private Long roleId;
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import(TaskExecutorConfig.class)
+public @interface EnableTaskExecutor {
 
 }

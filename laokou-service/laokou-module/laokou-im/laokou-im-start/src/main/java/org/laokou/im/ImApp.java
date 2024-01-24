@@ -19,7 +19,7 @@ package org.laokou.im;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
-import org.laokou.common.core.annotation.EnableTask;
+import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.actuate.autoconfigure.security.reactive.ReactiveManagementWebSecurityAutoConfiguration;
@@ -35,7 +35,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 /**
  * @author laokou
  */
-@EnableTask
+@EnableTaskExecutor
 @EnableRedisRepository
 @SpringBootApplication(scanBasePackages = "org.laokou",
 		exclude = { ReactiveSecurityAutoConfiguration.class, ReactiveManagementWebSecurityAutoConfiguration.class,

@@ -15,27 +15,22 @@
  *
  */
 
-package org.laokou.admin.gatewayimpl.database.dataobject;
+package org.laokou.auth.convertor;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import org.laokou.common.mybatisplus.repository.BaseDO;
+import org.laokou.auth.domain.user.User;
+import org.laokou.auth.dto.user.clientobject.UserCO;
+import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.common.i18n.dto.Convertor;
+import org.mapstruct.Mapper;
 
-import java.io.Serial;
+import static org.laokou.common.i18n.common.SysConstants.SPRING;
 
 /**
+ * 用户转换器.
+ *
  * @author laokou
  */
-@Data
-@TableName("boot_sys_role_dept")
-@Schema(name = "RoleDeptDO", description = "角色部门")
-public class RoleDeptDO extends BaseDO {
-
-	@Serial
-	private static final long serialVersionUID = 8958375447263625932L;
-
-	@Schema(name = "roleId", description = "角色ID")
-	private Long roleId;
+@Mapper(componentModel = SPRING)
+public interface UserConvertor extends Convertor<UserCO, User, UserDO> {
 
 }

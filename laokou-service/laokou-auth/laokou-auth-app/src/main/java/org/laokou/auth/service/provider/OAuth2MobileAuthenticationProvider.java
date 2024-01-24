@@ -15,12 +15,14 @@
  *
  */
 
-package org.laokou.auth.module.oauth2.authentication;
+package org.laokou.auth.service.provider;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.auth.domain.gateway.*;
+import org.laokou.auth.module.oauth2.authentication.OAuth2MobileAuthenticationToken;
+import org.laokou.auth.service.provider.AbstractOAuth2BaseAuthenticationProvider;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;

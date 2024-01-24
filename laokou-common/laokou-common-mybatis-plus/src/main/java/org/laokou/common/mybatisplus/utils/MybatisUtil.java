@@ -47,7 +47,7 @@ import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 @Component
 public class MybatisUtil {
 
-	private final Executor ttlTaskExecutor;
+	private final Executor executor;
 
 	private final SqlSessionFactory sqlSessionFactory;
 
@@ -87,7 +87,7 @@ public class MybatisUtil {
 		}
 		List<CompletableFuture<Void>> futures = partition.stream()
 			.map(item -> CompletableFuture
-				.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds, cyclicBarrier), ttlTaskExecutor))
+				.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds, cyclicBarrier), executor))
 			.toList();
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {

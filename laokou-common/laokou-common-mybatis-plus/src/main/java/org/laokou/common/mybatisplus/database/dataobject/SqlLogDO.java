@@ -20,6 +20,7 @@ package org.laokou.common.mybatisplus.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.laokou.common.mybatisplus.repository.BaseDO;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_SQL_LOG;
 
