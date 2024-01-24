@@ -28,6 +28,17 @@ db:
   # see DataSourcePoolProperties 与 ExternalDataSourceProperties
   pool:
     config:
+      # see DataSourcePoolProperties
+      # see HikariConfig
+      minimum-idle: 2
+      idle-timeout: 10000
+      # 连接时间
+      connection-timeout: 30000
+      # 超时时间
+      validation-timeout: 10000
+      # 最优最大连接数
+      maximum-pool-size: 20
+      # 数据库驱动
       driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
 management:
   metrics:
