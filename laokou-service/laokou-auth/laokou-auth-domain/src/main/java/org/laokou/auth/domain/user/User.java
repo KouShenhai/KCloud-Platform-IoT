@@ -17,12 +17,16 @@
 
 package org.laokou.auth.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.Identifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Set;
 
 import static lombok.AccessLevel.PRIVATE;
 import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
@@ -69,10 +73,30 @@ public class User extends Identifier<Long> {
     @Schema(name = TENANT_ID, description = "租户ID")
     private Long tenantId;
 
-    @Schema(name = "loginType", description = "登录类型 mail邮箱 mobile手机号 password密码 authorization_code授权码")
-    private String loginType;
+    @Schema(name = "captcha", description = "验证码")
+    private Captcha captcha;
 
-    @Schema(name = "publicKey", description = "公共密钥Key")
-    private String publicKey;
+    @Schema(name = "auth", description = "认证")
+    private Auth auth;
+
+    @JsonIgnore
+    public static void checkNull(User user) {
+
+    }
+
+    @JsonIgnore
+    public static void checkPassword(String password, String clientPassword, PasswordEncoder passwordEncoder) {
+
+    }
+
+    @JsonIgnore
+    public static void checkStatus(Integer status) {
+
+    }
+
+    @JsonIgnore
+    public static void checkPermissions(Set<String> permissions) {
+
+    }
 
 }

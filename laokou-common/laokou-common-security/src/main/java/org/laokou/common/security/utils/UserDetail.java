@@ -24,12 +24,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
+import org.springframework.util.Assert;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
@@ -190,6 +192,13 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+	}
+
+	@JsonIgnore
+	public static UserDetail copy(Object obj) {
+		UserDetail userDetail = ConvertUtil.sourceToTarget(obj, UserDetail.class);
+		Assert.isTrue(ObjectUtil.isNotNull(userDetail), "userDetail is null");
+		return userDetail;
 	}
 
 	@Override

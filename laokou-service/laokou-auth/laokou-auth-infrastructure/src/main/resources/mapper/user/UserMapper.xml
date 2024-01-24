@@ -38,13 +38,13 @@
         ,`tenant_id` as tenantId
         from boot_sys_user
         where del_flag = 0
-        <if test="type != null and (loginType == 'authorization_code' or loginType == 'password') and username != null and username != ''">
+        <if test="type != null and (type == 'authorization_code' or type == 'password') and username != null and username != ''">
             and <include refid="aes_decrypt_username"/> = #{username}
         </if>
-        <if test="type != null and loginType == 'mail' and username != null and username != ''">
+        <if test="type != null and type == 'mail' and username != null and username != ''">
             and `mail` = #{username}
         </if>
-        <if test="type != null and loginType == 'mobile' and username != null and username != ''">
+        <if test="type != null and type == 'mobile' and username != null and username != ''">
             and `mobile` = #{username}
         </if>
         limit 1

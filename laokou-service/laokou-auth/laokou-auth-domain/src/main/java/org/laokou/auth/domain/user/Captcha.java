@@ -14,19 +14,29 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.i18n.dto;
+
+package org.laokou.auth.domain.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.Identifier;
+
+import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
-@Getter
-@Schema(name = "Identifier", description = "标识")
-public abstract class Identifier<ID> implements Entity {
+@Data
+@Builder
+@NoArgsConstructor(access = PRIVATE)
+@AllArgsConstructor(access = PRIVATE)
+@Schema(name = "Captcha", description = "验证码")
+public class Captcha extends Identifier<String> {
 
-    @Schema(name = "id", description = "ID")
-    protected ID id;
+    @Schema(name = "captcha", description = "验证码")
+    private String captcha;
 
 }

@@ -44,7 +44,7 @@ public class UserGatewayImpl implements UserGateway {
 	 */
 	@Override
 	public User findOne(User user) {
-		UserDO userDO = userMapper.selectByConditions(user.getUsername(), user.getLoginType(), user.getPublicKey());
+		UserDO userDO = userMapper.selectByConditions(user.getUsername(), user.getAuth().getType(), user.getAuth().getPublicKey());
 		return userConvertor.convertEntity(userDO);
 	}
 

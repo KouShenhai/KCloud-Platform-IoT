@@ -14,19 +14,25 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.i18n.dto;
+
+package org.laokou.common.i18n.common.exception;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
 
 /**
  * @author laokou
  */
-@Getter
-@Schema(name = "Identifier", description = "标识")
-public abstract class Identifier<ID> implements Entity {
+@Schema(name = "AuthException", description = "认证异常")
+public final class AuthException extends GlobalException{
+    public AuthException(int code) {
+        super(code);
+    }
 
-    @Schema(name = "id", description = "ID")
-    protected ID id;
+    public AuthException(int code, String msg) {
+        super(code, msg);
+    }
 
+    public AuthException(String msg) {
+        super(msg);
+    }
 }

@@ -20,12 +20,13 @@ package org.laokou.auth.service;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.auth.Auth;
 import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.domain.gateway.LoginLogGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.log.LoginLog;
+import org.laokou.auth.domain.user.Auth;
+import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.core.utils.RequestUtil;
@@ -39,7 +40,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
@@ -82,27 +82,35 @@ public class UsersServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// 默认租户查询
-		Long tenantId = DEFAULT;
-		String type = AUTHORIZATION_CODE.getValue();
-		UserDetail userDetail = userGateway.getUserByUsername(new Auth(username, type, AesUtil.getKey()));
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String ip = IpUtil.getIpAddr(request);
-		if (ObjectUtil.isNull(userDetail)) {
-			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, new UserDetail(username, tenantId), type, ip);
+		String authType = AUTHORIZATION_CODE.getValue();
+		String publicKey = AesUtil.getKey();
+		Auth auth = Auth.builder().type(authType)
+				.publicKey(publicKey)
+				.build();
+		User user = User.builder().username(username)
+				.tenantId(DEFAULT)
+				.auth(auth)
+				.build();
+		User u = userGateway.findOne(user);
+		if (ObjectUtil.isNull(u)) {
+			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, UserDetail.copy(user), authType, ip);
 		}
+		UserDetail userDetail = UserDetail.copy(u);
 		String password = request.getParameter(PASSWORD);
 		String clientPassword = userDetail.getPassword();
 		if (!passwordEncoder.matches(password, clientPassword)) {
-			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, userDetail, type, ip);
+			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, userDetail, authType, ip);
 		}
 		// 是否锁定
 		if (!userDetail.isEnabled()) {
-			throw usernameNotFoundException(ACCOUNT_DISABLE, userDetail, type, ip);
+			throw usernameNotFoundException(ACCOUNT_DISABLE, userDetail, authType, ip);
 		}
 		// 权限标识列表
 		List<String> permissionsList = menuGateway.getPermissions(userDetail);
 		if (CollectionUtil.isEmpty(permissionsList)) {
-			throw usernameNotFoundException(FORBIDDEN, userDetail, type, ip);
+			throw usernameNotFoundException(FORBIDDEN, userDetail, authType, ip);
 		}
 		List<String> deptPaths = deptGateway.getDeptPaths(userDetail);
 		userDetail.setDeptPaths(deptPaths);
@@ -119,10 +127,10 @@ public class UsersServiceImpl implements UserDetailsService {
 		return userDetail;
 	}
 
-	private UsernameNotFoundException usernameNotFoundException(int code, UserDetail userDetail, String type, String ip) {
+	private UsernameNotFoundException usernameNotFoundException(int code, UserDetail userDetail, String authType, String ip) {
 		String message = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, message);
-		loginLogGateway.publish(new LoginLog(userDetail.getId(), userDetail.getUsername(), type, userDetail.getTenantId(), FAIL, message,
+		loginLogGateway.publish(new LoginLog(userDetail.getId(), userDetail.getUsername(), authType, userDetail.getTenantId(), FAIL, message,
 				ip, userDetail.getDeptId(), userDetail.getDeptPath()));
 		throw new UsernameNotFoundException(message);
 	}

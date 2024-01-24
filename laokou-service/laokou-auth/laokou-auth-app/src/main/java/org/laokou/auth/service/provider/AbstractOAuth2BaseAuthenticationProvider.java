@@ -25,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
-import org.laokou.auth.domain.auth.Auth;
 import org.laokou.auth.domain.gateway.*;
 import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.domain.source.Source;
@@ -284,7 +283,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			UserDetail userDetail;
 			try {
 				// 多租户查询（多数据源）
-				userDetail = userGateway.getUserByUsername(new Auth(encryptName, type, AesUtil.getKey()));
+				//userDetail = userGateway.findOne(new Auth(encryptName, type, AesUtil.getKey()));
 			}
 			catch (BadSqlGrammarException e) {
 				log.error("表 boot_sys_user 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
