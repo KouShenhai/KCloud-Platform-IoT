@@ -120,18 +120,6 @@ public class User extends Identifier<Long> {
         }
     }
 
-    public static void checkNullCaptcha(String captcha) {
-        if (StringUtil.isEmpty(captcha)) {
-            throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
-        }
-    }
-
-    public static void checkNullUUID(String uuid) {
-        if (StringUtil.isEmpty(uuid)) {
-            throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
-        }
-    }
-
     public static void checkCaptcha(Boolean validateResult) {
         if (ObjectUtil.isNull(validateResult)) {
             throw new AuthException(CAPTCHA_EXPIRED);

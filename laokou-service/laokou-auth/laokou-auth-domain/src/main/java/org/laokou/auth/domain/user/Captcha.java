@@ -22,9 +22,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.dto.Identifier;
+import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 
 import static lombok.AccessLevel.PRIVATE;
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.ValCodes.OAUTH2_CAPTCHA_REQUIRE;
+import static org.laokou.common.i18n.common.ValCodes.OAUTH2_UUID_REQUIRE;
 
 /**
  * @author laokou
@@ -38,5 +44,17 @@ public class Captcha extends Identifier<String> {
 
     @Schema(name = "captcha", description = "验证码")
     private String captcha;
+
+    public static void checkNullCaptcha(String captcha) {
+        if (StringUtil.isEmpty(captcha)) {
+            throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
+        }
+    }
+
+    public static void checkNullUUID(String uuid) {
+        if (StringUtil.isEmpty(uuid)) {
+            throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
+        }
+    }
 
 }
