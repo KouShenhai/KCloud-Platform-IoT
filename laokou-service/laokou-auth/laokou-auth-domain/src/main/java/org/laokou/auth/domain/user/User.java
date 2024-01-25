@@ -17,21 +17,32 @@
 
 package org.laokou.auth.domain.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.RegexUtil;
+import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.dto.Identifier;
+import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
 
 import static lombok.AccessLevel.PRIVATE;
+import static org.laokou.common.i18n.common.ErrorCodes.*;
 import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
 import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
 import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
+import static org.laokou.common.i18n.common.StatusCodes.FORBIDDEN;
+import static org.laokou.common.i18n.common.UserStatusEnums.ENABLED;
+import static org.laokou.common.i18n.common.ValCodes.*;
 
 /**
  * @author laokou
@@ -79,24 +90,79 @@ public class User extends Identifier<Long> {
     @Schema(name = "auth", description = "认证")
     private Auth auth;
 
-    @JsonIgnore
+    public static void checkMobile(String mobile) {
+        if (StringUtil.isEmpty(mobile)) {
+            throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_MOBILE_REQUIRE));
+        }
+        if (!RegexUtil.mobileRegex(mobile)) {
+            throw new AuthException(MOBILE_ERROR);
+        }
+    }
+
+    public static void checkMail(String mail) {
+        if (StringUtil.isEmpty(mail)) {
+            throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));
+        }
+        if (!RegexUtil.mailRegex(mail)) {
+            throw new AuthException(MAIL_ERROR, MessageUtil.getMessage(MAIL_ERROR));
+        }
+    }
+
+    public static void checkNullPassword(String password) {
+        if (StringUtil.isEmpty(password)) {
+            throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE));
+        }
+    }
+
+    public static void checkNullUsername(String username) {
+        if (StringUtil.isEmpty(username)) {
+            throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE));
+        }
+    }
+
+    public static void checkNullCaptcha(String captcha) {
+        if (StringUtil.isEmpty(captcha)) {
+            throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
+        }
+    }
+
+    public static void checkNullUUID(String uuid) {
+        if (StringUtil.isEmpty(uuid)) {
+            throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
+        }
+    }
+
+    public static void checkCaptcha(Boolean validateResult) {
+        if (ObjectUtil.isNull(validateResult)) {
+            throw new AuthException(CAPTCHA_EXPIRED);
+        }
+        if (!validateResult) {
+            throw new  AuthException(CAPTCHA_ERROR);
+        }
+    }
+
     public static void checkNull(User user) {
-
+        if (ObjectUtil.isNull(user)) {
+            throw new AuthException(ACCOUNT_PASSWORD_ERROR);
+        }
     }
 
-    @JsonIgnore
     public static void checkPassword(String password, String clientPassword, PasswordEncoder passwordEncoder) {
-
+        if (!passwordEncoder.matches(password, clientPassword)) {
+            throw new AuthException(ACCOUNT_PASSWORD_ERROR);
+        }
     }
 
-    @JsonIgnore
     public static void checkStatus(Integer status) {
-
+        if (ObjectUtil.equals(ENABLED.ordinal(), status)) {
+            throw new AuthException(ACCOUNT_DISABLE);
+        }
     }
 
-    @JsonIgnore
     public static void checkPermissions(Set<String> permissions) {
-
+        if (CollectionUtil.isEmpty(permissions)) {
+            throw new AuthException(FORBIDDEN);
+        }
     }
 
 }
