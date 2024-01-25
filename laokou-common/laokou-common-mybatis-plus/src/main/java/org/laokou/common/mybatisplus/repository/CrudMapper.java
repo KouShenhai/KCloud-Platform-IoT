@@ -25,11 +25,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "CrudMapper", description = "CRUD Mapper")
 public interface CrudMapper<ID, V, DO> extends BaseMapper<DO> {
 
-    /**
-     * 查看版本号.
-     * @param id ID
-     * @return 版本号
-     */
-    V selectVersion(ID id);
+	/**
+	 * 查看版本号.
+	 * @param id ID
+	 * @return 版本号
+	 */
+	V selectVersion(ID id);
 
 }

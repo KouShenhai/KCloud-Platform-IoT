@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.domain.user;
+package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -23,14 +23,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.common.exception.AuthException;
-import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 
+import java.time.LocalDateTime;
+
 import static lombok.AccessLevel.PRIVATE;
+import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
 import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.ValCodes.OAUTH2_CAPTCHA_REQUIRE;
-import static org.laokou.common.i18n.common.ValCodes.OAUTH2_UUID_REQUIRE;
+import static org.laokou.common.i18n.common.ValCodes.OAUTH2_TENANT_ID_REQUIRE;
 
 /**
  * @author laokou
@@ -39,21 +40,33 @@ import static org.laokou.common.i18n.common.ValCodes.OAUTH2_UUID_REQUIRE;
 @Builder
 @NoArgsConstructor(access = PRIVATE)
 @AllArgsConstructor(access = PRIVATE)
-@Schema(name = "Captcha", description = "验证码")
-public class Captcha extends Identifier<String> {
+@Schema(name = "AggregateRoot", description = "聚合根")
+public abstract class AggregateRoot<ID> extends Identifier<ID> {
 
-	@Schema(name = "captcha", description = "验证码")
-	private String captcha;
+	@Schema(name = CREATOR, description = "创建人")
+	protected ID creator;
 
-	public void checkNullCaptcha(String captcha) {
-		if (StringUtil.isEmpty(captcha)) {
-			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
-		}
-	}
+	@Schema(name = EDITOR, description = "修改人")
+	protected ID editor;
 
-	public void checkNullUUID(String uuid) {
-		if (StringUtil.isEmpty(uuid)) {
-			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
+	@Schema(name = DEPT_ID, description = "部门ID")
+	protected ID deptId;
+
+	@Schema(name = DEPT_PATH, description = "部门PATH")
+	protected String deptPath;
+
+	@Schema(name = TENANT_ID, description = "租户ID")
+	protected ID tenantId;
+
+	@Schema(name = CREATE_DATE, description = "创建时间")
+	protected LocalDateTime createDate;
+
+	@Schema(name = UPDATE_DATE, description = "修改时间")
+	protected LocalDateTime updateDate;
+
+	public void checkNullTenantId(String tenantId) {
+		if (StringUtil.isEmpty(tenantId)) {
+			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
 		}
 	}
 

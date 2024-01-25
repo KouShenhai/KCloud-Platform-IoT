@@ -18,10 +18,12 @@
 package org.laokou.common.core.holder;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
 
 import java.util.Optional;
+
+import static lombok.AccessLevel.PRIVATE;
 
 /**
  * 用户上下文.
@@ -55,43 +57,30 @@ public class UserContextHolder {
 	 * @param user 用户
 	 */
 	public static void set(User user) {
-		clear();
 		USER_LOCAL.set(user);
 	}
 
 	@Data
-	@NoArgsConstructor
+	@Builder
+	@AllArgsConstructor(access = PRIVATE)
+	@NoArgsConstructor(access = PRIVATE)
+	@Schema(name = "User", description = "用户")
 	public static class User {
 
-		/**
-		 * ID.
-		 */
+		@Schema(name = "id", description = "ID")
 		private Long id;
 
-		/**
-		 * 租户ID.
-		 */
+		@Schema(name = "tenantId", description = "租户ID")
 		private Long tenantId;
 
-		/**
-		 * 部门PATH.
-		 */
+		@Schema(name = "deptPath", description = "部门PATH")
 		private String deptPath;
 
-		/**
-		 * 部门ID.
-		 */
+		@Schema(name = "deptId", description = "部门ID")
 		private Long deptId;
 
-		/**
-		 * 数据源名称.
-		 */
+		@Schema(name = "sourceName", description = "数据源名称")
 		private String sourceName;
-
-		public User(Long tenantId, String sourceName) {
-			this.tenantId = tenantId;
-			this.sourceName = sourceName;
-		}
 
 	}
 

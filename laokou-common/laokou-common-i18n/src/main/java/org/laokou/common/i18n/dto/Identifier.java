@@ -26,7 +26,7 @@ import lombok.Getter;
 @Schema(name = "Identifier", description = "标识")
 public abstract class Identifier<ID> implements Entity {
 
-    @Schema(name = "id", description = "ID")
-    protected ID id;
+	@Schema(name = "id", description = "ID")
+	protected ID id;
 
 }

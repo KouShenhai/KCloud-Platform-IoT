@@ -35,6 +35,7 @@ import org.springframework.stereotype.Component;
 public class UserGatewayImpl implements UserGateway {
 
 	private final UserMapper userMapper;
+
 	private final UserConvertor userConvertor;
 
 	/**
@@ -44,7 +45,8 @@ public class UserGatewayImpl implements UserGateway {
 	 */
 	@Override
 	public User findOne(User user) {
-		UserDO userDO = userMapper.selectByConditions(user.getUsername(), user.getAuth().getType(), user.getAuth().getPublicKey());
+		UserDO userDO = userMapper.selectByConditions(user.getUsername(), user.getAuth().getType(),
+				user.getAuth().getPublicKey());
 		return userConvertor.convertEntity(userDO);
 	}
 

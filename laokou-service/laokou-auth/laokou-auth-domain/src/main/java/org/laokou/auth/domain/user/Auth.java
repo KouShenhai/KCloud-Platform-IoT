@@ -36,10 +36,10 @@ import static lombok.AccessLevel.PRIVATE;
 @Schema(name = "Auth", description = "认证")
 public class Auth extends Identifier<Long> {
 
-    @Schema(name = "type", description = "类型 mail邮箱 mobile手机号 password密码 authorization_code授权码")
-    private String type;
+	@Schema(name = "type", description = "类型 mail邮箱 mobile手机号 password密码 authorization_code授权码")
+	private String type;
 
-    @Schema(name = "publicKey", description = "公共密钥Key")
-    private String publicKey;
+	@Schema(name = "publicKey", description = "公共密钥Key")
+	private String publicKey;
 
 }

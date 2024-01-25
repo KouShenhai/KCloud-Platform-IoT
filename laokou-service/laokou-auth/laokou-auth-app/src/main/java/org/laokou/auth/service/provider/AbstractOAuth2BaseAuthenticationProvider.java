@@ -283,7 +283,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			UserDetail userDetail;
 			try {
 				// 多租户查询（多数据源）
-				//userDetail = userGateway.findOne(new Auth(encryptName, type, AesUtil.getKey()));
+				// userDetail = userGateway.findOne(new Auth(encryptName, type,
+				// AesUtil.getKey()));
 			}
 			catch (BadSqlGrammarException e) {
 				log.error("表 boot_sys_user 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
@@ -339,7 +340,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
-			UserContextHolder.clear();
 		}
 	}
 
@@ -355,11 +355,12 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		throw OAuth2ExceptionHandler.getException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
 	}
 
-	private OAuth2AuthenticationException authenticationException(int code, UserDetail userDetail, String type, String ip) {
+	private OAuth2AuthenticationException authenticationException(int code, UserDetail userDetail, String type,
+			String ip) {
 		String message = MessageUtil.getMessage(code);
 		// log.error("登录失败，状态码：{}，错误信息：{}", code, message);
-		loginLogGateway.publish(new LoginLog(userDetail.getId(), userDetail.getUsername(), type, userDetail.getTenantId(), FAIL, message,
-				ip, userDetail.getDeptId(), userDetail.getDeptPath()));
+		loginLogGateway.publish(new LoginLog(userDetail.getId(), userDetail.getUsername(), type,
+				userDetail.getTenantId(), FAIL, message, ip, userDetail.getDeptId(), userDetail.getDeptPath()));
 		throw OAuth2ExceptionHandler.getException(code, message);
 	}
 

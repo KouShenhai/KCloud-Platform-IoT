@@ -86,13 +86,8 @@ public class UsersServiceImpl implements UserDetailsService {
 		String ip = IpUtil.getIpAddr(request);
 		String authType = AUTHORIZATION_CODE.getValue();
 		String publicKey = AesUtil.getKey();
-		Auth auth = Auth.builder().type(authType)
-				.publicKey(publicKey)
-				.build();
-		User user = User.builder().username(username)
-				.tenantId(DEFAULT)
-				.auth(auth)
-				.build();
+		Auth auth = Auth.builder().type(authType).publicKey(publicKey).build();
+		User user = User.builder().username(username).tenantId(DEFAULT).auth(auth).build();
 		User u = userGateway.findOne(user);
 		if (ObjectUtil.isNull(u)) {
 			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, UserDetail.copy(user), authType, ip);
@@ -127,11 +122,12 @@ public class UsersServiceImpl implements UserDetailsService {
 		return userDetail;
 	}
 
-	private UsernameNotFoundException usernameNotFoundException(int code, UserDetail userDetail, String authType, String ip) {
+	private UsernameNotFoundException usernameNotFoundException(int code, UserDetail userDetail, String authType,
+			String ip) {
 		String message = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, message);
-		loginLogGateway.publish(new LoginLog(userDetail.getId(), userDetail.getUsername(), authType, userDetail.getTenantId(), FAIL, message,
-				ip, userDetail.getDeptId(), userDetail.getDeptPath()));
+		loginLogGateway.publish(new LoginLog(userDetail.getId(), userDetail.getUsername(), authType,
+				userDetail.getTenantId(), FAIL, message, ip, userDetail.getDeptId(), userDetail.getDeptPath()));
 		throw new UsernameNotFoundException(message);
 	}
 

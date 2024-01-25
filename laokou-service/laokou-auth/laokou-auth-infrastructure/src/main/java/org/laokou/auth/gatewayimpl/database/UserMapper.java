@@ -41,6 +41,7 @@ public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 	 * @param publicKey 密钥
 	 * @return 用户信息
 	 */
-	UserDO selectByConditions(@Param(USERNAME) String username, @Param("type") String type, @Param("publicKey") String publicKey);
+	UserDO selectByConditions(@Param(USERNAME) String username, @Param("type") String type,
+			@Param("publicKey") String publicKey);
 
 }

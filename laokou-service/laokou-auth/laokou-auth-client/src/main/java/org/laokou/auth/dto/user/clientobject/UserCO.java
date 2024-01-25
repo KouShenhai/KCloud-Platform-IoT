@@ -23,4 +23,5 @@ import org.laokou.common.i18n.dto.ClientObject;
  * @author laokou
  */
 public class UserCO extends ClientObject {
+
 }

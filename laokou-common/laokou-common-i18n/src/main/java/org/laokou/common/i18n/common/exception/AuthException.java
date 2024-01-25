@@ -23,16 +23,18 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author laokou
  */
 @Schema(name = "AuthException", description = "认证异常")
-public final class AuthException extends GlobalException{
-    public AuthException(int code) {
-        super(code);
-    }
+public final class AuthException extends GlobalException {
 
-    public AuthException(int code, String msg) {
-        super(code, msg);
-    }
+	public AuthException(int code) {
+		super(code);
+	}
 
-    public AuthException(String msg) {
-        super(msg);
-    }
+	public AuthException(int code, String msg) {
+		super(code, msg);
+	}
+
+	public AuthException(String msg) {
+		super(msg);
+	}
+
 }
