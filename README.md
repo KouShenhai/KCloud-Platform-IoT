@@ -24,6 +24,13 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
     <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流"></a>
 </p>
 
+### 😋 项目背景
+- 学习微服务架构设计并实践于生产
+- 整合所学技术方便快速搭建项目
+- 持续优化代码来提高代码质量
+- 复制粘贴代码提高生产效率
+- 学习DDD思想并落地实践
+
 ### 🔗 在线体验
 [老寇云平台在线体验（请点击我，境外服务器网络延迟请稍候）](https://www.laokou.org.cn)
 
