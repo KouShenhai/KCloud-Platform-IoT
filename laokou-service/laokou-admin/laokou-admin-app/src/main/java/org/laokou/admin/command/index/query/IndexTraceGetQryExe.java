@@ -28,7 +28,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.TRACE;
-import static org.laokou.common.i18n.common.MybatisPlusConstants.ID;
+import static org.laokou.common.i18n.common.MybatisPlusConstants.PRIMARY_KEY;
 
 /**
  * 查看分布式链路索引执行器.
@@ -51,7 +51,7 @@ public class IndexTraceGetQryExe {
 		search.setIndexNames(new String[] { TRACE });
 		search.setPageSize(1);
 		search.setPageNum(1);
-		search.setOrQueryList(Collections.singletonList(new Search.Query(ID, qry.getId())));
+		search.setOrQueryList(Collections.singletonList(new Search.Query(PRIMARY_KEY, qry.getId())));
 		return Result.of(elasticsearchTemplate.highlightSearchIndex(search).getRecords().getFirst());
 	}
 

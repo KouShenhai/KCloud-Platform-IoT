@@ -57,6 +57,7 @@ public class UserContextHolder {
 	 * @param user 用户
 	 */
 	public static void set(User user) {
+		USER_LOCAL.remove();
 		USER_LOCAL.set(user);
 	}
 

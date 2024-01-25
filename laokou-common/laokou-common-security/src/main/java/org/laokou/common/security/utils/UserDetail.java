@@ -25,8 +25,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -239,6 +242,33 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@JsonIgnore
 	public String getName() {
 		return this.username;
+	}
+
+	public void decrypt() {
+		decryptMail();
+		decryptMobile();
+	}
+
+	public void decryptMail() {
+		if (StringUtil.isNotEmpty(this.mail)) {
+			try {
+				this.setMail(AesUtil.decrypt(this.mail));
+			}
+			catch (Exception e) {
+				throw new SystemException("邮箱解密失败，请使用AES加密");
+			}
+		}
+	}
+
+	public void decryptMobile() {
+		if (StringUtil.isNotEmpty(this.mobile)) {
+			try {
+				this.setMobile(AesUtil.decrypt(this.mobile));
+			}
+			catch (Exception e) {
+				throw new SystemException("手机号解密失败，请使用AES加密");
+			}
+		}
 	}
 
 }

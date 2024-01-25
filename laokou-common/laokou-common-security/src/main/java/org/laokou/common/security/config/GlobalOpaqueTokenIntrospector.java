@@ -23,10 +23,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.holder.UserContextHolder;
-import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
@@ -99,6 +97,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, H
 			}
 			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED, MessageUtil.getMessage(UNAUTHORIZED));
 	}
+	// @formatter:on
 
 	/**
 	 * 解密字段.
@@ -106,24 +105,6 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, H
 	 * @return UserDetail
 	 */
 	private UserDetail decryptInfo(UserDetail userDetail) {
-		String mail = userDetail.getMail();
-		if (StringUtil.isNotEmpty(mail)) {
-			try {
-				userDetail.setMail(AesUtil.decrypt(mail));
-			}
-			catch (Exception e) {
-				log.error("邮箱解密失败，请使用AES加密");
-			}
-		}
-		String mobile = userDetail.getMobile();
-		if (StringUtil.isNotEmpty(mail)) {
-			try {
-				userDetail.setMobile(AesUtil.decrypt(mobile));
-			}
-			catch (Exception e) {
-				log.error("手机号解密失败，请使用AES加密");
-			}
-		}
 		// 写入当前线程
 		UserContextHolder.set(convert(userDetail));
 		return userDetail;

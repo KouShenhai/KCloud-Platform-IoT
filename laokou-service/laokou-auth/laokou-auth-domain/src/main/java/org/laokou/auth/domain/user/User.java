@@ -80,32 +80,32 @@ public class User extends AggregateRoot<Long> {
 	@Schema(name = "auth", description = "认证")
 	private Auth auth;
 
-	public void checkMobile(String mobile) {
-		if (StringUtil.isEmpty(mobile)) {
+	public void checkMobile() {
+		if (StringUtil.isEmpty(this.mobile)) {
 			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_MOBILE_REQUIRE));
 		}
-		if (!RegexUtil.mobileRegex(mobile)) {
+		if (!RegexUtil.mobileRegex(this.mobile)) {
 			throw new AuthException(MOBILE_ERROR);
 		}
 	}
 
-	public void checkMail(String mail) {
-		if (StringUtil.isEmpty(mail)) {
+	public void checkMail() {
+		if (StringUtil.isEmpty(this.mail)) {
 			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));
 		}
-		if (!RegexUtil.mailRegex(mail)) {
+		if (!RegexUtil.mailRegex(this.mail)) {
 			throw new AuthException(MAIL_ERROR, MessageUtil.getMessage(MAIL_ERROR));
 		}
 	}
 
-	public void checkNullPassword(String password) {
-		if (StringUtil.isEmpty(password)) {
+	public void checkNullPassword() {
+		if (StringUtil.isEmpty(this.password)) {
 			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE));
 		}
 	}
 
-	public void checkNullUsername(String username) {
-		if (StringUtil.isEmpty(username)) {
+	public void checkNullUsername() {
+		if (StringUtil.isEmpty(this.username)) {
 			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE));
 		}
 	}
@@ -119,25 +119,26 @@ public class User extends AggregateRoot<Long> {
 		}
 	}
 
-	public void checkNull(User user) {
+	public User newUser(User user) {
 		if (ObjectUtil.isNull(user)) {
 			throw new AuthException(ACCOUNT_PASSWORD_ERROR);
 		}
+		return user;
 	}
 
-	public void checkPassword(String password, String clientPassword, PasswordEncoder passwordEncoder) {
-		if (!passwordEncoder.matches(password, clientPassword)) {
+	public void checkPassword(String clientPassword, PasswordEncoder passwordEncoder) {
+		if (!passwordEncoder.matches(this.password, clientPassword)) {
 			throw new AuthException(ACCOUNT_PASSWORD_ERROR);
 		}
 	}
 
-	public void checkStatus(Integer status) {
-		if (ObjectUtil.equals(ENABLED.ordinal(), status)) {
+	public void checkStatus() {
+		if (ObjectUtil.equals(ENABLED.ordinal(), this.status)) {
 			throw new AuthException(ACCOUNT_DISABLE);
 		}
 	}
 
-	public void checkPermissions(Set<String> permissions) {
+	public void checkNullPermissions(Set<String> permissions) {
 		if (CollectionUtil.isEmpty(permissions)) {
 			throw new AuthException(FORBIDDEN);
 		}

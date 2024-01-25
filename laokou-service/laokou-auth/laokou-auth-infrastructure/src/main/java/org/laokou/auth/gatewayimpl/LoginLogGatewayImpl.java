@@ -20,7 +20,7 @@ package org.laokou.auth.gatewayimpl;
 import eu.bitwalker.useragentutils.UserAgent;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.common.event.DomainEventPublisher;
+import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.auth.domain.gateway.LoginLogGateway;
 import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.dto.log.domainevent.LoginLogEvent;

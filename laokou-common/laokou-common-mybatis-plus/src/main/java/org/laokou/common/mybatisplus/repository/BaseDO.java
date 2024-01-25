@@ -42,7 +42,7 @@ public class BaseDO extends AbstractDO {
 	private static final long serialVersionUID = -5855413730985647400L;
 
 	@TableId(type = IdType.INPUT)
-	@Schema(name = ID, description = "ID")
+	@Schema(name = PRIMARY_KEY, description = "ID")
 	private Long id;
 
 	@Schema(name = CREATOR, description = "创建人")

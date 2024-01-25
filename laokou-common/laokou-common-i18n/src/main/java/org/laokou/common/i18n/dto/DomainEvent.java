@@ -50,6 +50,7 @@ public abstract class DomainEvent<ID> implements Serializable {
 
 	// TODO 状态
 
+
 	@Schema(name = CREATOR, description = "创建人")
 	protected ID creator;
 

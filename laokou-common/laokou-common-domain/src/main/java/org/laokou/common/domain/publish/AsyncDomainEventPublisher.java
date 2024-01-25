@@ -15,28 +15,25 @@
  *
  */
 
-package org.laokou.auth.common.event;
+package org.laokou.common.domain.publish;
 
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.SpringContextUtil;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.rocketmq.template.RocketMqTemplate;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.ApplicationEvent;
-import org.springframework.stereotype.Component;
 
 /**
- * 领域事件推送器.
- *
  * @author laokou
  */
-@Component
-@Slf4j
-public class DomainEventPublisher {
+@AutoConfiguration
+@RequiredArgsConstructor
+public class AsyncDomainEventPublisher implements DomainEventPublisher{
 
-	/**
-	 * 推送事件.
-	 * @param event 事件
-	 */
-	public void publish(ApplicationEvent event) {
-		SpringContextUtil.publishEvent(event);
-	}
+    private final RocketMqTemplate rocketMqTemplate;
+
+    @Override
+    public void publish(ApplicationEvent event) {
+        rocketMqTemplate.sendAsyncOrderlyMessage();
+    }
 
 }

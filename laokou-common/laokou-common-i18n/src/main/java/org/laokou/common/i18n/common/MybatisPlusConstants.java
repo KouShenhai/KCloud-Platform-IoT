@@ -31,8 +31,8 @@ public final class MybatisPlusConstants {
 	@Schema(name = "PLACE_HOLDER", description = "分表标识符")
 	public static final String PLACE_HOLDER = "$$";
 
-	@Schema(name = "ID", description = "ID")
-	public static final String ID = "id";
+	@Schema(name = "PRIMARY_KEY", description = "ID")
+	public static final String PRIMARY_KEY = "id";
 
 	@Schema(name = "CREATOR", description = "创建人")
 	public static final String CREATOR = "creator";

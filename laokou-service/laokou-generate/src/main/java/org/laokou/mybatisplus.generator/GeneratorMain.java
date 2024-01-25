@@ -119,7 +119,7 @@ public class GeneratorMain {
 				// .addTableFills(new Property("update_date",
 				// FieldFill.INSERT_UPDATE))
 				.superClass(BaseDO.class)
-				.addSuperEntityColumns(ID, CREATOR, EDITOR, CREATE_DATE, UPDATE_DATE, DEL_FLAG, VERSION)
+				.addSuperEntityColumns(PRIMARY_KEY, CREATOR, EDITOR, CREATE_DATE, UPDATE_DATE, DEL_FLAG, VERSION)
 				.enableLombok() // 开启lombok
 				.logicDeleteColumnName("delFlag")// 说明逻辑删除是哪个字段
 				.enableTableFieldAnnotation()// 属性加上注解说明
