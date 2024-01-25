@@ -45,13 +45,13 @@ public class Captcha extends Identifier<String> {
     @Schema(name = "captcha", description = "验证码")
     private String captcha;
 
-    public static void checkNullCaptcha(String captcha) {
+    public void checkNullCaptcha(String captcha) {
         if (StringUtil.isEmpty(captcha)) {
             throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
         }
     }
 
-    public static void checkNullUUID(String uuid) {
+    public void checkNullUUID(String uuid) {
         if (StringUtil.isEmpty(uuid)) {
             throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
         }

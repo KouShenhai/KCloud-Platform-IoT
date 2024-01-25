@@ -90,7 +90,7 @@ public class User extends Identifier<Long> {
     @Schema(name = "auth", description = "认证")
     private Auth auth;
 
-    public static void checkMobile(String mobile) {
+    public void checkMobile(String mobile) {
         if (StringUtil.isEmpty(mobile)) {
             throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_MOBILE_REQUIRE));
         }
@@ -99,7 +99,7 @@ public class User extends Identifier<Long> {
         }
     }
 
-    public static void checkMail(String mail) {
+    public void checkMail(String mail) {
         if (StringUtil.isEmpty(mail)) {
             throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));
         }
@@ -108,19 +108,19 @@ public class User extends Identifier<Long> {
         }
     }
 
-    public static void checkNullPassword(String password) {
+    public void checkNullPassword(String password) {
         if (StringUtil.isEmpty(password)) {
             throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE));
         }
     }
 
-    public static void checkNullUsername(String username) {
+    public void checkNullUsername(String username) {
         if (StringUtil.isEmpty(username)) {
             throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE));
         }
     }
 
-    public static void checkCaptcha(Boolean validateResult) {
+    public void checkCaptcha(Boolean validateResult) {
         if (ObjectUtil.isNull(validateResult)) {
             throw new AuthException(CAPTCHA_EXPIRED);
         }
@@ -129,25 +129,25 @@ public class User extends Identifier<Long> {
         }
     }
 
-    public static void checkNull(User user) {
+    public void checkNull(User user) {
         if (ObjectUtil.isNull(user)) {
             throw new AuthException(ACCOUNT_PASSWORD_ERROR);
         }
     }
 
-    public static void checkPassword(String password, String clientPassword, PasswordEncoder passwordEncoder) {
+    public void checkPassword(String password, String clientPassword, PasswordEncoder passwordEncoder) {
         if (!passwordEncoder.matches(password, clientPassword)) {
             throw new AuthException(ACCOUNT_PASSWORD_ERROR);
         }
     }
 
-    public static void checkStatus(Integer status) {
+    public void checkStatus(Integer status) {
         if (ObjectUtil.equals(ENABLED.ordinal(), status)) {
             throw new AuthException(ACCOUNT_DISABLE);
         }
     }
 
-    public static void checkPermissions(Set<String> permissions) {
+    public void checkPermissions(Set<String> permissions) {
         if (CollectionUtil.isEmpty(permissions)) {
             throw new AuthException(FORBIDDEN);
         }
