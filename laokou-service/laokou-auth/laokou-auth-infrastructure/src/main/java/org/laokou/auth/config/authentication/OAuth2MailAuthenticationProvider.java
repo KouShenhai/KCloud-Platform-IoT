@@ -23,6 +23,7 @@ import org.laokou.auth.domain.gateway.LoginLogGateway;
 import org.laokou.auth.domain.user.Auth;
 import org.laokou.auth.domain.user.Captcha;
 import org.laokou.auth.domain.user.User;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.core.Authentication;
@@ -65,11 +66,14 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 			// log.info("验证码：{}", code);
 			// log.info("邮箱：{}", SensitiveUtil.format(Type.MAIL, mail));
 			Captcha captchaObj = Captcha.builder().captcha(code).uuid(mail).build();
-			Auth authObj = Auth.builder().type(getGrantType().getValue()).build();
+			Auth authObj = Auth.builder().type(getGrantType().getValue())
+					.secretKey(AesUtil.getSecretKeyStr())
+					.build();
 			User user = User.builder()
 				.tenantId(StringUtil.parseLong(tenantId))
 				.mail(mail)
 				.captcha(captchaObj)
+				.username(encryptAes(mail))
 				.auth(authObj)
 				.build();
 			// 检查租户ID

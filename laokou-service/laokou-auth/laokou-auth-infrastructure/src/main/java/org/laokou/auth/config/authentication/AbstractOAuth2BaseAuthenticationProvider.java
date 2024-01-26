@@ -23,12 +23,12 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.auth.domain.gateway.LoginLogGateway;
-import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.security.utils.UserDetail;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -55,8 +55,9 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.laokou.common.i18n.common.ErrorCodes.*;
-import static org.laokou.common.i18n.common.NumberConstants.FAIL;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
+import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
 
 /**
  * 抽象认证处理器.
@@ -135,12 +136,12 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			DefaultOAuth2TokenContext.Builder tokenContextBuilder = DefaultOAuth2TokenContext.builder()
 				.registeredClient(registeredClient)
 				.principal(principal)
-				.tokenType(OAuth2TokenType.ACCESS_TOKEN)
+				.tokenType(ACCESS_TOKEN)
 				.authorizedScopes(scopes)
 				.authorizationServerContext(AuthorizationServerContextHolder.getContext())
 				.authorizationGrantType(grantType)
 				.authorizationGrant(auth2BaseAuthenticationToken);
-			DefaultOAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.ACCESS_TOKEN)
+			DefaultOAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(ACCESS_TOKEN)
 				.build();
 			// 生成access_token
 			OAuth2Token generatedAccessToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
@@ -213,6 +214,13 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		return oAuth2CommonAuthenticationProvider.authenticationToken(user, request);
 	}
 
+	protected String encryptAes(String str) {
+		if (StringUtil.isEmpty(str)) {
+			return EMPTY;
+		}
+		return AesUtil.encrypt(str);
+	}
+
 	private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(
 			Authentication authentication) {
 		OAuth2ClientAuthenticationToken clientPrincipal = null;
@@ -223,15 +231,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			return clientPrincipal;
 		}
 		throw OAuth2ExceptionHandler.getException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
-	}
-
-	private OAuth2AuthenticationException authenticationException(int code, UserDetail userDetail, String type,
-			String ip) {
-		String message = MessageUtil.getMessage(code);
-		// log.error("登录失败，状态码：{}，错误信息：{}", code, message);
-		loginLogGateway.publish(new LoginLog(userDetail.getId(), userDetail.getUsername(), type,
-				userDetail.getTenantId(), FAIL, message, ip, userDetail.getDeptId(), userDetail.getDeptPath()));
-		throw OAuth2ExceptionHandler.getException(code, message);
 	}
 
 }

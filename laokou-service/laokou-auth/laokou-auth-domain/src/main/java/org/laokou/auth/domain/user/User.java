@@ -122,7 +122,7 @@ public class User extends AggregateRoot<Long> {
 	}
 
 	public void checkPassword(String clientPassword, PasswordEncoder passwordEncoder) {
-		if (StringUtil.isNotEmpty(this.password) && !passwordEncoder.matches(clientPassword, this.password)) {
+		if (StringUtil.isNotEmpty(clientPassword) && !passwordEncoder.matches(clientPassword, this.password)) {
 			throw new AuthException(ACCOUNT_PASSWORD_ERROR);
 		}
 	}

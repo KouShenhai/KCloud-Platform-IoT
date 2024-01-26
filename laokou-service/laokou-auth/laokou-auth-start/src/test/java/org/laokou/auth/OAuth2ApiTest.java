@@ -65,6 +65,10 @@ class OAuth2ApiTest {
 
 	private static final String REFRESH_TOKEN = "refreshToken";
 
+	private static final String MAIL = "2413176044@qq.com";
+
+	private static final String MOBILE = "xxx";
+
 	private static final Long SNOWFLAKE_ID = IdGenerator.defaultSnowflakeId();
 
 	private final CaptchaGateway captchaGateway;
@@ -83,8 +87,8 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void usernamePasswordAuthApiTest() {
-		String captcha = getCaptchasApi();
+	void testUsernamePasswordAuthApi() {
+		String captcha = getCaptchasApi(SNOWFLAKE_ID.toString());
 		String publicKey = getSecretsApi();
 		String privateKey = RsaUtil.getPrivateKey();
 		String encryptUsername = RsaUtil.encryptByPublicKey(USERNAME, publicKey);
@@ -101,6 +105,62 @@ class OAuth2ApiTest {
 		log.info("uuid：{}", SNOWFLAKE_ID);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
 		log.info("刷新token：{}", getRefreshTokenApi(tokenMap.get(REFRESH_TOKEN)));
+	}
+
+	@Test
+	void testMailAuthApi() {
+		String code = getCodeApi(MAIL);
+		Map<String, String> tokenMap = getMailAuthApi(code);
+		log.info("验证码：{}", code);
+		log.info("验证码：{}", MAIL);
+		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
+		log.info("刷新token：{}", getRefreshTokenApi(tokenMap.get(REFRESH_TOKEN)));
+	}
+
+	@Test
+	void testMobileAuthApi() {
+		String code = getCodeApi(MOBILE);
+		Map<String, String> tokenMap = getMobileAuthApi(code);
+		log.info("验证码：{}", code);
+		log.info("手机号：{}", MOBILE);
+		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
+		log.info("刷新token：{}", getRefreshTokenApi(tokenMap.get(REFRESH_TOKEN)));
+	}
+
+	private String getCodeApi(String uuid) {
+		return getCaptchasApi(uuid);
+	}
+
+	private Map<String, String> getMobileAuthApi(String code) {
+		String apiUrl = getOAuthApiUrl();
+		HashMap<String, String> params = new HashMap<>();
+		HashMap<String, String> headers = new HashMap<>(1);
+		params.put("code", code);
+		params.put("mobile", MOBILE);
+		params.put("tenant_id", "0");
+		params.put("grant_type", "mobile");
+		headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+		String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+		String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
+		String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
+		Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
+		return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
+	}
+
+	private Map<String, String> getMailAuthApi(String code) {
+		String apiUrl = getOAuthApiUrl();
+		HashMap<String, String> params = new HashMap<>();
+		HashMap<String, String> headers = new HashMap<>(1);
+		params.put("code", code);
+		params.put("mail", MAIL);
+		params.put("tenant_id", "0");
+		params.put("grant_type", "mail");
+		headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+		String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+		String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
+		String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
+		Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
+		return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 	}
 
 	@SneakyThrows
@@ -135,10 +195,10 @@ class OAuth2ApiTest {
 	}
 
 	@SneakyThrows
-	private String getCaptchasApi() {
+	private String getCaptchasApi(String uuid) {
 		String apiUrl = "/v1/captchas/";
-		mockMvc.perform(get(apiUrl + SNOWFLAKE_ID).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-		String key = captchaGateway.key(SNOWFLAKE_ID.toString());
+		mockMvc.perform(get(apiUrl + uuid).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+		String key = captchaGateway.key(uuid);
 		String captcha = redisUtil.get(key).toString();
 		Assert.isTrue(StringUtil.isNotEmpty(captcha), "captcha is empty");
 		return captcha;

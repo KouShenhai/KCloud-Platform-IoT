@@ -106,6 +106,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	private void setValue(String uuid, String code) {
 		String key = key(uuid);
 		// 保存五分钟
+		redisUtil.delete(key);
 		redisUtil.set(key, code, MINUTE_FIVE_EXPIRE);
 	}
 

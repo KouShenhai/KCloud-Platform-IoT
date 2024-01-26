@@ -88,7 +88,7 @@ public class OAuth2CommonAuthenticationProvider {
 			userDetail.setLoginIp(ip);
 			// 登录时间
 			userDetail.setLoginDate(DateUtil.now());
-			return new UsernamePasswordAuthenticationToken(userDetail, user.getUsername(), userDetail.getAuthorities());
+			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(), userDetail.getAuthorities());
 		}
 		catch (GlobalException e) {
 			throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg());
