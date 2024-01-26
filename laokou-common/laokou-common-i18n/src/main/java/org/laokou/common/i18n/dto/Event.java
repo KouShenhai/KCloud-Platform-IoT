@@ -15,7 +15,16 @@
  *
  */
 
+package org.laokou.common.i18n.dto;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
-package org.laokou.auth.module.oauth2.authentication;
+@Schema(name = "Event", description = "事件")
+public interface Event extends Serializable {
+
+}

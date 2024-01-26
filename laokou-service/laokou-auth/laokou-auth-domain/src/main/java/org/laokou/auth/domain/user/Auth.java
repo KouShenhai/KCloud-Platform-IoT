@@ -20,26 +20,34 @@ package org.laokou.auth.domain.user;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.Identifier;
+import lombok.Value;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.i18n.common.exception.AuthException;
+
+import java.util.List;
 
 import static lombok.AccessLevel.PRIVATE;
+import static org.laokou.common.i18n.common.ErrorCodes.INVALID_SCOPE;
 
 /**
  * @author laokou
  */
-@Data
+@Value
 @Builder
-@NoArgsConstructor(access = PRIVATE)
 @AllArgsConstructor(access = PRIVATE)
 @Schema(name = "Auth", description = "认证")
-public class Auth extends Identifier<Long> {
+public class Auth {
 
 	@Schema(name = "type", description = "类型 mail邮箱 mobile手机号 password密码 authorization_code授权码")
-	private String type;
+	String type;
 
-	@Schema(name = "publicKey", description = "公共密钥Key")
-	private String publicKey;
+	@Schema(name = "secretKey", description = "密钥Key")
+	String secretKey;
+
+	public void checkScopes(List<String> scopes) {
+		if (CollectionUtil.isNotEmpty(scopes) && scopes.size() != 1) {
+			throw new AuthException(INVALID_SCOPE);
+		}
+	}
 
 }

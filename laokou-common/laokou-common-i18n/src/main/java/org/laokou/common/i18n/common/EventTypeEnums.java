@@ -15,29 +15,14 @@
  *
  */
 
-package org.laokou.auth.module.oauth2.authentication;
+package org.laokou.common.i18n.common;
 
-import org.springframework.security.core.Authentication;
-
-import java.util.Map;
-
-import static org.laokou.common.i18n.common.OAuth2Constants.MOBILE;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * 手机号转换器.
- *
  * @author laokou
  */
-public class OAuth2MobileAuthenticationConverter extends AbstractOAuth2BaseAuthenticationConverter {
-
-	@Override
-	String getGrantType() {
-		return MOBILE;
-	}
-
-	@Override
-	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		return new OAuth2MobileAuthenticationToken(clientPrincipal, additionalParameters);
-	}
+@Schema(name = "EventTypeEnums", description = "事件类型枚举")
+public enum EventTypeEnums {
 
 }

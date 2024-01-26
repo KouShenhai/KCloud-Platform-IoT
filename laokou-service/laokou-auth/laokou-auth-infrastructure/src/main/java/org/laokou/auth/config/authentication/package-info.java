@@ -15,29 +15,7 @@
  *
  */
 
-package org.laokou.auth.module.oauth2.authentication;
-
-import org.springframework.security.core.Authentication;
-
-import java.util.Map;
-
-import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
-
 /**
- * 密码转换器.
- *
  * @author laokou
  */
-public class OAuth2PasswordAuthenticationConverter extends AbstractOAuth2BaseAuthenticationConverter {
-
-	@Override
-	String getGrantType() {
-		return PASSWORD;
-	}
-
-	@Override
-	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		return new OAuth2PasswordAuthenticationToken(clientPrincipal, additionalParameters);
-	}
-
-}
+package org.laokou.auth.config.authentication;

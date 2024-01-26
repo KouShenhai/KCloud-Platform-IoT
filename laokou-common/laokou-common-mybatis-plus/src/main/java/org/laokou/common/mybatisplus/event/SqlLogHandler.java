@@ -22,16 +22,16 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.database.SqlLogMapper;
 import org.laokou.common.mybatisplus.database.dataobject.SqlLogDO;
 import org.laokou.common.mybatisplus.handler.SqlLogEvent;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-import java.util.concurrent.CompletableFuture;
+
 import java.util.concurrent.Executor;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
@@ -45,23 +45,23 @@ import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUT
 @Component
 @NonNullApi
 @RequiredArgsConstructor
-public class SqlLogHandler implements ApplicationListener<SqlLogEvent> {
+public class SqlLogHandler implements ApplicationListener {
 
 	private final SqlLogMapper sqlLogMapper;
 
 	private final Executor executor;
 
-	@Override
-	public void onApplicationEvent(SqlLogEvent event) {
-		CompletableFuture.runAsync(() -> {
-			try {
-				execute(event);
-			}
-			catch (Exception e) {
-				log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			}
-		}, executor);
-	}
+	// @Override
+	// public void onApplicationEvent(SqlLogEvent event) {
+	// CompletableFuture.runAsync(() -> {
+	// try {
+	// execute(event);
+	// }
+	// catch (Exception e) {
+	// log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+	// }
+	// }, executor);
+	// }
 
 	private void execute(SqlLogEvent event) {
 		try {
@@ -81,6 +81,11 @@ public class SqlLogHandler implements ApplicationListener<SqlLogEvent> {
 		sqlLogDO.setEditor(1707428076142559234L);
 		sqlLogDO.setCreator(1707428076142559234L);
 		return sqlLogDO;
+	}
+
+	@Override
+	public void onApplicationEvent(ApplicationEvent event) {
+
 	}
 
 }

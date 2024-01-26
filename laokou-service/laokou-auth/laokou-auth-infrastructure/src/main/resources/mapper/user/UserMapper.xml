@@ -21,7 +21,7 @@
 <mapper namespace="org.laokou.auth.gatewayimpl.database.UserMapper">
 
     <sql id="aes_decrypt_username">
-        aes_decrypt(`username`, #{publicKey})
+        aes_decrypt(`username`, #{secretKey})
     </sql>
 
     <select id="selectByConditions" resultType="org.laokou.auth.gatewayimpl.database.dataobject.UserDO">

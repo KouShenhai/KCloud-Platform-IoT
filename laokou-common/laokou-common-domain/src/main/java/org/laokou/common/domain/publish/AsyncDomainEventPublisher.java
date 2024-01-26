@@ -27,13 +27,13 @@ import org.springframework.context.ApplicationEvent;
  */
 @AutoConfiguration
 @RequiredArgsConstructor
-public class AsyncDomainEventPublisher implements DomainEventPublisher{
+public class AsyncDomainEventPublisher implements DomainEventPublisher {
 
-    private final RocketMqTemplate rocketMqTemplate;
+	private final RocketMqTemplate rocketMqTemplate;
 
-    @Override
-    public void publish(ApplicationEvent event) {
-        rocketMqTemplate.sendAsyncOrderlyMessage();
-    }
+	@Override
+	public void publish(ApplicationEvent event) {
+		// rocketMqTemplate.sendAsyncOrderlyMessage();
+	}
 
 }

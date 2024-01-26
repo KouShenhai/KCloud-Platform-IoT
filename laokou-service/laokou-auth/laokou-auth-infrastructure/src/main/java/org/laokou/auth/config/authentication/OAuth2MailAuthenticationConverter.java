@@ -15,30 +15,29 @@
  *
  */
 
-package org.laokou.auth.module.oauth2.authentication;
+package org.laokou.auth.config.authentication;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
+import static org.laokou.common.i18n.common.OAuth2Constants.MAIL;
 
 /**
- * 密码令牌.
+ * 邮箱转换器.
  *
  * @author laokou
  */
-public class OAuth2PasswordAuthenticationToken extends AbstractOAuth2BaseAuthenticationToken {
+public class OAuth2MailAuthenticationConverter extends AbstractOAuth2BaseAuthenticationConverter {
 
-	/**
-	 * Sub-class constructor.
-	 * @param clientPrincipal the authenticated client principal
-	 * @param additionalParameters the additional parameters
-	 */
-	protected OAuth2PasswordAuthenticationToken(Authentication clientPrincipal,
-			Map<String, Object> additionalParameters) {
-		super(new AuthorizationGrantType(PASSWORD), clientPrincipal, additionalParameters);
+	@Override
+	String getGrantType() {
+		return MAIL;
+	}
+
+	@Override
+	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
+		return new OAuth2MailAuthenticationToken(clientPrincipal, additionalParameters);
 	}
 
 }

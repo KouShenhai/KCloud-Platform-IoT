@@ -96,7 +96,7 @@ public class ResourceAuditTaskCmdExe {
 		}
 		boolean flag = updateResource(id, version, status, resourceAuditDO);
 		// 审批日志
-		domainEventPublisher.publish(toAuditLogEvent(cmd, auditStatus));
+		// domainEventPublisher.publish(toAuditLogEvent(cmd, auditStatus));
 		// 审批中，则发送审批通知消息
 		if (status == IN_APPROVAL.getValue()) {
 			publishMessage(assignee, cmd);
@@ -111,8 +111,9 @@ public class ResourceAuditTaskCmdExe {
 	 */
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void publishMessage(String assignee, ResourceAuditTaskCmd cmd) {
-		domainEventPublisher
-			.publish(eventUtil.toAuditMessageEvent(assignee, cmd.getBusinessKey(), cmd.getInstanceName(), null));
+		// domainEventPublisher
+		// .publish(eventUtil.toAuditMessageEvent(assignee, cmd.getBusinessKey(),
+		// cmd.getInstanceName(), null));
 	}
 
 	/**
@@ -145,7 +146,7 @@ public class ResourceAuditTaskCmdExe {
 	 * @return 审批日志事件
 	 */
 	private AuditLogEvent toAuditLogEvent(ResourceAuditTaskCmd cmd, int auditStatus) {
-		AuditLogEvent event = new AuditLogEvent(this);
+		AuditLogEvent event = null;
 		event.setApprover(UserUtil.getUserName());
 		event.setComment(cmd.getComment());
 		event.setBusinessId(cmd.getBusinessKey());

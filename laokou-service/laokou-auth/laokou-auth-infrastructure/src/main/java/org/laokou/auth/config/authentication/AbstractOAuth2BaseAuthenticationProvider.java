@@ -15,38 +15,24 @@
  *
  */
 
-package org.laokou.auth.service.provider;
+package org.laokou.auth.config.authentication;
 
-import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
-import com.baomidou.dynamic.datasource.creator.hikaricp.HikariDataSourceCreator;
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
-import org.laokou.auth.domain.gateway.*;
+import org.laokou.auth.domain.gateway.LoginLogGateway;
 import org.laokou.auth.domain.log.LoginLog;
-import org.laokou.auth.domain.source.Source;
-import org.laokou.auth.module.oauth2.authentication.AbstractOAuth2BaseAuthenticationToken;
-import org.laokou.common.core.holder.UserContextHolder;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.IpUtil;
+import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.crypto.utils.AesUtil;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.mybatisplus.utils.DynamicUtil;
-import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.utils.UserDetail;
-import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.*;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -62,26 +48,14 @@ import org.springframework.security.oauth2.server.authorization.context.Authoriz
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.security.Principal;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
-import static org.laokou.common.i18n.common.BizCodes.LOGIN_SUCCEEDED;
 import static org.laokou.common.i18n.common.ErrorCodes.*;
 import static org.laokou.common.i18n.common.NumberConstants.FAIL;
-import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
-import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
-import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.StatusCodes.FORBIDDEN;
-import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
-import static org.laokou.common.i18n.common.TenantConstants.TENANT_ID;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 
 /**
@@ -93,29 +67,15 @@ import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParamet
 @RequiredArgsConstructor
 public abstract class AbstractOAuth2BaseAuthenticationProvider implements AuthenticationProvider {
 
-	protected final UserGateway userGateway;
+	private final OAuth2AuthorizationService authorizationService;
 
-	protected final MenuGateway menuGateway;
+	private final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
 
-	protected final DeptGateway deptGateway;
-
-	protected final PasswordEncoder passwordEncoder;
-
-	protected final CaptchaGateway captchaGateway;
-
-	protected final OAuth2AuthorizationService authorizationService;
-
-	protected final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
-
-	protected final SourceGateway sourceGateway;
-
-	protected final RedisUtil redisUtil;
-
-	protected final DynamicUtil dynamicUtil;
-
-	protected final LoginLogGateway loginLogGateway;
+	private final LoginLogGateway loginLogGateway;
 
 	private static final OAuth2TokenType ID_TOKEN_TOKEN_TYPE = new OAuth2TokenType(ID_TOKEN);
+
+	private final OAuth2CommonAuthenticationProvider oAuth2CommonAuthenticationProvider;
 
 	/**
 	 * 认证.
@@ -245,102 +205,12 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	/**
 	 * 获取用户信息.
-	 * @param username 登录名
-	 * @param password 密码
+	 * @param user 用户对象
 	 * @param request 请求参数
-	 * @param captcha 验证码
-	 * @param uuid 唯一标识
 	 * @return 用户信息
 	 */
-	protected UsernamePasswordAuthenticationToken authenticationToken(String username, String password,
-			HttpServletRequest request, String captcha, String uuid) {
-		try {
-			AuthorizationGrantType grantType = getGrantType();
-			String type = grantType.getValue();
-			long tenantId = Long.parseLong(request.getParameter(TENANT_ID));
-			String ip = IpUtil.getIpAddr(request);
-			// 验证验证码
-			Boolean validate = captchaGateway.validate(uuid, captcha);
-			if (ObjectUtil.isNull(validate)) {
-				throw authenticationException(CAPTCHA_EXPIRED, new UserDetail(username, tenantId), type, ip);
-			}
-			if (!validate) {
-				throw authenticationException(CAPTCHA_ERROR, new UserDetail(username, tenantId), type, ip);
-			}
-			// 初始化（多数据源切换）
-			String sourceName = getSourceName(tenantId);
-			// 加密
-			String encryptName;
-			boolean passwordFlag = false;
-			// 密码登录无需二次加密
-			if (PASSWORD.equals(type)) {
-				encryptName = username;
-				passwordFlag = true;
-			}
-			else {
-				encryptName = AesUtil.encrypt(username);
-			}
-			UserDetail userDetail;
-			try {
-				// 多租户查询（多数据源）
-				// userDetail = userGateway.findOne(new Auth(encryptName, type,
-				// AesUtil.getKey()));
-			}
-			catch (BadSqlGrammarException e) {
-				log.error("表 boot_sys_user 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-				throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "表 boot_sys_user 不存在");
-			}
-			if (ObjectUtil.isNull(userDetail)) {
-				throw authenticationException(ACCOUNT_PASSWORD_ERROR, new UserDetail(username, tenantId), type, ip);
-			}
-			if (passwordFlag) {
-				// 验证密码
-				String clientPassword = userDetail.getPassword();
-				if (!passwordEncoder.matches(password, clientPassword)) {
-					throw authenticationException(ACCOUNT_PASSWORD_ERROR, userDetail, type, ip);
-				}
-			}
-			// 是否锁定
-			if (!userDetail.isEnabled()) {
-				throw authenticationException(ACCOUNT_DISABLE, userDetail, type, ip);
-			}
-			List<String> permissionsList;
-			try {
-				// 权限标识列表
-				permissionsList = menuGateway.getPermissions(userDetail);
-			}
-			catch (BadSqlGrammarException e) {
-				log.error("表 boot_sys_menu 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-				throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "表 boot_sys_menu 不存在");
-			}
-			if (CollectionUtil.isEmpty(permissionsList)) {
-				throw authenticationException(FORBIDDEN, userDetail, type, ip);
-			}
-			List<String> deptPaths;
-			try {
-				// 部门列表
-				deptPaths = deptGateway.getDeptPaths(userDetail);
-			}
-			catch (BadSqlGrammarException e) {
-				log.error("表 boot_sys_dept 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-				throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "表 boot_sys_dept 不存在");
-			}
-			userDetail.setDeptPaths(deptPaths);
-			userDetail.setPermissionList(permissionsList);
-			// 数据源
-			userDetail.setSourceName(sourceName);
-			// 登录IP
-			userDetail.setLoginIp(ip);
-			// 登录时间
-			userDetail.setLoginDate(DateUtil.now());
-			// 登录成功
-			loginLogGateway.publish(new LoginLog(userDetail.getId(), username, type, tenantId, SUCCESS,
-					MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, userDetail.getDeptId(), userDetail.getDeptPath()));
-			return new UsernamePasswordAuthenticationToken(userDetail, encryptName, userDetail.getAuthorities());
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+	protected UsernamePasswordAuthenticationToken authenticationToken(User user, HttpServletRequest request) {
+		return oAuth2CommonAuthenticationProvider.authenticationToken(user, request);
 	}
 
 	private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(
@@ -362,84 +232,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		loginLogGateway.publish(new LoginLog(userDetail.getId(), userDetail.getUsername(), type,
 				userDetail.getTenantId(), FAIL, message, ip, userDetail.getDeptId(), userDetail.getDeptPath()));
 		throw OAuth2ExceptionHandler.getException(code, message);
-	}
-
-	/**
-	 * 根据租户ID查看数据源名称.
-	 * @param tenantId 租户ID
-	 * @return 数据源名称
-	 */
-	private String getSourceName(Long tenantId) {
-		// 默认数据源
-		String sourceName = MASTER;
-		try {
-			if (tenantId != DEFAULT) {
-				// 租户数据源
-				Source source = sourceGateway.getSourceByTenantId(tenantId);
-				sourceName = source.getName();
-				if (!dynamicUtil.getDataSources().containsKey(sourceName)) {
-					DataSourceProperty properties = properties(source);
-					// 验证连接
-					validate(properties);
-					dynamicUtil.getDataSource().addDataSource(sourceName, dataSource(properties));
-				}
-			}
-		}
-		finally {
-			DynamicDataSourceContextHolder.push(sourceName);
-			UserContextHolder.set(new UserContextHolder.User(tenantId, sourceName));
-		}
-		return sourceName;
-	}
-
-	private DataSource dataSource(DataSourceProperty properties) {
-		HikariDataSourceCreator hikariDataSourceCreator = dynamicUtil.getHikariDataSourceCreator();
-		return hikariDataSourceCreator.createDataSource(properties);
-	}
-
-	/**
-	 * 构建数据源属性配置.
-	 * @param source 数据源
-	 * @return 数据源属性配置
-	 */
-	private DataSourceProperty properties(Source source) {
-		DataSourceProperty properties = new DataSourceProperty();
-		properties.setUsername(source.getUsername());
-		properties.setPassword(source.getPassword());
-		properties.setUrl(source.getUrl());
-		properties.setDriverClassName(source.getDriverClassName());
-		return properties;
-	}
-
-	/**
-	 * 验证码数据源.
-	 * @param properties 数据源属性配置
-	 */
-	@SneakyThrows
-	private void validate(DataSourceProperty properties) {
-		Connection connection = null;
-		try {
-			Class.forName(properties.getDriverClassName());
-		}
-		catch (Exception e) {
-			log.error("加载数据源驱动失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "加载数据源驱动失败");
-		}
-		try {
-			// 1秒后连接超时
-			DriverManager.setLoginTimeout(1);
-			connection = DriverManager.getConnection(properties.getUrl(), properties.getUsername(),
-					properties.getPassword());
-		}
-		catch (Exception e) {
-			log.error("数据源连接超时，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "数据源连接超时");
-		}
-		finally {
-			if (ObjectUtil.isNotNull(connection)) {
-				connection.close();
-			}
-		}
 	}
 
 }

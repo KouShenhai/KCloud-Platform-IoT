@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.module.oauth2.filter;
+package org.laokou.auth.config.filter;
 
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.FilterChain;
@@ -23,12 +23,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.ThreadContext;
 import org.laokou.common.core.holder.ShutdownHolder;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import static org.laokou.common.i18n.common.StatusCodes.SERVICE_UNAVAILABLE;
+import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
 
 /**
  * 认证过滤器.
@@ -42,11 +44,17 @@ public class OAuth2AuthorizationFilter extends OncePerRequestFilter {
 	@Override
 	@SneakyThrows
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
-		if (ShutdownHolder.status()) {
-			ResponseUtil.response(response, SERVICE_UNAVAILABLE, MessageUtil.getMessage(SERVICE_UNAVAILABLE));
-			return;
+		try {
+			ThreadContext.put(TRACE_ID, request.getHeader(TRACE_ID));
+			if (ShutdownHolder.status()) {
+				ResponseUtil.response(response, SERVICE_UNAVAILABLE, MessageUtil.getMessage(SERVICE_UNAVAILABLE));
+				return;
+			}
+			chain.doFilter(request, response);
 		}
-		chain.doFilter(request, response);
+		finally {
+			ThreadContext.clearMap();
+		}
 	}
 
 }

@@ -21,20 +21,10 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.command.message.MessageInsertCmdExe;
-import org.laokou.admin.dto.message.MessageInsertCmd;
-import org.laokou.admin.dto.message.clientobject.MessageCO;
-import org.laokou.admin.dto.message.domainevent.MessageEvent;
-import org.laokou.admin.dto.resource.clientobject.AssigneeCO;
 import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.openfeign.utils.FeignUtil;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-
-import java.util.Collections;
 
 /**
  * 消息处理.
@@ -45,22 +35,28 @@ import java.util.Collections;
 @Component
 @NonNullApi
 @RequiredArgsConstructor
-public class MessageHandler implements ApplicationListener<MessageEvent> {
+public class MessageHandler implements ApplicationListener {
 
 	private final MessageInsertCmdExe messageInsertCmdExe;
 
 	private final TasksFeignClient tasksFeignClient;
 
+	// @Override
+	// public void onApplicationEvent(MessageEvent event) {
+	// MessageCO co = ConvertUtil.sourceToTarget(event, MessageCO.class);
+	// Assert.isTrue(ObjectUtil.isNotNull(co), "MessageCO is null");
+	// if (CollectionUtil.isEmpty(co.getReceiver())) {
+	// // 远程调用获取当前任务执行人
+	// AssigneeCO result =
+	// FeignUtil.result(tasksFeignClient.assignee(event.getInstanceId()));
+	// co.setReceiver(Collections.singleton(result.getAssignee()));
+	// }
+	// messageInsertCmdExe.execute(new MessageInsertCmd(co));
+	// }
+
 	@Override
-	public void onApplicationEvent(MessageEvent event) {
-		MessageCO co = ConvertUtil.sourceToTarget(event, MessageCO.class);
-		Assert.isTrue(ObjectUtil.isNotNull(co), "MessageCO is null");
-		if (CollectionUtil.isEmpty(co.getReceiver())) {
-			// 远程调用获取当前任务执行人
-			AssigneeCO result = FeignUtil.result(tasksFeignClient.assignee(event.getInstanceId()));
-			co.setReceiver(Collections.singleton(result.getAssignee()));
-		}
-		messageInsertCmdExe.execute(new MessageInsertCmd(co));
+	public void onApplicationEvent(ApplicationEvent event) {
+
 	}
 
 }

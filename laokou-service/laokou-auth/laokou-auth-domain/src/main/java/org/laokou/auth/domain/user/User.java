@@ -19,9 +19,9 @@ package org.laokou.auth.domain.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
@@ -34,22 +34,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
 
-import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PROTECTED;
 import static org.laokou.common.i18n.common.ErrorCodes.*;
 import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
 import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
 import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 import static org.laokou.common.i18n.common.StatusCodes.FORBIDDEN;
-import static org.laokou.common.i18n.common.UserStatusEnums.ENABLED;
+import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
+import static org.laokou.common.i18n.common.UserStatusEnums.DISABLE;
 import static org.laokou.common.i18n.common.ValCodes.*;
 
 /**
  * @author laokou
  */
 @Data
-@Builder
-@NoArgsConstructor(access = PRIVATE)
-@AllArgsConstructor(access = PRIVATE)
+@SuperBuilder
+@NoArgsConstructor(access = PROTECTED)
+@AllArgsConstructor(access = PROTECTED)
 @Schema(name = "User", description = "用户信息")
 public class User extends AggregateRoot<Long> {
 
@@ -79,6 +80,10 @@ public class User extends AggregateRoot<Long> {
 
 	@Schema(name = "auth", description = "认证")
 	private Auth auth;
+
+	public boolean isSuperAdministrator() {
+		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
+	}
 
 	public void checkMobile() {
 		if (StringUtil.isEmpty(this.mobile)) {
@@ -110,30 +115,20 @@ public class User extends AggregateRoot<Long> {
 		}
 	}
 
-	public void checkCaptcha(Boolean validateResult) {
-		if (ObjectUtil.isNull(validateResult)) {
-			throw new AuthException(CAPTCHA_EXPIRED);
-		}
-		if (!validateResult) {
-			throw new AuthException(CAPTCHA_ERROR);
-		}
-	}
-
-	public User newUser(User user) {
+	public void checkNull(User user) {
 		if (ObjectUtil.isNull(user)) {
 			throw new AuthException(ACCOUNT_PASSWORD_ERROR);
 		}
-		return user;
 	}
 
 	public void checkPassword(String clientPassword, PasswordEncoder passwordEncoder) {
-		if (!passwordEncoder.matches(this.password, clientPassword)) {
+		if (StringUtil.isNotEmpty(this.password) && !passwordEncoder.matches(clientPassword, this.password)) {
 			throw new AuthException(ACCOUNT_PASSWORD_ERROR);
 		}
 	}
 
 	public void checkStatus() {
-		if (ObjectUtil.equals(ENABLED.ordinal(), this.status)) {
+		if (ObjectUtil.equals(DISABLE.ordinal(), this.status)) {
 			throw new AuthException(ACCOUNT_DISABLE);
 		}
 	}

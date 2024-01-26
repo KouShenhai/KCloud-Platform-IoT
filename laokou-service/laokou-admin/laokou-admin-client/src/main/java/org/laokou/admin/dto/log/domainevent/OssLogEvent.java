@@ -20,9 +20,12 @@ package org.laokou.admin.dto.log.domainevent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+import org.laokou.common.i18n.common.EventStatusEnums;
+import org.laokou.common.i18n.common.EventTypeEnums;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 import java.io.Serial;
+import java.time.LocalDateTime;
 
 /**
  * @author laokou
@@ -30,7 +33,7 @@ import java.io.Serial;
 @Getter
 @Setter
 @Schema(name = "OssLogEvent", description = "OSS日志事件")
-public class OssLogEvent extends DomainEvent {
+public class OssLogEvent extends DomainEvent<Long> {
 
 	@Serial
 	private static final long serialVersionUID = 3776732013732856552L;
@@ -47,8 +50,9 @@ public class OssLogEvent extends DomainEvent {
 	@Schema(name = "size", description = "文件大小")
 	private Long size;
 
-	public OssLogEvent(Object source) {
-		super(source);
+	protected OssLogEvent(Long aLong, Long aggregateId, EventTypeEnums eventType, EventStatusEnums eventStatus,
+			Long creator, Long deptId, String deptPath, Long tenantId, LocalDateTime createDate) {
+		super(aLong, aggregateId, eventType, eventStatus, creator, deptId, deptPath, tenantId, createDate);
 	}
 
 }

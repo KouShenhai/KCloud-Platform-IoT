@@ -37,10 +37,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-domain</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.laokou</groupId>-->
+<!--            <artifactId>laokou-common-domain</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-sensitive</artifactId>

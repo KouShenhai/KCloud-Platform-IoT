@@ -18,23 +18,24 @@
 package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.common.EventStatusEnums;
+import org.laokou.common.i18n.common.EventTypeEnums;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import static lombok.AccessLevel.PROTECTED;
 import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
 
 /**
  * @author laokou
  */
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = PROTECTED)
 @Schema(name = "DomainEvent", description = "领域事件")
-public abstract class DomainEvent<ID> implements Serializable {
+public abstract class DomainEvent<ID> implements Event {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
@@ -45,11 +46,11 @@ public abstract class DomainEvent<ID> implements Serializable {
 	@Schema(name = "aggregateId", description = "聚合根ID")
 	private ID aggregateId;
 
-	// TODO 类型
+	@Schema(name = "EventTypeEnums", description = "类型")
+	private EventTypeEnums eventType;
 
-
-	// TODO 状态
-
+	@Schema(name = "EventStatusEnums", description = "状态")
+	private EventStatusEnums eventStatus;
 
 	@Schema(name = CREATOR, description = "创建人")
 	protected ID creator;

@@ -54,7 +54,7 @@ public class UserOptionListQryExe {
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_USER)
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
-		List<UserDO> list = userMapper.getOptionList(qry, AesUtil.getKey());
+		List<UserDO> list = userMapper.getOptionList(qry, AesUtil.getSecretKeyStr());
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}

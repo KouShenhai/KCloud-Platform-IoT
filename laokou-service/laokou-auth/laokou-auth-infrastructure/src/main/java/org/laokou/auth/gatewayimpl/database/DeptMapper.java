@@ -38,13 +38,13 @@ public interface DeptMapper {
 	 * 查看部门PATHS.
 	 * @return 部门PATHS
 	 */
-	List<String> getDeptPaths();
+	List<String> selectDeptPaths();
 
 	/**
 	 * 根据用户ID查看部门PATHS.
 	 * @param userId 用户ID
 	 * @return 部门PATHS
 	 */
-	List<String> getDeptPathsByUserId(@Param(USER_ID) Long userId);
+	List<String> selectDeptPathsByUserId(@Param(USER_ID) Long userId);
 
 }

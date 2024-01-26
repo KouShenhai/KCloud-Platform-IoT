@@ -38,6 +38,6 @@ public interface SourceMapper {
 	 * @param tenantId 租户ID
 	 * @return 数据源
 	 */
-	SourceDO getSourceByTenantId(@Param(TENANT_ID) Long tenantId);
+	SourceDO selectByTenantId(@Param(TENANT_ID) Long tenantId);
 
 }

@@ -15,15 +15,15 @@
  *
  */
 
-package org.laokou.auth.module.oauth2.authentication;
+package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
 import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
+import org.laokou.auth.domain.user.Auth;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
@@ -31,10 +31,8 @@ import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.util.MultiValueMap;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-import static org.laokou.common.i18n.common.ErrorCodes.INVALID_SCOPE;
-import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
 
 /**
  * 抽象认证转换器.
@@ -60,7 +58,6 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 	@Override
 	public Authentication convert(HttpServletRequest request) {
 		try {
-			ThreadContext.put(TRACE_ID, request.getHeader(TRACE_ID));
 			// 请求链 FilterOrderRegistration
 			String grantType = request.getParameter(OAuth2ParameterNames.GRANT_TYPE);
 			if (!getGrantType().equals(grantType)) {
@@ -68,11 +65,9 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 			}
 			// 构建请求参数集合
 			MultiValueMap<String, String> parameters = MapUtil.getParameters(request);
-			// 判断scope
-			String scope = parameters.getFirst(OAuth2ParameterNames.SCOPE);
-			if (StringUtil.isNotEmpty(scope) && parameters.get(OAuth2ParameterNames.SCOPE).size() != 1) {
-				throw OAuth2ExceptionHandler.getException(INVALID_SCOPE, MessageUtil.getMessage(INVALID_SCOPE));
-			}
+			List<String> scopes = parameters.get(OAuth2ParameterNames.SCOPE);
+			// 判断scopes
+			Auth.builder().build().checkScopes(scopes);
 			// 获取上下文认证信息
 			Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();
 			Map<String, Object> additionalParameters = new HashMap<>(parameters.size());
@@ -82,6 +77,9 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 				}
 			});
 			return convert(clientPrincipal, additionalParameters);
+		}
+		catch (GlobalException e) {
+			throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg());
 		}
 		finally {
 			ThreadContext.clearMap();

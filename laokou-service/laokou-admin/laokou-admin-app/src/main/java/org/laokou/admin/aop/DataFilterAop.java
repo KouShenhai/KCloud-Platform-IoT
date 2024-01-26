@@ -37,7 +37,7 @@ import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.LIKE;
 import static org.laokou.common.i18n.common.DatasourceConstants.OR;
@@ -87,7 +87,7 @@ public class DataFilterAop {
 		String tableAlias = dataFilter.tableAlias();
 		String deptPathColumn = dataFilter.deptPath();
 		String creatorColumn = dataFilter.creator();
-		List<String> deptPaths = userDetail.getDeptPaths();
+		Set<String> deptPaths = userDetail.getDeptPaths();
 		StringBuilder sqlFilter = new StringBuilder(300);
 		if (StringUtil.isNotEmpty(tableAlias)) {
 			tableAlias += DOT;

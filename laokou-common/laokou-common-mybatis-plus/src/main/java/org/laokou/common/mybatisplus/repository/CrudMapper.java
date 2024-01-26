@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.mybatisplus.repository;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

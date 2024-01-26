@@ -58,7 +58,7 @@ public class UserUpdateCmdExe {
 	public Result<Boolean> execute(UserUpdateCmd cmd) {
 		UserCO co = cmd.getUserCO();
 		// 用户表
-		int count = userMapper.getUserCount(toUserDO(co), AesUtil.getKey());
+		int count = userMapper.getUserCount(toUserDO(co), AesUtil.getSecretKeyStr());
 		if (count > 0) {
 			throw new SystemException("用户名已存在，请重新输入");
 		}

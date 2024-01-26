@@ -38,10 +38,10 @@ public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 	 * 根据用户名和登录类型查看用户信息.
 	 * @param username 用户名
 	 * @param type 类型 mail邮箱 mobile手机号 password密码 authorization_code授权码
-	 * @param publicKey 密钥
+	 * @param secretKey 密钥Key
 	 * @return 用户信息
 	 */
 	UserDO selectByConditions(@Param(USERNAME) String username, @Param("type") String type,
-			@Param("publicKey") String publicKey);
+			@Param("secretKey") String secretKey);
 
 }

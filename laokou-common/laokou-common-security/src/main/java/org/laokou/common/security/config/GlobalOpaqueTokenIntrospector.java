@@ -64,38 +64,36 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, H
 
 	@Override
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
-			String userKillKey = RedisKeyUtil.getUserKillKey(token);
-			if (ObjectUtil.isNotNull(redisUtil.get(userKillKey))) {
-				throw OAuth2ExceptionHandler.getException(ACCOUNT_FORCE_KILL,
-						MessageUtil.getMessage(ACCOUNT_FORCE_KILL));
-			}
-			// 用户相关数据，低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
-			String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-			Object obj = redisUtil.get(userInfoKey);
-			if (ObjectUtil.isNotNull(obj)) {
-				// 解密
-				return decryptInfo((UserDetail) obj);
-			}
-			OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token,
-					new OAuth2TokenType(FULL));
-			if (ObjectUtil.isNull(authorization)) {
-				throw OAuth2ExceptionHandler.getException(UNAUTHORIZED, MessageUtil.getMessage(UNAUTHORIZED));
-			}
-			OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
-			Instant expiresAt = accessToken.getToken().getExpiresAt();
-			Instant nowAt = Instant.now();
-			long expireTime = ChronoUnit.SECONDS.between(nowAt, expiresAt);
-			// 5秒后过期
-			long minTime = 5;
-			if (expireTime > minTime) {
-				Object principal = ((UsernamePasswordAuthenticationToken) Objects
-					.requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
-				UserDetail userDetail = (UserDetail) principal;
-				redisUtil.set(userInfoKey, userDetail, expireTime - 1);
-				// 解密
-				return decryptInfo(userDetail);
-			}
+		String userKillKey = RedisKeyUtil.getUserKillKey(token);
+		if (ObjectUtil.isNotNull(redisUtil.get(userKillKey))) {
+			throw OAuth2ExceptionHandler.getException(ACCOUNT_FORCE_KILL, MessageUtil.getMessage(ACCOUNT_FORCE_KILL));
+		}
+		// 用户相关数据，低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
+		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
+		Object obj = redisUtil.get(userInfoKey);
+		if (ObjectUtil.isNotNull(obj)) {
+			// 解密
+			return decryptInfo((UserDetail) obj);
+		}
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, new OAuth2TokenType(FULL));
+		if (ObjectUtil.isNull(authorization)) {
 			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED, MessageUtil.getMessage(UNAUTHORIZED));
+		}
+		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
+		Instant expiresAt = accessToken.getToken().getExpiresAt();
+		Instant nowAt = Instant.now();
+		long expireTime = ChronoUnit.SECONDS.between(nowAt, expiresAt);
+		// 5秒后过期
+		long minTime = 5;
+		if (expireTime > minTime) {
+			Object principal = ((UsernamePasswordAuthenticationToken) Objects
+				.requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
+			UserDetail userDetail = (UserDetail) principal;
+			redisUtil.set(userInfoKey, userDetail, expireTime - 1);
+			// 解密
+			return decryptInfo(userDetail);
+		}
+		throw OAuth2ExceptionHandler.getException(UNAUTHORIZED, MessageUtil.getMessage(UNAUTHORIZED));
 	}
 	// @formatter:on
 
@@ -121,7 +119,9 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, H
 	}
 
 	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) {
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+			@Nullable Exception ex) {
 		UserContextHolder.clear();
 	}
+
 }

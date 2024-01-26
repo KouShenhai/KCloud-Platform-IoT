@@ -132,7 +132,7 @@ public class OssGatewayImpl implements OssGateway {
 	 */
 	@Override
 	public void publish(OssLog ossLog) {
-		domainEventPublisher.publish(getEvent(ossLog));
+		domainEventPublisher.publish(null);
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class OssGatewayImpl implements OssGateway {
 	 * @return OSS日志事件
 	 */
 	private OssLogEvent getEvent(OssLog ossLog) {
-		OssLogEvent event = new OssLogEvent(this);
+		OssLogEvent event = null;
 		event.setMd5(ossLog.getMd5());
 		event.setUrl(ossLog.getUrl());
 		event.setName(ossLog.getName());

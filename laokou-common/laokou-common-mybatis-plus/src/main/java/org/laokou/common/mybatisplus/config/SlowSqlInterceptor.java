@@ -56,7 +56,7 @@ public class SlowSqlInterceptor implements Interceptor {
 			Object target = invocation.getTarget();
 			if (target instanceof StatementHandler statementHandler) {
 				String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
-				SpringContextUtil.publishEvent(toSqlEvent(sql, time));
+				SpringContextUtil.publishEvent(null);
 			}
 		}
 		return obj;
@@ -71,7 +71,7 @@ public class SlowSqlInterceptor implements Interceptor {
 	}
 
 	private SqlLogEvent toSqlEvent(String sql, long time) {
-		SqlLogEvent event = new SqlLogEvent(time);
+		SqlLogEvent event = null;
 		event.setDsl(sql);
 		event.setCostTime(time);
 		event.setCreateDate(DateUtil.now());

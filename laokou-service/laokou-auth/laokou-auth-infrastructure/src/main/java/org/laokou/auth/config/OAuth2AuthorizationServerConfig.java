@@ -15,15 +15,17 @@
  *
  */
 
-package org.laokou.auth.module.oauth2.config;
+package org.laokou.auth.config;
 
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import org.laokou.auth.module.oauth2.authentication.*;
-import org.laokou.auth.module.oauth2.filter.OAuth2AuthorizationFilter;
-import org.laokou.auth.service.UsersServiceImpl;
+import org.laokou.auth.config.authentication.OAuth2MailAuthenticationConverter;
+import org.laokou.auth.config.authentication.OAuth2MobileAuthenticationConverter;
+import org.laokou.auth.config.authentication.OAuth2PasswordAuthenticationConverter;
+import org.laokou.auth.config.authentication.UsersServiceImpl;
+import org.laokou.auth.config.filter.OAuth2AuthorizationFilter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;

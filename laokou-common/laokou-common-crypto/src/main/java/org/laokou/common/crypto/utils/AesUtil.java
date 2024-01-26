@@ -43,13 +43,13 @@ public class AesUtil {
 
 	private final static byte[] SECRET_KEY;
 
-	private final static String KEY;
+	private final static String SECRET_KEY_STRING;
 
 	static {
 		try (InputStream inputStream = ResourceUtil.getResource("conf/secretKey.b16").getInputStream()) {
 			SECRET_KEY = inputStream.readAllBytes();
 			Assert.isTrue(SECRET_KEY.length == 16, "密钥长度必须16位");
-			KEY = new String(SECRET_KEY, StandardCharsets.UTF_8);
+			SECRET_KEY_STRING = new String(SECRET_KEY, StandardCharsets.UTF_8);
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);
@@ -60,8 +60,8 @@ public class AesUtil {
 	 * 获取加密密钥.
 	 * @return 加密密钥
 	 */
-	public static String getKey() {
-		return KEY;
+	public static String getSecretKeyStr() {
+		return SECRET_KEY_STRING;
 	}
 
 	/**

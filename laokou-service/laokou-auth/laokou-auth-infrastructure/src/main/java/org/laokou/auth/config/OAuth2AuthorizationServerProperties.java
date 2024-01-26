@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.module.oauth2.config;
+package org.laokou.auth.config;
 
 import lombok.Data;
 import org.laokou.common.core.utils.CollectionUtil;

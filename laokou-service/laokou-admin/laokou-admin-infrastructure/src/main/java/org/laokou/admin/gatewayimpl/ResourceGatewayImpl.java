@@ -232,8 +232,9 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	 */
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void publishMessageEvent(Resource resource, String instanceId) {
-		domainEventPublisher
-			.publish(eventUtil.toAuditMessageEvent(null, resource.getId(), resource.getTitle(), instanceId));
+		// domainEventPublisher
+		// .publish(eventUtil.toAuditMessageEvent(null, resource.getId(),
+		// resource.getTitle(), instanceId));
 	}
 
 	/**
