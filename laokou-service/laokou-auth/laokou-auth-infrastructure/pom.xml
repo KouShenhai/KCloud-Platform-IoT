@@ -25,6 +25,10 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-mybatis-plus</artifactId>
             <exclusions>
                 <exclusion>
@@ -33,6 +37,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.laokou</groupId>-->
+<!--            <artifactId>laokou-common-domain</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-sensitive</artifactId>
@@ -41,6 +49,10 @@
         <dependency>
             <groupId>eu.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-security</artifactId>
         </dependency>
 <!--        <dependency>
             <groupId>org.laokou</groupId>

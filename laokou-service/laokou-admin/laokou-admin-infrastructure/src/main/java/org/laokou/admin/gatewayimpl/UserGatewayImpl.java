@@ -73,7 +73,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final Executor ttlTaskExecutor;
+	private final Executor executor;
 
 	/**
 	 * 新增用户.
@@ -155,9 +155,9 @@ public class UserGatewayImpl implements UserGateway {
 		UserDO userDO = userConvertor.toDataObject(user);
 		final PageQuery page = pageQuery.page();
 		CompletableFuture<List<UserDO>> c1 = CompletableFuture
-			.supplyAsync(() -> userMapper.getUserListFilter(userDO, page, AesUtil.getKey()), ttlTaskExecutor);
+			.supplyAsync(() -> userMapper.getUserListFilter(userDO, page, AesUtil.getSecretKeyStr()), executor);
 		CompletableFuture<Integer> c2 = CompletableFuture
-			.supplyAsync(() -> userMapper.getUserListTotalFilter(userDO, page, AesUtil.getKey()), ttlTaskExecutor);
+			.supplyAsync(() -> userMapper.getUserListTotalFilter(userDO, page, AesUtil.getSecretKeyStr()), executor);
 		CompletableFuture.allOf(c1, c2).join();
 		Datas<User> datas = new Datas<>();
 		datas.setTotal(c2.get());
@@ -204,7 +204,7 @@ public class UserGatewayImpl implements UserGateway {
 	private Boolean insertUser(UserDO userDO, User user) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
-				userMapper.insertUser(userDO, AesUtil.getKey());
+				userMapper.insertUser(userDO, AesUtil.getSecretKeyStr());
 				insertUserRole(user.getRoleIds(), userDO);
 				return true;
 			}

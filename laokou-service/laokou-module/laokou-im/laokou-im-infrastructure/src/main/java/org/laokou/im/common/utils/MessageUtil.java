@@ -43,7 +43,7 @@ public class MessageUtil {
 
 	private final Server websocketServer;
 
-	private final Executor ttlTaskExecutor;
+	private final Executor executor;
 
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void send(String message) {
@@ -56,7 +56,7 @@ public class MessageUtil {
 		TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.of(OK, msg)));
 		receiver.parallelStream()
 			.forEach(clientId -> CompletableFuture.runAsync(() -> websocketServer.send(clientId, webSocketFrame),
-					ttlTaskExecutor));
+					executor));
 	}
 
 }

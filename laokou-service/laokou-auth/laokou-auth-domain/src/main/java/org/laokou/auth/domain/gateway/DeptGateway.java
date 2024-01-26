@@ -17,9 +17,9 @@
 
 package org.laokou.auth.domain.gateway;
 
-import org.laokou.common.security.domain.User;
+import org.laokou.auth.domain.user.User;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * 部门.
@@ -33,6 +33,6 @@ public interface DeptGateway {
 	 * @param user 用户对象
 	 * @return 部门PATHS列表
 	 */
-	List<String> getDeptPaths(User user);
+	Set<String> findDeptPaths(User user);
 
 }

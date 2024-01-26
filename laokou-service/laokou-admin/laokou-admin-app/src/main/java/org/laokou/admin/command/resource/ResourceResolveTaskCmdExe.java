@@ -70,8 +70,9 @@ public class ResourceResolveTaskCmdExe {
 	 */
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void publishMessage(ResourceResolveTaskCmd cmd) {
-		domainEventPublisher.publish(
-				eventUtil.toAuditMessageEvent(null, cmd.getBusinessKey(), cmd.getInstanceName(), cmd.getInstanceId()));
+		// domainEventPublisher.publish(
+		// eventUtil.toAuditMessageEvent(null, cmd.getBusinessKey(),
+		// cmd.getInstanceName(), cmd.getInstanceId()));
 	}
 
 }

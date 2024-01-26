@@ -45,7 +45,7 @@ import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.database.BatchMapper;
-import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
+import org.laokou.common.mybatisplus.repository.BaseDO;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 
 import java.io.InputStream;

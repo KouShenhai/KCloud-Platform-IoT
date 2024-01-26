@@ -45,7 +45,7 @@ public class EventUtil {
 	}
 
 	private MessageEvent build(String title, String content, String instanceId, String assignee) {
-		MessageEvent event = new MessageEvent(this);
+		MessageEvent event = null;
 		event.setContent(content);
 		event.setTitle(title);
 		event.setInstanceId(instanceId);

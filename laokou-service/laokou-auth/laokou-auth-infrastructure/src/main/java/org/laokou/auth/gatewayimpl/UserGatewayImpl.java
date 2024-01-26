@@ -18,34 +18,49 @@
 package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.domain.auth.Auth;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.domain.gateway.UserGateway;
+import org.laokou.auth.domain.user.User;
 import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.security.domain.User;
+import org.laokou.common.i18n.common.exception.DataSourceException;
+import org.laokou.common.i18n.utils.LogUtil;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 
 /**
  * 用户.
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class UserGatewayImpl implements UserGateway {
 
 	private final UserMapper userMapper;
 
+	private final UserConvertor userConvertor;
+
 	/**
-	 * 根据用户名查看用户信息.
-	 * @param auth 认证对象
+	 * 查看用户信息.
+	 * @param user 用户对象
 	 * @return 用户信息
 	 */
 	@Override
-	public User getUserByUsername(Auth auth) {
-		UserDO userDO = userMapper.getUserByUsername(auth.getUsername(), auth.getType(), auth.getKey());
-		return ConvertUtil.sourceToTarget(userDO, User.class);
+	public User findOne(User user) {
+		try {
+			UserDO userDO = userMapper.selectByConditions(user.getUsername(), user.getAuth().getType(),
+					user.getAuth().getSecretKey());
+			return userConvertor.convertEntity(userDO);
+		}
+		catch (BadSqlGrammarException e) {
+			log.error("表 boot_sys_user 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			throw new DataSourceException(CUSTOM_SERVER_ERROR, "表 boot_sys_user 不存在");
+		}
 	}
 
 }

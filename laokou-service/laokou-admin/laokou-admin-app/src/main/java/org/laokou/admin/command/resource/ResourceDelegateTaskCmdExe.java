@@ -71,8 +71,9 @@ public class ResourceDelegateTaskCmdExe {
 	 */
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void publishMessage(ResourceDelegateTaskCmd cmd) {
-		domainEventPublisher.publish(eventUtil.toHandleMessageEvent(cmd.getUserId().toString(), cmd.getBusinessKey(),
-				cmd.getInstanceName(), null));
+		// domainEventPublisher.publish(eventUtil.toHandleMessageEvent(cmd.getUserId().toString(),
+		// cmd.getBusinessKey(),
+		// cmd.getInstanceName(), null));
 	}
 
 	/**

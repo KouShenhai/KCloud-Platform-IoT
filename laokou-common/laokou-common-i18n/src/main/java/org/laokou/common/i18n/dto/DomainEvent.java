@@ -18,27 +18,53 @@
 package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.context.ApplicationEvent;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.laokou.common.i18n.common.EventStatusEnums;
+import org.laokou.common.i18n.common.EventTypeEnums;
 
 import java.io.Serial;
-import java.io.Serializable;
-import java.time.Clock;
+import java.time.LocalDateTime;
+
+import static lombok.AccessLevel.PROTECTED;
+import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
 
 /**
  * @author laokou
  */
+@Data
+@AllArgsConstructor(access = PROTECTED)
 @Schema(name = "DomainEvent", description = "领域事件")
-public abstract class DomainEvent extends ApplicationEvent implements Serializable {
+public abstract class DomainEvent<ID> implements Event {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
 
-	protected DomainEvent(Object source, Clock clock) {
-		super(source, clock);
-	}
+	@Schema(name = "id", description = "ID")
+	private ID id;
 
-	protected DomainEvent(Object source) {
-		super(source);
-	}
+	@Schema(name = "aggregateId", description = "聚合根ID")
+	private ID aggregateId;
+
+	@Schema(name = "EventTypeEnums", description = "类型")
+	private EventTypeEnums eventType;
+
+	@Schema(name = "EventStatusEnums", description = "状态")
+	private EventStatusEnums eventStatus;
+
+	@Schema(name = CREATOR, description = "创建人")
+	protected ID creator;
+
+	@Schema(name = DEPT_ID, description = "部门ID")
+	protected ID deptId;
+
+	@Schema(name = DEPT_PATH, description = "部门PATH")
+	protected String deptPath;
+
+	@Schema(name = TENANT_ID, description = "租户ID")
+	protected ID tenantId;
+
+	@Schema(name = CREATE_DATE, description = "创建时间")
+	protected LocalDateTime createDate;
 
 }

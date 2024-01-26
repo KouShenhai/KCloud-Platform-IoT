@@ -20,8 +20,11 @@ package org.laokou.admin.dto.message.domainevent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+import org.laokou.common.i18n.common.EventStatusEnums;
+import org.laokou.common.i18n.common.EventTypeEnums;
 import org.laokou.common.i18n.dto.DomainEvent;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -30,7 +33,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Schema(name = "MessageEvent", description = "消息事件")
-public class MessageEvent extends DomainEvent {
+public class MessageEvent extends DomainEvent<Long> {
 
 	@Schema(name = "title", description = "消息标题")
 	private String title;
@@ -47,8 +50,9 @@ public class MessageEvent extends DomainEvent {
 	@Schema(name = "instanceId", description = "实例ID")
 	private String instanceId;
 
-	public MessageEvent(Object source) {
-		super(source);
+	protected MessageEvent(Long aLong, Long aggregateId, EventTypeEnums type, EventStatusEnums status, Long creator,
+			Long deptId, String deptPath, Long tenantId, LocalDateTime createDate) {
+		super(aLong, aggregateId, type, status, creator, deptId, deptPath, tenantId, createDate);
 	}
 
 }

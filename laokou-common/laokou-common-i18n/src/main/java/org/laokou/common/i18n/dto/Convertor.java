@@ -28,15 +28,15 @@ import java.util.List;
 public interface Convertor<C, E, D> {
 
 	/**
-	 * ClientObject 转 Domain.
+	 * ClientObject 转 Entity.
 	 * @param c ClientObject
-	 * @return Domain
+	 * @return Entity
 	 */
 	E toEntity(C c);
 
 	/**
-	 * Domain 转 DataObject.
-	 * @param e Domain
+	 * Entity 转 DataObject.
+	 * @param e Entity
 	 * @return DataObject
 	 */
 	D toDataObject(E e);
@@ -49,16 +49,16 @@ public interface Convertor<C, E, D> {
 	D toDataObj(C c);
 
 	/**
-	 * DataObject 转 Domain.
+	 * DataObject 转 Entity.
 	 * @param d DataObject
-	 * @return Domain
+	 * @return Entity
 	 */
 	E convertEntity(D d);
 
 	/**
-	 * DataObject List 转 Domain List.
+	 * DataObject List 转 Entity List.
 	 * @param list DataObject List
-	 * @return Domain List
+	 * @return Entity List
 	 */
 	List<E> convertEntityList(List<D> list);
 
@@ -77,15 +77,15 @@ public interface Convertor<C, E, D> {
 	List<C> convertClientObjList(List<D> list);
 
 	/**
-	 * Domain 转 ClientObject.
-	 * @param e Domain
+	 * Entity 转 ClientObject.
+	 * @param e Entity
 	 * @return ClientObject
 	 */
 	C convertClientObject(E e);
 
 	/**
-	 * Domain List 转 ClientObject List.
-	 * @param list Domain List
+	 * Entity List 转 ClientObject List.
+	 * @param list Entity List
 	 * @return ClientObject List
 	 */
 	List<C> convertClientObjectList(List<E> list);

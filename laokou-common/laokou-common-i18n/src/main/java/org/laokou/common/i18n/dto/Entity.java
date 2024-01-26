@@ -24,6 +24,7 @@ import java.io.Serializable;
 /**
  * @author laokou
  */
-@Schema(name = "Entity", description = "领域")
+@Schema(name = "Entity", description = "实体")
 public interface Entity extends Serializable {
+
 }

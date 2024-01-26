@@ -20,9 +20,12 @@ package org.laokou.admin.dto.log.domainevent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+import org.laokou.common.i18n.common.EventStatusEnums;
+import org.laokou.common.i18n.common.EventTypeEnums;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 import java.io.Serial;
+import java.time.LocalDateTime;
 
 /**
  * @author laokou
@@ -30,7 +33,7 @@ import java.io.Serial;
 @Setter
 @Getter
 @Schema(name = "AuditLogEvent", description = "审批日志事件")
-public class AuditLogEvent extends DomainEvent {
+public class AuditLogEvent extends DomainEvent<Long> {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
@@ -47,8 +50,9 @@ public class AuditLogEvent extends DomainEvent {
 	@Schema(name = "comment", description = "审批意见")
 	private String comment;
 
-	public AuditLogEvent(Object source) {
-		super(source);
+	protected AuditLogEvent(Long aLong, Long aggregateId, EventTypeEnums type, EventStatusEnums status, Long creator,
+			Long deptId, String deptPath, Long tenantId, LocalDateTime createDate) {
+		super(aLong, aggregateId, type, status, creator, deptId, deptPath, tenantId, createDate);
 	}
 
 }

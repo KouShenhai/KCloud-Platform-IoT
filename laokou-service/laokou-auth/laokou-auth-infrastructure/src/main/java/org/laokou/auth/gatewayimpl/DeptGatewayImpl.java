@@ -18,18 +18,26 @@
 package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.DeptGateway;
+import org.laokou.auth.domain.user.User;
 import org.laokou.auth.gatewayimpl.database.DeptMapper;
-import org.laokou.common.security.domain.User;
+import org.laokou.common.i18n.common.exception.DataSourceException;
+import org.laokou.common.i18n.utils.LogUtil;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 
 /**
  * 部门.
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DeptGatewayImpl implements DeptGateway {
@@ -42,12 +50,17 @@ public class DeptGatewayImpl implements DeptGateway {
 	 * @return 部门PATHS
 	 */
 	@Override
-	public List<String> getDeptPaths(User user) {
-		Long userId = user.getId();
-		if (user.isSuperAdministrator()) {
-			return deptMapper.getDeptPaths();
+	public Set<String> findDeptPaths(User user) {
+		try {
+			if (user.isSuperAdministrator()) {
+				return new HashSet<>(deptMapper.selectDeptPaths());
+			}
+			return new HashSet<>(deptMapper.selectDeptPathsByUserId(user.getId()));
 		}
-		return deptMapper.getDeptPathsByUserId(userId);
+		catch (BadSqlGrammarException e) {
+			log.error("表 boot_sys_dept 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			throw new DataSourceException(CUSTOM_SERVER_ERROR, "表 boot_sys_dept 不存在");
+		}
 	}
 
 }

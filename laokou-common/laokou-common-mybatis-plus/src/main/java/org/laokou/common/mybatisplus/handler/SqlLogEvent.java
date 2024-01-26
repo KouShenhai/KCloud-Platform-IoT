@@ -19,9 +19,9 @@ package org.laokou.common.mybatisplus.handler;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.laokou.common.i18n.common.EventStatusEnums;
+import org.laokou.common.i18n.common.EventTypeEnums;
 import org.laokou.common.i18n.dto.DomainEvent;
-
-import java.time.Clock;
 import java.time.LocalDateTime;
 
 /**
@@ -39,12 +39,9 @@ public class SqlLogEvent extends DomainEvent {
 
 	private String appName;
 
-	public SqlLogEvent(Object source) {
-		super(source);
-	}
-
-	public SqlLogEvent(Object source, Clock clock) {
-		super(source, clock);
+	protected SqlLogEvent(Object o, Object aggregateId, EventTypeEnums type, EventStatusEnums status, Object creator,
+			Object deptId, String deptPath, Object tenantId, LocalDateTime createDate) {
+		super(o, aggregateId, type, status, creator, deptId, deptPath, tenantId, createDate);
 	}
 
 }

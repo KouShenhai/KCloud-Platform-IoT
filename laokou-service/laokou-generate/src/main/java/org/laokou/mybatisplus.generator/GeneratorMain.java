@@ -23,7 +23,7 @@ import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.database.BatchMapper;
-import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
+import org.laokou.common.mybatisplus.repository.BaseDO;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -119,7 +119,7 @@ public class GeneratorMain {
 				// .addTableFills(new Property("update_date",
 				// FieldFill.INSERT_UPDATE))
 				.superClass(BaseDO.class)
-				.addSuperEntityColumns(ID, CREATOR, EDITOR, CREATE_DATE, UPDATE_DATE, DEL_FLAG, VERSION)
+				.addSuperEntityColumns(PRIMARY_KEY, CREATOR, EDITOR, CREATE_DATE, UPDATE_DATE, DEL_FLAG, VERSION)
 				.enableLombok() // 开启lombok
 				.logicDeleteColumnName("delFlag")// 说明逻辑删除是哪个字段
 				.enableTableFieldAnnotation()// 属性加上注解说明

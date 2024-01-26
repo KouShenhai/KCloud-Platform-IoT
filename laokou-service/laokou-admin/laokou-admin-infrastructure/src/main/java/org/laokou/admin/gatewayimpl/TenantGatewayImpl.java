@@ -387,8 +387,8 @@ public class TenantGatewayImpl implements TenantGateway {
 	 * @return 修改用户SQL
 	 */
 	private String getUpdateUsernameSql(long userId) {
-		return String.format(UPDATE_USERNAME_BY_ID_SQL_TEMPLATE, BOOT_SYS_USER, TENANT_USERNAME, AesUtil.getKey(),
-				userId);
+		return String.format(UPDATE_USERNAME_BY_ID_SQL_TEMPLATE, BOOT_SYS_USER, TENANT_USERNAME,
+				AesUtil.getSecretKeyStr(), userId);
 	}
 
 }

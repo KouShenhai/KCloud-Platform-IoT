@@ -64,6 +64,7 @@
         <module>laokou-common-dubbo</module>
         <module>laokou-common-mqtt</module>
         <module>laokou-common-rate-limiter</module>
+        <module>laokou-common-domain</module>
     </modules>
 
 </project>

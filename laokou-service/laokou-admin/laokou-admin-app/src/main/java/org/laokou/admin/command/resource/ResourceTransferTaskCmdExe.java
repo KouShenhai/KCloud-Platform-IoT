@@ -71,8 +71,9 @@ public class ResourceTransferTaskCmdExe {
 	 */
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void publishMessage(ResourceTransferTaskCmd cmd) {
-		domainEventPublisher.publish(eventUtil.toAuditMessageEvent(cmd.getUserId().toString(), cmd.getBusinessKey(),
-				cmd.getInstanceName(), null));
+		// domainEventPublisher.publish(eventUtil.toAuditMessageEvent(cmd.getUserId().toString(),
+		// cmd.getBusinessKey(),
+		// cmd.getInstanceName(), null));
 	}
 
 	/**

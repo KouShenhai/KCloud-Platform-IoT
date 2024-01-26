@@ -58,7 +58,7 @@ public class UserInsertCmdExe {
 	@DS(TENANT)
 	public Result<Boolean> execute(UserInsertCmd cmd) {
 		UserCO co = cmd.getUserCO();
-		int count = userMapper.getUserCount(toUserDO(co), AesUtil.getKey());
+		int count = userMapper.getUserCount(toUserDO(co), AesUtil.getSecretKeyStr());
 		if (count > 0) {
 			throw new SystemException("用户名已存在，请重新输入");
 		}

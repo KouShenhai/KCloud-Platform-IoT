@@ -29,7 +29,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.security.domain.User;
+import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
@@ -37,7 +37,7 @@ import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.LIKE;
 import static org.laokou.common.i18n.common.DatasourceConstants.OR;
@@ -58,14 +58,14 @@ public class DataFilterAop {
 	public void doBefore(JoinPoint point) {
 		Object param = Arrays.stream(point.getArgs()).filter(arg -> arg instanceof PageQuery).findFirst().orElse(null);
 		if (param instanceof PageQuery pageQuery) {
-			User user = UserUtil.user();
+			UserDetail userDetail = UserUtil.user();
 			// 超级管理员不过滤数据
-			if (user.isSuperAdministrator()) {
+			if (userDetail.isSuperAdministrator()) {
 				return;
 			}
 			try {
 				// 数据过滤
-				pageQuery.setSqlFilter(getSqlFilter(user, point));
+				pageQuery.setSqlFilter(getSqlFilter(userDetail, point));
 			}
 			catch (Exception ex) {
 				log.error("错误信息：{}，详情见日志", LogUtil.result(ex.getMessage()), ex);
@@ -76,10 +76,10 @@ public class DataFilterAop {
 	/**
 	 * 获取数据过滤的SQL.
 	 * @param point 切面对象
-	 * @param user 用户
+	 * @param userDetail 用户
 	 * @return 拼接的SQL
 	 */
-	private String getSqlFilter(User user, JoinPoint point) {
+	private String getSqlFilter(UserDetail userDetail, JoinPoint point) {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		Method method = signature.getMethod();
 		DataFilter dataFilter = AnnotationUtils.findAnnotation(method, DataFilter.class);
@@ -87,7 +87,7 @@ public class DataFilterAop {
 		String tableAlias = dataFilter.tableAlias();
 		String deptPathColumn = dataFilter.deptPath();
 		String creatorColumn = dataFilter.creator();
-		List<String> deptPaths = user.getDeptPaths();
+		Set<String> deptPaths = userDetail.getDeptPaths();
 		StringBuilder sqlFilter = new StringBuilder(300);
 		if (StringUtil.isNotEmpty(tableAlias)) {
 			tableAlias += DOT;
@@ -115,7 +115,7 @@ public class DataFilterAop {
 			.append(EQUAL)
 			.append(SPACE)
 			.append(DOUBLE_QUOT)
-			.append(user.getId())
+			.append(userDetail.getId())
 			.append(DOUBLE_QUOT);
 		sqlFilter.append(RIGHT);
 		return afterAndResult(sqlFilter.toString());

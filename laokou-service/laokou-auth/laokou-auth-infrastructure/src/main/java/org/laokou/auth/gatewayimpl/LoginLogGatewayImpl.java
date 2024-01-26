@@ -20,7 +20,6 @@ package org.laokou.auth.gatewayimpl;
 import eu.bitwalker.useragentutils.UserAgent;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.common.event.DomainEventPublisher;
 import org.laokou.auth.domain.gateway.LoginLogGateway;
 import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.dto.log.domainevent.LoginLogEvent;
@@ -38,7 +37,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoginLogGatewayImpl implements LoginLogGateway {
 
-	private final DomainEventPublisher domainEventPublisher;
+	//private final DomainEventPublisher domainEventPublisher;
 
 	/**
 	 * 推送登录日志.
@@ -46,7 +45,7 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 	 */
 	@Override
 	public void publish(LoginLog loginLog) {
-		domainEventPublisher.publish(getEvent(loginLog));
+		//domainEventPublisher.publish(getEvent(loginLog));
 	}
 
 	/**

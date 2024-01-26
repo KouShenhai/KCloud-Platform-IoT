@@ -103,7 +103,7 @@ public class OperateLogAop {
 		// 构建事件对象
 		Assert.isTrue(ObjectUtil.isNotNull(operateLog), "@OperateLog is null");
 		OperateLogEvent event = buildEvent(operateLog, request, joinPoint, e);
-		domainEventPublisher.publish(event);
+		domainEventPublisher.publish(null);
 	}
 
 	private OperateLogEvent buildEvent(OperateLog operateLog, HttpServletRequest request, JoinPoint joinPoint,
@@ -114,7 +114,7 @@ public class OperateLogAop {
 			String methodName = joinPoint.getSignature().getName();
 			Object[] args = joinPoint.getArgs();
 			List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs).toList();
-			OperateLogEvent event = new OperateLogEvent(this);
+			OperateLogEvent event = null;
 			Assert.isTrue(ObjectUtil.isNotNull(operateLog), "@OperateLog is null");
 			event.setModuleName(operateLog.module());
 			event.setName(operateLog.operation());

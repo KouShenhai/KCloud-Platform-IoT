@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
 	 * @return 响应结果
 	 */
 	@ExceptionHandler({ FeignException.class, SystemException.class, ApiException.class, FlowException.class,
-			DataSourceException.class, GatewayException.class })
+			DataSourceException.class, GatewayException.class, AuthException.class })
 	public Result<?> handle(GlobalException ex) {
 		// log.error("错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
 		return Result.fail(ex.getCode(), ex.getMsg());

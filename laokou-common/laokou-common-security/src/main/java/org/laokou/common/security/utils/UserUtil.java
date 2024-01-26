@@ -17,7 +17,6 @@
 
 package org.laokou.common.security.utils;
 
-import org.laokou.common.security.domain.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -26,8 +25,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class UserUtil {
 
-	public static User user() {
-		return (User) getAuthentication().getPrincipal();
+	public static UserDetail user() {
+		return (UserDetail) getAuthentication().getPrincipal();
 	}
 
 	public static Authentication getAuthentication() {

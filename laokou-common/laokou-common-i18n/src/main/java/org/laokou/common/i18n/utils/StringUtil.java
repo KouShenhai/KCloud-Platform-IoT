@@ -41,6 +41,13 @@ public class StringUtil {
 		return StringUtils.collectionToDelimitedString(coll, delim);
 	}
 
+	public static Long parseLong(String str) {
+		if (isEmpty(str)) {
+			return null;
+		}
+		return Long.parseLong(str);
+	}
+
 	public static String empty(String str) {
 		if (isEmpty(str)) {
 			return EMPTY;

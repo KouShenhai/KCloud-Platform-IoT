@@ -20,7 +20,7 @@ package org.laokou.admin.command.user.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.user.OnlineUserListQry;
 import org.laokou.admin.dto.user.clientobject.UserOnlineCO;
-import org.laokou.common.security.domain.User;
+import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -77,16 +77,16 @@ public class OnlineUserListQryExe {
 		List<UserOnlineCO> list = new ArrayList<>(keys.size());
 		String userInfoKeyPrefix = getUserKeyPrefix();
 		for (String key : keys) {
-			User user = (User) redisUtil.get(key);
-			String username = user.getUsername();
-			Long tenantId = user.getTenantId();
+			UserDetail userDetail = (UserDetail) redisUtil.get(key);
+			String username = userDetail.getUsername();
+			Long tenantId = userDetail.getTenantId();
 			if (ObjectUtil.equals(tenantId, UserUtil.getTenantId())
 					&& (StringUtil.isEmpty(keyword) || username.contains(keyword))) {
 				UserOnlineCO co = new UserOnlineCO();
 				co.setUsername(username);
 				co.setToken(key.substring(userInfoKeyPrefix.length()));
-				co.setLoginIp(user.getLoginIp());
-				co.setLoginDate(user.getLoginDate());
+				co.setLoginIp(userDetail.getLoginIp());
+				co.setLoginDate(userDetail.getLoginDate());
 				list.add(co);
 			}
 		}
