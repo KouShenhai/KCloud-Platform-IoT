@@ -27,6 +27,11 @@
   <artifactId>laokou-common-core</artifactId>
 
   <dependencies>
+    <!-- 解析客户端操作系统、浏览器等 -->
+    <dependency>
+      <groupId>eu.bitwalker</groupId>
+      <artifactId>UserAgentUtils</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>

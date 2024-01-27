@@ -41,19 +41,25 @@ public abstract class DomainEvent<ID> implements Event {
 	private static final long serialVersionUID = 1532877866226749304L;
 
 	@Schema(name = "id", description = "ID")
-	private ID id;
+	protected ID id;
 
 	@Schema(name = "aggregateId", description = "聚合根ID")
-	private ID aggregateId;
+	protected ID aggregateId;
 
-	@Schema(name = "EventTypeEnums", description = "类型")
-	private EventTypeEnums eventType;
+	@Schema(name = "eventType", description = "类型")
+	protected EventTypeEnums eventType;
 
-	@Schema(name = "EventStatusEnums", description = "状态")
-	private EventStatusEnums eventStatus;
+	@Schema(name = "eventStatus", description = "状态")
+	protected EventStatusEnums eventStatus;
+
+	@Schema(name = "topic", description = "主题")
+	protected String topic;
 
 	@Schema(name = CREATOR, description = "创建人")
 	protected ID creator;
+
+	@Schema(name = EDITOR, description = "编辑人")
+	protected ID editor;
 
 	@Schema(name = DEPT_ID, description = "部门ID")
 	protected ID deptId;
@@ -66,5 +72,8 @@ public abstract class DomainEvent<ID> implements Event {
 
 	@Schema(name = CREATE_DATE, description = "创建时间")
 	protected LocalDateTime createDate;
+
+	@Schema(name = UPDATE_DATE, description = "修改时间")
+	protected LocalDateTime updateDate;
 
 }

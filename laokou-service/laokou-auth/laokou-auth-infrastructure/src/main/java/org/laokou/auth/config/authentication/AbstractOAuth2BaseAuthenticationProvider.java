@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
-import org.laokou.auth.domain.gateway.LoginLogGateway;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.crypto.utils.AesUtil;
@@ -141,8 +140,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 				.authorizationServerContext(AuthorizationServerContextHolder.getContext())
 				.authorizationGrantType(grantType)
 				.authorizationGrant(auth2BaseAuthenticationToken);
-			DefaultOAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(ACCESS_TOKEN)
-				.build();
+			DefaultOAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(ACCESS_TOKEN).build();
 			// 生成access_token
 			OAuth2Token generatedAccessToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
 				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ACCESS_TOKEN_FAIL,

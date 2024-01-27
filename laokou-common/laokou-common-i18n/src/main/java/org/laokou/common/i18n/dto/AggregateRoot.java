@@ -27,6 +27,8 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static lombok.AccessLevel.PROTECTED;
 import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
@@ -46,7 +48,7 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	@Schema(name = CREATOR, description = "创建人")
 	protected ID creator;
 
-	@Schema(name = EDITOR, description = "修改人")
+	@Schema(name = EDITOR, description = "编辑人")
 	protected ID editor;
 
 	@Schema(name = DEPT_ID, description = "部门ID")
@@ -64,10 +66,17 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	@Schema(name = UPDATE_DATE, description = "修改时间")
 	protected LocalDateTime updateDate;
 
+	@Schema(name = "events", description = "事件集合")
+	private List<DomainEvent<ID>> events = new ArrayList<>(16);
+
 	public void checkNullTenantId() {
 		if (ObjectUtil.isNull(this.tenantId)) {
 			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
 		}
+	}
+
+	protected void addEvent(DomainEvent<ID> event) {
+		events.add(event);
 	}
 
 }

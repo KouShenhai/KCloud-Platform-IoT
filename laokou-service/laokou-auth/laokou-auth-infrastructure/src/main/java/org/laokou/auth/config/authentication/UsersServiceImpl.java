@@ -57,18 +57,11 @@ public class UsersServiceImpl implements UserDetailsService {
 		try {
 			HttpServletRequest request = RequestUtil.getHttpServletRequest();
 			String password = request.getParameter(PASSWORD);
-			Auth authObj = Auth.builder()
-					.type(AUTHORIZATION_CODE)
-					.secretKey(AesUtil.getSecretKeyStr())
-					.build();
-			User user = User.builder()
-					.auth(authObj)
-					.tenantId(DEFAULT)
-					.username(username)
-					.password(password)
-					.build();
+			Auth authObj = Auth.builder().type(AUTHORIZATION_CODE).secretKey(AesUtil.getSecretKeyStr()).build();
+			User user = User.builder().auth(authObj).tenantId(DEFAULT).username(username).password(password).build();
 			return (UserDetails) oAuth2CommonAuthenticationProvider.authenticationToken(user, request).getPrincipal();
-		} catch (OAuth2AuthenticationException e) {
+		}
+		catch (OAuth2AuthenticationException e) {
 			throw new UsernameNotFoundException(e.getError().getDescription(), e);
 		}
 	}

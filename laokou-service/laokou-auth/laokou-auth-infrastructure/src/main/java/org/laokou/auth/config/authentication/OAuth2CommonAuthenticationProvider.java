@@ -63,19 +63,19 @@ public class OAuth2CommonAuthenticationProvider {
 			String ip = IpUtil.getIpAddr(request);
 			Long tenantId = user.getTenantId();
 			// 检查验证码
-			checkCaptcha(captchaObj);
+			checkCaptcha(user, captchaObj, request);
 			// 数据源名称
 			String sourceName = getSourceName(tenantId);
 			User u = userGateway.findOne(user);
 			// 检查空对象
-			user.checkNull(u);
+			user.checkNull(u, request);
 			// 检查密码
-			u.checkPassword(user.getPassword(), passwordEncoder);
+			u.checkPassword(user.getPassword(), passwordEncoder, request);
 			// 检查状态
-			u.checkStatus();
+			u.checkStatus(request);
 			Set<String> permissions = menuGateway.findPermissions(u);
 			// 检查权限标识集合
-			u.checkNullPermissions(permissions);
+			u.checkNullPermissions(permissions, request);
 			Set<String> deptPaths = deptGateway.findDeptPaths(u);
 			UserDetail userDetail = UserDetail.copy(u);
 			// 部门PATH集合
@@ -88,7 +88,10 @@ public class OAuth2CommonAuthenticationProvider {
 			userDetail.setLoginIp(ip);
 			// 登录时间
 			userDetail.setLoginDate(DateUtil.now());
-			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(), userDetail.getAuthorities());
+			// 登录成功
+			u.loginSuccess(request);
+			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
+					userDetail.getAuthorities());
 		}
 		catch (GlobalException e) {
 			throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg());
@@ -98,11 +101,11 @@ public class OAuth2CommonAuthenticationProvider {
 		}
 	}
 
-	private void checkCaptcha(Captcha captchaObj) {
+	private void checkCaptcha(User user, Captcha captchaObj, HttpServletRequest request) {
 		if (ObjectUtil.isNotNull(captchaObj)) {
-			Boolean validate = captchaGateway.validate(captchaObj.getUuid(), captchaObj.getCaptcha());
+			Boolean checkResult = captchaGateway.check(captchaObj.getUuid(), captchaObj.getCaptcha());
 			// 检查验证码
-			captchaObj.checkCaptcha(validate);
+			user.checkCaptcha(checkResult, request);
 		}
 	}
 

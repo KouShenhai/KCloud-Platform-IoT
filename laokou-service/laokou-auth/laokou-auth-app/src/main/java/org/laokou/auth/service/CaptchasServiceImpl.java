@@ -41,7 +41,7 @@ public class CaptchasServiceImpl implements CaptchasServiceI {
 	 * @return 验证码
 	 */
 	@Override
-	public Result<String> get(CaptchaGetQry qry) {
+	public Result<String> find(CaptchaGetQry qry) {
 		return captchaGetQryExe.execute(qry);
 	}
 

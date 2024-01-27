@@ -47,8 +47,8 @@ public class SecretsController {
 	@GetMapping
 	@RateLimiter(id = "AUTH_SECRET", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
 	@Operation(summary = "安全配置", description = "获取密钥")
-	public Result<String> get() {
-		return secretsServiceI.get(new SecretGetQry());
+	public Result<String> find() {
+		return secretsServiceI.find(new SecretGetQry());
 	}
 
 }

@@ -32,12 +32,12 @@ public interface CaptchaGateway {
 	void set(String uuid, String code);
 
 	/**
-	 * 校验验证码.
+	 * 检查验证码.
 	 * @param uuid 唯一标识
 	 * @param code 验证码
 	 * @return 校验结果
 	 */
-	Boolean validate(String uuid, String code);
+	Boolean check(String uuid, String code);
 
 	/**
 	 * 获取key.

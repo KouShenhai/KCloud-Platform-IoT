@@ -25,4 +25,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "EventTypeEnums", description = "事件类型枚举")
 public enum EventTypeEnums {
 
+	LOGIN_FAILED, LOGIN_SUCCEEDED
+
 }

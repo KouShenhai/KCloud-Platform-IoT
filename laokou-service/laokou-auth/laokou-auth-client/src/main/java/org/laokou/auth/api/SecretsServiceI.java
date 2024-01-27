@@ -32,6 +32,6 @@ public interface SecretsServiceI {
 	 * @param qry 获取密钥参数
 	 * @return 密钥
 	 */
-	Result<String> get(SecretGetQry qry);
+	Result<String> find(SecretGetQry qry);
 
 }

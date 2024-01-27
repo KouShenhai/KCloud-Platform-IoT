@@ -15,7 +15,13 @@
  *
  */
 
+package org.laokou.common.i18n.common;
+
 /**
  * @author laokou
  */
-package org.laokou.auth.dto.log.domainevent;
+public enum LoginStatusEnums {
+
+	SUCCESS, FAIL
+
+}
