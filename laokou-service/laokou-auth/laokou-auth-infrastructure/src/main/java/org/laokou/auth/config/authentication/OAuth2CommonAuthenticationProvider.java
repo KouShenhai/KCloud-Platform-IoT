@@ -110,6 +110,7 @@ public class OAuth2CommonAuthenticationProvider {
 	}
 
 	private String getSourceName(Long tenantId) {
+		// 默认主表
 		if (DEFAULT == tenantId) {
 			return MASTER;
 		}
