@@ -41,7 +41,7 @@ public class SecretsServiceImpl implements SecretsServiceI {
 	 * @return 密钥
 	 */
 	@Override
-	public Result<String> get(SecretGetQry qry) {
+	public Result<String> find(SecretGetQry qry) {
 		return secretGetQryExe.execute(qry);
 	}
 

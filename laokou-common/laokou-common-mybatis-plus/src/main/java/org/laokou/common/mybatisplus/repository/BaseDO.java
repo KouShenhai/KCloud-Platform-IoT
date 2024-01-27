@@ -49,7 +49,7 @@ public class BaseDO extends AbstractDO {
 	@TableField(fill = FieldFill.INSERT)
 	private Long creator;
 
-	@Schema(name = EDITOR, description = "修改人")
+	@Schema(name = EDITOR, description = "编辑人")
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Long editor;
 

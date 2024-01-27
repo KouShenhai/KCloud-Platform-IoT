@@ -19,7 +19,6 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.gateway.LoginLogGateway;
 import org.laokou.auth.domain.user.Auth;
 import org.laokou.auth.domain.user.Captcha;
 import org.laokou.auth.domain.user.User;
@@ -47,7 +46,9 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
 @Component("mobileAuthenticationProvider")
 public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-	public OAuth2MobileAuthenticationProvider(OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, LoginLogGateway loginLogGateway, OAuth2CommonAuthenticationProvider oAuth2CommonAuthenticationProvider) {
+	public OAuth2MobileAuthenticationProvider(OAuth2AuthorizationService authorizationService,
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, LoginLogGateway loginLogGateway,
+			OAuth2CommonAuthenticationProvider oAuth2CommonAuthenticationProvider) {
 		super(authorizationService, tokenGenerator, loginLogGateway, oAuth2CommonAuthenticationProvider);
 	}
 
@@ -66,9 +67,7 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 			// log.info("验证码：{}", code);
 			// log.info("手机：{}", SensitiveUtil.format(Type.MOBILE, mobile));
 			Captcha captchaObj = Captcha.builder().captcha(code).uuid(mobile).build();
-			Auth authObj = Auth.builder().type(getGrantType().getValue())
-					.secretKey(AesUtil.getSecretKeyStr())
-					.build();
+			Auth authObj = Auth.builder().type(getGrantType().getValue()).secretKey(AesUtil.getSecretKeyStr()).build();
 			User user = User.builder()
 				.tenantId(StringUtil.parseLong(tenantId))
 				.mobile(mobile)

@@ -17,6 +17,7 @@
 
 package org.laokou.common.core.utils;
 
+import eu.bitwalker.useragentutils.UserAgent;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestAttributes;
@@ -24,6 +25,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import static org.laokou.common.i18n.common.TraceConstants.DOMAIN_NAME;
+import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 /**
  * 请求工具类.
@@ -49,6 +51,15 @@ public class RequestUtil {
 	 */
 	public static String getDomainName(HttpServletRequest request) {
 		return request.getHeader(DOMAIN_NAME);
+	}
+
+	/**
+	 * 获取浏览器信息.
+	 * @param request 请求对象
+	 * @return 浏览器信息
+	 */
+	public static UserAgent getUserAgent(HttpServletRequest request) {
+		return UserAgent.parseUserAgentString(request.getHeader(USER_AGENT));
 	}
 
 }

@@ -18,10 +18,13 @@
 package org.laokou.auth.domain.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.laokou.auth.domain.event.LoginFailedEvent;
+import org.laokou.auth.domain.event.LoginSucceededEvent;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
@@ -35,6 +38,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Set;
 
 import static lombok.AccessLevel.PROTECTED;
+import static org.laokou.common.i18n.common.BizCodes.LOGIN_SUCCEEDED;
 import static org.laokou.common.i18n.common.ErrorCodes.*;
 import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
 import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
@@ -115,28 +119,46 @@ public class User extends AggregateRoot<Long> {
 		}
 	}
 
-	public void checkNull(User user) {
+	public void checkNull(User user, HttpServletRequest request) {
 		if (ObjectUtil.isNull(user)) {
-			throw new AuthException(ACCOUNT_PASSWORD_ERROR);
+			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request);
 		}
 	}
 
-	public void checkPassword(String clientPassword, PasswordEncoder passwordEncoder) {
+	public void checkPassword(String clientPassword, PasswordEncoder passwordEncoder, HttpServletRequest request) {
 		if (StringUtil.isNotEmpty(clientPassword) && !passwordEncoder.matches(clientPassword, this.password)) {
-			throw new AuthException(ACCOUNT_PASSWORD_ERROR);
+			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request);
 		}
 	}
 
-	public void checkStatus() {
+	public void checkStatus(HttpServletRequest request) {
 		if (ObjectUtil.equals(DISABLE.ordinal(), this.status)) {
-			throw new AuthException(ACCOUNT_DISABLE);
+			loginFail(ACCOUNT_DISABLE, MessageUtil.getMessage(ACCOUNT_DISABLE), request);
 		}
 	}
 
-	public void checkNullPermissions(Set<String> permissions) {
+	public void checkNullPermissions(Set<String> permissions, HttpServletRequest request) {
 		if (CollectionUtil.isEmpty(permissions)) {
-			throw new AuthException(FORBIDDEN);
+			loginFail(FORBIDDEN, MessageUtil.getMessage(FORBIDDEN), request);
 		}
+	}
+
+	public void checkCaptcha(Boolean checkResult, HttpServletRequest request) {
+		if (ObjectUtil.isNull(checkResult)) {
+			loginFail(CAPTCHA_EXPIRED, MessageUtil.getMessage(CAPTCHA_EXPIRED), request);
+		}
+		if (!checkResult) {
+			loginFail(CAPTCHA_ERROR, MessageUtil.getMessage(CAPTCHA_ERROR), request);
+		}
+	}
+
+	public void loginSuccess(HttpServletRequest request) {
+		addEvent(new LoginSucceededEvent(this, request, MessageUtil.getMessage(LOGIN_SUCCEEDED)));
+	}
+
+	private void loginFail(int code, String message, HttpServletRequest request) {
+		addEvent(new LoginFailedEvent(this, request, message));
+		throw new AuthException(code, message);
 	}
 
 }

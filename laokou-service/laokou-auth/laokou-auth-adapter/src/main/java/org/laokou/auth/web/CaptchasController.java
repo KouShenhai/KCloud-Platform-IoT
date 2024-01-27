@@ -48,8 +48,8 @@ public class CaptchasController {
 	@GetMapping("{uuid}")
 	@RateLimiter(id = "AUTH_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
 	@Operation(summary = "验证码", description = "获取验证码")
-	public Result<String> get(@PathVariable("uuid") String uuid) {
-		return captchasServiceI.get(new CaptchaGetQry(uuid));
+	public Result<String> find(@PathVariable("uuid") String uuid) {
+		return captchasServiceI.find(new CaptchaGetQry(uuid));
 	}
 
 }

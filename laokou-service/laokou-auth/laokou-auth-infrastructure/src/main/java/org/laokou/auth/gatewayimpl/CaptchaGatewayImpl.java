@@ -55,13 +55,13 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	}
 
 	/**
-	 * 校验验证码.
+	 * 检查验证码.
 	 * @param uuid 唯一标识
 	 * @param code 验证码
 	 * @return 校验结果
 	 */
 	@Override
-	public Boolean validate(String uuid, String code) {
+	public Boolean check(String uuid, String code) {
 		// 获取验证码
 		String captcha = get(uuid);
 		if (StringUtil.isEmpty(captcha)) {
