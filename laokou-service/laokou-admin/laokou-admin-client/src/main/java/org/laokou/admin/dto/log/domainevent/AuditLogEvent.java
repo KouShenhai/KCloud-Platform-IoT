@@ -50,9 +50,11 @@ public class AuditLogEvent extends DomainEvent<Long> {
 	@Schema(name = "comment", description = "审批意见")
 	private String comment;
 
-	protected AuditLogEvent(Long aLong, Long aggregateId, EventTypeEnums type, EventStatusEnums status, Long creator,
-			Long deptId, String deptPath, Long tenantId, LocalDateTime createDate) {
-		super(aLong, aggregateId, type, status, creator, deptId, deptPath, tenantId, createDate);
+	protected AuditLogEvent(Long aLong, Long aggregateId, EventTypeEnums eventType, EventStatusEnums eventStatus,
+			String topic, Long creator, Long editor, Long deptId, String deptPath, Long tenantId,
+			LocalDateTime createDate, LocalDateTime updateDate) {
+		super(aLong, aggregateId, eventType, eventStatus, topic, creator, editor, deptId, deptPath, tenantId,
+				createDate, updateDate);
 	}
 
 }

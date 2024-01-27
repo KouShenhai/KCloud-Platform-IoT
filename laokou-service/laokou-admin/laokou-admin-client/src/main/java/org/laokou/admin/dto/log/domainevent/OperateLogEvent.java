@@ -77,9 +77,11 @@ public class OperateLogEvent extends DomainEvent<Long> {
 	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
 	private Long takeTime;
 
-	protected OperateLogEvent(Long aLong, Long aggregateId, EventTypeEnums type, EventStatusEnums status, Long creator,
-			Long deptId, String deptPath, Long tenantId, LocalDateTime createDate) {
-		super(aLong, aggregateId, type, status, creator, deptId, deptPath, tenantId, createDate);
+	protected OperateLogEvent(Long aLong, Long aggregateId, EventTypeEnums eventType, EventStatusEnums eventStatus,
+			String topic, Long creator, Long editor, Long deptId, String deptPath, Long tenantId,
+			LocalDateTime createDate, LocalDateTime updateDate) {
+		super(aLong, aggregateId, eventType, eventStatus, topic, creator, editor, deptId, deptPath, tenantId,
+				createDate, updateDate);
 	}
 
 }

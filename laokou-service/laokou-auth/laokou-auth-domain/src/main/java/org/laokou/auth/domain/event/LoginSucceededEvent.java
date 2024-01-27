@@ -20,7 +20,6 @@ package org.laokou.auth.domain.event;
 import eu.bitwalker.useragentutils.UserAgent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.Builder;
 import lombok.Getter;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.AddressUtil;
@@ -40,7 +39,6 @@ import static org.laokou.common.i18n.common.LoginStatusEnums.SUCCESS;
  * @author laokou
  */
 @Getter
-@Builder
 @Schema(name = "LoginSucceededEvent", description = "登录成功事件")
 public class LoginSucceededEvent extends DomainEvent<Long> {
 

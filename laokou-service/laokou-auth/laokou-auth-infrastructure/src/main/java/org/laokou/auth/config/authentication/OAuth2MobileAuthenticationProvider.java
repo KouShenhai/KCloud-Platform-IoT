@@ -47,9 +47,9 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
 public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
 	public OAuth2MobileAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, LoginLogGateway loginLogGateway,
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
 			OAuth2CommonAuthenticationProvider oAuth2CommonAuthenticationProvider) {
-		super(authorizationService, tokenGenerator, loginLogGateway, oAuth2CommonAuthenticationProvider);
+		super(authorizationService, tokenGenerator, oAuth2CommonAuthenticationProvider);
 	}
 
 	@Override

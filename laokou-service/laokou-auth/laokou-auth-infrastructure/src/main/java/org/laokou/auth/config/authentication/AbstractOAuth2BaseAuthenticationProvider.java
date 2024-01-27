@@ -71,8 +71,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	private final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
 
-	private final LoginLogGateway loginLogGateway;
-
 	private static final OAuth2TokenType ID_TOKEN_TOKEN_TYPE = new OAuth2TokenType(ID_TOKEN);
 
 	private final OAuth2CommonAuthenticationProvider oAuth2CommonAuthenticationProvider;
