@@ -29,7 +29,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-public class SqlLogEvent extends DomainEvent {
+public class SqlLogEvent extends DomainEvent<Long> {
 
 	private String dsl;
 
@@ -39,9 +39,11 @@ public class SqlLogEvent extends DomainEvent {
 
 	private String appName;
 
-	protected SqlLogEvent(Object o, Object aggregateId, EventTypeEnums type, EventStatusEnums status, Object creator,
-			Object deptId, String deptPath, Object tenantId, LocalDateTime createDate) {
-		super(o, aggregateId, type, status, creator, deptId, deptPath, tenantId, createDate);
+	protected SqlLogEvent(Long aLong, Long aggregateId, EventTypeEnums eventType, EventStatusEnums eventStatus,
+			String topic, Long creator, Long editor, Long deptId, String deptPath, Long tenantId,
+			LocalDateTime createDate, LocalDateTime updateDate) {
+		super(aLong, aggregateId, eventType, eventStatus, topic, creator, editor, deptId, deptPath, tenantId,
+				createDate, updateDate);
 	}
 
 }

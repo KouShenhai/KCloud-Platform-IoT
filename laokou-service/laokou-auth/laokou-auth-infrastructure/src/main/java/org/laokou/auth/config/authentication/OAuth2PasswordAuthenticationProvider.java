@@ -46,9 +46,9 @@ import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getExcep
 public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
 	public OAuth2PasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, LoginLogGateway loginLogGateway,
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
 			OAuth2CommonAuthenticationProvider oAuth2CommonAuthenticationProvider) {
-		super(authorizationService, tokenGenerator, loginLogGateway, oAuth2CommonAuthenticationProvider);
+		super(authorizationService, tokenGenerator, oAuth2CommonAuthenticationProvider);
 	}
 
 	@Override

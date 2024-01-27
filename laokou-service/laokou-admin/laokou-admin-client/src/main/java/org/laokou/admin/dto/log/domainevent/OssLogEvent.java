@@ -51,8 +51,10 @@ public class OssLogEvent extends DomainEvent<Long> {
 	private Long size;
 
 	protected OssLogEvent(Long aLong, Long aggregateId, EventTypeEnums eventType, EventStatusEnums eventStatus,
-			Long creator, Long deptId, String deptPath, Long tenantId, LocalDateTime createDate) {
-		super(aLong, aggregateId, eventType, eventStatus, creator, deptId, deptPath, tenantId, createDate);
+			String topic, Long creator, Long editor, Long deptId, String deptPath, Long tenantId,
+			LocalDateTime createDate, LocalDateTime updateDate) {
+		super(aLong, aggregateId, eventType, eventStatus, topic, creator, editor, deptId, deptPath, tenantId,
+				createDate, updateDate);
 	}
 
 }
