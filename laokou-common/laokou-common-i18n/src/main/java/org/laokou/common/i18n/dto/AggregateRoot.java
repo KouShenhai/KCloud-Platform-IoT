@@ -67,7 +67,7 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	protected LocalDateTime updateDate;
 
 	@Schema(name = "events", description = "事件集合")
-	private List<DomainEvent<ID>> events = new ArrayList<>(16);
+	private List<DomainEvent<ID>> events;
 
 	public void checkNullTenantId() {
 		if (ObjectUtil.isNull(this.tenantId)) {
@@ -76,7 +76,14 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	}
 
 	protected void addEvent(DomainEvent<ID> event) {
-		events.add(event);
+		events().add(event);
+	}
+
+	private List<DomainEvent<ID>> events() {
+		if (ObjectUtil.isNull(events)) {
+			events = new ArrayList<>(16);
+		}
+		return events;
 	}
 
 }

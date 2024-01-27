@@ -25685,3 +25685,22 @@ CREATE TABLE `undo_log`  (
                              UNIQUE INDEX `ux_undo_log`(`xid` ASC, `branch_id` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE TABLE if not exists `boot_sys_domain_event` (
+                                         `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                                         `creator` bigint DEFAULT '0' COMMENT '创建人',
+                                         `editor` bigint DEFAULT '0' COMMENT '编辑人',
+                                         `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                         `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                                         `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除标识 0未删除 1已删除',
+                                         `version` int NOT NULL DEFAULT '0' COMMENT '版本号',
+                                         `dept_id` bigint DEFAULT '0' COMMENT '部门ID',
+                                         `dept_path` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0' COMMENT '部门PATH',
+                                         `tenant_id` bigint DEFAULT '0' COMMENT '租户ID',
+                                         `aggregate_id` bigint DEFAULT NULL COMMENT '聚合根ID',
+                                         `event_type` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '事件类型',
+                                         `event_status` varchar(50) NOT NULL COMMENT '事件状态',
+                                         `topic` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'MQ主题',
+                                         `attribute` json DEFAULT NULL COMMENT '扩展属性',
+                                         PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='领域事件';

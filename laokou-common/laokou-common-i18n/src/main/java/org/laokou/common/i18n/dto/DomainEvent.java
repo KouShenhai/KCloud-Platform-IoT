@@ -46,13 +46,13 @@ public abstract class DomainEvent<ID> implements Event {
 	@Schema(name = "aggregateId", description = "聚合根ID")
 	protected ID aggregateId;
 
-	@Schema(name = "eventType", description = "类型")
+	@Schema(name = "eventType", description = "事件类型")
 	protected EventTypeEnums eventType;
 
-	@Schema(name = "eventStatus", description = "状态")
+	@Schema(name = "eventStatus", description = "事件状态")
 	protected EventStatusEnums eventStatus;
 
-	@Schema(name = "topic", description = "主题")
+	@Schema(name = "topic", description = "MQ主题")
 	protected String topic;
 
 	@Schema(name = CREATOR, description = "创建人")

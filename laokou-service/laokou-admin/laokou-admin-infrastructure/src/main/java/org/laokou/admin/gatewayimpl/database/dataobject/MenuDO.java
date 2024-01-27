@@ -24,11 +24,13 @@ import org.laokou.common.mybatisplus.repository.BaseDO;
 
 import java.io.Serial;
 
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_MENU;
+
 /**
  * @author laokou
  */
 @Data
-@TableName("boot_sys_menu")
+@TableName(BOOT_SYS_MENU)
 @Schema(name = "MenuDO", description = "菜单")
 public class MenuDO extends BaseDO {
 

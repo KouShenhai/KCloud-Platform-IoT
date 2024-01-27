@@ -24,11 +24,13 @@ import org.laokou.common.mybatisplus.repository.BaseDO;
 
 import java.io.Serial;
 
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_DEPT;
+
 /**
  * @author laokou
  */
 @Data
-@TableName("boot_sys_dept")
+@TableName(BOOT_SYS_DEPT)
 @Schema(name = "DeptDO", description = "部门")
 public class DeptDO extends BaseDO {
 

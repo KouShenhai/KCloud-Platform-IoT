@@ -119,10 +119,11 @@ public class User extends AggregateRoot<Long> {
 		}
 	}
 
-	public void checkNull(User user, HttpServletRequest request) {
+	public User copy(User user, HttpServletRequest request) {
 		if (ObjectUtil.isNull(user)) {
 			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request);
 		}
+		return user;
 	}
 
 	public void checkPassword(String clientPassword, PasswordEncoder passwordEncoder, HttpServletRequest request) {

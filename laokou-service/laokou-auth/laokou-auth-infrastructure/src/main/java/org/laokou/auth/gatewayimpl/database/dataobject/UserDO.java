@@ -34,7 +34,7 @@ import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
  * @author laokou
  */
 @Data
-@TableName(value = BOOT_SYS_USER, autoResultMap = true)
+@TableName(value = BOOT_SYS_USER)
 @Schema(name = "UserDO", description = "用户")
 public class UserDO extends BaseDO {
 
