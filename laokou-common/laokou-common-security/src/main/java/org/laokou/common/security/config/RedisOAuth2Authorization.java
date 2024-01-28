@@ -17,6 +17,7 @@
 
 package org.laokou.common.security.config;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.Authorization;
 import org.springframework.data.annotation.Id;
@@ -28,199 +29,133 @@ import java.time.Instant;
 
 import static org.laokou.common.i18n.common.OAuth2Constants.REDIS_OAUTH2_AUTHORIZATION_KEY;
 
+// @formatter:off
 /**
- * 仿照 数据库表 oauth2_authorization <a href=
- * "https://docs.spring.io/spring-data/redis/reference/redis/redis-repositories/indexes.html">二级索引</a>
+ * 仿照 数据库表 oauth2_authorization
+ * <a href="https://docs.spring.io/spring-data/redis/reference/redis/redis-repositories/indexes.html">二级索引</a>
  * <a href="https://www.jdon.com/57902.html">用法</a>.
  *
  * @author laokou
  */
+// @formatter:on
+
 @Data
 @RedisHash(REDIS_OAUTH2_AUTHORIZATION_KEY)
+@Schema(name = "RedisOAuth2Authorization", description = "Redis认证")
 public class RedisOAuth2Authorization extends Authorization {
 
-	/**
-	 * ID.
-	 */
 	@Id
+	@Schema(name = "id", description = "ID")
 	private String id;
 
-	/**
-	 * 客户端ID.
-	 */
+	@Schema(name = "registeredClientId", description = "客户端ID")
 	private String registeredClientId;
 
-	/**
-	 * 认证用户名.
-	 */
+	@Schema(name = "principalName", description = "认证用户名")
 	private String principalName;
 
-	/**
-	 * 认证类型.
-	 */
+	@Schema(name = "authorizationGrantType", description = "认证类型")
 	private String authorizationGrantType;
 
-	/**
-	 * 认证范围.
-	 */
+	@Schema(name = "authorizedScopes", description = "认证范围")
 	private String authorizedScopes;
 
-	/**
-	 * 认证信息.
-	 */
+	@Schema(name = "attributes", description = "认证信息")
 	private String attributes;
 
-	/**
-	 * 认证状态.
-	 */
 	@Indexed
+	@Schema(name = "state", description = "认证状态")
 	private String state;
 
-	/**
-	 * 授权码-值.
-	 */
 	@Indexed
+	@Schema(name = "authorizationCodeValue", description = "授权码")
 	private String authorizationCodeValue;
 
-	/**
-	 * 授权码-签发时间.
-	 */
+	@Schema(name = "authorizationCodeIssuedAt", description = "授权码签发时间")
 	private Instant authorizationCodeIssuedAt;
 
-	/**
-	 * 授权码-过期时间.
-	 */
+	@Schema(name = "authorizationCodeExpiresAt", description = "授权码过期时间")
 	private Instant authorizationCodeExpiresAt;
 
-	/**
-	 * 授权码-元数据.
-	 */
+	@Schema(name = "authorizationCodeMetadata", description = "授权码元数据")
 	private String authorizationCodeMetadata;
 
-	/**
-	 * 令牌-值.
-	 */
 	@Indexed
+	@Schema(name = "accessTokenValue", description = "令牌")
 	private String accessTokenValue;
 
-	/**
-	 * 令牌-签发时间.
-	 */
+	@Schema(name = "accessTokenIssuedAt", description = "令牌签发时间")
 	private Instant accessTokenIssuedAt;
 
-	/**
-	 * 令牌-过期时间.
-	 */
+	@Schema(name = "accessTokenExpiresAt", description = "令牌过期时间")
 	private Instant accessTokenExpiresAt;
 
-	/**
-	 * 令牌-元数据.
-	 */
+	@Schema(name = "accessTokenMetadata", description = "令牌元数据")
 	private String accessTokenMetadata;
 
-	/**
-	 * 令牌-类型.
-	 */
+	@Schema(name = "accessTokenType", description = "令牌类型")
 	private String accessTokenType;
 
-	/**
-	 * 令牌-范围.
-	 */
+	@Schema(name = "accessTokenScopes", description = "令牌范围")
 	private String accessTokenScopes;
 
-	/**
-	 * OID-值.
-	 */
 	@Indexed
+	@Schema(name = "oidcIdTokenValue", description = "OID")
 	private String oidcIdTokenValue;
 
-	/**
-	 * OID-签发时间.
-	 */
+	@Schema(name = "oidcIdTokenIssuedAt", description = "OID签发时间")
 	private Instant oidcIdTokenIssuedAt;
 
-	/**
-	 * OID-过期时间.
-	 */
+	@Schema(name = "oidcIdTokenExpiresAt", description = "OID过期时间")
 	private Instant oidcIdTokenExpiresAt;
 
-	/**
-	 * OID-元数据.
-	 */
+	@Schema(name = "oidcIdTokenMetadata", description = "OID元数据")
 	private String oidcIdTokenMetadata;
 
-	/**
-	 * OID-属性.
-	 */
+	@Schema(name = "oidcIdTokenClaims", description = "OID属性")
 	private String oidcIdTokenClaims;
 
-	/**
-	 * 刷新令牌-值.
-	 */
 	@Indexed
+	@Schema(name = "refreshTokenValue", description = "刷新令牌")
 	private String refreshTokenValue;
 
-	/**
-	 * 刷新令牌-签发时间.
-	 */
+	@Schema(name = "refreshTokenIssuedAt", description = "刷新令牌签发时间")
 	private Instant refreshTokenIssuedAt;
 
-	/**
-	 * 刷新令牌-过期时间.
-	 */
+	@Schema(name = "refreshTokenExpiresAt", description = "刷新令牌过期时间")
 	private Instant refreshTokenExpiresAt;
 
-	/**
-	 * 刷新令牌-元数据.
-	 */
+	@Schema(name = "refreshTokenMetadata", description = "刷新令牌元数据")
 	private String refreshTokenMetadata;
 
-	/**
-	 * 用户码-值.
-	 */
 	@Indexed
+	@Schema(name = "userCodeValue", description = "用户码")
 	private String userCodeValue;
 
-	/**
-	 * 用户码-签发时间.
-	 */
+	@Schema(name = "userCodeIssuedAt", description = "用户码签发时间")
 	private Instant userCodeIssuedAt;
 
-	/**
-	 * 用户码-过期时间.
-	 */
+	@Schema(name = "userCodeExpiresAt", description = "用户码过期时间")
 	private Instant userCodeExpiresAt;
 
-	/**
-	 * 用户码-元数据.
-	 */
+	@Schema(name = "userCodeMetadata", description = "用户码元数据")
 	private String userCodeMetadata;
 
-	/**
-	 * 设备码-值.
-	 */
 	@Indexed
+	@Schema(name = "deviceCodeValue", description = "设备码")
 	private String deviceCodeValue;
 
-	/**
-	 * 设备码-签发时间.
-	 */
+	@Schema(name = "deviceCodeIssuedAt", description = "设备码签发时间")
 	private Instant deviceCodeIssuedAt;
 
-	/**
-	 * 设备码-过期时间.
-	 */
+	@Schema(name = "deviceCodeExpiresAt", description = "设备码过期时间")
 	private Instant deviceCodeExpiresAt;
 
-	/**
-	 * 设备码-元数据.
-	 */
+	@Schema(name = "deviceCodeMetadata", description = "设备码元数据")
 	private String deviceCodeMetadata;
 
-	/**
-	 * 过期时间-秒.
-	 */
 	@TimeToLive
+	@Schema(name = "ttl", description = "过期时间（秒）")
 	private Long ttl;
 
 }

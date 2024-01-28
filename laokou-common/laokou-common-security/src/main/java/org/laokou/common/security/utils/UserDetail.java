@@ -20,10 +20,11 @@ package org.laokou.common.security.utils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -57,7 +58,7 @@ import static org.laokou.common.i18n.common.UserStatusEnums.ENABLED;
  * @author laokou
  */
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor(access = PRIVATE)
 @NoArgsConstructor(access = PRIVATE)
 @Schema(name = "UserDetail", description = "用户详细信息")
@@ -198,7 +199,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	}
 
 	@JsonIgnore
-	public static UserDetail copy(Object obj) {
+	public static UserDetail copy(Object obj, HttpServletRequest request) {
 		UserDetail userDetail = ConvertUtil.sourceToTarget(obj, UserDetail.class);
 		Assert.isTrue(ObjectUtil.isNotNull(userDetail), "userDetail is null");
 		return userDetail;

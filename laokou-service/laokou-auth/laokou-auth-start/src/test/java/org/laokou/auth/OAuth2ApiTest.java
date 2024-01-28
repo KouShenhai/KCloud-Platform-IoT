@@ -168,7 +168,7 @@ class OAuth2ApiTest {
 			String password) {
 		String apiUrl = getOAuthApiUrl();
 		HashMap<String, String> params = new HashMap<>();
-		HashMap<String, String> headers = new HashMap<>(1);
+		HashMap<String, String> headers = new HashMap<>(2);
 		params.put("uuid", String.valueOf(uuid));
 		params.put("username", username);
 		params.put("password", password);
@@ -176,6 +176,7 @@ class OAuth2ApiTest {
 		params.put("grant_type", "password");
 		params.put("captcha", captcha);
 		headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+		headers.put("trace-id", String.valueOf(System.currentTimeMillis()));
 		String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 		String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 		String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();

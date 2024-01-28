@@ -20,6 +20,7 @@ package org.laokou.auth.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 import static org.laokou.common.i18n.common.MybatisPlusConstants.TENANT_ID;
@@ -31,7 +32,7 @@ import static org.laokou.common.i18n.common.MybatisPlusConstants.TENANT_ID;
  */
 @Repository
 @Mapper
-public interface SourceMapper {
+public interface SourceMapper extends CrudMapper<Long, Integer, SourceDO> {
 
 	/**
 	 * 根据租户ID查询数据源.

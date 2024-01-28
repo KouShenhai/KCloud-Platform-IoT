@@ -15,41 +15,35 @@
  *
  */
 
-package org.laokou.admin.gatewayimpl.database.dataobject;
+package org.laokou.common.domain.repository;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.repository.BaseDO;
 
-import java.io.Serial;
-
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_DICT;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_DOMAIN_EVENT;
 
 /**
  * @author laokou
  */
 @Data
-@TableName(BOOT_SYS_DICT)
-@Schema(name = "DictDO", description = "字典")
-public class DictDO extends BaseDO {
+@TableName(BOOT_SYS_DOMAIN_EVENT)
+public class DomainEventDO extends BaseDO {
 
-	@Serial
-	private static final long serialVersionUID = 956432385619473630L;
+	@Schema(name = "eventType", description = "事件类型")
+	private String eventType;
 
-	@Schema(name = "label", description = "字典标签")
-	private String label;
+	@Schema(name = "eventStatus", description = "事件状态")
+	private String eventStatus;
 
-	@Schema(name = "type", description = "字典类型")
-	private String type;
+	@Schema(name = "topic", description = "MQ主题")
+	private String topic;
 
-	@Schema(name = "value", description = "字典值")
-	private String value;
+	@Schema(name = "aggregateId", description = "聚合根ID")
+	private Long aggregateId;
 
-	@Schema(name = "remark", description = "字典备注")
-	private String remark;
-
-	@Schema(name = "sort", description = "字典排序")
-	private Integer sort;
+	@Schema(name = "attribute", description = "扩展属性")
+	private String attribute;
 
 }

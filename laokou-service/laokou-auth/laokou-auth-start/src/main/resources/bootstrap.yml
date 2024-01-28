@@ -50,3 +50,6 @@ spring:
           - data-id: application-common.yaml
             group: ${NACOS-GROUP}
             refresh: true
+          - data-id: application-common-rocketmq.yaml
+            group: ${NACOS-GROUP}
+            refresh: true

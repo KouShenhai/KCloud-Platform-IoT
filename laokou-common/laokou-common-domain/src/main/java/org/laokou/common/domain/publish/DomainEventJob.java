@@ -15,20 +15,27 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.database;
+package org.laokou.common.domain.publish;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.mybatisplus.repository.CrudMapper;
-import org.springframework.stereotype.Repository;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.domain.repository.DomainEventMapper;
+import org.laokou.common.i18n.common.JobModeEnums;
+import org.laokou.common.i18n.dto.DomainEvent;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
- * 登录日志.
- *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface LoginLogMapper extends CrudMapper<Long, Integer, LoginLogDO> {
+@Component
+@RequiredArgsConstructor
+public class DomainEventJob {
+
+	private final DomainEventMapper domainEventMapper;
+
+	public void publish(List<DomainEvent<Long>> list, JobModeEnums jobMode) {
+
+	}
 
 }

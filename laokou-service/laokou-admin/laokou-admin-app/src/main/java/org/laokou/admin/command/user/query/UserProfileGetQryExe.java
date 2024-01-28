@@ -53,7 +53,7 @@ public class UserProfileGetQryExe {
 		co.setUsername(userDetail.getUsername());
 		co.setMobile(userDetail.getMobile());
 		co.setMail(userDetail.getMail());
-		// co.setPermissionList(userDetail.getPermissionList());
+		co.setPermissions(userDetail.getPermissions());
 		co.setTenantId(userDetail.getTenantId());
 		co.setSuperAdmin(userDetail.getSuperAdmin());
 		return co;

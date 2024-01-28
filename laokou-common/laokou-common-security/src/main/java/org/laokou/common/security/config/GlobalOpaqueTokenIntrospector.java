@@ -18,11 +18,8 @@
 package org.laokou.common.security.config;
 
 import io.micrometer.common.lang.NonNullApi;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -30,7 +27,6 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.laokou.common.security.utils.UserDetail;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
@@ -38,7 +34,8 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
-import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.security.Principal;
 import java.time.Instant;
@@ -56,9 +53,11 @@ import static org.laokou.common.i18n.common.StatusCodes.UNAUTHORIZED;
 @NonNullApi
 @AutoConfiguration
 @RequiredArgsConstructor
-public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, HandlerInterceptor {
+public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, WebMvcConfigurer {
 
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
+
+	private final UserContextInterceptor userContextInterceptor;
 
 	private final RedisUtil redisUtil;
 
@@ -103,25 +102,14 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, H
 	 * @return UserDetail
 	 */
 	private UserDetail decryptInfo(UserDetail userDetail) {
-		// 写入当前线程
-		UserContextHolder.set(convert(userDetail));
+		// 解密
+		userDetail.decrypt();
 		return userDetail;
 	}
 
-	private UserContextHolder.User convert(UserDetail userDetail) {
-		return UserContextHolder.User.builder()
-			.id(userDetail.getId())
-			.deptId(userDetail.getDeptId())
-			.deptPath(userDetail.getDeptPath())
-			.tenantId(userDetail.getTenantId())
-			.sourceName(userDetail.getSourceName())
-			.build();
-	}
-
 	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
-			@Nullable Exception ex) {
-		UserContextHolder.clear();
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(userContextInterceptor);
 	}
 
 }

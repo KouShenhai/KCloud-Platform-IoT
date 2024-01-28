@@ -22,6 +22,7 @@ import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerAutoConfiguration;
@@ -49,6 +50,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @EnableDiscoveryClient
 @EnableRedisRepository
 @EnableTaskExecutor
+@MapperScan({ "org.laokou.common.domain.repository", "org.laokou.auth.gatewayimpl.database" })
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 public class AuthApp {
 

@@ -15,24 +15,43 @@
  *
  */
 
-package org.laokou.common.domain.publish;
+package org.laokou.common.domain.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.rocketmq.template.RocketMqTemplate;
-import org.springframework.stereotype.Component;
+import org.laokou.common.domain.repository.DomainEventMapper;
+import org.laokou.common.domain.service.DomainEventService;
+import org.laokou.common.i18n.dto.DomainEvent;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
-@Component
+@Service
 @RequiredArgsConstructor
-public class AsyncDomainEventPublisher implements DomainEventPublisher {
+public class DomainEventServiceImpl implements DomainEventService {
 
-	private final RocketMqTemplate rocketMqTemplate;
+	private final DomainEventMapper domainEventMapper;
 
 	@Override
-	public void publish() {
-		// rocketMqTemplate.sendAsyncOrderlyMessage();
+	public void create(List<DomainEvent<Long>> events) {
+
+	}
+
+	@Override
+	public void modify(DomainEvent<Long> event) {
+
+	}
+
+	@Override
+	public void remove(Long id) {
+
+	}
+
+	@Override
+	public void find() {
+
 	}
 
 }

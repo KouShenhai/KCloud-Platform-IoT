@@ -17,8 +17,6 @@
 
 package org.laokou.common.domain.publish;
 
-import org.springframework.context.ApplicationEvent;
-
 /**
  * 领域事件推送器.
  *
@@ -28,8 +26,7 @@ public interface DomainEventPublisher {
 
 	/**
 	 * 推送事件.
-	 * @param event 事件
 	 */
-	void publish(ApplicationEvent event);
+	void publish();
 
 }

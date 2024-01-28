@@ -15,20 +15,17 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.database;
+package org.laokou.common.domain.repository;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 /**
- * 登录日志.
- *
  * @author laokou
  */
-@Mapper
 @Repository
-public interface LoginLogMapper extends CrudMapper<Long, Integer, LoginLogDO> {
+@Mapper
+public interface DomainEventMapper extends CrudMapper<Long, Integer, DomainEventDO> {
 
 }

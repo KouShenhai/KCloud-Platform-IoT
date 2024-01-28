@@ -25,6 +25,7 @@ import org.laokou.auth.domain.gateway.*;
 import org.laokou.auth.domain.user.Captcha;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.IpUtil;
+import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -57,39 +58,31 @@ public class OAuth2CommonAuthenticationProvider {
 
 	private final SourceGateway sourceGateway;
 
+	private final DomainEventService domainEventService;
+
 	public UsernamePasswordAuthenticationToken authenticationToken(User user, HttpServletRequest request) {
 		try {
 			Captcha captchaObj = user.getCaptcha();
-			String ip = IpUtil.getIpAddr(request);
 			Long tenantId = user.getTenantId();
+			String clientPassword = user.getPassword();
 			// 检查验证码
 			checkCaptcha(user, captchaObj, request);
 			// 数据源名称
 			String sourceName = getSourceName(tenantId);
 			User u = userGateway.findOne(user);
 			// 检查空对象
-			user.checkNull(u, request);
+			user = user.copy(u, request);
 			// 检查密码
-			u.checkPassword(user.getPassword(), passwordEncoder, request);
+			user.checkPassword(clientPassword, passwordEncoder, request);
 			// 检查状态
-			u.checkStatus(request);
-			Set<String> permissions = menuGateway.findPermissions(u);
+			user.checkStatus(request);
+			Set<String> permissions = menuGateway.findPermissions(user);
 			// 检查权限标识集合
-			u.checkNullPermissions(permissions, request);
-			Set<String> deptPaths = deptGateway.findDeptPaths(u);
-			UserDetail userDetail = UserDetail.copy(u);
-			// 部门PATH集合
-			userDetail.setDeptPaths(deptPaths);
-			// 权限标识集合
-			userDetail.setPermissions(permissions);
-			// 数据源名称
-			userDetail.setSourceName(sourceName);
-			// 登录IP
-			userDetail.setLoginIp(ip);
-			// 登录时间
-			userDetail.setLoginDate(DateUtil.now());
+			user.checkNullPermissions(permissions, request);
+			Set<String> deptPaths = deptGateway.findDeptPaths(user);
+			UserDetail userDetail = convert(user, request, deptPaths, permissions, sourceName);
 			// 登录成功
-			u.loginSuccess(request);
+			user.loginSuccess(request);
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
 					userDetail.getAuthorities());
 		}
@@ -97,8 +90,33 @@ public class OAuth2CommonAuthenticationProvider {
 			throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg());
 		}
 		finally {
+			// 清除数据源
 			DynamicDataSourceContextHolder.clear();
+			// 保存领域事件（事件溯源）
+			domainEventService.create(user.getEvents());
+			// 发布领域事件
 		}
+	}
+
+	private UserDetail convert(User user, HttpServletRequest request, Set<String> deptPaths, Set<String> permissions,
+			String sourceName) {
+		return UserDetail.builder()
+			.username(user.getUsername())
+			.tenantId(user.getTenantId())
+			.loginDate(DateUtil.now())
+			.loginIp(IpUtil.getIpAddr(request))
+			.id(user.getId())
+			.deptId(user.getDeptId())
+			.tenantId(user.getTenantId())
+			.deptPath(user.getDeptPath())
+			.sourceName(sourceName)
+			.deptPaths(deptPaths)
+			.permissions(permissions)
+			.avatar(user.getAvatar())
+			.superAdmin(user.getSuperAdmin())
+			.mail(user.getMail())
+			.mobile(user.getMobile())
+			.build();
 	}
 
 	private void checkCaptcha(User user, Captcha captchaObj, HttpServletRequest request) {

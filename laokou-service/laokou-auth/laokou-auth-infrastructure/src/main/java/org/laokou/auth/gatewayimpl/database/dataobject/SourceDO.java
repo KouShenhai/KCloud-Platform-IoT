@@ -24,11 +24,13 @@ import org.laokou.common.mybatisplus.repository.BaseDO;
 
 import java.io.Serial;
 
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_SOURCE;
+
 /**
  * @author laokou
  */
 @Data
-@TableName("boot_sys_source")
+@TableName(BOOT_SYS_SOURCE)
 @Schema(name = "SourceDO", description = "数据源")
 public class SourceDO extends BaseDO {
 

@@ -64,11 +64,11 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 			String captcha = request.getParameter(CAPTCHA);
 			String username = request.getParameter(USERNAME);
 			String password = request.getParameter(PASSWORD);
-			// log.info("租户ID：{}", tenantId);
 			// log.info("UUID：{}", uuid);
 			// log.info("验证码：{}", captcha);
 			// log.info("账号：{}", username);
 			// log.info("密码：{}", password);
+			// log.info("租户ID：{}", tenantId);
 			Captcha captchaObj = Captcha.builder().uuid(uuid).captcha(captcha).build();
 			Auth authObj = Auth.builder().secretKey(AesUtil.getSecretKeyStr()).type(getGrantType().getValue()).build();
 			User user = User.builder()

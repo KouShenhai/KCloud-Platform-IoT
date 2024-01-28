@@ -25,6 +25,7 @@ import org.laokou.common.i18n.common.StatusCodes;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.gateway.exception.ExceptionEnum;
+import org.laokou.gateway.utils.I18nUtil;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -65,18 +66,25 @@ public class RespFilter implements GlobalFilter, Ordered {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		// 获取request对象
-		ServerHttpRequest request = exchange.getRequest();
-		// 获取uri
-		String requestURL = getRequestURL(request);
-		// 表单提交
-		MediaType mediaType = getContentType(request);
-		if (requestURL.contains(TOKEN_URL) && POST.matches(getMethodName(request))
-				&& APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
-			return response(exchange, chain);
+		try {
+			// 国际化
+			I18nUtil.set(exchange);
+			// 获取request对象
+			ServerHttpRequest request = exchange.getRequest();
+			// 获取uri
+			String requestURL = getRequestURL(request);
+			// 表单提交
+			MediaType mediaType = getContentType(request);
+			if (requestURL.contains(TOKEN_URL) && POST.matches(getMethodName(request))
+					&& APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
+				return response(exchange, chain);
+			}
+			else {
+				return chain.filter(exchange);
+			}
 		}
-		else {
-			return chain.filter(exchange);
+		finally {
+			I18nUtil.reset();
 		}
 	}
 

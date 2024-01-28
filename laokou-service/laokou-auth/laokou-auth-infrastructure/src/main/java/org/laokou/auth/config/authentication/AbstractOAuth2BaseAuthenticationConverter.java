@@ -19,7 +19,6 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.ThreadContext;
 import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.auth.domain.user.Auth;
 import org.laokou.common.core.utils.MapUtil;
@@ -80,9 +79,6 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 		}
 		catch (GlobalException e) {
 			throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg());
-		}
-		finally {
-			ThreadContext.clearMap();
 		}
 	}
 

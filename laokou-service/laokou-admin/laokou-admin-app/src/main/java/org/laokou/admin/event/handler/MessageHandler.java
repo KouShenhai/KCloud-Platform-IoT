@@ -24,7 +24,6 @@ import org.laokou.admin.command.message.MessageInsertCmdExe;
 import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
 
 /**
  * 消息处理.
@@ -32,7 +31,7 @@ import org.springframework.stereotype.Component;
  * @author laokou
  */
 @Slf4j
-@Component
+// @Component
 @NonNullApi
 @RequiredArgsConstructor
 public class MessageHandler implements ApplicationListener {
