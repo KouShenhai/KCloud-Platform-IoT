@@ -32,6 +32,7 @@ import org.laokou.admin.common.event.DomainEventPublisher;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.log.domainevent.OperateLogEvent;
+import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -102,8 +103,12 @@ public class OperateLogAop {
 		OperateLog operateLog = AnnotationUtils.findAnnotation(method, OperateLog.class);
 		// 构建事件对象
 		Assert.isTrue(ObjectUtil.isNotNull(operateLog), "@OperateLog is null");
-		OperateLogEvent event = buildEvent(operateLog, request, joinPoint, e);
-		domainEventPublisher.publish(null);
+		System.out.println(UserContextHolder.get().getId());
+		System.out.println(UserContextHolder.get().getDeptId());
+		System.out.println(UserContextHolder.get().getTenantId());
+		System.out.println(UserContextHolder.get().getDeptPath());
+		//OperateLogEvent event = buildEvent(operateLog, request, joinPoint, e);
+		//domainEventPublisher.publish(null);
 	}
 
 	private OperateLogEvent buildEvent(OperateLog operateLog, HttpServletRequest request, JoinPoint joinPoint,

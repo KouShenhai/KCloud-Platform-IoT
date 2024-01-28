@@ -42,7 +42,7 @@ import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUT
 @RequiredArgsConstructor
 public class LoginLogHandler implements ApplicationListener {
 
-	//private final LoginLogMapper loginLogMapper;
+	// private final LoginLogMapper loginLogMapper;
 
 	private final Executor executor;
 

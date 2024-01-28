@@ -26,7 +26,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class UserUtil {
 
 	public static UserDetail user() {
+		try {
 		return (UserDetail) getAuthentication().getPrincipal();
+	} catch (Exception e) {
+			return UserDetail.builder().build();
+		}
 	}
 
 	public static Authentication getAuthentication() {

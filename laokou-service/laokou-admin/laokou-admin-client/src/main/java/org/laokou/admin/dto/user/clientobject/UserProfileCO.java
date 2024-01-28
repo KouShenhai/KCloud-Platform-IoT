@@ -22,7 +22,7 @@ import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.io.Serial;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author laokou
@@ -49,8 +49,8 @@ public class UserProfileCO extends ClientObject {
 	@Schema(name = "mail", description = "邮箱")
 	private String mail;
 
-	@Schema(name = "permissionList", description = "菜单权限标识集合")
-	private List<String> permissionList;
+	@Schema(name = "permissions", description = "菜单权限标识集合")
+	private Set<String> permissions;
 
 	@Schema(name = "tenantId", description = "租户ID")
 	private Long tenantId;

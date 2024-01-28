@@ -15,20 +15,14 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.database;
-
-import org.apache.ibatis.annotations.Mapper;
-import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.mybatisplus.repository.CrudMapper;
-import org.springframework.stereotype.Repository;
+package org.laokou.common.i18n.common;
 
 /**
- * 登录日志.
- *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface LoginLogMapper extends CrudMapper<Long, Integer, LoginLogDO> {
+public enum JobModeEnums {
+
+    SYNC,
+    ASYNC
 
 }

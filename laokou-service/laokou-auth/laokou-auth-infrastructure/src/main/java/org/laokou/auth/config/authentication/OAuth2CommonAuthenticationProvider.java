@@ -63,7 +63,6 @@ public class OAuth2CommonAuthenticationProvider {
 	public UsernamePasswordAuthenticationToken authenticationToken(User user, HttpServletRequest request) {
 		try {
 			Captcha captchaObj = user.getCaptcha();
-			String ip = IpUtil.getIpAddr(request);
 			Long tenantId = user.getTenantId();
 			String clientPassword = user.getPassword();
 			// 检查验证码
@@ -81,17 +80,7 @@ public class OAuth2CommonAuthenticationProvider {
 			// 检查权限标识集合
 			user.checkNullPermissions(permissions, request);
 			Set<String> deptPaths = deptGateway.findDeptPaths(user);
-			UserDetail userDetail = UserDetail.copy(user);
-			// 部门PATH集合
-			userDetail.setDeptPaths(deptPaths);
-			// 权限标识集合
-			userDetail.setPermissions(permissions);
-			// 数据源名称
-			userDetail.setSourceName(sourceName);
-			// 登录IP
-			userDetail.setLoginIp(ip);
-			// 登录时间
-			userDetail.setLoginDate(DateUtil.now());
+			UserDetail userDetail = convert(user, request, deptPaths, permissions, sourceName);
 			// 登录成功
 			user.loginSuccess(request);
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
@@ -103,9 +92,30 @@ public class OAuth2CommonAuthenticationProvider {
 		finally {
 			// 清除数据源
 			DynamicDataSourceContextHolder.clear();
-			// 保存领域事件
-			domainEventService.create(user.getEvents().getFirst());
+			// 保存领域事件（事件溯源）
+			domainEventService.create(user.getEvents());
+			// 发布领域事件
 		}
+	}
+
+	private UserDetail convert(User user, HttpServletRequest request,Set<String> deptPaths,Set<String> permissions,String sourceName) {
+		return UserDetail.builder()
+				.username(user.getUsername())
+				.tenantId(user.getTenantId())
+				.loginDate(DateUtil.now())
+				.loginIp(IpUtil.getIpAddr(request))
+				.id(user.getId())
+				.deptId(user.getDeptId())
+				.tenantId(user.getTenantId())
+				.deptPath(user.getDeptPath())
+				.sourceName(sourceName)
+				.deptPaths(deptPaths)
+				.permissions(permissions)
+				.avatar(user.getAvatar())
+				.superAdmin(user.getSuperAdmin())
+				.mail(user.getMail())
+				.mobile(user.getMobile())
+				.build();
 	}
 
 	private void checkCaptcha(User user, Captcha captchaObj, HttpServletRequest request) {

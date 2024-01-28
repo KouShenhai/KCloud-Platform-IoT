@@ -17,6 +17,7 @@
 package org.laokou.common.domain.repository;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -24,5 +25,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface DomainEventMapper {
+public interface DomainEventMapper extends CrudMapper<Long, Integer, DomainEventDO> {
+
 }

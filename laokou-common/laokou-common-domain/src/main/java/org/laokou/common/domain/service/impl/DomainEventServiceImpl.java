@@ -18,11 +18,12 @@
 package org.laokou.common.domain.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.repository.DomainEventMapper;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -34,12 +35,12 @@ public class DomainEventServiceImpl implements DomainEventService {
 	private final DomainEventMapper domainEventMapper;
 
 	@Override
-	public void create(DomainEvent<Long> event) {
-		System.out.println(JacksonUtil.toJsonStr(event));
+	public void create(List<DomainEvent<Long>> events) {
+
 	}
 
 	@Override
-	public void update(DomainEvent<Long> event) {
+	public void modify(DomainEvent<Long> event) {
 
 	}
 

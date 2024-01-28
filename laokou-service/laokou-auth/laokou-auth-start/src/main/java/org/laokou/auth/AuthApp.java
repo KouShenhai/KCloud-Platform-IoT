@@ -50,7 +50,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @EnableDiscoveryClient
 @EnableRedisRepository
 @EnableTaskExecutor
-@MapperScan({"org.laokou.common.domain.repository","org.laokou.auth.gatewayimpl.database"})
+@MapperScan({ "org.laokou.common.domain.repository", "org.laokou.auth.gatewayimpl.database" })
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 public class AuthApp {
 

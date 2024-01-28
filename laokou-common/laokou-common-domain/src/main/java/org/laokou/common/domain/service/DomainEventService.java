@@ -20,15 +20,17 @@ package org.laokou.common.domain.service;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.common.i18n.dto.DomainEvent;
 
+import java.util.List;
+
 /**
  * @author laokou
  */
 @Schema(name = "DomainEventService", description = "领域事件")
 public interface DomainEventService {
 
-	void create(DomainEvent<Long> event);
+	void create(List<DomainEvent<Long>> events);
 
-	void update(DomainEvent<Long> event);
+	void modify(DomainEvent<Long> event);
 
 	void remove(Long id);
 

@@ -19,20 +19,19 @@ package org.laokou.common.domain.publish;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.ApplicationEvent;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@AutoConfiguration
+@Component
 @RequiredArgsConstructor
 public class AsyncDomainEventPublisher implements DomainEventPublisher {
 
 	private final RocketMqTemplate rocketMqTemplate;
 
 	@Override
-	public void publish(ApplicationEvent event) {
+	public void publish() {
 		// rocketMqTemplate.sendAsyncOrderlyMessage();
 	}
 
