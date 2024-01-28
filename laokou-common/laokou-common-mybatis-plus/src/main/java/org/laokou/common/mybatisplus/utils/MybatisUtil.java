@@ -51,7 +51,7 @@ public class MybatisUtil {
 
 	private final SqlSessionFactory sqlSessionFactory;
 
-	private static final int DEFAULT_BATCH_NUM = 10000;
+	private static final int DEFAULT_BATCH_NUM = 50000;
 
 	public <T, M> void batch(List<T> dataList, Class<M> clazz, BiConsumer<M, T> consumer) {
 		batch(dataList, DEFAULT_BATCH_NUM, clazz, MASTER, consumer);

@@ -18,8 +18,12 @@
 package org.laokou.common.domain.publish;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.rocketmq.template.RocketMqTemplate;
+import org.laokou.common.domain.holder.DomainEventContextHolder;
+import org.laokou.common.i18n.common.JobModeEnums;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * @author laokou
@@ -28,11 +32,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AsyncDomainEventPublisher implements DomainEventPublisher {
 
-	private final RocketMqTemplate rocketMqTemplate;
+	private final DomainEventPublishTask domainEventPublishTask;
 
+	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	@Override
-	public void publish() {
-		// rocketMqTemplate.sendAsyncOrderlyMessage();
+	public void publish(JobModeEnums jobModeEnums) {
+		domainEventPublishTask.publishEvent(DomainEventContextHolder.get(), jobModeEnums);
 	}
 
 }

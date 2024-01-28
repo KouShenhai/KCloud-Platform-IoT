@@ -37,6 +37,9 @@ public class DomainEventDO extends BaseDO {
 	@Schema(name = "eventStatus", description = "事件状态")
 	private String eventStatus;
 
+	@Schema(name = "sourceName", description = "数据源名称")
+	private String sourceName;
+
 	@Schema(name = "topic", description = "MQ主题")
 	private String topic;
 

@@ -31,6 +31,7 @@ import java.io.Serial;
 import static org.laokou.common.i18n.common.EventStatusEnums.CREATED;
 import static org.laokou.common.i18n.common.EventTypeEnums.LOGIN_SUCCEEDED;
 import static org.laokou.common.i18n.common.LoginStatusEnums.SUCCESS;
+import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_LOG_TOPIC;
 
 /**
  * @author laokou
@@ -63,9 +64,10 @@ public class LoginSucceededEvent extends DomainEvent<Long> {
 	@Schema(name = "message", description = "登录信息")
 	private String message;
 
-	public LoginSucceededEvent(User user, HttpServletRequest request, String message) {
-		super(IdGenerator.defaultSnowflakeId(), user.getId(), LOGIN_SUCCEEDED, CREATED, "", user.getId(), user.getId(),
-				user.getDeptId(), user.getDeptPath(), user.getTenantId(), DateUtil.now(), DateUtil.now());
+	public LoginSucceededEvent(User user, HttpServletRequest request, String message, String sourceName) {
+		super(IdGenerator.defaultSnowflakeId(), user.getId(), LOGIN_SUCCEEDED, CREATED, LAOKOU_LOGIN_LOG_TOPIC,
+				sourceName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(), user.getTenantId(),
+				DateUtil.now(), DateUtil.now());
 		this.username = user.getUsername();
 		this.ip = IpUtil.getIpAddr(request);
 		this.address = AddressUtil.getRealAddress(this.ip);

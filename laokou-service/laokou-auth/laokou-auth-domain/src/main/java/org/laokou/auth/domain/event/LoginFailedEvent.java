@@ -34,6 +34,7 @@ import java.io.Serial;
 import static org.laokou.common.i18n.common.EventStatusEnums.CREATED;
 import static org.laokou.common.i18n.common.EventTypeEnums.LOGIN_FAILED;
 import static org.laokou.common.i18n.common.LoginStatusEnums.FAIL;
+import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_LOG_TOPIC;
 
 /**
  * @author laokou
@@ -66,9 +67,10 @@ public class LoginFailedEvent extends DomainEvent<Long> {
 	@Schema(name = "message", description = "登录信息")
 	private String message;
 
-	public LoginFailedEvent(User user, HttpServletRequest request, String message) {
-		super(IdGenerator.defaultSnowflakeId(), user.getId(), LOGIN_FAILED, CREATED, "", user.getId(), user.getId(),
-				user.getDeptId(), user.getDeptPath(), user.getTenantId(), DateUtil.now(), DateUtil.now());
+	public LoginFailedEvent(User user, HttpServletRequest request, String message, String sourceName) {
+		super(IdGenerator.defaultSnowflakeId(), user.getId(), LOGIN_FAILED, CREATED, LAOKOU_LOGIN_LOG_TOPIC, sourceName,
+				user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(), user.getTenantId(), DateUtil.now(),
+				DateUtil.now());
 		this.username = user.getUsername();
 		this.ip = IpUtil.getIpAddr(request);
 		this.address = AddressUtil.getRealAddress(this.ip);

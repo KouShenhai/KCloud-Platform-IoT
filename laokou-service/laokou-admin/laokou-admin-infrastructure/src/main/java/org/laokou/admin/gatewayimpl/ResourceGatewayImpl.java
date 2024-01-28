@@ -35,9 +35,9 @@ import org.laokou.admin.dto.resource.TaskStartCmd;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
 import org.laokou.admin.gatewayimpl.database.ResourceMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.ResourceIndex;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.ResourceIndex;
 import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
@@ -50,7 +50,6 @@ import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.openfeign.utils.FeignUtil;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -61,11 +60,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.AuditEnums.PENDING_APPROVAL;
-import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.RESOURCE;
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_RESOURCE;
+import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.RESOURCE;
 import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
 import static org.laokou.common.i18n.common.StringConstants.UNDER;
-import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * 资源管理.
@@ -230,7 +228,6 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	 * @param resource 资源对象
 	 * @param instanceId 实例ID
 	 */
-	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void publishMessageEvent(Resource resource, String instanceId) {
 		// domainEventPublisher
 		// .publish(eventUtil.toAuditMessageEvent(null, resource.getId(),

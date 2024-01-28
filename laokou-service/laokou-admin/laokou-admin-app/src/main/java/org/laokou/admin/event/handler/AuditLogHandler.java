@@ -26,19 +26,13 @@ import org.laokou.admin.gatewayimpl.database.dataobject.AuditLogDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.Executor;
-
-import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * 审批日志处理.
  *
  * @author laokou
  */
-@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 @Slf4j
 @Component
 @NonNullApi
@@ -46,8 +40,6 @@ import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUT
 public class AuditLogHandler implements ApplicationListener {
 
 	private final AuditLogMapper auditLogMapper;
-
-	private final Executor executor;
 
 	// @Override
 	// public void onApplicationEvent(AuditLogEvent event) {
