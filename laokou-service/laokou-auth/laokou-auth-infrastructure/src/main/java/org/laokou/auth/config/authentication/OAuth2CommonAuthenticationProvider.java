@@ -25,6 +25,7 @@ import org.laokou.auth.domain.gateway.*;
 import org.laokou.auth.domain.user.Captcha;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.IpUtil;
+import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.utils.DateUtil;
@@ -37,6 +38,7 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
+import static org.laokou.common.i18n.common.JobModeEnums.SYNC;
 import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
 
 /**
@@ -60,29 +62,31 @@ public class OAuth2CommonAuthenticationProvider {
 
 	private final DomainEventService domainEventService;
 
+	private final DomainEventPublisher domainEventPublisher;
+
 	public UsernamePasswordAuthenticationToken authenticationToken(User user, HttpServletRequest request) {
 		try {
 			Captcha captchaObj = user.getCaptcha();
 			Long tenantId = user.getTenantId();
 			String clientPassword = user.getPassword();
-			// 检查验证码
-			checkCaptcha(user, captchaObj, request);
 			// 数据源名称
 			String sourceName = getSourceName(tenantId);
+			// 检查验证码
+			checkCaptcha(user, captchaObj, request, sourceName);
 			User u = userGateway.findOne(user);
 			// 检查空对象
-			user = user.copy(u, request);
+			user = user.copy(u, request, sourceName);
 			// 检查密码
-			user.checkPassword(clientPassword, passwordEncoder, request);
+			user.checkPassword(clientPassword, passwordEncoder, request, sourceName);
 			// 检查状态
-			user.checkStatus(request);
+			user.checkStatus(request, sourceName);
 			Set<String> permissions = menuGateway.findPermissions(user);
 			// 检查权限标识集合
-			user.checkNullPermissions(permissions, request);
+			user.checkNullPermissions(permissions, request, sourceName);
 			Set<String> deptPaths = deptGateway.findDeptPaths(user);
 			UserDetail userDetail = convert(user, request, deptPaths, permissions, sourceName);
 			// 登录成功
-			user.loginSuccess(request);
+			user.loginSuccess(request, sourceName);
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
 					userDetail.getAuthorities());
 		}
@@ -95,6 +99,7 @@ public class OAuth2CommonAuthenticationProvider {
 			// 保存领域事件（事件溯源）
 			domainEventService.create(user.getEvents());
 			// 发布领域事件
+			domainEventPublisher.publish(SYNC);
 		}
 	}
 
@@ -119,11 +124,11 @@ public class OAuth2CommonAuthenticationProvider {
 			.build();
 	}
 
-	private void checkCaptcha(User user, Captcha captchaObj, HttpServletRequest request) {
+	private void checkCaptcha(User user, Captcha captchaObj, HttpServletRequest request, String sourceName) {
 		if (ObjectUtil.isNotNull(captchaObj)) {
 			Boolean checkResult = captchaGateway.check(captchaObj.getUuid(), captchaObj.getCaptcha());
 			// 检查验证码
-			user.checkCaptcha(checkResult, request);
+			user.checkCaptcha(checkResult, request, sourceName);
 		}
 	}
 

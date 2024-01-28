@@ -24,7 +24,6 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.netty.config.Server;
 import org.laokou.im.dto.message.clientobject.MsgCO;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -32,7 +31,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 import static org.laokou.common.i18n.common.StatusCodes.OK;
-import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * @author laokou
@@ -45,7 +43,6 @@ public class MessageUtil {
 
 	private final Executor executor;
 
-	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void send(String message) {
 		if (StringUtil.isEmpty(message)) {
 			return;

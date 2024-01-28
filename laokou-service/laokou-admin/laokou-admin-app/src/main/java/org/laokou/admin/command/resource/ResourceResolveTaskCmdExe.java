@@ -21,16 +21,12 @@ import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.common.event.DomainEventPublisher;
 import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.dto.resource.ResourceResolveTaskCmd;
 import org.laokou.admin.dto.resource.TaskResolveCmd;
 import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.i18n.dto.Result;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * 处理资源任务流程执行器.
@@ -45,8 +41,6 @@ public class ResourceResolveTaskCmdExe {
 	private final TasksFeignClient tasksFeignClient;
 
 	private final EventUtil eventUtil;
-
-	private final DomainEventPublisher domainEventPublisher;
 
 	/**
 	 * 执行处理资源任务流程.
@@ -68,7 +62,6 @@ public class ResourceResolveTaskCmdExe {
 	 * 推送处理消息.
 	 * @param cmd 处理资源任务流程参数
 	 */
-	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void publishMessage(ResourceResolveTaskCmd cmd) {
 		// domainEventPublisher.publish(
 		// eventUtil.toAuditMessageEvent(null, cmd.getBusinessKey(),

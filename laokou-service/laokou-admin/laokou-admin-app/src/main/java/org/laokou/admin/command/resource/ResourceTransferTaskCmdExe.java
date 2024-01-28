@@ -28,10 +28,7 @@ import org.laokou.admin.dto.resource.TaskTransferCmd;
 import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * 转办资源任务流程执行器.
@@ -69,7 +66,6 @@ public class ResourceTransferTaskCmdExe {
 	 * 推送转办消息.
 	 * @param cmd 转办资源任务流程参数
 	 */
-	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void publishMessage(ResourceTransferTaskCmd cmd) {
 		// domainEventPublisher.publish(eventUtil.toAuditMessageEvent(cmd.getUserId().toString(),
 		// cmd.getBusinessKey(),

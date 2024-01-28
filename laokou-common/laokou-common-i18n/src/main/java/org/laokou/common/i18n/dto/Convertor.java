@@ -25,69 +25,69 @@ import java.util.List;
  * @author laokou
  */
 @Schema(name = "Convertor", description = "对象转换器")
-public interface Convertor<C, E, D> {
+public interface Convertor<CO, Entity, DO> {
 
 	/**
 	 * ClientObject 转 Entity.
 	 * @param c ClientObject
 	 * @return Entity
 	 */
-	E toEntity(C c);
+	Entity toEntity(CO c);
 
 	/**
 	 * Entity 转 DataObject.
 	 * @param e Entity
 	 * @return DataObject
 	 */
-	D toDataObject(E e);
+	DO toDataObject(Entity e);
 
 	/**
 	 * ClientObject 转 DataObject.
 	 * @param c ClientObject
 	 * @return DataObject
 	 */
-	D toDataObj(C c);
+	DO toDataObj(CO c);
 
 	/**
 	 * DataObject 转 Entity.
 	 * @param d DataObject
 	 * @return Entity
 	 */
-	E convertEntity(D d);
+	Entity convertEntity(DO d);
 
 	/**
 	 * DataObject List 转 Entity List.
 	 * @param list DataObject List
 	 * @return Entity List
 	 */
-	List<E> convertEntityList(List<D> list);
+	List<Entity> convertEntityList(List<DO> list);
 
 	/**
 	 * DataObject 转 ClientObject.
 	 * @param d DataObject
 	 * @return ClientObject
 	 */
-	C convertClientObj(D d);
+	CO convertClientObj(DO d);
 
 	/**
 	 * DataObject List 转 ClientObject List.
 	 * @param list DataObject List
 	 * @return ClientObject List
 	 */
-	List<C> convertClientObjList(List<D> list);
+	List<CO> convertClientObjList(List<DO> list);
 
 	/**
 	 * Entity 转 ClientObject.
 	 * @param e Entity
 	 * @return ClientObject
 	 */
-	C convertClientObject(E e);
+	CO convertClientObject(Entity e);
 
 	/**
 	 * Entity List 转 ClientObject List.
 	 * @param list Entity List
 	 * @return ClientObject List
 	 */
-	List<C> convertClientObjectList(List<E> list);
+	List<CO> convertClientObjectList(List<Entity> list);
 
 }

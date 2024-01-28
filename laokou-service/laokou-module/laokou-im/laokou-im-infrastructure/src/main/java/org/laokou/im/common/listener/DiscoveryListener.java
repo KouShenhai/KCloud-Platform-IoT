@@ -27,18 +27,14 @@ import org.laokou.common.nacos.utils.ServiceUtil;
 import org.laokou.im.config.WebsocketProperties;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
-
-import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * @author laokou
  */
 @Data
-@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 @Component
 @NonNullApi
 @RequiredArgsConstructor

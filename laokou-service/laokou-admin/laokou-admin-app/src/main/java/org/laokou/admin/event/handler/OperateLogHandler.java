@@ -26,19 +26,15 @@ import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Executor;
-
-import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * 操作日志处理.
  *
  * @author laokou
  */
-@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 @Slf4j
 @Component
 @NonNullApi

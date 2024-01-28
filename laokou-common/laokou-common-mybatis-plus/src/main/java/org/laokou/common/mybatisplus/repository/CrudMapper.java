@@ -33,4 +33,10 @@ public interface CrudMapper<ID, V, DO> extends BaseMapper<DO> {
 	 */
 	V selectVersion(ID id);
 
+	/**
+	 * 插入数据.
+	 * @param entity 插入对象
+	 */
+	void insertOne(DO entity);
+
 }

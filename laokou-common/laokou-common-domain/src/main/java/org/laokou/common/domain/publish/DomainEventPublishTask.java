@@ -18,24 +18,46 @@
 package org.laokou.common.domain.publish;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.domain.repository.DomainEventMapper;
+import org.laokou.common.domain.convertor.DomainEventConvertor;
 import org.laokou.common.i18n.common.JobModeEnums;
 import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.rocketmq.template.RocketMqTemplate;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+
+import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class DomainEventJob {
+public class DomainEventPublishTask {
 
-	private final DomainEventMapper domainEventMapper;
+	private final Environment environment;
 
-	public void publish(List<DomainEvent<Long>> list, JobModeEnums jobMode) {
+	private final Executor executor;
 
+	private final RocketMqTemplate rocketMqTemplate;
+
+	public void publishEvent(List<DomainEvent<Long>> list, JobModeEnums jobMode) {
+		switch (jobMode) {
+			case SYNC -> {
+				String appName = environment.getProperty(SPRING_APPLICATION_NAME);
+				list.forEach(item -> CompletableFuture.runAsync(() -> rocketMqTemplate
+					.sendAsyncOrderlyMessage(item.getTopic(), DomainEventConvertor.toDataObject(item), appName),
+						executor));
+			}
+			case ASYNC -> {
+
+			}
+			default -> {
+			}
+		}
 	}
 
 }

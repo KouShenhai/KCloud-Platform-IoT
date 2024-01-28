@@ -39,14 +39,12 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.openfeign.utils.FeignUtil;
 import org.laokou.common.security.utils.UserUtil;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import static org.laokou.common.i18n.common.AuditConstants.STATUS;
 import static org.laokou.common.i18n.common.AuditEnums.*;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
-import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * 审批资源任务流程执行器.
@@ -109,7 +107,6 @@ public class ResourceAuditTaskCmdExe {
 	 * @param assignee 执行人
 	 * @param cmd 审批资源任务流程参数
 	 */
-	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void publishMessage(String assignee, ResourceAuditTaskCmd cmd) {
 		// domainEventPublisher
 		// .publish(eventUtil.toAuditMessageEvent(assignee, cmd.getBusinessKey(),

@@ -55,6 +55,9 @@ public abstract class DomainEvent<ID> implements Event {
 	@Schema(name = "topic", description = "MQ主题")
 	protected String topic;
 
+	@Schema(name = "sourceName", description = "数据源名称")
+	private String sourceName;
+
 	@Schema(name = CREATOR, description = "创建人")
 	protected ID creator;
 

@@ -40,10 +40,10 @@ public class SqlLogEvent extends DomainEvent<Long> {
 	private String appName;
 
 	protected SqlLogEvent(Long aLong, Long aggregateId, EventTypeEnums eventType, EventStatusEnums eventStatus,
-			String topic, Long creator, Long editor, Long deptId, String deptPath, Long tenantId,
+			String topic, String sourceName, Long creator, Long editor, Long deptId, String deptPath, Long tenantId,
 			LocalDateTime createDate, LocalDateTime updateDate) {
-		super(aLong, aggregateId, eventType, eventStatus, topic, creator, editor, deptId, deptPath, tenantId,
-				createDate, updateDate);
+		super(aLong, aggregateId, eventType, eventStatus, topic, sourceName, creator, editor, deptId, deptPath,
+				tenantId, createDate, updateDate);
 	}
 
 }

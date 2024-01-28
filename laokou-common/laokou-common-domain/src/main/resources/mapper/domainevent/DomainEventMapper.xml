@@ -20,4 +20,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.common.domain.repository.DomainEventMapper">
 
+    <sql id="columns">
+        `id`,
+        creator,
+        editor,
+        create_date,
+        update_date,
+        del_flag,
+        version,
+        dept_id,
+        dept_path,
+        tenant_id,
+        aggregate_id,
+        event_type,
+        event_status,
+        topic,
+        source_name,
+        `attribute`
+    </sql>
+
+    <insert id="insertOne" useGeneratedKeys="false">
+        insert into boot_sys_domain_event(<include refid="columns"/>)
+            values (
+                    #{id},
+                    #{creator},
+                    #{editor},
+                    #{createDate},
+                    #{updateDate},
+                    '0',
+                    '0',
+                    #{deptId},
+                    #{deptPath},
+                    #{tenantId},
+                    #{aggregateId},
+                    #{eventType},
+                    #{eventStatus},
+                    #{topic},
+                    #{sourceName},
+                    #{attribute}
+        )
+    </insert>
+
 </mapper>

@@ -28,10 +28,7 @@ import org.laokou.admin.dto.resource.TaskDelegateCmd;
 import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * 委派资源任务流程执行器.
@@ -69,7 +66,6 @@ public class ResourceDelegateTaskCmdExe {
 	 * 推送委派消息.
 	 * @param cmd 委派资源任务流程参数
 	 */
-	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void publishMessage(ResourceDelegateTaskCmd cmd) {
 		// domainEventPublisher.publish(eventUtil.toHandleMessageEvent(cmd.getUserId().toString(),
 		// cmd.getBusinessKey(),

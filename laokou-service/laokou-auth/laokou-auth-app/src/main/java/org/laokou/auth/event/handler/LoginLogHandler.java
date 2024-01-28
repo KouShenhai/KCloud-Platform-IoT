@@ -20,27 +20,32 @@ package org.laokou.auth.event.handler;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.common.message.MessageExt;
+import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.auth.domain.event.LoginSucceededEvent;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
+import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
+import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
+import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_LOG_CONSUMER_GROUP;
+import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_LOG_TOPIC;
 
 /**
  * 登录日志处理器.
  *
  * @author laokou
  */
-@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 @Slf4j
 @Component
 @NonNullApi
 @RequiredArgsConstructor
-public class LoginLogHandler implements ApplicationListener {
+@RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_LOG_CONSUMER_GROUP, topic = LAOKOU_LOGIN_LOG_TOPIC,
+		messageModel = CLUSTERING, consumeMode = ORDERLY)
+public class LoginLogHandler implements RocketMQListener<MessageExt> {
 
 	// private final LoginLogMapper loginLogMapper;
 
@@ -74,8 +79,8 @@ public class LoginLogHandler implements ApplicationListener {
 	}
 
 	@Override
-	public void onApplicationEvent(ApplicationEvent event) {
-
+	public void onMessage(MessageExt message) {
+		log.info(new String(message.getBody(), StandardCharsets.UTF_8));
 	}
 
 }
