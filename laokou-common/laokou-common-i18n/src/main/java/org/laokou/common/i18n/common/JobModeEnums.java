@@ -22,7 +22,6 @@ package org.laokou.common.i18n.common;
  */
 public enum JobModeEnums {
 
-    SYNC,
-    ASYNC
+	SYNC, ASYNC
 
 }

@@ -27,8 +27,9 @@ public class UserUtil {
 
 	public static UserDetail user() {
 		try {
-		return (UserDetail) getAuthentication().getPrincipal();
-	} catch (Exception e) {
+			return (UserDetail) getAuthentication().getPrincipal();
+		}
+		catch (Exception e) {
 			return UserDetail.builder().build();
 		}
 	}

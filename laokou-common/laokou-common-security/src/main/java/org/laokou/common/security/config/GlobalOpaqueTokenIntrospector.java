@@ -56,6 +56,7 @@ import static org.laokou.common.i18n.common.StatusCodes.UNAUTHORIZED;
 public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, WebMvcConfigurer {
 
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
+
 	private final UserContextInterceptor userContextInterceptor;
 
 	private final RedisUtil redisUtil;

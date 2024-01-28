@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.domain.repository;
 
 import org.apache.ibatis.annotations.Mapper;

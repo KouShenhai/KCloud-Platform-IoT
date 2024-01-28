@@ -78,10 +78,12 @@ public class RespFilter implements GlobalFilter, Ordered {
 			if (requestURL.contains(TOKEN_URL) && POST.matches(getMethodName(request))
 					&& APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
 				return response(exchange, chain);
-			} else {
+			}
+			else {
 				return chain.filter(exchange);
 			}
-		} finally {
+		}
+		finally {
 			I18nUtil.reset();
 		}
 	}

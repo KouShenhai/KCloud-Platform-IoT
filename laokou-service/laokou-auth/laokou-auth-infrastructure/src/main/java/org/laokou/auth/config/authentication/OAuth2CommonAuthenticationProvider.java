@@ -98,24 +98,25 @@ public class OAuth2CommonAuthenticationProvider {
 		}
 	}
 
-	private UserDetail convert(User user, HttpServletRequest request,Set<String> deptPaths,Set<String> permissions,String sourceName) {
+	private UserDetail convert(User user, HttpServletRequest request, Set<String> deptPaths, Set<String> permissions,
+			String sourceName) {
 		return UserDetail.builder()
-				.username(user.getUsername())
-				.tenantId(user.getTenantId())
-				.loginDate(DateUtil.now())
-				.loginIp(IpUtil.getIpAddr(request))
-				.id(user.getId())
-				.deptId(user.getDeptId())
-				.tenantId(user.getTenantId())
-				.deptPath(user.getDeptPath())
-				.sourceName(sourceName)
-				.deptPaths(deptPaths)
-				.permissions(permissions)
-				.avatar(user.getAvatar())
-				.superAdmin(user.getSuperAdmin())
-				.mail(user.getMail())
-				.mobile(user.getMobile())
-				.build();
+			.username(user.getUsername())
+			.tenantId(user.getTenantId())
+			.loginDate(DateUtil.now())
+			.loginIp(IpUtil.getIpAddr(request))
+			.id(user.getId())
+			.deptId(user.getDeptId())
+			.tenantId(user.getTenantId())
+			.deptPath(user.getDeptPath())
+			.sourceName(sourceName)
+			.deptPaths(deptPaths)
+			.permissions(permissions)
+			.avatar(user.getAvatar())
+			.superAdmin(user.getSuperAdmin())
+			.mail(user.getMail())
+			.mobile(user.getMobile())
+			.build();
 	}
 
 	private void checkCaptcha(User user, Captcha captchaObj, HttpServletRequest request) {

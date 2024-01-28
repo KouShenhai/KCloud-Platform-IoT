@@ -32,10 +32,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DomainEventJob {
 
-    private final DomainEventMapper domainEventMapper;
+	private final DomainEventMapper domainEventMapper;
 
-    public void publish(List<DomainEvent<Long>> list, JobModeEnums jobMode) {
+	public void publish(List<DomainEvent<Long>> list, JobModeEnums jobMode) {
 
-    }
+	}
 
 }

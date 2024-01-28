@@ -56,10 +56,12 @@ public class IpFilter implements GlobalFilter, Ordered {
 			I18nUtil.set(exchange);
 			if (ipProperties.isEnabled()) {
 				return validate(exchange, ipProperties.getLabel(), chain);
-			} else {
+			}
+			else {
 				return chain.filter(exchange);
 			}
-		} finally {
+		}
+		finally {
 			I18nUtil.reset();
 		}
 	}

@@ -31,7 +31,7 @@ import org.springframework.context.ApplicationListener;
  * @author laokou
  */
 @Slf4j
-//@Component
+// @Component
 @NonNullApi
 @RequiredArgsConstructor
 public class MessageHandler implements ApplicationListener {

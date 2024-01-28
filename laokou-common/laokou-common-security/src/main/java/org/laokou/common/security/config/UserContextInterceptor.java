@@ -34,25 +34,26 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @NonNullApi
 public class UserContextInterceptor implements HandlerInterceptor {
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        UserContextHolder.set(convert(UserUtil.user()));
-        return true;
-    }
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+		UserContextHolder.set(convert(UserUtil.user()));
+		return true;
+	}
 
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) {
-        UserContextHolder.clear();
-    }
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+			@Nullable Exception ex) {
+		UserContextHolder.clear();
+	}
 
-    private UserContextHolder.User convert(UserDetail userDetail) {
-        return UserContextHolder.User.builder()
-                .id(userDetail.getId())
-                .deptId(userDetail.getDeptId())
-                .deptPath(userDetail.getDeptPath())
-                .tenantId(userDetail.getTenantId())
-                .sourceName(userDetail.getSourceName())
-                .build();
-    }
+	private UserContextHolder.User convert(UserDetail userDetail) {
+		return UserContextHolder.User.builder()
+			.id(userDetail.getId())
+			.deptId(userDetail.getDeptId())
+			.deptPath(userDetail.getDeptPath())
+			.tenantId(userDetail.getTenantId())
+			.sourceName(userDetail.getSourceName())
+			.build();
+	}
 
 }

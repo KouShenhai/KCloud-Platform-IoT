@@ -103,12 +103,12 @@ public class OperateLogAop {
 		OperateLog operateLog = AnnotationUtils.findAnnotation(method, OperateLog.class);
 		// 构建事件对象
 		Assert.isTrue(ObjectUtil.isNotNull(operateLog), "@OperateLog is null");
-		System.out.println(UserContextHolder.get().getId());
-		System.out.println(UserContextHolder.get().getDeptId());
-		System.out.println(UserContextHolder.get().getTenantId());
-		System.out.println(UserContextHolder.get().getDeptPath());
-		//OperateLogEvent event = buildEvent(operateLog, request, joinPoint, e);
-		//domainEventPublisher.publish(null);
+		log.info("{}", UserContextHolder.get().getId());
+		log.info("{}", UserContextHolder.get().getDeptId());
+		log.info("{}", UserContextHolder.get().getTenantId());
+		log.info("{}", UserContextHolder.get().getDeptPath());
+		// OperateLogEvent event = buildEvent(operateLog, request, joinPoint, e);
+		// domainEventPublisher.publish(null);
 	}
 
 	private OperateLogEvent buildEvent(OperateLog operateLog, HttpServletRequest request, JoinPoint joinPoint,

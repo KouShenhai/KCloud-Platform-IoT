@@ -27,8 +27,6 @@ import java.util.List;
  */
 public class DomainEventContextHolder {
 
-    private static final ThreadLocal<List<DomainEvent<Long>>> DOMAIN_EVENT_LOCAL = new TransmittableThreadLocal<>();
-
-
+	private static final ThreadLocal<List<DomainEvent<Long>>> DOMAIN_EVENT_LOCAL = new TransmittableThreadLocal<>();
 
 }
