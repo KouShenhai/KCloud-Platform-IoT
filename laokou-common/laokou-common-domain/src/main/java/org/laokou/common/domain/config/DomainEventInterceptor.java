@@ -21,10 +21,11 @@ import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.domain.holder.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,22 +34,26 @@ import static org.laokou.common.i18n.common.JobModeEnums.SYNC;
 /**
  * @author laokou
  */
-@Component
+@Slf4j
 @NonNullApi
+@AutoConfiguration
 @RequiredArgsConstructor
 public class DomainEventInterceptor implements HandlerInterceptor {
 
-    private final DomainEventPublisher domainEventPublisher;
+	private final DomainEventPublisher domainEventPublisher;
 
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
-        // 发布当前线程的领域事件(同步发布)
-        domainEventPublisher.publish(SYNC);
-    }
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+			@Nullable ModelAndView modelAndView) {
+		// 发布当前线程的领域事件(同步发布)
+		domainEventPublisher.publish(SYNC);
+	}
 
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) throws Exception {
-        // 清除领域事件上下文
-        DomainEventContextHolder.clear();
-    }
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+			@Nullable Exception ex) {
+		// 清除领域事件上下文
+		DomainEventContextHolder.clear();
+	}
+
 }

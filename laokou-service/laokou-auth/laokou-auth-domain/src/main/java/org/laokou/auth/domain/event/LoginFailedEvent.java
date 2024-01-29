@@ -20,7 +20,8 @@ package org.laokou.auth.domain.event;
 import eu.bitwalker.useragentutils.UserAgent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.Getter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.AddressUtil;
 import org.laokou.common.core.utils.IdGenerator;
@@ -39,7 +40,10 @@ import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_LOG_T
 /**
  * @author laokou
  */
-@Getter
+@Data
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(name = "LoginFailedEvent", description = "登录失败事件")
 public class LoginFailedEvent extends DomainEvent<Long> {
 
@@ -67,10 +71,14 @@ public class LoginFailedEvent extends DomainEvent<Long> {
 	@Schema(name = "message", description = "登录信息")
 	private String message;
 
-	public LoginFailedEvent(User user, HttpServletRequest request, String message, String sourceName, String appName) {
+	@Schema(name = "type", description = "登录类型")
+	private String type;
+
+	public LoginFailedEvent(User user, HttpServletRequest request, String message, String sourceName, String appName,
+			String type) {
 		super(IdGenerator.defaultSnowflakeId(), user.getId(), LOGIN_FAILED, CREATED, LAOKOU_LOGIN_LOG_TOPIC, sourceName,
-				appName,user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(), user.getTenantId(), DateUtil.now(),
-				DateUtil.now());
+				appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(), user.getTenantId(),
+				DateUtil.now(), DateUtil.now());
 		this.username = user.getUsername();
 		this.ip = IpUtil.getIpAddr(request);
 		this.address = AddressUtil.getRealAddress(this.ip);
@@ -78,6 +86,7 @@ public class LoginFailedEvent extends DomainEvent<Long> {
 		this.os = userAgent.getOperatingSystem().getName();
 		this.browser = userAgent.getBrowser().getName();
 		this.message = message;
+		this.type = type;
 	}
 
 }

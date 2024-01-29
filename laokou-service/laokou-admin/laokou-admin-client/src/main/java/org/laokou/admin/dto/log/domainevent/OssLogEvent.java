@@ -50,7 +50,11 @@ public class OssLogEvent extends DomainEvent<Long> {
 	@Schema(name = "size", description = "文件大小")
 	private Long size;
 
-	protected OssLogEvent(Long aLong, Long aggregateId, EventTypeEnums eventType, EventStatusEnums eventStatus, String topic, String sourceName, String appName, Long creator, Long editor, Long deptId, String deptPath, Long tenantId, LocalDateTime createDate, LocalDateTime updateDate) {
-		super(aLong, aggregateId, eventType, eventStatus, topic, sourceName, appName, creator, editor, deptId, deptPath, tenantId, createDate, updateDate);
+	protected OssLogEvent(Long aLong, Long aggregateId, EventTypeEnums eventType, EventStatusEnums eventStatus,
+			String topic, String sourceName, String appName, Long creator, Long editor, Long deptId, String deptPath,
+			Long tenantId, LocalDateTime createDate, LocalDateTime updateDate) {
+		super(aLong, aggregateId, eventType, eventStatus, topic, sourceName, appName, creator, editor, deptId, deptPath,
+				tenantId, createDate, updateDate);
 	}
+
 }

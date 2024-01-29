@@ -17,6 +17,7 @@
 
 package org.laokou.auth.config.authentication;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
@@ -38,6 +39,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+import static org.laokou.common.i18n.common.JobModeEnums.SYNC;
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 
 /**
@@ -67,6 +69,8 @@ public class OAuth2CommonAuthenticationProvider {
 
 	public UsernamePasswordAuthenticationToken authenticationToken(User user, HttpServletRequest request) {
 		try {
+			// 认证类型
+			String authType = user.getAuth().getType();
 			// 应用名称
 			String appName = environment.getProperty(SPRING_APPLICATION_NAME);
 			Captcha captchaObj = user.getCaptcha();
@@ -75,21 +79,21 @@ public class OAuth2CommonAuthenticationProvider {
 			// 数据源名称
 			String sourceName = sourceGateway.findSourceNameByTenantId(tenantId);
 			// 检查验证码
-			checkCaptcha(user, captchaObj, request, sourceName,appName);
+			checkCaptcha(user, captchaObj, request, sourceName, appName, authType);
 			User u = userGateway.findOne(user);
 			// 检查空对象
-			user = user.copy(u, request, sourceName, appName);
+			user = user.copy(u, request, sourceName, appName, authType);
 			// 检查密码
-			user.checkPassword(clientPassword, passwordEncoder, request, sourceName,appName);
+			user.checkPassword(clientPassword, passwordEncoder, request, sourceName, appName, authType);
 			// 检查状态
-			user.checkStatus(request, sourceName,appName);
+			user.checkStatus(request, sourceName, appName, authType);
 			Set<String> permissions = menuGateway.findPermissions(user);
 			// 检查权限标识集合
-			user.checkNullPermissions(permissions, request, sourceName,appName);
+			user.checkNullPermissions(permissions, request, sourceName, appName, authType);
 			Set<String> deptPaths = deptGateway.findDeptPaths(user);
 			UserDetail userDetail = convert(user, request, deptPaths, permissions, sourceName);
 			// 登录成功
-			user.loginSuccess(request, sourceName,appName);
+			user.loginSuccess(request, sourceName, appName, authType);
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
 					userDetail.getAuthorities());
 		}
@@ -99,6 +103,10 @@ public class OAuth2CommonAuthenticationProvider {
 		finally {
 			// 保存领域事件（事件溯源）
 			domainEventService.create(user.getEvents());
+			// 清除数据源上下文
+			DynamicDataSourceContextHolder.clear();
+			// 发布当前线程的领域事件(同步发布)
+			domainEventPublisher.publish(SYNC);
 			// 清除领域事件上下文
 			DomainEventContextHolder.clear();
 		}
@@ -125,11 +133,12 @@ public class OAuth2CommonAuthenticationProvider {
 			.build();
 	}
 
-	private void checkCaptcha(User user, Captcha captchaObj, HttpServletRequest request, String sourceName,String appName) {
+	private void checkCaptcha(User user, Captcha captchaObj, HttpServletRequest request, String sourceName,
+			String appName, String authType) {
 		if (ObjectUtil.isNotNull(captchaObj)) {
 			Boolean checkResult = captchaGateway.check(captchaObj.getUuid(), captchaObj.getCaptcha());
 			// 检查验证码
-			user.checkCaptcha(checkResult, request, sourceName,appName);
+			user.checkCaptcha(checkResult, request, sourceName, appName, authType);
 		}
 	}
 

@@ -202,7 +202,7 @@ public class RocketMqTemplate {
 
 			@Override
 			public void onException(Throwable throwable) {
-				log.error("RocketMQ消息发送失败，报错信息", throwable);
+				log.error("RocketMQ消息发送失败，报错信息：{}，详情见日志", throwable.getMessage(), throwable);
 			}
 		});
 	}

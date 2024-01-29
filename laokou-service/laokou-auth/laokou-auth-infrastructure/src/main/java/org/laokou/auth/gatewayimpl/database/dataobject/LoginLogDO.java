@@ -62,4 +62,7 @@ public class LoginLogDO extends BaseDO {
 	@Schema(name = "type", description = "登录类型")
 	private String type;
 
+	@Schema(name = "eventId", description = "事件ID")
+	private Long eventId;
+
 }

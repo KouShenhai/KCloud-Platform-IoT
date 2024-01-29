@@ -15,24 +15,21 @@
  *
  */
 
-package org.laokou.common.domain.config;
+package org.laokou.common.domain.annotation;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.laokou.common.domain.config.DomainEventInterceptor;
+import org.laokou.common.domain.config.DomainEventConfig;
+import org.springframework.context.annotation.Import;
+
+import java.lang.annotation.*;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class WebMvcConfig implements WebMvcConfigurer {
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import({ DomainEventInterceptor.class, DomainEventConfig.class })
+public @interface EnableAutoPublishDomainEvent {
 
-    private final DomainEventInterceptor domainEventInterceptor;
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(domainEventInterceptor);
-    }
 }

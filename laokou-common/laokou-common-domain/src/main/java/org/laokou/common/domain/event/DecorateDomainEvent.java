@@ -15,33 +15,22 @@
  *
  */
 
-package org.laokou.common.mybatisplus.handler;
+package org.laokou.common.domain.event;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
-import lombok.Setter;
 import org.laokou.common.i18n.common.EventStatusEnums;
-import org.laokou.common.i18n.common.EventTypeEnums;
 import org.laokou.common.i18n.dto.DomainEvent;
-import java.time.LocalDateTime;
 
 /**
  * @author laokou
  */
 @Getter
-@Setter
-public class SqlLogEvent extends DomainEvent<Long> {
+@Schema(name = "DecorateDomainEvent", description = "装饰领域事件")
+public class DecorateDomainEvent extends DomainEvent<Long> {
 
-	private String dsl;
-
-	private long costTime;
-
-	private LocalDateTime createDate;
-
-	protected SqlLogEvent(Long aLong, Long aggregateId, EventTypeEnums eventType, EventStatusEnums eventStatus,
-			String topic, String sourceName, String appName, Long creator, Long editor, Long deptId, String deptPath,
-			Long tenantId, LocalDateTime createDate, LocalDateTime updateDate) {
-		super(aLong, aggregateId, eventType, eventStatus, topic, sourceName, appName, creator, editor, deptId, deptPath,
-				tenantId, createDate, updateDate);
+	public DecorateDomainEvent(Long id, EventStatusEnums eventStatus, String sourceName) {
+		super(id, eventStatus, sourceName);
 	}
 
 }
