@@ -11,7 +11,8 @@
     <artifactId>laokou-admin-infrastructure</artifactId>
 
     <dependencies>
-<!--        <dependency>
+<!--
+            <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-shardingsphere</artifactId>
             <exclusions>
@@ -32,7 +33,12 @@
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>-->
+        </dependency>
+-->
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-domain</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-admin-client</artifactId>
