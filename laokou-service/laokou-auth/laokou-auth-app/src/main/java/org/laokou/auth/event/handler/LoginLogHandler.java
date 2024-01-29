@@ -23,16 +23,34 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.laokou.auth.domain.event.LoginFailedEvent;
 import org.laokou.auth.domain.event.LoginSucceededEvent;
+import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
+import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.domain.event.DecorateDomainEvent;
+import org.laokou.common.domain.repository.DomainEventDO;
+import org.laokou.common.domain.service.DomainEventService;
+import org.laokou.common.i18n.common.EventTypeEnums;
+import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.Executor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
+import static org.laokou.common.i18n.common.EventStatusEnums.CONSUME_FAILED;
+import static org.laokou.common.i18n.common.EventStatusEnums.CONSUME_SUCCEED;
 import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_LOG_CONSUMER_GROUP;
 import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_LOG_TOPIC;
+import static org.laokou.common.i18n.common.StringConstants.UNDER;
 
 /**
  * 登录日志处理器.
@@ -47,40 +65,59 @@ import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_LOG_T
 		messageModel = CLUSTERING, consumeMode = ORDERLY)
 public class LoginLogHandler implements RocketMQListener<MessageExt> {
 
-	// private final LoginLogMapper loginLogMapper;
+	private final LoginLogMapper loginLogMapper;
 
-	private final Executor executor;
-
-	// @Override
-	// public void onApplicationEvent(LoginLogEvent event) {
-	// String sourceName = UserContextHolder.get().getSourceName();
-	// CompletableFuture.runAsync(() -> {
-	// try {
-	// DynamicDataSourceContextHolder.push(sourceName);
-	// execute(event);
-	// }
-	// catch (Exception e) {
-	// log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-	// }
-	// finally {
-	// DynamicDataSourceContextHolder.clear();
-	// }
-	// }, executor);
-	// }
-
-	private void execute(LoginSucceededEvent event) {
-		// LoginLogDO logDO = ConvertUtil.sourceToTarget(event, LoginLogDO.class);
-		// Assert.isTrue(ObjectUtil.isNotNull(logDO), "logDO is null");
-		// //logDO.setCreator(event.getUserId());
-		// //logDO.setEditor(event.getUserId());
-		// loginLogMapper.insertDynamicTable(logDO,
-		// TableTemplate.getCreateLoginLogTableSqlScript(DateUtil.now()),
-		// UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
-	}
+	private final DomainEventService domainEventService;
 
 	@Override
 	public void onMessage(MessageExt message) {
-		log.info(new String(message.getBody(), StandardCharsets.UTF_8));
+		List<DomainEvent<Long>> events = new ArrayList<>(1);
+		String msg = new String(message.getBody(), StandardCharsets.UTF_8);
+		DomainEventDO eventDO = JacksonUtil.toBean(msg, DomainEventDO.class);
+		try {
+			switch (EventTypeEnums.valueOf(eventDO.getEventType())) {
+				case LOGIN_FAILED -> {
+					LoginFailedEvent event = JacksonUtil.toBean(eventDO.getAttribute(), LoginFailedEvent.class);
+					create(Objects.requireNonNull(ConvertUtil.sourceToTarget(event, LoginLogDO.class)), eventDO);
+				}
+				case LOGIN_SUCCEEDED -> {
+					LoginSucceededEvent event = JacksonUtil.toBean(eventDO.getAttribute(), LoginSucceededEvent.class);
+					create(Objects.requireNonNull(ConvertUtil.sourceToTarget(event, LoginLogDO.class)), eventDO);
+				}
+			}
+			// 消费成功
+			events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
+		}
+		catch (Exception e) {
+			// 消费失败
+			events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_FAILED, eventDO.getSourceName()));
+		}
+		finally {
+			domainEventService.modify(events);
+		}
+	}
+
+	private LoginLogDO convert(LoginLogDO logDO, DomainEventDO eventDO) {
+		logDO.setId(IdGenerator.defaultSnowflakeId());
+		logDO.setEditor(eventDO.getEditor());
+		logDO.setCreator(eventDO.getCreator());
+		logDO.setCreateDate(eventDO.getCreateDate());
+		logDO.setUpdateDate(eventDO.getUpdateDate());
+		logDO.setDeptId(eventDO.getDeptId());
+		logDO.setDeptPath(eventDO.getDeptPath());
+		logDO.setTenantId(eventDO.getTenantId());
+		logDO.setEventId(eventDO.getId());
+		return logDO;
+	}
+
+	private void create(LoginLogDO logDO, DomainEventDO eventDO) {
+		try {
+			DynamicTableSuffixContextHolder.set(UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
+			loginLogMapper.insert(convert(logDO, eventDO));
+		}
+		finally {
+			DynamicTableSuffixContextHolder.clear();
+		}
 	}
 
 }

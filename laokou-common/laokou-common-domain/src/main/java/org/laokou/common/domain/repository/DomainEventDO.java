@@ -43,6 +43,9 @@ public class DomainEventDO extends BaseDO {
 	@Schema(name = "topic", description = "MQ主题")
 	private String topic;
 
+	@Schema(name = "appName", description = "应用名称")
+	private String appName;
+
 	@Schema(name = "aggregateId", description = "聚合根ID")
 	private Long aggregateId;
 

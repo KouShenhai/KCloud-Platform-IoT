@@ -15,25 +15,25 @@
  *
  */
 
-package org.laokou.common.domain.service;
+package org.laokou.common.domain.config;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import org.laokou.common.i18n.dto.DomainEvent;
-
-import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author laokou
  */
-@Schema(name = "DomainEventService", description = "领域事件")
-public interface DomainEventService {
+@AutoConfiguration
+@RequiredArgsConstructor
+public class DomainEventConfig implements WebMvcConfigurer {
 
-	void create(List<DomainEvent<Long>> events);
+	private final DomainEventInterceptor domainEventInterceptor;
 
-	void modify(List<DomainEvent<Long>> events);
-
-	void remove(Long id);
-
-	void finds();
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(domainEventInterceptor);
+	}
 
 }

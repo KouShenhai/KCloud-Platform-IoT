@@ -15,25 +15,22 @@
  *
  */
 
-package org.laokou.common.domain.service;
+package org.laokou.common.domain.event;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import org.laokou.common.i18n.common.EventStatusEnums;
 import org.laokou.common.i18n.dto.DomainEvent;
-
-import java.util.List;
 
 /**
  * @author laokou
  */
-@Schema(name = "DomainEventService", description = "领域事件")
-public interface DomainEventService {
+@Getter
+@Schema(name = "DecorateDomainEvent", description = "装饰领域事件")
+public class DecorateDomainEvent extends DomainEvent<Long> {
 
-	void create(List<DomainEvent<Long>> events);
-
-	void modify(List<DomainEvent<Long>> events);
-
-	void remove(Long id);
-
-	void finds();
+	public DecorateDomainEvent(Long id, EventStatusEnums eventStatus, String sourceName) {
+		super(id, eventStatus, sourceName);
+	}
 
 }

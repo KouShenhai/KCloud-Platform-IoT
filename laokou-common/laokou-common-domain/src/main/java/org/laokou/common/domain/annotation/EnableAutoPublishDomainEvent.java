@@ -15,25 +15,21 @@
  *
  */
 
-package org.laokou.common.domain.service;
+package org.laokou.common.domain.annotation;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.domain.config.DomainEventInterceptor;
+import org.laokou.common.domain.config.DomainEventConfig;
+import org.springframework.context.annotation.Import;
 
-import java.util.List;
+import java.lang.annotation.*;
 
 /**
  * @author laokou
  */
-@Schema(name = "DomainEventService", description = "领域事件")
-public interface DomainEventService {
-
-	void create(List<DomainEvent<Long>> events);
-
-	void modify(List<DomainEvent<Long>> events);
-
-	void remove(Long id);
-
-	void finds();
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import({ DomainEventInterceptor.class, DomainEventConfig.class })
+public @interface EnableAutoPublishDomainEvent {
 
 }

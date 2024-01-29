@@ -181,7 +181,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			// 获取请求密码并解密
 			Map<String, String> paramMap = MapUtil.parseParamMap(s);
 			if (paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
-				log.info("密码模式认证");
+				// log.info("密码模式认证");
 				try {
 					String privateKey = RsaUtil.getPrivateKey();
 					String password = paramMap.get(PASSWORD);

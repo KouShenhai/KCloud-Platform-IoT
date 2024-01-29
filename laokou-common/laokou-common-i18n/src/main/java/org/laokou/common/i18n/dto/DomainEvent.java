@@ -20,6 +20,8 @@ package org.laokou.common.i18n.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.common.EventStatusEnums;
 import org.laokou.common.i18n.common.EventTypeEnums;
 
@@ -33,6 +35,8 @@ import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
  * @author laokou
  */
 @Data
+@SuperBuilder
+@NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PROTECTED)
 @Schema(name = "DomainEvent", description = "领域事件")
 public abstract class DomainEvent<ID> implements Event {
@@ -58,6 +62,9 @@ public abstract class DomainEvent<ID> implements Event {
 	@Schema(name = "sourceName", description = "数据源名称")
 	private String sourceName;
 
+	@Schema(name = "appName", description = "应用名称")
+	private String appName;
+
 	@Schema(name = CREATOR, description = "创建人")
 	protected ID creator;
 
@@ -78,5 +85,11 @@ public abstract class DomainEvent<ID> implements Event {
 
 	@Schema(name = UPDATE_DATE, description = "修改时间")
 	protected LocalDateTime updateDate;
+
+	public DomainEvent(ID id, EventStatusEnums eventStatus, String sourceName) {
+		this.id = id;
+		this.eventStatus = eventStatus;
+		this.sourceName = sourceName;
+	}
 
 }
