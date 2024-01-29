@@ -79,6 +79,10 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 		events().add(event);
 	}
 
+	public void clearEvents() {
+		events = null;
+	}
+
 	private List<DomainEvent<ID>> events() {
 		if (ObjectUtil.isNull(events)) {
 			events = new ArrayList<>(16);

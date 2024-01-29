@@ -109,6 +109,8 @@ public class OAuth2CommonAuthenticationProvider {
 			domainEventPublisher.publish(SYNC);
 			// 清除领域事件上下文
 			DomainEventContextHolder.clear();
+			// 清空领域事件
+			user.clearEvents();
 		}
 	}
 
