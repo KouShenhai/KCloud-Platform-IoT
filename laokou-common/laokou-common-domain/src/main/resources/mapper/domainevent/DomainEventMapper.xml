@@ -36,6 +36,7 @@
         event_status,
         topic,
         source_name,
+        app_name,
         `attribute`
     </sql>
 
@@ -57,8 +58,12 @@
                     #{eventStatus},
                     #{topic},
                     #{sourceName},
+                    #{appName},
                     #{attribute}
         )
     </insert>
+    <delete id="deleteOneById">
+        delete from boot_sys_domain_event where id = #{id}
+    </delete>
 
 </mapper>

@@ -15,20 +15,24 @@
  *
  */
 
-package org.laokou.common.domain.repository;
+package org.laokou.common.domain.config;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.mybatisplus.repository.CrudMapper;
-import org.springframework.stereotype.Repository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author laokou
  */
-@Repository
-@Mapper
-public interface DomainEventMapper extends CrudMapper<Long, Integer, DomainEventDO> {
+@Component
+@RequiredArgsConstructor
+public class WebMvcConfig implements WebMvcConfigurer {
 
-   int deleteOneById(@Param("id") Long id);
+    private final DomainEventInterceptor domainEventInterceptor;
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(domainEventInterceptor);
+    }
 }

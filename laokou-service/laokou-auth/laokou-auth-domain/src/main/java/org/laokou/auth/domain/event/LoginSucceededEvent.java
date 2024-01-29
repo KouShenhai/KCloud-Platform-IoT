@@ -64,9 +64,9 @@ public class LoginSucceededEvent extends DomainEvent<Long> {
 	@Schema(name = "message", description = "登录信息")
 	private String message;
 
-	public LoginSucceededEvent(User user, HttpServletRequest request, String message, String sourceName) {
+	public LoginSucceededEvent(User user, HttpServletRequest request, String message, String sourceName, String appName) {
 		super(IdGenerator.defaultSnowflakeId(), user.getId(), LOGIN_SUCCEEDED, CREATED, LAOKOU_LOGIN_LOG_TOPIC,
-				sourceName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(), user.getTenantId(),
+				sourceName,appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(), user.getTenantId(),
 				DateUtil.now(), DateUtil.now());
 		this.username = user.getUsername();
 		this.ip = IpUtil.getIpAddr(request);

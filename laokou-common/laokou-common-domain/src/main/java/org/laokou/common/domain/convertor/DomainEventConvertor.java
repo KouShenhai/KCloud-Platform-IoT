@@ -42,6 +42,7 @@ public class DomainEventConvertor {
 		domainEventDO.setTopic(event.getTopic());
 		domainEventDO.setSourceName(event.getSourceName());
 		domainEventDO.setAttribute(JacksonUtil.toJsonStr(event));
+		domainEventDO.setAppName(event.getAppName());
 		return domainEventDO;
 	}
 

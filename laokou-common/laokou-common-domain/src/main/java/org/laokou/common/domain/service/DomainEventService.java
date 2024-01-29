@@ -30,10 +30,10 @@ public interface DomainEventService {
 
 	void create(List<DomainEvent<Long>> events);
 
-	void modify(DomainEvent<Long> event);
+	void modify(List<DomainEvent<Long>> events);
 
 	void remove(Long id);
 
-	void find();
+	void finds();
 
 }

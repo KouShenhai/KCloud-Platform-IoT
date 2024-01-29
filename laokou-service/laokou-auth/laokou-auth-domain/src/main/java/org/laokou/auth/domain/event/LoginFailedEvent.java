@@ -67,9 +67,9 @@ public class LoginFailedEvent extends DomainEvent<Long> {
 	@Schema(name = "message", description = "登录信息")
 	private String message;
 
-	public LoginFailedEvent(User user, HttpServletRequest request, String message, String sourceName) {
+	public LoginFailedEvent(User user, HttpServletRequest request, String message, String sourceName, String appName) {
 		super(IdGenerator.defaultSnowflakeId(), user.getId(), LOGIN_FAILED, CREATED, LAOKOU_LOGIN_LOG_TOPIC, sourceName,
-				user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(), user.getTenantId(), DateUtil.now(),
+				appName,user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(), user.getTenantId(), DateUtil.now(),
 				DateUtil.now());
 		this.username = user.getUsername();
 		this.ip = IpUtil.getIpAddr(request);

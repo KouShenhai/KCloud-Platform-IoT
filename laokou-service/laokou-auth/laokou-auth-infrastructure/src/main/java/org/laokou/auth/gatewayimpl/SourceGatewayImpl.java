@@ -37,6 +37,8 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
+import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
 import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 
 /**
@@ -60,6 +62,10 @@ public class SourceGatewayImpl implements SourceGateway {
 	 */
 	@Override
 	public String findSourceNameByTenantId(Long tenantId) {
+		// 默认主表
+		if (DEFAULT == tenantId) {
+			return MASTER;
+		}
 		SourceDO sourceDO = sourceMapper.selectByTenantId(tenantId);
 		// 验证数据源
 		checkNullSource(sourceDO);

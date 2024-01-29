@@ -119,47 +119,47 @@ public class User extends AggregateRoot<Long> {
 		}
 	}
 
-	public User copy(User user, HttpServletRequest request, String sourceName) {
+	public User copy(User user, HttpServletRequest request, String sourceName,String appName) {
 		if (ObjectUtil.isNull(user)) {
-			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName);
+			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,appName);
 		}
 		return user;
 	}
 
 	public void checkPassword(String clientPassword, PasswordEncoder passwordEncoder, HttpServletRequest request,
-			String sourceName) {
+			String sourceName,String appName) {
 		if (StringUtil.isNotEmpty(clientPassword) && !passwordEncoder.matches(clientPassword, this.password)) {
-			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName);
+			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,appName);
 		}
 	}
 
-	public void checkStatus(HttpServletRequest request, String sourceName) {
+	public void checkStatus(HttpServletRequest request, String sourceName,String appName) {
 		if (ObjectUtil.equals(DISABLE.ordinal(), this.status)) {
-			loginFail(ACCOUNT_DISABLE, MessageUtil.getMessage(ACCOUNT_DISABLE), request, sourceName);
+			loginFail(ACCOUNT_DISABLE, MessageUtil.getMessage(ACCOUNT_DISABLE), request, sourceName,appName);
 		}
 	}
 
-	public void checkNullPermissions(Set<String> permissions, HttpServletRequest request, String sourceName) {
+	public void checkNullPermissions(Set<String> permissions, HttpServletRequest request, String sourceName,String appName) {
 		if (CollectionUtil.isEmpty(permissions)) {
-			loginFail(FORBIDDEN, MessageUtil.getMessage(FORBIDDEN), request, sourceName);
+			loginFail(FORBIDDEN, MessageUtil.getMessage(FORBIDDEN), request, sourceName,appName);
 		}
 	}
 
-	public void checkCaptcha(Boolean checkResult, HttpServletRequest request, String sourceName) {
+	public void checkCaptcha(Boolean checkResult, HttpServletRequest request, String sourceName,String appName) {
 		if (ObjectUtil.isNull(checkResult)) {
-			loginFail(CAPTCHA_EXPIRED, MessageUtil.getMessage(CAPTCHA_EXPIRED), request, sourceName);
+			loginFail(CAPTCHA_EXPIRED, MessageUtil.getMessage(CAPTCHA_EXPIRED), request, sourceName,appName);
 		}
 		if (!checkResult) {
-			loginFail(CAPTCHA_ERROR, MessageUtil.getMessage(CAPTCHA_ERROR), request, sourceName);
+			loginFail(CAPTCHA_ERROR, MessageUtil.getMessage(CAPTCHA_ERROR), request, sourceName,appName);
 		}
 	}
 
-	public void loginSuccess(HttpServletRequest request, String sourceName) {
-		addEvent(new LoginSucceededEvent(this, request, MessageUtil.getMessage(LOGIN_SUCCEEDED), sourceName));
+	public void loginSuccess(HttpServletRequest request, String sourceName,String appName) {
+		addEvent(new LoginSucceededEvent(this, request, MessageUtil.getMessage(LOGIN_SUCCEEDED), sourceName,appName));
 	}
 
-	private void loginFail(int code, String message, HttpServletRequest request, String sourceName) {
-		addEvent(new LoginFailedEvent(this, request, message, sourceName));
+	private void loginFail(int code, String message, HttpServletRequest request, String sourceName,String appName) {
+		addEvent(new LoginFailedEvent(this, request, message, sourceName,appName));
 		throw new AuthException(code, message);
 	}
 
