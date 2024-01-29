@@ -71,7 +71,7 @@
         <!--dynamic-datasource版本-->
         <dynamic-datasource.version>4.3.0</dynamic-datasource.version>
         <!--httpclient5版本-->
-        <httpclient5.version>5.3</httpclient5.version>
+        <httpclient5.version>5.3.1</httpclient5.version>
         <!--hibernate-validator版本-->
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <!--ip2region版本-->
@@ -109,7 +109,7 @@
         <!--mqttv5-client版本-->
         <mqttv5-client.version>1.2.5</mqttv5-client.version>
         <!--mockito版本-->
-        <mockito.version>5.9.0</mockito.version>
+        <mockito.version>5.10.0</mockito.version>
         <!--flyway版本-->
         <flyway.version>10.6.0</flyway.version>
     </properties>
