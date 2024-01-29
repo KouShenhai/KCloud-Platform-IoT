@@ -21,6 +21,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import lombok.SneakyThrows;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
+import org.laokou.common.domain.annotation.EnableAutoPublishDomainEvent;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.security.annotation.EnableSecurity;
@@ -55,6 +56,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 @EnableSecurity
 @EnableTaskExecutor
+@EnableAutoPublishDomainEvent
 public class AdminApp {
 
 	@SneakyThrows

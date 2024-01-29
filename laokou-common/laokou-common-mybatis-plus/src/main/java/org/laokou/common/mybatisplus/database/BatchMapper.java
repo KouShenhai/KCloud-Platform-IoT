@@ -18,22 +18,19 @@
 package org.laokou.common.mybatisplus.database;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AbstractDO;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
@@ -52,17 +49,6 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	 * @return 新增结果
 	 */
 	int save(T entity);
-
-	/**
-	 * 批量插入.
-	 * @param entityList 数据集
-	 * @return int
-	 */
-	int insertBatchSomeColumn(List<T> entityList);
-
-	int alwaysUpdateSomeColumnById(@Param(Constants.ENTITY) T entity);
-
-	int deleteByIdWithFill(T entity);
 
 	/**
 	 * 获取版本号.
@@ -97,86 +83,6 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	 */
 	Integer resultCountFilter(@Param("tables") List<String> tables, @Param("param") T param,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
-
-	/**
-	 * SQL执行器.
-	 * @param sql SQL语句
-	 */
-	@Update("${sql}")
-	void execute(@Param("sql") String sql);
-
-	/**
-	 * 动态新增一条数据（分表）.
-	 * @param t 一条模型数据
-	 * @param sql 建表sql
-	 * @param suffix 分表的表名后缀
-	 */
-	default void insertDynamicTable(T t, String sql, String suffix) {
-		try {
-			DynamicTableSuffixContextHolder.set(suffix);
-			t.setId(IdGenerator.defaultSnowflakeId());
-			this.insert(t);
-		}
-		catch (Exception e) {
-			LOG.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			this.execute(sql);
-			this.insert(t);
-		}
-		finally {
-			DynamicTableSuffixContextHolder.clear();
-		}
-	}
-
-	/**
-	 * 根据ID动态删除（分表）.
-	 * @param id ID
-	 * @param suffix 分表的表名后缀
-	 * @return 删除结果
-	 */
-	default Integer deleteDynamicTableById(Long id, String suffix) {
-		try {
-			DynamicTableSuffixContextHolder.set(suffix);
-			return this.deleteById(id);
-		}
-		finally {
-			DynamicTableSuffixContextHolder.clear();
-		}
-	}
-
-	/**
-	 * 查看动态版本号.
-	 * @param id ID
-	 * @param clazz 类
-	 * @param suffix 分表的表名后缀
-	 * @return 版本号
-	 */
-	default Integer getDynamicVersion(Long id, Class<T> clazz, String suffix) {
-		try {
-			DynamicTableSuffixContextHolder.set(suffix);
-			return getVersion(id, clazz);
-		}
-		finally {
-			DynamicTableSuffixContextHolder.clear();
-		}
-	}
-
-	/**
-	 * 根据ID动态获取表名.
-	 * @param clazz 类
-	 * @param id ID
-	 * @param suffix 分表的表名后缀
-	 * @param columns 参数
-	 * @return 表名
-	 */
-	default T getDynamicTableById(Class<T> clazz, Long id, String suffix, String... columns) {
-		try {
-			DynamicTableSuffixContextHolder.set(suffix);
-			return this.selectOne(Wrappers.query(clazz).eq("id", id).select(columns));
-		}
-		finally {
-			DynamicTableSuffixContextHolder.clear();
-		}
-	}
 
 	/**
 	 * 新增一条数据（动态生成雪花算法ID）.
