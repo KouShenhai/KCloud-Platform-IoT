@@ -235,7 +235,7 @@ services:
     env_file:
       - env/xxl-job.env
     ports:
-      - "9090:9090"
+      - "9095:9095"
     volumes:
       - ./xxl-job/logs:/opt
     extra_hosts:

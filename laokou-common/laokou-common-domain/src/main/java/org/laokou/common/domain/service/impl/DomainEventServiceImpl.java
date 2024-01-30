@@ -18,6 +18,7 @@
 package org.laokou.common.domain.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.domain.convertor.DomainEventConvertor;
 import org.laokou.common.domain.holder.DomainEventContextHolder;
 import org.laokou.common.domain.repository.DomainEventDO;
@@ -28,6 +29,7 @@ import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author laokou
@@ -61,8 +63,8 @@ public class DomainEventServiceImpl implements DomainEventService {
 	}
 
 	@Override
-	public void finds() {
-
+	public void finds(Set<String> sourceNames, String appName, ResultHandler<DomainEventDO> resultHandler) {
+		domainEventMapper.selectObjects(sourceNames, appName, resultHandler);
 	}
 
 }

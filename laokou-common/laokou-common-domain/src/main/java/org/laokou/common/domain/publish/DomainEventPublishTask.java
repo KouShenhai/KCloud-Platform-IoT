@@ -26,17 +26,21 @@ import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.EventStatusEnums;
 import org.laokou.common.i18n.common.JobModeEnums;
 import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 import static org.laokou.common.i18n.common.EventStatusEnums.PUBLISH_FAILED;
 import static org.laokou.common.i18n.common.EventStatusEnums.PUBLISH_SUCCEED;
+import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 
 /**
  * @author laokou
@@ -50,7 +54,11 @@ public class DomainEventPublishTask {
 
 	private final DomainEventService domainEventService;
 
+	private final Environment environment;
+
 	private final RocketMqTemplate rocketMqTemplate;
+
+	private final DynamicUtil dynamicUtil;
 
 	public void publishEvent(List<DomainEvent<Long>> list, JobModeEnums jobMode) {
 		List<DomainEvent<Long>> modifyList = Collections.synchronizedList(new ArrayList<>());
@@ -64,14 +72,25 @@ public class DomainEventPublishTask {
 					CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
 				}
 			}
-			case ASYNC -> {
-
-			}
+			case ASYNC -> jobHandler();
 		}
 		// 批量修改事件状态
 		if (CollectionUtil.isNotEmpty(modifyList)) {
 			domainEventService.modify(modifyList);
 		}
+	}
+
+	private void jobHandler() {
+		domainEventService.finds(getSourceNames(), getAppName(), resultContext -> {
+		});
+	}
+
+	private String getAppName() {
+		return environment.getProperty(SPRING_APPLICATION_NAME);
+	}
+
+	private Set<String> getSourceNames() {
+		return dynamicUtil.getDataSources().keySet();
 	}
 
 	private void handleMqSend(List<DomainEvent<Long>> modifyList, DomainEvent<Long> item) {

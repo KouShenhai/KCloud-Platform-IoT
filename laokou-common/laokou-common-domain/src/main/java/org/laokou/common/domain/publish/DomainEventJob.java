@@ -15,7 +15,27 @@
  *
  */
 
+package org.laokou.common.domain.publish;
+
+import com.xxl.job.core.handler.annotation.XxlJob;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import static org.laokou.common.i18n.common.JobModeEnums.ASYNC;
+
 /**
  * @author laokou
  */
-package org.laokou.common.xxl.job.config.auto;
+@Component
+@RequiredArgsConstructor
+public class DomainEventJob {
+
+	private final DomainEventPublisher domainEventPublisher;
+
+	@XxlJob("publishDomainEventJobHandler")
+	public void publishDomainEventJob() {
+		// 定时任务
+		domainEventPublisher.publish(ASYNC);
+	}
+
+}

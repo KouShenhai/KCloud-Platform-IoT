@@ -15,10 +15,9 @@
  *
  */
 
-package org.laokou.common.xxl.job.config.auto;
+package org.laokou.common.xxl.job.config;
 
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
-import org.laokou.common.xxl.job.config.XxlJobProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +27,7 @@ import org.springframework.context.annotation.Bean;
  */
 @AutoConfiguration
 @ConditionalOnClass(XxlJobProperties.class)
-public class XxlJobAutoConfig {
+public class XxlJobConfig {
 
 	@Bean
 	public XxlJobSpringExecutor xxlJobExecutor(XxlJobProperties properties) {

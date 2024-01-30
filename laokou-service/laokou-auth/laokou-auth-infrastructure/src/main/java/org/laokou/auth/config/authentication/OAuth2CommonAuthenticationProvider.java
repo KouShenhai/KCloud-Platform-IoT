@@ -128,6 +128,7 @@ public class OAuth2CommonAuthenticationProvider {
 			.deptPaths(deptPaths)
 			.permissions(permissions)
 			.avatar(user.getAvatar())
+			.password(user.getPassword())
 			.superAdmin(user.getSuperAdmin())
 			.mail(user.getMail())
 			.mobile(user.getMobile())

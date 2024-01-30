@@ -15,28 +15,17 @@
  *
  */
 
-package org.laokou.common.domain.service;
+package org.laokou.common.xxl.job.annotation;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import org.apache.ibatis.session.ResultHandler;
-import org.laokou.common.domain.repository.DomainEventDO;
-import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.xxl.job.config.XxlJobConfig;
+import org.springframework.context.annotation.Import;
 
-import java.util.List;
-import java.util.Set;
+import java.lang.annotation.*;
 
-/**
- * @author laokou
- */
-@Schema(name = "DomainEventService", description = "领域事件")
-public interface DomainEventService {
-
-	void create(List<DomainEvent<Long>> events);
-
-	void modify(List<DomainEvent<Long>> events);
-
-	void remove(Long id);
-
-	void finds(Set<String> sourceNames, String appName, ResultHandler<DomainEventDO> resultHandler);
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import({ XxlJobConfig.class })
+public @interface EnableXxlJob {
 
 }

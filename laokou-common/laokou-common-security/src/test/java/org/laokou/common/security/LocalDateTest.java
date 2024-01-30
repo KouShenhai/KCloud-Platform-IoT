@@ -15,28 +15,22 @@
  *
  */
 
-package org.laokou.common.domain.service;
+package org.laokou.common.security;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import org.apache.ibatis.session.ResultHandler;
-import org.laokou.common.domain.repository.DomainEventDO;
-import org.laokou.common.i18n.dto.DomainEvent;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.DateUtil;
 
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
 
 /**
  * @author laokou
  */
-@Schema(name = "DomainEventService", description = "领域事件")
-public interface DomainEventService {
+@Slf4j
+public class LocalDateTest {
 
-	void create(List<DomainEvent<Long>> events);
-
-	void modify(List<DomainEvent<Long>> events);
-
-	void remove(Long id);
-
-	void finds(Set<String> sourceNames, String appName, ResultHandler<DomainEventDO> resultHandler);
+	public static void main(String[] args) {
+		LocalDate localDate = LocalDate.of(2023, 2, 28);
+		log.info("{}", DateUtil.format(DateUtil.plusMonths(localDate, 1), DateUtil.YYYYMM));
+	}
 
 }
