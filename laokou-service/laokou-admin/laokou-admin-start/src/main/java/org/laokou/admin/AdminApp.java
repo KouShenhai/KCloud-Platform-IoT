@@ -25,6 +25,8 @@ import org.laokou.common.domain.annotation.EnableAutoPublishDomainEvent;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.security.annotation.EnableSecurity;
+import org.laokou.common.xxl.job.annotation.EnableXxlJob;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
@@ -57,6 +59,8 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @EnableSecurity
 @EnableTaskExecutor
 @EnableAutoPublishDomainEvent
+@EnableXxlJob
+@MapperScan({ "org.laokou.common.domain.repository", "org.laokou.admin.gatewayimpl.database" })
 public class AdminApp {
 
 	@SneakyThrows

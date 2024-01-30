@@ -12,7 +12,7 @@ management:
 mybatis:
   mapper-locations: classpath:/mybatis-mapper/*Mapper.xml
 server:
-  port: 9090
+  port: 9095
   servlet:
     context-path: /xxl-job-admin
   shutdown: graceful

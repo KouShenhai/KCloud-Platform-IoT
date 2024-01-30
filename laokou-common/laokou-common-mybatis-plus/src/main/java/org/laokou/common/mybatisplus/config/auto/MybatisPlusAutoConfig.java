@@ -50,6 +50,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.SLOW_SQL_PREFIX;
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.StringConstants.DOT;
 import static org.laokou.common.i18n.common.StringConstants.TRUE;
+import static org.laokou.common.i18n.common.SysConstants.APPLICATION;
 import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 
 /**
@@ -127,9 +128,9 @@ public class MybatisPlusAutoConfig {
 		transactionTemplate.setReadOnly(false);
 		// 新建事务
 		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
-		// 默认数据库隔离级别
+		// 数据库隔离级别 => 读已提交
 		transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
-		// 事务超时时间,单位s
+		// 事务超时时间，单位s
 		transactionTemplate.setTimeout(180);
 		// 事务名称
 		transactionTemplate.setName("laokou-transaction-template");
@@ -149,7 +150,7 @@ public class MybatisPlusAutoConfig {
 	 */
 	private PaginationInnerInterceptor paginationInnerInterceptor() {
 		PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();
-		// -1 不受限制
+		// -1表示不受限制
 		paginationInnerInterceptor.setMaxLimit(-1L);
 		// 溢出总页数后是进行处理，查看源码就知道是干啥的
 		paginationInnerInterceptor.setOverflow(true);
@@ -168,7 +169,7 @@ public class MybatisPlusAutoConfig {
 
 	private String getApplicationId(ConfigurableEnvironment environment) {
 		String name = environment.getProperty(SPRING_APPLICATION_NAME);
-		return StringUtils.hasText(name) ? name : "application";
+		return StringUtils.hasText(name) ? name : APPLICATION;
 	}
 
 }

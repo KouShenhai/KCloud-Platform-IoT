@@ -86,7 +86,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@Schema(name = "mobile", description = "手机号")
 	private String mobile;
 
-	@JsonIgnore
 	@Schema(name = PASSWORD, description = "密码")
 	private transient String password;
 

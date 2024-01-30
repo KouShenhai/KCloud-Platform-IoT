@@ -21,5 +21,5 @@ LABEL description="laokou-xxl-job"
 # 复制文件
 COPY laokou-xxl-job.jar app.jar
 # 暴露端口
-EXPOSE 9090
+EXPOSE 9095
 CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1

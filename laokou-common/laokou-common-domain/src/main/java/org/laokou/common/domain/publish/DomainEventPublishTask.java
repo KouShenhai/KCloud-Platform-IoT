@@ -26,17 +26,21 @@ import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.EventStatusEnums;
 import org.laokou.common.i18n.common.JobModeEnums;
 import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 import static org.laokou.common.i18n.common.EventStatusEnums.PUBLISH_FAILED;
 import static org.laokou.common.i18n.common.EventStatusEnums.PUBLISH_SUCCEED;
+import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 
 /**
  * @author laokou
@@ -50,45 +54,56 @@ public class DomainEventPublishTask {
 
 	private final DomainEventService domainEventService;
 
+	private final Environment environment;
+
 	private final RocketMqTemplate rocketMqTemplate;
+
+	private final DynamicUtil dynamicUtil;
 
 	public void publishEvent(List<DomainEvent<Long>> list, JobModeEnums jobMode) {
 		List<DomainEvent<Long>> modifyList = Collections.synchronizedList(new ArrayList<>());
-		List<CompletableFuture<Void>> futures = Collections.synchronizedList(new ArrayList<>());
 		switch (jobMode) {
 			case SYNC -> {
 				if (CollectionUtil.isNotEmpty(list)) {
-					list.forEach(item -> {
-						CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-							// 同步发送并修改事件状态
-							boolean result = rocketMqTemplate.sendSyncOrderlyMessage(item.getTopic(),
-									DomainEventConvertor.toDataObject(item), item.getAppName());
-							if (result) {
-								// 发布成功
-								addEvent(modifyList, item, PUBLISH_SUCCEED);
-							}
-							else {
-								// 发布失败
-								addEvent(modifyList, item, PUBLISH_FAILED);
-							}
-						}, executor);
-						futures.add(future);
-					});
+					List<CompletableFuture<Void>> futures = list.stream()
+						.map(item -> CompletableFuture.runAsync(() -> handleMqSend(modifyList, item), executor))
+						.toList();
+					// 阻塞所有任务
+					CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
 				}
 			}
-			case ASYNC -> {
-
-			}
-			default -> {
-			}
-		}
-		// 阻塞所有任务
-		if (CollectionUtil.isNotEmpty(futures)) {
-			CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
+			case ASYNC -> jobHandler();
 		}
 		// 批量修改事件状态
 		if (CollectionUtil.isNotEmpty(modifyList)) {
 			domainEventService.modify(modifyList);
+		}
+	}
+
+	private void jobHandler() {
+		domainEventService.finds(getSourceNames(), getAppName(), resultContext -> {
+		});
+	}
+
+	private String getAppName() {
+		return environment.getProperty(SPRING_APPLICATION_NAME);
+	}
+
+	private Set<String> getSourceNames() {
+		return dynamicUtil.getDataSources().keySet();
+	}
+
+	private void handleMqSend(List<DomainEvent<Long>> modifyList, DomainEvent<Long> item) {
+		// 同步发送并修改事件状态
+		boolean result = rocketMqTemplate.sendSyncOrderlyMessage(item.getTopic(),
+				DomainEventConvertor.toDataObject(item), item.getAppName());
+		if (result) {
+			// 发布成功
+			addEvent(modifyList, item, PUBLISH_SUCCEED);
+		}
+		else {
+			// 发布失败
+			addEvent(modifyList, item, PUBLISH_FAILED);
 		}
 	}
 

@@ -36,7 +36,7 @@ public class TransactionalUtil {
 	private final TransactionTemplate transactionTemplate;
 
 	public <T> T execute(TransactionCallback<T> action, int propagationBehavior, int isolationLevel, boolean readOnly) {
-		return build(propagationBehavior, isolationLevel, readOnly).execute(action);
+		return convert(propagationBehavior, isolationLevel, readOnly).execute(action);
 	}
 
 	public <T> T defaultExecute(TransactionCallback<T> action, int isolationLevel, boolean readOnly) {
@@ -59,7 +59,7 @@ public class TransactionalUtil {
 
 	public void executeWithoutResult(Consumer<TransactionStatus> action, int propagationBehavior, int isolationLevel,
 			boolean readOnly) {
-		build(propagationBehavior, isolationLevel, readOnly).executeWithoutResult(action);
+		convert(propagationBehavior, isolationLevel, readOnly).executeWithoutResult(action);
 	}
 
 	public void defaultExecuteWithoutResult(Consumer<TransactionStatus> action, int isolationLevel, boolean readOnly) {
@@ -80,7 +80,7 @@ public class TransactionalUtil {
 		executeWithoutResult(action, TransactionDefinition.PROPAGATION_REQUIRES_NEW, isolationLevel, readOnly);
 	}
 
-	private TransactionTemplate build(int propagationBehavior, int isolationLevel, boolean readOnly) {
+	private TransactionTemplate convert(int propagationBehavior, int isolationLevel, boolean readOnly) {
 		transactionTemplate.setPropagationBehavior(propagationBehavior);
 		transactionTemplate.setIsolationLevel(isolationLevel);
 		transactionTemplate.setReadOnly(readOnly);
