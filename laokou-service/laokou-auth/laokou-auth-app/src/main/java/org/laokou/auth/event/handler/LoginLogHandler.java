@@ -36,7 +36,9 @@ import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.EventTypeEnums;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -89,8 +91,14 @@ public class LoginLogHandler implements RocketMQListener<MessageExt> {
 			events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
 		}
 		catch (Exception e) {
-			// 消费失败
-			events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_FAILED, eventDO.getSourceName()));
+			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			if (e instanceof DataIntegrityViolationException) {
+				// 消费成功（数据重复直接改为消费成功）
+				events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
+			} else {
+				// 消费失败
+				events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_FAILED, eventDO.getSourceName()));
+			}
 		}
 		finally {
 			domainEventService.modify(events);

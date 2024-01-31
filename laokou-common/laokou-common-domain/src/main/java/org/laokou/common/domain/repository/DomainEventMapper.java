@@ -32,9 +32,18 @@ import java.util.Set;
 @Mapper
 public interface DomainEventMapper extends CrudMapper<Long, Integer, DomainEventDO> {
 
-	int deleteOneById(@Param("id") Long id);
+	long selectTotal(@Param("sourceNames") Set<String> sourceNames, @Param("appName") String appName);
+
+	int deleteByYmd(@Param("ymd") String ymd);
 
 	void selectObjects(@Param("sourceNames") Set<String> sourceNames, @Param("appName") String appName,
 			ResultHandler<DomainEventDO> resultHandler);
+
+	int updateStatusById(@Param("entity")DomainEventDO entity);
+
+	default void updateStatus(DomainEventDO entity) {
+		entity.setVersion(selectVersion(entity.getId()));
+		updateStatusById(entity);
+	}
 
 }

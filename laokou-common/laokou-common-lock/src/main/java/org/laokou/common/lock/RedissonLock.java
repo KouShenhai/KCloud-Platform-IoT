@@ -46,10 +46,10 @@ public class RedissonLock extends AbstractLock<RLock> {
 	public RLock getLock(LockTypeEnums lockTypeEnums, String key) {
 		return switch (lockTypeEnums) {
 			case LOCK -> redisUtil.getLock(key);
-			case FAIR -> redisUtil.getFairLock(key);
-			case READ -> redisUtil.getReadLock(key);
-			case WRITE -> redisUtil.getWriteLock(key);
-			case FENCED -> redisUtil.getFencedLock(key);
+			case FAIR_LOCK -> redisUtil.getFairLock(key);
+			case READ_LOCK -> redisUtil.getReadLock(key);
+			case WRITE_LOCK -> redisUtil.getWriteLock(key);
+			case FENCED_LOCK -> redisUtil.getFencedLock(key);
 		};
 	}
 
