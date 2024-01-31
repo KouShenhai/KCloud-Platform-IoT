@@ -54,17 +54,20 @@ public class DomainEventServiceImpl implements DomainEventService {
 	public void modify(List<DomainEvent<Long>> events) {
 		List<DomainEventDO> list = events.stream().map(DomainEventConvertor::toDataObject).toList();
 		mybatisUtil.batch(list, DomainEventMapper.class, events.getFirst().getSourceName(),
-				DomainEventMapper::updateById);
+				DomainEventMapper::updateStatus);
 	}
 
 	@Override
-	public void remove(Long id) {
-		domainEventMapper.deleteOneById(id);
+	public void removeLastMonth(String ymd) {
+		domainEventMapper.deleteByYmd(ymd);
 	}
 
 	@Override
-	public void finds(Set<String> sourceNames, String appName, ResultHandler<DomainEventDO> resultHandler) {
-		domainEventMapper.selectObjects(sourceNames, appName, resultHandler);
+	public void findList(Set<String> sourceNames, String appName, ResultHandler<DomainEventDO> resultHandler) {
+		// 查询 创建/发布成功/发布失败/消费失败
+		if (domainEventMapper.selectTotal(sourceNames, appName) > 0) {
+			domainEventMapper.selectObjects(sourceNames, appName, resultHandler);
+		}
 	}
 
 }

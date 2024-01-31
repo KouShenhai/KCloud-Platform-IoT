@@ -195,8 +195,8 @@
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
                 <SSL-ENABLED>false</SSL-ENABLED>
-                <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
-                <MAIL-USERNAME>xxx</MAIL-USERNAME>
+                <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
+                <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
                 <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
                 <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
                 <ROUTER-AUTH-ENABLED>false</ROUTER-AUTH-ENABLED>

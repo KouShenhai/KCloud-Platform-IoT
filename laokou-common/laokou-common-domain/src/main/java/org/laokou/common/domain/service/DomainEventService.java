@@ -35,8 +35,8 @@ public interface DomainEventService {
 
 	void modify(List<DomainEvent<Long>> events);
 
-	void remove(Long id);
+	void removeLastMonth(String ymd);
 
-	void finds(Set<String> sourceNames, String appName, ResultHandler<DomainEventDO> resultHandler);
+	void findList(Set<String> sourceNames, String appName, ResultHandler<DomainEventDO> resultHandler);
 
 }

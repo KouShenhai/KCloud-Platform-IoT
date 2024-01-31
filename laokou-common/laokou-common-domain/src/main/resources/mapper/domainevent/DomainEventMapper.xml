@@ -26,8 +26,6 @@
         editor,
         create_date,
         update_date,
-        del_flag,
-        version,
         dept_id,
         dept_path,
         tenant_id,
@@ -39,12 +37,35 @@
         app_name,
         `attribute`
     </sql>
+    
+    <select id="selectVersion" resultType="integer">
+        select version from boot_sys_domain_event where id = #{id}
+    </select>
+    
+    <update id="updateStatusById">
+        update boot_sys_domain_event set event_status = #{entity.eventStatus}, version = version + 1 where id = #{entity.id} and version = #{entity.version}
+    </update>
 
     <select id="selectObjects" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.common.domain.repository.DomainEventDO">
         select <include refid="columns"/>
             from boot_sys_domain_event
         where del_flag = 0
-            and event_status in ('CREATED','PUBLISH_FAILED','CONSUME_FAILED')
+            and event_status in ('CREATED','PUBLISH_FAILED','CONSUME_FAILED','PUBLISH_SUCCEED')
+        <if test="sourceNames != null and sourceNames.size() > 0">
+            and source_name in
+            <foreach collection="sourceNames" item="item" open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="appName != null and appName != ''">
+            and app_name = #{appName}
+        </if>
+    </select>
+    <select id="selectTotal" resultType="long">
+        select count(1)
+        from boot_sys_domain_event
+        where del_flag = 0
+        and event_status in ('CREATED','PUBLISH_FAILED','CONSUME_FAILED', 'PUBLISH_SUCCEED')
         <if test="sourceNames != null and sourceNames.size() > 0">
             and source_name in
             <foreach collection="sourceNames" item="item" open="(" close=")">
@@ -64,8 +85,6 @@
                     #{editor},
                     #{createDate},
                     #{updateDate},
-                    '0',
-                    '0',
                     #{deptId},
                     #{deptPath},
                     #{tenantId},
@@ -78,8 +97,9 @@
                     #{attribute}
         )
     </insert>
-    <delete id="deleteOneById">
-        delete from boot_sys_domain_event where id = #{id}
+
+    <delete id="deleteByYmd">
+        delete from boot_sys_domain_event where date_format(create_date, '%Y%m%d') <![CDATA[ < ]]> #{ymd}
     </delete>
 
 </mapper>

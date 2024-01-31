@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.domain.convertor.DomainEventConvertor;
 import org.laokou.common.domain.event.DecorateDomainEvent;
+import org.laokou.common.domain.repository.DomainEventDO;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.EventStatusEnums;
 import org.laokou.common.i18n.common.JobModeEnums;
@@ -61,7 +62,7 @@ public class DomainEventPublishTask {
 	private final DynamicUtil dynamicUtil;
 
 	public void publishEvent(List<DomainEvent<Long>> list, JobModeEnums jobMode) {
-		List<DomainEvent<Long>> modifyList = Collections.synchronizedList(new ArrayList<>());
+		List<DomainEvent<Long>> modifyList = Collections.synchronizedList(new ArrayList<>(16));
 		switch (jobMode) {
 			case SYNC -> {
 				if (CollectionUtil.isNotEmpty(list)) {
@@ -70,19 +71,39 @@ public class DomainEventPublishTask {
 						.toList();
 					// 阻塞所有任务
 					CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
+					// 批量修改事件状态
+					domainEventService.modify(modifyList);
+					modifyList.clear();
 				}
 			}
-			case ASYNC -> jobHandler();
-		}
-		// 批量修改事件状态
-		if (CollectionUtil.isNotEmpty(modifyList)) {
-			domainEventService.modify(modifyList);
+			case ASYNC -> jobHandler(modifyList);
 		}
 	}
 
-	private void jobHandler() {
-		domainEventService.finds(getSourceNames(), getAppName(), resultContext -> {
+	private void jobHandler(List<DomainEvent<Long>> modifyList) {
+		int chunkSize = 1000;
+		List<DomainEventDO> list = Collections.synchronizedList(new ArrayList<>(chunkSize));
+		domainEventService.findList(getSourceNames(), getAppName(), resultContext -> {
+			list.add(resultContext.getResultObject());
+			if (list.size() % chunkSize == 0) {
+				mqSend(modifyList, list);
+			}
 		});
+		if (list.size() % chunkSize != 0) {
+			mqSend(modifyList, list);
+		}
+	}
+
+	private void mqSend(List<DomainEvent<Long>> modifyList, List<DomainEventDO> list) {
+		List<CompletableFuture<Void>> futures = list.stream()
+				.map(item -> CompletableFuture.runAsync(() -> handleMqSend(modifyList, item), executor))
+				.toList();
+		// 阻塞所有任务
+		CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
+		// 批量修改事件状态
+		domainEventService.modify(modifyList);
+		modifyList.clear();
+		list.clear();
 	}
 
 	private String getAppName() {
@@ -93,23 +114,33 @@ public class DomainEventPublishTask {
 		return dynamicUtil.getDataSources().keySet();
 	}
 
+	private void handleMqSend(List<DomainEvent<Long>> modifyList, DomainEventDO item) {
+		// 同步发送并修改事件状态
+		boolean result = rocketMqTemplate.sendSyncOrderlyMessage(item.getTopic(), item, item.getAppName());
+		addEvent(result, modifyList, item.getId(), item.getSourceName());
+	}
+
 	private void handleMqSend(List<DomainEvent<Long>> modifyList, DomainEvent<Long> item) {
 		// 同步发送并修改事件状态
 		boolean result = rocketMqTemplate.sendSyncOrderlyMessage(item.getTopic(),
 				DomainEventConvertor.toDataObject(item), item.getAppName());
+		addEvent(result, modifyList, item.getId(), item.getSourceName());
+	}
+
+	private void addEvent(boolean result,List<DomainEvent<Long>> modifyList, Long id,String sourceName) {
 		if (result) {
 			// 发布成功
-			addEvent(modifyList, item, PUBLISH_SUCCEED);
+			addEvent(modifyList, id, sourceName, PUBLISH_SUCCEED);
 		}
 		else {
 			// 发布失败
-			addEvent(modifyList, item, PUBLISH_FAILED);
+			addEvent(modifyList, id, sourceName , PUBLISH_FAILED);
 		}
 	}
 
-	private void addEvent(List<DomainEvent<Long>> modifyList, DomainEvent<Long> item,
+	private void addEvent(List<DomainEvent<Long>> modifyList, Long id,String sourceName,
 			EventStatusEnums eventStatusEnums) {
-		DecorateDomainEvent event = new DecorateDomainEvent(item.getId(), eventStatusEnums, item.getSourceName());
+		DecorateDomainEvent event = new DecorateDomainEvent(id, eventStatusEnums, sourceName);
 		modifyList.add(event);
 	}
 
