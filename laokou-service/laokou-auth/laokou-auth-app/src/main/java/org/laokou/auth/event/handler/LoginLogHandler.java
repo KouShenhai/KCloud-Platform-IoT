@@ -18,41 +18,22 @@
 package org.laokou.auth.event.handler;
 
 import io.micrometer.common.lang.NonNullApi;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.auth.domain.event.LoginFailedEvent;
 import org.laokou.auth.domain.event.LoginSucceededEvent;
-import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
-import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.auth.domain.gateway.LogGateway;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.event.DecorateDomainEvent;
+import org.laokou.common.domain.listener.AbstractDomainEventRocketMQListener;
 import org.laokou.common.domain.repository.DomainEventDO;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.EventTypeEnums;
-import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
-
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.common.i18n.common.EventStatusEnums.CONSUME_FAILED;
-import static org.laokou.common.i18n.common.EventStatusEnums.CONSUME_SUCCEED;
 import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_LOG_CONSUMER_GROUP;
 import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_LOG_TOPIC;
-import static org.laokou.common.i18n.common.StringConstants.UNDER;
 
 /**
  * 登录日志处理器.
@@ -62,69 +43,28 @@ import static org.laokou.common.i18n.common.StringConstants.UNDER;
 @Slf4j
 @Component
 @NonNullApi
-@RequiredArgsConstructor
 @RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_LOG_CONSUMER_GROUP, topic = LAOKOU_LOGIN_LOG_TOPIC,
 		messageModel = CLUSTERING, consumeMode = ORDERLY)
-public class LoginLogHandler implements RocketMQListener<MessageExt> {
+public class LoginLogHandler extends AbstractDomainEventRocketMQListener {
 
-	private final LoginLogMapper loginLogMapper;
+	private final LogGateway logGateway;
 
-	private final DomainEventService domainEventService;
+	public LoginLogHandler(DomainEventService domainEventService, LogGateway logGateway) {
+		super(domainEventService);
+		this.logGateway = logGateway;
+	}
 
 	@Override
-	public void onMessage(MessageExt message) {
-		List<DomainEvent<Long>> events = new ArrayList<>(1);
-		String msg = new String(message.getBody(), StandardCharsets.UTF_8);
-		DomainEventDO eventDO = JacksonUtil.toBean(msg, DomainEventDO.class);
-		try {
-			switch (EventTypeEnums.valueOf(eventDO.getEventType())) {
-				case LOGIN_FAILED -> {
-					LoginFailedEvent event = JacksonUtil.toBean(eventDO.getAttribute(), LoginFailedEvent.class);
-					create(Objects.requireNonNull(ConvertUtil.sourceToTarget(event, LoginLogDO.class)), eventDO);
-				}
-				case LOGIN_SUCCEEDED -> {
-					LoginSucceededEvent event = JacksonUtil.toBean(eventDO.getAttribute(), LoginSucceededEvent.class);
-					create(Objects.requireNonNull(ConvertUtil.sourceToTarget(event, LoginLogDO.class)), eventDO);
-				}
+	protected void handleDomainEvent(DomainEventDO eventDO) {
+		switch (EventTypeEnums.valueOf(eventDO.getEventType())) {
+			case LOGIN_FAILED -> {
+				LoginFailedEvent event = JacksonUtil.toBean(eventDO.getAttribute(), LoginFailedEvent.class);
+				logGateway.create(event, eventDO);
 			}
-			// 消费成功
-			events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
-		}
-		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			if (e instanceof DataIntegrityViolationException) {
-				// 消费成功（数据重复直接改为消费成功）
-				events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
-			} else {
-				// 消费失败
-				events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_FAILED, eventDO.getSourceName()));
+			case LOGIN_SUCCEEDED -> {
+				LoginSucceededEvent event = JacksonUtil.toBean(eventDO.getAttribute(), LoginSucceededEvent.class);
+				logGateway.create(event, eventDO);
 			}
-		}
-		finally {
-			domainEventService.modify(events);
-		}
-	}
-
-	private LoginLogDO convert(LoginLogDO logDO, DomainEventDO eventDO) {
-		logDO.setId(IdGenerator.defaultSnowflakeId());
-		logDO.setEditor(eventDO.getEditor());
-		logDO.setCreator(eventDO.getCreator());
-		logDO.setCreateDate(eventDO.getCreateDate());
-		logDO.setUpdateDate(eventDO.getUpdateDate());
-		logDO.setDeptId(eventDO.getDeptId());
-		logDO.setDeptPath(eventDO.getDeptPath());
-		logDO.setTenantId(eventDO.getTenantId());
-		logDO.setEventId(eventDO.getId());
-		return logDO;
-	}
-
-	private void create(LoginLogDO logDO, DomainEventDO eventDO) {
-		try {
-			DynamicTableSuffixContextHolder.set(UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
-			loginLogMapper.insert(convert(logDO, eventDO));
-		}
-		finally {
-			DynamicTableSuffixContextHolder.clear();
 		}
 	}
 

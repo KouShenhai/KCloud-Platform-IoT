@@ -21,6 +21,7 @@ import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.laokou.common.mybatisplus.repository.BaseDO;
@@ -29,7 +30,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import static org.apache.ibatis.type.JdbcType.*;
 import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
@@ -74,7 +74,7 @@ public class GeneratorMain {
 		// 默认生成到 KCloud-Platform-Alibaba
 		String outputDir = OUTPUT_DIR;
 		if (StringUtil.isEmpty(outputDir)) {
-			outputDir = Objects.requireNonNull(GeneratorMain.class.getClassLoader().getResource("")).getPath();
+			outputDir = ObjectUtil.requireNotNull(GeneratorMain.class.getClassLoader().getResource("")).getPath();
 			outputDir = outputDir.substring(0, outputDir.length() - 15) + File.separator + "src" + File.separator
 					+ "main" + File.separator + "java";
 			File srcFolder = new File(outputDir);

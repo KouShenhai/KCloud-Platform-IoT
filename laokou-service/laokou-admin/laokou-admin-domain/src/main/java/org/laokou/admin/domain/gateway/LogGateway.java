@@ -18,8 +18,11 @@
 package org.laokou.admin.domain.gateway;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.laokou.admin.domain.event.OperateFailedEvent;
+import org.laokou.admin.domain.event.OperateSucceededEvent;
 import org.laokou.admin.domain.log.LoginLog;
 import org.laokou.admin.domain.log.OperateLog;
+import org.laokou.common.domain.repository.DomainEventDO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 
@@ -44,5 +47,9 @@ public interface LogGateway {
 	 * @return 操作日志列表
 	 */
 	Datas<OperateLog> operateList(OperateLog operateLog, PageQuery pageQuery);
+
+	void create(OperateSucceededEvent event, DomainEventDO eventDO);
+
+	void create(OperateFailedEvent event, DomainEventDO eventDO);
 
 }

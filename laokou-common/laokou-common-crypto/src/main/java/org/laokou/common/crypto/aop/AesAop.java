@@ -22,15 +22,15 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.common.i18n.common.AlgorithmEnums;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.crypto.annotation.Crypto;
 import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.i18n.common.AlgorithmEnums;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.Objects;
 
 /**
  * AES切面.
@@ -48,7 +48,7 @@ public class AesAop {
 		Method method = signature.getMethod();
 		Crypto crypto = AnnotationUtils.findAnnotation(method, Crypto.class);
 		Object proceed = point.proceed();
-		if (Objects.requireNonNull(crypto).type() == AlgorithmEnums.AES) {
+		if (ObjectUtil.requireNotNull(crypto).type() == AlgorithmEnums.AES) {
 			if (proceed instanceof Result<?> result) {
 				Object data = result.getData();
 				AesUtil.transform(data);

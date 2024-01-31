@@ -18,16 +18,37 @@
 package org.laokou.admin.domain.log;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.laokou.admin.domain.event.OperateFailedEvent;
+import org.laokou.admin.domain.event.OperateSucceededEvent;
+import org.laokou.common.core.holder.UserContextHolder;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
+import java.util.*;
+
+import static lombok.AccessLevel.PROTECTED;
+import static org.laokou.common.i18n.common.StringConstants.*;
+import static org.laokou.common.i18n.common.SysConstants.EMPTY_JSON;
 
 /**
  * @author laokou
  */
 @Data
+@SuperBuilder
+@NoArgsConstructor(access = PROTECTED)
+@AllArgsConstructor(access = PROTECTED)
 @Schema(name = "OperateLog", description = "操作日志")
-public class OperateLog {
+public class OperateLog extends AggregateRoot<Long> {
 
 	@Schema(name = "name", description = "操作名称")
 	private String name;
@@ -56,19 +77,71 @@ public class OperateLog {
 	@Schema(name = "address", description = "操作的归属地")
 	private String address;
 
-	@Schema(name = "status", description = "操作状态 0成功 1失败")
-	private Integer status;
-
 	@Schema(name = "operator", description = "操作人")
 	private String operator;
 
 	@Schema(name = "errorMessage", description = "错误信息")
 	private String errorMessage;
 
+	@Schema(name = "status", description = "操作状态 0成功 1失败")
+	private Integer status;
+
 	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
 	private Long takeTime;
 
-	@Schema(name = "createDate", description = "创建时间")
-	private LocalDateTime createDate;
+	public void modifyStatus(Exception e, HttpServletRequest request, String appName) {
+		if (ObjectUtil.isNotNull(e)) {
+			operateFail(e, request, appName);
+		}
+		else {
+			operateSuccess(request, appName);
+		}
+	}
+
+	public void decorateMethodName(String className, String methodName) {
+		this.methodName = className + DOT + methodName + LEFT + RIGHT;
+	}
+
+	public void calculateTaskTime(long startTime) {
+		this.takeTime = IdGenerator.SystemClock.now() - startTime;
+	}
+
+	public void decorateRequestParams(Object[] args, Set<String> removeParams) {
+		List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs).toList();
+		if (CollectionUtil.isEmpty(params)) {
+			this.requestParams = EMPTY_JSON;
+		}
+		else {
+			Object obj = params.getFirst();
+			try {
+				Map<String, String> map = JacksonUtil.toMap(obj, String.class, String.class);
+				removeAny(map, removeParams.toArray(String[]::new));
+				this.requestParams = JacksonUtil.toJsonStr(map, true);
+			}
+			catch (Exception e) {
+				this.requestParams = JacksonUtil.toJsonStr(obj, true);
+			}
+		}
+	}
+
+	private void operateSuccess(HttpServletRequest request, String appName) {
+		addEvent(new OperateSucceededEvent(this, request, UserContextHolder.get(), appName));
+	}
+
+	private void operateFail(Exception e, HttpServletRequest request, String appName) {
+		this.errorMessage = e.getMessage();
+		addEvent(new OperateFailedEvent(this, request, UserContextHolder.get(), appName));
+	}
+
+	private void removeAny(Map<String, String> map, String... keys) {
+		for (String key : keys) {
+			map.remove(key);
+		}
+	}
+
+	private boolean filterArgs(Object arg) {
+		return !(arg instanceof HttpServletRequest) && !(arg instanceof MultipartFile)
+				&& !(arg instanceof HttpServletResponse);
+	}
 
 }

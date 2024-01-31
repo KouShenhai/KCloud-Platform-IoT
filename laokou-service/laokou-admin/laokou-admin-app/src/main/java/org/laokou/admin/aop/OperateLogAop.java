@@ -18,41 +18,29 @@
 package org.laokou.admin.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.hc.core5.http.HttpHeaders;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.admin.common.event.DomainEventPublisher;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.domain.annotation.OperateLog;
-import org.laokou.admin.dto.log.domainevent.OperateLogEvent;
-import org.laokou.common.core.holder.UserContextHolder;
-import org.laokou.common.core.utils.*;
-import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
-import static org.laokou.common.i18n.common.NumberConstants.FAIL;
-import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
-import static org.laokou.common.i18n.common.StringConstants.*;
-import static org.laokou.common.i18n.common.SysConstants.EMPTY_JSON;
+import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 
 /**
  * 操作日志切面.
@@ -67,7 +55,9 @@ public class OperateLogAop {
 
 	private final DefaultConfigProperties defaultConfigProperties;
 
-	private final DomainEventPublisher domainEventPublisher;
+	private final Environment environment;
+
+	private final DomainEventService domainEventService;
 
 	private static final ThreadLocal<Long> TASK_TIME_LOCAL = new NamedThreadLocal<>("耗时");
 
@@ -96,90 +86,35 @@ public class OperateLogAop {
 	}
 
 	private void handleLog(final JoinPoint joinPoint, final Exception e) {
-		HttpServletRequest request = RequestUtil.getHttpServletRequest();
-		// 获取注解
-		MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-		Method method = methodSignature.getMethod();
-		OperateLog operateLog = AnnotationUtils.findAnnotation(method, OperateLog.class);
-		// 构建事件对象
-		Assert.isTrue(ObjectUtil.isNotNull(operateLog), "@OperateLog is null");
-		log.info("{}", UserContextHolder.get().getId());
-		log.info("{}", UserContextHolder.get().getDeptId());
-		log.info("{}", UserContextHolder.get().getTenantId());
-		log.info("{}", UserContextHolder.get().getDeptPath());
-		// OperateLogEvent event = buildEvent(operateLog, request, joinPoint, e);
-		// domainEventPublisher.publish(null);
-	}
-
-	private OperateLogEvent buildEvent(OperateLog operateLog, HttpServletRequest request, JoinPoint joinPoint,
-			Exception e) {
 		try {
-			String ip = IpUtil.getIpAddr(request);
+			// 应用名称
+			String appName = environment.getProperty(SPRING_APPLICATION_NAME);
+			HttpServletRequest request = RequestUtil.getHttpServletRequest();
+			MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+			Method method = methodSignature.getMethod();
+			OperateLog operateLog = AnnotationUtils.findAnnotation(method, OperateLog.class);
+			Assert.isTrue(ObjectUtil.isNotNull(operateLog), "@OperateLog is null");
 			String className = joinPoint.getTarget().getClass().getName();
 			String methodName = joinPoint.getSignature().getName();
 			Object[] args = joinPoint.getArgs();
-			List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs).toList();
-			OperateLogEvent event = null;
-			Assert.isTrue(ObjectUtil.isNotNull(operateLog), "@OperateLog is null");
-			event.setModuleName(operateLog.module());
-			event.setName(operateLog.operation());
-			event.setUri(request.getRequestURI());
-			event.setIp(ip);
-			event.setAddress(AddressUtil.getRealAddress(ip));
-			event.setOperator(UserUtil.getUserName());
-			if (null != e) {
-				event.setStatus(FAIL);
-				event.setErrorMessage(e.getMessage());
-			}
-			else {
-				event.setStatus(SUCCESS);
-			}
-			event.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
-			event.setMethodName(className + DOT + methodName + LEFT + RIGHT);
-			event.setRequestType(request.getMethod());
-			Object obj;
-			if (CollectionUtil.isEmpty(params)) {
-				obj = null;
-			}
-			else {
-				obj = params.getFirst();
-			}
-			if (ObjectUtil.isNull(obj)) {
-				event.setRequestParams(EMPTY_JSON);
-			}
-			else {
-				String str = JacksonUtil.toJsonStr(obj);
-				if (RISK.contains(str)) {
-					Map<String, String> map = removeAny(JacksonUtil.toMap(str, String.class, String.class),
-							defaultConfigProperties.getRemoveParams().toArray(String[]::new));
-					event.setRequestParams(JacksonUtil.toJsonStr(map, true));
-				}
-				else {
-					event.setRequestParams(str);
-				}
-			}
-			event.setTakeTime(IdGenerator.SystemClock.now() - TASK_TIME_LOCAL.get());
-			return event;
-		}
-		catch (Exception ex) {
-			log.error("错误信息：{}，详情见日志", LogUtil.result(ex.getMessage()), ex);
-			throw ex;
+			org.laokou.admin.domain.log.OperateLog operate = org.laokou.admin.domain.log.OperateLog.builder()
+				.moduleName(operateLog.module())
+				.name(operateLog.operation())
+				.build();
+			// 组装类名
+			operate.decorateMethodName(className, methodName);
+			// 组装请求参数
+			operate.decorateRequestParams(args, defaultConfigProperties.getRemoveParams());
+			// 计算消耗时间
+			operate.calculateTaskTime(TASK_TIME_LOCAL.get());
+			// 修改状态
+			operate.modifyStatus(e, request, appName);
+			// 保存领域事件（事件溯源）
+			domainEventService.create(operate.getEvents());
 		}
 		finally {
 			TASK_TIME_LOCAL.remove();
 		}
-	}
-
-	private boolean filterArgs(Object arg) {
-		return !(arg instanceof HttpServletRequest) && !(arg instanceof MultipartFile)
-				&& !(arg instanceof HttpServletResponse);
-	}
-
-	private Map<String, String> removeAny(Map<String, String> map, String... keys) {
-		for (String key : keys) {
-			map.remove(key);
-		}
-		return map;
 	}
 
 }

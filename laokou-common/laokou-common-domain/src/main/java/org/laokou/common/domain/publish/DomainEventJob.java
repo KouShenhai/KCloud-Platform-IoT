@@ -34,6 +34,7 @@ import static org.laokou.common.i18n.common.JobModeEnums.ASYNC;
 public class DomainEventJob {
 
 	private final DomainEventPublisher domainEventPublisher;
+
 	private final DomainEventService domainEventService;
 
 	@Lock4j(key = "public_domain_event_job_lock", expire = 280000)

@@ -52,6 +52,7 @@ public class UserContextInterceptor implements HandlerInterceptor {
 			.deptId(userDetail.getDeptId())
 			.deptPath(userDetail.getDeptPath())
 			.tenantId(userDetail.getTenantId())
+			.username(userDetail.getUsername())
 			.sourceName(userDetail.getSourceName())
 			.build();
 	}
