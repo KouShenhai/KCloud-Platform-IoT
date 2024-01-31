@@ -63,7 +63,7 @@ public class DateUtil {
 	public static final int YYYY_DOT_MM_DOT_DD = 5;
 
 	/**
-	 * yyyymmdd
+	 * yyyymmdd.
 	 */
 	public static final int YYYYMMDD = 6;
 
@@ -435,7 +435,7 @@ public class DateUtil {
 		String YYYY_DOT_MM_DOT_DD = "yyyy.MM.dd";
 
 		/**
-		 * yyyyMMdd
+		 * yyyyMMdd.
 		 */
 		String YYYYMMDD = "yyyyMMdd";
 

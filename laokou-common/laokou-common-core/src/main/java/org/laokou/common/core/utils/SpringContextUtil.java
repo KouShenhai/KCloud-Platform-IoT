@@ -30,7 +30,6 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * spring上下文工具类.
@@ -111,7 +110,7 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	 * @return 类
 	 */
 	public static Class<?> getType(String name) {
-		return Objects.requireNonNull(applicationContext.getType(name));
+		return ObjectUtil.requireNotNull(applicationContext.getType(name));
 	}
 
 	/**

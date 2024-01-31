@@ -96,8 +96,8 @@ public class DomainEventPublishTask {
 
 	private void mqSend(List<DomainEvent<Long>> modifyList, List<DomainEventDO> list) {
 		List<CompletableFuture<Void>> futures = list.stream()
-				.map(item -> CompletableFuture.runAsync(() -> handleMqSend(modifyList, item), executor))
-				.toList();
+			.map(item -> CompletableFuture.runAsync(() -> handleMqSend(modifyList, item), executor))
+			.toList();
 		// 阻塞所有任务
 		CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
 		// 批量修改事件状态
@@ -127,18 +127,18 @@ public class DomainEventPublishTask {
 		addEvent(result, modifyList, item.getId(), item.getSourceName());
 	}
 
-	private void addEvent(boolean result,List<DomainEvent<Long>> modifyList, Long id,String sourceName) {
+	private void addEvent(boolean result, List<DomainEvent<Long>> modifyList, Long id, String sourceName) {
 		if (result) {
 			// 发布成功
 			addEvent(modifyList, id, sourceName, PUBLISH_SUCCEED);
 		}
 		else {
 			// 发布失败
-			addEvent(modifyList, id, sourceName , PUBLISH_FAILED);
+			addEvent(modifyList, id, sourceName, PUBLISH_FAILED);
 		}
 	}
 
-	private void addEvent(List<DomainEvent<Long>> modifyList, Long id,String sourceName,
+	private void addEvent(List<DomainEvent<Long>> modifyList, Long id, String sourceName,
 			EventStatusEnums eventStatusEnums) {
 		DecorateDomainEvent event = new DecorateDomainEvent(id, eventStatusEnums, sourceName);
 		modifyList.add(event);

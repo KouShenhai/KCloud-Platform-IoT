@@ -74,4 +74,7 @@ public class OperateLogDO extends BaseDO {
 	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
 	private Long takeTime;
 
+	@Schema(name = "", description = "事件ID")
+	private Long eventId;
+
 }

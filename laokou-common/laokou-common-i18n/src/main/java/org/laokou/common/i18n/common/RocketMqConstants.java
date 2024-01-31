@@ -34,6 +34,9 @@ public final class RocketMqConstants {
 	@Schema(name = "LAOKOU_LOGIN_LOG_TOPIC", description = "登录日志主题")
 	public static final String LAOKOU_LOGIN_LOG_TOPIC = "laokou_login_log_topic";
 
+	@Schema(name = "LAOKOU_OPERATE_LOG_TOPIC", description = "登录日志主题")
+	public static final String LAOKOU_OPERATE_LOG_TOPIC = "laokou_operate_log_topic";
+
 	@Schema(name = "LAOKOU_NOTICE_MESSAGE_TAG", description = "通知消息标签")
 	public static final String LAOKOU_NOTICE_MESSAGE_TAG = "notice";
 
@@ -46,8 +49,11 @@ public final class RocketMqConstants {
 	@Schema(name = "LAOKOU_NOTICE_MESSAGE_CONSUMER_GROUP", description = "通知消息消费者组")
 	public static final String LAOKOU_NOTICE_MESSAGE_CONSUMER_GROUP = "laokou_notice_message_consumer_group";
 
-	@Schema(name = "LAOKOU_LOGIN_LOG_CONSUMER_GROUP", description = "通知消息消费者组")
+	@Schema(name = "LAOKOU_LOGIN_LOG_CONSUMER_GROUP", description = "登录日志消费者组")
 	public static final String LAOKOU_LOGIN_LOG_CONSUMER_GROUP = "laokou_login_log_consumer_group";
+
+	@Schema(name = "LAOKOU_OPERATE_LOG_CONSUMER_GROUP", description = "登录日志消费者组")
+	public static final String LAOKOU_OPERATE_LOG_CONSUMER_GROUP = "laokou_operate_log_consumer_group";
 
 	@Schema(name = "TOPIC_TAG", description = "主题与标签的分隔符")
 	public static final String TOPIC_TAG = "%s:%s";

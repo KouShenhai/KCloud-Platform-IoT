@@ -18,17 +18,21 @@
 package org.laokou.admin.event.handler;
 
 import io.micrometer.common.lang.NonNullApi;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.dto.log.domainevent.OperateLogEvent;
-import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
+import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.laokou.admin.domain.event.OperateFailedEvent;
+import org.laokou.admin.domain.event.OperateSucceededEvent;
+import org.laokou.admin.domain.gateway.LogGateway;
+import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.domain.listener.AbstractDomainEventRocketMQListener;
+import org.laokou.common.domain.repository.DomainEventDO;
+import org.laokou.common.domain.service.DomainEventService;
+import org.laokou.common.i18n.common.EventTypeEnums;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.Executor;
+import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
+import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
+import static org.laokou.common.i18n.common.RocketMqConstants.*;
 
 /**
  * 操作日志处理.
@@ -38,38 +42,29 @@ import java.util.concurrent.Executor;
 @Slf4j
 @Component
 @NonNullApi
-@RequiredArgsConstructor
-public class OperateLogHandler implements ApplicationListener {
+@RocketMQMessageListener(consumerGroup = LAOKOU_OPERATE_LOG_CONSUMER_GROUP, topic = LAOKOU_OPERATE_LOG_TOPIC,
+		messageModel = CLUSTERING, consumeMode = ORDERLY)
+public class OperateLogHandler extends AbstractDomainEventRocketMQListener {
 
-	private final OperateLogMapper operateLogMapper;
+	private final LogGateway logGateway;
 
-	private final Executor executor;
-
-	// @Override
-	// public void onApplicationEvent(OperateLogEvent event) {
-	// String sourceName = UserContextHolder.get().getSourceName();
-	// CompletableFuture.runAsync(() -> {
-	// try {
-	// DynamicDataSourceContextHolder.push(sourceName);
-	// execute(event);
-	// }
-	// catch (Exception e) {
-	// log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-	// }
-	// finally {
-	// DynamicDataSourceContextHolder.clear();
-	// }
-	// }, executor);
-	// }
-
-	private void execute(OperateLogEvent event) {
-		OperateLogDO operateLogDO = ConvertUtil.sourceToTarget(event, OperateLogDO.class);
-		operateLogMapper.insertTable(operateLogDO);
+	public OperateLogHandler(DomainEventService domainEventService, LogGateway logGateway) {
+		super(domainEventService);
+		this.logGateway = logGateway;
 	}
 
 	@Override
-	public void onApplicationEvent(ApplicationEvent event) {
-
+	protected void handleDomainEvent(DomainEventDO eventDO) {
+		switch (EventTypeEnums.valueOf(eventDO.getEventType())) {
+			case OPERATE_FAILED -> {
+				OperateFailedEvent event = JacksonUtil.toBean(eventDO.getAttribute(), OperateFailedEvent.class);
+				logGateway.create(event, eventDO);
+			}
+			case OPERATE_SUCCEEDED -> {
+				OperateSucceededEvent event = JacksonUtil.toBean(eventDO.getAttribute(), OperateSucceededEvent.class);
+				logGateway.create(event, eventDO);
+			}
+		}
 	}
 
 }

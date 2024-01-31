@@ -15,16 +15,19 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.auth.domain.gateway;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import org.laokou.auth.domain.event.LoginFailedEvent;
+import org.laokou.auth.domain.event.LoginSucceededEvent;
+import org.laokou.common.domain.repository.DomainEventDO;
 
 /**
  * @author laokou
  */
-@Schema(name = "EventTypeEnums", description = "事件类型枚举")
-public enum EventTypeEnums {
+public interface LogGateway {
 
-	LOGIN_FAILED, LOGIN_SUCCEEDED, OPERATE_FAILED, OPERATE_SUCCEEDED
+	void create(LoginFailedEvent event, DomainEventDO eventDO);
+
+	void create(LoginSucceededEvent event, DomainEventDO eventDO);
 
 }

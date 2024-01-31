@@ -25,6 +25,8 @@ import lombok.SneakyThrows;
 import org.laokou.admin.convertor.LoginLogConvertor;
 import org.laokou.admin.convertor.OperateLogConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
+import org.laokou.admin.domain.event.OperateFailedEvent;
+import org.laokou.admin.domain.event.OperateSucceededEvent;
 import org.laokou.admin.domain.gateway.LogGateway;
 import org.laokou.admin.domain.log.LoginLog;
 import org.laokou.admin.domain.log.OperateLog;
@@ -33,8 +35,12 @@ import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.common.core.holder.UserContextHolder;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.domain.repository.DomainEventDO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.springframework.stereotype.Component;
 
@@ -42,7 +48,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.*;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_LOGIN_LOG;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_OPERATE_LOG;
 
 /**
  * 日志管理.
@@ -120,6 +127,39 @@ public class LogGatewayImpl implements LogGateway {
 		datas.setRecords(operateLogConvertor.convertEntityList(newPage.getRecords()));
 		datas.setTotal(newPage.getTotal());
 		return datas;
+	}
+
+	@Override
+	public void create(OperateSucceededEvent event, DomainEventDO eventDO) {
+		create(ObjectUtil.requireNotNull(ConvertUtil.sourceToTarget(event, OperateLogDO.class)), eventDO);
+	}
+
+	@Override
+	public void create(OperateFailedEvent event, DomainEventDO eventDO) {
+		create(ObjectUtil.requireNotNull(ConvertUtil.sourceToTarget(event, OperateLogDO.class)), eventDO);
+	}
+
+	private OperateLogDO convert(OperateLogDO logDO, DomainEventDO eventDO) {
+		logDO.setId(IdGenerator.defaultSnowflakeId());
+		logDO.setEditor(eventDO.getEditor());
+		logDO.setCreator(eventDO.getCreator());
+		logDO.setCreateDate(eventDO.getCreateDate());
+		logDO.setUpdateDate(eventDO.getUpdateDate());
+		logDO.setDeptId(eventDO.getDeptId());
+		logDO.setDeptPath(eventDO.getDeptPath());
+		logDO.setTenantId(eventDO.getTenantId());
+		logDO.setEventId(eventDO.getId());
+		return logDO;
+	}
+
+	private void create(OperateLogDO logDO, DomainEventDO eventDO) {
+		try {
+			DynamicDataSourceContextHolder.push(eventDO.getSourceName());
+			operateLogMapper.insert(convert(logDO, eventDO));
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

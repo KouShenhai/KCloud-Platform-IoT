@@ -70,6 +70,9 @@ public class UserContextHolder {
 		@Schema(name = "id", description = "ID")
 		private Long id;
 
+		@Schema(name = "username", description = "用户名")
+		private String username;
+
 		@Schema(name = "tenantId", description = "租户ID")
 		private Long tenantId;
 

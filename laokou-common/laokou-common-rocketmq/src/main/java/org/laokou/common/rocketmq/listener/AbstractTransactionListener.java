@@ -18,13 +18,11 @@
 package org.laokou.common.rocketmq.listener;
 
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionState;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.messaging.Message;
-
-import java.util.Objects;
 
 /**
  * @author laokou
@@ -34,7 +32,7 @@ public abstract class AbstractTransactionListener implements RocketMQLocalTransa
 
 	@Override
 	public RocketMQLocalTransactionState executeLocalTransaction(Message message, Object args) {
-		String transactionId = Objects.requireNonNull(message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID))
+		String transactionId = ObjectUtil.requireNotNull(message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID))
 			.toString();
 		Object payload = message.getPayload();
 		log.info("执行本地事务");
@@ -51,7 +49,7 @@ public abstract class AbstractTransactionListener implements RocketMQLocalTransa
 
 	@Override
 	public RocketMQLocalTransactionState checkLocalTransaction(Message message) {
-		String transactionId = Objects.requireNonNull(message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID))
+		String transactionId = ObjectUtil.requireNotNull(message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID))
 			.toString();
 		log.info("事务回查");
 		if (checkLocalTransaction(transactionId)) {

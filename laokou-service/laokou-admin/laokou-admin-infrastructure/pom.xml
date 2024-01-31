@@ -37,10 +37,6 @@
 -->
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-domain</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
             <artifactId>laokou-admin-client</artifactId>
         </dependency>
         <dependency>
@@ -64,10 +60,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-rocketmq</artifactId>
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
