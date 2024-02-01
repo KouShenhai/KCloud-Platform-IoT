@@ -18,6 +18,7 @@
 package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,6 +39,7 @@ import static org.laokou.common.i18n.common.StringConstants.DOT;
  *
  * @author laokou
  */
+@Slf4j
 public class FileUtil {
 
 	/**
@@ -77,11 +79,11 @@ public class FileUtil {
 	public static File createFile(String directory, String fileName) {
 		File directoryFile = new File(directory);
 		if (!directoryFile.exists()) {
-			directoryFile.mkdirs();
+			log.info("目录创建：{}", directoryFile.mkdirs());
 		}
 		File newFile = new File(directoryFile, fileName);
 		if (!newFile.exists()) {
-			newFile.createNewFile();
+			log.info("文件创建：{}", newFile.createNewFile());
 		}
 		return newFile;
 	}
