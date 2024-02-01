@@ -17,10 +17,6 @@
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-mybatis-plus</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus-generator</artifactId>
-		</dependency>
-    </dependencies>
+	</dependencies>
 
 </project>

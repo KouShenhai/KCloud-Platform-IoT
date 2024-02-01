@@ -18,12 +18,7 @@ import lombok.experimental.Accessors;
 </#if>
 import java.io.Serial;
 /**
- * <p>
- * ${table.comment!}
- * </p>
- *
  * @author ${author}
- * @since ${date}
  */
 <#if entityLombokModel>
 @Getter

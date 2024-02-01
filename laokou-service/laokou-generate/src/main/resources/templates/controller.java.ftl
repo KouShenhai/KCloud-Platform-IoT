@@ -27,12 +27,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import jakarta.servlet.http.HttpServletResponse;
 /**
- * <p>
- * ${table.comment!} 接口
- * </p>
- *
  * @author ${author}
- * @since ${date}
  */
 <#if restControllerStyle>
 @RestController

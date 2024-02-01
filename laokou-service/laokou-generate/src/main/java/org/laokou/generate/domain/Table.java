@@ -15,7 +15,25 @@
  *
  */
 
+package org.laokou.generate.domain;
+
+import lombok.Data;
+import lombok.experimental.SuperBuilder;
+
+import java.util.List;
+
 /**
  * @author laokou
  */
-package org.laokou.mybatisplus.generator;
+@Data
+@SuperBuilder
+public class Table {
+
+    private String name;
+    private String comment;
+    private Column pkColumn;
+    private List<Column> columns;
+    private String className;
+    private String instanceName;
+
+}

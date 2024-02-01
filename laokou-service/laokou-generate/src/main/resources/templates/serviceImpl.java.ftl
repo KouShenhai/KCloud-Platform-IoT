@@ -20,12 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.easy.excel.suppert.ExcelTemplate;
 /**
- * <p>
- * ${table.comment!} 服务实现类
- * </p>
- *
  * @author ${author}
- * @since ${date}
  */
 @Service
 <#if kotlin>

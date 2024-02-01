@@ -1,4 +1,4 @@
-package  ${package.Entity?replace("entity","excel")};
+package  ${package.Entity?replace("entity","qo")};
 <#if swagger>
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,21 +9,17 @@ import lombok.Data;
 import lombok.experimental.Accessors;
     </#if>
 </#if>
-import java.io.Serializable;
-import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import org.laokou.common.i18n.dto.BasePage;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serial;
 /**
-* @Description ${table.comment}
-* @Author ${author}
-* @Date ${date}
-*/
+ * @author ${author}
+ */
 @Data
-public class ${entity?substring(0,entity?length-2)}Excel implements Serializable {
+public class ${entity?substring(0,entity?length-2)}Qo extends BasePage {
 
     @Serial
     private static final long serialVersionUID = 1L;
-
 <#-- ----------  BEGIN 字段循环遍历  ---------->
 <#list table.fields as field>
     <#if field.keyFlag>
@@ -35,10 +31,14 @@ public class ${entity?substring(0,entity?length-2)}Excel implements Serializable
     * ${field.comment}
     */
     </#if>
-    @ExcelProperty(index = ${field_index},value = "${field.comment}")
-    @ColumnWidth(value = 20)
+    <#if springdoc>
+    @Schema(name = "${field.propertyName}",description = "${field.comment}")
+    <#elseif swagger>
+    @ApiModelProperty("${field.comment}")
+    <#else>
+
+    </#if>
     private ${field.propertyType} ${field.propertyName};
 </#list>
 <#------------  END 字段循环遍历  ---------->
-
 }
