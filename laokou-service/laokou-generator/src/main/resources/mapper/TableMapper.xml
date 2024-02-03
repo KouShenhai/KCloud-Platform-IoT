@@ -20,7 +20,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.generator.repository.TableMapper">
 
-    <select id="selectTables" resultType="map">
+    <select id="selectTables" resultType="org.laokou.generator.repository.TableDO">
         select table_name as name, table_comment as comment from information_schema.`tables`
         where table_schema = (select database())
         <if test="tableNames != null and tableNames.size() > 0">
@@ -34,12 +34,14 @@
         select table_name as tableName,column_name as name, data_type as dataType, column_comment as comment, column_key as `key`
         from information_schema.`columns`
         <where>
+            table_schema = (select database())
             <if test="tableNames != null and tableNames.size() > 0">
-                table_name in
+                and table_name in
                 <foreach collection="tableNames" item="item" open="(" close=")">
                     #{item}
                 </foreach>
             </if>
+            and column_name not in ('id','del_flag','version','create_date','update_date','creator','editor','dept_id','dept_path','tenant_id')
         </where>
         order by ordinal_position
     </select>
