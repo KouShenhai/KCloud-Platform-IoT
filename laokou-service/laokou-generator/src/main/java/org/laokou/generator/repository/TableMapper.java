@@ -15,19 +15,27 @@
  *
  */
 
-package org.laokou.auth.domain.gateway;
+package org.laokou.generator.repository;
 
-import org.laokou.auth.domain.event.LoginFailedEvent;
-import org.laokou.auth.domain.event.LoginSucceededEvent;
-import org.laokou.common.i18n.dto.DecorateDomainEvent;
+import org.apache.ibatis.annotations.MapKey;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author laokou
  */
-public interface LogGateway {
+@Repository
+@Mapper
+public interface TableMapper {
 
-	void create(LoginFailedEvent event, DecorateDomainEvent evt);
+	@MapKey("tableName")
+	Map<String, String> selectTables(@Param("tableNames") Set<String> tableNames);
 
-	void create(LoginSucceededEvent event, DecorateDomainEvent evt);
+	List<TableColumnDO> selectTableColumns(@Param("tableNames") Set<String> tableNames);
 
 }

@@ -74,29 +74,29 @@ public class AesUtil {
 
 	/**
 	 * 加密.
-	 * @param data 数据
+	 * @param str 字符串
 	 * @return 加密后的字符串
 	 */
 	@SneakyThrows
-	public static String encrypt(String data) {
+	public static String encrypt(String str) {
 		SecretKeySpec secretKeySpec = new SecretKeySpec(getSecretKey(), ALGORITHM_AES);
 		Cipher cipher = Cipher.getInstance(AES_INSTANCE);
 		cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, new IvParameterSpec(new byte[16]));
-		byte[] bytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
+		byte[] bytes = cipher.doFinal(str.getBytes(StandardCharsets.UTF_8));
 		return Base64.encodeBase64String(bytes);
 	}
 
 	/**
 	 * 解密.
-	 * @param data 数据
+	 * @param str 字符串
 	 * @return 解密后的字符串
 	 */
 	@SneakyThrows
-	public static String decrypt(String data) {
+	public static String decrypt(String str) {
 		SecretKeySpec secretKeySpec = new SecretKeySpec(getSecretKey(), ALGORITHM_AES);
 		Cipher cipher = Cipher.getInstance(AES_INSTANCE);
 		cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, new IvParameterSpec(new byte[16]));
-		byte[] bytes = Base64.decodeBase64(data);
+		byte[] bytes = Base64.decodeBase64(str);
 		return new String(cipher.doFinal(bytes), StandardCharsets.UTF_8);
 	}
 

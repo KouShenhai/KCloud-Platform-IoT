@@ -15,19 +15,19 @@
  *
  */
 
-package org.laokou.auth.domain.gateway;
+package org.laokou.common.crypto;
 
-import org.laokou.auth.domain.event.LoginFailedEvent;
-import org.laokou.auth.domain.event.LoginSucceededEvent;
-import org.laokou.common.i18n.dto.DecorateDomainEvent;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.StringUtil;
 
 /**
  * @author laokou
  */
-public interface LogGateway {
+@Slf4j
+public class StrTest {
 
-	void create(LoginFailedEvent event, DecorateDomainEvent evt);
-
-	void create(LoginSucceededEvent event, DecorateDomainEvent evt);
+	public static void main(String[] args) {
+		log.info("{}", StringUtil.convertUnder("_str_ee"));
+	}
 
 }

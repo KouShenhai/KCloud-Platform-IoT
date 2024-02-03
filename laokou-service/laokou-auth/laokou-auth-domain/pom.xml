@@ -17,7 +17,7 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-domain</artifactId>
+            <artifactId>laokou-common-core</artifactId>
         </dependency>
     </dependencies>
 

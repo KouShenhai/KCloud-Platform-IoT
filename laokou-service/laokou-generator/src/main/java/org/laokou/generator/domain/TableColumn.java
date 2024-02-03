@@ -15,19 +15,32 @@
  *
  */
 
-package org.laokou.auth.domain.gateway;
+package org.laokou.generator.domain;
 
-import org.laokou.auth.domain.event.LoginFailedEvent;
-import org.laokou.auth.domain.event.LoginSucceededEvent;
-import org.laokou.common.i18n.dto.DecorateDomainEvent;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Value;
+import lombok.experimental.SuperBuilder;
 
 /**
  * @author laokou
  */
-public interface LogGateway {
+@Value
+@SuperBuilder
+public class TableColumn {
 
-	void create(LoginFailedEvent event, DecorateDomainEvent evt);
+	@Schema(name = "name", description = "列名")
+	String name;
 
-	void create(LoginSucceededEvent event, DecorateDomainEvent evt);
+	@Schema(name = "dataType", description = "数据类型")
+	String dataType;
+
+	@Schema(name = "comment", description = "备注")
+	String comment;
+
+	@Schema(name = "fieldName", description = "属性名称")
+	String fieldName;
+
+	@Schema(name = "fieldType", description = "属性类型")
+	String fieldType;
 
 }

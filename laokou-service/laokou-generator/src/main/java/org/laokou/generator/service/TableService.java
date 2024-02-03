@@ -15,19 +15,18 @@
  *
  */
 
-package org.laokou.auth.domain.gateway;
+package org.laokou.generator.service;
 
-import org.laokou.auth.domain.event.LoginFailedEvent;
-import org.laokou.auth.domain.event.LoginSucceededEvent;
-import org.laokou.common.i18n.dto.DecorateDomainEvent;
+import org.laokou.generator.domain.Table;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author laokou
  */
-public interface LogGateway {
+public interface TableService {
 
-	void create(LoginFailedEvent event, DecorateDomainEvent evt);
-
-	void create(LoginSucceededEvent event, DecorateDomainEvent evt);
+	List<Table> findList(Set<String> tableNames);
 
 }

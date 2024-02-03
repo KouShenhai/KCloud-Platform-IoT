@@ -15,19 +15,18 @@
  *
  */
 
-package org.laokou.auth.domain.gateway;
+package org.laokou.generator.repository;
 
-import org.laokou.auth.domain.event.LoginFailedEvent;
-import org.laokou.auth.domain.event.LoginSucceededEvent;
-import org.laokou.common.i18n.dto.DecorateDomainEvent;
+import lombok.Data;
 
 /**
  * @author laokou
  */
-public interface LogGateway {
+@Data
+public class TableDO {
 
-	void create(LoginFailedEvent event, DecorateDomainEvent evt);
+	private String name;
 
-	void create(LoginSucceededEvent event, DecorateDomainEvent evt);
+	private String comment;
 
 }

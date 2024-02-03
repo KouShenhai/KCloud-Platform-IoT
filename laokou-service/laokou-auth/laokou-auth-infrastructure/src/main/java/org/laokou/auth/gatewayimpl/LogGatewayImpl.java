@@ -26,7 +26,7 @@ import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.domain.repository.DomainEventDO;
+import org.laokou.common.i18n.dto.DecorateDomainEvent;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
@@ -44,33 +44,33 @@ public class LogGatewayImpl implements LogGateway {
 	private final LoginLogMapper loginLogMapper;
 
 	@Override
-	public void create(LoginFailedEvent event, DomainEventDO eventDO) {
-		create(ObjectUtil.requireNotNull(ConvertUtil.sourceToTarget(event, LoginLogDO.class)), eventDO);
+	public void create(LoginFailedEvent event, DecorateDomainEvent evt) {
+		create(ObjectUtil.requireNotNull(ConvertUtil.sourceToTarget(event, LoginLogDO.class)), evt);
 	}
 
 	@Override
-	public void create(LoginSucceededEvent event, DomainEventDO eventDO) {
-		create(ObjectUtil.requireNotNull(ConvertUtil.sourceToTarget(event, LoginLogDO.class)), eventDO);
+	public void create(LoginSucceededEvent event, DecorateDomainEvent evt) {
+		create(ObjectUtil.requireNotNull(ConvertUtil.sourceToTarget(event, LoginLogDO.class)), evt);
 	}
 
-	private LoginLogDO convert(LoginLogDO logDO, DomainEventDO eventDO) {
+	private LoginLogDO convert(LoginLogDO logDO, DecorateDomainEvent evt) {
 		logDO.setId(IdGenerator.defaultSnowflakeId());
-		logDO.setEditor(eventDO.getEditor());
-		logDO.setCreator(eventDO.getCreator());
-		logDO.setCreateDate(eventDO.getCreateDate());
-		logDO.setUpdateDate(eventDO.getUpdateDate());
-		logDO.setDeptId(eventDO.getDeptId());
-		logDO.setDeptPath(eventDO.getDeptPath());
-		logDO.setTenantId(eventDO.getTenantId());
-		logDO.setEventId(eventDO.getId());
+		logDO.setEditor(evt.getEditor());
+		logDO.setCreator(evt.getCreator());
+		logDO.setCreateDate(evt.getCreateDate());
+		logDO.setUpdateDate(evt.getUpdateDate());
+		logDO.setDeptId(evt.getDeptId());
+		logDO.setDeptPath(evt.getDeptPath());
+		logDO.setTenantId(evt.getTenantId());
+		logDO.setEventId(evt.getId());
 		return logDO;
 	}
 
-	private void create(LoginLogDO logDO, DomainEventDO eventDO) {
+	private void create(LoginLogDO logDO, DecorateDomainEvent evt) {
 		try {
-			DynamicDataSourceContextHolder.push(eventDO.getSourceName());
+			DynamicDataSourceContextHolder.push(evt.getSourceName());
 			DynamicTableSuffixContextHolder.set(UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
-			loginLogMapper.insert(convert(logDO, eventDO));
+			loginLogMapper.insert(convert(logDO, evt));
 		}
 		finally {
 			DynamicTableSuffixContextHolder.clear();

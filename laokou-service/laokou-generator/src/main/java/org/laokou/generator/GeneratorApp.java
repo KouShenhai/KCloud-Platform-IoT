@@ -15,19 +15,22 @@
  *
  */
 
-package org.laokou.auth.domain.gateway;
+package org.laokou.generator;
 
-import org.laokou.auth.domain.event.LoginFailedEvent;
-import org.laokou.auth.domain.event.LoginSucceededEvent;
-import org.laokou.common.i18n.dto.DecorateDomainEvent;
+import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
  * @author laokou
  */
-public interface LogGateway {
+@EnableConfigurationProperties
+@SpringBootApplication(scanBasePackages = "org.laokou")
+public class GeneratorApp {
 
-	void create(LoginFailedEvent event, DecorateDomainEvent evt);
-
-	void create(LoginSucceededEvent event, DecorateDomainEvent evt);
+	public static void main(String[] args) {
+		new SpringApplicationBuilder(GeneratorApp.class).web(WebApplicationType.SERVLET).run(args);
+	}
 
 }

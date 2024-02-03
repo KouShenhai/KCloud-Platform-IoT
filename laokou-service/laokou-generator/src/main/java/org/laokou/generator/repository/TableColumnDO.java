@@ -15,32 +15,24 @@
  *
  */
 
-package org.laokou.generate.domain;
+package org.laokou.generator.repository;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Value;
-import lombok.experimental.SuperBuilder;
+import lombok.Data;
 
 /**
  * @author laokou
  */
-@Value
-@SuperBuilder
-public class Column {
+@Data
+public class TableColumnDO {
 
-    @Schema(name = "name", description = "列名")
-    String name;
+	private String tableName;
 
-    @Schema(name = "type", description = "类型")
-    String type;
+	private String name;
 
-    @Schema(name = "comment", description = "备注")
-    String comment;
+	private String dataType;
 
-    @Schema(name = "attrName", description = "属性名称")
-    String attrName;
+	private String comment;
 
-    @Schema(name = "attrType", description = "属性类型")
-    String attrType;
+	private String key;
 
 }

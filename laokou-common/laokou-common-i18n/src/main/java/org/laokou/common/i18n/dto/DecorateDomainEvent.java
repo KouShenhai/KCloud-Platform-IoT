@@ -15,25 +15,27 @@
  *
  */
 
-package org.laokou.generate.domain;
+package org.laokou.common.i18n.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.laokou.common.i18n.common.EventStatusEnums;
 
-import java.util.List;
+import static lombok.AccessLevel.PROTECTED;
 
 /**
  * @author laokou
  */
 @Data
 @SuperBuilder
-public class Table {
+@NoArgsConstructor(access = PROTECTED)
+@Schema(name = "DecorateDomainEvent", description = "装饰领域事件")
+public class DecorateDomainEvent extends DomainEvent<Long> {
 
-    private String name;
-    private String comment;
-    private Column pkColumn;
-    private List<Column> columns;
-    private String className;
-    private String instanceName;
+	public DecorateDomainEvent(Long id, EventStatusEnums eventStatus, String sourceName) {
+		super(id, eventStatus, sourceName);
+	}
 
 }
