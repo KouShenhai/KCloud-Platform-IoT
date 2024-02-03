@@ -27,6 +27,9 @@ import org.laokou.common.i18n.utils.StringUtil;
 public class StrTest {
 
 	public static void main(String[] args) {
+		String str = "_";
+		str += 1;
+		log.info("{}", str);
 		log.info("{}", StringUtil.convertUnder("_str_ee"));
 	}
 
