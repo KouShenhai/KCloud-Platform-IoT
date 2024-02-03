@@ -15,24 +15,25 @@
  *
  */
 
-package org.laokou.generator.repository;
+package ${packageName}.${moduleName}.gatewayimpl.database.dataobject;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Set;
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import org.laokou.common.mybatisplus.repository.BaseDO;
 
 /**
- * @author laokou
- */
-@Repository
-@Mapper
-public interface TableMapper {
+* @author laokou
+*/
+@Data
+@TableName("${name}")
+@Schema(name = "${className}DO", description = "${comment}")
+public class ${className}DO extends BaseDO {
 
-	List<TableDO> selectTables(@Param("tableNames") Set<String> tableNames);
+     <#list fields as field>
 
-	List<TableColumnDO> selectTableColumns(@Param("tableNames") Set<String> tableNames);
+     @Schema(name = "${field.name}", description = "${field.comment}")
+     private ${field.fieldType} ${field.fieldName};
 
+     </#list>
 }

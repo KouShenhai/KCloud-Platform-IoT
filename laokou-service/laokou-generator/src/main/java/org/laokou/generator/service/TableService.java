@@ -18,15 +18,15 @@
 package org.laokou.generator.service;
 
 import org.laokou.generator.domain.Table;
+import org.laokou.generator.dto.GenerateCmd;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author laokou
  */
 public interface TableService {
 
-	List<Table> findList(Set<String> tableNames);
+	List<Table> findList(GenerateCmd cmd);
 
 }

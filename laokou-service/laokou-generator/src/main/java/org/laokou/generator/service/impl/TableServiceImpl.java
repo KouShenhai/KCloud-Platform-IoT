@@ -19,22 +19,23 @@ package org.laokou.generator.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.DatasourceDataTypeEnums;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.generator.domain.Table;
 import org.laokou.generator.domain.TableColumn;
+import org.laokou.generator.dto.GenerateCmd;
 import org.laokou.generator.repository.TableColumnDO;
 import org.laokou.generator.repository.TableDO;
 import org.laokou.generator.repository.TableMapper;
 import org.laokou.generator.service.TableService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import static org.laokou.common.i18n.common.StringConstants.UNDER;
 
 /**
@@ -47,34 +48,29 @@ public class TableServiceImpl implements TableService {
 
 	private final TableMapper tableMapper;
 
-	private static final String PRIMARY_KEY = "PRI";
-
 	@Override
-	public List<Table> findList(Set<String> tableNames) {
-		Map<String, String> tables = tableMapper.selectTables(tableNames);
-		List<TableColumnDO> tableColumns = tableMapper.selectTableColumns(tableNames);
-		Map<String, List<TableColumnDO>> maps = tableColumns.stream()
+	public List<Table> findList(GenerateCmd cmd) {
+		List<TableDO> tables = tableMapper.selectTables(cmd.getTables());
+		List<TableColumnDO> tableColumns = tableMapper.selectTableColumns(cmd.getTables());
+		Map<String, List<TableColumnDO>> map = tableColumns.stream()
 			.collect(Collectors.groupingBy(TableColumnDO::getTableName));
-		return convert(tables, maps);
+		Map<String, String> tableMap = tables.stream().collect(Collectors.toMap(TableDO::getName, TableDO::getComment));
+		return convert(cmd, tableMap, map);
 	}
 
-	private List<Table> convert(Map<String, String> tables, Map<String, List<TableColumnDO>> maps) {
-		maps.forEach((key, value) -> {
-
+	private List<Table> convert(GenerateCmd cmd, Map<String, String> tableMap, Map<String, List<TableColumnDO>> map) {
+		List<Table> tableList = new ArrayList<>(map.size());
+		map.forEach((tableName, items) -> {
+			String tableComment = tableMap.get(tableName);
+			List<TableColumn> columns = items.stream().map(this::convert).toList();
+			tableList.add(convert(tableName, tableComment, cmd.getTablePrefix(), columns));
 		});
-		return null;
-	}
-
-	private TableColumnDO getPkColumn(List<TableColumnDO> list) {
-		List<TableColumnDO> pkList = list.stream().filter(item -> PRIMARY_KEY.equals(item.getKey())).toList();
-		if (CollectionUtil.isNotEmpty(pkList)) {
-			return pkList.getFirst();
-		}
-		return list.getFirst();
+		return tableList;
 	}
 
 	private TableColumn convert(TableColumnDO columnDO) {
 		return TableColumn.builder()
+			.name(columnDO.getName())
 			.fieldName(StringUtil.convertUnder(columnDO.getName()))
 			.dataType(columnDO.getDataType())
 			.comment(columnDO.getComment())
@@ -82,14 +78,14 @@ public class TableServiceImpl implements TableService {
 			.build();
 	}
 
-	private Table convert(TableDO tableDO, List<TableColumn> columns, TableColumn pkColumn) {
+	private Table convert(String name, String comment, String tablePrefix, List<TableColumn> columns) {
+		String newName = name.replace(tablePrefix, EMPTY);
 		return Table.builder()
-			.name(tableDO.getName())
-			.comment(tableDO.getComment())
+			.name(name)
+			.comment(comment)
 			.fields(columns)
-			.pkField(pkColumn)
-			.className(StringUtil.convertUnder(UNDER.concat(tableDO.getName())))
-			.instanceName(StringUtil.convertUnder(tableDO.getName()))
+			.className(StringUtil.convertUnder(UNDER.concat(newName)))
+			.instanceName(StringUtil.convertUnder(newName))
 			.build();
 	}
 

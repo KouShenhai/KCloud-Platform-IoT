@@ -54,8 +54,8 @@ public @interface Lock4j {
 	LockTypeEnums type() default LOCK;
 
 	/**
-	 * 开启应用标识(解决公共模块用同一把锁).
+	 * 开启标识(解决公共模块用同一把锁).
 	 */
-	boolean enableApp() default false;
+	boolean enable() default false;
 
 }

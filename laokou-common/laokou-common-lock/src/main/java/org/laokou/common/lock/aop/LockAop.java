@@ -67,12 +67,12 @@ public class LockAop {
 		Method method = methodSignature.getMethod();
 		Lock4j lock4j = AnnotationUtils.findAnnotation(method, Lock4j.class);
 		Assert.isTrue(ObjectUtil.isNotNull(lock4j), "@Lock4j is null");
-		String appId = UNDER;
-		if (lock4j.enableApp()) {
-			appId += environment.getProperty(SPRING_APPLICATION_NAME);
+		String appName = UNDER;
+		if (lock4j.enable()) {
+			appName += environment.getProperty(SPRING_APPLICATION_NAME);
 		}
-		// key + 时间戳 + 应用标识
-		String key = lock4j.key() + IdGenerator.SystemClock.now() + appId;
+		// key + 时间戳 + 应用名称
+		String key = lock4j.key() + IdGenerator.SystemClock.now() + appName;
 		long expire = lock4j.expire();
 		long timeout = lock4j.timeout();
 		final LockTypeEnums lockTypeEnums = lock4j.type();

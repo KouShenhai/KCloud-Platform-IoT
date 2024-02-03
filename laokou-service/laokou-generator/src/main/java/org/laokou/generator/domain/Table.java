@@ -33,8 +33,6 @@ public class Table {
 
 	private String comment;
 
-	private TableColumn pkField;
-
 	private List<TableColumn> fields;
 
 	private String className;

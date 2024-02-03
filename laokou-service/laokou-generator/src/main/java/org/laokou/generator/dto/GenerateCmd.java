@@ -15,24 +15,30 @@
  *
  */
 
-package org.laokou.generator.repository;
+package org.laokou.generator.dto;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
 
 /**
  * @author laokou
  */
-@Repository
-@Mapper
-public interface TableMapper {
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class GenerateCmd {
 
-	List<TableDO> selectTables(@Param("tableNames") Set<String> tableNames);
+	private Set<String> tables;
 
-	List<TableColumnDO> selectTableColumns(@Param("tableNames") Set<String> tableNames);
+	private String tablePrefix;
+
+	private String packageName;
+
+	private String moduleName;
 
 }
