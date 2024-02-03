@@ -22,8 +22,8 @@ import org.laokou.admin.domain.event.OperateFailedEvent;
 import org.laokou.admin.domain.event.OperateSucceededEvent;
 import org.laokou.admin.domain.log.LoginLog;
 import org.laokou.admin.domain.log.OperateLog;
-import org.laokou.common.domain.repository.DomainEventDO;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.DecorateDomainEvent;
 import org.laokou.common.i18n.dto.PageQuery;
 
 /**
@@ -48,8 +48,8 @@ public interface LogGateway {
 	 */
 	Datas<OperateLog> operateList(OperateLog operateLog, PageQuery pageQuery);
 
-	void create(OperateSucceededEvent event, DomainEventDO eventDO);
+	void create(OperateSucceededEvent event, DecorateDomainEvent evt);
 
-	void create(OperateFailedEvent event, DomainEventDO eventDO);
+	void create(OperateFailedEvent event, DecorateDomainEvent evt);
 
 }

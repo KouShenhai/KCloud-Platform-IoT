@@ -111,6 +111,8 @@ public class OperateLogAop {
 			operate.modifyStatus(e, request, appName);
 			// 保存领域事件（事件溯源）
 			domainEventService.create(operate.getEvents());
+			// 清空领域事件
+			operate.clearEvents();
 		}
 		finally {
 			TASK_TIME_LOCAL.remove();

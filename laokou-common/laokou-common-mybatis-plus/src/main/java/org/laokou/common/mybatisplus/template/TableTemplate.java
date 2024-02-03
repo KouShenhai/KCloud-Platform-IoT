@@ -18,19 +18,12 @@
 package org.laokou.common.mybatisplus.template;
 
 import com.google.common.base.CaseFormat;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.ResourceUtil;
-import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,16 +48,6 @@ public class TableTemplate {
 		return list;
 	}
 
-	@SneakyThrows
-	public static String getCreateLoginLogTableSqlScript(LocalDateTime localDateTime) {
-		return getContent(localDateTime, "scripts/boot_sys_login_log.sql");
-	}
-
-	@SneakyThrows
-	public static String getCreateTenantDBSqlScript() {
-		return TemplateUtil.getContent("scripts/kcloud_platform_alibaba_tenant.sql", new HashMap<>(0));
-	}
-
 	public static List<String> getInsertSqlScriptList(List<Map<String, String>> list, String tableName) {
 		List<String> sqlList = new ArrayList<>(list.size());
 		list.forEach(item -> {
@@ -83,21 +66,6 @@ public class TableTemplate {
 			sqlList.add(sql);
 		});
 		return sqlList;
-	}
-
-	@SneakyThrows
-	private static String getContent(LocalDateTime localDateTime, String location) {
-		Map<String, Object> params = new HashMap<>(1);
-		params.put("suffix", DateUtil.format(localDateTime, DateUtil.YYYYMM));
-		return getContent(location, params);
-	}
-
-	@SneakyThrows
-	private static String getContent(String location, Map<String, Object> params) {
-		try (InputStream inputStream = ResourceUtil.getResource(location).getInputStream()) {
-			String template = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-			return TemplateUtil.getContent(template, params);
-		}
 	}
 
 	private static LocalDate toDate(String dateStr) {

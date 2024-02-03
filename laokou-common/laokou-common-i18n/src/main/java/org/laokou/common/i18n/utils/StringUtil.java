@@ -22,9 +22,11 @@ import org.springframework.util.StringUtils;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.regex.Matcher;
 
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import static org.laokou.common.i18n.common.StringConstants.PERCENT;
+import static org.laokou.common.i18n.common.SysConstants.LINE_PATTERN;
 
 /**
  * 字符串工具类.
@@ -120,6 +122,21 @@ public class StringUtil {
 
 	public static boolean hasText(@Nullable CharSequence sequence) {
 		return StringUtils.hasText(sequence);
+	}
+
+	/**
+	 * 转换为驼峰json字符串.
+	 * @param str 字符串
+	 * @return 驼峰json字符串
+	 */
+	public static String convertUnder(String str) {
+		Matcher matcher = LINE_PATTERN.matcher(str.toLowerCase());
+		StringBuilder sb = new StringBuilder();
+		while (matcher.find()) {
+			matcher.appendReplacement(sb, matcher.group(1).toUpperCase());
+		}
+		matcher.appendTail(sb);
+		return sb.toString();
 	}
 
 }

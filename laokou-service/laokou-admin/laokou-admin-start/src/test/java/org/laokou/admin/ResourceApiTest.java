@@ -56,7 +56,7 @@ class ResourceApiTest extends CommonTest {
 
 	@Test
 	@SneakyThrows
-	void resourceSyncApiTest() {
+	void testResourceSyncApi() {
 		String apiUrl = API_PREFIX + "sync";
 		MvcResult mvcResult = super.mockMvc.perform(post(apiUrl).contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
@@ -69,7 +69,7 @@ class ResourceApiTest extends CommonTest {
 
 	@Test
 	@SneakyThrows
-	public void resourceSearchApiTest() {
+	public void testResourceSearchApi() {
 		String apiUrl = API_PREFIX + "search";
 		ResourceSearchGetQry qry = new ResourceSearchGetQry();
 		Search search = new Search();

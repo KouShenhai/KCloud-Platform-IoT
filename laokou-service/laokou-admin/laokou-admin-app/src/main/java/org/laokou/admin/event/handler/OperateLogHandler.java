@@ -23,11 +23,13 @@ import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.admin.domain.event.OperateFailedEvent;
 import org.laokou.admin.domain.event.OperateSucceededEvent;
 import org.laokou.admin.domain.gateway.LogGateway;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.listener.AbstractDomainEventRocketMQListener;
 import org.laokou.common.domain.repository.DomainEventDO;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.EventTypeEnums;
+import org.laokou.common.i18n.dto.DecorateDomainEvent;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
@@ -58,11 +60,11 @@ public class OperateLogHandler extends AbstractDomainEventRocketMQListener {
 		switch (EventTypeEnums.valueOf(eventDO.getEventType())) {
 			case OPERATE_FAILED -> {
 				OperateFailedEvent event = JacksonUtil.toBean(eventDO.getAttribute(), OperateFailedEvent.class);
-				logGateway.create(event, eventDO);
+				logGateway.create(event, ConvertUtil.sourceToTarget(eventDO, DecorateDomainEvent.class));
 			}
 			case OPERATE_SUCCEEDED -> {
 				OperateSucceededEvent event = JacksonUtil.toBean(eventDO.getAttribute(), OperateSucceededEvent.class);
-				logGateway.create(event, eventDO);
+				logGateway.create(event, ConvertUtil.sourceToTarget(eventDO, DecorateDomainEvent.class));
 			}
 		}
 	}

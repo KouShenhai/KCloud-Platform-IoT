@@ -88,6 +88,9 @@ public final class StringConstants {
 	@Schema(name = "UNDER", description = "分割参数")
 	public static final String UNDER = "_";
 
+	@Schema(name = "UNDER", description = "分割参数")
+	public static final Character CHAR_UNDER = '_';
+
 	@Schema(name = "DOUBLE_QUOT", description = "双引号")
 	public static final String DOUBLE_QUOT = "\"";
 

@@ -19,15 +19,15 @@ package org.laokou.auth.domain.gateway;
 
 import org.laokou.auth.domain.event.LoginFailedEvent;
 import org.laokou.auth.domain.event.LoginSucceededEvent;
-import org.laokou.common.domain.repository.DomainEventDO;
+import org.laokou.common.i18n.dto.DecorateDomainEvent;
 
 /**
  * @author laokou
  */
 public interface LogGateway {
 
-	void create(LoginFailedEvent event, DomainEventDO eventDO);
+	void create(LoginFailedEvent event, DecorateDomainEvent evt);
 
-	void create(LoginSucceededEvent event, DomainEventDO eventDO);
+	void create(LoginSucceededEvent event, DecorateDomainEvent evt);
 
 }
