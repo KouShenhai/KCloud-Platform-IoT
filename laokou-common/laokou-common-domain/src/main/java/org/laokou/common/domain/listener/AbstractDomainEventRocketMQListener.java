@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.repository.DomainEventDO;
 import org.laokou.common.domain.service.DomainEventService;
@@ -52,7 +53,8 @@ public abstract class AbstractDomainEventRocketMQListener implements RocketMQLis
 		DomainEventDO eventDO = JacksonUtil.toBean(msg, DomainEventDO.class);
 		try {
 			// 处理领域事件
-			handleDomainEvent(eventDO);
+			handleDomainEvent(ConvertUtil.sourceToTarget(eventDO, DecorateDomainEvent.class), eventDO.getEventType(),
+					eventDO.getAttribute());
 			// 消费成功
 			events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
 		}
@@ -72,6 +74,6 @@ public abstract class AbstractDomainEventRocketMQListener implements RocketMQLis
 		}
 	}
 
-	protected abstract void handleDomainEvent(DomainEventDO eventDO);
+	protected abstract void handleDomainEvent(DecorateDomainEvent evt, String eventType, String attribute);
 
 }

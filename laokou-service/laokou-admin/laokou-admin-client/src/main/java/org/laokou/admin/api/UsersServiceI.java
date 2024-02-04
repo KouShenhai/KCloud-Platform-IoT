@@ -37,23 +37,21 @@ public interface UsersServiceI {
 	/**
 	 * 修改用户.
 	 * @param cmd 修改用户参数
-	 * @return 修改结果
 	 */
-	Result<Boolean> update(UserUpdateCmd cmd);
+	void update(UserModifyCmd cmd);
 
 	/**
 	 * 新增用户.
 	 * @param cmd 新增用户参数
 	 * @return 新增结果
 	 */
-	Result<Boolean> insert(UserInsertCmd cmd);
+	Result<Boolean> insert(UserCreateCmd cmd);
 
 	/**
 	 * 强踢在线用户.
 	 * @param cmd 强踢在线用户参数
-	 * @return 强踢结果
 	 */
-	Result<Boolean> onlineKill(OnlineUserKillCmd cmd);
+	void onlineKill(OnlineUserKillCmd cmd);
 
 	/**
 	 * 查询在线用户列表.
@@ -74,7 +72,7 @@ public interface UsersServiceI {
 	 * @param cmd 修改用户信息参数
 	 * @return 修改结果
 	 */
-	Result<Boolean> updateProfile(UserProfileUpdateCmd cmd);
+	Result<Boolean> updateProfile(UserProfileModifyCmd cmd);
 
 	/**
 	 * 查询用户下拉框选择项列表.
@@ -88,7 +86,7 @@ public interface UsersServiceI {
 	 * @param cmd 修改用户状态参数
 	 * @return 修改结果
 	 */
-	Result<Boolean> updateStatus(UserStatusUpdateCmd cmd);
+	Result<Boolean> updateStatus(UserStatusModifyCmd cmd);
 
 	/**
 	 * 重置密码.
@@ -109,7 +107,7 @@ public interface UsersServiceI {
 	 * @param cmd 根据ID删除用户参数
 	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(UserDeleteCmd cmd);
+	Result<Boolean> deleteById(UserRemoveCmd cmd);
 
 	/**
 	 * 查询用户列表.

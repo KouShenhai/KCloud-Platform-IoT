@@ -20,31 +20,40 @@ package org.laokou.admin.command.user;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
-import org.laokou.admin.dto.user.UserDeleteCmd;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.admin.domain.user.User;
+import org.laokou.admin.dto.user.UserProfileModifyCmd;
+import org.laokou.admin.dto.user.clientobject.UserProfileCO;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
- * 删除用户执行器.
+ * 修改用户信息执行器.
  *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class UserDeleteCmdExe {
+public class UserProfileModifyCmdExe {
 
 	private final UserGateway userGateway;
 
 	/**
-	 * 执行删除用户.
-	 * @param cmd 删除用户参数
-	 * @return 执行删除结果
+	 * 执行修改用户信息.
+	 * @param cmd 修改用户信息参数
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(UserDeleteCmd cmd) {
-		return Result.of(userGateway.deleteById(cmd.getId()));
+	public void executeVoid(UserProfileModifyCmd cmd) {
+		userGateway.modify(convert(cmd.getUserProfileCO()));
+	}
+
+	private User convert(UserProfileCO co) {
+		return User.builder()
+				.id(co.getId())
+				.avatar(co.getAvatar())
+				.mobile(co.getMobile())
+				.mail(co.getMail())
+				.build();
 	}
 
 }

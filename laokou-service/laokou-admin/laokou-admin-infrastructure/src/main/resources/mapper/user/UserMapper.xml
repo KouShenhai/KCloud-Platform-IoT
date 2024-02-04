@@ -20,59 +20,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.UserMapper">
 
-    <resultMap id="user" type="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
-        <id column="id" property="id" />
-        <result column="username" property="username" />
-        <result column="avatar" property="avatar" />
-        <result column="superAdmin" property="superAdmin" />
-        <result column="status" property="status" />
-        <result column="create_date" property="createDate" />
-    </resultMap>
+    <sql id="columns">
+        `id`,
+        creator,
+        editor,
+        create_date,
+        update_date,
+        dept_id,
+        dept_path,
+        tenant_id,
+        username,
+        `password`
+    </sql>
 
-    <insert id="insertUser">
-        INSERT INTO `boot_sys_user` (`id`, `creator`, `editor`, `create_date`, `update_date`, `dept_id`, `dept_path`, `username`, `password`) VALUES (#{userDO.id}, #{userDO.creator}, #{userDO.creator}, now(), now(), #{userDO.deptId}, #{userDO.deptPath}, AES_ENCRYPT(${userDO.username},#{key}), #{userDO.password})
+    <insert id="insertObj" useGeneratedKeys="false">
+        insert into boot_sys_user(<include refid="columns"/>)
+        values (
+        #{id},
+        #{creator},
+        #{editor},
+        #{createDate},
+        #{updateDate},
+        #{deptId},
+        #{deptPath},
+        #{tenantId},
+        AES_ENCRYPT(#{userDO.username}, #{key}),
+        #{password}
+        )
     </insert>
 
-    <update id="updateUser">
-        update boot_sys_user
-        <set>
-            version = version + 1,
-            update_date = now(),
-            <if test="userDO.status != null">
-                `status` = #{userDO.status},
-            </if>
-            <if test="userDO.password != null and userDO.password != ''">
-                `password` = #{userDO.password},
-            </if>
-            <if test="userDO.avatar != null and userDO.avatar != ''">
-                avatar = #{userDO.avatar},
-            </if>
-            <if test="userDO.mail != null and userDO.mail != ''">
-                mail = #{userDO.mail},
-            </if>
-            <if test="userDO.mobile != null and userDO.mobile != ''">
-                mobile = #{userDO.mobile},
-            </if>
-            <if test="userDO.editor != null">
-                editor = #{userDO.editor},
-            </if>
-            <if test="userDO.deptId != null">
-                dept_id = #{userDO.deptId},
-            </if>
-            <if test="userDO.deptPath != null">
-                dept_path = #{userDO.deptPath}
-            </if>
-        </set>
-        <where>
-            <if test="userDO.id != null">
-                and id = #{userDO.id}
-            </if>
-            <if test="userDO.version != null">
-                and version = #{userDO.version}
-            </if>
-        </where>
-    </update>
-    <select id="getOptionList" resultMap="user">
+    <select id="getOptionList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
         select id
         ,`username`
         from (select id,AES_DECRYPT(`username`, #{key}) as username,del_flag,`status`,dept_path,creator from boot_sys_user) as boot_sys_user
@@ -80,7 +57,7 @@
         and `status` = 0
         order by id desc
     </select>
-    <select id="getUserListFilter" resultMap="user">
+    <select id="getUserListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
         select id
         ,`username`
         ,super_admin
@@ -113,6 +90,12 @@
         <if test="user.id != null">
             and id <![CDATA[ <> ]]> #{user.id}
         </if>
+    </select>
+
+    <select id="selectUsernameCount" resultType="long">
+        select count(1)
+        from boot_sys_user
+        where AES_DECRYPT(`username`, #{key}) = #{username}
     </select>
 
 </mapper>

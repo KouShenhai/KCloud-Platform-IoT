@@ -22,13 +22,11 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
-import org.laokou.admin.dto.user.UserInsertCmd;
+import org.laokou.admin.dto.user.UserCreateCmd;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
@@ -42,7 +40,7 @@ import static org.laokou.common.i18n.common.StringConstants.SINGLE_QUOT;
  */
 @Component
 @RequiredArgsConstructor
-public class UserInsertCmdExe {
+public class UserCreateCmdExe {
 
 	private final UserGateway userGateway;
 
@@ -56,13 +54,8 @@ public class UserInsertCmdExe {
 	 * @return 执行新增结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(UserInsertCmd cmd) {
+	public Result<Boolean> execute(UserCreateCmd cmd) {
 		UserCO co = cmd.getUserCO();
-		int count = userMapper.getUserCount(toUserDO(co), AesUtil.getSecretKeyStr());
-		if (count > 0) {
-			throw new SystemException("用户名已存在，请重新输入");
-		}
-		return Result.of(userGateway.insert(toUser(co)));
 	}
 
 	/**

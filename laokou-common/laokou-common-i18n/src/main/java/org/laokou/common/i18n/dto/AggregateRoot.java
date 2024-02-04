@@ -23,6 +23,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.common.exception.AuthException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 
@@ -34,6 +35,7 @@ import static lombok.AccessLevel.PROTECTED;
 import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
 import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 import static org.laokou.common.i18n.common.ValCodes.OAUTH2_TENANT_ID_REQUIRE;
+import static org.laokou.common.i18n.common.ValCodes.SYSTEM_ID_REQUIRE;
 
 /**
  * @author laokou
@@ -68,6 +70,12 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 
 	@Schema(name = "events", description = "事件集合")
 	private List<DomainEvent<ID>> events;
+
+	public void checkNullID() {
+		if (ObjectUtil.isNull(this.id)) {
+			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
+		}
+	}
 
 	public void checkNullTenantId() {
 		if (ObjectUtil.isNull(this.tenantId)) {

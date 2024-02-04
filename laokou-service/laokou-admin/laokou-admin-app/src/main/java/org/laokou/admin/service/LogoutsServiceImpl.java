@@ -19,9 +19,8 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.LogoutsServiceI;
-import org.laokou.admin.dto.logout.LogoutCmd;
 import org.laokou.admin.command.logout.LogoutCmdExe;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.admin.dto.logout.LogoutCmd;
 import org.springframework.stereotype.Service;
 
 /**
@@ -38,11 +37,10 @@ public class LogoutsServiceImpl implements LogoutsServiceI {
 	/**
 	 * 退出登录.
 	 * @param cmd 退出登录参数
-	 * @return 退出结果
 	 */
 	@Override
-	public Result<Boolean> logout(LogoutCmd cmd) {
-		return logoutCmdExe.execute(cmd);
+	public void logout(LogoutCmd cmd) {
+		logoutCmdExe.executeVoid(cmd);
 	}
 
 }

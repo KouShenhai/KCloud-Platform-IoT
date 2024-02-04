@@ -18,7 +18,6 @@
 package org.laokou.admin.api;
 
 import org.laokou.admin.dto.logout.LogoutCmd;
-import org.laokou.common.i18n.dto.Result;
 
 /**
  * 退出登录.
@@ -30,8 +29,7 @@ public interface LogoutsServiceI {
 	/**
 	 * 退出登录.
 	 * @param cmd 退出登录参数
-	 * @return 退出结果
 	 */
-	Result<Boolean> logout(LogoutCmd cmd);
+	void logout(LogoutCmd cmd);
 
 }

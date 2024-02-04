@@ -55,8 +55,8 @@ public class UsersController {
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@PreAuthorize("hasAuthority('users:update')")
 	@DataCache(name = USERS, key = "#cmd.userCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> update(@RequestBody UserUpdateCmd cmd) {
-		return usersServiceI.update(cmd);
+	public void modify(@RequestBody UserModifyCmd cmd) {
+		//return usersServiceI.update(cmd);
 	}
 
 	@TraceLog
@@ -72,8 +72,8 @@ public class UsersController {
 	@Operation(summary = "在线用户", description = "强踢在线用户")
 	@OperateLog(module = "用户管理", operation = "强踢在线用户")
 	@PreAuthorize("hasAuthority('users:kill-online')")
-	public Result<Boolean> killOnline(@RequestBody OnlineUserKillCmd cmd) {
-		return usersServiceI.onlineKill(cmd);
+	public void killOnline(@RequestBody OnlineUserKillCmd cmd) {
+		//return usersServiceI.onlineKill(cmd);
 	}
 
 	@TraceLog
@@ -93,8 +93,8 @@ public class UsersController {
 	@TraceLog
 	@PutMapping("profile")
 	@Operation(summary = "个人中心", description = "修改个人信息")
-	public Result<Boolean> updateProfile(@RequestBody UserProfileUpdateCmd cmd) {
-		return usersServiceI.updateProfile(cmd);
+	public void updateProfile(@RequestBody UserProfileModifyCmd cmd) {
+		//return usersServiceI.updateProfile(cmd);
 	}
 
 	@TraceLog
@@ -102,8 +102,8 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "修改用户状态")
 	@OperateLog(module = "用户管理", operation = "修改用户状态")
 	@PreAuthorize("hasAuthority('users:status')")
-	public Result<Boolean> updateStatus(@RequestBody UserStatusUpdateCmd cmd) {
-		return usersServiceI.updateStatus(cmd);
+	public void updateStatus(@RequestBody UserStatusModifyCmd cmd) {
+		//return usersServiceI.updateStatus(cmd);
 	}
 
 	@TraceLog
@@ -111,15 +111,15 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "重置密码")
 	@OperateLog(module = "用户管理", operation = "重置密码")
 	@PreAuthorize("hasAuthority('users:reset-password')")
-	public Result<Boolean> resetPassword(@RequestBody UserPasswordResetCmd cmd) {
-		return usersServiceI.resetPassword(cmd);
+	public void resetPassword(@RequestBody UserPasswordResetCmd cmd) {
+		//return usersServiceI.resetPassword(cmd);
 	}
 
 	@TraceLog
 	@PutMapping("password")
 	@Operation(summary = "个人中心", description = "修改密码")
-	public Result<Boolean> updatePassword(@RequestBody UserPasswordResetCmd cmd) {
-		return usersServiceI.resetPassword(cmd);
+	public void updatePassword(@RequestBody UserPasswordResetCmd cmd) {
+		//return usersServiceI.resetPassword(cmd);
 	}
 
 	@Idempotent
@@ -128,16 +128,16 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "新增用户")
 	@OperateLog(module = "用户管理", operation = "新增用户")
 	@PreAuthorize("hasAuthority('users:insert')")
-	public Result<Boolean> insert(@RequestBody UserInsertCmd cmd) {
-		return usersServiceI.insert(cmd);
+	public void insert(@RequestBody UserCreateCmd cmd) {
+		//return usersServiceI.insert(cmd);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "用户管理", description = "查看用户")
 	@DataCache(name = USERS, key = "#id")
-	public Result<UserCO> getById(@PathVariable("id") Long id) {
-		return usersServiceI.getById(new UserGetQry(id));
+	public void getById(@PathVariable("id") Long id) {
+		//return usersServiceI.getById(new UserGetQry(id));
 	}
 
 	@TraceLog
@@ -146,8 +146,8 @@ public class UsersController {
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@PreAuthorize("hasAuthority('users:delete')")
 	@DataCache(name = USERS, key = "#id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
-		return usersServiceI.deleteById(new UserDeleteCmd(id));
+	public void deleteById(@PathVariable("id") Long id) {
+		//return usersServiceI.deleteById(new UserDeleteCmd(id));
 	}
 
 	@TraceLog

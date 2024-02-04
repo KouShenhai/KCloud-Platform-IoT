@@ -22,9 +22,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.LogoutsServiceI;
 import org.laokou.admin.dto.logout.LogoutCmd;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author laokou
@@ -40,8 +42,8 @@ public class LogoutsController {
 	@TraceLog
 	@DeleteMapping
 	@Operation(summary = "认证授权", description = "退出登录")
-	public Result<Boolean> logout(@RequestBody LogoutCmd cmd) {
-		return logoutsServiceI.logout(cmd);
+	public void logout(@RequestBody LogoutCmd cmd) {
+		logoutsServiceI.logout(cmd);
 	}
 
 }

@@ -41,9 +41,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersServiceI {
 
-	private final UserUpdateCmdExe userUpdateCmdExe;
+	private final UserModifyCmdExe userModifyCmdExe;
 
-	private final UserInsertCmdExe userInsertCmdExe;
+	private final UserCreateCmdExe userCreateCmdExe;
 
 	private final OnlineUserKillCmdExe onlineUserKillCmdExe;
 
@@ -53,26 +53,25 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	private final UserOptionListQryExe userOptionListQryExe;
 
-	private final UserProfileUpdateCmdExe userProfileUpdateCmdExe;
+	private final UserProfileModifyCmdExe userProfileModifyCmdExe;
 
-	private final UserStatusUpdateCmdExe userStatusUpdateCmdExe;
+	private final UserStatusModifyCmdExe userStatusModifyCmdExe;
 
 	private final UserPasswordResetCmdExe userPasswordResetCmdExe;
 
 	private final UserGetQryExe userGetQryExe;
 
-	private final UserDeleteCmdExe userDeleteCmdExe;
+	private final UserRemoveCmdExe userRemoveCmdExe;
 
 	private final UserListQryExe userListQryExe;
 
 	/**
 	 * 修改用户.
 	 * @param cmd 修改用户参数
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(UserUpdateCmd cmd) {
-		return userUpdateCmdExe.execute(cmd);
+	public void update(UserModifyCmd cmd) {
+		userModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -81,18 +80,17 @@ public class UsersServiceImpl implements UsersServiceI {
 	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(UserInsertCmd cmd) {
-		return userInsertCmdExe.execute(cmd);
+	public Result<Boolean> insert(UserCreateCmd cmd) {
+		return userCreateCmdExe.execute(cmd);
 	}
 
 	/**
 	 * 强踢在线用户.
 	 * @param cmd 强踢在线用户参数
-	 * @return 强踢结果
 	 */
 	@Override
-	public Result<Boolean> onlineKill(OnlineUserKillCmd cmd) {
-		return onlineUserKillCmdExe.execute(cmd);
+	public void onlineKill(OnlineUserKillCmd cmd) {
+		onlineUserKillCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -121,8 +119,8 @@ public class UsersServiceImpl implements UsersServiceI {
 	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> updateProfile(UserProfileUpdateCmd cmd) {
-		return userProfileUpdateCmdExe.execute(cmd);
+	public Result<Boolean> updateProfile(UserProfileModifyCmd cmd) {
+		return userProfileModifyCmdExe.execute(cmd);
 	}
 
 	/**
@@ -141,8 +139,8 @@ public class UsersServiceImpl implements UsersServiceI {
 	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> updateStatus(UserStatusUpdateCmd cmd) {
-		return userStatusUpdateCmdExe.execute(cmd);
+	public Result<Boolean> updateStatus(UserStatusModifyCmd cmd) {
+		return userStatusModifyCmdExe.execute(cmd);
 	}
 
 	/**
@@ -171,8 +169,8 @@ public class UsersServiceImpl implements UsersServiceI {
 	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(UserDeleteCmd cmd) {
-		return userDeleteCmdExe.execute(cmd);
+	public Result<Boolean> deleteById(UserRemoveCmd cmd) {
+		return userRemoveCmdExe.execute(cmd);
 	}
 
 	/**

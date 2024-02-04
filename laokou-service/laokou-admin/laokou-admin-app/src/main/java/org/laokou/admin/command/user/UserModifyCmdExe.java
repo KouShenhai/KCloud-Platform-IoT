@@ -22,13 +22,10 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
-import org.laokou.admin.dto.user.UserUpdateCmd;
+import org.laokou.admin.dto.user.UserModifyCmd;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +38,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
  */
 @Component
 @RequiredArgsConstructor
-public class UserUpdateCmdExe {
+public class UserModifyCmdExe {
 
 	private final UserGateway userGateway;
 
@@ -52,17 +49,11 @@ public class UserUpdateCmdExe {
 	/**
 	 * 执行修改用户.
 	 * @param cmd 修改用户参数
-	 * @return 执行修改结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(UserUpdateCmd cmd) {
+	public void executeVoid(UserModifyCmd cmd) {
 		UserCO co = cmd.getUserCO();
-		// 用户表
-		int count = userMapper.getUserCount(toUserDO(co), AesUtil.getSecretKeyStr());
-		if (count > 0) {
-			throw new SystemException("用户名已存在，请重新输入");
-		}
-		return Result.of(userGateway.update(toUser(co)));
+		//return Result.of(userGateway.update(toUser(co)));
 	}
 
 	/**

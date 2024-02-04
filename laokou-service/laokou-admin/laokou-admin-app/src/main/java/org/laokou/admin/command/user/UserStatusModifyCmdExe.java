@@ -21,9 +21,8 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
-import org.laokou.admin.dto.user.UserStatusUpdateCmd;
+import org.laokou.admin.dto.user.UserStatusModifyCmd;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
@@ -35,7 +34,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
  */
 @Component
 @RequiredArgsConstructor
-public class UserStatusUpdateCmdExe {
+public class UserStatusModifyCmdExe {
 
 	private final UserGateway userGateway;
 
@@ -45,7 +44,7 @@ public class UserStatusUpdateCmdExe {
 	 * @return 执行修改结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(UserStatusUpdateCmd cmd) {
+	public Result<Boolean> execute(UserStatusModifyCmd cmd) {
 		return Result.of(userGateway.updateInfo(toUser(cmd)));
 	}
 
@@ -54,10 +53,10 @@ public class UserStatusUpdateCmdExe {
 	 * @param cmd 修改用户状态参数
 	 * @return 用户领域
 	 */
-	private User toUser(UserStatusUpdateCmd cmd) {
-		User user = new User(cmd.getId(), cmd.getStatus());
-		user.setEditor(UserUtil.getUserId());
-		return user;
+	private User toUser(UserStatusModifyCmd cmd) {
+		//User user = new User();
+		//user.setEditor(UserUtil.getUserId());
+		return null;
 	}
 
 }

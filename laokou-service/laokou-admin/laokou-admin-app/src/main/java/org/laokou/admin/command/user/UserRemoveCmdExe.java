@@ -17,38 +17,34 @@
 
 package org.laokou.admin.command.user;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.user.OnlineUserKillCmd;
-import org.laokou.common.redis.utils.RedisKeyUtil;
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.admin.domain.gateway.UserGateway;
+import org.laokou.admin.dto.user.UserRemoveCmd;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
+import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
- * 强踢在线用户执行器.
+ * 删除用户执行器.
  *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class OnlineUserKillCmdExe {
+public class UserRemoveCmdExe {
 
-	private final RedisUtil redisUtil;
+	private final UserGateway userGateway;
 
 	/**
-	 * 执行强踢在线用户.
-	 * @param cmd 强踢在线用户参数
+	 * 执行删除用户.
+	 * @param cmd 删除用户参数
+	 * @return 执行删除结果
 	 */
-	public void executeVoid(OnlineUserKillCmd cmd) {
-		String token = cmd.getToken();
-		String userKillKey = RedisKeyUtil.getUserKillKey(token);
-		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-		Long expire = redisUtil.getExpire(userInfoKey);
-		if (expire > 0) {
-			redisUtil.set(userKillKey, DEFAULT, expire);
-			redisUtil.delete(userInfoKey);
-		}
+	@DS(TENANT)
+	public Result<Boolean> execute(UserRemoveCmd cmd) {
+		return Result.of(userGateway.deleteById(cmd.getId()));
 	}
 
 }

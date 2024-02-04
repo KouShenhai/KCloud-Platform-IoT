@@ -18,10 +18,12 @@
 package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 /**
  * @author laokou
  */
+@Data
 @Schema(name = "AbstractDO", description = "抽象DO")
 public abstract class AbstractDO extends DTO {
 

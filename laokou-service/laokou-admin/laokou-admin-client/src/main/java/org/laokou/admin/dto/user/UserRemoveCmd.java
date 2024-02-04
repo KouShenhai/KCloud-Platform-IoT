@@ -30,7 +30,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(name = "UserDeleteCmd", description = "删除用户命令请求")
-public class UserDeleteCmd extends CommonCommand {
+public class UserRemoveCmd extends CommonCommand {
 
 	@Schema(name = "id", description = "ID")
 	private Long id;

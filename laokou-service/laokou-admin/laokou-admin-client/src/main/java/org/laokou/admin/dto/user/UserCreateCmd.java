@@ -19,17 +19,17 @@ package org.laokou.admin.dto.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.admin.dto.user.clientobject.UserProfileCO;
+import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
-@Schema(name = "UserProfileUpdateCmd", description = "修改用户信息命令请求")
-public class UserProfileUpdateCmd extends CommonCommand {
+@Schema(name = "UserInsertCmd", description = "新增用户命令请求")
+public class UserCreateCmd extends CommonCommand {
 
-	@Schema(name = "userProfileCO", description = "用户信息")
-	private UserProfileCO userProfileCO;
+	@Schema(name = "userCO", description = "用户")
+	private UserCO userCO;
 
 }
