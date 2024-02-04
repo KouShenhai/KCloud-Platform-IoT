@@ -37,7 +37,4 @@ public final class BizCodes {
 	@Schema(name = "LOGIN_SUCCEEDED", description = "登录成功")
 	public static final int LOGIN_SUCCEEDED = 200001;
 
-	@Schema(name = "ACCOUNT_FORCE_KILL", description = "账号已强制踢出")
-	public static final int ACCOUNT_FORCE_KILL = 300001;
-
 }

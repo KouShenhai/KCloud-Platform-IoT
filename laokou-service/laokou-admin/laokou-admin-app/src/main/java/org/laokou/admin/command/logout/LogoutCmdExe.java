@@ -67,8 +67,6 @@ public class LogoutCmdExe {
 		deleteMenuTreeKey(userId);
 		// 删除用户key
 		deleteUserInfoKey(token);
-		// 删除强踢Key
-		deleteUserKillKey(token);
 	}
 
 	/**
@@ -86,15 +84,6 @@ public class LogoutCmdExe {
 	private void deleteUserInfoKey(String token) {
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
 		redisUtil.delete(userInfoKey);
-	}
-
-	/**
-	 * 删除用户强踢Key.
-	 * @param token 令牌
-	 */
-	private void deleteUserKillKey(String token) {
-		String userKillKey = RedisKeyUtil.getUserKillKey(token);
-		redisUtil.delete(userKillKey);
 	}
 
 	/**

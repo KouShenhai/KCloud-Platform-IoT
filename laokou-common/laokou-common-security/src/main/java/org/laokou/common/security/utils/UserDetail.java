@@ -20,12 +20,10 @@ package org.laokou.common.security.utils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Identifier;
@@ -35,7 +33,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
-import org.springframework.util.Assert;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
@@ -196,13 +193,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
-	}
-
-	@JsonIgnore
-	public static UserDetail copy(Object obj, HttpServletRequest request) {
-		UserDetail userDetail = ConvertUtil.sourceToTarget(obj, UserDetail.class);
-		Assert.isTrue(ObjectUtil.isNotNull(userDetail), "userDetail is null");
-		return userDetail;
 	}
 
 	@Override

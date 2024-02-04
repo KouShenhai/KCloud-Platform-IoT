@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.List;
  * @author laokou
  */
 @Data
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(name = "Datas", description = "对象集合")
