@@ -78,7 +78,7 @@ public class DictsController {
 	@Operation(summary = "字典管理", description = "新增字典")
 	@OperateLog(module = "字典管理", operation = "新增字典")
 	@PreAuthorize("hasAuthority('dicts:create')")
-	public void create(@RequestBody DictInsertCmd cmd) {
+	public void create(@RequestBody DictCreateCmd cmd) {
 		return dictsServiceI.insert(cmd);
 	}
 
@@ -88,7 +88,7 @@ public class DictsController {
 	@OperateLog(module = "字典管理", operation = "修改字典")
 	@PreAuthorize("hasAuthority('dicts:modify')")
 	@DataCache(name = DICTS, key = "#cmd.dictCO.id", type = CacheOperatorTypeEnums.DEL)
-	public void modify(@RequestBody DictUpdateCmd cmd) {
+	public void modify(@RequestBody DictModifyCmd cmd) {
 		return dictsServiceI.update(cmd);
 	}
 
@@ -98,7 +98,7 @@ public class DictsController {
 	@OperateLog(module = "字典管理", operation = "删除字典")
 	@PreAuthorize("hasAuthority('dicts:remove')")
 	public void remove(@PathVariable("id") Long id) {
-		return dictsServiceI.deleteById(new DictDeleteCmd(id));
+		return dictsServiceI.deleteById(new DictRemoveCmd(id));
 	}
 
 }

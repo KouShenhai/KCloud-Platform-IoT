@@ -22,9 +22,9 @@ import org.laokou.admin.api.SourcesServiceI;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.source.*;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
-import org.laokou.admin.command.source.SourceDeleteCmdExe;
-import org.laokou.admin.command.source.SourceInsertCmdExe;
-import org.laokou.admin.command.source.SourceUpdateCmdExe;
+import org.laokou.admin.command.source.SourceRemoveCmdExe;
+import org.laokou.admin.command.source.SourceCreateCmdExe;
+import org.laokou.admin.command.source.SourceModifyCmdExe;
 import org.laokou.admin.command.source.query.SourceGetQryExe;
 import org.laokou.admin.command.source.query.SourceListQryExe;
 import org.laokou.admin.command.source.query.SourceOptionListQryExe;
@@ -43,11 +43,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SourcesServiceImpl implements SourcesServiceI {
 
-	private final SourceInsertCmdExe sourceInsertCmdExe;
+	private final SourceCreateCmdExe sourceCreateCmdExe;
 
-	private final SourceUpdateCmdExe sourceUpdateCmdExe;
+	private final SourceModifyCmdExe sourceModifyCmdExe;
 
-	private final SourceDeleteCmdExe sourceDeleteCmdExe;
+	private final SourceRemoveCmdExe sourceRemoveCmdExe;
 
 	private final SourceListQryExe sourceListQryExe;
 
@@ -61,8 +61,8 @@ public class SourcesServiceImpl implements SourcesServiceI {
 	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(SourceInsertCmd cmd) {
-		return sourceInsertCmdExe.execute(cmd);
+	public Result<Boolean> insert(SourceCreateCmd cmd) {
+		return sourceCreateCmdExe.execute(cmd);
 	}
 
 	/**
@@ -71,8 +71,8 @@ public class SourcesServiceImpl implements SourcesServiceI {
 	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(SourceUpdateCmd cmd) {
-		return sourceUpdateCmdExe.execute(cmd);
+	public Result<Boolean> update(SourceModifyCmd cmd) {
+		return sourceModifyCmdExe.execute(cmd);
 	}
 
 	/**
@@ -81,8 +81,8 @@ public class SourcesServiceImpl implements SourcesServiceI {
 	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(SourceDeleteCmd cmd) {
-		return sourceDeleteCmdExe.execute(cmd);
+	public Result<Boolean> deleteById(SourceRemoveCmd cmd) {
+		return sourceRemoveCmdExe.execute(cmd);
 	}
 
 	/**

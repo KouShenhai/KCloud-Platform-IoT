@@ -73,7 +73,7 @@ public class RolesController {
 	@Operation(summary = "角色管理", description = "新增角色")
 	@OperateLog(module = "角色管理", operation = "新增角色")
 	@PreAuthorize("hasAuthority('roles:create')")
-	public Result<Boolean> create(@RequestBody RoleInsertCmd cmd) {
+	public Result<Boolean> create(@RequestBody RoleCreateCmd cmd) {
 		return rolesServiceI.insert(cmd);
 	}
 
@@ -82,7 +82,7 @@ public class RolesController {
 	@Operation(summary = "角色管理", description = "修改角色")
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@PreAuthorize("hasAuthority('roles:modify')")
-	public Result<Boolean> modify(@RequestBody RoleUpdateCmd cmd) {
+	public Result<Boolean> modify(@RequestBody RoleModifyCmd cmd) {
 		return rolesServiceI.update(cmd);
 	}
 
@@ -92,7 +92,7 @@ public class RolesController {
 	@OperateLog(module = "角色管理", operation = "删除角色")
 	@PreAuthorize("hasAuthority('roles:remove')")
 	public Result<Boolean> remove(@PathVariable("id") Long id) {
-		return rolesServiceI.deleteById(new RoleDeleteCmd(id));
+		return rolesServiceI.deleteById(new RoleRemoveCmd(id));
 	}
 
 }

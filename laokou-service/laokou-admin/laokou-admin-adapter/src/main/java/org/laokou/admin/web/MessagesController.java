@@ -51,7 +51,7 @@ public class MessagesController {
 	@Operation(summary = "消息管理", description = "新增消息")
 	@OperateLog(module = "消息管理", operation = "新增消息")
 	@PreAuthorize("hasAuthority('messages:create')")
-	public Result<Boolean> create(@RequestBody MessageInsertCmd cmd) {
+	public Result<Boolean> create(@RequestBody MessageCreateCmd cmd) {
 		return messagesServiceI.insert(cmd);
 	}
 

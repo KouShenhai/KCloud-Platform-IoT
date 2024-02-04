@@ -44,21 +44,21 @@ public interface TenantsServiceI {
 	 * @param cmd 新增租户参数
 	 * @return 新增结果
 	 */
-	Result<Boolean> insert(TenantInsertCmd cmd);
+	Result<Boolean> insert(TenantCreateCmd cmd);
 
 	/**
 	 * 修改租户.
 	 * @param cmd 修改租户参数
 	 * @return 修改结果
 	 */
-	Result<Boolean> update(TenantUpdateCmd cmd);
+	Result<Boolean> update(TenantModifyCmd cmd);
 
 	/**
 	 * 根据ID删除租户.
 	 * @param cmd 根据ID删除租户
 	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(TenantDeleteCmd cmd);
+	Result<Boolean> deleteById(TenantRemoveCmd cmd);
 
 	/**
 	 * 查询租户列表.

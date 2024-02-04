@@ -76,7 +76,7 @@ public class MenusController {
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
 	@PreAuthorize("hasAuthority('menus:modify')")
 	@DataCache(name = MENUS, key = "#cmd.menuCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> modify(@RequestBody MenuUpdateCmd cmd) {
+	public Result<Boolean> modify(@RequestBody MenuModifyCmd cmd) {
 		return menusServiceI.update(cmd);
 	}
 
@@ -86,7 +86,7 @@ public class MenusController {
 	@Operation(summary = "菜单管理", description = "新增菜单")
 	@OperateLog(module = "菜单管理", operation = "新增菜单")
 	@PreAuthorize("hasAuthority('menus:create')")
-	public Result<Boolean> create(@RequestBody MenuInsertCmd cmd) {
+	public Result<Boolean> create(@RequestBody MenuCreateCmd cmd) {
 		return menusServiceI.insert(cmd);
 	}
 
@@ -96,7 +96,7 @@ public class MenusController {
 	@OperateLog(module = "菜单管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('menus:remove')")
 	public Result<Boolean> remove(@PathVariable("id") Long id) {
-		return menusServiceI.deleteById(new MenuDeleteCmd(id));
+		return menusServiceI.deleteById(new MenuRemoveCmd(id));
 	}
 
 	@TraceLog

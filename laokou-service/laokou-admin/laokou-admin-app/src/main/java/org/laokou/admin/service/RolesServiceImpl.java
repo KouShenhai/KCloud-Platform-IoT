@@ -22,9 +22,9 @@ import org.laokou.admin.api.RolesServiceI;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.role.*;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
-import org.laokou.admin.command.role.RoleDeleteCmdExe;
-import org.laokou.admin.command.role.RoleInsertCmdExe;
-import org.laokou.admin.command.role.RoleUpdateCmdExe;
+import org.laokou.admin.command.role.RoleRemoveCmdExe;
+import org.laokou.admin.command.role.RoleCreateCmdExe;
+import org.laokou.admin.command.role.RoleModifyCmdExe;
 import org.laokou.admin.command.role.query.RoleGetQryExe;
 import org.laokou.admin.command.role.query.RoleListQryExe;
 import org.laokou.admin.command.role.query.RoleOptionListQryExe;
@@ -49,11 +49,11 @@ public class RolesServiceImpl implements RolesServiceI {
 
 	private final RoleGetQryExe roleGetQryExe;
 
-	private final RoleInsertCmdExe roleInsertCmdExe;
+	private final RoleCreateCmdExe roleCreateCmdExe;
 
-	private final RoleUpdateCmdExe roleUpdateCmdExe;
+	private final RoleModifyCmdExe roleModifyCmdExe;
 
-	private final RoleDeleteCmdExe roleDeleteCmdExe;
+	private final RoleRemoveCmdExe roleRemoveCmdExe;
 
 	/**
 	 * 查询角色列表.
@@ -91,8 +91,8 @@ public class RolesServiceImpl implements RolesServiceI {
 	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(RoleInsertCmd cmd) {
-		return roleInsertCmdExe.execute(cmd);
+	public Result<Boolean> insert(RoleCreateCmd cmd) {
+		return roleCreateCmdExe.execute(cmd);
 	}
 
 	/**
@@ -101,8 +101,8 @@ public class RolesServiceImpl implements RolesServiceI {
 	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(RoleUpdateCmd cmd) {
-		return roleUpdateCmdExe.execute(cmd);
+	public Result<Boolean> update(RoleModifyCmd cmd) {
+		return roleModifyCmdExe.execute(cmd);
 	}
 
 	/**
@@ -111,8 +111,8 @@ public class RolesServiceImpl implements RolesServiceI {
 	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(RoleDeleteCmd cmd) {
-		return roleDeleteCmdExe.execute(cmd);
+	public Result<Boolean> deleteById(RoleRemoveCmd cmd) {
+		return roleRemoveCmdExe.execute(cmd);
 	}
 
 }

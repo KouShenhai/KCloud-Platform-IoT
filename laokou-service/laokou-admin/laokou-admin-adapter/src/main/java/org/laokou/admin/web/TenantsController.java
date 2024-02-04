@@ -68,7 +68,7 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "新增租户")
 	@OperateLog(module = "租户管理", operation = "新增租户")
 	@PreAuthorize("hasAuthority('tenants:create')")
-	public Result<Boolean> create(@RequestBody TenantInsertCmd cmd) {
+	public Result<Boolean> create(@RequestBody TenantCreateCmd cmd) {
 		return tenantsServiceI.insert(cmd);
 	}
 
@@ -86,7 +86,7 @@ public class TenantsController {
 	@OperateLog(module = "租户管理", operation = "修改租户")
 	@PreAuthorize("hasAuthority('tenants:modify')")
 	@DataCache(name = TENANTS, key = "#cmd.tenantCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> modify(@RequestBody TenantUpdateCmd cmd) {
+	public Result<Boolean> modify(@RequestBody TenantModifyCmd cmd) {
 		return tenantsServiceI.update(cmd);
 	}
 
@@ -96,7 +96,7 @@ public class TenantsController {
 	@OperateLog(module = "租户管理", operation = "删除租户")
 	@PreAuthorize("hasAuthority('tenants:remove')")
 	public Result<Boolean> remove(@PathVariable("id") Long id) {
-		return tenantsServiceI.deleteById(new TenantDeleteCmd(id));
+		return tenantsServiceI.deleteById(new TenantRemoveCmd(id));
 	}
 
 	@TraceLog

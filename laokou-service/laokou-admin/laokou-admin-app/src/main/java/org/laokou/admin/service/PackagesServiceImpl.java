@@ -22,9 +22,9 @@ import org.laokou.admin.api.PackagesServiceI;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.packages.*;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
-import org.laokou.admin.command.packages.PackageDeleteCmdExe;
-import org.laokou.admin.command.packages.PackageInsertCmdExe;
-import org.laokou.admin.command.packages.PackageUpdateCmdExe;
+import org.laokou.admin.command.packages.PackageRemoveCmdExe;
+import org.laokou.admin.command.packages.PackageCreateCmdExe;
+import org.laokou.admin.command.packages.PackageModifyCmdExe;
 import org.laokou.admin.command.packages.query.PackageGetQryExe;
 import org.laokou.admin.command.packages.query.PackageListQryExe;
 import org.laokou.admin.command.packages.query.PackageOptionListQryExe;
@@ -43,13 +43,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PackagesServiceImpl implements PackagesServiceI {
 
-	private final PackageInsertCmdExe packageInsertCmdExe;
+	private final PackageCreateCmdExe packageCreateCmdExe;
 
-	private final PackageUpdateCmdExe packageUpdateCmdExe;
+	private final PackageModifyCmdExe packageModifyCmdExe;
 
 	private final PackageListQryExe packageListQryExe;
 
-	private final PackageDeleteCmdExe packageDeleteCmdExe;
+	private final PackageRemoveCmdExe packageRemoveCmdExe;
 
 	private final PackageGetQryExe packageGetQryExe;
 
@@ -61,8 +61,8 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(PackageInsertCmd cmd) {
-		return packageInsertCmdExe.execute(cmd);
+	public Result<Boolean> insert(PackageCreateCmd cmd) {
+		return packageCreateCmdExe.execute(cmd);
 	}
 
 	/**
@@ -71,8 +71,8 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(PackageUpdateCmd cmd) {
-		return packageUpdateCmdExe.execute(cmd);
+	public Result<Boolean> update(PackageModifyCmd cmd) {
+		return packageModifyCmdExe.execute(cmd);
 	}
 
 	/**
@@ -81,8 +81,8 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(PackageDeleteCmd cmd) {
-		return packageDeleteCmdExe.execute(cmd);
+	public Result<Boolean> deleteById(PackageRemoveCmd cmd) {
+		return packageRemoveCmdExe.execute(cmd);
 	}
 
 	/**

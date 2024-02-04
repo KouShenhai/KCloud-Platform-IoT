@@ -37,21 +37,21 @@ public interface PackagesServiceI {
 	 * @param cmd 新增套餐参数
 	 * @return 新增结果
 	 */
-	Result<Boolean> insert(PackageInsertCmd cmd);
+	Result<Boolean> insert(PackageCreateCmd cmd);
 
 	/**
 	 * 修改套餐.
 	 * @param cmd 修改套餐参数
 	 * @return 修改结果
 	 */
-	Result<Boolean> update(PackageUpdateCmd cmd);
+	Result<Boolean> update(PackageModifyCmd cmd);
 
 	/**
 	 * 根据ID删除套餐.
 	 * @param cmd 根据ID删除套餐参数
 	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(PackageDeleteCmd cmd);
+	Result<Boolean> deleteById(PackageRemoveCmd cmd);
 
 	/**
 	 * 查询套餐列表.

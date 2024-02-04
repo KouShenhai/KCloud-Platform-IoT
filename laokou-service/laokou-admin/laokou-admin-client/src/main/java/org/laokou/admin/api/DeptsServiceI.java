@@ -49,21 +49,21 @@ public interface DeptsServiceI {
 	 * @param cmd 新增部门参数
 	 * @return 新增结果
 	 */
-	Result<Boolean> insert(DeptInsertCmd cmd);
+	Result<Boolean> insert(DeptCreateCmd cmd);
 
 	/**
 	 * 修改部门.
 	 * @param cmd 修改部门参数
 	 * @return 修改参数
 	 */
-	Result<Boolean> update(DeptUpdateCmd cmd);
+	Result<Boolean> update(DeptModifyCmd cmd);
 
 	/**
 	 * 根据ID删除部门.
 	 * @param cmd 根据ID删除部门参数
 	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(DeptDeleteCmd cmd);
+	Result<Boolean> deleteById(DeptRemoveCmd cmd);
 
 	/**
 	 * 根据ID查看部门.

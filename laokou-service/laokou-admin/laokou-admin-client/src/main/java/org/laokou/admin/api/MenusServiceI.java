@@ -56,21 +56,21 @@ public interface MenusServiceI {
 	 * @param cmd 修改菜单参数
 	 * @return 修改结果
 	 */
-	Result<Boolean> update(MenuUpdateCmd cmd);
+	Result<Boolean> update(MenuModifyCmd cmd);
 
 	/**
 	 * 新增菜单.
 	 * @param cmd 新增菜单参数
 	 * @return 新增菜单
 	 */
-	Result<Boolean> insert(MenuInsertCmd cmd);
+	Result<Boolean> insert(MenuCreateCmd cmd);
 
 	/**
 	 * 根据ID删除菜单.
 	 * @param cmd 根据ID删除菜单参数
 	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(MenuDeleteCmd cmd);
+	Result<Boolean> deleteById(MenuRemoveCmd cmd);
 
 	/**
 	 * 查看树菜单.

@@ -22,9 +22,9 @@ import org.laokou.admin.api.DictsServiceI;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.dict.*;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
-import org.laokou.admin.command.dict.DictDeleteCmdExe;
-import org.laokou.admin.command.dict.DictInsertCmdExe;
-import org.laokou.admin.command.dict.DictUpdateCmdExe;
+import org.laokou.admin.command.dict.DictRemoveCmdExe;
+import org.laokou.admin.command.dict.DictCreateCmdExe;
+import org.laokou.admin.command.dict.DictModifyCmdExe;
 import org.laokou.admin.command.dict.query.DictGetQryExe;
 import org.laokou.admin.command.dict.query.DictListQryExe;
 import org.laokou.admin.command.dict.query.DictOptionListQryExe;
@@ -43,11 +43,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DictsServiceImpl implements DictsServiceI {
 
-	private final DictInsertCmdExe dictInsertCmdExe;
+	private final DictCreateCmdExe dictCreateCmdExe;
 
-	private final DictUpdateCmdExe dictUpdateCmdExe;
+	private final DictModifyCmdExe dictModifyCmdExe;
 
-	private final DictDeleteCmdExe dictDeleteCmdExe;
+	private final DictRemoveCmdExe dictRemoveCmdExe;
 
 	private final DictOptionListQryExe dictOptionListQryExe;
 
@@ -61,8 +61,8 @@ public class DictsServiceImpl implements DictsServiceI {
 	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(DictInsertCmd cmd) {
-		return dictInsertCmdExe.execute(cmd);
+	public Result<Boolean> insert(DictCreateCmd cmd) {
+		return dictCreateCmdExe.execute(cmd);
 	}
 
 	/**
@@ -71,8 +71,8 @@ public class DictsServiceImpl implements DictsServiceI {
 	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(DictUpdateCmd cmd) {
-		return dictUpdateCmdExe.execute(cmd);
+	public Result<Boolean> update(DictModifyCmd cmd) {
+		return dictModifyCmdExe.execute(cmd);
 	}
 
 	/**
@@ -81,8 +81,8 @@ public class DictsServiceImpl implements DictsServiceI {
 	 * @return 删除字典
 	 */
 	@Override
-	public Result<Boolean> deleteById(DictDeleteCmd cmd) {
-		return dictDeleteCmdExe.execute(cmd);
+	public Result<Boolean> deleteById(DictRemoveCmd cmd) {
+		return dictRemoveCmdExe.execute(cmd);
 	}
 
 	/**

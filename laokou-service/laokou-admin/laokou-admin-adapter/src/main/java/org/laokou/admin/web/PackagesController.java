@@ -63,7 +63,7 @@ public class PackagesController {
 	@Operation(summary = "套餐管理", description = "新增套餐")
 	@OperateLog(module = "套餐管理", operation = "新增套餐")
 	@PreAuthorize("hasAuthority('packages:create')")
-	public Result<Boolean> create(@RequestBody PackageInsertCmd cmd) {
+	public Result<Boolean> create(@RequestBody PackageCreateCmd cmd) {
 		return packagesServiceI.insert(cmd);
 	}
 
@@ -81,7 +81,7 @@ public class PackagesController {
 	@OperateLog(module = "套餐管理", operation = "修改套餐")
 	@PreAuthorize("hasAuthority('packages:modify')")
 	@DataCache(name = PACKAGES, key = "#cmd.packageCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> modify(@RequestBody PackageUpdateCmd cmd) {
+	public Result<Boolean> modify(@RequestBody PackageModifyCmd cmd) {
 		return packagesServiceI.update(cmd);
 	}
 
@@ -91,7 +91,7 @@ public class PackagesController {
 	@OperateLog(module = "套餐管理", operation = "删除套餐")
 	@PreAuthorize("hasAuthority('packages:remove')")
 	public Result<Boolean> remove(@PathVariable("id") Long id) {
-		return packagesServiceI.deleteById(new PackageDeleteCmd(id));
+		return packagesServiceI.deleteById(new PackageRemoveCmd(id));
 	}
 
 	@TraceLog

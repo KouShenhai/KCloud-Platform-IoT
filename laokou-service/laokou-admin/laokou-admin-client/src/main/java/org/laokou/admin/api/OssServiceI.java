@@ -35,21 +35,21 @@ public interface OssServiceI {
 	 * @param cmd 新增OSS参数
 	 * @return 新增结果
 	 */
-	Result<Boolean> insert(OssInsertCmd cmd);
+	Result<Boolean> insert(OssCreateCmd cmd);
 
 	/**
 	 * 修改OSS.
 	 * @param cmd 修改OSS参数
 	 * @return 修改结果
 	 */
-	Result<Boolean> update(OssUpdateCmd cmd);
+	Result<Boolean> update(OssModifyCmd cmd);
 
 	/**
 	 * 根据ID删除OSS.
 	 * @param cmd 根据ID删除OSS参数
 	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(OssDeleteCmd cmd);
+	Result<Boolean> deleteById(OssRemoveCmd cmd);
 
 	/**
 	 * 根据ID查看OSS.

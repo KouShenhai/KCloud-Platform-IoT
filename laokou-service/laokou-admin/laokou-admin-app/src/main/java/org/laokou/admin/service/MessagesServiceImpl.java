@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.MessagesServiceI;
 import org.laokou.admin.dto.message.*;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
-import org.laokou.admin.command.message.MessageInsertCmdExe;
+import org.laokou.admin.command.message.MessageCreateCmdExe;
 import org.laokou.admin.command.message.MessageReadCmdExe;
 import org.laokou.admin.command.message.query.MessageGetQryExe;
 import org.laokou.admin.command.message.query.MessageListQryExe;
@@ -40,7 +40,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MessagesServiceImpl implements MessagesServiceI {
 
-	private final MessageInsertCmdExe messageInsertCmdExe;
+	private final MessageCreateCmdExe messageCreateCmdExe;
 
 	private final MessageListQryExe messageListQryExe;
 
@@ -58,8 +58,8 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(MessageInsertCmd cmd) {
-		return messageInsertCmdExe.execute(cmd);
+	public Result<Boolean> insert(MessageCreateCmd cmd) {
+		return messageCreateCmdExe.execute(cmd);
 	}
 
 	/**

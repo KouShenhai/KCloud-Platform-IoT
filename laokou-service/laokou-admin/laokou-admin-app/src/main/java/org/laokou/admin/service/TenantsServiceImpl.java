@@ -24,9 +24,9 @@ import org.laokou.admin.command.tenant.query.TenantGetIDQryExe;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.tenant.*;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
-import org.laokou.admin.command.tenant.TenantDeleteCmdExe;
-import org.laokou.admin.command.tenant.TenantInsertCmdExe;
-import org.laokou.admin.command.tenant.TenantUpdateCmdExe;
+import org.laokou.admin.command.tenant.TenantRemoveCmdExe;
+import org.laokou.admin.command.tenant.TenantCreateCmdExe;
+import org.laokou.admin.command.tenant.TenantModifyCmdExe;
 import org.laokou.admin.command.tenant.query.TenantGetQryExe;
 import org.laokou.admin.command.tenant.query.TenantListQryExe;
 import org.laokou.admin.command.tenant.query.TenantOptionListQryExe;
@@ -45,13 +45,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TenantsServiceImpl implements TenantsServiceI {
 
-	private final TenantInsertCmdExe tenantInsertCmdExe;
+	private final TenantCreateCmdExe tenantCreateCmdExe;
 
 	private final TenantOptionListQryExe tenantOptionListQryExe;
 
-	private final TenantUpdateCmdExe tenantUpdateCmdExe;
+	private final TenantModifyCmdExe tenantModifyCmdExe;
 
-	private final TenantDeleteCmdExe tenantDeleteCmdExe;
+	private final TenantRemoveCmdExe tenantRemoveCmdExe;
 
 	private final TenantListQryExe tenantListQryExe;
 
@@ -77,8 +77,8 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(TenantInsertCmd cmd) {
-		return tenantInsertCmdExe.execute(cmd);
+	public Result<Boolean> insert(TenantCreateCmd cmd) {
+		return tenantCreateCmdExe.execute(cmd);
 	}
 
 	/**
@@ -87,8 +87,8 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(TenantUpdateCmd cmd) {
-		return tenantUpdateCmdExe.execute(cmd);
+	public Result<Boolean> update(TenantModifyCmd cmd) {
+		return tenantModifyCmdExe.execute(cmd);
 	}
 
 	/**
@@ -97,8 +97,8 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(TenantDeleteCmd cmd) {
-		return tenantDeleteCmdExe.execute(cmd);
+	public Result<Boolean> deleteById(TenantRemoveCmd cmd) {
+		return tenantRemoveCmdExe.execute(cmd);
 	}
 
 	/**

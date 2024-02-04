@@ -63,7 +63,7 @@ public class SourcesController {
 	@Operation(summary = "数据源管理", description = "新增数据源")
 	@OperateLog(module = "数据源管理", operation = "数据源新增")
 	@PreAuthorize("hasAuthority('sources:create')")
-	public Result<Boolean> create(@RequestBody SourceInsertCmd cmd) {
+	public Result<Boolean> create(@RequestBody SourceCreateCmd cmd) {
 		return sourcesServiceI.insert(cmd);
 	}
 
@@ -81,7 +81,7 @@ public class SourcesController {
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@PreAuthorize("hasAuthority('sources:modify')")
 	@DataCache(name = SOURCES, key = "#cmd.sourceCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> modify(@RequestBody SourceUpdateCmd cmd) {
+	public Result<Boolean> modify(@RequestBody SourceModifyCmd cmd) {
 		return sourcesServiceI.update(cmd);
 	}
 
@@ -91,7 +91,7 @@ public class SourcesController {
 	@OperateLog(module = "数据源管理", operation = "删除数据源")
 	@PreAuthorize("hasAuthority('sources:remove')")
 	public Result<Boolean> remove(@PathVariable("id") Long id) {
-		return sourcesServiceI.deleteById(new SourceDeleteCmd(id));
+		return sourcesServiceI.deleteById(new SourceRemoveCmd(id));
 	}
 
 	@TraceLog

@@ -54,7 +54,7 @@ public class DefinitionsController {
 	@OperateLog(module = "流程定义", operation = "新增流程")
 	@PreAuthorize("hasAuthority('definitions:create')")
 	public void create(@RequestPart("file") MultipartFile file) throws IOException {
-		definitionsServiceI.create(new DefinitionInsertCmd(file));
+		definitionsServiceI.create(new DefinitionCreateCmd(file));
 	}
 
 	@TraceLog
@@ -79,7 +79,7 @@ public class DefinitionsController {
 	@OperateLog(module = "流程定义", operation = "删除流程")
 	@PreAuthorize("hasAuthority('definitions:remove')")
 	public void remove(@PathVariable("deploymentId") String deploymentId) {
-		definitionsServiceI.remove(new DefinitionDeleteCmd(deploymentId));
+		definitionsServiceI.remove(new DefinitionRemoveCmd(deploymentId));
 	}
 
 	@TraceLog

@@ -21,9 +21,9 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.DeptsServiceI;
 import org.laokou.admin.dto.dept.*;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
-import org.laokou.admin.command.dept.DeptDeleteCmdExe;
-import org.laokou.admin.command.dept.DeptInsertCmdExe;
-import org.laokou.admin.command.dept.DeptUpdateCmdExe;
+import org.laokou.admin.command.dept.DeptRemoveCmdExe;
+import org.laokou.admin.command.dept.DeptCreateCmdExe;
+import org.laokou.admin.command.dept.DeptModifyCmdExe;
 import org.laokou.admin.command.dept.query.DeptGetQryExe;
 import org.laokou.admin.command.dept.query.DeptIDSGetQryExe;
 import org.laokou.admin.command.dept.query.DeptListQryExe;
@@ -46,11 +46,11 @@ public class DeptsServiceImpl implements DeptsServiceI {
 
 	private final DeptListQryExe deptListQryExe;
 
-	private final DeptInsertCmdExe deptInsertCmdExe;
+	private final DeptCreateCmdExe deptCreateCmdExe;
 
-	private final DeptUpdateCmdExe deptUpdateCmdExe;
+	private final DeptModifyCmdExe deptModifyCmdExe;
 
-	private final DeptDeleteCmdExe deptDeleteCmdExe;
+	private final DeptRemoveCmdExe deptRemoveCmdExe;
 
 	private final DeptGetQryExe deptGetQryExe;
 
@@ -82,8 +82,8 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(DeptInsertCmd cmd) {
-		return deptInsertCmdExe.execute(cmd);
+	public Result<Boolean> insert(DeptCreateCmd cmd) {
+		return deptCreateCmdExe.execute(cmd);
 	}
 
 	/**
@@ -92,8 +92,8 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(DeptUpdateCmd cmd) {
-		return deptUpdateCmdExe.execute(cmd);
+	public Result<Boolean> update(DeptModifyCmd cmd) {
+		return deptModifyCmdExe.execute(cmd);
 	}
 
 	/**
@@ -102,8 +102,8 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(DeptDeleteCmd cmd) {
-		return deptDeleteCmdExe.execute(cmd);
+	public Result<Boolean> deleteById(DeptRemoveCmd cmd) {
+		return deptRemoveCmdExe.execute(cmd);
 	}
 
 	/**

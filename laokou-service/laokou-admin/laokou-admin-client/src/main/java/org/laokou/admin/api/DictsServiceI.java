@@ -37,21 +37,21 @@ public interface DictsServiceI {
 	 * @param cmd 新增字典参数
 	 * @return 新增结果
 	 */
-	Result<Boolean> insert(DictInsertCmd cmd);
+	Result<Boolean> insert(DictCreateCmd cmd);
 
 	/**
 	 * 修改字典.
 	 * @param cmd 修改字典参数
 	 * @return 修改结果
 	 */
-	Result<Boolean> update(DictUpdateCmd cmd);
+	Result<Boolean> update(DictModifyCmd cmd);
 
 	/**
 	 * 根据ID删除字典.
 	 * @param cmd 根据ID删除字典参数
 	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(DictDeleteCmd cmd);
+	Result<Boolean> deleteById(DictRemoveCmd cmd);
 
 	/**
 	 * 根据ID查看字典.

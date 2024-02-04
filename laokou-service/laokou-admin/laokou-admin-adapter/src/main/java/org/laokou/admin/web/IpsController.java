@@ -22,8 +22,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.IpsServiceI;
 import org.laokou.admin.domain.annotation.OperateLog;
-import org.laokou.admin.dto.ip.IpDeleteCmd;
-import org.laokou.admin.dto.ip.IpInsertCmd;
+import org.laokou.admin.dto.ip.IpRemoveCmd;
+import org.laokou.admin.dto.ip.IpCreateCmd;
 import org.laokou.admin.dto.ip.IpListQry;
 import org.laokou.admin.dto.ip.IpRefreshCmd;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
@@ -61,7 +61,7 @@ public class IpsController {
 	@Operation(summary = "黑名单", description = "新增IP")
 	@OperateLog(module = "黑名单", operation = "新增IP")
 	@PreAuthorize("hasAuthority('ips:create-black')")
-	public Result<Boolean> createBlack(@Validated @RequestBody IpInsertCmd cmd) {
+	public Result<Boolean> createBlack(@Validated @RequestBody IpCreateCmd cmd) {
 		return ipsServiceI.insert(cmd);
 	}
 
@@ -71,7 +71,7 @@ public class IpsController {
 	@OperateLog(module = "黑名单", operation = "删除IP")
 	@PreAuthorize("hasAuthority('ips:remove-black')")
 	public Result<Boolean> removeBlack(@PathVariable("id") Long id) {
-		return ipsServiceI.deleteById(new IpDeleteCmd(id));
+		return ipsServiceI.deleteById(new IpRemoveCmd(id));
 	}
 
 	@PostMapping("white/list")
@@ -88,7 +88,7 @@ public class IpsController {
 	@Operation(summary = "白名单", description = "新增IP")
 	@OperateLog(module = "白名单", operation = "新增IP")
 	@PreAuthorize("hasAuthority('ips:create-white')")
-	public Result<Boolean> createWhite(@Validated @RequestBody IpInsertCmd cmd) {
+	public Result<Boolean> createWhite(@Validated @RequestBody IpCreateCmd cmd) {
 		return ipsServiceI.insert(cmd);
 	}
 
@@ -98,7 +98,7 @@ public class IpsController {
 	@OperateLog(module = "白名单", operation = "删除IP")
 	@PreAuthorize("hasAuthority('ips:remove-white')")
 	public Result<Boolean> removeWhite(@PathVariable("id") Long id) {
-		return ipsServiceI.deleteById(new IpDeleteCmd(id));
+		return ipsServiceI.deleteById(new IpRemoveCmd(id));
 	}
 
 	@TraceLog

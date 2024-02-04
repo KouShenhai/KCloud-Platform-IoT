@@ -21,9 +21,9 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.MenusServiceI;
 import org.laokou.admin.dto.menu.*;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
-import org.laokou.admin.command.menu.MenuDeleteCmdExe;
-import org.laokou.admin.command.menu.MenuInsertCmdExe;
-import org.laokou.admin.command.menu.MenuUpdateCmdExe;
+import org.laokou.admin.command.menu.MenuRemoveCmdExe;
+import org.laokou.admin.command.menu.MenuCreateCmdExe;
+import org.laokou.admin.command.menu.MenuModifyCmdExe;
 import org.laokou.admin.command.menu.query.*;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
@@ -45,11 +45,11 @@ public class MenusServiceImpl implements MenusServiceI {
 
 	private final MenuListQryExe menuListQryExe;
 
-	private final MenuUpdateCmdExe menuUpdateCmdExe;
+	private final MenuModifyCmdExe menuModifyCmdExe;
 
-	private final MenuInsertCmdExe menuInsertCmdExe;
+	private final MenuCreateCmdExe menuCreateCmdExe;
 
-	private final MenuDeleteCmdExe menuDeleteCmdExe;
+	private final MenuRemoveCmdExe menuRemoveCmdExe;
 
 	private final MenuTreeGetQryExe menuTreeGetQryExe;
 
@@ -93,8 +93,8 @@ public class MenusServiceImpl implements MenusServiceI {
 	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(MenuUpdateCmd cmd) {
-		return menuUpdateCmdExe.execute(cmd);
+	public Result<Boolean> update(MenuModifyCmd cmd) {
+		return menuModifyCmdExe.execute(cmd);
 	}
 
 	/**
@@ -103,8 +103,8 @@ public class MenusServiceImpl implements MenusServiceI {
 	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(MenuInsertCmd cmd) {
-		return menuInsertCmdExe.execute(cmd);
+	public Result<Boolean> insert(MenuCreateCmd cmd) {
+		return menuCreateCmdExe.execute(cmd);
 	}
 
 	/**
@@ -113,8 +113,8 @@ public class MenusServiceImpl implements MenusServiceI {
 	 * @return 删除菜单
 	 */
 	@Override
-	public Result<Boolean> deleteById(MenuDeleteCmd cmd) {
-		return menuDeleteCmdExe.execute(cmd);
+	public Result<Boolean> deleteById(MenuRemoveCmd cmd) {
+		return menuRemoveCmdExe.execute(cmd);
 	}
 
 	/**

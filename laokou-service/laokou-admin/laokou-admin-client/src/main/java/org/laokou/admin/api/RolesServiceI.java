@@ -58,20 +58,20 @@ public interface RolesServiceI {
 	 * @param cmd 新增角色参数
 	 * @return 新增结果
 	 */
-	Result<Boolean> insert(RoleInsertCmd cmd);
+	Result<Boolean> insert(RoleCreateCmd cmd);
 
 	/**
 	 * 修改角色.
 	 * @param cmd 修改角色参数
 	 * @return 修改结果
 	 */
-	Result<Boolean> update(RoleUpdateCmd cmd);
+	Result<Boolean> update(RoleModifyCmd cmd);
 
 	/**
 	 * 根据ID删除角色.
 	 * @param cmd 根据ID删除角色参数
 	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(RoleDeleteCmd cmd);
+	Result<Boolean> deleteById(RoleRemoveCmd cmd);
 
 }

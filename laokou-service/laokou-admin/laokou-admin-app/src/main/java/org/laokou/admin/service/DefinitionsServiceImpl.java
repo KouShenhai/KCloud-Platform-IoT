@@ -37,13 +37,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DefinitionsServiceImpl implements DefinitionsServiceI {
 
-	private final DefinitionInsertCmdExe definitionInsertCmdExe;
+	private final DefinitionCreateCmdExe definitionCreateCmdExe;
 
 	private final DefinitionListQryExe definitionListQryExe;
 
 	private final DefinitionDiagramGetQryExe definitionDiagramGetQryExe;
 
-	private final DefinitionDeleteCmdExe definitionDeleteCmdExe;
+	private final DefinitionRemoveCmdExe definitionRemoveCmdExe;
 
 	private final DefinitionSuspendCmdExe definitionSuspendCmdExe;
 
@@ -57,8 +57,8 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 	 * @return 执行新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(DefinitionInsertCmd cmd) {
-		return definitionInsertCmdExe.execute(cmd);
+	public Result<Boolean> insert(DefinitionCreateCmd cmd) {
+		return definitionCreateCmdExe.execute(cmd);
 	}
 
 	/**
@@ -87,8 +87,8 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 	 * @return 执行删除结果
 	 */
 	@Override
-	public Result<Boolean> delete(DefinitionDeleteCmd cmd) {
-		return definitionDeleteCmdExe.execute(cmd);
+	public Result<Boolean> delete(DefinitionRemoveCmd cmd) {
+		return definitionRemoveCmdExe.execute(cmd);
 	}
 
 	/**

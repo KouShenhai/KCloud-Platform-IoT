@@ -17,8 +17,8 @@
 
 package org.laokou.admin.api;
 
-import org.laokou.admin.dto.ip.IpDeleteCmd;
-import org.laokou.admin.dto.ip.IpInsertCmd;
+import org.laokou.admin.dto.ip.IpRemoveCmd;
+import org.laokou.admin.dto.ip.IpCreateCmd;
 import org.laokou.admin.dto.ip.IpListQry;
 import org.laokou.admin.dto.ip.IpRefreshCmd;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
@@ -37,14 +37,14 @@ public interface IpsServiceI {
 	 * @param cmd 新增IP参数
 	 * @return 新增结果
 	 */
-	Result<Boolean> insert(IpInsertCmd cmd);
+	Result<Boolean> insert(IpCreateCmd cmd);
 
 	/**
 	 * 根据ID删除IP.
 	 * @param cmd 根据IP删除IP参数
 	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(IpDeleteCmd cmd);
+	Result<Boolean> deleteById(IpRemoveCmd cmd);
 
 	/**
 	 * 查询IP列表.

@@ -70,7 +70,7 @@ public class OssController {
 	@Operation(summary = "OSS管理", description = "新增OSS")
 	@OperateLog(module = "OSS管理", operation = "新增OSS")
 	@PreAuthorize("hasAuthority('oss:create')")
-	public Result<Boolean> create(@RequestBody OssInsertCmd cmd) {
+	public Result<Boolean> create(@RequestBody OssCreateCmd cmd) {
 		return ossServiceI.insert(cmd);
 	}
 
@@ -88,7 +88,7 @@ public class OssController {
 	@OperateLog(module = "OSS管理", operation = "修改OSS")
 	@PreAuthorize("hasAuthority('oss:modify')")
 	@DataCache(name = OSS, key = "#cmd.ossCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> modify(@RequestBody OssUpdateCmd cmd) {
+	public Result<Boolean> modify(@RequestBody OssModifyCmd cmd) {
 		return ossServiceI.update(cmd);
 	}
 
@@ -98,7 +98,7 @@ public class OssController {
 	@OperateLog(module = "OSS管理", operation = "删除OSS")
 	@PreAuthorize("hasAuthority('oss:remove')")
 	public Result<Boolean> remove(@PathVariable("id") Long id) {
-		return ossServiceI.deleteById(new OssDeleteCmd(id));
+		return ossServiceI.deleteById(new OssRemoveCmd(id));
 	}
 
 }
