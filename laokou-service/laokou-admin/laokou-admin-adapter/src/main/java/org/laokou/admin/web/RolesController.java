@@ -49,21 +49,21 @@ public class RolesController {
 	@PostMapping("list")
 	@Operation(summary = "角色管理", description = "查询角色列表")
 	@PreAuthorize("hasAuthority('roles:list')")
-	public Result<Datas<RoleCO>> list(@RequestBody RoleListQry qry) {
+	public Result<Datas<RoleCO>> findList(@RequestBody RoleListQry qry) {
 		return rolesServiceI.list(qry);
 	}
 
 	@TraceLog
 	@GetMapping("option-list")
 	@Operation(summary = "角色管理", description = "下拉列表")
-	public Result<List<OptionCO>> optionList() {
+	public Result<List<OptionCO>> findOptionList() {
 		return rolesServiceI.optionList(new RoleOptionListQry());
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "角色管理", description = "查看角色")
-	public Result<RoleCO> getById(@PathVariable("id") Long id) {
+	public Result<RoleCO> findById(@PathVariable("id") Long id) {
 		return rolesServiceI.getById(new RoleGetQry(id));
 	}
 
@@ -73,7 +73,7 @@ public class RolesController {
 	@Operation(summary = "角色管理", description = "新增角色")
 	@OperateLog(module = "角色管理", operation = "新增角色")
 	@PreAuthorize("hasAuthority('roles:insert')")
-	public Result<Boolean> insert(@RequestBody RoleInsertCmd cmd) {
+	public Result<Boolean> create(@RequestBody RoleInsertCmd cmd) {
 		return rolesServiceI.insert(cmd);
 	}
 
@@ -82,7 +82,7 @@ public class RolesController {
 	@Operation(summary = "角色管理", description = "修改角色")
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@PreAuthorize("hasAuthority('roles:update')")
-	public Result<Boolean> update(@RequestBody RoleUpdateCmd cmd) {
+	public Result<Boolean> modify(@RequestBody RoleUpdateCmd cmd) {
 		return rolesServiceI.update(cmd);
 	}
 
@@ -91,7 +91,7 @@ public class RolesController {
 	@Operation(summary = "角色管理", description = "删除角色")
 	@OperateLog(module = "角色管理", operation = "删除角色")
 	@PreAuthorize("hasAuthority('roles:delete')")
-	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+	public Result<Boolean> remove(@PathVariable("id") Long id) {
 		return rolesServiceI.deleteById(new RoleDeleteCmd(id));
 	}
 

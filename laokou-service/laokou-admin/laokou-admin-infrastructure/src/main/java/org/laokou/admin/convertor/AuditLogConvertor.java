@@ -18,7 +18,6 @@
 package org.laokou.admin.convertor;
 
 import org.laokou.admin.domain.resource.AuditLog;
-import org.laokou.admin.dto.resource.clientobject.AuditLogCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.AuditLogDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
@@ -30,6 +29,6 @@ import static org.laokou.common.i18n.common.SysConstants.SPRING;
  * @author laokou
  */
 @Mapper(componentModel = SPRING)
-public interface AuditLogConvertor extends Convertor<AuditLogCO, AuditLog, AuditLogDO> {
+public interface AuditLogConvertor extends Convertor<AuditLog, AuditLogDO> {
 
 }

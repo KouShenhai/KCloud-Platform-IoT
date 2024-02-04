@@ -18,7 +18,6 @@
 package org.laokou.admin.convertor;
 
 import org.laokou.admin.domain.oss.Oss;
-import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
@@ -31,6 +30,6 @@ import static org.laokou.common.i18n.common.SysConstants.SPRING;
  * @author laokou
  */
 @Mapper(componentModel = SPRING)
-public interface OssConvertor extends Convertor<OssCO, Oss, OssDO> {
+public interface OssConvertor extends Convertor<Oss, OssDO> {
 
 }

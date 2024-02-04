@@ -50,15 +50,15 @@ public class DeptsController {
 	@GetMapping("tree")
 	@TraceLog
 	@Operation(summary = "部门管理", description = "树形部门列表")
-	public Result<DeptCO> tree() {
-		return deptsServiceI.tree(new DeptTreeGetQry());
+	public Result<List<DeptCO>> findTreeList() {
+		//return deptsServiceI.tree(new DeptTreeGetQry());
 	}
 
 	@PostMapping("list")
 	@Operation(summary = "部门管理", description = "查询菜单列表")
 	@PreAuthorize("hasAuthority('depts:list')")
 	@TraceLog
-	public Result<List<DeptCO>> list(@RequestBody DeptListQry qry) {
+	public Result<List<DeptCO>> findList(@RequestBody DeptListQry qry) {
 		return deptsServiceI.list(qry);
 	}
 
@@ -68,7 +68,7 @@ public class DeptsController {
 	@OperateLog(module = "部门管理", operation = "新增菜单")
 	@PreAuthorize("hasAuthority('depts:insert')")
 	@TraceLog
-	public Result<Boolean> insert(@RequestBody DeptInsertCmd cmd) {
+	public void create(@RequestBody DeptInsertCmd cmd) {
 		return deptsServiceI.insert(cmd);
 	}
 
@@ -78,7 +78,7 @@ public class DeptsController {
 	@PreAuthorize("hasAuthority('depts:update')")
 	@TraceLog
 	@DataCache(name = DEPTS, key = "#cmd.deptCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> update(@RequestBody DeptUpdateCmd cmd) {
+	public void modify(@RequestBody DeptUpdateCmd cmd) {
 		return deptsServiceI.update(cmd);
 	}
 
@@ -86,7 +86,7 @@ public class DeptsController {
 	@TraceLog
 	@Operation(summary = "部门管理", description = "查看菜单")
 	@DataCache(name = DEPTS, key = "#id")
-	public Result<DeptCO> getById(@PathVariable("id") Long id) {
+	public Result<DeptCO> findById(@PathVariable("id") Long id) {
 		return deptsServiceI.getById(new DeptGetQry(id));
 	}
 
@@ -95,15 +95,14 @@ public class DeptsController {
 	@Operation(summary = "部门管理", description = "删除菜单")
 	@OperateLog(module = "部门管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('depts:delete')")
-	@DataCache(name = DEPTS, key = "#id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+	public void remove(@RequestBody Long[] ids) {
 		return deptsServiceI.deleteById(new DeptDeleteCmd(id));
 	}
 
 	@GetMapping("{roleId}/ids")
 	@TraceLog
 	@Operation(summary = "部门管理", description = "部门IDS")
-	public Result<List<Long>> ids(@PathVariable("roleId") Long roleId) {
+	public Result<List<Long>> findIds(@PathVariable("roleId") Long roleId) {
 		return deptsServiceI.ids(new DeptIDSGetQry(roleId));
 	}
 

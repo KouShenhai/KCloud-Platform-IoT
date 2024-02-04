@@ -52,7 +52,7 @@ public class OssController {
 	@PostMapping("list")
 	@Operation(summary = "OSS管理", description = "查询OSS列表")
 	@PreAuthorize("hasAuthority('oss:list')")
-	public Result<Datas<OssCO>> list(@RequestBody OssListQry qry) {
+	public Result<Datas<OssCO>> findList(@RequestBody OssListQry qry) {
 		return ossServiceI.list(qry);
 	}
 
@@ -70,7 +70,7 @@ public class OssController {
 	@Operation(summary = "OSS管理", description = "新增OSS")
 	@OperateLog(module = "OSS管理", operation = "新增OSS")
 	@PreAuthorize("hasAuthority('oss:insert')")
-	public Result<Boolean> insert(@RequestBody OssInsertCmd cmd) {
+	public Result<Boolean> create(@RequestBody OssInsertCmd cmd) {
 		return ossServiceI.insert(cmd);
 	}
 
@@ -78,7 +78,7 @@ public class OssController {
 	@GetMapping("{id}")
 	@Operation(summary = "OSS管理", description = "查看OSS")
 	@DataCache(name = OSS, key = "#id")
-	public Result<OssCO> getById(@PathVariable("id") Long id) {
+	public Result<OssCO> findById(@PathVariable("id") Long id) {
 		return ossServiceI.getById(new OssGetQry(id));
 	}
 
@@ -88,7 +88,7 @@ public class OssController {
 	@OperateLog(module = "OSS管理", operation = "修改OSS")
 	@PreAuthorize("hasAuthority('oss:update')")
 	@DataCache(name = OSS, key = "#cmd.ossCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> update(@RequestBody OssUpdateCmd cmd) {
+	public Result<Boolean> modify(@RequestBody OssUpdateCmd cmd) {
 		return ossServiceI.update(cmd);
 	}
 
@@ -98,7 +98,7 @@ public class OssController {
 	@OperateLog(module = "OSS管理", operation = "删除OSS")
 	@PreAuthorize("hasAuthority('oss:delete')")
 	@DataCache(name = OSS, key = "#id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+	public Result<Boolean> remove(@PathVariable("id") Long id) {
 		return ossServiceI.deleteById(new OssDeleteCmd(id));
 	}
 

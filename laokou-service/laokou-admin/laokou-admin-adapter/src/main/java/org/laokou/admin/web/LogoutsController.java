@@ -42,7 +42,7 @@ public class LogoutsController {
 	@TraceLog
 	@DeleteMapping
 	@Operation(summary = "认证授权", description = "退出登录")
-	public void logout(@RequestBody LogoutCmd cmd) {
+	public void remove(@RequestBody LogoutCmd cmd) {
 		logoutsServiceI.logout(cmd);
 	}
 

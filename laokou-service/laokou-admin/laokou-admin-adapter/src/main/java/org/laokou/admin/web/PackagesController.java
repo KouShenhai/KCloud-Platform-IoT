@@ -53,7 +53,7 @@ public class PackagesController {
 	@PostMapping("list")
 	@Operation(summary = "套餐管理", description = "查询套餐列表")
 	@PreAuthorize("hasAuthority('packages:list')")
-	public Result<Datas<PackageCO>> list(@RequestBody PackageListQry qry) {
+	public Result<Datas<PackageCO>> findList(@RequestBody PackageListQry qry) {
 		return packagesServiceI.list(qry);
 	}
 
@@ -63,7 +63,7 @@ public class PackagesController {
 	@Operation(summary = "套餐管理", description = "新增套餐")
 	@OperateLog(module = "套餐管理", operation = "新增套餐")
 	@PreAuthorize("hasAuthority('packages:insert')")
-	public Result<Boolean> insert(@RequestBody PackageInsertCmd cmd) {
+	public Result<Boolean> create(@RequestBody PackageInsertCmd cmd) {
 		return packagesServiceI.insert(cmd);
 	}
 
@@ -71,7 +71,7 @@ public class PackagesController {
 	@GetMapping("{id}")
 	@Operation(summary = "套餐管理", description = "查看套餐")
 	@DataCache(name = PACKAGES, key = "#id")
-	public Result<PackageCO> getById(@PathVariable("id") Long id) {
+	public Result<PackageCO> findById(@PathVariable("id") Long id) {
 		return packagesServiceI.getById(new PackageGetQry(id));
 	}
 
@@ -81,7 +81,7 @@ public class PackagesController {
 	@OperateLog(module = "套餐管理", operation = "修改套餐")
 	@PreAuthorize("hasAuthority('packages:update')")
 	@DataCache(name = PACKAGES, key = "#cmd.packageCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> update(@RequestBody PackageUpdateCmd cmd) {
+	public Result<Boolean> modify(@RequestBody PackageUpdateCmd cmd) {
 		return packagesServiceI.update(cmd);
 	}
 
@@ -91,14 +91,14 @@ public class PackagesController {
 	@OperateLog(module = "套餐管理", operation = "删除套餐")
 	@PreAuthorize("hasAuthority('packages:delete')")
 	@DataCache(name = PACKAGES, key = "#id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+	public Result<Boolean> remove(@PathVariable("id") Long id) {
 		return packagesServiceI.deleteById(new PackageDeleteCmd(id));
 	}
 
 	@TraceLog
 	@GetMapping("option-list")
 	@Operation(summary = "套餐管理", description = "下拉列表")
-	public Result<List<OptionCO>> optionList() {
+	public Result<List<OptionCO>> findOptionList() {
 		return packagesServiceI.optionList(new PackageOptionListQry());
 	}
 

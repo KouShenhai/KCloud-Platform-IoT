@@ -53,7 +53,7 @@ public class DefinitionsController {
 	@Operation(summary = "流程定义", description = "新增流程")
 	@OperateLog(module = "流程定义", operation = "新增流程")
 	@PreAuthorize("hasAuthority('definitions:insert')")
-	public Result<Boolean> insert(@RequestPart("file") MultipartFile file) throws IOException {
+	public Result<Boolean> create(@RequestPart("file") MultipartFile file) throws IOException {
 		return definitionsServiceI.insert(new DefinitionInsertCmd(file));
 	}
 
@@ -61,7 +61,7 @@ public class DefinitionsController {
 	@PostMapping("list")
 	@Operation(summary = "流程定义", description = "查询流程列表")
 	@PreAuthorize("hasAuthority('definitions:list')")
-	public Result<Datas<DefinitionCO>> list(@RequestBody DefinitionListQry qry) {
+	public Result<Datas<DefinitionCO>> findList(@RequestBody DefinitionListQry qry) {
 		return definitionsServiceI.list(qry);
 	}
 
@@ -69,7 +69,7 @@ public class DefinitionsController {
 	@GetMapping("{definitionId}/diagram")
 	@Operation(summary = "流程定义", description = "流程图")
 	@PreAuthorize("hasAuthority('definitions:diagram')")
-	public Result<String> diagram(@PathVariable("definitionId") String definitionId) {
+	public Result<String> findDiagram(@PathVariable("definitionId") String definitionId) {
 		return definitionsServiceI.diagram(new DefinitionDiagramGetQry(definitionId));
 	}
 
@@ -78,7 +78,7 @@ public class DefinitionsController {
 	@Operation(summary = "流程定义", description = "删除流程")
 	@OperateLog(module = "流程定义", operation = "删除流程")
 	@PreAuthorize("hasAuthority('definitions:delete')")
-	public Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId) {
+	public Result<Boolean> remove(@PathVariable("deploymentId") String deploymentId) {
 		return definitionsServiceI.delete(new DefinitionDeleteCmd(deploymentId));
 	}
 
@@ -103,7 +103,7 @@ public class DefinitionsController {
 	@GetMapping("template")
 	@Operation(summary = "流程定义", description = "流程模板")
 	@PreAuthorize("hasAuthority('definitions:template')")
-	public void template(HttpServletResponse response) {
+	public void findTemplate(HttpServletResponse response) {
 		definitionsServiceI.template(new DefinitionTemplateCmd(response));
 	}
 

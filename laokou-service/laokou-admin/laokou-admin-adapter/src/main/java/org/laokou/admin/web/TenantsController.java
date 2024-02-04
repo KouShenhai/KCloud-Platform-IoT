@@ -58,7 +58,7 @@ public class TenantsController {
 	@PostMapping("list")
 	@Operation(summary = "租户管理", description = "查询租户列表")
 	@PreAuthorize("hasAuthority('tenants:list')")
-	public Result<Datas<TenantCO>> list(@RequestBody TenantListQry qry) {
+	public Result<Datas<TenantCO>> findList(@RequestBody TenantListQry qry) {
 		return tenantsServiceI.list(qry);
 	}
 
@@ -68,7 +68,7 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "新增租户")
 	@OperateLog(module = "租户管理", operation = "新增租户")
 	@PreAuthorize("hasAuthority('tenants:insert')")
-	public Result<Boolean> insert(@RequestBody TenantInsertCmd cmd) {
+	public Result<Boolean> create(@RequestBody TenantInsertCmd cmd) {
 		return tenantsServiceI.insert(cmd);
 	}
 
@@ -76,7 +76,7 @@ public class TenantsController {
 	@GetMapping("{id}")
 	@Operation(summary = "租户管理", description = "查看租户")
 	@DataCache(name = TENANTS, key = "#id")
-	public Result<TenantCO> getById(@PathVariable("id") Long id) {
+	public Result<TenantCO> findById(@PathVariable("id") Long id) {
 		return tenantsServiceI.getById(new TenantGetQry(id));
 	}
 
@@ -86,7 +86,7 @@ public class TenantsController {
 	@OperateLog(module = "租户管理", operation = "修改租户")
 	@PreAuthorize("hasAuthority('tenants:update')")
 	@DataCache(name = TENANTS, key = "#cmd.tenantCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> update(@RequestBody TenantUpdateCmd cmd) {
+	public Result<Boolean> modify(@RequestBody TenantUpdateCmd cmd) {
 		return tenantsServiceI.update(cmd);
 	}
 
@@ -96,21 +96,21 @@ public class TenantsController {
 	@OperateLog(module = "租户管理", operation = "删除租户")
 	@PreAuthorize("hasAuthority('tenants:delete')")
 	@DataCache(name = TENANTS, key = "#id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+	public Result<Boolean> remove(@PathVariable("id") Long id) {
 		return tenantsServiceI.deleteById(new TenantDeleteCmd(id));
 	}
 
 	@TraceLog
 	@GetMapping("option-list")
 	@Operation(summary = "租户管理", description = "下拉列表")
-	public Result<List<OptionCO>> optionList() {
+	public Result<List<OptionCO>> findOptionList() {
 		return tenantsServiceI.optionList(new TenantOptionListQry());
 	}
 
 	@TraceLog
 	@GetMapping("id")
 	@Operation(summary = "租户管理", description = "解析域名查看ID")
-	public Result<Long> getIdByDomainName(HttpServletRequest request) {
+	public Result<Long> findIdByDomainName(HttpServletRequest request) {
 		return tenantsServiceI.getIdByDomainName(new TenantGetIDQry(request));
 	}
 

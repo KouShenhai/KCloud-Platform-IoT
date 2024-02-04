@@ -53,7 +53,7 @@ public class SourcesController {
 	@PostMapping("list")
 	@Operation(summary = "数据源管理", description = "查询数据源列表")
 	@PreAuthorize("hasAuthority('sources:list')")
-	public Result<Datas<SourceCO>> list(@RequestBody SourceListQry qry) {
+	public Result<Datas<SourceCO>> findList(@RequestBody SourceListQry qry) {
 		return sourcesServiceI.list(qry);
 	}
 
@@ -63,7 +63,7 @@ public class SourcesController {
 	@Operation(summary = "数据源管理", description = "新增数据源")
 	@OperateLog(module = "数据源管理", operation = "数据源新增")
 	@PreAuthorize("hasAuthority('sources:insert')")
-	public Result<Boolean> insert(@RequestBody SourceInsertCmd cmd) {
+	public Result<Boolean> create(@RequestBody SourceInsertCmd cmd) {
 		return sourcesServiceI.insert(cmd);
 	}
 
@@ -71,7 +71,7 @@ public class SourcesController {
 	@GetMapping("{id}")
 	@Operation(summary = "数据源管理", description = "查看数据源")
 	@DataCache(name = SOURCES, key = "#id")
-	public Result<SourceCO> getById(@PathVariable("id") Long id) {
+	public Result<SourceCO> findById(@PathVariable("id") Long id) {
 		return sourcesServiceI.getById(new SourceGetQry(id));
 	}
 
@@ -81,7 +81,7 @@ public class SourcesController {
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@PreAuthorize("hasAuthority('sources:update')")
 	@DataCache(name = SOURCES, key = "#cmd.sourceCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> update(@RequestBody SourceUpdateCmd cmd) {
+	public Result<Boolean> modify(@RequestBody SourceUpdateCmd cmd) {
 		return sourcesServiceI.update(cmd);
 	}
 
@@ -91,14 +91,14 @@ public class SourcesController {
 	@OperateLog(module = "数据源管理", operation = "删除数据源")
 	@PreAuthorize("hasAuthority('sources:delete')")
 	@DataCache(name = SOURCES, key = "#id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+	public Result<Boolean> remove(@PathVariable("id") Long id) {
 		return sourcesServiceI.deleteById(new SourceDeleteCmd(id));
 	}
 
 	@TraceLog
 	@GetMapping("option-list")
 	@Operation(summary = "数据源管理", description = "下拉列表")
-	public Result<List<OptionCO>> optionList() {
+	public Result<List<OptionCO>> findOptionList() {
 		return sourcesServiceI.optionList(new SourceOptionListQry());
 	}
 

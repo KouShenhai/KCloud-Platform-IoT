@@ -24,6 +24,7 @@ import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserGetQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
+import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +39,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 @RequiredArgsConstructor
 public class UserGetQryExe {
 
-	private final UserGateway userGateway;
+	private final UserMapper userMapper;
 
 	/**
 	 * 执行查看用户.

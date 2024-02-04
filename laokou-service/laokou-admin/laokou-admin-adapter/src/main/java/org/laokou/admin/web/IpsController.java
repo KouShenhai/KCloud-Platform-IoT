@@ -51,7 +51,7 @@ public class IpsController {
 	@TraceLog
 	@Operation(summary = "黑名单", description = "查询IP列表")
 	@PreAuthorize("hasAuthority('ips:black-list')")
-	public Result<Datas<IpCO>> blacklist(@RequestBody IpListQry qry) {
+	public Result<Datas<IpCO>> findBlacklist(@RequestBody IpListQry qry) {
 		return ipsServiceI.list(qry);
 	}
 
@@ -61,7 +61,7 @@ public class IpsController {
 	@Operation(summary = "黑名单", description = "新增IP")
 	@OperateLog(module = "黑名单", operation = "新增IP")
 	@PreAuthorize("hasAuthority('ips:insert-black')")
-	public Result<Boolean> insertBlack(@Validated @RequestBody IpInsertCmd cmd) {
+	public Result<Boolean> createBlack(@Validated @RequestBody IpInsertCmd cmd) {
 		return ipsServiceI.insert(cmd);
 	}
 
@@ -70,7 +70,7 @@ public class IpsController {
 	@Operation(summary = "黑名单", description = "删除IP")
 	@OperateLog(module = "黑名单", operation = "删除IP")
 	@PreAuthorize("hasAuthority('ips:delete-black')")
-	public Result<Boolean> deleteBlackById(@PathVariable("id") Long id) {
+	public Result<Boolean> removeBlack(@PathVariable("id") Long id) {
 		return ipsServiceI.deleteById(new IpDeleteCmd(id));
 	}
 
@@ -78,7 +78,7 @@ public class IpsController {
 	@TraceLog
 	@Operation(summary = "白名单", description = "查询IP列表")
 	@PreAuthorize("hasAuthority('ips:white-list')")
-	public Result<Datas<IpCO>> whitelist(@RequestBody IpListQry qry) {
+	public Result<Datas<IpCO>> findWhitelist(@RequestBody IpListQry qry) {
 		return ipsServiceI.list(qry);
 	}
 
@@ -88,7 +88,7 @@ public class IpsController {
 	@Operation(summary = "白名单", description = "新增IP")
 	@OperateLog(module = "白名单", operation = "新增IP")
 	@PreAuthorize("hasAuthority('ips:insert-white')")
-	public Result<Boolean> insertWhite(@Validated @RequestBody IpInsertCmd cmd) {
+	public Result<Boolean> createWhite(@Validated @RequestBody IpInsertCmd cmd) {
 		return ipsServiceI.insert(cmd);
 	}
 
@@ -97,7 +97,7 @@ public class IpsController {
 	@Operation(summary = "白名单", description = "删除IP")
 	@OperateLog(module = "白名单", operation = "删除IP")
 	@PreAuthorize("hasAuthority('ips:delete-white')")
-	public Result<Boolean> deleteWhiteById(@PathVariable("id") Long id) {
+	public Result<Boolean> removeWhite(@PathVariable("id") Long id) {
 		return ipsServiceI.deleteById(new IpDeleteCmd(id));
 	}
 
