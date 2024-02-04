@@ -19,19 +19,14 @@ package org.laokou.admin.command.user;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserCreateCmd;
 import org.laokou.admin.dto.user.clientobject.UserCO;
-import org.laokou.admin.gatewayimpl.database.UserMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
-import static org.laokou.common.i18n.common.StringConstants.SINGLE_QUOT;
 
 /**
  * 新增用户执行器.
@@ -44,27 +39,13 @@ public class UserCreateCmdExe {
 
 	private final UserGateway userGateway;
 
-	private final UserMapper userMapper;
-
-	private final UserConvertor userConvertor;
-
 	/**
 	 * 执行新增用户.
 	 * @param cmd 新增用户参数
-	 * @return 执行新增结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(UserCreateCmd cmd) {
-		UserCO co = cmd.getUserCO();
-	}
-
-	/**
-	 * 转换为用户数据模型.
-	 * @param co 用户对象
-	 * @return 用户数据模型
-	 */
-	private UserDO toUserDO(UserCO co) {
-		return userConvertor.toDataObj(co);
+	public void executeVoid(UserCreateCmd cmd) {
+		userGateway.create(convert(cmd.getUserCO()));
 	}
 
 	/**
@@ -72,14 +53,16 @@ public class UserCreateCmdExe {
 	 * @param co 用户对象
 	 * @return 用户领域
 	 */
-	private User toUser(UserCO co) {
-		User user = userConvertor.toEntity(co);
-		user.setTenantId(UserUtil.getTenantId());
-		user.setCreator(UserUtil.getUserId());
-		user.setDeptId(co.getDeptId());
-		user.setDeptPath(co.getDeptPath());
-		user.setUsername(SINGLE_QUOT.concat(user.getUsername()).concat(SINGLE_QUOT));
-		return user;
+	private User convert(UserCO co) {
+		return User.builder()
+		.tenantId(UserUtil.getTenantId())
+		.creator(UserUtil.getUserId())
+		.deptId(co.getDeptId())
+		.deptPath(co.getDeptPath())
+		.editor(UserUtil.getUserId())
+				.roleIds(co.getRoleIds())
+		.username(co.getUsername())
+				.build();
 	}
 
 }

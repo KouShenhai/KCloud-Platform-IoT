@@ -21,7 +21,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.dto.user.UserRemoveCmd;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
@@ -40,11 +39,10 @@ public class UserRemoveCmdExe {
 	/**
 	 * 执行删除用户.
 	 * @param cmd 删除用户参数
-	 * @return 执行删除结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(UserRemoveCmd cmd) {
-		return Result.of(userGateway.deleteById(cmd.getId()));
+	public void executeVoid(UserRemoveCmd cmd) {
+		userGateway.remove(cmd.getIds());
 	}
 
 }

@@ -55,9 +55,16 @@ public class MenuTreeGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<MenuCO> execute(MenuTreeGetQry qry) {
-		List<Menu> menuList = menuGateway.list(new User(YES.ordinal(), UserUtil.getTenantId()), null);
+		List<Menu> menuList = menuGateway.list(convert(), null);
 		List<MenuCO> menus = menuConvertor.convertClientObjectList(menuList);
 		return Result.of(TreeUtil.buildTreeNode(menus, MenuCO.class));
+	}
+
+	private User convert() {
+		return User.builder()
+				.superAdmin(YES.ordinal())
+				.tenantId(UserUtil.getTenantId())
+				.build();
 	}
 
 }

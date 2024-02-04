@@ -99,7 +99,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	public void remove(String[] ids) {
+	public void remove(Long[] ids) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				userMapper.deleteBatchIds(Arrays.asList(ids));

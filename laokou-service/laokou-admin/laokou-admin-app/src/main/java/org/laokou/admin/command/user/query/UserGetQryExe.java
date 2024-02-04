@@ -40,8 +40,6 @@ public class UserGetQryExe {
 
 	private final UserGateway userGateway;
 
-	private final UserConvertor userConvertor;
-
 	/**
 	 * 执行查看用户.
 	 * @param qry 查看用户参数
@@ -49,8 +47,8 @@ public class UserGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<UserCO> execute(UserGetQry qry) {
-		User user = userGateway.getById(qry.getId());
-		return Result.of(userConvertor.convertClientObject(user));
+//		User user = userGateway.getById(qry.getId());
+//		return Result.of(userConvertor.convertClientObject(user));
 	}
 
 }

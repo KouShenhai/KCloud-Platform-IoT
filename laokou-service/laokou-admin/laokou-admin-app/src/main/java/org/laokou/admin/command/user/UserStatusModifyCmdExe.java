@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserStatusModifyCmd;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
@@ -41,11 +41,10 @@ public class UserStatusModifyCmdExe {
 	/**
 	 * 执行修改用户状态.
 	 * @param cmd 修改用户状态参数
-	 * @return 执行修改结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(UserStatusModifyCmd cmd) {
-		return Result.of(userGateway.updateInfo(toUser(cmd)));
+	public void executeVoid(UserStatusModifyCmd cmd) {
+		userGateway.modify(convert(cmd));
 	}
 
 	/**
@@ -53,10 +52,12 @@ public class UserStatusModifyCmdExe {
 	 * @param cmd 修改用户状态参数
 	 * @return 用户领域
 	 */
-	private User toUser(UserStatusModifyCmd cmd) {
-		//User user = new User();
-		//user.setEditor(UserUtil.getUserId());
-		return null;
+	private User convert(UserStatusModifyCmd cmd) {
+		return User.builder()
+				.id(cmd.getId())
+				.status(cmd.getStatus())
+				.editor(UserUtil.getUserId())
+				.build();
 	}
 
 }

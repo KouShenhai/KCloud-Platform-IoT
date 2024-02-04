@@ -42,6 +42,6 @@ public interface UserGateway {
 	 * 根据IDS删除
 	 * @param ids IDS
 	 */
-	void remove(String[] ids);
+	void remove(Long[] ids);
 
 }
