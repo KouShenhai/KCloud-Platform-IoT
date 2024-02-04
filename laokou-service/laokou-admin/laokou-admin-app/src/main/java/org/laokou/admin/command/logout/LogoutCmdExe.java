@@ -60,13 +60,12 @@ public class LogoutCmdExe {
 		}
 		UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) ObjectUtil
 			.requireNotNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
-		Long userId = userDetail.getId();
 		// 删除token
 		removeToken(authorization);
 		// 删除菜单key
-		deleteMenuTreeKey(userId);
+		removeMenuTreeKey(userDetail.getId());
 		// 删除用户key
-		deleteUserInfoKey(token);
+		removeUserInfoKey(token);
 	}
 
 	/**
@@ -81,7 +80,7 @@ public class LogoutCmdExe {
 	 * 删除用户信息Key.
 	 * @param token 令牌
 	 */
-	private void deleteUserInfoKey(String token) {
+	private void removeUserInfoKey(String token) {
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
 		redisUtil.delete(userInfoKey);
 	}
@@ -90,7 +89,7 @@ public class LogoutCmdExe {
 	 * 删除树菜单Key.
 	 * @param userId 用户ID
 	 */
-	private void deleteMenuTreeKey(Long userId) {
+	private void removeMenuTreeKey(Long userId) {
 		String resourceTreeKey = RedisKeyUtil.getMenuTreeKey(userId);
 		redisUtil.delete(resourceTreeKey);
 	}

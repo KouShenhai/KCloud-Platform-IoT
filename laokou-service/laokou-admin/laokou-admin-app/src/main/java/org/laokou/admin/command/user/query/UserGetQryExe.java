@@ -19,12 +19,10 @@ package org.laokou.admin.command.user.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.UserConvertor;
-import org.laokou.admin.domain.gateway.UserGateway;
-import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserGetQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -48,8 +46,15 @@ public class UserGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<UserCO> execute(UserGetQry qry) {
-//		User user = userGateway.getById(qry.getId());
-//		return Result.of(userConvertor.convertClientObject(user));
+		UserDO userDO = userMapper.selectById(qry.getId());
+		return Result.of(convert(userDO));
+	}
+
+	private UserCO convert(UserDO userDO) {
+		return UserCO.builder()
+				.id(userDO.getId())
+				.avatar(userDO.getAvatar())
+				.build();
 	}
 
 }

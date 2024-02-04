@@ -18,6 +18,7 @@
 package org.laokou.admin.dto.user.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
@@ -29,6 +30,7 @@ import java.util.List;
  * @author laokou
  */
 @Data
+@Builder
 @Schema(name = "UserCO", description = "用户")
 public class UserCO extends ClientObject {
 

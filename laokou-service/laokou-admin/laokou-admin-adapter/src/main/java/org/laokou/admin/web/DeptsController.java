@@ -66,7 +66,7 @@ public class DeptsController {
 	@PostMapping
 	@Operation(summary = "部门管理", description = "新增菜单")
 	@OperateLog(module = "部门管理", operation = "新增菜单")
-	@PreAuthorize("hasAuthority('depts:insert')")
+	@PreAuthorize("hasAuthority('depts:create')")
 	@TraceLog
 	public void create(@RequestBody DeptInsertCmd cmd) {
 		return deptsServiceI.insert(cmd);
@@ -75,7 +75,7 @@ public class DeptsController {
 	@PutMapping
 	@Operation(summary = "部门管理", description = "修改菜单")
 	@OperateLog(module = "部门管理", operation = "修改菜单")
-	@PreAuthorize("hasAuthority('depts:update')")
+	@PreAuthorize("hasAuthority('depts:modify')")
 	@TraceLog
 	@DataCache(name = DEPTS, key = "#cmd.deptCO.id", type = CacheOperatorTypeEnums.DEL)
 	public void modify(@RequestBody DeptUpdateCmd cmd) {
@@ -94,7 +94,7 @@ public class DeptsController {
 	@TraceLog
 	@Operation(summary = "部门管理", description = "删除菜单")
 	@OperateLog(module = "部门管理", operation = "删除菜单")
-	@PreAuthorize("hasAuthority('depts:delete')")
+	@PreAuthorize("hasAuthority('depts:remove')")
 	public void remove(@RequestBody Long[] ids) {
 		return deptsServiceI.deleteById(new DeptDeleteCmd(id));
 	}

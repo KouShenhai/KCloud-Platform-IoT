@@ -48,7 +48,7 @@ public class ClustersServiceImpl implements ClustersServiceI {
 	 * @return 服务列表
 	 */
 	@Override
-	public Result<Datas<ClusterServiceCO>> serviceList(ClusterServiceListQry qry) {
+	public Result<Datas<ClusterServiceCO>> findServiceList(ClusterServiceListQry qry) {
 		return clusterServiceListQryExe.execute(qry);
 	}
 
@@ -58,7 +58,7 @@ public class ClustersServiceImpl implements ClustersServiceI {
 	 * @return 服务实例列表
 	 */
 	@Override
-	public Result<Datas<ClusterInstanceCO>> instanceList(ClusterInstanceListQry qry) {
+	public Result<Datas<ClusterInstanceCO>> findInstanceList(ClusterInstanceListQry qry) {
 		return clusterInstanceListQryExe.execute(qry);
 	}
 

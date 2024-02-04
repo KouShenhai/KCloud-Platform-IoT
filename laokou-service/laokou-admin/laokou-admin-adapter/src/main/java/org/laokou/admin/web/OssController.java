@@ -69,7 +69,7 @@ public class OssController {
 	@PostMapping
 	@Operation(summary = "OSS管理", description = "新增OSS")
 	@OperateLog(module = "OSS管理", operation = "新增OSS")
-	@PreAuthorize("hasAuthority('oss:insert')")
+	@PreAuthorize("hasAuthority('oss:create')")
 	public Result<Boolean> create(@RequestBody OssInsertCmd cmd) {
 		return ossServiceI.insert(cmd);
 	}
@@ -86,7 +86,7 @@ public class OssController {
 	@PutMapping
 	@Operation(summary = "OSS管理", description = "修改OSS")
 	@OperateLog(module = "OSS管理", operation = "修改OSS")
-	@PreAuthorize("hasAuthority('oss:update')")
+	@PreAuthorize("hasAuthority('oss:modify')")
 	@DataCache(name = OSS, key = "#cmd.ossCO.id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> modify(@RequestBody OssUpdateCmd cmd) {
 		return ossServiceI.update(cmd);
@@ -96,8 +96,7 @@ public class OssController {
 	@DeleteMapping("{id}")
 	@Operation(summary = "OSS管理", description = "删除OSS")
 	@OperateLog(module = "OSS管理", operation = "删除OSS")
-	@PreAuthorize("hasAuthority('oss:delete')")
-	@DataCache(name = OSS, key = "#id", type = CacheOperatorTypeEnums.DEL)
+	@PreAuthorize("hasAuthority('oss:remove')")
 	public Result<Boolean> remove(@PathVariable("id") Long id) {
 		return ossServiceI.deleteById(new OssDeleteCmd(id));
 	}

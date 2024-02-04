@@ -112,7 +112,7 @@ public class ResourceController {
 	@TraceLog
 	@Operation(summary = "资源管理", description = "新增资源")
 	@OperateLog(module = "资源管理", operation = "新增资源")
-	@PreAuthorize("hasAuthority('resource:insert')")
+	@PreAuthorize("hasAuthority('resource:create')")
 	public Result<Boolean> create(@Validated @RequestBody ResourceInsertCmd cmd) throws IOException {
 		return resourceServiceI.insert(cmd);
 	}
@@ -122,7 +122,7 @@ public class ResourceController {
 	@TraceLog
 	@Operation(summary = "资源管理", description = "修改资源")
 	@OperateLog(module = "资源管理", operation = "修改资源")
-	@PreAuthorize("hasAuthority('resource:update')")
+	@PreAuthorize("hasAuthority('resource:modify')")
 	public Result<Boolean> modify(@Validated @RequestBody ResourceUpdateCmd cmd) throws IOException {
 		return resourceServiceI.update(cmd);
 	}
@@ -131,7 +131,7 @@ public class ResourceController {
 	@TraceLog
 	@Operation(summary = "资源管理", description = "删除资源")
 	@OperateLog(module = "资源管理", operation = "删除资源")
-	@PreAuthorize("hasAuthority('resource:delete')")
+	@PreAuthorize("hasAuthority('resource:remove')")
 	public Result<Boolean> remove(@PathVariable("id") Long id) {
 		return resourceServiceI.deleteById(new ResourceDeleteCmd(id));
 	}

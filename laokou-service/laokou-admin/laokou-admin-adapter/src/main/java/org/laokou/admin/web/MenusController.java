@@ -74,7 +74,7 @@ public class MenusController {
 	@PutMapping
 	@Operation(summary = "菜单管理", description = "修改菜单")
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
-	@PreAuthorize("hasAuthority('menus:update')")
+	@PreAuthorize("hasAuthority('menus:modify')")
 	@DataCache(name = MENUS, key = "#cmd.menuCO.id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> modify(@RequestBody MenuUpdateCmd cmd) {
 		return menusServiceI.update(cmd);
@@ -85,7 +85,7 @@ public class MenusController {
 	@PostMapping
 	@Operation(summary = "菜单管理", description = "新增菜单")
 	@OperateLog(module = "菜单管理", operation = "新增菜单")
-	@PreAuthorize("hasAuthority('menus:insert')")
+	@PreAuthorize("hasAuthority('menus:create')")
 	public Result<Boolean> create(@RequestBody MenuInsertCmd cmd) {
 		return menusServiceI.insert(cmd);
 	}
@@ -94,8 +94,7 @@ public class MenusController {
 	@DeleteMapping("{id}")
 	@Operation(summary = "菜单管理", description = "删除菜单")
 	@OperateLog(module = "菜单管理", operation = "删除菜单")
-	@PreAuthorize("hasAuthority('menus:delete')")
-	@DataCache(name = MENUS, key = "#id", type = CacheOperatorTypeEnums.DEL)
+	@PreAuthorize("hasAuthority('menus:remove')")
 	public Result<Boolean> remove(@PathVariable("id") Long id) {
 		return menusServiceI.deleteById(new MenuDeleteCmd(id));
 	}

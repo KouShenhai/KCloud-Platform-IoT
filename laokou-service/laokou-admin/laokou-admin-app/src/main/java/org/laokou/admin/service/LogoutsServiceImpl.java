@@ -39,7 +39,7 @@ public class LogoutsServiceImpl implements LogoutsServiceI {
 	 * @param cmd 退出登录参数
 	 */
 	@Override
-	public void logout(LogoutCmd cmd) {
+	public void remove(LogoutCmd cmd) {
 		logoutCmdExe.executeVoid(cmd);
 	}
 

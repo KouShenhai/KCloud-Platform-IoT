@@ -67,7 +67,7 @@ public class TenantsController {
 	@PostMapping
 	@Operation(summary = "租户管理", description = "新增租户")
 	@OperateLog(module = "租户管理", operation = "新增租户")
-	@PreAuthorize("hasAuthority('tenants:insert')")
+	@PreAuthorize("hasAuthority('tenants:create')")
 	public Result<Boolean> create(@RequestBody TenantInsertCmd cmd) {
 		return tenantsServiceI.insert(cmd);
 	}
@@ -84,7 +84,7 @@ public class TenantsController {
 	@PutMapping
 	@Operation(summary = "租户管理", description = "修改租户")
 	@OperateLog(module = "租户管理", operation = "修改租户")
-	@PreAuthorize("hasAuthority('tenants:update')")
+	@PreAuthorize("hasAuthority('tenants:modify')")
 	@DataCache(name = TENANTS, key = "#cmd.tenantCO.id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> modify(@RequestBody TenantUpdateCmd cmd) {
 		return tenantsServiceI.update(cmd);
@@ -94,8 +94,7 @@ public class TenantsController {
 	@DeleteMapping("{id}")
 	@Operation(summary = "租户管理", description = "删除租户")
 	@OperateLog(module = "租户管理", operation = "删除租户")
-	@PreAuthorize("hasAuthority('tenants:delete')")
-	@DataCache(name = TENANTS, key = "#id", type = CacheOperatorTypeEnums.DEL)
+	@PreAuthorize("hasAuthority('tenants:remove')")
 	public Result<Boolean> remove(@PathVariable("id") Long id) {
 		return tenantsServiceI.deleteById(new TenantDeleteCmd(id));
 	}

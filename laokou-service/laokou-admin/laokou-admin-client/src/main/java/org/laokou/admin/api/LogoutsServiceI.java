@@ -30,6 +30,6 @@ public interface LogoutsServiceI {
 	 * 退出登录.
 	 * @param cmd 退出登录参数
 	 */
-	void logout(LogoutCmd cmd);
+	void remove(LogoutCmd cmd);
 
 }

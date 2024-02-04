@@ -59,7 +59,7 @@ public class LogsController {
 
 	@PostMapping("operate-export")
 	@Operation(summary = "日志管理", description = "导出操作日志")
-	@PreAuthorize("hasAuthority('logs:operate-export')")
+	@PreAuthorize("hasAuthority('logs:export-operate')")
 	@OperateLog(module = "日志管理", operation = "导出操作日志")
 	public void exportOperate(@RequestBody OperateLogExportCmd cmd, HttpServletResponse response) {
 		cmd.setResponse(response);
@@ -76,7 +76,7 @@ public class LogsController {
 
 	@PostMapping("login-export")
 	@Operation(summary = "日志管理", description = "导出登录日志")
-	@PreAuthorize("hasAuthority('logs:login-export')")
+	@PreAuthorize("hasAuthority('logs:export-login')")
 	@OperateLog(module = "日志管理", operation = "导出登录日志")
 	public void exportLogin(@RequestBody LoginLogExportCmd cmd, HttpServletResponse response) {
 		cmd.setResponse(response);

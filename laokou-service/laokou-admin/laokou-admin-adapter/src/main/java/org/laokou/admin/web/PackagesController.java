@@ -62,7 +62,7 @@ public class PackagesController {
 	@PostMapping
 	@Operation(summary = "套餐管理", description = "新增套餐")
 	@OperateLog(module = "套餐管理", operation = "新增套餐")
-	@PreAuthorize("hasAuthority('packages:insert')")
+	@PreAuthorize("hasAuthority('packages:create')")
 	public Result<Boolean> create(@RequestBody PackageInsertCmd cmd) {
 		return packagesServiceI.insert(cmd);
 	}
@@ -79,7 +79,7 @@ public class PackagesController {
 	@PutMapping
 	@Operation(summary = "套餐管理", description = "修改套餐")
 	@OperateLog(module = "套餐管理", operation = "修改套餐")
-	@PreAuthorize("hasAuthority('packages:update')")
+	@PreAuthorize("hasAuthority('packages:modify')")
 	@DataCache(name = PACKAGES, key = "#cmd.packageCO.id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> modify(@RequestBody PackageUpdateCmd cmd) {
 		return packagesServiceI.update(cmd);
@@ -89,8 +89,7 @@ public class PackagesController {
 	@DeleteMapping("{id}")
 	@Operation(summary = "套餐管理", description = "删除套餐")
 	@OperateLog(module = "套餐管理", operation = "删除套餐")
-	@PreAuthorize("hasAuthority('packages:delete')")
-	@DataCache(name = PACKAGES, key = "#id", type = CacheOperatorTypeEnums.DEL)
+	@PreAuthorize("hasAuthority('packages:remove')")
 	public Result<Boolean> remove(@PathVariable("id") Long id) {
 		return packagesServiceI.deleteById(new PackageDeleteCmd(id));
 	}

@@ -72,7 +72,7 @@ public class RolesController {
 	@PostMapping
 	@Operation(summary = "角色管理", description = "新增角色")
 	@OperateLog(module = "角色管理", operation = "新增角色")
-	@PreAuthorize("hasAuthority('roles:insert')")
+	@PreAuthorize("hasAuthority('roles:create')")
 	public Result<Boolean> create(@RequestBody RoleInsertCmd cmd) {
 		return rolesServiceI.insert(cmd);
 	}
@@ -81,7 +81,7 @@ public class RolesController {
 	@PutMapping
 	@Operation(summary = "角色管理", description = "修改角色")
 	@OperateLog(module = "角色管理", operation = "修改角色")
-	@PreAuthorize("hasAuthority('roles:update')")
+	@PreAuthorize("hasAuthority('roles:modify')")
 	public Result<Boolean> modify(@RequestBody RoleUpdateCmd cmd) {
 		return rolesServiceI.update(cmd);
 	}
@@ -90,7 +90,7 @@ public class RolesController {
 	@DeleteMapping("{id}")
 	@Operation(summary = "角色管理", description = "删除角色")
 	@OperateLog(module = "角色管理", operation = "删除角色")
-	@PreAuthorize("hasAuthority('roles:delete')")
+	@PreAuthorize("hasAuthority('roles:remove')")
 	public Result<Boolean> remove(@PathVariable("id") Long id) {
 		return rolesServiceI.deleteById(new RoleDeleteCmd(id));
 	}

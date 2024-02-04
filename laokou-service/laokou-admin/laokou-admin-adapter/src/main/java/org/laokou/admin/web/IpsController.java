@@ -60,7 +60,7 @@ public class IpsController {
 	@PostMapping("black")
 	@Operation(summary = "黑名单", description = "新增IP")
 	@OperateLog(module = "黑名单", operation = "新增IP")
-	@PreAuthorize("hasAuthority('ips:insert-black')")
+	@PreAuthorize("hasAuthority('ips:create-black')")
 	public Result<Boolean> createBlack(@Validated @RequestBody IpInsertCmd cmd) {
 		return ipsServiceI.insert(cmd);
 	}
@@ -69,7 +69,7 @@ public class IpsController {
 	@DeleteMapping("black/{id}")
 	@Operation(summary = "黑名单", description = "删除IP")
 	@OperateLog(module = "黑名单", operation = "删除IP")
-	@PreAuthorize("hasAuthority('ips:delete-black')")
+	@PreAuthorize("hasAuthority('ips:remove-black')")
 	public Result<Boolean> removeBlack(@PathVariable("id") Long id) {
 		return ipsServiceI.deleteById(new IpDeleteCmd(id));
 	}
@@ -87,7 +87,7 @@ public class IpsController {
 	@PostMapping("white")
 	@Operation(summary = "白名单", description = "新增IP")
 	@OperateLog(module = "白名单", operation = "新增IP")
-	@PreAuthorize("hasAuthority('ips:insert-white')")
+	@PreAuthorize("hasAuthority('ips:create-white')")
 	public Result<Boolean> createWhite(@Validated @RequestBody IpInsertCmd cmd) {
 		return ipsServiceI.insert(cmd);
 	}
@@ -96,7 +96,7 @@ public class IpsController {
 	@DeleteMapping("white/{id}")
 	@Operation(summary = "白名单", description = "删除IP")
 	@OperateLog(module = "白名单", operation = "删除IP")
-	@PreAuthorize("hasAuthority('ips:delete-white')")
+	@PreAuthorize("hasAuthority('ips:remove-white')")
 	public Result<Boolean> removeWhite(@PathVariable("id") Long id) {
 		return ipsServiceI.deleteById(new IpDeleteCmd(id));
 	}

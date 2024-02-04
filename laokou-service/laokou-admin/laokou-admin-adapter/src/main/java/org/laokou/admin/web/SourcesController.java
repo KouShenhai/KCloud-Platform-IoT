@@ -62,7 +62,7 @@ public class SourcesController {
 	@PostMapping
 	@Operation(summary = "数据源管理", description = "新增数据源")
 	@OperateLog(module = "数据源管理", operation = "数据源新增")
-	@PreAuthorize("hasAuthority('sources:insert')")
+	@PreAuthorize("hasAuthority('sources:create')")
 	public Result<Boolean> create(@RequestBody SourceInsertCmd cmd) {
 		return sourcesServiceI.insert(cmd);
 	}
@@ -79,7 +79,7 @@ public class SourcesController {
 	@PutMapping
 	@Operation(summary = "数据源管理", description = "修改数据源")
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
-	@PreAuthorize("hasAuthority('sources:update')")
+	@PreAuthorize("hasAuthority('sources:modify')")
 	@DataCache(name = SOURCES, key = "#cmd.sourceCO.id", type = CacheOperatorTypeEnums.DEL)
 	public Result<Boolean> modify(@RequestBody SourceUpdateCmd cmd) {
 		return sourcesServiceI.update(cmd);
@@ -89,8 +89,7 @@ public class SourcesController {
 	@DeleteMapping("{id}")
 	@Operation(summary = "数据源管理", description = "删除数据源")
 	@OperateLog(module = "数据源管理", operation = "删除数据源")
-	@PreAuthorize("hasAuthority('sources:delete')")
-	@DataCache(name = SOURCES, key = "#id", type = CacheOperatorTypeEnums.DEL)
+	@PreAuthorize("hasAuthority('sources:remove')")
 	public Result<Boolean> remove(@PathVariable("id") Long id) {
 		return sourcesServiceI.deleteById(new SourceDeleteCmd(id));
 	}

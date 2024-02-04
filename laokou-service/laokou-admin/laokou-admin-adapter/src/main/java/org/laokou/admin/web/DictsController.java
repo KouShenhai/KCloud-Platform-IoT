@@ -77,7 +77,7 @@ public class DictsController {
 	@PostMapping
 	@Operation(summary = "字典管理", description = "新增字典")
 	@OperateLog(module = "字典管理", operation = "新增字典")
-	@PreAuthorize("hasAuthority('dicts:insert')")
+	@PreAuthorize("hasAuthority('dicts:create')")
 	public void create(@RequestBody DictInsertCmd cmd) {
 		return dictsServiceI.insert(cmd);
 	}
@@ -86,7 +86,7 @@ public class DictsController {
 	@PutMapping
 	@Operation(summary = "字典管理", description = "修改字典")
 	@OperateLog(module = "字典管理", operation = "修改字典")
-	@PreAuthorize("hasAuthority('dicts:update')")
+	@PreAuthorize("hasAuthority('dicts:modify')")
 	@DataCache(name = DICTS, key = "#cmd.dictCO.id", type = CacheOperatorTypeEnums.DEL)
 	public void modify(@RequestBody DictUpdateCmd cmd) {
 		return dictsServiceI.update(cmd);
@@ -96,8 +96,7 @@ public class DictsController {
 	@DeleteMapping("{id}")
 	@Operation(summary = "字典管理", description = "删除字典")
 	@OperateLog(module = "字典管理", operation = "删除字典")
-	@PreAuthorize("hasAuthority('dicts:delete')")
-	@DataCache(name = DICTS, key = "#id", type = CacheOperatorTypeEnums.DEL)
+	@PreAuthorize("hasAuthority('dicts:remove')")
 	public void remove(@PathVariable("id") Long id) {
 		return dictsServiceI.deleteById(new DictDeleteCmd(id));
 	}
