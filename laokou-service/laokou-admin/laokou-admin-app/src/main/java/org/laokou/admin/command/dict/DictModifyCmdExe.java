@@ -71,7 +71,8 @@ public class DictModifyCmdExe {
 		if (count > 0) {
 			throw new SystemException(String.format("类型为%s，值为%s的字典已存在，请重新填写", type, value));
 		}
-		return Result.of(dictGateway.update(dictConvertor.toEntity(co)));
+		return null;
+		// return Result.of(dictGateway.update(dictConvertor.toEntity(co)));
 	}
 
 }

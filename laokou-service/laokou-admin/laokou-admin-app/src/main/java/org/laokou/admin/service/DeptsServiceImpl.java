@@ -63,7 +63,8 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	 */
 	@Override
 	public Result<DeptCO> tree(DeptTreeGetQry qry) {
-		return deptTreeGetQryExe.execute(qry);
+		return null;
+		// return deptTreeGetQryExe.execute(qry);
 	}
 
 	/**
@@ -73,7 +74,8 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	 */
 	@Override
 	public Result<List<DeptCO>> list(DeptListQry qry) {
-		return deptListQryExe.execute(qry);
+		return null;
+		// return deptListQryExe.execute(qry);
 	}
 
 	/**
@@ -83,7 +85,8 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	 */
 	@Override
 	public Result<Boolean> insert(DeptCreateCmd cmd) {
-		return deptCreateCmdExe.execute(cmd);
+		return null;
+		// return deptCreateCmdExe.execute(cmd);
 	}
 
 	/**
@@ -113,7 +116,8 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	 */
 	@Override
 	public Result<DeptCO> getById(DeptGetQry qry) {
-		return deptGetQryExe.execute(qry);
+		return null;
+		// return deptGetQryExe.execute(qry);
 	}
 
 	/**

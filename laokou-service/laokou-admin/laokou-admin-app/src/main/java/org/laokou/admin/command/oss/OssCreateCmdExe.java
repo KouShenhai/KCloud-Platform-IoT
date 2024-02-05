@@ -47,7 +47,8 @@ public class OssCreateCmdExe {
 	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(OssCreateCmd cmd) {
-		return Result.of(ossGateway.insert(ossConvertor.toEntity(cmd.getOssCO())));
+		return null;
+		// return Result.of(ossGateway.insert(ossConvertor.toEntity(cmd.getOssCO())));
 	}
 
 }

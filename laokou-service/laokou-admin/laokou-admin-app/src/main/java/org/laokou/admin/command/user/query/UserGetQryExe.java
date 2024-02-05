@@ -51,10 +51,7 @@ public class UserGetQryExe {
 	}
 
 	private UserCO convert(UserDO userDO) {
-		return UserCO.builder()
-				.id(userDO.getId())
-				.avatar(userDO.getAvatar())
-				.build();
+		return UserCO.builder().id(userDO.getId()).avatar(userDO.getAvatar()).build();
 	}
 
 }

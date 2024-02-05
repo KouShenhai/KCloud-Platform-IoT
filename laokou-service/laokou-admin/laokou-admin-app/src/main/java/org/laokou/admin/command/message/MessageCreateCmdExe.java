@@ -69,7 +69,8 @@ public class MessageCreateCmdExe {
 	 * @return 消息领域
 	 */
 	private Message toMessage(MessageCO co) {
-		return messageConvertor.toEntity(co);
+		return null;
+		// return messageConvertor.toEntity(co);
 	}
 
 }

@@ -57,7 +57,7 @@ public class IndexsController {
 	@TraceLog
 	@Operation(summary = "索引管理", description = "查看索引")
 	@PreAuthorize("hasAuthority('indexs:info')")
-	public Result<Map<String, Object>> findInfo(@PathVariable("indexName") String indexName) {
+	public Result<Map<String, Object>> find(@PathVariable("indexName") String indexName) {
 		return indexsServiceI.info(new IndexGetQry(indexName));
 	}
 

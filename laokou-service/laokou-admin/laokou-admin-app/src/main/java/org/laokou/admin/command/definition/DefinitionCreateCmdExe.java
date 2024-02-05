@@ -18,9 +18,6 @@
 package org.laokou.admin.command.definition;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.definition.DefinitionCreateCmd;
-import org.laokou.admin.gatewayimpl.rpc.DefinitionsFeignClient;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,15 +29,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DefinitionCreateCmdExe {
 
-	private final DefinitionsFeignClient definitionsFeignClient;
-
+	/*
+	 * private final DefinitionsFeignClient definitionsFeignClient;
+	 *
+	 */
 	/**
 	 * 执行新增流程.
 	 * @param cmd 新增流程参数
 	 * @return 执行新增结果
-	 */
-	public Result<Boolean> execute(DefinitionCreateCmd cmd) {
-		return definitionsFeignClient.insert(cmd.getFile());
-	}
+	 *//*
+		 *
+		 * public Result<Boolean> execute(DefinitionCreateCmd cmd) { return
+		 * definitionsFeignClient.insert(cmd.getFile()); }
+		 */
 
 }

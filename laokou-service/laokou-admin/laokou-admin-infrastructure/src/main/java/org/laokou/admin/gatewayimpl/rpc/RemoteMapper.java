@@ -17,11 +17,7 @@
 
 package org.laokou.admin.gatewayimpl.rpc;
 
-import org.apache.dubbo.config.annotation.DubboReference;
-import org.laokou.report.api.ReportServiceI;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.SysConstants.VERSION;
 
 /**
  * @author laokou
@@ -29,11 +25,10 @@ import static org.laokou.common.i18n.common.SysConstants.VERSION;
 @Component
 public class RemoteMapper {
 
-	@DubboReference(version = VERSION)
-	private ReportServiceI reportServiceI;
-
-	public void test() {
-		reportServiceI.test();
-	}
+	/*
+	 * @DubboReference(version = VERSION) private ReportServiceI reportServiceI;
+	 *
+	 * public void test() { reportServiceI.test(); }
+	 */
 
 }

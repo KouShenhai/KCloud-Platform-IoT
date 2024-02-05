@@ -22,15 +22,10 @@ import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.dto.resource.ResourceTaskListQry;
 import org.laokou.admin.dto.resource.TaskListQry;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
-import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
-import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.openfeign.utils.FeignUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * 查询资源任务列表执行器.
@@ -41,7 +36,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ResourceTaskListQryExe {
 
-	private final TasksFeignClient tasksFeignClient;
+	// private final TasksFeignClient tasksFeignClient;
 
 	private final DefaultConfigProperties defaultConfigProperties;
 
@@ -51,13 +46,14 @@ public class ResourceTaskListQryExe {
 	 * @return 资源任务列表
 	 */
 	public Result<Datas<TaskCO>> execute(ResourceTaskListQry qry) {
-		Datas<TaskCO> result = FeignUtil.result(tasksFeignClient.list(toQry(qry)));
-		List<TaskCO> records = result.getRecords();
-		String userName = UserUtil.getUserName();
-		if (CollectionUtil.isNotEmpty(records)) {
-			records.parallelStream().forEach(item -> item.setUsername(userName));
-		}
-		return Result.of(result);
+		return null;
+		// Datas<TaskCO> result = FeignUtil.result(tasksFeignClient.list(toQry(qry)));
+		// List<TaskCO> records = result.getRecords();
+		// String userName = UserUtil.getUserName();
+		// if (CollectionUtil.isNotEmpty(records)) {
+		// records.parallelStream().forEach(item -> item.setUsername(userName));
+		// }
+		// return Result.of(result);
 	}
 
 	/**

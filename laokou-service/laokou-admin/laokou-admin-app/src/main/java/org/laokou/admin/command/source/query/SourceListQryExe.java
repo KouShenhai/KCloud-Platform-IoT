@@ -50,7 +50,7 @@ public class SourceListQryExe {
 		Source source = ConvertUtil.sourceToTarget(qry, Source.class);
 		Datas<Source> newPage = sourceGateway.list(source, qry);
 		Datas<SourceCO> datas = new Datas<>();
-		datas.setRecords(sourceConvertor.convertClientObjectList(newPage.getRecords()));
+		// datas.setRecords(sourceConvertor.convertClientObjectList(newPage.getRecords()));
 		datas.setTotal(newPage.getTotal());
 		return Result.of(datas);
 	}

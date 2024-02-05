@@ -62,7 +62,8 @@ public class RoleCreateCmdExe {
 		if (count > 0) {
 			throw new SystemException("角色已存在，请重新填写");
 		}
-		return Result.of(roleGateway.insert(roleConvertor.toEntity(co), toUser()));
+		return null;
+		// return Result.of(roleGateway.insert(roleConvertor.toEntity(co), toUser()));
 	}
 
 	/**

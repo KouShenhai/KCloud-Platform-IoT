@@ -17,103 +17,93 @@
 
 package org.laokou.admin.gatewayimpl.rpc.fallback;
 
-import org.laokou.admin.dto.resource.*;
-import org.laokou.admin.dto.resource.clientobject.AssigneeCO;
-import org.laokou.admin.dto.resource.clientobject.AuditCO;
-import org.laokou.admin.dto.resource.clientobject.StartCO;
-import org.laokou.admin.dto.resource.clientobject.TaskCO;
-import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
-import org.laokou.common.i18n.common.exception.FeignException;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.Result;
-
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-
 /**
  * 任务流程.
  *
  * @author laokou
  */
-public class TasksFeignClientFallback implements TasksFeignClient {
-
-	/**
-	 * 查询任务流程列表.
-	 * @param qry 查询任务流程列表参数
-	 * @return 任务流程列表
+/*
+ * public class TasksFeignClientFallback implements TasksFeignClient {
+ *
+ */
+/**
+ * 查询任务流程列表.
+ * @param qry 查询任务流程列表参数
+ * @return 任务流程列表
+ *//*
+	 *
+	 * @Override public Result<Datas<TaskCO>> list(TaskListQry qry) { return
+	 * Result.of(Datas.of()); }
+	 *
 	 */
-	@Override
-	public Result<Datas<TaskCO>> list(TaskListQry qry) {
-		return Result.of(Datas.of());
-	}
-
-	/**
-	 * 审批任务流程.
-	 * @param cmd 审批任务流程参数
-	 * @return 审批结果
+/**
+ * 审批任务流程.
+ * @param cmd 审批任务流程参数
+ * @return 审批结果
+ *//*
+	 *
+	 * @Override public Result<AuditCO> audit(TaskAuditCmd cmd) { throw new
+	 * FeignException("审批流程失败"); }
+	 *
 	 */
-	@Override
-	public Result<AuditCO> audit(TaskAuditCmd cmd) {
-		throw new FeignException("审批流程失败");
-	}
-
-	/**
-	 * 处理任务流程.
-	 * @param cmd 处理任务流程参数
-	 * @return 处理结果
+/**
+ * 处理任务流程.
+ * @param cmd 处理任务流程参数
+ * @return 处理结果
+ *//*
+	 *
+	 * @Override public Result<Boolean> resolve(TaskResolveCmd cmd) { throw new
+	 * FeignException("处理流程失败"); }
+	 *
 	 */
-	@Override
-	public Result<Boolean> resolve(TaskResolveCmd cmd) {
-		throw new FeignException("处理流程失败");
-	}
-
-	/**
-	 * 开始任务流程.
-	 * @param cmd 开始任务流程参数
-	 * @return 开始结果
+/**
+ * 开始任务流程.
+ * @param cmd 开始任务流程参数
+ * @return 开始结果
+ *//*
+	 *
+	 * @Override public Result<StartCO> start(TaskStartCmd cmd) { throw new
+	 * FeignException("启动流程失败"); }
+	 *
 	 */
-	@Override
-	public Result<StartCO> start(TaskStartCmd cmd) {
-		throw new FeignException("启动流程失败");
-	}
-
-	/**
-	 * 查看流程图.
-	 * @param instanceId 实例ID
-	 * @return 流程图
+/**
+ * 查看流程图.
+ * @param instanceId 实例ID
+ * @return 流程图
+ *//*
+	 *
+	 * @Override public Result<String> diagram(String instanceId) { return
+	 * Result.of(EMPTY); }
+	 *
 	 */
-	@Override
-	public Result<String> diagram(String instanceId) {
-		return Result.of(EMPTY);
-	}
-
-	/**
-	 * 转办任务流程.
-	 * @param cmd 转办任务流程参数
-	 * @return 转办结果
+/**
+ * 转办任务流程.
+ * @param cmd 转办任务流程参数
+ * @return 转办结果
+ *//*
+	 *
+	 * @Override public Result<Boolean> transfer(TaskTransferCmd cmd) { throw new
+	 * FeignException("转办流程失败"); }
+	 *
 	 */
-	@Override
-	public Result<Boolean> transfer(TaskTransferCmd cmd) {
-		throw new FeignException("转办流程失败");
-	}
-
-	/**
-	 * 委派任务流程.
-	 * @param cmd 委派任务流程参数
-	 * @return 委派结果
+/**
+ * 委派任务流程.
+ * @param cmd 委派任务流程参数
+ * @return 委派结果
+ *//*
+	 *
+	 * @Override public Result<Boolean> delegate(TaskDelegateCmd cmd) { throw new
+	 * FeignException("委派流程失败"); }
+	 *
 	 */
-	@Override
-	public Result<Boolean> delegate(TaskDelegateCmd cmd) {
-		throw new FeignException("委派流程失败");
-	}
-
-	/**
-	 * 查看流程人员ID.
-	 * @param instanceId 流程ID
-	 * @return 流程人员ID
+/**
+ * 查看流程人员ID.
+ * @param instanceId 流程ID
+ * @return 流程人员ID
+ *//*
+	 *
+	 * @Override public Result<AssigneeCO> assignee(String instanceId) { throw new
+	 * FeignException("获取流程人员失败"); }
+	 *
+	 * }
 	 */
-	@Override
-	public Result<AssigneeCO> assignee(String instanceId) {
-		throw new FeignException("获取流程人员失败");
-	}
-
-}

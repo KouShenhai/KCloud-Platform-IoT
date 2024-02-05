@@ -37,7 +37,7 @@ public class ReportsController {
 
 	@GetMapping
 	public void test() {
-		remoteMapper.test();
+		//remoteMapper.test();
 	}
 
 }

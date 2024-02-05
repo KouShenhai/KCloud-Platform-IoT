@@ -17,12 +17,7 @@
 
 package org.laokou.admin.common.utils;
 
-import org.laokou.common.i18n.common.MessageTypeEnums;
-import org.laokou.admin.dto.message.domainevent.MessageEvent;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections;
 
 /**
  * 消息事件工具类.
@@ -32,26 +27,23 @@ import java.util.Collections;
 @Component
 public class EventUtil {
 
-	public MessageEvent toAuditMessageEvent(String assignee, Long id, String name, String instanceId) {
-		String title = "资源待审批任务提醒";
-		String content = String.format("编号为%s，名称为%s的资源需要审批，请及时查看并审批", id, name);
-		return build(title, content, instanceId, assignee);
-	}
-
-	public MessageEvent toHandleMessageEvent(String assignee, Long id, String name, String instanceId) {
-		String title = "资源待处理任务提醒";
-		String content = String.format("编号为%s，名称为%s的资源需要处理，请及时查看并处理", id, name);
-		return build(title, content, instanceId, assignee);
-	}
-
-	private MessageEvent build(String title, String content, String instanceId, String assignee) {
-		MessageEvent event = null;
-		event.setContent(content);
-		event.setTitle(title);
-		event.setInstanceId(instanceId);
-		event.setType(MessageTypeEnums.REMIND.ordinal());
-		event.setReceiver(StringUtil.isEmpty(assignee) ? Collections.emptySet() : Collections.singleton(assignee));
-		return event;
-	}
+	/*
+	 * public MessageEvent toAuditMessageEvent(String assignee, Long id, String name,
+	 * String instanceId) { String title = "资源待审批任务提醒"; String content =
+	 * String.format("编号为%s，名称为%s的资源需要审批，请及时查看并审批", id, name); return build(title,
+	 * content, instanceId, assignee); }
+	 *
+	 * public MessageEvent toHandleMessageEvent(String assignee, Long id, String name,
+	 * String instanceId) { String title = "资源待处理任务提醒"; String content =
+	 * String.format("编号为%s，名称为%s的资源需要处理，请及时查看并处理", id, name); return build(title,
+	 * content, instanceId, assignee); }
+	 *
+	 * private MessageEvent build(String title, String content, String instanceId, String
+	 * assignee) { MessageEvent event = null; event.setContent(content);
+	 * event.setTitle(title); event.setInstanceId(instanceId);
+	 * event.setType(MessageTypeEnums.REMIND.ordinal());
+	 * event.setReceiver(StringUtil.isEmpty(assignee) ? Collections.emptySet() :
+	 * Collections.singleton(assignee)); return event; }
+	 */
 
 }

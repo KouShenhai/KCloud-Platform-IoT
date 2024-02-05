@@ -32,7 +32,6 @@ public interface DefinitionsServiceI {
 	/**
 	 * 新增流程.
 	 * @param cmd 新增流程参数
-	 * @return 执行新增结果
 	 */
 	void create(DefinitionCreateCmd cmd);
 
@@ -53,21 +52,18 @@ public interface DefinitionsServiceI {
 	/**
 	 * 删除流程.
 	 * @param cmd 删除流程参数
-	 * @return 执行删除结果
 	 */
 	void remove(DefinitionRemoveCmd cmd);
 
 	/**
 	 * 挂起流程.
 	 * @param cmd 挂起流程参数
-	 * @return 执行挂起结果
 	 */
 	void suspend(DefinitionSuspendCmd cmd);
 
 	/**
 	 * 激活流程.
 	 * @param cmd 激活流程参数
-	 * @return 执行激活结果
 	 */
 	void activate(DefinitionActivateCmd cmd);
 

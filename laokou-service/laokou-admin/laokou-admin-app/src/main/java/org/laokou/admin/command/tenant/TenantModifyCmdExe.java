@@ -20,7 +20,6 @@ package org.laokou.admin.command.tenant;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.gateway.TenantGateway;
-import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.dto.tenant.TenantModifyCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -44,8 +43,9 @@ public class TenantModifyCmdExe {
 	 * @return 执行修改结果
 	 */
 	public Result<Boolean> execute(TenantModifyCmd cmd) {
-		Tenant tenant = tenantConvertor.toEntity(cmd.getTenantCO());
-		return Result.of(tenantGateway.update(tenant));
+		return null;
+		// Tenant tenant = tenantConvertor.toEntity(cmd.getTenantCO());
+		// return Result.of(tenantGateway.update(tenant));
 	}
 
 }

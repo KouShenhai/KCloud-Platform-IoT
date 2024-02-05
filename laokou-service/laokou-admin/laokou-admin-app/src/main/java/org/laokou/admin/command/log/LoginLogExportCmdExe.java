@@ -19,10 +19,8 @@ package org.laokou.admin.command.log;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.common.utils.ExcelUtil;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.log.LoginLogExportCmd;
-import org.laokou.admin.dto.log.clientobject.LoginLogExcel;
 import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.core.holder.UserContextHolder;
@@ -34,7 +32,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.*;
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_LOGIN_LOG;
 
 /**
  * 导出登录日志执行器.
@@ -57,8 +55,9 @@ public class LoginLogExportCmdExe {
 			PageQuery pageQuery = cmd.time().ignore();
 			List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(),
 					pageQuery.getEndTime(), BOOT_SYS_LOGIN_LOG);
-			ExcelUtil.doExport(dynamicTables, cmd.getResponse(), buildLoginLog(cmd), pageQuery, loginLogMapper,
-					LoginLogExcel.class);
+			// ExcelUtil.doExport(dynamicTables, cmd.getResponse(), buildLoginLog(cmd),
+			// pageQuery, loginLogMapper,
+			// LoginLogExcel.class);
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

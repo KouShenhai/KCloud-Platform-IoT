@@ -31,6 +31,6 @@ public interface UserGateway {
 	 * @param user 用户对象
 	 * @return 用户信息
 	 */
-	User findOne(User user);
+	User find(User user);
 
 }

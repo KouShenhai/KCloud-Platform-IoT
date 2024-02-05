@@ -67,7 +67,8 @@ public class MenuModifyCmdExe {
 		if (count > 0) {
 			throw new SystemException("菜单已存在，请重新填写");
 		}
-		return Result.of(menuGateway.update(menuConvertor.toEntity(cmd.getMenuCO())));
+		return null;
+		// return Result.of(menuGateway.update(menuConvertor.toEntity(cmd.getMenuCO())));
 	}
 
 }

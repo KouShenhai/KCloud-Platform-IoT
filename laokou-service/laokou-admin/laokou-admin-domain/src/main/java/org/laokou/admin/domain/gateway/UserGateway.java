@@ -39,7 +39,7 @@ public interface UserGateway {
 	void create(User user);
 
 	/**
-	 * 根据IDS删除
+	 * 根据IDS删除.
 	 * @param ids IDS
 	 */
 	void remove(Long[] ids);

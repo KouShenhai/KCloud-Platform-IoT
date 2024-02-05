@@ -48,7 +48,9 @@ public class ResourceGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<ResourceCO> execute(ResourceGetQry qry) {
-		return Result.of(resourceConvertor.convertClientObject(resourceGateway.getById(qry.getId())));
+		return null;
+		// return
+		// Result.of(resourceConvertor.convertClientObject(resourceGateway.getById(qry.getId())));
 	}
 
 }

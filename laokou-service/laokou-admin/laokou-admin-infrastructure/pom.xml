@@ -81,10 +81,6 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-report-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-openfeign</artifactId>
         </dependency>
         <dependency>

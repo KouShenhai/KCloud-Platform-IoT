@@ -43,7 +43,8 @@ public class IpCreateCmdExe {
 	 * @return 执行新增结果
 	 */
 	public Result<Boolean> execute(IpCreateCmd cmd) {
-		return Result.of(ipGateway.insert(ipConvertor.toEntity(cmd.getIpCO())));
+		return null;
+		//return Result.of(ipGateway.insert(ipConvertor.toEntity(cmd.getIpCO())));
 	}
 
 }

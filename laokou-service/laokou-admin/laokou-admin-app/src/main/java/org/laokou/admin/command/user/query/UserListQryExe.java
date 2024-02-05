@@ -20,7 +20,6 @@ package org.laokou.admin.command.user.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
-import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.common.i18n.dto.Datas;
@@ -46,12 +45,13 @@ public class UserListQryExe {
 	 * @return 用户列表
 	 */
 	public Result<Datas<UserCO>> execute(UserListQry qry) {
-		User user = new User(qry.getUsername());
-		Datas<User> newPage = userGateway.list(user, qry);
-		Datas<UserCO> datas = new Datas<>();
-		datas.setRecords(userConvertor.convertClientObjectList(newPage.getRecords()));
-		datas.setTotal(newPage.getTotal());
-		return Result.of(datas);
+		return null;
+		/*
+		 * User user = new User(qry.getUsername()); Datas<User> newPage =
+		 * userGateway.list(user, qry); Datas<UserCO> datas = new Datas<>();
+		 * datas.setRecords(userConvertor.convertClientObjectList(newPage.getRecords()));
+		 * datas.setTotal(newPage.getTotal()); return Result.of(datas);
+		 */
 	}
 
 }

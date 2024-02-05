@@ -83,12 +83,11 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	/**
 	 * 查看用户信息.
-	 * @param qry 查看用户信息参数
 	 * @return 用户信息
 	 */
 	@Override
-	public Result<UserProfileCO> findProfile(UserProfileGetQry qry) {
-		return userProfileGetQryExe.execute(qry);
+	public Result<UserProfileCO> findProfile() {
+		return userProfileGetQryExe.execute();
 	}
 
 	/**

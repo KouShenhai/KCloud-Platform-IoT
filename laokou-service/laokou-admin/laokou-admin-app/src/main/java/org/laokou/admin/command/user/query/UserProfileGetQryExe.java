@@ -17,7 +17,6 @@
 
 package org.laokou.admin.command.user.query;
 
-import org.laokou.admin.dto.user.UserProfileGetQry;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
 import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.i18n.dto.Result;
@@ -34,10 +33,9 @@ public class UserProfileGetQryExe {
 
 	/**
 	 * 执行查看用户信息.
-	 * @param qry 查看用户信息参数
 	 * @return 用户信息
 	 */
-	public Result<UserProfileCO> execute(UserProfileGetQry qry) {
+	public Result<UserProfileCO> execute() {
 		return Result.of(convert());
 	}
 

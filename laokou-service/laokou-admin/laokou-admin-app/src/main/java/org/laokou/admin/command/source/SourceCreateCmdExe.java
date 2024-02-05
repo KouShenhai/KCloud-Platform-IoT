@@ -51,9 +51,11 @@ public class SourceCreateCmdExe {
 	 * @return 执行新增结果
 	 */
 	public Result<Boolean> execute(SourceCreateCmd cmd) {
-		Source source = sourceConvertor.toEntity(cmd.getSourceCO());
-		validate(source);
-		return Result.of(sourceGateway.insert(source));
+		/*
+		 * Source source = sourceConvertor.toEntity(cmd.getSourceCO()); validate(source);
+		 * return Result.of(sourceGateway.insert(source));
+		 */
+		return null;
 	}
 
 	/**

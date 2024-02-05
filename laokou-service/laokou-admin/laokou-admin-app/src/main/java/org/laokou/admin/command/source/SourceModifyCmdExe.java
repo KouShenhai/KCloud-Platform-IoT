@@ -55,9 +55,11 @@ public class SourceModifyCmdExe {
 	 * @return 执行修改结果
 	 */
 	public Result<Boolean> execute(SourceModifyCmd cmd) {
-		Source source = sourceConvertor.toEntity(cmd.getSourceCO());
-		validate(source);
-		return Result.of(sourceGateway.update(source));
+		/*
+		 * Source source = sourceConvertor.toEntity(cmd.getSourceCO()); validate(source);
+		 * return Result.of(sourceGateway.update(source));
+		 */
+		return null;
 	}
 
 	/**

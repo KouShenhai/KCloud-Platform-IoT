@@ -50,7 +50,8 @@ public class MenuGetQryExe {
 	@DS(TENANT)
 	public Result<MenuCO> execute(MenuGetQry qry) {
 		Menu menu = menuGateway.getById(qry.getId());
-		return Result.of(menuConvertor.convertClientObject(menu));
+		return null;
+		// return Result.of(menuConvertor.convertClientObject(menu));
 	}
 
 }

@@ -25,7 +25,6 @@ import org.laokou.admin.domain.menu.Menu;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.menu.MenuTreeGetQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
-import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -56,15 +55,13 @@ public class MenuTreeGetQryExe {
 	@DS(TENANT)
 	public Result<MenuCO> execute(MenuTreeGetQry qry) {
 		List<Menu> menuList = menuGateway.list(convert(), null);
-		List<MenuCO> menus = menuConvertor.convertClientObjectList(menuList);
-		return Result.of(TreeUtil.buildTreeNode(menus, MenuCO.class));
+		return null;
+		// List<MenuCO> menus = menuConvertor.convertClientObjectList(menuList);
+		// return Result.of(TreeUtil.buildTreeNode(menus, MenuCO.class));
 	}
 
 	private User convert() {
-		return User.builder()
-				.superAdmin(YES.ordinal())
-				.tenantId(UserUtil.getTenantId())
-				.build();
+		return User.builder().superAdmin(YES.ordinal()).tenantId(UserUtil.getTenantId()).build();
 	}
 
 }

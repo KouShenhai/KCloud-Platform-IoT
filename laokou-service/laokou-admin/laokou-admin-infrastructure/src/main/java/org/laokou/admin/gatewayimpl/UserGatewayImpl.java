@@ -114,18 +114,16 @@ public class UserGatewayImpl implements UserGateway {
 
 	private void checkMail(User user, String mail) {
 		if (StringUtil.isNotEmpty(mail)) {
-			long count = userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class)
-							.eq(UserDO::getMail, mail)
-							.ne(UserDO::getId, user.getId()));
+			long count = userMapper.selectCount(
+					Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMail, mail).ne(UserDO::getId, user.getId()));
 			user.checkMail(count);
 		}
 	}
 
 	private void checkMobile(User user, String mobile) {
 		if (StringUtil.isNotEmpty(mobile)) {
-			long count = userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class)
-					.eq(UserDO::getMobile, mobile)
-					.ne(UserDO::getId, user.getId()));
+			long count = userMapper.selectCount(
+					Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMobile, mobile).ne(UserDO::getId, user.getId()));
 			user.checkMobile(count);
 		}
 	}
@@ -170,7 +168,7 @@ public class UserGatewayImpl implements UserGateway {
 		userMapper.updateById(userDO);
 	}
 
-	private void modifyUserRole(UserDO userDO,List<Long> roleIds) {
+	private void modifyUserRole(UserDO userDO, List<Long> roleIds) {
 		if (CollectionUtil.isNotEmpty(roleIds)) {
 			// 删除用户角色
 			removeUserRole(userDO);
@@ -179,7 +177,7 @@ public class UserGatewayImpl implements UserGateway {
 		}
 	}
 
-	private void createUserRole(UserDO userDO,List<Long> roleIds) {
+	private void createUserRole(UserDO userDO, List<Long> roleIds) {
 		List<UserRoleDO> list = roleIds.parallelStream().map(roleId -> convert(userDO, roleId)).toList();
 		mybatisUtil.batch(list, UserRoleMapper.class, DynamicDataSourceContextHolder.peek(), UserRoleMapper::insertOne);
 	}

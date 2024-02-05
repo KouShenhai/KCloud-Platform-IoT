@@ -51,7 +51,7 @@ public class UserGatewayImpl implements UserGateway {
 	 * @return 用户信息
 	 */
 	@Override
-	public User findOne(User user) {
+	public User find(User user) {
 		try {
 			UserDO userDO = userMapper.selectByConditions(user.getUsername(), user.getAuth().getType(),
 					user.getAuth().getSecretKey());

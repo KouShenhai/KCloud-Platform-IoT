@@ -59,7 +59,8 @@ public class MenuCreateCmdExe {
 		if (count > 0) {
 			throw new SystemException("菜单已存在，请重新填写");
 		}
-		return Result.of(menuGateway.insert(menuConvertor.toEntity(co)));
+		return null;
+		// return Result.of(menuGateway.insert(menuConvertor.toEntity(co)));
 	}
 
 }

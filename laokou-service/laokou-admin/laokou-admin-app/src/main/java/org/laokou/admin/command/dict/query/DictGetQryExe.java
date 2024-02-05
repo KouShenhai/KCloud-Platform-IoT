@@ -48,7 +48,9 @@ public class DictGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<DictCO> execute(DictGetQry qry) {
-		return Result.of(dictConvertor.convertClientObject(dictGateway.getById(qry.getId())));
+		return null;
+		// return
+		// Result.of(dictConvertor.convertClientObject(dictGateway.getById(qry.getId())));
 	}
 
 }

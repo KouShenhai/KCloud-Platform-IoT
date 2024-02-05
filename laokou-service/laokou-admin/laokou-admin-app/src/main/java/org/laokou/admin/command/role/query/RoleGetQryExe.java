@@ -48,7 +48,11 @@ public class RoleGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<RoleCO> execute(RoleGetQry qry) {
-		return Result.of(roleConvertor.convertClientObject(roleGateway.getById(qry.getId())));
+		/*
+		 * return
+		 * Result.of(roleConvertor.convertClientObject(roleGateway.getById(qry.getId())));
+		 */
+		return null;
 	}
 
 }

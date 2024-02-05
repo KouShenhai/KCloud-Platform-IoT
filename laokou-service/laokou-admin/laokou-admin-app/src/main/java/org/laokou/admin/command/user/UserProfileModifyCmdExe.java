@@ -48,12 +48,7 @@ public class UserProfileModifyCmdExe {
 	}
 
 	private User convert(UserProfileCO co) {
-		return User.builder()
-				.id(co.getId())
-				.avatar(co.getAvatar())
-				.mobile(co.getMobile())
-				.mail(co.getMail())
-				.build();
+		return User.builder().id(co.getId()).avatar(co.getAvatar()).mobile(co.getMobile()).mail(co.getMail()).build();
 	}
 
 }

@@ -51,7 +51,8 @@ public class DeptsController {
 	@TraceLog
 	@Operation(summary = "部门管理", description = "树形部门列表")
 	public Result<List<DeptCO>> findTreeList() {
-		//return deptsServiceI.tree(new DeptTreeGetQry());
+		return null;
+		// return deptsServiceI.tree(new DeptTreeGetQry());
 	}
 
 	@PostMapping("list")
@@ -69,7 +70,7 @@ public class DeptsController {
 	@PreAuthorize("hasAuthority('depts:create')")
 	@TraceLog
 	public void create(@RequestBody DeptCreateCmd cmd) {
-		return deptsServiceI.insert(cmd);
+		// return deptsServiceI.insert(cmd);
 	}
 
 	@PutMapping
@@ -79,7 +80,7 @@ public class DeptsController {
 	@TraceLog
 	@DataCache(name = DEPTS, key = "#cmd.deptCO.id", type = CacheOperatorTypeEnums.DEL)
 	public void modify(@RequestBody DeptModifyCmd cmd) {
-		return deptsServiceI.update(cmd);
+		// return deptsServiceI.update(cmd);
 	}
 
 	@GetMapping("{id}")
@@ -96,7 +97,7 @@ public class DeptsController {
 	@OperateLog(module = "部门管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('depts:remove')")
 	public void remove(@RequestBody Long[] ids) {
-		return deptsServiceI.deleteById(new DeptRemoveCmd(id));
+		// return deptsServiceI.deleteById(new DeptRemoveCmd(id));
 	}
 
 	@GetMapping("{roleId}/ids")

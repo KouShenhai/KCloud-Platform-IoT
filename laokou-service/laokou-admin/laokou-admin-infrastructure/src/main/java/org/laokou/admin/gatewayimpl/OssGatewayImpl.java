@@ -27,7 +27,6 @@ import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.OssGateway;
 import org.laokou.admin.domain.oss.Oss;
 import org.laokou.admin.domain.oss.OssLog;
-import org.laokou.admin.dto.log.domainevent.OssLogEvent;
 import org.laokou.admin.gatewayimpl.database.OssMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -140,14 +139,11 @@ public class OssGatewayImpl implements OssGateway {
 	 * @param ossLog OSS日志对象
 	 * @return OSS日志事件
 	 */
-	private OssLogEvent getEvent(OssLog ossLog) {
-		OssLogEvent event = null;
-		event.setMd5(ossLog.getMd5());
-		event.setUrl(ossLog.getUrl());
-		event.setName(ossLog.getName());
-		event.setSize(ossLog.getSize());
-		return event;
-	}
+	/*
+	 * private OssLogEvent getEvent(OssLog ossLog) { OssLogEvent event = null;
+	 * event.setMd5(ossLog.getMd5()); event.setUrl(ossLog.getUrl());
+	 * event.setName(ossLog.getName()); event.setSize(ossLog.getSize()); return event; }
+	 */
 
 	/**
 	 * 新增OSS.

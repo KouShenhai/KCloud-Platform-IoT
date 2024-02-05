@@ -51,7 +51,7 @@ public class PackageListQryExe {
 		Datas<Package> newPage = packageGateway.list(pack, qry);
 		Datas<PackageCO> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(packageConvertor.convertClientObjectList(newPage.getRecords()));
+		// datas.setRecords(packageConvertor.convertClientObjectList(newPage.getRecords()));
 		return Result.of(datas);
 	}
 

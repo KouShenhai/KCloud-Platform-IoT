@@ -43,7 +43,9 @@ public class TenantCreateCmdExe {
 	 * @return 执行新增结果
 	 */
 	public Result<Boolean> execute(TenantCreateCmd cmd) {
-		return Result.of(tenantGateway.insert(tenantConvertor.toEntity(cmd.getTenantCO())));
+		return null;
+		// return
+		// Result.of(tenantGateway.insert(tenantConvertor.toEntity(cmd.getTenantCO())));
 	}
 
 }

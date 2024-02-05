@@ -18,9 +18,6 @@
 package org.laokou.admin.command.definition;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.definition.DefinitionSuspendCmd;
-import org.laokou.admin.gatewayimpl.rpc.DefinitionsFeignClient;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,15 +29,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DefinitionSuspendCmdExe {
 
-	private final DefinitionsFeignClient definitionsFeignClient;
-
-	/**
-	 * 执行挂起流程.
-	 * @param cmd 挂起流程参数
-	 * @return 执行挂起结果
-	 */
-	public Result<Boolean> execute(DefinitionSuspendCmd cmd) {
-		return definitionsFeignClient.suspend(cmd.getDefinitionId());
-	}
+	/*
+	 * private final DefinitionsFeignClient definitionsFeignClient;
+	 *
+	 *//**
+		 * 执行挂起流程.
+		 * @param cmd 挂起流程参数
+		 * @return 执行挂起结果
+		 *//*
+			 * public Result<Boolean> execute(DefinitionSuspendCmd cmd) { return
+			 * definitionsFeignClient.suspend(cmd.getDefinitionId()); }
+			 */
 
 }

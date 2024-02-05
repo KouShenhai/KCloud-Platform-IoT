@@ -55,14 +55,14 @@ public class UserCreateCmdExe {
 	 */
 	private User convert(UserCO co) {
 		return User.builder()
-		.tenantId(UserUtil.getTenantId())
-		.creator(UserUtil.getUserId())
-		.deptId(co.getDeptId())
-		.deptPath(co.getDeptPath())
-		.editor(UserUtil.getUserId())
-				.roleIds(co.getRoleIds())
-		.username(co.getUsername())
-				.build();
+			.tenantId(UserUtil.getTenantId())
+			.creator(UserUtil.getUserId())
+			.deptId(co.getDeptId())
+			.deptPath(co.getDeptPath())
+			.editor(UserUtil.getUserId())
+			.roleIds(co.getRoleIds())
+			.username(co.getUsername())
+			.build();
 	}
 
 }

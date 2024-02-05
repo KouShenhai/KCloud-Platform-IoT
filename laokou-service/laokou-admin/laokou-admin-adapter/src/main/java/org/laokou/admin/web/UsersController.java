@@ -62,7 +62,7 @@ public class UsersController {
 	@GetMapping("profile")
 	@Operation(summary = "个人中心", description = "查看个人信息")
 	public Result<UserProfileCO> findProfile() {
-		return usersServiceI.findProfile(new UserProfileGetQry());
+		return usersServiceI.findProfile();
 	}
 
 	@TraceLog

@@ -51,7 +51,7 @@ public class LoginLogListQryExe {
 		Datas<LoginLog> newPage = logGateway.loginList(loginLog, qry);
 		Datas<LoginLogCO> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(loginLogConvertor.convertClientObjectList(newPage.getRecords()));
+		// datas.setRecords(loginLogConvertor.convertClientObjectList(newPage.getRecords()));
 		return Result.of(datas);
 	}
 

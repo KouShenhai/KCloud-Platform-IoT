@@ -26,6 +26,7 @@ import java.util.List;
  */
 @Schema(name = "Convertor", description = "对象转换器")
 public interface Convertor<Entity, DO> {
+
 	/**
 	 * Entity 转 DataObject.
 	 * @param e Entity

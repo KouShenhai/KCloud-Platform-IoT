@@ -19,7 +19,6 @@ package org.laokou.admin.command.resource.query;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.resource.ResourceDiagramGetQry;
-import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +31,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResourceDiagramGetQryExe {
 
-	private final TasksFeignClient tasksFeignClient;
+	// private final TasksFeignClient tasksFeignClient;
 
 	/**
 	 * 执行查看资源任务流程图.
@@ -40,7 +39,8 @@ public class ResourceDiagramGetQryExe {
 	 * @return 资源流程图
 	 */
 	public Result<String> execute(ResourceDiagramGetQry qry) {
-		return tasksFeignClient.diagram(qry.getInstanceId());
+		return null;
+		// return tasksFeignClient.diagram(qry.getInstanceId());
 	}
 
 }

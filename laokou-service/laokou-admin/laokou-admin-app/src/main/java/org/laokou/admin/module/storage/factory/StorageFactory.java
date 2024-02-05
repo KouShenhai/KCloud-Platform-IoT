@@ -69,7 +69,8 @@ public class StorageFactory {
 	private OssCO getOssConfig(Long tenantId) {
 		Algorithm algorithm = new PollSelectAlgorithm();
 		OssDO ossDO = algorithm.select(getOssCache(tenantId), EMPTY);
-		return ossConvertor.convertClientObj(ossDO);
+		return null;
+		//return ossConvertor.convertClientObj(ossDO);
 	}
 
 	/**

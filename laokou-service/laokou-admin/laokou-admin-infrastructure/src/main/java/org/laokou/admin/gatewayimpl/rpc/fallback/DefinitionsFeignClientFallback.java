@@ -17,79 +17,73 @@
 
 package org.laokou.admin.gatewayimpl.rpc.fallback;
 
-import org.laokou.admin.dto.definition.DefinitionListQry;
-import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
-import org.laokou.admin.gatewayimpl.rpc.DefinitionsFeignClient;
-import org.laokou.common.i18n.common.exception.FeignException;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.web.multipart.MultipartFile;
-
 /**
  * 定义流程.
  *
  * @author laokou
  */
-public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
-
-	/**
-	 * 新增流程.
-	 * @param file 文件
-	 * @return 新增结果
+/*
+ * public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
+ *
+ */
+/**
+ * 新增流程.
+ * @param file 文件
+ * @return 新增结果
+ *//*
+	 *
+	 * @Override public Result<Boolean> insert(MultipartFile file) { throw new
+	 * FeignException("新增流程失败"); }
+	 *
 	 */
-	@Override
-	public Result<Boolean> insert(MultipartFile file) {
-		throw new FeignException("新增流程失败");
-	}
-
-	/**
-	 * 查询任务流程列表.
-	 * @param qry 查询任务流程列表参数
-	 * @return 任务流程列表
+/**
+ * 查询任务流程列表.
+ * @param qry 查询任务流程列表参数
+ * @return 任务流程列表
+ *//*
+	 *
+	 * @Override public Result<Datas<DefinitionCO>> list(DefinitionListQry qry) { return
+	 * Result.of(Datas.of()); }
+	 *
 	 */
-	@Override
-	public Result<Datas<DefinitionCO>> list(DefinitionListQry qry) {
-		return Result.of(Datas.of());
-	}
-
-	/**
-	 * 挂起流程.
-	 * @param definitionId 定义ID
-	 * @return 挂起结果
+/**
+ * 挂起流程.
+ * @param definitionId 定义ID
+ * @return 挂起结果
+ *//*
+	 *
+	 * @Override public Result<Boolean> suspend(String definitionId) { throw new
+	 * FeignException("挂起流程失败"); }
+	 *
 	 */
-	@Override
-	public Result<Boolean> suspend(String definitionId) {
-		throw new FeignException("挂起流程失败");
-	}
-
-	/**
-	 * 激活流程.
-	 * @param definitionId 定义ID
-	 * @return 激活结果
+/**
+ * 激活流程.
+ * @param definitionId 定义ID
+ * @return 激活结果
+ *//*
+	 *
+	 * @Override public Result<Boolean> activate(String definitionId) { throw new
+	 * FeignException("激活流程失败"); }
+	 *
 	 */
-	@Override
-	public Result<Boolean> activate(String definitionId) {
-		throw new FeignException("激活流程失败");
-	}
-
-	/**
-	 * 查看流程图.
-	 * @param definitionId 定义ID
-	 * @return 流程图
+/**
+ * 查看流程图.
+ * @param definitionId 定义ID
+ * @return 流程图
+ *//*
+	 *
+	 * @Override public Result<String> diagram(String definitionId) { throw new
+	 * FeignException("查看流程图失败"); }
+	 *
 	 */
-	@Override
-	public Result<String> diagram(String definitionId) {
-		throw new FeignException("查看流程图失败");
-	}
-
-	/**
-	 * 删除流程.
-	 * @param deploymentId 定义ID
-	 * @return 删除结果
+/**
+ * 删除流程.
+ * @param deploymentId 定义ID
+ * @return 删除结果
+ *//*
+	 *
+	 * @Override public Result<Boolean> delete(String deploymentId) { throw new
+	 * FeignException("删除流程失败"); }
+	 *
+	 * }
 	 */
-	@Override
-	public Result<Boolean> delete(String deploymentId) {
-		throw new FeignException("删除流程失败");
-	}
-
-}

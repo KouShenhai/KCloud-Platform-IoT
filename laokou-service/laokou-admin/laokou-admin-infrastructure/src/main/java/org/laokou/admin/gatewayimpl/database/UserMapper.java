@@ -35,7 +35,7 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Repository
 @Mapper
-public interface UserMapper extends CrudMapper<Long,Integer,UserDO> {
+public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 
 	/**
 	 * 新增用户.

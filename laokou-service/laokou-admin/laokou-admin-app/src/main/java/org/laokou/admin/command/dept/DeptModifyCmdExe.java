@@ -70,7 +70,10 @@ public class DeptModifyCmdExe {
 		if (co.getId().equals(co.getPid())) {
 			throw new SystemException("上级部门不能为当前部门");
 		}
-		return Result.of(deptGateway.update(deptConvertor.toEntity(co)));
+		return null;
+		/*
+		 * return Result.of(deptGateway.update(deptConvertor.toEntity(co)));
+		 */
 	}
 
 }

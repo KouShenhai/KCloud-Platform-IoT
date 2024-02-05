@@ -48,10 +48,9 @@ public interface UsersServiceI {
 
 	/**
 	 * 查看用户信息.
-	 * @param qry 查看用户信息参数
 	 * @return 用户信息
 	 */
-	Result<UserProfileCO> findProfile(UserProfileGetQry qry);
+	Result<UserProfileCO> findProfile();
 
 	/**
 	 * 修改用户信息.
@@ -88,7 +87,6 @@ public interface UsersServiceI {
 	/**
 	 * 根据ID删除用户.
 	 * @param cmd 根据ID删除用户参数
-	 * @return 删除结果
 	 */
 	void remove(UserRemoveCmd cmd);
 

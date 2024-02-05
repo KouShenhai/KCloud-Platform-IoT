@@ -21,10 +21,8 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.domain.gateway.RoleGateway;
-import org.laokou.admin.domain.role.Role;
 import org.laokou.admin.dto.role.RoleListQry;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -51,12 +49,14 @@ public class RoleListQryExe {
 	 */
 	@DS(TENANT)
 	public Result<Datas<RoleCO>> execute(RoleListQry qry) {
-		Role role = ConvertUtil.sourceToTarget(qry, Role.class);
-		Datas<Role> datas = roleGateway.list(role, qry);
-		Datas<RoleCO> newDatas = new Datas<>();
-		newDatas.setTotal(datas.getTotal());
-		newDatas.setRecords(roleConvertor.convertClientObjectList(datas.getRecords()));
-		return Result.of(newDatas);
+		/*
+		 * Role role = ConvertUtil.sourceToTarget(qry, Role.class); Datas<Role> datas =
+		 * roleGateway.list(role, qry); Datas<RoleCO> newDatas = new Datas<>();
+		 * newDatas.setTotal(datas.getTotal());
+		 * newDatas.setRecords(roleConvertor.convertClientObjectList(datas.getRecords()));
+		 * return Result.of(newDatas);
+		 */
+		return null;
 	}
 
 }

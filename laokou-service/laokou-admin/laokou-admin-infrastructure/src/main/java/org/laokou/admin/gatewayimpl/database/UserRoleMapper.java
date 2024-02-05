@@ -34,7 +34,7 @@ import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
  */
 @Repository
 @Mapper
-public interface UserRoleMapper extends CrudMapper<Long,Integer,UserRoleDO> {
+public interface UserRoleMapper extends CrudMapper<Long, Integer, UserRoleDO> {
 
 	/**
 	 * 根据用户ID查询角色IDS.

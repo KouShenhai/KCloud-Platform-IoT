@@ -53,11 +53,7 @@ public class UserStatusModifyCmdExe {
 	 * @return 用户领域
 	 */
 	private User convert(UserStatusModifyCmd cmd) {
-		return User.builder()
-				.id(cmd.getId())
-				.status(cmd.getStatus())
-				.editor(UserUtil.getUserId())
-				.build();
+		return User.builder().id(cmd.getId()).status(cmd.getStatus()).editor(UserUtil.getUserId()).build();
 	}
 
 }

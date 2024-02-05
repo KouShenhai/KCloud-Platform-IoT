@@ -47,10 +47,7 @@ public class UserPasswordResetCmdExe {
 	}
 
 	private User convert(UserPasswordResetCmd cmd) {
-		return User.builder()
-				.id(cmd.getId())
-				.password(cmd.getPassword())
-				.build();
+		return User.builder().id(cmd.getId()).password(cmd.getPassword()).build();
 	}
 
 }

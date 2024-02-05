@@ -47,7 +47,8 @@ public class OssModifyCmdExe {
 	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(OssModifyCmd cmd) {
-		return Result.of(ossGateway.update(ossConvertor.toEntity(cmd.getOssCO())));
+		return null;
+		// return Result.of(ossGateway.update(ossConvertor.toEntity(cmd.getOssCO())));
 	}
 
 }

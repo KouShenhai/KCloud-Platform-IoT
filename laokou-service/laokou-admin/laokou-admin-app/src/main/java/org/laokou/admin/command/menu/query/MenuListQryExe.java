@@ -55,7 +55,8 @@ public class MenuListQryExe {
 		Menu menu = new Menu();
 		menu.setName(qry.getName());
 		List<Menu> list = menuGateway.list(menu, UserUtil.getTenantId());
-		return Result.of(menuConvertor.convertClientObjectList(list));
+		return null;
+		// return Result.of(menuConvertor.convertClientObjectList(list));
 	}
 
 }

@@ -44,7 +44,9 @@ public class PackageGetQryExe {
 	 * @return 套餐
 	 */
 	public Result<PackageCO> execute(PackageGetQry qry) {
-		return Result.of(packageConvertor.convertClientObject(packageGateway.getById(qry.getId())));
+		return null;
+		// return
+		// Result.of(packageConvertor.convertClientObject(packageGateway.getById(qry.getId())));
 	}
 
 }

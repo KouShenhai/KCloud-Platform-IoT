@@ -19,10 +19,8 @@ package org.laokou.admin.command.resource;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.common.utils.BusinessUtil;
 import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.gateway.ResourceGateway;
-import org.laokou.admin.domain.resource.Resource;
 import org.laokou.admin.dto.resource.ResourceCreateCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -49,9 +47,12 @@ public class ResourceCreateCmdExe {
 	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(ResourceCreateCmd cmd) {
-		Resource resource = resourceConvertor.toEntity(cmd.getResourceCO());
-		BusinessUtil.checkResource(resource);
-		return Result.of(resourceGateway.insert(resource));
+		return null;
+		/*
+		 * Resource resource = resourceConvertor.toEntity(cmd.getResourceCO());
+		 * BusinessUtil.checkResource(resource); return
+		 * Result.of(resourceGateway.insert(resource));
+		 */
 	}
 
 }

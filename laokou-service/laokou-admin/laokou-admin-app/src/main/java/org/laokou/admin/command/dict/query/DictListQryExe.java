@@ -54,7 +54,7 @@ public class DictListQryExe {
 		Dict dict = ConvertUtil.sourceToTarget(qry, Dict.class);
 		Datas<Dict> datas = dictGateway.list(dict, qry);
 		Datas<DictCO> da = new Datas<>();
-		da.setRecords(dictConvertor.convertClientObjectList(datas.getRecords()));
+		// da.setRecords(dictConvertor.convertClientObjectList(datas.getRecords()));
 		da.setTotal(datas.getTotal());
 		return Result.of(da);
 	}
