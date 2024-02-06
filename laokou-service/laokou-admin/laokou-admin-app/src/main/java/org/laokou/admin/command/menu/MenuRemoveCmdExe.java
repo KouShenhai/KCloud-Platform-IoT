@@ -20,9 +20,8 @@ package org.laokou.admin.command.menu;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.dto.menu.MenuRemoveCmd;
 import org.laokou.admin.domain.gateway.MenuGateway;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.admin.dto.menu.MenuRemoveCmd;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
@@ -42,11 +41,10 @@ public class MenuRemoveCmdExe {
 	/**
 	 * 执行删除树菜单.
 	 * @param cmd 删除树菜单参数
-	 * @return 执行删除结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(MenuRemoveCmd cmd) {
-		return Result.of(menuGateway.deleteById(cmd.getId()));
+	public void executeVoid(MenuRemoveCmd cmd) {
+		menuGateway.remove(cmd.getIds());
 	}
 
 }

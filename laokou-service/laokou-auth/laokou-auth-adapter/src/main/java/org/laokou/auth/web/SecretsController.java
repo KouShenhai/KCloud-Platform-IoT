@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.SecretsServiceI;
-import org.laokou.auth.dto.secret.SecretGetQry;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;

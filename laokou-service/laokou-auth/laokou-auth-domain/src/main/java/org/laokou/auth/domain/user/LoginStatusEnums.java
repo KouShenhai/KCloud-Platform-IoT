@@ -15,17 +15,13 @@
  *
  */
 
-package org.laokou.admin.dto.menu;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+package org.laokou.auth.domain.user;
 
 /**
  * @author laokou
  */
-@Data
-@Schema(name = "MenuTreeGetQry", description = "查看树菜单命令请求")
-public class MenuTreeGetQry extends CommonCommand {
+public enum LoginStatusEnums {
+
+	SUCCESS, FAIL
 
 }

@@ -51,20 +51,17 @@ public class MenusServiceImpl implements MenusServiceI {
 
 	private final MenuRemoveCmdExe menuRemoveCmdExe;
 
-	private final MenuTreeGetQryExe menuTreeGetQryExe;
-
 	private final MenuIDSGetQryExe menuIDSGetQryExe;
 
 	private final MenuTenantTreeGetQryExe menuTenantTreeGetQryExe;
 
 	/**
 	 * 查看树形菜单列表（用户）.
-	 * @param qry 查看树形菜单列表（用户）参数
 	 * @return 树形菜单列表（用户）
 	 */
 	@Override
-	public Result<MenuCO> treeList(MenuTreeListQry qry) {
-		return menuTreeListQryExe.execute(qry);
+	public Result<List<MenuCO>> findTreeList() {
+		return menuTreeListQryExe.execute();
 	}
 
 	/**
@@ -73,7 +70,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	 * @return 菜单列表
 	 */
 	@Override
-	public Result<List<MenuCO>> list(MenuListQry qry) {
+	public Result<List<MenuCO>> findList(MenuListQry qry) {
 		return menuListQryExe.execute(qry);
 	}
 
@@ -83,48 +80,35 @@ public class MenusServiceImpl implements MenusServiceI {
 	 * @return 菜单
 	 */
 	@Override
-	public Result<MenuCO> getById(MenuGetQry qry) {
+	public Result<MenuCO> findById(MenuGetQry qry) {
 		return menuGetQryExe.execute(qry);
 	}
 
 	/**
 	 * 修改菜单.
 	 * @param cmd 修改菜单参数
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(MenuModifyCmd cmd) {
-		return menuModifyCmdExe.execute(cmd);
+	public void modify(MenuModifyCmd cmd) {
+		menuModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 新增菜单.
 	 * @param cmd 新增菜单参数
-	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(MenuCreateCmd cmd) {
-		return menuCreateCmdExe.execute(cmd);
+	public void create(MenuCreateCmd cmd) {
+		menuCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 根据ID删除菜单.
 	 * @param cmd 根据ID删除菜单参数
-	 * @return 删除菜单
 	 */
 	@Override
-	public Result<Boolean> deleteById(MenuRemoveCmd cmd) {
-		return menuRemoveCmdExe.execute(cmd);
-	}
-
-	/**
-	 * 查看树菜单.
-	 * @param qry 查看树菜单参数
-	 * @return 树菜单
-	 */
-	@Override
-	public Result<MenuCO> tree(MenuTreeGetQry qry) {
-		return menuTreeGetQryExe.execute(qry);
+	public void remove(MenuRemoveCmd cmd) {
+		menuRemoveCmdExe.executeVoid(cmd);
 	}
 
 	/**

@@ -34,7 +34,7 @@ import java.io.Serial;
 
 import static org.laokou.common.i18n.common.EventStatusEnums.CREATED;
 import static org.laokou.common.i18n.common.EventTypeEnums.LOGIN_FAILED;
-import static org.laokou.common.i18n.common.LoginStatusEnums.FAIL;
+import static org.laokou.auth.domain.user.LoginStatusEnums.FAIL;
 import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_LOG_TOPIC;
 
 /**

@@ -32,7 +32,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Schema(name = "MenuDeleteCmd", description = "删除菜单命令请求")
 public class MenuRemoveCmd extends CommonCommand {
 
-	@Schema(name = "id", description = "ID")
-	private Long id;
+	@Schema(name = "ids", description = "IDS")
+	private Long[] ids;
 
 }

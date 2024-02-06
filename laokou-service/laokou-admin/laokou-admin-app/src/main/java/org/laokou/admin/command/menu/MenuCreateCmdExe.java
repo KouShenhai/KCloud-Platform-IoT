@@ -18,16 +18,12 @@
 package org.laokou.admin.command.menu;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
+import org.laokou.admin.domain.menu.Menu;
 import org.laokou.admin.dto.menu.MenuCreateCmd;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
-import org.laokou.admin.gatewayimpl.database.MenuMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
@@ -43,24 +39,28 @@ public class MenuCreateCmdExe {
 
 	private final MenuGateway menuGateway;
 
-	private final MenuConvertor menuConvertor;
-
-	private final MenuMapper menuMapper;
-
 	/**
 	 * 执行新增菜单.
 	 * @param cmd 新增菜单参数
 	 * @return 执行新增结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(MenuCreateCmd cmd) {
-		MenuCO co = cmd.getMenuCO();
-		Long count = menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, co.getName()));
-		if (count > 0) {
-			throw new SystemException("菜单已存在，请重新填写");
-		}
-		return null;
-		// return Result.of(menuGateway.insert(menuConvertor.toEntity(co)));
+	public void executeVoid(MenuCreateCmd cmd) {
+		menuGateway.create(convert(cmd.getMenuCO()));
+	}
+
+	private Menu convert(MenuCO co) {
+		return Menu.builder()
+				.id(IdGenerator.defaultSnowflakeId())
+				.pid(co.getPid())
+				.name(co.getName())
+				.type(co.getType())
+				.sort(co.getSort())
+				.permission(co.getPermission())
+				.icon(co.getIcon())
+				.url(co.getUrl())
+				.visible(co.getVisible())
+				.build();
 	}
 
 }

@@ -15,17 +15,14 @@
  *
  */
 
-package org.laokou.admin.dto.menu;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+package org.laokou.admin.domain.menu;
 
 /**
  * @author laokou
  */
-@Data
-@Schema(name = "MenuTreeListQry", description = "查询树菜单列表命令请求")
-public class MenuTreeListQry extends CommonCommand {
+public enum VisibleEnums {
+
+    YES,
+    NO
 
 }

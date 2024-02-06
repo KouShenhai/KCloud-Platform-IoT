@@ -31,4 +31,7 @@ public class MenuListQry extends CommonCommand {
 	@Schema(name = "name", description = "菜单名称")
 	private String name;
 
+	@Schema(name = "type", description = "LIST列表 TREE_LIST树形列表")
+	private String type;
+
 }

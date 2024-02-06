@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.TokensServiceI;
-import org.laokou.admin.dto.token.TokenGetQry;
 import org.laokou.admin.dto.token.clientobject.TokenCO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -44,7 +43,7 @@ public class TokensController {
 	@PostMapping
 	@Operation(summary = "令牌管理", description = "生成令牌")
 	public Result<TokenCO> generate() {
-		return tokensServiceI.generate(new TokenGetQry());
+		return tokensServiceI.generate();
 	}
 
 }

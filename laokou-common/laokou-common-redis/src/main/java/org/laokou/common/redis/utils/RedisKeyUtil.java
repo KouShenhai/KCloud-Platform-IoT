@@ -78,14 +78,6 @@ public final class RedisKeyUtil {
 	}
 
 	/**
-	 * 用户踢出Key.
-	 * @param token 令牌
-	 */
-	public static String getUserKillKey(String token) {
-		return "user:kill:" + token;
-	}
-
-	/**
 	 * 接口幂等性Key.
 	 * @param token 令牌
 	 */

@@ -18,14 +18,17 @@
 package org.laokou.admin.command.menu.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.MenuConvertor;
-import org.laokou.admin.domain.gateway.MenuGateway;
-import org.laokou.admin.domain.menu.Menu;
+import org.laokou.admin.domain.menu.TypeEnums;
 import org.laokou.admin.dto.menu.MenuListQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -41,9 +44,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 @RequiredArgsConstructor
 public class MenuListQryExe {
 
-	private final MenuGateway menuGateway;
-
-	private final MenuConvertor menuConvertor;
+	private final MenuMapper menuMapper;
 
 	/**
 	 * 执行查询菜单列表.
@@ -52,11 +53,35 @@ public class MenuListQryExe {
 	 */
 	@DS(TENANT)
 	public Result<List<MenuCO>> execute(MenuListQry qry) {
-		Menu menu = new Menu();
-		menu.setName(qry.getName());
-		List<Menu> list = menuGateway.list(menu, UserUtil.getTenantId());
-		return null;
-		// return Result.of(menuConvertor.convertClientObjectList(list));
+		return switch (TypeEnums.valueOf(qry.getType())) {
+			case LIST -> Result.of(getMenuList(qry).stream().map(this::convert).toList());
+			case TREE_LIST -> Result.of(buildTreeNode(getMenuList(qry).stream().map(this::convert).toList()));
+		};
+	}
+
+	private List<MenuCO> buildTreeNode(List<MenuCO> list) {
+		return TreeUtil.buildTreeNode(list, MenuCO.class).getChildren();
+	}
+
+	private List<MenuDO> getMenuList(MenuListQry qry) {
+		LambdaQueryWrapper<MenuDO> wrapper = Wrappers.lambdaQuery(MenuDO.class)
+				.like(StringUtil.isNotEmpty(qry.getName()), MenuDO::getName, qry.getName())
+				.orderByDesc(MenuDO::getSort);
+		return menuMapper.selectList(wrapper);
+	}
+
+	private MenuCO convert(MenuDO menuDO) {
+		MenuCO co = new MenuCO();
+		co.setUrl(menuDO.getUrl());
+		co.setIcon(menuDO.getIcon());
+		co.setName(menuDO.getName());
+		co.setPid(menuDO.getPid());
+		co.setSort(menuDO.getSort());
+		co.setType(menuDO.getType());
+		co.setId(menuDO.getId());
+		co.setPermission(menuDO.getPermission());
+		co.setVisible(menuDO.getVisible());
+		return co;
 	}
 
 }

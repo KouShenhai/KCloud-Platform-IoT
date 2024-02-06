@@ -19,11 +19,10 @@ package org.laokou.admin.command.menu.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.MenuConvertor;
-import org.laokou.admin.domain.gateway.MenuGateway;
-import org.laokou.admin.domain.menu.Menu;
 import org.laokou.admin.dto.menu.MenuGetQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -38,9 +37,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 @RequiredArgsConstructor
 public class MenuGetQryExe {
 
-	private final MenuGateway menuGateway;
-
-	private final MenuConvertor menuConvertor;
+	private final MenuMapper menuMapper;
 
 	/**
 	 * 执行查看菜单.
@@ -49,9 +46,21 @@ public class MenuGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<MenuCO> execute(MenuGetQry qry) {
-		Menu menu = menuGateway.getById(qry.getId());
-		return null;
-		// return Result.of(menuConvertor.convertClientObject(menu));
+		return Result.of(convert(menuMapper.selectById(qry.getId())));
+	}
+
+	private MenuCO convert(MenuDO menuDO) {
+		MenuCO co = new MenuCO();
+		co.setUrl(menuDO.getUrl());
+		co.setIcon(menuDO.getIcon());
+		co.setName(menuDO.getName());
+		co.setPid(menuDO.getPid());
+		co.setSort(menuDO.getSort());
+		co.setType(menuDO.getType());
+		co.setId(menuDO.getId());
+		co.setPermission(menuDO.getPermission());
+		co.setVisible(menuDO.getVisible());
+		return co;
 	}
 
 }

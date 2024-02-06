@@ -50,8 +50,8 @@ public class MenusController {
 	@TraceLog
 	@GetMapping("tree-list")
 	@Operation(summary = "菜单管理", description = "树形菜单列表（用户）")
-	public Result<MenuCO> findTreeList() {
-		return menusServiceI.treeList(new MenuTreeListQry());
+	public Result<List<MenuCO>> findTreeList() {
+		return menusServiceI.findTreeList();
 	}
 
 	@TraceLog
@@ -59,7 +59,7 @@ public class MenusController {
 	@Operation(summary = "菜单管理", description = "查询菜单列表")
 	@PreAuthorize("hasAuthority('menus:list')")
 	public Result<List<MenuCO>> findList(@RequestBody MenuListQry qry) {
-		return menusServiceI.list(qry);
+		return menusServiceI.findList(qry);
 	}
 
 	@TraceLog
@@ -67,7 +67,7 @@ public class MenusController {
 	@Operation(summary = "菜单管理", description = "查看菜单")
 	@DataCache(name = MENUS, key = "#id")
 	public Result<MenuCO> findById(@PathVariable("id") Long id) {
-		return menusServiceI.getById(new MenuGetQry(id));
+		return menusServiceI.findById(new MenuGetQry(id));
 	}
 
 	@TraceLog
@@ -76,8 +76,8 @@ public class MenusController {
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
 	@PreAuthorize("hasAuthority('menus:modify')")
 	@DataCache(name = MENUS, key = "#cmd.menuCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> modify(@RequestBody MenuModifyCmd cmd) {
-		return menusServiceI.update(cmd);
+	public void modify(@RequestBody MenuModifyCmd cmd) {
+		menusServiceI.modify(cmd);
 	}
 
 	@Idempotent
@@ -86,24 +86,17 @@ public class MenusController {
 	@Operation(summary = "菜单管理", description = "新增菜单")
 	@OperateLog(module = "菜单管理", operation = "新增菜单")
 	@PreAuthorize("hasAuthority('menus:create')")
-	public Result<Boolean> create(@RequestBody MenuCreateCmd cmd) {
-		return menusServiceI.insert(cmd);
+	public void create(@RequestBody MenuCreateCmd cmd) {
+		menusServiceI.create(cmd);
 	}
 
 	@TraceLog
-	@DeleteMapping("{id}")
+	@DeleteMapping
 	@Operation(summary = "菜单管理", description = "删除菜单")
 	@OperateLog(module = "菜单管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('menus:remove')")
-	public Result<Boolean> remove(@PathVariable("id") Long id) {
-		return menusServiceI.deleteById(new MenuRemoveCmd(id));
-	}
-
-	@TraceLog
-	@GetMapping("tree")
-	@Operation(summary = "菜单管理", description = "树形菜单列表")
-	public Result<MenuCO> tree() {
-		return menusServiceI.tree(new MenuTreeGetQry());
+	public void remove(@RequestBody Long[] ids) {
+		menusServiceI.remove(new MenuRemoveCmd(ids));
 	}
 
 	@TraceLog

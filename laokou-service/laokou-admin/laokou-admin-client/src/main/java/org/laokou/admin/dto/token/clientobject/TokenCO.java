@@ -29,10 +29,10 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "", description = "")
+@Schema(name = "TokenCO", description = "令牌")
 public class TokenCO extends ClientObject {
 
-	@Schema(name = "", description = "")
+	@Schema(name = "token", description = "令牌")
 	private String token;
 
 }

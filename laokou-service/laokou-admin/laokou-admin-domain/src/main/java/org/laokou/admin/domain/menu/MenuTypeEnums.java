@@ -15,17 +15,14 @@
  *
  */
 
-package org.laokou.admin.dto.token;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+package org.laokou.admin.domain.menu;
 
 /**
  * @author laokou
  */
-@Data
-@Schema(name = "TokenGetQry", description = "查看令牌命令请求")
-public class TokenGetQry extends CommonCommand {
+public enum MenuTypeEnums {
+
+    MENU,
+    BUTTON
 
 }

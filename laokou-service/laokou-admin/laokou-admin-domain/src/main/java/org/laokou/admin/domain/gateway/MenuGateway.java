@@ -19,7 +19,6 @@ package org.laokou.admin.domain.gateway;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.admin.domain.menu.Menu;
-import org.laokou.admin.domain.user.User;
 
 import java.util.List;
 
@@ -30,33 +29,22 @@ import java.util.List;
 public interface MenuGateway {
 
 	/**
-	 * 根据类型查询菜单列表.
-	 * @param user 用户对象
-	 * @param type 类型
-	 * @return 菜单列表
-	 */
-	List<Menu> list(User user, Integer type);
-
-	/**
 	 * 修改菜单.
 	 * @param menu 菜单对象
-	 * @return 修改结果
 	 */
-	Boolean update(Menu menu);
+	void modify(Menu menu);
 
 	/**
 	 * 新增菜单.
 	 * @param menu 菜单对象
-	 * @return 新增结果
 	 */
-	Boolean insert(Menu menu);
+	void create(Menu menu);
 
 	/**
 	 * 根据ID删除菜单.
-	 * @param id ID
-	 * @return 删除结果
+	 * @param ids IDS
 	 */
-	Boolean deleteById(Long id);
+	void remove(Long[] ids);
 
 	/**
 	 * 根据ID查看菜单.
@@ -71,14 +59,6 @@ public interface MenuGateway {
 	 * @return 菜单IDS
 	 */
 	List<Long> getIdsByRoleId(Long roleId);
-
-	/**
-	 * 根据租户ID查询菜单列表.
-	 * @param menu 菜单对象
-	 * @param tenantId 租户ID
-	 * @return 菜单列表
-	 */
-	List<Menu> list(Menu menu, Long tenantId);
 
 	/**
 	 * 查询租户菜单列表.

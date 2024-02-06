@@ -18,21 +18,13 @@
 package org.laokou.admin.command.menu;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
+import org.laokou.admin.domain.menu.Menu;
 import org.laokou.admin.dto.menu.MenuModifyCmd;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
-import org.laokou.admin.gatewayimpl.database.MenuMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.ValCodes.SYSTEM_ID_REQUIRE;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
@@ -46,29 +38,27 @@ public class MenuModifyCmdExe {
 
 	private final MenuGateway menuGateway;
 
-	private final MenuConvertor menuConvertor;
-
-	private final MenuMapper menuMapper;
-
 	/**
 	 * 执行删除菜单.
 	 * @param cmd 删除菜单参数
-	 * @return 执行删除结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(MenuModifyCmd cmd) {
-		MenuCO co = cmd.getMenuCO();
-		Long id = co.getId();
-		if (ObjectUtil.isNull(id)) {
-			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
-		}
-		Long count = menuMapper
-			.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, co.getName()).ne(MenuDO::getId, id));
-		if (count > 0) {
-			throw new SystemException("菜单已存在，请重新填写");
-		}
-		return null;
-		// return Result.of(menuGateway.update(menuConvertor.toEntity(cmd.getMenuCO())));
+	public void executeVoid(MenuModifyCmd cmd) {
+		menuGateway.modify(convert(cmd.getMenuCO()));
+	}
+
+	private Menu convert(MenuCO co) {
+		return Menu.builder()
+				.id(co.getId())
+				.pid(co.getPid())
+				.name(co.getName())
+				.type(co.getType())
+				.sort(co.getSort())
+				.permission(co.getPermission())
+				.icon(co.getIcon())
+				.url(co.getUrl())
+				.visible(co.getVisible())
+				.build();
 	}
 
 }

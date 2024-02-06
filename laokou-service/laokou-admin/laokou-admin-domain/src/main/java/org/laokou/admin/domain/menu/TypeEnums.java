@@ -15,13 +15,14 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.admin.domain.menu;
 
 /**
  * @author laokou
  */
-public enum LoginStatusEnums {
+public enum TypeEnums {
 
-	SUCCESS, FAIL
+    LIST,
+    TREE_LIST
 
 }

@@ -25,7 +25,10 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.ClientObject;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.laokou.common.i18n.common.StringConstants.COMMA;
 
@@ -93,31 +96,6 @@ public class TreeUtil {
 			}
 		}
 		return rootNode;
-	}
-
-	/**
-	 * 构建树菜单列表.
-	 * @param treeNodes 菜单列表
-	 * @param <T> 泛型
-	 * @return 树菜单列表
-	 */
-	public static <T extends TreeNode<T>> List<T> buildTreeNode(List<T> treeNodes) {
-		List<T> nodes = new ArrayList<>(treeNodes.size());
-		// list转map
-		Map<Long, T> nodeMap = new LinkedHashMap<>(treeNodes.size());
-		for (T node : treeNodes) {
-			nodeMap.put(node.getId(), node);
-		}
-		for (T treeNo : treeNodes) {
-			T parent = nodeMap.get(treeNo.getPid());
-			if (ObjectUtil.isNotNull(parent) && treeNo.getPid().equals(parent.getId())) {
-				treeNo.setPath(parent.getPath() + COMMA + treeNo.getId());
-				parent.getChildren().add(treeNo);
-				continue;
-			}
-			nodes.add(treeNo);
-		}
-		return nodes;
 	}
 
 	@Data

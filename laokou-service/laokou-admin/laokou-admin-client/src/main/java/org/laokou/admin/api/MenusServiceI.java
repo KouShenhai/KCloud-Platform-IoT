@@ -32,52 +32,41 @@ public interface MenusServiceI {
 
 	/**
 	 * 查看树形菜单列表（用户）.
-	 * @param qry 查看树形菜单列表（用户）参数
 	 * @return 树形菜单列表（用户）
 	 */
-	Result<MenuCO> treeList(MenuTreeListQry qry);
+	Result<List<MenuCO>> findTreeList();
 
 	/**
 	 * 查询菜单列表.
 	 * @param qry 查询菜单列表参数
 	 * @return 菜单列表
 	 */
-	Result<List<MenuCO>> list(MenuListQry qry);
+	Result<List<MenuCO>> findList(MenuListQry qry);
 
 	/**
 	 * 根据ID查看菜单.
 	 * @param qry 根据ID查看菜单参数
 	 * @return 菜单
 	 */
-	Result<MenuCO> getById(MenuGetQry qry);
+	Result<MenuCO> findById(MenuGetQry qry);
 
 	/**
 	 * 修改菜单.
 	 * @param cmd 修改菜单参数
-	 * @return 修改结果
 	 */
-	Result<Boolean> update(MenuModifyCmd cmd);
+	void modify(MenuModifyCmd cmd);
 
 	/**
 	 * 新增菜单.
 	 * @param cmd 新增菜单参数
-	 * @return 新增菜单
 	 */
-	Result<Boolean> insert(MenuCreateCmd cmd);
+	void create(MenuCreateCmd cmd);
 
 	/**
 	 * 根据ID删除菜单.
 	 * @param cmd 根据ID删除菜单参数
-	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(MenuRemoveCmd cmd);
-
-	/**
-	 * 查看树菜单.
-	 * @param qry 查看树菜单参数
-	 * @return 树菜单
-	 */
-	Result<MenuCO> tree(MenuTreeGetQry qry);
+	void remove(MenuRemoveCmd cmd);
 
 	/**
 	 * 根据角色ID查看菜单IDS.

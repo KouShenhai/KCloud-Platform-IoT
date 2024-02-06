@@ -17,12 +17,12 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.admin.domain.menu.Menu;
-import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -30,6 +30,7 @@ import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -49,54 +50,45 @@ public class MenuGatewayImpl implements MenuGateway {
 	private final MenuConvertor menuConvertor;
 
 	/**
-	 * 查询菜单列表.
-	 * @param user 用户对象
-	 * @param type 类型
-	 * @return 菜单列表
-	 */
-	@Override
-	public List<Menu> list(User user, Integer type) {
-		return menuConvertor.convertEntityList(getMenuList(type, user));
-	}
-
-	/**
 	 * 修改菜单.
 	 * @param menu 菜单对象
-	 * @return 修改结果
 	 */
 	@Override
-	public Boolean update(Menu menu) {
-		MenuDO menuDO = menuConvertor.toDataObject(menu);
-		menuDO.setVersion(menuMapper.getVersion(menuDO.getId(), MenuDO.class));
-		return updateMenu(menuDO);
+	public void modify(Menu menu) {
+		// 检查ID
+		menu.checkNullID();
+		// 检查菜单名称
+		long count = menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()).ne(MenuDO::getId, menu.getId()));
+		menu.checkName(count);
+		modify(menuConvertor.toDataObject(menu));
 	}
 
 	/**
 	 * 新增菜单.
 	 * @param menu 菜单对象
-	 * @return 新增结果
 	 */
 	@Override
-	public Boolean insert(Menu menu) {
-		MenuDO menuDO = menuConvertor.toDataObject(menu);
-		return insertMenu(menuDO);
+	public void create(Menu menu) {
+		// 检查菜单名称
+		long count = menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()));
+		menu.checkName(count);
+		create(menuConvertor.toDataObject(menu));
 	}
 
 	/**
 	 * 根据ID删除菜单.
-	 * @param id ID
-	 * @return 删除结果
+	 * @param ids IDS
 	 */
 	@Override
-	public Boolean deleteById(Long id) {
-		return transactionalUtil.defaultExecute(r -> {
+	public void remove(Long[] ids) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return menuMapper.deleteById(id) > 0;
+				menuMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(LogUtil.result(e.getMessage()));
 			}
 		});
 	}
@@ -122,18 +114,6 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	/**
-	 * 根据租户ID查询菜单列表.
-	 * @param menu 菜单对象
-	 * @param tenantId 租户ID
-	 * @return 菜单列表
-	 */
-	@Override
-	public List<Menu> list(Menu menu, Long tenantId) {
-		List<MenuDO> list = menuMapper.getMenuListLikeName(null, menu.getName());
-		return menuConvertor.convertEntityList(list);
-	}
-
-	/**
 	 * 查询租户菜单列表.
 	 * @return 租户菜单列表
 	 */
@@ -143,33 +123,18 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	/**
-	 * 查询菜单列表.
-	 * @param type 菜单类型 0菜单 1按钮
-	 * @param user 用户对象
-	 * @return 菜单列表
-	 */
-	private List<MenuDO> getMenuList(Integer type, User user) {
-		Long userId = user.getId();
-		if (user.isSuperAdministrator()) {
-			return menuMapper.getMenuListLikeName(type, null);
-		}
-		return menuMapper.getMenuListByUserId(type, userId);
-	}
-
-	/**
 	 * 修改菜单.
 	 * @param menuDO 菜单数据模型
-	 * @return 修改结果
 	 */
-	private Boolean updateMenu(MenuDO menuDO) {
-		return transactionalUtil.defaultExecute(r -> {
+	private void modify(MenuDO menuDO) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return menuMapper.updateById(menuDO) > 0;
+				menuMapper.updateById(menuDO);
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(LogUtil.result(e.getMessage()));
 			}
 		});
 	}
@@ -177,12 +142,11 @@ public class MenuGatewayImpl implements MenuGateway {
 	/**
 	 * 新增菜单.
 	 * @param menuDO 菜单数据模型
-	 * @return 新增结果
 	 */
-	private Boolean insertMenu(MenuDO menuDO) {
-		return transactionalUtil.defaultExecute(r -> {
+	private void create(MenuDO menuDO) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return menuMapper.insertTable(menuDO);
+				menuMapper.insert(menuDO);
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);

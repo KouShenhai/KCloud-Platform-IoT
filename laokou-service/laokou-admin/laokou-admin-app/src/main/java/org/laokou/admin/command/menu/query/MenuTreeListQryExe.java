@@ -18,23 +18,25 @@
 package org.laokou.admin.command.menu.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.MenuConvertor;
-import org.laokou.admin.domain.gateway.MenuGateway;
-import org.laokou.admin.domain.menu.Menu;
-import org.laokou.admin.domain.user.User;
-import org.laokou.admin.dto.menu.MenuTreeListQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static org.laokou.admin.domain.menu.MenuTypeEnums.MENU;
+import static org.laokou.admin.domain.menu.VisibleEnums.YES;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
@@ -46,31 +48,58 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 @RequiredArgsConstructor
 public class MenuTreeListQryExe {
 
-	private final MenuGateway menuGateway;
+	private final MenuMapper menuMapper;
 
 	private final RedisUtil redisUtil;
 
-	private final MenuConvertor menuConvertor;
-
 	/**
 	 * 执行查询树菜单列表.
-	 * @param qry 查询树菜单列表参数
 	 * @return 树菜单列表
 	 */
 	@DS(TENANT)
-	public Result<MenuCO> execute(MenuTreeListQry qry) {
+	public Result<List<MenuCO>> execute() {
 		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserUtil.getUserId());
 		Object obj = redisUtil.get(menuTreeKey);
 		if (ObjectUtil.isNotNull(obj)) {
-			return Result.of((MenuCO) obj);
+			return Result.of(((MenuCO) obj).getChildren());
 		}
-		User user = ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
-		List<Menu> menuList = menuGateway.list(user, 0);
-		return null;
-		// List<MenuCO> menus = menuConvertor.convertClientObjectList(menuList);
-		// MenuCO menuCO = TreeUtil.buildTreeNode(menus, MenuCO.class);
-		// redisUtil.set(menuTreeKey, menuCO, RedisUtil.HOUR_ONE_EXPIRE);
-		// return Result.of(menuCO);
+		MenuCO co = buildTreeNode(convert(getMenuList()));
+		redisUtil.set(menuTreeKey, co, RedisUtil.HOUR_ONE_EXPIRE);
+		return Result.of(co.getChildren());
+	}
+
+	private List<MenuCO> convert(List<MenuDO> list) {
+		return list.stream().map(this::convert).toList();
+	}
+
+	private MenuCO buildTreeNode(List<MenuCO> list) {
+		return TreeUtil.buildTreeNode(list, MenuCO.class);
+	}
+
+	private MenuCO convert(MenuDO menuDO) {
+		MenuCO co = new MenuCO();
+		co.setUrl(menuDO.getUrl());
+		co.setIcon(menuDO.getIcon());
+		co.setName(menuDO.getName());
+		co.setPid(menuDO.getPid());
+		co.setSort(menuDO.getSort());
+		co.setType(menuDO.getType());
+		co.setId(menuDO.getId());
+		co.setPermission(menuDO.getPermission());
+		co.setVisible(menuDO.getVisible());
+		return co;
+	}
+
+	private List<MenuDO> getMenuList() {
+		UserDetail user = UserUtil.user();
+		if (user.isSuperAdministrator()) {
+			LambdaQueryWrapper<MenuDO> wrapper = Wrappers.lambdaQuery(MenuDO.class)
+					.eq(MenuDO::getType, MENU.ordinal())
+					.eq(MenuDO::getVisible, YES.ordinal())
+					.orderByDesc(MenuDO::getSort);
+			return menuMapper.selectList(wrapper);
+		}
+		return menuMapper.selectListByUserId(user.getId());
 	}
 
 }
