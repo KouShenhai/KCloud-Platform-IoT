@@ -17,7 +17,6 @@
 
 package org.laokou.admin.domain.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,14 +25,12 @@ import lombok.experimental.SuperBuilder;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
 import static lombok.AccessLevel.PRIVATE;
-import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
 
 /**
  * @author laokou
@@ -103,11 +100,6 @@ public class User extends AggregateRoot<Long> {
 		if (StringUtil.isNotEmpty(pwd)) {
 			this.password = passwordEncoder.encode(pwd);
 		}
-	}
-
-	@JsonIgnore
-	public boolean isSuperAdministrator() {
-		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
 	}
 
 }

@@ -35,9 +35,8 @@ public interface DictsServiceI {
 	/**
 	 * 新增字典.
 	 * @param cmd 新增字典参数
-	 * @return 新增结果
 	 */
-	Result<Boolean> insert(DictCreateCmd cmd);
+	void create(DictCreateCmd cmd);
 
 	/**
 	 * 修改字典.

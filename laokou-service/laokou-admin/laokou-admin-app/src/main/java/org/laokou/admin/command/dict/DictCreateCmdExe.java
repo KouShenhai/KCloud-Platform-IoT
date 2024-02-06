@@ -26,8 +26,6 @@ import org.laokou.admin.dto.dict.DictCreateCmd;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
@@ -53,16 +51,12 @@ public class DictCreateCmdExe {
 	 * @return 执行新增结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(DictCreateCmd cmd) {
+	public void executeVoid(DictCreateCmd cmd) {
 		DictCO co = cmd.getDictCO();
 		String type = co.getType();
 		String value = co.getValue();
 		Long count = dictMapper
 			.selectCount(Wrappers.lambdaQuery(DictDO.class).eq(DictDO::getValue, value).eq(DictDO::getType, type));
-		if (count > 0) {
-			throw new SystemException(String.format("类型为%s，值为%s的字典已存在，请重新填写", type, value));
-		}
-		return null;
 		// return Result.of(dictGateway.insert(dictConvertor.toEntity(co)));
 	}
 

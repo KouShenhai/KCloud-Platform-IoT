@@ -58,11 +58,10 @@ public class DictsServiceImpl implements DictsServiceI {
 	/**
 	 * 新增字典.
 	 * @param cmd 新增字典参数
-	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(DictCreateCmd cmd) {
-		return dictCreateCmdExe.execute(cmd);
+	public void create(DictCreateCmd cmd) {
+		dictCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
