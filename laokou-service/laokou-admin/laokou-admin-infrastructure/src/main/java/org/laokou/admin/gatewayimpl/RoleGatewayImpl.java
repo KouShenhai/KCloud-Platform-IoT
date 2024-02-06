@@ -91,7 +91,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	public Boolean update(Role role, User user) {
 		Long id = role.getId();
 		RoleDO roleDO = roleConvertor.toDataObject(role);
-		roleDO.setVersion(roleMapper.getVersion(id, RoleDO.class));
+		//roleDO.setVersion(roleMapper.getVersion(id, RoleDO.class));
 		return updateRole(roleDO, role, user);
 	}
 
@@ -151,7 +151,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	private Boolean insertRole(RoleDO roleDO, Role role, User user) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
-				roleMapper.insertTable(roleDO);
+				//roleMapper.insertTable(roleDO);
 				insertRoleMenu(roleDO.getId(), role.getMenuIds(), user);
 				insertRoleDept(roleDO.getId(), role.getDeptIds(), user);
 				return true;

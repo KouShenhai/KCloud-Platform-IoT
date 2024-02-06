@@ -31,6 +31,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
@@ -71,17 +72,18 @@ public class MenuListQryExe {
 	}
 
 	private MenuCO convert(MenuDO menuDO) {
-		MenuCO co = new MenuCO();
-		co.setUrl(menuDO.getUrl());
-		co.setIcon(menuDO.getIcon());
-		co.setName(menuDO.getName());
-		co.setPid(menuDO.getPid());
-		co.setSort(menuDO.getSort());
-		co.setType(menuDO.getType());
-		co.setId(menuDO.getId());
-		co.setPermission(menuDO.getPermission());
-		co.setVisible(menuDO.getVisible());
-		return co;
+		return MenuCO.builder()
+				.url(menuDO.getUrl())
+				.icon(menuDO.getIcon())
+				.name(menuDO.getName())
+				.pid(menuDO.getPid())
+				.sort(menuDO.getSort())
+				.type(menuDO.getType())
+				.id(menuDO.getId())
+				.permission(menuDO.getPermission())
+				.visible(menuDO.getVisible())
+				.children(new ArrayList<>(16))
+				.build();
 	}
 
 }

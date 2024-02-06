@@ -31,7 +31,7 @@
         </if>
         order by sort desc
     </select>
-    <select id="getRoleIds" resultType="java.lang.Long">
+    <select id="selectRoleIds" resultType="java.lang.Long">
         select id
         from boot_sys_role
         where del_flag = 0

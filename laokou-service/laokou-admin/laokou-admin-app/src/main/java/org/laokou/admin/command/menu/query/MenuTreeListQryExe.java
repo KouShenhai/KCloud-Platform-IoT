@@ -33,6 +33,7 @@ import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.admin.domain.menu.MenuTypeEnums.MENU;
@@ -77,17 +78,18 @@ public class MenuTreeListQryExe {
 	}
 
 	private MenuCO convert(MenuDO menuDO) {
-		MenuCO co = new MenuCO();
-		co.setUrl(menuDO.getUrl());
-		co.setIcon(menuDO.getIcon());
-		co.setName(menuDO.getName());
-		co.setPid(menuDO.getPid());
-		co.setSort(menuDO.getSort());
-		co.setType(menuDO.getType());
-		co.setId(menuDO.getId());
-		co.setPermission(menuDO.getPermission());
-		co.setVisible(menuDO.getVisible());
-		return co;
+		return MenuCO.builder()
+				.url(menuDO.getUrl())
+				.icon(menuDO.getIcon())
+				.name(menuDO.getName())
+				.pid(menuDO.getPid())
+				.sort(menuDO.getSort())
+				.type(menuDO.getType())
+				.id(menuDO.getId())
+				.permission(menuDO.getPermission())
+				.visible(menuDO.getVisible())
+				.children(new ArrayList<>(16))
+				.build();
 	}
 
 	private List<MenuDO> getMenuList() {
@@ -95,8 +97,7 @@ public class MenuTreeListQryExe {
 		if (user.isSuperAdministrator()) {
 			LambdaQueryWrapper<MenuDO> wrapper = Wrappers.lambdaQuery(MenuDO.class)
 					.eq(MenuDO::getType, MENU.ordinal())
-					.eq(MenuDO::getVisible, YES.ordinal())
-					.orderByDesc(MenuDO::getSort);
+					.eq(MenuDO::getVisible, YES.ordinal()).orderByDesc(MenuDO::getSort);
 			return menuMapper.selectList(wrapper);
 		}
 		return menuMapper.selectListByUserId(user.getId());

@@ -64,6 +64,7 @@ public class TaskExecutorConfig {
 		executor.setKeepAliveSeconds((int) springTaskExecutionProperties.getPool().getKeepAlive().toSeconds());
 		// 线程名字前缀
 		executor.setThreadNamePrefix(threadNamePrefix);
+		// 初始化
 		executor.initialize();
 		return TtlExecutors.getTtlExecutorService(executor.getThreadPoolExecutor());
 	}

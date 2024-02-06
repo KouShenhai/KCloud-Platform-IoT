@@ -42,8 +42,8 @@ import static org.laokou.common.i18n.common.ValCodes.SYSTEM_ID_REQUIRE;
  */
 @Data
 @SuperBuilder
-@NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PROTECTED)
+@NoArgsConstructor(access = PROTECTED)
 @Schema(name = "AggregateRoot", description = "聚合根")
 public abstract class AggregateRoot<ID> extends Identifier<ID> {
 

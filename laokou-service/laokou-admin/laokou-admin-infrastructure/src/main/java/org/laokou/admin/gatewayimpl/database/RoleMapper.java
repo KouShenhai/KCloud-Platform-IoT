@@ -22,7 +22,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -36,7 +36,7 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Repository
 @Mapper
-public interface RoleMapper extends BatchMapper<RoleDO> {
+public interface RoleMapper extends CrudMapper<Long,Integer,RoleDO> {
 
 	/**
 	 * 查询角色列表.
@@ -52,6 +52,6 @@ public interface RoleMapper extends BatchMapper<RoleDO> {
 	 * 查看角色IDS.
 	 * @return 角色IDS
 	 */
-	List<Long> getRoleIds();
+	List<Long> selectRoleIds();
 
 }

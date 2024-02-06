@@ -21,15 +21,17 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.ClientObject;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static lombok.AccessLevel.PROTECTED;
 import static org.laokou.common.i18n.common.StringConstants.COMMA;
 
 /**
@@ -99,10 +101,11 @@ public class TreeUtil {
 	}
 
 	@Data
-	@AllArgsConstructor
-	@NoArgsConstructor
+	@SuperBuilder
+	@AllArgsConstructor(access = PROTECTED)
+	@NoArgsConstructor(access = PROTECTED)
 	@Schema(name = "TreeNode", description = "树节点")
-	public static class TreeNode<T> extends ClientObject {
+	public static class TreeNode<T> implements Serializable {
 
 		@Schema(name = "id", description = "ID")
 		private Long id;

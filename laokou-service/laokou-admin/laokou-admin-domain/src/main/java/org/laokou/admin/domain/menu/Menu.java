@@ -25,6 +25,7 @@ import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 
+import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 /**
@@ -32,8 +33,8 @@ import static lombok.AccessLevel.PROTECTED;
  */
 @Data
 @SuperBuilder
-@NoArgsConstructor(access = PROTECTED)
-@AllArgsConstructor(access = PROTECTED)
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "Menu", description = "菜单")
 public class Menu extends AggregateRoot<Long> {
 

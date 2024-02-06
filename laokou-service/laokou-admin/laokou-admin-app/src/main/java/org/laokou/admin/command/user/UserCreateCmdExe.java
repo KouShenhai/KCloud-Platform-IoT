@@ -23,6 +23,7 @@ import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserCreateCmd;
 import org.laokou.admin.dto.user.clientobject.UserCO;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
@@ -62,6 +63,7 @@ public class UserCreateCmdExe {
 			.editor(UserUtil.getUserId())
 			.roleIds(co.getRoleIds())
 			.username(co.getUsername())
+			.id(IdGenerator.defaultSnowflakeId())
 			.build();
 	}
 

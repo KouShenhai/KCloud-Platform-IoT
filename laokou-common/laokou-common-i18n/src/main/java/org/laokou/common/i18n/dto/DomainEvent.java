@@ -36,8 +36,8 @@ import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
  */
 @Data
 @SuperBuilder
-@NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PROTECTED)
+@NoArgsConstructor(access = PROTECTED)
 @Schema(name = "DomainEvent", description = "领域事件")
 public abstract class DomainEvent<ID> implements Event {
 

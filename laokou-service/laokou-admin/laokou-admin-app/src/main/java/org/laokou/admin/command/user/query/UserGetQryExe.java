@@ -21,12 +21,18 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.user.UserGetQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
+import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
+import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
 
 /**
  * 查看用户执行器.
@@ -38,6 +44,8 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 public class UserGetQryExe {
 
 	private final UserMapper userMapper;
+	private final RoleMapper roleMapper;
+	private final UserRoleMapper userRoleMapper;
 
 	/**
 	 * 执行查看用户.
@@ -51,7 +59,24 @@ public class UserGetQryExe {
 	}
 
 	private UserCO convert(UserDO userDO) {
-		return UserCO.builder().id(userDO.getId()).avatar(userDO.getAvatar()).build();
+		return UserCO.builder().id(userDO.getId())
+				.deptId(userDO.getDeptId())
+				.deptPath(userDO.getDeptPath())
+				.superAdmin(userDO.getSuperAdmin())
+				.roleIds(getRoleIds(userDO))
+				.status(userDO.getStatus())
+				.id(userDO.getId())
+				.build();
 	}
 
+	private List<Long> getRoleIds(UserDO userDO) {
+		if (isSuperAdministrator(userDO.getSuperAdmin())) {
+			return roleMapper.selectRoleIds();
+		}
+		return userRoleMapper.selectRoleIdsUserId(userDO.getId());
+	}
+
+	private boolean isSuperAdministrator(Integer superAdmin) {
+		return ObjectUtil.equals(YES.ordinal(), superAdmin);
+	}
 }

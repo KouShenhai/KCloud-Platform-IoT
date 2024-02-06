@@ -851,11 +851,12 @@ public class ElasticsearchTemplate {
 				}
 				data.add(sourceData);
 			}
-			Datas<Map<String, Object>> datas = new Datas<>();
+/*			Datas<Map<String, Object>> datas = new Datas<>();
 			final long total = hits.getTotalHits().value;
 			datas.setRecords(data);
 			datas.setTotal(total);
-			return datas;
+			return datas;*/
+			return null;
 		}
 		catch (Exception e) {
 			throw new SystemException("高亮搜索查询失败");
