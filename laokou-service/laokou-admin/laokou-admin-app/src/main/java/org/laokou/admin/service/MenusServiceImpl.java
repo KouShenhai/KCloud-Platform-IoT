@@ -39,8 +39,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MenusServiceImpl implements MenusServiceI {
 
-	private final MenuTreeListQryExe menuTreeListQryExe;
-
 	private final MenuGetQryExe menuGetQryExe;
 
 	private final MenuListQryExe menuListQryExe;
@@ -54,15 +52,6 @@ public class MenusServiceImpl implements MenusServiceI {
 	private final MenuIDSGetQryExe menuIDSGetQryExe;
 
 	private final MenuTenantTreeGetQryExe menuTenantTreeGetQryExe;
-
-	/**
-	 * 查看树形菜单列表（用户）.
-	 * @return 树形菜单列表（用户）
-	 */
-	@Override
-	public Result<List<MenuCO>> findTreeList() {
-		return menuTreeListQryExe.execute();
-	}
 
 	/**
 	 * 查询菜单列表.

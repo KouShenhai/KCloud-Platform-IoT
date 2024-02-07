@@ -41,23 +41,21 @@ public interface DictsServiceI {
 	/**
 	 * 修改字典.
 	 * @param cmd 修改字典参数
-	 * @return 修改结果
 	 */
-	Result<Boolean> update(DictModifyCmd cmd);
+	void modify(DictModifyCmd cmd);
 
 	/**
 	 * 根据ID删除字典.
 	 * @param cmd 根据ID删除字典参数
-	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(DictRemoveCmd cmd);
+	void remove(DictRemoveCmd cmd);
 
 	/**
 	 * 根据ID查看字典.
 	 * @param qry 根据ID查看字典参数
 	 * @return 字典
 	 */
-	Result<DictCO> getById(DictGetQry qry);
+	Result<DictCO> findById(DictGetQry qry);
 
 	/**
 	 * 查询字典下拉框选择项列表.
@@ -71,6 +69,6 @@ public interface DictsServiceI {
 	 * @param qry 查询字典列表参数
 	 * @return 字典列表
 	 */
-	Result<Datas<DictCO>> list(DictListQry qry);
+	Result<Datas<DictCO>> findList(DictListQry qry);
 
 }

@@ -27,7 +27,6 @@ import org.laokou.admin.command.dept.DeptModifyCmdExe;
 import org.laokou.admin.command.dept.query.DeptGetQryExe;
 import org.laokou.admin.command.dept.query.DeptIDSGetQryExe;
 import org.laokou.admin.command.dept.query.DeptListQryExe;
-import org.laokou.admin.command.dept.query.DeptTreeGetQryExe;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -42,8 +41,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeptsServiceImpl implements DeptsServiceI {
 
-	private final DeptTreeGetQryExe deptTreeGetQryExe;
-
 	private final DeptListQryExe deptListQryExe;
 
 	private final DeptCreateCmdExe deptCreateCmdExe;
@@ -57,25 +54,13 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	private final DeptIDSGetQryExe deptIDSGetQryExe;
 
 	/**
-	 * 查看部门树.
-	 * @param qry 查看部门树参数
-	 * @return 部门树
-	 */
-	@Override
-	public Result<DeptCO> tree(DeptTreeGetQry qry) {
-		return null;
-		// return deptTreeGetQryExe.execute(qry);
-	}
-
-	/**
 	 * 查询部门列表.
 	 * @param qry 查询部门列表参数
 	 * @return 部门列表
 	 */
 	@Override
-	public Result<List<DeptCO>> list(DeptListQry qry) {
-		return null;
-		// return deptListQryExe.execute(qry);
+	public Result<List<DeptCO>> findList(DeptListQry qry) {
+		return deptListQryExe.execute(qry);
 	}
 
 	/**
@@ -92,11 +77,10 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	/**
 	 * 修改部门.
 	 * @param cmd 修改部门参数
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(DeptModifyCmd cmd) {
-		return deptModifyCmdExe.execute(cmd);
+	public void modify(DeptModifyCmd cmd) {
+		deptModifyCmdExe.execute(cmd);
 	}
 
 	/**
@@ -115,9 +99,8 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	 * @return 部门
 	 */
 	@Override
-	public Result<DeptCO> getById(DeptGetQry qry) {
-		return null;
-		// return deptGetQryExe.execute(qry);
+	public Result<DeptCO> findById(DeptGetQry qry) {
+		return deptGetQryExe.execute(qry);
 	}
 
 	/**

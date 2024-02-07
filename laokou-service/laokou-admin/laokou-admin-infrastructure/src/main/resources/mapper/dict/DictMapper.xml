@@ -19,7 +19,7 @@
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.DictMapper">
-    <select id="getDictListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.DictDO">
+    <select id="selectListByCondition" resultType="org.laokou.admin.gatewayimpl.database.dataobject.DictDO">
         SELECT id
             ,create_date
             ,`value`
@@ -29,12 +29,24 @@
             ,remark
         from boot_sys_dict
         where del_flag = 0
-        <if test="type != null and type != ''">
-            and `type` like #{type}
+        <if test="dict.type != null and dict.type != ''">
+            and `type` like #{dict.type}
         </if>
-        <if test="label != null and label != ''">
-            and `label` like #{label}
+        <if test="dict.label != null and dict.label != ''">
+            and `label` like #{dict.label}
         </if>
         order by sort desc
+        limit ${pageQuery.pageIndex},${pageQuery.pageSize}
+    </select>
+    <select id="selectCountByCondition" resultType="java.lang.Long">
+        SELECT count(1)
+        from boot_sys_dict
+        where del_flag = 0
+        <if test="dict.type != null and dict.type != ''">
+            and `type` like #{dict.type}
+        </if>
+        <if test="dict.label != null and dict.label != ''">
+            and `label` like #{dict.label}
+        </if>
     </select>
 </mapper>

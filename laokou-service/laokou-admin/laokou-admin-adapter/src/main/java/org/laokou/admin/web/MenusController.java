@@ -48,13 +48,6 @@ public class MenusController {
 	private final MenusServiceI menusServiceI;
 
 	@TraceLog
-	@GetMapping("tree-list")
-	@Operation(summary = "菜单管理", description = "树形菜单列表（用户）")
-	public Result<List<MenuCO>> findTreeList() {
-		return menusServiceI.findTreeList();
-	}
-
-	@TraceLog
 	@PostMapping("list")
 	@Operation(summary = "菜单管理", description = "查询菜单列表")
 	@PreAuthorize("hasAuthority('menus:list')")
@@ -107,7 +100,7 @@ public class MenusController {
 	}
 
 	@TraceLog
-	@GetMapping("tenant-tree")
+	@GetMapping("tenant-list")
 	@Operation(summary = "菜单管理", description = "树形租户菜单列表")
 	public Result<MenuCO> findTenantTreeList() {
 		return menusServiceI.tenantTree(new MenuTenantTreeGetQry());

@@ -29,13 +29,6 @@ import java.util.List;
 public interface DeptGateway {
 
 	/**
-	 * 查询部门列表.
-	 * @param dept 部门对象
-	 * @return 部门列表
-	 */
-	List<Dept> list(Dept dept);
-
-	/**
 	 * 新增部门.
 	 * @param dept 部门对象
 	 * @return 新增结果
@@ -45,9 +38,8 @@ public interface DeptGateway {
 	/**
 	 * 修改部门.
 	 * @param dept 部门对象
-	 * @return 修改结果
 	 */
-	Boolean update(Dept dept);
+	void modify(Dept dept);
 
 	/**
 	 * 根据角色IDS查询部门IDS.

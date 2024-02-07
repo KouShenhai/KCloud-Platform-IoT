@@ -15,17 +15,15 @@
  *
  */
 
-package org.laokou.admin.dto.dept;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+package org.laokou.common.i18n.common;
 
 /**
  * @author laokou
  */
-@Data
-@Schema(name = "DeptUpdateCmd", description = "构建部门树命令请求")
-public class DeptTreeGetQry extends CommonCommand {
+public enum FindTypeEnums {
+
+    LIST,
+    TREE_LIST,
+    USER_TREE_LIST
 
 }

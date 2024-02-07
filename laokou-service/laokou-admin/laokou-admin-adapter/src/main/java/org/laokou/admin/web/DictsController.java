@@ -54,7 +54,7 @@ public class DictsController {
 	@Operation(summary = "字典管理", description = "查询字典列表")
 	@PreAuthorize("hasAuthority('dicts:list')")
 	public Result<Datas<DictCO>> findList(@RequestBody DictListQry qry) {
-		return dictsServiceI.list(qry);
+		return dictsServiceI.findList(qry);
 	}
 
 	@TraceLog
@@ -69,7 +69,7 @@ public class DictsController {
 	@Operation(summary = "字典管理", description = "查看字典")
 	@DataCache(name = DICTS, key = "#id")
 	public Result<DictCO> findById(@PathVariable("id") Long id) {
-		return dictsServiceI.getById(new DictGetQry(id));
+		return dictsServiceI.findById(new DictGetQry(id));
 	}
 
 	@Idempotent
@@ -79,7 +79,7 @@ public class DictsController {
 	@OperateLog(module = "字典管理", operation = "新增字典")
 	@PreAuthorize("hasAuthority('dicts:create')")
 	public void create(@RequestBody DictCreateCmd cmd) {
-		// return dictsServiceI.insert(cmd);
+		dictsServiceI.create(cmd);
 	}
 
 	@TraceLog
@@ -89,16 +89,16 @@ public class DictsController {
 	@PreAuthorize("hasAuthority('dicts:modify')")
 	@DataCache(name = DICTS, key = "#cmd.dictCO.id", type = CacheOperatorTypeEnums.DEL)
 	public void modify(@RequestBody DictModifyCmd cmd) {
-		// return dictsServiceI.update(cmd);
+		dictsServiceI.modify(cmd);
 	}
 
 	@TraceLog
-	@DeleteMapping("{id}")
+	@DeleteMapping
 	@Operation(summary = "字典管理", description = "删除字典")
 	@OperateLog(module = "字典管理", operation = "删除字典")
 	@PreAuthorize("hasAuthority('dicts:remove')")
-	public void remove(@PathVariable("id") Long id) {
-		// return dictsServiceI.deleteById(new DictRemoveCmd(id));
+	public void remove(@RequestBody Long[] ids) {
+		dictsServiceI.remove(new DictRemoveCmd(ids));
 	}
 
 }

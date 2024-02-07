@@ -47,20 +47,12 @@ public class DeptsController {
 
 	private final DeptsServiceI deptsServiceI;
 
-	@GetMapping("tree")
-	@TraceLog
-	@Operation(summary = "部门管理", description = "树形部门列表")
-	public Result<List<DeptCO>> findTreeList() {
-		return null;
-		// return deptsServiceI.tree(new DeptTreeGetQry());
-	}
-
 	@PostMapping("list")
 	@Operation(summary = "部门管理", description = "查询菜单列表")
 	@PreAuthorize("hasAuthority('depts:list')")
 	@TraceLog
 	public Result<List<DeptCO>> findList(@RequestBody DeptListQry qry) {
-		return deptsServiceI.list(qry);
+		return deptsServiceI.findList(qry);
 	}
 
 	@Idempotent
@@ -80,7 +72,7 @@ public class DeptsController {
 	@TraceLog
 	@DataCache(name = DEPTS, key = "#cmd.deptCO.id", type = CacheOperatorTypeEnums.DEL)
 	public void modify(@RequestBody DeptModifyCmd cmd) {
-		// return deptsServiceI.update(cmd);
+		deptsServiceI.modify(cmd);
 	}
 
 	@GetMapping("{id}")
@@ -88,7 +80,7 @@ public class DeptsController {
 	@Operation(summary = "部门管理", description = "查看菜单")
 	@DataCache(name = DEPTS, key = "#id")
 	public Result<DeptCO> findById(@PathVariable("id") Long id) {
-		return deptsServiceI.getById(new DeptGetQry(id));
+		return deptsServiceI.findById(new DeptGetQry(id));
 	}
 
 	@DeleteMapping("{id}")

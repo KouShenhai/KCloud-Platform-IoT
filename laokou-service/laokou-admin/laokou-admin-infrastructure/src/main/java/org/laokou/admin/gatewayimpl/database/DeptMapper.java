@@ -20,7 +20,7 @@ package org.laokou.admin.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,7 +32,7 @@ import java.util.List;
  */
 @Repository
 @Mapper
-public interface DeptMapper extends BatchMapper<DeptDO> {
+public interface DeptMapper extends CrudMapper<Long,Integer,DeptDO> {
 
 	/**
 	 * 查询部门列表.
@@ -50,16 +50,16 @@ public interface DeptMapper extends BatchMapper<DeptDO> {
 
 	/**
 	 * 根据部门父节点ID查看部门.
-	 * @param pid 部门子节点ID
+	 * @param id 部门ID
 	 * @return 部门
 	 */
-	String getDeptPathByPid(@Param("pid") Long pid);
+	String selectPathById(@Param("id") Long id);
 
 	/**
 	 * 根据PATH模糊查询部门子节点列表.
 	 * @param path 部门PATH
 	 * @return 部门子节点列表
 	 */
-	List<DeptDO> getDeptChildrenListByLikePath(@Param("path") String path);
+	List<DeptDO> selectListByPath(@Param("path") String path);
 
 }

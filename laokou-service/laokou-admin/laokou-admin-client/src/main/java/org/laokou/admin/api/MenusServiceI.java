@@ -31,12 +31,6 @@ import java.util.List;
 public interface MenusServiceI {
 
 	/**
-	 * 查看树形菜单列表（用户）.
-	 * @return 树形菜单列表（用户）
-	 */
-	Result<List<MenuCO>> findTreeList();
-
-	/**
 	 * 查询菜单列表.
 	 * @param qry 查询菜单列表参数
 	 * @return 菜单列表

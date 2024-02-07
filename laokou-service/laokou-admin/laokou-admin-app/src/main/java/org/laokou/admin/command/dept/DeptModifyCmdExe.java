@@ -46,30 +46,19 @@ public class DeptModifyCmdExe {
 
 	private final DeptGateway deptGateway;
 
-	private final DeptMapper deptMapper;
-
-	private final DeptConvertor deptConvertor;
-
 	/**
 	 * 执行修改部门.
 	 * @param cmd 修改部门参数
 	 * @return 执行修改结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(DeptModifyCmd cmd) {
+	public void execute(DeptModifyCmd cmd) {
 		DeptCO co = cmd.getDeptCO();
 		Long id = co.getId();
 		if (ObjectUtil.isNull(id)) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
-		long count = deptMapper
-			.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, co.getName()).ne(DeptDO::getId, id));
-		if (count > 0) {
-			throw new SystemException("部门已存在，请重新填写");
-		}
-		if (co.getId().equals(co.getPid())) {
-			throw new SystemException("上级部门不能为当前部门");
-		}
+
 		return null;
 		/*
 		 * return Result.of(deptGateway.update(deptConvertor.toEntity(co)));

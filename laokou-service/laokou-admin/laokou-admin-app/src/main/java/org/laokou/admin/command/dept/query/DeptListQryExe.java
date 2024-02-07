@@ -17,10 +17,24 @@
 
 package org.laokou.admin.command.dept.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.DeptConvertor;
-import org.laokou.admin.domain.gateway.DeptGateway;
+import org.laokou.common.i18n.common.FindTypeEnums;
+import org.laokou.admin.dto.dept.DeptListQry;
+import org.laokou.admin.dto.dept.clientobject.DeptCO;
+import org.laokou.admin.gatewayimpl.database.DeptMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
+import org.laokou.common.core.utils.TreeUtil;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 
 /**
@@ -32,19 +46,43 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DeptListQryExe {
 
-	private final DeptGateway deptGateway;
-
-	private final DeptConvertor deptConvertor;
+	private final DeptMapper deptMapper;
 
 	/**
 	 * 执行查询部门列表.
 	 * @param qry 查询部门列表参数
 	 * @return 部门列表
 	 */
-	/*
-	 * @DS(TENANT) public Result<List<DeptCO>> execute(DeptListQry qry) { Dept dept = new
-	 * Dept(); dept.setName(qry.getName()); List<Dept> list = deptGateway.list(dept);
-	 * return Result.of(deptConvertor.convertClientObjectList(list)); }
-	 */
+	@DS(TENANT)
+	public Result<List<DeptCO>> execute(DeptListQry qry) {
+		return switch (FindTypeEnums.valueOf(qry.getType())) {
+			case LIST -> Result.of(getDeptList(qry).stream().map(this::convert).toList());
+			case TREE_LIST -> Result.of(buildTreeNode(getDeptList(qry).stream().map(this::convert).toList()));
+            case USER_TREE_LIST -> null;
+        };
+	}
+
+	private List<DeptCO> buildTreeNode(List<DeptCO> list) {
+		return TreeUtil.buildTreeNode(list, DeptCO.class).getChildren();
+	}
+
+	private DeptCO convert(DeptDO deptDO) {
+		return DeptCO.builder()
+				.id(deptDO.getId())
+				.pid(deptDO.getPid())
+				.name(deptDO.getName())
+				.sort(deptDO.getSort())
+				.children(new ArrayList<>(16))
+				.build();
+	}
+
+	private List<DeptDO> getDeptList(DeptListQry qry) {
+		String name = qry.getName();
+		LambdaQueryWrapper<DeptDO> wrapper = Wrappers.lambdaQuery(DeptDO.class)
+				.like(StringUtil.isNotEmpty(name), DeptDO::getName, name)
+				.orderByDesc(DeptDO::getSort)
+				.select(DeptDO::getId, DeptDO::getPid, DeptDO::getName, DeptDO::getSort);
+		return deptMapper.selectList(wrapper);
+	}
 
 }

@@ -19,16 +19,15 @@ package org.laokou.admin.domain.dept;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.AggregateRoot;
 
 /**
  * @author laokou
  */
 @Data
 @Schema(name = "Dept", description = "部门")
-public class Dept {
-
-	@Schema(name = "id", description = "ID")
-	private Long id;
+public class Dept extends AggregateRoot<Long> {
 
 	@Schema(name = "name", description = "部门名称")
 	private String name;
@@ -41,5 +40,17 @@ public class Dept {
 
 	@Schema(name = "sort", description = "部门排序")
 	private Integer sort;
+
+	public void checkName(long count) {
+		if (count > 0) {
+			throw new SystemException("部门名称已存在，请重新填写");
+		}
+	}
+
+	public void checkIdAndPid() {
+		if (id.equals(pid)) {
+			throw new SystemException("上级部门不能为当前部门");
+		}
+	}
 
 }

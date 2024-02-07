@@ -35,20 +35,17 @@
         WHERE a.id = c.dept_id
           AND c.role_id = b.id
           AND b.id = #{roleId}
-          and a.del_flag = 0
         group by a.id
     </select>
-    <select id="getDeptPathByPid" resultType="java.lang.String">
+    <select id="selectPathById" resultType="java.lang.String">
         select path
         from boot_sys_dept
         where id = #{pid}
     </select>
-    <select id="getDeptChildrenListByLikePath"
-            resultType="org.laokou.admin.gatewayimpl.database.dataobject.DeptDO">
-        select id
-             ,path
+    <select id="selectListByPath" resultType="org.laokou.admin.gatewayimpl.database.dataobject.DeptDO">
+        select id, path
         from boot_sys_dept
         where path like concat(#{path},'%')
-            and path <![CDATA[ <> ]]> #{path}
+        and path <![CDATA[ <> ]]> #{path}
     </select>
 </mapper>

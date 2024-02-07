@@ -19,16 +19,22 @@ package org.laokou.admin.command.dict.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.DictConvertor;
-import org.laokou.admin.domain.dict.Dict;
-import org.laokou.admin.domain.gateway.DictGateway;
+import lombok.SneakyThrows;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.dict.DictListQry;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.gatewayimpl.database.DictMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_DICT;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
@@ -40,23 +46,43 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 @RequiredArgsConstructor
 public class DictListQryExe {
 
-	private final DictGateway dictGateway;
-
-	private final DictConvertor dictConvertor;
+	private final DictMapper dictMapper;
+	private final Executor executor;
 
 	/**
 	 * 执行查询部门列表.
 	 * @param qry 查询部门列表参数
 	 * @return 部门列表
 	 */
+	@SneakyThrows
 	@DS(TENANT)
+	@DataFilter(tableAlias = BOOT_SYS_DICT)
 	public Result<Datas<DictCO>> execute(DictListQry qry) {
-		Dict dict = ConvertUtil.sourceToTarget(qry, Dict.class);
-		Datas<Dict> datas = dictGateway.list(dict, qry);
-		Datas<DictCO> da = new Datas<>();
-		// da.setRecords(dictConvertor.convertClientObjectList(datas.getRecords()));
-		da.setTotal(datas.getTotal());
-		return Result.of(da);
+		DictDO dictDO = convert(qry);
+		PageQuery page = qry.page();
+		CompletableFuture<List<DictDO>> c1 = CompletableFuture.supplyAsync(() -> dictMapper.selectListByCondition(dictDO, page), executor);
+		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> dictMapper.selectCountByCondition(dictDO, page), executor);
+		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
+		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
+	}
+
+	private DictDO convert(DictListQry qry) {
+		DictDO dictDO = new DictDO();
+		dictDO.setLabel(qry.getLabel());
+		dictDO.setType(qry.getType());
+		return dictDO;
+	}
+
+	private DictCO convert(DictDO dictDO) {
+		return DictCO.builder()
+				.id(dictDO.getId())
+				.value(dictDO.getValue())
+				.label(dictDO.getLabel())
+				.type(dictDO.getType())
+				.createDate(dictDO.getCreateDate())
+				.remark(dictDO.getRemark())
+				.sort(dictDO.getSort())
+				.build();
 	}
 
 }

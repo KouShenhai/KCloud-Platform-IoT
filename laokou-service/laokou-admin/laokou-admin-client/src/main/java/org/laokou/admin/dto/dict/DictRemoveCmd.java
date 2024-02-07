@@ -32,7 +32,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Schema(name = "DictDeleteCmd", description = "删除字典命令请求")
 public class DictRemoveCmd extends CommonCommand {
 
-	@Schema(name = "id", description = "ID")
-	private Long id;
+	@Schema(name = "ids", description = "IDS")
+	private Long[] ids;
 
 }
