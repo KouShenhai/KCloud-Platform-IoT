@@ -31,9 +31,8 @@ public interface DeptGateway {
 	/**
 	 * 新增部门.
 	 * @param dept 部门对象
-	 * @return 新增结果
 	 */
-	Boolean insert(Dept dept);
+	void create(Dept dept);
 
 	/**
 	 * 修改部门.
@@ -50,10 +49,9 @@ public interface DeptGateway {
 
 	/**
 	 * 根据ID删除部门.
-	 * @param id ID
-	 * @return 删除结果
+	 * @param ids IDS
 	 */
-	Boolean deleteById(Long id);
+	void remove(Long[] ids);
 
 	/**
 	 * 根据ID查看部门.

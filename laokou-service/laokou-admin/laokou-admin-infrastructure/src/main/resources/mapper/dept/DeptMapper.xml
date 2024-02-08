@@ -40,7 +40,7 @@
     <select id="selectPathById" resultType="java.lang.String">
         select path
         from boot_sys_dept
-        where id = #{pid}
+        where id = #{id}
     </select>
     <select id="selectListByPath" resultType="org.laokou.admin.gatewayimpl.database.dataobject.DeptDO">
         select id, path

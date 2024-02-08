@@ -40,9 +40,8 @@ public interface DeptsServiceI {
 	/**
 	 * 新增部门.
 	 * @param cmd 新增部门参数
-	 * @return 新增结果
 	 */
-	Result<Boolean> insert(DeptCreateCmd cmd);
+	void create(DeptCreateCmd cmd);
 
 	/**
 	 * 修改部门.
@@ -53,9 +52,8 @@ public interface DeptsServiceI {
 	/**
 	 * 根据ID删除部门.
 	 * @param cmd 根据ID删除部门参数
-	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(DeptRemoveCmd cmd);
+	void remove(DeptRemoveCmd cmd);
 
 	/**
 	 * 根据ID查看部门.

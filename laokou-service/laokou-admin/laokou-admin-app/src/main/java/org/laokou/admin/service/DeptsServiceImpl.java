@@ -25,7 +25,7 @@ import org.laokou.admin.command.dept.DeptRemoveCmdExe;
 import org.laokou.admin.command.dept.DeptCreateCmdExe;
 import org.laokou.admin.command.dept.DeptModifyCmdExe;
 import org.laokou.admin.command.dept.query.DeptGetQryExe;
-import org.laokou.admin.command.dept.query.DeptIDSGetQryExe;
+import org.laokou.admin.command.dept.query.DeptIdsGetQryExe;
 import org.laokou.admin.command.dept.query.DeptListQryExe;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
@@ -51,7 +51,7 @@ public class DeptsServiceImpl implements DeptsServiceI {
 
 	private final DeptGetQryExe deptGetQryExe;
 
-	private final DeptIDSGetQryExe deptIDSGetQryExe;
+	private final DeptIdsGetQryExe deptIDSGetQryExe;
 
 	/**
 	 * 查询部门列表.
@@ -66,12 +66,10 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	/**
 	 * 新增部门.
 	 * @param cmd 新增部门参数
-	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(DeptCreateCmd cmd) {
-		return null;
-		// return deptCreateCmdExe.execute(cmd);
+	public void create(DeptCreateCmd cmd) {
+		deptCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -80,17 +78,16 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	 */
 	@Override
 	public void modify(DeptModifyCmd cmd) {
-		deptModifyCmdExe.execute(cmd);
+		deptModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 根据ID删除部门.
 	 * @param cmd 根据ID删除部门参数
-	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(DeptRemoveCmd cmd) {
-		return deptRemoveCmdExe.execute(cmd);
+	public void remove(DeptRemoveCmd cmd) {
+		deptRemoveCmdExe.executeVoid(cmd);
 	}
 
 	/**

@@ -32,7 +32,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Schema(name = "DeptDeleteCmd", description = "删除部门命令请求")
 public class DeptRemoveCmd extends CommonCommand {
 
-	@Schema(name = "id", description = "ID")
-	private Long id;
+	@Schema(name = "ids", description = "IDS")
+	private Long[] ids;
 
 }

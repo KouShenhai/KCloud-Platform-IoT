@@ -131,10 +131,10 @@ public class UserGatewayImpl implements UserGateway {
 	private void create(UserDO userDO, List<Long> roleIds) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
+				// 新增用户
+				userMapper.insertObj(userDO, AesUtil.getSecretKeyStr());
 				// 新增用户角色
 				createUserRole(userDO, roleIds);
-				// 新增用户
-				createUser(userDO);
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
@@ -142,19 +142,15 @@ public class UserGatewayImpl implements UserGateway {
 				throw new SystemException(LogUtil.result(e.getMessage()));
 			}
 		});
-	}
-
-	private void createUser(UserDO userDO) {
-		userMapper.insertObj(userDO, AesUtil.getSecretKeyStr());
 	}
 
 	private void modify(UserDO userDO, List<Long> roleIds) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
+				// 修改用户
+				userMapper.updateById(userDO);
 				// 修改用户角色
 				modifyUserRole(userDO, roleIds);
-				// 修改用户
-				modifyUser(userDO);
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
@@ -162,10 +158,6 @@ public class UserGatewayImpl implements UserGateway {
 				throw new SystemException(LogUtil.result(e.getMessage()));
 			}
 		});
-	}
-
-	private void modifyUser(UserDO userDO) {
-		userMapper.updateById(userDO);
 	}
 
 	private void modifyUserRole(UserDO userDO, List<Long> roleIds) {

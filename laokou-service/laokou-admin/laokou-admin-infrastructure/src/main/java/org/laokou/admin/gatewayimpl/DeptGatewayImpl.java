@@ -26,7 +26,7 @@ import org.laokou.admin.domain.dept.Dept;
 import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -34,6 +34,7 @@ import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.StringConstants.COMMA;
@@ -60,14 +61,15 @@ public class DeptGatewayImpl implements DeptGateway {
 	/**
 	 * 新增部门.
 	 * @param dept 部门对象
-	 * @return 新增结果
 	 */
 	@Override
-	public Boolean insert(Dept dept) {
+	public void create(Dept dept) {
+		long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, dept.getName()));
+		dept.checkName(count);
 		DeptDO deptDO = deptConvertor.toDataObject(dept);
-		deptDO.setId(IdGenerator.defaultSnowflakeId());
-		//deptDO.setPath(getPath(deptDO.getPid(), deptDO.getId()));
-		return insertDept(deptDO);
+		// 修改新path
+		deptDO.setPath(getNewPath(deptDO));
+		create(deptDO);
 	}
 
 	/**
@@ -102,14 +104,13 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	/**
 	 * 根据ID删除部门.
-	 * @param id ID
-	 * @return 删除结果
+	 * @param ids IDS
 	 */
 	@Override
-	public Boolean deleteById(Long id) {
-		return transactionalUtil.defaultExecute(r -> {
+	public void remove(Long[] ids) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return deptMapper.deleteById(id) > 0;
+				deptMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
@@ -140,6 +141,7 @@ public class DeptGatewayImpl implements DeptGateway {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				deptMapper.updateById(deptDO);
+				// 修改PATH
 				modifyPath(oldPath, newPath, children);
 			}
 			catch (Exception e) {
@@ -153,31 +155,31 @@ public class DeptGatewayImpl implements DeptGateway {
 	/**
 	 * 新增部门.
 	 * @param deptDO 部门数据模型
-	 * @return 新增结果
 	 */
-	private Boolean insertDept(DeptDO deptDO) {
-		/*return transactionalUtil.defaultExecute(r -> {
+	private void create(DeptDO deptDO) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return deptMapper.insertTable(deptDO);
+				deptMapper.insert(deptDO);
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
-		});*/
-		return null;
+		});
 	}
 
 	/**
-	 * 修改部门子节点.
+	 * 修改部门子节点PATH.
 	 * @param oldPath 旧部门PATH
 	 * @param newPath 新部门PATH
 	 * @param children 部门子节点列表
 	 */
 	private void modifyPath(String oldPath, String newPath, List<DeptDO> children) {
-		children.forEach(item -> item.setPath(item.getPath().replace(oldPath, newPath)));
-		mybatisUtil.batch(children, DeptMapper.class, DynamicDataSourceContextHolder.peek(), DeptMapper::updateById);
+		if (CollectionUtil.isNotEmpty(children)) {
+			children.parallelStream().forEach(item -> item.setPath(item.getPath().replace(oldPath, newPath)));
+			mybatisUtil.batch(children, DeptMapper.class, DynamicDataSourceContextHolder.peek(), DeptMapper::updateById);
+		}
 	}
 
 	/**

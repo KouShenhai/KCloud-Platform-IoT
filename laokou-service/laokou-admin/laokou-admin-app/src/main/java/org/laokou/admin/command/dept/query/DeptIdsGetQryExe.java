@@ -35,7 +35,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
  */
 @Component
 @RequiredArgsConstructor
-public class DeptIDSGetQryExe {
+public class DeptIdsGetQryExe {
 
 	private final DeptGateway deptGateway;
 

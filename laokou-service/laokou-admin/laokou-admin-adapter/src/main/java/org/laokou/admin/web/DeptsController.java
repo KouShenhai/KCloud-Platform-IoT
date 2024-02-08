@@ -62,7 +62,7 @@ public class DeptsController {
 	@PreAuthorize("hasAuthority('depts:create')")
 	@TraceLog
 	public void create(@RequestBody DeptCreateCmd cmd) {
-		// return deptsServiceI.insert(cmd);
+		deptsServiceI.create(cmd);
 	}
 
 	@PutMapping
@@ -83,13 +83,13 @@ public class DeptsController {
 		return deptsServiceI.findById(new DeptGetQry(id));
 	}
 
-	@DeleteMapping("{id}")
+	@DeleteMapping
 	@TraceLog
 	@Operation(summary = "部门管理", description = "删除菜单")
 	@OperateLog(module = "部门管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('depts:remove')")
 	public void remove(@RequestBody Long[] ids) {
-		// return deptsServiceI.deleteById(new DeptRemoveCmd(id));
+		deptsServiceI.remove(new DeptRemoveCmd(ids));
 	}
 
 	@GetMapping("{roleId}/ids")
