@@ -19,7 +19,6 @@ package org.laokou.admin.command.role.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.dto.role.RoleListQry;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
@@ -39,8 +38,6 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 public class RoleListQryExe {
 
 	private final RoleGateway roleGateway;
-
-	private final RoleConvertor roleConvertor;
 
 	/**
 	 * 执行查询角色列表.

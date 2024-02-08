@@ -50,7 +50,7 @@ public class RolesController {
 	@Operation(summary = "角色管理", description = "查询角色列表")
 	@PreAuthorize("hasAuthority('roles:list')")
 	public Result<Datas<RoleCO>> findList(@RequestBody RoleListQry qry) {
-		return rolesServiceI.list(qry);
+		return rolesServiceI.findList(qry);
 	}
 
 	@TraceLog

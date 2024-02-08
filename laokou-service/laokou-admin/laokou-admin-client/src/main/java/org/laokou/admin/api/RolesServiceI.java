@@ -37,7 +37,7 @@ public interface RolesServiceI {
 	 * @param qry 查询角色列表
 	 * @return 角色列表
 	 */
-	Result<Datas<RoleCO>> list(RoleListQry qry);
+	Result<Datas<RoleCO>> findList(RoleListQry qry);
 
 	/**
 	 * 查询角色下拉框选择项列表.

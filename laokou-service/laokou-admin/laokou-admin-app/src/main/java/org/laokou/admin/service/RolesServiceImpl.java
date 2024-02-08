@@ -61,7 +61,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	 * @return 查询角色列表
 	 */
 	@Override
-	public Result<Datas<RoleCO>> list(RoleListQry qry) {
+	public Result<Datas<RoleCO>> findList(RoleListQry qry) {
 		return roleListQryExe.execute(qry);
 	}
 
