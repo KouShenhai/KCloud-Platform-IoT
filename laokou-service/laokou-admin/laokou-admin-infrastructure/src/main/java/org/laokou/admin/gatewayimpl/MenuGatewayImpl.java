@@ -56,7 +56,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	@Override
 	public void modify(Menu menu) {
 		// 检查ID
-		menu.checkNullID();
+		menu.checkNullId();
 		// 检查菜单名称
 		long count = menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()).ne(MenuDO::getId, menu.getId()));
 		menu.checkName(count);
@@ -91,26 +91,6 @@ public class MenuGatewayImpl implements MenuGateway {
 				throw new SystemException(LogUtil.result(e.getMessage()));
 			}
 		});
-	}
-
-	/**
-	 * 根据ID查看菜单.
-	 * @param id ID
-	 * @return 菜单
-	 */
-	@Override
-	public Menu getById(Long id) {
-		return menuConvertor.convertEntity(menuMapper.selectById(id));
-	}
-
-	/**
-	 * 根据角色ID查看菜单IDS.
-	 * @param roleId 角色ID
-	 * @return 菜单IDS
-	 */
-	@Override
-	public List<Long> getIdsByRoleId(Long roleId) {
-		return menuMapper.getMenuIdsByRoleId(roleId);
 	}
 
 	/**

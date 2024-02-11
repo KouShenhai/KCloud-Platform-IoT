@@ -46,7 +46,7 @@ public interface DeptMapper extends CrudMapper<Long,Integer,DeptDO> {
 	 * @param roleId 角色ID
 	 * @return 部门
 	 */
-	List<Long> getDeptIdsByRoleId(@Param("roleId") Long roleId);
+	List<Long> selectIdsByRoleId(@Param("roleId") Long roleId);
 
 	/**
 	 * 根据部门父节点ID查看部门.

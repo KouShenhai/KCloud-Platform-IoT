@@ -71,7 +71,7 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	@Schema(name = "events", description = "事件集合")
 	private List<DomainEvent<ID>> events;
 
-	public void checkNullID() {
+	public void checkNullId() {
 		if (ObjectUtil.isNull(this.id)) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}

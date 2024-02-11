@@ -78,7 +78,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	 */
 	@Override
 	public void modify(Dept dept) {
-		dept.checkNullID();
+		dept.checkNullId();
 		long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, dept.getName()).ne(DeptDO::getId, dept.getId()));
 		dept.checkName(count);
 		dept.checkIdAndPid();
@@ -90,16 +90,6 @@ public class DeptGatewayImpl implements DeptGateway {
 		// 获取所有子节点
 		List<DeptDO> children = deptMapper.selectListByPath(oldPath);
 		modify(deptDO, oldPath, deptDO.getPath(), children);
-	}
-
-	/**
-	 * 根据角色ID查看部门IDS.
-	 * @param roleId 角色IDS
-	 * @return 部门IDS
-	 */
-	@Override
-	public List<Long> getDeptIds(Long roleId) {
-		return deptMapper.getDeptIdsByRoleId(roleId);
 	}
 
 	/**
@@ -118,16 +108,6 @@ public class DeptGatewayImpl implements DeptGateway {
 				throw new SystemException(e.getMessage());
 			}
 		});
-	}
-
-	/**
-	 * 根据ID查看部门.
-	 * @param id ID
-	 * @return 部门
-	 */
-	@Override
-	public Dept getById(Long id) {
-		return deptConvertor.convertEntity(deptMapper.selectById(id));
 	}
 
 	/**

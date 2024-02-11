@@ -47,7 +47,7 @@
         GROUP BY <include refid="columns"/>
         ORDER BY a.sort desc
     </select>
-    <select id="getMenuIdsByRoleId" resultType="java.lang.Long">
+    <select id="selectIdsByRoleId" resultType="java.lang.Long">
         SELECT a.id
         FROM boot_sys_menu a
            ,boot_sys_role b

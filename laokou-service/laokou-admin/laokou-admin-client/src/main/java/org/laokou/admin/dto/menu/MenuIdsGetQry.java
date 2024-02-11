@@ -29,8 +29,8 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "MenuIDSGetQry", description = "查看菜单IDS命令请求")
-public class MenuIDSGetQry extends CommonCommand {
+@Schema(name = "MenuIdsGetQry", description = "查看菜单IDS命令请求")
+public class MenuIdsGetQry extends CommonCommand {
 
 	@Schema(name = "roleId", description = "角色ID")
 	private Long roleId;

@@ -47,20 +47,6 @@ public interface MenuGateway {
 	void remove(Long[] ids);
 
 	/**
-	 * 根据ID查看菜单.
-	 * @param id ID
-	 * @return 菜单
-	 */
-	Menu getById(Long id);
-
-	/**
-	 * 根据角色ID查询菜单IDS.
-	 * @param roleId 角色ID
-	 * @return 菜单IDS
-	 */
-	List<Long> getIdsByRoleId(Long roleId);
-
-	/**
 	 * 查询租户菜单列表.
 	 * @return 租户菜单列表
 	 */

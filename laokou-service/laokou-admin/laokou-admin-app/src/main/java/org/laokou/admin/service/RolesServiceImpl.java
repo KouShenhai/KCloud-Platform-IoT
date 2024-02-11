@@ -81,38 +81,35 @@ public class RolesServiceImpl implements RolesServiceI {
 	 * @return 角色
 	 */
 	@Override
-	public Result<RoleCO> getById(RoleGetQry qry) {
+	public Result<RoleCO> findById(RoleGetQry qry) {
 		return roleGetQryExe.execute(qry);
 	}
 
 	/**
 	 * 新增角色.
 	 * @param cmd 新增角色参数
-	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(RoleCreateCmd cmd) {
-		return roleCreateCmdExe.execute(cmd);
+	public void create(RoleCreateCmd cmd) {
+		//return roleCreateCmdExe.execute(cmd);
 	}
 
 	/**
 	 * 修改角色.
 	 * @param cmd 修改角色参数
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(RoleModifyCmd cmd) {
-		return roleModifyCmdExe.execute(cmd);
+	public void modify(RoleModifyCmd cmd) {
+		roleModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 根据ID删除角色.
 	 * @param cmd 根据ID删除角色参数
-	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(RoleRemoveCmd cmd) {
-		return roleRemoveCmdExe.execute(cmd);
+	public void remove(RoleRemoveCmd cmd) {
+		//roleRemoveCmdExe.execute(cmd);
 	}
 
 }

@@ -17,15 +17,12 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.RoleConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.domain.role.Role;
-import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.RoleDeptMapper;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.RoleMenuMapper;
@@ -36,16 +33,13 @@ import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_ROLE;
 
 /**
  * 角色管理.
@@ -72,27 +66,26 @@ public class RoleGatewayImpl implements RoleGateway {
 	/**
 	 * 新增角色.
 	 * @param role 角色对象
-	 * @param user 用户对象
-	 * @return 新增结果
 	 */
 	@Override
-	public Boolean insert(Role role, User user) {
+	public void create(Role role) {
+		long count = roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()));
+		role.checkName(count);
 		RoleDO roleDO = roleConvertor.toDataObject(role);
-		return insertRole(roleDO, role, user);
+		create(roleDO, role);
 	}
 
 	/**
 	 * 修改角色.
 	 * @param role 角色对象
-	 * @param user 用户对象
-	 * @return 修改结果
 	 */
 	@Override
-	public Boolean update(Role role, User user) {
-		Long id = role.getId();
+	public void modify(Role role) {
+		role.checkNullId();
+		long count = roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()).ne(RoleDO::getId, role.getId()));
+		role.checkName(count);
 		RoleDO roleDO = roleConvertor.toDataObject(role);
-		//roleDO.setVersion(roleMapper.getVersion(id, RoleDO.class));
-		return updateRole(roleDO, role, user);
+		modify(roleDO, role);
 	}
 
 	/**
@@ -125,41 +118,21 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	/**
-	 * 查询角色列表.
-	 * @param role 角色对象
-	 * @param pageQuery 分页参数
-	 * @return 角色列表
-	 */
-	@Override
-	@DataFilter(tableAlias = BOOT_SYS_ROLE)
-	public Datas<Role> list(Role role, PageQuery pageQuery) {
-		IPage<RoleDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<RoleDO> newPage = roleMapper.getRoleListFilter(page, role.getName(), pageQuery);
-		Datas<Role> datas = new Datas<>();
-		datas.setRecords(roleConvertor.convertEntityList(newPage.getRecords()));
-		datas.setTotal(newPage.getTotal());
-		return datas;
-	}
-
-	/**
 	 * 新增角色.
 	 * @param roleDO 角色数据模型
 	 * @param role 角色对象
-	 * @param user 用户对象
-	 * @return 新增结果
 	 */
-	private Boolean insertRole(RoleDO roleDO, Role role, User user) {
-		return transactionalUtil.defaultExecute(r -> {
+	private void create(RoleDO roleDO, Role role) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				//roleMapper.insertTable(roleDO);
-				insertRoleMenu(roleDO.getId(), role.getMenuIds(), user);
-				insertRoleDept(roleDO.getId(), role.getDeptIds(), user);
-				return true;
+				roleMapper.insert(roleDO);
+				createRoleDept(roleDO, role.getDeptIds());
+				createRoleMenu(roleDO, role.getMenuIds());
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(LogUtil.result(e.getMessage()));
 			}
 		});
 
@@ -169,16 +142,13 @@ public class RoleGatewayImpl implements RoleGateway {
 	 * 修改角色.
 	 * @param roleDO 角色数据模型
 	 * @param role 角色对象
-	 * @param user 用户对象
-	 * @return 修改结果
 	 */
-	private Boolean updateRole(RoleDO roleDO, Role role, User user) {
-		return transactionalUtil.defaultExecute(r -> {
+	private void modify(RoleDO roleDO, Role role) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				roleMapper.updateById(roleDO);
-				updateRoleDept(roleDO.getId(), role.getDeptIds(), user);
-				updateRoleMenu(roleDO.getId(), role.getMenuIds(), user);
-				return true;
+				modifyRoleDept(roleDO, role.getDeptIds());
+				modifyRoleMenu(roleDO, role.getMenuIds());
 			}
 			catch (Exception e) {
 				log.error("错误信息", e);
@@ -189,90 +159,84 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	/**
-	 * 修改角色菜单.
-	 * @param roleId 角色ID
-	 * @param menuIds 菜单IDS
-	 * @param user 用户对象
-	 */
-	private void updateRoleMenu(Long roleId, List<Long> menuIds, User user) {
-		roleMenuMapper.deleteRoleMenuByRoleId(roleId);
-		insertRoleMenu(roleId, menuIds, user);
-	}
-
-	/**
-	 * 修改角色部门.
-	 * @param roleId 角色ID
+	 * 新增角色部门.
+	 * @param roleDO 角色对象
 	 * @param deptIds 部门IDS
-	 * @param user 用户对象
 	 */
-	private void updateRoleDept(Long roleId, List<Long> deptIds, User user) {
-		roleDeptMapper.deleteRoleDeptByRoleId(roleId);
-		insertRoleDept(roleId, deptIds, user);
+	private void createRoleDept(RoleDO roleDO, List<Long> deptIds) {
+		List<RoleDeptDO> list = deptIds.parallelStream().map(deptId -> to(roleDO.getId(), deptId)).toList();
+		mybatisUtil.batch(list, RoleDeptMapper.class, UserContextHolder.get().getSourceName(), RoleDeptMapper::insertOne);
 	}
 
 	/**
 	 * 新增角色菜单.
-	 * @param roleId 角色ID
+	 * @param roleDO 角色对象
 	 * @param menuIds 菜单IDS
-	 * @param user 用户对象
 	 */
-	private void insertRoleMenu(Long roleId, List<Long> menuIds, User user) {
+	private void createRoleMenu(RoleDO roleDO, List<Long> menuIds) {
+		List<RoleMenuDO> list = menuIds.parallelStream().map(menuId -> convert(roleDO.getId(), menuId)).toList();
+		mybatisUtil.batch(list, RoleMenuMapper.class, UserContextHolder.get().getSourceName(), RoleMenuMapper::insertOne);
+	}
+
+	private void modifyRoleMenu(RoleDO roleDO, List<Long> menuIds) {
 		if (CollectionUtil.isNotEmpty(menuIds)) {
-			List<RoleMenuDO> list = menuIds.parallelStream().map(menuId -> toRoleMenuDO(roleId, menuId, user)).toList();
-			mybatisUtil.batch(list, RoleMenuMapper.class, UserContextHolder.get().getSourceName(),
-					RoleMenuMapper::save);
+			// 删除
+			removeRoleMenu(roleDO);
+			// 新增
+			createRoleMenu(roleDO, menuIds);
 		}
 	}
 
-	/**
-	 * 新增角色部门.
-	 * @param roleId 角色ID
-	 * @param deptIds 部门IDS
-	 * @param user 用户对象
-	 */
-	private void insertRoleDept(Long roleId, List<Long> deptIds, User user) {
+	private void modifyRoleDept(RoleDO roleDO, List<Long> deptIds) {
 		if (CollectionUtil.isNotEmpty(deptIds)) {
-			List<RoleDeptDO> list = deptIds.parallelStream().map(deptId -> toRoleDeptDO(roleId, deptId, user)).toList();
-			mybatisUtil.batch(list, RoleDeptMapper.class, UserContextHolder.get().getSourceName(),
-					RoleDeptMapper::save);
+			// 删除
+			removeRoleDept(roleDO);
+			// 新增
+			createRoleDept(roleDO, deptIds);
 		}
 	}
 
-	/**
-	 * 转换为角色菜单数据模型.
-	 * @param roleId 角色ID
-	 * @param menuId 菜单ID
-	 * @param user 用户对象
-	 * @return 角色菜单数据模型
-	 */
-	private RoleMenuDO toRoleMenuDO(Long roleId, Long menuId, User user) {
-		RoleMenuDO roleMenuDO = new RoleMenuDO();
-		roleMenuDO.setRoleId(roleId);
-		roleMenuDO.setMenuId(menuId);
-		roleMenuDO.setId(IdGenerator.defaultSnowflakeId());
-		roleMenuDO.setDeptId(user.getDeptId());
-		roleMenuDO.setTenantId(user.getTenantId());
-		roleMenuDO.setCreator(user.getId());
-		roleMenuDO.setDeptPath(user.getDeptPath());
-		return roleMenuDO;
+	private void removeRoleMenu(RoleDO roleDO) {
+		roleMenuMapper.deleteByRoleId(roleDO.getId());
+	}
+
+	private void removeRoleDept(RoleDO roleDO) {
+		roleDeptMapper.deleteByRoleId(roleDO.getId());
 	}
 
 	/**
 	 * 转换为角色部门数据模型.
 	 * @param roleId 角色ID
 	 * @param deptId 部门ID
-	 * @param user 用户对象
 	 * @return 角色部门数据模型
 	 */
-	private RoleDeptDO toRoleDeptDO(Long roleId, Long deptId, User user) {
+	private RoleDeptDO to(Long roleId, Long deptId) {
 		RoleDeptDO roleDeptDO = new RoleDeptDO();
 		roleDeptDO.setRoleId(roleId);
 		roleDeptDO.setDeptId(deptId);
 		roleDeptDO.setId(IdGenerator.defaultSnowflakeId());
-		roleDeptDO.setTenantId(user.getTenantId());
-		roleDeptDO.setCreator(user.getId());
-		roleDeptDO.setDeptPath(user.getDeptPath());
+		roleDeptDO.setTenantId(UserUtil.getTenantId());
+		roleDeptDO.setCreator(UserUtil.getUserId());
+		roleDeptDO.setDeptPath(UserUtil.getDeptPath());
 		return roleDeptDO;
+	}
+
+	/**
+	 * 转换为角色菜单数据模型.
+	 * @param roleId 角色ID
+	 * @param menuId 菜单ID
+	 * @return 角色菜单数据模型
+	 */
+	private RoleMenuDO convert(Long roleId, Long menuId) {
+		RoleMenuDO roleMenuDO = new RoleMenuDO();
+		roleMenuDO.setRoleId(roleId);
+		roleMenuDO.setMenuId(menuId);
+		roleMenuDO.setId(IdGenerator.defaultSnowflakeId());
+		roleMenuDO.setDeptId(UserUtil.getDeptId());
+		roleMenuDO.setTenantId(UserUtil.getTenantId());
+		roleMenuDO.setCreator(UserUtil.getUserId());
+		roleMenuDO.setDeptPath(UserUtil.getDeptPath());
+		return roleMenuDO;
 	}
 
 }

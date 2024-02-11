@@ -49,7 +49,7 @@ public class MenusServiceImpl implements MenusServiceI {
 
 	private final MenuRemoveCmdExe menuRemoveCmdExe;
 
-	private final MenuIDSGetQryExe menuIDSGetQryExe;
+	private final MenuIdsGetQryExe menuIDSGetQryExe;
 
 	private final MenuTenantTreeGetQryExe menuTenantTreeGetQryExe;
 
@@ -106,7 +106,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	 * @return 菜单IDS
 	 */
 	@Override
-	public Result<List<Long>> ids(MenuIDSGetQry qry) {
+	public Result<List<Long>> findIds(MenuIdsGetQry qry) {
 		return menuIDSGetQryExe.execute(qry);
 	}
 

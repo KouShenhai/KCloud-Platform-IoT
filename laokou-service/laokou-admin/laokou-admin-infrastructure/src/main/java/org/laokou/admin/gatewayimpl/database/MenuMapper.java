@@ -48,7 +48,7 @@ public interface MenuMapper extends CrudMapper<Long, Integer, MenuDO> {
 	 * @param roleId 角色ID
 	 * @return 菜单IDS
 	 */
-	List<Long> getMenuIdsByRoleId(@Param("roleId") Long roleId);
+	List<Long> selectIdsByRoleId(@Param("roleId") Long roleId);
 
 	/**
 	 * 查询租户菜单列表.

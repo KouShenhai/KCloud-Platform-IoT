@@ -67,6 +67,6 @@ public interface DeptsServiceI {
 	 * @param qry 根据角色ID查看部门IDS参数
 	 * @return 部门IDS
 	 */
-	Result<List<Long>> ids(DeptIDSGetQry qry);
+	Result<List<Long>> findIds(DeptIdsGetQry qry);
 
 }

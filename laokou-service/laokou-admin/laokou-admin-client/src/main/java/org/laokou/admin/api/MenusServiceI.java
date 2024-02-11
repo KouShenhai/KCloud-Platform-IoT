@@ -67,7 +67,7 @@ public interface MenusServiceI {
 	 * @param qry 根据角色ID查看菜单IDS参数
 	 * @return 菜单IDS
 	 */
-	Result<List<Long>> ids(MenuIDSGetQry qry);
+	Result<List<Long>> findIds(MenuIdsGetQry qry);
 
 	/**
 	 * 查看租户菜单树.

@@ -19,8 +19,8 @@ package org.laokou.admin.command.dept.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.dept.DeptIDSGetQry;
-import org.laokou.admin.domain.gateway.DeptGateway;
+import org.laokou.admin.dto.dept.DeptIdsGetQry;
+import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +37,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 @RequiredArgsConstructor
 public class DeptIdsGetQryExe {
 
-	private final DeptGateway deptGateway;
+	private final DeptMapper deptMapper;
 
 	/**
 	 * 执行查看部门IDS.
@@ -45,8 +45,8 @@ public class DeptIdsGetQryExe {
 	 * @return 部门IDS
 	 */
 	@DS(TENANT)
-	public Result<List<Long>> execute(DeptIDSGetQry qry) {
-		return Result.of(deptGateway.getDeptIds(qry.getRoleId()));
+	public Result<List<Long>> execute(DeptIdsGetQry qry) {
+		return Result.of(deptMapper.selectIdsByRoleId(qry.getRoleId()));
 	}
 
 }

@@ -18,24 +18,13 @@
 package org.laokou.admin.command.role;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.domain.gateway.RoleGateway;
-import org.laokou.admin.domain.user.User;
+import org.laokou.admin.domain.role.Role;
 import org.laokou.admin.dto.role.RoleModifyCmd;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
-import org.laokou.admin.gatewayimpl.database.RoleMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ValidatorUtil;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.ValCodes.SYSTEM_ID_REQUIRE;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
@@ -49,37 +38,23 @@ public class RoleModifyCmdExe {
 
 	private final RoleGateway roleGateway;
 
-	private final RoleMapper roleMapper;
-
-	private final RoleConvertor roleConvertor;
-
 	/**
 	 * 执行修改角色.
 	 * @param cmd 修改角色参数
-	 * @return 执行修改结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(RoleModifyCmd cmd) {
-		RoleCO co = cmd.getRoleCO();
-		Long id = co.getId();
-		if (ObjectUtil.isNull(id)) {
-			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
-		}
-		Long count = roleMapper
-			.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, co.getName()).ne(RoleDO::getId, id));
-		if (count > 0) {
-			throw new SystemException("角色已存在，请重新填写");
-		}
-		return null;
-		// return Result.of(roleGateway.update(roleConvertor.toEntity(co), toUser()));
+	public void executeVoid(RoleModifyCmd cmd) {
+		roleGateway.modify(convert(cmd.getRoleCO()));
 	}
 
-	/**
-	 * 转换为用户领域.
-	 * @return 用户领域
-	 */
-	private User toUser() {
-		return ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
+	private Role convert(RoleCO roleCO) {
+		return Role.builder()
+				.id(roleCO.getId())
+				.name(roleCO.getName())
+				.sort(roleCO.getSort())
+				.menuIds(roleCO.getMenuIds())
+				.deptIds(roleCO.getDeptIds())
+				.build();
 	}
 
 }

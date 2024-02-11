@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
@@ -40,13 +39,13 @@ public interface RoleMapper extends CrudMapper<Long,Integer,RoleDO> {
 
 	/**
 	 * 查询角色列表.
-	 * @param page 分页参数
-	 * @param name 角色名称
+	 * @param role 角色对象
 	 * @param pageQuery 分页参数
 	 * @return 角色列表
 	 */
-	IPage<RoleDO> getRoleListFilter(IPage<RoleDO> page, @Param("name") String name,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+	List<RoleDO> selectListByCondition(@Param("role")RoleDO role, @Param(PAGE_QUERY)PageQuery pageQuery);
+
+	long selectCountByCondition(@Param("role") RoleDO role, @Param(PAGE_QUERY)PageQuery pageQuery);
 
 	/**
 	 * 查看角色IDS.

@@ -51,7 +51,7 @@ public class Captcha {
 		}
 	}
 
-	public void checkNullUUID() {
+	public void checkNullUuid() {
 		if (StringUtil.isEmpty(this.uuid)) {
 			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
 		}

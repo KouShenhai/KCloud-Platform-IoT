@@ -20,8 +20,6 @@ package org.laokou.admin.domain.gateway;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.admin.domain.dept.Dept;
 
-import java.util.List;
-
 /**
  * @author laokou
  */
@@ -41,23 +39,9 @@ public interface DeptGateway {
 	void modify(Dept dept);
 
 	/**
-	 * 根据角色IDS查询部门IDS.
-	 * @param roleId 角色IDS
-	 * @return 部门IDS
-	 */
-	List<Long> getDeptIds(Long roleId);
-
-	/**
 	 * 根据ID删除部门.
 	 * @param ids IDS
 	 */
 	void remove(Long[] ids);
-
-	/**
-	 * 根据ID查看部门.
-	 * @param id ID
-	 * @return 部门
-	 */
-	Dept getById(Long id);
 
 }

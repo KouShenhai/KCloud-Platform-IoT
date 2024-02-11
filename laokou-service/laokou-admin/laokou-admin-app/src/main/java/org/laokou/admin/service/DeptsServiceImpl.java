@@ -106,7 +106,7 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	 * @return 部门IDS
 	 */
 	@Override
-	public Result<List<Long>> ids(DeptIDSGetQry qry) {
+	public Result<List<Long>> findIds(DeptIdsGetQry qry) {
 		return deptIDSGetQryExe.execute(qry);
 	}
 

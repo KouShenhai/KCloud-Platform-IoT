@@ -64,7 +64,7 @@ public class RolesController {
 	@GetMapping("{id}")
 	@Operation(summary = "角色管理", description = "查看角色")
 	public Result<RoleCO> findById(@PathVariable("id") Long id) {
-		return rolesServiceI.getById(new RoleGetQry(id));
+		return rolesServiceI.findById(new RoleGetQry(id));
 	}
 
 	@Idempotent
@@ -73,8 +73,8 @@ public class RolesController {
 	@Operation(summary = "角色管理", description = "新增角色")
 	@OperateLog(module = "角色管理", operation = "新增角色")
 	@PreAuthorize("hasAuthority('roles:create')")
-	public Result<Boolean> create(@RequestBody RoleCreateCmd cmd) {
-		return rolesServiceI.insert(cmd);
+	public void create(@RequestBody RoleCreateCmd cmd) {
+		//return rolesServiceI.insert(cmd);
 	}
 
 	@TraceLog
@@ -82,17 +82,17 @@ public class RolesController {
 	@Operation(summary = "角色管理", description = "修改角色")
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@PreAuthorize("hasAuthority('roles:modify')")
-	public Result<Boolean> modify(@RequestBody RoleModifyCmd cmd) {
-		return rolesServiceI.update(cmd);
+	public void modify(@RequestBody RoleModifyCmd cmd) {
+		rolesServiceI.modify(cmd);
 	}
 
 	@TraceLog
-	@DeleteMapping("{id}")
+	@DeleteMapping
 	@Operation(summary = "角色管理", description = "删除角色")
 	@OperateLog(module = "角色管理", operation = "删除角色")
 	@PreAuthorize("hasAuthority('roles:remove')")
-	public Result<Boolean> remove(@PathVariable("id") Long id) {
-		return rolesServiceI.deleteById(new RoleRemoveCmd(id));
+	public void remove(@RequestBody Long[] ids) {
+		//rolesServiceI.deleteById(new RoleRemoveCmd(ids));
 	}
 
 }

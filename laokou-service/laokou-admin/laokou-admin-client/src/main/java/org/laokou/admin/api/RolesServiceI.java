@@ -51,27 +51,24 @@ public interface RolesServiceI {
 	 * @param qry 根据ID查看角色
 	 * @return 角色
 	 */
-	Result<RoleCO> getById(RoleGetQry qry);
+	Result<RoleCO> findById(RoleGetQry qry);
 
 	/**
 	 * 新增角色.
 	 * @param cmd 新增角色参数
-	 * @return 新增结果
 	 */
-	Result<Boolean> insert(RoleCreateCmd cmd);
+	void create(RoleCreateCmd cmd);
 
 	/**
 	 * 修改角色.
 	 * @param cmd 修改角色参数
-	 * @return 修改结果
 	 */
-	Result<Boolean> update(RoleModifyCmd cmd);
+	void modify(RoleModifyCmd cmd);
 
 	/**
 	 * 根据ID删除角色.
 	 * @param cmd 根据ID删除角色参数
-	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(RoleRemoveCmd cmd);
+	void remove(RoleRemoveCmd cmd);
 
 }

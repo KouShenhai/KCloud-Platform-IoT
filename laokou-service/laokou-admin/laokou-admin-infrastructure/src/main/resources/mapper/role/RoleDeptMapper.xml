@@ -19,11 +19,32 @@
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.RoleDeptMapper">
-    <insert id="save" useGeneratedKeys="false">
-        insert into boot_sys_role_dept(id,role_id,dept_id,dept_path,tenant_id,creator,del_flag,version)
-        values (#{id}, #{roleId}, #{deptId},#{deptPath},#{tenantId},#{creator},'0','0')
+    <sql id="columns">
+        `id`,
+        creator,
+        editor,
+        create_date,
+        update_date,
+        dept_id,
+        dept_path,
+        tenant_id,
+        role_id
+    </sql>
+    <insert id="insertOne" useGeneratedKeys="false">
+        insert into boot_sys_role_dept(<include refid="columns"/>)
+        values (
+        #{id},
+        #{creator},
+        #{editor},
+        #{createDate},
+        #{updateDate},
+        #{deptId},
+        #{deptPath},
+        #{tenantId},
+        #{roleId}
+        )
     </insert>
-    <delete id="deleteRoleDeptByRoleId">
+    <delete id="deleteByRoleId">
         delete from boot_sys_role_dept
         where role_id = #{roleId}
     </delete>

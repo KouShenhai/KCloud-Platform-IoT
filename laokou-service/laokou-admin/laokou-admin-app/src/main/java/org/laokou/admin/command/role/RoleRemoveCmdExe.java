@@ -46,7 +46,8 @@ public class RoleRemoveCmdExe {
 	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(RoleRemoveCmd cmd) {
-		return Result.of(roleGateway.deleteById(cmd.getId()));
+		//return Result.of(roleGateway.deleteById(cmd.getId()));
+		return null;
 	}
 
 }

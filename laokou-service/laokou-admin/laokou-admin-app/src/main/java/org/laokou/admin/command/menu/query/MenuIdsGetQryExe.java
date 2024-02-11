@@ -19,8 +19,8 @@ package org.laokou.admin.command.menu.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.menu.MenuIDSGetQry;
-import org.laokou.admin.domain.gateway.MenuGateway;
+import org.laokou.admin.dto.menu.MenuIdsGetQry;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -35,9 +35,9 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
  */
 @Component
 @RequiredArgsConstructor
-public class MenuIDSGetQryExe {
+public class MenuIdsGetQryExe {
 
-	private final MenuGateway menuGateway;
+	private final MenuMapper menuMapper;
 
 	/**
 	 * 执行查看菜单IDS.
@@ -45,8 +45,8 @@ public class MenuIDSGetQryExe {
 	 * @return 菜单IDS
 	 */
 	@DS(TENANT)
-	public Result<List<Long>> execute(MenuIDSGetQry qry) {
-		return Result.of(menuGateway.getIdsByRoleId(qry.getRoleId()));
+	public Result<List<Long>> execute(MenuIdsGetQry qry) {
+		return Result.of(menuMapper.selectIdsByRoleId(qry.getRoleId()));
 	}
 
 }
