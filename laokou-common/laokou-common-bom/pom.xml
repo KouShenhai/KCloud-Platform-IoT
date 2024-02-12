@@ -53,7 +53,7 @@
         <!--guava版本-->
         <guava.version>33.0.0-jre</guava.version>
         <!--oshi版本-->
-        <oshi.version>6.4.11</oshi.version>
+        <oshi.version>6.4.12</oshi.version>
         <!--elasticsearch版本-->
         <elasticsearch.version>8.6.2</elasticsearch.version>
         <!--rocketmq版本-->
@@ -111,7 +111,7 @@
         <!--mockito版本-->
         <mockito.version>5.10.0</mockito.version>
         <!--flyway版本-->
-        <flyway.version>10.7.1</flyway.version>
+        <flyway.version>10.7.2</flyway.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
