@@ -45,9 +45,8 @@ import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
+
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.SysConstants.LINE_PATTERN;
 import static org.laokou.common.i18n.common.SysConstants.TLS_PROTOCOL_VERSION;
 
 /**
@@ -259,21 +258,6 @@ public class HttpUtil {
 			// log.info("打印：{}", resultString);
 			return resultString;
 		}
-	}
-
-	/**
-	 * 转换为驼峰json字符串.
-	 * @param data 数据
-	 * @return 驼峰json字符串
-	 */
-	public static String transformerUnderHumpData(String data) {
-		Matcher matcher = LINE_PATTERN.matcher(data.toLowerCase());
-		StringBuilder sb = new StringBuilder();
-		while (matcher.find()) {
-			matcher.appendReplacement(sb, matcher.group(1).toUpperCase());
-		}
-		matcher.appendTail(sb);
-		return sb.toString();
 	}
 
 	/**
