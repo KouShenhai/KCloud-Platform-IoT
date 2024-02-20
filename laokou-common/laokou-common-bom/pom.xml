@@ -33,7 +33,7 @@
         <!--mysql版本-->
         <mysql.version>8.0.33</mysql.version>
         <!--admin版本-->
-        <spring-boot-admin.version>3.2.1</spring-boot-admin.version>
+        <spring-boot-admin.version>3.2.2</spring-boot-admin.version>
         <!--flowable版本-->
         <flowable.version>7.0.1</flowable.version>
         <!--mybatis-plus版本 -->
@@ -41,7 +41,7 @@
         <!--mybatis-spring版本-->
         <mybatis-spring.version>3.0.3</mybatis-spring.version>
         <!--redisson版本-->
-        <redisson.version>3.26.0</redisson.version>
+        <redisson.version>3.26.1</redisson.version>
         <!--UserAgentUtils版本-->
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
         <!--jsoup版本-->
@@ -87,7 +87,7 @@
         <!--spring-kafka版本-->
         <spring-kafka.version>3.1.1</spring-kafka.version>
         <!--netty版本-->
-        <netty.version>4.1.106.Final</netty.version>
+        <netty.version>4.1.107.Final</netty.version>
         <!--gson版本-->
         <gson.version>2.10.1</gson.version>
         <!--swagger-annotations-jakarta版本-->
@@ -111,7 +111,7 @@
         <!--mockito版本-->
         <mockito.version>5.10.0</mockito.version>
         <!--flyway版本-->
-        <flyway.version>10.7.2</flyway.version>
+        <flyway.version>10.8.1</flyway.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
