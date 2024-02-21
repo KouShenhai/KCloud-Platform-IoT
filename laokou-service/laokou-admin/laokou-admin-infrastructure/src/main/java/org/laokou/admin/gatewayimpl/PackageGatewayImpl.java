@@ -17,12 +17,9 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.PackageConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.PackageGateway;
 import org.laokou.admin.domain.packages.Package;
 import org.laokou.admin.domain.user.User;
@@ -33,16 +30,12 @@ import org.laokou.admin.gatewayimpl.database.dataobject.PackageMenuDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_PACKAGE;
 
 /**
  * 套餐管理.
@@ -84,25 +77,8 @@ public class PackageGatewayImpl implements PackageGateway {
 	@Override
 	public Boolean update(Package pack, User user) {
 		PackageDO packageDO = packageConvertor.toDataObject(pack);
-		packageDO.setVersion(packageMapper.getVersion(pack.getId(), PackageDO.class));
+		packageDO.setVersion(packageMapper.selectVersion(packageDO.getId()));
 		return updatePackage(packageDO, pack, user);
-	}
-
-	/**
-	 * 查询套餐列表.
-	 * @param pack 套餐对象
-	 * @param pageQuery 分页参数
-	 * @return 套餐列表
-	 */
-	@Override
-	@DataFilter(tableAlias = BOOT_SYS_PACKAGE)
-	public Datas<Package> list(Package pack, PageQuery pageQuery) {
-		IPage<PackageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<PackageDO> newPage = packageMapper.getPackageListFilter(page, pack.getName(), pageQuery);
-		Datas<Package> datas = new Datas<>();
-		datas.setTotal(newPage.getTotal());
-		datas.setRecords(packageConvertor.convertEntityList(newPage.getRecords()));
-		return datas;
 	}
 
 	/**
@@ -146,7 +122,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	private Boolean insertPackage(PackageDO packageDO, Package pack, User user) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
-				packageMapper.insertTable(packageDO);
+				//packageMapper.insertTable(packageDO);
 				insertPackageMenu(packageDO.getId(), pack.getMenuIds(), user);
 				return true;
 			}

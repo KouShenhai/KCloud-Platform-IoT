@@ -54,7 +54,7 @@ public class PackagesController {
 	@Operation(summary = "套餐管理", description = "查询套餐列表")
 	@PreAuthorize("hasAuthority('packages:list')")
 	public Result<Datas<PackageCO>> findList(@RequestBody PackageListQry qry) {
-		return packagesServiceI.list(qry);
+		return packagesServiceI.findList(qry);
 	}
 
 	@Idempotent

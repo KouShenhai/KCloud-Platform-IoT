@@ -15,44 +15,38 @@
  *
  */
 
-package org.laokou.admin.command.packages.query;
+package org.laokou.admin.command.pack.query;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.PackageConvertor;
 import org.laokou.admin.domain.gateway.PackageGateway;
-import org.laokou.admin.domain.packages.Package;
-import org.laokou.admin.dto.packages.PackageListQry;
+import org.laokou.admin.dto.packages.PackageGetQry;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
- * 查询套餐列表执行器.
+ * 查看套餐执行器.
  *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class PackageListQryExe {
+public class PackageGetQryExe {
 
 	private final PackageGateway packageGateway;
 
 	private final PackageConvertor packageConvertor;
 
 	/**
-	 * 执行查询套餐列表.
-	 * @param qry 查询套餐列表
-	 * @return 套餐列表
+	 * 执行查看套餐.
+	 * @param qry 查看套餐参数
+	 * @return 套餐
 	 */
-	public Result<Datas<PackageCO>> execute(PackageListQry qry) {
-		Package pack = ConvertUtil.sourceToTarget(qry, Package.class);
-		Datas<Package> newPage = packageGateway.list(pack, qry);
-		Datas<PackageCO> datas = new Datas<>();
-		datas.setTotal(newPage.getTotal());
-		// datas.setRecords(packageConvertor.convertClientObjectList(newPage.getRecords()));
-		return Result.of(datas);
+	public Result<PackageCO> execute(PackageGetQry qry) {
+		return null;
+		// return
+		// Result.of(packageConvertor.convertClientObject(packageGateway.getById(qry.getId())));
 	}
 
 }

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.command.packages;
+package org.laokou.admin.command.pack;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.PackageGateway;

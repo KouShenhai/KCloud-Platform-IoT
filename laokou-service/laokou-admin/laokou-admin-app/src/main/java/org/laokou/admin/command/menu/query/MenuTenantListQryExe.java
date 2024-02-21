@@ -19,12 +19,17 @@ package org.laokou.admin.command.menu.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.MenuConvertor;
-import org.laokou.admin.domain.gateway.MenuGateway;
-import org.laokou.admin.dto.menu.MenuTenantTreeGetQry;
+import org.laokou.admin.dto.menu.MenuTenantListQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.common.core.utils.TreeUtil;
+import org.laokou.common.i18n.common.FindTypeEnums;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
@@ -35,11 +40,9 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
  */
 @Component
 @RequiredArgsConstructor
-public class MenuTenantTreeGetQryExe {
+public class MenuTenantListQryExe {
 
-	private final MenuGateway menuGateway;
-
-	private final MenuConvertor menuConvertor;
+	private final MenuMapper menuMapper;
 
 	/**
 	 * 执行查看租户树菜单.
@@ -47,11 +50,30 @@ public class MenuTenantTreeGetQryExe {
 	 * @return 租户树菜单
 	 */
 	@DS(TENANT)
-	public Result<MenuCO> execute(MenuTenantTreeGetQry qry) {
-		//List<Menu> list = menuGateway.getTenantMenuList();
-		return null;
-		// List<MenuCO> menuList = menuConvertor.convertClientObjectList(list);
-		// return Result.of(TreeUtil.buildTreeNode(menuList, MenuCO.class));
+	public Result<List<MenuCO>> execute(MenuTenantListQry qry) {
+		return switch (FindTypeEnums.valueOf(qry.getType())) {
+			case LIST, USER_TREE_LIST -> null;
+			case TREE_LIST -> Result.of(buildTreeNode(menuMapper.selectTenantMenuList().stream().map(this::convert).toList()).getChildren());
+        };
+	}
+
+	private MenuCO convert(MenuDO menuDO) {
+		return MenuCO.builder()
+				.url(menuDO.getUrl())
+				.icon(menuDO.getIcon())
+				.name(menuDO.getName())
+				.pid(menuDO.getPid())
+				.sort(menuDO.getSort())
+				.type(menuDO.getType())
+				.id(menuDO.getId())
+				.permission(menuDO.getPermission())
+				.visible(menuDO.getVisible())
+				.children(new ArrayList<>(16))
+				.build();
+	}
+
+	private MenuCO buildTreeNode(List<MenuCO> list) {
+		return TreeUtil.buildTreeNode(list, MenuCO.class);
 	}
 
 }

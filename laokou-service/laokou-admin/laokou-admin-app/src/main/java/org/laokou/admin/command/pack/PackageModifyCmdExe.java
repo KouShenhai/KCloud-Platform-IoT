@@ -15,38 +15,41 @@
  *
  */
 
-package org.laokou.admin.command.packages.query;
+package org.laokou.admin.command.pack;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.PackageConvertor;
 import org.laokou.admin.domain.gateway.PackageGateway;
-import org.laokou.admin.dto.packages.PackageGetQry;
-import org.laokou.admin.dto.packages.clientobject.PackageCO;
+import org.laokou.admin.domain.packages.Package;
+import org.laokou.admin.domain.user.User;
+import org.laokou.admin.dto.packages.PackageModifyCmd;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**
- * 查看套餐执行器.
+ * 修改套餐执行器.
  *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class PackageGetQryExe {
+public class PackageModifyCmdExe {
 
 	private final PackageGateway packageGateway;
 
-	private final PackageConvertor packageConvertor;
-
 	/**
-	 * 执行查看套餐.
-	 * @param qry 查看套餐参数
-	 * @return 套餐
+	 * 执行修改套餐.
+	 * @param cmd 修改套餐参数
+	 * @return 执行修改结果
 	 */
-	public Result<PackageCO> execute(PackageGetQry qry) {
-		return null;
-		// return
-		// Result.of(packageConvertor.convertClientObject(packageGateway.getById(qry.getId())));
+	public Result<Boolean> execute(PackageModifyCmd cmd) {
+		Package pack = ConvertUtil.sourceToTarget(cmd.getPackageCO(), Package.class);
+		return Result.of(packageGateway.update(pack, toUser()));
+	}
+
+	private User toUser() {
+		return ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
 	}
 
 }

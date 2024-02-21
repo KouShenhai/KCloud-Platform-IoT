@@ -58,7 +58,7 @@
             and a.del_flag = 0
         group by a.id
     </select>
-    <select id="getTenantMenuList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
+    <select id="selectTenantMenuList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
         select id
              ,pid
              ,`name`

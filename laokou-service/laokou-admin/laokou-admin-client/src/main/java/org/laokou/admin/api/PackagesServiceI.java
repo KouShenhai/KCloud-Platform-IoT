@@ -58,7 +58,7 @@ public interface PackagesServiceI {
 	 * @param qry 查询套餐列表参数
 	 * @return 套餐列表
 	 */
-	Result<Datas<PackageCO>> list(PackageListQry qry);
+	Result<Datas<PackageCO>> findList(PackageListQry qry);
 
 	/**
 	 * 根据ID查看套餐.

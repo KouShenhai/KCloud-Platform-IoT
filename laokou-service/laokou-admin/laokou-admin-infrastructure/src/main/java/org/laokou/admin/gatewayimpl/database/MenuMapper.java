@@ -54,7 +54,7 @@ public interface MenuMapper extends CrudMapper<Long, Integer, MenuDO> {
 	 * 查询租户菜单列表.
 	 * @return 租户菜单列表
 	 */
-	List<MenuDO> getTenantMenuList();
+	List<MenuDO> selectTenantMenuList();
 
 	/**
 	 * 根据套餐ID查询租户菜单列表.

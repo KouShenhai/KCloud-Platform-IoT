@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.i18n.dto.AbstractDO;
+import org.laokou.common.i18n.dto.DTO;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serial;
@@ -36,7 +36,7 @@ import static org.laokou.common.i18n.utils.DateUtil.Constant.YYYY_ROD_MM_ROD_DD_
  */
 @Data
 @Schema(name = "BaseDO", description = "映射基类")
-public class BaseDO extends AbstractDO {
+public class BaseDO extends DTO {
 
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;

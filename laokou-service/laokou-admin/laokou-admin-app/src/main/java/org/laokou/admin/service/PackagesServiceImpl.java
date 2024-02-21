@@ -22,12 +22,12 @@ import org.laokou.admin.api.PackagesServiceI;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.packages.*;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
-import org.laokou.admin.command.packages.PackageRemoveCmdExe;
-import org.laokou.admin.command.packages.PackageCreateCmdExe;
-import org.laokou.admin.command.packages.PackageModifyCmdExe;
-import org.laokou.admin.command.packages.query.PackageGetQryExe;
-import org.laokou.admin.command.packages.query.PackageListQryExe;
-import org.laokou.admin.command.packages.query.PackageOptionListQryExe;
+import org.laokou.admin.command.pack.PackageRemoveCmdExe;
+import org.laokou.admin.command.pack.PackageCreateCmdExe;
+import org.laokou.admin.command.pack.PackageModifyCmdExe;
+import org.laokou.admin.command.pack.query.PackageGetQryExe;
+import org.laokou.admin.command.pack.query.PackageListQryExe;
+import org.laokou.admin.command.pack.query.PackageOptionListQryExe;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
@@ -91,7 +91,7 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	 * @return 套餐列表
 	 */
 	@Override
-	public Result<Datas<PackageCO>> list(PackageListQry qry) {
+	public Result<Datas<PackageCO>> findList(PackageListQry qry) {
 		return packageListQryExe.execute(qry);
 	}
 

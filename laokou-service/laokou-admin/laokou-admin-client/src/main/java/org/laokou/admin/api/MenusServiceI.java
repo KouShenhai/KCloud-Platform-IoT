@@ -74,6 +74,6 @@ public interface MenusServiceI {
 	 * @param qry 查看租户菜单树参数
 	 * @return 租户菜单树
 	 */
-	Result<MenuCO> tenantTree(MenuTenantTreeGetQry qry);
+	Result<List<MenuCO>> findTenantMenuList(MenuTenantListQry qry);
 
 }

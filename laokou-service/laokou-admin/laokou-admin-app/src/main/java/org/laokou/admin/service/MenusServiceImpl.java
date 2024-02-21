@@ -51,7 +51,7 @@ public class MenusServiceImpl implements MenusServiceI {
 
 	private final MenuIdsGetQryExe menuIDSGetQryExe;
 
-	private final MenuTenantTreeGetQryExe menuTenantTreeGetQryExe;
+	private final MenuTenantListQryExe menuTenantListQryExe;
 
 	/**
 	 * 查询菜单列表.
@@ -116,8 +116,8 @@ public class MenusServiceImpl implements MenusServiceI {
 	 * @return 租户菜单树
 	 */
 	@Override
-	public Result<MenuCO> tenantTree(MenuTenantTreeGetQry qry) {
-		return menuTenantTreeGetQryExe.execute(qry);
+	public Result<List<MenuCO>> findTenantMenuList(MenuTenantListQry qry) {
+		return menuTenantListQryExe.execute(qry);
 	}
 
 }

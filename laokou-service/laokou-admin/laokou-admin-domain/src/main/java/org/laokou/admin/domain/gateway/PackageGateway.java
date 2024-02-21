@@ -46,14 +46,6 @@ public interface PackageGateway {
 	Boolean update(Package pack, User user);
 
 	/**
-	 * 查询套餐列表.
-	 * @param pack 套餐对象
-	 * @param pageQuery 分页参数
-	 * @return 套餐列表
-	 */
-	Datas<Package> list(Package pack, PageQuery pageQuery);
-
-	/**
 	 * 根据ID查看套餐.
 	 * @param id ID
 	 * @return 套餐

@@ -24,14 +24,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author laokou
  */
 @Schema(name = "CrudMapper", description = "CRUD Mapper")
-public interface CrudMapper<ID, V, DO> extends BaseMapper<DO> {
+public interface CrudMapper<ID, VERSION, DO> extends BaseMapper<DO> {
 
 	/**
 	 * 查看版本号.
 	 * @param id ID
 	 * @return 版本号
 	 */
-	V selectVersion(ID id);
+	VERSION selectVersion(ID id);
 
 	/**
 	 * 插入数据.

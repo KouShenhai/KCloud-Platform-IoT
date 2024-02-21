@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.command.packages.query;
+package org.laokou.admin.command.pack.query;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;

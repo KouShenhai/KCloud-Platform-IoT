@@ -15,7 +15,32 @@
  *
  */
 
+package org.laokou.admin.command.pack;
+
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.PackageGateway;
+import org.laokou.admin.dto.packages.PackageRemoveCmd;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Component;
+
 /**
+ * 删除套餐执行器.
+ *
  * @author laokou
  */
-package org.laokou.admin.command.packages.query;
+@Component
+@RequiredArgsConstructor
+public class PackageRemoveCmdExe {
+
+	private final PackageGateway packageGateway;
+
+	/**
+	 * 执行删除套餐.
+	 * @param cmd 删除套餐参数
+	 * @return 执行删除结果
+	 */
+	public Result<Boolean> execute(PackageRemoveCmd cmd) {
+		return Result.of(packageGateway.deleteById(cmd.getId()));
+	}
+
+}

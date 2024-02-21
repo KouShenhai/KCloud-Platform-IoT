@@ -17,13 +17,14 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
@@ -34,16 +35,10 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Mapper
 @Repository
-public interface PackageMapper extends BatchMapper<PackageDO> {
+public interface PackageMapper extends CrudMapper<Long,Integer,PackageDO> {
 
-	/**
-	 * 查询套餐列表.
-	 * @param page 分页参数
-	 * @param name 套餐名称
-	 * @param pageQuery 分页参数
-	 * @return 套餐列表
-	 */
-	IPage<PackageDO> getPackageListFilter(IPage<PackageDO> page, @Param("name") String name,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+	List<PackageDO> selectListByCondition(@Param("pack")PackageDO pack, @Param(PAGE_QUERY)PageQuery pageQuery);
+
+	long selectCountByCondition(@Param("pack")PackageDO pack, @Param(PAGE_QUERY)PageQuery pageQuery);
 
 }

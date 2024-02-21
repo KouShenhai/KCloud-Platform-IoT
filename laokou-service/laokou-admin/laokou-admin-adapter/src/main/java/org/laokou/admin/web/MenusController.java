@@ -100,10 +100,10 @@ public class MenusController {
 	}
 
 	@TraceLog
-	@GetMapping("tenant-list")
-	@Operation(summary = "菜单管理", description = "树形租户菜单列表")
-	public Result<MenuCO> findTenantTreeList() {
-		return menusServiceI.tenantTree(new MenuTenantTreeGetQry());
+	@PostMapping("tenant-menu-list")
+	@Operation(summary = "菜单管理", description = "查询租户菜单列表")
+	public Result<List<MenuCO>> findTenantMenuList(@RequestBody MenuTenantListQry qry) {
+		return menusServiceI.findTenantMenuList(qry);
 	}
 
 }

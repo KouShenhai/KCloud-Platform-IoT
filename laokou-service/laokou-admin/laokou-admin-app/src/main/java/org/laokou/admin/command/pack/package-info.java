@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- /*
+/*
  * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,11 +14,8 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.admin.gatewayimpl.database.TestMapper">
-    <insert id="save" useGeneratedKeys="false">
-        insert into test(id,name)
-        values (#{id},#{name})
-    </insert>
-</mapper>
+
+/**
+ * @author laokou
+ */
+package org.laokou.admin.command.pack;
