@@ -17,7 +17,6 @@
 
 package org.laokou.admin.command.pack.query;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.admin.domain.annotation.DataFilter;
@@ -35,7 +34,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_PACKAGE;
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 查询套餐列表执行器.
@@ -55,7 +53,6 @@ public class PackageListQryExe {
 	 * @return 套餐列表
 	 */
 	@SneakyThrows
-	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_PACKAGE)
 	public Result<Datas<PackageCO>> execute(PackageListQry qry) {
 		PackageDO packageDO = convert(qry);

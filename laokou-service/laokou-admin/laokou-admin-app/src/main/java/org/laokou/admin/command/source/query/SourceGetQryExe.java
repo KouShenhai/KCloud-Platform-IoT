@@ -18,11 +18,10 @@
 package org.laokou.admin.command.source.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.gateway.SourceGateway;
-import org.laokou.admin.domain.source.Source;
 import org.laokou.admin.dto.source.SourceGetQry;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.gatewayimpl.database.SourceMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +34,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SourceGetQryExe {
 
-	private final SourceGateway sourceGateway;
+	private final SourceMapper sourceMapper;
 
 	/**
 	 * 执行查看数据源.
@@ -43,8 +42,18 @@ public class SourceGetQryExe {
 	 * @return 数据源
 	 */
 	public Result<SourceCO> execute(SourceGetQry qry) {
-		Source source = sourceGateway.getById(qry.getId());
-		return Result.of(ConvertUtil.sourceToTarget(source, SourceCO.class));
+		return Result.of(convert(sourceMapper.selectById(qry.getId())));
+	}
+
+	private SourceCO convert(SourceDO sourceDO) {
+		return SourceCO.builder()
+				.id(sourceDO.getId())
+				.name(sourceDO.getName())
+				.url(sourceDO.getUrl())
+				.driverClassName(sourceDO.getDriverClassName())
+				.username(sourceDO.getUsername())
+				.password(sourceDO.getPassword())
+				.build();
 	}
 
 }

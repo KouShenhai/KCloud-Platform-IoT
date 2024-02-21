@@ -17,15 +17,15 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
-import static org.laokou.common.i18n.common.MybatisPlusConstants.TENANT_ID;
+import java.util.List;
+
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
@@ -35,30 +35,10 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Mapper
 @Repository
-public interface SourceMapper extends BatchMapper<SourceDO> {
+public interface SourceMapper extends CrudMapper<Long, Integer,SourceDO> {
 
-	/**
-	 * 根据名称查询数据源.
-	 * @param name 数据源名称
-	 * @return 数据源
-	 */
-	SourceDO getSourceByName(@Param("name") String name);
+	List<SourceDO> selectListByCondition(@Param("source")SourceDO source, @Param(PAGE_QUERY)PageQuery pageQuery);
 
-	/**
-	 * 查询数据源列表.
-	 * @param page 分页参数
-	 * @param name 数据源名称
-	 * @param pageQuery 分页参数
-	 * @return 数据源列表
-	 */
-	IPage<SourceDO> getSourceListFilter(IPage<SourceDO> page, @Param("name") String name,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
-
-	/**
-	 * 根据租户ID查看数据源.
-	 * @param tenantId 租户ID
-	 * @return 数据源
-	 */
-	SourceDO getSourceByTenantId(@Param(TENANT_ID) Long tenantId);
+	long selectCountByCondition(@Param("source")SourceDO source, @Param(PAGE_QUERY)PageQuery pageQuery);
 
 }

@@ -20,16 +20,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.SourceMapper">
 
-    <select id="getSourceByName" resultType="org.laokou.admin.gatewayimpl.database.dataobject.SourceDO">
-        select driver_class_name
-             ,url
-             ,username
-             ,password
-        from boot_sys_source
-        where del_flag = 0
-            and name = #{name}
-    </select>
-    <select id="getSourceListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.SourceDO">
+    <select id="selectListByCondition" resultType="org.laokou.admin.gatewayimpl.database.dataobject.SourceDO">
         select id
               ,`name`
               ,driver_class_name
@@ -37,19 +28,19 @@
               ,username
         from boot_sys_source
         where del_flag = 0
-        <if test="name != null and name != ''">
-            and `name` like #{name}
+        <if test="source.name != null and source.name != ''">
+            and `name` like #{source.name}
         </if>
         order by id desc
+        limit ${pageQuery.pageIndex},${pageQuery.pageSize}
     </select>
-    <select id="getSourceByTenantId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.SourceDO">
-        select a.`name`
-             , a.`driver_class_name`
-             , a.`url`
-             , a.`username`
-             , a.`password`
-        from boot_sys_source a
-                 JOIN boot_sys_tenant b on b.source_id = a.id
-        where b.id = #{tenantId}
+    <select id="selectCountByCondition" resultType="java.lang.Long">
+        select count(1)
+        from boot_sys_source
+        where del_flag = 0
+        <if test="source.name != null and source.name != ''">
+            and `name` like #{source.name}
+        </if>
     </select>
+
 </mapper>

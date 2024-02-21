@@ -91,7 +91,7 @@ public class SourcesServiceImpl implements SourcesServiceI {
 	 * @return 数据源
 	 */
 	@Override
-	public Result<SourceCO> getById(SourceGetQry qry) {
+	public Result<SourceCO> findById(SourceGetQry qry) {
 		return sourceGetQryExe.execute(qry);
 	}
 
@@ -101,7 +101,7 @@ public class SourcesServiceImpl implements SourcesServiceI {
 	 * @return 数据源列表
 	 */
 	@Override
-	public Result<Datas<SourceCO>> list(SourceListQry qry) {
+	public Result<Datas<SourceCO>> findList(SourceListQry qry) {
 		return sourceListQryExe.execute(qry);
 	}
 

@@ -19,29 +19,12 @@ package org.laokou.admin.domain.gateway;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.admin.domain.source.Source;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
  */
 @Schema(name = "SourceGateway", description = "数据源网关")
 public interface SourceGateway {
-
-	/**
-	 * 查询数据源列表.
-	 * @param source 数据源对象
-	 * @param pageQuery 分页参数
-	 * @return 数据源列表
-	 */
-	Datas<Source> list(Source source, PageQuery pageQuery);
-
-	/**
-	 * 根据ID查看数据源.
-	 * @param id ID
-	 * @return 数据源
-	 */
-	Source getById(Long id);
 
 	/**
 	 * 新增数据源.

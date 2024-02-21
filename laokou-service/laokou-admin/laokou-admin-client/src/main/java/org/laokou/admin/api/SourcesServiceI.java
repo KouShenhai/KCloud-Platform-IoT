@@ -58,14 +58,14 @@ public interface SourcesServiceI {
 	 * @param qry 根据ID查看数据源参数
 	 * @return 数据源
 	 */
-	Result<SourceCO> getById(SourceGetQry qry);
+	Result<SourceCO> findById(SourceGetQry qry);
 
 	/**
 	 * 查询数据源列表.
 	 * @param qry 查询数据源列表参数
 	 * @return 数据源列表
 	 */
-	Result<Datas<SourceCO>> list(SourceListQry qry);
+	Result<Datas<SourceCO>> findList(SourceListQry qry);
 
 	/**
 	 * 查询数据源下拉框选择项列表.
