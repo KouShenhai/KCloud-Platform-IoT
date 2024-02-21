@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
  * @author laokou
  */
 @Component
-public class RemoteMapper {
+public class RemoteClient {
 
 	/*
 	 * @DubboReference(version = VERSION) private ReportServiceI reportServiceI;
