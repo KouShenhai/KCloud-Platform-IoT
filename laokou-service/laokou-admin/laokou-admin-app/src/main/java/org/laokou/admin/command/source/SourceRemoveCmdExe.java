@@ -20,7 +20,6 @@ package org.laokou.admin.command.source;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.SourceGateway;
 import org.laokou.admin.dto.source.SourceRemoveCmd;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,10 +36,9 @@ public class SourceRemoveCmdExe {
 	/**
 	 * 执行删除数据源.
 	 * @param cmd 删除数据源参数
-	 * @return 执行删除结果
 	 */
-	public Result<Boolean> execute(SourceRemoveCmd cmd) {
-		return Result.of(sourceGateway.deleteById(cmd.getId()));
+	public void executeVoid(SourceRemoveCmd cmd) {
+		sourceGateway.remove(cmd.getIds());
 	}
 
 }

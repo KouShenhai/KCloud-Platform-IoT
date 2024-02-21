@@ -17,17 +17,12 @@
 
 package org.laokou.admin.command.source;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.SourceConvertor;
 import org.laokou.admin.domain.gateway.SourceGateway;
 import org.laokou.admin.domain.source.Source;
 import org.laokou.admin.dto.source.SourceCreateCmd;
-import org.laokou.admin.gatewayimpl.database.SourceMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
-import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.admin.dto.source.clientobject.SourceCO;
+import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -41,37 +36,23 @@ public class SourceCreateCmdExe {
 
 	private final SourceGateway sourceGateway;
 
-	private final SourceMapper sourceMapper;
-
-	private final SourceConvertor sourceConvertor;
-
 	/**
 	 * 执行新增数据源.
 	 * @param cmd 新增数据源参数
-	 * @return 执行新增结果
 	 */
-	public Result<Boolean> execute(SourceCreateCmd cmd) {
-		/*
-		 * Source source = sourceConvertor.toEntity(cmd.getSourceCO()); validate(source);
-		 * return Result.of(sourceGateway.insert(source));
-		 */
-		return null;
+	public void executeVoid(SourceCreateCmd cmd) {
+		sourceGateway.create(convert(cmd.getSourceCO()));
 	}
 
-	/**
-	 * 校验数据源填写信息.
-	 * @param source 数据源对象
-	 */
-	private void validate(Source source) {
-		String name = source.getName();
-		boolean sourceRegex = RegexUtil.sourceRegex(name);
-		if (!sourceRegex) {
-			throw new SystemException("数据源名称必须包含字母、下划线和数字");
-		}
-		Long count = sourceMapper.selectCount(Wrappers.query(SourceDO.class).eq("name", name));
-		if (count > 0) {
-			throw new SystemException("数据源名称已存在，请重新填写");
-		}
+	private Source convert(SourceCO sourceCO) {
+		return Source.builder()
+				.id(IdGenerator.defaultSnowflakeId())
+				.url(sourceCO.getUrl())
+				.password(sourceCO.getPassword())
+				.username(sourceCO.getUsername())
+				.driverClassName(sourceCO.getDriverClassName())
+				.name(sourceCO.getName())
+				.build();
 	}
 
 }

@@ -32,7 +32,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Schema(name = "SourceDeleteCmd", description = "删除数据源命令请求")
 public class SourceRemoveCmd extends CommonCommand {
 
-	@Schema(name = "id", description = "ID")
-	private Long id;
+	@Schema(name = "ids", description = "IDS")
+	private Long[] ids;
 
 }

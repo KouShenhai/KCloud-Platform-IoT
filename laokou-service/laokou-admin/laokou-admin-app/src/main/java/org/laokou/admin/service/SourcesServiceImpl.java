@@ -58,31 +58,28 @@ public class SourcesServiceImpl implements SourcesServiceI {
 	/**
 	 * 新增数据源.
 	 * @param cmd 新增数据源参数
-	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(SourceCreateCmd cmd) {
-		return sourceCreateCmdExe.execute(cmd);
+	public void create(SourceCreateCmd cmd) {
+		sourceCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 修改数据源.
 	 * @param cmd 修改数据源参数
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(SourceModifyCmd cmd) {
-		return sourceModifyCmdExe.execute(cmd);
+	public void modify(SourceModifyCmd cmd) {
+		sourceModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 根据ID删除数据源.
 	 * @param cmd 根据ID删除数据源参数
-	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(SourceRemoveCmd cmd) {
-		return sourceRemoveCmdExe.execute(cmd);
+	public void remove(SourceRemoveCmd cmd) {
+		sourceRemoveCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -107,12 +104,11 @@ public class SourcesServiceImpl implements SourcesServiceI {
 
 	/**
 	 * 查询数据源下拉框选择项列表.
-	 * @param qry 查询数据源下拉框选择项列表参数
 	 * @return 数据源下拉框选择项列表
 	 */
 	@Override
-	public Result<List<OptionCO>> optionList(SourceOptionListQry qry) {
-		return sourceOptionListQryExe.execute(qry);
+	public Result<List<OptionCO>> findOptionList() {
+		return sourceOptionListQryExe.execute();
 	}
 
 }

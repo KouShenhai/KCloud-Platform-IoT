@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.SourceConvertor;
@@ -28,6 +29,8 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 /**
  * 数据源管理.
@@ -48,41 +51,45 @@ public class SourceGatewayImpl implements SourceGateway {
 	/**
 	 * 新增数据源.
 	 * @param source 数据源对象
-	 * @return 新增结果
 	 */
 	@Override
-	public Boolean insert(Source source) {
-		SourceDO sourceDO = sourceConvertor.toDataObject(source);
-		return insertSource(sourceDO);
+	public void create(Source source) {
+		source.checkName();
+		long count = sourceMapper.selectCount(Wrappers.lambdaQuery(SourceDO.class).eq(SourceDO::getName, source.getName()));
+		source.checkName(count);
+		create(sourceConvertor.toDataObject(source));
 	}
 
 	/**
 	 * 修改数据源.
 	 * @param source 数据源对象
-	 * @return 修改结果
 	 */
 	@Override
-	public Boolean update(Source source) {
+	public void modify(Source source) {
+		source.checkNullId();
+		source.checkName();
+		long count = sourceMapper.selectCount(Wrappers.lambdaQuery(SourceDO.class).eq(SourceDO::getName, source.getName()).ne(SourceDO::getId, source.getId()));
+		source.checkName(count);
 		SourceDO sourceDO = sourceConvertor.toDataObject(source);
-		//sourceDO.setVersion(sourceMapper.getVersion(sourceDO.getId(), SourceDO.class));
-		return updateSource(sourceDO);
+		sourceDO.setVersion(sourceMapper.selectVersion(sourceDO.getId()));
+		modify(sourceDO);
 	}
 
 	/**
-	 * 根据ID删除数据源.
-	 * @param id ID
-	 * @return 删除结果
+	 * 根据IDS删除数据源.
+	 * @param ids IDS
 	 */
 	@Override
-	public Boolean deleteById(Long id) {
-		return transactionalUtil.defaultExecute(r -> {
+	public void remove(Long[] ids) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return sourceMapper.deleteById(id) > 0;
+				sourceMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(msg);
 			}
 		});
 	}
@@ -90,17 +97,17 @@ public class SourceGatewayImpl implements SourceGateway {
 	/**
 	 * 修改数据源.
 	 * @param sourceDO 数据源数据模型
-	 * @return 修改结果
 	 */
-	private Boolean updateSource(SourceDO sourceDO) {
-		return transactionalUtil.defaultExecute(r -> {
+	private void modify(SourceDO sourceDO) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return sourceMapper.updateById(sourceDO) > 0;
+				sourceMapper.updateById(sourceDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(msg);
 			}
 		});
 	}
@@ -108,18 +115,17 @@ public class SourceGatewayImpl implements SourceGateway {
 	/**
 	 * 新增数据源.
 	 * @param sourceDO 数据源数据模型
-	 * @return 新增结果
 	 */
-	private Boolean insertSource(SourceDO sourceDO) {
-		return transactionalUtil.defaultExecute(r -> {
+	private void create(SourceDO sourceDO) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return null;
-				//return sourceMapper.insertTable(sourceDO);
+				sourceMapper.insert(sourceDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(msg);
 			}
 		});
 	}

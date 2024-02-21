@@ -29,22 +29,20 @@ public interface SourceGateway {
 	/**
 	 * 新增数据源.
 	 * @param source 数据源对象
-	 * @return 新增结果
 	 */
-	Boolean insert(Source source);
+	void create(Source source);
 
 	/**
 	 * 修改数据源.
 	 * @param source 数据源对象
-	 * @return 修改结果
 	 */
-	Boolean update(Source source);
+	void modify(Source source);
 
 	/**
-	 * 根据ID删除数据源.
-	 * @param id ID
+	 * 根据IDS删除数据源.
+	 * @param ids IDS
 	 * @return 删除结果
 	 */
-	Boolean deleteById(Long id);
+	void remove(Long[] ids);
 
 }

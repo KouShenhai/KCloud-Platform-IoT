@@ -64,7 +64,7 @@ public class SourcesController {
 	@OperateLog(module = "数据源管理", operation = "数据源新增")
 	@PreAuthorize("hasAuthority('sources:create')")
 	public void create(@RequestBody SourceCreateCmd cmd) {
-		sourcesServiceI.insert(cmd);
+		sourcesServiceI.create(cmd);
 	}
 
 	@TraceLog
@@ -82,23 +82,23 @@ public class SourcesController {
 	@PreAuthorize("hasAuthority('sources:modify')")
 	@DataCache(name = SOURCES, key = "#cmd.sourceCO.id", type = CacheOperatorTypeEnums.DEL)
 	public void modify(@RequestBody SourceModifyCmd cmd) {
-		sourcesServiceI.update(cmd);
+		sourcesServiceI.modify(cmd);
 	}
 
 	@TraceLog
-	@DeleteMapping("{id}")
+	@DeleteMapping
 	@Operation(summary = "数据源管理", description = "删除数据源")
 	@OperateLog(module = "数据源管理", operation = "删除数据源")
 	@PreAuthorize("hasAuthority('sources:remove')")
-	public void remove(@PathVariable("id") Long id) {
-		sourcesServiceI.deleteById(new SourceRemoveCmd(id));
+	public void remove(@RequestBody Long[] ids) {
+		sourcesServiceI.remove(new SourceRemoveCmd(ids));
 	}
 
 	@TraceLog
 	@GetMapping("option-list")
 	@Operation(summary = "数据源管理", description = "下拉列表")
 	public Result<List<OptionCO>> findOptionList() {
-		return sourcesServiceI.optionList(new SourceOptionListQry());
+		return sourcesServiceI.findOptionList();
 	}
 
 }

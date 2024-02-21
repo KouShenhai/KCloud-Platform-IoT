@@ -42,5 +42,7 @@
             and `name` like #{source.name}
         </if>
     </select>
-
+    <select id="selectVersion" resultType="integer">
+        select version from boot_sys_source where id = #{id}
+    </select>
 </mapper>
