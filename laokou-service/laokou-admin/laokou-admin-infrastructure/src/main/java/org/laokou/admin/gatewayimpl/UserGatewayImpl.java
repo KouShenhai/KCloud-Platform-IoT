@@ -82,6 +82,8 @@ public class UserGatewayImpl implements UserGateway {
 		// 检查手机号
 		checkMobile(user, mobile);
 		UserDO userDO = userConvertor.toDataObject(user);
+		// 版本号
+		userDO.setVersion(userMapper.selectVersion(userDO.getId()));
 		// 修改
 		modify(userDO, user.getRoleIds());
 	}

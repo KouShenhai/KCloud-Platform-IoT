@@ -20,9 +20,8 @@ package org.laokou.admin.command.role;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.dto.role.RoleRemoveCmd;
 import org.laokou.admin.domain.gateway.RoleGateway;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.admin.dto.role.RoleRemoveCmd;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
@@ -42,12 +41,10 @@ public class RoleRemoveCmdExe {
 	/**
 	 * 执行删除角色.
 	 * @param cmd 删除角色参数
-	 * @return 执行删除结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(RoleRemoveCmd cmd) {
-		//return Result.of(roleGateway.deleteById(cmd.getId()));
-		return null;
+	public void executeVoid(RoleRemoveCmd cmd) {
+		roleGateway.remove(cmd.getIds());
 	}
 
 }

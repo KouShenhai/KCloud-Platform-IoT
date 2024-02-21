@@ -50,8 +50,8 @@ public interface DeptsServiceI {
 	void modify(DeptModifyCmd cmd);
 
 	/**
-	 * 根据ID删除部门.
-	 * @param cmd 根据ID删除部门参数
+	 * 根据IDS删除部门.
+	 * @param cmd 根据IDS删除部门参数
 	 */
 	void remove(DeptRemoveCmd cmd);
 

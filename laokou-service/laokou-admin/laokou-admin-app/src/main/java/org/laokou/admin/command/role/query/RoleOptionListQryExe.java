@@ -21,14 +21,11 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
-import org.laokou.admin.dto.role.RoleOptionListQry;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
-import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
@@ -46,21 +43,19 @@ public class RoleOptionListQryExe {
 
 	/**
 	 * 执行查询角色下拉框选择项列表.
-	 * @param qry 查询角色下拉框选择项列表参数
 	 * @return 角色下拉框选择项列表
 	 */
 	@DS(TENANT)
-	public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
-		List<RoleDO> list = roleMapper.selectList(
-				Wrappers.lambdaQuery(RoleDO.class).select(RoleDO::getId, RoleDO::getName).orderByDesc(RoleDO::getSort));
-		if (CollectionUtil.isEmpty(list)) {
-			return Result.of(new ArrayList<>(0));
-		}
-/*		List<OptionCO> options = list.stream()
-			.map(item -> new OptionCO(item.getName(), String.valueOf(item.getId())))
-			.toList();
-		return Result.of(options);*/
-		return null;
+	public Result<List<OptionCO>> execute() {
+		List<RoleDO> list = roleMapper.selectList(Wrappers.lambdaQuery(RoleDO.class).select(RoleDO::getId, RoleDO::getName).orderByDesc(RoleDO::getSort));
+		return Result.of(list.stream().map(this::convert).toList());
+	}
+
+	private OptionCO convert(RoleDO roleDO) {
+		return OptionCO.builder()
+				.label(roleDO.getName())
+				.value(String.valueOf(roleDO.getId()))
+				.build();
 	}
 
 }

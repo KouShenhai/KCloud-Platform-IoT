@@ -60,6 +60,7 @@ public class UserModifyCmdExe {
 				.mail(co.getMail())
 				.mobile(co.getMobile())
 				.password(co.getPassword())
+				.deptId(co.getDeptId())
 				.build();
 	}
 

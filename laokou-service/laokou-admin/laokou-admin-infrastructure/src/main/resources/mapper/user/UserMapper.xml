@@ -33,10 +33,6 @@
         `password`
     </sql>
 
-    <sql id="aes_decrypt_username">
-        aes_decrypt(`username`, #{secretKey})
-    </sql>
-
     <insert id="insertObj" useGeneratedKeys="false">
         insert into boot_sys_user(<include refid="columns"/>)
         values (
@@ -48,14 +44,14 @@
         #{user.deptId},
         #{user.deptPath},
         #{user.tenantId},
-        AES_ENCRYPT(#{user.username}, #{secretKey}),
+        aes_encrypt(#{user.username}, #{secretKey}),
         #{user.password}
         )
     </insert>
 
     <select id="selectOptionList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
         select id
-        ,<include refid="aes_decrypt_username"/> as `username`
+        ,aes_decrypt(`username`, #{secretKey}) as `username`
         from boot_sys_user
         where del_flag = 0
         and `status` = 0
@@ -63,7 +59,7 @@
     </select>
     <select id="selectListByCondition" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
         select id
-        ,<include refid="aes_decrypt_username"/> as `username`
+        ,aes_decrypt(`username`, #{secretKey}) as `username`
         ,super_admin
         ,create_date
         ,avatar
@@ -72,7 +68,7 @@
         where del_flag = 0
         and create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
         <if test="user.username != null and user.username != ''">
-            and <include refid="aes_decrypt_username"/> like #{user.username}
+            and aes_decrypt(`username`, #{secretKey}) like #{user.username}
         </if>
         order by id desc
         limit ${pageQuery.pageIndex},${pageQuery.pageSize}
@@ -83,13 +79,15 @@
         where del_flag = 0
         and create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
         <if test="user.username != null and user.username != ''">
-            and <include refid="aes_decrypt_username"/> like #{user.username}
+            and aes_decrypt(`username`, #{secretKey}) like #{user.username}
         </if>
     </select>
     <select id="selectUsernameCount" resultType="long">
         select count(1)
         from boot_sys_user
-        where <include refid="aes_decrypt_username"/> = #{username}
+        where aes_decrypt(`username`, #{secretKey}) = #{username}
     </select>
-
+    <select id="selectVersion" resultType="integer">
+        select version from boot_sys_user where id = #{id}
+    </select>
 </mapper>

@@ -57,7 +57,6 @@ public abstract class AbstractDomainEventRocketMQListener implements RocketMQLis
 			events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			if (e instanceof DataIntegrityViolationException) {
 				// 消费成功（数据重复直接改为消费成功）
 				events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
@@ -65,6 +64,7 @@ public abstract class AbstractDomainEventRocketMQListener implements RocketMQLis
 			else {
 				// 消费失败
 				events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_FAILED, eventDO.getSourceName()));
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
 		}
 		finally {

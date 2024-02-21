@@ -35,6 +35,7 @@
     <select id="selectCountByCondition" resultType="java.lang.Long">
         select count(1)
         from boot_sys_role
+        where del_flag = 0
         <if test="role.name != '' and role.name != null">
             and `name` like #{role.name}
         </if>
@@ -44,5 +45,7 @@
         from boot_sys_role
         where del_flag = 0
     </select>
-
+    <select id="selectVersion" resultType="integer">
+        select version from boot_sys_role where id = #{id}
+    </select>
 </mapper>

@@ -39,17 +39,9 @@ public interface RoleGateway {
 	void modify(Role role);
 
 	/**
-	 * 根据ID查看角色.
-	 * @param id ID
-	 * @return 角色
+	 * 根据IDS删除角色.
+	 * @param ids IDS
 	 */
-	Role getById(Long id);
-
-	/**
-	 * 根据ID删除角色.
-	 * @param id ID
-	 * @return 删除结果
-	 */
-	Boolean deleteById(Long id);
+	void remove(Long[] ids);
 
 }

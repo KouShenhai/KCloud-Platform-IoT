@@ -67,12 +67,11 @@ public class RolesServiceImpl implements RolesServiceI {
 
 	/**
 	 * 查询角色下拉框选择项列表.
-	 * @param qry 查询角色下拉框选择项列表参数
 	 * @return 角色下拉框选择项列表
 	 */
 	@Override
-	public Result<List<OptionCO>> optionList(RoleOptionListQry qry) {
-		return roleOptionListQryExe.execute(qry);
+	public Result<List<OptionCO>> findOptionList() {
+		return roleOptionListQryExe.execute();
 	}
 
 	/**
@@ -91,7 +90,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	 */
 	@Override
 	public void create(RoleCreateCmd cmd) {
-		//return roleCreateCmdExe.execute(cmd);
+		roleCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -104,12 +103,12 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	/**
-	 * 根据ID删除角色.
-	 * @param cmd 根据ID删除角色参数
+	 * 根据IDS删除角色.
+	 * @param cmd 根据IDS删除角色参数
 	 */
 	@Override
 	public void remove(RoleRemoveCmd cmd) {
-		//roleRemoveCmdExe.execute(cmd);
+		roleRemoveCmdExe.executeVoid(cmd);
 	}
 
 }

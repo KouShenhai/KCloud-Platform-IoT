@@ -57,8 +57,8 @@ public interface MenusServiceI {
 	void create(MenuCreateCmd cmd);
 
 	/**
-	 * 根据ID删除菜单.
-	 * @param cmd 根据ID删除菜单参数
+	 * 根据IDS删除菜单.
+	 * @param cmd 根据IDS删除菜单参数
 	 */
 	void remove(MenuRemoveCmd cmd);
 

@@ -118,8 +118,8 @@ public class UsersController {
 	@GetMapping("{id}")
 	@Operation(summary = "用户管理", description = "查看用户")
 	@DataCache(name = USERS, key = "#id")
-	public void findById(@PathVariable("id") Long id) {
-		usersServiceI.findById(new UserGetQry(id));
+	public Result<UserCO> findById(@PathVariable("id") Long id) {
+		return usersServiceI.findById(new UserGetQry(id));
 	}
 
 	@TraceLog

@@ -45,6 +45,12 @@ public interface RoleMapper extends CrudMapper<Long,Integer,RoleDO> {
 	 */
 	List<RoleDO> selectListByCondition(@Param("role")RoleDO role, @Param(PAGE_QUERY)PageQuery pageQuery);
 
+	/**
+	 * 查询角色数量.
+	 * @param role 角色对象
+	 * @param pageQuery 分页参数
+	 * @return 角色数量
+	 */
 	long selectCountByCondition(@Param("role") RoleDO role, @Param(PAGE_QUERY)PageQuery pageQuery);
 
 	/**

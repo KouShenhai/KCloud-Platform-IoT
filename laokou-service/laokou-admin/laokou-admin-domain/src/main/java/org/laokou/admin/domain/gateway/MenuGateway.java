@@ -20,8 +20,6 @@ package org.laokou.admin.domain.gateway;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.admin.domain.menu.Menu;
 
-import java.util.List;
-
 /**
  * @author laokou
  */
@@ -45,11 +43,5 @@ public interface MenuGateway {
 	 * @param ids IDS
 	 */
 	void remove(Long[] ids);
-
-	/**
-	 * 查询租户菜单列表.
-	 * @return 租户菜单列表
-	 */
-	List<Menu> getTenantMenuList();
 
 }

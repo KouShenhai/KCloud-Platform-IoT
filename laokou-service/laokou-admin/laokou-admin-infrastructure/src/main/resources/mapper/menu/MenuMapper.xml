@@ -95,4 +95,7 @@
         where a.del_flag = 0
             and b.package_id = #{packageId}
     </select>
+    <select id="selectVersion" resultType="integer">
+        select version from boot_sys_menu where id = #{id}
+    </select>
 </mapper>

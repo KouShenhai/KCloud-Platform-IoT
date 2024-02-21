@@ -45,8 +45,8 @@ public interface DictsServiceI {
 	void modify(DictModifyCmd cmd);
 
 	/**
-	 * 根据ID删除字典.
-	 * @param cmd 根据ID删除字典参数
+	 * 根据IDS删除字典.
+	 * @param cmd 根据IDS删除字典参数
 	 */
 	void remove(DictRemoveCmd cmd);
 

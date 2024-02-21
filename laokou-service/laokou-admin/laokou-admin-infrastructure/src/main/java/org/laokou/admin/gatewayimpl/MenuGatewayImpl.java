@@ -31,7 +31,6 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * 菜单管理.
@@ -60,7 +59,10 @@ public class MenuGatewayImpl implements MenuGateway {
 		// 检查菜单名称
 		long count = menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()).ne(MenuDO::getId, menu.getId()));
 		menu.checkName(count);
-		modify(menuConvertor.toDataObject(menu));
+		MenuDO menuDO = menuConvertor.toDataObject(menu);
+		// 版本号
+		menuDO.setVersion(menuMapper.selectVersion(menuDO.getId()));
+		modify(menuDO);
 	}
 
 	/**
@@ -91,15 +93,6 @@ public class MenuGatewayImpl implements MenuGateway {
 				throw new SystemException(LogUtil.result(e.getMessage()));
 			}
 		});
-	}
-
-	/**
-	 * 查询租户菜单列表.
-	 * @return 租户菜单列表
-	 */
-	@Override
-	public List<Menu> getTenantMenuList() {
-		return menuConvertor.convertEntityList(menuMapper.getTenantMenuList());
 	}
 
 	/**

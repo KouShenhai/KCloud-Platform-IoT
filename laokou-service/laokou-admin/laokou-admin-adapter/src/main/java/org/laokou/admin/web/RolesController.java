@@ -57,7 +57,7 @@ public class RolesController {
 	@GetMapping("option-list")
 	@Operation(summary = "角色管理", description = "下拉列表")
 	public Result<List<OptionCO>> findOptionList() {
-		return rolesServiceI.optionList(new RoleOptionListQry());
+		return rolesServiceI.findOptionList();
 	}
 
 	@TraceLog
@@ -74,7 +74,7 @@ public class RolesController {
 	@OperateLog(module = "角色管理", operation = "新增角色")
 	@PreAuthorize("hasAuthority('roles:create')")
 	public void create(@RequestBody RoleCreateCmd cmd) {
-		//return rolesServiceI.insert(cmd);
+		rolesServiceI.create(cmd);
 	}
 
 	@TraceLog
@@ -92,7 +92,7 @@ public class RolesController {
 	@OperateLog(module = "角色管理", operation = "删除角色")
 	@PreAuthorize("hasAuthority('roles:remove')")
 	public void remove(@RequestBody Long[] ids) {
-		//rolesServiceI.deleteById(new RoleRemoveCmd(ids));
+		rolesServiceI.remove(new RoleRemoveCmd(ids));
 	}
 
 }

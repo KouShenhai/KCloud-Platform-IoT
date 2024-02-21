@@ -85,8 +85,8 @@ public interface UsersServiceI {
 	Result<UserCO> findById(UserGetQry qry);
 
 	/**
-	 * 根据ID删除用户.
-	 * @param cmd 根据ID删除用户参数
+	 * 根据IDS删除用户.
+	 * @param cmd 根据IDS删除用户参数
 	 */
 	void remove(UserRemoveCmd cmd);
 

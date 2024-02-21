@@ -63,6 +63,7 @@ public class UserCreateCmdExe {
 			.editor(UserUtil.getUserId())
 			.roleIds(co.getRoleIds())
 			.username(co.getUsername())
+			.password(co.getPassword())
 			.id(IdGenerator.defaultSnowflakeId())
 			.build();
 	}

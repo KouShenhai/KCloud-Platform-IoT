@@ -49,4 +49,7 @@
             and `label` like #{dict.label}
         </if>
     </select>
+    <select id="selectVersion" resultType="integer">
+        select version from boot_sys_dict where id = #{id}
+    </select>
 </mapper>

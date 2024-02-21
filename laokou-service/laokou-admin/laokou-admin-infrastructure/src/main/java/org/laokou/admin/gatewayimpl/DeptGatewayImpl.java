@@ -85,10 +85,11 @@ public class DeptGatewayImpl implements DeptGateway {
 		DeptDO deptDO = deptConvertor.toDataObject(dept);
 		// 修改新path
 		deptDO.setPath(getNewPath(deptDO));
-		// 旧path
 		String oldPath = deptMapper.selectPathById(deptDO.getId());
-		// 获取所有子节点
+		// 根据oldPath获取所有子节点
 		List<DeptDO> children = deptMapper.selectListByPath(oldPath);
+		// 版本号
+		deptDO.setVersion(deptMapper.selectVersion(deptDO.getId()));
 		modify(deptDO, oldPath, deptDO.getPath(), children);
 	}
 

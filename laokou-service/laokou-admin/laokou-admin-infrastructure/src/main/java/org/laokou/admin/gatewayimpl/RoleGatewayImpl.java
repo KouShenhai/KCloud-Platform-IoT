@@ -39,6 +39,7 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -85,34 +86,25 @@ public class RoleGatewayImpl implements RoleGateway {
 		long count = roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()).ne(RoleDO::getId, role.getId()));
 		role.checkName(count);
 		RoleDO roleDO = roleConvertor.toDataObject(role);
+		// 版本号
+		roleDO.setVersion(roleMapper.selectVersion(roleDO.getId()));
 		modify(roleDO, role);
 	}
 
 	/**
-	 * 根据ID查看角色.
-	 * @param id ID
-	 * @return 角色
+	 * 根据IDS删除角色.
+	 * @param ids IDS
 	 */
 	@Override
-	public Role getById(Long id) {
-		return roleConvertor.convertEntity(roleMapper.selectById(id));
-	}
-
-	/**
-	 * 根据ID删除角色.
-	 * @param id ID
-	 * @return 删除结果
-	 */
-	@Override
-	public Boolean deleteById(Long id) {
-		return transactionalUtil.defaultExecute(r -> {
+	public void remove(Long[] ids) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return roleMapper.deleteById(id) > 0;
+				roleMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(LogUtil.result(e.getMessage()));
 			}
 		});
 	}

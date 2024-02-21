@@ -37,7 +37,7 @@ public final class StatusCodes {
 	@Schema(name = "UNAUTHORIZED", description = "登录状态已过期")
 	public static final int UNAUTHORIZED = 401;
 
-	@Schema(name = "FORBIDDEN", description = "访问拒绝，没有权限")
+	@Schema(name = "FORBIDDEN", description = "拒绝访问，没有权限")
 	public static final int FORBIDDEN = 403;
 
 	@Schema(name = "NOT_FOUND", description = "无法找到请求的资源")

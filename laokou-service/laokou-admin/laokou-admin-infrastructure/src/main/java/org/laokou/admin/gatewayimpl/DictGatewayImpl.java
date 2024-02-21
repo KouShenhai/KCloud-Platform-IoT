@@ -70,7 +70,10 @@ public class DictGatewayImpl implements DictGateway {
 		// 验证类型和值
 		long count = dictMapper.selectCount(Wrappers.lambdaQuery(DictDO.class).eq(DictDO::getValue,dict.getValue()).eq(DictDO::getType, dict.getType()).ne(DictDO::getId, dict.getId()));
 		dict.checkTypeAndValue(count);
-		modify(dictConvertor.toDataObject(dict));
+		DictDO dictDO = dictConvertor.toDataObject(dict);
+		// 版本号
+		dictDO.setVersion(dictMapper.selectVersion(dictDO.getId()));
+		modify(dictDO);
 	}
 
 	/**
