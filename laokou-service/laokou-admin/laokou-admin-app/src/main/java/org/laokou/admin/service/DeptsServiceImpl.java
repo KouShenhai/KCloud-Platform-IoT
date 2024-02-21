@@ -21,13 +21,12 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.DeptsServiceI;
 import org.laokou.admin.dto.dept.*;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
-import org.laokou.admin.command.dept.DeptDeleteCmdExe;
-import org.laokou.admin.command.dept.DeptInsertCmdExe;
-import org.laokou.admin.command.dept.DeptUpdateCmdExe;
+import org.laokou.admin.command.dept.DeptRemoveCmdExe;
+import org.laokou.admin.command.dept.DeptCreateCmdExe;
+import org.laokou.admin.command.dept.DeptModifyCmdExe;
 import org.laokou.admin.command.dept.query.DeptGetQryExe;
-import org.laokou.admin.command.dept.query.DeptIDSGetQryExe;
+import org.laokou.admin.command.dept.query.DeptIdsGetQryExe;
 import org.laokou.admin.command.dept.query.DeptListQryExe;
-import org.laokou.admin.command.dept.query.DeptTreeGetQryExe;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -42,29 +41,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeptsServiceImpl implements DeptsServiceI {
 
-	private final DeptTreeGetQryExe deptTreeGetQryExe;
-
 	private final DeptListQryExe deptListQryExe;
 
-	private final DeptInsertCmdExe deptInsertCmdExe;
+	private final DeptCreateCmdExe deptCreateCmdExe;
 
-	private final DeptUpdateCmdExe deptUpdateCmdExe;
+	private final DeptModifyCmdExe deptModifyCmdExe;
 
-	private final DeptDeleteCmdExe deptDeleteCmdExe;
+	private final DeptRemoveCmdExe deptRemoveCmdExe;
 
 	private final DeptGetQryExe deptGetQryExe;
 
-	private final DeptIDSGetQryExe deptIDSGetQryExe;
-
-	/**
-	 * 查看部门树.
-	 * @param qry 查看部门树参数
-	 * @return 部门树
-	 */
-	@Override
-	public Result<DeptCO> tree(DeptTreeGetQry qry) {
-		return deptTreeGetQryExe.execute(qry);
-	}
+	private final DeptIdsGetQryExe deptIDSGetQryExe;
 
 	/**
 	 * 查询部门列表.
@@ -72,38 +59,35 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	 * @return 部门列表
 	 */
 	@Override
-	public Result<List<DeptCO>> list(DeptListQry qry) {
+	public Result<List<DeptCO>> findList(DeptListQry qry) {
 		return deptListQryExe.execute(qry);
 	}
 
 	/**
 	 * 新增部门.
 	 * @param cmd 新增部门参数
-	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(DeptInsertCmd cmd) {
-		return deptInsertCmdExe.execute(cmd);
+	public void create(DeptCreateCmd cmd) {
+		deptCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 修改部门.
 	 * @param cmd 修改部门参数
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(DeptUpdateCmd cmd) {
-		return deptUpdateCmdExe.execute(cmd);
+	public void modify(DeptModifyCmd cmd) {
+		deptModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 根据ID删除部门.
 	 * @param cmd 根据ID删除部门参数
-	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(DeptDeleteCmd cmd) {
-		return deptDeleteCmdExe.execute(cmd);
+	public void remove(DeptRemoveCmd cmd) {
+		deptRemoveCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -112,7 +96,7 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	 * @return 部门
 	 */
 	@Override
-	public Result<DeptCO> getById(DeptGetQry qry) {
+	public Result<DeptCO> findById(DeptGetQry qry) {
 		return deptGetQryExe.execute(qry);
 	}
 
@@ -122,7 +106,7 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	 * @return 部门IDS
 	 */
 	@Override
-	public Result<List<Long>> ids(DeptIDSGetQry qry) {
+	public Result<List<Long>> findIds(DeptIdsGetQry qry) {
 		return deptIDSGetQryExe.execute(qry);
 	}
 

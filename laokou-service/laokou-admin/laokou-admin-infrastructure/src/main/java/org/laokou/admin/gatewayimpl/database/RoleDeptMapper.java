@@ -20,7 +20,7 @@ package org.laokou.admin.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDeptDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -30,12 +30,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface RoleDeptMapper extends BatchMapper<RoleDeptDO> {
+public interface RoleDeptMapper extends CrudMapper<Long,Integer,RoleDeptDO> {
 
 	/**
 	 * 根据角色ID删除角色部门.
 	 * @param roleId 角色ID
 	 */
-	void deleteRoleDeptByRoleId(@Param("roleId") Long roleId);
+	void deleteByRoleId(@Param("roleId") Long roleId);
 
 }

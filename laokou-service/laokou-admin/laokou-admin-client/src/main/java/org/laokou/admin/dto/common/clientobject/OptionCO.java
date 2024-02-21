@@ -19,18 +19,22 @@ package org.laokou.admin.dto.common.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.io.Serial;
 
+import static lombok.AccessLevel.PRIVATE;
+
 /**
  * @author laokou
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "OptionCO", description = "下拉框选择参数项参数")
 public class OptionCO extends ClientObject {
 

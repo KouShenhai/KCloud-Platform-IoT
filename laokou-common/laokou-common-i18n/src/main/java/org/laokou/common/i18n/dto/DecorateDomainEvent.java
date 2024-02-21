@@ -23,14 +23,14 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.common.EventStatusEnums;
 
-import static lombok.AccessLevel.PROTECTED;
+import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
 @SuperBuilder
-@NoArgsConstructor(access = PROTECTED)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "DecorateDomainEvent", description = "装饰领域事件")
 public class DecorateDomainEvent extends DomainEvent<Long> {
 

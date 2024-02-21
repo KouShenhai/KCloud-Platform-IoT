@@ -18,19 +18,24 @@
 package org.laokou.admin.domain.dict;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.AggregateRoot;
 
-import java.time.LocalDateTime;
+import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
+@SuperBuilder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "Dict", description = "字典")
-public class Dict {
-
-	@Schema(name = "id", description = "ID")
-	private Long id;
+public class Dict extends AggregateRoot<Long> {
 
 	@Schema(name = "label", description = "字典标签")
 	private String label;
@@ -44,10 +49,13 @@ public class Dict {
 	@Schema(name = "remark", description = "字典类型")
 	private String remark;
 
-	@Schema(name = "createDate", description = "创建时间")
-	private LocalDateTime createDate;
-
 	@Schema(name = "sort", description = "字典排序")
 	private Integer sort;
+
+	public void checkTypeAndValue(long count) {
+		if (count > 0) {
+			throw new SystemException(String.format("类型为%s，值为%s的字典已存在，请重新填写", type, value));
+		}
+	}
 
 }

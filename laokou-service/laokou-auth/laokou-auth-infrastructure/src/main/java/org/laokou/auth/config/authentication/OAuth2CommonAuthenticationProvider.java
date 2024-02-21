@@ -80,7 +80,7 @@ public class OAuth2CommonAuthenticationProvider {
 			String sourceName = sourceGateway.findSourceNameByTenantId(tenantId);
 			// 检查验证码
 			checkCaptcha(user, captchaObj, request, sourceName, appName, authType);
-			User u = userGateway.findOne(user);
+			User u = userGateway.find(user);
 			// 检查空对象
 			user = user.copy(u, request, sourceName, appName, authType);
 			// 检查密码

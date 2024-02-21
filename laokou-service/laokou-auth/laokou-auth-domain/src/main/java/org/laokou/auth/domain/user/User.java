@@ -37,6 +37,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
 
+import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 import static org.laokou.common.i18n.common.BizCodes.LOGIN_SUCCEEDED;
 import static org.laokou.common.i18n.common.ErrorCodes.*;
@@ -53,8 +54,8 @@ import static org.laokou.common.i18n.common.ValCodes.*;
  */
 @Data
 @SuperBuilder
-@NoArgsConstructor(access = PROTECTED)
-@AllArgsConstructor(access = PROTECTED)
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "User", description = "用户信息")
 public class User extends AggregateRoot<Long> {
 

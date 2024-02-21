@@ -18,7 +18,6 @@
 package org.laokou.admin.command.resource;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,24 +25,17 @@ import org.laokou.admin.common.event.DomainEventPublisher;
 import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.dto.log.domainevent.AuditLogEvent;
 import org.laokou.admin.dto.resource.ResourceAuditTaskCmd;
-import org.laokou.admin.dto.resource.TaskAuditCmd;
-import org.laokou.admin.dto.resource.clientobject.AuditCO;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
 import org.laokou.admin.gatewayimpl.database.ResourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
-import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.openfeign.utils.FeignUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import static org.laokou.common.i18n.common.AuditConstants.STATUS;
-import static org.laokou.common.i18n.common.AuditEnums.*;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
@@ -56,7 +48,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 @RequiredArgsConstructor
 public class ResourceAuditTaskCmdExe {
 
-	private final TasksFeignClient tasksFeignClient;
+	// private final TasksFeignClient tasksFeignClient;
 
 	private final ResourceAuditMapper resourceAuditMapper;
 
@@ -74,32 +66,25 @@ public class ResourceAuditTaskCmdExe {
 	@DS(TENANT)
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(ResourceAuditTaskCmd cmd) {
-		log.info("资源审批任务分布式事务 XID：{}", RootContext.getXID());
-		TaskAuditCmd taskAuditCmd = ConvertUtil.sourceToTarget(cmd, TaskAuditCmd.class);
-		AuditCO co = FeignUtil.result(tasksFeignClient.audit(taskAuditCmd));
-		// 下一个审批人
-		String assignee = co.getAssignee();
-		// 审批状态
-		int auditStatus = Integer.parseInt(cmd.getValues().get(STATUS).toString());
-		// 还有审批人，就是审批中，没有审批人就结束审批
-		int status = StringUtil.isNotEmpty(assignee) ? IN_APPROVAL.getValue()
-				// 通过审批 或 驳回审批
-				: auditStatus == PASS.getValue() ? APPROVED.getValue() : REJECT_APPROVAL.getValue();
-		// 修改审批状态，审批通过需要将审批通过内容更新至资源表
-		Long id = cmd.getBusinessKey();
-		int version = resourceMapper.getVersion(id, ResourceDO.class);
-		ResourceAuditDO resourceAuditDO = null;
-		if (status == APPROVED.getValue()) {
-			resourceAuditDO = resourceAuditMapper.getResourceAuditByResourceId(id);
-		}
-		boolean flag = updateResource(id, version, status, resourceAuditDO);
-		// 审批日志
-		// domainEventPublisher.publish(toAuditLogEvent(cmd, auditStatus));
-		// 审批中，则发送审批通知消息
-		if (status == IN_APPROVAL.getValue()) {
-			publishMessage(assignee, cmd);
-		}
-		return Result.of(flag);
+		/*
+		 * log.info("资源审批任务分布式事务 XID：{}", RootContext.getXID()); TaskAuditCmd taskAuditCmd
+		 * = ConvertUtil.sourceToTarget(cmd, TaskAuditCmd.class); AuditCO co =
+		 * FeignUtil.result(tasksFeignClient.audit(taskAuditCmd)); // 下一个审批人 String
+		 * assignee = co.getAssignee(); // 审批状态 int auditStatus =
+		 * Integer.parseInt(cmd.getValues().get(STATUS).toString()); //
+		 * 还有审批人，就是审批中，没有审批人就结束审批 int status = StringUtil.isNotEmpty(assignee) ?
+		 * IN_APPROVAL.getValue() // 通过审批 或 驳回审批 : auditStatus == PASS.getValue() ?
+		 * APPROVED.getValue() : REJECT_APPROVAL.getValue(); // 修改审批状态，审批通过需要将审批通过内容更新至资源表
+		 * Long id = cmd.getBusinessKey(); int version = resourceMapper.getVersion(id,
+		 * ResourceDO.class); ResourceAuditDO resourceAuditDO = null; if (status ==
+		 * APPROVED.getValue()) { resourceAuditDO =
+		 * resourceAuditMapper.getResourceAuditByResourceId(id); } boolean flag =
+		 * updateResource(id, version, status, resourceAuditDO); // 审批日志 //
+		 * domainEventPublisher.publish(toAuditLogEvent(cmd, auditStatus)); //
+		 * 审批中，则发送审批通知消息 if (status == IN_APPROVAL.getValue()) { publishMessage(assignee,
+		 * cmd); } return Result.of(flag);
+		 */
+		return null;
 	}
 
 	/**

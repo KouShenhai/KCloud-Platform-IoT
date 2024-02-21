@@ -49,22 +49,22 @@ public class RolesController {
 	@PostMapping("list")
 	@Operation(summary = "角色管理", description = "查询角色列表")
 	@PreAuthorize("hasAuthority('roles:list')")
-	public Result<Datas<RoleCO>> list(@RequestBody RoleListQry qry) {
-		return rolesServiceI.list(qry);
+	public Result<Datas<RoleCO>> findList(@RequestBody RoleListQry qry) {
+		return rolesServiceI.findList(qry);
 	}
 
 	@TraceLog
 	@GetMapping("option-list")
 	@Operation(summary = "角色管理", description = "下拉列表")
-	public Result<List<OptionCO>> optionList() {
-		return rolesServiceI.optionList(new RoleOptionListQry());
+	public Result<List<OptionCO>> findOptionList() {
+		return rolesServiceI.findOptionList();
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "角色管理", description = "查看角色")
-	public Result<RoleCO> getById(@PathVariable("id") Long id) {
-		return rolesServiceI.getById(new RoleGetQry(id));
+	public Result<RoleCO> findById(@PathVariable("id") Long id) {
+		return rolesServiceI.findById(new RoleGetQry(id));
 	}
 
 	@Idempotent
@@ -72,27 +72,27 @@ public class RolesController {
 	@PostMapping
 	@Operation(summary = "角色管理", description = "新增角色")
 	@OperateLog(module = "角色管理", operation = "新增角色")
-	@PreAuthorize("hasAuthority('roles:insert')")
-	public Result<Boolean> insert(@RequestBody RoleInsertCmd cmd) {
-		return rolesServiceI.insert(cmd);
+	@PreAuthorize("hasAuthority('roles:create')")
+	public void create(@RequestBody RoleCreateCmd cmd) {
+		rolesServiceI.create(cmd);
 	}
 
 	@TraceLog
 	@PutMapping
 	@Operation(summary = "角色管理", description = "修改角色")
 	@OperateLog(module = "角色管理", operation = "修改角色")
-	@PreAuthorize("hasAuthority('roles:update')")
-	public Result<Boolean> update(@RequestBody RoleUpdateCmd cmd) {
-		return rolesServiceI.update(cmd);
+	@PreAuthorize("hasAuthority('roles:modify')")
+	public void modify(@RequestBody RoleModifyCmd cmd) {
+		rolesServiceI.modify(cmd);
 	}
 
 	@TraceLog
-	@DeleteMapping("{id}")
+	@DeleteMapping
 	@Operation(summary = "角色管理", description = "删除角色")
 	@OperateLog(module = "角色管理", operation = "删除角色")
-	@PreAuthorize("hasAuthority('roles:delete')")
-	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
-		return rolesServiceI.deleteById(new RoleDeleteCmd(id));
+	@PreAuthorize("hasAuthority('roles:remove')")
+	public void remove(@RequestBody Long[] ids) {
+		rolesServiceI.remove(new RoleRemoveCmd(ids));
 	}
 
 }

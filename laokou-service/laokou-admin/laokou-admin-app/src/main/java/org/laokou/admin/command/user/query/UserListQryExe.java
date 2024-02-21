@@ -18,14 +18,23 @@
 package org.laokou.admin.command.user.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.UserConvertor;
-import org.laokou.admin.domain.gateway.UserGateway;
-import org.laokou.admin.domain.user.User;
+import lombok.SneakyThrows;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
+import org.laokou.admin.gatewayimpl.database.UserMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_USER;
 
 /**
  * 查询用户列表执行器.
@@ -36,22 +45,40 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserListQryExe {
 
-	private final UserGateway userGateway;
-
-	private final UserConvertor userConvertor;
+	private final UserMapper userMapper;
+	private final Executor executor;
 
 	/**
 	 * 执行查询用户列表.
 	 * @param qry 查询用户列表参数
 	 * @return 用户列表
 	 */
+	@SneakyThrows
+	@DataFilter(tableAlias = BOOT_SYS_USER)
 	public Result<Datas<UserCO>> execute(UserListQry qry) {
-		User user = new User(qry.getUsername());
-		Datas<User> newPage = userGateway.list(user, qry);
-		Datas<UserCO> datas = new Datas<>();
-		datas.setRecords(userConvertor.convertClientObjectList(newPage.getRecords()));
-		datas.setTotal(newPage.getTotal());
-		return Result.of(datas);
+		UserDO userDO = convert(qry);
+		String secretKey = AesUtil.getSecretKeyStr();
+		PageQuery page = qry.page();
+		CompletableFuture<List<UserDO>> c1 = CompletableFuture.supplyAsync(() -> userMapper.selectListByCondition(userDO, page, secretKey), executor);
+		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> userMapper.selectCountByCondition(userDO, page, secretKey), executor);
+		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
+		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
+	}
+
+	private UserDO convert(UserListQry qry) {
+		UserDO userDO = new UserDO();
+		userDO.setUsername(qry.getUsername());
+		return userDO;
+	}
+
+	private UserCO convert(UserDO userDO) {
+		return UserCO.builder()
+				.id(userDO.getId())
+				.username(userDO.getUsername())
+				.status(userDO.getStatus())
+				.avatar(userDO.getAvatar())
+				.createDate(userDO.getCreateDate())
+				.build();
 	}
 
 }

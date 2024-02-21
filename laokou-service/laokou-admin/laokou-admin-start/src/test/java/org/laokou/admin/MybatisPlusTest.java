@@ -22,19 +22,12 @@ import com.baomidou.dynamic.datasource.creator.hikaricp.HikariCpConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.admin.common.utils.DsUtil;
-import org.laokou.admin.gatewayimpl.database.TestMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.TestDO;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -63,12 +56,12 @@ class MybatisPlusTest extends CommonTest {
 		addDs();
 		// 测试一百万数据
 		int size = 1000000;
-		List<TestDO> list = new ArrayList<>(size);
-		for (long i = 1; i <= size; i++) {
-			list.add(new TestDO(i, EMPTY + i, 0L));
-		}
+//		List<TestDO> list = new ArrayList<>(size);
+//		for (long i = 1; i <= size; i++) {
+//			list.add(new TestDO(i, EMPTY + i, 0L));
+//		}
 		long start = IdGenerator.SystemClock.now();
-		mybatisUtil.batch(list, TestMapper.class, DS_NAME, TestMapper::save);
+		//mybatisUtil.batch(list, TestMapper.class, DS_NAME, TestMapper::save);
 		long end = IdGenerator.SystemClock.now();
 		log.info("批量插入一百万数据，消耗时间：{}毫秒", (end - start));
 	}

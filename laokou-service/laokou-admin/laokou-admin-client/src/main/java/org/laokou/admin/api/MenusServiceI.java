@@ -31,66 +31,49 @@ import java.util.List;
 public interface MenusServiceI {
 
 	/**
-	 * 查看树形菜单列表（用户）.
-	 * @param qry 查看树形菜单列表（用户）参数
-	 * @return 树形菜单列表（用户）
-	 */
-	Result<MenuCO> treeList(MenuTreeListQry qry);
-
-	/**
 	 * 查询菜单列表.
 	 * @param qry 查询菜单列表参数
 	 * @return 菜单列表
 	 */
-	Result<List<MenuCO>> list(MenuListQry qry);
+	Result<List<MenuCO>> findList(MenuListQry qry);
 
 	/**
 	 * 根据ID查看菜单.
 	 * @param qry 根据ID查看菜单参数
 	 * @return 菜单
 	 */
-	Result<MenuCO> getById(MenuGetQry qry);
+	Result<MenuCO> findById(MenuGetQry qry);
 
 	/**
 	 * 修改菜单.
 	 * @param cmd 修改菜单参数
-	 * @return 修改结果
 	 */
-	Result<Boolean> update(MenuUpdateCmd cmd);
+	void modify(MenuModifyCmd cmd);
 
 	/**
 	 * 新增菜单.
 	 * @param cmd 新增菜单参数
-	 * @return 新增菜单
 	 */
-	Result<Boolean> insert(MenuInsertCmd cmd);
+	void create(MenuCreateCmd cmd);
 
 	/**
-	 * 根据ID删除菜单.
-	 * @param cmd 根据ID删除菜单参数
-	 * @return 删除结果
+	 * 根据IDS删除菜单.
+	 * @param cmd 根据IDS删除菜单参数
 	 */
-	Result<Boolean> deleteById(MenuDeleteCmd cmd);
-
-	/**
-	 * 查看树菜单.
-	 * @param qry 查看树菜单参数
-	 * @return 树菜单
-	 */
-	Result<MenuCO> tree(MenuTreeGetQry qry);
+	void remove(MenuRemoveCmd cmd);
 
 	/**
 	 * 根据角色ID查看菜单IDS.
 	 * @param qry 根据角色ID查看菜单IDS参数
 	 * @return 菜单IDS
 	 */
-	Result<List<Long>> ids(MenuIDSGetQry qry);
+	Result<List<Long>> findIds(MenuIdsGetQry qry);
 
 	/**
 	 * 查看租户菜单树.
 	 * @param qry 查看租户菜单树参数
 	 * @return 租户菜单树
 	 */
-	Result<MenuCO> tenantTree(MenuTenantTreeGetQry qry);
+	Result<List<MenuCO>> findTenantMenuList(MenuTenantListQry qry);
 
 }

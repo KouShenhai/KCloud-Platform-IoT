@@ -22,9 +22,9 @@ import org.laokou.admin.api.DictsServiceI;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.dict.*;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
-import org.laokou.admin.command.dict.DictDeleteCmdExe;
-import org.laokou.admin.command.dict.DictInsertCmdExe;
-import org.laokou.admin.command.dict.DictUpdateCmdExe;
+import org.laokou.admin.command.dict.DictRemoveCmdExe;
+import org.laokou.admin.command.dict.DictCreateCmdExe;
+import org.laokou.admin.command.dict.DictModifyCmdExe;
 import org.laokou.admin.command.dict.query.DictGetQryExe;
 import org.laokou.admin.command.dict.query.DictListQryExe;
 import org.laokou.admin.command.dict.query.DictOptionListQryExe;
@@ -43,11 +43,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DictsServiceImpl implements DictsServiceI {
 
-	private final DictInsertCmdExe dictInsertCmdExe;
+	private final DictCreateCmdExe dictCreateCmdExe;
 
-	private final DictUpdateCmdExe dictUpdateCmdExe;
+	private final DictModifyCmdExe dictModifyCmdExe;
 
-	private final DictDeleteCmdExe dictDeleteCmdExe;
+	private final DictRemoveCmdExe dictRemoveCmdExe;
 
 	private final DictOptionListQryExe dictOptionListQryExe;
 
@@ -58,31 +58,28 @@ public class DictsServiceImpl implements DictsServiceI {
 	/**
 	 * 新增字典.
 	 * @param cmd 新增字典参数
-	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(DictInsertCmd cmd) {
-		return dictInsertCmdExe.execute(cmd);
+	public void create(DictCreateCmd cmd) {
+		dictCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 修改字典.
 	 * @param cmd 修改字典参数
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(DictUpdateCmd cmd) {
-		return dictUpdateCmdExe.execute(cmd);
+	public void modify(DictModifyCmd cmd) {
+		dictModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 根据ID删除字典.
 	 * @param cmd 根据ID删除字典参数
-	 * @return 删除字典
 	 */
 	@Override
-	public Result<Boolean> deleteById(DictDeleteCmd cmd) {
-		return dictDeleteCmdExe.execute(cmd);
+	public void remove(DictRemoveCmd cmd) {
+		dictRemoveCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -91,7 +88,7 @@ public class DictsServiceImpl implements DictsServiceI {
 	 * @return 字典
 	 */
 	@Override
-	public Result<DictCO> getById(DictGetQry qry) {
+	public Result<DictCO> findById(DictGetQry qry) {
 		return dictGetQryExe.execute(qry);
 	}
 
@@ -111,7 +108,7 @@ public class DictsServiceImpl implements DictsServiceI {
 	 * @return 字典列表
 	 */
 	@Override
-	public Result<Datas<DictCO>> list(DictListQry qry) {
+	public Result<Datas<DictCO>> findList(DictListQry qry) {
 		return dictListQryExe.execute(qry);
 	}
 

@@ -27,7 +27,7 @@
         </if>
         order by sort desc
     </select>
-    <select id="getDeptIdsByRoleId" resultType="long">
+    <select id="selectIdsByRoleId" resultType="long">
         SELECT a.id
         FROM boot_sys_dept a
            ,boot_sys_role b
@@ -38,17 +38,19 @@
           and a.del_flag = 0
         group by a.id
     </select>
-    <select id="getDeptPathByPid" resultType="java.lang.String">
+    <select id="selectPathById" resultType="java.lang.String">
         select path
         from boot_sys_dept
-        where id = #{pid}
+        where id = #{id}
     </select>
-    <select id="getDeptChildrenListByLikePath"
-            resultType="org.laokou.admin.gatewayimpl.database.dataobject.DeptDO">
-        select id
-             ,path
+    <select id="selectListByPath" resultType="org.laokou.admin.gatewayimpl.database.dataobject.DeptDO">
+        select id, path
         from boot_sys_dept
         where path like concat(#{path},'%')
-            and path <![CDATA[ <> ]]> #{path}
+        and path <![CDATA[ <> ]]> #{path}
+        and del_flag = 0
+    </select>
+    <select id="selectVersion" resultType="integer">
+        select version from boot_sys_dept where id = #{id}
     </select>
 </mapper>

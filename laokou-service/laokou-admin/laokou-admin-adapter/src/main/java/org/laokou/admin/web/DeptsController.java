@@ -47,64 +47,56 @@ public class DeptsController {
 
 	private final DeptsServiceI deptsServiceI;
 
-	@GetMapping("tree")
-	@TraceLog
-	@Operation(summary = "部门管理", description = "树形部门列表")
-	public Result<DeptCO> tree() {
-		return deptsServiceI.tree(new DeptTreeGetQry());
-	}
-
 	@PostMapping("list")
 	@Operation(summary = "部门管理", description = "查询菜单列表")
 	@PreAuthorize("hasAuthority('depts:list')")
 	@TraceLog
-	public Result<List<DeptCO>> list(@RequestBody DeptListQry qry) {
-		return deptsServiceI.list(qry);
+	public Result<List<DeptCO>> findList(@RequestBody DeptListQry qry) {
+		return deptsServiceI.findList(qry);
 	}
 
 	@Idempotent
 	@PostMapping
 	@Operation(summary = "部门管理", description = "新增菜单")
 	@OperateLog(module = "部门管理", operation = "新增菜单")
-	@PreAuthorize("hasAuthority('depts:insert')")
+	@PreAuthorize("hasAuthority('depts:create')")
 	@TraceLog
-	public Result<Boolean> insert(@RequestBody DeptInsertCmd cmd) {
-		return deptsServiceI.insert(cmd);
+	public void create(@RequestBody DeptCreateCmd cmd) {
+		deptsServiceI.create(cmd);
 	}
 
 	@PutMapping
 	@Operation(summary = "部门管理", description = "修改菜单")
 	@OperateLog(module = "部门管理", operation = "修改菜单")
-	@PreAuthorize("hasAuthority('depts:update')")
+	@PreAuthorize("hasAuthority('depts:modify')")
 	@TraceLog
 	@DataCache(name = DEPTS, key = "#cmd.deptCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> update(@RequestBody DeptUpdateCmd cmd) {
-		return deptsServiceI.update(cmd);
+	public void modify(@RequestBody DeptModifyCmd cmd) {
+		deptsServiceI.modify(cmd);
 	}
 
 	@GetMapping("{id}")
 	@TraceLog
 	@Operation(summary = "部门管理", description = "查看菜单")
 	@DataCache(name = DEPTS, key = "#id")
-	public Result<DeptCO> getById(@PathVariable("id") Long id) {
-		return deptsServiceI.getById(new DeptGetQry(id));
+	public Result<DeptCO> findById(@PathVariable("id") Long id) {
+		return deptsServiceI.findById(new DeptGetQry(id));
 	}
 
-	@DeleteMapping("{id}")
+	@DeleteMapping
 	@TraceLog
 	@Operation(summary = "部门管理", description = "删除菜单")
 	@OperateLog(module = "部门管理", operation = "删除菜单")
-	@PreAuthorize("hasAuthority('depts:delete')")
-	@DataCache(name = DEPTS, key = "#id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
-		return deptsServiceI.deleteById(new DeptDeleteCmd(id));
+	@PreAuthorize("hasAuthority('depts:remove')")
+	public void remove(@RequestBody Long[] ids) {
+		deptsServiceI.remove(new DeptRemoveCmd(ids));
 	}
 
 	@GetMapping("{roleId}/ids")
 	@TraceLog
 	@Operation(summary = "部门管理", description = "部门IDS")
-	public Result<List<Long>> ids(@PathVariable("roleId") Long roleId) {
-		return deptsServiceI.ids(new DeptIDSGetQry(roleId));
+	public Result<List<Long>> findIds(@PathVariable("roleId") Long roleId) {
+		return deptsServiceI.findIds(new DeptIdsGetQry(roleId));
 	}
 
 }

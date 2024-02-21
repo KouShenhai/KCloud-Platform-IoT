@@ -22,9 +22,9 @@ import org.laokou.admin.api.RolesServiceI;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.role.*;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
-import org.laokou.admin.command.role.RoleDeleteCmdExe;
-import org.laokou.admin.command.role.RoleInsertCmdExe;
-import org.laokou.admin.command.role.RoleUpdateCmdExe;
+import org.laokou.admin.command.role.RoleRemoveCmdExe;
+import org.laokou.admin.command.role.RoleCreateCmdExe;
+import org.laokou.admin.command.role.RoleModifyCmdExe;
 import org.laokou.admin.command.role.query.RoleGetQryExe;
 import org.laokou.admin.command.role.query.RoleListQryExe;
 import org.laokou.admin.command.role.query.RoleOptionListQryExe;
@@ -49,11 +49,11 @@ public class RolesServiceImpl implements RolesServiceI {
 
 	private final RoleGetQryExe roleGetQryExe;
 
-	private final RoleInsertCmdExe roleInsertCmdExe;
+	private final RoleCreateCmdExe roleCreateCmdExe;
 
-	private final RoleUpdateCmdExe roleUpdateCmdExe;
+	private final RoleModifyCmdExe roleModifyCmdExe;
 
-	private final RoleDeleteCmdExe roleDeleteCmdExe;
+	private final RoleRemoveCmdExe roleRemoveCmdExe;
 
 	/**
 	 * 查询角色列表.
@@ -61,18 +61,17 @@ public class RolesServiceImpl implements RolesServiceI {
 	 * @return 查询角色列表
 	 */
 	@Override
-	public Result<Datas<RoleCO>> list(RoleListQry qry) {
+	public Result<Datas<RoleCO>> findList(RoleListQry qry) {
 		return roleListQryExe.execute(qry);
 	}
 
 	/**
 	 * 查询角色下拉框选择项列表.
-	 * @param qry 查询角色下拉框选择项列表参数
 	 * @return 角色下拉框选择项列表
 	 */
 	@Override
-	public Result<List<OptionCO>> optionList(RoleOptionListQry qry) {
-		return roleOptionListQryExe.execute(qry);
+	public Result<List<OptionCO>> findOptionList() {
+		return roleOptionListQryExe.execute();
 	}
 
 	/**
@@ -81,38 +80,35 @@ public class RolesServiceImpl implements RolesServiceI {
 	 * @return 角色
 	 */
 	@Override
-	public Result<RoleCO> getById(RoleGetQry qry) {
+	public Result<RoleCO> findById(RoleGetQry qry) {
 		return roleGetQryExe.execute(qry);
 	}
 
 	/**
 	 * 新增角色.
 	 * @param cmd 新增角色参数
-	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(RoleInsertCmd cmd) {
-		return roleInsertCmdExe.execute(cmd);
+	public void create(RoleCreateCmd cmd) {
+		roleCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 修改角色.
 	 * @param cmd 修改角色参数
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(RoleUpdateCmd cmd) {
-		return roleUpdateCmdExe.execute(cmd);
+	public void modify(RoleModifyCmd cmd) {
+		roleModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**
-	 * 根据ID删除角色.
-	 * @param cmd 根据ID删除角色参数
-	 * @return 删除结果
+	 * 根据IDS删除角色.
+	 * @param cmd 根据IDS删除角色参数
 	 */
 	@Override
-	public Result<Boolean> deleteById(RoleDeleteCmd cmd) {
-		return roleDeleteCmdExe.execute(cmd);
+	public void remove(RoleRemoveCmd cmd) {
+		roleRemoveCmdExe.executeVoid(cmd);
 	}
 
 }

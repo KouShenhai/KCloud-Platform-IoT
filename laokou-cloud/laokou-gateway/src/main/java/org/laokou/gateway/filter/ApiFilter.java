@@ -28,7 +28,6 @@ import org.laokou.common.nacos.utils.ReactiveRequestUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.laokou.gateway.annotation.Auth;
 import org.laokou.gateway.config.GatewayExtProperties;
-import org.laokou.gateway.utils.I18nUtil;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.Assert;
@@ -64,10 +63,7 @@ public class ApiFilter implements WebFilter {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-		try {
-			// 国际化
-			I18nUtil.set(exchange);
-			return requestMappingHandlerMapping.getHandler(exchange)
+		return requestMappingHandlerMapping.getHandler(exchange)
 				.switchIfEmpty(chain.filter(exchange))
 				.flatMap(handler -> {
 					ServerHttpRequest request = exchange.getRequest();
@@ -83,10 +79,6 @@ public class ApiFilter implements WebFilter {
 					}
 					return chain.filter(exchange);
 				});
-		}
-		finally {
-			I18nUtil.reset();
-		}
 	}
 
 	/**

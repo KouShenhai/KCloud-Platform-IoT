@@ -53,15 +53,15 @@ public class LogsController {
 	@PostMapping("operate-list")
 	@Operation(summary = "日志管理", description = "查询操作日志列表")
 	@PreAuthorize("hasAuthority('logs:operate-list')")
-	public Result<Datas<OperateLogCO>> operateList(@RequestBody OperateLogListQry qry) {
+	public Result<Datas<OperateLogCO>> findOperateList(@RequestBody OperateLogListQry qry) {
 		return logsServiceI.operateList(qry);
 	}
 
 	@PostMapping("operate-export")
 	@Operation(summary = "日志管理", description = "导出操作日志")
-	@PreAuthorize("hasAuthority('logs:operate-export')")
+	@PreAuthorize("hasAuthority('logs:export-operate')")
 	@OperateLog(module = "日志管理", operation = "导出操作日志")
-	public void operateExport(@RequestBody OperateLogExportCmd cmd, HttpServletResponse response) {
+	public void exportOperate(@RequestBody OperateLogExportCmd cmd, HttpServletResponse response) {
 		cmd.setResponse(response);
 		logsServiceI.operateExport(cmd);
 	}
@@ -70,15 +70,15 @@ public class LogsController {
 	@PostMapping("login-list")
 	@Operation(summary = "日志管理", description = "查询登录日志列表")
 	@PreAuthorize("hasAuthority('logs:login-list')")
-	public Result<Datas<LoginLogCO>> loginList(@RequestBody LoginLogListQry qry) {
+	public Result<Datas<LoginLogCO>> findLoginList(@RequestBody LoginLogListQry qry) {
 		return logsServiceI.loginList(qry);
 	}
 
 	@PostMapping("login-export")
 	@Operation(summary = "日志管理", description = "导出登录日志")
-	@PreAuthorize("hasAuthority('logs:login-export')")
+	@PreAuthorize("hasAuthority('logs:export-login')")
 	@OperateLog(module = "日志管理", operation = "导出登录日志")
-	public void loginExport(@RequestBody LoginLogExportCmd cmd, HttpServletResponse response) {
+	public void exportLogin(@RequestBody LoginLogExportCmd cmd, HttpServletResponse response) {
 		cmd.setResponse(response);
 		logsServiceI.loginExport(cmd);
 	}

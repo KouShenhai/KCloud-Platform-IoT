@@ -18,17 +18,25 @@
 package org.laokou.admin.domain.menu;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.AggregateRoot;
+
+import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PROTECTED;
 
 /**
  * @author laokou
  */
 @Data
+@SuperBuilder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "Menu", description = "菜单")
-public class Menu {
-
-	@Schema(name = "id", description = "ID")
-	private Long id;
+public class Menu extends AggregateRoot<Long> {
 
 	@Schema(name = "name", description = "菜单名称")
 	private String name;
@@ -53,5 +61,11 @@ public class Menu {
 
 	@Schema(name = "visible", description = "菜单状态 0显示 1隐藏")
 	private Integer visible;
+
+	public void checkName(long count) {
+		if (count > 0) {
+			throw new SystemException("菜单名称已存在，请重新填写");
+		}
+	}
 
 }

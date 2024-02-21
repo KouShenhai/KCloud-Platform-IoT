@@ -82,21 +82,21 @@ public interface ResourceServiceI {
 	 * @param cmd 新增资源
 	 * @return 新增结果
 	 */
-	Result<Boolean> insert(ResourceInsertCmd cmd);
+	Result<Boolean> insert(ResourceCreateCmd cmd);
 
 	/**
 	 * 修改资源.
 	 * @param cmd 修改资源
 	 * @return 修改结果
 	 */
-	Result<Boolean> update(ResourceUpdateCmd cmd);
+	Result<Boolean> update(ResourceModifyCmd cmd);
 
 	/**
 	 * 根据ID删除资源.
 	 * @param cmd 根据ID删除资源参数
 	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(ResourceDeleteCmd cmd);
+	Result<Boolean> deleteById(ResourceRemoveCmd cmd);
 
 	/**
 	 * 查看资源任务流程图.

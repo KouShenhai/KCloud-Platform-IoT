@@ -19,6 +19,7 @@ package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,6 +30,10 @@ import java.util.List;
  * @author laokou
  */
 @Data
+@Builder
+// TODO
+//@AllArgsConstructor(access = PRIVATE)
+//@NoArgsConstructor(access = PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(name = "Datas", description = "对象集合")
@@ -47,6 +52,10 @@ public class Datas<T> extends DTO {
 	 */
 	public static <T> Datas<T> of() {
 		return new Datas<>(0, new ArrayList<>(0));
+	}
+
+	public static <T> Datas<T> of(List<T> list, long total) {
+		return new Datas<>(total, list);
 	}
 
 }

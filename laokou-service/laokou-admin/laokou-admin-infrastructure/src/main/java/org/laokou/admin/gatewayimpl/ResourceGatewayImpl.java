@@ -31,14 +31,11 @@ import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.laokou.admin.domain.resource.Resource;
-import org.laokou.admin.dto.resource.TaskStartCmd;
-import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
 import org.laokou.admin.gatewayimpl.database.ResourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceIndex;
-import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.JacksonUtil;
@@ -49,7 +46,6 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import org.laokou.common.openfeign.utils.FeignUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -59,7 +55,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.AuditEnums.PENDING_APPROVAL;
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_RESOURCE;
 import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.RESOURCE;
 import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
@@ -79,7 +74,9 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private final ResourceAuditMapper resourceAuditMapper;
 
-	private final TasksFeignClient tasksFeignClient;
+	/*
+	 * private final TasksFeignClient tasksFeignClient;
+	 */
 
 	private final DomainEventPublisher domainEventPublisher;
 
@@ -216,10 +213,10 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private Boolean updateResource(Resource resource, Integer version) {
 		log.info("开始任务分布式事务 XID：{}", RootContext.getXID());
 		insertResourceAudit(resource);
-		StartCO co = startTask(resource);
-		int status = PENDING_APPROVAL.getValue();
-		updateResourceStatus(resource, status, version, co.getInstanceId());
-		publishMessageEvent(resource, co.getInstanceId());
+		// StartCO co = startTask(resource);
+		// int status = PENDING_APPROVAL.getValue();
+		// updateResourceStatus(resource, status, version, co.getInstanceId());
+		// publishMessageEvent(resource, co.getInstanceId());
 		return true;
 	}
 
@@ -239,12 +236,13 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	 * @param resource 资源对象
 	 * @return 开始结果
 	 */
-	private StartCO startTask(Resource resource) {
-		TaskStartCmd cmd = new TaskStartCmd();
-		cmd.setBusinessKey(resource.getId().toString());
-		cmd.setDefinitionKey(defaultConfigProperties.getDefinitionKey());
-		cmd.setInstanceName(resource.getTitle());
-		return FeignUtil.result(tasksFeignClient.start(cmd));
+	private Object startTask(Resource resource) {
+		return null;
+		// TaskStartCmd cmd = new TaskStartCmd();
+		// cmd.setBusinessKey(resource.getId().toString());
+		// cmd.setDefinitionKey(defaultConfigProperties.getDefinitionKey());
+		// cmd.setInstanceName(resource.getTitle());
+		// return FeignUtil.result(tasksFeignClient.start(cmd));
 	}
 
 	/**

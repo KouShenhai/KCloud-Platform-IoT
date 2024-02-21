@@ -34,7 +34,7 @@ public interface MessagesServiceI {
 	 * @param cmd 新增消息参数
 	 * @return 新增结果
 	 */
-	Result<Boolean> insert(MessageInsertCmd cmd);
+	Result<Boolean> insert(MessageCreateCmd cmd);
 
 	/**
 	 * 查询消息列表.

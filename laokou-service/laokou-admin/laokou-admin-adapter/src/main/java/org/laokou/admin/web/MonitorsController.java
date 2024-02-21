@@ -45,14 +45,14 @@ public class MonitorsController {
 	@TraceLog
 	@GetMapping("cache")
 	@Operation(summary = "监控管理", description = "缓存监控")
-	public Result<RedisCacheCO> cache() {
+	public Result<RedisCacheCO> findCacheInfo() {
 		return monitorsServiceI.cache(new MonitorRedisCacheGetQry());
 	}
 
 	@TraceLog
 	@GetMapping("server")
 	@Operation(summary = "监控管理", description = "主机监控")
-	public Result<ServerCO> server() {
+	public Result<ServerCO> findServerInfo() {
 		return monitorsServiceI.server(new MonitorServerGetQry());
 	}
 

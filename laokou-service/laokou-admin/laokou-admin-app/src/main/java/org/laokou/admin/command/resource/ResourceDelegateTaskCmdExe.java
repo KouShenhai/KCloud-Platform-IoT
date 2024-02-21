@@ -17,7 +17,6 @@
 
 package org.laokou.admin.command.resource;
 
-import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +24,6 @@ import org.laokou.admin.common.event.DomainEventPublisher;
 import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.dto.resource.ResourceDelegateTaskCmd;
 import org.laokou.admin.dto.resource.TaskDelegateCmd;
-import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -40,7 +38,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResourceDelegateTaskCmdExe {
 
-	private final TasksFeignClient tasksFeignClient;
+	// private final TasksFeignClient tasksFeignClient;
 
 	private final DomainEventPublisher domainEventPublisher;
 
@@ -53,13 +51,12 @@ public class ResourceDelegateTaskCmdExe {
 	 */
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(ResourceDelegateTaskCmd cmd) {
-		log.info("资源委派任务分布式事务 XID：{}", RootContext.getXID());
-		Result<Boolean> result = tasksFeignClient.delegate(toCmd(cmd));
-		// 发送消息
-		if (result.success()) {
-			publishMessage(cmd);
-		}
-		return result;
+		/*
+		 * log.info("资源委派任务分布式事务 XID：{}", RootContext.getXID()); Result<Boolean> result =
+		 * tasksFeignClient.delegate(toCmd(cmd)); // 发送消息 if (result.success()) {
+		 * publishMessage(cmd); } return result;
+		 */
+		return null;
 	}
 
 	/**

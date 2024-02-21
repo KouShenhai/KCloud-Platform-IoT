@@ -17,13 +17,14 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
@@ -34,17 +35,10 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Repository
 @Mapper
-public interface DictMapper extends BatchMapper<DictDO> {
+public interface DictMapper extends CrudMapper<Long,Integer,DictDO> {
 
-	/**
-	 * 查询字典列表.
-	 * @param page 分页参数
-	 * @param type 类型
-	 * @param label 标签
-	 * @param pageQuery 分页参数
-	 * @return 字典列表
-	 */
-	IPage<DictDO> getDictListFilter(IPage<DictDO> page, @Param("type") String type, @Param("label") String label,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+    List<DictDO> selectListByCondition(@Param("dict")DictDO dict, @Param(PAGE_QUERY)PageQuery pageQuery);
+
+    long selectCountByCondition(@Param("dict")DictDO dict, @Param(PAGE_QUERY)PageQuery pageQuery);
 
 }

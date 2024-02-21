@@ -18,16 +18,25 @@
 package org.laokou.admin.dto.role.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.io.Serial;
 import java.util.List;
 
+import static lombok.AccessLevel.PRIVATE;
+
 /**
  * @author laokou
  */
 @Data
+@Builder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "RoleCO", description = "角色")
 public class RoleCO extends ClientObject {
 
@@ -38,6 +47,7 @@ public class RoleCO extends ClientObject {
 	private Long id;
 
 	@Schema(name = "name", description = "角色名称")
+	@NotBlank(message = "请填写角色名称")
 	private String name;
 
 	@Schema(name = "sort", description = "角色排序")

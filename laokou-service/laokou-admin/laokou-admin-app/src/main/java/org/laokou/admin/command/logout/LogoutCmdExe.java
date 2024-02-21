@@ -19,12 +19,11 @@ package org.laokou.admin.command.logout;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.logout.LogoutCmd;
-import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
@@ -49,32 +48,24 @@ public class LogoutCmdExe {
 	/**
 	 * 执行退出登录.
 	 * @param cmd 退出登录参数
-	 * @return 执行退出结果
 	 */
-	public Result<Boolean> execute(LogoutCmd cmd) {
+	public void executeVoid(LogoutCmd cmd) {
 		String token = cmd.getToken();
 		if (StringUtil.isEmpty(token)) {
-			return Result.of(true);
+			return;
 		}
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
 		if (ObjectUtil.isNull(authorization)) {
-			return Result.of(true);
+			return;
 		}
 		UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) ObjectUtil
 			.requireNotNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
-		if (ObjectUtil.isNull(userDetail)) {
-			return Result.of(true);
-		}
-		Long userId = userDetail.getId();
 		// 删除token
 		removeToken(authorization);
 		// 删除菜单key
-		deleteMenuTreeKey(userId);
+		removeMenuTreeKey(userDetail.getId());
 		// 删除用户key
-		deleteUserInfoKey(token);
-		// 删除强踢Key
-		deleteUserKillKey(token);
-		return Result.of(true);
+		removeUserInfoKey(token);
 	}
 
 	/**
@@ -89,25 +80,16 @@ public class LogoutCmdExe {
 	 * 删除用户信息Key.
 	 * @param token 令牌
 	 */
-	private void deleteUserInfoKey(String token) {
+	private void removeUserInfoKey(String token) {
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
 		redisUtil.delete(userInfoKey);
-	}
-
-	/**
-	 * 删除用户强踢Key.
-	 * @param token 令牌
-	 */
-	private void deleteUserKillKey(String token) {
-		String userKillKey = RedisKeyUtil.getUserKillKey(token);
-		redisUtil.delete(userKillKey);
 	}
 
 	/**
 	 * 删除树菜单Key.
 	 * @param userId 用户ID
 	 */
-	private void deleteMenuTreeKey(Long userId) {
+	private void removeMenuTreeKey(Long userId) {
 		String resourceTreeKey = RedisKeyUtil.getMenuTreeKey(userId);
 		redisUtil.delete(resourceTreeKey);
 	}

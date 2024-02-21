@@ -37,41 +37,37 @@ public interface RolesServiceI {
 	 * @param qry 查询角色列表
 	 * @return 角色列表
 	 */
-	Result<Datas<RoleCO>> list(RoleListQry qry);
+	Result<Datas<RoleCO>> findList(RoleListQry qry);
 
 	/**
 	 * 查询角色下拉框选择项列表.
-	 * @param qry 查询角色下拉框选择项列表参数
 	 * @return 角色下拉框选择项列表
 	 */
-	Result<List<OptionCO>> optionList(RoleOptionListQry qry);
+	Result<List<OptionCO>> findOptionList();
 
 	/**
 	 * 根据ID查看角色.
 	 * @param qry 根据ID查看角色
 	 * @return 角色
 	 */
-	Result<RoleCO> getById(RoleGetQry qry);
+	Result<RoleCO> findById(RoleGetQry qry);
 
 	/**
 	 * 新增角色.
 	 * @param cmd 新增角色参数
-	 * @return 新增结果
 	 */
-	Result<Boolean> insert(RoleInsertCmd cmd);
+	void create(RoleCreateCmd cmd);
 
 	/**
 	 * 修改角色.
 	 * @param cmd 修改角色参数
-	 * @return 修改结果
 	 */
-	Result<Boolean> update(RoleUpdateCmd cmd);
+	void modify(RoleModifyCmd cmd);
 
 	/**
-	 * 根据ID删除角色.
-	 * @param cmd 根据ID删除角色参数
-	 * @return 删除结果
+	 * 根据IDS删除角色.
+	 * @param cmd 根据IDS删除角色参数
 	 */
-	Result<Boolean> deleteById(RoleDeleteCmd cmd);
+	void remove(RoleRemoveCmd cmd);
 
 }

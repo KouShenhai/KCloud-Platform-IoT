@@ -20,7 +20,7 @@ package org.laokou.admin.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -34,19 +34,19 @@ import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
  */
 @Repository
 @Mapper
-public interface UserRoleMapper extends BatchMapper<UserRoleDO> {
+public interface UserRoleMapper extends CrudMapper<Long, Integer, UserRoleDO> {
 
 	/**
 	 * 根据用户ID查询角色IDS.
 	 * @param userId 用户ID
 	 * @return 角色IDS
 	 */
-	List<Long> getRoleIdsByUserId(@Param(USER_ID) Long userId);
+	List<Long> selectRoleIdsByUserId(@Param(USER_ID) Long userId);
 
 	/**
 	 * 根据用户ID删除用户角色.
 	 * @param userId 用户ID
 	 */
-	void deleteUserRoleByUserId(@Param(USER_ID) Long userId);
+	void deleteByUserId(@Param(USER_ID) Long userId);
 
 }

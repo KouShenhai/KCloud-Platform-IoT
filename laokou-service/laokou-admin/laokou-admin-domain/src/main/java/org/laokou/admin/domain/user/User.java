@@ -17,23 +17,30 @@
 
 package org.laokou.admin.domain.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import java.time.LocalDateTime;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.utils.StringUtil;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.List;
 
-import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
+import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
-@Schema(name = "User", description = "用户")
-public class User {
-
-	@Schema(name = "id", description = "ID")
-	private Long id;
+@SuperBuilder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
+@Schema(name = "User", description = "用户信息")
+public class User extends AggregateRoot<Long> {
 
 	@Schema(name = "username", description = "用户名")
 	private String username;
@@ -56,55 +63,43 @@ public class User {
 	@Schema(name = "mobile", description = "手机号")
 	private String mobile;
 
-	@Schema(name = "editor", description = "编辑人")
-	private Long editor;
-
-	@Schema(name = "deptId", description = "部门ID")
-	private Long deptId;
-
-	@Schema(name = "version", description = "版本号")
-	private Integer version;
-
-	@Schema(name = "createDate", description = "创建时间")
-	private LocalDateTime createDate;
-
-	@Schema(name = "creator", description = "创建人")
-	private Long creator;
-
 	@Schema(name = "superAdmin", description = "超级管理员标识 0否 1是")
 	private Integer superAdmin;
 
-	@Schema(name = "tenantId", description = "租户ID")
-	private Long tenantId;
-
-	@Schema(name = "deptPath", description = "部门PATH")
-	private String deptPath;
-
-	public User(String username) {
-		this.username = username;
+	public void checkUserName(long count) {
+		if (count > 0) {
+			throw new SystemException("用户名已存在，请重新输入");
+		}
 	}
 
-	public User(Long id, Integer status) {
-		this.id = id;
-		this.status = status;
+	public void checkMail(long count) {
+		if (count > 0) {
+			throw new SystemException("邮箱地址已被注册，请重新填写");
+		}
 	}
 
-	public User(Long id, String password) {
-		this.id = id;
-		this.password = password;
+	public void checkMobile(long count) {
+		if (count > 0) {
+			throw new SystemException("手机号已被注册，请重新填写");
+		}
 	}
 
-	public User(Integer superAdmin, Long tenantId) {
-		this.superAdmin = superAdmin;
-		this.tenantId = tenantId;
+	public void encryptMail(String mail) {
+		if (StringUtil.isNotEmpty(mail)) {
+			this.mail = AesUtil.encrypt(mail);
+		}
 	}
 
-	public User() {
+	public void encryptMobile(String mobile) {
+		if (StringUtil.isNotEmpty(mobile)) {
+			this.mobile = AesUtil.encrypt(mobile);
+		}
 	}
 
-	@JsonIgnore
-	public boolean isSuperAdministrator() {
-		return this.superAdmin == YES.ordinal();
+	public void encryptPassword(PasswordEncoder passwordEncoder, String pwd) {
+		if (StringUtil.isNotEmpty(pwd)) {
+			this.password = passwordEncoder.encode(pwd);
+		}
 	}
 
 }

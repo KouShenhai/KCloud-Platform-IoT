@@ -23,10 +23,8 @@ import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.admin.domain.event.OperateFailedEvent;
 import org.laokou.admin.domain.event.OperateSucceededEvent;
 import org.laokou.admin.domain.gateway.LogGateway;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.listener.AbstractDomainEventRocketMQListener;
-import org.laokou.common.domain.repository.DomainEventDO;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.EventTypeEnums;
 import org.laokou.common.i18n.dto.DecorateDomainEvent;
@@ -34,7 +32,8 @@ import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.common.i18n.common.RocketMqConstants.*;
+import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OPERATE_LOG_CONSUMER_GROUP;
+import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OPERATE_LOG_TOPIC;
 
 /**
  * 操作日志处理.
@@ -56,15 +55,15 @@ public class OperateLogHandler extends AbstractDomainEventRocketMQListener {
 	}
 
 	@Override
-	protected void handleDomainEvent(DomainEventDO eventDO) {
-		switch (EventTypeEnums.valueOf(eventDO.getEventType())) {
+	protected void handleDomainEvent(DecorateDomainEvent evt, String eventType, String attribute) {
+		switch (EventTypeEnums.valueOf(eventType)) {
 			case OPERATE_FAILED -> {
-				OperateFailedEvent event = JacksonUtil.toBean(eventDO.getAttribute(), OperateFailedEvent.class);
-				logGateway.create(event, ConvertUtil.sourceToTarget(eventDO, DecorateDomainEvent.class));
+				OperateFailedEvent event = JacksonUtil.toBean(attribute, OperateFailedEvent.class);
+				logGateway.create(event, evt);
 			}
 			case OPERATE_SUCCEEDED -> {
-				OperateSucceededEvent event = JacksonUtil.toBean(eventDO.getAttribute(), OperateSucceededEvent.class);
-				logGateway.create(event, ConvertUtil.sourceToTarget(eventDO, DecorateDomainEvent.class));
+				OperateSucceededEvent event = JacksonUtil.toBean(attribute, OperateSucceededEvent.class);
+				logGateway.create(event, evt);
 			}
 		}
 	}

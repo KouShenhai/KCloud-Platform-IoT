@@ -23,10 +23,8 @@ import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.domain.event.LoginFailedEvent;
 import org.laokou.auth.domain.event.LoginSucceededEvent;
 import org.laokou.auth.domain.gateway.LogGateway;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.listener.AbstractDomainEventRocketMQListener;
-import org.laokou.common.domain.repository.DomainEventDO;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.EventTypeEnums;
 import org.laokou.common.i18n.dto.DecorateDomainEvent;
@@ -57,15 +55,15 @@ public class LoginLogHandler extends AbstractDomainEventRocketMQListener {
 	}
 
 	@Override
-	protected void handleDomainEvent(DomainEventDO eventDO) {
-		switch (EventTypeEnums.valueOf(eventDO.getEventType())) {
+	protected void handleDomainEvent(DecorateDomainEvent evt, String eventType, String attribute) {
+		switch (EventTypeEnums.valueOf(eventType)) {
 			case LOGIN_FAILED -> {
-				LoginFailedEvent event = JacksonUtil.toBean(eventDO.getAttribute(), LoginFailedEvent.class);
-				logGateway.create(event, ConvertUtil.sourceToTarget(eventDO, DecorateDomainEvent.class));
+				LoginFailedEvent event = JacksonUtil.toBean(attribute, LoginFailedEvent.class);
+				logGateway.create(event, evt);
 			}
 			case LOGIN_SUCCEEDED -> {
-				LoginSucceededEvent event = JacksonUtil.toBean(eventDO.getAttribute(), LoginSucceededEvent.class);
-				logGateway.create(event, ConvertUtil.sourceToTarget(eventDO, DecorateDomainEvent.class));
+				LoginSucceededEvent event = JacksonUtil.toBean(attribute, LoginSucceededEvent.class);
+				logGateway.create(event, evt);
 			}
 		}
 	}

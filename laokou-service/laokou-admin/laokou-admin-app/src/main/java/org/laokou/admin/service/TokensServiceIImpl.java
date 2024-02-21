@@ -20,7 +20,6 @@ package org.laokou.admin.service;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.TokensServiceI;
 import org.laokou.admin.command.token.qry.TokenGetQryExe;
-import org.laokou.admin.dto.token.TokenGetQry;
 import org.laokou.admin.dto.token.clientobject.TokenCO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
@@ -38,12 +37,11 @@ public class TokensServiceIImpl implements TokensServiceI {
 
 	/**
 	 * 生成令牌.
-	 * @param qry 生成令牌参数
 	 * @return 令牌
 	 */
 	@Override
-	public Result<TokenCO> generate(TokenGetQry qry) {
-		return tokenGetQryExe.execute(qry);
+	public Result<TokenCO> generate() {
+		return tokenGetQryExe.execute();
 	}
 
 }

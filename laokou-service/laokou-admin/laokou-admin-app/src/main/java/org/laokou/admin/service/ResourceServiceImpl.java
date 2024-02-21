@@ -56,11 +56,11 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	private final ResourceDownloadCmdExe resourceDownloadCmdExe;
 
-	private final ResourceInsertCmdExe resourceInsertCmdExe;
+	private final ResourceCreateCmdExe resourceCreateCmdExe;
 
-	private final ResourceUpdateCmdExe resourceUpdateCmdExe;
+	private final ResourceModifyCmdExe resourceModifyCmdExe;
 
-	private final ResourceDeleteCmdExe resourceDeleteCmdExe;
+	private final ResourceRemoveCmdExe resourceRemoveCmdExe;
 
 	private final ResourceDiagramGetQryExe resourceDiagramGetQryExe;
 
@@ -143,8 +143,8 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(ResourceInsertCmd cmd) {
-		return resourceInsertCmdExe.execute(cmd);
+	public Result<Boolean> insert(ResourceCreateCmd cmd) {
+		return resourceCreateCmdExe.execute(cmd);
 	}
 
 	/**
@@ -153,8 +153,8 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(ResourceUpdateCmd cmd) {
-		return resourceUpdateCmdExe.execute(cmd);
+	public Result<Boolean> update(ResourceModifyCmd cmd) {
+		return resourceModifyCmdExe.execute(cmd);
 	}
 
 	/**
@@ -163,8 +163,8 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(ResourceDeleteCmd cmd) {
-		return resourceDeleteCmdExe.execute(cmd);
+	public Result<Boolean> deleteById(ResourceRemoveCmd cmd) {
+		return resourceRemoveCmdExe.execute(cmd);
 	}
 
 	/**

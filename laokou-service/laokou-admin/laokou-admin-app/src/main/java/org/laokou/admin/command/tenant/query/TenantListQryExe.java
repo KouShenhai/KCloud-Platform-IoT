@@ -51,7 +51,7 @@ public class TenantListQryExe {
 		Datas<Tenant> newPage = tenantGateway.list(tenant, qry);
 		Datas<TenantCO> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(tenantConvertor.convertClientObjectList(newPage.getRecords()));
+		// datas.setRecords(tenantConvertor.convertClientObjectList(newPage.getRecords()));
 		return Result.of(datas);
 	}
 

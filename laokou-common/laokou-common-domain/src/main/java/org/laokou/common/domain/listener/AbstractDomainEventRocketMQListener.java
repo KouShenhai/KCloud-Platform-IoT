@@ -52,12 +52,11 @@ public abstract class AbstractDomainEventRocketMQListener implements RocketMQLis
 		DomainEventDO eventDO = JacksonUtil.toBean(msg, DomainEventDO.class);
 		try {
 			// 处理领域事件
-			handleDomainEvent(eventDO);
+			handleDomainEvent(convert(eventDO), eventDO.getEventType(), eventDO.getAttribute());
 			// 消费成功
 			events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			if (e instanceof DataIntegrityViolationException) {
 				// 消费成功（数据重复直接改为消费成功）
 				events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
@@ -65,6 +64,7 @@ public abstract class AbstractDomainEventRocketMQListener implements RocketMQLis
 			else {
 				// 消费失败
 				events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_FAILED, eventDO.getSourceName()));
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
 		}
 		finally {
@@ -72,6 +72,20 @@ public abstract class AbstractDomainEventRocketMQListener implements RocketMQLis
 		}
 	}
 
-	protected abstract void handleDomainEvent(DomainEventDO eventDO);
+	private DecorateDomainEvent convert(DomainEventDO eventDO) {
+		return DecorateDomainEvent.builder()
+			.sourceName(eventDO.getSourceName())
+			.editor(eventDO.getEditor())
+			.creator(eventDO.getCreator())
+			.updateDate(eventDO.getUpdateDate())
+			.createDate(eventDO.getCreateDate())
+			.deptId(eventDO.getDeptId())
+			.deptPath(eventDO.getDeptPath())
+			.tenantId(eventDO.getTenantId())
+			.id(eventDO.getId())
+			.build();
+	}
+
+	protected abstract void handleDomainEvent(DecorateDomainEvent evt, String eventType, String attribute);
 
 }

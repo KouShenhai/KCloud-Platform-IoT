@@ -37,21 +37,21 @@ public interface SourcesServiceI {
 	 * @param cmd 新增数据源参数
 	 * @return 新增结果
 	 */
-	Result<Boolean> insert(SourceInsertCmd cmd);
+	Result<Boolean> insert(SourceCreateCmd cmd);
 
 	/**
 	 * 修改数据源.
 	 * @param cmd 修改数据源参数
 	 * @return 修改结果
 	 */
-	Result<Boolean> update(SourceUpdateCmd cmd);
+	Result<Boolean> update(SourceModifyCmd cmd);
 
 	/**
 	 * 根据ID删除数据源.
 	 * @param cmd 根据ID删除数据源参数
 	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(SourceDeleteCmd cmd);
+	Result<Boolean> deleteById(SourceRemoveCmd cmd);
 
 	/**
 	 * 根据ID查看数据源.

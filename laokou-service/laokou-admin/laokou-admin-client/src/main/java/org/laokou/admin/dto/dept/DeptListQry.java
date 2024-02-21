@@ -32,6 +32,9 @@ public class DeptListQry extends CommonCommand {
 	@Schema(name = "name", description = "部门名称")
 	private String name;
 
+	@Schema(name = "type", description = "LIST列表 TREE_LIST树形列表 USER_TREE_LIST用户树形列表")
+	private String type;
+
 	public void setName(String name) {
 		this.name = StringUtil.like(name);
 	}

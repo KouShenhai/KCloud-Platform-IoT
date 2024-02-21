@@ -19,12 +19,12 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.IpsServiceI;
-import org.laokou.admin.command.ip.IpDeleteCmdExe;
-import org.laokou.admin.command.ip.IpInsertCmdExe;
+import org.laokou.admin.command.ip.IpRemoveCmdExe;
+import org.laokou.admin.command.ip.IpCreateCmdExe;
 import org.laokou.admin.command.ip.IpRefreshCmdExe;
 import org.laokou.admin.command.ip.query.IpListQryExe;
-import org.laokou.admin.dto.ip.IpDeleteCmd;
-import org.laokou.admin.dto.ip.IpInsertCmd;
+import org.laokou.admin.dto.ip.IpRemoveCmd;
+import org.laokou.admin.dto.ip.IpCreateCmd;
 import org.laokou.admin.dto.ip.IpListQry;
 import org.laokou.admin.dto.ip.IpRefreshCmd;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
@@ -41,9 +41,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class IpsServiceImpl implements IpsServiceI {
 
-	private final IpInsertCmdExe ipInsertCmdExe;
+	private final IpCreateCmdExe ipCreateCmdExe;
 
-	private final IpDeleteCmdExe ipDeleteCmdExe;
+	private final IpRemoveCmdExe ipRemoveCmdExe;
 
 	private final IpListQryExe ipListQryExe;
 
@@ -55,8 +55,8 @@ public class IpsServiceImpl implements IpsServiceI {
 	 * @return 新增IP
 	 */
 	@Override
-	public Result<Boolean> insert(IpInsertCmd cmd) {
-		return ipInsertCmdExe.execute(cmd);
+	public Result<Boolean> insert(IpCreateCmd cmd) {
+		return ipCreateCmdExe.execute(cmd);
 	}
 
 	/**
@@ -65,8 +65,8 @@ public class IpsServiceImpl implements IpsServiceI {
 	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(IpDeleteCmd cmd) {
-		return ipDeleteCmdExe.execute(cmd);
+	public Result<Boolean> deleteById(IpRemoveCmd cmd) {
+		return ipRemoveCmdExe.execute(cmd);
 	}
 
 	/**

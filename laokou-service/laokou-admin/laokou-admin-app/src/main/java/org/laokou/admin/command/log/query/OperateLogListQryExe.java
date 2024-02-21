@@ -55,7 +55,7 @@ public class OperateLogListQryExe {
 		Datas<OperateLog> newPage = logGateway.operateList(operateLog, qry);
 		Datas<OperateLogCO> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(operateLogConvertor.convertClientObjectList(newPage.getRecords()));
+		// datas.setRecords(operateLogConvertor.convertClientObjectList(newPage.getRecords()));
 		return Result.of(datas);
 	}
 

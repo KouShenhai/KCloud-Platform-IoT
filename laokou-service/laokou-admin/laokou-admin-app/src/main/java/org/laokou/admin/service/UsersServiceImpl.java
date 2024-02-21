@@ -19,13 +19,15 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.UsersServiceI;
+import org.laokou.admin.command.user.*;
+import org.laokou.admin.command.user.query.UserGetQryExe;
+import org.laokou.admin.command.user.query.UserListQryExe;
+import org.laokou.admin.command.user.query.UserOptionListQryExe;
+import org.laokou.admin.command.user.query.UserProfileGetQryExe;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.user.*;
 import org.laokou.admin.dto.user.clientobject.UserCO;
-import org.laokou.admin.dto.user.clientobject.UserOnlineCO;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
-import org.laokou.admin.command.user.*;
-import org.laokou.admin.command.user.query.*;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
@@ -41,88 +43,60 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersServiceI {
 
-	private final UserUpdateCmdExe userUpdateCmdExe;
+	private final UserModifyCmdExe userModifyCmdExe;
 
-	private final UserInsertCmdExe userInsertCmdExe;
-
-	private final OnlineUserKillCmdExe onlineUserKillCmdExe;
-
-	private final OnlineUserListQryExe onlineUserListQryExe;
+	private final UserCreateCmdExe userCreateCmdExe;
 
 	private final UserProfileGetQryExe userProfileGetQryExe;
 
 	private final UserOptionListQryExe userOptionListQryExe;
 
-	private final UserProfileUpdateCmdExe userProfileUpdateCmdExe;
+	private final UserProfileModifyCmdExe userProfileModifyCmdExe;
 
-	private final UserStatusUpdateCmdExe userStatusUpdateCmdExe;
+	private final UserStatusModifyCmdExe userStatusModifyCmdExe;
 
 	private final UserPasswordResetCmdExe userPasswordResetCmdExe;
 
 	private final UserGetQryExe userGetQryExe;
 
-	private final UserDeleteCmdExe userDeleteCmdExe;
+	private final UserRemoveCmdExe userRemoveCmdExe;
 
 	private final UserListQryExe userListQryExe;
 
 	/**
 	 * 修改用户.
 	 * @param cmd 修改用户参数
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(UserUpdateCmd cmd) {
-		return userUpdateCmdExe.execute(cmd);
+	public void modify(UserModifyCmd cmd) {
+		userModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 新增用户.
 	 * @param cmd 新增用户参数
-	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(UserInsertCmd cmd) {
-		return userInsertCmdExe.execute(cmd);
-	}
-
-	/**
-	 * 强踢在线用户.
-	 * @param cmd 强踢在线用户参数
-	 * @return 强踢结果
-	 */
-	@Override
-	public Result<Boolean> onlineKill(OnlineUserKillCmd cmd) {
-		return onlineUserKillCmdExe.execute(cmd);
-	}
-
-	/**
-	 * 查询在线用户列表.
-	 * @param qry 查询在线用户列表参数
-	 * @return 在线用户列表
-	 */
-	@Override
-	public Result<Datas<UserOnlineCO>> onlineList(OnlineUserListQry qry) {
-		return onlineUserListQryExe.execute(qry);
+	public void create(UserCreateCmd cmd) {
+		userCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 查看用户信息.
-	 * @param qry 查看用户信息参数
 	 * @return 用户信息
 	 */
 	@Override
-	public Result<UserProfileCO> getProfile(UserProfileGetQry qry) {
-		return userProfileGetQryExe.execute(qry);
+	public Result<UserProfileCO> findProfile() {
+		return userProfileGetQryExe.execute();
 	}
 
 	/**
 	 * 修改用户信息.
 	 * @param cmd 修改用户信息参数
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> updateProfile(UserProfileUpdateCmd cmd) {
-		return userProfileUpdateCmdExe.execute(cmd);
+	public void modifyProfile(UserProfileModifyCmd cmd) {
+		userProfileModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -131,28 +105,26 @@ public class UsersServiceImpl implements UsersServiceI {
 	 * @return 用户下拉框选择项列表
 	 */
 	@Override
-	public Result<List<OptionCO>> optionList(UserOptionListQry qry) {
+	public Result<List<OptionCO>> findOptionList(UserOptionListQry qry) {
 		return userOptionListQryExe.execute(qry);
 	}
 
 	/**
 	 * 修改用户状态.
 	 * @param cmd 修改用户状态参数
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> updateStatus(UserStatusUpdateCmd cmd) {
-		return userStatusUpdateCmdExe.execute(cmd);
+	public void modifyStatus(UserStatusModifyCmd cmd) {
+		userStatusModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 重置密码.
 	 * @param cmd 重置密码参数
-	 * @return 重置结果
 	 */
 	@Override
-	public Result<Boolean> resetPassword(UserPasswordResetCmd cmd) {
-		return userPasswordResetCmdExe.execute(cmd);
+	public void resetPassword(UserPasswordResetCmd cmd) {
+		userPasswordResetCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -161,18 +133,17 @@ public class UsersServiceImpl implements UsersServiceI {
 	 * @return 用户
 	 */
 	@Override
-	public Result<UserCO> getById(UserGetQry qry) {
+	public Result<UserCO> findById(UserGetQry qry) {
 		return userGetQryExe.execute(qry);
 	}
 
 	/**
 	 * 根据ID删除用户.
 	 * @param cmd 根据ID删除用户参数
-	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(UserDeleteCmd cmd) {
-		return userDeleteCmdExe.execute(cmd);
+	public void remove(UserRemoveCmd cmd) {
+		userRemoveCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -181,7 +152,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	 * @return 用户列表
 	 */
 	@Override
-	public Result<Datas<UserCO>> list(UserListQry qry) {
+	public Result<Datas<UserCO>> findList(UserListQry qry) {
 		return userListQryExe.execute(qry);
 	}
 

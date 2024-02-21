@@ -54,7 +54,7 @@ public class ResourceListQryExe {
 		Resource resource = ConvertUtil.sourceToTarget(qry, Resource.class);
 		Datas<Resource> newPage = resourceGateway.list(resource, qry);
 		Datas<ResourceCO> datas = new Datas<>();
-		datas.setRecords(resourceConvertor.convertClientObjectList(newPage.getRecords()));
+		// datas.setRecords(resourceConvertor.convertClientObjectList(newPage.getRecords()));
 		datas.setTotal(newPage.getTotal());
 		return Result.of(datas);
 	}

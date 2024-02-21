@@ -19,10 +19,10 @@ package org.laokou.admin.command.dept.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.DeptConvertor;
-import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.admin.dto.dept.DeptGetQry;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
+import org.laokou.admin.gatewayimpl.database.DeptMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -37,9 +37,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 @RequiredArgsConstructor
 public class DeptGetQryExe {
 
-	private final DeptGateway deptGateway;
-
-	private final DeptConvertor deptConvertor;
+	private final DeptMapper deptMapper;
 
 	/**
 	 * 执行查看部门.
@@ -48,7 +46,17 @@ public class DeptGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<DeptCO> execute(DeptGetQry qry) {
-		return Result.of(deptConvertor.convertClientObject(deptGateway.getById(qry.getId())));
+		return Result.of(convert(deptMapper.selectById(qry.getId())));
+	}
+
+	private DeptCO convert(DeptDO deptDO) {
+		return DeptCO.builder()
+				.path(deptDO.getPath())
+				.sort(deptDO.getSort())
+				.id(deptDO.getId())
+				.pid(deptDO.getPid())
+				.name(deptDO.getName())
+				.build();
 	}
 
 }

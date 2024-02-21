@@ -25,7 +25,6 @@ import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.user.*;
 import org.laokou.admin.dto.user.clientobject.UserCO;
-import org.laokou.admin.dto.user.clientobject.UserOnlineCO;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
@@ -53,57 +52,40 @@ public class UsersController {
 	@PutMapping
 	@Operation(summary = "用户管理", description = "修改用户")
 	@OperateLog(module = "用户管理", operation = "修改用户")
-	@PreAuthorize("hasAuthority('users:update')")
+	@PreAuthorize("hasAuthority('users:modify')")
 	@DataCache(name = USERS, key = "#cmd.userCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> update(@RequestBody UserUpdateCmd cmd) {
-		return usersServiceI.update(cmd);
-	}
-
-	@TraceLog
-	@PostMapping("online-list")
-	@PreAuthorize("hasAuthority('users:online-list')")
-	@Operation(summary = "在线用户", description = "查询在线用户列表")
-	public Result<Datas<UserOnlineCO>> onlineList(@RequestBody OnlineUserListQry qry) {
-		return usersServiceI.onlineList(qry);
-	}
-
-	@TraceLog
-	@DeleteMapping("kill-online")
-	@Operation(summary = "在线用户", description = "强踢在线用户")
-	@OperateLog(module = "用户管理", operation = "强踢在线用户")
-	@PreAuthorize("hasAuthority('users:kill-online')")
-	public Result<Boolean> killOnline(@RequestBody OnlineUserKillCmd cmd) {
-		return usersServiceI.onlineKill(cmd);
+	public void modify(@RequestBody UserModifyCmd cmd) {
+		usersServiceI.modify(cmd);
 	}
 
 	@TraceLog
 	@GetMapping("profile")
 	@Operation(summary = "个人中心", description = "查看个人信息")
-	public Result<UserProfileCO> getProfile() {
-		return usersServiceI.getProfile(new UserProfileGetQry());
+	public Result<UserProfileCO> findProfile() {
+		return usersServiceI.findProfile();
 	}
 
 	@TraceLog
 	@GetMapping("option-list")
 	@Operation(summary = "用户管理", description = "下拉列表")
-	public Result<List<OptionCO>> optionList() {
-		return usersServiceI.optionList(new UserOptionListQry());
+	public Result<List<OptionCO>> findOptionList() {
+		return usersServiceI.findOptionList(new UserOptionListQry());
 	}
 
 	@TraceLog
 	@PutMapping("profile")
 	@Operation(summary = "个人中心", description = "修改个人信息")
-	public Result<Boolean> updateProfile(@RequestBody UserProfileUpdateCmd cmd) {
-		return usersServiceI.updateProfile(cmd);
+	public void modifyProfile(@RequestBody UserProfileModifyCmd cmd) {
+		usersServiceI.modifyProfile(cmd);
 	}
 
 	@TraceLog
 	@PutMapping("status")
 	@Operation(summary = "用户管理", description = "修改用户状态")
 	@OperateLog(module = "用户管理", operation = "修改用户状态")
-	@PreAuthorize("hasAuthority('users:status')")
-	public Result<Boolean> updateStatus(@RequestBody UserStatusUpdateCmd cmd) {
-		return usersServiceI.updateStatus(cmd);
+	@PreAuthorize("hasAuthority('users:modify-status')")
+	public void modifyStatus(@RequestBody UserStatusModifyCmd cmd) {
+		usersServiceI.modifyStatus(cmd);
 	}
 
 	@TraceLog
@@ -111,15 +93,15 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "重置密码")
 	@OperateLog(module = "用户管理", operation = "重置密码")
 	@PreAuthorize("hasAuthority('users:reset-password')")
-	public Result<Boolean> resetPassword(@RequestBody UserPasswordResetCmd cmd) {
-		return usersServiceI.resetPassword(cmd);
+	public void resetPassword(@RequestBody UserPasswordResetCmd cmd) {
+		usersServiceI.resetPassword(cmd);
 	}
 
 	@TraceLog
 	@PutMapping("password")
 	@Operation(summary = "个人中心", description = "修改密码")
-	public Result<Boolean> updatePassword(@RequestBody UserPasswordResetCmd cmd) {
-		return usersServiceI.resetPassword(cmd);
+	public void modifyPassword(@RequestBody UserPasswordResetCmd cmd) {
+		usersServiceI.resetPassword(cmd);
 	}
 
 	@Idempotent
@@ -127,35 +109,34 @@ public class UsersController {
 	@PostMapping
 	@Operation(summary = "用户管理", description = "新增用户")
 	@OperateLog(module = "用户管理", operation = "新增用户")
-	@PreAuthorize("hasAuthority('users:insert')")
-	public Result<Boolean> insert(@RequestBody UserInsertCmd cmd) {
-		return usersServiceI.insert(cmd);
+	@PreAuthorize("hasAuthority('users:create')")
+	public void create(@RequestBody UserCreateCmd cmd) {
+		usersServiceI.create(cmd);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "用户管理", description = "查看用户")
 	@DataCache(name = USERS, key = "#id")
-	public Result<UserCO> getById(@PathVariable("id") Long id) {
-		return usersServiceI.getById(new UserGetQry(id));
+	public Result<UserCO> findById(@PathVariable("id") Long id) {
+		return usersServiceI.findById(new UserGetQry(id));
 	}
 
 	@TraceLog
-	@DeleteMapping("{id}")
+	@DeleteMapping
 	@Operation(summary = "用户管理", description = "删除用户")
 	@OperateLog(module = "用户管理", operation = "删除用户")
-	@PreAuthorize("hasAuthority('users:delete')")
-	@DataCache(name = USERS, key = "#id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
-		return usersServiceI.deleteById(new UserDeleteCmd(id));
+	@PreAuthorize("hasAuthority('users:remove')")
+	public void remove(@RequestBody Long[] ids) {
+		usersServiceI.remove(new UserRemoveCmd(ids));
 	}
 
 	@TraceLog
 	@PostMapping("list")
 	@Operation(summary = "用户管理", description = "查询用户列表")
 	@PreAuthorize("hasAuthority('users:list')")
-	public Result<Datas<UserCO>> list(@RequestBody UserListQry qry) {
-		return usersServiceI.list(qry);
+	public Result<Datas<UserCO>> findList(@RequestBody UserListQry qry) {
+		return usersServiceI.findList(qry);
 	}
 
 }

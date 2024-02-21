@@ -24,12 +24,9 @@ import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.dict.DictOptionListQry;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
@@ -56,10 +53,14 @@ public class DictOptionListQryExe {
 			.eq(DictDO::getType, qry.getType())
 			.select(DictDO::getLabel, DictDO::getValue)
 			.orderByDesc(DictDO::getId));
-		if (CollectionUtil.isEmpty(list)) {
-			return Result.of(new ArrayList<>(0));
-		}
-		return Result.of(ConvertUtil.sourceToTarget(list, OptionCO.class));
+		return Result.of(list.stream().map(this::convert).toList());
+	}
+
+	private OptionCO convert(DictDO dictDO) {
+		return OptionCO.builder()
+				.label(dictDO.getLabel())
+				.value(dictDO.getValue())
+				.build();
 	}
 
 }

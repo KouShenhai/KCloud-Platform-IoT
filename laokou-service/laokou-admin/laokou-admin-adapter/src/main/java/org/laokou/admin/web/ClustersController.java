@@ -46,16 +46,18 @@ public class ClustersController {
 	@PostMapping("service-list")
 	@Operation(summary = "集群管理", description = "查询服务列表")
 	@PreAuthorize("hasAuthority('clusters:service-list')")
-	public Result<Datas<ClusterServiceCO>> serviceList(@RequestBody ClusterServiceListQry qry) {
-		return clustersServiceI.serviceList(qry);
+	public Result<Datas<ClusterServiceCO>> findServiceList(@RequestBody ClusterServiceListQry qry) {
+		return null;
+		// return clustersServiceI.serviceList(qry);
 	}
 
 	@TraceLog
 	@PostMapping("instance-list")
 	@Operation(summary = "集群管理", description = "查询实例列表")
 	@PreAuthorize("hasAuthority('clusters:instance-list')")
-	public Result<Datas<ClusterInstanceCO>> instanceList(@RequestBody ClusterInstanceListQry qry) {
-		return clustersServiceI.instanceList(qry);
+	public Result<Datas<ClusterInstanceCO>> findInstanceList(@RequestBody ClusterInstanceListQry qry) {
+		return null;
+		// return clustersServiceI.instanceList(qry);
 	}
 
 }

@@ -18,11 +18,6 @@
 package org.laokou.admin.command.definition.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.definition.DefinitionListQry;
-import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
-import org.laokou.admin.gatewayimpl.rpc.DefinitionsFeignClient;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,15 +29,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DefinitionListQryExe {
 
-	private final DefinitionsFeignClient definitionsFeignClient;
-
+	/*
+	 * private final DefinitionsFeignClient definitionsFeignClient;
+	 *
+	 */
 	/**
 	 * 执行查询流程列表.
 	 * @param qry 查询流程列表参数
 	 * @return 流程列表
-	 */
-	public Result<Datas<DefinitionCO>> execute(DefinitionListQry qry) {
-		return definitionsFeignClient.list(qry);
-	}
+	 *//*
+		 *
+		 * public Result<Datas<DefinitionCO>> execute(DefinitionListQry qry) { return
+		 * definitionsFeignClient.list(qry); }
+		 */
 
 }

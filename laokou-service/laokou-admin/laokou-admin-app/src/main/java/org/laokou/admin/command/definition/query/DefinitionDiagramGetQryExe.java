@@ -18,9 +18,6 @@
 package org.laokou.admin.command.definition.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.definition.DefinitionDiagramGetQry;
-import org.laokou.admin.gatewayimpl.rpc.DefinitionsFeignClient;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,15 +29,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DefinitionDiagramGetQryExe {
 
-	private final DefinitionsFeignClient definitionsFeignClient;
-
-	/**
-	 * 执行查看流程图.
-	 * @param qry 查看流程图参数
-	 * @return 流程图
-	 */
-	public Result<String> execute(DefinitionDiagramGetQry qry) {
-		return definitionsFeignClient.diagram(qry.getDefinitionId());
-	}
+	/*
+	 * private final DefinitionsFeignClient definitionsFeignClient;
+	 *
+	 *//**
+		 * 执行查看流程图.
+		 * @param qry 查看流程图参数
+		 * @return 流程图
+		 *//*
+			 * public Result<String> execute(DefinitionDiagramGetQry qry) { return
+			 * definitionsFeignClient.diagram(qry.getDefinitionId()); }
+			 */
 
 }

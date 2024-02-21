@@ -37,11 +37,11 @@
 -->
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-domain</artifactId>
+            <artifactId>laokou-common-security</artifactId>
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-admin-client</artifactId>
+            <artifactId>laokou-common-domain</artifactId>
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
@@ -78,10 +78,6 @@
                     <artifactId>spring-boot-starter-web</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-report-client</artifactId>
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>

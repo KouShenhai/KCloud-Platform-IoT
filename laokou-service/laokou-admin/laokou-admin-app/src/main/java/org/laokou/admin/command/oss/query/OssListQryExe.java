@@ -55,7 +55,7 @@ public class OssListQryExe {
 		Datas<Oss> newPage = ossGateway.list(oss, qry);
 		Datas<OssCO> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(ossConvertor.convertClientObjectList(newPage.getRecords()));
+		// datas.setRecords(ossConvertor.convertClientObjectList(newPage.getRecords()));
 		return Result.of(datas);
 	}
 

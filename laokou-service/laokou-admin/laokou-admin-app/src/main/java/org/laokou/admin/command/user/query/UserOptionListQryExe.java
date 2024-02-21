@@ -24,12 +24,10 @@ import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.user.UserOptionListQry;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_USER;
@@ -54,12 +52,8 @@ public class UserOptionListQryExe {
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_USER)
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
-		List<UserDO> list = userMapper.getOptionList(qry, AesUtil.getSecretKeyStr());
-		if (CollectionUtil.isEmpty(list)) {
-			return Result.of(new ArrayList<>(0));
-		}
-		List<OptionCO> options = list.stream().map(this::option).toList();
-		return Result.of(options);
+		List<UserDO> list = userMapper.selectOptionList(qry, AesUtil.getSecretKeyStr());
+		return Result.of(list.stream().map(this::convert).toList());
 	}
 
 	/**
@@ -67,11 +61,11 @@ public class UserOptionListQryExe {
 	 * @param userDO 用户对象
 	 * @return 下拉框命令请求
 	 */
-	private OptionCO option(UserDO userDO) {
-		OptionCO oc = new OptionCO();
-		oc.setLabel(userDO.getUsername());
-		oc.setValue(userDO.getId().toString());
-		return oc;
+	private OptionCO convert(UserDO userDO) {
+		return OptionCO.builder()
+				.value(userDO.getId().toString())
+				.label(userDO.getUsername())
+				.build();
 	}
 
 }

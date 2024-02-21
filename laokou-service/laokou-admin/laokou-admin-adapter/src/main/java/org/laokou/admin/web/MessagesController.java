@@ -50,8 +50,8 @@ public class MessagesController {
 	@PostMapping
 	@Operation(summary = "消息管理", description = "新增消息")
 	@OperateLog(module = "消息管理", operation = "新增消息")
-	@PreAuthorize("hasAuthority('messages:insert')")
-	public Result<Boolean> insert(@RequestBody MessageInsertCmd cmd) {
+	@PreAuthorize("hasAuthority('messages:create')")
+	public Result<Boolean> create(@RequestBody MessageCreateCmd cmd) {
 		return messagesServiceI.insert(cmd);
 	}
 
@@ -59,7 +59,7 @@ public class MessagesController {
 	@PostMapping("list")
 	@Operation(summary = "消息管理", description = "查询消息列表")
 	@PreAuthorize("hasAuthority('messages:list')")
-	public Result<Datas<MessageCO>> list(@RequestBody MessageListQry qry) {
+	public Result<Datas<MessageCO>> findList(@RequestBody MessageListQry qry) {
 		return messagesServiceI.list(qry);
 	}
 
@@ -76,21 +76,21 @@ public class MessagesController {
 	@Operation(summary = "消息管理", description = "查看消息")
 	@PreAuthorize("hasAuthority('messages:detail')")
 	@DataCache(name = MESSAGES, key = "#id")
-	public Result<MessageCO> getById(@PathVariable("id") Long id) {
+	public Result<MessageCO> findById(@PathVariable("id") Long id) {
 		return messagesServiceI.getById(new MessageGetQry(id));
 	}
 
 	@TraceLog
 	@PostMapping("unread-list")
 	@Operation(summary = "消息管理", description = "未读消息列表")
-	public Result<Datas<MessageCO>> unreadList(@RequestBody MessageUnreadListQry qry) {
+	public Result<Datas<MessageCO>> findUnreadList(@RequestBody MessageUnreadListQry qry) {
 		return messagesServiceI.unreadList(qry);
 	}
 
 	@TraceLog
 	@GetMapping("unread-count")
-	@Operation(summary = "消息管理", description = "未读消息数量")
-	public Result<Integer> unreadCount() {
+	@Operation(summary = "消息管理", description = "未读消息数")
+	public Result<Integer> findUnreadCount() {
 		return messagesServiceI.unreadCount(new MessageUnreadCountGetQry());
 	}
 

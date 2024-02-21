@@ -17,12 +17,11 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -36,22 +35,28 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Repository
 @Mapper
-public interface RoleMapper extends BatchMapper<RoleDO> {
+public interface RoleMapper extends CrudMapper<Long,Integer,RoleDO> {
 
 	/**
 	 * 查询角色列表.
-	 * @param page 分页参数
-	 * @param name 角色名称
+	 * @param role 角色对象
 	 * @param pageQuery 分页参数
 	 * @return 角色列表
 	 */
-	IPage<RoleDO> getRoleListFilter(IPage<RoleDO> page, @Param("name") String name,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+	List<RoleDO> selectListByCondition(@Param("role")RoleDO role, @Param(PAGE_QUERY)PageQuery pageQuery);
+
+	/**
+	 * 查询角色数量.
+	 * @param role 角色对象
+	 * @param pageQuery 分页参数
+	 * @return 角色数量
+	 */
+	long selectCountByCondition(@Param("role") RoleDO role, @Param(PAGE_QUERY)PageQuery pageQuery);
 
 	/**
 	 * 查看角色IDS.
 	 * @return 角色IDS
 	 */
-	List<Long> getRoleIds();
+	List<Long> selectRoleIds();
 
 }

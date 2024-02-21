@@ -81,7 +81,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 			// 检查租户ID
 			user.checkNullTenantId();
 			// 检查UUID
-			captchaObj.checkNullUUID();
+			captchaObj.checkNullUuid();
 			// 检查验证码
 			captchaObj.checkNullCaptcha();
 			// 检查账号

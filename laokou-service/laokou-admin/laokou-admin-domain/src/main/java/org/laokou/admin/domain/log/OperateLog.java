@@ -36,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
+import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 import static org.laokou.common.i18n.common.StringConstants.*;
 import static org.laokou.common.i18n.common.SysConstants.EMPTY_JSON;
@@ -45,8 +46,8 @@ import static org.laokou.common.i18n.common.SysConstants.EMPTY_JSON;
  */
 @Data
 @SuperBuilder
-@NoArgsConstructor(access = PROTECTED)
-@AllArgsConstructor(access = PROTECTED)
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "OperateLog", description = "操作日志")
 public class OperateLog extends AggregateRoot<Long> {
 

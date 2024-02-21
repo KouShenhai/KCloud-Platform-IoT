@@ -30,6 +30,7 @@ import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ import java.util.concurrent.Executor;
 import static org.laokou.common.i18n.common.EventStatusEnums.PUBLISH_FAILED;
 import static org.laokou.common.i18n.common.EventStatusEnums.PUBLISH_SUCCEED;
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
+import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * @author laokou
@@ -61,6 +63,7 @@ public class DomainEventPublishTask {
 
 	private final DynamicUtil dynamicUtil;
 
+	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void publishEvent(List<DomainEvent<Long>> list, JobModeEnums jobMode) {
 		List<DomainEvent<Long>> modifyList = Collections.synchronizedList(new ArrayList<>(16));
 		switch (jobMode) {

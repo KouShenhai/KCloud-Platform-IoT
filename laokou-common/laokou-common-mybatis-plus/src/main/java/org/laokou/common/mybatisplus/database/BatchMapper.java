@@ -21,9 +21,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.ResultHandler;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.AbstractDO;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.slf4j.Logger;
@@ -36,7 +34,7 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 /**
  * @author laokou
  */
-public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
+public interface BatchMapper<T> extends BaseMapper<T> {
 
 	/**
 	 * slf4j日志配置.
@@ -61,7 +59,8 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 		if (ObjectUtil.isNull(value)) {
 			throw new SystemException("数据不存在");
 		}
-		return value.getVersion();
+		return 0;
+		//return value.getVersion();
 	}
 
 	/**
@@ -91,7 +90,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	 */
 	default Boolean insertTable(T t) {
 		try {
-			t.setId(IdGenerator.defaultSnowflakeId());
+			//t.setId(IdGenerator.defaultSnowflakeId());
 			return this.insert(t) > 0;
 		}
 		catch (Exception e) {

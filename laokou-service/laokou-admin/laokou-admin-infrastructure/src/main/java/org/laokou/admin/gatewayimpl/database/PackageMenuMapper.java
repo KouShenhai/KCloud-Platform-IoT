@@ -20,7 +20,7 @@ package org.laokou.admin.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageMenuDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -32,20 +32,20 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface PackageMenuMapper extends BatchMapper<PackageMenuDO> {
+public interface PackageMenuMapper extends CrudMapper<Long, Integer,PackageMenuDO> {
 
 	/**
 	 * 根据套餐ID查看菜单IDS.
 	 * @param packageId 套餐ID
 	 * @return 菜单IDS
 	 */
-	List<Long> getMenuIdsByPackageId(@Param("packageId") Long packageId);
+	List<Long> selectMenuIdsByPackageId(@Param("packageId") Long packageId);
 
 	/**
 	 * 根据套餐ID删除套餐菜单.
 	 * @param packageId 套餐ID
 	 * @return 删除结果
 	 */
-	Integer deletePackageMenuByPackageId(@Param("packageId") Long packageId);
+	Integer deleteByPackageId(@Param("packageId") Long packageId);
 
 }

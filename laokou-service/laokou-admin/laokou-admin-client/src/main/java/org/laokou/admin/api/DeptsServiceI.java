@@ -31,52 +31,42 @@ import java.util.List;
 public interface DeptsServiceI {
 
 	/**
-	 * 查看部门树.
-	 * @param qry 查看部门树参数
-	 * @return 部门树
-	 */
-	Result<DeptCO> tree(DeptTreeGetQry qry);
-
-	/**
 	 * 查询部门列表.
 	 * @param qry 查询部门列表参数
 	 * @return 部门列表
 	 */
-	Result<List<DeptCO>> list(DeptListQry qry);
+	Result<List<DeptCO>> findList(DeptListQry qry);
 
 	/**
 	 * 新增部门.
 	 * @param cmd 新增部门参数
-	 * @return 新增结果
 	 */
-	Result<Boolean> insert(DeptInsertCmd cmd);
+	void create(DeptCreateCmd cmd);
 
 	/**
 	 * 修改部门.
 	 * @param cmd 修改部门参数
-	 * @return 修改参数
 	 */
-	Result<Boolean> update(DeptUpdateCmd cmd);
+	void modify(DeptModifyCmd cmd);
 
 	/**
-	 * 根据ID删除部门.
-	 * @param cmd 根据ID删除部门参数
-	 * @return 删除结果
+	 * 根据IDS删除部门.
+	 * @param cmd 根据IDS删除部门参数
 	 */
-	Result<Boolean> deleteById(DeptDeleteCmd cmd);
+	void remove(DeptRemoveCmd cmd);
 
 	/**
 	 * 根据ID查看部门.
 	 * @param qry 根据ID查看部门参数
 	 * @return 部门
 	 */
-	Result<DeptCO> getById(DeptGetQry qry);
+	Result<DeptCO> findById(DeptGetQry qry);
 
 	/**
 	 * 根据角色ID查看部门IDS.
 	 * @param qry 根据角色ID查看部门IDS参数
 	 * @return 部门IDS
 	 */
-	Result<List<Long>> ids(DeptIDSGetQry qry);
+	Result<List<Long>> findIds(DeptIdsGetQry qry);
 
 }

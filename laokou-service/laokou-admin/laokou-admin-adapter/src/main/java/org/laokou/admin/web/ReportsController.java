@@ -19,7 +19,7 @@ package org.laokou.admin.web;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.gatewayimpl.rpc.RemoteMapper;
+import org.laokou.admin.gatewayimpl.rpc.RemoteClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,11 +33,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("v1/reports")
 public class ReportsController {
 
-	private final RemoteMapper remoteMapper;
+	private final RemoteClient remoteClient;
 
 	@GetMapping
 	public void test() {
-		remoteMapper.test();
+		//remoteMapper.test();
 	}
 
 }

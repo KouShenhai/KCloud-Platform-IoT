@@ -17,14 +17,11 @@
 
 package org.laokou.admin.command.resource;
 
-import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.dto.resource.ResourceResolveTaskCmd;
-import org.laokou.admin.dto.resource.TaskResolveCmd;
-import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +35,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResourceResolveTaskCmdExe {
 
-	private final TasksFeignClient tasksFeignClient;
+	//private final TasksFeignClient tasksFeignClient;
 
 	private final EventUtil eventUtil;
 
@@ -49,13 +46,12 @@ public class ResourceResolveTaskCmdExe {
 	 */
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(ResourceResolveTaskCmd cmd) {
-		log.info("资源处理任务分布式事务 XID：{}", RootContext.getXID());
-		Result<Boolean> result = tasksFeignClient.resolve(new TaskResolveCmd(cmd.getTaskId()));
-		// 发送消息
-		if (result.success()) {
-			publishMessage(cmd);
-		}
-		return result;
+		/*
+		 * log.info("资源处理任务分布式事务 XID：{}", RootContext.getXID()); Result<Boolean> result =
+		 * tasksFeignClient.resolve(new TaskResolveCmd(cmd.getTaskId())); // 发送消息 if
+		 * (result.success()) { publishMessage(cmd); } return result;
+		 */
+		return null;
 	}
 
 	/**

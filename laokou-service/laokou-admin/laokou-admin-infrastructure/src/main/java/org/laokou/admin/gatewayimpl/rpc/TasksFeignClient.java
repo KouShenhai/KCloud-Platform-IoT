@@ -17,93 +17,80 @@
 
 package org.laokou.admin.gatewayimpl.rpc;
 
-import org.laokou.admin.dto.resource.*;
-import org.laokou.admin.dto.resource.clientobject.AssigneeCO;
-import org.laokou.admin.dto.resource.clientobject.AuditCO;
-import org.laokou.admin.dto.resource.clientobject.StartCO;
-import org.laokou.admin.dto.resource.clientobject.TaskCO;
-import org.laokou.admin.gatewayimpl.rpc.factory.TasksFeignClientFallbackFactory;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import static org.laokou.common.i18n.common.OpenFeignConstants.LAOKOU_FLOWABLE_SERVICE;
-
 /**
  * 任务流程.
  *
  * @author laokou
  */
-@FeignClient(contextId = "tasks", name = LAOKOU_FLOWABLE_SERVICE, path = "v1/tasks",
-		fallbackFactory = TasksFeignClientFallbackFactory.class)
-public interface TasksFeignClient {
-
-	/**
+/*
+ * @FeignClient(contextId = "tasks", name = LAOKOU_FLOWABLE_SERVICE, path = "v1/tasks",
+ * fallbackFactory = TasksFeignClientFallbackFactory.class) public interface
+ * TasksFeignClient {
+ *
+ *//**
 	 * 查询任务流程列表.
 	 * @param qry 查询任务流程列表参数
 	 * @return 任务列表
 	 */
-	@PostMapping("list")
-	Result<Datas<TaskCO>> list(@RequestBody TaskListQry qry);
-
-	/**
+/*
+ * @PostMapping("list") Result<Datas<TaskCO>> list(@RequestBody TaskListQry qry);
+ *
+ *//**
 	 * 审批任务流程.
 	 * @param cmd 审批任务流程参数
 	 * @return 审批结果
 	 */
-	@PostMapping("audit")
-	Result<AuditCO> audit(@RequestBody TaskAuditCmd cmd);
-
-	/**
+/*
+ * @PostMapping("audit") Result<AuditCO> audit(@RequestBody TaskAuditCmd cmd);
+ *
+ *//**
 	 * 处理任务流程.
 	 * @param cmd 处理任务流程参数
 	 * @return 处理结果
 	 */
-	@PostMapping("resolve")
-	Result<Boolean> resolve(@RequestBody TaskResolveCmd cmd);
-
-	/**
+/*
+ * @PostMapping("resolve") Result<Boolean> resolve(@RequestBody TaskResolveCmd cmd);
+ *
+ *//**
 	 * 开始任务流程.
 	 * @param cmd 开始任务流程参数
 	 * @return 开始结果
 	 */
-	@PostMapping("start")
-	Result<StartCO> start(@RequestBody TaskStartCmd cmd);
-
-	/**
+/*
+ * @PostMapping("start") Result<StartCO> start(@RequestBody TaskStartCmd cmd);
+ *
+ *//**
 	 * 查看任务流程图.
 	 * @param instanceId 实例ID
 	 * @return 流程图
 	 */
-	@GetMapping("{instanceId}/diagram")
-	Result<String> diagram(@PathVariable("instanceId") String instanceId);
-
-	/**
+/*
+ * @GetMapping("{instanceId}/diagram") Result<String> diagram(@PathVariable("instanceId")
+ * String instanceId);
+ *
+ *//**
 	 * 转办任务流程.
 	 * @param cmd 转办任务流程参数
 	 * @return 转办结果
 	 */
-	@PostMapping("transfer")
-	Result<Boolean> transfer(@RequestBody TaskTransferCmd cmd);
-
-	/**
+/*
+ * @PostMapping("transfer") Result<Boolean> transfer(@RequestBody TaskTransferCmd cmd);
+ *
+ *//**
 	 * 委派任务流程.
 	 * @param cmd 委派任务流程参数
 	 * @return 委派结果
 	 */
-	@PostMapping("delegate")
-	Result<Boolean> delegate(@RequestBody TaskDelegateCmd cmd);
-
-	/**
+/*
+ * @PostMapping("delegate") Result<Boolean> delegate(@RequestBody TaskDelegateCmd cmd);
+ *
+ *//**
 	 * 查看流程人员ID.
 	 * @param instanceId 流程ID
 	 * @return 流程人员ID
-	 */
-	@GetMapping("{instanceId}/assignee")
-	Result<AssigneeCO> assignee(@PathVariable("instanceId") String instanceId);
-
-}
+	 *//*
+		 * @GetMapping("{instanceId}/assignee") Result<AssigneeCO>
+		 * assignee(@PathVariable("instanceId") String instanceId);
+		 *
+		 * }
+		 */

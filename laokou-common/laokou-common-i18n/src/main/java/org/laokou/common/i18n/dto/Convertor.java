@@ -25,14 +25,7 @@ import java.util.List;
  * @author laokou
  */
 @Schema(name = "Convertor", description = "对象转换器")
-public interface Convertor<CO, Entity, DO> {
-
-	/**
-	 * ClientObject 转 Entity.
-	 * @param c ClientObject
-	 * @return Entity
-	 */
-	Entity toEntity(CO c);
+public interface Convertor<Entity, DO> {
 
 	/**
 	 * Entity 转 DataObject.
@@ -40,13 +33,6 @@ public interface Convertor<CO, Entity, DO> {
 	 * @return DataObject
 	 */
 	DO toDataObject(Entity e);
-
-	/**
-	 * ClientObject 转 DataObject.
-	 * @param c ClientObject
-	 * @return DataObject
-	 */
-	DO toDataObj(CO c);
 
 	/**
 	 * DataObject 转 Entity.
@@ -61,33 +47,5 @@ public interface Convertor<CO, Entity, DO> {
 	 * @return Entity List
 	 */
 	List<Entity> convertEntityList(List<DO> list);
-
-	/**
-	 * DataObject 转 ClientObject.
-	 * @param d DataObject
-	 * @return ClientObject
-	 */
-	CO convertClientObj(DO d);
-
-	/**
-	 * DataObject List 转 ClientObject List.
-	 * @param list DataObject List
-	 * @return ClientObject List
-	 */
-	List<CO> convertClientObjList(List<DO> list);
-
-	/**
-	 * Entity 转 ClientObject.
-	 * @param e Entity
-	 * @return ClientObject
-	 */
-	CO convertClientObject(Entity e);
-
-	/**
-	 * Entity List 转 ClientObject List.
-	 * @param list Entity List
-	 * @return ClientObject List
-	 */
-	List<CO> convertClientObjectList(List<Entity> list);
 
 }

@@ -38,11 +38,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OssServiceImpl implements OssServiceI {
 
-	private final OssInsertCmdExe ossInsertCmdExe;
+	private final OssCreateCmdExe ossCreateCmdExe;
 
-	private final OssUpdateCmdExe ossUpdateCmdExe;
+	private final OssModifyCmdExe ossModifyCmdExe;
 
-	private final OssDeleteCmdExe ossDeleteCmdExe;
+	private final OssRemoveCmdExe ossRemoveCmdExe;
 
 	private final OssListQryExe ossListQryExe;
 
@@ -56,8 +56,8 @@ public class OssServiceImpl implements OssServiceI {
 	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(OssInsertCmd cmd) {
-		return ossInsertCmdExe.execute(cmd);
+	public Result<Boolean> insert(OssCreateCmd cmd) {
+		return ossCreateCmdExe.execute(cmd);
 	}
 
 	/**
@@ -66,8 +66,8 @@ public class OssServiceImpl implements OssServiceI {
 	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(OssUpdateCmd cmd) {
-		return ossUpdateCmdExe.execute(cmd);
+	public Result<Boolean> update(OssModifyCmd cmd) {
+		return ossModifyCmdExe.execute(cmd);
 	}
 
 	/**
@@ -76,8 +76,8 @@ public class OssServiceImpl implements OssServiceI {
 	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(OssDeleteCmd cmd) {
-		return ossDeleteCmdExe.execute(cmd);
+	public Result<Boolean> deleteById(OssRemoveCmd cmd) {
+		return ossRemoveCmdExe.execute(cmd);
 	}
 
 	/**

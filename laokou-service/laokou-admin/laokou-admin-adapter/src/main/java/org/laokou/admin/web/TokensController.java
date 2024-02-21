@@ -21,11 +21,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.TokensServiceI;
-import org.laokou.admin.dto.token.TokenGetQry;
 import org.laokou.admin.dto.token.clientobject.TokenCO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,10 +40,10 @@ public class TokensController {
 	private final TokensServiceI tokensServiceI;
 
 	@TraceLog
-	@GetMapping
+	@PostMapping
 	@Operation(summary = "令牌管理", description = "生成令牌")
 	public Result<TokenCO> generate() {
-		return tokensServiceI.generate(new TokenGetQry());
+		return tokensServiceI.generate();
 	}
 
 }

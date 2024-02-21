@@ -20,8 +20,7 @@ package org.laokou.admin.event.handler;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.command.message.MessageInsertCmdExe;
-import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
+import org.laokou.admin.command.message.MessageCreateCmdExe;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 
@@ -36,9 +35,9 @@ import org.springframework.context.ApplicationListener;
 @RequiredArgsConstructor
 public class MessageHandler implements ApplicationListener {
 
-	private final MessageInsertCmdExe messageInsertCmdExe;
+	private final MessageCreateCmdExe messageCreateCmdExe;
 
-	private final TasksFeignClient tasksFeignClient;
+	//private final TasksFeignClient tasksFeignClient;
 
 	// @Override
 	// public void onApplicationEvent(MessageEvent event) {

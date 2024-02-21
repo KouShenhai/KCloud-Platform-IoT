@@ -36,13 +36,13 @@ public interface ClustersServiceI {
 	 * @param qry 服务列表查询参数
 	 * @return 服务列表
 	 */
-	Result<Datas<ClusterServiceCO>> serviceList(ClusterServiceListQry qry);
+	Result<Datas<ClusterServiceCO>> findServiceList(ClusterServiceListQry qry);
 
 	/**
 	 * 查询服务实例列表.
 	 * @param qry 服务实例查询参数
 	 * @return 服务实例列表
 	 */
-	Result<Datas<ClusterInstanceCO>> instanceList(ClusterInstanceListQry qry);
+	Result<Datas<ClusterInstanceCO>> findInstanceList(ClusterInstanceListQry qry);
 
 }

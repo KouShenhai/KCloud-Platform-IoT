@@ -17,73 +17,75 @@
 
 package org.laokou.admin.gatewayimpl.rpc;
 
-import org.laokou.admin.dto.definition.DefinitionListQry;
-import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
-import org.laokou.admin.gatewayimpl.rpc.factory.DefinitionsFeignClientFallbackFactory;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import static org.laokou.common.i18n.common.OpenFeignConstants.LAOKOU_FLOWABLE_SERVICE;
-import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
-
 /**
  * 定义流程.
  *
  * @author laokou
  */
-@FeignClient(contextId = "definitions", name = LAOKOU_FLOWABLE_SERVICE, path = "v1/definitions",
-		fallbackFactory = DefinitionsFeignClientFallbackFactory.class)
-public interface DefinitionsFeignClient {
-
-	/**
-	 * 新增流程.
-	 * @param file 文件
-	 * @return 新增结果
+/*
+ * @FeignClient(contextId = "definitions", name = LAOKOU_FLOWABLE_SERVICE, path =
+ * "v1/definitions", fallbackFactory = DefinitionsFeignClientFallbackFactory.class) public
+ * interface DefinitionsFeignClient {
+ *
+ */
+/**
+ * 新增流程.
+ * @param file 文件
+ * @return 新增结果
+ *//*
+	 *
+	 * @PostMapping(consumes = MULTIPART_FORM_DATA_VALUE) Result<Boolean>
+	 * insert(@RequestPart("file") MultipartFile file);
+	 *
 	 */
-	@PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
-	Result<Boolean> insert(@RequestPart("file") MultipartFile file);
-
-	/**
-	 * 查询任务流程列表.
-	 * @param qry 查询任务流程列表参数
-	 * @return 流程列表
+/**
+ * 查询任务流程列表.
+ * @param qry 查询任务流程列表参数
+ * @return 流程列表
+ *//*
+	 *
+	 * @PostMapping("list") Result<Datas<DefinitionCO>> list(@RequestBody
+	 * DefinitionListQry qry);
+	 *
 	 */
-	@PostMapping("list")
-	Result<Datas<DefinitionCO>> list(@RequestBody DefinitionListQry qry);
-
-	/**
-	 * 挂起流程.
-	 * @param definitionId 定义ID
-	 * @return 挂起结果
+/**
+ * 挂起流程.
+ * @param definitionId 定义ID
+ * @return 挂起结果
+ *//*
+	 *
+	 * @PutMapping("{definitionId}/suspend") Result<Boolean>
+	 * suspend(@PathVariable("definitionId") String definitionId);
+	 *
 	 */
-	@PutMapping("{definitionId}/suspend")
-	Result<Boolean> suspend(@PathVariable("definitionId") String definitionId);
-
-	/**
-	 * 激活流程.
-	 * @param definitionId 定义ID
-	 * @return 激活结果
+/**
+ * 激活流程.
+ * @param definitionId 定义ID
+ * @return 激活结果
+ *//*
+	 *
+	 * @PutMapping("{definitionId}/activate") Result<Boolean>
+	 * activate(@PathVariable("definitionId") String definitionId);
+	 *
 	 */
-	@PutMapping("{definitionId}/activate")
-	Result<Boolean> activate(@PathVariable("definitionId") String definitionId);
-
-	/**
-	 * 查看流程图.
-	 * @param definitionId 定义ID
-	 * @return 流程图
+/**
+ * 查看流程图.
+ * @param definitionId 定义ID
+ * @return 流程图
+ *//*
+	 *
+	 * @GetMapping("{definitionId}/diagram") Result<String>
+	 * diagram(@PathVariable("definitionId") String definitionId);
+	 *
 	 */
-	@GetMapping("{definitionId}/diagram")
-	Result<String> diagram(@PathVariable("definitionId") String definitionId);
-
-	/**
-	 * 删除流程.
-	 * @param deploymentId 定义ID
-	 * @return 删除结果
+/**
+ * 删除流程.
+ * @param deploymentId 定义ID
+ * @return 删除结果
+ *//*
+	 *
+	 * @DeleteMapping("{deploymentId}") Result<Boolean>
+	 * delete(@PathVariable("deploymentId") String deploymentId);
+	 *
+	 * }
 	 */
-	@DeleteMapping("{deploymentId}")
-	Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId);
-
-}

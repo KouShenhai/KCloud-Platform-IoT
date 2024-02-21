@@ -22,8 +22,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserPasswordResetCmd;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
@@ -42,22 +40,14 @@ public class UserPasswordResetCmdExe {
 	/**
 	 * 执行重置用户密码.
 	 * @param cmd 重置用户密码参数
-	 * @return 执行重置结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(UserPasswordResetCmd cmd) {
-		return Result.of(userGateway.resetPassword(toUser(cmd)));
+	public void executeVoid(UserPasswordResetCmd cmd) {
+		userGateway.modify(convert(cmd));
 	}
 
-	/**
-	 * 转换为用户领域.
-	 * @param cmd 重置用户密码参数
-	 * @return 用户领域
-	 */
-	private User toUser(UserPasswordResetCmd cmd) {
-		User user = new User(cmd.getId(), cmd.getPassword());
-		user.setEditor(UserUtil.getUserId());
-		return user;
+	private User convert(UserPasswordResetCmd cmd) {
+		return User.builder().id(cmd.getId()).password(cmd.getPassword()).build();
 	}
 
 }

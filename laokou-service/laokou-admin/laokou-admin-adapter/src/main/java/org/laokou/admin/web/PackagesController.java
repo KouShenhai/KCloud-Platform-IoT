@@ -53,8 +53,8 @@ public class PackagesController {
 	@PostMapping("list")
 	@Operation(summary = "套餐管理", description = "查询套餐列表")
 	@PreAuthorize("hasAuthority('packages:list')")
-	public Result<Datas<PackageCO>> list(@RequestBody PackageListQry qry) {
-		return packagesServiceI.list(qry);
+	public Result<Datas<PackageCO>> findList(@RequestBody PackageListQry qry) {
+		return packagesServiceI.findList(qry);
 	}
 
 	@Idempotent
@@ -62,43 +62,42 @@ public class PackagesController {
 	@PostMapping
 	@Operation(summary = "套餐管理", description = "新增套餐")
 	@OperateLog(module = "套餐管理", operation = "新增套餐")
-	@PreAuthorize("hasAuthority('packages:insert')")
-	public Result<Boolean> insert(@RequestBody PackageInsertCmd cmd) {
-		return packagesServiceI.insert(cmd);
+	@PreAuthorize("hasAuthority('packages:create')")
+	public void create(@RequestBody PackageCreateCmd cmd) {
+		packagesServiceI.create(cmd);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "套餐管理", description = "查看套餐")
 	@DataCache(name = PACKAGES, key = "#id")
-	public Result<PackageCO> getById(@PathVariable("id") Long id) {
-		return packagesServiceI.getById(new PackageGetQry(id));
+	public Result<PackageCO> findById(@PathVariable("id") Long id) {
+		return packagesServiceI.findById(new PackageGetQry(id));
 	}
 
 	@TraceLog
 	@PutMapping
 	@Operation(summary = "套餐管理", description = "修改套餐")
 	@OperateLog(module = "套餐管理", operation = "修改套餐")
-	@PreAuthorize("hasAuthority('packages:update')")
+	@PreAuthorize("hasAuthority('packages:modify')")
 	@DataCache(name = PACKAGES, key = "#cmd.packageCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> update(@RequestBody PackageUpdateCmd cmd) {
-		return packagesServiceI.update(cmd);
+	public void modify(@RequestBody PackageModifyCmd cmd) {
+		packagesServiceI.modify(cmd);
 	}
 
 	@TraceLog
-	@DeleteMapping("{id}")
+	@DeleteMapping
 	@Operation(summary = "套餐管理", description = "删除套餐")
 	@OperateLog(module = "套餐管理", operation = "删除套餐")
-	@PreAuthorize("hasAuthority('packages:delete')")
-	@DataCache(name = PACKAGES, key = "#id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
-		return packagesServiceI.deleteById(new PackageDeleteCmd(id));
+	@PreAuthorize("hasAuthority('packages:remove')")
+	public void remove(@RequestBody Long[] ids) {
+		packagesServiceI.remove(new PackageRemoveCmd(ids));
 	}
 
 	@TraceLog
 	@GetMapping("option-list")
 	@Operation(summary = "套餐管理", description = "下拉列表")
-	public Result<List<OptionCO>> optionList() {
+	public Result<List<OptionCO>> findOptionList() {
 		return packagesServiceI.optionList(new PackageOptionListQry());
 	}
 

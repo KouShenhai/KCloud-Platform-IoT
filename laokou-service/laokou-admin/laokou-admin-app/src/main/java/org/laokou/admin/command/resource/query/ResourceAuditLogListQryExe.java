@@ -57,7 +57,8 @@ public class ResourceAuditLogListQryExe {
 			.select(AuditLogDO::getId, AuditLogDO::getStatus, AuditLogDO::getComment, AuditLogDO::getCreateDate,
 					AuditLogDO::getApprover)
 			.orderByDesc(AuditLogDO::getId));
-		return Result.of(auditLogConvertor.convertClientObjList(list));
+		return null;
+		// return Result.of(auditLogConvertor.convertClientObjList(list));
 	}
 
 }

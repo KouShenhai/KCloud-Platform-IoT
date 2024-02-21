@@ -61,7 +61,7 @@ public class ResourceController {
 	@TraceLog
 	@Operation(summary = "资源管理", description = "查询审批日志列表")
 	@PreAuthorize("hasAuthority('resource:audit-log')")
-	public Result<List<AuditLogCO>> auditLog(@PathVariable("id") Long id) {
+	public Result<List<AuditLogCO>> findAuditLog(@PathVariable("id") Long id) {
 		return resourceServiceI.auditLog(new ResourceAuditLogListQry(id));
 	}
 
@@ -88,7 +88,7 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "查询资源列表")
 	@TraceLog
 	@PreAuthorize("hasAuthority('resource:list')")
-	public Result<Datas<ResourceCO>> list(@RequestBody ResourceListQry qry) {
+	public Result<Datas<ResourceCO>> findList(@RequestBody ResourceListQry qry) {
 		return resourceServiceI.list(qry);
 	}
 
@@ -96,7 +96,7 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "查看资源")
 	@TraceLog
 	@PreAuthorize("hasAuthority('resource:detail')")
-	public Result<ResourceCO> getById(@PathVariable("id") Long id) {
+	public Result<ResourceCO> findById(@PathVariable("id") Long id) {
 		return resourceServiceI.getById(new ResourceGetQry(id));
 	}
 
@@ -112,8 +112,8 @@ public class ResourceController {
 	@TraceLog
 	@Operation(summary = "资源管理", description = "新增资源")
 	@OperateLog(module = "资源管理", operation = "新增资源")
-	@PreAuthorize("hasAuthority('resource:insert')")
-	public Result<Boolean> insert(@Validated @RequestBody ResourceInsertCmd cmd) throws IOException {
+	@PreAuthorize("hasAuthority('resource:create')")
+	public Result<Boolean> create(@Validated @RequestBody ResourceCreateCmd cmd) throws IOException {
 		return resourceServiceI.insert(cmd);
 	}
 
@@ -122,8 +122,8 @@ public class ResourceController {
 	@TraceLog
 	@Operation(summary = "资源管理", description = "修改资源")
 	@OperateLog(module = "资源管理", operation = "修改资源")
-	@PreAuthorize("hasAuthority('resource:update')")
-	public Result<Boolean> update(@Validated @RequestBody ResourceUpdateCmd cmd) throws IOException {
+	@PreAuthorize("hasAuthority('resource:modify')")
+	public Result<Boolean> modify(@Validated @RequestBody ResourceModifyCmd cmd) throws IOException {
 		return resourceServiceI.update(cmd);
 	}
 
@@ -131,16 +131,16 @@ public class ResourceController {
 	@TraceLog
 	@Operation(summary = "资源管理", description = "删除资源")
 	@OperateLog(module = "资源管理", operation = "删除资源")
-	@PreAuthorize("hasAuthority('resource:delete')")
-	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
-		return resourceServiceI.deleteById(new ResourceDeleteCmd(id));
+	@PreAuthorize("hasAuthority('resource:remove')")
+	public Result<Boolean> remove(@PathVariable("id") Long id) {
+		return resourceServiceI.deleteById(new ResourceRemoveCmd(id));
 	}
 
 	@GetMapping("{instanceId}/diagram")
 	@TraceLog
 	@Operation(summary = "资源管理", description = "查看流程")
 	@PreAuthorize("hasAuthority('resource:diagram')")
-	public Result<String> diagram(@PathVariable("instanceId") String instanceId) {
+	public Result<String> findDiagram(@PathVariable("instanceId") String instanceId) {
 		return resourceServiceI.diagram(new ResourceDiagramGetQry(instanceId));
 	}
 
@@ -148,7 +148,7 @@ public class ResourceController {
 	@PostMapping("task-list")
 	@Operation(summary = "资源管理", description = "查询任务列表")
 	@PreAuthorize("hasAuthority('resource:task-list')")
-	public Result<Datas<TaskCO>> taskList(@RequestBody ResourceTaskListQry qry) {
+	public Result<Datas<TaskCO>> findTaskList(@RequestBody ResourceTaskListQry qry) {
 		return resourceServiceI.taskList(qry);
 	}
 
@@ -165,7 +165,7 @@ public class ResourceController {
 	@TraceLog
 	@GetMapping("{id}/detail-task")
 	@Operation(summary = "资源管理", description = "查看任务")
-	public Result<ResourceCO> detailTask(@PathVariable("id") Long id) {
+	public Result<ResourceCO> findTaskInfo(@PathVariable("id") Long id) {
 		return resourceServiceI.detailTask(new ResourceDetailTaskGetQry(id));
 	}
 

@@ -20,63 +20,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.MenuMapper">
 
-    <select id="getMenuListByUserId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
-        SELECT a.url
-            ,a.type
-            ,a.sort
-            ,a.id
-            ,a.pid
-            ,a.name
-            ,a.icon
-            ,a.permission
-            ,a.visible
+    <sql id="columns">
+         a.url
+        ,a.type
+        ,a.sort
+        ,a.id
+        ,a.pid
+        ,a.name
+        ,a.icon
+        ,a.permission
+        ,a.visible
+    </sql>
+
+    <select id="selectListByUserId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
+        SELECT <include refid="columns"/>
         FROM boot_sys_menu a
             ,boot_sys_role b
             ,boot_sys_role_menu c
             ,boot_sys_user_role e
-        WHERE a.id = c.menu_id
-            AND c.role_id = b.id
+        WHERE a.id = c.menu_id AND c.role_id = b.id
             AND b.id = e.role_id
             AND e.user_id = #{userId}
-            and a.del_flag = 0
-        <if test="type != null">
-            and a.type = #{type}
-            and a.visible = 0
-        </if>
-        group by a.url
-            ,a.type
-            ,a.sort
-            ,a.id
-            ,a.pid
-            ,a.name
-            ,a.icon
-            ,a.permission
-            ,a.visible
-        order by a.sort desc
+            AND a.del_flag = 0
+            AND a.type = 0
+            AND a.visible = 0
+        GROUP BY <include refid="columns"/>
+        ORDER BY a.sort desc
     </select>
-
-    <select id="getMenuListLikeName" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
-        select id
-             ,pid
-             ,`name`
-             ,icon
-             ,url
-             ,`type`
-             ,permission
-             ,visible
-             ,sort
-        from boot_sys_menu
-        where del_flag = 0
-        <if test="type != null">
-            and `type` = #{type}
-            and visible = 0
-        </if>
-        <if test="name != null and name != ''">
-            and `name` like concat('%',#{name},'%')
-        </if>
-        order by sort desc
-    </select>
-    <select id="getMenuIdsByRoleId" resultType="java.lang.Long">
+    <select id="selectIdsByRoleId" resultType="java.lang.Long">
         SELECT a.id
         FROM boot_sys_menu a
            ,boot_sys_role b
@@ -87,7 +58,7 @@
             and a.del_flag = 0
         group by a.id
     </select>
-    <select id="getTenantMenuList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
+    <select id="selectTenantMenuList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
         select id
              ,pid
              ,`name`
@@ -123,5 +94,8 @@
         join boot_sys_package_menu b on b.menu_id = a.id
         where a.del_flag = 0
             and b.package_id = #{packageId}
+    </select>
+    <select id="selectVersion" resultType="integer">
+        select version from boot_sys_menu where id = #{id}
     </select>
 </mapper>

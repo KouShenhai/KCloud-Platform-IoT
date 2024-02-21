@@ -30,8 +30,8 @@ import static lombok.AccessLevel.PROTECTED;
  */
 @Data
 @SuperBuilder
-@NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PROTECTED)
+@NoArgsConstructor(access = PROTECTED)
 @Schema(name = "Identifier", description = "标识")
 public abstract class Identifier<ID> implements Entity {
 
