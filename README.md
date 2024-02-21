@@ -19,7 +19,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
     <a target="_blank" href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/static/v1?label=Spring Boot&message=3.2.2&color=green" alt="SpringBoot"></a>
     <a target="_blank" href="https://spring.io/projects/spring-cloud"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2023.0.0&color=green"></a>
     <a target="_blank" href="https://github.com/alibaba/spring-cloud-alibaba"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud Alibaba&message=2022.0.0.0&color=orange"></a>
-    <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.2.1&color=blue"></a>
+    <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.2.2&color=blue"></a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java17"><img alt="JDK" src="https://img.shields.io/badge/GraalVM-21.0.1-blue.svg"/></a>
     <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流"></a>
 </p>
@@ -74,31 +74,31 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 
 ### ✂ 技术体系
 #### 🎯 Spring全家桶及核心技术版本
-| 组件                          | 版本               |
-|:----------------------------|:-----------------|
-| Spring Boot                 | 3.2.2            |
-| Spring Cloud                | 2023.0.0         |
-| Spring Cloud Alibaba        | 2022.0.0.0       |
-| Spring Boot Admin           | 3.2.2            |
-| Spring Authorization Server | 1.2.1            |
-| Mybatis Plus                | 3.5.5            |
-| Nacos                       | 2.2.4            |
-| Seata                       | 2.0.0            |
-| Sentinel                    | 1.8.7            |
-| Mysql                       | 8.0.33           |
-| Redis                       | 7.0.11           |
-| Elasticsearch               | 8.6.2            |
-| RocketMQ                    | 5.1.1            |
-| Flowable                    | 7.0.1            |
-| ShardingSphere              | 5.3.2            |
-| OpenResty                   | 1.21.4.1         |
-| Netty                       | 4.1.106.Final    |
-| Dubbo                       | 3.3.0-beta.1     |
-| Kafka                       | 3.6.0            |
-| EMQX                        | 5.3.0            |
-| Postgresql                  | 16.1             |
-| Flyway                      | 10.6.0           |
-| Canal                       | 1.1.7            |
+| 组件                          | 版本            |
+|:----------------------------|:--------------|
+| Spring Boot                 | 3.2.2         |
+| Spring Cloud                | 2023.0.0      |
+| Spring Cloud Alibaba        | 2022.0.0.0    |
+| Spring Boot Admin           | 3.2.2         |
+| Spring Authorization Server | 1.2.2         |
+| Mybatis Plus                | 3.5.5         |
+| Nacos                       | 2.2.4         |
+| Seata                       | 2.0.0         |
+| Sentinel                    | 1.8.7         |
+| Mysql                       | 8.0.33        |
+| Redis                       | 7.0.11        |
+| Elasticsearch               | 8.6.2         |
+| RocketMQ                    | 5.1.1         |
+| Flowable                    | 7.0.1         |
+| ShardingSphere              | 5.3.2         |
+| OpenResty                   | 1.21.4.1      |
+| Netty                       | 4.1.106.Final |
+| Dubbo                       | 3.3.0-beta.1  |
+| Kafka                       | 3.6.0         |
+| EMQX                        | 5.3.0         |
+| Postgresql                  | 16.1          |
+| Flyway                      | 10.6.0        |
+| Canal                       | 1.1.7         |
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
