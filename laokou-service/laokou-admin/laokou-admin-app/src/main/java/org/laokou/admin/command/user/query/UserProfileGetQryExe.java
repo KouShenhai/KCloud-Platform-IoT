@@ -46,15 +46,15 @@ public class UserProfileGetQryExe {
 	private UserProfileCO convert() {
 		UserDetail userDetail = UserUtil.user();
 		return UserProfileCO.builder()
-				.id(userDetail.getId())
-				.avatar(userDetail.getAvatar())
-				.username(userDetail.getUsername())
-				.mobile(userDetail.getMobile())
-				.mail(userDetail.getMail())
-				.permissions(userDetail.getPermissions())
-				.tenantId(userDetail.getTenantId())
-				.superAdmin(userDetail.getSuperAdmin())
-				.build();
+			.id(userDetail.getId())
+			.avatar(userDetail.getAvatar())
+			.username(userDetail.getUsername())
+			.mobile(userDetail.getMobile())
+			.mail(userDetail.getMail())
+			.permissions(userDetail.getPermissions())
+			.tenantId(userDetail.getTenantId())
+			.superAdmin(userDetail.getSuperAdmin())
+			.build();
 	}
 
 }

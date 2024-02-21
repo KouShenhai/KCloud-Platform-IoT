@@ -51,12 +51,12 @@ public class DeptGetQryExe {
 
 	private DeptCO convert(DeptDO deptDO) {
 		return DeptCO.builder()
-				.path(deptDO.getPath())
-				.sort(deptDO.getSort())
-				.id(deptDO.getId())
-				.pid(deptDO.getPid())
-				.name(deptDO.getName())
-				.build();
+			.path(deptDO.getPath())
+			.sort(deptDO.getSort())
+			.id(deptDO.getId())
+			.pid(deptDO.getPid())
+			.name(deptDO.getName())
+			.build();
 	}
 
 }

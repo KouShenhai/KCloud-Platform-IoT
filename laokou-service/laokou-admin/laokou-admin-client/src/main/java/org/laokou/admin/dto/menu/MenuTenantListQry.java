@@ -28,7 +28,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Schema(name = "MenuTenantListQry", description = "查询租户菜单列表命令请求")
 public class MenuTenantListQry extends CommonCommand {
 
-    @Schema(name = "type", description = "LIST列表 TREE_LIST树形列表 USER_TREE_LIST用户树形列表")
-    private String type;
+	@Schema(name = "type", description = "LIST列表 TREE_LIST树形列表 USER_TREE_LIST用户树形列表")
+	private String type;
 
 }

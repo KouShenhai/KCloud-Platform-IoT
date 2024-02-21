@@ -50,10 +50,7 @@ public class PackageOptionListQryExe {
 	}
 
 	private OptionCO convert(PackageDO packageDO) {
-		return OptionCO.builder()
-				.label(packageDO.getName())
-				.value(String.valueOf(packageDO.getId()))
-				.build();
+		return OptionCO.builder().label(packageDO.getName()).value(String.valueOf(packageDO.getId())).build();
 	}
 
 }

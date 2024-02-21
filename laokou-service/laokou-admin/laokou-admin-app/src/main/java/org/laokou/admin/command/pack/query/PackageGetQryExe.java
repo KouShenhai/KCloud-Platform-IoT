@@ -36,6 +36,7 @@ import org.springframework.stereotype.Component;
 public class PackageGetQryExe {
 
 	private final PackageMapper packageMapper;
+
 	private final PackageMenuMapper packageMenuMapper;
 
 	/**
@@ -49,10 +50,10 @@ public class PackageGetQryExe {
 
 	private PackageCO convert(PackageDO packageDO) {
 		return PackageCO.builder()
-				.id(packageDO.getId())
-				.name(packageDO.getName())
-				.menuIds(packageMenuMapper.selectMenuIdsByPackageId(packageDO.getId()))
-				.build();
+			.id(packageDO.getId())
+			.name(packageDO.getName())
+			.menuIds(packageMenuMapper.selectMenuIdsByPackageId(packageDO.getId()))
+			.build();
 	}
 
 }

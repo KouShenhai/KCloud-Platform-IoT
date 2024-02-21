@@ -46,13 +46,13 @@ public class SourceCreateCmdExe {
 
 	private Source convert(SourceCO sourceCO) {
 		return Source.builder()
-				.id(IdGenerator.defaultSnowflakeId())
-				.url(sourceCO.getUrl())
-				.password(sourceCO.getPassword())
-				.username(sourceCO.getUsername())
-				.driverClassName(sourceCO.getDriverClassName())
-				.name(sourceCO.getName())
-				.build();
+			.id(IdGenerator.defaultSnowflakeId())
+			.url(sourceCO.getUrl())
+			.password(sourceCO.getPassword())
+			.username(sourceCO.getUsername())
+			.driverClassName(sourceCO.getDriverClassName())
+			.name(sourceCO.getName())
+			.build();
 	}
 
 }

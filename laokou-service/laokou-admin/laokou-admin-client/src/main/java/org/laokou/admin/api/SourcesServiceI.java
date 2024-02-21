@@ -45,8 +45,8 @@ public interface SourcesServiceI {
 	void modify(SourceModifyCmd cmd);
 
 	/**
-	 * 根据ID删除数据源.
-	 * @param cmd 根据ID删除数据源参数
+	 * 根据IDS删除数据源.
+	 * @param cmd 根据IDS删除数据源参数
 	 */
 	void remove(SourceRemoveCmd cmd);
 

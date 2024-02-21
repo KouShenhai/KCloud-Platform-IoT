@@ -32,7 +32,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface PackageMenuMapper extends CrudMapper<Long, Integer,PackageMenuDO> {
+public interface PackageMenuMapper extends CrudMapper<Long, Integer, PackageMenuDO> {
 
 	/**
 	 * 根据套餐ID查看菜单IDS.

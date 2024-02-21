@@ -60,7 +60,7 @@ public interface BatchMapper<T> extends BaseMapper<T> {
 			throw new SystemException("数据不存在");
 		}
 		return 0;
-		//return value.getVersion();
+		// return value.getVersion();
 	}
 
 	/**
@@ -90,7 +90,7 @@ public interface BatchMapper<T> extends BaseMapper<T> {
 	 */
 	default Boolean insertTable(T t) {
 		try {
-			//t.setId(IdGenerator.defaultSnowflakeId());
+			// t.setId(IdGenerator.defaultSnowflakeId());
 			return this.insert(t) > 0;
 		}
 		catch (Exception e) {

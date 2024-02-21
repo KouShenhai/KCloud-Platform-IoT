@@ -44,7 +44,7 @@ public class IpCreateCmdExe {
 	 */
 	public Result<Boolean> execute(IpCreateCmd cmd) {
 		return null;
-		//return Result.of(ipGateway.insert(ipConvertor.toEntity(cmd.getIpCO())));
+		// return Result.of(ipGateway.insert(ipConvertor.toEntity(cmd.getIpCO())));
 	}
 
 }

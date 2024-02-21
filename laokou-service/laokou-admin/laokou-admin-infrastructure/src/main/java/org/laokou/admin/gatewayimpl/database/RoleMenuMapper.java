@@ -30,7 +30,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface RoleMenuMapper extends CrudMapper<Long,Integer,RoleMenuDO> {
+public interface RoleMenuMapper extends CrudMapper<Long, Integer, RoleMenuDO> {
 
 	/**
 	 * 根据角色ID删除角色菜单.

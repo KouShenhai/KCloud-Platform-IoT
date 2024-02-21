@@ -35,7 +35,7 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Repository
 @Mapper
-public interface RoleMapper extends CrudMapper<Long,Integer,RoleDO> {
+public interface RoleMapper extends CrudMapper<Long, Integer, RoleDO> {
 
 	/**
 	 * 查询角色列表.
@@ -43,7 +43,7 @@ public interface RoleMapper extends CrudMapper<Long,Integer,RoleDO> {
 	 * @param pageQuery 分页参数
 	 * @return 角色列表
 	 */
-	List<RoleDO> selectListByCondition(@Param("role")RoleDO role, @Param(PAGE_QUERY)PageQuery pageQuery);
+	List<RoleDO> selectListByCondition(@Param("role") RoleDO role, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 	/**
 	 * 查询角色数量.
@@ -51,7 +51,7 @@ public interface RoleMapper extends CrudMapper<Long,Integer,RoleDO> {
 	 * @param pageQuery 分页参数
 	 * @return 角色数量
 	 */
-	long selectCountByCondition(@Param("role") RoleDO role, @Param(PAGE_QUERY)PageQuery pageQuery);
+	long selectCountByCondition(@Param("role") RoleDO role, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 	/**
 	 * 查看角色IDS.

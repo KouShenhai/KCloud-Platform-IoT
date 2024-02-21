@@ -47,6 +47,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 public class DictListQryExe {
 
 	private final DictMapper dictMapper;
+
 	private final Executor executor;
 
 	/**
@@ -60,8 +61,10 @@ public class DictListQryExe {
 	public Result<Datas<DictCO>> execute(DictListQry qry) {
 		DictDO dictDO = convert(qry);
 		PageQuery page = qry.page();
-		CompletableFuture<List<DictDO>> c1 = CompletableFuture.supplyAsync(() -> dictMapper.selectListByCondition(dictDO, page), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> dictMapper.selectCountByCondition(dictDO, page), executor);
+		CompletableFuture<List<DictDO>> c1 = CompletableFuture
+			.supplyAsync(() -> dictMapper.selectListByCondition(dictDO, page), executor);
+		CompletableFuture<Long> c2 = CompletableFuture
+			.supplyAsync(() -> dictMapper.selectCountByCondition(dictDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
 	}
@@ -75,14 +78,14 @@ public class DictListQryExe {
 
 	private DictCO convert(DictDO dictDO) {
 		return DictCO.builder()
-				.id(dictDO.getId())
-				.value(dictDO.getValue())
-				.label(dictDO.getLabel())
-				.type(dictDO.getType())
-				.createDate(dictDO.getCreateDate())
-				.remark(dictDO.getRemark())
-				.sort(dictDO.getSort())
-				.build();
+			.id(dictDO.getId())
+			.value(dictDO.getValue())
+			.label(dictDO.getLabel())
+			.type(dictDO.getType())
+			.createDate(dictDO.getCreateDate())
+			.remark(dictDO.getRemark())
+			.sort(dictDO.getSort())
+			.build();
 	}
 
 }

@@ -20,7 +20,6 @@ package org.laokou.admin.command.tenant;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.dto.tenant.TenantRemoveCmd;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,10 +36,9 @@ public class TenantRemoveCmdExe {
 	/**
 	 * 执行删除租户.
 	 * @param cmd 删除租户参数
-	 * @return 执行删除结果
 	 */
-	public Result<Boolean> execute(TenantRemoveCmd cmd) {
-		return Result.of(tenantGateway.deleteById(cmd.getId()));
+	public void executeVoid(TenantRemoveCmd cmd) {
+		tenantGateway.remove(cmd.getIds());
 	}
 
 }

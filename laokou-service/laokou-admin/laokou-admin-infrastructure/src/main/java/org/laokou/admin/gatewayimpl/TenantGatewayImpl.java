@@ -17,8 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,21 +25,15 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.TenantConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
-import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.*;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.NumberConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -57,10 +50,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.laokou.common.i18n.common.DatasourceConstants.*;
@@ -99,69 +89,47 @@ public class TenantGatewayImpl implements TenantGateway {
 	/**
 	 * 新增租户.
 	 * @param tenant 租户对象
-	 * @return 新增结果
 	 */
 	@Override
-	public Boolean insert(Tenant tenant) {
+	public void create(Tenant tenant) {
+		long count = tenantMapper
+			.selectCount(Wrappers.lambdaQuery(TenantDO.class).eq(TenantDO::getName, tenant.getName()));
+		tenant.checkName(count);
 		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
-		tenantDO.setLabel(defaultConfigProperties.getTenantPrefix() + tenantMapper.maxLabelNum());
-		return insertTenant(tenantDO);
-	}
-
-	/**
-	 * 查询租户列表.
-	 * @param tenant 租户对象
-	 * @param pageQuery 分页参数
-	 * @return 租户列表
-	 */
-	@Override
-	@DataFilter(tableAlias = BOOT_SYS_TENANT)
-	public Datas<Tenant> list(Tenant tenant, PageQuery pageQuery) {
-		IPage<TenantDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<TenantDO> newPage = tenantMapper.getTenantListFilter(page, tenant.getName(), pageQuery);
-		Datas<Tenant> datas = new Datas<>();
-		datas.setTotal(newPage.getTotal());
-		datas.setRecords(tenantConvertor.convertEntityList(newPage.getRecords()));
-		return datas;
-	}
-
-	/**
-	 * 根据ID查看租户.
-	 * @param id ID
-	 * @return 租户
-	 */
-	@Override
-	public Tenant getById(Long id) {
-		return tenantConvertor.convertEntity(tenantMapper.selectById(id));
+		tenantDO.setLabel(defaultConfigProperties.getTenantPrefix() + tenantMapper.selectMaxLabelNum());
+		create(tenantDO);
 	}
 
 	/**
 	 * 修改租户.
 	 * @param tenant 租户对象
-	 * @return 修改结果
 	 */
 	@Override
-	public Boolean update(Tenant tenant) {
+	public void modify(Tenant tenant) {
+		long count = tenantMapper.selectCount(Wrappers.lambdaQuery(TenantDO.class)
+			.eq(TenantDO::getName, tenant.getName())
+			.ne(TenantDO::getId, tenant.getId()));
+		tenant.checkName(count);
 		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
-		tenantDO.setVersion(tenantMapper.getVersion(tenant.getId(), TenantDO.class));
-		return updateTenant(tenantDO);
+		tenantDO.setVersion(tenantMapper.selectVersion(tenantDO.getId()));
+		modify(tenantDO);
 	}
 
 	/**
-	 * 根据ID删除租户.
-	 * @param id ID
-	 * @return 删除结果
+	 * 根据IDS删除租户.
+	 * @param ids IDS
 	 */
 	@Override
-	public Boolean deleteById(Long id) {
-		return transactionalUtil.defaultExecute(r -> {
+	public void remove(Long[] ids) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return tenantMapper.deleteById(id) > 0;
+				tenantMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(msg);
 			}
 		});
 	}
@@ -173,7 +141,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	 */
 	@Override
 	@SneakyThrows
-	public void download(Long id, HttpServletResponse response) {
+	public void downloadDatasource(Long id, HttpServletResponse response) {
 		String fileName = "kcloud_platform_alibaba_tenant.sql";
 		String fileExt = FileUtil.getFileExt(fileName);
 		String name = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + fileExt;
@@ -192,17 +160,17 @@ public class TenantGatewayImpl implements TenantGateway {
 	/**
 	 * 新增租户.
 	 * @param tenantDO 租户数据模型
-	 * @return 新增结果
 	 */
-	private Boolean insertTenant(TenantDO tenantDO) {
-		return transactionalUtil.defaultExecute(r -> {
+	private void create(TenantDO tenantDO) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return tenantMapper.insertTable(tenantDO);
+				tenantMapper.insert(tenantDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(msg);
 			}
 		});
 	}
@@ -210,17 +178,17 @@ public class TenantGatewayImpl implements TenantGateway {
 	/**
 	 * 修改租户.
 	 * @param tenantDO 租户数据模型
-	 * @return 修改结果
 	 */
-	private Boolean updateTenant(TenantDO tenantDO) {
-		return transactionalUtil.defaultExecute(r -> {
+	private void modify(TenantDO tenantDO) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return tenantMapper.updateById(tenantDO) > 0;
+				tenantMapper.updateById(tenantDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(msg);
 			}
 		});
 	}

@@ -53,23 +53,25 @@ public class MenuTenantListQryExe {
 	public Result<List<MenuCO>> execute(MenuTenantListQry qry) {
 		return switch (FindTypeEnums.valueOf(qry.getType())) {
 			case LIST, USER_TREE_LIST -> null;
-			case TREE_LIST -> Result.of(buildTreeNode(menuMapper.selectTenantMenuList().stream().map(this::convert).toList()).getChildren());
-        };
+			case TREE_LIST ->
+				Result.of(buildTreeNode(menuMapper.selectTenantMenuList().stream().map(this::convert).toList())
+					.getChildren());
+		};
 	}
 
 	private MenuCO convert(MenuDO menuDO) {
 		return MenuCO.builder()
-				.url(menuDO.getUrl())
-				.icon(menuDO.getIcon())
-				.name(menuDO.getName())
-				.pid(menuDO.getPid())
-				.sort(menuDO.getSort())
-				.type(menuDO.getType())
-				.id(menuDO.getId())
-				.permission(menuDO.getPermission())
-				.visible(menuDO.getVisible())
-				.children(new ArrayList<>(16))
-				.build();
+			.url(menuDO.getUrl())
+			.icon(menuDO.getIcon())
+			.name(menuDO.getName())
+			.pid(menuDO.getPid())
+			.sort(menuDO.getSort())
+			.type(menuDO.getType())
+			.id(menuDO.getId())
+			.permission(menuDO.getPermission())
+			.visible(menuDO.getVisible())
+			.children(new ArrayList<>(16))
+			.build();
 	}
 
 	private MenuCO buildTreeNode(List<MenuCO> list) {

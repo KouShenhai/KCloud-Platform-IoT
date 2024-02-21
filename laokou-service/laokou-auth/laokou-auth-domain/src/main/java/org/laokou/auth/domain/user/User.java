@@ -38,7 +38,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Set;
 
 import static lombok.AccessLevel.PRIVATE;
-import static lombok.AccessLevel.PROTECTED;
 import static org.laokou.common.i18n.common.BizCodes.LOGIN_SUCCEEDED;
 import static org.laokou.common.i18n.common.ErrorCodes.*;
 import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;

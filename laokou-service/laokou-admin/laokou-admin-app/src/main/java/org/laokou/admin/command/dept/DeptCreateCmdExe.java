@@ -50,11 +50,11 @@ public class DeptCreateCmdExe {
 
 	private Dept convert(DeptCO deptCO) {
 		return Dept.builder()
-				.id(IdGenerator.defaultSnowflakeId())
-				.pid(deptCO.getPid())
-				.name(deptCO.getName())
-				.sort(deptCO.getSort())
-				.build();
+			.id(IdGenerator.defaultSnowflakeId())
+			.pid(deptCO.getPid())
+			.name(deptCO.getName())
+			.sort(deptCO.getSort())
+			.build();
 	}
 
 }

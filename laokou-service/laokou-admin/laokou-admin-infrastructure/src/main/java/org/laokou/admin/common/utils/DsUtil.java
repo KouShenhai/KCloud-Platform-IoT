@@ -100,7 +100,8 @@ public class DsUtil {
 	}
 
 	private void addDs(String sourceName) {
-		SourceDO source = sourceMapper.selectOne(Wrappers.lambdaQuery(SourceDO.class).eq(SourceDO::getName, sourceName));
+		SourceDO source = sourceMapper
+			.selectOne(Wrappers.lambdaQuery(SourceDO.class).eq(SourceDO::getName, sourceName));
 		addDs(sourceName, properties(source));
 	}
 

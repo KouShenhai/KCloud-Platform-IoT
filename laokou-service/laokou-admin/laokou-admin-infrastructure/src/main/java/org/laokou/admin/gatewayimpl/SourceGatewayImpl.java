@@ -55,7 +55,8 @@ public class SourceGatewayImpl implements SourceGateway {
 	@Override
 	public void create(Source source) {
 		source.checkName();
-		long count = sourceMapper.selectCount(Wrappers.lambdaQuery(SourceDO.class).eq(SourceDO::getName, source.getName()));
+		long count = sourceMapper
+			.selectCount(Wrappers.lambdaQuery(SourceDO.class).eq(SourceDO::getName, source.getName()));
 		source.checkName(count);
 		create(sourceConvertor.toDataObject(source));
 	}
@@ -68,7 +69,9 @@ public class SourceGatewayImpl implements SourceGateway {
 	public void modify(Source source) {
 		source.checkNullId();
 		source.checkName();
-		long count = sourceMapper.selectCount(Wrappers.lambdaQuery(SourceDO.class).eq(SourceDO::getName, source.getName()).ne(SourceDO::getId, source.getId()));
+		long count = sourceMapper.selectCount(Wrappers.lambdaQuery(SourceDO.class)
+			.eq(SourceDO::getName, source.getName())
+			.ne(SourceDO::getId, source.getId()));
 		source.checkName(count);
 		SourceDO sourceDO = sourceConvertor.toDataObject(source);
 		sourceDO.setVersion(sourceMapper.selectVersion(sourceDO.getId()));

@@ -45,10 +45,10 @@ public class PackageModifyCmdExe {
 
 	private Package convert(PackageCO packageCO) {
 		return Package.builder()
-				.id(packageCO.getId())
-				.name(packageCO.getName())
-				.menuIds(packageCO.getMenuIds())
-				.build();
+			.id(packageCO.getId())
+			.name(packageCO.getName())
+			.menuIds(packageCO.getMenuIds())
+			.build();
 	}
 
 }

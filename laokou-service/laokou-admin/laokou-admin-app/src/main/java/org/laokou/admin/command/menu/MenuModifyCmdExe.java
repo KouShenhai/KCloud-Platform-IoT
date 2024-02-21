@@ -49,16 +49,16 @@ public class MenuModifyCmdExe {
 
 	private Menu convert(MenuCO co) {
 		return Menu.builder()
-				.id(co.getId())
-				.pid(co.getPid())
-				.name(co.getName())
-				.type(co.getType())
-				.sort(co.getSort())
-				.permission(co.getPermission())
-				.icon(co.getIcon())
-				.url(co.getUrl())
-				.visible(co.getVisible())
-				.build();
+			.id(co.getId())
+			.pid(co.getPid())
+			.name(co.getName())
+			.type(co.getType())
+			.sort(co.getSort())
+			.permission(co.getPermission())
+			.icon(co.getIcon())
+			.url(co.getUrl())
+			.visible(co.getVisible())
+			.build();
 	}
 
 }

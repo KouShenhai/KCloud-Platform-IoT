@@ -35,7 +35,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResourceResolveTaskCmdExe {
 
-	//private final TasksFeignClient tasksFeignClient;
+	// private final TasksFeignClient tasksFeignClient;
 
 	private final EventUtil eventUtil;
 

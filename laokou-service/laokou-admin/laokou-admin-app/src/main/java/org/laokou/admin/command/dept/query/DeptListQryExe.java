@@ -36,7 +36,6 @@ import java.util.List;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
-
 /**
  * 查询部门列表执行器.
  *
@@ -58,8 +57,8 @@ public class DeptListQryExe {
 		return switch (FindTypeEnums.valueOf(qry.getType())) {
 			case LIST -> Result.of(getDeptList(qry).stream().map(this::convert).toList());
 			case TREE_LIST -> Result.of(buildTreeNode(getDeptList(qry).stream().map(this::convert).toList()));
-            case USER_TREE_LIST -> null;
-        };
+			case USER_TREE_LIST -> null;
+		};
 	}
 
 	private List<DeptCO> buildTreeNode(List<DeptCO> list) {
@@ -68,20 +67,20 @@ public class DeptListQryExe {
 
 	private DeptCO convert(DeptDO deptDO) {
 		return DeptCO.builder()
-				.id(deptDO.getId())
-				.pid(deptDO.getPid())
-				.name(deptDO.getName())
-				.sort(deptDO.getSort())
-				.children(new ArrayList<>(16))
-				.build();
+			.id(deptDO.getId())
+			.pid(deptDO.getPid())
+			.name(deptDO.getName())
+			.sort(deptDO.getSort())
+			.children(new ArrayList<>(16))
+			.build();
 	}
 
 	private List<DeptDO> getDeptList(DeptListQry qry) {
 		String name = qry.getName();
 		LambdaQueryWrapper<DeptDO> wrapper = Wrappers.lambdaQuery(DeptDO.class)
-				.like(StringUtil.isNotEmpty(name), DeptDO::getName, name)
-				.orderByDesc(DeptDO::getSort)
-				.select(DeptDO::getId, DeptDO::getPid, DeptDO::getName, DeptDO::getSort);
+			.like(StringUtil.isNotEmpty(name), DeptDO::getName, name)
+			.orderByDesc(DeptDO::getSort)
+			.select(DeptDO::getId, DeptDO::getPid, DeptDO::getName, DeptDO::getSort);
 		return deptMapper.selectList(wrapper);
 	}
 

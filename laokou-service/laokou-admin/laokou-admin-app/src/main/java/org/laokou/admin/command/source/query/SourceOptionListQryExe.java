@@ -50,10 +50,7 @@ public class SourceOptionListQryExe {
 	}
 
 	public OptionCO convert(SourceDO sourceDO) {
-		return OptionCO.builder()
-				.value(String.valueOf(sourceDO.getId()))
-				.label(sourceDO.getName())
-				.build();
+		return OptionCO.builder().value(String.valueOf(sourceDO.getId())).label(sourceDO.getName()).build();
 	}
 
 }

@@ -35,10 +35,10 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Repository
 @Mapper
-public interface DictMapper extends CrudMapper<Long,Integer,DictDO> {
+public interface DictMapper extends CrudMapper<Long, Integer, DictDO> {
 
-    List<DictDO> selectListByCondition(@Param("dict")DictDO dict, @Param(PAGE_QUERY)PageQuery pageQuery);
+	List<DictDO> selectListByCondition(@Param("dict") DictDO dict, @Param(PAGE_QUERY) PageQuery pageQuery);
 
-    long selectCountByCondition(@Param("dict")DictDO dict, @Param(PAGE_QUERY)PageQuery pageQuery);
+	long selectCountByCondition(@Param("dict") DictDO dict, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

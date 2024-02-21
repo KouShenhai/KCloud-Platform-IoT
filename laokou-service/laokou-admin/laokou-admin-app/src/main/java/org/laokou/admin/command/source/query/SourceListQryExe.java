@@ -45,6 +45,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_SOURCE;
 public class SourceListQryExe {
 
 	private final SourceMapper sourceMapper;
+
 	private final Executor executor;
 
 	/**
@@ -57,8 +58,10 @@ public class SourceListQryExe {
 	public Result<Datas<SourceCO>> execute(SourceListQry qry) {
 		SourceDO sourceDO = convert(qry);
 		PageQuery page = qry.page();
-		CompletableFuture<List<SourceDO>> c1 = CompletableFuture.supplyAsync(() -> sourceMapper.selectListByCondition(sourceDO, page), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> sourceMapper.selectCountByCondition(sourceDO, page), executor);
+		CompletableFuture<List<SourceDO>> c1 = CompletableFuture
+			.supplyAsync(() -> sourceMapper.selectListByCondition(sourceDO, page), executor);
+		CompletableFuture<Long> c2 = CompletableFuture
+			.supplyAsync(() -> sourceMapper.selectCountByCondition(sourceDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
 	}
@@ -71,12 +74,12 @@ public class SourceListQryExe {
 
 	private SourceCO convert(SourceDO sourceDO) {
 		return SourceCO.builder()
-				.id(sourceDO.getId())
-				.name(sourceDO.getName())
-				.url(sourceDO.getUrl())
-				.driverClassName(sourceDO.getDriverClassName())
-				.username(sourceDO.getUsername())
-				.build();
+			.id(sourceDO.getId())
+			.name(sourceDO.getName())
+			.url(sourceDO.getUrl())
+			.driverClassName(sourceDO.getDriverClassName())
+			.username(sourceDO.getUsername())
+			.build();
 	}
 
 }

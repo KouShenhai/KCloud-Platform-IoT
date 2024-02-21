@@ -41,7 +41,6 @@ public interface SourceGateway {
 	/**
 	 * 根据IDS删除数据源.
 	 * @param ids IDS
-	 * @return 删除结果
 	 */
 	void remove(Long[] ids);
 

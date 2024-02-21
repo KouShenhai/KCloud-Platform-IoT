@@ -42,7 +42,6 @@ public class RoleCreateCmdExe {
 	/**
 	 * 执行新增角色.
 	 * @param cmd 新增角色参数
-	 * @return 执行新增结果
 	 */
 	@DS(TENANT)
 	public void executeVoid(RoleCreateCmd cmd) {
@@ -51,12 +50,12 @@ public class RoleCreateCmdExe {
 
 	private Role convert(RoleCO roleCO) {
 		return Role.builder()
-				.id(IdGenerator.defaultSnowflakeId())
-				.name(roleCO.getName())
-				.sort(roleCO.getSort())
-				.menuIds(roleCO.getMenuIds())
-				.deptIds(roleCO.getDeptIds())
-				.build();
+			.id(IdGenerator.defaultSnowflakeId())
+			.name(roleCO.getName())
+			.sort(roleCO.getSort())
+			.menuIds(roleCO.getMenuIds())
+			.deptIds(roleCO.getDeptIds())
+			.build();
 	}
 
 }

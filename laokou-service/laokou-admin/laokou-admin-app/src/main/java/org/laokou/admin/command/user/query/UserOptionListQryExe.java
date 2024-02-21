@@ -62,10 +62,7 @@ public class UserOptionListQryExe {
 	 * @return 下拉框命令请求
 	 */
 	private OptionCO convert(UserDO userDO) {
-		return OptionCO.builder()
-				.value(userDO.getId().toString())
-				.label(userDO.getUsername())
-				.build();
+		return OptionCO.builder().value(userDO.getId().toString()).label(userDO.getUsername()).build();
 	}
 
 }

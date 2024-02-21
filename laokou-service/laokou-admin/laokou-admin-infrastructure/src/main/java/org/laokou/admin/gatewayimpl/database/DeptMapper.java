@@ -32,7 +32,7 @@ import java.util.List;
  */
 @Repository
 @Mapper
-public interface DeptMapper extends CrudMapper<Long,Integer,DeptDO> {
+public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
 
 	/**
 	 * 查询部门列表.
