@@ -18,15 +18,22 @@
 package org.laokou.admin.command.source.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.SourceConvertor;
-import org.laokou.admin.domain.gateway.SourceGateway;
-import org.laokou.admin.domain.source.Source;
+import lombok.SneakyThrows;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.source.SourceListQry;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.gatewayimpl.database.SourceMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_SOURCE;
 
 /**
  * 查询数据源列表执行器.
@@ -37,22 +44,39 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SourceListQryExe {
 
-	private final SourceGateway sourceGateway;
-
-	private final SourceConvertor sourceConvertor;
+	private final SourceMapper sourceMapper;
+	private final Executor executor;
 
 	/**
 	 * 执行查询数据源列表.
 	 * @param qry 查询数据源列表参数
 	 * @return 数据源列表
 	 */
+	@SneakyThrows
+	@DataFilter(tableAlias = BOOT_SYS_SOURCE)
 	public Result<Datas<SourceCO>> execute(SourceListQry qry) {
-		Source source = ConvertUtil.sourceToTarget(qry, Source.class);
-		Datas<Source> newPage = sourceGateway.list(source, qry);
-		Datas<SourceCO> datas = new Datas<>();
-		// datas.setRecords(sourceConvertor.convertClientObjectList(newPage.getRecords()));
-		datas.setTotal(newPage.getTotal());
-		return Result.of(datas);
+		SourceDO sourceDO = convert(qry);
+		PageQuery page = qry.page();
+		CompletableFuture<List<SourceDO>> c1 = CompletableFuture.supplyAsync(() -> sourceMapper.selectListByCondition(sourceDO, page), executor);
+		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> sourceMapper.selectCountByCondition(sourceDO, page), executor);
+		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
+		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
+	}
+
+	private SourceDO convert(SourceListQry qry) {
+		SourceDO sourceDO = new SourceDO();
+		sourceDO.setName(qry.getName());
+		return sourceDO;
+	}
+
+	private SourceCO convert(SourceDO sourceDO) {
+		return SourceCO.builder()
+				.id(sourceDO.getId())
+				.name(sourceDO.getName())
+				.url(sourceDO.getUrl())
+				.driverClassName(sourceDO.getDriverClassName())
+				.username(sourceDO.getUsername())
+				.build();
 	}
 
 }

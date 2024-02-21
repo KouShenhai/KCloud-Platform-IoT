@@ -19,8 +19,6 @@ package org.laokou.admin.domain.gateway;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.admin.domain.source.Source;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
@@ -29,39 +27,22 @@ import org.laokou.common.i18n.dto.PageQuery;
 public interface SourceGateway {
 
 	/**
-	 * 查询数据源列表.
-	 * @param source 数据源对象
-	 * @param pageQuery 分页参数
-	 * @return 数据源列表
-	 */
-	Datas<Source> list(Source source, PageQuery pageQuery);
-
-	/**
-	 * 根据ID查看数据源.
-	 * @param id ID
-	 * @return 数据源
-	 */
-	Source getById(Long id);
-
-	/**
 	 * 新增数据源.
 	 * @param source 数据源对象
-	 * @return 新增结果
 	 */
-	Boolean insert(Source source);
+	void create(Source source);
 
 	/**
 	 * 修改数据源.
 	 * @param source 数据源对象
-	 * @return 修改结果
 	 */
-	Boolean update(Source source);
+	void modify(Source source);
 
 	/**
-	 * 根据ID删除数据源.
-	 * @param id ID
+	 * 根据IDS删除数据源.
+	 * @param ids IDS
 	 * @return 删除结果
 	 */
-	Boolean deleteById(Long id);
+	void remove(Long[] ids);
 
 }

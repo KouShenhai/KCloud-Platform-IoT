@@ -19,6 +19,7 @@ package org.laokou.admin.common.utils;
 
 import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
 import com.baomidou.dynamic.datasource.creator.hikaricp.HikariDataSourceCreator;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -99,7 +100,7 @@ public class DsUtil {
 	}
 
 	private void addDs(String sourceName) {
-		SourceDO source = sourceMapper.getSourceByName(sourceName);
+		SourceDO source = sourceMapper.selectOne(Wrappers.lambdaQuery(SourceDO.class).eq(SourceDO::getName, sourceName));
 		addDs(sourceName, properties(source));
 	}
 

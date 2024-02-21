@@ -104,11 +104,10 @@ public class PackagesServiceImpl implements PackagesServiceI {
 
 	/**
 	 * 查询套餐下拉框选择项列表.
-	 * @param qry 查询套餐下拉框选择项列表参数
 	 * @return 套餐下拉框选择项列表
 	 */
 	@Override
-	public Result<List<OptionCO>> optionList(PackageOptionListQry qry) {
+	public Result<List<OptionCO>> findOptionList() {
 		return packageOptionListQryExe.execute();
 	}
 

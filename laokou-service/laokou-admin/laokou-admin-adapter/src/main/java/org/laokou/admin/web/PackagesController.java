@@ -98,7 +98,7 @@ public class PackagesController {
 	@GetMapping("option-list")
 	@Operation(summary = "套餐管理", description = "下拉列表")
 	public Result<List<OptionCO>> findOptionList() {
-		return packagesServiceI.optionList(new PackageOptionListQry());
+		return packagesServiceI.findOptionList();
 	}
 
 }

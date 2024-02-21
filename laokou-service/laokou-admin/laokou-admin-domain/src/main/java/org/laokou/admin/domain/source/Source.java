@@ -18,17 +18,25 @@
 package org.laokou.admin.domain.source;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.laokou.common.core.utils.RegexUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.AggregateRoot;
+
+import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
+@SuperBuilder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "Source", description = "数据源")
-public class Source {
-
-	@Schema(name = "id", description = "ID")
-	private Long id;
+public class Source extends AggregateRoot<Long> {
 
 	@Schema(name = "name", description = "数据源名称")
 	private String name;
@@ -44,5 +52,17 @@ public class Source {
 
 	@Schema(name = "url", description = "数据源的连接信息")
 	private String url;
+
+	public void checkName() {
+		if (!RegexUtil.sourceRegex(name)) {
+			throw new SystemException("数据源名称必须包含字母、下划线和数字");
+		}
+	}
+
+	public void checkName(long count) {
+		if (count > 0) {
+			throw new SystemException("数据源名称已存在，请重新填写");
+		}
+	}
 
 }

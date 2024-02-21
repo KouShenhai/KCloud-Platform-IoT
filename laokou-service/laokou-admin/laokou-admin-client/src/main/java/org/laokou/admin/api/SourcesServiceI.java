@@ -35,43 +35,39 @@ public interface SourcesServiceI {
 	/**
 	 * 新增数据源.
 	 * @param cmd 新增数据源参数
-	 * @return 新增结果
 	 */
-	Result<Boolean> insert(SourceCreateCmd cmd);
+	void create(SourceCreateCmd cmd);
 
 	/**
 	 * 修改数据源.
 	 * @param cmd 修改数据源参数
-	 * @return 修改结果
 	 */
-	Result<Boolean> update(SourceModifyCmd cmd);
+	void modify(SourceModifyCmd cmd);
 
 	/**
 	 * 根据ID删除数据源.
 	 * @param cmd 根据ID删除数据源参数
-	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(SourceRemoveCmd cmd);
+	void remove(SourceRemoveCmd cmd);
 
 	/**
 	 * 根据ID查看数据源.
 	 * @param qry 根据ID查看数据源参数
 	 * @return 数据源
 	 */
-	Result<SourceCO> getById(SourceGetQry qry);
+	Result<SourceCO> findById(SourceGetQry qry);
 
 	/**
 	 * 查询数据源列表.
 	 * @param qry 查询数据源列表参数
 	 * @return 数据源列表
 	 */
-	Result<Datas<SourceCO>> list(SourceListQry qry);
+	Result<Datas<SourceCO>> findList(SourceListQry qry);
 
 	/**
 	 * 查询数据源下拉框选择项列表.
-	 * @param qry 查询数据源下拉框选择项列表参数
 	 * @return 数据源下拉框选择项列表
 	 */
-	Result<List<OptionCO>> optionList(SourceOptionListQry qry);
+	Result<List<OptionCO>> findOptionList();
 
 }
