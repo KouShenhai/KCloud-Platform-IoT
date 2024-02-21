@@ -20,11 +20,8 @@ package org.laokou.admin.command.pack;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.PackageGateway;
 import org.laokou.admin.domain.packages.Package;
-import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.packages.PackageModifyCmd;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
+import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.springframework.stereotype.Component;
 
 /**
@@ -41,15 +38,17 @@ public class PackageModifyCmdExe {
 	/**
 	 * 执行修改套餐.
 	 * @param cmd 修改套餐参数
-	 * @return 执行修改结果
 	 */
-	public Result<Boolean> execute(PackageModifyCmd cmd) {
-		Package pack = ConvertUtil.sourceToTarget(cmd.getPackageCO(), Package.class);
-		return Result.of(packageGateway.update(pack, toUser()));
+	public void executeVoid(PackageModifyCmd cmd) {
+		packageGateway.modify(convert(cmd.getPackageCO()));
 	}
 
-	private User toUser() {
-		return ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
+	private Package convert(PackageCO packageCO) {
+		return Package.builder()
+				.id(packageCO.getId())
+				.name(packageCO.getName())
+				.menuIds(packageCO.getMenuIds())
+				.build();
 	}
 
 }

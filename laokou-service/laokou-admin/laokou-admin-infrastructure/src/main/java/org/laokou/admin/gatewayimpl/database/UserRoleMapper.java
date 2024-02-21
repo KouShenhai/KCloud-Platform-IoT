@@ -41,7 +41,7 @@ public interface UserRoleMapper extends CrudMapper<Long, Integer, UserRoleDO> {
 	 * @param userId 用户ID
 	 * @return 角色IDS
 	 */
-	List<Long> selectRoleIdsUserId(@Param(USER_ID) Long userId);
+	List<Long> selectRoleIdsByUserId(@Param(USER_ID) Long userId);
 
 	/**
 	 * 根据用户ID删除用户角色.

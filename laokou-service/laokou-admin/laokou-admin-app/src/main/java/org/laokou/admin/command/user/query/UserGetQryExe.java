@@ -73,7 +73,7 @@ public class UserGetQryExe {
 		if (isSuperAdministrator(userDO.getSuperAdmin())) {
 			return roleMapper.selectRoleIds();
 		}
-		return userRoleMapper.selectRoleIdsUserId(userDO.getId());
+		return userRoleMapper.selectRoleIdsByUserId(userDO.getId());
 	}
 
 	private boolean isSuperAdministrator(Integer superAdmin) {

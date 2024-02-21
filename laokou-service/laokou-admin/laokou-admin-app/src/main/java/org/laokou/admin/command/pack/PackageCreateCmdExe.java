@@ -20,11 +20,9 @@ package org.laokou.admin.command.pack;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.PackageGateway;
 import org.laokou.admin.domain.packages.Package;
-import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.packages.PackageCreateCmd;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
+import org.laokou.admin.dto.packages.clientobject.PackageCO;
+import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -41,19 +39,17 @@ public class PackageCreateCmdExe {
 	/**
 	 * 执行新增套餐.
 	 * @param cmd 新增套餐参数
-	 * @return 执行新增结果
 	 */
-	public Result<Boolean> execute(PackageCreateCmd cmd) {
-		Package pack = ConvertUtil.sourceToTarget(cmd.getPackageCO(), Package.class);
-		return Result.of(packageGateway.insert(pack, toUser()));
+	public void executeVoid(PackageCreateCmd cmd) {
+		packageGateway.create(convert(cmd.getPackageCO()));
 	}
 
-	/**
-	 * 转换成用户领域.
-	 * @return 用户领域
-	 */
-	private User toUser() {
-		return ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
+	private Package convert(PackageCO packageCO) {
+		return Package.builder()
+				.id(IdGenerator.defaultSnowflakeId())
+				.name(packageCO.getName())
+				.menuIds(packageCO.getMenuIds())
+				.build();
 	}
 
 }

@@ -39,4 +39,7 @@
             and `name` like #{pack.name}
         </if>
     </select>
+    <select id="selectVersion" resultType="integer">
+        select version from boot_sys_package where id = #{id}
+    </select>
 </mapper>

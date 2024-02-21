@@ -18,10 +18,11 @@
 package org.laokou.admin.command.pack.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.PackageConvertor;
-import org.laokou.admin.domain.gateway.PackageGateway;
 import org.laokou.admin.dto.packages.PackageGetQry;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
+import org.laokou.admin.gatewayimpl.database.PackageMapper;
+import org.laokou.admin.gatewayimpl.database.PackageMenuMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -34,9 +35,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PackageGetQryExe {
 
-	private final PackageGateway packageGateway;
-
-	private final PackageConvertor packageConvertor;
+	private final PackageMapper packageMapper;
+	private final PackageMenuMapper packageMenuMapper;
 
 	/**
 	 * 执行查看套餐.
@@ -44,9 +44,15 @@ public class PackageGetQryExe {
 	 * @return 套餐
 	 */
 	public Result<PackageCO> execute(PackageGetQry qry) {
-		return null;
-		// return
-		// Result.of(packageConvertor.convertClientObject(packageGateway.getById(qry.getId())));
+		return Result.of(convert(packageMapper.selectById(qry.getId())));
+	}
+
+	private PackageCO convert(PackageDO packageDO) {
+		return PackageCO.builder()
+				.id(packageDO.getId())
+				.name(packageDO.getName())
+				.menuIds(packageMenuMapper.selectMenuIdsByPackageId(packageDO.getId()))
+				.build();
 	}
 
 }

@@ -35,23 +35,20 @@ public interface PackagesServiceI {
 	/**
 	 * 新增套餐.
 	 * @param cmd 新增套餐参数
-	 * @return 新增结果
 	 */
-	Result<Boolean> insert(PackageCreateCmd cmd);
+	void create(PackageCreateCmd cmd);
 
 	/**
 	 * 修改套餐.
 	 * @param cmd 修改套餐参数
-	 * @return 修改结果
 	 */
-	Result<Boolean> update(PackageModifyCmd cmd);
+	void modify(PackageModifyCmd cmd);
 
 	/**
 	 * 根据ID删除套餐.
 	 * @param cmd 根据ID删除套餐参数
-	 * @return 删除结果
 	 */
-	Result<Boolean> deleteById(PackageRemoveCmd cmd);
+	void remove(PackageRemoveCmd cmd);
 
 	/**
 	 * 查询套餐列表.
@@ -65,7 +62,7 @@ public interface PackagesServiceI {
 	 * @param qry 根据ID查看套餐参数
 	 * @return 套餐
 	 */
-	Result<PackageCO> getById(PackageGetQry qry);
+	Result<PackageCO> findById(PackageGetQry qry);
 
 	/**
 	 * 查询套餐下拉框选择项列表.

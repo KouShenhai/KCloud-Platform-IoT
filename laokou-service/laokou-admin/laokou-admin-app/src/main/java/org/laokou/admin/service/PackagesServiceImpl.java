@@ -58,31 +58,28 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	/**
 	 * 新增套餐.
 	 * @param cmd 新增套餐参数
-	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(PackageCreateCmd cmd) {
-		return packageCreateCmdExe.execute(cmd);
+	public void create(PackageCreateCmd cmd) {
+		packageCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 修改套餐.
 	 * @param cmd 修改套餐参数
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(PackageModifyCmd cmd) {
-		return packageModifyCmdExe.execute(cmd);
+	public void modify(PackageModifyCmd cmd) {
+		packageModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 根据ID删除套餐.
 	 * @param cmd 根据ID删除套餐参数
-	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(PackageRemoveCmd cmd) {
-		return packageRemoveCmdExe.execute(cmd);
+	public void remove(PackageRemoveCmd cmd) {
+		packageRemoveCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -101,7 +98,7 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	 * @return 套餐
 	 */
 	@Override
-	public Result<PackageCO> getById(PackageGetQry qry) {
+	public Result<PackageCO> findById(PackageGetQry qry) {
 		return packageGetQryExe.execute(qry);
 	}
 

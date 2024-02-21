@@ -63,8 +63,8 @@ public class PackagesController {
 	@Operation(summary = "套餐管理", description = "新增套餐")
 	@OperateLog(module = "套餐管理", operation = "新增套餐")
 	@PreAuthorize("hasAuthority('packages:create')")
-	public Result<Boolean> create(@RequestBody PackageCreateCmd cmd) {
-		return packagesServiceI.insert(cmd);
+	public void create(@RequestBody PackageCreateCmd cmd) {
+		packagesServiceI.create(cmd);
 	}
 
 	@TraceLog
@@ -72,7 +72,7 @@ public class PackagesController {
 	@Operation(summary = "套餐管理", description = "查看套餐")
 	@DataCache(name = PACKAGES, key = "#id")
 	public Result<PackageCO> findById(@PathVariable("id") Long id) {
-		return packagesServiceI.getById(new PackageGetQry(id));
+		return packagesServiceI.findById(new PackageGetQry(id));
 	}
 
 	@TraceLog
@@ -81,17 +81,17 @@ public class PackagesController {
 	@OperateLog(module = "套餐管理", operation = "修改套餐")
 	@PreAuthorize("hasAuthority('packages:modify')")
 	@DataCache(name = PACKAGES, key = "#cmd.packageCO.id", type = CacheOperatorTypeEnums.DEL)
-	public Result<Boolean> modify(@RequestBody PackageModifyCmd cmd) {
-		return packagesServiceI.update(cmd);
+	public void modify(@RequestBody PackageModifyCmd cmd) {
+		packagesServiceI.modify(cmd);
 	}
 
 	@TraceLog
-	@DeleteMapping("{id}")
+	@DeleteMapping
 	@Operation(summary = "套餐管理", description = "删除套餐")
 	@OperateLog(module = "套餐管理", operation = "删除套餐")
 	@PreAuthorize("hasAuthority('packages:remove')")
-	public Result<Boolean> remove(@PathVariable("id") Long id) {
-		return packagesServiceI.deleteById(new PackageRemoveCmd(id));
+	public void remove(@RequestBody Long[] ids) {
+		packagesServiceI.remove(new PackageRemoveCmd(ids));
 	}
 
 	@TraceLog

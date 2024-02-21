@@ -19,9 +19,6 @@ package org.laokou.admin.domain.gateway;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.admin.domain.packages.Package;
-import org.laokou.admin.domain.user.User;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
@@ -32,31 +29,19 @@ public interface PackageGateway {
 	/**
 	 * 新增套餐.
 	 * @param pack 套餐对象
-	 * @param user 用户对象
-	 * @return 新增结果
 	 */
-	Boolean insert(Package pack, User user);
+	void create(Package pack);
 
 	/**
 	 * 修改套餐.
 	 * @param pack 套餐对象
-	 * @param user 用户对象
-	 * @return 修改结果
 	 */
-	Boolean update(Package pack, User user);
+	void modify(Package pack);
 
 	/**
-	 * 根据ID查看套餐.
-	 * @param id ID
-	 * @return 套餐
+	 * 根据IDS删除套餐.
+	 * @param ids IDS
 	 */
-	Package getById(Long id);
-
-	/**
-	 * 根据ID删除套餐.
-	 * @param id ID
-	 * @return 删除结果
-	 */
-	Boolean deleteById(Long id);
+	void remove(Long[] ids);
 
 }

@@ -52,7 +52,7 @@
         delete from boot_sys_user_role
         where user_id = #{userId}
     </delete>
-    <select id="selectRoleIdsUserId" resultType="java.lang.Long">
+    <select id="selectRoleIdsByUserId" resultType="java.lang.Long">
         select role_id
         from boot_sys_user_role
         where user_id = #{userId}
