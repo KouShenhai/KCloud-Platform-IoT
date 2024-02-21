@@ -83,7 +83,8 @@ public class RoleGatewayImpl implements RoleGateway {
 	@Override
 	public void modify(Role role) {
 		role.checkNullId();
-		long count = roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()).ne(RoleDO::getId, role.getId()));
+		long count = roleMapper.selectCount(
+				Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()).ne(RoleDO::getId, role.getId()));
 		role.checkName(count);
 		RoleDO roleDO = roleConvertor.toDataObject(role);
 		// 版本号
@@ -157,7 +158,8 @@ public class RoleGatewayImpl implements RoleGateway {
 	 */
 	private void createRoleDept(RoleDO roleDO, List<Long> deptIds) {
 		List<RoleDeptDO> list = deptIds.parallelStream().map(deptId -> to(roleDO.getId(), deptId)).toList();
-		mybatisUtil.batch(list, RoleDeptMapper.class, UserContextHolder.get().getSourceName(), RoleDeptMapper::insertOne);
+		mybatisUtil.batch(list, RoleDeptMapper.class, UserContextHolder.get().getSourceName(),
+				RoleDeptMapper::insertOne);
 	}
 
 	/**
@@ -167,7 +169,8 @@ public class RoleGatewayImpl implements RoleGateway {
 	 */
 	private void createRoleMenu(RoleDO roleDO, List<Long> menuIds) {
 		List<RoleMenuDO> list = menuIds.parallelStream().map(menuId -> convert(roleDO.getId(), menuId)).toList();
-		mybatisUtil.batch(list, RoleMenuMapper.class, UserContextHolder.get().getSourceName(), RoleMenuMapper::insertOne);
+		mybatisUtil.batch(list, RoleMenuMapper.class, UserContextHolder.get().getSourceName(),
+				RoleMenuMapper::insertOne);
 	}
 
 	private void modifyRoleMenu(RoleDO roleDO, List<Long> menuIds) {

@@ -54,14 +54,14 @@ public class UserModifyCmdExe {
 	 */
 	private User convert(UserCO co) {
 		return User.builder()
-				.roleIds(co.getRoleIds())
-				.id(co.getId())
-				.avatar(co.getAvatar())
-				.mail(co.getMail())
-				.mobile(co.getMobile())
-				.password(co.getPassword())
-				.deptId(co.getDeptId())
-				.build();
+			.roleIds(co.getRoleIds())
+			.id(co.getId())
+			.avatar(co.getAvatar())
+			.mail(co.getMail())
+			.mobile(co.getMobile())
+			.password(co.getPassword())
+			.deptId(co.getDeptId())
+			.build();
 	}
 
 }

@@ -63,42 +63,38 @@ public class TenantsServiceImpl implements TenantsServiceI {
 
 	/**
 	 * 查询租户下拉框选择项列表.
-	 * @param qry 查询租户下拉框选择项列表参数
 	 * @return 租户下拉框选择项列表
 	 */
 	@Override
-	public Result<List<OptionCO>> optionList(TenantOptionListQry qry) {
-		return tenantOptionListQryExe.execute(qry);
+	public Result<List<OptionCO>> findOptionList() {
+		return tenantOptionListQryExe.execute();
 	}
 
 	/**
 	 * 新增租户.
 	 * @param cmd 新增租户参数
-	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(TenantCreateCmd cmd) {
-		return tenantCreateCmdExe.execute(cmd);
+	public void create(TenantCreateCmd cmd) {
+		tenantCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 修改租户.
 	 * @param cmd 修改租户参数
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(TenantModifyCmd cmd) {
-		return tenantModifyCmdExe.execute(cmd);
+	public void modify(TenantModifyCmd cmd) {
+		tenantModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 根据ID删除租户.
 	 * @param cmd 根据ID删除租户
-	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(TenantRemoveCmd cmd) {
-		return tenantRemoveCmdExe.execute(cmd);
+	public void remove(TenantRemoveCmd cmd) {
+		tenantRemoveCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -107,7 +103,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	 * @return 租户列表
 	 */
 	@Override
-	public Result<Datas<TenantCO>> list(TenantListQry qry) {
+	public Result<Datas<TenantCO>> findList(TenantListQry qry) {
 		return tenantListQryExe.execute(qry);
 	}
 
@@ -117,7 +113,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	 * @return 租户
 	 */
 	@Override
-	public Result<TenantCO> getById(TenantGetQry qry) {
+	public Result<TenantCO> findById(TenantGetQry qry) {
 		return tenantGetQryExe.execute(qry);
 	}
 
@@ -127,7 +123,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	 * @return 租户ID
 	 */
 	@Override
-	public Result<Long> getIdByDomainName(TenantGetIDQry qry) {
+	public Result<Long> findIdByDomainName(TenantGetIDQry qry) {
 		return tenantGetIDQryExe.execute(qry);
 	}
 

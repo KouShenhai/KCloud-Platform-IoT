@@ -53,6 +53,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 public class MenuListQryExe {
 
 	private final MenuMapper menuMapper;
+
 	private final RedisUtil redisUtil;
 
 	/**
@@ -64,9 +65,10 @@ public class MenuListQryExe {
 	public Result<List<MenuCO>> execute(MenuListQry qry) {
 		return switch (FindTypeEnums.valueOf(qry.getType())) {
 			case LIST -> Result.of(getMenuList(qry).stream().map(this::convert).toList());
-			case TREE_LIST -> Result.of(buildTreeNode(getMenuList(qry).stream().map(this::convert).toList()).getChildren());
-            case USER_TREE_LIST -> Result.of(getUserMenuList());
-        };
+			case TREE_LIST ->
+				Result.of(buildTreeNode(getMenuList(qry).stream().map(this::convert).toList()).getChildren());
+			case USER_TREE_LIST -> Result.of(getUserMenuList());
+		};
 	}
 
 	private List<MenuCO> getUserMenuList() {
@@ -84,9 +86,9 @@ public class MenuListQryExe {
 		UserDetail user = UserUtil.user();
 		if (user.isSuperAdministrator()) {
 			LambdaQueryWrapper<MenuDO> wrapper = Wrappers.lambdaQuery(MenuDO.class)
-					.eq(MenuDO::getType, MENU.ordinal())
-					.eq(MenuDO::getVisible, YES.ordinal())
-					.orderByDesc(MenuDO::getSort);
+				.eq(MenuDO::getType, MENU.ordinal())
+				.eq(MenuDO::getVisible, YES.ordinal())
+				.orderByDesc(MenuDO::getSort);
 			return menuMapper.selectList(wrapper);
 		}
 		return menuMapper.selectListByUserId(user.getId());
@@ -98,24 +100,24 @@ public class MenuListQryExe {
 
 	private List<MenuDO> getMenuList(MenuListQry qry) {
 		LambdaQueryWrapper<MenuDO> wrapper = Wrappers.lambdaQuery(MenuDO.class)
-				.like(StringUtil.isNotEmpty(qry.getName()), MenuDO::getName, qry.getName())
-				.orderByDesc(MenuDO::getSort);
+			.like(StringUtil.isNotEmpty(qry.getName()), MenuDO::getName, qry.getName())
+			.orderByDesc(MenuDO::getSort);
 		return menuMapper.selectList(wrapper);
 	}
 
 	private MenuCO convert(MenuDO menuDO) {
 		return MenuCO.builder()
-				.url(menuDO.getUrl())
-				.icon(menuDO.getIcon())
-				.name(menuDO.getName())
-				.pid(menuDO.getPid())
-				.sort(menuDO.getSort())
-				.type(menuDO.getType())
-				.id(menuDO.getId())
-				.permission(menuDO.getPermission())
-				.visible(menuDO.getVisible())
-				.children(new ArrayList<>(16))
-				.build();
+			.url(menuDO.getUrl())
+			.icon(menuDO.getIcon())
+			.name(menuDO.getName())
+			.pid(menuDO.getPid())
+			.sort(menuDO.getSort())
+			.type(menuDO.getType())
+			.id(menuDO.getId())
+			.permission(menuDO.getPermission())
+			.visible(menuDO.getVisible())
+			.children(new ArrayList<>(16))
+			.build();
 	}
 
 }

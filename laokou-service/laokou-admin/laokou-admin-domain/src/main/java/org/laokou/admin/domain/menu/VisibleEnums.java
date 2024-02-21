@@ -22,7 +22,6 @@ package org.laokou.admin.domain.menu;
  */
 public enum VisibleEnums {
 
-    YES,
-    NO
+	YES, NO
 
 }

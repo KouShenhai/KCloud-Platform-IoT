@@ -79,7 +79,8 @@ public class DeptGatewayImpl implements DeptGateway {
 	@Override
 	public void modify(Dept dept) {
 		dept.checkNullId();
-		long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, dept.getName()).ne(DeptDO::getId, dept.getId()));
+		long count = deptMapper.selectCount(
+				Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, dept.getName()).ne(DeptDO::getId, dept.getId()));
 		dept.checkName(count);
 		dept.checkIdAndPid();
 		DeptDO deptDO = deptConvertor.toDataObject(dept);
@@ -159,7 +160,8 @@ public class DeptGatewayImpl implements DeptGateway {
 	private void modifyPath(String oldPath, String newPath, List<DeptDO> children) {
 		if (CollectionUtil.isNotEmpty(children)) {
 			children.parallelStream().forEach(item -> item.setPath(item.getPath().replace(oldPath, newPath)));
-			mybatisUtil.batch(children, DeptMapper.class, DynamicDataSourceContextHolder.peek(), DeptMapper::updateById);
+			mybatisUtil.batch(children, DeptMapper.class, DynamicDataSourceContextHolder.peek(),
+					DeptMapper::updateById);
 		}
 	}
 

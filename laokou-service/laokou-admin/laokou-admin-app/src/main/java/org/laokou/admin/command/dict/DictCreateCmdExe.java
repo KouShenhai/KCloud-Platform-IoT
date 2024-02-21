@@ -50,13 +50,13 @@ public class DictCreateCmdExe {
 
 	private Dict convert(DictCO dictCO) {
 		return Dict.builder()
-				.id(IdGenerator.defaultSnowflakeId())
-				.value(dictCO.getValue())
-				.label(dictCO.getLabel())
-				.type(dictCO.getType())
-				.remark(dictCO.getRemark())
-				.sort(dictCO.getSort())
-				.build();
+			.id(IdGenerator.defaultSnowflakeId())
+			.value(dictCO.getValue())
+			.label(dictCO.getLabel())
+			.type(dictCO.getType())
+			.remark(dictCO.getRemark())
+			.sort(dictCO.getSort())
+			.build();
 	}
 
 }

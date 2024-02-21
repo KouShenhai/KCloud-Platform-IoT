@@ -25,9 +25,6 @@ import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
@@ -53,16 +50,16 @@ public class MenuGetQryExe {
 
 	private MenuCO convert(MenuDO menuDO) {
 		return MenuCO.builder()
-		     .url(menuDO.getUrl())
-		     .icon(menuDO.getIcon())
-		     .name(menuDO.getName())
-		     .pid(menuDO.getPid())
-		     .sort(menuDO.getSort())
-		     .type(menuDO.getType())
-		     .id(menuDO.getId())
-		     .permission(menuDO.getPermission())
-		     .visible(menuDO.getVisible())
-				.build();
+			.url(menuDO.getUrl())
+			.icon(menuDO.getIcon())
+			.name(menuDO.getName())
+			.pid(menuDO.getPid())
+			.sort(menuDO.getSort())
+			.type(menuDO.getType())
+			.id(menuDO.getId())
+			.permission(menuDO.getPermission())
+			.visible(menuDO.getVisible())
+			.build();
 	}
 
 }

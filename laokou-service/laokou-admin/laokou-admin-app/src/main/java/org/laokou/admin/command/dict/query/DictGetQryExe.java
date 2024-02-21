@@ -51,13 +51,13 @@ public class DictGetQryExe {
 
 	private DictCO convert(DictDO dictDO) {
 		return DictCO.builder()
-				.id(dictDO.getId())
-				.sort(dictDO.getSort())
-				.remark(dictDO.getRemark())
-				.value(dictDO.getValue())
-				.label(dictDO.getLabel())
-				.type(dictDO.getType())
-				.build();
+			.id(dictDO.getId())
+			.sort(dictDO.getSort())
+			.remark(dictDO.getRemark())
+			.value(dictDO.getValue())
+			.label(dictDO.getLabel())
+			.type(dictDO.getType())
+			.build();
 	}
 
 }

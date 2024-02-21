@@ -35,18 +35,19 @@ import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 @Slf4j
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class SeataSagaTest extends CommonTest{
+public class SeataSagaTest extends CommonTest {
 
-    private final StateMachineEngine stateMachineEngine;
+	private final StateMachineEngine stateMachineEngine;
 
-    public SeataSagaTest(WebApplicationContext webApplicationContext, OAuth2AuthorizationService oAuth2AuthorizationService, StateMachineEngine stateMachineEngine) {
-        super(webApplicationContext, oAuth2AuthorizationService);
-        this.stateMachineEngine = stateMachineEngine;
-    }
+	public SeataSagaTest(WebApplicationContext webApplicationContext,
+			OAuth2AuthorizationService oAuth2AuthorizationService, StateMachineEngine stateMachineEngine) {
+		super(webApplicationContext, oAuth2AuthorizationService);
+		this.stateMachineEngine = stateMachineEngine;
+	}
 
-    @Test
-    public void testStateMachineEngine() {
-        stateMachineEngine.start(EMPTY, "0", new HashMap<>(0));
-    }
+	@Test
+	public void testStateMachineEngine() {
+		stateMachineEngine.start(EMPTY, "0", new HashMap<>(0));
+	}
 
 }

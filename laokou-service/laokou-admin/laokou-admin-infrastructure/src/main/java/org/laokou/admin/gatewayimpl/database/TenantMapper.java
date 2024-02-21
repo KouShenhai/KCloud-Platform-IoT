@@ -17,13 +17,14 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
@@ -34,22 +35,16 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Mapper
 @Repository
-public interface TenantMapper extends BatchMapper<TenantDO> {
+public interface TenantMapper extends CrudMapper<Long, Integer, TenantDO> {
 
-	/**
-	 * 查询租户列表.
-	 * @param page 分页参数
-	 * @param name 租户名称
-	 * @param pageQuery 分页参数
-	 * @return 租户列表
-	 */
-	IPage<TenantDO> getTenantListFilter(IPage<TenantDO> page, @Param("name") String name,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+	List<TenantDO> selectListByCondition(@Param("tenant") TenantDO tenant, @Param(PAGE_QUERY) PageQuery pageQuery);
+
+	long selectCountByCondition(@Param("tenant") TenantDO tenant, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 	/**
 	 * 查看最大标签数字.
 	 * @return 最大标签数字
 	 */
-	Integer maxLabelNum();
+	Integer selectMaxLabelNum();
 
 }

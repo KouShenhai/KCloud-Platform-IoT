@@ -47,6 +47,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 public class RoleListQryExe {
 
 	private final RoleMapper roleMapper;
+
 	private final Executor executor;
 
 	/**
@@ -60,8 +61,10 @@ public class RoleListQryExe {
 	public Result<Datas<RoleCO>> execute(RoleListQry qry) {
 		RoleDO roleDO = convert(qry);
 		PageQuery page = qry.page();
-		CompletableFuture<List<RoleDO>> c1 = CompletableFuture.supplyAsync(() -> roleMapper.selectListByCondition(roleDO, page), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> roleMapper.selectCountByCondition(roleDO, page), executor);
+		CompletableFuture<List<RoleDO>> c1 = CompletableFuture
+			.supplyAsync(() -> roleMapper.selectListByCondition(roleDO, page), executor);
+		CompletableFuture<Long> c2 = CompletableFuture
+			.supplyAsync(() -> roleMapper.selectCountByCondition(roleDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
 	}
@@ -73,11 +76,7 @@ public class RoleListQryExe {
 	}
 
 	private RoleCO convert(RoleDO roleDO) {
-		return RoleCO.builder()
-				.id(roleDO.getId())
-				.name(roleDO.getName())
-				.sort(roleDO.getSort())
-				.build();
+		return RoleCO.builder().id(roleDO.getId()).name(roleDO.getName()).sort(roleDO.getSort()).build();
 	}
 
 }

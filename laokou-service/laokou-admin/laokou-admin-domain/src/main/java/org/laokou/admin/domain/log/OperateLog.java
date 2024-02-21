@@ -37,7 +37,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
 
 import static lombok.AccessLevel.PRIVATE;
-import static lombok.AccessLevel.PROTECTED;
 import static org.laokou.common.i18n.common.StringConstants.*;
 import static org.laokou.common.i18n.common.SysConstants.EMPTY_JSON;
 

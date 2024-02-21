@@ -18,10 +18,10 @@
 package org.laokou.admin.command.tenant.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.dto.tenant.TenantGetQry;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.gatewayimpl.database.TenantMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TenantGetQryExe {
 
-	private final TenantGateway tenantGateway;
+	private final TenantMapper tenantMapper;
 
 	/**
 	 * 执行查看租户.
@@ -42,7 +42,17 @@ public class TenantGetQryExe {
 	 * @return 租户
 	 */
 	public Result<TenantCO> execute(TenantGetQry qry) {
-		return Result.of(ConvertUtil.sourceToTarget(tenantGateway.getById(qry.getId()), TenantCO.class));
+		return Result.of(convert(tenantMapper.selectById(qry.getId())));
+	}
+
+	private TenantCO convert(TenantDO tenantDO) {
+		return TenantCO.builder()
+			.id(tenantDO.getId())
+			.label(tenantDO.getLabel())
+			.name(tenantDO.getName())
+			.packageId(tenantDO.getPackageId())
+			.sourceId(tenantDO.getSourceId())
+			.build();
 	}
 
 }

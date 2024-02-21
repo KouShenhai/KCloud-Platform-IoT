@@ -50,11 +50,7 @@ public class RoleGetQryExe {
 	}
 
 	private RoleCO convert(RoleDO roleDO) {
-		return RoleCO.builder()
-				.id(roleDO.getId())
-				.sort(roleDO.getSort())
-				.name(roleDO.getName())
-				.build();
+		return RoleCO.builder().id(roleDO.getId()).sort(roleDO.getSort()).name(roleDO.getName()).build();
 	}
 
 }

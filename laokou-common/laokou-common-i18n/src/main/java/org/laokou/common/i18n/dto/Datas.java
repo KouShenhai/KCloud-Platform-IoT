@@ -32,8 +32,8 @@ import java.util.List;
 @Data
 @Builder
 // TODO
-//@AllArgsConstructor(access = PRIVATE)
-//@NoArgsConstructor(access = PRIVATE)
+// @AllArgsConstructor(access = PRIVATE)
+// @NoArgsConstructor(access = PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(name = "Datas", description = "对象集合")

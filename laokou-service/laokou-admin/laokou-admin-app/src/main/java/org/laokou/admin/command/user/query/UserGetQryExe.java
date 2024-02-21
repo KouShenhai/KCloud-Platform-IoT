@@ -44,7 +44,9 @@ import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
 public class UserGetQryExe {
 
 	private final UserMapper userMapper;
+
 	private final RoleMapper roleMapper;
+
 	private final UserRoleMapper userRoleMapper;
 
 	/**
@@ -59,14 +61,15 @@ public class UserGetQryExe {
 	}
 
 	private UserCO convert(UserDO userDO) {
-		return UserCO.builder().id(userDO.getId())
-				.deptId(userDO.getDeptId())
-				.deptPath(userDO.getDeptPath())
-				.superAdmin(userDO.getSuperAdmin())
-				.roleIds(getRoleIds(userDO))
-				.status(userDO.getStatus())
-				.id(userDO.getId())
-				.build();
+		return UserCO.builder()
+			.id(userDO.getId())
+			.deptId(userDO.getDeptId())
+			.deptPath(userDO.getDeptPath())
+			.superAdmin(userDO.getSuperAdmin())
+			.roleIds(getRoleIds(userDO))
+			.status(userDO.getStatus())
+			.id(userDO.getId())
+			.build();
 	}
 
 	private List<Long> getRoleIds(UserDO userDO) {
@@ -79,4 +82,5 @@ public class UserGetQryExe {
 	private boolean isSuperAdministrator(Integer superAdmin) {
 		return ObjectUtil.equals(YES.ordinal(), superAdmin);
 	}
+
 }

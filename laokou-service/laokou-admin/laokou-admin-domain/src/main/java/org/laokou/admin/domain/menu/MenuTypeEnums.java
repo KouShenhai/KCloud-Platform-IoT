@@ -22,7 +22,6 @@ package org.laokou.admin.domain.menu;
  */
 public enum MenuTypeEnums {
 
-    MENU,
-    BUTTON
+	MENU, BUTTON
 
 }

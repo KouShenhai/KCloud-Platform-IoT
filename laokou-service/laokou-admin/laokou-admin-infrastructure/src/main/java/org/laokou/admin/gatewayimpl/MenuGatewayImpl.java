@@ -57,7 +57,8 @@ public class MenuGatewayImpl implements MenuGateway {
 		// 检查ID
 		menu.checkNullId();
 		// 检查菜单名称
-		long count = menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()).ne(MenuDO::getId, menu.getId()));
+		long count = menuMapper.selectCount(
+				Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()).ne(MenuDO::getId, menu.getId()));
 		menu.checkName(count);
 		MenuDO menuDO = menuConvertor.toDataObject(menu);
 		// 版本号

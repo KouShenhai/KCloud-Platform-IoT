@@ -49,13 +49,13 @@ public class DictModifyCmdExe {
 
 	private Dict convert(DictCO co) {
 		return Dict.builder()
-				.id(co.getId())
-				.value(co.getValue())
-				.type(co.getType())
-				.label(co.getLabel())
-				.sort(co.getSort())
-				.remark(co.getRemark())
-				.build();
+			.id(co.getId())
+			.value(co.getValue())
+			.type(co.getType())
+			.label(co.getLabel())
+			.sort(co.getSort())
+			.remark(co.getRemark())
+			.build();
 	}
 
 }

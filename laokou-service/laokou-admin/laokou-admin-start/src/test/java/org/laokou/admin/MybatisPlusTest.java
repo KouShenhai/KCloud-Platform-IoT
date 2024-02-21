@@ -56,12 +56,12 @@ class MybatisPlusTest extends CommonTest {
 		addDs();
 		// 测试一百万数据
 		int size = 1000000;
-//		List<TestDO> list = new ArrayList<>(size);
-//		for (long i = 1; i <= size; i++) {
-//			list.add(new TestDO(i, EMPTY + i, 0L));
-//		}
+		// List<TestDO> list = new ArrayList<>(size);
+		// for (long i = 1; i <= size; i++) {
+		// list.add(new TestDO(i, EMPTY + i, 0L));
+		// }
 		long start = IdGenerator.SystemClock.now();
-		//mybatisUtil.batch(list, TestMapper.class, DS_NAME, TestMapper::save);
+		// mybatisUtil.batch(list, TestMapper.class, DS_NAME, TestMapper::save);
 		long end = IdGenerator.SystemClock.now();
 		log.info("批量插入一百万数据，消耗时间：{}毫秒", (end - start));
 	}

@@ -35,10 +35,10 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Mapper
 @Repository
-public interface SourceMapper extends CrudMapper<Long, Integer,SourceDO> {
+public interface SourceMapper extends CrudMapper<Long, Integer, SourceDO> {
 
-	List<SourceDO> selectListByCondition(@Param("source")SourceDO source, @Param(PAGE_QUERY)PageQuery pageQuery);
+	List<SourceDO> selectListByCondition(@Param("source") SourceDO source, @Param(PAGE_QUERY) PageQuery pageQuery);
 
-	long selectCountByCondition(@Param("source")SourceDO source, @Param(PAGE_QUERY)PageQuery pageQuery);
+	long selectCountByCondition(@Param("source") SourceDO source, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

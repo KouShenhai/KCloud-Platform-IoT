@@ -18,10 +18,10 @@
 package org.laokou.admin.command.tenant;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.gateway.TenantGateway;
+import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.dto.tenant.TenantModifyCmd;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,17 +35,22 @@ public class TenantModifyCmdExe {
 
 	private final TenantGateway tenantGateway;
 
-	private final TenantConvertor tenantConvertor;
-
 	/**
 	 * 执行修改租户.
 	 * @param cmd 修改租户参数
-	 * @return 执行修改结果
 	 */
-	public Result<Boolean> execute(TenantModifyCmd cmd) {
-		return null;
-		// Tenant tenant = tenantConvertor.toEntity(cmd.getTenantCO());
-		// return Result.of(tenantGateway.update(tenant));
+	public void executeVoid(TenantModifyCmd cmd) {
+		tenantGateway.modify(convert(cmd.getTenantCO()));
+	}
+
+	private Tenant convert(TenantCO tenantCO) {
+		return Tenant.builder()
+			.id(tenantCO.getId())
+			.name(tenantCO.getName())
+			.label(tenantCO.getLabel())
+			.packageId(tenantCO.getPackageId())
+			.sourceId(tenantCO.getSourceId())
+			.build();
 	}
 
 }

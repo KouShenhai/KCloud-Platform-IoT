@@ -45,6 +45,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_PACKAGE
 public class PackageListQryExe {
 
 	private final PackageMapper packageMapper;
+
 	private final Executor executor;
 
 	/**
@@ -57,8 +58,10 @@ public class PackageListQryExe {
 	public Result<Datas<PackageCO>> execute(PackageListQry qry) {
 		PackageDO packageDO = convert(qry);
 		PageQuery page = qry.page();
-		CompletableFuture<List<PackageDO>> c1 = CompletableFuture.supplyAsync(() -> packageMapper.selectListByCondition(packageDO, page), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> packageMapper.selectCountByCondition(packageDO, page), executor);
+		CompletableFuture<List<PackageDO>> c1 = CompletableFuture
+			.supplyAsync(() -> packageMapper.selectListByCondition(packageDO, page), executor);
+		CompletableFuture<Long> c2 = CompletableFuture
+			.supplyAsync(() -> packageMapper.selectCountByCondition(packageDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
 	}
@@ -70,10 +73,7 @@ public class PackageListQryExe {
 	}
 
 	private PackageCO convert(PackageDO packageDO) {
-		return PackageCO.builder()
-				.id(packageDO.getId())
-				.name(packageDO.getName())
-				.build();
+		return PackageCO.builder().id(packageDO.getId()).name(packageDO.getName()).build();
 	}
 
 }

@@ -64,21 +64,21 @@ public class ApiFilter implements WebFilter {
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 		return requestMappingHandlerMapping.getHandler(exchange)
-				.switchIfEmpty(chain.filter(exchange))
-				.flatMap(handler -> {
-					ServerHttpRequest request = exchange.getRequest();
-					String requestURL = ReactiveRequestUtil.getRequestURL(request);
-					if (ReactiveRequestUtil.pathMatcher(requestURL, API_PATTERN)) {
-						if (handler instanceof HandlerMethod handlerMethod) {
-							if (handlerMethod.hasMethodAnnotation(Auth.class)) {
-								Auth auth = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Auth.class);
-								Assert.isTrue(ObjectUtil.isNotNull(auth), "@Auth is null");
-								return validate(exchange, request, auth, chain);
-							}
+			.switchIfEmpty(chain.filter(exchange))
+			.flatMap(handler -> {
+				ServerHttpRequest request = exchange.getRequest();
+				String requestURL = ReactiveRequestUtil.getRequestURL(request);
+				if (ReactiveRequestUtil.pathMatcher(requestURL, API_PATTERN)) {
+					if (handler instanceof HandlerMethod handlerMethod) {
+						if (handlerMethod.hasMethodAnnotation(Auth.class)) {
+							Auth auth = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Auth.class);
+							Assert.isTrue(ObjectUtil.isNotNull(auth), "@Auth is null");
+							return validate(exchange, request, auth, chain);
 						}
 					}
-					return chain.filter(exchange);
-				});
+				}
+				return chain.filter(exchange);
+			});
 	}
 
 	/**

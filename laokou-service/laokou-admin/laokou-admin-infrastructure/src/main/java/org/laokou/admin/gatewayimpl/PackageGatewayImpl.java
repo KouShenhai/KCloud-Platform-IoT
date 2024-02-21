@@ -65,7 +65,8 @@ public class PackageGatewayImpl implements PackageGateway {
 	 */
 	@Override
 	public void create(Package pack) {
-		long count = packageMapper.selectCount(Wrappers.lambdaQuery(PackageDO.class).eq(PackageDO::getName, pack.getName()));
+		long count = packageMapper
+			.selectCount(Wrappers.lambdaQuery(PackageDO.class).eq(PackageDO::getName, pack.getName()));
 		pack.checkName(count);
 		PackageDO packageDO = packageConvertor.toDataObject(pack);
 		create(packageDO, pack);
@@ -78,7 +79,9 @@ public class PackageGatewayImpl implements PackageGateway {
 	@Override
 	public void modify(Package pack) {
 		pack.checkNullId();
-		long count = packageMapper.selectCount(Wrappers.lambdaQuery(PackageDO.class).eq(PackageDO::getName, pack.getName()).ne(PackageDO::getId, pack.getId()));
+		long count = packageMapper.selectCount(Wrappers.lambdaQuery(PackageDO.class)
+			.eq(PackageDO::getName, pack.getName())
+			.ne(PackageDO::getId, pack.getId()));
 		pack.checkName(count);
 		PackageDO packageDO = packageConvertor.toDataObject(pack);
 		// 版本号

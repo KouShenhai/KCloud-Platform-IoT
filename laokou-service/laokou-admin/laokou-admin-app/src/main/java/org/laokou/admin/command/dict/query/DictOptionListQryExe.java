@@ -57,10 +57,7 @@ public class DictOptionListQryExe {
 	}
 
 	private OptionCO convert(DictDO dictDO) {
-		return OptionCO.builder()
-				.label(dictDO.getLabel())
-				.value(dictDO.getValue())
-				.build();
+		return OptionCO.builder().label(dictDO.getLabel()).value(dictDO.getValue()).build();
 	}
 
 }

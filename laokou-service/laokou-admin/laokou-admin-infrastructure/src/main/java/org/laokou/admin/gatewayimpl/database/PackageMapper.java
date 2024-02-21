@@ -35,10 +35,10 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Mapper
 @Repository
-public interface PackageMapper extends CrudMapper<Long,Integer,PackageDO> {
+public interface PackageMapper extends CrudMapper<Long, Integer, PackageDO> {
 
-	List<PackageDO> selectListByCondition(@Param("pack")PackageDO pack, @Param(PAGE_QUERY)PageQuery pageQuery);
+	List<PackageDO> selectListByCondition(@Param("pack") PackageDO pack, @Param(PAGE_QUERY) PageQuery pageQuery);
 
-	long selectCountByCondition(@Param("pack")PackageDO pack, @Param(PAGE_QUERY)PageQuery pageQuery);
+	long selectCountByCondition(@Param("pack") PackageDO pack, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

@@ -49,12 +49,12 @@ public class RoleModifyCmdExe {
 
 	private Role convert(RoleCO roleCO) {
 		return Role.builder()
-				.id(roleCO.getId())
-				.name(roleCO.getName())
-				.sort(roleCO.getSort())
-				.menuIds(roleCO.getMenuIds())
-				.deptIds(roleCO.getDeptIds())
-				.build();
+			.id(roleCO.getId())
+			.name(roleCO.getName())
+			.sort(roleCO.getSort())
+			.menuIds(roleCO.getMenuIds())
+			.deptIds(roleCO.getDeptIds())
+			.build();
 	}
 
 }

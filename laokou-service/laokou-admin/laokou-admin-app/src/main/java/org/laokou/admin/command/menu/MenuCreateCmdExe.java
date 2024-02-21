@@ -42,7 +42,6 @@ public class MenuCreateCmdExe {
 	/**
 	 * 执行新增菜单.
 	 * @param cmd 新增菜单参数
-	 * @return 执行新增结果
 	 */
 	@DS(TENANT)
 	public void executeVoid(MenuCreateCmd cmd) {
@@ -51,16 +50,16 @@ public class MenuCreateCmdExe {
 
 	private Menu convert(MenuCO co) {
 		return Menu.builder()
-				.id(IdGenerator.defaultSnowflakeId())
-				.pid(co.getPid())
-				.name(co.getName())
-				.type(co.getType())
-				.sort(co.getSort())
-				.permission(co.getPermission())
-				.icon(co.getIcon())
-				.url(co.getUrl())
-				.visible(co.getVisible())
-				.build();
+			.id(IdGenerator.defaultSnowflakeId())
+			.pid(co.getPid())
+			.name(co.getName())
+			.type(co.getType())
+			.sort(co.getSort())
+			.permission(co.getPermission())
+			.icon(co.getIcon())
+			.url(co.getUrl())
+			.visible(co.getVisible())
+			.build();
 	}
 
 }

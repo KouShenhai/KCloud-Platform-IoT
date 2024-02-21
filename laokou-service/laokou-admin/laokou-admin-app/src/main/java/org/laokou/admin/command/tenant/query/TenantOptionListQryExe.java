@@ -20,14 +20,11 @@ package org.laokou.admin.command.tenant.query;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
-import org.laokou.admin.dto.tenant.TenantOptionListQry;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
-import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,21 +40,17 @@ public class TenantOptionListQryExe {
 
 	/**
 	 * 执行查询租户下拉框选择项列表.
-	 * @param qry 查询租户下拉框选择项列表参数
 	 * @return 租户下拉框选择项列表
 	 */
-	public Result<List<OptionCO>> execute(TenantOptionListQry qry) {
+	public Result<List<OptionCO>> execute() {
 		List<TenantDO> list = tenantMapper.selectList(Wrappers.lambdaQuery(TenantDO.class)
 			.select(TenantDO::getId, TenantDO::getName)
 			.orderByDesc(TenantDO::getId));
-		if (CollectionUtil.isEmpty(list)) {
-			return Result.of(new ArrayList<>(0));
-		}
-/*		List<OptionCO> options = list.stream()
-			.map(item -> new OptionCO(item.getName(), String.valueOf(item.getId())))
-			.toList();
-		return Result.of(options);*/
-		return null;
+		return Result.of(list.stream().map(this::convert).toList());
+	}
+
+	private OptionCO convert(TenantDO tenantDO) {
+		return OptionCO.builder().label(tenantDO.getName()).value(String.valueOf(tenantDO.getId())).build();
 	}
 
 }

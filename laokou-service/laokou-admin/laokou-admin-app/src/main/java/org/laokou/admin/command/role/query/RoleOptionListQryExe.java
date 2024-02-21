@@ -47,15 +47,13 @@ public class RoleOptionListQryExe {
 	 */
 	@DS(TENANT)
 	public Result<List<OptionCO>> execute() {
-		List<RoleDO> list = roleMapper.selectList(Wrappers.lambdaQuery(RoleDO.class).select(RoleDO::getId, RoleDO::getName).orderByDesc(RoleDO::getSort));
+		List<RoleDO> list = roleMapper.selectList(
+				Wrappers.lambdaQuery(RoleDO.class).select(RoleDO::getId, RoleDO::getName).orderByDesc(RoleDO::getSort));
 		return Result.of(list.stream().map(this::convert).toList());
 	}
 
 	private OptionCO convert(RoleDO roleDO) {
-		return OptionCO.builder()
-				.label(roleDO.getName())
-				.value(String.valueOf(roleDO.getId()))
-				.build();
+		return OptionCO.builder().label(roleDO.getName()).value(String.valueOf(roleDO.getId())).build();
 	}
 
 }

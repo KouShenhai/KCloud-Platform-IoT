@@ -30,7 +30,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface RoleDeptMapper extends CrudMapper<Long,Integer,RoleDeptDO> {
+public interface RoleDeptMapper extends CrudMapper<Long, Integer, RoleDeptDO> {
 
 	/**
 	 * 根据角色ID删除角色部门.

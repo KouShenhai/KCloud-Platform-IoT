@@ -45,13 +45,13 @@ public class SourceModifyCmdExe {
 
 	private Source convert(SourceCO sourceCO) {
 		return Source.builder()
-				.id(sourceCO.getId())
-				.url(sourceCO.getUrl())
-				.password(sourceCO.getPassword())
-				.username(sourceCO.getUsername())
-				.driverClassName(sourceCO.getDriverClassName())
-				.name(sourceCO.getName())
-				.build();
+			.id(sourceCO.getId())
+			.url(sourceCO.getUrl())
+			.password(sourceCO.getPassword())
+			.username(sourceCO.getUsername())
+			.driverClassName(sourceCO.getDriverClassName())
+			.name(sourceCO.getName())
+			.build();
 	}
 
 }

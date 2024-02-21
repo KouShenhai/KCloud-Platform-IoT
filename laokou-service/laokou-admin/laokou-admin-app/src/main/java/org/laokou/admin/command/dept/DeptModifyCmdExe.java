@@ -49,11 +49,11 @@ public class DeptModifyCmdExe {
 
 	private Dept convert(DeptCO deptCO) {
 		return Dept.builder()
-				.id(deptCO.getId())
-				.pid(deptCO.getPid())
-				.name(deptCO.getName())
-				.sort(deptCO.getSort())
-				.build();
+			.id(deptCO.getId())
+			.pid(deptCO.getPid())
+			.name(deptCO.getName())
+			.sort(deptCO.getSort())
+			.build();
 	}
 
 }

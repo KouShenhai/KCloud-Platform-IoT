@@ -46,6 +46,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_USER;
 public class UserListQryExe {
 
 	private final UserMapper userMapper;
+
 	private final Executor executor;
 
 	/**
@@ -59,8 +60,10 @@ public class UserListQryExe {
 		UserDO userDO = convert(qry);
 		String secretKey = AesUtil.getSecretKeyStr();
 		PageQuery page = qry.page();
-		CompletableFuture<List<UserDO>> c1 = CompletableFuture.supplyAsync(() -> userMapper.selectListByCondition(userDO, page, secretKey), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> userMapper.selectCountByCondition(userDO, page, secretKey), executor);
+		CompletableFuture<List<UserDO>> c1 = CompletableFuture
+			.supplyAsync(() -> userMapper.selectListByCondition(userDO, page, secretKey), executor);
+		CompletableFuture<Long> c2 = CompletableFuture
+			.supplyAsync(() -> userMapper.selectCountByCondition(userDO, page, secretKey), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
 	}
@@ -73,12 +76,12 @@ public class UserListQryExe {
 
 	private UserCO convert(UserDO userDO) {
 		return UserCO.builder()
-				.id(userDO.getId())
-				.username(userDO.getUsername())
-				.status(userDO.getStatus())
-				.avatar(userDO.getAvatar())
-				.createDate(userDO.getCreateDate())
-				.build();
+			.id(userDO.getId())
+			.username(userDO.getUsername())
+			.status(userDO.getStatus())
+			.avatar(userDO.getAvatar())
+			.createDate(userDO.getCreateDate())
+			.build();
 	}
 
 }

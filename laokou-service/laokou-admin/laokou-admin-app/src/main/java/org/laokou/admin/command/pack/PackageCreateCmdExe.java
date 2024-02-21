@@ -46,10 +46,10 @@ public class PackageCreateCmdExe {
 
 	private Package convert(PackageCO packageCO) {
 		return Package.builder()
-				.id(IdGenerator.defaultSnowflakeId())
-				.name(packageCO.getName())
-				.menuIds(packageCO.getMenuIds())
-				.build();
+			.id(IdGenerator.defaultSnowflakeId())
+			.name(packageCO.getName())
+			.menuIds(packageCO.getMenuIds())
+			.build();
 	}
 
 }

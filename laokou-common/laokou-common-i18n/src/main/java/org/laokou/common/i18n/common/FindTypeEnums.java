@@ -22,8 +22,6 @@ package org.laokou.common.i18n.common;
  */
 public enum FindTypeEnums {
 
-    LIST,
-    TREE_LIST,
-    USER_TREE_LIST
+	LIST, TREE_LIST, USER_TREE_LIST
 
 }
