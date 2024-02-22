@@ -15,16 +15,15 @@
  *
  */
 
-package org.laokou.admin.module.storage;
+package org.laokou.admin.config.driver;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.dto.oss.clientobject.OssCO;
+import org.laokou.admin.domain.oss.File;
+import org.laokou.admin.domain.oss.Oss;
 import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
-
-import java.io.InputStream;
 
 /**
  * OSS抽象.
@@ -35,33 +34,28 @@ import java.io.InputStream;
 @NonNullApi
 public abstract class AbstractStorageDriver<O> implements StorageDriver<O> {
 
-	protected OssCO co;
+	protected Oss oss;
 
 	/**
 	 * 上传文件.
-	 * @param limitRead 读取时间
-	 * @param fileSize 文件大小
-	 * @param fileName 文件名
-	 * @param inputStream 输入流
-	 * @param contentType 类型
+	 * @param file 文件对象
 	 * @return 文件对象
 	 */
-	public String upload(int limitRead, long fileSize, String fileName, InputStream inputStream, String contentType) {
+	public String upload(File file) {
 		try {
-			// 修改文件名
-			String newFileName = getFileName(fileName);
 			// 获取连接对象
 			O obj = getObj();
 			// 创建bucket
 			createBucket(obj);
 			// 上传文件
-			putObject(obj, limitRead, fileSize, newFileName, inputStream, contentType);
+			putObject(obj, file);
 			// 获取地址
-			return getUrl(obj, newFileName);
+			return getUrl(obj, file);
 		}
 		catch (Exception ex) {
-			log.error("文件上传失败，错误信息：{}，详情见日志", LogUtil.result(ex.getMessage()), ex);
-			throw new SystemException(String.format("文件上传失败，错误信息：%s", ex.getMessage()));
+			String msg = LogUtil.result(ex.getMessage());
+			log.error("文件上传失败，错误信息：{}，详情见日志", msg, ex);
+			throw new SystemException(String.format("文件上传失败，错误信息：%s", msg));
 		}
 	}
 

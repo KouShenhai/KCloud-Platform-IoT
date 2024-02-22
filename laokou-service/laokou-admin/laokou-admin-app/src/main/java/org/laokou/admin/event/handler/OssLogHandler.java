@@ -60,7 +60,7 @@ public class OssLogHandler implements ApplicationListener {
 
 	private void execute(OssLogEvent event) {
 		OssLogDO ossLogDO = ConvertUtil.sourceToTarget(event, OssLogDO.class);
-		ossLogMapper.insertTable(ossLogDO);
+		//ossLogMapper.insertTable(ossLogDO);
 	}
 
 	@Override

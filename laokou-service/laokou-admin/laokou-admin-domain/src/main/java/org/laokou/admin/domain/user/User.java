@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -81,18 +80,6 @@ public class User extends AggregateRoot<Long> {
 	public void checkMobile(long count) {
 		if (count > 0) {
 			throw new SystemException("手机号已被注册，请重新填写");
-		}
-	}
-
-	public void encryptMail(String mail) {
-		if (StringUtil.isNotEmpty(mail)) {
-			this.mail = AesUtil.encrypt(mail);
-		}
-	}
-
-	public void encryptMobile(String mobile) {
-		if (StringUtil.isNotEmpty(mobile)) {
-			this.mobile = AesUtil.encrypt(mobile);
 		}
 	}
 

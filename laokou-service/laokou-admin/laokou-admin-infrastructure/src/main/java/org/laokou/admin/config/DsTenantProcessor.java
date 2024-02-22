@@ -15,12 +15,12 @@
  *
  */
 
-package org.laokou.admin.module.ds;
+package org.laokou.admin.config;
 
 import com.baomidou.dynamic.datasource.processor.DsProcessor;
+import lombok.RequiredArgsConstructor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.laokou.admin.common.utils.DsUtil;
-import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +32,10 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
  * @author laokou
  */
 @Component
+@RequiredArgsConstructor
 public class DsTenantProcessor extends DsProcessor {
+
+	private final DsUtil dsUtil;
 
 	@Override
 	public boolean matches(String key) {
@@ -41,7 +44,6 @@ public class DsTenantProcessor extends DsProcessor {
 
 	@Override
 	public String doDetermineDatasource(MethodInvocation invocation, String key) {
-		DsUtil dsUtil = SpringContextUtil.getBean(DsUtil.class);
 		return dsUtil.loadDs(UserUtil.getSourceName());
 	}
 

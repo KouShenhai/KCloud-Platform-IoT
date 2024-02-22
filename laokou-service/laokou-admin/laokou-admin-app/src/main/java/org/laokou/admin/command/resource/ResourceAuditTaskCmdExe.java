@@ -21,7 +21,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.common.event.DomainEventPublisher;
 import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.dto.log.domainevent.AuditLogEvent;
 import org.laokou.admin.dto.resource.ResourceAuditTaskCmd;
@@ -53,8 +52,6 @@ public class ResourceAuditTaskCmdExe {
 	private final ResourceAuditMapper resourceAuditMapper;
 
 	private final ResourceMapper resourceMapper;
-
-	private final DomainEventPublisher domainEventPublisher;
 
 	private final EventUtil eventUtil;
 

@@ -20,7 +20,6 @@ package org.laokou.admin.command.resource;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.common.event.DomainEventPublisher;
 import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.dto.resource.ResourceDelegateTaskCmd;
 import org.laokou.admin.dto.resource.TaskDelegateCmd;
@@ -39,8 +38,6 @@ import org.springframework.stereotype.Component;
 public class ResourceDelegateTaskCmdExe {
 
 	// private final TasksFeignClient tasksFeignClient;
-
-	private final DomainEventPublisher domainEventPublisher;
 
 	private final EventUtil eventUtil;
 

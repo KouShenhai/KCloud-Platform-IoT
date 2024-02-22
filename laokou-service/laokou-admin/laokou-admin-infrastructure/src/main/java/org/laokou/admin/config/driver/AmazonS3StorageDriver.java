@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.module.storage;
+package org.laokou.admin.config.driver;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentials;
@@ -28,10 +28,11 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.jetbrains.annotations.NotNull;
-import org.laokou.admin.dto.oss.clientobject.OssCO;
+import org.laokou.admin.domain.oss.File;
+import org.laokou.admin.domain.oss.Oss;
 import org.laokou.common.i18n.utils.DateUtil;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import java.net.URL;
 
 /**
@@ -41,8 +42,8 @@ import java.net.URL;
  */
 public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 
-	public AmazonS3StorageDriver(OssCO co) {
-		this.co = co;
+	public AmazonS3StorageDriver(Oss oss) {
+		this.oss = oss;
 	}
 
 	/**
@@ -50,7 +51,7 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 	 */
 	@Override
 	public void createBucket(AmazonS3 amazonS3) {
-		String bucketName = co.getBucketName();
+		String bucketName = oss.getBucketName();
 		// bucketName不存在则新建
 		if (!amazonS3.doesBucketExistV2(bucketName)) {
 			amazonS3.createBucket(bucketName);
@@ -58,36 +59,32 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 	}
 
 	/**
-	 * @param amazonS3 连接对象
-	 * @param readLimit 读取时间
-	 * @param fileSize 文件大小
-	 * @param fileName 文件名
-	 * @param inputStream 输入流
-	 * @param contentType 类型
+	 * 上传文件.
+	 * @param file 文件对象
+	 * @param amazonS3 s3对象
 	 */
 	@Override
-	public void putObject(AmazonS3 amazonS3, int readLimit, long fileSize, String fileName, InputStream inputStream,
-			String contentType) {
+	public void putObject(AmazonS3 amazonS3, File file) {
 		// 上传文件
-		String bucketName = co.getBucketName();
+		String bucketName = oss.getBucketName();
 		ObjectMetadata objectMetadata = new ObjectMetadata();
-		objectMetadata.setContentLength(fileSize);
-		objectMetadata.setContentType(contentType);
-		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fileName, inputStream, objectMetadata);
-		putObjectRequest.getRequestClientOptions().setReadLimit(readLimit);
+		objectMetadata.setContentLength(file.getSize());
+		objectMetadata.setContentType(file.getContentType());
+		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, getFileName(file.getName()), new ByteArrayInputStream(file.getBosCache().toByteArray()), objectMetadata);
+		putObjectRequest.getRequestClientOptions().setReadLimit(file.getLimitRead());
 		amazonS3.putObject(putObjectRequest);
 	}
 
 	/**
 	 * 查看URL.
 	 * @param amazonS3 连接对象
-	 * @param fileName 文件名
+	 * @param file 文件对象
 	 * @return URL
 	 */
 	@Override
-	public String getUrl(AmazonS3 amazonS3, String fileName) {
-		String bucketName = co.getBucketName();
-		URL url = amazonS3.getUrl(bucketName, fileName);
+	public String getUrl(AmazonS3 amazonS3, File file) {
+		String bucketName = oss.getBucketName();
+		URL url = amazonS3.getUrl(bucketName, getFileName(file.getName()));
 		return url.toString();
 	}
 
@@ -108,11 +105,11 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 	@NotNull
 	@Override
 	protected AmazonS3 getObj() {
-		String accessKey = co.getAccessKey();
-		String secretKey = co.getSecretKey();
-		String region = co.getRegion();
-		String endpoint = co.getEndpoint();
-		Boolean pathStyleAccessEnabled = co.getPathStyleAccessEnabled() == 1;
+		String accessKey = oss.getAccessKey();
+		String secretKey = oss.getSecretKey();
+		String region = oss.getRegion();
+		String endpoint = oss.getEndpoint();
+		Boolean pathStyleAccessEnabled = oss.getPathStyleAccessEnabled() == 1;
 		ClientConfiguration clientConfiguration = new ClientConfiguration();
 		AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(
 				endpoint, region);
