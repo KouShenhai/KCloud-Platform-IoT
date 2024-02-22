@@ -25,7 +25,7 @@ import org.laokou.auth.domain.gateway.*;
 import org.laokou.auth.domain.user.Captcha;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.IpUtil;
-import org.laokou.common.domain.holder.DomainEventContextHolder;
+import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.exception.GlobalException;

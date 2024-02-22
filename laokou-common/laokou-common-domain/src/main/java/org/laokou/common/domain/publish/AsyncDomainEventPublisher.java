@@ -18,7 +18,7 @@
 package org.laokou.common.domain.publish;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.domain.holder.DomainEventContextHolder;
+import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.i18n.common.JobModeEnums;
 import org.springframework.stereotype.Component;
 

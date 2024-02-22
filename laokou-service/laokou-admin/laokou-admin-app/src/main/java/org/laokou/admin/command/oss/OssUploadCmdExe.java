@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.domain.gateway.OssGateway;
+import org.laokou.admin.domain.oss.File;
 import org.laokou.admin.domain.oss.OssLog;
 import org.laokou.admin.dto.oss.OssUploadCmd;
 import org.laokou.admin.dto.oss.clientobject.FileCO;
@@ -40,7 +41,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import static org.laokou.common.i18n.common.SysConstants.MAX_FILE_SIZE;
+
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
@@ -64,7 +65,9 @@ public class OssUploadCmdExe {
 	 * @param cmd OSS上传文件参数
 	 * @return 执行上传文件结果
 	 */
+	@DS(TENANT)
 	public Result<FileCO> execute(OssUploadCmd cmd) {
+		File file = new File(cmd.getFile());
 		return Result.of(upload(cmd.getFile()));
 	}
 
@@ -74,7 +77,6 @@ public class OssUploadCmdExe {
 	 * @return 上传结果
 	 */
 	@SneakyThrows
-	@DS(TENANT)
 	private FileCO upload(MultipartFile file) {
 		String fileName = file.getOriginalFilename();
 		long fileSize = file.getSize();
@@ -85,9 +87,11 @@ public class OssUploadCmdExe {
 		before(file, fileSize);
 		ByteArrayOutputStream bos = getCacheStream(inputStream);
 		String md5 = DigestUtils.md5DigestAsHex(new ByteArrayInputStream(bos.toByteArray()));
-		OssLogDO ossLogDO = ossLogMapper.selectOne(Wrappers.query(OssLogDO.class).eq("md5", md5).select("url"));
+		OssLogDO ossLogDO = ossLogMapper
+			.selectOne(Wrappers.lambdaQuery(OssLogDO.class).eq(OssLogDO::getMd5, md5).select(OssLogDO::getUrl));
 		if (ObjectUtil.isNotNull(ossLogDO)) {
-			return new FileCO(ossLogDO.getUrl(), md5);
+			return null;
+			// return new FileCO(ossLogDO.getUrl(), md5);
 		}
 		String url = storageFactory.build(UserUtil.getTenantId())
 			.upload(limitRead, fileSize, fileName, new ByteArrayInputStream(bos.toByteArray()), contentType);
@@ -119,9 +123,6 @@ public class OssUploadCmdExe {
 		if (log.isDebugEnabled()) {
 			log.debug("文件上传前，校验文件大小");
 		}
-		if (fileSize > MAX_FILE_SIZE) {
-			throw new SystemException("单个文件上传不能超过100M，请重新选择文件并上传");
-		}
 	}
 
 	/**
@@ -133,7 +134,8 @@ public class OssUploadCmdExe {
 			log.debug("文件上传后，存入日志");
 		}
 		ossGateway.publish(ossLog);
-		return new FileCO(ossLog.getUrl(), ossLog.getMd5());
+		return null;
+		// return new FileCO(ossLog.getUrl(), ossLog.getMd5());
 	}
 
 }

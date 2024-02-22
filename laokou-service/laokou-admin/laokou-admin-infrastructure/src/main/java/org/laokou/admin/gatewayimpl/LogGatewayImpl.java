@@ -34,7 +34,7 @@ import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
-import org.laokou.common.core.holder.UserContextHolder;
+import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.Datas;

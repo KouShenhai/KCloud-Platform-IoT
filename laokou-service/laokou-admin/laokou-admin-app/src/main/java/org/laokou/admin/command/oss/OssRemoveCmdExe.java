@@ -21,7 +21,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.OssGateway;
 import org.laokou.admin.dto.oss.OssRemoveCmd;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
@@ -40,11 +39,10 @@ public class OssRemoveCmdExe {
 	/**
 	 * 执行删除OSS.
 	 * @param cmd 删除OSS参数
-	 * @return 执行删除结果
 	 */
 	@DS(TENANT)
-	public Result<Boolean> execute(OssRemoveCmd cmd) {
-		return Result.of(ossGateway.deleteById(cmd.getId()));
+	public void executeVoid(OssRemoveCmd cmd) {
+		ossGateway.remove(cmd.getIds());
 	}
 
 }

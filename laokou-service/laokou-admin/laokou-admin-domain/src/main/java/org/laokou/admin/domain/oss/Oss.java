@@ -18,17 +18,24 @@
 package org.laokou.admin.domain.oss;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.AggregateRoot;
+
+import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
+@SuperBuilder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "Oss", description = "OSS")
-public class Oss {
-
-	@Schema(name = "id", description = "ID")
-	private Long id;
+public class Oss extends AggregateRoot<Long> {
 
 	@Schema(name = "name", description = "OSS名称")
 	private String name;
@@ -50,5 +57,11 @@ public class Oss {
 
 	@Schema(name = "pathStyleAccessEnabled", description = "路径样式访问 1已开启 0未启用")
 	private Integer pathStyleAccessEnabled;
+
+	public void checkName(long count) {
+		if (count > 0) {
+			throw new SystemException("OSS名称已存在，请重新填写");
+		}
+	}
 
 }

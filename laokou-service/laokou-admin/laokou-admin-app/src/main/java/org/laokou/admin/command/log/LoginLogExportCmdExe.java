@@ -23,7 +23,7 @@ import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.log.LoginLogExportCmd;
 import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.core.holder.UserContextHolder;
+import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.template.TableTemplate;

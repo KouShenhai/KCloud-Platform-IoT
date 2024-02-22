@@ -17,12 +17,11 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -36,18 +35,10 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Repository
 @Mapper
-public interface OssMapper extends BatchMapper<OssDO> {
+public interface OssMapper extends CrudMapper<Long, Integer, OssDO> {
 
-	/**
-	 * 查询OSS列表.
-	 * @param page 分页参数
-	 * @param name OSS名称
-	 * @param pageQuery 分页参数
-	 * @return OSS列表
-	 */
-	IPage<OssDO> getOssListByFilter(IPage<OssDO> page, @Param("name") String name,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+	List<OssDO> selectListByCondition(@Param("oss") OssDO oss, @Param(PAGE_QUERY) PageQuery pageQuery);
 
-	List<OssDO> getOssListByFilter(@Param("name") String name);
+	long selectCountByCondition(@Param("oss") OssDO oss, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

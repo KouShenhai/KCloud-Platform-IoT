@@ -17,26 +17,22 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.common.event.DomainEventPublisher;
 import org.laokou.admin.convertor.OssConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.OssGateway;
 import org.laokou.admin.domain.oss.Oss;
 import org.laokou.admin.domain.oss.OssLog;
 import org.laokou.admin.gatewayimpl.database.OssMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_OSS;
+import java.util.Arrays;
 
 /**
  * OSS管理.
@@ -57,70 +53,47 @@ public class OssGatewayImpl implements OssGateway {
 	private final OssConvertor ossConvertor;
 
 	/**
-	 * 查询OSS列表.
-	 * @param oss OSS对象
-	 * @param pageQuery 分页参数
-	 * @return OSS列表
-	 */
-	@Override
-	@DataFilter(tableAlias = BOOT_SYS_OSS)
-	public Datas<Oss> list(Oss oss, PageQuery pageQuery) {
-		IPage<OssDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<OssDO> newPage = ossMapper.getOssListByFilter(page, oss.getName(), pageQuery);
-		Datas<Oss> datas = new Datas<>();
-		datas.setRecords(ossConvertor.convertEntityList(newPage.getRecords()));
-		datas.setTotal(newPage.getTotal());
-		return datas;
-	}
-
-	/**
-	 * 根据ID查看OSS.
-	 * @param id ID
-	 * @return OSS
-	 */
-	@Override
-	public Oss getById(Long id) {
-		return ossConvertor.convertEntity(ossMapper.selectById(id));
-	}
-
-	/**
 	 * 新增OSS.
 	 * @param oss OSS对象
-	 * @return 新增结果
 	 */
 	@Override
-	public Boolean insert(Oss oss) {
+	public void create(Oss oss) {
+		long count = ossMapper.selectCount(Wrappers.lambdaQuery(OssDO.class).eq(OssDO::getName, oss.getName()));
+		oss.checkName(count);
 		OssDO ossDO = ossConvertor.toDataObject(oss);
-		return insertOss(ossDO);
+		create(ossDO);
 	}
 
 	/**
 	 * 修改OSS.
 	 * @param oss OSS对象
-	 * @return 修改结果
 	 */
 	@Override
-	public Boolean update(Oss oss) {
+	public void modify(Oss oss) {
+		oss.checkNullId();
+		long count = ossMapper.selectCount(
+				Wrappers.lambdaQuery(OssDO.class).eq(OssDO::getName, oss.getName()).ne(OssDO::getId, oss.getId()));
+		oss.checkName(count);
 		OssDO ossDO = ossConvertor.toDataObject(oss);
-		ossDO.setVersion(ossMapper.getVersion(ossDO.getId(), OssDO.class));
-		return updateOss(ossDO);
+		ossDO.setVersion(ossMapper.selectVersion(ossDO.getId()));
+		modify(ossDO);
 	}
 
 	/**
-	 * 根据ID删除OSS.
-	 * @param id ID
-	 * @return 删除结果
+	 * 根据IDS删除OSS.
+	 * @param ids IDS
 	 */
 	@Override
-	public Boolean deleteById(Long id) {
-		return transactionalUtil.defaultExecute(r -> {
+	public void remove(Long[] ids) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return ossMapper.deleteById(id) > 0;
+				ossMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(msg);
 			}
 		});
 	}
@@ -148,17 +121,17 @@ public class OssGatewayImpl implements OssGateway {
 	/**
 	 * 新增OSS.
 	 * @param ossDO OSS数据模型
-	 * @return 新增结果
 	 */
-	private Boolean insertOss(OssDO ossDO) {
-		return transactionalUtil.defaultExecute(r -> {
+	private void create(OssDO ossDO) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return ossMapper.insertTable(ossDO);
+				ossMapper.insert(ossDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(msg);
 			}
 		});
 	}
@@ -166,17 +139,17 @@ public class OssGatewayImpl implements OssGateway {
 	/**
 	 * 修改OSS.
 	 * @param ossDO OSS数据模型
-	 * @return 修改结果
 	 */
-	private Boolean updateOss(OssDO ossDO) {
-		return transactionalUtil.defaultExecute(r -> {
+	private void modify(OssDO ossDO) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return ossMapper.updateById(ossDO) > 0;
+				ossMapper.updateById(ossDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(msg);
 			}
 		});
 	}

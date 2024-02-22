@@ -39,9 +39,6 @@ public final class SysConstants {
 	@Schema(name = "UNDEFINED", description = "UNDEFINED")
 	public static final String UNDEFINED = "undefined";
 
-	@Schema(name = "MAX_FILE_SIZE", description = "最大上传文件大小")
-	public static final long MAX_FILE_SIZE = 100 * 1024 * 1024;
-
 	@Schema(name = "ALGORITHM_RSA", description = "RSA加密算法")
 	public static final String ALGORITHM_RSA = "RSA";
 

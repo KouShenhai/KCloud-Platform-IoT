@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.laokou.admin.domain.event.OperateFailedEvent;
 import org.laokou.admin.domain.event.OperateSucceededEvent;
-import org.laokou.common.core.holder.UserContextHolder;
+import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;

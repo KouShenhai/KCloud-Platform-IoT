@@ -20,7 +20,7 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
-import org.laokou.common.core.holder.UserContextHolder;
+import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.Set;

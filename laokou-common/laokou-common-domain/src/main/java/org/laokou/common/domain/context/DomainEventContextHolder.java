@@ -15,7 +15,30 @@
  *
  */
 
+package org.laokou.common.domain.context;
+
+import com.alibaba.ttl.TransmittableThreadLocal;
+import org.laokou.common.i18n.dto.DomainEvent;
+
+import java.util.List;
+
 /**
  * @author laokou
  */
-package org.laokou.common.core.holder;
+public class DomainEventContextHolder {
+
+	private static final ThreadLocal<List<DomainEvent<Long>>> DOMAIN_EVENT_LOCAL = new TransmittableThreadLocal<>();
+
+	public static void set(List<DomainEvent<Long>> events) {
+		DOMAIN_EVENT_LOCAL.set(events);
+	}
+
+	public static List<DomainEvent<Long>> get() {
+		return DOMAIN_EVENT_LOCAL.get();
+	}
+
+	public static void clear() {
+		DOMAIN_EVENT_LOCAL.remove();
+	}
+
+}
