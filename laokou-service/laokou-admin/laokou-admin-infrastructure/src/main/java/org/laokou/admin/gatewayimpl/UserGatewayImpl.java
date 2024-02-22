@@ -71,16 +71,10 @@ public class UserGatewayImpl implements UserGateway {
 		user.checkNullId();
 		// 密码加密
 		user.encryptPassword(passwordEncoder, user.getPassword());
-		String mail = user.getMail();
-		String mobile = user.getMobile();
-		// 邮箱加密
-		user.encryptMail(mail);
-		// 手机号加密
-		user.encryptMobile(mobile);
-		// 检查邮箱
-		checkMail(user, mail);
 		// 检查手机号
-		checkMobile(user, mobile);
+		checkMobile(user);
+		// 检查邮箱
+		checkMail(user);
 		UserDO userDO = userConvertor.toDataObject(user);
 		// 版本号
 		userDO.setVersion(userMapper.selectVersion(userDO.getId()));
@@ -114,18 +108,20 @@ public class UserGatewayImpl implements UserGateway {
 		});
 	}
 
-	private void checkMail(User user, String mail) {
+	private void checkMail(User user) {
+		String mail = user.getMail();
 		if (StringUtil.isNotEmpty(mail)) {
 			long count = userMapper.selectCount(
-					Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMail, mail).ne(UserDO::getId, user.getId()));
+					Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMail, AesUtil.encrypt(mail)).ne(UserDO::getId, user.getId()));
 			user.checkMail(count);
 		}
 	}
 
-	private void checkMobile(User user, String mobile) {
+	private void checkMobile(User user) {
+		String mobile = user.getMobile();
 		if (StringUtil.isNotEmpty(mobile)) {
 			long count = userMapper.selectCount(
-					Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMobile, mobile).ne(UserDO::getId, user.getId()));
+					Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMobile, AesUtil.encrypt(mobile)).ne(UserDO::getId, user.getId()));
 			user.checkMobile(count);
 		}
 	}

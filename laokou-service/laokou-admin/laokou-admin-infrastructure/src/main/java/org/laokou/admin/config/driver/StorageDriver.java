@@ -15,9 +15,9 @@
  *
  */
 
-package org.laokou.admin.module.storage;
+package org.laokou.admin.config.driver;
 
-import java.io.InputStream;
+import org.laokou.admin.domain.oss.File;
 
 /**
  * OSS对外操作接口.
@@ -35,32 +35,24 @@ public interface StorageDriver<O> {
 	/**
 	 * 上传文件.
 	 * @param obj 连接对象
-	 * @param readLimit 读取时间
-	 * @param fileSize 文件大小
-	 * @param fileName 文件名
-	 * @param inputStream 输入流
-	 * @param contentType 类型
+	 * @param file 文件对象
 	 */
-	void putObject(O obj, int readLimit, long fileSize, String fileName, InputStream inputStream, String contentType);
+	void putObject(O obj, File file);
 
 	/**
 	 * 获取地址.
 	 * @param obj 连接对象
-	 * @param fileName 文件名
+	 * @param file 文件对象
 	 * @return 上传成功的链接
 	 */
-	String getUrl(O obj, String fileName);
+	String getUrl(O obj, File file);
 
 	/**
 	 * 上传文件.
-	 * @param fileName 文件名
-	 * @param inputStream 输入流
-	 * @param contentType 类型
-	 * @param fileSize 文件大小
-	 * @param readLimit 读取时间
+	 * @param file 文件对象
 	 * @return 上传成功的链接
 	 */
-	String upload(int readLimit, long fileSize, String fileName, InputStream inputStream, String contentType);
+	String upload(File file);
 
 	/**
 	 * 获取文件名称.

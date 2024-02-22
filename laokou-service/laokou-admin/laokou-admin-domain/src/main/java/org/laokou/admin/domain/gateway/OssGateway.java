@@ -18,8 +18,9 @@
 package org.laokou.admin.domain.gateway;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.laokou.admin.domain.oss.File;
 import org.laokou.admin.domain.oss.Oss;
-import org.laokou.admin.domain.oss.OssLog;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author laokou
@@ -45,10 +46,6 @@ public interface OssGateway {
 	 */
 	void remove(Long[] ids);
 
-	/**
-	 * 推送OSS日志.
-	 * @param ossLog OSS日志对象
-	 */
-	void publish(OssLog ossLog);
+	File upload(MultipartFile mf);
 
 }

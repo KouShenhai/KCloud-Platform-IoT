@@ -20,19 +20,35 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.common.event.DomainEventPublisher;
+import org.laokou.admin.config.driver.AmazonS3StorageDriver;
 import org.laokou.admin.convertor.OssConvertor;
 import org.laokou.admin.domain.gateway.OssGateway;
+import org.laokou.admin.domain.oss.File;
 import org.laokou.admin.domain.oss.Oss;
-import org.laokou.admin.domain.oss.OssLog;
+import org.laokou.admin.gatewayimpl.database.OssLogMapper;
 import org.laokou.admin.gatewayimpl.database.OssMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.OssLogDO;
+import org.laokou.common.algorithm.template.Algorithm;
+import org.laokou.common.algorithm.template.select.PollSelectAlgorithm;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * OSS管理.
@@ -46,11 +62,13 @@ public class OssGatewayImpl implements OssGateway {
 
 	private final OssMapper ossMapper;
 
+	private final OssLogMapper ossLogMapper;
+
 	private final TransactionalUtil transactionalUtil;
 
-	private final DomainEventPublisher domainEventPublisher;
-
 	private final OssConvertor ossConvertor;
+
+	private final RedisUtil redisUtil;
 
 	/**
 	 * 新增OSS.
@@ -98,25 +116,42 @@ public class OssGatewayImpl implements OssGateway {
 		});
 	}
 
-	/**
-	 * 推送OSS日志事件.
-	 * @param ossLog OSS日志对象
-	 */
 	@Override
-	public void publish(OssLog ossLog) {
-		domainEventPublisher.publish(null);
+	public File upload(MultipartFile mf) {
+		File file = new File(mf);
+		file.checkSize();
+		file.setUrl(getUrl(file));
+		return file;
 	}
 
-	/**
-	 * 转换OSS日志事件.
-	 * @param ossLog OSS日志对象
-	 * @return OSS日志事件
-	 */
-	/*
-	 * private OssLogEvent getEvent(OssLog ossLog) { OssLogEvent event = null;
-	 * event.setMd5(ossLog.getMd5()); event.setUrl(ossLog.getUrl());
-	 * event.setName(ossLog.getName()); event.setSize(ossLog.getSize()); return event; }
-	 */
+	private String getUrl(File file) {
+		String url = Optional.ofNullable(ossLogMapper.selectOne(Wrappers.lambdaQuery(OssLogDO.class).eq(OssLogDO::getMd5, file.getMd5()).select(OssLogDO::getUrl))).orElse(new OssLogDO()).getUrl();
+		if (StringUtil.isNotEmpty(url)) {
+			return url;
+		}
+		Algorithm algorithm = new PollSelectAlgorithm();
+		OssDO ossDO = algorithm.select(getOssListCache(), EMPTY);
+		return new AmazonS3StorageDriver(ossConvertor.convertEntity(ossDO)).upload(file);
+	}
+
+	private List<OssDO> getOssListCache() {
+		Long tenantId = UserUtil.getTenantId();
+		String ossConfigKey = RedisKeyUtil.getOssConfigKey(tenantId);
+		List<Object> objList = redisUtil.lGetAll(ossConfigKey);
+		if (CollectionUtil.isNotEmpty(objList)) {
+			return ConvertUtil.sourceToTarget(objList, OssDO.class);
+		}
+		else {
+			List<OssDO> result = ossMapper.selectList(Wrappers.lambdaQuery(OssDO.class).eq(OssDO::getTenantId, tenantId));
+			if (CollectionUtil.isEmpty(result)) {
+				throw new SystemException("请配置OSS");
+			}
+			List<Object> objs = new ArrayList<>(result);
+			redisUtil.delete(ossConfigKey);
+			redisUtil.lSet(ossConfigKey, objs, RedisUtil.HOUR_ONE_EXPIRE);
+			return result;
+		}
+	}
 
 	/**
 	 * 新增OSS.

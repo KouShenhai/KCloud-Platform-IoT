@@ -24,7 +24,6 @@ import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.common.event.DomainEventPublisher;
 import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.ResourceConvertor;
@@ -77,8 +76,6 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	/*
 	 * private final TasksFeignClient tasksFeignClient;
 	 */
-
-	private final DomainEventPublisher domainEventPublisher;
 
 	private final ResourceConvertor resourceConvertor;
 
