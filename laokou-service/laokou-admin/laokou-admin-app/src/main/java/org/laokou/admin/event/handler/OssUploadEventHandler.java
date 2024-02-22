@@ -48,6 +48,6 @@ public class OssUploadEventHandler extends AbstractDomainEventRocketMQListener {
 
 	@Override
 	protected void handleDomainEvent(DecorateDomainEvent evt, String attribute) {
-
+		log.info("-->>>>>>>>>{}",attribute);
 	}
 }

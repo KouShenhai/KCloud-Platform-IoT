@@ -28,6 +28,7 @@ import org.laokou.admin.domain.event.OssUploadSucceededEvent;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -82,12 +83,22 @@ public class File extends AggregateRoot<Long> {
 		this.name = file.getOriginalFilename();
 	}
 
+	public void modifyUrl(Exception e, String url, String appName) {
+		if (ObjectUtil.isNotNull(e)) {
+			ossUploadFail(url,e, appName);
+		}
+		else {
+			ossUploadSuccess(url, appName);
+		}
+		this.url = url;
+	}
+
 	private void ossUploadSuccess(String url,String appName) {
-		addEvent(new OssUploadSucceededEvent(convert(this, EMPTY), UserContextHolder.get(), appName));
+		addEvent(new OssUploadSucceededEvent(convert(this,url, EMPTY), UserContextHolder.get(), appName));
 	}
 
 	private void ossUploadFail(String url,Exception e, String appName) {
-		addEvent(new OssUploadFailedEvent(convert(this, e.getMessage()), UserContextHolder.get(), appName));
+		addEvent(new OssUploadFailedEvent(convert(this,url, e.getMessage()), UserContextHolder.get(), appName));
 	}
 
 	public void checkSize() {
@@ -103,13 +114,13 @@ public class File extends AggregateRoot<Long> {
 		return bos;
 	}
 
-	private OssLog convert(File file,String errorMsg) {
+	private OssLog convert(File file, String url, String errorMessage) {
 		return OssLog.builder()
 				.md5(file.getMd5())
-				.url(file.getUrl())
+				.url(url)
 				.name(file.getName())
 				.size(file.getSize())
-				.errorMessage(errorMsg)
+				.errorMessage(errorMessage)
 				.build();
 	}
 
