@@ -25,8 +25,7 @@ import lombok.SneakyThrows;
 import org.laokou.admin.convertor.LoginLogConvertor;
 import org.laokou.admin.convertor.OperateLogConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
-import org.laokou.admin.domain.event.OperateFailedEvent;
-import org.laokou.admin.domain.event.OperateSucceededEvent;
+import org.laokou.admin.domain.event.OperateEvent;
 import org.laokou.admin.domain.gateway.LogGateway;
 import org.laokou.admin.domain.log.LoginLog;
 import org.laokou.admin.domain.log.OperateLog;
@@ -35,12 +34,10 @@ import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.common.core.context.UserContextHolder;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.DecorateDomainEvent;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.springframework.stereotype.Component;
 
@@ -130,16 +127,31 @@ public class LogGatewayImpl implements LogGateway {
 	}
 
 	@Override
-	public void create(OperateSucceededEvent event, DecorateDomainEvent evt) {
-		create(ObjectUtil.requireNotNull(ConvertUtil.sourceToTarget(event, OperateLogDO.class)), evt);
+	public void create(OperateEvent event, DecorateDomainEvent evt) {
+		try {
+			DynamicDataSourceContextHolder.push(evt.getSourceName());
+			operateLogMapper.insert(convert(event, evt));
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
-	@Override
-	public void create(OperateFailedEvent event, DecorateDomainEvent evt) {
-		create(ObjectUtil.requireNotNull(ConvertUtil.sourceToTarget(event, OperateLogDO.class)), evt);
-	}
-
-	private OperateLogDO convert(OperateLogDO logDO, DecorateDomainEvent evt) {
+	private OperateLogDO convert(OperateEvent operateEvent, DecorateDomainEvent evt) {
+		OperateLogDO logDO = new OperateLogDO();
+		logDO.setName(operateEvent.getName());
+		logDO.setModuleName(operateEvent.getModuleName());
+		logDO.setUri(operateEvent.getUri());
+		logDO.setMethodName(operateEvent.getMethodName());
+		logDO.setRequestType(operateEvent.getRequestType());
+		logDO.setRequestParams(operateEvent.getRequestParams());
+		logDO.setUserAgent(operateEvent.getUserAgent());
+		logDO.setIp(operateEvent.getIp());
+		logDO.setStatus(operateEvent.getStatus());
+		logDO.setOperator(operateEvent.getOperator());
+		logDO.setErrorMessage(operateEvent.getErrorMessage());
+		logDO.setTakeTime(operateEvent.getTakeTime());
+		logDO.setAddress(operateEvent.getAddress());
 		logDO.setId(IdGenerator.defaultSnowflakeId());
 		logDO.setEditor(evt.getEditor());
 		logDO.setCreator(evt.getCreator());
@@ -150,16 +162,6 @@ public class LogGatewayImpl implements LogGateway {
 		logDO.setTenantId(evt.getTenantId());
 		logDO.setEventId(evt.getId());
 		return logDO;
-	}
-
-	private void create(OperateLogDO logDO, DecorateDomainEvent evt) {
-		try {
-			DynamicDataSourceContextHolder.push(evt.getSourceName());
-			operateLogMapper.insert(convert(logDO, evt));
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
 	}
 
 }

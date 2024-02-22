@@ -129,6 +129,7 @@ public class OssGatewayImpl implements OssGateway {
 		if (StringUtil.isNotEmpty(url)) {
 			return url;
 		}
+		// 轮询算法
 		Algorithm algorithm = new PollSelectAlgorithm();
 		OssDO ossDO = algorithm.select(getOssListCache(), EMPTY);
 		return new AmazonS3StorageDriver(ossConvertor.convertEntity(ossDO)).upload(file);

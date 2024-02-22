@@ -17,73 +17,25 @@
 
 package org.laokou.auth.domain.event;
 
-import eu.bitwalker.useragentutils.UserAgent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.*;
+import lombok.Data;
 import lombok.experimental.SuperBuilder;
 import org.laokou.auth.domain.user.User;
-import org.laokou.common.core.utils.*;
-import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.DateUtil;
 
-import java.io.Serial;
-
-import static org.laokou.common.i18n.common.EventStatusEnums.CREATED;
-import static org.laokou.common.i18n.common.EventTypeEnums.LOGIN_SUCCEEDED;
-import static org.laokou.auth.domain.user.LoginStatusEnums.SUCCESS;
-import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_LOG_TOPIC;
+import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
 
 /**
  * @author laokou
  */
 @Data
 @SuperBuilder
-@AllArgsConstructor
-@NoArgsConstructor
 @Schema(name = "LoginSucceededEvent", description = "登录成功事件")
-public class LoginSucceededEvent extends DomainEvent<Long> {
-
-	@Serial
-	private static final long serialVersionUID = -325094951800650353L;
-
-	@Schema(name = "username", description = "登录的用户名")
-	private String username;
-
-	@Schema(name = "ip", description = "登录的IP地址")
-	private String ip;
-
-	@Schema(name = "address", description = "登录的归属地")
-	private String address;
-
-	@Schema(name = "browser", description = "登录的浏览器")
-	private String browser;
-
-	@Schema(name = "os", description = "登录的操作系统")
-	private String os;
-
-	@Schema(name = "status", description = "登录状态 0登录成功 1登录失败")
-	private Integer status = SUCCESS.ordinal();
-
-	@Schema(name = "message", description = "登录信息")
-	private String message;
-
-	@Schema(name = "type", description = "登录类型")
-	private String type;
+public class LoginSucceededEvent extends LoginEvent {
 
 	public LoginSucceededEvent(User user, HttpServletRequest request, String message, String sourceName, String appName,
-			String type) {
-		super(IdGenerator.defaultSnowflakeId(), user.getId(), LOGIN_SUCCEEDED, CREATED, LAOKOU_LOGIN_LOG_TOPIC,
-				sourceName, appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(),
-				user.getTenantId(), DateUtil.now(), DateUtil.now());
-		this.username = user.getUsername();
-		this.ip = IpUtil.getIpAddr(request);
-		this.address = AddressUtil.getRealAddress(this.ip);
-		UserAgent userAgent = RequestUtil.getUserAgent(request);
-		this.os = userAgent.getOperatingSystem().getName();
-		this.browser = userAgent.getBrowser().getName();
-		this.message = message;
-		this.type = type;
+							String type) {
+		super(user, request, message, sourceName, appName, type, SUCCESS);
 	}
 
 }

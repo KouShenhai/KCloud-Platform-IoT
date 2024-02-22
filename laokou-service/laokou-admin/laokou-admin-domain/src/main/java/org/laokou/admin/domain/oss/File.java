@@ -23,6 +23,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
+import org.laokou.admin.domain.event.OssUploadFailedEvent;
+import org.laokou.admin.domain.event.OssUploadSucceededEvent;
+import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.springframework.util.DigestUtils;
@@ -33,6 +36,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 import static lombok.AccessLevel.PRIVATE;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -78,6 +82,14 @@ public class File extends AggregateRoot<Long> {
 		this.name = file.getOriginalFilename();
 	}
 
+	private void ossUploadSuccess(String url,String appName) {
+		addEvent(new OssUploadSucceededEvent(convert(this, EMPTY), UserContextHolder.get(), appName));
+	}
+
+	private void ossUploadFail(String url,Exception e, String appName) {
+		addEvent(new OssUploadFailedEvent(convert(this, e.getMessage()), UserContextHolder.get(), appName));
+	}
+
 	public void checkSize() {
 		if (size > MAX_FILE_SIZE) {
 			throw new SystemException("单个文件上传不能超过100M，请重新选择文件并上传");
@@ -89,6 +101,16 @@ public class File extends AggregateRoot<Long> {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		bos.write(inputStream.readAllBytes());
 		return bos;
+	}
+
+	private OssLog convert(File file,String errorMsg) {
+		return OssLog.builder()
+				.md5(file.getMd5())
+				.url(file.getUrl())
+				.name(file.getName())
+				.size(file.getSize())
+				.errorMessage(errorMsg)
+				.build();
 	}
 
 }

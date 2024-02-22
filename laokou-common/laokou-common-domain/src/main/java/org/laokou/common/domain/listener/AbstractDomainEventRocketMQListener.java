@@ -52,7 +52,7 @@ public abstract class AbstractDomainEventRocketMQListener implements RocketMQLis
 		DomainEventDO eventDO = JacksonUtil.toBean(msg, DomainEventDO.class);
 		try {
 			// 处理领域事件
-			handleDomainEvent(convert(eventDO), eventDO.getEventType(), eventDO.getAttribute());
+			handleDomainEvent(convert(eventDO), eventDO.getAttribute());
 			// 消费成功
 			events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
 		}
@@ -86,6 +86,6 @@ public abstract class AbstractDomainEventRocketMQListener implements RocketMQLis
 			.build();
 	}
 
-	protected abstract void handleDomainEvent(DecorateDomainEvent evt, String eventType, String attribute);
+	protected abstract void handleDomainEvent(DecorateDomainEvent evt, String attribute);
 
 }
