@@ -19,16 +19,13 @@ package org.laokou.auth.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.domain.event.LoginFailedEvent;
-import org.laokou.auth.domain.event.LoginSucceededEvent;
+import org.laokou.auth.domain.event.LoginEvent;
 import org.laokou.auth.domain.gateway.LogGateway;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.DecorateDomainEvent;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -44,16 +41,28 @@ public class LogGatewayImpl implements LogGateway {
 	private final LoginLogMapper loginLogMapper;
 
 	@Override
-	public void create(LoginFailedEvent event, DecorateDomainEvent evt) {
-		create(ObjectUtil.requireNotNull(ConvertUtil.sourceToTarget(event, LoginLogDO.class)), evt);
+	public void create(LoginEvent event, DecorateDomainEvent evt) {
+		try {
+			DynamicDataSourceContextHolder.push(evt.getSourceName());
+			DynamicTableSuffixContextHolder.set(UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
+			loginLogMapper.insert(convert(event, evt));
+		}
+		finally {
+			DynamicTableSuffixContextHolder.clear();
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
-	@Override
-	public void create(LoginSucceededEvent event, DecorateDomainEvent evt) {
-		create(ObjectUtil.requireNotNull(ConvertUtil.sourceToTarget(event, LoginLogDO.class)), evt);
-	}
-
-	private LoginLogDO convert(LoginLogDO logDO, DecorateDomainEvent evt) {
+	private LoginLogDO convert(LoginEvent loginEvent, DecorateDomainEvent evt) {
+		LoginLogDO logDO = new LoginLogDO();
+		logDO.setUsername(loginEvent.getUsername());
+		logDO.setIp(loginEvent.getIp());
+		logDO.setAddress(loginEvent.getAddress());
+		logDO.setBrowser(loginEvent.getBrowser());
+		logDO.setOs(loginEvent.getOs());
+		logDO.setStatus(loginEvent.getStatus());
+		logDO.setMessage(loginEvent.getMessage());
+		logDO.setType(loginEvent.getType());
 		logDO.setId(IdGenerator.defaultSnowflakeId());
 		logDO.setEditor(evt.getEditor());
 		logDO.setCreator(evt.getCreator());
@@ -64,18 +73,6 @@ public class LogGatewayImpl implements LogGateway {
 		logDO.setTenantId(evt.getTenantId());
 		logDO.setEventId(evt.getId());
 		return logDO;
-	}
-
-	private void create(LoginLogDO logDO, DecorateDomainEvent evt) {
-		try {
-			DynamicDataSourceContextHolder.push(evt.getSourceName());
-			DynamicTableSuffixContextHolder.set(UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
-			loginLogMapper.insert(convert(logDO, evt));
-		}
-		finally {
-			DynamicTableSuffixContextHolder.clear();
-			DynamicDataSourceContextHolder.clear();
-		}
 	}
 
 }

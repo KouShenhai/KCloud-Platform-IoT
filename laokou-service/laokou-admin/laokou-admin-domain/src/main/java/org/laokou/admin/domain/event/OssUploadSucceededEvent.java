@@ -15,15 +15,27 @@
  *
  */
 
-package org.laokou.auth.domain.gateway;
+package org.laokou.admin.domain.event;
 
-import org.laokou.auth.domain.event.LoginEvent;
-import org.laokou.common.i18n.dto.DecorateDomainEvent;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.experimental.SuperBuilder;
+import org.laokou.admin.domain.oss.OssLog;
+import org.laokou.common.core.context.UserContextHolder;
+
+import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
 
 /**
  * @author laokou
  */
-public interface LogGateway {
+@Data
+@SuperBuilder
+@Schema(name = "OssLogSucceededEvent", description = "OSS日志事件")
+public class OssUploadSucceededEvent extends OssUploadEvent {
 
-	void create(LoginEvent event, DecorateDomainEvent evt);
+    public OssUploadSucceededEvent(OssLog ossLog, UserContextHolder.User user,
+                                String appName) {
+        super(ossLog, user, appName, SUCCESS);
+    }
+
 }

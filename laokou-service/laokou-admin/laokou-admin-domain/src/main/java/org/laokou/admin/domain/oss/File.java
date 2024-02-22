@@ -23,8 +23,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
+import org.laokou.admin.domain.event.OssUploadFailedEvent;
+import org.laokou.admin.domain.event.OssUploadSucceededEvent;
+import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +37,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 import static lombok.AccessLevel.PRIVATE;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -78,6 +83,24 @@ public class File extends AggregateRoot<Long> {
 		this.name = file.getOriginalFilename();
 	}
 
+	public void modifyUrl(Exception e, String url, String appName) {
+		if (ObjectUtil.isNotNull(e)) {
+			ossUploadFail(url,e, appName);
+		}
+		else {
+			ossUploadSuccess(url, appName);
+		}
+		this.url = url;
+	}
+
+	private void ossUploadSuccess(String url,String appName) {
+		addEvent(new OssUploadSucceededEvent(convert(this,url, EMPTY), UserContextHolder.get(), appName));
+	}
+
+	private void ossUploadFail(String url,Exception e, String appName) {
+		addEvent(new OssUploadFailedEvent(convert(this,url, e.getMessage()), UserContextHolder.get(), appName));
+	}
+
 	public void checkSize() {
 		if (size > MAX_FILE_SIZE) {
 			throw new SystemException("单个文件上传不能超过100M，请重新选择文件并上传");
@@ -89,6 +112,16 @@ public class File extends AggregateRoot<Long> {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		bos.write(inputStream.readAllBytes());
 		return bos;
+	}
+
+	private OssLog convert(File file, String url, String errorMessage) {
+		return OssLog.builder()
+				.md5(file.getMd5())
+				.url(url)
+				.name(file.getName())
+				.size(file.getSize())
+				.errorMessage(errorMessage)
+				.build();
 	}
 
 }

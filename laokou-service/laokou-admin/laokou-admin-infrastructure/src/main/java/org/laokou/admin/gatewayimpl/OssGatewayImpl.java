@@ -33,6 +33,7 @@ import org.laokou.common.algorithm.template.Algorithm;
 import org.laokou.common.algorithm.template.select.PollSelectAlgorithm;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -40,6 +41,7 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.utils.UserUtil;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,6 +50,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
@@ -69,6 +72,10 @@ public class OssGatewayImpl implements OssGateway {
 	private final OssConvertor ossConvertor;
 
 	private final RedisUtil redisUtil;
+
+	private final Environment environment;
+
+	private final DomainEventService domainEventService;
 
 	/**
 	 * 新增OSS.
@@ -120,18 +127,31 @@ public class OssGatewayImpl implements OssGateway {
 	public File upload(MultipartFile mf) {
 		File file = new File(mf);
 		file.checkSize();
-		file.setUrl(getUrl(file));
-		return file;
+		return upload(file);
 	}
 
-	private String getUrl(File file) {
-		String url = Optional.ofNullable(ossLogMapper.selectOne(Wrappers.lambdaQuery(OssLogDO.class).eq(OssLogDO::getMd5, file.getMd5()).select(OssLogDO::getUrl))).orElse(new OssLogDO()).getUrl();
-		if (StringUtil.isNotEmpty(url)) {
-			return url;
+	private File upload(File file) {
+		try {
+			// 修改URL
+			file.setUrl(Optional.ofNullable(ossLogMapper.selectOne(Wrappers.lambdaQuery(OssLogDO.class).eq(OssLogDO::getMd5, file.getMd5()).select(OssLogDO::getUrl))).orElse(new OssLogDO()).getUrl());
+			if (StringUtil.isNotEmpty(file.getUrl())) {
+				return file;
+			}
+			// 轮询算法
+			Algorithm algorithm = new PollSelectAlgorithm();
+			OssDO ossDO = algorithm.select(getOssListCache(), EMPTY);
+			// 修改URL
+			file.modifyUrl(null,new AmazonS3StorageDriver(ossConvertor.convertEntity(ossDO)).upload(file), environment.getProperty(SPRING_APPLICATION_NAME));
+			return file;
+		} catch (Exception e) {
+			file.modifyUrl(e, EMPTY, environment.getProperty(SPRING_APPLICATION_NAME));
+			throw e;
+		} finally {
+			// 保存领域事件（事件溯源）
+			domainEventService.create(file.getEvents());
+			// 清空领域事件
+			file.clearEvents();
 		}
-		Algorithm algorithm = new PollSelectAlgorithm();
-		OssDO ossDO = algorithm.select(getOssListCache(), EMPTY);
-		return new AmazonS3StorageDriver(ossConvertor.convertEntity(ossDO)).upload(file);
 	}
 
 	private List<OssDO> getOssListCache() {

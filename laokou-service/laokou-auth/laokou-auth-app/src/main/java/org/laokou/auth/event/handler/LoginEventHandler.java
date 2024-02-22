@@ -15,57 +15,46 @@
  *
  */
 
-package org.laokou.admin.event.handler;
+package org.laokou.auth.event.handler;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.laokou.admin.domain.event.OperateFailedEvent;
-import org.laokou.admin.domain.event.OperateSucceededEvent;
-import org.laokou.admin.domain.gateway.LogGateway;
+import org.laokou.auth.domain.event.LoginEvent;
+import org.laokou.auth.domain.gateway.LogGateway;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.listener.AbstractDomainEventRocketMQListener;
 import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.common.EventTypeEnums;
 import org.laokou.common.i18n.dto.DecorateDomainEvent;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OPERATE_LOG_CONSUMER_GROUP;
-import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OPERATE_LOG_TOPIC;
+import static org.laokou.common.i18n.common.RocketMqConstants.*;
 
 /**
- * 操作日志处理.
+ * 登录日志处理器.
  *
  * @author laokou
  */
 @Slf4j
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_OPERATE_LOG_CONSUMER_GROUP, topic = LAOKOU_OPERATE_LOG_TOPIC,
+@RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_EVENT_CONSUMER_GROUP, topic = LAOKOU_LOGIN_EVENT_TOPIC,
 		messageModel = CLUSTERING, consumeMode = ORDERLY)
-public class OperateLogHandler extends AbstractDomainEventRocketMQListener {
+public class LoginEventHandler extends AbstractDomainEventRocketMQListener {
 
 	private final LogGateway logGateway;
 
-	public OperateLogHandler(DomainEventService domainEventService, LogGateway logGateway) {
+	public LoginEventHandler(DomainEventService domainEventService, LogGateway logGateway) {
 		super(domainEventService);
 		this.logGateway = logGateway;
 	}
 
 	@Override
-	protected void handleDomainEvent(DecorateDomainEvent evt, String eventType, String attribute) {
-		switch (EventTypeEnums.valueOf(eventType)) {
-			case OPERATE_FAILED -> {
-				OperateFailedEvent event = JacksonUtil.toBean(attribute, OperateFailedEvent.class);
-				logGateway.create(event, evt);
-			}
-			case OPERATE_SUCCEEDED -> {
-				OperateSucceededEvent event = JacksonUtil.toBean(attribute, OperateSucceededEvent.class);
-				logGateway.create(event, evt);
-			}
-		}
+	protected void handleDomainEvent(DecorateDomainEvent evt, String attribute) {
+		LoginEvent event = JacksonUtil.toBean(attribute, LoginEvent.class);
+		logGateway.create(event, evt);
 	}
 
 }

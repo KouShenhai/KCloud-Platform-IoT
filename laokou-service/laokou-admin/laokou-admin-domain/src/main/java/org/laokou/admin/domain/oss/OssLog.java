@@ -21,15 +21,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.laokou.common.i18n.dto.AggregateRoot;
+
+import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@SuperBuilder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "OssLog", description = "OSS日志")
-public class OssLog {
+public class OssLog extends AggregateRoot<Long> {
 
 	@Schema(name = "md5", description = "文件的MD5标识")
 	private String md5;
@@ -42,5 +47,11 @@ public class OssLog {
 
 	@Schema(name = "size", description = "文件大小")
 	private Long size;
+
+	@Schema(name = "errorMessage", description = "错误信息")
+	private String errorMessage;
+
+	@Schema(name = "status", description = "上传状态 0成功 1失败")
+	private Integer status;
 
 }
