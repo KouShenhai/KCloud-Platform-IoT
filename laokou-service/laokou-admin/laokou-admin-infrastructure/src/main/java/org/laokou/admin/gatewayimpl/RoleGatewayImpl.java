@@ -29,7 +29,7 @@ import org.laokou.admin.gatewayimpl.database.RoleMenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleMenuDO;
-import org.laokou.common.core.holder.UserContextHolder;
+import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -123,9 +123,10 @@ public class RoleGatewayImpl implements RoleGateway {
 				createRoleMenu(roleDO, role.getMenuIds());
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
-				throw new SystemException(LogUtil.result(e.getMessage()));
+				throw new SystemException(msg);
 			}
 		});
 
@@ -144,9 +145,10 @@ public class RoleGatewayImpl implements RoleGateway {
 				modifyRoleMenu(roleDO, role.getMenuIds());
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(msg);
 			}
 		});
 	}

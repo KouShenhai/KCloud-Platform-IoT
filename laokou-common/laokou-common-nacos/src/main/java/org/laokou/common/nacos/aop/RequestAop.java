@@ -25,7 +25,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.core.holder.ShutdownHolder;
+import org.laokou.common.core.context.ShutdownHolder;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.StatusCodes.SERVICE_UNAVAILABLE;

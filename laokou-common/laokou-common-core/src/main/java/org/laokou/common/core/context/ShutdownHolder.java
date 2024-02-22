@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.core.holder;
+package org.laokou.common.core.context;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;

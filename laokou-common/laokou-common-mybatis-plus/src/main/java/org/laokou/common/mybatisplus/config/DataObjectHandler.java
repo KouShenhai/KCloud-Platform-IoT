@@ -20,7 +20,7 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
-import org.laokou.common.core.holder.UserContextHolder;
+import org.laokou.common.core.context.UserContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -37,7 +37,6 @@ public class DataObjectHandler implements MetaObjectHandler {
 
 	@Override
 	public void insertFill(MetaObject metaObject) {
-		// log.info("insert fill");
 		UserContextHolder.User user = UserContextHolder.get();
 		this.strictInsertFill(metaObject, CREATOR, user::getId, Long.class);
 		this.strictInsertFill(metaObject, EDITOR, user::getId, Long.class);
@@ -52,7 +51,6 @@ public class DataObjectHandler implements MetaObjectHandler {
 
 	@Override
 	public void updateFill(MetaObject metaObject) {
-		// log.info("update fill");
 		UserContextHolder.User user = UserContextHolder.get();
 		this.strictUpdateFill(metaObject, EDITOR, user::getId, Long.class);
 		this.strictUpdateFill(metaObject, UPDATE_DATE, LocalDateTime::now, LocalDateTime.class);

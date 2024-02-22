@@ -20,8 +20,6 @@ package org.laokou.admin.domain.gateway;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.admin.domain.oss.Oss;
 import org.laokou.admin.domain.oss.OssLog;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
@@ -30,40 +28,22 @@ import org.laokou.common.i18n.dto.PageQuery;
 public interface OssGateway {
 
 	/**
-	 * 查询OSS列表.
-	 * @param oss OSS对象
-	 * @param pageQuery 分页参数
-	 * @return OSS
-	 */
-	Datas<Oss> list(Oss oss, PageQuery pageQuery);
-
-	/**
-	 * 根据ID查看OSS.
-	 * @param id ID
-	 * @return OSS
-	 */
-	Oss getById(Long id);
-
-	/**
 	 * 新增OSS.
 	 * @param oss OSS对象
-	 * @return 新增结果
 	 */
-	Boolean insert(Oss oss);
+	void create(Oss oss);
 
 	/**
 	 * 修改OSS.
 	 * @param oss OSS对象
-	 * @return 修改结果
 	 */
-	Boolean update(Oss oss);
+	void modify(Oss oss);
 
 	/**
-	 * 根据ID删除OSS.
-	 * @param id ID
-	 * @return 删除结果
+	 * 根据IDS删除OSS.
+	 * @param ids IDS
 	 */
-	Boolean deleteById(Long id);
+	void remove(Long[] ids);
 
 	/**
 	 * 推送OSS日志.

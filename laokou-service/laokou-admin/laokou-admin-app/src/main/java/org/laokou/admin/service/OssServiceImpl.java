@@ -53,31 +53,28 @@ public class OssServiceImpl implements OssServiceI {
 	/**
 	 * 新增OSS.
 	 * @param cmd 新增OSS参数
-	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(OssCreateCmd cmd) {
-		return ossCreateCmdExe.execute(cmd);
+	public void create(OssCreateCmd cmd) {
+		ossCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 修改OSS.
 	 * @param cmd 修改OSS参数
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(OssModifyCmd cmd) {
-		return ossModifyCmdExe.execute(cmd);
+	public void modify(OssModifyCmd cmd) {
+		ossModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 根据ID删除OSS.
 	 * @param cmd 根据ID删除OSS参数
-	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> deleteById(OssRemoveCmd cmd) {
-		return ossRemoveCmdExe.execute(cmd);
+	public void remove(OssRemoveCmd cmd) {
+		ossRemoveCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -86,7 +83,7 @@ public class OssServiceImpl implements OssServiceI {
 	 * @return OSS
 	 */
 	@Override
-	public Result<OssCO> getById(OssGetQry qry) {
+	public Result<OssCO> findById(OssGetQry qry) {
 		return ossGetQryExe.execute(qry);
 	}
 
@@ -96,7 +93,7 @@ public class OssServiceImpl implements OssServiceI {
 	 * @return OSS列表
 	 */
 	@Override
-	public Result<Datas<OssCO>> list(OssListQry qry) {
+	public Result<Datas<OssCO>> findList(OssListQry qry) {
 		return ossListQryExe.execute(qry);
 	}
 

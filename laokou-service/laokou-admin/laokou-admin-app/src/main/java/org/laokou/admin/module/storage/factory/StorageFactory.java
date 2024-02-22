@@ -85,7 +85,7 @@ public class StorageFactory {
 			return ConvertUtil.sourceToTarget(objList, OssDO.class);
 		}
 		else {
-			List<OssDO> result = ossMapper.getOssListByFilter(EMPTY);
+			List<OssDO> result = null;
 			if (CollectionUtil.isEmpty(result)) {
 				throw new SystemException("请配置OSS");
 			}

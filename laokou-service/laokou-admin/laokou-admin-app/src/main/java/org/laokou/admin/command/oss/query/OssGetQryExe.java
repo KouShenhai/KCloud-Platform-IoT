@@ -19,10 +19,10 @@ package org.laokou.admin.command.oss.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.OssConvertor;
-import org.laokou.admin.domain.gateway.OssGateway;
 import org.laokou.admin.dto.oss.OssGetQry;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
+import org.laokou.admin.gatewayimpl.database.OssMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -37,9 +37,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 @RequiredArgsConstructor
 public class OssGetQryExe {
 
-	private final OssGateway ossGateway;
-
-	private final OssConvertor ossConvertor;
+	private final OssMapper ossMapper;
 
 	/**
 	 * 执行查看OSS.
@@ -48,9 +46,20 @@ public class OssGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<OssCO> execute(OssGetQry qry) {
-		return null;
-		// return
-		// Result.of(ossConvertor.convertClientObject(ossGateway.getById(qry.getId())));
+		return Result.of(convert(ossMapper.selectById(qry.getId())));
+	}
+
+	private OssCO convert(OssDO ossDO) {
+		return OssCO.builder()
+			.id(ossDO.getId())
+			.name(ossDO.getName())
+			.accessKey(ossDO.getAccessKey())
+			.secretKey(ossDO.getSecretKey())
+			.bucketName(ossDO.getBucketName())
+			.pathStyleAccessEnabled(ossDO.getPathStyleAccessEnabled())
+			.region(ossDO.getRegion())
+			.endpoint(ossDO.getEndpoint())
+			.build();
 	}
 
 }

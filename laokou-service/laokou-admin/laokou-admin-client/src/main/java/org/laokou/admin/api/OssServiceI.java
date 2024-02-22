@@ -33,37 +33,34 @@ public interface OssServiceI {
 	/**
 	 * 新增OSS.
 	 * @param cmd 新增OSS参数
-	 * @return 新增结果
 	 */
-	Result<Boolean> insert(OssCreateCmd cmd);
+	void create(OssCreateCmd cmd);
 
 	/**
 	 * 修改OSS.
 	 * @param cmd 修改OSS参数
-	 * @return 修改结果
 	 */
-	Result<Boolean> update(OssModifyCmd cmd);
+	void modify(OssModifyCmd cmd);
 
 	/**
-	 * 根据ID删除OSS.
-	 * @param cmd 根据ID删除OSS参数
-	 * @return 删除结果
+	 * 根据IDS删除OSS.
+	 * @param cmd 根据IDS删除OSS参数
 	 */
-	Result<Boolean> deleteById(OssRemoveCmd cmd);
+	void remove(OssRemoveCmd cmd);
 
 	/**
 	 * 根据ID查看OSS.
 	 * @param qry 根据ID查看OSS参数
 	 * @return OSS
 	 */
-	Result<OssCO> getById(OssGetQry qry);
+	Result<OssCO> findById(OssGetQry qry);
 
 	/**
 	 * 查询OSS列表.
 	 * @param qry 查询OSS列表参数
 	 * @return OSS列表
 	 */
-	Result<Datas<OssCO>> list(OssListQry qry);
+	Result<Datas<OssCO>> findList(OssListQry qry);
 
 	/**
 	 * 上传文件.

@@ -32,7 +32,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Schema(name = "OssDeleteCmd", description = "删除OSS命令请求")
 public class OssRemoveCmd extends CommonCommand {
 
-	@Schema(name = "id", description = "ID")
-	private Long id;
+	@Schema(name = "ids", description = "IDS")
+	private Long[] ids;
 
 }
