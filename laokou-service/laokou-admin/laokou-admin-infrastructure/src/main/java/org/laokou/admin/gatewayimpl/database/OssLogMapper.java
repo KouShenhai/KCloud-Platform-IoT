@@ -29,6 +29,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface OssLogMapper extends CrudMapper<Long,Integer,OssLogDO> {
+public interface OssLogMapper extends CrudMapper<Long, Integer, OssLogDO> {
 
 }

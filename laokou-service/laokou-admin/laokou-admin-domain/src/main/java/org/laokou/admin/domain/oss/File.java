@@ -85,7 +85,7 @@ public class File extends AggregateRoot<Long> {
 
 	public void modifyUrl(Exception e, String url, String appName) {
 		if (ObjectUtil.isNotNull(e)) {
-			ossUploadFail(url,e, appName);
+			ossUploadFail(url, e, appName);
 		}
 		else {
 			ossUploadSuccess(url, appName);
@@ -93,12 +93,12 @@ public class File extends AggregateRoot<Long> {
 		this.url = url;
 	}
 
-	private void ossUploadSuccess(String url,String appName) {
-		addEvent(new OssUploadSucceededEvent(convert(this,url, EMPTY), UserContextHolder.get(), appName));
+	private void ossUploadSuccess(String url, String appName) {
+		addEvent(new OssUploadSucceededEvent(convert(this, url, EMPTY), UserContextHolder.get(), appName));
 	}
 
-	private void ossUploadFail(String url,Exception e, String appName) {
-		addEvent(new OssUploadFailedEvent(convert(this,url, e.getMessage()), UserContextHolder.get(), appName));
+	private void ossUploadFail(String url, Exception e, String appName) {
+		addEvent(new OssUploadFailedEvent(convert(this, url, e.getMessage()), UserContextHolder.get(), appName));
 	}
 
 	public void checkSize() {
@@ -116,12 +116,12 @@ public class File extends AggregateRoot<Long> {
 
 	private OssLog convert(File file, String url, String errorMessage) {
 		return OssLog.builder()
-				.md5(file.getMd5())
-				.url(url)
-				.name(file.getName())
-				.size(file.getSize())
-				.errorMessage(errorMessage)
-				.build();
+			.md5(file.getMd5())
+			.url(url)
+			.name(file.getName())
+			.size(file.getSize())
+			.errorMessage(errorMessage)
+			.build();
 	}
 
 }

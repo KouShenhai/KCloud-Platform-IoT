@@ -25,6 +25,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "EventTypeEnums", description = "事件类型枚举")
 public enum EventTypeEnums {
 
-	LOGIN_FAILED, LOGIN_SUCCEEDED, OPERATE_FAILED, OPERATE_SUCCEEDED,OSS_UPLOAD_FAILED,OSS_UPLOAD_SUCCEEDED
+	LOGIN_FAILED, LOGIN_SUCCEEDED, OPERATE_FAILED, OPERATE_SUCCEEDED, OSS_UPLOAD_FAILED, OSS_UPLOAD_SUCCEEDED
 
 }

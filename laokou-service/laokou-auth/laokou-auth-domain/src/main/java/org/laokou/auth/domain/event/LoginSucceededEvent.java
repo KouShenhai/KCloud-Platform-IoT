@@ -34,7 +34,7 @@ import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
 public class LoginSucceededEvent extends LoginEvent {
 
 	public LoginSucceededEvent(User user, HttpServletRequest request, String message, String sourceName, String appName,
-							String type) {
+			String type) {
 		super(user, request, message, sourceName, appName, type, SUCCESS);
 	}
 

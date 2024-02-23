@@ -50,7 +50,8 @@ public class TransactionalUtil {
 		try {
 			set();
 			return convert(propagationBehavior, isolationLevel, readOnly).execute(action);
-		} finally {
+		}
+		finally {
 			remove();
 		}
 	}
@@ -78,7 +79,8 @@ public class TransactionalUtil {
 		try {
 			set();
 			convert(propagationBehavior, isolationLevel, readOnly).executeWithoutResult(action);
-		} finally {
+		}
+		finally {
 			remove();
 		}
 	}

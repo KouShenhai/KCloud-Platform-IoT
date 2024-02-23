@@ -70,7 +70,8 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 		ObjectMetadata objectMetadata = new ObjectMetadata();
 		objectMetadata.setContentLength(file.getSize());
 		objectMetadata.setContentType(file.getContentType());
-		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, getFileName(file.getName()), new ByteArrayInputStream(file.getBosCache().toByteArray()), objectMetadata);
+		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, getFileName(file.getName()),
+				new ByteArrayInputStream(file.getBosCache().toByteArray()), objectMetadata);
 		putObjectRequest.getRequestClientOptions().setReadLimit(file.getLimitRead());
 		amazonS3.putObject(putObjectRequest);
 	}

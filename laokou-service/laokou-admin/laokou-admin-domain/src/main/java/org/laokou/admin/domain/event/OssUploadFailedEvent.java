@@ -34,9 +34,8 @@ import static org.laokou.common.i18n.common.NumberConstants.FAIL;
 @Schema(name = "OssLogFailedEvent", description = "OSS文件上传失败事件")
 public class OssUploadFailedEvent extends OssUploadEvent {
 
-    public OssUploadFailedEvent(OssLog ossLog, UserContextHolder.User user,
-                                String appName) {
-        super(ossLog, user, appName, FAIL, OSS_UPLOAD_FAILED);
-    }
+	public OssUploadFailedEvent(OssLog ossLog, UserContextHolder.User user, String appName) {
+		super(ossLog, user, appName, FAIL, OSS_UPLOAD_FAILED);
+	}
 
 }

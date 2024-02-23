@@ -34,9 +34,8 @@ import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
 @Schema(name = "OssLogSucceededEvent", description = "OSS文件上传成功事件")
 public class OssUploadSucceededEvent extends OssUploadEvent {
 
-    public OssUploadSucceededEvent(OssLog ossLog, UserContextHolder.User user,
-                                String appName) {
-        super(ossLog, user, appName, SUCCESS, OSS_UPLOAD_SUCCEEDED);
-    }
+	public OssUploadSucceededEvent(OssLog ossLog, UserContextHolder.User user, String appName) {
+		super(ossLog, user, appName, SUCCESS, OSS_UPLOAD_SUCCEEDED);
+	}
 
 }
