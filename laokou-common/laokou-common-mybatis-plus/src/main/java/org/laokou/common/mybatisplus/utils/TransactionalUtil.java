@@ -17,6 +17,7 @@
 
 package org.laokou.common.mybatisplus.utils;
 
+import com.alibaba.ttl.TransmittableThreadLocal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionDefinition;
@@ -33,10 +34,25 @@ import java.util.function.Consumer;
 @RequiredArgsConstructor
 public class TransactionalUtil {
 
+	private static final ThreadLocal<TransactionTemplate> TRANSACTION_LOCAL = new TransmittableThreadLocal<>();
+
 	private final TransactionTemplate transactionTemplate;
 
+	public void set() {
+		TRANSACTION_LOCAL.set(transactionTemplate);
+	}
+
+	public void remove() {
+		TRANSACTION_LOCAL.remove();
+	}
+
 	public <T> T execute(TransactionCallback<T> action, int propagationBehavior, int isolationLevel, boolean readOnly) {
-		return convert(propagationBehavior, isolationLevel, readOnly).execute(action);
+		try {
+			set();
+			return convert(propagationBehavior, isolationLevel, readOnly).execute(action);
+		} finally {
+			remove();
+		}
 	}
 
 	public <T> T defaultExecute(TransactionCallback<T> action, int isolationLevel, boolean readOnly) {
@@ -59,7 +75,12 @@ public class TransactionalUtil {
 
 	public void executeWithoutResult(Consumer<TransactionStatus> action, int propagationBehavior, int isolationLevel,
 			boolean readOnly) {
-		convert(propagationBehavior, isolationLevel, readOnly).executeWithoutResult(action);
+		try {
+			set();
+			convert(propagationBehavior, isolationLevel, readOnly).executeWithoutResult(action);
+		} finally {
+			remove();
+		}
 	}
 
 	public void defaultExecuteWithoutResult(Consumer<TransactionStatus> action, int isolationLevel, boolean readOnly) {
@@ -81,6 +102,7 @@ public class TransactionalUtil {
 	}
 
 	private TransactionTemplate convert(int propagationBehavior, int isolationLevel, boolean readOnly) {
+		TransactionTemplate transactionTemplate = TRANSACTION_LOCAL.get();
 		transactionTemplate.setPropagationBehavior(propagationBehavior);
 		transactionTemplate.setIsolationLevel(isolationLevel);
 		transactionTemplate.setReadOnly(readOnly);

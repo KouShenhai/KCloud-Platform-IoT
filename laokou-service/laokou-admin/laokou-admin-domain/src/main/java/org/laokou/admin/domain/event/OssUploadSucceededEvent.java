@@ -23,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 import org.laokou.admin.domain.oss.OssLog;
 import org.laokou.common.core.context.UserContextHolder;
 
+import static org.laokou.common.i18n.common.EventTypeEnums.OSS_UPLOAD_SUCCEEDED;
 import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
 
 /**
@@ -30,12 +31,12 @@ import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
  */
 @Data
 @SuperBuilder
-@Schema(name = "OssLogSucceededEvent", description = "OSS日志事件")
+@Schema(name = "OssLogSucceededEvent", description = "OSS文件上传成功事件")
 public class OssUploadSucceededEvent extends OssUploadEvent {
 
     public OssUploadSucceededEvent(OssLog ossLog, UserContextHolder.User user,
                                 String appName) {
-        super(ossLog, user, appName, SUCCESS);
+        super(ossLog, user, appName, SUCCESS, OSS_UPLOAD_SUCCEEDED);
     }
 
 }

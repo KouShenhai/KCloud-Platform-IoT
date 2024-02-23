@@ -37,13 +37,15 @@
         app_name,
         `attribute`
     </sql>
-    
-    <select id="selectVersion" resultType="integer">
-        select version from boot_sys_domain_event where id = #{id}
-    </select>
-    
-    <update id="updateStatusById">
-        update boot_sys_domain_event set event_status = #{entity.eventStatus}, version = version + 1 where id = #{entity.id} and version = #{entity.version}
+    <update id="updateStatus">
+        <choose>
+            <when test="evt.eventStatus == 'PUBLISH_SUCCEED' or evt.eventStatus == 'PUBLISH_FAILED'">
+                update boot_sys_domain_event set event_status = #{evt.eventStatus} where id = #{evt.id} and event_status = 'CREATED'
+            </when>
+            <when test="evt.eventStatus == 'CONSUME_SUCCEED' or evt.eventStatus == 'CONSUME_FAILED'">
+                update boot_sys_domain_event set event_status = #{evt.eventStatus} where id = #{evt.id} and (event_status = 'CREATED' or event_status = 'PUBLISH_SUCCEED' or event_status = 'PUBLISH_FAILED')
+            </when>
+        </choose>
     </update>
 
     <select id="selectObjects" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.common.domain.repository.DomainEventDO">

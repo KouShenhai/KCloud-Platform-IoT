@@ -23,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 import org.laokou.admin.domain.oss.OssLog;
 import org.laokou.common.core.context.UserContextHolder;
 
+import static org.laokou.common.i18n.common.EventTypeEnums.OSS_UPLOAD_FAILED;
 import static org.laokou.common.i18n.common.NumberConstants.FAIL;
 
 /**
@@ -30,12 +31,12 @@ import static org.laokou.common.i18n.common.NumberConstants.FAIL;
  */
 @Data
 @SuperBuilder
-@Schema(name = "OssLogFailedEvent", description = "OSS日志事件")
+@Schema(name = "OssLogFailedEvent", description = "OSS文件上传失败事件")
 public class OssUploadFailedEvent extends OssUploadEvent {
 
     public OssUploadFailedEvent(OssLog ossLog, UserContextHolder.User user,
                                 String appName) {
-        super(ossLog, user, appName, FAIL);
+        super(ossLog, user, appName, FAIL, OSS_UPLOAD_FAILED);
     }
 
 }

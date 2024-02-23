@@ -28,13 +28,13 @@ import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.AddressUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.IpUtil;
+import org.laokou.common.i18n.common.EventTypeEnums;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.DateUtil;
 
 import java.io.Serial;
 
 import static org.laokou.common.i18n.common.EventStatusEnums.CREATED;
-import static org.laokou.common.i18n.common.EventTypeEnums.OPERATE_FAILED;
 import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OPERATE_EVENT_TOPIC;
 
 /**
@@ -43,7 +43,7 @@ import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OPERATE_EVE
 @Data
 @SuperBuilder
 @NoArgsConstructor
-@Schema(name = "AbstractOperateEvent", description = "操作事件")
+@Schema(name = "OperateEvent", description = "操作事件")
 public class OperateEvent extends DomainEvent<Long> {
 
     @Serial
@@ -89,8 +89,8 @@ public class OperateEvent extends DomainEvent<Long> {
     protected Long takeTime;
 
     public OperateEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user,
-                        String appName, Integer status) {
-        super(IdGenerator.defaultSnowflakeId(), user.getId(), OPERATE_FAILED, CREATED, LAOKOU_OPERATE_EVENT_TOPIC,
+                        String appName, Integer status, EventTypeEnums eventType) {
+        super(IdGenerator.defaultSnowflakeId(), user.getId(), eventType, CREATED, LAOKOU_OPERATE_EVENT_TOPIC,
                 user.getSourceName(), appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(),
                 user.getTenantId(), DateUtil.now(), DateUtil.now());
         this.takeTime = operateLog.getTakeTime();

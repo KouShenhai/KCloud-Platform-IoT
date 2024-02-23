@@ -33,6 +33,8 @@ import org.laokou.common.algorithm.template.Algorithm;
 import org.laokou.common.algorithm.template.select.PollSelectAlgorithm;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.domain.context.DomainEventContextHolder;
+import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -50,6 +52,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.laokou.common.i18n.common.JobModeEnums.SYNC;
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
@@ -76,6 +79,8 @@ public class OssGatewayImpl implements OssGateway {
 	private final Environment environment;
 
 	private final DomainEventService domainEventService;
+
+	private final DomainEventPublisher domainEventPublisher;
 
 	/**
 	 * 新增OSS.
@@ -149,6 +154,10 @@ public class OssGatewayImpl implements OssGateway {
 		} finally {
 			// 保存领域事件（事件溯源）
 			domainEventService.create(file.getEvents());
+			// 发布当前线程的领域事件(同步发布)
+			domainEventPublisher.publish(SYNC);
+			// 清除领域事件上下文
+			DomainEventContextHolder.clear();
 			// 清空领域事件
 			file.clearEvents();
 		}

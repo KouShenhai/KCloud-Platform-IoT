@@ -24,6 +24,7 @@ import lombok.experimental.SuperBuilder;
 import org.laokou.admin.domain.log.OperateLog;
 import org.laokou.common.core.context.UserContextHolder;
 
+import static org.laokou.common.i18n.common.EventTypeEnums.OPERATE_FAILED;
 import static org.laokou.common.i18n.common.NumberConstants.FAIL;
 
 /**
@@ -31,12 +32,12 @@ import static org.laokou.common.i18n.common.NumberConstants.FAIL;
  */
 @Data
 @SuperBuilder
-@Schema(name = "OperateLogEvent", description = "操作日志事件")
+@Schema(name = "OperateFailedEvent", description = "操作失败事件")
 public class OperateFailedEvent extends OperateEvent {
 
 	public OperateFailedEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user,
 			String appName) {
-		super(operateLog, request, user, appName, FAIL);
+		super(operateLog, request, user, appName, FAIL, OPERATE_FAILED);
 	}
 
 }

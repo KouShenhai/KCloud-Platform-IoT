@@ -39,11 +39,6 @@ public interface DomainEventMapper extends CrudMapper<Long, Integer, DomainEvent
 	void selectObjects(@Param("sourceNames") Set<String> sourceNames, @Param("appName") String appName,
 			ResultHandler<DomainEventDO> resultHandler);
 
-	int updateStatusById(@Param("entity") DomainEventDO entity);
-
-	default void updateStatus(DomainEventDO entity) {
-		entity.setVersion(selectVersion(entity.getId()));
-		updateStatusById(entity);
-	}
+	void updateStatus(@Param("evt") DomainEventDO evt);
 
 }
