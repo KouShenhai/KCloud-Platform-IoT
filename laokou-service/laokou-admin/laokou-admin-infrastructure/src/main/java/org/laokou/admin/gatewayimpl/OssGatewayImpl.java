@@ -53,6 +53,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.laokou.common.i18n.common.JobModeEnums.SYNC;
+import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
@@ -136,15 +137,14 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	private File upload(File file) {
+		file.setUrl(Optional.ofNullable(ossLogMapper.selectOne(Wrappers.lambdaQuery(OssLogDO.class)
+			.eq(OssLogDO::getStatus, SUCCESS)
+			.eq(OssLogDO::getMd5, file.getMd5())
+			.select(OssLogDO::getUrl))).orElse(new OssLogDO()).getUrl());
+		if (StringUtil.isNotEmpty(file.getUrl())) {
+			return file;
+		}
 		try {
-			// 修改URL
-			file.setUrl(Optional.ofNullable(ossLogMapper.selectOne(
-					Wrappers.lambdaQuery(OssLogDO.class).eq(OssLogDO::getMd5, file.getMd5()).select(OssLogDO::getUrl)))
-				.orElse(new OssLogDO())
-				.getUrl());
-			if (StringUtil.isNotEmpty(file.getUrl())) {
-				return file;
-			}
 			// 轮询算法
 			Algorithm algorithm = new PollSelectAlgorithm();
 			OssDO ossDO = algorithm.select(getOssListCache(), EMPTY);

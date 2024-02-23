@@ -20,6 +20,9 @@ package org.laokou.admin.event.handler;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.laokou.admin.domain.event.OssUploadEvent;
+import org.laokou.admin.domain.gateway.LogGateway;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.listener.AbstractDomainEventRocketMQListener;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.dto.DecorateDomainEvent;
@@ -42,13 +45,17 @@ import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OSS_UPLOAD_
 		messageModel = CLUSTERING, consumeMode = ORDERLY)
 public class OssUploadEventHandler extends AbstractDomainEventRocketMQListener {
 
-	public OssUploadEventHandler(DomainEventService domainEventService) {
+	private final LogGateway logGateway;
+
+	public OssUploadEventHandler(DomainEventService domainEventService, LogGateway logGateway) {
 		super(domainEventService);
+		this.logGateway = logGateway;
 	}
 
 	@Override
 	protected void handleDomainEvent(DecorateDomainEvent evt, String attribute) {
-		log.info("-->>>>>>>>>{}", attribute);
+		OssUploadEvent event = JacksonUtil.toBean(attribute, OssUploadEvent.class);
+		logGateway.create(event, evt);
 	}
 
 }

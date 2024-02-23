@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.gateway.support.ip;
+package org.laokou.gateway.ip;
 
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.web.server.ServerWebExchange;
