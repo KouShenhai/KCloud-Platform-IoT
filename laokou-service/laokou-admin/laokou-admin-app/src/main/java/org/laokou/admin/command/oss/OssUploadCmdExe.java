@@ -52,10 +52,7 @@ public class OssUploadCmdExe {
 	}
 
 	private FileCO convert(File file) {
-		return FileCO.builder()
-				.md5(file.getMd5())
-				.url(file.getUrl())
-				.build();
+		return FileCO.builder().md5(file.getMd5()).url(file.getUrl()).build();
 	}
 
 }

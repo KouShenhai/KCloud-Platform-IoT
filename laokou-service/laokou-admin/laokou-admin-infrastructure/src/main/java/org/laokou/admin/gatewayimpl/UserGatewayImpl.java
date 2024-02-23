@@ -111,8 +111,9 @@ public class UserGatewayImpl implements UserGateway {
 	private void checkMail(User user) {
 		String mail = user.getMail();
 		if (StringUtil.isNotEmpty(mail)) {
-			long count = userMapper.selectCount(
-					Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMail, AesUtil.encrypt(mail)).ne(UserDO::getId, user.getId()));
+			long count = userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class)
+				.eq(UserDO::getMail, AesUtil.encrypt(mail))
+				.ne(UserDO::getId, user.getId()));
 			user.checkMail(count);
 		}
 	}
@@ -120,8 +121,9 @@ public class UserGatewayImpl implements UserGateway {
 	private void checkMobile(User user) {
 		String mobile = user.getMobile();
 		if (StringUtil.isNotEmpty(mobile)) {
-			long count = userMapper.selectCount(
-					Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMobile, AesUtil.encrypt(mobile)).ne(UserDO::getId, user.getId()));
+			long count = userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class)
+				.eq(UserDO::getMobile, AesUtil.encrypt(mobile))
+				.ne(UserDO::getId, user.getId()));
 			user.checkMobile(count);
 		}
 	}

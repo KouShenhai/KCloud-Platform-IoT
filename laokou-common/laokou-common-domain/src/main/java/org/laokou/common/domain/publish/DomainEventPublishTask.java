@@ -143,8 +143,7 @@ public class DomainEventPublishTask {
 
 	private void addEvent(List<DomainEvent<Long>> modifyList, Long id, String sourceName,
 			EventStatusEnums eventStatusEnums) {
-		DecorateDomainEvent event = new DecorateDomainEvent(id, eventStatusEnums, sourceName);
-		modifyList.add(event);
+		modifyList.add(new DecorateDomainEvent(id, eventStatusEnums, sourceName));
 	}
 
 }

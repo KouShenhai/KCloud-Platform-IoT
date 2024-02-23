@@ -46,47 +46,47 @@ import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_EVENT
 @Schema(name = "LoginEvent", description = "登录事件")
 public class LoginEvent extends DomainEvent<Long> {
 
-    @Serial
-    private static final long serialVersionUID = -325094951800650353L;
+	@Serial
+	private static final long serialVersionUID = -325094951800650353L;
 
-    @Schema(name = "username", description = "登录的用户名")
-    protected String username;
+	@Schema(name = "username", description = "登录的用户名")
+	protected String username;
 
-    @Schema(name = "ip", description = "登录的IP地址")
-    protected String ip;
+	@Schema(name = "ip", description = "登录的IP地址")
+	protected String ip;
 
-    @Schema(name = "address", description = "登录的归属地")
-    protected String address;
+	@Schema(name = "address", description = "登录的归属地")
+	protected String address;
 
-    @Schema(name = "browser", description = "登录的浏览器")
-    protected String browser;
+	@Schema(name = "browser", description = "登录的浏览器")
+	protected String browser;
 
-    @Schema(name = "os", description = "登录的操作系统")
-    protected String os;
+	@Schema(name = "os", description = "登录的操作系统")
+	protected String os;
 
-    @Schema(name = "status", description = "登录状态 0登录成功 1登录失败")
-    protected Integer status;
+	@Schema(name = "status", description = "登录状态 0登录成功 1登录失败")
+	protected Integer status;
 
-    @Schema(name = "message", description = "登录信息")
-    protected String message;
+	@Schema(name = "message", description = "登录信息")
+	protected String message;
 
-    @Schema(name = "type", description = "登录类型")
-    protected String type;
+	@Schema(name = "type", description = "登录类型")
+	protected String type;
 
-    public LoginEvent(User user, HttpServletRequest request, String message, String sourceName, String appName,
-                            String type, Integer status) {
-        super(IdGenerator.defaultSnowflakeId(), user.getId(), LOGIN_FAILED, CREATED, LAOKOU_LOGIN_EVENT_TOPIC, sourceName,
-                appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(), user.getTenantId(),
-                DateUtil.now(), DateUtil.now());
-        this.username = user.getUsername();
-        this.ip = IpUtil.getIpAddr(request);
-        this.address = AddressUtil.getRealAddress(this.ip);
-        UserAgent userAgent = RequestUtil.getUserAgent(request);
-        this.os = userAgent.getOperatingSystem().getName();
-        this.browser = userAgent.getBrowser().getName();
-        this.message = message;
-        this.type = type;
-        this.status = status;
-    }
+	public LoginEvent(User user, HttpServletRequest request, String message, String sourceName, String appName,
+			String type, Integer status) {
+		super(IdGenerator.defaultSnowflakeId(), user.getId(), LOGIN_FAILED, CREATED, LAOKOU_LOGIN_EVENT_TOPIC,
+				sourceName, appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(),
+				user.getTenantId(), DateUtil.now(), DateUtil.now());
+		this.username = user.getUsername();
+		this.ip = IpUtil.getIpAddr(request);
+		this.address = AddressUtil.getRealAddress(this.ip);
+		UserAgent userAgent = RequestUtil.getUserAgent(request);
+		this.os = userAgent.getOperatingSystem().getName();
+		this.browser = userAgent.getBrowser().getName();
+		this.message = message;
+		this.type = type;
+		this.status = status;
+	}
 
 }

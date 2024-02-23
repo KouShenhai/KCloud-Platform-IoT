@@ -33,6 +33,8 @@ import org.laokou.common.algorithm.template.Algorithm;
 import org.laokou.common.algorithm.template.select.PollSelectAlgorithm;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.domain.context.DomainEventContextHolder;
+import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -50,6 +52,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.laokou.common.i18n.common.JobModeEnums.SYNC;
 import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
@@ -76,6 +79,8 @@ public class OssGatewayImpl implements OssGateway {
 	private final Environment environment;
 
 	private final DomainEventService domainEventService;
+
+	private final DomainEventPublisher domainEventPublisher;
 
 	/**
 	 * 新增OSS.
@@ -133,7 +138,10 @@ public class OssGatewayImpl implements OssGateway {
 	private File upload(File file) {
 		try {
 			// 修改URL
-			file.setUrl(Optional.ofNullable(ossLogMapper.selectOne(Wrappers.lambdaQuery(OssLogDO.class).eq(OssLogDO::getMd5, file.getMd5()).select(OssLogDO::getUrl))).orElse(new OssLogDO()).getUrl());
+			file.setUrl(Optional.ofNullable(ossLogMapper.selectOne(
+					Wrappers.lambdaQuery(OssLogDO.class).eq(OssLogDO::getMd5, file.getMd5()).select(OssLogDO::getUrl)))
+				.orElse(new OssLogDO())
+				.getUrl());
 			if (StringUtil.isNotEmpty(file.getUrl())) {
 				return file;
 			}
@@ -141,14 +149,21 @@ public class OssGatewayImpl implements OssGateway {
 			Algorithm algorithm = new PollSelectAlgorithm();
 			OssDO ossDO = algorithm.select(getOssListCache(), EMPTY);
 			// 修改URL
-			file.modifyUrl(null,new AmazonS3StorageDriver(ossConvertor.convertEntity(ossDO)).upload(file), environment.getProperty(SPRING_APPLICATION_NAME));
+			file.modifyUrl(null, new AmazonS3StorageDriver(ossConvertor.convertEntity(ossDO)).upload(file),
+					environment.getProperty(SPRING_APPLICATION_NAME));
 			return file;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			file.modifyUrl(e, EMPTY, environment.getProperty(SPRING_APPLICATION_NAME));
 			throw e;
-		} finally {
+		}
+		finally {
 			// 保存领域事件（事件溯源）
 			domainEventService.create(file.getEvents());
+			// 发布当前线程的领域事件(同步发布)
+			domainEventPublisher.publish(SYNC);
+			// 清除领域事件上下文
+			DomainEventContextHolder.clear();
 			// 清空领域事件
 			file.clearEvents();
 		}
@@ -162,7 +177,8 @@ public class OssGatewayImpl implements OssGateway {
 			return ConvertUtil.sourceToTarget(objList, OssDO.class);
 		}
 		else {
-			List<OssDO> result = ossMapper.selectList(Wrappers.lambdaQuery(OssDO.class).eq(OssDO::getTenantId, tenantId));
+			List<OssDO> result = ossMapper
+				.selectList(Wrappers.lambdaQuery(OssDO.class).eq(OssDO::getTenantId, tenantId));
 			if (CollectionUtil.isEmpty(result)) {
 				throw new SystemException("请配置OSS");
 			}

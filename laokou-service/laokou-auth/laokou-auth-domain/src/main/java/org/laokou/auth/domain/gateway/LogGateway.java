@@ -26,4 +26,5 @@ import org.laokou.common.i18n.dto.DecorateDomainEvent;
 public interface LogGateway {
 
 	void create(LoginEvent event, DecorateDomainEvent evt);
+
 }

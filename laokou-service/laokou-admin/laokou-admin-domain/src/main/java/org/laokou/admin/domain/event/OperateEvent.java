@@ -28,13 +28,13 @@ import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.AddressUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.IpUtil;
+import org.laokou.common.i18n.common.EventTypeEnums;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.DateUtil;
 
 import java.io.Serial;
 
 import static org.laokou.common.i18n.common.EventStatusEnums.CREATED;
-import static org.laokou.common.i18n.common.EventTypeEnums.OPERATE_FAILED;
 import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OPERATE_EVENT_TOPIC;
 
 /**
@@ -43,70 +43,70 @@ import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OPERATE_EVE
 @Data
 @SuperBuilder
 @NoArgsConstructor
-@Schema(name = "AbstractOperateEvent", description = "操作事件")
+@Schema(name = "OperateEvent", description = "操作事件")
 public class OperateEvent extends DomainEvent<Long> {
 
-    @Serial
-    private static final long serialVersionUID = -6523521638764501311L;
+	@Serial
+	private static final long serialVersionUID = -6523521638764501311L;
 
-    @Schema(name = "name", description = "操作名称")
-    protected String name;
+	@Schema(name = "name", description = "操作名称")
+	protected String name;
 
-    @Schema(name = "moduleName", description = "操作的模块名称")
-    protected String moduleName;
+	@Schema(name = "moduleName", description = "操作的模块名称")
+	protected String moduleName;
 
-    @Schema(name = "uri", description = "操作的URI")
-    protected String uri;
+	@Schema(name = "uri", description = "操作的URI")
+	protected String uri;
 
-    @Schema(name = "methodName", description = "操作的方法名")
-    protected String methodName;
+	@Schema(name = "methodName", description = "操作的方法名")
+	protected String methodName;
 
-    @Schema(name = "requestType", description = "操作的请求类型")
-    protected String requestType;
+	@Schema(name = "requestType", description = "操作的请求类型")
+	protected String requestType;
 
-    @Schema(name = "requestParams", description = "操作的请求参数")
-    protected String requestParams;
+	@Schema(name = "requestParams", description = "操作的请求参数")
+	protected String requestParams;
 
-    @Schema(name = "userAgent", description = "操作的浏览器")
-    protected String userAgent;
+	@Schema(name = "userAgent", description = "操作的浏览器")
+	protected String userAgent;
 
-    @Schema(name = "ip", description = "操作的IP地址")
-    protected String ip;
+	@Schema(name = "ip", description = "操作的IP地址")
+	protected String ip;
 
-    @Schema(name = "address", description = "操作的归属地")
-    protected String address;
+	@Schema(name = "address", description = "操作的归属地")
+	protected String address;
 
-    @Schema(name = "status", description = "操作状态 0成功 1失败")
-    protected Integer status;
+	@Schema(name = "status", description = "操作状态 0成功 1失败")
+	protected Integer status;
 
-    @Schema(name = "operator", description = "操作人")
-    protected String operator;
+	@Schema(name = "operator", description = "操作人")
+	protected String operator;
 
-    @Schema(name = "errorMessage", description = "错误信息")
-    protected String errorMessage;
+	@Schema(name = "errorMessage", description = "错误信息")
+	protected String errorMessage;
 
-    @Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
-    protected Long takeTime;
+	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
+	protected Long takeTime;
 
-    public OperateEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user,
-                        String appName, Integer status) {
-        super(IdGenerator.defaultSnowflakeId(), user.getId(), OPERATE_FAILED, CREATED, LAOKOU_OPERATE_EVENT_TOPIC,
-                user.getSourceName(), appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(),
-                user.getTenantId(), DateUtil.now(), DateUtil.now());
-        this.takeTime = operateLog.getTakeTime();
-        this.errorMessage = operateLog.getErrorMessage();
-        this.operator = user.getUsername();
-        String ip = IpUtil.getIpAddr(request);
-        this.address = AddressUtil.getRealAddress(ip);
-        this.ip = ip;
-        this.userAgent = request.getHeader(HttpHeaders.USER_AGENT);
-        this.requestParams = operateLog.getRequestParams();
-        this.requestType = request.getMethod();
-        this.methodName = operateLog.getMethodName();
-        this.uri = request.getRequestURI();
-        this.moduleName = operateLog.getModuleName();
-        this.name = operateLog.getName();
-        this.status = status;
-    }
+	public OperateEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user, String appName,
+			Integer status, EventTypeEnums eventType) {
+		super(IdGenerator.defaultSnowflakeId(), user.getId(), eventType, CREATED, LAOKOU_OPERATE_EVENT_TOPIC,
+				user.getSourceName(), appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(),
+				user.getTenantId(), DateUtil.now(), DateUtil.now());
+		this.takeTime = operateLog.getTakeTime();
+		this.errorMessage = operateLog.getErrorMessage();
+		this.operator = user.getUsername();
+		String ip = IpUtil.getIpAddr(request);
+		this.address = AddressUtil.getRealAddress(ip);
+		this.ip = ip;
+		this.userAgent = request.getHeader(HttpHeaders.USER_AGENT);
+		this.requestParams = operateLog.getRequestParams();
+		this.requestType = request.getMethod();
+		this.methodName = operateLog.getMethodName();
+		this.uri = request.getRequestURI();
+		this.moduleName = operateLog.getModuleName();
+		this.name = operateLog.getName();
+		this.status = status;
+	}
 
 }
