@@ -47,4 +47,13 @@ public class OssLogDO extends BaseDO {
 	@Schema(name = "size", description = "文件大小")
 	private Long size;
 
+	@Schema(name = "status", description = "操作状态 0成功 1失败")
+	private Integer status;
+
+	@Schema(name = "errorMessage", description = "错误信息")
+	private String errorMessage;
+
+	@Schema(name = "eventId", description = "事件ID")
+	private Long eventId;
+
 }

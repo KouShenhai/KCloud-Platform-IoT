@@ -26,13 +26,16 @@ import org.laokou.admin.convertor.LoginLogConvertor;
 import org.laokou.admin.convertor.OperateLogConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.event.OperateEvent;
+import org.laokou.admin.domain.event.OssUploadEvent;
 import org.laokou.admin.domain.gateway.LogGateway;
 import org.laokou.admin.domain.log.LoginLog;
 import org.laokou.admin.domain.log.OperateLog;
 import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
+import org.laokou.admin.gatewayimpl.database.OssLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.Datas;
@@ -60,6 +63,8 @@ public class LogGatewayImpl implements LogGateway {
 	private final OperateLogMapper operateLogMapper;
 
 	private final LoginLogMapper loginLogMapper;
+
+	private final OssLogMapper ossLogMapper;
 
 	private final Executor executor;
 
@@ -135,6 +140,37 @@ public class LogGatewayImpl implements LogGateway {
 		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
+	}
+
+	@Override
+	public void create(OssUploadEvent event, DecorateDomainEvent evt) {
+		try {
+			DynamicDataSourceContextHolder.push(evt.getSourceName());
+			ossLogMapper.insert(convert(event, evt));
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
+	}
+
+	private OssLogDO convert(OssUploadEvent ossUploadEvent, DecorateDomainEvent evt) {
+		OssLogDO logDO = new OssLogDO();
+		logDO.setMd5(ossUploadEvent.getMd5());
+		logDO.setUrl(ossUploadEvent.getUrl());
+		logDO.setName(ossUploadEvent.getName());
+		logDO.setSize(ossUploadEvent.getSize());
+		logDO.setStatus(ossUploadEvent.getStatus());
+		logDO.setErrorMessage(ossUploadEvent.getErrorMessage());
+		logDO.setId(IdGenerator.defaultSnowflakeId());
+		logDO.setEditor(evt.getEditor());
+		logDO.setCreator(evt.getCreator());
+		logDO.setCreateDate(evt.getCreateDate());
+		logDO.setUpdateDate(evt.getUpdateDate());
+		logDO.setDeptId(evt.getDeptId());
+		logDO.setDeptPath(evt.getDeptPath());
+		logDO.setTenantId(evt.getTenantId());
+		logDO.setEventId(evt.getId());
+		return logDO;
 	}
 
 	private OperateLogDO convert(OperateEvent operateEvent, DecorateDomainEvent evt) {

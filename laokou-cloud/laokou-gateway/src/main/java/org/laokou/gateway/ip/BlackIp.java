@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.gateway.support.ip;
+package org.laokou.gateway.ip;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
