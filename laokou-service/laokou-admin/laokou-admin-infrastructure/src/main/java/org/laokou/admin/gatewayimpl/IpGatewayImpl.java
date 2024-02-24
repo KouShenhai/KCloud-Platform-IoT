@@ -31,6 +31,7 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -63,11 +64,10 @@ public class IpGatewayImpl implements IpGateway {
 	/**
 	 * 新增IP.
 	 * @param ip IP对象
-	 * @return 新增结果
 	 */
 	@Override
-	public Boolean insert(Ip ip) {
-		return insertIp(ipConvertor.toDataObject(ip));
+	public void create(Ip ip) {
+		create(ipConvertor.toDataObject(ip));
 	}
 
 	/**
@@ -129,17 +129,17 @@ public class IpGatewayImpl implements IpGateway {
 	/**
 	 * 新增IP.
 	 * @param ipDO IP数据模型
-	 * @return 新增结果
 	 */
-	private Boolean insertIp(IpDO ipDO) {
-		return transactionalUtil.defaultExecute(r -> {
+	private void create(IpDO ipDO) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return ipMapper.insertTable(ipDO);
+				ipMapper.insert(ipDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(msg);
 			}
 		});
 	}

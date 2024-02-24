@@ -18,9 +18,15 @@
 package org.laokou.admin.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.IpDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
  * IP.
@@ -29,6 +35,10 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface IpMapper extends BatchMapper<IpDO> {
+public interface IpMapper extends CrudMapper<Long,Integer,IpDO> {
+
+    List<IpDO> selectListByCondition(@Param("ip")IpDO ip,@Param(PAGE_QUERY) PageQuery pageQuery);
+
+    long selectCountByCondition(@Param("ip")IpDO ip,@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

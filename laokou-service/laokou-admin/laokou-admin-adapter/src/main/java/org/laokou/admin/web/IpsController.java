@@ -52,7 +52,7 @@ public class IpsController {
 	@Operation(summary = "黑名单", description = "查询IP列表")
 	@PreAuthorize("hasAuthority('ips:black-list')")
 	public Result<Datas<IpCO>> findBlacklist(@RequestBody IpListQry qry) {
-		return ipsServiceI.list(qry);
+		return ipsServiceI.findList(qry);
 	}
 
 	@Idempotent
@@ -61,8 +61,8 @@ public class IpsController {
 	@Operation(summary = "黑名单", description = "新增IP")
 	@OperateLog(module = "黑名单", operation = "新增IP")
 	@PreAuthorize("hasAuthority('ips:create-black')")
-	public Result<Boolean> createBlack(@Validated @RequestBody IpCreateCmd cmd) {
-		return ipsServiceI.insert(cmd);
+	public void createBlack(@Validated @RequestBody IpCreateCmd cmd) {
+		ipsServiceI.create(cmd);
 	}
 
 	@TraceLog
@@ -79,7 +79,7 @@ public class IpsController {
 	@Operation(summary = "白名单", description = "查询IP列表")
 	@PreAuthorize("hasAuthority('ips:white-list')")
 	public Result<Datas<IpCO>> findWhitelist(@RequestBody IpListQry qry) {
-		return ipsServiceI.list(qry);
+		return ipsServiceI.findList(qry);
 	}
 
 	@Idempotent
@@ -88,8 +88,8 @@ public class IpsController {
 	@Operation(summary = "白名单", description = "新增IP")
 	@OperateLog(module = "白名单", operation = "新增IP")
 	@PreAuthorize("hasAuthority('ips:create-white')")
-	public Result<Boolean> createWhite(@Validated @RequestBody IpCreateCmd cmd) {
-		return ipsServiceI.insert(cmd);
+	public void createWhite(@Validated @RequestBody IpCreateCmd cmd) {
+		ipsServiceI.create(cmd);
 	}
 
 	@TraceLog

@@ -31,9 +31,8 @@ public interface IpGateway {
 	/**
 	 * 新增IP.
 	 * @param ip IP对象
-	 * @return 新增结果
 	 */
-	Boolean insert(Ip ip);
+	void create(Ip ip);
 
 	/**
 	 * 根据ID删除IP.

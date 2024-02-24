@@ -19,7 +19,6 @@ package org.laokou.admin.command.ip;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.IpGateway;
-import org.laokou.admin.domain.ip.Ip;
 import org.laokou.admin.dto.ip.IpRefreshCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -41,7 +40,7 @@ public class IpRefreshCmdExe {
 	 * @return 执行刷新结果
 	 */
 	public Result<Boolean> execute(IpRefreshCmd cmd) {
-		return Result.of(ipGateway.refresh(new Ip(cmd.getLabel())));
+		return Result.of(ipGateway.refresh(null));
 	}
 
 }

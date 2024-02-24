@@ -52,11 +52,10 @@ public class IpsServiceImpl implements IpsServiceI {
 	/**
 	 * 新增IP.
 	 * @param cmd 新增IP参数
-	 * @return 新增IP
 	 */
 	@Override
-	public Result<Boolean> insert(IpCreateCmd cmd) {
-		return ipCreateCmdExe.execute(cmd);
+	public void create(IpCreateCmd cmd) {
+		ipCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -75,7 +74,7 @@ public class IpsServiceImpl implements IpsServiceI {
 	 * @return IP列表
 	 */
 	@Override
-	public Result<Datas<IpCO>> list(IpListQry qry) {
+	public Result<Datas<IpCO>> findList(IpListQry qry) {
 		return ipListQryExe.execute(qry);
 	}
 
