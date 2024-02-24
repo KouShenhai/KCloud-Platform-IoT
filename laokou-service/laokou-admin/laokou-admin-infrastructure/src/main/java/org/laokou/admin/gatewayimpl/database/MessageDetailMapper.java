@@ -20,7 +20,7 @@ package org.laokou.admin.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
@@ -32,13 +32,13 @@ import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
  */
 @Repository
 @Mapper
-public interface MessageDetailMapper extends BatchMapper<MessageDetailDO> {
+public interface MessageDetailMapper extends CrudMapper<Long, Integer, MessageDetailDO> {
 
 	/**
 	 * 根据用户ID查看未读消息数.
 	 * @param userId 用户ID
 	 * @return 未读消息数
 	 */
-	Integer getUnreadMessageCountByUserId(@Param(USER_ID) Long userId);
+	Integer selectUnreadCountByUserId(@Param(USER_ID) Long userId);
 
 }

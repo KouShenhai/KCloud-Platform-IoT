@@ -19,15 +19,22 @@ package org.laokou.admin.command.message.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.gateway.MessageGateway;
-import org.laokou.admin.domain.message.Message;
+import lombok.SneakyThrows;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.message.MessageListQry;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.gatewayimpl.database.MessageMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_MESSAGE;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
@@ -39,21 +46,42 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 @RequiredArgsConstructor
 public class MessageListQryExe {
 
-	private final MessageGateway messageGateway;
+	private final MessageMapper messageMapper;
+
+	private final Executor executor;
 
 	/**
 	 * 执行查询消息列表.
 	 * @param qry 查询消息列表参数
 	 * @return 消息列表
 	 */
+	@SneakyThrows
 	@DS(TENANT)
+	@DataFilter(tableAlias = BOOT_SYS_MESSAGE)
 	public Result<Datas<MessageCO>> execute(MessageListQry qry) {
-		Message message = ConvertUtil.sourceToTarget(qry, Message.class);
-		Datas<Message> list = messageGateway.list(message, qry);
-		Datas<MessageCO> datas = new Datas<>();
-		datas.setRecords(ConvertUtil.sourceToTarget(list.getRecords(), MessageCO.class));
-		datas.setTotal(list.getTotal());
-		return Result.of(datas);
+		MessageDO messageDO = convert(qry);
+		PageQuery page = qry.page();
+		CompletableFuture<List<MessageDO>> c1 = CompletableFuture
+			.supplyAsync(() -> messageMapper.selectListByCondition(messageDO, page), executor);
+		CompletableFuture<Long> c2 = CompletableFuture
+			.supplyAsync(() -> messageMapper.selectCountByCondition(messageDO, page), executor);
+		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
+		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
+	}
+
+	private MessageDO convert(MessageListQry qry) {
+		MessageDO messageDO = new MessageDO();
+		messageDO.setTitle(qry.getTitle());
+		return messageDO;
+	}
+
+	private MessageCO convert(MessageDO messageDO) {
+		return MessageCO.builder()
+			.id(messageDO.getId())
+			.title(messageDO.getTitle())
+			.type(messageDO.getType())
+			.createDate(messageDO.getCreateDate())
+			.build();
 	}
 
 }

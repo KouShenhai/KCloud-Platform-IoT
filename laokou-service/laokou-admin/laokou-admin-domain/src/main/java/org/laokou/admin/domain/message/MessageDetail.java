@@ -15,17 +15,28 @@
  *
  */
 
-package org.laokou.admin.dto.message;
+package org.laokou.admin.domain.message;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.laokou.common.i18n.dto.AggregateRoot;
+
+import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
-@Schema(name = "MessageUnreadCountGetQry", description = "查看未读消息数量命令请求")
-public class MessageUnreadCountGetQry extends CommonCommand {
+@SuperBuilder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
+@Schema(name = "Message", description = "消息")
+public class MessageDetail extends AggregateRoot<Long> {
+
+	@Schema(name = "readFlag", description = "消息已读标识 0未读 1已读")
+	private Integer readFlag;
 
 }

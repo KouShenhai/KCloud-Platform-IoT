@@ -114,9 +114,6 @@ public final class SysConstants {
 	@Schema(name = "UNKNOWN_STATUS", description = "未知异常")
 	public static final String UNKNOWN_STATUS = "UNKNOWN";
 
-	@Schema(name = "DEFAULT_MESSAGE", description = "默认消息")
-	public static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
-
 	@Schema(name = "WEBSOCKET_PATH", description = "WebSocket路径")
 	public static final String WEBSOCKET_PATH = "/ws";
 

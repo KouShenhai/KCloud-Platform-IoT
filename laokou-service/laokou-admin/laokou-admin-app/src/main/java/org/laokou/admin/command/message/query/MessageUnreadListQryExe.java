@@ -18,20 +18,20 @@
 package org.laokou.admin.command.message.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.message.MessageUnreadListQry;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionDefinition;
+
+import java.util.List;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
@@ -55,15 +55,23 @@ public class MessageUnreadListQryExe {
 	 */
 	@DS(TENANT)
 	public Result<Datas<MessageCO>> execute(MessageUnreadListQry qry) {
-		IPage<MessageDO> page = new Page<>(qry.getPageNum(), qry.getPageSize());
-		IPage<MessageDO> newPage = transactionalUtil.defaultExecute(
-				r -> messageMapper.getUnreadMessageListByUserIdAndType(page, UserUtil.getUserId(), qry.getType()),
+		PageQuery pageQuery = qry.page().ignore();
+		List<MessageDO> list = transactionalUtil.defaultExecute(
+				r -> messageMapper.selectUnreadListByCondition(UserUtil.getUserId(), qry.getType(), pageQuery),
 				TransactionDefinition.ISOLATION_READ_UNCOMMITTED, true);
-		long total = newPage.getTotal();
-		Datas<MessageCO> datas = new Datas<>();
-		datas.setTotal(total);
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), MessageCO.class));
-		return Result.of(datas);
+		Long count = transactionalUtil.defaultExecute(
+				r -> messageMapper.selectUnreadCountByCondition(UserUtil.getUserId(), qry.getType(), pageQuery),
+				TransactionDefinition.ISOLATION_READ_UNCOMMITTED, true);
+		return Result.of(Datas.of(list.stream().map(this::convert).toList(), count));
+	}
+
+	private MessageCO convert(MessageDO messageDO) {
+		return MessageCO.builder()
+			.id(messageDO.getId())
+			.type(messageDO.getType())
+			.title(messageDO.getTitle())
+			.content(messageDO.getContent())
+			.build();
 	}
 
 }

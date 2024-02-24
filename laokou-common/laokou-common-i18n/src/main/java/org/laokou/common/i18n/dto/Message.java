@@ -15,29 +15,30 @@
  *
  */
 
-package org.laokou.admin.dto.message.clientobject;
+package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import org.laokou.common.i18n.dto.ClientObject;
+import lombok.NoArgsConstructor;
 
-import java.io.Serial;
 import java.util.Set;
 
 /**
  * @author laokou
  */
 @Data
-@Schema(name = "MsgCO", description = "消息")
-public class MsgCO extends ClientObject {
-
-	@Serial
-	private static final long serialVersionUID = -4930262464816447000L;
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Schema(name = "Message", description = "消息")
+public class Message extends DTO {
 
 	@Schema(name = "receiver", description = "接收者集合")
 	private Set<String> receiver;
 
-	@Schema(name = "msg", description = "消息")
-	private String msg;
+	@Schema(name = "payload", description = "消息")
+	private String payload;
 
 }

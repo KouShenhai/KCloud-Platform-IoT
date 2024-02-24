@@ -80,7 +80,7 @@
             and `name` not like '%集群%'
         order by sort desc
     </select>
-    <select id="getTenantMenuListByPackageId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
+    <select id="selectTenantMenuListByPackageId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
         select a.id
              ,a.pid
              ,a.`name`

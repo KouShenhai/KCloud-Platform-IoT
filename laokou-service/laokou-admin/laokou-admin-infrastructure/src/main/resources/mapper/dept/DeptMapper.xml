@@ -19,14 +19,6 @@
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.DeptMapper">
-    <select id="getDeptList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.DeptDO">
-        select id,pid,`name`,sort from boot_sys_dept
-        where del_flag = 0
-        <if test="deptDO.name != null and deptDO.name != ''">
-            and `name` like #{deptDO.name}
-        </if>
-        order by sort desc
-    </select>
     <select id="selectIdsByRoleId" resultType="long">
         SELECT a.id
         FROM boot_sys_dept a

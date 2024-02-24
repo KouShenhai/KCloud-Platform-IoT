@@ -18,16 +18,25 @@
 package org.laokou.admin.dto.message.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import static lombok.AccessLevel.PRIVATE;
+
 /**
  * @author laokou
  */
 @Data
+@Builder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "MessageCO", description = "消息")
 public class MessageCO extends ClientObject {
 
@@ -46,6 +55,7 @@ public class MessageCO extends ClientObject {
 	@Schema(name = "type", description = "消息类型 0通知 1提醒")
 	private Integer type;
 
+	@NotEmpty(message = "接收人集合不为空")
 	@Schema(name = "receiver", description = "接收人集合")
 	private Set<String> receiver;
 
