@@ -35,9 +35,8 @@ public interface IpsServiceI {
 	/**
 	 * 新增IP.
 	 * @param cmd 新增IP参数
-	 * @return 新增结果
 	 */
-	Result<Boolean> insert(IpCreateCmd cmd);
+	void create(IpCreateCmd cmd);
 
 	/**
 	 * 根据ID删除IP.
@@ -51,7 +50,7 @@ public interface IpsServiceI {
 	 * @param qry 查询IP列表参数
 	 * @return IP列表
 	 */
-	Result<Datas<IpCO>> list(IpListQry qry);
+	Result<Datas<IpCO>> findList(IpListQry qry);
 
 	/**
 	 * 刷新IP至Redis.

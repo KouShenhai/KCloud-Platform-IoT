@@ -57,7 +57,7 @@ public class IndexsServiceImpl implements IndexsServiceI {
 	 * @return 索引列表
 	 */
 	@Override
-	public Result<Datas<IndexCO>> list(IndexListQry qry) {
+	public Result<Datas<IndexCO>> findList(IndexListQry qry) {
 		return indexListQryExe.execute(qry);
 	}
 
@@ -67,7 +67,7 @@ public class IndexsServiceImpl implements IndexsServiceI {
 	 * @return 索引信息
 	 */
 	@Override
-	public Result<Map<String, Object>> info(IndexGetQry qry) {
+	public Result<Map<String, Object>> findByIndexName(IndexGetQry qry) {
 		return indexGetQryExe.execute(qry);
 	}
 
@@ -77,7 +77,7 @@ public class IndexsServiceImpl implements IndexsServiceI {
 	 * @return 分布式链路索引列表
 	 */
 	@Override
-	public Result<Datas<Map<String, Object>>> traceList(IndexTraceListQry qry) {
+	public Result<Datas<Map<String, Object>>> findTraceList(IndexTraceListQry qry) {
 		return indexTraceListQryExe.execute(qry);
 	}
 
@@ -87,7 +87,7 @@ public class IndexsServiceImpl implements IndexsServiceI {
 	 * @return 分布式链路索引
 	 */
 	@Override
-	public Result<Map<String, Object>> getTraceById(IndexTraceGetQry qry) {
+	public Result<Map<String, Object>> findTraceById(IndexTraceGetQry qry) {
 		return indexTraceGetQryExe.execute(qry);
 	}
 
