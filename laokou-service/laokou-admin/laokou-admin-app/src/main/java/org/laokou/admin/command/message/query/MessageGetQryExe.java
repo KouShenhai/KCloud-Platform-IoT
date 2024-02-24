@@ -19,11 +19,10 @@ package org.laokou.admin.command.message.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.gateway.MessageGateway;
-import org.laokou.admin.domain.message.Message;
 import org.laokou.admin.dto.message.MessageGetQry;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.gatewayimpl.database.MessageMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +37,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 @RequiredArgsConstructor
 public class MessageGetQryExe {
 
-	private final MessageGateway messageGateway;
+	private final MessageMapper messageMapper;
 
 	/**
 	 * 执行查看消息.
@@ -47,8 +46,16 @@ public class MessageGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<MessageCO> execute(MessageGetQry qry) {
-		Message message = messageGateway.getById(qry.getId());
-		return Result.of(ConvertUtil.sourceToTarget(message, MessageCO.class));
+		return Result.of(convert(messageMapper.selectById(qry.getId())));
+	}
+
+	private MessageCO convert(MessageDO messageDO) {
+		return MessageCO.builder()
+			.id(messageDO.getId())
+			.content(messageDO.getContent())
+			.title(messageDO.getTitle())
+			.type(messageDO.getType())
+			.build();
 	}
 
 }

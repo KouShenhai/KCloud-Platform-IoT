@@ -35,13 +35,6 @@ import java.util.List;
 public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
 
 	/**
-	 * 查询部门列表.
-	 * @param deptDO 部门数据模型
-	 * @return 部门列表
-	 */
-	List<DeptDO> getDeptList(@Param("deptDO") DeptDO deptDO);
-
-	/**
 	 * 根据角色ID查看部门.
 	 * @param roleId 角色ID
 	 * @return 部门

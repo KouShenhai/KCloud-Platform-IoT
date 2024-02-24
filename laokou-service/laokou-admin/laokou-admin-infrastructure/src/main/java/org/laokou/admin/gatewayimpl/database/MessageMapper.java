@@ -17,15 +17,15 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
-import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
+import java.util.List;
+
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
@@ -35,33 +35,30 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Repository
 @Mapper
-public interface MessageMapper extends BatchMapper<MessageDO> {
+public interface MessageMapper extends CrudMapper<Long, Integer, MessageDO> {
 
-	/**
-	 * 根据用户ID和Type查询未读消息列表.
-	 * @param page 分页参数
-	 * @param userId 用户ID
-	 * @param type 类型
-	 * @return 未读消息列表
-	 */
-	IPage<MessageDO> getUnreadMessageListByUserIdAndType(IPage<MessageDO> page, @Param(USER_ID) Long userId,
-			@Param("type") Integer type);
+	List<MessageDO> selectListByCondition(@Param("message") MessageDO message, @Param(PAGE_QUERY) PageQuery pageQuery);
 
-	/**
-	 * 查询消息列表.
-	 * @param page 分页参数
-	 * @param title 消息标题
-	 * @param pageQuery 分页参数
-	 * @return 消息列表
-	 */
-	IPage<MessageDO> getMessageListFilter(IPage<MessageDO> page, @Param("title") String title,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+	long selectCountByCondition(@Param("message") MessageDO message, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 	/**
 	 * 根据详情ID查看消息.
 	 * @param detailId 详情ID
 	 * @return 消息
 	 */
-	MessageDO getMessageByDetailId(@Param("detailId") Long detailId);
+	MessageDO selectByDetailId(@Param("detailId") Long detailId);
+
+	/**
+	 * 根据用户ID和Type查询未读消息列表.
+	 * @param type 类型
+	 * @param userId 用户ID
+	 * @param pageQuery 分页
+	 * @return 未读消息列表
+	 */
+	List<MessageDO> selectUnreadListByCondition(@Param("userId") Long userId, @Param("type") Integer type,
+			@Param(PAGE_QUERY) PageQuery pageQuery);
+
+	long selectUnreadCountByCondition(@Param("userId") Long userId, @Param("type") Integer type,
+			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

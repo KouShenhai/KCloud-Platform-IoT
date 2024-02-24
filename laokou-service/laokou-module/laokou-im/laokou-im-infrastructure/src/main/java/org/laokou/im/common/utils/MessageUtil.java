@@ -20,10 +20,10 @@ package org.laokou.im.common.utils;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.dto.Message;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.netty.config.Server;
-import org.laokou.im.dto.message.clientobject.MsgCO;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -47,10 +47,10 @@ public class MessageUtil {
 		if (StringUtil.isEmpty(message)) {
 			return;
 		}
-		MsgCO msgDTO = JacksonUtil.toBean(message, MsgCO.class);
-		String msg = msgDTO.getMsg();
-		Set<String> receiver = msgDTO.getReceiver();
-		TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.of(OK, msg)));
+		Message msg = JacksonUtil.toBean(message, Message.class);
+		String payload = msg.getPayload();
+		Set<String> receiver = msg.getReceiver();
+		TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.of(OK, payload)));
 		receiver.parallelStream()
 			.forEach(clientId -> CompletableFuture.runAsync(() -> websocketServer.send(clientId, webSocketFrame),
 					executor));

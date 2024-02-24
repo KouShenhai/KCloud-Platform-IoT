@@ -61,6 +61,6 @@ public interface MenuMapper extends CrudMapper<Long, Integer, MenuDO> {
 	 * @param packageId 套餐ID
 	 * @return 租户菜单列表
 	 */
-	List<MenuDO> getTenantMenuListByPackageId(@Param("packageId") Long packageId);
+	List<MenuDO> selectTenantMenuListByPackageId(@Param("packageId") Long packageId);
 
 }
