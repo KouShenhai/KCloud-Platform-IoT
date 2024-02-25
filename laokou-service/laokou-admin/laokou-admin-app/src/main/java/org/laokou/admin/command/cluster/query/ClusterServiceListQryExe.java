@@ -49,30 +49,20 @@ public class ClusterServiceListQryExe {
 	 * @return 服务列表
 	 */
 	public Result<Datas<ClusterServiceCO>> execute(ClusterServiceListQry qry) {
-		return Result.of(getDatas(qry));
-	}
-
-	/**
-	 * 服务列表分页.
-	 * @param qry 查询服务列表参数
-	 * @return 分页结果
-	 */
-	private Datas<ClusterServiceCO> getDatas(ClusterServiceListQry qry) {
 		Integer pageNum = qry.getPageNum();
 		Integer pageSize = qry.getPageSize();
-		String id = qry.getId();
+		String serviceId = qry.getServiceId();
 		Set<String> services = defaultConfigProperties.getGracefulShutdownServices();
 		List<String> list = serviceUtil.getServices();
 		list = list.stream().filter(services::contains).toList();
-		if (StringUtil.isNotEmpty(id)) {
-			list = list.stream().filter(n -> n.contains(id)).toList();
+		if (StringUtil.isNotEmpty(serviceId)) {
+			list = list.stream().filter(n -> n.contains(serviceId)).toList();
 		}
-		return new Datas<>(list.size(),
-				list.stream()
-					.map(ClusterServiceCO::new)
-					.skip((long) (pageNum - 1) * pageSize)
-					.limit(pageSize)
-					.toList());
+		return Result.of(Datas.of(list.stream()
+				.map(item -> ClusterServiceCO.builder().serviceId(item).build())
+				.skip((long) (pageNum - 1) * pageSize)
+				.limit(pageSize)
+				.toList(),list.size()));
 	}
 
 }
