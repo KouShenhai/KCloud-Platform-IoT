@@ -45,25 +45,15 @@ public class ClusterInstanceListQryExe {
 	 * @return 服务实例列表
 	 */
 	public Result<Datas<ClusterInstanceCO>> execute(ClusterInstanceListQry qry) {
-		return Result.of(getDatas(qry));
-	}
-
-	/**
-	 * 服务实例列表分页.
-	 * @param qry 查询服务实例列表参数
-	 * @return 分页结果
-	 */
-	private Datas<ClusterInstanceCO> getDatas(ClusterInstanceListQry qry) {
 		Integer pageNum = qry.getPageNum();
 		Integer pageSize = qry.getPageSize();
 		String serviceId = qry.getServiceId();
 		List<ServiceInstance> instances = serviceUtil.getInstances(serviceId);
-		return new Datas<>(instances.size(),
-				instances.stream()
-					.map(item -> build(item, serviceId.substring(7)))
-					.skip((long) (pageNum - 1) * pageSize)
-					.limit(pageSize)
-					.toList());
+		return Result.of(Datas.of(instances.stream()
+				.map(item -> convert(item, serviceId.substring(7)))
+				.skip((long) (pageNum - 1) * pageSize)
+				.limit(pageSize)
+				.toList(),instances.size()));
 	}
 
 	/**
@@ -72,12 +62,12 @@ public class ClusterInstanceListQryExe {
 	 * @param router 路由ID
 	 * @return 服务实例视图
 	 */
-	private ClusterInstanceCO build(ServiceInstance instance, String router) {
-		ClusterInstanceCO co = new ClusterInstanceCO();
-		co.setHost(instance.getHost());
-		co.setPort(instance.getPort());
-		co.setRouter(router);
-		return co;
+	private ClusterInstanceCO convert(ServiceInstance instance, String router) {
+		return ClusterInstanceCO.builder()
+				.host(instance.getHost())
+				.port(instance.getPort())
+				.router(router)
+				.build();
 	}
 
 }

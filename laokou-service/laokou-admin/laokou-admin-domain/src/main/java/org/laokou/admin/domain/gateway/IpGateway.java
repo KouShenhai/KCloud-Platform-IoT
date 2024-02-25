@@ -19,8 +19,6 @@ package org.laokou.admin.domain.gateway;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.admin.domain.ip.Ip;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
@@ -35,25 +33,15 @@ public interface IpGateway {
 	void create(Ip ip);
 
 	/**
-	 * 根据ID删除IP.
-	 * @param id ID
-	 * @return 删除结果
+	 * 根据IDS删除IP.
+	 * @param ids IDS
 	 */
-	Boolean deleteById(Long id);
-
-	/**
-	 * 查询IP列表.
-	 * @param ip IP对象
-	 * @param pageQuery 分页参数
-	 * @return IP列表
-	 */
-	Datas<Ip> list(Ip ip, PageQuery pageQuery);
+	void remove(Long[] ids);
 
 	/**
 	 * 刷新IP至缓存.
 	 * @param ip IP对象
-	 * @return 刷新结果
 	 */
-	Boolean refresh(Ip ip);
+	void refresh(Ip ip);
 
 }

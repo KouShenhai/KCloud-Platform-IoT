@@ -39,11 +39,10 @@ public interface IpsServiceI {
 	void create(IpCreateCmd cmd);
 
 	/**
-	 * 根据ID删除IP.
-	 * @param cmd 根据IP删除IP参数
-	 * @return 删除结果
+	 * 根据IDS删除IP.
+	 * @param cmd 根据IDS删除IP参数
 	 */
-	Result<Boolean> deleteById(IpRemoveCmd cmd);
+	void remove(IpRemoveCmd cmd);
 
 	/**
 	 * 查询IP列表.
@@ -55,8 +54,7 @@ public interface IpsServiceI {
 	/**
 	 * 刷新IP至Redis.
 	 * @param cmd 刷新IP至Redis参数
-	 * @return 刷新结果
 	 */
-	Result<Boolean> refresh(IpRefreshCmd cmd);
+	void refresh(IpRefreshCmd cmd);
 
 }
