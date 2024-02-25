@@ -59,13 +59,12 @@ public class IpsServiceImpl implements IpsServiceI {
 	}
 
 	/**
-	 * 根据IP删除IP.
-	 * @param cmd 根据IP删除IP参数
-	 * @return 删除结果
+	 * 根据IDS删除IP.
+	 * @param cmd 根据IDS删除IP参数
 	 */
 	@Override
-	public Result<Boolean> deleteById(IpRemoveCmd cmd) {
-		return ipRemoveCmdExe.execute(cmd);
+	public void remove(IpRemoveCmd cmd) {
+		ipRemoveCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -81,11 +80,10 @@ public class IpsServiceImpl implements IpsServiceI {
 	/**
 	 * 刷新IP至Redis.
 	 * @param cmd 刷新IP至Redis参数
-	 * @return 刷新结果
 	 */
 	@Override
-	public Result<Boolean> refresh(IpRefreshCmd cmd) {
-		return ipRefreshCmdExe.execute(cmd);
+	public void refresh(IpRefreshCmd cmd) {
+		ipRefreshCmdExe.executeVoid(cmd);
 	}
 
 }

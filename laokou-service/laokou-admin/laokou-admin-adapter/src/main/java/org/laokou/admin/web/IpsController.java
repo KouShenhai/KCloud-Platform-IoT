@@ -66,12 +66,12 @@ public class IpsController {
 	}
 
 	@TraceLog
-	@DeleteMapping("black/{id}")
+	@DeleteMapping("black")
 	@Operation(summary = "黑名单", description = "删除IP")
 	@OperateLog(module = "黑名单", operation = "删除IP")
 	@PreAuthorize("hasAuthority('ips:remove-black')")
-	public Result<Boolean> removeBlack(@PathVariable("id") Long id) {
-		return ipsServiceI.deleteById(new IpRemoveCmd(id));
+	public void removeBlack(@RequestBody Long[] ids) {
+		ipsServiceI.remove(new IpRemoveCmd(ids));
 	}
 
 	@PostMapping("white/list")
@@ -93,12 +93,12 @@ public class IpsController {
 	}
 
 	@TraceLog
-	@DeleteMapping("white/{id}")
+	@DeleteMapping("white")
 	@Operation(summary = "白名单", description = "删除IP")
 	@OperateLog(module = "白名单", operation = "删除IP")
 	@PreAuthorize("hasAuthority('ips:remove-white')")
-	public Result<Boolean> removeWhite(@PathVariable("id") Long id) {
-		return ipsServiceI.deleteById(new IpRemoveCmd(id));
+	public void removeWhite(@RequestBody Long[] ids) {
+		ipsServiceI.remove(new IpRemoveCmd(ids));
 	}
 
 	@TraceLog
@@ -107,8 +107,8 @@ public class IpsController {
 	@OperateLog(module = "白名单", operation = "刷新IP")
 	@PreAuthorize("hasAuthority('ips:refresh-white')")
 	@Lock4j(key = "refresh_white_ip_lock", expire = 60000)
-	public Result<Boolean> refreshWhite(@PathVariable("label") String label) {
-		return ipsServiceI.refresh(new IpRefreshCmd(label));
+	public void refreshWhite(@PathVariable("label") String label) {
+		ipsServiceI.refresh(new IpRefreshCmd(label));
 	}
 
 	@TraceLog
@@ -117,8 +117,8 @@ public class IpsController {
 	@OperateLog(module = "黑名单", operation = "刷新IP")
 	@PreAuthorize("hasAuthority('ips:refresh-black')")
 	@Lock4j(key = "refresh_black_ip_lock", expire = 60000)
-	public Result<Boolean> refreshBlack(@PathVariable("label") String label) {
-		return ipsServiceI.refresh(new IpRefreshCmd(label));
+	public void refreshBlack(@PathVariable("label") String label) {
+		ipsServiceI.refresh(new IpRefreshCmd(label));
 	}
 
 }
