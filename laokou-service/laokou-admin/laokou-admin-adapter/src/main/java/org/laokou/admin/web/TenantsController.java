@@ -63,7 +63,6 @@ public class TenantsController {
 	}
 
 	@Idempotent
-	@TraceLog
 	@PostMapping
 	@Operation(summary = "租户管理", description = "新增租户")
 	@OperateLog(module = "租户管理", operation = "新增租户")
@@ -80,7 +79,6 @@ public class TenantsController {
 		return tenantsServiceI.findById(new TenantGetQry(id));
 	}
 
-	@TraceLog
 	@PutMapping
 	@Operation(summary = "租户管理", description = "修改租户")
 	@OperateLog(module = "租户管理", operation = "修改租户")
@@ -90,7 +88,6 @@ public class TenantsController {
 		tenantsServiceI.modify(cmd);
 	}
 
-	@TraceLog
 	@DeleteMapping
 	@Operation(summary = "租户管理", description = "删除租户")
 	@OperateLog(module = "租户管理", operation = "删除租户")

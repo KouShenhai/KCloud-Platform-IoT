@@ -26,6 +26,7 @@ import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.flowable.api.DefinitionsServiceI;
 import org.laokou.flowable.dto.definition.*;
 import org.laokou.flowable.dto.definition.clientobject.DefinitionCO;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,15 +39,16 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @RequiredArgsConstructor
 @Tag(name = "DefinitionsController", description = "流程定义")
 @RequestMapping("v1/definitions")
-public class DefinitionsController {
+public class FlowDefinitionsController {
 
 	private final DefinitionsServiceI definitionsServiceI;
 
 	@Idempotent
 	@PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
 	@Operation(summary = "流程定义", description = "新增流程")
-	public Result<Boolean> insert(@RequestPart("file") MultipartFile file) {
-		return definitionsServiceI.insert(new DefinitionInsertCmd(file));
+	@PreAuthorize("hasAuthority('definitions:create')")
+	public void create(@RequestPart("file") MultipartFile file) {
+		definitionsServiceI.create(new DefinitionCreateCmd(file));
 	}
 
 	@PostMapping("list")
@@ -64,7 +66,7 @@ public class DefinitionsController {
 	@DeleteMapping("{deploymentId}")
 	@Operation(summary = "流程定义", description = "删除流程")
 	public Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId) {
-		return definitionsServiceI.delete(new DefinitionDeleteCmd(deploymentId));
+		return definitionsServiceI.delete(new DefinitionRemoveCmd(deploymentId));
 	}
 
 	@PutMapping("{definitionId}/suspend")

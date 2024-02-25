@@ -68,7 +68,6 @@ public class RolesController {
 	}
 
 	@Idempotent
-	@TraceLog
 	@PostMapping
 	@Operation(summary = "角色管理", description = "新增角色")
 	@OperateLog(module = "角色管理", operation = "新增角色")
@@ -77,7 +76,6 @@ public class RolesController {
 		rolesServiceI.create(cmd);
 	}
 
-	@TraceLog
 	@PutMapping
 	@Operation(summary = "角色管理", description = "修改角色")
 	@OperateLog(module = "角色管理", operation = "修改角色")
@@ -86,7 +84,6 @@ public class RolesController {
 		rolesServiceI.modify(cmd);
 	}
 
-	@TraceLog
 	@DeleteMapping
 	@Operation(summary = "角色管理", description = "删除角色")
 	@OperateLog(module = "角色管理", operation = "删除角色")

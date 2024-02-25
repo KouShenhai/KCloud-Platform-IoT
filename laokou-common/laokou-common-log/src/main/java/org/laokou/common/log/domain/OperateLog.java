@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.domain.log;
+package org.laokou.common.log.domain;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,14 +24,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.laokou.admin.domain.event.OperateFailedEvent;
-import org.laokou.admin.domain.event.OperateSucceededEvent;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.log.event.OperateFailedEvent;
+import org.laokou.common.log.event.OperateSucceededEvent;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
@@ -49,6 +49,8 @@ import static org.laokou.common.i18n.common.SysConstants.EMPTY_JSON;
 @NoArgsConstructor(access = PRIVATE)
 @Schema(name = "OperateLog", description = "操作日志")
 public class OperateLog extends AggregateRoot<Long> {
+
+	private static final Set<String> REMOVE_PARAMS = Set.of("username","password","mail","mobile");
 
 	@Schema(name = "name", description = "操作名称")
 	private String name;
@@ -106,7 +108,7 @@ public class OperateLog extends AggregateRoot<Long> {
 		this.takeTime = IdGenerator.SystemClock.now() - startTime;
 	}
 
-	public void decorateRequestParams(Object[] args, Set<String> removeParams) {
+	public void decorateRequestParams(Object[] args) {
 		List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs).toList();
 		if (CollectionUtil.isEmpty(params)) {
 			this.requestParams = EMPTY_JSON;
@@ -115,7 +117,7 @@ public class OperateLog extends AggregateRoot<Long> {
 			Object obj = params.getFirst();
 			try {
 				Map<String, String> map = JacksonUtil.toMap(obj, String.class, String.class);
-				removeAny(map, removeParams.toArray(String[]::new));
+				removeAny(map, REMOVE_PARAMS.toArray(String[]::new));
 				this.requestParams = JacksonUtil.toJsonStr(map, true);
 			}
 			catch (Exception e) {

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.domain.annotation;
+package org.laokou.common.log.annotation;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

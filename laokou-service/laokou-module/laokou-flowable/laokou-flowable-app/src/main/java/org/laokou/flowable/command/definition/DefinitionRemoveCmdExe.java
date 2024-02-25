@@ -25,7 +25,7 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import org.laokou.flowable.dto.definition.DefinitionDeleteCmd;
+import org.laokou.flowable.dto.definition.DefinitionRemoveCmd;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
@@ -38,7 +38,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DefinitionDeleteCmdExe {
+public class DefinitionRemoveCmdExe {
 
 	private final RepositoryService repositoryService;
 
@@ -49,7 +49,7 @@ public class DefinitionDeleteCmdExe {
 	 * @param cmd 删除流程参数
 	 * @return 删除结果
 	 */
-	public Result<Boolean> execute(DefinitionDeleteCmd cmd) {
+	public Result<Boolean> execute(DefinitionRemoveCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			return transactionalUtil.defaultExecute(r -> {

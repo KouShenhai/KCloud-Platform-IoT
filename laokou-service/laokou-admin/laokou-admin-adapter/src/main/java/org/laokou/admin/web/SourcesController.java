@@ -58,7 +58,6 @@ public class SourcesController {
 	}
 
 	@Idempotent
-	@TraceLog
 	@PostMapping
 	@Operation(summary = "数据源管理", description = "新增数据源")
 	@OperateLog(module = "数据源管理", operation = "数据源新增")
@@ -75,7 +74,6 @@ public class SourcesController {
 		return sourcesServiceI.findById(new SourceGetQry(id));
 	}
 
-	@TraceLog
 	@PutMapping
 	@Operation(summary = "数据源管理", description = "修改数据源")
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
@@ -85,7 +83,6 @@ public class SourcesController {
 		sourcesServiceI.modify(cmd);
 	}
 
-	@TraceLog
 	@DeleteMapping
 	@Operation(summary = "数据源管理", description = "删除数据源")
 	@OperateLog(module = "数据源管理", operation = "删除数据源")

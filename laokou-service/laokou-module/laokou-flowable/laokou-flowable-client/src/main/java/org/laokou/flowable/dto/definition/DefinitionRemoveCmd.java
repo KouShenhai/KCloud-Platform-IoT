@@ -15,29 +15,24 @@
  *
  */
 
-package org.laokou.admin.domain.event;
+package org.laokou.flowable.dto.definition;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.experimental.SuperBuilder;
-import org.laokou.admin.domain.log.OperateLog;
-import org.laokou.common.core.context.UserContextHolder;
-
-import static org.laokou.common.i18n.common.EventTypeEnums.OPERATE_FAILED;
-import static org.laokou.common.i18n.common.NumberConstants.FAIL;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
-@SuperBuilder
-@Schema(name = "OperateFailedEvent", description = "操作失败事件")
-public class OperateFailedEvent extends OperateEvent {
+@AllArgsConstructor
+@NoArgsConstructor
+@Schema(name = "DefinitionRemoveCmd", description = "删除流程命令请求")
+public class DefinitionRemoveCmd extends CommonCommand {
 
-	public OperateFailedEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user,
-			String appName) {
-		super(operateLog, request, user, appName, FAIL, OPERATE_FAILED);
-	}
+	@Schema(name = "deploymentId", description = "部署ID")
+	private String deploymentId;
 
 }

@@ -15,25 +15,29 @@
  *
  */
 
-package org.laokou.flowable.dto.definition;
+package org.laokou.common.log.event;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
-import org.springframework.web.multipart.MultipartFile;
+import lombok.experimental.SuperBuilder;
+import org.laokou.common.core.context.UserContextHolder;
+import org.laokou.common.log.domain.OperateLog;
+
+import static org.laokou.common.i18n.common.EventTypeEnums.OPERATE_FAILED;
+import static org.laokou.common.i18n.common.NumberConstants.FAIL;
 
 /**
  * @author laokou
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Schema(name = "DefinitionInsertCmd", description = "新增流程命令请求")
-public class DefinitionInsertCmd extends CommonCommand {
+@SuperBuilder
+@Schema(name = "OperateFailedEvent", description = "操作失败事件")
+public class OperateFailedEvent extends OperateEvent {
 
-	@Schema(name = "file", description = "流程图XML文件")
-	private MultipartFile file;
+	public OperateFailedEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user,
+							  String appName) {
+		super(operateLog, request, user, appName, FAIL, OPERATE_FAILED);
+	}
 
 }

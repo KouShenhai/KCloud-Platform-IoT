@@ -47,7 +47,6 @@ public class MessagesController {
 	private final MessagesServiceI messagesServiceI;
 
 	@Idempotent
-	@TraceLog
 	@PostMapping
 	@Operation(summary = "消息管理", description = "新增消息")
 	@OperateLog(module = "消息管理", operation = "新增消息")

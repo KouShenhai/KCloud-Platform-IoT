@@ -48,11 +48,9 @@ public class DefinitionsController {
 	private final DefinitionsServiceI definitionsServiceI;
 
 	@Idempotent
-	@TraceLog
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Operation(summary = "流程定义", description = "新增流程")
 	@OperateLog(module = "流程定义", operation = "新增流程")
-	@PreAuthorize("hasAuthority('definitions:create')")
 	public void create(@RequestPart("file") MultipartFile file) throws IOException {
 		definitionsServiceI.create(new DefinitionCreateCmd(file));
 	}

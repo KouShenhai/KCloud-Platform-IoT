@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.domain.event;
+package org.laokou.common.log.event;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +23,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.apache.hc.core5.http.HttpHeaders;
-import org.laokou.admin.domain.log.OperateLog;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.AddressUtil;
 import org.laokou.common.core.utils.IdGenerator;
@@ -31,6 +30,7 @@ import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.i18n.common.EventTypeEnums;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.log.domain.OperateLog;
 
 import java.io.Serial;
 
@@ -89,7 +89,7 @@ public class OperateEvent extends DomainEvent<Long> {
 	protected Long takeTime;
 
 	public OperateEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user, String appName,
-			Integer status, EventTypeEnums eventType) {
+						Integer status, EventTypeEnums eventType) {
 		super(IdGenerator.defaultSnowflakeId(), user.getId(), eventType, CREATED, LAOKOU_OPERATE_EVENT_TOPIC,
 				user.getSourceName(), appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(),
 				user.getTenantId(), DateUtil.now(), DateUtil.now());

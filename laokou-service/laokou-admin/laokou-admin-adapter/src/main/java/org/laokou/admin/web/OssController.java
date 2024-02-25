@@ -66,7 +66,6 @@ public class OssController {
 	}
 
 	@Idempotent
-	@TraceLog
 	@PostMapping
 	@Operation(summary = "OSS管理", description = "新增OSS")
 	@OperateLog(module = "OSS管理", operation = "新增OSS")
@@ -83,7 +82,6 @@ public class OssController {
 		return ossServiceI.findById(new OssGetQry(id));
 	}
 
-	@TraceLog
 	@PutMapping
 	@Operation(summary = "OSS管理", description = "修改OSS")
 	@OperateLog(module = "OSS管理", operation = "修改OSS")
@@ -93,7 +91,6 @@ public class OssController {
 		ossServiceI.modify(cmd);
 	}
 
-	@TraceLog
 	@DeleteMapping
 	@Operation(summary = "OSS管理", description = "删除OSS")
 	@OperateLog(module = "OSS管理", operation = "删除OSS")

@@ -48,7 +48,6 @@ public class UsersController {
 
 	private final UsersServiceI usersServiceI;
 
-	@TraceLog
 	@PutMapping
 	@Operation(summary = "用户管理", description = "修改用户")
 	@OperateLog(module = "用户管理", operation = "修改用户")
@@ -72,14 +71,12 @@ public class UsersController {
 		return usersServiceI.findOptionList(new UserOptionListQry());
 	}
 
-	@TraceLog
 	@PutMapping("profile")
 	@Operation(summary = "个人中心", description = "修改个人信息")
 	public void modifyProfile(@RequestBody UserProfileModifyCmd cmd) {
 		usersServiceI.modifyProfile(cmd);
 	}
 
-	@TraceLog
 	@PutMapping("status")
 	@Operation(summary = "用户管理", description = "修改用户状态")
 	@OperateLog(module = "用户管理", operation = "修改用户状态")
@@ -88,7 +85,6 @@ public class UsersController {
 		usersServiceI.modifyStatus(cmd);
 	}
 
-	@TraceLog
 	@PutMapping("reset-password")
 	@Operation(summary = "用户管理", description = "重置密码")
 	@OperateLog(module = "用户管理", operation = "重置密码")
@@ -97,7 +93,6 @@ public class UsersController {
 		usersServiceI.resetPassword(cmd);
 	}
 
-	@TraceLog
 	@PutMapping("password")
 	@Operation(summary = "个人中心", description = "修改密码")
 	public void modifyPassword(@RequestBody UserPasswordResetCmd cmd) {
@@ -105,7 +100,6 @@ public class UsersController {
 	}
 
 	@Idempotent
-	@TraceLog
 	@PostMapping
 	@Operation(summary = "用户管理", description = "新增用户")
 	@OperateLog(module = "用户管理", operation = "新增用户")
@@ -122,7 +116,6 @@ public class UsersController {
 		return usersServiceI.findById(new UserGetQry(id));
 	}
 
-	@TraceLog
 	@DeleteMapping
 	@Operation(summary = "用户管理", description = "删除用户")
 	@OperateLog(module = "用户管理", operation = "删除用户")

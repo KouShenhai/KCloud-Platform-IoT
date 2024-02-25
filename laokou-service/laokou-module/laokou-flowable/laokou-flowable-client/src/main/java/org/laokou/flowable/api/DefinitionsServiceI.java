@@ -32,9 +32,8 @@ public interface DefinitionsServiceI {
 	/**
 	 * 新增流程.
 	 * @param cmd 新增流程参数
-	 * @return 新增结果
 	 */
-	Result<Boolean> insert(DefinitionInsertCmd cmd);
+	void create(DefinitionCreateCmd cmd);
 
 	/**
 	 * 查询流程列表.
@@ -55,7 +54,7 @@ public interface DefinitionsServiceI {
 	 * @param cmd 删除流程参数
 	 * @return 流程图
 	 */
-	Result<Boolean> delete(DefinitionDeleteCmd cmd);
+	Result<Boolean> delete(DefinitionRemoveCmd cmd);
 
 	/**
 	 * 挂起流程.

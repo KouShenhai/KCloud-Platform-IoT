@@ -63,7 +63,6 @@ public class MenusController {
 		return menusServiceI.findById(new MenuGetQry(id));
 	}
 
-	@TraceLog
 	@PutMapping
 	@Operation(summary = "菜单管理", description = "修改菜单")
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
@@ -74,7 +73,6 @@ public class MenusController {
 	}
 
 	@Idempotent
-	@TraceLog
 	@PostMapping
 	@Operation(summary = "菜单管理", description = "新增菜单")
 	@OperateLog(module = "菜单管理", operation = "新增菜单")
@@ -83,7 +81,6 @@ public class MenusController {
 		menusServiceI.create(cmd);
 	}
 
-	@TraceLog
 	@DeleteMapping
 	@Operation(summary = "菜单管理", description = "删除菜单")
 	@OperateLog(module = "菜单管理", operation = "删除菜单")

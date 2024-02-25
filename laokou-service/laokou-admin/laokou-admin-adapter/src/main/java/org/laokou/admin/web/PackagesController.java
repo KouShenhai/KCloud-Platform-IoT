@@ -58,7 +58,6 @@ public class PackagesController {
 	}
 
 	@Idempotent
-	@TraceLog
 	@PostMapping
 	@Operation(summary = "套餐管理", description = "新增套餐")
 	@OperateLog(module = "套餐管理", operation = "新增套餐")
@@ -75,7 +74,6 @@ public class PackagesController {
 		return packagesServiceI.findById(new PackageGetQry(id));
 	}
 
-	@TraceLog
 	@PutMapping
 	@Operation(summary = "套餐管理", description = "修改套餐")
 	@OperateLog(module = "套餐管理", operation = "修改套餐")
@@ -85,7 +83,6 @@ public class PackagesController {
 		packagesServiceI.modify(cmd);
 	}
 
-	@TraceLog
 	@DeleteMapping
 	@Operation(summary = "套餐管理", description = "删除套餐")
 	@OperateLog(module = "套餐管理", operation = "删除套餐")

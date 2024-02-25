@@ -22,6 +22,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author laokou
@@ -29,10 +30,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "DefinitionDeleteCmd", description = "删除流程命令请求")
-public class DefinitionDeleteCmd extends CommonCommand {
+@Schema(name = "DefinitionCreateCmd", description = "新增流程命令请求")
+public class DefinitionCreateCmd extends CommonCommand {
 
-	@Schema(name = "deploymentId", description = "部署ID")
-	private String deploymentId;
+	@Schema(name = "file", description = "流程图XML文件")
+	private MultipartFile file;
 
 }

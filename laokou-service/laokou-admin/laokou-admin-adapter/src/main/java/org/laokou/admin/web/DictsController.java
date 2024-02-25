@@ -73,7 +73,6 @@ public class DictsController {
 	}
 
 	@Idempotent
-	@TraceLog
 	@PostMapping
 	@Operation(summary = "字典管理", description = "新增字典")
 	@OperateLog(module = "字典管理", operation = "新增字典")
@@ -82,7 +81,6 @@ public class DictsController {
 		dictsServiceI.create(cmd);
 	}
 
-	@TraceLog
 	@PutMapping
 	@Operation(summary = "字典管理", description = "修改字典")
 	@OperateLog(module = "字典管理", operation = "修改字典")
@@ -92,7 +90,6 @@ public class DictsController {
 		dictsServiceI.modify(cmd);
 	}
 
-	@TraceLog
 	@DeleteMapping
 	@Operation(summary = "字典管理", description = "删除字典")
 	@OperateLog(module = "字典管理", operation = "删除字典")

@@ -56,7 +56,6 @@ public class IpsController {
 	}
 
 	@Idempotent
-	@TraceLog
 	@PostMapping("black")
 	@Operation(summary = "黑名单", description = "新增IP")
 	@OperateLog(module = "黑名单", operation = "新增IP")
@@ -65,7 +64,6 @@ public class IpsController {
 		ipsServiceI.create(cmd);
 	}
 
-	@TraceLog
 	@DeleteMapping("black")
 	@Operation(summary = "黑名单", description = "删除IP")
 	@OperateLog(module = "黑名单", operation = "删除IP")
@@ -83,7 +81,6 @@ public class IpsController {
 	}
 
 	@Idempotent
-	@TraceLog
 	@PostMapping("white")
 	@Operation(summary = "白名单", description = "新增IP")
 	@OperateLog(module = "白名单", operation = "新增IP")
@@ -92,7 +89,6 @@ public class IpsController {
 		ipsServiceI.create(cmd);
 	}
 
-	@TraceLog
 	@DeleteMapping("white")
 	@Operation(summary = "白名单", description = "删除IP")
 	@OperateLog(module = "白名单", operation = "删除IP")
@@ -101,7 +97,6 @@ public class IpsController {
 		ipsServiceI.remove(new IpRemoveCmd(ids));
 	}
 
-	@TraceLog
 	@GetMapping("white/refresh/{label}")
 	@Operation(summary = "白名单", description = "刷新IP")
 	@OperateLog(module = "白名单", operation = "刷新IP")
@@ -111,7 +106,6 @@ public class IpsController {
 		ipsServiceI.refresh(new IpRefreshCmd(label));
 	}
 
-	@TraceLog
 	@GetMapping("black/refresh/{label}")
 	@Operation(summary = "黑名单", description = "刷新IP")
 	@OperateLog(module = "黑名单", operation = "刷新IP")
