@@ -17,14 +17,10 @@
 
 package org.laokou.flowable.command.definition;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.flowable.engine.RepositoryService;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.flowable.domain.gateway.DefinitionGateway;
 import org.laokou.flowable.dto.definition.DefinitionRemoveCmd;
 import org.springframework.stereotype.Component;
 
@@ -40,34 +36,15 @@ import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 @RequiredArgsConstructor
 public class DefinitionRemoveCmdExe {
 
-	private final RepositoryService repositoryService;
-
-	private final TransactionalUtil transactionalUtil;
+	private final DefinitionGateway definitionGateway;
 
 	/**
 	 * 执行删除流程.
 	 * @param cmd 删除流程参数
-	 * @return 删除结果
 	 */
-	public Result<Boolean> execute(DefinitionRemoveCmd cmd) {
-		try {
-			DynamicDataSourceContextHolder.push(FLOWABLE);
-			return transactionalUtil.defaultExecute(r -> {
-				try {
-					// true允许级联删除 不设置会导致数据库关联异常
-					repositoryService.deleteDeployment(cmd.getDeploymentId(), true);
-					return Result.of(true);
-				}
-				catch (Exception e) {
-					log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-					r.setRollbackOnly();
-					throw new SystemException(LogUtil.fail(e.getMessage()));
-				}
-			});
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+	@DS(FLOWABLE)
+	public void executeVoid(DefinitionRemoveCmd cmd) {
+		definitionGateway.remove(cmd.getDeploymentId());
 	}
 
 }

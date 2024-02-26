@@ -17,7 +17,9 @@
 
 package org.laokou.flowable.domain.gateway;
 
+import org.laokou.flowable.domain.definition.Activate;
 import org.laokou.flowable.domain.definition.Deployment;
+import org.laokou.flowable.domain.definition.Suspend;
 
 /**
  * @author laokou
@@ -25,5 +27,11 @@ import org.laokou.flowable.domain.definition.Deployment;
 public interface DefinitionGateway {
 
 	void create(Deployment deployment);
+
+	void remove(String deploymentId);
+
+	void activate(Activate activate);
+
+	void suspend(Suspend suspend);
 
 }

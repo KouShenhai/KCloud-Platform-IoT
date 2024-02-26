@@ -24,11 +24,14 @@ import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.Process;
 import org.flowable.common.engine.impl.util.io.InputStreamSource;
 import org.flowable.engine.RepositoryService;
+import org.flowable.engine.repository.ProcessDefinition;
 import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.security.utils.UserUtil;
+import org.laokou.flowable.domain.definition.Activate;
 import org.laokou.flowable.domain.definition.Deployment;
+import org.laokou.flowable.domain.definition.Suspend;
 import org.laokou.flowable.domain.gateway.DefinitionGateway;
 import org.springframework.stereotype.Component;
 
@@ -57,6 +60,79 @@ public class DefinitionGatewayImpl implements DefinitionGateway {
 			.count();
 		deployment.checkKey(count);
 		create(deployment, bpmnModel);
+	}
+
+	@Override
+	public void remove(String deploymentId) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
+			try {
+				// true允许级联删除 不设置会导致数据库关联异常
+				repositoryService.deleteDeployment(deploymentId, true);
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				r.setRollbackOnly();
+				throw new FlowException(LogUtil.fail(e.getMessage()));
+			}
+		});
+	}
+
+	@Override
+	public void activate(Activate activate) {
+		String definitionId = activate.getDefinitionId();
+		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+				.processDefinitionTenantId(UserUtil.getTenantId().toString())
+				.processDefinitionId(definitionId)
+				.singleResult();
+		activate.checkActivated(!processDefinition.isSuspended());
+		activate(definitionId);
+	}
+
+	@Override
+	public void suspend(Suspend suspend) {
+		String definitionId = suspend.getDefinitionId();
+		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+				.processDefinitionTenantId(UserUtil.getTenantId().toString())
+				.processDefinitionId(definitionId)
+				.singleResult();
+		suspend.checkSuspended(processDefinition.isSuspended());
+		suspend(definitionId);
+	}
+
+	/**
+	 * 激活流程.
+	 * @param definitionId 定义ID
+	 */
+	private void activate(String definitionId) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
+			try {
+				// 激活
+				repositoryService.activateProcessDefinitionById(definitionId, true, null);
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				r.setRollbackOnly();
+				throw new FlowException(LogUtil.fail(e.getMessage()));
+			}
+		});
+	}
+
+	/**
+	 * 挂起流程.
+	 * @param definitionId 定义ID
+	 */
+	private void suspend(String definitionId) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
+			try {
+				// 挂起
+				repositoryService.suspendProcessDefinitionById(definitionId, true, null);
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				r.setRollbackOnly();
+				throw new FlowException(LogUtil.fail(e.getMessage()));
+			}
+		});
 	}
 
 	/**
