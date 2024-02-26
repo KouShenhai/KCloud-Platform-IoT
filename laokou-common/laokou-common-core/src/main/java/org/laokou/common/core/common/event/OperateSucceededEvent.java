@@ -15,14 +15,14 @@
  *
  */
 
-package org.laokou.common.log.event;
+package org.laokou.common.core.common.event;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 import org.laokou.common.core.context.UserContextHolder;
-import org.laokou.common.log.domain.OperateLog;
+import org.laokou.common.core.common.domain.OperateLog;
 
 import static org.laokou.common.i18n.common.EventTypeEnums.OPERATE_SUCCEEDED;
 import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;

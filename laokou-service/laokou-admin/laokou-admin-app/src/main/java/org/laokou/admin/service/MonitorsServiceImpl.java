@@ -19,8 +19,6 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.MonitorsServiceI;
-import org.laokou.admin.dto.monitor.MonitorRedisCacheGetQry;
-import org.laokou.admin.dto.monitor.MonitorServerGetQry;
 import org.laokou.admin.dto.monitor.clientobject.RedisCacheCO;
 import org.laokou.admin.dto.monitor.clientobject.ServerCO;
 import org.laokou.admin.command.monitor.query.MonitorRedisCacheGetQryExe;
@@ -43,22 +41,20 @@ public class MonitorsServiceImpl implements MonitorsServiceI {
 
 	/**
 	 * 查看缓存监控.
-	 * @param qry 查看缓存监控参数
 	 * @return 缓存监控
 	 */
 	@Override
-	public Result<RedisCacheCO> cache(MonitorRedisCacheGetQry qry) {
-		return monitorRedisCacheGetQryExe.execute(qry);
+	public Result<RedisCacheCO> findCacheInfo() {
+		return monitorRedisCacheGetQryExe.execute();
 	}
 
 	/**
 	 * 查看服务器监控.
-	 * @param qry 查看服务器监控参数
 	 * @return 服务器监控
 	 */
 	@Override
-	public Result<ServerCO> server(MonitorServerGetQry qry) {
-		return monitorServerGetQryExe.execute(qry);
+	public Result<ServerCO> findServerInfo() {
+		return monitorServerGetQryExe.execute();
 	}
 
 }

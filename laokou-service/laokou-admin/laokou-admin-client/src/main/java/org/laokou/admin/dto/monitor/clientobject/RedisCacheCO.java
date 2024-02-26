@@ -18,17 +18,25 @@
 package org.laokou.admin.dto.monitor.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.io.Serial;
 import java.util.List;
 import java.util.Map;
 
+import static lombok.AccessLevel.PRIVATE;
+
 /**
  * @author laokou
  */
 @Data
+@Builder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "RedisCacheCO", description = "Redis缓存")
 public class RedisCacheCO extends ClientObject {
 

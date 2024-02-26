@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.log.event;
+package org.laokou.common.core.common.event;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,7 +30,7 @@ import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.i18n.common.EventTypeEnums;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.log.domain.OperateLog;
+import org.laokou.common.core.common.domain.OperateLog;
 
 import java.io.Serial;
 

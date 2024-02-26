@@ -37,13 +37,13 @@ import static lombok.AccessLevel.PRIVATE;
 @Schema(name = "Suspend", description = "挂起")
 public class Suspend extends AggregateRoot<Long> {
 
-    @Schema(name = "definitionId", description = "定义ID")
-    private String definitionId;
+	@Schema(name = "definitionId", description = "定义ID")
+	private String definitionId;
 
-    public void checkSuspended(boolean suspended) {
-        if (suspended) {
-            throw new FlowException("挂起失败，流程已挂起");
-        }
-    }
+	public void checkSuspended(boolean suspended) {
+		if (suspended) {
+			throw new FlowException("挂起失败，流程已挂起");
+		}
+	}
 
 }

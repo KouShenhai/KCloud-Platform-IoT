@@ -81,9 +81,9 @@ public class DefinitionGatewayImpl implements DefinitionGateway {
 	public void activate(Activate activate) {
 		String definitionId = activate.getDefinitionId();
 		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-				.processDefinitionTenantId(UserUtil.getTenantId().toString())
-				.processDefinitionId(definitionId)
-				.singleResult();
+			.processDefinitionTenantId(UserUtil.getTenantId().toString())
+			.processDefinitionId(definitionId)
+			.singleResult();
 		activate.checkActivated(!processDefinition.isSuspended());
 		activate(definitionId);
 	}
@@ -92,9 +92,9 @@ public class DefinitionGatewayImpl implements DefinitionGateway {
 	public void suspend(Suspend suspend) {
 		String definitionId = suspend.getDefinitionId();
 		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-				.processDefinitionTenantId(UserUtil.getTenantId().toString())
-				.processDefinitionId(definitionId)
-				.singleResult();
+			.processDefinitionTenantId(UserUtil.getTenantId().toString())
+			.processDefinitionId(definitionId)
+			.singleResult();
 		suspend.checkSuspended(processDefinition.isSuspended());
 		suspend(definitionId);
 	}

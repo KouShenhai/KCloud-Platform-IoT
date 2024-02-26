@@ -19,7 +19,7 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.DefinitionsServiceI;
-import org.laokou.admin.command.definition.DefinitionTemplateCmdExe;
+import org.laokou.admin.command.definition.DefinitionDownloadTemplateCmdExe;
 import org.laokou.admin.dto.definition.DefinitionTemplateCmd;
 import org.springframework.stereotype.Service;
 
@@ -32,11 +32,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DefinitionsServiceImpl implements DefinitionsServiceI {
 
-	private final DefinitionTemplateCmdExe definitionTemplateCmdExe;
+	private final DefinitionDownloadTemplateCmdExe definitionDownloadTemplateCmdExe;
 
 	@Override
-	public void findTemplate(DefinitionTemplateCmd qry) {
-
+	public void downloadTemplate(DefinitionTemplateCmd cmd) {
+		definitionDownloadTemplateCmdExe.executeVoid(cmd);
 	}
 
 }

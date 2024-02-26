@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.log.domain;
+package org.laokou.common.core.common.domain;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,14 +24,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.laokou.common.core.common.event.OperateFailedEvent;
+import org.laokou.common.core.common.event.OperateSucceededEvent;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.log.event.OperateFailedEvent;
-import org.laokou.common.log.event.OperateSucceededEvent;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
