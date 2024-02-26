@@ -89,7 +89,7 @@ public class OperateEvent extends DomainEvent<Long> {
 	protected Long takeTime;
 
 	public OperateEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user, String appName,
-						Integer status, EventTypeEnums eventType) {
+			Integer status, EventTypeEnums eventType) {
 		super(IdGenerator.defaultSnowflakeId(), user.getId(), eventType, CREATED, LAOKOU_OPERATE_EVENT_TOPIC,
 				user.getSourceName(), appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(),
 				user.getTenantId(), DateUtil.now(), DateUtil.now());

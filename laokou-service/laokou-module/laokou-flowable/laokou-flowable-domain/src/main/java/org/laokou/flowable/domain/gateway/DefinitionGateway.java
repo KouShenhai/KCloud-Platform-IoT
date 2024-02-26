@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.flowable.domain.gateway;
 
 import org.laokou.flowable.domain.definition.Deployment;
@@ -23,6 +24,6 @@ import org.laokou.flowable.domain.definition.Deployment;
  */
 public interface DefinitionGateway {
 
-    void create(Deployment deployment);
+	void create(Deployment deployment);
 
 }

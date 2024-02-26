@@ -50,7 +50,7 @@ import static org.laokou.common.i18n.common.SysConstants.EMPTY_JSON;
 @Schema(name = "OperateLog", description = "操作日志")
 public class OperateLog extends AggregateRoot<Long> {
 
-	private static final Set<String> REMOVE_PARAMS = Set.of("username","password","mail","mobile");
+	private static final Set<String> REMOVE_PARAMS = Set.of("username", "password", "mail", "mobile");
 
 	@Schema(name = "name", description = "操作名称")
 	private String name;

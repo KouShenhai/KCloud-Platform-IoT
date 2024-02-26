@@ -40,14 +40,14 @@ public interface DefinitionsServiceI {
 	 * @param qry 查询流程列表参数
 	 * @return 流程列表
 	 */
-	Result<Datas<DefinitionCO>> list(DefinitionListQry qry);
+	Result<Datas<DefinitionCO>> findList(DefinitionListQry qry);
 
 	/**
 	 * 查看流程图.
 	 * @param qry 查看流程图参数
 	 * @return 流程图
 	 */
-	Result<String> diagram(DefinitionDiagramGetQry qry);
+	Result<String> findDiagram(DefinitionDiagramGetQry qry);
 
 	/**
 	 * 删除流程.

@@ -23,6 +23,8 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
+import org.laokou.common.log.annotation.OperateLog;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.laokou.flowable.api.DefinitionsServiceI;
 import org.laokou.flowable.dto.definition.*;
 import org.laokou.flowable.dto.definition.clientobject.DefinitionCO;
@@ -47,36 +49,47 @@ public class FlowDefinitionsController {
 	@PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
 	@Operation(summary = "流程定义", description = "新增流程")
 	@PreAuthorize("hasAuthority('definitions:create')")
+	@OperateLog(module = "流程定义", operation = "新增流程")
 	public void create(@RequestPart("file") MultipartFile file) {
 		definitionsServiceI.create(new DefinitionCreateCmd(file));
 	}
 
+	@TraceLog
 	@PostMapping("list")
 	@Operation(summary = "流程定义", description = "查询流程列表")
-	public Result<Datas<DefinitionCO>> list(@RequestBody DefinitionListQry qry) {
-		return definitionsServiceI.list(qry);
+	@PreAuthorize("hasAuthority('definitions:list')")
+	public Result<Datas<DefinitionCO>> findList(@RequestBody DefinitionListQry qry) {
+		return definitionsServiceI.findList(qry);
 	}
 
+	@TraceLog
 	@GetMapping("{definitionId}/diagram")
 	@Operation(summary = "流程定义", description = "查看流程图")
-	public Result<String> diagram(@PathVariable("definitionId") String definitionId) {
-		return definitionsServiceI.diagram(new DefinitionDiagramGetQry(definitionId));
+	@PreAuthorize("hasAuthority('definitions:diagram')")
+	public Result<String> findDiagram(@PathVariable("definitionId") String definitionId) {
+		return definitionsServiceI.findDiagram(new DefinitionDiagramGetQry(definitionId));
 	}
 
 	@DeleteMapping("{deploymentId}")
 	@Operation(summary = "流程定义", description = "删除流程")
-	public Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId) {
+	@OperateLog(module = "流程定义", operation = "删除流程")
+	@PreAuthorize("hasAuthority('definitions:remove')")
+	public Result<Boolean> remove(@PathVariable("deploymentId") String deploymentId) {
 		return definitionsServiceI.delete(new DefinitionRemoveCmd(deploymentId));
 	}
 
 	@PutMapping("{definitionId}/suspend")
 	@Operation(summary = "流程定义", description = "挂起流程")
+	@OperateLog(module = "流程定义", operation = "挂起流程")
+	@PreAuthorize("hasAuthority('definitions:suspend')")
 	public Result<Boolean> suspend(@PathVariable("definitionId") String definitionId) {
 		return definitionsServiceI.suspend(new DefinitionSuspendCmd(definitionId));
 	}
 
 	@PutMapping("{definitionId}/activate")
 	@Operation(summary = "流程定义", description = "激活流程")
+	@OperateLog(module = "流程定义", operation = "激活流程")
+	@PreAuthorize("hasAuthority('definitions:activate')")
 	public Result<Boolean> activate(@PathVariable("definitionId") String definitionId) {
 		return definitionsServiceI.activate(new DefinitionActivateCmd(definitionId));
 	}

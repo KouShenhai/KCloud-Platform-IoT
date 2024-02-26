@@ -36,7 +36,7 @@ import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
 public class OperateSucceededEvent extends OperateEvent {
 
 	public OperateSucceededEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user,
-								 String appName) {
+			String appName) {
 		super(operateLog, request, user, appName, SUCCESS, OPERATE_SUCCEEDED);
 	}
 

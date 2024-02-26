@@ -94,7 +94,8 @@ public class OperateLogAop {
 			HttpServletRequest request = RequestUtil.getHttpServletRequest();
 			MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 			Method method = methodSignature.getMethod();
-			org.laokou.common.log.annotation.OperateLog operateLog = AnnotationUtils.findAnnotation(method, org.laokou.common.log.annotation.OperateLog.class);
+			org.laokou.common.log.annotation.OperateLog operateLog = AnnotationUtils.findAnnotation(method,
+					org.laokou.common.log.annotation.OperateLog.class);
 			Assert.isTrue(ObjectUtil.isNotNull(operateLog), "@OperateLog is null");
 			String className = joinPoint.getTarget().getClass().getName();
 			String methodName = joinPoint.getSignature().getName();

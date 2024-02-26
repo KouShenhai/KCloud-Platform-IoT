@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.UsersServiceI;
-import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.user.*;
 import org.laokou.admin.dto.user.clientobject.UserCO;
@@ -31,10 +30,13 @@ import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
+import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+
 import static org.laokou.common.i18n.common.CacheNameConstants.USERS;
 
 /**

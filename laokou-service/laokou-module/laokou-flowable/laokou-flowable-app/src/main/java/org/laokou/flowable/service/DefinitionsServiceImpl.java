@@ -67,7 +67,7 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 	 * @return 流程列表
 	 */
 	@Override
-	public Result<Datas<DefinitionCO>> list(DefinitionListQry qry) {
+	public Result<Datas<DefinitionCO>> findList(DefinitionListQry qry) {
 		return definitionListQryExe.execute(qry);
 	}
 
@@ -77,7 +77,7 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 	 * @return 流程图
 	 */
 	@Override
-	public Result<String> diagram(DefinitionDiagramGetQry qry) {
+	public Result<String> findDiagram(DefinitionDiagramGetQry qry) {
 		return definitionDiagramGetQryExe.execute(qry);
 	}
 

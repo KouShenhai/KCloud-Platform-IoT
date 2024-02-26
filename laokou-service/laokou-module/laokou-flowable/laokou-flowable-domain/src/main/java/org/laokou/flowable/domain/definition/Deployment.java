@@ -41,31 +41,31 @@ import static lombok.AccessLevel.PRIVATE;
 @Schema(name = "Deployment", description = "部署")
 public class Deployment extends AggregateRoot<Long> {
 
-    private static final String BPMN_FILE_SUFFIX = ".bpmn";
+	private static final String BPMN_FILE_SUFFIX = ".bpmn";
 
-    @Schema(name = "key", description = "键")
-    private InputStream inputStream;
+	@Schema(name = "key", description = "键")
+	private InputStream inputStream;
 
-    @Schema(name = "inputStream", description = "输入流")
-    private String key;
+	@Schema(name = "inputStream", description = "输入流")
+	private String key;
 
-    @Schema(name = "name", description = "名称")
-    private String name;
+	@Schema(name = "name", description = "名称")
+	private String name;
 
-    @SneakyThrows
-    public Deployment(MultipartFile file) {
-        this.inputStream = file.getInputStream();
-    }
+	@SneakyThrows
+	public Deployment(MultipartFile file) {
+		this.inputStream = file.getInputStream();
+	}
 
-    public void modify(String id, String name) {
-        this.key = id;
-        this.name = name + BPMN_FILE_SUFFIX;
-    }
+	public void modify(String id, String name) {
+		this.key = id;
+		this.name = name + BPMN_FILE_SUFFIX;
+	}
 
-    public void checkKey(long count) {
-        if (count > 0) {
-            throw new FlowException("流程已存在，请更换流程图并上传");
-        }
-    }
+	public void checkKey(long count) {
+		if (count > 0) {
+			throw new FlowException("流程已存在，请更换流程图并上传");
+		}
+	}
 
 }

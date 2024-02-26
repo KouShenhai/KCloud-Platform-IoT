@@ -17,13 +17,14 @@
 
 package org.laokou.flowable.command.definition.query;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.utils.Base64;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.RepositoryService;
 import org.flowable.image.impl.DefaultProcessDiagramGenerator;
+import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.flowable.dto.definition.DefinitionDiagramGetQry;
@@ -37,7 +38,6 @@ import java.io.InputStream;
 import java.util.Collections;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
  * 查看流程图执行器.
@@ -56,30 +56,24 @@ public class DefinitionDiagramGetQryExe {
 	 * @param qry 查看流程图参数
 	 * @return 流程图
 	 */
+	@DS(FLOWABLE)
 	public Result<String> execute(DefinitionDiagramGetQry qry) {
-		try {
-			DynamicDataSourceContextHolder.push(FLOWABLE);
-			String definitionId = qry.getDefinitionId();
-			// 获取图片流
-			DefaultProcessDiagramGenerator diagramGenerator = new DefaultProcessDiagramGenerator();
-			BpmnModel bpmnModel = repositoryService.getBpmnModel(definitionId);
-			// 输出为图片
-			InputStream inputStream = diagramGenerator.generateDiagram(bpmnModel, "png", Collections.emptyList(),
-					Collections.emptyList(), "宋体", "宋体", "宋体", null, 1.0, false);
-			try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-				BufferedImage image = ImageIO.read(inputStream);
-				if (null != image) {
-					ImageIO.write(image, "png", outputStream);
-				}
-				return Result.of(Base64.encodeBase64String(outputStream.toByteArray()));
+		// 获取图片流
+		DefaultProcessDiagramGenerator diagramGenerator = new DefaultProcessDiagramGenerator();
+		BpmnModel bpmnModel = repositoryService.getBpmnModel(qry.getDefinitionId());
+		// 输出为图片
+		InputStream inputStream = diagramGenerator.generateDiagram(bpmnModel, "png", Collections.emptyList(),
+				Collections.emptyList(), "宋体", "宋体", "宋体", null, 1.0, false);
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			BufferedImage image = ImageIO.read(inputStream);
+			if (null != image) {
+				ImageIO.write(image, "png", outputStream);
 			}
-			catch (IOException e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-				return Result.of(EMPTY);
-			}
+			return Result.of(Base64.encodeBase64String(outputStream.toByteArray()));
 		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
+		catch (IOException e) {
+			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			throw new FlowException("流程图查看失败");
 		}
 	}
 

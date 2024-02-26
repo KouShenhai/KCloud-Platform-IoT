@@ -36,7 +36,7 @@ import static org.laokou.common.i18n.common.NumberConstants.FAIL;
 public class OperateFailedEvent extends OperateEvent {
 
 	public OperateFailedEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user,
-							  String appName) {
+			String appName) {
 		super(operateLog, request, user, appName, FAIL, OPERATE_FAILED);
 	}
 
