@@ -18,4 +18,4 @@
 /**
  * @author laokou
  */
-package org.laokou.auth.dto.captcha;
+package org.laokou.auth.dto;

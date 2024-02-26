@@ -66,6 +66,10 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-admin-domain</artifactId>
         </dependency>

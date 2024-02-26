@@ -110,6 +110,8 @@ spring:
                 - https://laokou.org.cn
             # 客户端请求访问时需要授权同意
             require-authorization-consent: true
+            # PKCE
+            require-proof-key: false
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
