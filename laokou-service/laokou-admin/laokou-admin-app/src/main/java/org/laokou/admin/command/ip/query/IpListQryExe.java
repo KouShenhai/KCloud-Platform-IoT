@@ -42,6 +42,7 @@ import java.util.concurrent.Executor;
 public class IpListQryExe {
 
 	private final IpMapper ipMapper;
+
 	private final Executor executor;
 
 	/**
@@ -54,9 +55,9 @@ public class IpListQryExe {
 		IpDO ipDO = convert(qry.getLabel());
 		PageQuery page = qry.page();
 		CompletableFuture<List<IpDO>> c1 = CompletableFuture
-				.supplyAsync(() -> ipMapper.selectListByCondition(ipDO,page), executor);
-		CompletableFuture<Long> c2 = CompletableFuture
-				.supplyAsync(() -> ipMapper.selectCountByCondition(ipDO,page), executor);
+			.supplyAsync(() -> ipMapper.selectListByCondition(ipDO, page), executor);
+		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ipMapper.selectCountByCondition(ipDO, page),
+				executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
 	}
@@ -68,10 +69,7 @@ public class IpListQryExe {
 	}
 
 	private IpCO convert(IpDO ipDO) {
-		return IpCO.builder()
-				.id(ipDO.getId())
-				.value(ipDO.getValue())
-				.build();
+		return IpCO.builder().id(ipDO.getId()).value(ipDO.getValue()).build();
 	}
 
 }

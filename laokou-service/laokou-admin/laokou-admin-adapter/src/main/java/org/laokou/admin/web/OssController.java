@@ -24,12 +24,12 @@ import org.laokou.admin.api.OssServiceI;
 import org.laokou.admin.dto.oss.*;
 import org.laokou.admin.dto.oss.clientobject.FileCO;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
-import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
+import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -66,7 +66,6 @@ public class OssController {
 	}
 
 	@Idempotent
-	@TraceLog
 	@PostMapping
 	@Operation(summary = "OSS管理", description = "新增OSS")
 	@OperateLog(module = "OSS管理", operation = "新增OSS")
@@ -83,7 +82,6 @@ public class OssController {
 		return ossServiceI.findById(new OssGetQry(id));
 	}
 
-	@TraceLog
 	@PutMapping
 	@Operation(summary = "OSS管理", description = "修改OSS")
 	@OperateLog(module = "OSS管理", operation = "修改OSS")
@@ -93,7 +91,6 @@ public class OssController {
 		ossServiceI.modify(cmd);
 	}
 
-	@TraceLog
 	@DeleteMapping
 	@Operation(summary = "OSS管理", description = "删除OSS")
 	@OperateLog(module = "OSS管理", operation = "删除OSS")
