@@ -40,7 +40,7 @@ import static org.laokou.common.i18n.common.StringConstants.SLASH;
  */
 @Component
 @RequiredArgsConstructor
-public class DefinitionTemplateCmdExe {
+public class DefinitionDownloadTemplateCmdExe {
 
 	private static final String TEMPLATE_NAME = "audit.bpmn20.xml";
 
@@ -60,7 +60,6 @@ public class DefinitionTemplateCmdExe {
 			.getInputStream(); ServletOutputStream outputStream = response.getOutputStream()) {
 			IOUtils.write(inputStream.readAllBytes(), outputStream);
 		}
-
 	}
 
 }

@@ -15,28 +15,28 @@
  *
  */
 
-package org.laokou.admin;
+package org.laokou.flowable;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.admin.dto.definition.DefinitionListQry;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.flowable.dto.definition.DefinitionListQry;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.charset.StandardCharsets;
 
 import static org.laokou.common.i18n.common.RequestHeaderConstants.AUTHORIZATION;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author laokou
@@ -58,12 +58,12 @@ class DefinitionsApiTest extends CommonTest {
 	void definitionsListTest() {
 		String apiUrl = API_PREFIX + "list";
 		MvcResult mvcResult = super.mockMvc
-			.perform(post(apiUrl).accept(MediaType.APPLICATION_JSON)
+			.perform(MockMvcRequestBuilders.post(apiUrl).accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.header(AUTHORIZATION, getToken())
 				.content(JacksonUtil.toJsonStr(new DefinitionListQry())))
-			.andExpect(status().isOk())
-			.andDo(print())
+			.andExpect(MockMvcResultMatchers.status().isOk())
+			.andDo(MockMvcResultHandlers.print())
 			.andReturn();
 		String body = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
 		Assert.isTrue(StringUtil.isNotEmpty(body), "response body is empty");

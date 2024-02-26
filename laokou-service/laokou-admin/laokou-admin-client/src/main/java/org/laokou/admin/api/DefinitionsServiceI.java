@@ -30,6 +30,6 @@ public interface DefinitionsServiceI {
 	 * 下载流程模板.
 	 * @param qry 下载流程模板参数
 	 */
-	void findTemplate(DefinitionTemplateCmd qry);
+	void downloadTemplate(DefinitionTemplateCmd qry);
 
 }

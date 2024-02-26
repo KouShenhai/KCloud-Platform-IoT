@@ -21,8 +21,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.MonitorsServiceI;
-import org.laokou.admin.dto.monitor.MonitorRedisCacheGetQry;
-import org.laokou.admin.dto.monitor.MonitorServerGetQry;
 import org.laokou.admin.dto.monitor.clientobject.RedisCacheCO;
 import org.laokou.admin.dto.monitor.clientobject.ServerCO;
 import org.laokou.common.i18n.dto.Result;
@@ -46,14 +44,14 @@ public class MonitorsController {
 	@GetMapping("cache")
 	@Operation(summary = "监控管理", description = "缓存监控")
 	public Result<RedisCacheCO> findCacheInfo() {
-		return monitorsServiceI.cache(new MonitorRedisCacheGetQry());
+		return monitorsServiceI.findCacheInfo();
 	}
 
 	@TraceLog
 	@GetMapping("server")
 	@Operation(summary = "监控管理", description = "主机监控")
 	public Result<ServerCO> findServerInfo() {
-		return monitorsServiceI.server(new MonitorServerGetQry());
+		return monitorsServiceI.findServerInfo();
 	}
 
 }

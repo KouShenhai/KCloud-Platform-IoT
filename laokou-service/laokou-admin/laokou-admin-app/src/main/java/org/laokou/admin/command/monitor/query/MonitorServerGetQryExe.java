@@ -17,7 +17,6 @@
 
 package org.laokou.admin.command.monitor.query;
 
-import org.laokou.admin.dto.monitor.MonitorServerGetQry;
 import org.laokou.admin.dto.monitor.clientobject.ServerCO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -32,13 +31,16 @@ public class MonitorServerGetQryExe {
 
 	/**
 	 * 执行查看服务器监控.
-	 * @param qry 查看服务器监控参数
 	 * @return 服务器监控
 	 */
-	public Result<ServerCO> execute(MonitorServerGetQry qry) {
+	public Result<ServerCO> execute() {
+		return Result.of(convert());
+	}
+
+	private ServerCO convert() {
 		ServerCO serverCO = new ServerCO();
 		serverCO.copyTo();
-		return Result.of(serverCO);
+		return serverCO;
 	}
 
 }

@@ -37,13 +37,13 @@ import static lombok.AccessLevel.PRIVATE;
 @Schema(name = "Activate", description = "激活")
 public class Activate extends AggregateRoot<Long> {
 
-    @Schema(name = "definitionId", description = "定义ID")
-    private String definitionId;
+	@Schema(name = "definitionId", description = "定义ID")
+	private String definitionId;
 
-    public void checkActivated(boolean activated) {
-        if (activated) {
-            throw new FlowException("激活失败，流程已激活");
-        }
-    }
+	public void checkActivated(boolean activated) {
+		if (activated) {
+			throw new FlowException("激活失败，流程已激活");
+		}
+	}
 
 }

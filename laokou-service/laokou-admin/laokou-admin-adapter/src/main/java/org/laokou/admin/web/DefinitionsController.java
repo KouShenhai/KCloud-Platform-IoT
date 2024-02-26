@@ -39,11 +39,11 @@ public class DefinitionsController {
 
 	private final DefinitionsServiceI definitionsServiceI;
 
-	@GetMapping("template")
+	@GetMapping("download-template")
 	@Operation(summary = "流程定义", description = "下载模板")
-	@PreAuthorize("hasAuthority('definitions:template')")
-	public void findTemplate(HttpServletResponse response) {
-		definitionsServiceI.findTemplate(new DefinitionTemplateCmd(response));
+	@PreAuthorize("hasAuthority('definitions:download-template')")
+	public void downloadTemplate(HttpServletResponse response) {
+		definitionsServiceI.downloadTemplate(new DefinitionTemplateCmd(response));
 	}
 
 }

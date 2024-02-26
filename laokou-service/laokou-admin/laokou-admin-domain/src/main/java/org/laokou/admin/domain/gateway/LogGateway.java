@@ -18,10 +18,10 @@
 package org.laokou.admin.domain.gateway;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.laokou.admin.domain.event.OperateEvent;
 import org.laokou.admin.domain.event.OssUploadEvent;
 import org.laokou.admin.domain.log.LoginLog;
-import org.laokou.admin.domain.log.OperateLog;
+import org.laokou.common.core.common.domain.OperateLog;
+import org.laokou.common.core.common.event.OperateEvent;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.DecorateDomainEvent;
 import org.laokou.common.i18n.dto.PageQuery;

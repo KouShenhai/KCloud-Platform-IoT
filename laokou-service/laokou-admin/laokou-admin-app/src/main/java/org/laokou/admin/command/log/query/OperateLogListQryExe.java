@@ -19,11 +19,10 @@ package org.laokou.admin.command.log.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.OperateLogConvertor;
 import org.laokou.admin.domain.gateway.LogGateway;
-import org.laokou.admin.domain.log.OperateLog;
 import org.laokou.admin.dto.log.OperateLogListQry;
 import org.laokou.admin.dto.log.clientobject.OperateLogCO;
+import org.laokou.common.core.common.domain.OperateLog;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -41,8 +40,6 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 public class OperateLogListQryExe {
 
 	private final LogGateway logGateway;
-
-	private final OperateLogConvertor operateLogConvertor;
 
 	/**
 	 * 执行查询操作日志列表.
