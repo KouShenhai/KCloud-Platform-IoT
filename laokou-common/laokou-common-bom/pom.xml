@@ -65,7 +65,7 @@
         <!--spring-security-oauth2-authorization-server版本-->
         <spring-security-oauth2-authorization-server.version>1.2.2</spring-security-oauth2-authorization-server.version>
         <!--spring-boot-starter-oauth2-resource-server版本-->
-        <spring-boot-starter-oauth2-resource-server.version>3.2.2</spring-boot-starter-oauth2-resource-server.version>
+        <spring-boot-starter-oauth2-resource-server.version>3.2.3</spring-boot-starter-oauth2-resource-server.version>
         <!--aws-java-sdk-s3版本-->
         <aws-java-sdk-s3.version>1.12.267</aws-java-sdk-s3.version>
         <!--dynamic-datasource版本-->
