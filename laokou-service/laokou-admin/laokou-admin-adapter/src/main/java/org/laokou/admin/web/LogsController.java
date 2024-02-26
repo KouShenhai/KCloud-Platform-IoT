@@ -54,7 +54,7 @@ public class LogsController {
 	@Operation(summary = "日志管理", description = "查询操作日志列表")
 	@PreAuthorize("hasAuthority('logs:operate-list')")
 	public Result<Datas<OperateLogCO>> findOperateList(@RequestBody OperateLogListQry qry) {
-		return logsServiceI.operateList(qry);
+		return logsServiceI.findOperateList(qry);
 	}
 
 	@PostMapping("operate-export")

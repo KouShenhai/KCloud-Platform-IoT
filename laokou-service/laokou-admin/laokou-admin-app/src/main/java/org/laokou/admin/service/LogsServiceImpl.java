@@ -56,7 +56,7 @@ public class LogsServiceImpl implements LogsServiceI {
 	 * @return 操作日志列表
 	 */
 	@Override
-	public Result<Datas<OperateLogCO>> operateList(OperateLogListQry qry) {
+	public Result<Datas<OperateLogCO>> findOperateList(OperateLogListQry qry) {
 		return operateLogListQryExe.execute(qry);
 	}
 

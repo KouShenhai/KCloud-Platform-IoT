@@ -17,13 +17,14 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
@@ -34,17 +35,10 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Repository
 @Mapper
-public interface OperateLogMapper extends BatchMapper<OperateLogDO> {
+public interface OperateLogMapper extends CrudMapper<Long,Integer,OperateLogDO> {
 
-	/**
-	 * 查询操作日志列表.
-	 * @param page 分页参数
-	 * @param moduleName 模块名称
-	 * @param status 状态
-	 * @param pageQuery 分页参数
-	 * @return 操作日志列表
-	 */
-	IPage<OperateLogDO> getOperateListFilter(IPage<OperateLogDO> page, @Param("moduleName") String moduleName,
-			@Param("status") Integer status, @Param(PAGE_QUERY) PageQuery pageQuery);
+	List<OperateLogDO> selectListByCondition(@Param("operate") OperateLogDO operate, @Param(PAGE_QUERY) PageQuery pageQuery);
+
+	long selectCountByCondition(@Param("operate") OperateLogDO operate, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 }
