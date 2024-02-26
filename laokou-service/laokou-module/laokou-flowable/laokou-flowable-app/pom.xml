@@ -17,7 +17,7 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-security</artifactId>
+            <artifactId>laokou-flowable-client</artifactId>
         </dependency>
     </dependencies>
 

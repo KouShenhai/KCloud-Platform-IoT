@@ -45,11 +45,7 @@ public class IpCreateCmdExe {
 	}
 
 	private Ip convert(IpCO ipCO) {
-		return Ip.builder()
-				.id(IdGenerator.defaultSnowflakeId())
-				.value(ipCO.getValue())
-				.label(ipCO.getLabel())
-				.build();
+		return Ip.builder().id(IdGenerator.defaultSnowflakeId()).value(ipCO.getValue()).label(ipCO.getLabel()).build();
 	}
 
 }

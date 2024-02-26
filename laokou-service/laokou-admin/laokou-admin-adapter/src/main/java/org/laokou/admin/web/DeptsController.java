@@ -23,11 +23,11 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.DeptsServiceI;
 import org.laokou.admin.dto.dept.*;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
-import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
+import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +60,6 @@ public class DeptsController {
 	@Operation(summary = "部门管理", description = "新增菜单")
 	@OperateLog(module = "部门管理", operation = "新增菜单")
 	@PreAuthorize("hasAuthority('depts:create')")
-	@TraceLog
 	public void create(@RequestBody DeptCreateCmd cmd) {
 		deptsServiceI.create(cmd);
 	}
@@ -69,7 +68,6 @@ public class DeptsController {
 	@Operation(summary = "部门管理", description = "修改菜单")
 	@OperateLog(module = "部门管理", operation = "修改菜单")
 	@PreAuthorize("hasAuthority('depts:modify')")
-	@TraceLog
 	@DataCache(name = DEPTS, key = "#cmd.deptCO.id", type = CacheOperatorTypeEnums.DEL)
 	public void modify(@RequestBody DeptModifyCmd cmd) {
 		deptsServiceI.modify(cmd);
@@ -84,7 +82,6 @@ public class DeptsController {
 	}
 
 	@DeleteMapping
-	@TraceLog
 	@Operation(summary = "部门管理", description = "删除菜单")
 	@OperateLog(module = "部门管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('depts:remove')")
