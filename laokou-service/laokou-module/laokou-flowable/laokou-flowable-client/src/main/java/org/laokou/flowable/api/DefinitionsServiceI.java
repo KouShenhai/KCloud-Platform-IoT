@@ -32,30 +32,29 @@ public interface DefinitionsServiceI {
 	/**
 	 * 新增流程.
 	 * @param cmd 新增流程参数
-	 * @return 新增结果
 	 */
-	Result<Boolean> insert(DefinitionInsertCmd cmd);
+	void create(DefinitionCreateCmd cmd);
 
 	/**
 	 * 查询流程列表.
 	 * @param qry 查询流程列表参数
 	 * @return 流程列表
 	 */
-	Result<Datas<DefinitionCO>> list(DefinitionListQry qry);
+	Result<Datas<DefinitionCO>> findList(DefinitionListQry qry);
 
 	/**
 	 * 查看流程图.
 	 * @param qry 查看流程图参数
 	 * @return 流程图
 	 */
-	Result<String> diagram(DefinitionDiagramGetQry qry);
+	Result<String> findDiagram(DefinitionDiagramGetQry qry);
 
 	/**
 	 * 删除流程.
 	 * @param cmd 删除流程参数
 	 * @return 流程图
 	 */
-	Result<Boolean> delete(DefinitionDeleteCmd cmd);
+	Result<Boolean> delete(DefinitionRemoveCmd cmd);
 
 	/**
 	 * 挂起流程.

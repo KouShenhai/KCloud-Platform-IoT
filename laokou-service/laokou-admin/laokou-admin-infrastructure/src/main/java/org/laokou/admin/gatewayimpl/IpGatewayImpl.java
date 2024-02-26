@@ -93,13 +93,15 @@ public class IpGatewayImpl implements IpGateway {
 	@Override
 	public void refresh(Ip ip) {
 		String label = ip.getLabel();
-		List<IpDO> list = ipMapper.selectList(Wrappers.lambdaQuery(IpDO.class).eq(IpDO::getLabel, label).select(IpDO::getValue));
+		List<IpDO> list = ipMapper
+			.selectList(Wrappers.lambdaQuery(IpDO.class).eq(IpDO::getLabel, label).select(IpDO::getValue));
 		if (CollectionUtil.isEmpty(list)) {
 			return;
 		}
 		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(label);
 		redisUtil.hDel(ipCacheHashKey);
-		redisUtil.hSet(ipCacheHashKey, list.stream().collect(Collectors.toMap(IpDO::getValue, val -> DEFAULT)), NOT_EXPIRE);
+		redisUtil.hSet(ipCacheHashKey, list.stream().collect(Collectors.toMap(IpDO::getValue, val -> DEFAULT)),
+				NOT_EXPIRE);
 	}
 
 	/**

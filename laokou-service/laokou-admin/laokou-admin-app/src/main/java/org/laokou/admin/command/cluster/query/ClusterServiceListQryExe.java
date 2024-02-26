@@ -59,10 +59,10 @@ public class ClusterServiceListQryExe {
 			list = list.stream().filter(n -> n.contains(serviceId)).toList();
 		}
 		return Result.of(Datas.of(list.stream()
-				.map(item -> ClusterServiceCO.builder().serviceId(item).build())
-				.skip((long) (pageNum - 1) * pageSize)
-				.limit(pageSize)
-				.toList(),list.size()));
+			.map(item -> ClusterServiceCO.builder().serviceId(item).build())
+			.skip((long) (pageNum - 1) * pageSize)
+			.limit(pageSize)
+			.toList(), list.size()));
 	}
 
 }

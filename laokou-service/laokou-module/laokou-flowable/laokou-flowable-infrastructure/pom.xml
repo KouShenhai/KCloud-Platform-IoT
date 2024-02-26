@@ -17,15 +17,19 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-flowable-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-seata</artifactId>
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-mybatis-plus</artifactId>
+            <artifactId>laokou-flowable-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-log</artifactId>
         </dependency>
     </dependencies>
 

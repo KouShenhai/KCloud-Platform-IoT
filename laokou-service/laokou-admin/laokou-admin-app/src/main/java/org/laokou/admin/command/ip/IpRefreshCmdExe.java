@@ -43,9 +43,7 @@ public class IpRefreshCmdExe {
 	}
 
 	private Ip convert(String label) {
-		return Ip.builder()
-				.label(label)
-				.build();
+		return Ip.builder().label(label).build();
 	}
 
 }
