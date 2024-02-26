@@ -74,24 +74,24 @@ public class FlowDefinitionsController {
 	@Operation(summary = "流程定义", description = "删除流程")
 	@OperateLog(module = "流程定义", operation = "删除流程")
 	@PreAuthorize("hasAuthority('definitions:remove')")
-	public Result<Boolean> remove(@PathVariable("deploymentId") String deploymentId) {
-		return definitionsServiceI.delete(new DefinitionRemoveCmd(deploymentId));
+	public void remove(@PathVariable("deploymentId") String deploymentId) {
+		definitionsServiceI.remove(new DefinitionRemoveCmd(deploymentId));
 	}
 
 	@PutMapping("{definitionId}/suspend")
 	@Operation(summary = "流程定义", description = "挂起流程")
 	@OperateLog(module = "流程定义", operation = "挂起流程")
 	@PreAuthorize("hasAuthority('definitions:suspend')")
-	public Result<Boolean> suspend(@PathVariable("definitionId") String definitionId) {
-		return definitionsServiceI.suspend(new DefinitionSuspendCmd(definitionId));
+	public void suspend(@PathVariable("definitionId") String definitionId) {
+		definitionsServiceI.suspend(new DefinitionSuspendCmd(definitionId));
 	}
 
 	@PutMapping("{definitionId}/activate")
 	@Operation(summary = "流程定义", description = "激活流程")
 	@OperateLog(module = "流程定义", operation = "激活流程")
 	@PreAuthorize("hasAuthority('definitions:activate')")
-	public Result<Boolean> activate(@PathVariable("definitionId") String definitionId) {
-		return definitionsServiceI.activate(new DefinitionActivateCmd(definitionId));
+	public void activate(@PathVariable("definitionId") String definitionId) {
+		definitionsServiceI.activate(new DefinitionActivateCmd(definitionId));
 	}
 
 }

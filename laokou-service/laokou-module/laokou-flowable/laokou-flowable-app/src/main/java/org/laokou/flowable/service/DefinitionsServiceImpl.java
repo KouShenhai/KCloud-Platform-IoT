@@ -84,31 +84,28 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 	/**
 	 * 删除流程.
 	 * @param cmd 删除流程参数
-	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> delete(DefinitionRemoveCmd cmd) {
-		return definitionRemoveCmdExe.execute(cmd);
+	public void remove(DefinitionRemoveCmd cmd) {
+		definitionRemoveCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 挂起流程.
 	 * @param cmd 挂起流程参数
-	 * @return 挂起结果
 	 */
 	@Override
-	public Result<Boolean> suspend(DefinitionSuspendCmd cmd) {
-		return definitionSuspendCmdExe.execute(cmd);
+	public void suspend(DefinitionSuspendCmd cmd) {
+		definitionSuspendCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 激活流程.
 	 * @param cmd 激活流程参数
-	 * @return 激活结果
 	 */
 	@Override
-	public Result<Boolean> activate(DefinitionActivateCmd cmd) {
-		return definitionActivateCmdExe.execute(cmd);
+	public void activate(DefinitionActivateCmd cmd) {
+		definitionActivateCmdExe.executeVoid(cmd);
 	}
 
 }
