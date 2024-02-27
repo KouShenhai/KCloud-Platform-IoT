@@ -22,8 +22,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.resource.ResourceDetailTaskGetQry;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -47,8 +45,8 @@ public class ResourceDetailTaskGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<ResourceCO> execute(ResourceDetailTaskGetQry qry) {
-		ResourceAuditDO resourceAuditDO = resourceAuditMapper.getResourceAuditByResourceId(qry.getId());
-		return Result.of(ConvertUtil.sourceToTarget(resourceAuditDO, ResourceCO.class));
+		//ResourceAuditDO resourceAuditDO = resourceAuditMapper.getResourceAuditByResourceId(qry.getId());
+		return null;
 	}
 
 }

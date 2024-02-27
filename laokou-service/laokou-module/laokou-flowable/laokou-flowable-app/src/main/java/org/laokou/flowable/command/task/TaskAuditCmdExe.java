@@ -67,7 +67,6 @@ public class TaskAuditCmdExe {
 			log.info("审批流程分布式事务 XID：{}", RootContext.getXID());
 			String taskId = cmd.getTaskId();
 			Map<String, Object> values = cmd.getValues();
-			String instanceId = cmd.getInstanceId();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			Task task = taskService.createTaskQuery()
 				.taskTenantId(UserUtil.getTenantId().toString())
@@ -81,7 +80,8 @@ public class TaskAuditCmdExe {
 			}
 			// 审批
 			audit(taskId, values);
-			return Result.of(new AuditCO(taskMapper.getAssigneeByInstanceId(instanceId, UserUtil.getTenantId())));
+			return null;
+			//return Result.of(new AuditCO(taskMapper.getAssigneeByInstanceId(instanceId, UserUtil.getTenantId())));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
@@ -104,9 +104,10 @@ public class TaskAuditCmdExe {
 				}
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				String msg = e.getMessage();
+				log.error("错误信息：{}，详情见日志", LogUtil.result(msg), e);
 				r.setRollbackOnly();
-				throw new SystemException(LogUtil.fail(e.getMessage()));
+				throw new SystemException(LogUtil.fail(msg));
 			}
 		});
 	}

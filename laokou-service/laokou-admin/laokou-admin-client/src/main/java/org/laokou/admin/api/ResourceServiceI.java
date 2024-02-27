@@ -17,12 +17,10 @@
 
 package org.laokou.admin.api;
 
-import org.laokou.admin.dto.oss.OssUploadCmd;
-import org.laokou.admin.dto.oss.clientobject.FileCO;
+import org.laokou.admin.dto.resource.*;
 import org.laokou.admin.dto.resource.clientobject.AuditLogCO;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
-import org.laokou.admin.dto.resource.*;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 
@@ -51,18 +49,11 @@ public interface ResourceServiceI {
 	Result<Boolean> sync(ResourceSyncCmd cmd);
 
 	/**
-	 * 上传资源文件.
-	 * @param cmd 上传资源文件参数
-	 * @return 文件对象
-	 */
-	Result<FileCO> upload(OssUploadCmd cmd);
-
-	/**
 	 * 查询资源列表.
 	 * @param qry 查询资源列表参数
 	 * @return 资源列表
 	 */
-	Result<Datas<ResourceCO>> list(ResourceListQry qry);
+	Result<Datas<ResourceCO>> findList(ResourceListQry qry);
 
 	/**
 	 * 根据ID查看资源.

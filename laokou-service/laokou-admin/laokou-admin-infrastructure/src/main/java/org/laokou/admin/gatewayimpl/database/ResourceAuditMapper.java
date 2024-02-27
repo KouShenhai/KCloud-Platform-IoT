@@ -37,6 +37,6 @@ public interface ResourceAuditMapper extends CrudMapper<Long, Integer, ResourceA
 	 * @param resourceId 资源ID
 	 * @return 资源审批
 	 */
-	ResourceAuditDO getResourceAuditByResourceId(@Param("resourceId") Long resourceId);
+	ResourceAuditDO selectByResourceId(@Param("resourceId") Long resourceId);
 
 }

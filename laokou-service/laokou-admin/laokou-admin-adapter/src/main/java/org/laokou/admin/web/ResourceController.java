@@ -22,8 +22,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.ResourceServiceI;
-import org.laokou.admin.dto.oss.OssUploadCmd;
-import org.laokou.admin.dto.oss.clientobject.FileCO;
 import org.laokou.admin.dto.resource.*;
 import org.laokou.admin.dto.resource.clientobject.AuditLogCO;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
@@ -31,16 +29,11 @@ import org.laokou.admin.dto.resource.clientobject.TaskCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
-import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.log.annotation.OperateLog;
-import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
-import org.redisson.api.RateIntervalUnit;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -65,31 +58,23 @@ public class ResourceController {
 		return resourceServiceI.auditLog(new ResourceAuditLogListQry(id));
 	}
 
-	@PostMapping("sync")
-	@RateLimiter(id = "RESOURCE_SYNC", unit = RateIntervalUnit.MINUTES)
-	@TraceLog
-	@Operation(summary = "资源管理", description = "同步资源")
-	@OperateLog(module = "资源管理", operation = "同步资源")
-	@Lock4j(key = "resource_sync_lock", expire = 60000)
-	@PreAuthorize("hasAuthority('resource:sync')")
-	public Result<Boolean> sync() {
-		return resourceServiceI.sync(new ResourceSyncCmd());
-	}
-
-	@PostMapping(value = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@TraceLog
-	@Operation(summary = "资源管理", description = "上传资源")
-	@OperateLog(module = "资源管理", operation = "上传资源")
-	public Result<FileCO> upload(@RequestPart("file") MultipartFile file) {
-		return resourceServiceI.upload(new OssUploadCmd(file));
-	}
+//	@PostMapping("sync")
+//	@RateLimiter(id = "RESOURCE_SYNC", unit = RateIntervalUnit.MINUTES)
+//	@TraceLog
+//	@Operation(summary = "资源管理", description = "同步资源")
+//	@OperateLog(module = "资源管理", operation = "同步资源")
+//	@Lock4j(key = "resource_sync_lock", expire = 60000)
+//	@PreAuthorize("hasAuthority('resource:sync')")
+//	public Result<Boolean> sync() {
+//		return resourceServiceI.sync(new ResourceSyncCmd());
+//	}
 
 	@PostMapping("list")
 	@Operation(summary = "资源管理", description = "查询资源列表")
 	@TraceLog
 	@PreAuthorize("hasAuthority('resource:list')")
 	public Result<Datas<ResourceCO>> findList(@RequestBody ResourceListQry qry) {
-		return resourceServiceI.list(qry);
+		return resourceServiceI.findList(qry);
 	}
 
 	@GetMapping("{id}")

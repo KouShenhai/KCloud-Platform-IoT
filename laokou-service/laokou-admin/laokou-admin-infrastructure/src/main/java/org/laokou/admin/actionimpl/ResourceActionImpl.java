@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- /*
+/*
  * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,19 +14,26 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.admin.gatewayimpl.database.ResourceAuditMapper">
 
-    <select id="selectByResourceId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO">
-        select title
-             , url
-             , `code`
-             , remark
-        from boot_sys_resource_audit
-        where del_flag = 0
-            and resource_id = #{resourceId}
-        order by id desc
-        limit 1
-    </select>
-</mapper>
+package org.laokou.admin.actionimpl;
+
+import org.laokou.admin.domain.action.ResourceAction;
+import org.springframework.stereotype.Component;
+
+/**
+ * @author laokou
+ */
+@Component("resourceAction")
+public class ResourceActionImpl implements ResourceAction {
+
+    @Override
+    public boolean modify(Long businessKey, Integer status) {
+        return true;
+    }
+
+    @Override
+    public boolean compensateModify(Long businessKey, Integer status) {
+        return true;
+    }
+
+}

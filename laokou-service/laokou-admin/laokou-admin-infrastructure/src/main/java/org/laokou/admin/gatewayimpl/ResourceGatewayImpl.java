@@ -17,8 +17,6 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.ResourceConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.laokou.admin.domain.resource.Resource;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
@@ -40,8 +37,6 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -54,7 +49,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_RESOURCE;
 import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.RESOURCE;
 import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
 import static org.laokou.common.i18n.common.StringConstants.UNDER;
@@ -86,24 +80,6 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private final TransactionalUtil transactionalUtil;
 
 	private final EventUtil eventUtil;
-
-	/**
-	 * 查询资源列表.
-	 * @param resource 资源对象
-	 * @param pageQuery 分页参数
-	 * @return 资源列表
-	 */
-	@Override
-	@DataFilter(tableAlias = BOOT_SYS_RESOURCE)
-	public Datas<Resource> list(Resource resource, PageQuery pageQuery) {
-		IPage<ResourceDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		ResourceDO resourceDO = resourceConvertor.toDataObject(resource);
-		IPage<ResourceDO> newPage = resourceMapper.getResourceListFilter(page, resourceDO, pageQuery);
-		Datas<Resource> datas = new Datas<>();
-		datas.setTotal(newPage.getTotal());
-		datas.setRecords(resourceConvertor.convertEntityList(newPage.getRecords()));
-		return datas;
-	}
 
 	/**
 	 * 根据ID查看资源.
