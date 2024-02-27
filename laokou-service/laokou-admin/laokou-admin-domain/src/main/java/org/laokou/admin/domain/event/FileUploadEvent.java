@@ -29,7 +29,7 @@ import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.DateUtil;
 
 import static org.laokou.common.i18n.common.EventStatusEnums.CREATED;
-import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OSS_UPLOAD_EVENT_TOPIC;
+import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_FILE_UPLOAD_EVENT_TOPIC;
 
 /**
  * @author laokou
@@ -37,8 +37,8 @@ import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OSS_UPLOAD_
 @Data
 @SuperBuilder
 @NoArgsConstructor
-@Schema(name = "OssUploadEvent", description = "OSS文件上传事件")
-public class OssUploadEvent extends DomainEvent<Long> {
+@Schema(name = "FileUploadEvent", description = "文件上传事件")
+public class FileUploadEvent extends DomainEvent<Long> {
 
 	@Schema(name = "md5", description = "文件的MD5标识")
 	private String md5;
@@ -58,9 +58,9 @@ public class OssUploadEvent extends DomainEvent<Long> {
 	@Schema(name = "errorMessage", description = "错误信息")
 	private String errorMessage;
 
-	public OssUploadEvent(OssLog ossLog, UserContextHolder.User user, String appName, Integer status,
+	public FileUploadEvent(OssLog ossLog, UserContextHolder.User user, String appName, Integer status,
 			EventTypeEnums eventType) {
-		super(IdGenerator.defaultSnowflakeId(), user.getId(), eventType, CREATED, LAOKOU_OSS_UPLOAD_EVENT_TOPIC,
+		super(IdGenerator.defaultSnowflakeId(), user.getId(), eventType, CREATED, LAOKOU_FILE_UPLOAD_EVENT_TOPIC,
 				user.getSourceName(), appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(),
 				user.getTenantId(), DateUtil.now(), DateUtil.now());
 		this.errorMessage = ossLog.getErrorMessage();

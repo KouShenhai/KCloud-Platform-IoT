@@ -18,4 +18,4 @@
 /**
  * @author laokou
  */
-package org.laokou.common.mybatisplus.database;
+package org.laokou.auth.dto;

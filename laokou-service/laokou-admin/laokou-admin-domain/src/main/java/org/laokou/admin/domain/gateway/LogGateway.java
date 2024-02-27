@@ -18,13 +18,9 @@
 package org.laokou.admin.domain.gateway;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.laokou.admin.domain.event.OssUploadEvent;
-import org.laokou.admin.domain.log.LoginLog;
-import org.laokou.common.core.common.domain.OperateLog;
+import org.laokou.admin.domain.event.FileUploadEvent;
 import org.laokou.common.core.common.event.OperateEvent;
-import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.DecorateDomainEvent;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
@@ -32,24 +28,8 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Schema(name = "LogGateway", description = "日志网关")
 public interface LogGateway {
 
-	/**
-	 * 查询登录日志列表.
-	 * @param loginLog 登录日志对象
-	 * @param pageQuery 分页参数
-	 * @return 登录日志列表
-	 */
-	Datas<LoginLog> loginList(LoginLog loginLog, PageQuery pageQuery);
-
-	/**
-	 * 查询操作日志列表.
-	 * @param operateLog 操作日志对象
-	 * @param pageQuery 分页参数
-	 * @return 操作日志列表
-	 */
-	Datas<OperateLog> operateList(OperateLog operateLog, PageQuery pageQuery);
-
 	void create(OperateEvent event, DecorateDomainEvent evt);
 
-	void create(OssUploadEvent event, DecorateDomainEvent evt);
+	void create(FileUploadEvent event, DecorateDomainEvent evt);
 
 }

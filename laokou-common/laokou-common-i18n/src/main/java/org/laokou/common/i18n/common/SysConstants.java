@@ -120,4 +120,7 @@ public final class SysConstants {
 	@Schema(name = "THREAD_POOL_TASK_EXECUTOR_NAME", description = "线程池名称")
 	public static final String THREAD_POOL_TASK_EXECUTOR_NAME = "executor";
 
+	@Schema(name = "SHA256", description = "sha256算法")
+	public static final String SHA256 = "SHA-256";
+
 }

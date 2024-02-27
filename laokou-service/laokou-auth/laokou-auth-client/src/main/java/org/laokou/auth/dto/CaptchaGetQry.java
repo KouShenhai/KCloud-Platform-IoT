@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.dto.captcha;
+package org.laokou.auth.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

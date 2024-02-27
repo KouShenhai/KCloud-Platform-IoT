@@ -23,19 +23,19 @@ import lombok.experimental.SuperBuilder;
 import org.laokou.admin.domain.oss.OssLog;
 import org.laokou.common.core.context.UserContextHolder;
 
-import static org.laokou.common.i18n.common.EventTypeEnums.OSS_UPLOAD_SUCCEEDED;
-import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
+import static org.laokou.common.i18n.common.EventTypeEnums.FILE_UPLOAD_FAILED;
+import static org.laokou.common.i18n.common.NumberConstants.FAIL;
 
 /**
  * @author laokou
  */
 @Data
 @SuperBuilder
-@Schema(name = "OssLogSucceededEvent", description = "OSS文件上传成功事件")
-public class OssUploadSucceededEvent extends OssUploadEvent {
+@Schema(name = "FileLogFailedEvent", description = "文件上传失败事件")
+public class FileUploadFailedEvent extends FileUploadEvent {
 
-	public OssUploadSucceededEvent(OssLog ossLog, UserContextHolder.User user, String appName) {
-		super(ossLog, user, appName, SUCCESS, OSS_UPLOAD_SUCCEEDED);
+	public FileUploadFailedEvent(OssLog ossLog, UserContextHolder.User user, String appName) {
+		super(ossLog, user, appName, FAIL, FILE_UPLOAD_FAILED);
 	}
 
 }

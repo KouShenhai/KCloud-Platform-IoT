@@ -58,7 +58,8 @@ class DefinitionsApiTest extends CommonTest {
 	void definitionsListTest() {
 		String apiUrl = API_PREFIX + "list";
 		MvcResult mvcResult = super.mockMvc
-			.perform(MockMvcRequestBuilders.post(apiUrl).accept(MediaType.APPLICATION_JSON)
+			.perform(MockMvcRequestBuilders.post(apiUrl)
+				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.header(AUTHORIZATION, getToken())
 				.content(JacksonUtil.toJsonStr(new DefinitionListQry())))

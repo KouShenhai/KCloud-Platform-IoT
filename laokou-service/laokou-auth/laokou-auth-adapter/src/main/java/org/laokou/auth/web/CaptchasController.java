@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.CaptchasServiceI;
-import org.laokou.auth.dto.captcha.CaptchaGetQry;
+import org.laokou.auth.dto.CaptchaGetQry;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;

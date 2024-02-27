@@ -23,8 +23,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
-import org.laokou.admin.domain.event.OssUploadFailedEvent;
-import org.laokou.admin.domain.event.OssUploadSucceededEvent;
+import org.laokou.admin.domain.event.FileUploadFailedEvent;
+import org.laokou.admin.domain.event.FileUploadSucceededEvent;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
@@ -94,11 +94,11 @@ public class File extends AggregateRoot<Long> {
 	}
 
 	private void ossUploadSuccess(String url, String appName) {
-		addEvent(new OssUploadSucceededEvent(convert(this, url, EMPTY), UserContextHolder.get(), appName));
+		addEvent(new FileUploadSucceededEvent(convert(this, url, EMPTY), UserContextHolder.get(), appName));
 	}
 
 	private void ossUploadFail(String url, Exception e, String appName) {
-		addEvent(new OssUploadFailedEvent(convert(this, url, e.getMessage()), UserContextHolder.get(), appName));
+		addEvent(new FileUploadFailedEvent(convert(this, url, e.getMessage()), UserContextHolder.get(), appName));
 	}
 
 	public void checkSize() {

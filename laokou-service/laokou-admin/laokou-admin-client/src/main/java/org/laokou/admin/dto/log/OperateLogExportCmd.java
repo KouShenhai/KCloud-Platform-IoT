@@ -20,12 +20,16 @@ package org.laokou.admin.dto.log;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author laokou
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(name = "OperateLogExportCmd", description = "导出操作日志命令请求")
 public class OperateLogExportCmd extends OperateLogListQry {
 
