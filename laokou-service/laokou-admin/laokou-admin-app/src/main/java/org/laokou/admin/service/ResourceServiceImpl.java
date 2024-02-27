@@ -19,15 +19,12 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.ResourceServiceI;
-import org.laokou.admin.command.oss.OssUploadCmdExe;
-import org.laokou.admin.dto.oss.OssUploadCmd;
-import org.laokou.admin.dto.oss.clientobject.FileCO;
+import org.laokou.admin.command.resource.*;
+import org.laokou.admin.command.resource.query.*;
 import org.laokou.admin.dto.resource.*;
 import org.laokou.admin.dto.resource.clientobject.AuditLogCO;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
-import org.laokou.admin.command.resource.*;
-import org.laokou.admin.command.resource.query.*;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
@@ -51,8 +48,6 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	private final ResourceListQryExe resourceListQryExe;
 
 	private final ResourceGetQryExe resourceGetQryExe;
-
-	private final OssUploadCmdExe ossUploadCmdExe;
 
 	private final ResourceDownloadCmdExe resourceDownloadCmdExe;
 
@@ -99,22 +94,12 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	/**
-	 * 上传资源文件.
-	 * @param cmd 上传资源文件参数
-	 * @return 文件对象
-	 */
-	@Override
-	public Result<FileCO> upload(OssUploadCmd cmd) {
-		return ossUploadCmdExe.execute(cmd);
-	}
-
-	/**
 	 * 查询资源列表.
 	 * @param qry 查询资源列表参数
 	 * @return 资源列表
 	 */
 	@Override
-	public Result<Datas<ResourceCO>> list(ResourceListQry qry) {
+	public Result<Datas<ResourceCO>> findList(ResourceListQry qry) {
 		return resourceListQryExe.execute(qry);
 	}
 

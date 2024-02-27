@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- /*
+/*
  * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,19 +14,17 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.admin.gatewayimpl.database.ResourceAuditMapper">
+package org.laokou.admin.domain.action;
 
-    <select id="selectByResourceId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO">
-        select title
-             , url
-             , `code`
-             , remark
-        from boot_sys_resource_audit
-        where del_flag = 0
-            and resource_id = #{resourceId}
-        order by id desc
-        limit 1
-    </select>
-</mapper>
+import java.util.Map;
+
+/**
+ * @author laokou
+ */
+public interface AuditAction {
+
+    boolean audit(String taskId, Map<String, Object> values);
+
+    boolean compensateAudit(String taskId);
+
+}

@@ -19,23 +19,12 @@ package org.laokou.admin.domain.gateway;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.admin.domain.resource.Resource;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
  */
 @Schema(name = "ResourceGateway", description = "资源网关")
 public interface ResourceGateway {
-
-	/**
-	 * 查询资源列表.
-	 * @param resource 资源对象
-	 * @param pageQuery 分页参数
-	 * @return 资源列表
-	 */
-	Datas<Resource> list(Resource resource, PageQuery pageQuery);
-
 	/**
 	 * 根据ID查看资源.
 	 * @param id ID
