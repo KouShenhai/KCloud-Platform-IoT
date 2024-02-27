@@ -57,13 +57,13 @@ public class LogsController {
 		return logsServiceI.findOperateList(qry);
 	}
 
-	@PostMapping("operate-export")
+	@PostMapping("export-operate")
 	@Operation(summary = "日志管理", description = "导出操作日志")
 	@PreAuthorize("hasAuthority('logs:export-operate')")
 	@OperateLog(module = "日志管理", operation = "导出操作日志")
 	public void exportOperate(@RequestBody OperateLogExportCmd cmd, HttpServletResponse response) {
 		cmd.setResponse(response);
-		logsServiceI.operateExport(cmd);
+		logsServiceI.exportOperate(cmd);
 	}
 
 	@TraceLog
@@ -74,13 +74,13 @@ public class LogsController {
 		return logsServiceI.loginList(qry);
 	}
 
-	@PostMapping("login-export")
+	@PostMapping("export-login")
 	@Operation(summary = "日志管理", description = "导出登录日志")
 	@PreAuthorize("hasAuthority('logs:export-login')")
 	@OperateLog(module = "日志管理", operation = "导出登录日志")
 	public void exportLogin(@RequestBody LoginLogExportCmd cmd, HttpServletResponse response) {
 		cmd.setResponse(response);
-		logsServiceI.loginExport(cmd);
+		logsServiceI.exportLogin(cmd);
 	}
 
 }

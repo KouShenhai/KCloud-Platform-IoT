@@ -30,6 +30,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -47,6 +48,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 public class OperateLogListQryExe {
 
 	private final OperateLogMapper operateLogMapper;
+
 	private final Executor executor;
 
 	/**
@@ -61,9 +63,9 @@ public class OperateLogListQryExe {
 		OperateLogDO operateLogDO = convert(qry);
 		PageQuery page = qry.page();
 		CompletableFuture<List<OperateLogDO>> c1 = CompletableFuture
-				.supplyAsync(() -> operateLogMapper.selectListByCondition(operateLogDO, page), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> operateLogMapper.selectCountByCondition(operateLogDO, page),
-				executor);
+			.supplyAsync(() -> operateLogMapper.selectListByCondition(operateLogDO, page), executor);
+		CompletableFuture<Long> c2 = CompletableFuture
+			.supplyAsync(() -> operateLogMapper.selectObjCount(Collections.emptyList(), operateLogDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
 	}
@@ -77,21 +79,21 @@ public class OperateLogListQryExe {
 
 	private OperateLogCO convert(OperateLogDO operateLogDO) {
 		return OperateLogCO.builder()
-				.id(operateLogDO.getId())
-				.name(operateLogDO.getName())
-				.uri(operateLogDO.getUri())
-				.methodName(operateLogDO.getMethodName())
-				.requestType(operateLogDO.getRequestType())
-				.requestParams(operateLogDO.getRequestParams())
-				.userAgent(operateLogDO.getUserAgent())
-				.ip(operateLogDO.getIp())
-				.address(operateLogDO.getAddress())
-				.status(operateLogDO.getStatus())
-				.operator(operateLogDO.getOperator())
-				.errorMessage(operateLogDO.getErrorMessage())
-				.takeTime(operateLogDO.getTakeTime())
-				.createDate(operateLogDO.getCreateDate())
-				.build();
+			.id(operateLogDO.getId())
+			.name(operateLogDO.getName())
+			.uri(operateLogDO.getUri())
+			.methodName(operateLogDO.getMethodName())
+			.requestType(operateLogDO.getRequestType())
+			.requestParams(operateLogDO.getRequestParams())
+			.userAgent(operateLogDO.getUserAgent())
+			.ip(operateLogDO.getIp())
+			.address(operateLogDO.getAddress())
+			.status(operateLogDO.getStatus())
+			.operator(operateLogDO.getOperator())
+			.errorMessage(operateLogDO.getErrorMessage())
+			.takeTime(operateLogDO.getTakeTime())
+			.createDate(operateLogDO.getCreateDate())
+			.build();
 	}
 
 }

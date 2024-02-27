@@ -134,7 +134,9 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	@Override
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Boolean update(Resource resource) {
-		return updateResource(resource, resourceMapper.getVersion(resource.getId(), ResourceDO.class));
+		return null;
+		// return updateResource(resource, resourceMapper.getVersion(resource.getId(),
+		// ResourceDO.class));
 	}
 
 	/**
@@ -196,7 +198,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	 */
 	private Resource insertTable(Resource resource) {
 		ResourceDO resourceDO = resourceConvertor.toDataObject(resource);
-		resourceMapper.insertTable(resourceDO);
+		// resourceMapper.insertTable(resourceDO);
 		resource.setId(resourceDO.getId());
 		return resource;
 	}
@@ -266,7 +268,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		ResourceAuditDO resourceAuditDO = ConvertUtil.sourceToTarget(resource, ResourceAuditDO.class);
 		Assert.isTrue(ObjectUtil.isNotNull(resourceAuditDO), "resource audit is null");
 		resourceAuditDO.setResourceId(resource.getId());
-		resourceAuditMapper.insertTable(resourceAuditDO);
+		// resourceAuditMapper.insertTable(resourceAuditDO);
 	}
 
 	/**

@@ -15,7 +15,29 @@
  *
  */
 
+package org.laokou.common.mybatisplus.repository;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_SQL_LOG;
+
 /**
  * @author laokou
  */
-package org.laokou.common.mybatisplus.database.dataobject;
+@Data
+@TableName(BOOT_SYS_SQL_LOG)
+@Schema(name = "SqlLogDO", description = "SQL日志")
+public class SqlLogDO extends BaseDO {
+
+	@Schema(name = "appName", description = "应用名称")
+	private String appName;
+
+	@Schema(name = "dsl", description = "查询语句")
+	private String dsl;
+
+	@Schema(name = "costTime", description = "消耗时间")
+	private Long costTime;
+
+}

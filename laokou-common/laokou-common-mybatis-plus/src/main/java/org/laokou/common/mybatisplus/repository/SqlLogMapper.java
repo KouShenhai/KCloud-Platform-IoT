@@ -15,7 +15,16 @@
  *
  */
 
+package org.laokou.common.mybatisplus.repository;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
 /**
  * @author laokou
  */
-package org.laokou.common.mybatisplus.database;
+@Repository
+@Mapper
+public interface SqlLogMapper extends CrudMapper<Long, Integer, SqlLogDO> {
+
+}

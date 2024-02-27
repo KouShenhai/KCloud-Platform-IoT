@@ -48,7 +48,8 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 @EnableSecurity
 @EnableTaskExecutor
-@MapperScan({ "org.laokou.common.domain.repository", "org.laokou.flowable.gatewayimpl.database" })
+@MapperScan({ "org.laokou.common.domain.repository", "org.laokou.flowable.gatewayimpl.database",
+		"org.laokou.common.mybatisplus.repository" })
 public class FlowableApp {
 
 	public static void main(String[] args) throws UnknownHostException {

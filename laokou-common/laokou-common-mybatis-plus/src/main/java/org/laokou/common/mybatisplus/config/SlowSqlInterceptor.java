@@ -55,16 +55,16 @@ public class SlowSqlInterceptor implements Interceptor {
 		Object target = invocation.getTarget();
 		if (target instanceof StatementHandler statementHandler) {
 			String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
-			sql =  StringUtil.isNotEmpty(sql) ? " Consume Time：" + time + " ms " +
-					"\n Execute SQL：" + sql.replaceAll("\\s+", " ") + "\n" : "";
+			sql = StringUtil.isNotEmpty(sql)
+					? " Consume Time：" + time + " ms " + "\n Execute SQL：" + sql.replaceAll("\\s+", " ") + "\n" : "";
 			log.info("\n{}", sql);
 		}
-//		if (time > getMillis()) {
-//			Object target = invocation.getTarget();
-//			if (target instanceof StatementHandler statementHandler) {
-//				String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
-//			}
-//		}
+		// if (time > getMillis()) {
+		// Object target = invocation.getTarget();
+		// if (target instanceof StatementHandler statementHandler) {
+		// String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
+		// }
+		// }
 		return obj;
 	}
 

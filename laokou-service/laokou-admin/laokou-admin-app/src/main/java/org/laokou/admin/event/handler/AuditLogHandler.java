@@ -60,7 +60,7 @@ public class AuditLogHandler implements ApplicationListener {
 
 	private void execute(AuditLogEvent event) {
 		AuditLogDO auditLogDO = ConvertUtil.sourceToTarget(event, AuditLogDO.class);
-		auditLogMapper.insertTable(auditLogDO);
+		// auditLogMapper.insertTable(auditLogDO);
 	}
 
 	@Override

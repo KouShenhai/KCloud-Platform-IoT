@@ -65,7 +65,7 @@ public class LogsServiceImpl implements LogsServiceI {
 	 * @param cmd 导出操作日志参数
 	 */
 	@Override
-	public void operateExport(OperateLogExportCmd cmd) {
+	public void exportOperate(OperateLogExportCmd cmd) {
 		operateLogExportCmdExe.executeVoid(cmd);
 	}
 
@@ -84,7 +84,7 @@ public class LogsServiceImpl implements LogsServiceI {
 	 * @param cmd 导出登录日志参数
 	 */
 	@Override
-	public void loginExport(LoginLogExportCmd cmd) {
+	public void exportLogin(LoginLogExportCmd cmd) {
 		loginLogExportCmdExe.executeVoid(cmd);
 	}
 

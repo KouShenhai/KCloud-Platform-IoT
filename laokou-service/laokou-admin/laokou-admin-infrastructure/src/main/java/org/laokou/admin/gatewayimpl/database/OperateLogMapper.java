@@ -35,10 +35,9 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Repository
 @Mapper
-public interface OperateLogMapper extends CrudMapper<Long,Integer,OperateLogDO> {
+public interface OperateLogMapper extends CrudMapper<Long, Integer, OperateLogDO> {
 
-	List<OperateLogDO> selectListByCondition(@Param("operate") OperateLogDO operate, @Param(PAGE_QUERY) PageQuery pageQuery);
-
-	long selectCountByCondition(@Param("operate") OperateLogDO operate, @Param(PAGE_QUERY) PageQuery pageQuery);
+	List<OperateLogDO> selectListByCondition(@Param("operate") OperateLogDO operate,
+			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

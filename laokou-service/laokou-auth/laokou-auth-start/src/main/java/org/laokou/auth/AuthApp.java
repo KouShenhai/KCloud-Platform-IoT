@@ -52,7 +52,8 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @EnableRedisRepository
 @EnableTaskExecutor
 @EnableXxlJob
-@MapperScan({ "org.laokou.common.domain.repository", "org.laokou.auth.gatewayimpl.database" })
+@MapperScan({ "org.laokou.common.domain.repository", "org.laokou.auth.gatewayimpl.database",
+		"org.laokou.common.mybatisplus.repository" })
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 public class AuthApp {
 

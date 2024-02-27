@@ -20,7 +20,7 @@ package org.laokou.admin.event.handler;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.laokou.admin.domain.event.OssUploadEvent;
+import org.laokou.admin.domain.event.FileUploadEvent;
 import org.laokou.admin.domain.gateway.LogGateway;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.listener.AbstractDomainEventRocketMQListener;
@@ -30,8 +30,7 @@ import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OSS_UPLOAD_EVENT_CONSUMER_GROUP;
-import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OSS_UPLOAD_EVENT_TOPIC;
+import static org.laokou.common.i18n.common.RocketMqConstants.*;
 
 /**
  * OSS日志处理.
@@ -41,20 +40,20 @@ import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OSS_UPLOAD_
 @Slf4j
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_OSS_UPLOAD_EVENT_CONSUMER_GROUP, topic = LAOKOU_OSS_UPLOAD_EVENT_TOPIC,
-		messageModel = CLUSTERING, consumeMode = ORDERLY)
-public class OssUploadEventHandler extends AbstractDomainEventRocketMQListener {
+@RocketMQMessageListener(consumerGroup = LAOKOU_FILE_UPLOAD_EVENT_CONSUMER_GROUP,
+		topic = LAOKOU_FILE_UPLOAD_EVENT_TOPIC, messageModel = CLUSTERING, consumeMode = ORDERLY)
+public class FileUploadEventHandler extends AbstractDomainEventRocketMQListener {
 
 	private final LogGateway logGateway;
 
-	public OssUploadEventHandler(DomainEventService domainEventService, LogGateway logGateway) {
+	public FileUploadEventHandler(DomainEventService domainEventService, LogGateway logGateway) {
 		super(domainEventService);
 		this.logGateway = logGateway;
 	}
 
 	@Override
 	protected void handleDomainEvent(DecorateDomainEvent evt, String attribute) {
-		OssUploadEvent event = JacksonUtil.toBean(attribute, OssUploadEvent.class);
+		FileUploadEvent event = JacksonUtil.toBean(attribute, FileUploadEvent.class);
 		logGateway.create(event, evt);
 	}
 

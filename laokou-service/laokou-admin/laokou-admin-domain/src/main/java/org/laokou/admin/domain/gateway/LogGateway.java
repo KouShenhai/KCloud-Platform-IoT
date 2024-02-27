@@ -18,7 +18,7 @@
 package org.laokou.admin.domain.gateway;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.laokou.admin.domain.event.OssUploadEvent;
+import org.laokou.admin.domain.event.FileUploadEvent;
 import org.laokou.common.core.common.event.OperateEvent;
 import org.laokou.common.i18n.dto.DecorateDomainEvent;
 
@@ -30,6 +30,6 @@ public interface LogGateway {
 
 	void create(OperateEvent event, DecorateDomainEvent evt);
 
-	void create(OssUploadEvent event, DecorateDomainEvent evt);
+	void create(FileUploadEvent event, DecorateDomainEvent evt);
 
 }

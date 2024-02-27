@@ -35,7 +35,7 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Repository
 @Mapper
-public interface LoginLogMapper extends CrudMapper<Long,Integer,LoginLogDO> {
+public interface LoginLogMapper extends CrudMapper<Long, Integer, LoginLogDO> {
 
 	/**
 	 * 查询登录日志列表.
@@ -45,16 +45,6 @@ public interface LoginLogMapper extends CrudMapper<Long,Integer,LoginLogDO> {
 	 * @return 登录日志列表
 	 */
 	List<LoginLogDO> selectListByCondition(@Param("tables") List<String> tables, @Param("log") LoginLogDO log,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
-
-	/**
-	 * 查看登录日志总数.
-	 * @param tables 表集合
-	 * @param log 登录日志数据模型
-	 * @param pageQuery 分页参数
-	 * @return 登录日志总数
-	 */
-	long selectCountByCondition(@Param("tables") List<String> tables, @Param("log") LoginLogDO log,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

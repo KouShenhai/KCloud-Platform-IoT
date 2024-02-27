@@ -44,8 +44,8 @@ import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
-import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.laokou.common.mybatisplus.repository.BaseDO;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 
 import java.io.InputStream;
@@ -69,34 +69,35 @@ import static org.laokou.common.i18n.common.SysConstants.EXCEL_EXT;
  */
 @Slf4j
 public class ExcelUtil {
+
 	private static final int DEFAULT_SIZE = 1000;
 
 	public static <M, T> void doImport(InputStream inputStream, HttpServletResponse response, Class<M> clazz,
-									   BiConsumer<M, T> consumer, MybatisUtil mybatisUtil) {
+			BiConsumer<M, T> consumer, MybatisUtil mybatisUtil) {
 		EasyExcel.read(inputStream, new DataListener<>(clazz, consumer, response, mybatisUtil)).sheet().doRead();
 	}
 
-	public static <T extends BaseDO> void doExport(List<String> tables, HttpServletResponse response, T param,
-												   PageQuery pageQuery, BatchMapper<T> batchMapper, Class<?> clazz) {
-		doExport(tables, DEFAULT_SIZE, response, param, pageQuery, batchMapper, clazz);
+	public static <DO extends BaseDO> void doExport(List<String> tables, HttpServletResponse response, DO param,
+			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
+		doExport(tables, DEFAULT_SIZE, response, param, pageQuery, crudMapper, clazz);
 	}
 
 	@SneakyThrows
-	public static <T extends BaseDO> void doExport(List<String> tables, int size, HttpServletResponse response, T param,
-												   PageQuery pageQuery, BatchMapper<T> batchMapper, Class<?> clazz) {
+	public static <DO extends BaseDO> void doExport(List<String> tables, int size, HttpServletResponse response,
+			DO param, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
 		try (ServletOutputStream out = response.getOutputStream();
-			 ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
+				ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
 			// 设置请求头
 			header(response);
-			if (batchMapper.resultCountFilter(tables, param, pageQuery) > 0) {
+			if (crudMapper.selectObjCount(tables, param, pageQuery) > 0) {
 				// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
-				List<T> list = Collections.synchronizedList(new ArrayList<>(size));
-				batchMapper.resultListFilter(tables, param, resultContext -> {
+				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
+				crudMapper.selectObjList(tables, param, pageQuery, resultContext -> {
 					list.add(resultContext.getResultObject());
 					if (list.size() % size == 0) {
 						writeSheet(list, clazz, excelWriter);
 					}
-				}, pageQuery);
+				});
 				if (list.size() % size != 0) {
 					writeSheet(list, clazz, excelWriter);
 				}
@@ -161,7 +162,7 @@ public class ExcelUtil {
 		}
 
 		DataListener(Class<M> clazz, BiConsumer<M, T> consumer, int batchCount, HttpServletResponse response,
-					 MybatisUtil mybatisUtil) {
+				MybatisUtil mybatisUtil) {
 			this.batchCount = batchCount;
 			this.clazz = clazz;
 			this.response = response;
@@ -202,7 +203,7 @@ public class ExcelUtil {
 			}
 			// 写入excel
 			try (ServletOutputStream out = response.getOutputStream();
-				 ExcelWriter excelWriter = EasyExcel.write(out, Error.class).build()) {
+					ExcelWriter excelWriter = EasyExcel.write(out, Error.class).build()) {
 				// 设置请求头
 				header(response);
 				if (CollectionUtil.isEmpty(ERRORS)) {

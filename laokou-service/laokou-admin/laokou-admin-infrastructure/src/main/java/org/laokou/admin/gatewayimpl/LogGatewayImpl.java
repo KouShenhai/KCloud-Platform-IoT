@@ -19,7 +19,7 @@ package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.event.OssUploadEvent;
+import org.laokou.admin.domain.event.FileUploadEvent;
 import org.laokou.admin.domain.gateway.LogGateway;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.OssLogMapper;
@@ -55,7 +55,7 @@ public class LogGatewayImpl implements LogGateway {
 	}
 
 	@Override
-	public void create(OssUploadEvent event, DecorateDomainEvent evt) {
+	public void create(FileUploadEvent event, DecorateDomainEvent evt) {
 		try {
 			DynamicDataSourceContextHolder.push(evt.getSourceName());
 			ossLogMapper.insert(convert(event, evt));
@@ -65,14 +65,14 @@ public class LogGatewayImpl implements LogGateway {
 		}
 	}
 
-	private OssLogDO convert(OssUploadEvent ossUploadEvent, DecorateDomainEvent evt) {
+	private OssLogDO convert(FileUploadEvent fileUploadEvent, DecorateDomainEvent evt) {
 		OssLogDO logDO = new OssLogDO();
-		logDO.setMd5(ossUploadEvent.getMd5());
-		logDO.setUrl(ossUploadEvent.getUrl());
-		logDO.setName(ossUploadEvent.getName());
-		logDO.setSize(ossUploadEvent.getSize());
-		logDO.setStatus(ossUploadEvent.getStatus());
-		logDO.setErrorMessage(ossUploadEvent.getErrorMessage());
+		logDO.setMd5(fileUploadEvent.getMd5());
+		logDO.setUrl(fileUploadEvent.getUrl());
+		logDO.setName(fileUploadEvent.getName());
+		logDO.setSize(fileUploadEvent.getSize());
+		logDO.setStatus(fileUploadEvent.getStatus());
+		logDO.setErrorMessage(fileUploadEvent.getErrorMessage());
 		logDO.setId(IdGenerator.defaultSnowflakeId());
 		logDO.setEditor(evt.getEditor());
 		logDO.setCreator(evt.getCreator());
