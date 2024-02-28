@@ -18,10 +18,7 @@
 package org.laokou.admin.gatewayimpl;
 
 import io.seata.core.context.RootContext;
-import io.seata.saga.engine.AsyncCallback;
 import io.seata.saga.engine.StateMachineEngine;
-import io.seata.saga.proctrl.ProcessContext;
-import io.seata.saga.statelang.domain.ExecutionStatus;
 import io.seata.saga.statelang.domain.StateMachineInstance;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
@@ -346,8 +343,9 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		map.put("tenantId", UserUtil.getTenantId());
 		map.put("deptId", UserUtil.getDeptId());
 		map.put("deptPath", UserUtil.getDeptPath());
-		StateMachineInstance smi = stateMachineEngine.startWithBusinessKey("resourceModify", UserUtil.getTenantId().toString(),businessKey.toString(), map);
-		//waitingForFinish(smi);
+		StateMachineInstance smi = stateMachineEngine.startWithBusinessKey("resourceModify",
+				UserUtil.getTenantId().toString(), businessKey.toString(), map);
+		// waitingForFinish(smi);
 		log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
 	}
 
@@ -358,46 +356,17 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		map.put("instanceName", resource.getTitle());
 		map.put("definitionKey", defaultConfigProperties.getDefinitionKey());
 		map.put("rollback", FALSE);
-		StateMachineInstance smi = stateMachineEngine.startWithBusinessKey("resourceModify", UserUtil.getTenantId().toString(),businessKey.toString(), map);
-		//waitingForFinish(smi);
+		StateMachineInstance smi = stateMachineEngine.startWithBusinessKey("resourceModify",
+				UserUtil.getTenantId().toString(), businessKey.toString(), map);
+		// waitingForFinish(smi);
 		log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
 		HashMap<String, Object> map1 = new HashMap<>(0);
-		map1.put("businessKey",businessKey);
-		map1.put("status",1);
-		smi = stateMachineEngine.startWithBusinessKey("resourceModify", UserUtil.getTenantId().toString(),String.valueOf(IdGenerator.defaultSnowflakeId()), map1);
-		//waitingForFinish(smi);
+		map1.put("businessKey", businessKey);
+		map1.put("status", 1);
+		smi = stateMachineEngine.startWithBusinessKey("resourceModify", UserUtil.getTenantId().toString(),
+				String.valueOf(IdGenerator.defaultSnowflakeId()), map1);
+		// waitingForFinish(smi);
 		log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
-	}
-
-	private static final Object LOCK = new Object();
-
-	private static final AsyncCallback CALL_BACK = new AsyncCallback() {
-		@Override
-		public void onFinished(ProcessContext context, StateMachineInstance stateMachineInstance) {
-			synchronized (LOCK) {
-				LOCK.notifyAll();
-			}
-		}
-
-		@Override
-		public void onError(ProcessContext context, StateMachineInstance stateMachineInstance, Exception exp) {
-			synchronized (LOCK) {
-				LOCK.notifyAll();
-			}
-		}
-	};
-
-	private static void waitingForFinish(StateMachineInstance inst) {
-		synchronized (LOCK) {
-			if (ExecutionStatus.RU.equals(inst.getStatus())) {
-				try {
-					LOCK.wait();
-				}
-				catch (InterruptedException e) {
-					throw new RuntimeException(e.getMessage());
-				}
-			}
-		}
 	}
 
 }

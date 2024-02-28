@@ -30,7 +30,7 @@ public class ResourceActionImpl implements ResourceAction {
 
 	@Override
 	public boolean modify(Long businessKey, Integer status) {
-		log.info(">>>>>>>>>>>>>>>状态"+status);
+		log.info(">>>>>>>>>>>>>>>状态:{}", status);
 		return true;
 	}
 

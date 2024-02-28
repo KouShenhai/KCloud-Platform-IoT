@@ -18,6 +18,7 @@
 package org.laokou.admin.actionimpl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.domain.action.ResourceAuditAction;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author laokou
  */
+@Slf4j
 @Component("resourceAuditAction")
 @RequiredArgsConstructor
 public class ResourceAuditActionImpl implements ResourceAuditAction {
@@ -36,8 +38,7 @@ public class ResourceAuditActionImpl implements ResourceAuditAction {
 	@Override
 	public boolean create(Long businessKey, String title, String remark, String code, String url, Long resourceId,
 			Long userId, Long tenantId, Long deptId, String deptPath) {
-		System.out
-			.println(convert(businessKey, title, remark, code, url, resourceId, userId, tenantId, deptId, deptPath));
+		log.info("{}", convert(businessKey, title, remark, code, url, resourceId, userId, tenantId, deptId, deptPath));
 		// resourceAuditMapper.insertOne(convert(businessKey,title,remark,code,url,resourceId,userId,tenantId,deptId,deptPath));
 		return true;
 	}

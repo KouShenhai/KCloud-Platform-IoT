@@ -39,10 +39,11 @@ public class StartActionImpl implements StartAction {
 	@Override
 	public boolean start(Long businessKey, String instanceName, String definitionKey) {
 		if (StringUtil.isNotEmpty(definitionKey)) {
-			log.info("<<>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<名称" + definitionKey);
+			log.info("<<>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<名称:{}", definitionKey);
 			return FeignUtil.result(tasksFeignClient.start(convert(businessKey, instanceName, definitionKey)));
-		}else {
-			log.info("<<<<<<<<<<<名称" + definitionKey);
+		}
+		else {
+			log.info("<<<<<<<<<<<名称:{}", definitionKey);
 			return true;
 		}
 	}
