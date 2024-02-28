@@ -26,8 +26,6 @@ import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.flowable.api.TasksServiceI;
 import org.laokou.flowable.dto.task.*;
 import org.laokou.flowable.dto.task.clientobject.AssigneeCO;
-import org.laokou.flowable.dto.task.clientobject.AuditCO;
-import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.laokou.flowable.dto.task.clientobject.TaskCO;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +36,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "TasksController", description = "任务流程")
 @RequiredArgsConstructor
 @RequestMapping("v1/tasks")
-public class TasksController {
+public class FlowTasksController {
 
 	private final TasksServiceI tasksServiceI;
 
@@ -51,7 +49,7 @@ public class TasksController {
 	@Idempotent
 	@PostMapping("audit")
 	@Operation(summary = "任务流程", description = "审批任务流程")
-	public Result<AuditCO> audit(@RequestBody TaskAuditCmd cmd) {
+	public Result<Boolean> audit(@RequestBody TaskAuditCmd cmd) {
 		return tasksServiceI.audit(cmd);
 	}
 
@@ -62,10 +60,9 @@ public class TasksController {
 		return tasksServiceI.resolve(cmd);
 	}
 
-	@Idempotent
 	@PostMapping("start")
 	@Operation(summary = "任务流程", description = "开始任务流程")
-	public Result<StartCO> start(@RequestBody TaskStartCmd cmd) {
+	public Result<Boolean> start(@RequestBody TaskStartCmd cmd) {
 		return tasksServiceI.start(cmd);
 	}
 

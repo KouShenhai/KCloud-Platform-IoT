@@ -47,6 +47,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 public class ResourceListQryExe {
 
 	private final ResourceMapper resourceMapper;
+
 	private final Executor executor;
 
 	/**
@@ -61,9 +62,9 @@ public class ResourceListQryExe {
 		ResourceDO resourceDO = convert(qry);
 		PageQuery page = qry.page();
 		CompletableFuture<List<ResourceDO>> c1 = CompletableFuture
-				.supplyAsync(() -> resourceMapper.selectListByCondition(resourceDO, page), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> resourceMapper.selectCountByCondition(resourceDO, page),
-				executor);
+			.supplyAsync(() -> resourceMapper.selectListByCondition(resourceDO, page), executor);
+		CompletableFuture<Long> c2 = CompletableFuture
+			.supplyAsync(() -> resourceMapper.selectCountByCondition(resourceDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
 	}
@@ -79,13 +80,13 @@ public class ResourceListQryExe {
 
 	private ResourceCO convert(ResourceDO resourceDO) {
 		return ResourceCO.builder()
-				.id(resourceDO.getId())
-				.title(resourceDO.getTitle())
-				.remark(resourceDO.getRemark())
-				.instanceId(resourceDO.getInstanceId())
-				.code(resourceDO.getCode())
-				.status(resourceDO.getStatus())
-				.build();
+			.id(resourceDO.getId())
+			.title(resourceDO.getTitle())
+			.remark(resourceDO.getRemark())
+			.instanceId(resourceDO.getInstanceId())
+			.code(resourceDO.getCode())
+			.status(resourceDO.getStatus())
+			.build();
 	}
 
 }

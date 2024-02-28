@@ -15,7 +15,7 @@
 # */
 # server
 server:
-  port: 10000
+  port: 10010
   ssl:
     # 开启证书
     enabled: @SSL-ENABLED@

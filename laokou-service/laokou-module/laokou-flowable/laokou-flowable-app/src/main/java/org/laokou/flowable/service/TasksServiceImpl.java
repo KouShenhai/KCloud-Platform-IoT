@@ -26,8 +26,6 @@ import org.laokou.flowable.command.task.query.TaskDiagramGetQryExe;
 import org.laokou.flowable.command.task.query.TaskListQryExe;
 import org.laokou.flowable.dto.task.*;
 import org.laokou.flowable.dto.task.clientobject.AssigneeCO;
-import org.laokou.flowable.dto.task.clientobject.AuditCO;
-import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.laokou.flowable.dto.task.clientobject.TaskCO;
 import org.springframework.stereotype.Service;
 
@@ -69,10 +67,9 @@ public class TasksServiceImpl implements TasksServiceI {
 	/**
 	 * 审批任务流程.
 	 * @param cmd 审批任务流程参数
-	 * @return 审批结果
 	 */
 	@Override
-	public Result<AuditCO> audit(TaskAuditCmd cmd) {
+	public Result<Boolean> audit(TaskAuditCmd cmd) {
 		return taskAuditCmdExe.execute(cmd);
 	}
 
@@ -89,10 +86,9 @@ public class TasksServiceImpl implements TasksServiceI {
 	/**
 	 * 开始任务流程.
 	 * @param cmd 开始任务流程
-	 * @return 开始结果
 	 */
 	@Override
-	public Result<StartCO> start(TaskStartCmd cmd) {
+	public Result<Boolean> start(TaskStartCmd cmd) {
 		return taskStartCmdExe.execute(cmd);
 	}
 

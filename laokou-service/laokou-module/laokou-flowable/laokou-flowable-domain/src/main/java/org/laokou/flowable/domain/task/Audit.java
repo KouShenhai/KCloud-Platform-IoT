@@ -15,24 +15,47 @@
  *
  */
 
-package org.laokou.admin.dto.resource;
+package org.laokou.flowable.domain.task;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import lombok.experimental.SuperBuilder;
+import org.laokou.common.i18n.common.exception.FlowException;
+import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.utils.ObjectUtil;
+
+import java.util.Map;
+
+import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Schema(name = "TaskResolveCmd", description = "处理任务流程命令请求")
-public class TaskResolveCmd extends CommonCommand {
+@SuperBuilder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
+@Schema(name = "Audit", description = "审批")
+public class Audit extends AggregateRoot<Long> {
 
 	@Schema(name = "taskId", description = "任务ID")
 	private String taskId;
+
+	@Schema(name = "values", description = "流程变量")
+	private Map<String, Object> values;
+
+	public void checkTask(Object obj) {
+		if (ObjectUtil.isNull(obj)) {
+			throw new FlowException("任务不存在");
+		}
+	}
+
+	public void checkPending(boolean pending) {
+		if (pending) {
+			throw new FlowException("非审批任务，请处理任务");
+		}
+	}
 
 }

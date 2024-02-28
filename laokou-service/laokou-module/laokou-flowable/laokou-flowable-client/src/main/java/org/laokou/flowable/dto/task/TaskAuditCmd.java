@@ -18,7 +18,9 @@
 package org.laokou.flowable.dto.task;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 import java.io.Serial;
@@ -28,6 +30,8 @@ import java.util.Map;
  * @author laokou
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(name = "TaskAuditCmd", description = "审批任务流程命令请求")
 public class TaskAuditCmd extends CommonCommand {
 
@@ -36,9 +40,6 @@ public class TaskAuditCmd extends CommonCommand {
 
 	@Schema(name = "taskId", description = "任务ID")
 	private String taskId;
-
-	@Schema(name = "instanceId", description = "实例ID")
-	private String instanceId;
 
 	@Schema(name = "values", description = "流程变量")
 	private Map<String, Object> values;

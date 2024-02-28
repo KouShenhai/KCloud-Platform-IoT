@@ -57,10 +57,8 @@ public class TaskListQryExe {
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			IPage<TaskDO> page = new Page<>(qry.getPageNum(), qry.getPageSize());
 			IPage<TaskDO> newPage = taskMapper.getTaskList(page, key, userId, name, UserUtil.getTenantId());
-			Datas<TaskCO> datas = new Datas<>();
-			datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), TaskCO.class));
-			datas.setTotal(newPage.getTotal());
-			return Result.of(datas);
+			return Result
+				.of(Datas.of(ConvertUtil.sourceToTarget(newPage.getRecords(), TaskCO.class), newPage.getTotal()));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

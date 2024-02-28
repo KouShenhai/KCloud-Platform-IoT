@@ -25,12 +25,6 @@ import org.laokou.admin.domain.resource.Resource;
  */
 @Schema(name = "ResourceGateway", description = "资源网关")
 public interface ResourceGateway {
-	/**
-	 * 根据ID查看资源.
-	 * @param id ID
-	 * @return 资源
-	 */
-	Resource getById(Long id);
 
 	/**
 	 * 新增资源.
@@ -42,9 +36,8 @@ public interface ResourceGateway {
 	/**
 	 * 修改资源.
 	 * @param resource 资源对象
-	 * @return 修改结果
 	 */
-	Boolean update(Resource resource);
+	void modify(Resource resource);
 
 	/**
 	 * 同步资源.

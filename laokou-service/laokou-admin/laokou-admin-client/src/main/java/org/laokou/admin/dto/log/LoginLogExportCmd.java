@@ -37,4 +37,9 @@ public class LoginLogExportCmd extends LoginLogListQry {
 	@Schema(name = "response", description = "响应")
 	private HttpServletResponse response;
 
+	public LoginLogExportCmd response(HttpServletResponse response) {
+		this.response = response;
+		return this;
+	}
+
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.domain.action;
 
 /**
@@ -21,8 +22,8 @@ package org.laokou.admin.domain.action;
  */
 public interface ResourceAction {
 
-    boolean modify(Long businessKey, Integer status);
+	boolean modify(Long businessKey, Integer status);
 
-    boolean compensateModify(Long businessKey, Integer status);
+	boolean compensateModify(Long businessKey, Integer status);
 
 }

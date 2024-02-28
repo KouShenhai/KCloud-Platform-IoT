@@ -18,6 +18,8 @@
 package org.laokou.admin.gatewayimpl;
 
 import io.seata.core.context.RootContext;
+import io.seata.saga.engine.StateMachineEngine;
+import io.seata.saga.statelang.domain.StateMachineInstance;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -32,25 +34,26 @@ import org.laokou.admin.gatewayimpl.database.ResourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceIndex;
+import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.RESOURCE;
 import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
+import static org.laokou.common.i18n.common.StringConstants.FALSE;
 import static org.laokou.common.i18n.common.StringConstants.UNDER;
 
 /**
@@ -67,10 +70,6 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private final ResourceAuditMapper resourceAuditMapper;
 
-	/*
-	 * private final TasksFeignClient tasksFeignClient;
-	 */
-
 	private final ResourceConvertor resourceConvertor;
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
@@ -79,17 +78,11 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final EventUtil eventUtil;
+	private final StateMachineEngine stateMachineEngine;
 
-	/**
-	 * 根据ID查看资源.
-	 * @param id ID
-	 * @return 资源
-	 */
-	@Override
-	public Resource getById(Long id) {
-		return resourceConvertor.convertEntity(resourceMapper.selectById(id));
-	}
+	private final TasksFeignClient tasksFeignClient;
+
+	private final EventUtil eventUtil;
 
 	/**
 	 * 新增资源.
@@ -105,14 +98,12 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	/**
 	 * 修改资源.
 	 * @param resource 资源对象
-	 * @return 修改结果
 	 */
 	@Override
 	@GlobalTransactional(rollbackFor = Exception.class)
-	public Boolean update(Resource resource) {
-		return null;
-		// return updateResource(resource, resourceMapper.getVersion(resource.getId(),
-		// ResourceDO.class));
+	public void modify(Resource resource) {
+		startCreateResourceAudit(resource);
+		startFlowTask(resource);
 	}
 
 	/**
@@ -337,6 +328,45 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	 */
 	private void syncAfter() {
 		log.info("结束同步数据");
+	}
+
+	private void startCreateResourceAudit(Resource resource) {
+		Map<String, Object> map = new HashMap<>(10);
+		Long businessKey = IdGenerator.defaultSnowflakeId();
+		map.put("businessKey", businessKey);
+		map.put("title", resource.getTitle());
+		map.put("remark", resource.getRemark());
+		map.put("code", resource.getCode());
+		map.put("url", resource.getUrl());
+		map.put("resourceId", resource.getId());
+		map.put("userId", UserUtil.getUserId());
+		map.put("tenantId", UserUtil.getTenantId());
+		map.put("deptId", UserUtil.getDeptId());
+		map.put("deptPath", UserUtil.getDeptPath());
+		StateMachineInstance smi = stateMachineEngine.startWithBusinessKey("resourceModify",
+				UserUtil.getTenantId().toString(), businessKey.toString(), map);
+		// waitingForFinish(smi);
+		log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
+	}
+
+	private void startFlowTask(Resource resource) {
+		Map<String, Object> map = new HashMap<>(3);
+		Long businessKey = resource.getId();
+		map.put("businessKey", businessKey);
+		map.put("instanceName", resource.getTitle());
+		map.put("definitionKey", defaultConfigProperties.getDefinitionKey());
+		map.put("rollback", FALSE);
+		StateMachineInstance smi = stateMachineEngine.startWithBusinessKey("resourceModify",
+				UserUtil.getTenantId().toString(), businessKey.toString(), map);
+		// waitingForFinish(smi);
+		log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
+		HashMap<String, Object> map1 = new HashMap<>(0);
+		map1.put("businessKey", businessKey);
+		map1.put("status", 1);
+		smi = stateMachineEngine.startWithBusinessKey("resourceModify", UserUtil.getTenantId().toString(),
+				String.valueOf(IdGenerator.defaultSnowflakeId()), map1);
+		// waitingForFinish(smi);
+		log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
 	}
 
 }

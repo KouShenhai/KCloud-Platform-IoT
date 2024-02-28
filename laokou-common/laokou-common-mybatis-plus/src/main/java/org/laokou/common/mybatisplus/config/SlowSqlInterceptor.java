@@ -57,7 +57,7 @@ public class SlowSqlInterceptor implements Interceptor {
 			String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
 			sql = StringUtil.isNotEmpty(sql)
 					? " Consume Time：" + time + " ms " + "\n Execute SQL：" + sql.replaceAll("\\s+", " ") + "\n" : "";
-			log.info("\n{}", sql);
+			// log.info("\n{}", sql);
 		}
 		// if (time > getMillis()) {
 		// Object target = invocation.getTarget();

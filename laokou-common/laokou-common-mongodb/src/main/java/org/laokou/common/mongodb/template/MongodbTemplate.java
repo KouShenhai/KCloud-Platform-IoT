@@ -89,10 +89,10 @@ public class MongodbTemplate {
 		query.limit(end);
 		List<Map> result = mongoTemplate.find(query, Map.class, collectionName);
 		long total = mongoTemplate.count(query, collectionName);
-		Datas<Map> datas = new Datas<>();
-		datas.setRecords(result);
-		datas.setTotal(total);
-		return datas;
+		// Datas<Map> datas = new Datas<>();
+		// datas.setRecords(result);
+		// datas.setTotal(total);
+		return null;
 	}
 
 	public void insertBatch(String collectionName, List<? extends Object> dataList) {

@@ -15,22 +15,28 @@
  *
  */
 
-package org.laokou.admin.dto.resource;
+package org.laokou.flowable.domain.task;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import lombok.experimental.SuperBuilder;
+import org.laokou.common.i18n.common.exception.FlowException;
+import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.utils.ObjectUtil;
+
+import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Schema(name = "TaskStartCmd", description = "开始任务流程命令请求")
-public class TaskStartCmd extends CommonCommand {
+@SuperBuilder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
+@Schema(name = "Start", description = "开始")
+public class Start extends AggregateRoot<Long> {
 
 	@Schema(name = "definitionKey", description = "定义Key")
 	private String definitionKey;
@@ -40,5 +46,23 @@ public class TaskStartCmd extends CommonCommand {
 
 	@Schema(name = "instanceName", description = "实例名称")
 	private String instanceName;
+
+	public void checkDefinition(Object obj) {
+		if (ObjectUtil.isNull(obj)) {
+			throw new FlowException("流程未定义");
+		}
+	}
+
+	public void checkInstance(Object obj) {
+		if (ObjectUtil.isNull(obj)) {
+			throw new FlowException("流程不存在");
+		}
+	}
+
+	public void checkSuspended(boolean suspended) {
+		if (suspended) {
+			throw new FlowException("挂起失败，流程已挂起");
+		}
+	}
 
 }

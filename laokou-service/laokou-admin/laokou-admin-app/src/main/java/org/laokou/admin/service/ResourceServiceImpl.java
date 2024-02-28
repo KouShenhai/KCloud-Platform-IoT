@@ -109,7 +109,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	 * @return 资源
 	 */
 	@Override
-	public Result<ResourceCO> getById(ResourceGetQry qry) {
+	public Result<ResourceCO> findById(ResourceGetQry qry) {
 		return resourceGetQryExe.execute(qry);
 	}
 
@@ -135,11 +135,10 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	/**
 	 * 修改资源.
 	 * @param cmd 修改资源
-	 * @return 修改结果
 	 */
 	@Override
-	public Result<Boolean> update(ResourceModifyCmd cmd) {
-		return resourceModifyCmdExe.execute(cmd);
+	public void modify(ResourceModifyCmd cmd) {
+		resourceModifyCmdExe.executeVoid(cmd);
 	}
 
 	/**

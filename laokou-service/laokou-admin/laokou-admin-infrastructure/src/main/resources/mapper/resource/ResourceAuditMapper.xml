@@ -20,6 +20,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.ResourceAuditMapper">
 
+    <sql id="columns">
+        `id`,
+        creator,
+        editor,
+        create_date,
+        update_date,
+        dept_id,
+        dept_path,
+        tenant_id,
+        title,
+        remark,
+        `code`,
+        resource_id,
+        url
+    </sql>
+    <insert id="insertOne" useGeneratedKeys="false">
+        insert into boot_sys_resource_audit(<include refid="columns"/>)
+        values (
+        #{id},
+        #{creator},
+        #{editor},
+        #{createDate},
+        #{updateDate},
+        #{deptId},
+        #{deptPath},
+        #{tenantId},
+        #{title},
+        #{remark},
+        #{code},
+        #{resourceId},
+        #{url}
+        )
+    </insert>
+    <delete id="deleteOneById">
+        delete from boot_sys_resource_audit where id = #{id}
+    </delete>
+
     <select id="selectByResourceId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO">
         select title
              , url

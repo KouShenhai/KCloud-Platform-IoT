@@ -60,7 +60,7 @@ public interface ResourceServiceI {
 	 * @param qry 根据ID查看资源参数
 	 * @return 资源
 	 */
-	Result<ResourceCO> getById(ResourceGetQry qry);
+	Result<ResourceCO> findById(ResourceGetQry qry);
 
 	/**
 	 * 下载资源.
@@ -78,9 +78,8 @@ public interface ResourceServiceI {
 	/**
 	 * 修改资源.
 	 * @param cmd 修改资源
-	 * @return 修改结果
 	 */
-	Result<Boolean> update(ResourceModifyCmd cmd);
+	void modify(ResourceModifyCmd cmd);
 
 	/**
 	 * 根据ID删除资源.
