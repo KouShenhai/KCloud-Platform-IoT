@@ -119,7 +119,7 @@ public class User extends AggregateRoot<Long> {
 		}
 	}
 
-	public User copy(User user, HttpServletRequest request, String sourceName, String appName, String authType) {
+	public User create(User user, HttpServletRequest request, String sourceName, String appName, String authType) {
 		if (ObjectUtil.isNull(user)) {
 			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,
 					appName, authType);

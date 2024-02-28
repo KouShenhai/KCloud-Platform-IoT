@@ -15,24 +15,16 @@
  *
  */
 
-package org.laokou.admin.dto.resource.clientobject;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.ClientObject;
+package org.laokou.admin.domain.action;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Schema(name = "StartCO", description = "开始流程")
-public class StartCO extends ClientObject {
+public interface ResourceAuditAction {
 
-	@Schema(name = "instanceId", description = "实例ID")
-	private String instanceId;
+	boolean create(Long businessKey, String title, String remark, String code, String url, Long resourceId, Long userId,
+			Long tenantId, Long deptId, String deptPath);
+
+	boolean compensateCreate(Long businessKey);
 
 }

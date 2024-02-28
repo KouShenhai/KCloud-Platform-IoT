@@ -18,35 +18,42 @@
 package org.laokou.admin.actionimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.action.AuditAction;
-import org.laokou.admin.dto.resource.TaskAuditCmd;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.domain.action.StartAction;
+import org.laokou.admin.dto.resource.TaskStartCmd;
 import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.openfeign.utils.FeignUtil;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 /**
  * @author laokou
  */
-@Component("auditAction")
+@Slf4j
+@Component("startAction")
 @RequiredArgsConstructor
-public class AuditActionImpl implements AuditAction {
+public class StartActionImpl implements StartAction {
 
 	private final TasksFeignClient tasksFeignClient;
 
 	@Override
-	public boolean audit(String taskId, Map<String, Object> values) {
-		return FeignUtil.result(tasksFeignClient.audit(convert(taskId, values)));
+	public boolean start(Long businessKey, String instanceName, String definitionKey) {
+		if (StringUtil.isNotEmpty(definitionKey)) {
+			log.info("<<>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<名称" + definitionKey);
+			return FeignUtil.result(tasksFeignClient.start(convert(businessKey, instanceName, definitionKey)));
+		}else {
+			log.info("<<<<<<<<<<<名称" + definitionKey);
+			return true;
+		}
 	}
 
 	@Override
-	public boolean compensateAudit(String taskId) {
+	public boolean compensateStart(Long businessKey, String definitionKey) {
 		return true;
 	}
 
-	private TaskAuditCmd convert(String taskId, Map<String, Object> values) {
-		return new TaskAuditCmd(taskId, values);
+	private TaskStartCmd convert(Long businessKey, String instanceName, String definitionKey) {
+		return new TaskStartCmd(definitionKey, businessKey.toString(), instanceName);
 	}
 
 }

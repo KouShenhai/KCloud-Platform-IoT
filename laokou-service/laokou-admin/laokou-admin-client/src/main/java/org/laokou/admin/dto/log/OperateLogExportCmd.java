@@ -37,4 +37,9 @@ public class OperateLogExportCmd extends OperateLogListQry {
 	@Schema(name = "response", description = "响应")
 	private HttpServletResponse response;
 
+	public OperateLogExportCmd response(HttpServletResponse response) {
+		this.response = response;
+		return this;
+	}
+
 }

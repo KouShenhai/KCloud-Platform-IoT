@@ -26,16 +26,15 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static lombok.AccessLevel.PRIVATE;
+
 /**
  * @author laokou
  */
 @Data
 @Builder
-// TODO
-// @AllArgsConstructor(access = PRIVATE)
-// @NoArgsConstructor(access = PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "Datas", description = "对象集合")
 public class Datas<T> extends DTO {
 

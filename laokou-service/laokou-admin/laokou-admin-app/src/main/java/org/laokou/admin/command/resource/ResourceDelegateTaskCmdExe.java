@@ -22,9 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.dto.resource.ResourceDelegateTaskCmd;
-import org.laokou.admin.dto.resource.TaskDelegateCmd;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -71,12 +69,10 @@ public class ResourceDelegateTaskCmdExe {
 	 * @param cmd 委派资源任务流程参数
 	 * @return 委派任务流程命令请求
 	 */
-	private TaskDelegateCmd toCmd(ResourceDelegateTaskCmd cmd) {
-		TaskDelegateCmd c = new TaskDelegateCmd();
-		c.setTaskId(cmd.getTaskId());
-		c.setUserId(UserUtil.getUserId());
-		c.setToUserId(cmd.getUserId());
-		return c;
-	}
+	/*
+	 * private TaskDelegateCmd toCmd(ResourceDelegateTaskCmd cmd) { TaskDelegateCmd c =
+	 * new TaskDelegateCmd(); c.setTaskId(cmd.getTaskId());
+	 * c.setUserId(UserUtil.getUserId()); c.setToUserId(cmd.getUserId()); return c; }
+	 */
 
 }

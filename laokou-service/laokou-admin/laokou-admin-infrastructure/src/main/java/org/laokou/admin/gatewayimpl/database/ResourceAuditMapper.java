@@ -39,4 +39,6 @@ public interface ResourceAuditMapper extends CrudMapper<Long, Integer, ResourceA
 	 */
 	ResourceAuditDO selectByResourceId(@Param("resourceId") Long resourceId);
 
+	void deleteOneById(@Param("id") Long id);
+
 }

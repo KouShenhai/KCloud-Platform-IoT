@@ -15,17 +15,15 @@
  *
  */
 
-package org.laokou.admin.gatewayimpl.rpc.factory;
+package org.laokou.admin.domain.action;
 
 /**
  * @author laokou
  */
-/*
- * @Component public class DefinitionsFeignClientFallbackFactory implements
- * FallbackFactory<DefinitionsFeignClientFallback> {
- *
- * @Override public DefinitionsFeignClientFallback create(Throwable throwable) { return
- * new DefinitionsFeignClientFallback(); }
- *
- * }
- */
+public interface StartAction {
+
+	boolean start(Long businessKey, String instanceName, String definitionKey);
+
+	boolean compensateStart(Long businessKey, String definitionKey);
+
+}

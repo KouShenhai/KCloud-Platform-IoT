@@ -62,8 +62,7 @@ public class LogsController {
 	@PreAuthorize("hasAuthority('logs:export-operate')")
 	@OperateLog(module = "日志管理", operation = "导出操作日志")
 	public void exportOperate(@RequestBody OperateLogExportCmd cmd, HttpServletResponse response) {
-		cmd.setResponse(response);
-		logsServiceI.exportOperate(cmd);
+		logsServiceI.exportOperate(cmd.response(response));
 	}
 
 	@TraceLog
@@ -79,8 +78,7 @@ public class LogsController {
 	@PreAuthorize("hasAuthority('logs:export-login')")
 	@OperateLog(module = "日志管理", operation = "导出登录日志")
 	public void exportLogin(@RequestBody LoginLogExportCmd cmd, HttpServletResponse response) {
-		cmd.setResponse(response);
-		logsServiceI.exportLogin(cmd);
+		logsServiceI.exportLogin(cmd.response(response));
 	}
 
 }

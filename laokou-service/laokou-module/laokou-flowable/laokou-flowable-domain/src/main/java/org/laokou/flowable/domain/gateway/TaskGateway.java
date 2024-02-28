@@ -15,24 +15,18 @@
  *
  */
 
-package org.laokou.admin.dto.resource.clientobject;
+package org.laokou.flowable.domain.gateway;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.ClientObject;
+import org.laokou.flowable.domain.task.Audit;
+import org.laokou.flowable.domain.task.Start;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Schema(name = "AuditCO", description = "审批任务流程")
-public class AuditCO extends ClientObject {
+public interface TaskGateway {
 
-	@Schema(name = "assignee", description = "执行人")
-	private String assignee;
+	void start(Start start);
+
+	void audit(Audit audit);
 
 }

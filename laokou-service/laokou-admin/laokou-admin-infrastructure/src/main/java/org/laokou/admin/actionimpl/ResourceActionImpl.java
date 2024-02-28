@@ -17,23 +17,26 @@
 
 package org.laokou.admin.actionimpl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.domain.action.ResourceAction;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component("resourceAction")
 public class ResourceActionImpl implements ResourceAction {
 
-    @Override
-    public boolean modify(Long businessKey, Integer status) {
-        return true;
-    }
+	@Override
+	public boolean modify(Long businessKey, Integer status) {
+		log.info(">>>>>>>>>>>>>>>状态"+status);
+		return true;
+	}
 
-    @Override
-    public boolean compensateModify(Long businessKey, Integer status) {
-        return true;
-    }
+	@Override
+	public boolean compensateModify(Long businessKey, Integer status) {
+		return true;
+	}
 
 }

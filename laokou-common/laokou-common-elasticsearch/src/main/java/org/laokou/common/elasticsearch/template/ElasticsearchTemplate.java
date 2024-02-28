@@ -977,7 +977,6 @@ public class ElasticsearchTemplate {
 	 * @throws IOException IOException
 	 */
 	public Datas<Map<String, Long>> aggregationSearchIndex(Search search) throws IOException {
-		Datas<Map<String, Long>> datas = new Datas<>();
 		String[] indexNames = search.getIndexNames();
 		Search.Aggregation aggregationKey = search.getAggregationKey();
 		String field = aggregationKey.getField();
@@ -1002,9 +1001,7 @@ public class ElasticsearchTemplate {
 		for (Terms.Bucket bucket : buckets) {
 			list.add(Map.of(bucket.getKeyAsString(), bucket.getDocCount()));
 		}
-		datas.setRecords(list);
-		datas.setTotal(list.size());
-		return datas;
+		return Datas.of(list, list.size());
 	}
 
 	/**

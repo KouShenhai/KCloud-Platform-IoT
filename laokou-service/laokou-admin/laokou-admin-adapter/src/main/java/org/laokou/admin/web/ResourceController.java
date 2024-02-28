@@ -58,16 +58,16 @@ public class ResourceController {
 		return resourceServiceI.auditLog(new ResourceAuditLogListQry(id));
 	}
 
-//	@PostMapping("sync")
-//	@RateLimiter(id = "RESOURCE_SYNC", unit = RateIntervalUnit.MINUTES)
-//	@TraceLog
-//	@Operation(summary = "资源管理", description = "同步资源")
-//	@OperateLog(module = "资源管理", operation = "同步资源")
-//	@Lock4j(key = "resource_sync_lock", expire = 60000)
-//	@PreAuthorize("hasAuthority('resource:sync')")
-//	public Result<Boolean> sync() {
-//		return resourceServiceI.sync(new ResourceSyncCmd());
-//	}
+	// @PostMapping("sync")
+	// @RateLimiter(id = "RESOURCE_SYNC", unit = RateIntervalUnit.MINUTES)
+	// @TraceLog
+	// @Operation(summary = "资源管理", description = "同步资源")
+	// @OperateLog(module = "资源管理", operation = "同步资源")
+	// @Lock4j(key = "resource_sync_lock", expire = 60000)
+	// @PreAuthorize("hasAuthority('resource:sync')")
+	// public Result<Boolean> sync() {
+	// return resourceServiceI.sync(new ResourceSyncCmd());
+	// }
 
 	@PostMapping("list")
 	@Operation(summary = "资源管理", description = "查询资源列表")
@@ -82,7 +82,7 @@ public class ResourceController {
 	@TraceLog
 	@PreAuthorize("hasAuthority('resource:detail')")
 	public Result<ResourceCO> findById(@PathVariable("id") Long id) {
-		return resourceServiceI.getById(new ResourceGetQry(id));
+		return resourceServiceI.findById(new ResourceGetQry(id));
 	}
 
 	@GetMapping("{id}/download")
@@ -94,31 +94,28 @@ public class ResourceController {
 
 	@Idempotent
 	@PostMapping
-	@TraceLog
 	@Operation(summary = "资源管理", description = "新增资源")
 	@OperateLog(module = "资源管理", operation = "新增资源")
 	@PreAuthorize("hasAuthority('resource:create')")
-	public Result<Boolean> create(@Validated @RequestBody ResourceCreateCmd cmd) throws IOException {
-		return resourceServiceI.insert(cmd);
+	public void create(@Validated @RequestBody ResourceCreateCmd cmd) throws IOException {
+		resourceServiceI.insert(cmd);
 	}
 
 	@Idempotent
 	@PutMapping
-	@TraceLog
 	@Operation(summary = "资源管理", description = "修改资源")
 	@OperateLog(module = "资源管理", operation = "修改资源")
 	@PreAuthorize("hasAuthority('resource:modify')")
-	public Result<Boolean> modify(@Validated @RequestBody ResourceModifyCmd cmd) throws IOException {
-		return resourceServiceI.update(cmd);
+	public void modify(@Validated @RequestBody ResourceModifyCmd cmd) throws IOException {
+		resourceServiceI.modify(cmd);
 	}
 
 	@DeleteMapping("{id}")
-	@TraceLog
 	@Operation(summary = "资源管理", description = "删除资源")
 	@OperateLog(module = "资源管理", operation = "删除资源")
 	@PreAuthorize("hasAuthority('resource:remove')")
-	public Result<Boolean> remove(@PathVariable("id") Long id) {
-		return resourceServiceI.deleteById(new ResourceRemoveCmd(id));
+	public void remove(@PathVariable("id") Long id) {
+		resourceServiceI.deleteById(new ResourceRemoveCmd(id));
 	}
 
 	@GetMapping("{instanceId}/diagram")

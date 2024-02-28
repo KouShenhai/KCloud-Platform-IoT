@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.domain.action;
 
 import java.util.Map;
@@ -23,8 +24,8 @@ import java.util.Map;
  */
 public interface AuditAction {
 
-    boolean audit(String taskId, Map<String, Object> values);
+	boolean audit(String taskId, Map<String, Object> values);
 
-    boolean compensateAudit(String taskId);
+	boolean compensateAudit(String taskId);
 
 }
