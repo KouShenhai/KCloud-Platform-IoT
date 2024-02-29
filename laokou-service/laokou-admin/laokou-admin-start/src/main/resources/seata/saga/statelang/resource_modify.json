@@ -10,16 +10,12 @@
       "ServiceMethod": "create",
       "CompensateState": "CompensateCreateResourceAudit",
       "Input": [
-        "$.[businessKey]",
+        "$.[id]",
         "$.[title]",
         "$.[remark]",
         "$.[code]",
         "$.[url]",
-        "$.[resourceId]",
-        "$.[userId]",
-        "$.[tenantId]",
-        "$.[deptId]",
-        "$.[deptPath]"
+        "$.[resourceId]"
       ],
       "Output": {
         "resourceAuditResult": "$.#root"
@@ -43,11 +39,11 @@
     },
     "FlowStart": {
       "Type": "ServiceTask",
-      "ServiceName": "startAction",
+      "ServiceName": "startFlowAction",
       "ServiceMethod": "start",
       "CompensateState": "CompensateFlowStart",
       "Input": [
-        "$.[businessKey]",
+        "$.[id]",
         "$.[instanceName]",
         "$.[definitionKey]",
         {
@@ -88,7 +84,7 @@
       "ServiceMethod": "modify",
       "CompensateState": "CompensateModifyResource",
       "Input": [
-        "$.[businessKey]",
+        "$.[id]",
         "$.[status]",
         {
           "throwException": "$.[rollback]"
@@ -117,7 +113,7 @@
       "ServiceName": "resourceAuditAction",
       "ServiceMethod": "compensateCreate",
       "Input": [
-        "$.[businessKey]"
+        "$.[id]"
       ]
     },
     "CompensateModifyResource": {
@@ -125,16 +121,16 @@
       "ServiceName": "resourceAction",
       "ServiceMethod": "compensateModify",
       "Input": [
-        "$.[businessKey]",
+        "$.[id]",
         "$.[status]"
       ]
     },
     "CompensateFlowStart": {
       "Type": "ServiceTask",
-      "ServiceName": "startAction",
+      "ServiceName": "startFlowAction",
       "ServiceMethod": "compensateStart",
       "Input": [
-        "$.[businessKey]",
+        "$.[id]",
         "$.[definitionKey]"
       ]
     },

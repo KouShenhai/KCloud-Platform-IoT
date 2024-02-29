@@ -6,7 +6,7 @@
   "States": {
     "FlowAudit": {
       "Type": "ServiceTask",
-      "ServiceName": "auditAction",
+      "ServiceName": "auditFlowAction",
       "ServiceMethod": "audit",
       "CompensateState": "CompensateFlowAudit",
       "Input": [
@@ -39,7 +39,7 @@
       "ServiceMethod": "modify",
       "CompensateState": "CompensateModifyResource",
       "Input": [
-        "$.[businessKey]",
+        "$.[id]",
         "$.[status]",
         {
           "throwException": "$.[rollback]"
@@ -65,7 +65,7 @@
     },
     "CompensateFlowAudit": {
       "Type": "ServiceTask",
-      "ServiceName": "auditAction",
+      "ServiceName": "auditFlowAction",
       "ServiceMethod": "compensateAudit",
       "Input": [
         "$.[taskId]"
@@ -76,7 +76,7 @@
       "ServiceName": "resourceAction",
       "ServiceMethod": "compensateModify",
       "Input": [
-        "$.[businessKey]",
+        "$.[id]",
         "$.[status]"
       ]
     },

@@ -23,6 +23,7 @@ import org.laokou.admin.domain.action.ResourceAuditAction;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,9 +37,8 @@ public class ResourceAuditActionImpl implements ResourceAuditAction {
 	private final ResourceAuditMapper resourceAuditMapper;
 
 	@Override
-	public boolean create(Long businessKey, String title, String remark, String code, String url, Long resourceId,
-			Long userId, Long tenantId, Long deptId, String deptPath) {
-		log.info("{}", convert(businessKey, title, remark, code, url, resourceId, userId, tenantId, deptId, deptPath));
+	public boolean create(Long businessKey, String title, String remark, String code, String url, Long resourceId) {
+		log.info("{}", convert(businessKey, title, remark, code, url, resourceId));
 		// resourceAuditMapper.insertOne(convert(businessKey,title,remark,code,url,resourceId,userId,tenantId,deptId,deptPath));
 		return true;
 	}
@@ -50,7 +50,7 @@ public class ResourceAuditActionImpl implements ResourceAuditAction {
 	}
 
 	private ResourceAuditDO convert(Long businessKey, String title, String remark, String code, String url,
-			Long resourceId, Long userId, Long tenantId, Long deptId, String deptPath) {
+			Long resourceId) {
 		ResourceAuditDO resourceAuditDO = new ResourceAuditDO();
 		resourceAuditDO.setId(businessKey);
 		resourceAuditDO.setResourceId(resourceId);
@@ -60,11 +60,11 @@ public class ResourceAuditActionImpl implements ResourceAuditAction {
 		resourceAuditDO.setUrl(url);
 		resourceAuditDO.setCreateDate(DateUtil.now());
 		resourceAuditDO.setUpdateDate(DateUtil.now());
-		resourceAuditDO.setTenantId(tenantId);
-		resourceAuditDO.setCreator(userId);
-		resourceAuditDO.setEditor(userId);
-		resourceAuditDO.setDeptId(deptId);
-		resourceAuditDO.setDeptPath(deptPath);
+		resourceAuditDO.setTenantId(UserUtil.getTenantId());
+		resourceAuditDO.setCreator(UserUtil.getUserId());
+		resourceAuditDO.setEditor(UserUtil.getUserId());
+		resourceAuditDO.setDeptId(UserUtil.getDeptId());
+		resourceAuditDO.setDeptPath(UserUtil.getDeptPath());
 		return resourceAuditDO;
 	}
 

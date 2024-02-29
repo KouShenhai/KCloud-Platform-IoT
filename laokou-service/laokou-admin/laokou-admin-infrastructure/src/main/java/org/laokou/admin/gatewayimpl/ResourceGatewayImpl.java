@@ -20,7 +20,6 @@ package org.laokou.admin.gatewayimpl;
 import io.seata.core.context.RootContext;
 import io.seata.saga.engine.StateMachineEngine;
 import io.seata.saga.statelang.domain.StateMachineInstance;
-import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -90,7 +89,6 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	 * @return 新增结果
 	 */
 	@Override
-	@GlobalTransactional(rollbackFor = Exception.class)
 	public Boolean insert(Resource resource) {
 		return insertResource(resource);
 	}
@@ -100,7 +98,6 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	 * @param resource 资源对象
 	 */
 	@Override
-	@GlobalTransactional(rollbackFor = Exception.class)
 	public void modify(Resource resource) {
 		startCreateResourceAudit(resource);
 		startFlowTask(resource);
@@ -332,36 +329,30 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private void startCreateResourceAudit(Resource resource) {
 		Map<String, Object> map = new HashMap<>(10);
-		Long businessKey = IdGenerator.defaultSnowflakeId();
-		map.put("businessKey", businessKey);
+		map.put("id", IdGenerator.defaultSnowflakeId());
 		map.put("title", resource.getTitle());
 		map.put("remark", resource.getRemark());
 		map.put("code", resource.getCode());
 		map.put("url", resource.getUrl());
 		map.put("resourceId", resource.getId());
-		map.put("userId", UserUtil.getUserId());
-		map.put("tenantId", UserUtil.getTenantId());
-		map.put("deptId", UserUtil.getDeptId());
-		map.put("deptPath", UserUtil.getDeptPath());
 		StateMachineInstance smi = stateMachineEngine.startWithBusinessKey("resourceModify",
-				UserUtil.getTenantId().toString(), businessKey.toString(), map);
+				UserUtil.getTenantId().toString(), String.valueOf(IdGenerator.defaultSnowflakeId()), map);
 		// waitingForFinish(smi);
 		log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
 	}
 
 	private void startFlowTask(Resource resource) {
 		Map<String, Object> map = new HashMap<>(3);
-		Long businessKey = resource.getId();
-		map.put("businessKey", businessKey);
+		map.put("id", resource.getId());
 		map.put("instanceName", resource.getTitle());
 		map.put("definitionKey", defaultConfigProperties.getDefinitionKey());
 		map.put("rollback", FALSE);
 		StateMachineInstance smi = stateMachineEngine.startWithBusinessKey("resourceModify",
-				UserUtil.getTenantId().toString(), businessKey.toString(), map);
+				UserUtil.getTenantId().toString(), String.valueOf(IdGenerator.defaultSnowflakeId()), map);
 		// waitingForFinish(smi);
 		log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
 		HashMap<String, Object> map1 = new HashMap<>(0);
-		map1.put("businessKey", businessKey);
+		map1.put("id", IdGenerator.defaultSnowflakeId());
 		map1.put("status", 1);
 		smi = stateMachineEngine.startWithBusinessKey("resourceModify", UserUtil.getTenantId().toString(),
 				String.valueOf(IdGenerator.defaultSnowflakeId()), map1);
