@@ -18,22 +18,29 @@
 package org.laokou.admin.domain.message;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.laokou.common.i18n.dto.AggregateRoot;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+
+import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
-@NoArgsConstructor
+@SuperBuilder
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "Message", description = "消息")
-public class Message {
+public class Message extends AggregateRoot<Long> {
 
-	@Schema(name = "id", description = "ID")
-	private Long id;
+	@Schema(name = "DEFAULT_MESSAGE", description = "默认消息")
+	private static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
 
 	@Schema(name = "title", description = "消息标题")
 	private String title;
@@ -49,5 +56,9 @@ public class Message {
 
 	@Schema(name = "receiver", description = "接收人集合")
 	private Set<String> receiver;
+
+	public String getDefaultMessage() {
+		return DEFAULT_MESSAGE;
+	}
 
 }

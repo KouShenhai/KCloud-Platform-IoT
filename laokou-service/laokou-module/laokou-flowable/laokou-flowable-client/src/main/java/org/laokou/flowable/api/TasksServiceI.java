@@ -21,8 +21,6 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.dto.task.*;
 import org.laokou.flowable.dto.task.clientobject.AssigneeCO;
-import org.laokou.flowable.dto.task.clientobject.AuditCO;
-import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.laokou.flowable.dto.task.clientobject.TaskCO;
 
 /**
@@ -42,9 +40,8 @@ public interface TasksServiceI {
 	/**
 	 * 审批任务流程.
 	 * @param cmd 审批任务流程参数
-	 * @return 审批结果
 	 */
-	Result<AuditCO> audit(TaskAuditCmd cmd);
+	Result<Boolean> audit(TaskAuditCmd cmd);
 
 	/**
 	 * 处理任务流程.
@@ -56,9 +53,8 @@ public interface TasksServiceI {
 	/**
 	 * 开始任务流程.
 	 * @param cmd 开始任务流程
-	 * @return 开始结果
 	 */
-	Result<StartCO> start(TaskStartCmd cmd);
+	Result<Boolean> start(TaskStartCmd cmd);
 
 	/**
 	 * 查看任务流程图.

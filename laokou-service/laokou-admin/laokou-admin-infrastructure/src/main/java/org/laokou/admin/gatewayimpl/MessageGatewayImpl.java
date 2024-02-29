@@ -18,38 +18,34 @@
 package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.ThreadContext;
 import org.laokou.admin.convertor.MessageConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
-import org.laokou.admin.domain.user.User;
+import org.laokou.admin.domain.message.MessageDetail;
 import org.laokou.admin.gatewayimpl.database.MessageDetailMapper;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
-import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.MessageTypeEnums;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_MESSAGE;
-import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_NOTICE_MESSAGE_TAG;
-import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_REMIND_MESSAGE_TAG;
+import static org.laokou.common.i18n.common.RocketMqConstants.*;
+import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
 
 /**
  * 消息管理.
@@ -69,78 +65,56 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	private final MessageConvertor messageConvertor;
 
-	private final MybatisUtil mybatisUtil;
+	private final MessageDetailMapper messageDetailMapper;
 
-	/**
-	 * 查询消息列表.
-	 * @param message 消息对象
-	 * @param pageQuery 分页参数
-	 * @return 消息列表
-	 */
-	@Override
-	@DataFilter(tableAlias = BOOT_SYS_MESSAGE)
-	public Datas<Message> list(Message message, PageQuery pageQuery) {
-		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<MessageDO> newPage = messageMapper.getMessageListFilter(page, message.getTitle(), pageQuery);
-		Datas<Message> datas = new Datas<>();
-		datas.setTotal(newPage.getTotal());
-		datas.setRecords(messageConvertor.convertEntityList(newPage.getRecords()));
-		return datas;
-	}
+	private final MybatisUtil mybatisUtil;
 
 	/**
 	 * 新增消息.
 	 * @param message 消息对象
-	 * @param user 用户对象
-	 * @return 新增结果
 	 */
 	@Override
-	public Boolean insert(Message message, User user) {
-		insertMessage(messageConvertor.toDataObject(message), message, user);
-		// 插入成功发送消息
-		pushMessage(message.getReceiver(), message.getType());
-		return true;
+	public void create(Message message) {
+		create(messageConvertor.toDataObject(message), message);
+		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(message.getType()),
+				JacksonUtil.toJsonStr(org.laokou.common.i18n.dto.Message.builder()
+					.payload(message.getDefaultMessage())
+					.receiver(message.getReceiver())
+					.build()),
+				ThreadContext.get(TRACE_ID));
 	}
 
-	/**
-	 * 根据ID查看消息.
-	 * @param id ID
-	 * @return 消息
-	 */
 	@Override
-	public Message getById(Long id) {
-		return messageConvertor.convertEntity(messageMapper.selectById(id));
+	public void read(MessageDetail messageDetail) {
+		MessageDetailDO messageDetailDO = convert(messageDetail);
+		messageDetailDO.setVersion(messageDetailMapper.selectVersion(messageDetailDO.getId()));
+		modifyMessageDetail(messageDetailDO);
 	}
 
-	/**
-	 * 推送消息.
-	 * @param receiver 接收人集合
-	 * @param type 类型
-	 */
-	private void pushMessage(Set<String> receiver, Integer type) {
-		if (CollectionUtil.isEmpty(receiver)) {
-			return;
-		}
-		/*
-		 * MsgCO co = new MsgCO(); co.setMsg(DEFAULT_MESSAGE); co.setReceiver(receiver);
-		 */
-		/*
-		 * rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(type),
-		 * JacksonUtil.toJsonStr(co), ThreadContext.get(TRACE_ID));
-		 */
+	private void modifyMessageDetail(MessageDetailDO messageDetailDO) {
+		transactionalUtil.defaultExecuteWithoutResult(rollback -> {
+			try {
+				messageDetailMapper.updateById(messageDetailDO);
+			}
+			catch (Exception e) {
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
+				rollback.setRollbackOnly();
+				throw new SystemException(msg);
+			}
+		});
 	}
 
 	/**
 	 * 新增消息.
 	 * @param messageDO 消息数据模型
 	 * @param message 消息对象
-	 * @param user 用户对象
 	 */
-	private void insertMessage(MessageDO messageDO, Message message, User user) {
+	private void create(MessageDO messageDO, Message message) {
 		transactionalUtil.defaultExecuteWithoutResult(rollback -> {
 			try {
-				messageMapper.insertTable(messageDO);
-				insertMessageDetail(messageDO.getId(), message.getReceiver(), user);
+				messageMapper.insert(messageDO);
+				createMessageDetail(messageDO.getId(), message.getReceiver());
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
@@ -154,16 +128,11 @@ public class MessageGatewayImpl implements MessageGateway {
 	 * 新增消息详情.
 	 * @param messageId 消息ID
 	 * @param receiver 接收人列表
-	 * @param user 用户对象
 	 */
-	private void insertMessageDetail(Long messageId, Set<String> receiver, User user) {
-		if (CollectionUtil.isNotEmpty(receiver)) {
-			List<MessageDetailDO> list = receiver.parallelStream()
-				.map(userId -> toMessageDetailDO(messageId, userId, user))
-				.toList();
-			mybatisUtil.batch(list, MessageDetailMapper.class, DynamicDataSourceContextHolder.peek(),
-					MessageDetailMapper::save);
-		}
+	private void createMessageDetail(Long messageId, Set<String> receiver) {
+		List<MessageDetailDO> list = receiver.parallelStream().map(userId -> convert(messageId, userId)).toList();
+		mybatisUtil.batch(list, MessageDetailMapper.class, DynamicDataSourceContextHolder.peek(),
+				MessageDetailMapper::insertOne);
 	}
 
 	/**
@@ -175,23 +144,30 @@ public class MessageGatewayImpl implements MessageGateway {
 		return type == MessageTypeEnums.NOTICE.ordinal() ? LAOKOU_NOTICE_MESSAGE_TAG : LAOKOU_REMIND_MESSAGE_TAG;
 	}
 
+	private MessageDetailDO convert(MessageDetail messageDetail) {
+		MessageDetailDO messageDetailDO = new MessageDetailDO();
+		messageDetailDO.setReadFlag(messageDetail.getReadFlag());
+		messageDetailDO.setId(messageDetail.getId());
+		return messageDetailDO;
+	}
+
 	/**
 	 * 转换消息详情数据模型.
 	 * @param messageId 消息ID
 	 * @param userId 用户ID
-	 * @param user 用户对象
 	 * @return 消息详情数据模型
 	 */
-	private MessageDetailDO toMessageDetailDO(Long messageId, String userId, User user) {
+	private MessageDetailDO convert(Long messageId, String userId) {
 		MessageDetailDO messageDetailDO = new MessageDetailDO();
 		messageDetailDO.setUserId(Long.parseLong(userId));
 		messageDetailDO.setId(IdGenerator.defaultSnowflakeId());
 		messageDetailDO.setCreateDate(DateUtil.now());
-		messageDetailDO.setCreator(user.getId());
-		messageDetailDO.setDeptId(user.getDeptId());
-		messageDetailDO.setTenantId(user.getTenantId());
+		messageDetailDO.setCreator(UserUtil.getUserId());
+		messageDetailDO.setEditor(UserUtil.getUserId());
+		messageDetailDO.setDeptId(UserUtil.getDeptId());
+		messageDetailDO.setTenantId(UserUtil.getTenantId());
 		messageDetailDO.setMessageId(messageId);
-		messageDetailDO.setDeptPath(user.getDeptPath());
+		messageDetailDO.setDeptPath(UserUtil.getDeptPath());
 		return messageDetailDO;
 	}
 

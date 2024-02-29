@@ -18,13 +18,17 @@
 package org.laokou.admin.dto.resource;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(name = "TaskStartCmd", description = "开始任务流程命令请求")
 public class TaskStartCmd extends CommonCommand {
 

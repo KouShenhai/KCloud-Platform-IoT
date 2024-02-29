@@ -17,9 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.IpConvertor;
@@ -29,13 +27,13 @@ import org.laokou.admin.gatewayimpl.database.IpMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.IpDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,83 +61,63 @@ public class IpGatewayImpl implements IpGateway {
 	/**
 	 * 新增IP.
 	 * @param ip IP对象
-	 * @return 新增结果
 	 */
 	@Override
-	public Boolean insert(Ip ip) {
-		return insertIp(ipConvertor.toDataObject(ip));
+	public void create(Ip ip) {
+		create(ipConvertor.toDataObject(ip));
 	}
 
 	/**
-	 * 根据ID删除IP.
-	 * @param id ID
-	 * @return 删除结果
+	 * 根据IDS删除IP.
+	 * @param ids IDS
 	 */
 	@Override
-	public Boolean deleteById(Long id) {
-		return transactionalUtil.defaultExecute(r -> {
+	public void remove(Long[] ids) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return ipMapper.deleteById(id) > 0;
+				ipMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(msg);
 			}
 		});
 	}
 
 	/**
-	 * 查询IP列表.
-	 * @param ip IP对象
-	 * @param pageQuery 分页参数
-	 * @return IP列表
-	 */
-	@Override
-	public Datas<Ip> list(Ip ip, PageQuery pageQuery) {
-		IPage<IpDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<IpDO> newPage = ipMapper.selectPage(page,
-				Wrappers.lambdaQuery(IpDO.class).eq(IpDO::getLabel, ip.getLabel()).select(IpDO::getId, IpDO::getValue));
-		Datas<Ip> datas = new Datas<>();
-		datas.setRecords(ipConvertor.convertEntityList(newPage.getRecords()));
-		datas.setTotal(newPage.getTotal());
-		return datas;
-	}
-
-	/**
 	 * 刷新IP至Redis.
 	 * @param ip IP对象
-	 * @return 刷新结果
 	 */
 	@Override
-	public Boolean refresh(Ip ip) {
+	public void refresh(Ip ip) {
 		String label = ip.getLabel();
 		List<IpDO> list = ipMapper
 			.selectList(Wrappers.lambdaQuery(IpDO.class).eq(IpDO::getLabel, label).select(IpDO::getValue));
 		if (CollectionUtil.isEmpty(list)) {
-			return false;
+			return;
 		}
 		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(label);
 		redisUtil.hDel(ipCacheHashKey);
 		redisUtil.hSet(ipCacheHashKey, list.stream().collect(Collectors.toMap(IpDO::getValue, val -> DEFAULT)),
 				NOT_EXPIRE);
-		return true;
 	}
 
 	/**
 	 * 新增IP.
 	 * @param ipDO IP数据模型
-	 * @return 新增结果
 	 */
-	private Boolean insertIp(IpDO ipDO) {
-		return transactionalUtil.defaultExecute(r -> {
+	private void create(IpDO ipDO) {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				return ipMapper.insertTable(ipDO);
+				ipMapper.insert(ipDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				String msg = LogUtil.result(e.getMessage());
+				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(msg);
 			}
 		});
 	}

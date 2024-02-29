@@ -19,16 +19,22 @@ package org.laokou.admin.command.resource.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.ResourceConvertor;
-import org.laokou.admin.domain.gateway.ResourceGateway;
-import org.laokou.admin.domain.resource.Resource;
+import lombok.SneakyThrows;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.resource.ResourceListQry;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.gatewayimpl.database.ResourceMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+
+import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_RESOURCE;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
@@ -40,23 +46,47 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 @RequiredArgsConstructor
 public class ResourceListQryExe {
 
-	private final ResourceGateway resourceGateway;
+	private final ResourceMapper resourceMapper;
 
-	private final ResourceConvertor resourceConvertor;
+	private final Executor executor;
 
 	/**
 	 * 执行查询资源列表.
 	 * @param qry 查询资源列表参数
 	 * @return 资源列表
 	 */
+	@SneakyThrows
 	@DS(TENANT)
+	@DataFilter(tableAlias = BOOT_SYS_RESOURCE)
 	public Result<Datas<ResourceCO>> execute(ResourceListQry qry) {
-		Resource resource = ConvertUtil.sourceToTarget(qry, Resource.class);
-		Datas<Resource> newPage = resourceGateway.list(resource, qry);
-		Datas<ResourceCO> datas = new Datas<>();
-		// datas.setRecords(resourceConvertor.convertClientObjectList(newPage.getRecords()));
-		datas.setTotal(newPage.getTotal());
-		return Result.of(datas);
+		ResourceDO resourceDO = convert(qry);
+		PageQuery page = qry.page();
+		CompletableFuture<List<ResourceDO>> c1 = CompletableFuture
+			.supplyAsync(() -> resourceMapper.selectListByCondition(resourceDO, page), executor);
+		CompletableFuture<Long> c2 = CompletableFuture
+			.supplyAsync(() -> resourceMapper.selectCountByCondition(resourceDO, page), executor);
+		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
+		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
+	}
+
+	private ResourceDO convert(ResourceListQry qry) {
+		ResourceDO resourceDO = new ResourceDO();
+		resourceDO.setId(qry.getId());
+		resourceDO.setCode(qry.getCode());
+		resourceDO.setTitle(qry.getTitle());
+		resourceDO.setStatus(qry.getStatus());
+		return resourceDO;
+	}
+
+	private ResourceCO convert(ResourceDO resourceDO) {
+		return ResourceCO.builder()
+			.id(resourceDO.getId())
+			.title(resourceDO.getTitle())
+			.remark(resourceDO.getRemark())
+			.instanceId(resourceDO.getInstanceId())
+			.code(resourceDO.getCode())
+			.status(resourceDO.getStatus())
+			.build();
 	}
 
 }

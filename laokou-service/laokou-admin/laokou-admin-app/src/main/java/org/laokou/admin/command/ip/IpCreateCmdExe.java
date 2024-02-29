@@ -18,10 +18,11 @@
 package org.laokou.admin.command.ip;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.IpConvertor;
 import org.laokou.admin.domain.gateway.IpGateway;
+import org.laokou.admin.domain.ip.Ip;
 import org.laokou.admin.dto.ip.IpCreateCmd;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.admin.dto.ip.clientobject.IpCO;
+import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,16 +36,16 @@ public class IpCreateCmdExe {
 
 	private final IpGateway ipGateway;
 
-	private final IpConvertor ipConvertor;
-
 	/**
 	 * 执行新增IP.
 	 * @param cmd 新增IP参数
-	 * @return 执行新增结果
 	 */
-	public Result<Boolean> execute(IpCreateCmd cmd) {
-		return null;
-		// return Result.of(ipGateway.insert(ipConvertor.toEntity(cmd.getIpCO())));
+	public void executeVoid(IpCreateCmd cmd) {
+		ipGateway.create(convert(cmd.getIpCO()));
+	}
+
+	private Ip convert(IpCO ipCO) {
+		return Ip.builder().id(IdGenerator.defaultSnowflakeId()).value(ipCO.getValue()).label(ipCO.getLabel()).build();
 	}
 
 }

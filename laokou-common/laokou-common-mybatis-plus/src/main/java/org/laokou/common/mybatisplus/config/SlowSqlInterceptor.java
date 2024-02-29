@@ -24,8 +24,8 @@ import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.handler.SqlLogEvent;
 import org.laokou.common.mybatisplus.utils.SqlUtil;
 
@@ -52,13 +52,19 @@ public class SlowSqlInterceptor implements Interceptor {
 		long start = IdGenerator.SystemClock.now();
 		Object obj = invocation.proceed();
 		long time = (IdGenerator.SystemClock.now() - start);
-		if (time > getMillis()) {
-			Object target = invocation.getTarget();
-			if (target instanceof StatementHandler statementHandler) {
-				String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
-				SpringContextUtil.publishEvent(null);
-			}
+		Object target = invocation.getTarget();
+		if (target instanceof StatementHandler statementHandler) {
+			String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
+			sql = StringUtil.isNotEmpty(sql)
+					? " Consume Time：" + time + " ms " + "\n Execute SQL：" + sql.replaceAll("\\s+", " ") + "\n" : "";
+			// log.info("\n{}", sql);
 		}
+		// if (time > getMillis()) {
+		// Object target = invocation.getTarget();
+		// if (target instanceof StatementHandler statementHandler) {
+		// String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
+		// }
+		// }
 		return obj;
 	}
 

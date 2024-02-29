@@ -25,10 +25,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class RemoteClient {
 
-	/*
-	 * @DubboReference(version = VERSION) private ReportServiceI reportServiceI;
-	 *
-	 * public void test() { reportServiceI.test(); }
-	 */
+	// @DubboReference(version = VERSION)
+	// private ReportServiceI reportServiceI;
+	//
+	// public void test() {
+	// reportServiceI.test();
+	// }
 
 }

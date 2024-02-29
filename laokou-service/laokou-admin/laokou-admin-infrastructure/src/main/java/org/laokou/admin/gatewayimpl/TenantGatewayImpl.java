@@ -279,7 +279,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	 * @return 菜单列表
 	 */
 	private List<MenuDO> getMenuList(long tenantId, long userId, long deptId, String deptPath, long packageId) {
-		List<MenuDO> menuList = menuMapper.getTenantMenuListByPackageId(packageId);
+		List<MenuDO> menuList = menuMapper.selectTenantMenuListByPackageId(packageId);
 		menuList.forEach(item -> {
 			item.setTenantId(tenantId);
 			item.setCreateDate(DateUtil.now());

@@ -17,17 +17,15 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.seata.core.context.RootContext;
-import io.seata.spring.annotation.GlobalTransactional;
+import io.seata.saga.engine.StateMachineEngine;
+import io.seata.saga.statelang.domain.StateMachineInstance;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.ResourceConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.laokou.admin.domain.resource.Resource;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
@@ -35,26 +33,23 @@ import org.laokou.admin.gatewayimpl.database.ResourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceIndex;
+import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_RESOURCE;
 import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.RESOURCE;
 import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
 import static org.laokou.common.i18n.common.StringConstants.UNDER;
@@ -73,10 +68,6 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private final ResourceAuditMapper resourceAuditMapper;
 
-	/*
-	 * private final TasksFeignClient tasksFeignClient;
-	 */
-
 	private final ResourceConvertor resourceConvertor;
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
@@ -85,35 +76,11 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	private final StateMachineEngine stateMachineEngine;
+
+	private final TasksFeignClient tasksFeignClient;
+
 	private final EventUtil eventUtil;
-
-	/**
-	 * 查询资源列表.
-	 * @param resource 资源对象
-	 * @param pageQuery 分页参数
-	 * @return 资源列表
-	 */
-	@Override
-	@DataFilter(tableAlias = BOOT_SYS_RESOURCE)
-	public Datas<Resource> list(Resource resource, PageQuery pageQuery) {
-		IPage<ResourceDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		ResourceDO resourceDO = resourceConvertor.toDataObject(resource);
-		IPage<ResourceDO> newPage = resourceMapper.getResourceListFilter(page, resourceDO, pageQuery);
-		Datas<Resource> datas = new Datas<>();
-		datas.setTotal(newPage.getTotal());
-		datas.setRecords(resourceConvertor.convertEntityList(newPage.getRecords()));
-		return datas;
-	}
-
-	/**
-	 * 根据ID查看资源.
-	 * @param id ID
-	 * @return 资源
-	 */
-	@Override
-	public Resource getById(Long id) {
-		return resourceConvertor.convertEntity(resourceMapper.selectById(id));
-	}
 
 	/**
 	 * 新增资源.
@@ -121,7 +88,6 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	 * @return 新增结果
 	 */
 	@Override
-	@GlobalTransactional(rollbackFor = Exception.class)
 	public Boolean insert(Resource resource) {
 		return insertResource(resource);
 	}
@@ -129,12 +95,11 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	/**
 	 * 修改资源.
 	 * @param resource 资源对象
-	 * @return 修改结果
 	 */
 	@Override
-	@GlobalTransactional(rollbackFor = Exception.class)
-	public Boolean update(Resource resource) {
-		return updateResource(resource, resourceMapper.getVersion(resource.getId(), ResourceDO.class));
+	public void modify(Resource resource) {
+		startCreateResourceAudit(resource);
+		//startFlowTask(resource);
 	}
 
 	/**
@@ -196,7 +161,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	 */
 	private Resource insertTable(Resource resource) {
 		ResourceDO resourceDO = resourceConvertor.toDataObject(resource);
-		resourceMapper.insertTable(resourceDO);
+		// resourceMapper.insertTable(resourceDO);
 		resource.setId(resourceDO.getId());
 		return resource;
 	}
@@ -266,7 +231,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		ResourceAuditDO resourceAuditDO = ConvertUtil.sourceToTarget(resource, ResourceAuditDO.class);
 		Assert.isTrue(ObjectUtil.isNotNull(resourceAuditDO), "resource audit is null");
 		resourceAuditDO.setResourceId(resource.getId());
-		resourceAuditMapper.insertTable(resourceAuditDO);
+		// resourceAuditMapper.insertTable(resourceAuditDO);
 	}
 
 	/**
@@ -359,6 +324,21 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	 */
 	private void syncAfter() {
 		log.info("结束同步数据");
+	}
+
+	private void startCreateResourceAudit(Resource resource) {
+		Map<String, Object> map = new HashMap<>(10);
+		String businessKey = String.valueOf(IdGenerator.defaultSnowflakeId());
+		map.put("businessKey", businessKey);
+		map.put("title", resource.getTitle());
+		map.put("remark", resource.getRemark());
+		map.put("code", resource.getCode());
+		map.put("url", resource.getUrl());
+		map.put("resourceId", resource.getId());
+		StateMachineInstance smi = stateMachineEngine.startWithBusinessKey("resourceModify",
+				UserUtil.getTenantId().toString(), businessKey, map);
+		// waitingForFinish(smi);
+		log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
 	}
 
 }

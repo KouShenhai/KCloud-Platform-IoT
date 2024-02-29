@@ -55,11 +55,10 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	/**
 	 * 新增消息.
 	 * @param cmd 新增消息参数
-	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(MessageCreateCmd cmd) {
-		return messageCreateCmdExe.execute(cmd);
+	public void create(MessageCreateCmd cmd) {
+		messageCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -68,7 +67,7 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	 * @return 消息列表
 	 */
 	@Override
-	public Result<Datas<MessageCO>> list(MessageListQry qry) {
+	public Result<Datas<MessageCO>> findList(MessageListQry qry) {
 		return messageListQryExe.execute(qry);
 	}
 
@@ -88,7 +87,7 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	 * @return 消息
 	 */
 	@Override
-	public Result<MessageCO> getById(MessageGetQry qry) {
+	public Result<MessageCO> findById(MessageGetQry qry) {
 		return messageGetQryExe.execute(qry);
 	}
 
@@ -98,18 +97,17 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	 * @return 未读消息列表
 	 */
 	@Override
-	public Result<Datas<MessageCO>> unreadList(MessageUnreadListQry qry) {
+	public Result<Datas<MessageCO>> findUnreadList(MessageUnreadListQry qry) {
 		return messageUnreadListQryExe.execute(qry);
 	}
 
 	/**
 	 * 查看未读消息数.
-	 * @param qry 查看未读消息数参数
 	 * @return 未读消息数
 	 */
 	@Override
-	public Result<Integer> unreadCount(MessageUnreadCountGetQry qry) {
-		return messageUnreadCountGetQryExe.execute(qry);
+	public Result<Integer> findUnreadCount() {
+		return messageUnreadCountGetQryExe.execute();
 	}
 
 }

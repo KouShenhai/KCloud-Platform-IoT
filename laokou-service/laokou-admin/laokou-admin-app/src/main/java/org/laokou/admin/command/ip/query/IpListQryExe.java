@@ -18,14 +18,19 @@
 package org.laokou.admin.command.ip.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.IpConvertor;
-import org.laokou.admin.domain.gateway.IpGateway;
-import org.laokou.admin.domain.ip.Ip;
+import lombok.SneakyThrows;
 import org.laokou.admin.dto.ip.IpListQry;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
+import org.laokou.admin.gatewayimpl.database.IpMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.IpDO;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 /**
  * 查询IP列表执行器.
@@ -36,21 +41,35 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class IpListQryExe {
 
-	private final IpGateway ipGateway;
+	private final IpMapper ipMapper;
 
-	private final IpConvertor ipConvertor;
+	private final Executor executor;
 
 	/**
 	 * 查询IP列表.
 	 * @param qry 查询IP列表参数
 	 * @return IP列表
 	 */
+	@SneakyThrows
 	public Result<Datas<IpCO>> execute(IpListQry qry) {
-		Datas<Ip> page = ipGateway.list(new Ip(qry.getLabel()), qry);
-		Datas<IpCO> datas = new Datas<>();
-		// datas.setRecords(ipConvertor.convertClientObjectList(page.getRecords()));
-		datas.setTotal(page.getTotal());
-		return Result.of(datas);
+		IpDO ipDO = convert(qry.getLabel());
+		PageQuery page = qry.page();
+		CompletableFuture<List<IpDO>> c1 = CompletableFuture
+			.supplyAsync(() -> ipMapper.selectListByCondition(ipDO, page), executor);
+		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ipMapper.selectCountByCondition(ipDO, page),
+				executor);
+		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
+		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
+	}
+
+	private IpDO convert(String label) {
+		IpDO ipDO = new IpDO();
+		ipDO.setLabel(label);
+		return ipDO;
+	}
+
+	private IpCO convert(IpDO ipDO) {
+		return IpCO.builder().id(ipDO.getId()).value(ipDO.getValue()).build();
 	}
 
 }

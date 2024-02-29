@@ -32,16 +32,15 @@ public interface MessagesServiceI {
 	/**
 	 * 新增消息.
 	 * @param cmd 新增消息参数
-	 * @return 新增结果
 	 */
-	Result<Boolean> insert(MessageCreateCmd cmd);
+	void create(MessageCreateCmd cmd);
 
 	/**
 	 * 查询消息列表.
 	 * @param qry 查询消息列表参数
 	 * @return 消息列表
 	 */
-	Result<Datas<MessageCO>> list(MessageListQry qry);
+	Result<Datas<MessageCO>> findList(MessageListQry qry);
 
 	/**
 	 * 读取消息.
@@ -55,20 +54,19 @@ public interface MessagesServiceI {
 	 * @param qry 根据ID查看消息参数
 	 * @return 消息
 	 */
-	Result<MessageCO> getById(MessageGetQry qry);
+	Result<MessageCO> findById(MessageGetQry qry);
 
 	/**
 	 * 查询未读消息列表.
 	 * @param qry 查询未读消息列表参数
 	 * @return 未读消息列表
 	 */
-	Result<Datas<MessageCO>> unreadList(MessageUnreadListQry qry);
+	Result<Datas<MessageCO>> findUnreadList(MessageUnreadListQry qry);
 
 	/**
 	 * 查看未读消息数.
-	 * @param qry 查看未读消息数参数
 	 * @return 未读消息数
 	 */
-	Result<Integer> unreadCount(MessageUnreadCountGetQry qry);
+	Result<Integer> findUnreadCount();
 
 }

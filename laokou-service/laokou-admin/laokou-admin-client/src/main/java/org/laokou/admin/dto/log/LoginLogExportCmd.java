@@ -20,17 +20,26 @@ package org.laokou.admin.dto.log;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author laokou
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(name = "LoginLogExportCmd", description = "导出登录日志命令请求")
 public class LoginLogExportCmd extends LoginLogListQry {
 
 	@JsonIgnore
 	@Schema(name = "response", description = "响应")
 	private HttpServletResponse response;
+
+	public LoginLogExportCmd response(HttpServletResponse response) {
+		this.response = response;
+		return this;
+	}
 
 }

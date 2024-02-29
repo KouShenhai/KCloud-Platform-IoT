@@ -20,7 +20,6 @@ package org.laokou.admin.command.ip;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.IpGateway;
 import org.laokou.admin.dto.ip.IpRemoveCmd;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,10 +36,9 @@ public class IpRemoveCmdExe {
 	/**
 	 * 执行删除IP.
 	 * @param cmd 删除IP参数
-	 * @return 执行删除结果
 	 */
-	public Result<Boolean> execute(IpRemoveCmd cmd) {
-		return Result.of(ipGateway.deleteById(cmd.getId()));
+	public void executeVoid(IpRemoveCmd cmd) {
+		ipGateway.remove(cmd.getIds());
 	}
 
 }

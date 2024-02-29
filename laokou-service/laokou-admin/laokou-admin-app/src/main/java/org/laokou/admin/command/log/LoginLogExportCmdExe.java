@@ -17,14 +17,14 @@
 
 package org.laokou.admin.command.log;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.common.utils.ExcelUtil;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.log.LoginLogExportCmd;
+import org.laokou.admin.dto.log.clientobject.LoginLogExcel;
 import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.core.context.UserContextHolder;
-import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.security.utils.UserUtil;
@@ -33,6 +33,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_LOGIN_LOG;
+import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 导出登录日志执行器.
@@ -43,25 +44,20 @@ import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_LOGIN_L
 @RequiredArgsConstructor
 public class LoginLogExportCmdExe {
 
+	private final LoginLogMapper loginLogMapper;
+
 	/**
 	 * 执行导出登录日志.
 	 * @param cmd 导出登录日志参数
 	 */
+	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
 	public void executeVoid(LoginLogExportCmd cmd) {
-		try {
-			DynamicDataSourceContextHolder.push(UserContextHolder.get().getSourceName());
-			LoginLogMapper loginLogMapper = SpringContextUtil.getBean(LoginLogMapper.class);
-			PageQuery pageQuery = cmd.time().ignore();
-			List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(),
-					pageQuery.getEndTime(), BOOT_SYS_LOGIN_LOG);
-			// ExcelUtil.doExport(dynamicTables, cmd.getResponse(), buildLoginLog(cmd),
-			// pageQuery, loginLogMapper,
-			// LoginLogExcel.class);
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+		PageQuery pageQuery = cmd.time().ignore();
+		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
+				BOOT_SYS_LOGIN_LOG);
+		ExcelUtil.doExport(dynamicTables, cmd.getResponse(), convert(cmd), pageQuery, loginLogMapper,
+				LoginLogExcel.class);
 	}
 
 	/**
@@ -69,7 +65,7 @@ public class LoginLogExportCmdExe {
 	 * @param cmd 导出登录日志参数
 	 * @return 登录日志数据模型
 	 */
-	private LoginLogDO buildLoginLog(LoginLogExportCmd cmd) {
+	private LoginLogDO convert(LoginLogExportCmd cmd) {
 		LoginLogDO loginLogDO = new LoginLogDO();
 		loginLogDO.setTenantId(UserUtil.getTenantId());
 		loginLogDO.setUsername(cmd.getUsername());

@@ -23,8 +23,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.mybatisplus.database.SqlLogMapper;
-import org.laokou.common.mybatisplus.database.dataobject.SqlLogDO;
+import org.laokou.common.mybatisplus.repository.SqlLogMapper;
+import org.laokou.common.mybatisplus.repository.SqlLogDO;
 import org.laokou.common.mybatisplus.handler.SqlLogEvent;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
@@ -63,7 +63,7 @@ public class SqlLogHandler implements ApplicationListener {
 	private void execute(SqlLogEvent event) {
 		try {
 			DynamicDataSourceContextHolder.push(MASTER);
-			sqlLogMapper.insertTable(toSqlLog(event));
+			// sqlLogMapper.insertTable(toSqlLog(event));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

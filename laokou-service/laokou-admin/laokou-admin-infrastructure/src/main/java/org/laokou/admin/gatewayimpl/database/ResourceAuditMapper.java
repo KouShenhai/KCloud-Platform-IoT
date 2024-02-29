@@ -20,7 +20,7 @@ package org.laokou.admin.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -30,13 +30,15 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface ResourceAuditMapper extends BatchMapper<ResourceAuditDO> {
+public interface ResourceAuditMapper extends CrudMapper<Long, Integer, ResourceAuditDO> {
 
 	/**
 	 * 根据资源ID查看资源审批.
 	 * @param resourceId 资源ID
 	 * @return 资源审批
 	 */
-	ResourceAuditDO getResourceAuditByResourceId(@Param("resourceId") Long resourceId);
+	ResourceAuditDO selectByResourceId(@Param("resourceId") Long resourceId);
+
+	void deleteOneById(@Param("id") Long id);
 
 }

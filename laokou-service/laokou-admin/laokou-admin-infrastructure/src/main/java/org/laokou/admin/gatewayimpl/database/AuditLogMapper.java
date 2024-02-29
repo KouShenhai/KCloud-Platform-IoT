@@ -19,7 +19,7 @@ package org.laokou.admin.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.AuditLogDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -29,6 +29,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface AuditLogMapper extends BatchMapper<AuditLogDO> {
+public interface AuditLogMapper extends CrudMapper<Long, Integer, AuditLogDO> {
 
 }

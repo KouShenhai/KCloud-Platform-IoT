@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.IpGateway;
 import org.laokou.admin.domain.ip.Ip;
 import org.laokou.admin.dto.ip.IpRefreshCmd;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,10 +37,13 @@ public class IpRefreshCmdExe {
 	/**
 	 * 执行IP刷新至Redis.
 	 * @param cmd IP刷新至Redis参数
-	 * @return 执行刷新结果
 	 */
-	public Result<Boolean> execute(IpRefreshCmd cmd) {
-		return Result.of(ipGateway.refresh(new Ip(cmd.getLabel())));
+	public void executeVoid(IpRefreshCmd cmd) {
+		ipGateway.refresh(convert(cmd.getLabel()));
+	}
+
+	private Ip convert(String label) {
+		return Ip.builder().label(label).build();
 	}
 
 }

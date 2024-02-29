@@ -35,29 +35,26 @@ public interface IpsServiceI {
 	/**
 	 * 新增IP.
 	 * @param cmd 新增IP参数
-	 * @return 新增结果
 	 */
-	Result<Boolean> insert(IpCreateCmd cmd);
+	void create(IpCreateCmd cmd);
 
 	/**
-	 * 根据ID删除IP.
-	 * @param cmd 根据IP删除IP参数
-	 * @return 删除结果
+	 * 根据IDS删除IP.
+	 * @param cmd 根据IDS删除IP参数
 	 */
-	Result<Boolean> deleteById(IpRemoveCmd cmd);
+	void remove(IpRemoveCmd cmd);
 
 	/**
 	 * 查询IP列表.
 	 * @param qry 查询IP列表参数
 	 * @return IP列表
 	 */
-	Result<Datas<IpCO>> list(IpListQry qry);
+	Result<Datas<IpCO>> findList(IpListQry qry);
 
 	/**
 	 * 刷新IP至Redis.
 	 * @param cmd 刷新IP至Redis参数
-	 * @return 刷新结果
 	 */
-	Result<Boolean> refresh(IpRefreshCmd cmd);
+	void refresh(IpRefreshCmd cmd);
 
 }

@@ -82,7 +82,7 @@ public class OAuth2CommonAuthenticationProvider {
 			checkCaptcha(user, captchaObj, request, sourceName, appName, authType);
 			User u = userGateway.find(user);
 			// 检查空对象
-			user = user.copy(u, request, sourceName, appName, authType);
+			user = user.create(u, request, sourceName, appName, authType);
 			// 检查密码
 			user.checkPassword(clientPassword, passwordEncoder, request, sourceName, appName, authType);
 			// 检查状态

@@ -23,13 +23,14 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.MessagesServiceI;
 import org.laokou.admin.dto.message.*;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
-import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
+import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import static org.laokou.common.i18n.common.CacheNameConstants.MESSAGES;
@@ -46,13 +47,12 @@ public class MessagesController {
 	private final MessagesServiceI messagesServiceI;
 
 	@Idempotent
-	@TraceLog
 	@PostMapping
 	@Operation(summary = "消息管理", description = "新增消息")
 	@OperateLog(module = "消息管理", operation = "新增消息")
 	@PreAuthorize("hasAuthority('messages:create')")
-	public Result<Boolean> create(@RequestBody MessageCreateCmd cmd) {
-		return messagesServiceI.insert(cmd);
+	public void create(@Validated @RequestBody MessageCreateCmd cmd) {
+		messagesServiceI.create(cmd);
 	}
 
 	@TraceLog
@@ -60,7 +60,7 @@ public class MessagesController {
 	@Operation(summary = "消息管理", description = "查询消息列表")
 	@PreAuthorize("hasAuthority('messages:list')")
 	public Result<Datas<MessageCO>> findList(@RequestBody MessageListQry qry) {
-		return messagesServiceI.list(qry);
+		return messagesServiceI.findList(qry);
 	}
 
 	@TraceLog
@@ -77,21 +77,21 @@ public class MessagesController {
 	@PreAuthorize("hasAuthority('messages:detail')")
 	@DataCache(name = MESSAGES, key = "#id")
 	public Result<MessageCO> findById(@PathVariable("id") Long id) {
-		return messagesServiceI.getById(new MessageGetQry(id));
+		return messagesServiceI.findById(new MessageGetQry(id));
 	}
 
 	@TraceLog
 	@PostMapping("unread-list")
 	@Operation(summary = "消息管理", description = "未读消息列表")
 	public Result<Datas<MessageCO>> findUnreadList(@RequestBody MessageUnreadListQry qry) {
-		return messagesServiceI.unreadList(qry);
+		return messagesServiceI.findUnreadList(qry);
 	}
 
 	@TraceLog
 	@GetMapping("unread-count")
 	@Operation(summary = "消息管理", description = "未读消息数")
 	public Result<Integer> findUnreadCount() {
-		return messagesServiceI.unreadCount(new MessageUnreadCountGetQry());
+		return messagesServiceI.findUnreadCount();
 	}
 
 }

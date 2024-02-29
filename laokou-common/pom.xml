@@ -65,6 +65,7 @@
         <module>laokou-common-mqtt</module>
         <module>laokou-common-rate-limiter</module>
         <module>laokou-common-domain</module>
+        <module>laokou-common-log</module>
     </modules>
 
 </project>

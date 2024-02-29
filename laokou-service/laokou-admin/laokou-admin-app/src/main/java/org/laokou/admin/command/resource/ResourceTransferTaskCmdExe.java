@@ -22,9 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.dto.resource.ResourceTransferTaskCmd;
-import org.laokou.admin.dto.resource.TaskTransferCmd;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -71,12 +69,10 @@ public class ResourceTransferTaskCmdExe {
 	 * @param cmd 资源转办任务流程参数
 	 * @return 任务转办命令请求
 	 */
-	private TaskTransferCmd toCmd(ResourceTransferTaskCmd cmd) {
-		TaskTransferCmd c = new TaskTransferCmd();
-		c.setTaskId(cmd.getTaskId());
-		c.setToUserId(cmd.getUserId());
-		c.setUserId(UserUtil.getUserId());
-		return c;
-	}
+	/*
+	 * private TaskTransferCmd toCmd(ResourceTransferTaskCmd cmd) { TaskTransferCmd c =
+	 * new TaskTransferCmd(); c.setTaskId(cmd.getTaskId());
+	 * c.setToUserId(cmd.getUserId()); c.setUserId(UserUtil.getUserId()); return c; }
+	 */
 
 }
