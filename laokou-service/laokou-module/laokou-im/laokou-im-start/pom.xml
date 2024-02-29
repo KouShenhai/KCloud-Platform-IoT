@@ -112,7 +112,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <imageName>${parent.artifactId}</imageName>
+                    <imageName>${project.parent.artifactId}</imageName>
                     <mainClass>org.laokou.im.ImApp</mainClass>
                     <fallback>false</fallback>
                     <!-- 快速构建 -->
