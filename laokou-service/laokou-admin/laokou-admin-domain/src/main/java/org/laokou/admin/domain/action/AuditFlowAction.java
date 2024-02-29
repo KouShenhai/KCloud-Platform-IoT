@@ -17,13 +17,15 @@
 
 package org.laokou.admin.domain.action;
 
+import java.util.Map;
+
 /**
  * @author laokou
  */
-public interface StartAction {
+public interface AuditFlowAction {
 
-	boolean start(Long businessKey, String instanceName, String definitionKey);
+	boolean audit(String taskId, Map<String, Object> values);
 
-	boolean compensateStart(Long businessKey, String definitionKey);
+	boolean compensateAudit(String taskId);
 
 }

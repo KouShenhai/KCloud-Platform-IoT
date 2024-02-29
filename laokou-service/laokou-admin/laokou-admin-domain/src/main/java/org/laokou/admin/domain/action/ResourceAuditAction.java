@@ -22,9 +22,8 @@ package org.laokou.admin.domain.action;
  */
 public interface ResourceAuditAction {
 
-	boolean create(Long businessKey, String title, String remark, String code, String url, Long resourceId, Long userId,
-			Long tenantId, Long deptId, String deptPath);
+	boolean create(Long id, String title, String remark, String code, String url, Long resourceId);
 
-	boolean compensateCreate(Long businessKey);
+	boolean compensateCreate(Long id);
 
 }

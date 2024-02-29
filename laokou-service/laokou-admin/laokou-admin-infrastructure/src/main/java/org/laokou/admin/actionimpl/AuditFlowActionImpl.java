@@ -18,7 +18,7 @@
 package org.laokou.admin.actionimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.action.AuditAction;
+import org.laokou.admin.domain.action.AuditFlowAction;
 import org.laokou.admin.dto.resource.TaskAuditCmd;
 import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
 import org.laokou.common.openfeign.utils.FeignUtil;
@@ -29,9 +29,9 @@ import java.util.Map;
 /**
  * @author laokou
  */
-@Component("auditAction")
+@Component("auditFlowAction")
 @RequiredArgsConstructor
-public class AuditActionImpl implements AuditAction {
+public class AuditFlowActionImpl implements AuditFlowAction {
 
 	private final TasksFeignClient tasksFeignClient;
 
