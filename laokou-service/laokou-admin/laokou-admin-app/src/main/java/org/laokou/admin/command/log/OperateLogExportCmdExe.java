@@ -19,13 +19,16 @@ package org.laokou.admin.command.log;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.common.utils.ExcelUtil;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.log.OperateLogExportCmd;
+import org.laokou.admin.dto.log.clientobject.OperateLogExcel;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
-import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
+
+import java.util.Collections;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_OPERATE_LOG;
 import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
@@ -39,6 +42,8 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 @RequiredArgsConstructor
 public class OperateLogExportCmdExe {
 
+	private final OperateLogMapper operateLogMapper;
+
 	/**
 	 * 执行导出操作日志.
 	 * @param cmd 导出操作日志参数
@@ -46,10 +51,8 @@ public class OperateLogExportCmdExe {
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_OPERATE_LOG)
 	public void executeVoid(OperateLogExportCmd cmd) {
-		OperateLogMapper operateLogMapper = SpringContextUtil.getBean(OperateLogMapper.class);
-		// ExcelUtil.doExport(Collections.emptyList(), cmd.getResponse(),
-		// buildOperateLog(cmd), cmd, operateLogMapper,
-		// OperateLogExcel.class);
+		ExcelUtil.doExport(Collections.emptyList(), cmd.getResponse(), convert(cmd), cmd, operateLogMapper,
+				OperateLogExcel.class);
 	}
 
 	/**
@@ -57,7 +60,7 @@ public class OperateLogExportCmdExe {
 	 * @param cmd 导出操作日志参数
 	 * @return 操作日志数据对象
 	 */
-	private OperateLogDO buildOperateLog(OperateLogExportCmd cmd) {
+	private OperateLogDO convert(OperateLogExportCmd cmd) {
 		OperateLogDO operateLogDO = new OperateLogDO();
 		operateLogDO.setTenantId(UserUtil.getTenantId());
 		operateLogDO.setModuleName(cmd.getModuleName());

@@ -17,14 +17,13 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.ResultHandler;
-import org.laokou.admin.gatewayimpl.database.dataobject.ResourceIndex;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.ResourceIndex;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -38,17 +37,18 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Repository
 @Mapper
-public interface ResourceMapper extends BatchMapper<ResourceDO> {
+public interface ResourceMapper extends CrudMapper<Long, Integer, ResourceDO> {
 
 	/**
 	 * 查询资源列表.
-	 * @param page 分页参数
-	 * @param resourceDO 资源数据模型
+	 * @param resource 资源数据模型
 	 * @param pageQuery 分页参数
 	 * @return 资源列表
 	 */
-	IPage<ResourceDO> getResourceListFilter(IPage<ResourceDO> page, @Param("resource") ResourceDO resourceDO,
+	List<ResourceDO> selectListByCondition(@Param("resource") ResourceDO resource,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
+
+	long selectCountByCondition(@Param("resource") ResourceDO resource, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 	/**
 	 * 处理资源索引.

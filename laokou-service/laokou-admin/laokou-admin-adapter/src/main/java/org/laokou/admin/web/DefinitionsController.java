@@ -22,19 +22,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.DefinitionsServiceI;
-import org.laokou.admin.dto.definition.*;
-import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
-import org.laokou.admin.domain.annotation.OperateLog;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.idempotent.annotation.Idempotent;
-import org.laokou.common.trace.annotation.TraceLog;
-import org.springframework.http.MediaType;
+import org.laokou.admin.dto.definition.DefinitionTemplateCmd;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author laokou
@@ -47,64 +39,11 @@ public class DefinitionsController {
 
 	private final DefinitionsServiceI definitionsServiceI;
 
-	@Idempotent
-	@TraceLog
-	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@Operation(summary = "流程定义", description = "新增流程")
-	@OperateLog(module = "流程定义", operation = "新增流程")
-	@PreAuthorize("hasAuthority('definitions:create')")
-	public void create(@RequestPart("file") MultipartFile file) throws IOException {
-		definitionsServiceI.create(new DefinitionCreateCmd(file));
-	}
-
-	@TraceLog
-	@PostMapping("list")
-	@Operation(summary = "流程定义", description = "查询流程列表")
-	@PreAuthorize("hasAuthority('definitions:list')")
-	public Result<Datas<DefinitionCO>> findList(@RequestBody DefinitionListQry qry) {
-		return definitionsServiceI.findList(qry);
-	}
-
-	@TraceLog
-	@GetMapping("{definitionId}/diagram")
-	@Operation(summary = "流程定义", description = "流程图")
-	@PreAuthorize("hasAuthority('definitions:diagram')")
-	public Result<String> findDiagram(@PathVariable("definitionId") String definitionId) {
-		return definitionsServiceI.findDiagram(new DefinitionDiagramGetQry(definitionId));
-	}
-
-	@TraceLog
-	@DeleteMapping("{deploymentId}")
-	@Operation(summary = "流程定义", description = "删除流程")
-	@OperateLog(module = "流程定义", operation = "删除流程")
-	@PreAuthorize("hasAuthority('definitions:remove')")
-	public void remove(@PathVariable("deploymentId") String deploymentId) {
-		definitionsServiceI.remove(new DefinitionRemoveCmd(deploymentId));
-	}
-
-	@TraceLog
-	@PutMapping("{definitionId}/suspend")
-	@Operation(summary = "流程定义", description = "挂起流程")
-	@OperateLog(module = "流程定义", operation = "挂起流程")
-	@PreAuthorize("hasAuthority('definitions:suspend')")
-	public void suspend(@PathVariable("definitionId") String definitionId) {
-		definitionsServiceI.suspend(new DefinitionSuspendCmd(definitionId));
-	}
-
-	@TraceLog
-	@PutMapping("{definitionId}/activate")
-	@Operation(summary = "流程定义", description = "激活流程")
-	@OperateLog(module = "流程定义", operation = "激活流程")
-	@PreAuthorize("hasAuthority('definitions:activate')")
-	public void activate(@PathVariable("definitionId") String definitionId) {
-		definitionsServiceI.activate(new DefinitionActivateCmd(definitionId));
-	}
-
-	@GetMapping("template")
-	@Operation(summary = "流程定义", description = "流程模板")
-	@PreAuthorize("hasAuthority('definitions:template')")
-	public void findTemplate(HttpServletResponse response) {
-		definitionsServiceI.findTemplate(new DefinitionTemplateCmd(response));
+	@GetMapping("download-template")
+	@Operation(summary = "流程定义", description = "下载模板")
+	@PreAuthorize("hasAuthority('definitions:download-template')")
+	public void downloadTemplate(HttpServletResponse response) {
+		definitionsServiceI.downloadTemplate(new DefinitionTemplateCmd(response));
 	}
 
 }

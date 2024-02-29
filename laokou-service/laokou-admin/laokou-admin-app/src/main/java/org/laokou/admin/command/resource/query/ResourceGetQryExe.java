@@ -19,10 +19,10 @@ package org.laokou.admin.command.resource.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.ResourceConvertor;
-import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.laokou.admin.dto.resource.ResourceGetQry;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
+import org.laokou.admin.gatewayimpl.database.ResourceMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -37,9 +37,7 @@ import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 @RequiredArgsConstructor
 public class ResourceGetQryExe {
 
-	private final ResourceGateway resourceGateway;
-
-	private final ResourceConvertor resourceConvertor;
+	private final ResourceMapper resourceMapper;
 
 	/**
 	 * 执行查看资源.
@@ -48,9 +46,18 @@ public class ResourceGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<ResourceCO> execute(ResourceGetQry qry) {
-		return null;
-		// return
-		// Result.of(resourceConvertor.convertClientObject(resourceGateway.getById(qry.getId())));
+		return Result.of(convert(resourceMapper.selectById(qry.getId())));
+	}
+
+	private ResourceCO convert(ResourceDO resourceDO) {
+		return ResourceCO.builder()
+			.id(resourceDO.getId())
+			.title(resourceDO.getTitle())
+			.remark(resourceDO.getRemark())
+			.code(resourceDO.getCode())
+			.status(resourceDO.getStatus())
+			.url(resourceDO.getUrl())
+			.build();
 	}
 
 }

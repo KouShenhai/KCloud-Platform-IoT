@@ -24,12 +24,12 @@ import org.laokou.admin.api.PackagesServiceI;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.packages.*;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
-import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
+import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -58,7 +58,6 @@ public class PackagesController {
 	}
 
 	@Idempotent
-	@TraceLog
 	@PostMapping
 	@Operation(summary = "套餐管理", description = "新增套餐")
 	@OperateLog(module = "套餐管理", operation = "新增套餐")
@@ -75,7 +74,6 @@ public class PackagesController {
 		return packagesServiceI.findById(new PackageGetQry(id));
 	}
 
-	@TraceLog
 	@PutMapping
 	@Operation(summary = "套餐管理", description = "修改套餐")
 	@OperateLog(module = "套餐管理", operation = "修改套餐")
@@ -85,7 +83,6 @@ public class PackagesController {
 		packagesServiceI.modify(cmd);
 	}
 
-	@TraceLog
 	@DeleteMapping
 	@Operation(summary = "套餐管理", description = "删除套餐")
 	@OperateLog(module = "套餐管理", operation = "删除套餐")

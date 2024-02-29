@@ -23,7 +23,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.TenantsServiceI;
-import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.tenant.*;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
@@ -32,6 +31,7 @@ import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
+import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -63,7 +63,6 @@ public class TenantsController {
 	}
 
 	@Idempotent
-	@TraceLog
 	@PostMapping
 	@Operation(summary = "租户管理", description = "新增租户")
 	@OperateLog(module = "租户管理", operation = "新增租户")
@@ -80,7 +79,6 @@ public class TenantsController {
 		return tenantsServiceI.findById(new TenantGetQry(id));
 	}
 
-	@TraceLog
 	@PutMapping
 	@Operation(summary = "租户管理", description = "修改租户")
 	@OperateLog(module = "租户管理", operation = "修改租户")
@@ -90,7 +88,6 @@ public class TenantsController {
 		tenantsServiceI.modify(cmd);
 	}
 
-	@TraceLog
 	@DeleteMapping
 	@Operation(summary = "租户管理", description = "删除租户")
 	@OperateLog(module = "租户管理", operation = "删除租户")

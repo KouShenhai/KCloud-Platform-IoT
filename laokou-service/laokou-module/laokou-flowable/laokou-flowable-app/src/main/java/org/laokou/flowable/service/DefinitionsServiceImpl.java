@@ -22,8 +22,8 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.api.DefinitionsServiceI;
 import org.laokou.flowable.command.definition.DefinitionActivateCmdExe;
-import org.laokou.flowable.command.definition.DefinitionDeleteCmdExe;
-import org.laokou.flowable.command.definition.DefinitionInsertCmdExe;
+import org.laokou.flowable.command.definition.DefinitionRemoveCmdExe;
+import org.laokou.flowable.command.definition.DefinitionCreateCmdExe;
 import org.laokou.flowable.command.definition.DefinitionSuspendCmdExe;
 import org.laokou.flowable.command.definition.query.DefinitionDiagramGetQryExe;
 import org.laokou.flowable.command.definition.query.DefinitionListQryExe;
@@ -40,7 +40,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DefinitionsServiceImpl implements DefinitionsServiceI {
 
-	private final DefinitionInsertCmdExe definitionInsertCmdExe;
+	private final DefinitionCreateCmdExe definitionCreateCmdExe;
 
 	private final DefinitionListQryExe definitionListQryExe;
 
@@ -48,18 +48,17 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 
 	private final DefinitionSuspendCmdExe definitionSuspendCmdExe;
 
-	private final DefinitionDeleteCmdExe definitionDeleteCmdExe;
+	private final DefinitionRemoveCmdExe definitionRemoveCmdExe;
 
 	private final DefinitionDiagramGetQryExe definitionDiagramGetQryExe;
 
 	/**
 	 * 新增流程.
 	 * @param cmd 新增流程参数
-	 * @return 新增结果
 	 */
 	@Override
-	public Result<Boolean> insert(DefinitionInsertCmd cmd) {
-		return definitionInsertCmdExe.execute(cmd);
+	public void create(DefinitionCreateCmd cmd) {
+		definitionCreateCmdExe.executeVoid(cmd);
 	}
 
 	/**
@@ -68,7 +67,7 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 	 * @return 流程列表
 	 */
 	@Override
-	public Result<Datas<DefinitionCO>> list(DefinitionListQry qry) {
+	public Result<Datas<DefinitionCO>> findList(DefinitionListQry qry) {
 		return definitionListQryExe.execute(qry);
 	}
 
@@ -78,38 +77,35 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 	 * @return 流程图
 	 */
 	@Override
-	public Result<String> diagram(DefinitionDiagramGetQry qry) {
+	public Result<String> findDiagram(DefinitionDiagramGetQry qry) {
 		return definitionDiagramGetQryExe.execute(qry);
 	}
 
 	/**
 	 * 删除流程.
 	 * @param cmd 删除流程参数
-	 * @return 删除结果
 	 */
 	@Override
-	public Result<Boolean> delete(DefinitionDeleteCmd cmd) {
-		return definitionDeleteCmdExe.execute(cmd);
+	public void remove(DefinitionRemoveCmd cmd) {
+		definitionRemoveCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 挂起流程.
 	 * @param cmd 挂起流程参数
-	 * @return 挂起结果
 	 */
 	@Override
-	public Result<Boolean> suspend(DefinitionSuspendCmd cmd) {
-		return definitionSuspendCmdExe.execute(cmd);
+	public void suspend(DefinitionSuspendCmd cmd) {
+		definitionSuspendCmdExe.executeVoid(cmd);
 	}
 
 	/**
 	 * 激活流程.
 	 * @param cmd 激活流程参数
-	 * @return 激活结果
 	 */
 	@Override
-	public Result<Boolean> activate(DefinitionActivateCmd cmd) {
-		return definitionActivateCmdExe.execute(cmd);
+	public void activate(DefinitionActivateCmd cmd) {
+		definitionActivateCmdExe.executeVoid(cmd);
 	}
 
 }

@@ -18,38 +18,17 @@
 package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-import org.laokou.admin.convertor.LoginLogConvertor;
-import org.laokou.admin.convertor.OperateLogConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
-import org.laokou.admin.domain.event.OperateEvent;
-import org.laokou.admin.domain.event.OssUploadEvent;
+import org.laokou.admin.domain.event.FileUploadEvent;
 import org.laokou.admin.domain.gateway.LogGateway;
-import org.laokou.admin.domain.log.LoginLog;
-import org.laokou.admin.domain.log.OperateLog;
-import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.OssLogMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssLogDO;
-import org.laokou.common.core.context.UserContextHolder;
+import org.laokou.common.core.common.event.OperateEvent;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.DecorateDomainEvent;
-import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_LOGIN_LOG;
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_OPERATE_LOG;
 
 /**
  * 日志管理.
@@ -62,74 +41,7 @@ public class LogGatewayImpl implements LogGateway {
 
 	private final OperateLogMapper operateLogMapper;
 
-	private final LoginLogMapper loginLogMapper;
-
 	private final OssLogMapper ossLogMapper;
-
-	private final Executor executor;
-
-	private final LoginLogConvertor loginLogConvertor;
-
-	private final OperateLogConvertor operateLogConvertor;
-
-	/**
-	 * 查询登录日志列表.
-	 * @param loginLog 登录日志对象
-	 * @param pageQuery 分页参数
-	 * @return 登录日志列表
-	 */
-	@Override
-	@DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
-	@SneakyThrows
-	public Datas<LoginLog> loginList(LoginLog loginLog, PageQuery pageQuery) {
-		PageQuery page = pageQuery.time().page().ignore();
-		LoginLogDO loginLogDO = loginLogConvertor.toDataObject(loginLog);
-		loginLogDO.setTenantId(UserContextHolder.get().getTenantId());
-		String sourceName = UserContextHolder.get().getSourceName();
-		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
-				BOOT_SYS_LOGIN_LOG);
-		CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture.supplyAsync(() -> {
-			try {
-				DynamicDataSourceContextHolder.push(sourceName);
-				return loginLogMapper.getLoginLogListFilter(dynamicTables, loginLogDO, page);
-			}
-			finally {
-				DynamicDataSourceContextHolder.clear();
-			}
-		}, executor);
-		CompletableFuture<Integer> c2 = CompletableFuture.supplyAsync(() -> {
-			try {
-				DynamicDataSourceContextHolder.push(sourceName);
-				return loginLogMapper.getLoginLogCountFilter(dynamicTables, loginLogDO, page);
-			}
-			finally {
-				DynamicDataSourceContextHolder.clear();
-			}
-		}, executor);
-		CompletableFuture.allOf(c1, c2).join();
-		Datas<LoginLog> datas = new Datas<>();
-		datas.setTotal(c2.get());
-		datas.setRecords(loginLogConvertor.convertEntityList(c1.get()));
-		return datas;
-	}
-
-	/**
-	 * 查询操作日志列表.
-	 * @param operateLog 操作日志对象
-	 * @param pageQuery 分页参数
-	 * @return 操作日志列表
-	 */
-	@Override
-	@DataFilter(tableAlias = BOOT_SYS_OPERATE_LOG)
-	public Datas<OperateLog> operateList(OperateLog operateLog, PageQuery pageQuery) {
-		IPage<OperateLogDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<OperateLogDO> newPage = operateLogMapper.getOperateListFilter(page, operateLog.getModuleName(),
-				operateLog.getStatus(), pageQuery);
-		Datas<OperateLog> datas = new Datas<>();
-		datas.setRecords(operateLogConvertor.convertEntityList(newPage.getRecords()));
-		datas.setTotal(newPage.getTotal());
-		return datas;
-	}
 
 	@Override
 	public void create(OperateEvent event, DecorateDomainEvent evt) {
@@ -143,7 +55,7 @@ public class LogGatewayImpl implements LogGateway {
 	}
 
 	@Override
-	public void create(OssUploadEvent event, DecorateDomainEvent evt) {
+	public void create(FileUploadEvent event, DecorateDomainEvent evt) {
 		try {
 			DynamicDataSourceContextHolder.push(evt.getSourceName());
 			ossLogMapper.insert(convert(event, evt));
@@ -153,14 +65,14 @@ public class LogGatewayImpl implements LogGateway {
 		}
 	}
 
-	private OssLogDO convert(OssUploadEvent ossUploadEvent, DecorateDomainEvent evt) {
+	private OssLogDO convert(FileUploadEvent fileUploadEvent, DecorateDomainEvent evt) {
 		OssLogDO logDO = new OssLogDO();
-		logDO.setMd5(ossUploadEvent.getMd5());
-		logDO.setUrl(ossUploadEvent.getUrl());
-		logDO.setName(ossUploadEvent.getName());
-		logDO.setSize(ossUploadEvent.getSize());
-		logDO.setStatus(ossUploadEvent.getStatus());
-		logDO.setErrorMessage(ossUploadEvent.getErrorMessage());
+		logDO.setMd5(fileUploadEvent.getMd5());
+		logDO.setUrl(fileUploadEvent.getUrl());
+		logDO.setName(fileUploadEvent.getName());
+		logDO.setSize(fileUploadEvent.getSize());
+		logDO.setStatus(fileUploadEvent.getStatus());
+		logDO.setErrorMessage(fileUploadEvent.getErrorMessage());
 		logDO.setId(IdGenerator.defaultSnowflakeId());
 		logDO.setEditor(evt.getEditor());
 		logDO.setCreator(evt.getCreator());

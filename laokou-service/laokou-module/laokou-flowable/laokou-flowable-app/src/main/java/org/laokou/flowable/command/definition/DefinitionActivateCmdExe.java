@@ -17,17 +17,11 @@
 
 package org.laokou.flowable.command.definition;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.flowable.engine.RepositoryService;
-import org.flowable.engine.repository.ProcessDefinition;
-import org.laokou.common.i18n.common.exception.FlowException;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import org.laokou.common.security.utils.UserUtil;
+import org.laokou.flowable.domain.definition.Activate;
+import org.laokou.flowable.domain.gateway.DefinitionGateway;
 import org.laokou.flowable.dto.definition.DefinitionActivateCmd;
 import org.springframework.stereotype.Component;
 
@@ -43,53 +37,15 @@ import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 @RequiredArgsConstructor
 public class DefinitionActivateCmdExe {
 
-	private final RepositoryService repositoryService;
-
-	private final TransactionalUtil transactionalUtil;
+	private final DefinitionGateway definitionGateway;
 
 	/**
 	 * 执行激活流程.
 	 * @param cmd 激活流程参数
-	 * @return 激活结果
 	 */
-	public Result<Boolean> execute(DefinitionActivateCmd cmd) {
-		try {
-			String definitionId = cmd.getDefinitionId();
-			DynamicDataSourceContextHolder.push(FLOWABLE);
-			ProcessDefinition definition = repositoryService.createProcessDefinitionQuery()
-				.processDefinitionTenantId(UserUtil.getTenantId().toString())
-				.processDefinitionId(definitionId)
-				.singleResult();
-			if (definition.isSuspended()) {
-				return Result.of(activate(definitionId));
-			}
-			else {
-				throw new FlowException("激活失败，流程已激活");
-			}
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
-	}
-
-	/**
-	 * 激活流程.
-	 * @param definitionId 定义ID
-	 * @return 激活结果
-	 */
-	private Boolean activate(String definitionId) {
-		return transactionalUtil.defaultExecute(r -> {
-			try {
-				// 激活
-				repositoryService.activateProcessDefinitionById(definitionId, true, null);
-				return true;
-			}
-			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-				r.setRollbackOnly();
-				throw new SystemException(LogUtil.fail(e.getMessage()));
-			}
-		});
+	@DS(FLOWABLE)
+	public void executeVoid(DefinitionActivateCmd cmd) {
+		definitionGateway.activate(Activate.builder().definitionId(cmd.getDefinitionId()).build());
 	}
 
 }

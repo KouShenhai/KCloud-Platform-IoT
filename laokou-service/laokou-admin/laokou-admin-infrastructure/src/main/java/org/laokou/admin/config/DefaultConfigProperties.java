@@ -37,6 +37,11 @@ import static org.laokou.common.i18n.common.PropertiesConstants.DEFAULT_CONFIG_P
 public class DefaultConfigProperties {
 
 	/**
+	 * 租户前缀.
+	 */
+	private String tenantPrefix;
+
+	/**
 	 * 定义key.
 	 */
 	private String definitionKey;
@@ -47,19 +52,9 @@ public class DefaultConfigProperties {
 	private Set<String> tenantTables = new HashSet<>(0);
 
 	/**
-	 * 请求参数移除列表.
-	 */
-	private Set<String> removeParams = new HashSet<>(0);
-
-	/**
 	 * 优雅停机服务列表.
 	 */
 	private Set<String> gracefulShutdownServices = new HashSet<>(0);
-
-	/**
-	 * 租户前缀.
-	 */
-	private String tenantPrefix;
 
 	/**
 	 * 域名列表.

@@ -17,6 +17,7 @@
 
 package org.laokou.common.security.config;
 
+import com.baomidou.dynamic.datasource.annotation.Master;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,6 +61,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 
 	private final RedisUtil redisUtil;
 
+	@Master
 	@Override
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
 		// 用户相关数据，低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享

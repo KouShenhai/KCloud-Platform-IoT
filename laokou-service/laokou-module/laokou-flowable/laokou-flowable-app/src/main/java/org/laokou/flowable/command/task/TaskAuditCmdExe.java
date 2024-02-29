@@ -17,29 +17,17 @@
 
 package org.laokou.flowable.command.task;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import io.seata.core.context.RootContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.flowable.engine.TaskService;
-import org.flowable.task.api.DelegationState;
-import org.flowable.task.api.Task;
-import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.common.exception.FlowException;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import org.laokou.common.security.utils.UserUtil;
+import org.laokou.flowable.domain.gateway.TaskGateway;
+import org.laokou.flowable.domain.task.Audit;
 import org.laokou.flowable.dto.task.TaskAuditCmd;
-import org.laokou.flowable.dto.task.clientobject.AuditCO;
-import org.laokou.flowable.gatewayimpl.database.TaskMapper;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-
-import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
+import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
 
 /**
  * 审批任务流程执行器.
@@ -51,64 +39,21 @@ import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
 @RequiredArgsConstructor
 public class TaskAuditCmdExe {
 
-	private final TaskService taskService;
-
-	private final TaskMapper taskMapper;
-
-	private final TransactionalUtil transactionalUtil;
+	private final TaskGateway taskGateway;
 
 	/**
 	 * 执行审批任务流程.
 	 * @param cmd 审批任务流程参数
-	 * @return 审批结果
 	 */
-	public Result<AuditCO> execute(TaskAuditCmd cmd) {
-		try {
-			log.info("审批流程分布式事务 XID：{}", RootContext.getXID());
-			String taskId = cmd.getTaskId();
-			Map<String, Object> values = cmd.getValues();
-			String instanceId = cmd.getInstanceId();
-			DynamicDataSourceContextHolder.push(FLOWABLE);
-			Task task = taskService.createTaskQuery()
-				.taskTenantId(UserUtil.getTenantId().toString())
-				.taskId(taskId)
-				.singleResult();
-			if (ObjectUtil.isNull(task)) {
-				throw new FlowException("任务不存在");
-			}
-			if (DelegationState.PENDING.equals(task.getDelegationState())) {
-				throw new FlowException("非审批任务，请处理任务");
-			}
-			// 审批
-			audit(taskId, values);
-			return Result.of(new AuditCO(taskMapper.getAssigneeByInstanceId(instanceId, UserUtil.getTenantId())));
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+	@DS(TENANT)
+	public Result<Boolean> execute(TaskAuditCmd cmd) {
+		log.info("审批流程分布式事务 XID：{}", RootContext.getXID());
+		taskGateway.audit(convert(cmd));
+		return Result.of(Boolean.TRUE);
 	}
 
-	/**
-	 * 审批任务流程.
-	 * @param taskId 任务ID
-	 * @param values 流程变量
-	 */
-	private void audit(String taskId, Map<String, Object> values) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				if (MapUtil.isNotEmpty(values)) {
-					taskService.complete(taskId, values);
-				}
-				else {
-					taskService.complete(taskId);
-				}
-			}
-			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-				r.setRollbackOnly();
-				throw new SystemException(LogUtil.fail(e.getMessage()));
-			}
-		});
+	private Audit convert(TaskAuditCmd cmd) {
+		return Audit.builder().values(cmd.getValues()).taskId(cmd.getTaskId()).build();
 	}
 
 }

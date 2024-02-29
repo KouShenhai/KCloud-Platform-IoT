@@ -17,8 +17,6 @@
 
 package org.laokou.admin.api;
 
-import org.laokou.admin.dto.monitor.MonitorRedisCacheGetQry;
-import org.laokou.admin.dto.monitor.MonitorServerGetQry;
 import org.laokou.admin.dto.monitor.clientobject.RedisCacheCO;
 import org.laokou.admin.dto.monitor.clientobject.ServerCO;
 import org.laokou.common.i18n.dto.Result;
@@ -32,16 +30,14 @@ public interface MonitorsServiceI {
 
 	/**
 	 * 查看缓存监控.
-	 * @param qry 查看缓存监控参数
 	 * @return 缓存监控
 	 */
-	Result<RedisCacheCO> cache(MonitorRedisCacheGetQry qry);
+	Result<RedisCacheCO> findCacheInfo();
 
 	/**
 	 * 查看服务器监控.
-	 * @param qry 查看服务器监控参数
 	 * @return 服务器监控
 	 */
-	Result<ServerCO> server(MonitorServerGetQry qry);
+	Result<ServerCO> findServerInfo();
 
 }

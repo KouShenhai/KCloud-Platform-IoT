@@ -38,13 +38,13 @@ public interface LogsServiceI {
 	 * @param qry 查询操作日志列表参数
 	 * @return 操作日志列表
 	 */
-	Result<Datas<OperateLogCO>> operateList(OperateLogListQry qry);
+	Result<Datas<OperateLogCO>> findOperateList(OperateLogListQry qry);
 
 	/**
 	 * 导出操作日志.
 	 * @param cmd 导出操作日志参数
 	 */
-	void operateExport(OperateLogExportCmd cmd);
+	void exportOperate(OperateLogExportCmd cmd);
 
 	/**
 	 * 查询登录日志列表.
@@ -57,6 +57,6 @@ public interface LogsServiceI {
 	 * 导出登录日志.
 	 * @param cmd 导出登录日志参数
 	 */
-	void loginExport(LoginLogExportCmd cmd);
+	void exportLogin(LoginLogExportCmd cmd);
 
 }

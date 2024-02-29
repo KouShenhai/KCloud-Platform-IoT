@@ -42,7 +42,7 @@
             , c.business_key_ as businessKey
         from ACT_HI_ACTINST a
         join ACT_RU_TASK b on a.task_id_ = b.id_
-        join (select name_,business_key_,proc_inst_id_,tenant_id_ from ACT_RU_EXECUTION where business_key_ <![CDATA[ <> ]]> '') c on a.proc_inst_id_ = c.proc_inst_id_
+        join ACT_RU_EXECUTION c on a.proc_inst_id_ = c.proc_inst_id_
         join ACT_RE_PROCDEF d on d.id_ = a.proc_def_id_
         where a.assignee_ = #{userId}
             and b.suspension_state_ = 1
@@ -52,6 +52,7 @@
             and b.tenant_id_ = #{tenantId}
             and c.tenant_id_ = #{tenantId}
             and d.tenant_id_ = #{tenantId}
+            and c.business_key_ <![CDATA[ <> ]]> ''
         <if test="name != null and name != ''">
             and d.name_ like #{name}
         </if>

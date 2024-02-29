@@ -21,13 +21,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.RolesServiceI;
-import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.role.*;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
+import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -68,7 +68,6 @@ public class RolesController {
 	}
 
 	@Idempotent
-	@TraceLog
 	@PostMapping
 	@Operation(summary = "角色管理", description = "新增角色")
 	@OperateLog(module = "角色管理", operation = "新增角色")
@@ -77,7 +76,6 @@ public class RolesController {
 		rolesServiceI.create(cmd);
 	}
 
-	@TraceLog
 	@PutMapping
 	@Operation(summary = "角色管理", description = "修改角色")
 	@OperateLog(module = "角色管理", operation = "修改角色")
@@ -86,7 +84,6 @@ public class RolesController {
 		rolesServiceI.modify(cmd);
 	}
 
-	@TraceLog
 	@DeleteMapping
 	@Operation(summary = "角色管理", description = "删除角色")
 	@OperateLog(module = "角色管理", operation = "删除角色")

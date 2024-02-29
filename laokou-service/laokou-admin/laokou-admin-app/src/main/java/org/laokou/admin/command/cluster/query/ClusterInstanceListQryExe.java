@@ -50,10 +50,10 @@ public class ClusterInstanceListQryExe {
 		String serviceId = qry.getServiceId();
 		List<ServiceInstance> instances = serviceUtil.getInstances(serviceId);
 		return Result.of(Datas.of(instances.stream()
-				.map(item -> convert(item, serviceId.substring(7)))
-				.skip((long) (pageNum - 1) * pageSize)
-				.limit(pageSize)
-				.toList(),instances.size()));
+			.map(item -> convert(item, serviceId.substring(7)))
+			.skip((long) (pageNum - 1) * pageSize)
+			.limit(pageSize)
+			.toList(), instances.size()));
 	}
 
 	/**
@@ -63,11 +63,7 @@ public class ClusterInstanceListQryExe {
 	 * @return 服务实例视图
 	 */
 	private ClusterInstanceCO convert(ServiceInstance instance, String router) {
-		return ClusterInstanceCO.builder()
-				.host(instance.getHost())
-				.port(instance.getPort())
-				.router(router)
-				.build();
+		return ClusterInstanceCO.builder().host(instance.getHost()).port(instance.getPort()).router(router).build();
 	}
 
 }

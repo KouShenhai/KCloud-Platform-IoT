@@ -22,6 +22,7 @@ import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.security.annotation.EnableSecurity;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
@@ -47,6 +48,8 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 @EnableSecurity
 @EnableTaskExecutor
+@MapperScan({ "org.laokou.common.domain.repository", "org.laokou.flowable.gatewayimpl.database",
+		"org.laokou.common.mybatisplus.repository" })
 public class FlowableApp {
 
 	public static void main(String[] args) throws UnknownHostException {

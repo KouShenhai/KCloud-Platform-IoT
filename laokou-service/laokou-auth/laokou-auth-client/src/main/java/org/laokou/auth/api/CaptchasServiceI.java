@@ -17,7 +17,7 @@
 
 package org.laokou.auth.api;
 
-import org.laokou.auth.dto.captcha.CaptchaGetQry;
+import org.laokou.auth.dto.CaptchaGetQry;
 import org.laokou.common.i18n.dto.Result;
 
 /**

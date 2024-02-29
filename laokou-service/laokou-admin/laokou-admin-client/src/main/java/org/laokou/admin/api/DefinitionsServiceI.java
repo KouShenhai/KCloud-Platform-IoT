@@ -17,10 +17,7 @@
 
 package org.laokou.admin.api;
 
-import org.laokou.admin.dto.definition.*;
-import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.admin.dto.definition.DefinitionTemplateCmd;
 
 /**
  * 流程定义.
@@ -30,47 +27,9 @@ import org.laokou.common.i18n.dto.Result;
 public interface DefinitionsServiceI {
 
 	/**
-	 * 新增流程.
-	 * @param cmd 新增流程参数
-	 */
-	void create(DefinitionCreateCmd cmd);
-
-	/**
-	 * 查询流程列表.
-	 * @param qry 查询流程列表参数
-	 * @return 流程列表
-	 */
-	Result<Datas<DefinitionCO>> findList(DefinitionListQry qry);
-
-	/**
-	 * 查看流程图.
-	 * @param qry 流程图查看参数
-	 * @return 流程图
-	 */
-	Result<String> findDiagram(DefinitionDiagramGetQry qry);
-
-	/**
-	 * 删除流程.
-	 * @param cmd 删除流程参数
-	 */
-	void remove(DefinitionRemoveCmd cmd);
-
-	/**
-	 * 挂起流程.
-	 * @param cmd 挂起流程参数
-	 */
-	void suspend(DefinitionSuspendCmd cmd);
-
-	/**
-	 * 激活流程.
-	 * @param cmd 激活流程参数
-	 */
-	void activate(DefinitionActivateCmd cmd);
-
-	/**
 	 * 下载流程模板.
 	 * @param qry 下载流程模板参数
 	 */
-	void findTemplate(DefinitionTemplateCmd qry);
+	void downloadTemplate(DefinitionTemplateCmd qry);
 
 }
