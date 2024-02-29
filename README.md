@@ -92,12 +92,12 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | Flowable                    | 7.0.1         |
 | ShardingSphere              | 5.3.2         |
 | OpenResty                   | 1.21.4.1      |
-| Netty                       | 4.1.106.Final |
+| Netty                       | 4.1.107.Final |
 | Dubbo                       | 3.3.0-beta.1  |
-| Kafka                       | 3.6.0         |
+| Kafka                       | 3.6.1         |
 | EMQX                        | 5.3.0         |
 | Postgresql                  | 16.1          |
-| Flyway                      | 10.6.0        |
+| Flyway                      | 10.8.1        |
 | Canal                       | 1.1.7         |
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
