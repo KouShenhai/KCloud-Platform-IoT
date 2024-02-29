@@ -22,12 +22,12 @@
 
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common-bom</artifactId>
-    <version>3.2.2</version>
+    <version>3.2.3</version>
     <packaging>pom</packaging>
     <properties>
-        <laokou.version>3.2.2</laokou.version>
+        <laokou.version>3.2.3</laokou.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.2.2</spring-boot.version>
+        <spring-boot.version>3.2.3</spring-boot.version>
         <!--lombok版本-->
         <lombok.version>1.18.30</lombok.version>
         <!--mysql版本-->

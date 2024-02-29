@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-admin</artifactId>
-        <version>3.2.2</version>
+        <version>3.2.3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-admin-start</artifactId>
@@ -158,7 +158,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <imageName>${parent.artifactId}</imageName>
+                    <imageName>${project.parent.artifactId}</imageName>
                     <mainClass>org.laokou.admin.AdminApp</mainClass>
                     <fallback>false</fallback>
                     <!-- 快速构建 -->
