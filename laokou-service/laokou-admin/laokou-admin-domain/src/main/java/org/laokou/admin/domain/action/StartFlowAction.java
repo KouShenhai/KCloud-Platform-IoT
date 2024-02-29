@@ -22,8 +22,8 @@ package org.laokou.admin.domain.action;
  */
 public interface StartFlowAction {
 
-	boolean start(Long businessKey, String instanceName, String definitionKey);
+	boolean start(String businessKey, String instanceName, String definitionKey);
 
-	boolean compensateStart(Long businessKey, String definitionKey);
+	boolean compensateStart(String businessKey, String definitionKey);
 
 }

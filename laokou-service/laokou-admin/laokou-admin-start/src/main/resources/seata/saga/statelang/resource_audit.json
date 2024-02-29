@@ -39,7 +39,7 @@
       "ServiceMethod": "modify",
       "CompensateState": "CompensateModifyResource",
       "Input": [
-        "$.[id]",
+        "$.[businessKey]",
         "$.[status]",
         {
           "throwException": "$.[rollback]"
@@ -76,7 +76,7 @@
       "ServiceName": "resourceAction",
       "ServiceMethod": "compensateModify",
       "Input": [
-        "$.[id]",
+        "$.[businessKey]",
         "$.[status]"
       ]
     },

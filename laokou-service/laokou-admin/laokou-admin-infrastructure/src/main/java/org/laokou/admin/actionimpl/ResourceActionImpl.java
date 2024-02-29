@@ -29,13 +29,13 @@ import org.springframework.stereotype.Component;
 public class ResourceActionImpl implements ResourceAction {
 
 	@Override
-	public boolean modify(Long id, Integer status) {
-		log.info(">>>>>>>>>>>>>>>状态:{}", status);
+	public boolean modify(String businessKey, Integer status) {
+		log.info(">>>>>>>>>>>>>>>businessKey:{}", businessKey);
 		return true;
 	}
 
 	@Override
-	public boolean compensateModify(Long id, Integer status) {
+	public boolean compensateModify(String businessKey, Integer status) {
 		return true;
 	}
 

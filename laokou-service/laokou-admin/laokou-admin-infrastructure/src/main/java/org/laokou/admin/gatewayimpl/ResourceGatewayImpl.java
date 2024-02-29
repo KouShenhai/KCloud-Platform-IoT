@@ -52,7 +52,6 @@ import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.RESOURCE;
 import static org.laokou.common.i18n.common.NumberConstants.DEFAULT;
-import static org.laokou.common.i18n.common.StringConstants.FALSE;
 import static org.laokou.common.i18n.common.StringConstants.UNDER;
 
 /**
@@ -100,7 +99,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	@Override
 	public void modify(Resource resource) {
 		startCreateResourceAudit(resource);
-		startFlowTask(resource);
+		//startFlowTask(resource);
 	}
 
 	/**
@@ -329,33 +328,15 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private void startCreateResourceAudit(Resource resource) {
 		Map<String, Object> map = new HashMap<>(10);
-		map.put("id", IdGenerator.defaultSnowflakeId());
+		String businessKey = String.valueOf(IdGenerator.defaultSnowflakeId());
+		map.put("businessKey", businessKey);
 		map.put("title", resource.getTitle());
 		map.put("remark", resource.getRemark());
 		map.put("code", resource.getCode());
 		map.put("url", resource.getUrl());
 		map.put("resourceId", resource.getId());
 		StateMachineInstance smi = stateMachineEngine.startWithBusinessKey("resourceModify",
-				UserUtil.getTenantId().toString(), String.valueOf(IdGenerator.defaultSnowflakeId()), map);
-		// waitingForFinish(smi);
-		log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
-	}
-
-	private void startFlowTask(Resource resource) {
-		Map<String, Object> map = new HashMap<>(3);
-		map.put("id", resource.getId());
-		map.put("instanceName", resource.getTitle());
-		map.put("definitionKey", defaultConfigProperties.getDefinitionKey());
-		map.put("rollback", FALSE);
-		StateMachineInstance smi = stateMachineEngine.startWithBusinessKey("resourceModify",
-				UserUtil.getTenantId().toString(), String.valueOf(IdGenerator.defaultSnowflakeId()), map);
-		// waitingForFinish(smi);
-		log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
-		HashMap<String, Object> map1 = new HashMap<>(0);
-		map1.put("id", IdGenerator.defaultSnowflakeId());
-		map1.put("status", 1);
-		smi = stateMachineEngine.startWithBusinessKey("resourceModify", UserUtil.getTenantId().toString(),
-				String.valueOf(IdGenerator.defaultSnowflakeId()), map1);
+				UserUtil.getTenantId().toString(), businessKey, map);
 		// waitingForFinish(smi);
 		log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
 	}
