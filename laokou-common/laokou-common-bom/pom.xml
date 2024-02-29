@@ -53,7 +53,7 @@
         <!--guava版本-->
         <guava.version>33.0.0-jre</guava.version>
         <!--oshi版本-->
-        <oshi.version>6.4.12</oshi.version>
+        <oshi.version>6.4.13</oshi.version>
         <!--elasticsearch版本-->
         <elasticsearch.version>8.6.2</elasticsearch.version>
         <!--rocketmq版本-->
