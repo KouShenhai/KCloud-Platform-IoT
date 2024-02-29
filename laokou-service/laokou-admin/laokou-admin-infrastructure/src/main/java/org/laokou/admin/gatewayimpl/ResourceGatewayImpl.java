@@ -336,7 +336,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		map.put("url", resource.getUrl());
 		map.put("resourceId", resource.getId());
 		StateMachineInstance smi = stateMachineEngine.startWithBusinessKey("resourceModify",
-				UserUtil.getTenantId().toString(),String.valueOf(IdGenerator.defaultSnowflakeId()), map);
+				UserUtil.getTenantId().toString(), String.valueOf(IdGenerator.defaultSnowflakeId()), map);
 		// waitingForFinish(smi);
 		log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
 	}
