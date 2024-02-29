@@ -37,24 +37,24 @@ public class StartFlowActionImpl implements StartFlowAction {
 	private final TasksFeignClient tasksFeignClient;
 
 	@Override
-	public boolean start(Long id, String instanceName, String definitionKey) {
+	public boolean start(String businessKey, String instanceName, String definitionKey) {
 		if (StringUtil.isNotEmpty(definitionKey)) {
 			log.info("<<>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<名称:{}", definitionKey);
-			return FeignUtil.result(tasksFeignClient.start(convert(id, instanceName, definitionKey)));
+			return FeignUtil.result(tasksFeignClient.start(convert(businessKey, instanceName, definitionKey)));
 		}
 		else {
-			log.info("<<<<<<<<<<<名称:{}", definitionKey);
+			log.info("<<<<<<<<<<<ID:{}", businessKey);
 			return true;
 		}
 	}
 
 	@Override
-	public boolean compensateStart(Long id, String definitionKey) {
+	public boolean compensateStart(String businessKey, String definitionKey) {
 		return true;
 	}
 
-	private TaskStartCmd convert(Long id, String instanceName, String definitionKey) {
-		return new TaskStartCmd(definitionKey, id.toString(), instanceName);
+	private TaskStartCmd convert(String businessKey, String instanceName, String definitionKey) {
+		return new TaskStartCmd(definitionKey, businessKey, instanceName);
 	}
 
 }

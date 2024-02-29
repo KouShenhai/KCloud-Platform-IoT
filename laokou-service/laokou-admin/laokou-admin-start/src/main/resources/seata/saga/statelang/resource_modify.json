@@ -10,7 +10,7 @@
       "ServiceMethod": "create",
       "CompensateState": "CompensateCreateResourceAudit",
       "Input": [
-        "$.[id]",
+        "$.[businessKey]",
         "$.[title]",
         "$.[remark]",
         "$.[code]",
@@ -43,7 +43,7 @@
       "ServiceMethod": "start",
       "CompensateState": "CompensateFlowStart",
       "Input": [
-        "$.[id]",
+        "$.[businessKey]",
         "$.[instanceName]",
         "$.[definitionKey]",
         {
@@ -84,7 +84,7 @@
       "ServiceMethod": "modify",
       "CompensateState": "CompensateModifyResource",
       "Input": [
-        "$.[id]",
+        "$.[businessKey]",
         "$.[status]",
         {
           "throwException": "$.[rollback]"
@@ -113,7 +113,7 @@
       "ServiceName": "resourceAuditAction",
       "ServiceMethod": "compensateCreate",
       "Input": [
-        "$.[id]"
+        "$.[businessKey]"
       ]
     },
     "CompensateModifyResource": {
@@ -121,7 +121,7 @@
       "ServiceName": "resourceAction",
       "ServiceMethod": "compensateModify",
       "Input": [
-        "$.[id]",
+        "$.[businessKey]",
         "$.[status]"
       ]
     },
@@ -130,7 +130,7 @@
       "ServiceName": "startFlowAction",
       "ServiceMethod": "compensateStart",
       "Input": [
-        "$.[id]",
+        "$.[businessKey]",
         "$.[definitionKey]"
       ]
     },

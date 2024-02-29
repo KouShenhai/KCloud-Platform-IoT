@@ -37,22 +37,22 @@ public class ResourceAuditActionImpl implements ResourceAuditAction {
 	private final ResourceAuditMapper resourceAuditMapper;
 
 	@Override
-	public boolean create(Long businessKey, String title, String remark, String code, String url, Long resourceId) {
+	public boolean create(String businessKey, String title, String remark, String code, String url, Long resourceId) {
 		log.info("{}", convert(businessKey, title, remark, code, url, resourceId));
 		// resourceAuditMapper.insertOne(convert(businessKey,title,remark,code,url,resourceId,userId,tenantId,deptId,deptPath));
 		return true;
 	}
 
 	@Override
-	public boolean compensateCreate(Long businessKey) {
-		resourceAuditMapper.deleteOneById(businessKey);
+	public boolean compensateCreate(String businessKey) {
+		resourceAuditMapper.deleteOneById(Long.parseLong(businessKey));
 		return true;
 	}
 
-	private ResourceAuditDO convert(Long businessKey, String title, String remark, String code, String url,
+	private ResourceAuditDO convert(String businessKey, String title, String remark, String code, String url,
 			Long resourceId) {
 		ResourceAuditDO resourceAuditDO = new ResourceAuditDO();
-		resourceAuditDO.setId(businessKey);
+		resourceAuditDO.setId(Long.parseLong(businessKey));
 		resourceAuditDO.setResourceId(resourceId);
 		resourceAuditDO.setTitle(title);
 		resourceAuditDO.setRemark(remark);

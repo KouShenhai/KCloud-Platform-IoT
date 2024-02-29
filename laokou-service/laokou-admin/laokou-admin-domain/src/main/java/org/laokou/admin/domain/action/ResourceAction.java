@@ -22,8 +22,8 @@ package org.laokou.admin.domain.action;
  */
 public interface ResourceAction {
 
-	boolean modify(Long businessKey, Integer status);
+	boolean modify(String businessKey, Integer status);
 
-	boolean compensateModify(Long businessKey, Integer status);
+	boolean compensateModify(String businessKey, Integer status);
 
 }
