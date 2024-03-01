@@ -92,7 +92,7 @@ services:
     depends_on:
       - zookeeper
   rocketmq-namesrv:
-    image: apache/rocketmq:5.1.1
+    image: apache/rocketmq:5.2.0
     container_name: rocketmq-namesrv
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -106,7 +106,7 @@ services:
       - TZ=Asia/Shanghai
     network_mode: bridge
   rocketmq-broker:
-    image: apache/rocketmq:5.1.1
+    image: apache/rocketmq:5.2.0
     container_name: rocketmq-broker
     # 保持容器在没有守护程序的情况下运行
     tty: true
