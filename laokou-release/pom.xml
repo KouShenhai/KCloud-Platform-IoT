@@ -39,7 +39,7 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
-        <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
         <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
     </properties>
 
@@ -107,7 +107,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.5</version>
+                <version>1.6</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
