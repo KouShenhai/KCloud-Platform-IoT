@@ -28,7 +28,7 @@ import java.util.HashMap;
  * @author laokou
  */
 @Slf4j
-public class GYApiTest {
+public class GYSGApiTest {
     public static void main(String[] args) {
         HashMap<String, String> params = new HashMap<>(2);
         String key = "";
