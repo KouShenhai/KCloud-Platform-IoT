@@ -16,7 +16,7 @@
 version: '3.8'
 services:
   mysql:
-    image: mysql:8.0.33
+    image: mysql:8.3.0
     container_name: mysql
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -46,7 +46,7 @@ services:
       retries: 10
     network_mode: bridge
   redis:
-    image: redis:7.0.11
+    image: redis:7.2.4
     container_name: redis
     # 保持容器在没有守护程序的情况下运行
     tty: true
