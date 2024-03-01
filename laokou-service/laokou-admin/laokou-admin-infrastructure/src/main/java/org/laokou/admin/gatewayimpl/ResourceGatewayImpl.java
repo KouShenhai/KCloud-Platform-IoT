@@ -99,7 +99,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	@Override
 	public void modify(Resource resource) {
 		startCreateResourceAudit(resource);
-		//startFlowTask(resource);
+		// startFlowTask(resource);
 	}
 
 	/**

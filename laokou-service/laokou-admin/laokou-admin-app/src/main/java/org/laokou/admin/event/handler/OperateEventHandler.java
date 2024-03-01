@@ -59,7 +59,8 @@ public class OperateEventHandler extends AbstractDomainEventRocketMQListener {
 			OperateEvent event = JacksonUtil.toBean(attribute, OperateEvent.class);
 			DynamicDataSourceContextHolder.push(evt.getSourceName());
 			logGateway.create(event, evt);
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
