@@ -20,7 +20,7 @@ package org.laokou.admin.actionimpl;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.action.AuditFlowAction;
 import org.laokou.admin.dto.resource.TaskAuditCmd;
-import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
+import org.laokou.admin.gatewayimpl.rpc.FlowTaskFeignClient;
 import org.laokou.common.openfeign.utils.FeignUtil;
 import org.springframework.stereotype.Component;
 
@@ -33,11 +33,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuditFlowActionImpl implements AuditFlowAction {
 
-	private final TasksFeignClient tasksFeignClient;
+	private final FlowTaskFeignClient flowTaskFeignClient;
 
 	@Override
 	public boolean audit(String taskId, Map<String, Object> values) {
-		return FeignUtil.result(tasksFeignClient.audit(convert(taskId, values)));
+		return FeignUtil.result(flowTaskFeignClient.audit(convert(taskId, values)));
 	}
 
 	@Override
