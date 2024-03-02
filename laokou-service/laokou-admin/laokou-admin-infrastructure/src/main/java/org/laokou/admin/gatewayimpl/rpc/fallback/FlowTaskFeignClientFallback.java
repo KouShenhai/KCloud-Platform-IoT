@@ -19,7 +19,7 @@ package org.laokou.admin.gatewayimpl.rpc.fallback;
 
 import org.laokou.admin.dto.resource.TaskAuditCmd;
 import org.laokou.admin.dto.resource.TaskStartCmd;
-import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
+import org.laokou.admin.gatewayimpl.rpc.FlowTaskFeignClient;
 import org.laokou.common.i18n.common.exception.FeignException;
 import org.laokou.common.i18n.dto.Result;
 
@@ -28,7 +28,7 @@ import org.laokou.common.i18n.dto.Result;
  *
  * @author laokou
  */
-public class TasksFeignClientFallback implements TasksFeignClient {
+public class FlowTaskFeignClientFallback implements FlowTaskFeignClient {
 
 	/**
 	 * 审批任务流程.

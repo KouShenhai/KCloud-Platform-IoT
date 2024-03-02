@@ -34,7 +34,7 @@ import static org.laokou.common.i18n.common.OpenFeignConstants.LAOKOU_FLOWABLE_S
  */
 @FeignClient(contextId = "tasks", name = LAOKOU_FLOWABLE_SERVICE, path = "v1/tasks",
 		fallbackFactory = TasksFeignClientFallbackFactory.class)
-public interface TasksFeignClient {
+public interface FlowTaskFeignClient {
 
 	/**
 	 * 审批任务流程.
