@@ -57,7 +57,7 @@
         <!--elasticsearch版本-->
         <elasticsearch.version>8.12.2</elasticsearch.version>
         <!--rocketmq版本-->
-        <rocketmq.version>2.2.3</rocketmq.version>
+        <rocketmq.version>2.3.0</rocketmq.version>
         <!--jakarta.servlet-api版本-->
         <jakarta-servlet-api.version>6.1.0-M2</jakarta-servlet-api.version>
         <!--easyexcel版本-->
