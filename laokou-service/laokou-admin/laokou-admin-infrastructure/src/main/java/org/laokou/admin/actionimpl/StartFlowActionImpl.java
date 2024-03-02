@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.domain.action.StartFlowAction;
 import org.laokou.admin.dto.resource.TaskStartCmd;
 import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.openfeign.utils.FeignUtil;
 import org.springframework.stereotype.Component;
 
@@ -38,14 +37,8 @@ public class StartFlowActionImpl implements StartFlowAction {
 
 	@Override
 	public boolean start(String businessKey, String instanceName, String definitionKey) {
-		if (StringUtil.isNotEmpty(definitionKey)) {
-			log.info("<<>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<名称:{}", definitionKey);
-			return FeignUtil.result(tasksFeignClient.start(convert(businessKey, instanceName, definitionKey)));
-		}
-		else {
-			log.info("<<<<<<<<<<<ID:{}", businessKey);
-			return true;
-		}
+		log.info("<<>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<名称:{}", definitionKey);
+		return FeignUtil.result(tasksFeignClient.start(convert(businessKey, instanceName, definitionKey)));
 	}
 
 	@Override
