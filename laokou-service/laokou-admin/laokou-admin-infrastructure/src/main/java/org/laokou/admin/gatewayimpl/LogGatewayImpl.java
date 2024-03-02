@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.event.FileUploadEvent;
 import org.laokou.admin.domain.gateway.LogGateway;
@@ -45,24 +44,12 @@ public class LogGatewayImpl implements LogGateway {
 
 	@Override
 	public void create(OperateEvent event, DecorateDomainEvent evt) {
-		try {
-			DynamicDataSourceContextHolder.push(evt.getSourceName());
-			operateLogMapper.insert(convert(event, evt));
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+		operateLogMapper.insert(convert(event, evt));
 	}
 
 	@Override
 	public void create(FileUploadEvent event, DecorateDomainEvent evt) {
-		try {
-			DynamicDataSourceContextHolder.push(evt.getSourceName());
-			ossLogMapper.insert(convert(event, evt));
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+		ossLogMapper.insert(convert(event, evt));
 	}
 
 	private OssLogDO convert(FileUploadEvent fileUploadEvent, DecorateDomainEvent evt) {

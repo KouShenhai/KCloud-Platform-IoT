@@ -17,6 +17,7 @@
 
 package org.laokou.admin.event.handler;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -53,8 +54,14 @@ public class FileUploadEventHandler extends AbstractDomainEventRocketMQListener 
 
 	@Override
 	protected void handleDomainEvent(DecorateDomainEvent evt, String attribute) {
-		FileUploadEvent event = JacksonUtil.toBean(attribute, FileUploadEvent.class);
-		logGateway.create(event, evt);
+		try {
+			FileUploadEvent event = JacksonUtil.toBean(attribute, FileUploadEvent.class);
+			DynamicDataSourceContextHolder.push(evt.getSourceName());
+			logGateway.create(event, evt);
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }
