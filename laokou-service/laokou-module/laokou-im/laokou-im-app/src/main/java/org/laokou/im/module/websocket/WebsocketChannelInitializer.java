@@ -61,11 +61,13 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 	@SneakyThrows
 	protected void initChannel(NioSocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
-		SSLEngine sslEngine = sslContext().createSSLEngine();
-		sslEngine.setNeedClientAuth(false);
-		sslEngine.setUseClientMode(false);
-		// TLS
-		pipeline.addLast(new SslHandler(sslEngine));
+		if (serverProperties.getSsl().isEnabled()) {
+			SSLEngine sslEngine = sslContext().createSSLEngine();
+			sslEngine.setNeedClientAuth(false);
+			sslEngine.setUseClientMode(false);
+			// TLS
+			pipeline.addLast(new SslHandler(sslEngine));
+		}
 		// 心跳检测
 		pipeline.addLast(new IdleStateHandler(60, 0, 0, SECONDS));
 		// HTTP解码器
