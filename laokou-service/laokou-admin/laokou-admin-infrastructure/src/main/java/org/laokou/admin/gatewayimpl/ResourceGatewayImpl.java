@@ -33,7 +33,7 @@ import org.laokou.admin.gatewayimpl.database.ResourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceIndex;
-import org.laokou.admin.gatewayimpl.rpc.TasksFeignClient;
+import org.laokou.admin.gatewayimpl.rpc.FlowTaskFeignClient;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
@@ -78,7 +78,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private final StateMachineEngine stateMachineEngine;
 
-	private final TasksFeignClient tasksFeignClient;
+	private final FlowTaskFeignClient flowTaskFeignClient;
 
 	private final EventUtil eventUtil;
 
