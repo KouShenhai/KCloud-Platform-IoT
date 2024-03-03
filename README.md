@@ -328,6 +328,12 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
         <th>备注</th>
     </tr>
     <tr>
+        <td>2024/03/03</td>
+        <td>y*i</td>
+        <td>￥58.88</td>
+        <td>无</td>
+    </tr>
+    <tr>
         <td>2024/01/30</td>
         <td>*阳</td>
         <td>￥10</td>
