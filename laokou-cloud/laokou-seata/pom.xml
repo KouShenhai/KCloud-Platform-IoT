@@ -22,7 +22,7 @@
         <!--fastjson版本-->
         <fastjson.version>2.0.47</fastjson.version>
         <!--logback版本-->
-        <logback.version>1.5.1</logback.version>
+        <logback.version>1.5.2</logback.version>
         <!--logstash-logback-encoder版本-->
         <logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
         <!--druid版本-->
