@@ -60,6 +60,6 @@
     "npm-run-all2": "^6.0.0",
     "webpack": "^5.1.0",
     "webpack-cli": "^5.0.0",
-    "webpack-dev-server": "^4.13.2"
+    "webpack-dev-server": "^5.0.0"
   }
 }
