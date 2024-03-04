@@ -123,4 +123,7 @@ public final class SysConstants {
 	@Schema(name = "SHA256", description = "sha256算法")
 	public static final String SHA256 = "SHA-256";
 
+	@Schema(name = "THREADS_VIRTUAL_ENABLED", description = "虚拟线程开关")
+	public static final String THREADS_VIRTUAL_ENABLED = "threads.virtual.enabled";
+
 }

@@ -27,6 +27,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.laokou.common.i18n.common.exception.DataSourceException;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -38,6 +39,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
+import static org.laokou.common.i18n.common.StringConstants.TRUE;
+import static org.laokou.common.i18n.common.SysConstants.THREADS_VIRTUAL_ENABLED;
 
 /**
  * @author laokou
@@ -50,6 +53,8 @@ public class MybatisUtil {
 	private final Executor executor;
 
 	private final SqlSessionFactory sqlSessionFactory;
+
+	private final Environment environment;
 
 	private static final int DEFAULT_BATCH_NUM = 50000;
 
@@ -77,9 +82,8 @@ public class MybatisUtil {
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);
 		int size = partition.size();
-		// 经测试，10个任务可以支持多线程事务回滚，超过则被阻塞
 		CyclicBarrier cyclicBarrier;
-		if (size > 10) {
+		if (size > getMaxRollbackTaskNum()) {
 			cyclicBarrier = null;
 		}
 		else {
@@ -132,6 +136,16 @@ public class MybatisUtil {
 		if (ObjectUtil.isNotNull(cyclicBarrier)) {
 			cyclicBarrier.reset();
 		}
+	}
+
+	private int getMaxRollbackTaskNum() {
+		// 开启虚拟线程，60个任务可以支持多线程事务回滚，超过则被阻塞
+		// 不开启虚拟线程，10个任务可以支持多线程事务回滚，超过则被阻塞
+		return enabled() ? 60 : 10;
+	}
+
+	private boolean enabled() {
+		return ObjectUtil.equals(TRUE, environment.getProperty(THREADS_VIRTUAL_ENABLED));
 	}
 
 }
