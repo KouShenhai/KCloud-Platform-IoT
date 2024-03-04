@@ -30,6 +30,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 
 import static org.laokou.common.i18n.common.StringConstants.TRUE;
+import static org.laokou.common.i18n.common.SysConstants.THREADS_VIRTUAL_ENABLED;
 import static org.laokou.common.i18n.common.SysConstants.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
@@ -45,7 +46,7 @@ public class TaskExecutorConfig {
 	@Bean(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public Executor executor(SpringTaskExecutionProperties springTaskExecutionProperties, Environment environment) {
 		String threadNamePrefix = springTaskExecutionProperties.getThreadNamePrefix();
-		String enabled = environment.getProperty("spring.threads.virtual.enabled");
+		String enabled = environment.getProperty(THREADS_VIRTUAL_ENABLED);
 		if (ObjectUtil.equals(TRUE, enabled)) {
 			// 虚拟线程
 			return new VirtualThreadTaskExecutor(threadNamePrefix);

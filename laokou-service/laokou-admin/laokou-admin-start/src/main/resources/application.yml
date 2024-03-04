@@ -79,6 +79,10 @@ spring:
       ignored-interfaces:
         - docker0
         - veth.*
+  # 开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
