@@ -75,7 +75,7 @@ services:
     privileged: true
     network_mode: bridge
   kafka:
-    image: bitnami/kafka:3.6.1
+    image: bitnami/kafka:3.7.0
     container_name: kafka
     tty: true
     ports:
