@@ -67,7 +67,7 @@
         <!--spring-boot-starter-oauth2-resource-server版本-->
         <spring-boot-starter-oauth2-resource-server.version>3.2.3</spring-boot-starter-oauth2-resource-server.version>
         <!--aws-java-sdk-s3版本-->
-        <aws-java-sdk-s3.version>1.12.672</aws-java-sdk-s3.version>
+        <aws-java-sdk-s3.version>1.12.671</aws-java-sdk-s3.version>
         <!--dynamic-datasource版本-->
         <dynamic-datasource.version>4.3.0</dynamic-datasource.version>
         <!--httpclient5版本-->
@@ -76,8 +76,8 @@
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <!--ip2region版本-->
         <ip2region.version>2.7.0</ip2region.version>
-        <!--jackson-module-kotlin版本-->
-        <jackson-module-kotlin.version>2.16.1</jackson-module-kotlin.version>
+        <!--jackson版本-->
+        <jackson.version>2.16.1</jackson.version>
         <!--xxl-job版本-->
         <xxl-job.version>2.4.0</xxl-job.version>
         <!--shardingsphere版本-->
@@ -117,6 +117,11 @@
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-log</artifactId>
@@ -390,7 +395,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.module</groupId>
                 <artifactId>jackson-module-kotlin</artifactId>
-                <version>${jackson-module-kotlin.version}</version>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.xuxueli</groupId>
