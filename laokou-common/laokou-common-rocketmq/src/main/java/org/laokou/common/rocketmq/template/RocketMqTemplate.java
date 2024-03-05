@@ -19,18 +19,19 @@ package org.laokou.common.rocketmq.template;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.client.producer.SendCallback;
-import org.apache.rocketmq.client.producer.SendResult;
-import org.apache.rocketmq.spring.core.RocketMQTemplate;
-import org.apache.rocketmq.spring.support.RocketMQHeaders;
-import org.laokou.common.i18n.common.RocketMqConstants;
+import org.apache.rocketmq.client.apis.producer.SendReceipt;
+import org.apache.rocketmq.client.apis.producer.Transaction;
+import org.apache.rocketmq.client.common.Pair;
+import org.apache.rocketmq.client.core.RocketMQClientTemplate;
+import org.apache.rocketmq.client.support.RocketMQHeaders;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
-import static org.apache.rocketmq.client.producer.SendStatus.SEND_OK;
-import static org.laokou.common.i18n.common.StringConstants.NULL;
-import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
+import java.time.Duration;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author laokou
@@ -40,125 +41,91 @@ import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
 @RequiredArgsConstructor
 public class RocketMqTemplate {
 
-	private final RocketMQTemplate rocketMQTemplate;
+	private final RocketMQClientTemplate rocketMQTemplate;
 
 	/**
 	 * 同步发送.
 	 * @param topic 主题
 	 * @param payload 消息
-	 * @param timeout 超时时间
 	 * @param <T> 泛型
 	 * @return 发送结果
 	 */
-	public <T> boolean sendSyncMessage(String topic, T payload, long timeout) {
-		Message<T> message = MessageBuilder.withPayload(payload).build();
-		return rocketMQTemplate.syncSend(topic, message, timeout).getSendStatus().equals(SEND_OK);
+	public <T> CompletableFuture<SendReceipt> sendSyncMessage(String topic, T payload) {
+		return rocketMQTemplate.asyncSendNormalMessage(topic, payload, future());
 	}
 
 	/**
-	 * 同步发送.
+	 * 异步发送.
 	 * @param topic 主题
 	 * @param payload 消息
-	 * @param timeout 超时时间
 	 * @param <T> 泛型
-	 * @param delayLevel 延迟等级
 	 * @return 发送结果
 	 */
-	public <T> boolean sendSyncMessage(String topic, T payload, long timeout, int delayLevel) {
-		Message<T> message = MessageBuilder.withPayload(payload).build();
-		return rocketMQTemplate.syncSend(topic, message, timeout, delayLevel).getSendStatus().equals(SEND_OK);
+	public <T> boolean syncSendNormalMessage(String topic, T payload) {
+		try {
+			return ObjectUtil.isNotNull(rocketMQTemplate.syncSendNormalMessage(topic, payload).getMessageId());
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**
-	 * 同步发送消息.
+	 * 同步发送顺序消息.
 	 * @param topic 主题
 	 * @param payload 消息
 	 * @param <T> 泛型
+	 * @param messageGroup 消息分组（取模）
 	 */
-	public <T> boolean sendSyncMessage(String topic, T payload) {
-		Message<T> message = MessageBuilder.withPayload(payload).build();
-		return rocketMQTemplate.syncSend(topic, message).getSendStatus().equals(SEND_OK);
+	public <T> boolean syncSendFifoMessage(String topic, T payload, String messageGroup) {
+		try {
+			return ObjectUtil
+				.isNotNull(rocketMQTemplate.syncSendFifoMessage(topic, payload, messageGroup).getMessageId());
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**
-	 * 异步发送消息.
+	 * 异步发送顺序消息.
 	 * @param topic 主题
 	 * @param payload 消息
 	 * @param <T> 泛型
+	 * @param messageGroup 消息分组（取模）
 	 */
-	public <T> void sendAsyncMessage(String topic, T payload) {
-		Message<T> message = MessageBuilder.withPayload(payload).build();
-		rocketMQTemplate.asyncSend(topic, message, new SendCallback() {
-			@Override
-			public void onSuccess(SendResult sendResult) {
-				log.info("RocketMQ消息发送成功");
-			}
-
-			@Override
-			public void onException(Throwable throwable) {
-				log.error("RocketMQ消息发送失败，报错信息", throwable);
-			}
-		});
+	public <T> CompletableFuture<SendReceipt> asyncSendFifoMessage(String topic, T payload, String messageGroup) {
+		return rocketMQTemplate.asyncSendFifoMessage(topic, payload, messageGroup, future());
 	}
 
 	/**
-	 * 异步发送消息.
+	 * 事务消息.
 	 * @param topic 主题
-	 * @param tag 标签
 	 * @param payload 消息
 	 * @param <T> 泛型
+	 * @param transactionId 事务ID
+	 * @return 发送结果
 	 */
-	public <T> void sendAsyncMessage(String topic, String tag, T payload) {
-		Message<T> message = MessageBuilder.withPayload(payload).build();
-		sendAsyncMessage(topic, tag, message);
+	public <T> Pair<SendReceipt, Transaction> sendMessageInTransaction(String topic, T payload, Long transactionId) {
+		try {
+			Message<T> message = MessageBuilder.withPayload(payload)
+				.setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId)
+				.build();
+			return rocketMQTemplate.sendMessageInTransaction(topic, message);
+		}
+		catch (Exception e) {
+			throw new SystemException("RocketMQ发送事务消息失败");
+		}
 	}
 
 	/**
-	 * 异步发送消息.
+	 * 转换并发送.
 	 * @param topic 主题
-	 * @param tag 标签
-	 * @param payload 消息
-	 * @param traceId 链路ID
+	 * @param payload 消息内容
 	 * @param <T> 泛型
 	 */
-	public <T> void sendAsyncMessage(String topic, String tag, T payload, String traceId) {
-		Message<T> message = MessageBuilder.withPayload(payload).setHeader(TRACE_ID, traceId).build();
-		sendAsyncMessage(topic, tag, message);
-	}
-
-	/**
-	 * 异步发送消息.
-	 * @param topic 主题
-	 * @param payload 消息
-	 * @param <T> 泛型
-	 * @param timeout 超时时间
-	 */
-	public <T> void sendAsyncMessage(String topic, T payload, long timeout) {
-		Message<T> message = MessageBuilder.withPayload(payload).build();
-		rocketMQTemplate.asyncSend(topic, message, new SendCallback() {
-			@Override
-			public void onSuccess(SendResult sendResult) {
-				log.info("RocketMQ消息发送成功");
-			}
-
-			@Override
-			public void onException(Throwable throwable) {
-				log.error("RocketMQ消息发送失败，报错信息", throwable);
-			}
-		}, timeout);
-	}
-
-	/**
-	 * 单向发送消息.
-	 * @param topic 主题
-	 * @param payload 消息
-	 * @param <T> 泛型
-	 */
-	public <T> void sendOneWayMessage(String topic, T payload) {
-		Message<T> message = MessageBuilder.withPayload(payload).build();
-		// 单向发送，只负责发送消息，不会触发回调函数，即发送消息请求不等待
-		// 适用于耗时短，但对可靠性不高的场景，如日志收集
-		rocketMQTemplate.sendOneWay(topic, message);
+	public <T> void convertAndSend(String topic, T payload) {
+		rocketMQTemplate.convertAndSend(topic, payload);
 	}
 
 	/**
@@ -168,108 +135,30 @@ public class RocketMqTemplate {
 	 * @param payload 消息
 	 * @param <T> 泛型
 	 */
-	public <T> boolean sendDelayMessage(String topic, long delay, T payload) {
-		Message<T> message = MessageBuilder.withPayload(payload).build();
-		return rocketMQTemplate.syncSendDelayTimeSeconds(topic, payload, delay).getSendStatus().equals(SEND_OK);
+	public <T> boolean syncSendDelayMessage(String topic, T payload, long delay) {
+		return ObjectUtil
+			.isNotNull(rocketMQTemplate.syncSendDelayMessage(topic, payload, Duration.ofSeconds(delay)).getMessageId());
 	}
 
 	/**
-	 * 同步发送顺序消息.
+	 * 延迟消息.
 	 * @param topic 主题
+	 * @param delay 延迟时间
 	 * @param payload 消息
 	 * @param <T> 泛型
-	 * @param id 标识
 	 */
-	public <T> boolean sendSyncOrderlyMessage(String topic, T payload, String id) {
-		Message<T> message = MessageBuilder.withPayload(payload).build();
-		return rocketMQTemplate.syncSendOrderly(topic, message, id).getSendStatus().equals(SEND_OK);
+	public <T> CompletableFuture<SendReceipt> asyncSendDelayMessage(String topic, T payload, long delay) {
+		return rocketMQTemplate.asyncSendDelayMessage(topic, payload, Duration.ofSeconds(delay), future());
 	}
 
-	/**
-	 * 异步发送顺序消息.
-	 * @param topic 主题
-	 * @param payload 消息
-	 * @param <T> 泛型
-	 * @param id 标识
-	 */
-	public <T> void sendAsyncOrderlyMessage(String topic, T payload, String id) {
-		Message<T> message = MessageBuilder.withPayload(payload).build();
-		rocketMQTemplate.asyncSendOrderly(topic, message, id, new SendCallback() {
-			@Override
-			public void onSuccess(SendResult sendResult) {
-				log.info("RocketMQ消息发送成功");
-			}
-
-			@Override
-			public void onException(Throwable throwable) {
+	private CompletableFuture<SendReceipt> future() {
+		CompletableFuture<SendReceipt> future = new CompletableFuture<>();
+		return future.whenCompleteAsync((sendReceipt, throwable) -> {
+			if (null != throwable) {
 				log.error("RocketMQ消息发送失败，报错信息：{}，详情见日志", throwable.getMessage(), throwable);
+				return;
 			}
-		});
-	}
-
-	/**
-	 * 单向发送顺序消息.
-	 * @param topic 主题
-	 * @param payload 消息
-	 * @param <T> 泛型
-	 * @param id 标识
-	 */
-	public <T> void sendOneWayOrderlyMessage(String topic, T payload, String id) {
-		Message<T> message = MessageBuilder.withPayload(payload).build();
-		// 单向发送，只负责发送消息，不会触发回调函数，即发送消息请求不等待
-		// 适用于耗时短，但对可靠性不高的场景，如日志收集
-		rocketMQTemplate.sendOneWayOrderly(topic, message, id);
-	}
-
-	/**
-	 * 事务消息.
-	 * @param topic 主题
-	 * @param payload 消息
-	 * @param transactionId 事务ID
-	 * @param <T> 泛型
-	 * @return 发送结果
-	 */
-	public <T> boolean sendTransactionMessage(String topic, T payload, Long transactionId) {
-		Message<T> message = MessageBuilder.withPayload(payload)
-			.setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId)
-			.build();
-		return rocketMQTemplate.sendMessageInTransaction(topic, message, NULL).getSendStatus().equals(SEND_OK);
-	}
-
-	/**
-	 * 转换并发送.
-	 * @param topic 主题
-	 * @param payload 消息内容
-	 * @param <T> 泛型
-	 */
-	public <T> void convertAndSendMessage(String topic, T payload) {
-		Message<T> message = MessageBuilder.withPayload(payload).build();
-		rocketMQTemplate.convertAndSend(topic, message);
-	}
-
-	/**
-	 * 发送并接收.
-	 * @param topic 主题
-	 * @param payload 内容
-	 * @param clazz 类型
-	 * @param <T> 泛型
-	 */
-	public <T> Object sendAndReceiveMessage(String topic, T payload, Class<?> clazz) {
-		Message<T> message = MessageBuilder.withPayload(payload).build();
-		return rocketMQTemplate.sendAndReceive(topic, message, clazz);
-	}
-
-	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message) {
-		rocketMQTemplate.asyncSend(String.format(RocketMqConstants.TOPIC_TAG, topic, tag), message, new SendCallback() {
-			@Override
-			public void onSuccess(SendResult sendResult) {
-				log.info("RocketMQ消息发送成功");
-			}
-
-			@Override
-			public void onException(Throwable throwable) {
-				log.error("RocketMQ消息失败，报错信息", throwable);
-			}
+			log.info("RocketMQ消息发送成功, messageId：{}", sendReceipt.getMessageId());
 		});
 	}
 

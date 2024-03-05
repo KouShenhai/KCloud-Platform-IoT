@@ -119,14 +119,14 @@ public class DomainEventPublishTask {
 
 	private void handleMqSend(List<DomainEvent<Long>> modifyList, DomainEventDO item) {
 		// 同步发送并修改事件状态
-		boolean result = rocketMqTemplate.sendSyncOrderlyMessage(item.getTopic(), item, item.getAppName());
+		boolean result = rocketMqTemplate.syncSendFifoMessage(item.getTopic(), item, item.getAppName());
 		addEvent(result, modifyList, item.getId(), item.getSourceName());
 	}
 
 	private void handleMqSend(List<DomainEvent<Long>> modifyList, DomainEvent<Long> item) {
 		// 同步发送并修改事件状态
-		boolean result = rocketMqTemplate.sendSyncOrderlyMessage(item.getTopic(),
-				DomainEventConvertor.toDataObject(item), item.getAppName());
+		boolean result = rocketMqTemplate.syncSendFifoMessage(item.getTopic(), DomainEventConvertor.toDataObject(item),
+				item.getAppName());
 		addEvent(result, modifyList, item.getId(), item.getSourceName());
 	}
 

@@ -20,7 +20,6 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.ThreadContext;
 import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
@@ -30,7 +29,6 @@ import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.MessageTypeEnums;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.DateUtil;
@@ -44,8 +42,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.RocketMqConstants.*;
-import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
+import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_NOTICE_MESSAGE_TAG;
+import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_REMIND_MESSAGE_TAG;
 
 /**
  * 消息管理.
@@ -76,12 +74,12 @@ public class MessageGatewayImpl implements MessageGateway {
 	@Override
 	public void create(Message message) {
 		create(messageConvertor.toDataObject(message), message);
-		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(message.getType()),
-				JacksonUtil.toJsonStr(org.laokou.common.i18n.dto.Message.builder()
-					.payload(message.getDefaultMessage())
-					.receiver(message.getReceiver())
-					.build()),
-				ThreadContext.get(TRACE_ID));
+//		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(message.getType()),
+//				JacksonUtil.toJsonStr(org.laokou.common.i18n.dto.Message.builder()
+//					.payload(message.getDefaultMessage())
+//					.receiver(message.getReceiver())
+//					.build()),
+//				ThreadContext.get(TRACE_ID));
 	}
 
 	@Override

@@ -19,19 +19,14 @@ package org.laokou.im.common.listener;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.ThreadContext;
-import org.apache.rocketmq.common.message.MessageExt;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.apache.rocketmq.client.annotation.RocketMQMessageListener;
+import org.apache.rocketmq.client.apis.consumer.ConsumeResult;
+import org.apache.rocketmq.client.apis.message.MessageView;
+import org.apache.rocketmq.client.core.RocketMQListener;
 import org.laokou.im.common.utils.MessageUtil;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
-
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
 import static org.laokou.common.i18n.common.RocketMqConstants.*;
-import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
 
 /**
  * @author laokou
@@ -39,24 +34,28 @@ import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@RocketMQMessageListener(consumerGroup = LAOKOU_NOTICE_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC,
-		selectorExpression = LAOKOU_NOTICE_MESSAGE_TAG, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
-public class NoticeMessageListener implements RocketMQListener<MessageExt> {
+@RocketMQMessageListener(consumerGroup = LAOKOU_NOTICE_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC, tag = LAOKOU_NOTICE_MESSAGE_TAG)
+public class NoticeMessageListener implements RocketMQListener {
 
 	private final MessageUtil messageUtil;
 
 	@Override
-	public void onMessage(MessageExt messageExt) {
-		try {
-			String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
-			String traceId = messageExt.getProperty(TRACE_ID);
-			ThreadContext.put(TRACE_ID, traceId);
-			log.info("接收到通知消息：{}", message);
-			messageUtil.send(message);
-		}
-		finally {
-			ThreadContext.clearMap();
-		}
+	public ConsumeResult consume(MessageView messageView) {
+		return null;
 	}
+
+//	@Override
+//	public void onMessage(MessageExt messageExt) {
+//		try {
+//			String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
+//			String traceId = messageExt.getProperty(TRACE_ID);
+//			ThreadContext.put(TRACE_ID, traceId);
+//			log.info("接收到通知消息：{}", message);
+//			messageUtil.send(message);
+//		}
+//		finally {
+//			ThreadContext.clearMap();
+//		}
+//	}
 
 }

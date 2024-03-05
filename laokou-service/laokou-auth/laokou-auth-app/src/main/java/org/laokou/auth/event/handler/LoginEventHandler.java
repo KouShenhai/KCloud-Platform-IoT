@@ -19,7 +19,7 @@ package org.laokou.auth.event.handler;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.apache.rocketmq.client.annotation.RocketMQMessageListener;
 import org.laokou.auth.domain.event.LoginEvent;
 import org.laokou.auth.domain.gateway.LogGateway;
 import org.laokou.common.core.utils.JacksonUtil;
@@ -28,9 +28,8 @@ import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.dto.DecorateDomainEvent;
 import org.springframework.stereotype.Component;
 
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.common.i18n.common.RocketMqConstants.*;
+import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_EVENT_CONSUMER_GROUP;
+import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_EVENT_TOPIC;
 
 /**
  * 登录日志处理器.
@@ -40,8 +39,7 @@ import static org.laokou.common.i18n.common.RocketMqConstants.*;
 @Slf4j
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_EVENT_CONSUMER_GROUP, topic = LAOKOU_LOGIN_EVENT_TOPIC,
-		messageModel = CLUSTERING, consumeMode = ORDERLY)
+@RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_EVENT_CONSUMER_GROUP, topic = LAOKOU_LOGIN_EVENT_TOPIC)
 public class LoginEventHandler extends AbstractDomainEventRocketMQListener {
 
 	private final LogGateway logGateway;

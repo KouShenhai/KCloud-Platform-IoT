@@ -19,8 +19,9 @@ package org.laokou.common.domain.listener;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.common.message.MessageExt;
-import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.apache.rocketmq.client.apis.consumer.ConsumeResult;
+import org.apache.rocketmq.client.apis.message.MessageView;
+import org.apache.rocketmq.client.core.RocketMQListener;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.repository.DomainEventDO;
 import org.laokou.common.domain.service.DomainEventService;
@@ -41,14 +42,14 @@ import static org.laokou.common.i18n.common.EventStatusEnums.CONSUME_SUCCEED;
  */
 @Slf4j
 @RequiredArgsConstructor
-public abstract class AbstractDomainEventRocketMQListener implements RocketMQListener<MessageExt> {
+public abstract class AbstractDomainEventRocketMQListener implements RocketMQListener {
 
 	private final DomainEventService domainEventService;
 
 	@Override
-	public void onMessage(MessageExt message) {
+	public ConsumeResult consume(MessageView messageView) {
 		List<DomainEvent<Long>> events = new ArrayList<>(1);
-		String msg = new String(message.getBody(), StandardCharsets.UTF_8);
+		String msg = new String(messageView.getBody().array(), StandardCharsets.UTF_8);
 		DomainEventDO eventDO = JacksonUtil.toBean(msg, DomainEventDO.class);
 		try {
 			// 处理领域事件
@@ -70,6 +71,7 @@ public abstract class AbstractDomainEventRocketMQListener implements RocketMQLis
 		finally {
 			domainEventService.modify(events);
 		}
+		return ConsumeResult.SUCCESS;
 	}
 
 	private DecorateDomainEvent convert(DomainEventDO eventDO) {
