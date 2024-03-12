@@ -63,7 +63,7 @@ services:
       - TZ=Asia/Shanghai
     network_mode: bridge
   zookeeper:
-    image: bitnami/zookeeper:3.9.1
+    image: bitnami/zookeeper:3.9.2
     container_name: zookeeper
     tty: true
     ports:
