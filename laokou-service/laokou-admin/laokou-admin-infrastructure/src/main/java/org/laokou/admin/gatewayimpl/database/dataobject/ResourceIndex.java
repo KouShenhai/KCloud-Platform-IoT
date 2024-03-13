@@ -21,7 +21,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.elasticsearch.v7.annotation.ElasticsearchField;
 import org.laokou.common.i18n.dto.Index;
 
 import java.io.Serial;
@@ -37,24 +36,19 @@ public class ResourceIndex extends Index {
 	private static final long serialVersionUID = -3715061850731611381L;
 
 	@Schema(name = "id", description = "ID")
-	@ElasticsearchField(type = "long")
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;
 
 	@Schema(name = "title", description = "资源名称")
-	@ElasticsearchField(type = "text", participle = 3)
 	private String title;
 
 	@Schema(name = "code", description = "资源类型 audio音频 video视频  image图片")
-	@ElasticsearchField
 	private String code;
 
 	@Schema(name = "remark", description = "资源备注")
-	@ElasticsearchField(type = "text", participle = 3)
 	private String remark;
 
 	@Schema(name = "ym", description = "年月")
-	@ElasticsearchField
 	private String ym;
 
 }

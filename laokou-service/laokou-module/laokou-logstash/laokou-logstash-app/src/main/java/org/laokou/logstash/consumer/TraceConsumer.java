@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.elasticsearch.v7.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -51,8 +50,6 @@ import static org.laokou.common.i18n.common.SysConstants.UNDEFINED;
 @Component
 @RequiredArgsConstructor
 public class TraceConsumer {
-
-	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	@KafkaListener(topics = LAOKOU_TRACE_TOPIC, groupId = LAOKOU_LOGSTASH_CONSUMER_GROUP)
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
@@ -101,7 +98,8 @@ public class TraceConsumer {
 					traceIndex.setUserId(replaceValue(traceIndex.getUserId()));
 					traceIndex.setUsername(replaceValue(traceIndex.getUsername()));
 					String indexName = getIndexName(DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMM));
-					elasticsearchTemplate.syncIndexAsync(EMPTY, indexName, JacksonUtil.toJsonStr(traceIndex));
+					// elasticsearchTemplate.syncIndexAsync(EMPTY, indexName,
+					// JacksonUtil.toJsonStr(traceIndex));
 				}
 				catch (Exception e) {
 					log.error("同步数据报错", e);
@@ -133,18 +131,19 @@ public class TraceConsumer {
 	@SneakyThrows
 	private void createIndex(String ym) {
 		String indexName = getIndexName(ym);
-		try {
-			if (!elasticsearchTemplate.isIndexExists(indexName)) {
-				elasticsearchTemplate.createAsyncIndex(indexName, TRACE, TraceIndex.class);
-				log.info("索引【{}】创建成功", indexName);
-			}
-			else {
-				log.info("索引【{}】已存在", indexName);
-			}
-		}
-		catch (Exception e) {
-			log.error("创建索引【{}】失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
-		}
+		// try {
+		// if (!elasticsearchTemplate.isIndexExists(indexName)) {
+		// elasticsearchTemplate.createAsyncIndex(indexName, TRACE, TraceIndex.class);
+		// log.info("索引【{}】创建成功", indexName);
+		// }
+		// else {
+		// log.info("索引【{}】已存在", indexName);
+		// }
+		// }
+		// catch (Exception e) {
+		// log.error("创建索引【{}】失败，错误信息：{}，详情见日志", indexName,
+		// LogUtil.result(e.getMessage()), e);
+		// }
 	}
 
 }

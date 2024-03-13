@@ -15,7 +15,25 @@
  *
  */
 
-/**
- * @author laokou
- */
-package org.laokou.common.elasticsearch.v7.utils;
+package org.laokou.common.elasticsearch.annotation;
+
+import java.lang.annotation.*;
+
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.FIELD })
+public @interface Field {
+
+	String value() default "";
+
+	Type type();
+
+	String searchAnalyzer() default "";
+
+	String analyzer() default "";
+
+	boolean fielddata() default false;
+
+	boolean eagerGlobalOrdinals() default false;
+
+}

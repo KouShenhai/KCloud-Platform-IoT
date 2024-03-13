@@ -37,8 +37,6 @@ import org.laokou.admin.gatewayimpl.rpc.FlowTaskFeignClient;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.elasticsearch.v7.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -69,8 +67,6 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private final ResourceAuditMapper resourceAuditMapper;
 
 	private final ResourceConvertor resourceConvertor;
-
-	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	private final DefaultConfigProperties defaultConfigProperties;
 
@@ -241,7 +237,8 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private void createIndex(List<String> list) {
 		list.forEach(ym -> {
 			try {
-				elasticsearchTemplate.createIndex(index(ym), RESOURCE, ResourceIndex.class);
+				// elasticsearchTemplate.createIndex(index(ym), RESOURCE,
+				// ResourceIndex.class);
 			}
 			catch (Exception e) {
 				log.error("索引创建失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
@@ -257,7 +254,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private void deleteIndex(List<String> list) {
 		list.forEach(ym -> {
 			try {
-				elasticsearchTemplate.deleteIndex(index(ym));
+				// elasticsearchTemplate.deleteIndex(index(ym));
 			}
 			catch (Exception e) {
 				log.error("索引删除失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
@@ -292,7 +289,8 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		Map<String, List<ResourceIndex>> listMap = list.stream().collect(Collectors.groupingBy(ResourceIndex::getYm));
 		listMap.forEach((k, v) -> {
 			try {
-				elasticsearchTemplate.syncBatchIndex(index(k), JacksonUtil.toJsonStr(v));
+				// elasticsearchTemplate.syncBatchIndex(index(k),
+				// JacksonUtil.toJsonStr(v));
 			}
 			catch (Exception e) {
 				log.error("索引同步失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);

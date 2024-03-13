@@ -21,18 +21,15 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.index.IndexListQry;
 import org.laokou.admin.dto.index.clientobject.IndexCO;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.elasticsearch.v7.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.RESOURCE;
-import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.TRACE;
 
 /**
  * 查询索引列表执行器.
@@ -43,15 +40,13 @@ import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.TRACE;
 @RequiredArgsConstructor
 public class IndexListQryExe {
 
-	private final ElasticsearchTemplate elasticsearchTemplate;
-
 	/**
 	 * 执行查询索引列表.
 	 * @param qry 查询索引列表参数
 	 * @return 索引列表
 	 */
 	public Result<Datas<IndexCO>> execute(IndexListQry qry) {
-		Map<String, String> indexNames = elasticsearchTemplate.getIndexNames(new String[] { RESOURCE, TRACE });
+		Map<String, String> indexNames = new HashMap<>(0);
 		if (MapUtil.isEmpty(indexNames)) {
 			return Result.of(Datas.of());
 		}
