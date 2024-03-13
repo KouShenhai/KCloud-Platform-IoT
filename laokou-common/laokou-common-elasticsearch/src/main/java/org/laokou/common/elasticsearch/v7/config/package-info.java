@@ -18,4 +18,4 @@
 /**
  * @author laokou
  */
-package org.laokou.common.elasticsearch.config.auto;
+package org.laokou.common.elasticsearch.v7.config;

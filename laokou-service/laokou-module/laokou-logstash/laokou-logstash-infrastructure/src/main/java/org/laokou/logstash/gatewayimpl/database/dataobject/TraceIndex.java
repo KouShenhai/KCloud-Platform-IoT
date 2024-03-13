@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
-import org.laokou.common.elasticsearch.annotation.ElasticsearchField;
+import org.laokou.common.elasticsearch.v7.annotation.ElasticsearchField;
 import org.laokou.common.i18n.dto.Index;
 import org.springframework.format.annotation.DateTimeFormat;
 

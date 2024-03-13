@@ -15,29 +15,26 @@
  *
  */
 
-package org.laokou.common.elasticsearch.annotation;
+package org.laokou.common.elasticsearch.v7.utils;
 
-import java.lang.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * Elasticsearch注解.
+ * 属性、类型、分词器.
  *
  * @author laokou
  */
-@Target({ ElementType.FIELD, ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Inherited
-public @interface ElasticsearchField {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class FieldMapping {
 
-	/**
-	 * 默认 keyword.
-	 */
-	String type() default "keyword";
+	private String field;
 
-	/**
-	 * 0 not_analyzed 1 ik_smart 2.ik_max_word 3.ik-index(自定义分词器).
-	 */
-	int participle() default 0;
+	private String type;
+
+	private Integer participle;
 
 }

@@ -19,7 +19,7 @@ package org.laokou.admin.command.index.query;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.index.IndexGetQry;
-import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
+import org.laokou.common.elasticsearch.v7.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 

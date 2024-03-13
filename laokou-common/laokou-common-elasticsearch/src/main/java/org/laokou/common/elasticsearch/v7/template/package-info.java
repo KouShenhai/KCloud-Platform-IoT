@@ -18,4 +18,4 @@
 /**
  * @author laokou
  */
-package org.laokou.common.elasticsearch.template;
+package org.laokou.common.elasticsearch.v7.template;
