@@ -110,6 +110,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 - 分布式事务：Seata & RocketMQ
 - 消息队列：RocketMQ & Kafka & MQTT
 - 服务监控：Spring Boot Admin & Prometheus
+- 高亮搜索：Elasticsearch
 - 链路跟踪：SkyWalking
 - 任务调度：XXL Job
 - 日志分析：EFK
