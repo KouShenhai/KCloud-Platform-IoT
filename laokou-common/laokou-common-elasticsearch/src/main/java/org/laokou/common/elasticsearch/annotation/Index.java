@@ -15,26 +15,17 @@
  *
  */
 
-package org.laokou.common.elasticsearch.v7.utils;
+package org.laokou.common.elasticsearch.annotation;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.lang.annotation.*;
 
-/**
- * 属性、类型、分词器.
- *
- * @author laokou
- */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class FieldMapping {
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.TYPE })
+public @interface Index {
 
-	private String field;
+	Analysis analysis() default @Analysis;
 
-	private String type;
-
-	private Integer participle;
+	Setting setting() default @Setting;
 
 }

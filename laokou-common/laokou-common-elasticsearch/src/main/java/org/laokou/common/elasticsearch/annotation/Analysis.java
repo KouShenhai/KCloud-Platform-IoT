@@ -15,7 +15,12 @@
  *
  */
 
-/**
- * @author laokou
- */
-package org.laokou.common.elasticsearch.v7.config;
+package org.laokou.common.elasticsearch.annotation;
+
+public @interface Analysis {
+
+	Filter[] filters() default {};
+
+	Analyzer[] analyzers() default {};
+
+}

@@ -15,29 +15,17 @@
  *
  */
 
-package org.laokou.common.elasticsearch.v7.annotation;
+package org.laokou.common.elasticsearch.annotation;
 
 import java.lang.annotation.*;
 
-/**
- * Elasticsearch注解.
- *
- * @author laokou
- */
-@Target({ ElementType.FIELD, ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Inherited
-public @interface ElasticsearchField {
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.TYPE })
+public @interface Option {
 
-	/**
-	 * 默认 keyword.
-	 */
-	String type() default "keyword";
+	String key();
 
-	/**
-	 * 0 not_analyzed 1 ik_smart 2.ik_max_word 3.ik-index(自定义分词器).
-	 */
-	int participle() default 0;
+	String value();
 
 }

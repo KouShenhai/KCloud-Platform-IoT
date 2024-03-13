@@ -29,7 +29,7 @@ import reactor.core.scheduler.Schedulers;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.NetworkConstants.HTTPS_SCHEME;
+import static org.laokou.common.i18n.common.NetworkConstants.HTTPS_PROTOCOL;
 import static org.laokou.common.i18n.common.StringConstants.SLASH;
 import static org.laokou.common.i18n.common.SysConstants.ALL_PATTERNS;
 
@@ -47,7 +47,7 @@ public class OpenApiDocConfig {
 	public List<GroupedOpenApi> openApis(RouteDefinitionLocator locator, ServerProperties serverProperties) {
 		List<GroupedOpenApi> groups = new ArrayList<>();
 		locator.getRouteDefinitions().filter(routeDefinition -> {
-			if (!serverProperties.getSsl().isEnabled() && HTTPS_SCHEME.equals(routeDefinition.getUri().getScheme())) {
+			if (!serverProperties.getSsl().isEnabled() && HTTPS_PROTOCOL.equals(routeDefinition.getUri().getScheme())) {
 				throw new RuntimeException(
 						String.format("HTTP不允许开启SSL，请检查URL为%s的路由", routeDefinition.getUri().toString()));
 			}

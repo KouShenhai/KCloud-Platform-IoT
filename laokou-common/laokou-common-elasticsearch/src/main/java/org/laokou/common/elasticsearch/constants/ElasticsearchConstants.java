@@ -15,33 +15,15 @@
  *
  */
 
-package org.laokou.admin.command.resource.query;
-
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.resource.ResourceSearchGetQry;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
-
-import java.util.Map;
+package org.laokou.common.elasticsearch.constants;
 
 /**
- * 搜索资源执行器.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class ResourceSearchGetQryExe {
+public interface ElasticsearchConstants {
 
-	/**
-	 * 执行搜索资源.
-	 * @param qry 搜索资源参数
-	 * @return 搜索结果
-	 */
-	public Result<Datas<Map<String, Object>>> execute(ResourceSearchGetQry qry) {
-		return null;
-		// return Result.of(elasticsearchTemplate.highlightSearchIndex(qry.getSearch()));
-	}
+	String HIGHLIGHT_PRE_TAGS = "<font color='red'>";
+
+	String HIGHLIGHT_POST_TAGS = "</font>";
 
 }

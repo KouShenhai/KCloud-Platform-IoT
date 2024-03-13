@@ -19,7 +19,6 @@ package org.laokou.admin.command.index.query;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.index.IndexTraceGetQry;
-import org.laokou.common.elasticsearch.v7.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.dto.Search;
 import org.springframework.stereotype.Component;
@@ -39,8 +38,6 @@ import static org.laokou.common.i18n.common.MybatisPlusConstants.PRIMARY_KEY;
 @RequiredArgsConstructor
 public class IndexTraceGetQryExe {
 
-	private final ElasticsearchTemplate elasticsearchTemplate;
-
 	/**
 	 * 执行查看分布式链路索引.
 	 * @param qry 查看分布式链路索引
@@ -52,7 +49,9 @@ public class IndexTraceGetQryExe {
 		search.setPageSize(1);
 		search.setPageNum(1);
 		search.setOrQueryList(Collections.singletonList(new Search.Query(PRIMARY_KEY, qry.getId())));
-		return Result.of(elasticsearchTemplate.highlightSearchIndex(search).getRecords().getFirst());
+		return null;
+		// return
+		// Result.of(elasticsearchTemplate.highlightSearchIndex(search).getRecords().getFirst());
 	}
 
 }

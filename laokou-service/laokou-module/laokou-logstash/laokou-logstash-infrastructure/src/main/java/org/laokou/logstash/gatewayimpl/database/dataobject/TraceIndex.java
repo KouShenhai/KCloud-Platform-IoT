@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
-import org.laokou.common.elasticsearch.v7.annotation.ElasticsearchField;
 import org.laokou.common.i18n.dto.Index;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -35,46 +34,33 @@ import static org.laokou.common.i18n.utils.DateUtil.Constant.*;
 @Data
 public class TraceIndex extends Index {
 
-	@ElasticsearchField(type = "long")
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;
 
-	@ElasticsearchField
 	private String appName;
 
-	@ElasticsearchField
 	private String profile;
 
-	@ElasticsearchField
 	@DateTimeFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS)
 	@JsonFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
 	private LocalDateTime timestamp;
 
-	@ElasticsearchField
 	private String userId;
 
-	@ElasticsearchField
 	private String username;
 
-	@ElasticsearchField
 	private String tenantId;
 
-	@ElasticsearchField
 	private String traceId;
 
-	@ElasticsearchField
 	private String ip;
 
-	@ElasticsearchField
 	private String level;
 
-	@ElasticsearchField
 	private String thread;
 
-	@ElasticsearchField
 	private String logger;
 
-	@ElasticsearchField
 	private String msg;
 
 }

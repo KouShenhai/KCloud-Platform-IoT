@@ -15,32 +15,14 @@
  *
  */
 
-package org.laokou.admin.command.index.query;
+package org.laokou.common.elasticsearch.annotation;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.index.IndexGetQry;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
+public @interface Setting {
 
-import java.util.Map;
+	short shards() default 1;
 
-/**
- * 查看索引执行器.
- *
- * @author laokou
- */
-@Component
-@RequiredArgsConstructor
-public class IndexGetQryExe {
+	short replicas() default 1;
 
-	/**
-	 * 执行查看索引.
-	 * @param qry 查看索引参数
-	 * @return 索引
-	 */
-	public Result<Map<String, Object>> execute(IndexGetQry qry) {
-		return null;
-		// return Result.of(elasticsearchTemplate.getIndexProperties(qry.getIndexName()));
-	}
+	String refreshInterval() default "1s";
 
 }

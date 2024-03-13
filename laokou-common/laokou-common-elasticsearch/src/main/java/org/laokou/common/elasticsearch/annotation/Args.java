@@ -15,23 +15,12 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.common.elasticsearch.annotation;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+public @interface Args {
 
-/**
- * @author laokou
- */
-@Schema(name = "ElasticsearchConstants", description = "Elasticsearch变量")
-public final class ElasticsearchConstants {
+	String filter();
 
-	private ElasticsearchConstants() {
-	}
-
-	@Schema(name = "IK_ANALYZED", description = "ik分词器")
-	public static final Integer IK_ANALYZED = 3;
-
-	@Schema(name = "NOT_ANALYZED", description = "无分词器")
-	public static final Integer NOT_ANALYZED = 0;
+	String tokenizer();
 
 }

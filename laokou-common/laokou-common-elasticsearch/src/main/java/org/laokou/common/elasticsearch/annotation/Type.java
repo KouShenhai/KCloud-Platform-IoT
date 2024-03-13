@@ -15,7 +15,25 @@
  *
  */
 
+package org.laokou.common.elasticsearch.annotation;
+
+import lombok.Getter;
+
 /**
  * @author laokou
  */
-package org.laokou.common.elasticsearch.v7.annotation;
+@Getter
+public enum Type {
+
+	AUTO("auto"), TEXT("text"), KEYWORD("keyword"), LONG("long"), INTEGER("integer"), SHORT("short"), BYTE("byte"),
+	DOUBLE("double"), FLOAT("float"), DATE("date"), BOOLEAN("boolean"), BINARY("binary"),
+	INTEGER_RANGE("integer_range"), FLOAT_RANGE("float_range"), LONG_RANGE("long_range"), DOUBLE_RANGE("double_range"),
+	DATE_RANGE("date_range"), OBJECT("object"), IP("ip");
+
+	private final String value;
+
+	Type(String value) {
+		this.value = value;
+	}
+
+}

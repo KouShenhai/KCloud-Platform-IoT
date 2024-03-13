@@ -34,12 +34,6 @@ public final class NetworkConstants {
 	@Schema(name = "IP", description = "IP参数")
 	public static final String IP = "ip";
 
-	@Schema(name = "HTTP_SCHEME", description = "http协议")
-	public static final String HTTP_SCHEME = "http";
-
-	@Schema(name = "", description = "https协议")
-	public static final String HTTPS_SCHEME = "https";
-
 	@Schema(name = "WWW", description = "www三级域名")
 	public static final String WWW = "www";
 
@@ -55,7 +49,16 @@ public final class NetworkConstants {
 	@Schema(name = "LOCAL_DESC", description = "本地IP描述")
 	public static final String LOCAL_DESC = "内网";
 
+	@Schema(name = "HTTP_SCHEME", description = "http协议头")
+	public static final String HTTP_SCHEME = "http://";
+
 	@Schema(name = "HTTP_PROTOCOL", description = "http协议")
-	public static final String HTTP_PROTOCOL = "http://";
+	public static final String HTTP_PROTOCOL = "http";
+
+	@Schema(name = "HTTPS_PROTOCOL", description = "https协议")
+	public static final String HTTPS_PROTOCOL = "https";
+
+	@Schema(name = "HTTPS_SCHEME", description = "HTTPS协议头")
+	public static final String HTTPS_SCHEME = "https://";
 
 }

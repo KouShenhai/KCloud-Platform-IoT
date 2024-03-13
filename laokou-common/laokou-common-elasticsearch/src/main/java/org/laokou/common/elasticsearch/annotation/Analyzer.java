@@ -15,7 +15,12 @@
  *
  */
 
-/**
- * @author laokou
- */
-package org.laokou.common.elasticsearch.v7.template;
+package org.laokou.common.elasticsearch.annotation;
+
+public @interface Analyzer {
+
+	String name();
+
+	Args args();
+
+}

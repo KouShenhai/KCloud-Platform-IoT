@@ -19,7 +19,6 @@ package org.laokou.admin.command.index.query;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.index.IndexTraceListQry;
-import org.laokou.common.elasticsearch.v7.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.dto.Search;
@@ -41,8 +40,6 @@ public class IndexTraceListQryExe {
 
 	private static final String TRACE_ID = "traceId";
 
-	private final ElasticsearchTemplate elasticsearchTemplate;
-
 	/**
 	 * 执行查询分布式链路索引列表.
 	 * @param qry 查询分布式链路索引列表参数
@@ -54,7 +51,8 @@ public class IndexTraceListQryExe {
 		search.setPageSize(qry.getPageSize());
 		search.setPageNum(qry.getPageNum());
 		search.setOrQueryList(Collections.singletonList(new Search.Query(TRACE_ID, qry.getTraceId())));
-		return Result.of(elasticsearchTemplate.highlightSearchIndex(search));
+		return null;
+		// return Result.of(elasticsearchTemplate.highlightSearchIndex(search));
 	}
 
 }
