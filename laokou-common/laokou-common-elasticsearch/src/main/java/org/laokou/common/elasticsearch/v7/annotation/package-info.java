@@ -15,31 +15,7 @@
  *
  */
 
-package org.laokou.common.elasticsearch.annotation;
-
-import org.laokou.common.i18n.common.ElasticsearchFieldTypeEnums;
-
-import java.lang.annotation.*;
-
-import static org.laokou.common.i18n.common.ElasticsearchFieldTypeEnums.KEYWORD;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-
 /**
- * es注解.
- *
  * @author laokou
  */
-@Documented
-@Target({ ElementType.FIELD })
-@Retention(RetentionPolicy.RUNTIME)
-public @interface EsField {
-
-	String value();
-
-	ElasticsearchFieldTypeEnums type() default KEYWORD;
-
-	String searchAnalyzer() default EMPTY;
-
-	String analyzer() default EMPTY;
-
-}
+package org.laokou.common.elasticsearch.v7.annotation;

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.elasticsearch.config.auto;
+package org.laokou.common.elasticsearch.v7.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -202,16 +202,5 @@ public class ElasticsearchAutoConfig {
 		}
 
 	}
-
-	// @Bean(name = "elasticsearchClient")
-	// @ConditionalOnMissingBean(ElasticsearchClient.class)
-	// @ConditionalOnClass(RestClientBuilder.class)
-	// public ElasticsearchClient elasticsearchClient(RestClientBuilder
-	// elasticsearchRestClientBuilder) {
-	// ElasticsearchTransport transport = new
-	// RestClientTransport(elasticsearchRestClientBuilder.build(),
-	// new JacksonJsonpMapper());
-	// return new ElasticsearchClient(transport);
-	// }
 
 }

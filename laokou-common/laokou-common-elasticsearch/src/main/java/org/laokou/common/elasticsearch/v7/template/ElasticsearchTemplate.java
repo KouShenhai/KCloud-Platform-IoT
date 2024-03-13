@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.elasticsearch.template;
+package org.laokou.common.elasticsearch.v7.template;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -68,9 +68,9 @@ import org.elasticsearch.xcontent.XContentType;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.elasticsearch.clientobject.SettingsCO;
-import org.laokou.common.elasticsearch.utils.FieldMapping;
-import org.laokou.common.elasticsearch.utils.FieldMappingUtil;
+import org.laokou.common.elasticsearch.v7.clientobject.SettingsCO;
+import org.laokou.common.elasticsearch.v7.utils.FieldMapping;
+import org.laokou.common.elasticsearch.v7.utils.FieldMappingUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Search;

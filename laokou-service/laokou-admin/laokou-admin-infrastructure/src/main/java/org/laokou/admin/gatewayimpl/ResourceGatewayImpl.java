@@ -38,7 +38,7 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
+import org.laokou.common.elasticsearch.v7.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;

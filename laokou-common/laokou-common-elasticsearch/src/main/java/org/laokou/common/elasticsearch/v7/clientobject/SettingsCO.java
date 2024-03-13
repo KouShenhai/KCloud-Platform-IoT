@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.elasticsearch.clientobject;
+package org.laokou.common.elasticsearch.v7.clientobject;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

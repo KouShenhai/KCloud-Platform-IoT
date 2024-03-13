@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.index.IndexListQry;
 import org.laokou.admin.dto.index.clientobject.IndexCO;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
+import org.laokou.common.elasticsearch.v7.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;

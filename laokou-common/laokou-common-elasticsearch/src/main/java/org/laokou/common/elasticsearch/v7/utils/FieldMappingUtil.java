@@ -15,10 +15,10 @@
  *
  */
 
-package org.laokou.common.elasticsearch.utils;
+package org.laokou.common.elasticsearch.v7.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.elasticsearch.annotation.ElasticsearchField;
+import org.laokou.common.elasticsearch.v7.annotation.ElasticsearchField;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
