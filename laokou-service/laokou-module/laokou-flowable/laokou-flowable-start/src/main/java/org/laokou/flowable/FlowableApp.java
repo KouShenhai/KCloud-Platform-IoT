@@ -29,6 +29,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAut
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.net.InetAddress;
@@ -38,7 +39,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 
 /**
  * 启动类.
- *
+ * &#064;EnableAspectJAutoProxy(exposeProxy  = true) => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
  * @author laokou
  */
 @EnableRedisRepository
@@ -48,6 +49,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 @EnableSecurity
 @EnableTaskExecutor
+@EnableAspectJAutoProxy(exposeProxy = true)
 @MapperScan({ "org.laokou.common.domain.repository", "org.laokou.flowable.gatewayimpl.database",
 		"org.laokou.common.mybatisplus.repository" })
 public class FlowableApp {

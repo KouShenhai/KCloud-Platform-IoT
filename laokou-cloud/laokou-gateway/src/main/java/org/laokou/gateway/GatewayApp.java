@@ -36,7 +36,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 
 /**
  * 网关启动类.
- *
+ * &#064;EnableAspectJAutoProxy(exposeProxy  = true) => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
  * @author laokou
  */
 @EnableAuth
@@ -45,7 +45,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 		exclude = { RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
 @EnableConfigurationProperties
 @EnableEncryptableProperties
-@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy(exposeProxy = true)
 @EnableDiscoveryClient
 public class GatewayApp {
 
