@@ -42,8 +42,8 @@ import java.net.InetAddress;
 import static org.laokou.common.i18n.common.NetworkConstants.IP;
 
 /**
- * 启动类.
- * &#064;EnableAspectJAutoProxy(exposeProxy  = true) => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
+ * 启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
+ *
  * @author laokou
  */
 @SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
