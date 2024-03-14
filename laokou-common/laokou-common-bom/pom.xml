@@ -111,7 +111,7 @@
         <!--mockito版本-->
         <mockito.version>5.11.0</mockito.version>
         <!--flyway版本-->
-        <flyway.version>10.9.1</flyway.version>
+        <flyway.version>10.10.0</flyway.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
