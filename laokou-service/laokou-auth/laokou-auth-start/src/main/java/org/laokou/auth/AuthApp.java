@@ -32,6 +32,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.net.InetAddress;
@@ -40,7 +41,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 
 /**
  * 启动类.
- *
+ * &#064;EnableAspectJAutoProxy(exposeProxy  = true) => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
  * @author laokou
  */
 @SpringBootApplication(scanBasePackages = "org.laokou",
@@ -55,6 +56,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @MapperScan({ "org.laokou.common.domain.repository", "org.laokou.auth.gatewayimpl.database",
 		"org.laokou.common.mybatisplus.repository" })
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
+@EnableAspectJAutoProxy(exposeProxy = true)
 public class AuthApp {
 
 	@SneakyThrows
