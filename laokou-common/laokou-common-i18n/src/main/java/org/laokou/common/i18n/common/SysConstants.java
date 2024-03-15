@@ -31,7 +31,7 @@ public final class SysConstants {
 	}
 
 	@Schema(name = "VERSION", description = "版本")
-	public static final String VERSION = "3.2.3";
+	public static final String VERSION = "3.2.4";
 
 	@Schema(name = "GRACEFUL_SHUTDOWN_URL", description = "优雅停机URL")
 	public static final String GRACEFUL_SHUTDOWN_URL = "/graceful-shutdown";
