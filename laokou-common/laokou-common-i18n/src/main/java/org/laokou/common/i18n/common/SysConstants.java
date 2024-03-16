@@ -42,6 +42,9 @@ public final class SysConstants {
 	@Schema(name = "ALGORITHM_RSA", description = "RSA加密算法")
 	public static final String ALGORITHM_RSA = "RSA";
 
+	@Schema(name = "SUN_RSA_SIGN_PROVIDER", description = "RSA签名提供者")
+	public static final String SUN_RSA_SIGN_PROVIDER = "SunRsaSign";
+
 	@Schema(name = "ENABLED", description = "开启")
 	public static final String ENABLED = "enabled";
 
@@ -78,8 +81,8 @@ public final class SysConstants {
 	@Schema(name = "CRYPTO_SUFFIX", description = "加密后缀")
 	public static final String CRYPTO_SUFFIX = ")";
 
-	@Schema(name = "PUBLIC_KEY", description = "公钥Key")
-	public static final String PUBLIC_KEY = "public-key";
+	@Schema(name = "PRIVATE_KEY", description = "私钥Key")
+	public static final String PRIVATE_KEY = "private-key";
 
 	@Schema(name = "ALL_PATTERNS", description = "拦截所有路径")
 	public static final String ALL_PATTERNS = "/**";

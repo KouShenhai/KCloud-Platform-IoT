@@ -23,13 +23,13 @@ import com.alibaba.nacos.api.config.ConfigService;
 import com.google.common.base.Preconditions;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shardingsphere.driver.jdbc.core.driver.ShardingSphereDriverURLProvider;
+import org.apache.shardingsphere.driver.jdbc.core.driver.ShardingSphereURLProvider;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.PropertyUtil;
+import org.laokou.common.crypto.utils.RsaUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.shardingsphere.utils.CryptoUtil;
 import org.springframework.util.StringUtils;
 
 import java.io.ByteArrayInputStream;
@@ -43,6 +43,7 @@ import java.util.regex.Matcher;
 
 import static com.alibaba.cloud.nacos.NacosDiscoveryProperties.PREFIX;
 import static org.laokou.common.i18n.common.ShardingSphereConstants.*;
+import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 import static org.laokou.common.i18n.common.StringConstants.RISK;
 import static org.laokou.common.i18n.common.SysConstants.*;
 
@@ -50,7 +51,7 @@ import static org.laokou.common.i18n.common.SysConstants.*;
  * @author laokou
  */
 @Slf4j
-public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
+public class NacosDriverURLProvider implements ShardingSphereURLProvider {
 
 	@Override
 	public boolean accept(String url) {
@@ -59,7 +60,7 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 
 	@SneakyThrows
 	@Override
-	public byte[] getContent(String url) {
+	public byte[] getContent(String url, String prefix) {
 		NacosConfigProperties properties = PropertyUtil.getProperties(PREFIX, NacosConfigProperties.class,
 				YAML_LOCATION, YAML_FORMAT);
 		String group = properties.getGroup();
@@ -77,20 +78,20 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 		if (list.isEmpty()) {
 			throw new RuntimeException("Nacos配置ShardingSphere不正确");
 		}
-		List<String> strList = list.stream().filter(i -> i.startsWith(PUBLIC_KEY)).toList();
-		String publicKey = "";
+		List<String> strList = list.stream().filter(i -> i.startsWith(PRIVATE_KEY)).toList();
+		String privateKey = EMPTY;
 		if (CollectionUtil.isNotEmpty(strList)) {
-			publicKey = strList.getFirst().substring(11).trim();
+			privateKey = strList.getFirst().substring(12).trim();
 		}
 		StringBuilder stringBuilder = new StringBuilder();
-		String finalPublicKey = publicKey;
+		String pk = privateKey;
 		list.forEach(item -> {
-			if (!item.startsWith(PUBLIC_KEY)) {
+			if (!item.startsWith(PRIVATE_KEY)) {
 				if (item.contains(CRYPTO_PREFIX) && item.contains(CRYPTO_SUFFIX)) {
 					int index = item.indexOf(RISK);
 					String key = item.substring(0, index + 2);
 					String val = item.substring(index + 2).trim();
-					stringBuilder.append(key).append(decrypt(finalPublicKey, val)).append("\n");
+					stringBuilder.append(key).append(decrypt(pk, val)).append("\n");
 				}
 				else {
 					stringBuilder.append(item).append("\n");
@@ -118,14 +119,14 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 	/**
 	 * 字符串解密.
 	 * @param cipherText 加密字符串
-	 * @param publicKey 公钥
+	 * @param privateKey 私钥
 	 */
-	private String decrypt(String publicKey, String cipherText) {
+	private String decrypt(String privateKey, String cipherText) {
 		if (StringUtils.hasText(cipherText)) {
 			Matcher matcher = ENC_PATTERN.matcher(cipherText);
 			if (matcher.find()) {
 				try {
-					return CryptoUtil.decrypt(publicKey, matcher.group(1));
+					return RsaUtil.decryptByPrivateKey(matcher.group(1), privateKey);
 				}
 				catch (Exception e) {
 					log.error("ShardingSphere decrypt error", e);
