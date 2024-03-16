@@ -214,14 +214,10 @@ public class ElasticsearchTemplate {
 	}
 
 	private CreateIndexRequest getCreateIndexRequest(Document document) {
-		String name = document.getName();
-		String alias = document.getAlias();
 		CreateIndexRequest.Builder createIndexbuilder = new CreateIndexRequest.Builder();
-		if (StringUtil.isNotEmpty(alias)) {
-			// 别名
-			createIndexbuilder.aliases(alias, fn -> fn.isWriteIndex(true));
-		}
-		return createIndexbuilder.index(name).mappings(getMappings(document)).settings(getSettings(document)).build();
+		// 别名
+		createIndexbuilder.aliases(document.getAlias(), fn -> fn.isWriteIndex(true));
+		return createIndexbuilder.index(document.getName()).mappings(getMappings(document)).settings(getSettings(document)).build();
 	}
 
 	private IndexSettings getSettings(Document document) {
@@ -295,7 +291,7 @@ public class ElasticsearchTemplate {
 			Index index = clazz.getAnnotation(Index.class);
 			return Document.builder()
 				.name(name)
-				.alias(alias)
+				.alias(StringUtil.isNotEmpty(alias) ? alias : name)
 				.mappings(getMappings(clazz))
 				.setting(getSetting(index))
 				.analysis(getAnalysis(index))
