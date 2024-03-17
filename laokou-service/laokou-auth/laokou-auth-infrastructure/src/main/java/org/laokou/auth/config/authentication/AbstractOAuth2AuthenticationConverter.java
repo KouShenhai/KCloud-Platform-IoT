@@ -39,7 +39,7 @@ import java.util.Map;
  * @author laokou
  */
 @Slf4j
-public abstract class AbstractOAuth2BaseAuthenticationConverter implements AuthenticationConverter {
+public abstract class AbstractOAuth2AuthenticationConverter implements AuthenticationConverter {
 
 	/**
 	 * 获取认证类型.

@@ -28,7 +28,7 @@ import static org.laokou.common.i18n.common.OAuth2Constants.MAIL;
  *
  * @author laokou
  */
-public class OAuth2MailAuthenticationConverter extends AbstractOAuth2BaseAuthenticationConverter {
+public class OAuth2MailAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
 
 	@Override
 	String getGrantType() {

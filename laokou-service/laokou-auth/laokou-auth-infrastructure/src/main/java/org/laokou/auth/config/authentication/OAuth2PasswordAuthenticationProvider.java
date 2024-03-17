@@ -43,12 +43,11 @@ import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getExcep
  */
 @Slf4j
 @Component("passwordAuthenticationProvider")
-public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
+public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2PasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-			OAuth2CommonAuthenticationProvider oAuth2CommonAuthenticationProvider) {
-		super(authorizationService, tokenGenerator, oAuth2CommonAuthenticationProvider);
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProvider authProvider) {
+		super(authorizationService, tokenGenerator, authProvider);
 	}
 
 	@Override

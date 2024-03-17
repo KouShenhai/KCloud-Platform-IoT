@@ -66,6 +66,7 @@
         <module>laokou-common-rate-limiter</module>
         <module>laokou-common-domain</module>
         <module>laokou-common-log</module>
+        <module>laokou-common-test</module>
     </modules>
 
 </project>

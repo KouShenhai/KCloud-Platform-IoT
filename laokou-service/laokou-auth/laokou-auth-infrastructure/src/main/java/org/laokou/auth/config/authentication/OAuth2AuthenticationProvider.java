@@ -45,9 +45,9 @@ import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATI
 /**
  * @author laokou
  */
-@Component
 @RequiredArgsConstructor
-public class OAuth2CommonAuthenticationProvider {
+@Component("authProvider")
+public class OAuth2AuthenticationProvider {
 
 	private final UserGateway userGateway;
 

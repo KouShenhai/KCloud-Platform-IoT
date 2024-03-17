@@ -29,7 +29,7 @@ import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
  *
  * @author laokou
  */
-public class OAuth2PasswordAuthenticationToken extends AbstractOAuth2BaseAuthenticationToken {
+public class OAuth2PasswordAuthenticationToken extends AbstractOAuth2AuthenticationToken {
 
 	/**
 	 * Sub-class constructor.

@@ -28,7 +28,7 @@ import static org.laokou.common.i18n.common.OAuth2Constants.MOBILE;
  *
  * @author laokou
  */
-public class OAuth2MobileAuthenticationConverter extends AbstractOAuth2BaseAuthenticationConverter {
+public class OAuth2MobileAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
 
 	@Override
 	String getGrantType() {

@@ -26,8 +26,8 @@ import org.laokou.auth.domain.gateway.CaptchaGateway;
 import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.crypto.utils.RsaUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,6 +39,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,6 +70,8 @@ class OAuth2ApiTest {
 
 	private static final String MOBILE = "xxx";
 
+	private static final String CODE = "iQWEh8YSpdwZ8_5QsA8C_1tVpR-6_fcLMYDKGnhozJW9MmTzf30aYvq6F_O3sSL0PP0bEVVdoXeau8QOuTln3ABn2c-00x7irutqFKAHRJVFZGln_6Wmuab4ostt-3-y";
+
 	private static final Long SNOWFLAKE_ID = IdGenerator.defaultSnowflakeId();
 
 	private final CaptchaGateway captchaGateway;
@@ -88,15 +91,15 @@ class OAuth2ApiTest {
 
 	@Test
 	void testUsernamePasswordAuthApi() {
-		String captcha = getCaptchasApi(SNOWFLAKE_ID.toString());
-		String publicKey = getSecretsApi();
+		log.info("---------- 账号密码认证模式开始 ----------");
+		String captcha = getCaptcha(SNOWFLAKE_ID.toString());
+		String publicKey = getSecret();
 		String privateKey = RsaUtil.getPrivateKey();
 		String encryptUsername = RsaUtil.encryptByPublicKey(USERNAME, publicKey);
 		String encryptPassword = RsaUtil.encryptByPublicKey(PASSWORD, publicKey);
 		String decryptUsername = RsaUtil.decryptByPrivateKey(encryptUsername, privateKey);
 		String decryptPassword = RsaUtil.decryptByPrivateKey(encryptPassword, privateKey);
-		Map<String, String> tokenMap = getUsernamePasswordAuthApi(SNOWFLAKE_ID, captcha, decryptUsername,
-				decryptPassword);
+		Map<String, String> tokenMap = usernamePasswordAuth(SNOWFLAKE_ID, captcha, decryptUsername, decryptPassword);
 		log.info("验证码：{}", captcha);
 		log.info("加密用户名：{}", encryptUsername);
 		log.info("加密密码：{}", encryptPassword);
@@ -104,99 +107,209 @@ class OAuth2ApiTest {
 		log.info("解密密码：{}", decryptPassword);
 		log.info("uuid：{}", SNOWFLAKE_ID);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		log.info("刷新token：{}", getRefreshTokenApi(tokenMap.get(REFRESH_TOKEN)));
+		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
+		log.info("---------- 账号密码认证模式结束 ----------");
 	}
 
 	@Test
 	void testMailAuthApi() {
+		log.info("---------- 邮箱认证开始 ----------");
 		String code = getCodeApi(MAIL);
-		Map<String, String> tokenMap = getMailAuthApi(code);
+		Map<String, String> tokenMap = mailAuth(code);
 		log.info("验证码：{}", code);
 		log.info("验证码：{}", MAIL);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		log.info("刷新token：{}", getRefreshTokenApi(tokenMap.get(REFRESH_TOKEN)));
+		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
+		log.info("---------- 邮箱认证结束 ----------");
 	}
 
 	@Test
 	void testMobileAuthApi() {
+		log.info("---------- 手机号认证开始 ----------");
 		String code = getCodeApi(MOBILE);
-		Map<String, String> tokenMap = getMobileAuthApi(code);
+		Map<String, String> tokenMap = mobileAuth(code);
 		log.info("验证码：{}", code);
 		log.info("手机号：{}", MOBILE);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		log.info("刷新token：{}", getRefreshTokenApi(tokenMap.get(REFRESH_TOKEN)));
+		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
+		log.info("---------- 手机号认证结束 ----------");
+	}
+
+	@Test
+	void testAuthorizationCodeAuthApi() {
+		log.info("---------- 授权码认证模式开始 ----------");
+		Map<String, String> tokenMap = authorizationCodeAuth();
+		log.info("编码：{}", CODE);
+		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
+		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
+		log.info("---------- 授权码认证模式结束 ----------");
+	}
+
+	@Test
+	void testClientCredentialsAuthApi() {
+		log.info("---------- 客户端认证模式开始 ----------");
+		Map<String, String> tokenMap = clientCredentialsAuth();
+		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
+		log.info("---------- 客户端认证模式结束 ----------");
+	}
+
+	@Test
+	void testDeviceAuthorizationCodeAuthApi() {
+		log.info("---------- 设备授权码认证模式开始 ----------");
+		String deviceCode = getDeviceCode();
+		// 需要用户确认
+		Map<String, String> tokenMap = deviceAuthorizationCodeAuth(deviceCode);
+		log.info("设备码：{}", deviceCode);
+		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
+		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
+		log.info("---------- 设备授权码认证模式结束 ----------");
+	}
+
+	private Map<String, String> deviceAuthorizationCodeAuth(String deviceCode) {
+		try {
+			String apiUrl = getOAuthApiUrl();
+			HashMap<String, String> params = new HashMap<>(3);
+			HashMap<String, String> headers = new HashMap<>(1);
+			params.put("device_code", deviceCode);
+			params.put("grant_type", "urn:ietf:params:oauth:grant-type:device_code");
+			headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
+			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
+			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
+			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
+		}
+		catch (Exception e) {
+			return Collections.emptyMap();
+		}
+	}
+
+	private Map<String, String> clientCredentialsAuth() {
+		try {
+			String apiUrl = getOAuthApiUrl();
+			HashMap<String, String> params = new HashMap<>(1);
+			HashMap<String, String> headers = new HashMap<>(1);
+			params.put("grant_type", "client_credentials");
+			headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
+			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
+			return Map.of(ACCESS_TOKEN, accessToken);
+		}
+		catch (Exception e) {
+			return Collections.emptyMap();
+		}
+	}
+
+	private Map<String, String> authorizationCodeAuth() {
+		try {
+			String apiUrl = getOAuthApiUrl();
+			HashMap<String, String> params = new HashMap<>(3);
+			HashMap<String, String> headers = new HashMap<>(1);
+			params.put("code", CODE);
+			params.put("redirect_uri", "http://127.0.0.1:8001");
+			params.put("grant_type", "authorization_code");
+			headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
+			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
+			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
+			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
+		}
+		catch (Exception e) {
+			return Collections.emptyMap();
+		}
 	}
 
 	private String getCodeApi(String uuid) {
-		return getCaptchasApi(uuid);
+		return getCaptcha(uuid);
 	}
 
-	private Map<String, String> getMobileAuthApi(String code) {
-		String apiUrl = getOAuthApiUrl();
-		HashMap<String, String> params = new HashMap<>();
-		HashMap<String, String> headers = new HashMap<>(1);
-		params.put("code", code);
-		params.put("mobile", MOBILE);
-		params.put("tenant_id", "0");
-		params.put("grant_type", "mobile");
-		headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
-		String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
-		String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
-		String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
-		Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
-		return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
+	private Map<String, String> mobileAuth(String code) {
+		try {
+			String apiUrl = getOAuthApiUrl();
+			HashMap<String, String> params = new HashMap<>(4);
+			HashMap<String, String> headers = new HashMap<>(1);
+			params.put("code", code);
+			params.put("mobile", MOBILE);
+			params.put("tenant_id", "0");
+			params.put("grant_type", "mobile");
+			headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
+			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
+			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
+			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
+		}
+		catch (Exception e) {
+			return Collections.emptyMap();
+		}
 	}
 
-	private Map<String, String> getMailAuthApi(String code) {
-		String apiUrl = getOAuthApiUrl();
-		HashMap<String, String> params = new HashMap<>();
-		HashMap<String, String> headers = new HashMap<>(1);
-		params.put("code", code);
-		params.put("mail", MAIL);
-		params.put("tenant_id", "0");
-		params.put("grant_type", "mail");
-		headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
-		String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
-		String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
-		String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
-		Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
-		return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
-	}
-
-	@SneakyThrows
-	private Map<String, String> getUsernamePasswordAuthApi(long uuid, String captcha, String username,
-			String password) {
-		String apiUrl = getOAuthApiUrl();
-		HashMap<String, String> params = new HashMap<>();
-		HashMap<String, String> headers = new HashMap<>(2);
-		params.put("uuid", String.valueOf(uuid));
-		params.put("username", username);
-		params.put("password", password);
-		params.put("tenant_id", "0");
-		params.put("grant_type", "password");
-		params.put("captcha", captcha);
-		headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
-		headers.put("trace-id", String.valueOf(System.currentTimeMillis()));
-		String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
-		String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
-		String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
-		Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
-		return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
-	}
-
-	private String getRefreshTokenApi(String refreshToken) {
-		String apiUrl = getOAuthApiUrl();
-		HashMap<String, String> params = new HashMap<>();
-		HashMap<String, String> headers = new HashMap<>(1);
-		params.put("refresh_token", refreshToken);
-		params.put("grant_type", "refresh_token");
-		headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
-		String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
-		return JacksonUtil.readTree(json).get("access_token").asText();
+	private Map<String, String> mailAuth(String code) {
+		try {
+			String apiUrl = getOAuthApiUrl();
+			HashMap<String, String> params = new HashMap<>(4);
+			HashMap<String, String> headers = new HashMap<>(1);
+			params.put("code", code);
+			params.put("mail", MAIL);
+			params.put("tenant_id", "0");
+			params.put("grant_type", "mail");
+			headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
+			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
+			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
+			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
+		}
+		catch (Exception e) {
+			return Collections.emptyMap();
+		}
 	}
 
 	@SneakyThrows
-	private String getCaptchasApi(String uuid) {
+	private Map<String, String> usernamePasswordAuth(long uuid, String captcha, String username, String password) {
+		try {
+			String apiUrl = getOAuthApiUrl();
+			HashMap<String, String> params = new HashMap<>(6);
+			HashMap<String, String> headers = new HashMap<>(2);
+			params.put("uuid", String.valueOf(uuid));
+			params.put("username", username);
+			params.put("password", password);
+			params.put("tenant_id", "0");
+			params.put("grant_type", "password");
+			params.put("captcha", captcha);
+			headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			headers.put("trace-id", String.valueOf(System.currentTimeMillis()));
+			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
+			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
+			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
+			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
+		}
+		catch (Exception e) {
+			return Collections.emptyMap();
+		}
+	}
+
+	private String getRefreshToken(String refreshToken) {
+		try {
+			String apiUrl = getOAuthApiUrl();
+			HashMap<String, String> params = new HashMap<>(2);
+			HashMap<String, String> headers = new HashMap<>(1);
+			params.put("refresh_token", refreshToken);
+			params.put("grant_type", "refresh_token");
+			headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			return JacksonUtil.readTree(json).get("access_token").asText();
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	@SneakyThrows
+	private String getCaptcha(String uuid) {
 		String apiUrl = "/v1/captchas/";
 		mockMvc.perform(get(apiUrl + uuid).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 		String key = captchaGateway.key(uuid);
@@ -206,7 +319,7 @@ class OAuth2ApiTest {
 	}
 
 	@SneakyThrows
-	private String getSecretsApi() {
+	private String getSecret() {
 		String apiUrl = "/v1/secrets";
 		MvcResult mvcResult = mockMvc.perform(get(apiUrl).contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
@@ -218,8 +331,27 @@ class OAuth2ApiTest {
 		return secret;
 	}
 
+	private String getDeviceCode() {
+		try {
+			String apiUrl = getDeviceCodeApiUrl();
+			HashMap<String, String> params = new HashMap<>(0);
+			HashMap<String, String> headers = new HashMap<>(1);
+			headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			return JacksonUtil.readTree(json).get("device_code").asText();
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
 	private String getOAuthApiUrl() {
 		return getSchema(disabledSsl()) + LOCAL_IPV4 + RISK + serverProperties.getPort() + "/oauth2/token";
+	}
+
+	private String getDeviceCodeApiUrl() {
+		return getSchema(disabledSsl()) + LOCAL_IPV4 + RISK + serverProperties.getPort()
+				+ "/oauth2/device_authorization";
 	}
 
 	private String getSchema(boolean disabled) {

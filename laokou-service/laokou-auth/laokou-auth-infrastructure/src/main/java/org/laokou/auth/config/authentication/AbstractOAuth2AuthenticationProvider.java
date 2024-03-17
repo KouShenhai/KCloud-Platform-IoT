@@ -65,7 +65,7 @@ import static org.springframework.security.oauth2.server.authorization.OAuth2Tok
  */
 @Slf4j
 @RequiredArgsConstructor
-public abstract class AbstractOAuth2BaseAuthenticationProvider implements AuthenticationProvider {
+public abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationProvider {
 
 	private final OAuth2AuthorizationService authorizationService;
 
@@ -73,7 +73,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	private static final OAuth2TokenType ID_TOKEN_TOKEN_TYPE = new OAuth2TokenType(ID_TOKEN);
 
-	private final OAuth2CommonAuthenticationProvider oAuth2CommonAuthenticationProvider;
+	private final OAuth2AuthenticationProvider authProvider;
 
 	/**
 	 * 认证.
@@ -116,7 +116,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		try {
 			// 仿照授权码模式
 			// 生成token（access_token + refresh_token）
-			AbstractOAuth2BaseAuthenticationToken auth2BaseAuthenticationToken = (AbstractOAuth2BaseAuthenticationToken) authentication;
+			AbstractOAuth2AuthenticationToken auth2BaseAuthenticationToken = (AbstractOAuth2AuthenticationToken) authentication;
 			OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(
 					auth2BaseAuthenticationToken);
 			RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
@@ -207,7 +207,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	 * @return 用户信息
 	 */
 	protected UsernamePasswordAuthenticationToken authenticationToken(User user, HttpServletRequest request) {
-		return oAuth2CommonAuthenticationProvider.authenticationToken(user, request);
+		return authProvider.authenticationToken(user, request);
 	}
 
 	protected String encryptAes(String str) {
