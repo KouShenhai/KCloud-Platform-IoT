@@ -32,11 +32,12 @@ import org.springframework.util.MultiValueMap;
 @NonNullApi
 public class WinCondition implements Condition {
 
-    @Override
-    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-        MultiValueMap<String, Object> attributes = metadata.getAllAnnotationAttributes(ConditionalOnWin.class.getName(),true);
-        log.info("evn：{}", context.getEnvironment().getDefaultProfiles()[0]);
-        return attributes != null && !attributes.isEmpty() && "win".equals(attributes.getFirst("env"));
-    }
+	@Override
+	public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+		MultiValueMap<String, Object> attributes = metadata.getAllAnnotationAttributes(ConditionalOnWin.class.getName(),
+				true);
+		log.info("evn：{}", context.getEnvironment().getDefaultProfiles()[0]);
+		return attributes != null && !attributes.isEmpty() && "win".equals(attributes.getFirst("env"));
+	}
 
 }

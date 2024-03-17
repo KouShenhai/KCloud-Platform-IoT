@@ -167,9 +167,10 @@ class OAuth2ApiTest {
 	private Map<String, String> deviceAuthorizationCodeAuth(String deviceCode) {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("device_code", deviceCode
-					,"grant_type", "urn:ietf:params:oauth:grant-type:device_code");
-			Map<String, String> headers = Collections.singletonMap("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			Map<String, String> params = Map.of("device_code", deviceCode, "grant_type",
+					"urn:ietf:params:oauth:grant-type:device_code");
+			Map<String, String> headers = Collections.singletonMap("Authorization",
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
@@ -185,7 +186,8 @@ class OAuth2ApiTest {
 		try {
 			String apiUrl = getOAuthApiUrl();
 			Map<String, String> params = Map.of("grant_type", "client_credentials");
-			Map<String, String> headers = Collections.singletonMap("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			Map<String, String> headers = Collections.singletonMap("Authorization",
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
@@ -199,10 +201,10 @@ class OAuth2ApiTest {
 	private Map<String, String> authorizationCodeAuth() {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("code", CODE
-					,"redirect_uri", "http://127.0.0.1:8001"
-					,"grant_type", "authorization_code");
-			Map<String, String> headers = Collections.singletonMap("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			Map<String, String> params = Map.of("code", CODE, "redirect_uri", "http://127.0.0.1:8001", "grant_type",
+					"authorization_code");
+			Map<String, String> headers = Collections.singletonMap("Authorization",
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
@@ -221,11 +223,10 @@ class OAuth2ApiTest {
 	private Map<String, String> mobileAuth(String code) {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("code", code
-					,"mobile", MOBILE
-					,"tenant_id", "0"
-					,"grant_type", "mobile");
-			Map<String, String> headers = Collections.singletonMap("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			Map<String, String> params = Map.of("code", code, "mobile", MOBILE, "tenant_id", "0", "grant_type",
+					"mobile");
+			Map<String, String> headers = Collections.singletonMap("Authorization",
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
@@ -240,11 +241,9 @@ class OAuth2ApiTest {
 	private Map<String, String> mailAuth(String code) {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("code", code
-					,"mail", MAIL
-					,"tenant_id", "0"
-					,"grant_type", "mail");
-			Map<String, String> headers = Collections.singletonMap("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			Map<String, String> params = Map.of("code", code, "mail", MAIL, "tenant_id", "0", "grant_type", "mail");
+			Map<String, String> headers = Collections.singletonMap("Authorization",
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
@@ -260,14 +259,11 @@ class OAuth2ApiTest {
 	private Map<String, String> usernamePasswordAuth(long uuid, String captcha, String username, String password) {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("uuid", String.valueOf(uuid)
-					,"username", username
-					,"password", password
-					,"tenant_id", "0"
-					,"grant_type", "password"
-					,"captcha", captcha);
-			Map<String, String> headers = Map.of("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8="
-					,"trace-id", String.valueOf(System.currentTimeMillis()));
+			Map<String, String> params = Map.of("uuid", String.valueOf(uuid), "username", username, "password",
+					password, "tenant_id", "0", "grant_type", "password", "captcha", captcha);
+			Map<String, String> headers = Map.of("Authorization",
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "trace-id",
+					String.valueOf(System.currentTimeMillis()));
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
@@ -282,9 +278,9 @@ class OAuth2ApiTest {
 	private String getRefreshToken(String refreshToken) {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("refresh_token", refreshToken
-					,"grant_type", "refresh_token");
-			Map<String, String> headers = Collections.singletonMap("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			Map<String, String> params = Map.of("refresh_token", refreshToken, "grant_type", "refresh_token");
+			Map<String, String> headers = Collections.singletonMap("Authorization",
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			return JacksonUtil.readTree(json).get("access_token").asText();
 		}
@@ -320,7 +316,8 @@ class OAuth2ApiTest {
 		try {
 			String apiUrl = getDeviceCodeApiUrl();
 			Map<String, String> params = Collections.emptyMap();
-			Map<String, String> headers = Collections.singletonMap("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			Map<String, String> headers = Collections.singletonMap("Authorization",
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			return JacksonUtil.readTree(json).get("device_code").asText();
 		}

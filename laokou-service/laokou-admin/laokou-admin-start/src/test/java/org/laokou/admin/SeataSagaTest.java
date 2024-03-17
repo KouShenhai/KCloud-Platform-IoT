@@ -26,8 +26,6 @@ import org.springframework.test.context.TestConstructor;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Collections;
-import java.util.HashMap;
-
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**

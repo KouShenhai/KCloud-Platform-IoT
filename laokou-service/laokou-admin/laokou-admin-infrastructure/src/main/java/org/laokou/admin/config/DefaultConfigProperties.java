@@ -22,7 +22,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 import static org.laokou.common.i18n.common.PropertiesConstants.DEFAULT_CONFIG_PREFIX;

@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.test.container.annotation;
 
 import org.laokou.test.container.condition.WinCondition;
@@ -21,12 +22,12 @@ import org.springframework.context.annotation.Conditional;
 
 import java.lang.annotation.*;
 
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target({ ElementType.METHOD, ElementType.TYPE })
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Conditional({WinCondition.class})
+@Conditional({ WinCondition.class })
 public @interface ConditionalOnWin {
 
-    String env() default "";
+	String env() default "";
 
 }

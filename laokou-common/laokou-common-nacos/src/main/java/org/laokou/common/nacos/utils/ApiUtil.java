@@ -57,7 +57,8 @@ public class ApiUtil {
 		String password = nacosConfigProperties.getPassword();
 		params.put(USERNAME, username);
 		params.put(PASSWORD, password);
-		String result = HttpUtil.doFormUrlencodedPost(tokenUri, params, Collections.emptyMap(), protocolProxy.sslEnabled());
+		String result = HttpUtil.doFormUrlencodedPost(tokenUri, params, Collections.emptyMap(),
+				protocolProxy.sslEnabled());
 		if (StringUtil.isEmpty(result)) {
 			return EMPTY;
 		}
