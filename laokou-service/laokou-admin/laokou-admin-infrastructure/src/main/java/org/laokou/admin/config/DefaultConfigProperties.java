@@ -21,6 +21,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,16 +50,16 @@ public class DefaultConfigProperties {
 	/**
 	 * 租户表集合.
 	 */
-	private Set<String> tenantTables = new HashSet<>(0);
+	private Set<String> tenantTables = Collections.emptySet();
 
 	/**
 	 * 优雅停机服务列表.
 	 */
-	private Set<String> gracefulShutdownServices = new HashSet<>(0);
+	private Set<String> gracefulShutdownServices = Collections.emptySet();
 
 	/**
 	 * 域名列表.
 	 */
-	private Set<String> domainNames = new HashSet<>(0);
+	private Set<String> domainNames = Collections.emptySet();
 
 }

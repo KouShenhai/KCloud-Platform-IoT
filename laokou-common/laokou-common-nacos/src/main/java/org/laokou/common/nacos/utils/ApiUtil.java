@@ -29,6 +29,7 @@ import org.laokou.common.nacos.proxy.ProtocolProxy;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ public class ApiUtil {
 		String password = nacosConfigProperties.getPassword();
 		params.put(USERNAME, username);
 		params.put(PASSWORD, password);
-		String result = HttpUtil.doFormUrlencodedPost(tokenUri, params, new HashMap<>(0), protocolProxy.sslEnabled());
+		String result = HttpUtil.doFormUrlencodedPost(tokenUri, params, Collections.emptyMap(), protocolProxy.sslEnabled());
 		if (StringUtil.isEmpty(result)) {
 			return EMPTY;
 		}
@@ -76,7 +77,7 @@ public class ApiUtil {
 		params.put("show", "all");
 		params.put(ACCESS_TOKEN, token);
 		params.put(USERNAME, username);
-		String configInfo = HttpUtil.doGet(configUri, params, new HashMap<>(0), protocolProxy.sslEnabled());
+		String configInfo = HttpUtil.doGet(configUri, params, Collections.emptyMap(), protocolProxy.sslEnabled());
 		if (StringUtil.isEmpty(configInfo)) {
 			return null;
 		}
@@ -85,7 +86,7 @@ public class ApiUtil {
 
 	public void doConfigInfo(ConfigCO co, String token) {
 		String configUri = protocolProxy.getConfigUri(nacosConfigProperties.getServerAddr());
-		HttpUtil.doFormUrlencodedPost(configUri, getMap(co, token), new HashMap<>(0), protocolProxy.sslEnabled());
+		HttpUtil.doFormUrlencodedPost(configUri, getMap(co, token), Collections.emptyMap(), protocolProxy.sslEnabled());
 	}
 
 	@SneakyThrows

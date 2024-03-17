@@ -27,10 +27,7 @@ import org.springframework.security.oauth2.server.authorization.settings.Configu
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_AUTHORIZATION_SERVER_PREFIX;
 
@@ -60,7 +57,7 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 	/**
 	 * Registered clients of the Authorization Server.
 	 */
-	private final Map<String, Client> client = new HashMap<>(0);
+	private final Map<String, Client> client = Collections.emptyMap();
 
 	/**
 	 * Authorization Server endpoints.
@@ -239,12 +236,12 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 		/**
 		 * Client authentication method(s) that the client may use.
 		 */
-		private Set<String> clientAuthenticationMethods = new HashSet<>(0);
+		private Set<String> clientAuthenticationMethods = Collections.emptySet();
 
 		/**
 		 * Authorization grant type(s) that the client may use.
 		 */
-		private Set<String> authorizationGrantTypes = new HashSet<>(0);
+		private Set<String> authorizationGrantTypes = Collections.emptySet();
 
 		/**
 		 * Redirect URI(s) that the client may use in redirect-based flows.
@@ -254,12 +251,12 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 		/**
 		 * Redirect URI(s) that the client may use for logout.
 		 */
-		private Set<String> postLogoutRedirectUris = new HashSet<>(0);
+		private Set<String> postLogoutRedirectUris = Collections.emptySet();
 
 		/**
 		 * Scope(s) that the client may use.
 		 */
-		private Set<String> scopes = new HashSet<>(0);
+		private Set<String> scopes = Collections.emptySet();
 
 	}
 

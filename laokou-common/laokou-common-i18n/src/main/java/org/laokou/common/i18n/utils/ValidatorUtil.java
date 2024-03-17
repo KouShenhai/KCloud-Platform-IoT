@@ -24,7 +24,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -60,7 +60,7 @@ public class ValidatorUtil {
 		if (!violationSet.isEmpty()) {
 			return violationSet.stream().map(ConstraintViolation::getMessage).collect(Collectors.toSet());
 		}
-		return new HashSet<>(0);
+		return Collections.emptySet();
 	}
 
 }

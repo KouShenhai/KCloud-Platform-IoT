@@ -21,6 +21,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -46,7 +47,7 @@ public class OAuth2ResourceServerProperties {
 	@Data
 	public static class RequestMatcher {
 
-		private Map<String, Set<String>> ignorePatterns = new HashMap<>(0);
+		private Map<String, Set<String>> ignorePatterns = Collections.emptyMap();
 
 	}
 

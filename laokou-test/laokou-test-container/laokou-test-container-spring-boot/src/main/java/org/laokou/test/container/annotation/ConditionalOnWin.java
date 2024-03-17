@@ -14,20 +14,19 @@
  * limitations under the License.
  *
  */
+package org.laokou.test.container.annotation;
 
-package org.laokou.test.container;
+import org.laokou.test.container.condition.WinCondition;
+import org.springframework.context.annotation.Conditional;
 
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import java.lang.annotation.*;
 
-@Slf4j
-@SpringBootTest
-class ConditionalTest {
+@Target({ElementType.METHOD, ElementType.TYPE})
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Conditional({WinCondition.class})
+public @interface ConditionalOnWin {
 
-	@Test
-	void contextLoads() {
-
-	}
+    String env() default "";
 
 }
