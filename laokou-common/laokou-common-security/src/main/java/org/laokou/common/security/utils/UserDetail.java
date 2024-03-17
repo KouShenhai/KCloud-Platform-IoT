@@ -36,10 +36,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static lombok.AccessLevel.PRIVATE;
@@ -226,7 +223,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@Override
 	@JsonIgnore
 	public Map<String, Object> getAttributes() {
-		return new HashMap<>(0);
+		return Collections.emptyMap();
 	}
 
 	@Override

@@ -113,7 +113,7 @@ public class MapUtil {
 	 */
 	public static Map<String, String> toMap(String str, String on, String separator) {
 		if (StringUtil.isEmpty(str)) {
-			return new HashMap<>(0);
+			return Collections.emptyMap();
 		}
 		return Splitter.on(on).trimResults().withKeyValueSeparator(separator).split(str);
 	}
@@ -127,7 +127,7 @@ public class MapUtil {
 		String[] strings = params.split(AND);
 		int length = strings.length;
 		if (length == 0) {
-			return new HashMap<>(0);
+			return Collections.emptyMap();
 		}
 		Map<String, String> paramMap = new HashMap<>(strings.length);
 		for (String string : strings) {

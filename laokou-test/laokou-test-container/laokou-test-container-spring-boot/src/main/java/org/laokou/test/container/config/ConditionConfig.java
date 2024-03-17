@@ -15,18 +15,28 @@
  *
  */
 
-package org.laokou.test.container;
+package org.laokou.test.container.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.laokou.test.container.annotation.ConditionalOnWin;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Slf4j
-@SpringBootTest
-class ConditionalTest {
+@Configuration
+class ConditionConfig {
 
-	@Test
-	void contextLoads() {
+	@Bean
+	@ConditionalOnWin(env = "win")
+	User user() {
+		return new User();
+	}
+
+	static class User {
+
+		User() {
+			log.info("用户初始化成功");
+		}
 
 	}
 

@@ -26,10 +26,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 查询索引列表执行器.
@@ -46,7 +43,7 @@ public class IndexListQryExe {
 	 * @return 索引列表
 	 */
 	public Result<Datas<IndexCO>> execute(IndexListQry qry) {
-		Map<String, String> indexNames = new HashMap<>(0);
+		Map<String, String> indexNames = Collections.emptyMap();
 		if (MapUtil.isEmpty(indexNames)) {
 			return Result.of(Datas.of());
 		}

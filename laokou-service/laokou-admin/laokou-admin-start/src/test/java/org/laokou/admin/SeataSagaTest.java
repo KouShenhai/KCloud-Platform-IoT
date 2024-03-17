@@ -25,8 +25,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.test.context.TestConstructor;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.HashMap;
-
+import java.util.Collections;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
 
 /**
@@ -47,7 +46,7 @@ public class SeataSagaTest extends CommonTest {
 
 	@Test
 	public void testStateMachineEngine() {
-		stateMachineEngine.start(EMPTY, "0", new HashMap<>(0));
+		stateMachineEngine.start(EMPTY, "0", Collections.emptyMap());
 	}
 
 }

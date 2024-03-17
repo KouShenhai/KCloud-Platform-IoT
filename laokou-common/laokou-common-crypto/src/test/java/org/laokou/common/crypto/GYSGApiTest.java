@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -36,7 +37,7 @@ public class GYSGApiTest {
 		String cx = "";
 		params.put("key", key);
 		params.put("cx", cx);
-		String result = HttpUtil.doGet("https://api.t1qq.com/api/sky/sc/sg", params, new HashMap<>(0), true);
+		String result = HttpUtil.doGet("https://api.t1qq.com/api/sky/sc/sg", params, Collections.emptyMap(), true);
 		Result res = JacksonUtil.toBean(result, Result.class);
 		Result.Action action = res.action;
 		Result.Adorn adorn = res.adorn;

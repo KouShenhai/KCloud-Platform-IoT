@@ -15,19 +15,19 @@
  *
  */
 
-package org.laokou.test.container;
+package org.laokou.test.container.annotation;
 
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.laokou.test.container.condition.WinCondition;
+import org.springframework.context.annotation.Conditional;
 
-@Slf4j
-@SpringBootTest
-class ConditionalTest {
+import java.lang.annotation.*;
 
-	@Test
-	void contextLoads() {
+@Target({ ElementType.METHOD, ElementType.TYPE })
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Conditional({ WinCondition.class })
+public @interface ConditionalOnWin {
 
-	}
+	String env() default "";
 
 }
