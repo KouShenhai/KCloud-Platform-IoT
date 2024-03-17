@@ -28,7 +28,7 @@ import java.util.Map;
  *
  * @author laokou
  */
-public abstract class AbstractOAuth2BaseAuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
+public abstract class AbstractOAuth2AuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
 
 	/**
 	 * Sub-class constructor.
@@ -36,7 +36,7 @@ public abstract class AbstractOAuth2BaseAuthenticationToken extends OAuth2Author
 	 * @param clientPrincipal the authenticated client principal
 	 * @param additionalParameters the additional parameters
 	 */
-	protected AbstractOAuth2BaseAuthenticationToken(AuthorizationGrantType authorizationGrantType,
+	protected AbstractOAuth2AuthenticationToken(AuthorizationGrantType authorizationGrantType,
 			Authentication clientPrincipal, Map<String, Object> additionalParameters) {
 		super(authorizationGrantType, clientPrincipal, additionalParameters);
 	}

@@ -217,7 +217,10 @@ public class ElasticsearchTemplate {
 		CreateIndexRequest.Builder createIndexbuilder = new CreateIndexRequest.Builder();
 		// 别名
 		createIndexbuilder.aliases(document.getAlias(), fn -> fn.isWriteIndex(true));
-		return createIndexbuilder.index(document.getName()).mappings(getMappings(document)).settings(getSettings(document)).build();
+		return createIndexbuilder.index(document.getName())
+			.mappings(getMappings(document))
+			.settings(getSettings(document))
+			.build();
 	}
 
 	private IndexSettings getSettings(Document document) {

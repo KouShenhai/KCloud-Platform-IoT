@@ -15,29 +15,16 @@
  *
  */
 
-package org.laokou.auth.config.authentication;
+package org.laokou.test.container;
 
-import org.springframework.security.core.Authentication;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Map;
+@SpringBootApplication
+class SpringBootTestApp {
 
-import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
-
-/**
- * 密码转换器.
- *
- * @author laokou
- */
-public class OAuth2PasswordAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
-
-	@Override
-	String getGrantType() {
-		return PASSWORD;
-	}
-
-	@Override
-	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		return new OAuth2PasswordAuthenticationToken(clientPrincipal, additionalParameters);
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBootTestApp.class, args);
 	}
 
 }

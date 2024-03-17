@@ -44,7 +44,7 @@ import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UserDetailsService {
 
-	private final OAuth2CommonAuthenticationProvider oAuth2CommonAuthenticationProvider;
+	private final OAuth2AuthenticationProvider authProvider;
 
 	/**
 	 * 获取用户信息.
@@ -59,7 +59,7 @@ public class UsersServiceImpl implements UserDetailsService {
 			String password = request.getParameter(PASSWORD);
 			Auth authObj = Auth.builder().type(AUTHORIZATION_CODE).secretKey(AesUtil.getSecretKeyStr()).build();
 			User user = User.builder().auth(authObj).tenantId(DEFAULT).username(username).password(password).build();
-			return (UserDetails) oAuth2CommonAuthenticationProvider.authenticationToken(user, request).getPrincipal();
+			return (UserDetails) authProvider.authenticationToken(user, request).getPrincipal();
 		}
 		catch (OAuth2AuthenticationException e) {
 			throw new UsernameNotFoundException(e.getError().getDescription(), e);

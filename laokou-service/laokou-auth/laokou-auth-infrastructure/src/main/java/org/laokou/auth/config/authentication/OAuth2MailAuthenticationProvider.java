@@ -44,12 +44,11 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
  */
 @Slf4j
 @Component("mailAuthenticationProvider")
-public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
+public class OAuth2MailAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2MailAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-			OAuth2CommonAuthenticationProvider oAuth2CommonAuthenticationProvider) {
-		super(authorizationService, tokenGenerator, oAuth2CommonAuthenticationProvider);
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProvider authProvider) {
+		super(authorizationService, tokenGenerator, authProvider);
 	}
 
 	@Override

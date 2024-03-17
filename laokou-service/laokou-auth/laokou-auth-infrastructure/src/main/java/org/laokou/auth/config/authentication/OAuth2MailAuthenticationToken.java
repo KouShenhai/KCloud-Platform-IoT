@@ -29,7 +29,7 @@ import static org.laokou.common.i18n.common.OAuth2Constants.MAIL;
  *
  * @author laokou
  */
-public class OAuth2MailAuthenticationToken extends AbstractOAuth2BaseAuthenticationToken {
+public class OAuth2MailAuthenticationToken extends AbstractOAuth2AuthenticationToken {
 
 	/**
 	 * Sub-class constructor.
