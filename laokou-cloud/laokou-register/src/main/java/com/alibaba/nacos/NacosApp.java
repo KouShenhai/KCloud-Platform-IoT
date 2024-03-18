@@ -21,16 +21,18 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
+ * Nacos starter.
+ * <p>
+ * Use @SpringBootApplication and @ComponentScan at the same time, using CUSTOM type filter to control module enabled.
+ * </p>
+ *
  * @author nacos
- * @version 2.2.0 Nacos starter
  */
-@SpringBootApplication(scanBasePackages = "com.alibaba.nacos")
 @ServletComponentScan
-@EnableScheduling
 @EnableEncryptableProperties
+@SpringBootApplication(scanBasePackages = "com.alibaba.nacos")
 public class NacosApp {
 
 	public static void main(String[] args) {

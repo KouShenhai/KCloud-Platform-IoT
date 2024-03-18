@@ -57,7 +57,7 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 	/**
 	 * Registered clients of the Authorization Server.
 	 */
-	private final Map<String, Client> client = Collections.emptyMap();
+	private final Map<String, Client> client = new HashMap<>(0);
 
 	/**
 	 * Authorization Server endpoints.
@@ -236,27 +236,27 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 		/**
 		 * Client authentication method(s) that the client may use.
 		 */
-		private Set<String> clientAuthenticationMethods = Collections.emptySet();
+		private Set<String> clientAuthenticationMethods = new HashSet<>(0);
 
 		/**
 		 * Authorization grant type(s) that the client may use.
 		 */
-		private Set<String> authorizationGrantTypes = Collections.emptySet();
+		private Set<String> authorizationGrantTypes = new HashSet<>(0);
 
 		/**
 		 * Redirect URI(s) that the client may use in redirect-based flows.
 		 */
-		private Set<String> redirectUris = new HashSet<>();
+		private Set<String> redirectUris = new HashSet<>(0);
 
 		/**
 		 * Redirect URI(s) that the client may use for logout.
 		 */
-		private Set<String> postLogoutRedirectUris = Collections.emptySet();
+		private Set<String> postLogoutRedirectUris = new HashSet<>(0);
 
 		/**
 		 * Scope(s) that the client may use.
 		 */
-		private Set<String> scopes = Collections.emptySet();
+		private Set<String> scopes = new HashSet<>(0);
 
 	}
 
