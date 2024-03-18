@@ -34,7 +34,7 @@
     <description>一个企业级微服务架构的云服务多租户SaaS平台</description>
     <url>https://koushenhai.github.io/KCloud-Platform-Alibaba</url>
     <properties>
-        <nacos.version>3.2.1</nacos.version>
+        <nacos.version>2.3.1</nacos.version>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
@@ -45,7 +45,33 @@
     </properties>
 
     <dependencies>
-
+<!--
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-config</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-naming</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-default-plugin-all</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-istio</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-prometheus</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+-->
     </dependencies>
 
     <distributionManagement>

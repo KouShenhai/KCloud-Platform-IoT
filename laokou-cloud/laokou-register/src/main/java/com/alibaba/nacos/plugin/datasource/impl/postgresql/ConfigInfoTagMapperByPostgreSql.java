@@ -36,6 +36,10 @@ package com.alibaba.nacos.plugin.datasource.impl.postgresql;
 import com.alibaba.nacos.plugin.datasource.constants.DataSourceConstant;
 import com.alibaba.nacos.plugin.datasource.mapper.AbstractMapper;
 import com.alibaba.nacos.plugin.datasource.mapper.ConfigInfoTagMapper;
+import com.alibaba.nacos.plugin.datasource.model.MapperContext;
+import com.alibaba.nacos.plugin.datasource.model.MapperResult;
+
+import java.util.Collections;
 
 /**
  * The postgresql implementation of ConfigInfoTagMapper.
@@ -47,15 +51,18 @@ import com.alibaba.nacos.plugin.datasource.mapper.ConfigInfoTagMapper;
 public class ConfigInfoTagMapperByPostgreSql extends AbstractMapper implements ConfigInfoTagMapper {
 
 	@Override
-	public String findAllConfigInfoTagForDumpAllFetchRows(int startRow, int pageSize) {
-		return " SELECT t.id,data_id,group_id,tenant_id,tag_id,app_name,content,md5,gmt_modified "
-				+ " FROM (  SELECT id FROM config_info_tag  ORDER BY id LIMIT " + pageSize + " OFFSET " + startRow
-				+ " ) " + "g, config_info_tag t  WHERE g.id = t.id  ";
+	public String getDataSource() {
+		return DataSourceConstant.POSTGRESQL;
 	}
 
 	@Override
-	public String getDataSource() {
-		return DataSourceConstant.POSTGRESQL;
+	public MapperResult findAllConfigInfoTagForDumpAllFetchRows(MapperContext context) {
+		int startRow = context.getStartRow();
+		int pageSize = context.getPageSize();
+		String sql = " SELECT t.id,data_id,group_id,tenant_id,tag_id,app_name,content,md5,gmt_modified "
+				+ " FROM (  SELECT id FROM config_info_tag  ORDER BY id LIMIT " + pageSize + " OFFSET " + startRow
+				+ " ) " + "g, config_info_tag t  WHERE g.id = t.id  ";
+		return new MapperResult(sql, Collections.emptyList());
 	}
 
 }

@@ -48,6 +48,9 @@ management:
       influx:
         enabled: false
 nacos:
+  config:
+    push:
+      maxRetryTime: 50
   core:
     auth:
       caching:

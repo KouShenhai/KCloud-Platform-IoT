@@ -22,7 +22,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import static com.baomidou.mybatisplus.core.toolkit.Constants.MYBATIS_PLUS;
@@ -44,7 +44,7 @@ public class MybatisPlusExtProperties {
 
 		private boolean enabled = false;
 
-		private Set<String> ignoreTables = Collections.emptySet();
+		private Set<String> ignoreTables = new HashSet<>(0);
 
 	}
 
