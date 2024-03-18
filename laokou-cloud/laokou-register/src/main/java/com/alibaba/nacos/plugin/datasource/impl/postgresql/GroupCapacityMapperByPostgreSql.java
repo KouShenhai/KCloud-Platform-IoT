@@ -58,4 +58,5 @@ public class GroupCapacityMapperByPostgreSql extends AbstractMapper implements G
 		String sql = "SELECT id, group_id FROM group_capacity WHERE id > ? LIMIT ?";
 		return new MapperResult(sql, CollectionUtils.list(context.getWhereParameter("id"), context.getPageSize()));
 	}
+
 }

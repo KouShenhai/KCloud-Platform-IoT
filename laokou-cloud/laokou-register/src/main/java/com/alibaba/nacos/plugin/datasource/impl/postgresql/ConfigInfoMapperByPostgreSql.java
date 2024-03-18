@@ -65,11 +65,12 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 	public MapperResult findConfigInfoByAppFetchRows(MapperContext context) {
 		int startRow = context.getStartRow();
 		int pageSize = context.getPageSize();
-		String appName = (String)context.getWhereParameter("app_name");
-		String tenantId = (String)context.getWhereParameter("tenantId");
+		String appName = (String) context.getWhereParameter("app_name");
+		String tenantId = (String) context.getWhereParameter("tenantId");
 		String sql = "SELECT id,data_id,group_id,tenant_id,app_name,content FROM config_info"
-				+ " WHERE tenant_id LIKE ? AND app_name= ?" + " LIMIT " + pageSize + " OFFSET " + startRow;;
-		return new MapperResult(sql, CollectionUtils.list(new Object[]{tenantId, appName}));
+				+ " WHERE tenant_id LIKE ? AND app_name= ?" + " LIMIT " + pageSize + " OFFSET " + startRow;
+		;
+		return new MapperResult(sql, CollectionUtils.list(new Object[] { tenantId, appName }));
 	}
 
 	@Override
@@ -96,7 +97,8 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 		int pageSize = context.getPageSize();
 		String sql = " SELECT data_id,group_id,app_name  FROM ( "
 				+ " SELECT id FROM config_info WHERE tenant_id LIKE ? ORDER BY id LIMIT " + pageSize + " OFFSET "
-				+ startRow + " )" + " g, config_info t WHERE g.id = t.id  ";;
+				+ startRow + " )" + " g, config_info t WHERE g.id = t.id  ";
+		;
 		return new MapperResult(sql, CollectionUtils.list(context.getWhereParameter("tenantId")));
 	}
 
@@ -120,13 +122,13 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 	@Override
 	public MapperResult findChangeConfigFetchRows(MapperContext context) {
 		int pageSize = context.getPageSize();
-		String tenant = (String)context.getWhereParameter("tenantId");
-		String dataId = (String)context.getWhereParameter("dataId");
-		String group = (String)context.getWhereParameter("groupId");
-		String appName = (String)context.getWhereParameter("app_name");
+		String tenant = (String) context.getWhereParameter("tenantId");
+		String dataId = (String) context.getWhereParameter("dataId");
+		String group = (String) context.getWhereParameter("groupId");
+		String appName = (String) context.getWhereParameter("app_name");
 		String tenantTmp = StringUtils.isBlank(tenant) ? "" : tenant;
-		Timestamp startTime = (Timestamp)context.getWhereParameter("startTime");
-		Timestamp endTime = (Timestamp)context.getWhereParameter("endTime");
+		Timestamp startTime = (Timestamp) context.getWhereParameter("startTime");
+		Timestamp endTime = (Timestamp) context.getWhereParameter("endTime");
 		String lastMaxId = (String) context.getWhereParameter("lastMaxId");
 		List<Object> paramList = new ArrayList<>(6);
 		String sqlFetchRows = "SELECT id,data_id,group_id,tenant_id,app_name,content,type,md5,gmt_modified FROM config_info WHERE ";
@@ -155,7 +157,8 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 			where += " AND gmt_modified <= ? ";
 			paramList.add(endTime);
 		}
-		sqlFetchRows = sqlFetchRows + where + " AND id > " + lastMaxId + " ORDER BY id ASC" + " LIMIT " + pageSize + " OFFSET " + 0;
+		sqlFetchRows = sqlFetchRows + where + " AND id > " + lastMaxId + " ORDER BY id ASC" + " LIMIT " + pageSize
+				+ " OFFSET " + 0;
 		return new MapperResult(sqlFetchRows, paramList);
 	}
 
@@ -165,7 +168,8 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 		int pageSize = context.getPageSize();
 		String sql = "SELECT t.id,data_id,group_id,tenant_id,app_name,md5,type,gmt_modified,encrypted_data_key FROM "
 				+ "( SELECT id FROM config_info ORDER BY id LIMIT " + pageSize + " OFFSET " + startRow
-				+ " ) g, config_info t WHERE g.id = t.id";;
+				+ " ) g, config_info t WHERE g.id = t.id";
+		;
 		return new MapperResult(sql, Collections.emptyList());
 	}
 
@@ -173,9 +177,9 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 	public MapperResult findConfigInfoBaseLikeFetchRows(MapperContext context) {
 		int startRow = context.getStartRow();
 		int pageSize = context.getPageSize();
-		String dataId = (String)context.getWhereParameter("dataId");
-		String group = (String)context.getWhereParameter("groupId");
-		String content = (String)context.getWhereParameter("content");
+		String dataId = (String) context.getWhereParameter("dataId");
+		String group = (String) context.getWhereParameter("groupId");
+		String content = (String) context.getWhereParameter("content");
 		List<Object> paramList = new ArrayList<>(3);
 		String sqlFetchRows = "SELECT id,data_id,group_id,tenant_id,content FROM config_info WHERE ";
 		String where = " 1=1 AND tenant_id='" + NamespaceUtil.getNamespaceDefaultId() + "' ";
@@ -199,11 +203,11 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 	public MapperResult findConfigInfo4PageFetchRows(MapperContext context) {
 		int startRow = context.getStartRow();
 		int pageSize = context.getPageSize();
-		String tenant = (String)context.getWhereParameter("tenantId");
-		String dataId = (String)context.getWhereParameter("dataId");
-		String group = (String)context.getWhereParameter("groupId");
-		String appName = (String)context.getWhereParameter("app_name");
-		String content = (String)context.getWhereParameter("content");
+		String tenant = (String) context.getWhereParameter("tenantId");
+		String dataId = (String) context.getWhereParameter("dataId");
+		String group = (String) context.getWhereParameter("groupId");
+		String appName = (String) context.getWhereParameter("app_name");
+		String content = (String) context.getWhereParameter("content");
 		List<Object> paramList = new ArrayList<>(5);
 		String sql = "SELECT id,data_id,group_id,tenant_id,app_name,content,type,encrypted_data_key FROM config_info";
 		StringBuilder where = new StringBuilder(" WHERE ");
@@ -234,19 +238,21 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 		int startRow = context.getStartRow();
 		int pageSize = context.getPageSize();
 		String sql = "SELECT id,data_id,group_id,content FROM config_info WHERE group_id=? AND tenant_id=?" + " LIMIT "
-				+ pageSize + " OFFSET " + startRow;;
-		return new MapperResult(sql, CollectionUtils.list(context.getWhereParameter("groupId"), context.getWhereParameter("tenantId")));
+				+ pageSize + " OFFSET " + startRow;
+		;
+		return new MapperResult(sql,
+				CollectionUtils.list(context.getWhereParameter("groupId"), context.getWhereParameter("tenantId")));
 	}
 
 	@Override
 	public MapperResult findConfigInfoLike4PageFetchRows(MapperContext context) {
 		int startRow = context.getStartRow();
 		int pageSize = context.getPageSize();
-		String tenant = (String)context.getWhereParameter("tenantId");
-		String dataId = (String)context.getWhereParameter("dataId");
-		String group = (String)context.getWhereParameter("groupId");
-		String appName = (String)context.getWhereParameter("app_name");
-		String content = (String)context.getWhereParameter("content");
+		String tenant = (String) context.getWhereParameter("tenantId");
+		String dataId = (String) context.getWhereParameter("dataId");
+		String group = (String) context.getWhereParameter("groupId");
+		String appName = (String) context.getWhereParameter("app_name");
+		String content = (String) context.getWhereParameter("content");
 		List<Object> paramList = new ArrayList<>(5);
 		String sqlFetchRows = "SELECT id,data_id,group_id,tenant_id,app_name,content,encrypted_data_key FROM config_info";
 		StringBuilder where = new StringBuilder(" WHERE ");
@@ -277,6 +283,8 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 		String sql = "SELECT t.id,data_id,group_id,tenant_id,app_name,content,md5 "
 				+ " FROM (  SELECT id FROM config_info WHERE tenant_id LIKE ? ORDER BY id LIMIT ? OFFSET ? )"
 				+ " g, config_info t  WHERE g.id = t.id ";
-		return new MapperResult(sql, CollectionUtils.list(context.getWhereParameter("tenantId"),context.getPageSize(), context.getStartRow()));
+		return new MapperResult(sql, CollectionUtils.list(context.getWhereParameter("tenantId"), context.getPageSize(),
+				context.getStartRow()));
 	}
+
 }

@@ -59,12 +59,13 @@ public class ConfigInfoAggrMapperByPostgreSql extends AbstractMapper implements 
 	public MapperResult findConfigInfoAggrByPageFetchRows(MapperContext context) {
 		int startRow = context.getStartRow();
 		int pageSize = context.getPageSize();
-		String dataId = (String)context.getWhereParameter("dataId");
-		String groupId = (String)context.getWhereParameter("groupId");
-		String tenantId = (String)context.getWhereParameter("tenantId");
+		String dataId = (String) context.getWhereParameter("dataId");
+		String groupId = (String) context.getWhereParameter("groupId");
+		String tenantId = (String) context.getWhereParameter("tenantId");
 		String sql = "SELECT data_id,group_id,tenant_id,datum_id,app_name,content FROM config_info_aggr WHERE data_id= ? AND "
 				+ "group_id= ? AND tenant_id= ? ORDER BY datum_id LIMIT " + pageSize + " OFFSET " + startRow;
-		List<Object> paramList = CollectionUtils.list(new Object[]{ dataId, groupId, tenantId });
+		List<Object> paramList = CollectionUtils.list(new Object[] { dataId, groupId, tenantId });
 		return new MapperResult(sql, paramList);
 	}
+
 }

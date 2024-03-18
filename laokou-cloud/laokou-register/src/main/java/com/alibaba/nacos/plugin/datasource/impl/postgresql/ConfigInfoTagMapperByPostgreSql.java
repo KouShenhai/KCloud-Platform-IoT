@@ -64,4 +64,5 @@ public class ConfigInfoTagMapperByPostgreSql extends AbstractMapper implements C
 				+ " ) " + "g, config_info_tag t  WHERE g.id = t.id  ";
 		return new MapperResult(sql, Collections.emptyList());
 	}
+
 }

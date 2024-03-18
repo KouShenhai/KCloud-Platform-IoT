@@ -25,7 +25,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 /**
  * Nacos starter.
  * <p>
- * Use @SpringBootApplication and @ComponentScan at the same time, using CUSTOM type filter to control module enabled.
+ * Use @SpringBootApplication and @ComponentScan at the same time, using CUSTOM type
+ * filter to control module enabled.
  * </p>
  *
  * @author nacos

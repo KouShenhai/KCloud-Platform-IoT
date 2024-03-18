@@ -68,4 +68,5 @@ public class ConfigInfoBetaMapperByPostgreSql extends AbstractMapper implements 
 		paramList.add(pageSize);
 		return new MapperResult(sql, paramList);
 	}
+
 }

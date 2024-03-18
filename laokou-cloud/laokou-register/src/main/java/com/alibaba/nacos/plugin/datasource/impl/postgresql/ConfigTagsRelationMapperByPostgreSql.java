@@ -61,11 +61,11 @@ public class ConfigTagsRelationMapperByPostgreSql extends AbstractMapper impleme
 	public MapperResult findConfigInfo4PageFetchRows(MapperContext context) {
 		int startRow = context.getStartRow();
 		int pageSize = context.getPageSize();
-		String tenant = (String)context.getWhereParameter("tenantId");
-		String dataId = (String)context.getWhereParameter("dataId");
-		String group = (String)context.getWhereParameter("groupId");
-		String appName = (String)context.getWhereParameter("app_name");
-		String content = (String)context.getWhereParameter("content");
+		String tenant = (String) context.getWhereParameter("tenantId");
+		String dataId = (String) context.getWhereParameter("dataId");
+		String group = (String) context.getWhereParameter("groupId");
+		String appName = (String) context.getWhereParameter("app_name");
+		String content = (String) context.getWhereParameter("content");
 		String[] tagArr = (String[]) context.getWhereParameter("tagARR");
 		List<Object> paramList = new ArrayList<>(5);
 		StringBuilder where = new StringBuilder(" WHERE ");
@@ -106,11 +106,11 @@ public class ConfigTagsRelationMapperByPostgreSql extends AbstractMapper impleme
 	public MapperResult findConfigInfoLike4PageFetchRows(MapperContext context) {
 		int startRow = context.getStartRow();
 		int pageSize = context.getPageSize();
-		String tenant = (String)context.getWhereParameter("tenantId");
-		String dataId = (String)context.getWhereParameter("dataId");
-		String group = (String)context.getWhereParameter("groupId");
-		String appName = (String)context.getWhereParameter("app_name");
-		String content = (String)context.getWhereParameter("content");
+		String tenant = (String) context.getWhereParameter("tenantId");
+		String dataId = (String) context.getWhereParameter("dataId");
+		String group = (String) context.getWhereParameter("groupId");
+		String appName = (String) context.getWhereParameter("app_name");
+		String content = (String) context.getWhereParameter("content");
 		String[] tagArr = (String[]) context.getWhereParameter("tagARR");
 		List<Object> paramList = new ArrayList<>(5);
 		StringBuilder where = new StringBuilder(" WHERE ");
@@ -146,4 +146,5 @@ public class ConfigTagsRelationMapperByPostgreSql extends AbstractMapper impleme
 		sqlFetchRows = sqlFetchRows + where + " LIMIT " + pageSize + " OFFSET " + startRow;
 		return new MapperResult(sqlFetchRows, paramList);
 	}
+
 }
