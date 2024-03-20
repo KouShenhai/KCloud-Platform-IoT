@@ -26,7 +26,6 @@ import com.baomidou.mybatisplus.extension.parser.cache.JdkSerialCaffeineJsqlPars
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.*;
 import lombok.SneakyThrows;
-import org.laokou.common.mybatisplus.config.*;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

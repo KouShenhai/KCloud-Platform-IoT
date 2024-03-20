@@ -331,6 +331,12 @@ Gitee 前端地址（React版本）：[KCloud-React-Alibaba](https://gitee.com/l
         <th>备注</th>
     </tr>
     <tr>
+        <td>2024/03/20</td>
+        <td>A细节*</td>
+        <td>￥66.00</td>
+        <td>无</td>
+    </tr>
+    <tr>
         <td>2024/03/03</td>
         <td>y*i</td>
         <td>￥58.88</td>

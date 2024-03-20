@@ -24,9 +24,10 @@ import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.mybatisplus.handler.SqlLogEvent;
+import org.laokou.common.mybatisplus.handler.event.SqlLogEvent;
 import org.laokou.common.mybatisplus.utils.SqlUtil;
 
 import java.sql.Connection;
@@ -55,16 +56,11 @@ public class SlowSqlInterceptor implements Interceptor {
 		Object target = invocation.getTarget();
 		if (target instanceof StatementHandler statementHandler) {
 			String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
+			SpringContextUtil.publishEvent(new SqlLogEvent("慢SQL事件", getAppName(), sql, time, DateUtil.now()));
 			sql = StringUtil.isNotEmpty(sql)
 					? " Consume Time：" + time + " ms " + "\n Execute SQL：" + sql.replaceAll("\\s+", " ") + "\n" : "";
-			// log.info("\n{}", sql);
+			log.info("\n{}", sql);
 		}
-		// if (time > getMillis()) {
-		// Object target = invocation.getTarget();
-		// if (target instanceof StatementHandler statementHandler) {
-		// String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
-		// }
-		// }
 		return obj;
 	}
 
@@ -74,15 +70,6 @@ public class SlowSqlInterceptor implements Interceptor {
 
 	private long getMillis() {
 		return Long.parseLong(properties.getProperty("millis"));
-	}
-
-	private SqlLogEvent toSqlEvent(String sql, long time) {
-		SqlLogEvent event = null;
-		event.setDsl(sql);
-		event.setCostTime(time);
-		event.setCreateDate(DateUtil.now());
-		event.setAppName(getAppName());
-		return event;
 	}
 
 }
