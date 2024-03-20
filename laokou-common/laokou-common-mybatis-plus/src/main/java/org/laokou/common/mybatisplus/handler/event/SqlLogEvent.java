@@ -15,7 +15,37 @@
  *
  */
 
+package org.laokou.common.mybatisplus.handler.event;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.context.ApplicationEvent;
+
+import java.time.LocalDateTime;
+
 /**
  * @author laokou
  */
-package org.laokou.common.mybatisplus.config.auto;
+@Getter
+@Setter
+@ToString
+public class SqlLogEvent extends ApplicationEvent {
+
+	private String appName;
+
+	private String sql;
+
+	private long costTime;
+
+	private LocalDateTime createDate;
+
+	public SqlLogEvent(Object source, String appName, String sql, long costTime, LocalDateTime createDate) {
+		super(source);
+		this.sql = sql;
+		this.appName = appName;
+		this.costTime = costTime;
+		this.createDate = createDate;
+	}
+
+}

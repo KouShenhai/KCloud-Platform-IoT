@@ -112,11 +112,18 @@
         <mockito.version>5.11.0</mockito.version>
         <!--flyway版本-->
         <flyway.version>10.10.0</flyway.version>
+        <!--retry版本-->
+        <retry.version>2.0.5</retry.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.retry</groupId>
+                <artifactId>spring-retry</artifactId>
+                <version>${retry.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-aop</artifactId>

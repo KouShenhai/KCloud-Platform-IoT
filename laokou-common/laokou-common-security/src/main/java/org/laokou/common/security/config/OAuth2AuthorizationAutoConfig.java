@@ -17,8 +17,6 @@
 
 package org.laokou.common.security.config;
 
-import org.laokou.common.security.config.RedisOAuth2AuthorizationRepository;
-import org.laokou.common.security.config.RedisOAuth2AuthorizationService;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
