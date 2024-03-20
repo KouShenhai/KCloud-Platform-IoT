@@ -15,9 +15,8 @@
  *
  */
 
-package org.laokou.common.redis.config.auto;
+package org.laokou.common.redis.config;
 
-import org.laokou.common.redis.config.RedissonConfig;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
 import org.redisson.api.RedissonClient;
 import org.redisson.api.RedissonReactiveClient;

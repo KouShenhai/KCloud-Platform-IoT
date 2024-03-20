@@ -18,4 +18,4 @@
 /**
  * @author laokou
  */
-package org.laokou.common.redis.config.auto;
+package org.laokou.common.prometheus.config;

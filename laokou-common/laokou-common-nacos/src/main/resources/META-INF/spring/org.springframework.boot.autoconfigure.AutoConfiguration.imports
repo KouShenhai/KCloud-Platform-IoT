@@ -1,2 +1,2 @@
-org.laokou.common.nacos.config.auto.NacosAutoConfig
+org.laokou.common.nacos.config.NacosAutoConfig
 org.laokou.common.nacos.utils.ServiceUtil

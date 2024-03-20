@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.security.config.auto;
+package org.laokou.common.security.config;
 
 import com.baomidou.dynamic.datasource.annotation.Master;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

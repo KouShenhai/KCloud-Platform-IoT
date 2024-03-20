@@ -1,2 +1,2 @@
-org.laokou.common.mybatisplus.config.auto.MybatisPlusAutoConfig
+org.laokou.common.mybatisplus.config.MybatisPlusAutoConfig
 org.laokou.common.mybatisplus.config.DataObjectHandler

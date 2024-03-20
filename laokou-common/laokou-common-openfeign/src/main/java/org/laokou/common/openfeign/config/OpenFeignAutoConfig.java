@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.openfeign.config.auto;
+package org.laokou.common.openfeign.config;
 
 import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
 import feign.*;

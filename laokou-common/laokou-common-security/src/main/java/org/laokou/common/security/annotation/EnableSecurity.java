@@ -19,8 +19,8 @@ package org.laokou.common.security.annotation;
 
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
 import org.laokou.common.security.config.UserContextInterceptor;
-import org.laokou.common.security.config.auto.OAuth2ResourceServerAutoConfig;
-import org.laokou.common.security.config.auto.OAuth2SecurityAutoConfig;
+import org.laokou.common.security.config.OAuth2ResourceServerAutoConfig;
+import org.laokou.common.security.config.OAuth2SecurityAutoConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

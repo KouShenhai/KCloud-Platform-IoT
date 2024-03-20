@@ -15,13 +15,12 @@
  *
  */
 
-package org.laokou.common.security.config.auto;
+package org.laokou.common.security.config;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

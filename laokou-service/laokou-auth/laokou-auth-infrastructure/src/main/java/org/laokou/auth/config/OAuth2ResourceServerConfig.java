@@ -32,7 +32,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_AUTHORIZATION_SERVER_PREFIX;
 import static org.laokou.common.i18n.common.StringConstants.TRUE;
 import static org.laokou.common.i18n.common.SysConstants.ENABLED;
-import static org.laokou.common.security.config.auto.OAuth2ResourceServerAutoConfig.customizer;
+import static org.laokou.common.security.config.OAuth2ResourceServerAutoConfig.customizer;
 
 /**
  * 资源服务器配置.

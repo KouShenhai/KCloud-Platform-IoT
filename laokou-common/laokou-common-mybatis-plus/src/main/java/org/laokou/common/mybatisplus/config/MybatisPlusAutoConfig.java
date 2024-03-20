@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.mybatisplus.config.auto;
+package org.laokou.common.mybatisplus.config;
 
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;

@@ -18,4 +18,4 @@
 /**
  * @author laokou
  */
-package org.laokou.common.trace.config.auto;
+package org.laokou.common.openapi.doc.config;

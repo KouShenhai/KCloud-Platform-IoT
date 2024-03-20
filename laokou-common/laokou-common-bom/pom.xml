@@ -67,7 +67,7 @@
         <!--spring-boot-starter-oauth2-resource-server版本-->
         <spring-boot-starter-oauth2-resource-server.version>3.2.3</spring-boot-starter-oauth2-resource-server.version>
         <!--aws-java-sdk-s3版本-->
-        <aws-java-sdk-s3.version>1.12.683</aws-java-sdk-s3.version>
+        <aws-java-sdk-s3.version>1.12.682</aws-java-sdk-s3.version>
         <!--dynamic-datasource版本-->
         <dynamic-datasource.version>4.3.0</dynamic-datasource.version>
         <!--httpclient5版本-->
@@ -101,7 +101,7 @@
         <!--mapstruct版本-->
         <mapstruct.version>1.6.0.Beta1</mapstruct.version>
         <!--spring-integration-mqtt版本-->
-        <spring-integration-mqtt.version>6.2.3</spring-integration-mqtt.version>
+        <spring-integration-mqtt.version>6.2.2</spring-integration-mqtt.version>
         <!--log4j2-ttl-thread-context-map版本-->
         <log4j2-ttl-thread-context-map.version>1.4.0</log4j2-ttl-thread-context-map.version>
         <!--transmittable-thread-local版本-->

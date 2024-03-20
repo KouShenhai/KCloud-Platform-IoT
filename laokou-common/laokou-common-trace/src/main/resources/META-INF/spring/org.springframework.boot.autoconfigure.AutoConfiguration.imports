@@ -1,2 +1,2 @@
-org.laokou.common.trace.config.auto.TraceAutoConfig
-org.laokou.common.trace.config.auto.ReactiveTraceAutoConfig
+org.laokou.common.trace.config.TraceAutoConfig
+org.laokou.common.trace.config.ReactiveTraceAutoConfig

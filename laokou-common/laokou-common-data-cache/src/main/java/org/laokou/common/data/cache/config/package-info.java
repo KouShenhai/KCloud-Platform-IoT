@@ -18,4 +18,4 @@
 /**
  * @author laokou
  */
-package org.laokou.common.cors.config.auto;
+package org.laokou.common.data.cache.config;
