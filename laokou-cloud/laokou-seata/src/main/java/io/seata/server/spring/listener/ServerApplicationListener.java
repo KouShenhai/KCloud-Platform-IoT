@@ -15,8 +15,6 @@
  */
 package io.seata.server.spring.listener;
 
-import java.util.Properties;
-
 import io.seata.common.holder.ObjectHolder;
 import io.seata.common.util.StringUtils;
 import io.seata.spring.boot.autoconfigure.SeataCoreEnvironmentPostProcessor;
@@ -29,11 +27,11 @@ import org.springframework.core.ResolvableType;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.PropertiesPropertySource;
 
+import java.util.Properties;
+
 import static io.seata.common.Constants.OBJECT_KEY_SPRING_CONFIGURABLE_ENVIRONMENT;
 import static io.seata.common.DefaultValues.SERVICE_OFFSET_SPRING_BOOT;
-import static io.seata.core.constants.ConfigurationKeys.ENV_SEATA_PORT_KEY;
-import static io.seata.core.constants.ConfigurationKeys.SERVER_SERVICE_PORT_CAMEL;
-import static io.seata.core.constants.ConfigurationKeys.SERVER_SERVICE_PORT_CONFIG;
+import static io.seata.core.constants.ConfigurationKeys.*;
 
 /**
  * @author slievrly
