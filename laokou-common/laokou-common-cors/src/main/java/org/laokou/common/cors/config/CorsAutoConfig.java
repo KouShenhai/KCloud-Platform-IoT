@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.cors.config.auto;
+package org.laokou.common.cors.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

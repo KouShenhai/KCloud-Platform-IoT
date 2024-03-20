@@ -15,7 +15,20 @@
  *
  */
 
+package org.laokou.mqtt.config;
+
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Bean;
+
 /**
  * @author laokou
  */
-package org.laokou.common.openfeign.config.auto;
+@AutoConfiguration
+public class MqttAutoConfig {
+
+	@Bean(name = "mqttServer", initMethod = "start", destroyMethod = "stop")
+	public Server mqttServer(SpringMqttProperties springMqttProperties, MqttStrategy mqttStrategy) {
+		return new MqttServer(springMqttProperties, mqttStrategy);
+	}
+
+}

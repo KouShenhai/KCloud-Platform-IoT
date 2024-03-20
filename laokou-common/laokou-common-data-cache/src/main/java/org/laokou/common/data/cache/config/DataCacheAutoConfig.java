@@ -15,11 +15,10 @@
  *
  */
 
-package org.laokou.common.data.cache.config.auto;
+package org.laokou.common.data.cache.config;
 
-import org.laokou.common.data.cache.config.RedissonSpringExtCacheManager;
 import org.laokou.common.redis.config.GlobalJsonJacksonCodec;
-import org.laokou.common.redis.config.auto.RedisAutoConfig;
+import org.laokou.common.redis.config.RedisAutoConfig;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

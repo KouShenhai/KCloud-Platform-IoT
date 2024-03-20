@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.trace.config.auto;
+package org.laokou.common.trace.config;
 
 import org.laokou.common.trace.interceptor.TraceInterceptor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

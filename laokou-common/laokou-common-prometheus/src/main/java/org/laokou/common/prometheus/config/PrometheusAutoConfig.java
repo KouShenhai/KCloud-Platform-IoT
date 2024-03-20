@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.prometheus.config.auto;
+package org.laokou.common.prometheus.config;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;

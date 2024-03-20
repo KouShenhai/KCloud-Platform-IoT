@@ -92,7 +92,7 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 				long start = IdGenerator.SystemClock.now();
 				NEWED_SCHEDULED_THREAD_POOL.scheduleWithFixedDelay(() -> {
 					long end = IdGenerator.SystemClock.now();
-					// 一分钟内没完成 或 计数器为 -> 结束
+					// 一分钟内没完成 或 计数器为0 -> 结束
 					if (end - start >= second || ShutdownHolder.get() == 0) {
 						ThreadUtil.shutdown(NEWED_SCHEDULED_THREAD_POOL, 10);
 					}

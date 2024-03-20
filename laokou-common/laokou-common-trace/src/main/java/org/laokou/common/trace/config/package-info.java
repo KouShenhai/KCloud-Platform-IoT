@@ -15,24 +15,7 @@
  *
  */
 
-package org.laokou.mqtt.config.auto;
-
-import org.laokou.mqtt.config.MqttServer;
-import org.laokou.mqtt.config.MqttStrategy;
-import org.laokou.mqtt.config.Server;
-import org.laokou.mqtt.config.SpringMqttProperties;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.annotation.Bean;
-
 /**
  * @author laokou
  */
-@AutoConfiguration
-public class MqttAutoConfig {
-
-	@Bean(name = "mqttServer", initMethod = "start", destroyMethod = "stop")
-	public Server mqttServer(SpringMqttProperties springMqttProperties, MqttStrategy mqttStrategy) {
-		return new MqttServer(springMqttProperties, mqttStrategy);
-	}
-
-}
+package org.laokou.common.trace.config;

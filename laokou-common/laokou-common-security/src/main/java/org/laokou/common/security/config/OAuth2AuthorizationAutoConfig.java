@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.security.config.auto;
+package org.laokou.common.security.config;
 
 import org.laokou.common.security.config.RedisOAuth2AuthorizationRepository;
 import org.laokou.common.security.config.RedisOAuth2AuthorizationService;

@@ -15,7 +15,24 @@
  *
  */
 
+package org.laokou.common.trace.config;
+
+import org.laokou.common.trace.interceptor.ReactiveTraceInterceptor;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.server.WebFilter;
+
 /**
  * @author laokou
  */
-package org.laokou.common.openapi.doc.config.auto;
+@AutoConfiguration
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
+public class ReactiveTraceAutoConfig {
+
+	@Bean
+	public WebFilter webFilter() {
+		return new ReactiveTraceInterceptor();
+	}
+
+}

@@ -18,4 +18,4 @@
 /**
  * @author laokou
  */
-package org.laokou.common.monitor.config.auto;
+package org.laokou.common.monitor.config;

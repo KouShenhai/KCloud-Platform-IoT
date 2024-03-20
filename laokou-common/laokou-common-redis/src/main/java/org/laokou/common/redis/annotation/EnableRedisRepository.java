@@ -17,7 +17,7 @@
 
 package org.laokou.common.redis.annotation;
 
-import org.laokou.common.redis.config.auto.RedisAutoConfig;
+import org.laokou.common.redis.config.RedisAutoConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

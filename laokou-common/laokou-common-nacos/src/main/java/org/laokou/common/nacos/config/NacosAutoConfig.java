@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.nacos.config.auto;
+package org.laokou.common.nacos.config;
 
 import com.alibaba.nacos.client.naming.remote.NamingClientProxy;
 import jakarta.annotation.PreDestroy;

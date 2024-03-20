@@ -31,7 +31,7 @@
  * limitations under the License.
  */
 
-package org.laokou.common.monitor.config.auto;
+package org.laokou.common.monitor.config;
 
 import de.codecentric.boot.admin.client.config.ClientProperties;
 import de.codecentric.boot.admin.client.config.InstanceProperties;
