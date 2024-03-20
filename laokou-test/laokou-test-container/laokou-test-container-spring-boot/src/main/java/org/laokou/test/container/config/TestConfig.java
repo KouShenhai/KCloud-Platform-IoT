@@ -15,17 +15,13 @@
  *
  */
 
-package org.laokou.test.container;
+package org.laokou.test.container.config;
 
-import org.laokou.test.container.config.TestConfig;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 
-@SpringBootApplication(exclude = { TestConfig.class })
-class SpringBootTestApp {
-
-	public static void main(String[] args) {
-		SpringApplication.run(SpringBootTestApp.class, args);
-	}
-
+/**
+ * @author laokou
+ */
+@AutoConfiguration
+public class TestConfig {
 }
