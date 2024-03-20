@@ -56,7 +56,7 @@
         <!--lombok-mapstruct-binding版本-->
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <!--lombok版本-->
-        <lombok.version>1.18.30</lombok.version>
+        <lombok.version>1.18.32</lombok.version>
         <docker.repostory>registry.cn-shenzhen.aliyuncs.com</docker.repostory>
         <docker.registry.name>koushenhai</docker.registry.name>
         <docker.version>1.2.2</docker.version>
