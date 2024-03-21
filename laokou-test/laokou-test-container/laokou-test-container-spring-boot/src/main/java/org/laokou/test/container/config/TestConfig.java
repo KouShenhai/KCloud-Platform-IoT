@@ -24,4 +24,5 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
  */
 @AutoConfiguration
 public class TestConfig {
+
 }

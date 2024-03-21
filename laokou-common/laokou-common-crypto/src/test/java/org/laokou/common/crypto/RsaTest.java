@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.crypto.utils.RsaUtil;
 
 import static org.laokou.common.i18n.common.SysConstants.DEFAULT_PASSWORD;
+import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
 
 /**
  * @author laokou
@@ -31,7 +32,7 @@ public class RsaTest {
 	public static void main(String[] args) {
 		String publicKey = RsaUtil.getPublicKey();
 		String privateKey = RsaUtil.getPrivateKey();
-		String username = RsaUtil.encryptByPublicKey("root", publicKey);
+		String username = RsaUtil.encryptByPublicKey(DEFAULT_USERNAME, publicKey);
 		String pwd = RsaUtil.encryptByPublicKey(DEFAULT_PASSWORD, publicKey);
 		log.info(username);
 		log.info(pwd);

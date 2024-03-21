@@ -34,9 +34,10 @@ import java.util.Arrays;
 @Configuration
 public class BeanRegisterTest implements BeanDefinitionRegistryPostProcessor {
 
-    @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-        String[] beanDefinitionNames = registry.getBeanDefinitionNames();
-        Arrays.stream(beanDefinitionNames).forEach(name -> log.info(">>>>>>>>>>>>> {}", name));
-    }
+	@Override
+	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+		String[] beanDefinitionNames = registry.getBeanDefinitionNames();
+		Arrays.stream(beanDefinitionNames).forEach(name -> log.info(">>>>>>>>>>>>> {}", name));
+	}
+
 }
