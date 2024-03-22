@@ -17,6 +17,7 @@
 
 package org.laokou.test.container.config;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.test.container.annotation.ConditionalOnWin;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +33,10 @@ class ConditionConfig {
 		return new User();
 	}
 
+	@Data
 	static class User {
+
+		private String name;
 
 		User() {
 			log.info("用户初始化成功");
