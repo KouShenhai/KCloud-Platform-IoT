@@ -22,12 +22,12 @@
 
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common-bom</artifactId>
-    <version>3.2.4</version>
+    <version>3.2.5</version>
     <packaging>pom</packaging>
     <properties>
-        <laokou.version>3.2.4</laokou.version>
+        <laokou.version>3.2.5</laokou.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.2.4</spring-boot.version>
+        <spring-boot.version>3.2.5-SNAPSHOT</spring-boot.version>
         <!--lombok版本-->
         <lombok.version>1.18.32</lombok.version>
         <!--mysql版本-->
@@ -63,9 +63,9 @@
         <!--easyexcel版本-->
         <easyexcel.version>3.3.4</easyexcel.version>
         <!--spring-security-oauth2-authorization-server版本-->
-        <spring-security-oauth2-authorization-server.version>1.2.3</spring-security-oauth2-authorization-server.version>
+        <spring-security-oauth2-authorization-server.version>1.2.4-SNAPSHOT</spring-security-oauth2-authorization-server.version>
         <!--spring-boot-starter-oauth2-resource-server版本-->
-        <spring-boot-starter-oauth2-resource-server.version>3.2.4</spring-boot-starter-oauth2-resource-server.version>
+        <spring-boot-starter-oauth2-resource-server.version>3.2.5-SNAPSHOT</spring-boot-starter-oauth2-resource-server.version>
         <!--aws-java-sdk-s3版本-->
         <aws-java-sdk-s3.version>1.12.685</aws-java-sdk-s3.version>
         <!--dynamic-datasource版本-->
