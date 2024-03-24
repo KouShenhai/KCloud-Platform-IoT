@@ -46,6 +46,9 @@ public class MonitorApp {
 		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, String.valueOf(TRUE));
 		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
+		// 因为nacos的log4j2导致本项目的日志不输出的问题
+		// 配置关闭nacos日志
+		System.setProperty("nacos.logging.default.config.enabled", "false");
 		new SpringApplicationBuilder(MonitorApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 

@@ -5,17 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-test</artifactId>
+        <artifactId>laokou-test-container-dubbo</artifactId>
         <version>3.2.5</version>
     </parent>
 
-    <artifactId>laokou-test-container</artifactId>
-    <version>3.2.5</version>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>laokou-test-container-spring-boot</module>
-        <module>laokou-test-container-dubbo</module>
-    </modules>
+    <artifactId>laokou-test-container-dubbo-api</artifactId>
 
 </project>

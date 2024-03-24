@@ -60,6 +60,9 @@ public class FlowableApp {
 		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+		// 因为nacos的log4j2导致本项目的日志不输出的问题
+		// 配置关闭nacos日志
+		System.setProperty("nacos.logging.default.config.enabled", "false");
 		new SpringApplicationBuilder(FlowableApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
