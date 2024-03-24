@@ -28,9 +28,9 @@ import static org.laokou.common.i18n.common.SysConstants.VERSION;
 @DubboService(version = VERSION)
 public class UserApiImpl implements UserApi {
 
-    @Override
-    public String getName() {
-        return "k↑";
-    }
+	@Override
+	public String getName() {
+		return "k↑";
+	}
 
 }

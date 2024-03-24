@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.test.container;
 
 /**
@@ -21,6 +22,6 @@ package org.laokou.test.container;
  */
 public interface UserApi {
 
-    String getName();
+	String getName();
 
 }
