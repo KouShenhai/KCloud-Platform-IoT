@@ -6,7 +6,7 @@ spring:
 dubbo:
   application:
     name: ${spring.application.name}
-    qos-port: 1111
+    qos-port: 1112
   protocol:
     id: dubbo
     name: dubbo

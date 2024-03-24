@@ -46,6 +46,9 @@ public class LogtashApp {
 		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
 		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
+		// 因为nacos的log4j2导致本项目的日志不输出的问题
+		// 配置关闭nacos日志
+		System.setProperty("nacos.logging.default.config.enabled", "false");
 		new SpringApplicationBuilder(LogtashApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
