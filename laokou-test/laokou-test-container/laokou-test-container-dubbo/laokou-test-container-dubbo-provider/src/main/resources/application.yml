@@ -1,0 +1,22 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: laokou-test-container-dubbo-provider
+dubbo:
+  application:
+    name: ${spring.application.name}
+    qos-port: 1111
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: -1
+  registry:
+    address: nacos://@NACOS-DISCOVERY-ADDRESS@
+    username: @NACOS-USERNAME@
+    password: @NACOS-PASSWORD@
+    group: LAOKOU_GROUP
+    parameters:
+      namespace: @NACOS-NAMESPACE@
+      register-consumer-url: true
+    protocol: nacos

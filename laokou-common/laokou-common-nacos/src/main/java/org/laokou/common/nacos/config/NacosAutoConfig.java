@@ -26,8 +26,11 @@ import org.laokou.common.nacos.proxy.ProtocolProxyDelegate;
 import org.laokou.common.nacos.utils.ServiceUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.web.server.Ssl;
 import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.context.annotation.Bean;
+
+import java.util.Optional;
 
 /**
  * @author laokou
@@ -48,7 +51,7 @@ public class NacosAutoConfig {
 	 */
 	@Bean
 	public ProtocolProxy protocolProxy(ServerProperties serverProperties) {
-		return new ProtocolProxyDelegate(serverProperties.getSsl().isEnabled());
+		return new ProtocolProxyDelegate(Optional.ofNullable(serverProperties.getSsl()).orElse(new Ssl()).isEnabled());
 	}
 
 	@PreDestroy

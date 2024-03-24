@@ -34,6 +34,7 @@ services:
       - ./mysql8/conf/my.cnf:/etc/mysql/my.cnf
       # 请手动授予rw权限，不然无法写入文件
       - ./mysql8/logs:/var/log/mysql
+      - ./mysql8/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - MYSQL_ROOT_PASSWORD=laokou123
       - TZ=Asia/Shanghai
