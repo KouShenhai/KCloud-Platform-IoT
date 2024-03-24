@@ -33,7 +33,7 @@
         <!--mysql版本-->
         <mysql.version>8.3.0</mysql.version>
         <!--admin版本-->
-        <spring-boot-admin.version>3.2.2</spring-boot-admin.version>
+        <spring-boot-admin.version>3.2.3</spring-boot-admin.version>
         <!--flowable版本-->
         <flowable.version>7.0.1</flowable.version>
         <!--mybatis-plus版本 -->
@@ -67,7 +67,7 @@
         <!--spring-boot-starter-oauth2-resource-server版本-->
         <spring-boot-starter-oauth2-resource-server.version>3.2.5-SNAPSHOT</spring-boot-starter-oauth2-resource-server.version>
         <!--aws-java-sdk-s3版本-->
-        <aws-java-sdk-s3.version>1.12.685</aws-java-sdk-s3.version>
+        <aws-java-sdk-s3.version>1.12.686</aws-java-sdk-s3.version>
         <!--dynamic-datasource版本-->
         <dynamic-datasource.version>4.3.0</dynamic-datasource.version>
         <!--httpclient5版本-->
