@@ -17,16 +17,28 @@
 
 package org.laokou.test.container;
 
-import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestConstructor;
 
-@EnableDubbo
-@SpringBootApplication
-public class DubboConsumerTestApp {
+import static org.laokou.common.i18n.common.SysConstants.VERSION;
 
-	public static void main(String[] args) {
-		SpringApplication.run(DubboConsumerTestApp.class, args);
-	}
+/**
+ * @author laokou
+ */
+@Slf4j
+@SpringBootTest
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+public class ConsumerApiTest {
+
+    @DubboReference(version = VERSION)
+    private UserApi userApi;
+
+    @Test
+    void testConsumerApi() {
+        log.info("name：{}", userApi.getName());
+    }
 
 }

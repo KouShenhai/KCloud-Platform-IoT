@@ -15,7 +15,7 @@ dubbo:
     address: nacos://@NACOS-DISCOVERY-ADDRESS@
     username: @NACOS-USERNAME@
     password: @NACOS-PASSWORD@
-    group: LAOKOU_GROUP
+    group: TEST_GROUP
     parameters:
       namespace: @NACOS-NAMESPACE@
       register-consumer-url: true
