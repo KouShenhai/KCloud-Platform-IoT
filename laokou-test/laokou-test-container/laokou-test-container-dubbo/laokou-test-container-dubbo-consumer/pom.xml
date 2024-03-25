@@ -26,6 +26,14 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-test-container-dubbo-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-dubbo</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
