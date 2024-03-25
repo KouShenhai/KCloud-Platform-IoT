@@ -33,12 +33,12 @@ import static org.laokou.common.i18n.common.SysConstants.VERSION;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class ConsumerApiTest {
 
-    @DubboReference(version = VERSION)
-    private UserApi userApi;
+	@DubboReference(version = VERSION)
+	private UserApi userApi;
 
-    @Test
-    void testConsumerApi() {
-        log.info("name：{}", userApi.getName());
-    }
+	@Test
+	void testConsumerApi() {
+		log.info("name：{}", userApi.getName());
+	}
 
 }
