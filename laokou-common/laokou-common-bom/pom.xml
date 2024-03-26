@@ -95,7 +95,7 @@
         <!--disruptor版本-->
         <disruptor.version>3.4.4</disruptor.version>
         <!--dubbo版本-->
-        <dubbo.version>3.3.0-beta.1</dubbo.version>
+        <dubbo.version>3.3.0-beta.2</dubbo.version>
         <!--lombok-mapstruct-binding版本-->
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <!--mapstruct版本-->
