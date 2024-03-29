@@ -39,4 +39,10 @@ func main() {
 	fmt.Println(64 / 2 / 2 / 2)
 	// 左移动 => 2的n次平方
 	// 右移动 => 2的n次开方
+	var j,k = 60,13
+	fmt.Println(j & k)
+	fmt.Println(j | k)
+	fmt.Println(j ^ k)
+	fmt.Println(j << 2)
+	fmt.Println(j >> 2)
 }
