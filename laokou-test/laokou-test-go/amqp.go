@@ -15,22 +15,22 @@ type AMQP struct {
 	PASSWORD string
 }
 
-func failOnError(err error, msg string) {
+func FailOnError(err error, msg string) {
 	if err != nil {
 		log.Printf("错误信息：%s，错误异常栈：%s", msg, err)
 	}
 }
 
-func initAMQP(mq AMQP) *amqp.Connection {
+func InitAMQP(mq AMQP) *amqp.Connection {
 	url := fmt.Sprintf("amqp://%s:%s@%s:%d", mq.USERNAME, mq.PASSWORD, mq.HOST, mq.PORT)
 	conn, err := amqp.Dial(url)
-	failOnError(err, "Failed to connect to RabbitMQ")
+	FailOnError(err, "Failed to connect to RabbitMQ")
 	return conn
 }
 
-func initChannel(conn *amqp.Connection, exchange string) *amqp.Channel {
+func InitChannel(conn *amqp.Connection, exchange string) *amqp.Channel {
 	channel, err := conn.Channel()
-	failOnError(err, "Failed to open a channel")
+	FailOnError(err, "Failed to open a channel")
 	err = channel.ExchangeDeclare(
 		exchange, // name
 		"topic",  // type
@@ -40,11 +40,11 @@ func initChannel(conn *amqp.Connection, exchange string) *amqp.Channel {
 		false,    // no-wait
 		nil,      // arguments
 	)
-	failOnError(err, "Failed to declare an exchange")
+	FailOnError(err, "Failed to declare an exchange")
 	return channel
 }
 
-func send(channel *amqp.Channel, exchange string, key string, payload string) {
+func Send(channel *amqp.Channel, exchange string, key string, payload string) {
 	// 5秒内没完成则取消
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -57,10 +57,10 @@ func send(channel *amqp.Channel, exchange string, key string, payload string) {
 			ContentType: "text/plain",
 			Body:        []byte(payload),
 		})
-	failOnError(err, "Failed to publish a message")
+	FailOnError(err, "Failed to publish a message")
 }
 
-func closeAMQP(conn *amqp.Connection) {
+func CloseAMQP(conn *amqp.Connection) {
 	if conn != nil {
 		err := conn.Close()
 		if err != nil {
@@ -69,7 +69,7 @@ func closeAMQP(conn *amqp.Connection) {
 	}
 }
 
-func closeChannel(channel *amqp.Channel) {
+func CloseChannel(channel *amqp.Channel) {
 	if channel != nil {
 		err := channel.Close()
 		if err != nil {
@@ -78,7 +78,7 @@ func closeChannel(channel *amqp.Channel) {
 	}
 }
 
-func declareQueue(channel *amqp.Channel, topic string) {
+func DeclareQueue(channel *amqp.Channel, topic string) {
 	_, err := channel.QueueDeclare(
 		topic, // name
 		false, // durable
@@ -87,20 +87,20 @@ func declareQueue(channel *amqp.Channel, topic string) {
 		false, // no-wait
 		nil,   // arguments
 	)
-	failOnError(err, "Failed to declare a queue")
+	FailOnError(err, "Failed to declare a queue")
 }
 
-func bindQueue(channel *amqp.Channel, exchange string, key string, topic string) {
+func BindQueue(channel *amqp.Channel, exchange string, key string, topic string) {
 	err := channel.QueueBind(
 		topic,    // queue name
 		key,      // routing key
 		exchange, // exchange
 		false,
 		nil)
-	failOnError(err, "Failed to bind a queue")
+	FailOnError(err, "Failed to bind a queue")
 }
 
-func receive(channel *amqp.Channel, topic string) {
+func Receive(channel *amqp.Channel, topic string) {
 	ms, err := channel.Consume(
 		topic, // queue
 		"",    // consumer
@@ -110,7 +110,7 @@ func receive(channel *amqp.Channel, topic string) {
 		false, // no wait
 		nil,   // args
 	)
-	failOnError(err, "Failed to register a consumer")
+	FailOnError(err, "Failed to register a consumer")
 	// 协程
 	var forever chan struct{}
 	go func() {
@@ -128,12 +128,12 @@ func main() {
 	payload := "hello world"
 	key := "*.iot"
 	topic := "laokou_iot_topic"
-	conn := initAMQP(mq)
-	channel := initChannel(conn, exchange)
-	declareQueue(channel, topic)
-	bindQueue(channel, exchange, key, topic)
-	send(channel, exchange, key, payload)
-	receive(channel, topic)
-	defer closeAMQP(conn)
-	defer closeChannel(channel)
+	conn := InitAMQP(mq)
+	channel := InitChannel(conn, exchange)
+	DeclareQueue(channel, topic)
+	BindQueue(channel, exchange, key, topic)
+	Send(channel, exchange, key, payload)
+	Receive(channel, topic)
+	defer CloseAMQP(conn)
+	defer CloseChannel(channel)
 }

@@ -14,7 +14,7 @@ type Redis struct {
 	DATABASE int
 }
 
-func initRDB(r Redis) *redis.Client {
+func InitRDB(r Redis) *redis.Client {
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     fmt.Sprintf("%s:%d", r.HOST, r.PORT),
 		Password: r.PASSWORD, // 默认密码为空
@@ -23,7 +23,7 @@ func initRDB(r Redis) *redis.Client {
 	return rdb
 }
 
-func closeRDB(rdb *redis.Client) {
+func CloseRDB(rdb *redis.Client) {
 	err := rdb.Close()
 	if err != nil {
 		return
@@ -33,7 +33,7 @@ func closeRDB(rdb *redis.Client) {
 func main() {
 	// https://redis.uptrace.dev/zh/guide/go-redis.html
 	_redis := Redis{"127.0.0.1", 6379, "laokou123", 0}
-	rdb := initRDB(_redis)
+	rdb := InitRDB(_redis)
 	ctx := context.Background()
 	result, err := rdb.Get(ctx, "key").Result()
 	if err != nil && err.Error() != "redis: nil" {
@@ -45,5 +45,5 @@ func main() {
 			log.Println("连接成功，key存在")
 		}
 	}
-	defer closeRDB(rdb)
+	defer CloseRDB(rdb)
 }
