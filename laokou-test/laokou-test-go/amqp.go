@@ -100,7 +100,7 @@ func BindQueue(channel *amqp.Channel, exchange string, key string, topic string)
 	FailOnError(err, "Failed to bind a queue")
 }
 
-func Receive(channel *amqp.Channel, topic string) {
+func Receive(channel *amqp.Channel, topic string, name string) {
 	ms, err := channel.Consume(
 		topic, // queue
 		"",    // consumer
@@ -129,12 +129,13 @@ func main() {
 	key := "laokou.iot"
 	router := "*.iot"
 	topic := "laokou_iot_topic"
+	name := "laokou_consumer"
 	conn := InitAMQP(mq)
 	channel := InitChannel(conn, exchange)
 	DeclareQueue(channel, topic)
 	BindQueue(channel, exchange, router, topic)
 	Send(channel, exchange, key, payload)
-	Receive(channel, topic)
+	Receive(channel, topic, name)
 	defer CloseAMQP(conn)
 	defer CloseChannel(channel)
 }
