@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"log"
 	"time"
 )
 
@@ -49,14 +50,25 @@ func initMysql(ds DataSource) (*sql.DB, error) {
 	}
 }
 
+func closeDB(db *sql.DB) {
+	// 延迟调用
+	if db != nil {
+		err := db.Close()
+		if err != nil {
+			return
+		}
+	}
+}
+
 func main() {
 	// https://gorm.io/zh_CN/docs/connecting_to_the_database.html
 	ds := DataSource{"127.0.0.1", 3306, "kcloud_platform_alibaba_iot", "root", "laokou123", "utf8mb4", 10, 100, time.Hour}
 	// 连接mysql
 	db, err := initMysql(ds)
 	if db == nil || err != nil {
-		fmt.Printf("连接失败，错误信息：%s", err.Error())
+		log.Printf("连接失败，错误信息：%s", err.Error())
 	} else {
-		fmt.Println("连接成功")
+		log.Println("连接成功")
 	}
+	defer closeDB(db)
 }
