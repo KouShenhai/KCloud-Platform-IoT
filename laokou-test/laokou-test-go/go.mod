@@ -3,6 +3,7 @@ module laokou-test-go
 go 1.22
 
 require (
+	github.com/rabbitmq/amqp091-go v1.9.0
 	github.com/redis/go-redis/v9 v9.5.1
 	gorm.io/driver/mysql v1.5.6
 	gorm.io/gorm v1.25.9
