@@ -126,12 +126,13 @@ func main() {
 	exchange := "laokou_iot_exchange"
 	mq := AMQP{"127.0.0.1", 5672, "root", "laokou123"}
 	payload := "hello world"
-	key := "*.iot"
+	key := "laokou.iot"
+	router := "*.iot"
 	topic := "laokou_iot_topic"
 	conn := InitAMQP(mq)
 	channel := InitChannel(conn, exchange)
 	DeclareQueue(channel, topic)
-	BindQueue(channel, exchange, key, topic)
+	BindQueue(channel, exchange, router, topic)
 	Send(channel, exchange, key, payload)
 	Receive(channel, topic)
 	defer CloseAMQP(conn)
