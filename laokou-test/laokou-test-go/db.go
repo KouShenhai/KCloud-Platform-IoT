@@ -11,17 +11,17 @@ import (
 type DataSource struct {
 	HOST            string
 	PORT            int
-	DataBase        string
-	UserName        string
-	Password        string
-	Charset         string
+	DATABASE        string
+	USERNAME        string
+	PASSWORD        string
+	CHARSET         string
 	MaxIdleConns    int
 	MaxOpenConns    int
 	ConnMaxLifetime time.Duration
 }
 
-func connectMysql(ds DataSource) (*sql.DB, error) {
-	dns := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s&parseTime=True&loc=Local", ds.UserName, ds.Password, ds.HOST, ds.PORT, ds.DataBase, ds.Charset)
+func initMysql(ds DataSource) (*sql.DB, error) {
+	dns := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s&parseTime=True&loc=Local", ds.USERNAME, ds.PASSWORD, ds.HOST, ds.PORT, ds.DATABASE, ds.CHARSET)
 	config := mysql.Config{
 		DSN:                       dns,   // DSN data source name
 		DefaultStringSize:         256,   // string 类型字段的默认长度
@@ -53,9 +53,9 @@ func main() {
 	// https://gorm.io/zh_CN/docs/connecting_to_the_database.html
 	ds := DataSource{"127.0.0.1", 3306, "kcloud_platform_alibaba_iot", "root", "laokou123", "utf8mb4", 10, 100, time.Hour}
 	// 连接mysql
-	db, err := connectMysql(ds)
+	db, err := initMysql(ds)
 	if db == nil || err != nil {
-		fmt.Printf("连接失败，错误信息：%s", err)
+		fmt.Printf("连接失败，错误信息：%s", err.Error())
 	} else {
 		fmt.Println("连接成功")
 	}
