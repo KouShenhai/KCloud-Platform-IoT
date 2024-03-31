@@ -35,6 +35,7 @@ func main() {
 	_redis := Redis{"127.0.0.1", 6379, "laokou123", 0}
 	rdb := InitRDB(_redis)
 	ctx := context.Background()
+	defer CloseRDB(rdb)
 	result, err := rdb.Get(ctx, "key").Result()
 	if err != nil && err.Error() != "redis: nil" {
 		log.Printf("连接失败，错误信息：%s\n", err.Error())
@@ -45,5 +46,4 @@ func main() {
 			log.Println("连接成功，key存在")
 		}
 	}
-	defer CloseRDB(rdb)
 }

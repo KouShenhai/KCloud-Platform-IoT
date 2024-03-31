@@ -78,9 +78,9 @@ func CloseChannel(channel *amqp.Channel) {
 	}
 }
 
-func DeclareQueue(channel *amqp.Channel, topic string) {
-	_, err := channel.QueueDeclare(
-		topic, // name
+func DeclareQueue(channel *amqp.Channel) amqp.Queue {
+	queue, err := channel.QueueDeclare(
+		"",    // name
 		false, // durable
 		false, // delete when unused
 		true,  // exclusive
@@ -88,27 +88,28 @@ func DeclareQueue(channel *amqp.Channel, topic string) {
 		nil,   // arguments
 	)
 	FailOnError(err, "Failed to declare a queue")
+	return queue
 }
 
-func BindQueue(channel *amqp.Channel, exchange string, key string, topic string) {
+func BindQueue(channel *amqp.Channel, exchange string, key string, queue amqp.Queue) {
 	err := channel.QueueBind(
-		topic,    // queue name
-		key,      // routing key
-		exchange, // exchange
+		queue.Name, // queue name
+		key,        // routing key
+		exchange,   // exchange
 		false,
 		nil)
 	FailOnError(err, "Failed to bind a queue")
 }
 
-func Receive(channel *amqp.Channel, topic string) {
+func Receive(channel *amqp.Channel, queue amqp.Queue) {
 	ms, err := channel.Consume(
-		topic, // queue
-		"",    // consumer
-		true,  // auto ack
-		false, // exclusive
-		false, // no local
-		false, // no wait
-		nil,   // args
+		queue.Name, // queue
+		"",         // consumer
+		false,      // no auto ack
+		false,      // exclusive
+		false,      // no local
+		false,      // no wait
+		nil,        // args
 	)
 	FailOnError(err, "Failed to register a consumer")
 	// 协程
@@ -116,9 +117,19 @@ func Receive(channel *amqp.Channel, topic string) {
 	go func() {
 		for m := range ms {
 			log.Printf("接收消息：%s", m.Body)
+			// 失败 -> nack
+			// err := channel.Nack(m.DeliveryTag, false, true)
+			// 成功 -> ack
+			err := channel.Ack(m.DeliveryTag, false)
+			FailOnError(err, "Failed to ack")
 		}
 	}()
 	<-forever
+}
+
+func modifyQos(channel *amqp.Channel) {
+	err := channel.Qos(1, 0, false)
+	FailOnError(err, "Failed to modify qos")
 }
 
 func main() {
@@ -127,14 +138,14 @@ func main() {
 	mq := AMQP{"127.0.0.1", 5672, "root", "laokou123"}
 	payload := "hello world"
 	key := "laokou.iot"
-	router := "*.iot"
-	topic := "laokou_iot_topic"
+	routerKey := "*.iot"
 	conn := InitAMQP(mq)
 	channel := InitChannel(conn, exchange)
-	DeclareQueue(channel, topic)
-	BindQueue(channel, exchange, router, topic)
-	Send(channel, exchange, key, payload)
-	Receive(channel, topic)
+	queue := DeclareQueue(channel)
+	BindQueue(channel, exchange, routerKey, queue)
+	modifyQos(channel)
 	defer CloseAMQP(conn)
 	defer CloseChannel(channel)
+	Send(channel, exchange, key, payload)
+	Receive(channel, queue)
 }
