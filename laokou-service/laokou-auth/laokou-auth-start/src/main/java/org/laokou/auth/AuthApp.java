@@ -20,6 +20,7 @@ package org.laokou.auth;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
+import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.xxl.job.annotation.EnableXxlJob;
@@ -53,6 +54,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @EnableRedisRepository
 @EnableTaskExecutor
 @EnableXxlJob
+@EnableRouter
 @MapperScan({ "org.laokou.common.domain.repository", "org.laokou.auth.gatewayimpl.database",
 		"org.laokou.common.mybatisplus.repository" })
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })

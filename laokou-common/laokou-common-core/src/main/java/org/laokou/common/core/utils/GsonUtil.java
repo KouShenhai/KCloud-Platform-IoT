@@ -15,24 +15,27 @@
  *
  */
 
-package org.laokou.common.dynamic.router.utils;
+package org.laokou.common.core.utils;
 
-import static org.laokou.common.i18n.common.RouterConstants.GENERATED_NAME_PREFIX;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
- * 路由名称工具类.
+ * gson工具类.
  *
  * @author laokou
  */
-public class NameUtil {
+public class GsonUtil {
 
 	/**
-	 * 路由生成名称.
-	 * @param i 索引
-	 * @return 路由生成名称
+	 * 对象转为gson字符串.
+	 * @param obj 对象
+	 * @return gson字符串
 	 */
-	public static String generateName(int i) {
-		return GENERATED_NAME_PREFIX + i;
+	public static String toPrettyFormat(Object obj) {
+		// 关闭html转义
+		Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+		return gson.toJson(obj);
 	}
 
 }

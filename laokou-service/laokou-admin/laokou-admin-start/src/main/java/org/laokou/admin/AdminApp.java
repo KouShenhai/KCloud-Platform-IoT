@@ -21,6 +21,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import lombok.SneakyThrows;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
+import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.security.annotation.EnableSecurity;
@@ -58,6 +59,7 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @EnableSecurity
 @EnableTaskExecutor
 @EnableXxlJob
+@EnableRouter
 @MapperScan({ "org.laokou.common.domain.repository", "org.laokou.admin.gatewayimpl.database",
 		"org.laokou.common.mybatisplus.repository" })
 public class AdminApp {

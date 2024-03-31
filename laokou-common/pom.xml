@@ -39,7 +39,6 @@
         <module>laokou-common-secret</module>
         <module>laokou-common-i18n</module>
         <module>laokou-common-crypto</module>
-        <module>laokou-common-dynamic-router</module>
         <module>laokou-common-elasticsearch</module>
         <module>laokou-common-redis</module>
         <module>laokou-common-rocketmq</module>

@@ -1,17 +1,18 @@
+
 {
-  "id": "${appId}",
-  "uri": "lb://${appId}",
+  "id": "${appName}",
+  "uri": "lb://${appName}",
   "predicates": [
     {
       "name": "Path",
       "args": {
-        "pattern": "/${name}/**"
+        "pattern": "/${abbr}/**"
       }
     },
     {
       "name": "Weight",
       "args": {
-        "_genkey_0": "${name}",
+        "_genkey_0": "${abbr}",
         "_genkey_1": "100"
       }
     }
@@ -26,7 +27,7 @@
     {
       "name": "RewritePath",
       "args": {
-        "_genkey_0": "/${name}/(?<path>.*)",
+        "_genkey_0": "/${abbr}/(?<path>.*)",
         "_genkey_1": "/$\\{path}"
       }
     }
