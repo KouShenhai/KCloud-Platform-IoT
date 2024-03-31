@@ -65,10 +65,10 @@ func main() {
 	ds := DataSource{"127.0.0.1", 3306, "kcloud_platform_alibaba_iot", "root", "laokou123", "utf8mb4", 10, 100, time.Hour}
 	// 连接mysql
 	db, err := InitMysql(ds)
+	defer CloseDB(db)
 	if db == nil || err != nil {
 		log.Printf("连接失败，错误信息：%s", err.Error())
 	} else {
 		log.Println("连接成功")
 	}
-	defer CloseDB(db)
 }
