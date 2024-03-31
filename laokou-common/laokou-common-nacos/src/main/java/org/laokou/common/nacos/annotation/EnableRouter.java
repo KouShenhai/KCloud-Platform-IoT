@@ -15,7 +15,17 @@
  *
  */
 
-/**
- * @author laokou
- */
-package org.laokou.common.dynamic.router;
+package org.laokou.common.nacos.annotation;
+
+import org.laokou.common.nacos.handler.RouterListener;
+import org.springframework.context.annotation.Import;
+
+import java.lang.annotation.*;
+
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import({ RouterListener.class })
+public @interface EnableRouter {
+
+}
