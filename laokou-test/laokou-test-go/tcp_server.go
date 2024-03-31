@@ -2,13 +2,15 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"net"
 )
 
-func InitTcpServer(host string, port int) {
-	listen, err := net.Listen("tcp", fmt.Sprintf("%s:%d", host, port))
+func InitTcpServer(network string, ip net.IP, port int) {
+	listen, err := net.ListenTCP(network, &net.TCPAddr{
+		IP:   ip,
+		Port: port,
+	})
 	if err != nil {
 		log.Printf("Listene failed，error：%s", err)
 		return
@@ -16,7 +18,8 @@ func InitTcpServer(host string, port int) {
 	defer func(listen net.Listener) {
 		err := listen.Close()
 		if err != nil {
-			log.Printf("Server close failed，error：%s", err)
+			log.Printf("TCP server close failed，error：%s", err)
+			return
 		}
 	}(listen)
 	for {
@@ -29,11 +32,11 @@ func InitTcpServer(host string, port int) {
 		} else {
 			log.Printf("Accept connect，Conn：%s，Client IP：%s", conn, conn.RemoteAddr().String())
 		}
-		go HandleConnect(conn)
+		go HandleTcpConnect(conn)
 	}
 }
 
-func HandleConnect(conn net.Conn) {
+func HandleTcpConnect(conn net.Conn) {
 	defer func(conn net.Conn) {
 		err := conn.Close()
 		if err != nil {
@@ -64,5 +67,5 @@ func HandleConnect(conn net.Conn) {
 }
 
 func main() {
-	InitTcpServer("127.0.0.1", 7654)
+	InitTcpServer("tcp4", net.IPv4(0, 0, 0, 0), 7654)
 }
