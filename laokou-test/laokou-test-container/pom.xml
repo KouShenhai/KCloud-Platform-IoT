@@ -16,7 +16,6 @@
     <modules>
         <module>laokou-test-container-spring-boot</module>
         <module>laokou-test-container-dubbo</module>
-        <module>laokou-test-container-sqlserver2000</module>
     </modules>
 
 </project>

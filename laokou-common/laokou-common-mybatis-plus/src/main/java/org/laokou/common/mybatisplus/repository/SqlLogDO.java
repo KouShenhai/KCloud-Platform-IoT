@@ -34,8 +34,8 @@ public class SqlLogDO extends BaseDO {
 	@Schema(name = "appName", description = "应用名称")
 	private String appName;
 
-	@Schema(name = "dsl", description = "查询语句")
-	private String dsl;
+	@Schema(name = "sql", description = "查询语句")
+	private String sql;
 
 	@Schema(name = "costTime", description = "消耗时间")
 	private Long costTime;
