@@ -19,7 +19,7 @@ func main() {
 	fmt.Println("测试...")
 	// testAMQP()
 	// testMysql()
-	testSqlServer2000()
+	// testSqlServer2000()
 	// testRDB()
 	// testTcpServer()
 	// testConnectTcpServer()
