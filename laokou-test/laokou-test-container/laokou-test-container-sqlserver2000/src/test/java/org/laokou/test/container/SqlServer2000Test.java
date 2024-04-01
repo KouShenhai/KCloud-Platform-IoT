@@ -25,6 +25,7 @@ class SqlServer2000Test {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

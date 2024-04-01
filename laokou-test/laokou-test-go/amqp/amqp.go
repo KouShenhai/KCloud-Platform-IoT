@@ -1,4 +1,4 @@
-package main
+package amqp
 
 import (
 	"context"
@@ -127,7 +127,7 @@ func Receive(channel *amqp.Channel, queue amqp.Queue) {
 	<-forever
 }
 
-func modifyQos(channel *amqp.Channel) {
+func ModifyQos(channel *amqp.Channel) {
 	err := channel.Qos(1, 0, false)
 	FailOnError(err, "Failed to modify qos")
 }
@@ -143,7 +143,7 @@ func main() {
 	channel := InitChannel(conn, exchange)
 	queue := DeclareQueue(channel)
 	BindQueue(channel, exchange, routerKey, queue)
-	modifyQos(channel)
+	ModifyQos(channel)
 	defer CloseAMQP(conn)
 	defer CloseChannel(channel)
 	Send(channel, exchange, key, payload)
