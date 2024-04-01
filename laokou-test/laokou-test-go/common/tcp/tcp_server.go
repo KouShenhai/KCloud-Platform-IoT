@@ -12,13 +12,13 @@ func InitTcpServer(network string, ip net.IP, port int) {
 		Port: port,
 	})
 	if err != nil {
-		log.Printf("Listene failed，error：%s", err)
+		log.Printf("Listene failed，error：%s", err.Error())
 		return
 	}
 	defer func(listen net.Listener) {
 		err := listen.Close()
 		if err != nil {
-			log.Printf("TCP server close failed，error：%s", err)
+			log.Printf("TCP server close failed，error：%s", err.Error())
 			return
 		}
 	}(listen)
@@ -27,7 +27,7 @@ func InitTcpServer(network string, ip net.IP, port int) {
 		// 监听客户端
 		conn, err := listen.Accept()
 		if err != nil {
-			log.Printf("Accept failed，error：%s", err)
+			log.Printf("Accept failed，error：%s", err.Error())
 			continue
 		} else {
 			log.Printf("Accept connect，Conn：%s，Client IP：%s", conn, conn.RemoteAddr().String())
@@ -40,7 +40,7 @@ func HandleTcpConnect(conn net.Conn) {
 	defer func(conn net.Conn) {
 		err := conn.Close()
 		if err != nil {
-			log.Printf("Close failed，error：%s", err)
+			log.Printf("Close failed，error：%s", err.Error())
 		}
 	}(conn)
 	for {
@@ -49,7 +49,7 @@ func HandleTcpConnect(conn net.Conn) {
 		reader := bufio.NewReader(conn)
 		n, err := reader.Read(buf)
 		if err != nil {
-			log.Printf("Read from client failed，error：%s", err)
+			log.Printf("Read from client failed，error：%s", err.Error())
 			err := conn.Close()
 			if err != nil {
 				return

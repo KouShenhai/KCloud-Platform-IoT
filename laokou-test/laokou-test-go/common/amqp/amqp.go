@@ -17,7 +17,7 @@ type AMQP struct {
 
 func FailOnError(err error, msg string) {
 	if err != nil {
-		log.Printf("错误信息：%s，错误异常栈：%s", msg, err)
+		log.Printf("错误信息：%s，错误异常栈：%s", msg, err.Error())
 	}
 }
 

@@ -3,8 +3,10 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	_ "github.com/mattn/go-adodb"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"log"
 	"time"
 )
 
@@ -20,10 +22,31 @@ type DataSource struct {
 	ConnMaxLifetime time.Duration
 }
 
-func InitMysql(ds DataSource) (*sql.DB, error) {
-	dns := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s&parseTime=True&loc=Local", ds.USERNAME, ds.PASSWORD, ds.HOST, ds.PORT, ds.DATABASE, ds.CHARSET)
+func ConnectSqlServer2000(ds DataSource) (*sql.DB, error) {
+	config := fmt.Sprintf("Provider=SQLOLEDB;Initial Catalog=%s;Data Source=%s\\MSSQLSERVER", ds.DATABASE, ds.HOST)
+	config = fmt.Sprintf("%s,%d;user id=%s;password=%s", config, ds.PORT, ds.USERNAME, ds.PASSWORD)
+	return sql.Open("adodb", config)
+}
+
+func QueryBySqlServer2000(db *sql.DB, qrySql string) *sql.Rows {
+	rows, err := db.Query(qrySql)
+	if err != nil {
+		log.Printf("Query failed，error：%s", err.Error())
+	}
+	return rows
+}
+
+func ExecBySqlServer2000(db *sql.DB, execSql string) {
+	_, err := db.Exec(execSql)
+	if err != nil {
+		log.Printf("Exec failed，error：%s", err.Error())
+	}
+}
+
+func ConnectMysql(ds DataSource) (*gorm.DB, *sql.DB, error) {
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s&parseTime=True&loc=Local", ds.USERNAME, ds.PASSWORD, ds.HOST, ds.PORT, ds.DATABASE, ds.CHARSET)
 	config := mysql.Config{
-		DSN:                       dns,   // DSN data source name
+		DSN:                       dsn,   // DSN data source name
 		DefaultStringSize:         256,   // string 类型字段的默认长度
 		DisableDatetimePrecision:  true,  // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
 		DontSupportRenameIndex:    true,  // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
@@ -34,19 +57,20 @@ func InitMysql(ds DataSource) (*sql.DB, error) {
 		// 迁移时禁用外键约束
 		DisableForeignKeyConstraintWhenMigrating: true,
 	})
-	if err != nil {
-		return nil, err
-	} else {
-		// 连接池
-		sqlDB, er := db.DB()
-		// SetMaxIdleConns sets the maximum number of connections in the idle connection pool.
-		sqlDB.SetMaxIdleConns(ds.MaxIdleConns)
-		// SetMaxOpenConns sets the maximum number of open connections to the database.
-		sqlDB.SetMaxOpenConns(ds.MaxOpenConns)
-		// SetConnMaxLifetime sets the maximum amount of time a connection may be reused.
-		sqlDB.SetConnMaxLifetime(ds.ConnMaxLifetime)
-		return sqlDB, er
-	}
+	pool := InitConnectPool(db, ds)
+	return db, pool, err
+}
+
+func InitConnectPool(db *gorm.DB, ds DataSource) *sql.DB {
+	// 连接池
+	sqlDB, _ := db.DB()
+	// SetMaxIdleConns sets the maximum number of connections in the idle connection pool.
+	sqlDB.SetMaxIdleConns(ds.MaxIdleConns)
+	// SetMaxOpenConns sets the maximum number of open connections to the database.
+	sqlDB.SetMaxOpenConns(ds.MaxOpenConns)
+	// SetConnMaxLifetime sets the maximum amount of time a connection may be reused.
+	sqlDB.SetConnMaxLifetime(ds.ConnMaxLifetime)
+	return sqlDB
 }
 
 func CloseDB(db *sql.DB) {

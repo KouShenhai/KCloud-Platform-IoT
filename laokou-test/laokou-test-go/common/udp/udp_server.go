@@ -11,7 +11,7 @@ func InitUdpServer(network string, ip net.IP, port int) {
 		Port: port,
 	})
 	if err != nil {
-		log.Printf("Listen failed，error：%s", err)
+		log.Printf("Listen failed，error：%s", err.Error())
 		return
 	}
 	HandleUdpConnect(listen)
@@ -21,21 +21,21 @@ func HandleUdpConnect(listen *net.UDPConn) {
 	defer func(listen *net.UDPConn) {
 		err := listen.Close()
 		if err != nil {
-			log.Printf("UDP server close failed，error：%s", err)
+			log.Printf("UDP server close failed，error：%s", err.Error())
 		}
 	}(listen)
 	for {
 		buf := make([]byte, 1024)
 		n, addr, err := listen.ReadFromUDP(buf)
 		if err != nil {
-			log.Printf("Read from failed，error：%s", err)
+			log.Printf("Read from failed，error：%s", err.Error())
 		}
 		str := string(buf[:n])
 		log.Printf("Recive msg：%s，IP：%s", str, addr.IP.String())
 		// 转发
 		_, err = listen.WriteToUDP([]byte(str), addr)
 		if err != nil {
-			log.Printf("Send failed，error：%s", err)
+			log.Printf("Send failed，error：%s", err.Error())
 		}
 	}
 }

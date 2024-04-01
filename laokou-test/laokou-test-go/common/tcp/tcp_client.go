@@ -12,7 +12,7 @@ func ConnectTcpServer(network string, ip net.IP, port int) net.Conn {
 		Port: port,
 	})
 	if err != nil {
-		log.Printf("Client connect failed，error：%s", err)
+		log.Printf("Client connect failed，error：%s", err.Error())
 		return nil
 	}
 	go func() {

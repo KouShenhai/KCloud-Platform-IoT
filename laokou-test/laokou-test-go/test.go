@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"context"
+	"database/sql"
 	"fmt"
 	_amqp "laokou-test-go/common/amqp"
 	_db "laokou-test-go/common/db"
@@ -17,7 +18,8 @@ import (
 func main() {
 	fmt.Println("测试...")
 	// testAMQP()
-	// testDB()
+	// testMysql()
+	testSqlServer2000()
 	// testRDB()
 	// testTcpServer()
 	// testConnectTcpServer()
@@ -25,16 +27,90 @@ func main() {
 	// testConnectUdpServer()
 }
 
-func testDB() {
+func testMysql() {
 	// https://gorm.io/zh_CN/docs/connecting_to_the_database.html
 	ds := _db.DataSource{HOST: "127.0.0.1", PORT: 3306, DATABASE: "kcloud_platform_alibaba_iot", USERNAME: "root", PASSWORD: "laokou123", CHARSET: "utf8mb4", MaxIdleConns: 10, MaxOpenConns: 100, ConnMaxLifetime: time.Hour}
 	// 连接mysql
-	db, err := _db.InitMysql(ds)
+	db, pool, err := _db.ConnectMysql(ds)
+	defer _db.CloseDB(pool)
+	if db == nil || err != nil {
+		log.Printf("连接失败，错误信息：%s", err.Error())
+	} else {
+		log.Println("连接成功")
+	}
+}
+
+func testSqlServer2000() {
+	ds := _db.DataSource{HOST: "192.168.111.128", PORT: 1433, DATABASE: "kcloud_platform_alibaba_xot", USERNAME: "sa", PASSWORD: "123456"}
+	db, err := _db.ConnectSqlServer2000(ds)
 	defer _db.CloseDB(db)
 	if db == nil || err != nil {
 		log.Printf("连接失败，错误信息：%s", err.Error())
 	} else {
 		log.Println("连接成功")
+	}
+	// https://www.sjkjc.com/posts/golang-basic-sqlserver
+
+	// Query
+	testSqlServer2000Query(db)
+
+	// Find
+	testSqlServer2000Find(db)
+
+	// Create
+	testSqlServer2000Create(db)
+	testSqlServer2000Query(db)
+
+	// Modify
+	testSqlServer2000Modify(db)
+	testSqlServer2000Query(db)
+
+	// Remove
+	testSqlServer2000Remove(db)
+	testSqlServer2000Query(db)
+}
+
+func testSqlServer2000Remove(db *sql.DB) {
+	// 删除
+	_db.ExecBySqlServer2000(db, "delete from t_user where username = 'lk'")
+	log.Printf("Exec Remove")
+}
+
+func testSqlServer2000Modify(db *sql.DB) {
+	// 修改
+	_db.ExecBySqlServer2000(db, "update t_user set username = 'lk' where username = 'laokou123'")
+	log.Printf("Exec Modify")
+}
+
+func testSqlServer2000Find(db *sql.DB) {
+	// 查看
+	rows := _db.QueryBySqlServer2000(db, "select username from t_user where username = 'laokou'")
+	for rows.Next() {
+		var username string
+		err := rows.Scan(&username)
+		if err != nil {
+			return
+		}
+		log.Printf("Find：%s", username)
+	}
+}
+
+func testSqlServer2000Create(db *sql.DB) {
+	// 新增
+	_db.ExecBySqlServer2000(db, "insert into t_user(username) values('laokou123')")
+	log.Printf("Exec Create")
+}
+
+func testSqlServer2000Query(db *sql.DB) {
+	// 查询
+	rows := _db.QueryBySqlServer2000(db, "select username from t_user")
+	for rows.Next() {
+		var username string
+		err := rows.Scan(&username)
+		if err != nil {
+			return
+		}
+		log.Printf("Query：%s", username)
 	}
 }
 
@@ -62,7 +138,7 @@ func testConnectTcpServer() {
 		defer func(conn net.Conn) {
 			err := conn.Close()
 			if err != nil {
-				log.Printf("Close failed，error：%s", err)
+				log.Printf("Close failed，error：%s", err.Error())
 			}
 		}(conn)
 		for {
@@ -91,14 +167,14 @@ func testConnectUdpServer() {
 	defer func(socket *net.UDPConn) {
 		err := socket.Close()
 		if err != nil {
-			log.Printf("Close failed，error：%s", err)
+			log.Printf("Close failed，error：%s", err.Error())
 		}
 	}(socket)
 	if socket != nil {
 		buf := make([]byte, 1024)
 		n, addr, err := socket.ReadFromUDP(buf)
 		if err != nil {
-			log.Printf("Recive failed，error：%s", err)
+			log.Printf("Recive failed，error：%s", err.Error())
 		}
 		log.Printf("Recive message：%s，IP：%s", string(buf[:n]), addr)
 	}
