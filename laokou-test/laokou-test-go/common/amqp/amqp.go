@@ -131,21 +131,3 @@ func ModifyQos(channel *amqp.Channel) {
 	err := channel.Qos(1, 0, false)
 	FailOnError(err, "Failed to modify qos")
 }
-
-func main() {
-	// https://github.com/rabbitmq/rabbitmq-tutorials/blob/main/go/emit_log_topic.go
-	exchange := "laokou_iot_exchange"
-	mq := AMQP{"127.0.0.1", 5672, "root", "laokou123"}
-	payload := "hello world"
-	key := "laokou.iot"
-	routerKey := "*.iot"
-	conn := InitAMQP(mq)
-	channel := InitChannel(conn, exchange)
-	queue := DeclareQueue(channel)
-	BindQueue(channel, exchange, routerKey, queue)
-	ModifyQos(channel)
-	defer CloseAMQP(conn)
-	defer CloseChannel(channel)
-	Send(channel, exchange, key, payload)
-	Receive(channel, queue)
-}

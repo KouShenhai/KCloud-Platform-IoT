@@ -1,4 +1,4 @@
-package main
+package udp
 
 import (
 	"log"
@@ -38,8 +38,4 @@ func HandleUdpConnect(listen *net.UDPConn) {
 			log.Printf("Send failed，error：%s", err)
 		}
 	}
-}
-
-func main() {
-	InitUdpServer("udp4", net.IPv4(0, 0, 0, 0), 7655)
 }

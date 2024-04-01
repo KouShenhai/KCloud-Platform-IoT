@@ -1,4 +1,4 @@
-package main
+package tcp
 
 import (
 	"bufio"
@@ -64,8 +64,4 @@ func HandleTcpConnect(conn net.Conn) {
 			return
 		}
 	}
-}
-
-func main() {
-	InitTcpServer("tcp4", net.IPv4(0, 0, 0, 0), 7654)
 }

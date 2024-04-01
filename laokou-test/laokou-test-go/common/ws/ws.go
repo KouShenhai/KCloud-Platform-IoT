@@ -1,5 +1,5 @@
 package ws
 
 func main() {
-	
+
 }
