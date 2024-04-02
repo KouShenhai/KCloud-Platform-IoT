@@ -58,7 +58,6 @@
 		<module>laokou-common-netty</module>
         <module>laokou-common-idempotent</module>
         <module>laokou-common-lock</module>
-        <module>laokou-common-monitor</module>
         <module>laokou-common-sensitive</module>
         <module>laokou-common-dubbo</module>
         <module>laokou-common-mqtt</module>
