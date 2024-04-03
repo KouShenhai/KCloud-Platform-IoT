@@ -28,7 +28,9 @@ func main() {
 }
 
 func testSqlServer() {
-	testSqlServer2000()
+	// testSqlServer2000()
+	// testSqlServer2005()
+	testSqlServer2008()
 }
 
 func testMysql() {
@@ -44,9 +46,9 @@ func testMysql() {
 	}
 }
 
-func testSqlServer2000() {
-	ds := _db.DataSource{HOST: "192.168.111.128", PORT: 1433, DATABASE: "kcloud_platform_alibaba_xot", USERNAME: "sa", PASSWORD: "123456"}
-	db, err := _db.ConnectSqlServer2000(ds)
+func testSqlServer2008() {
+	ds := _db.DataSource{HOST: "127.0.0.1", PORT: 1433, DATABASE: "kcloud_platform_alibaba_iot", USERNAME: "sa", PASSWORD: "123456"}
+	db, err := _db.ConnectSqlServerLow(ds)
 	defer _db.CloseDB(db)
 	if db == nil || err != nil {
 		log.Printf("连接失败，错误信息：%s", err.Error())
@@ -55,40 +57,91 @@ func testSqlServer2000() {
 	}
 	// https://www.sjkjc.com/posts/golang-basic-sqlserver
 
-	// Query
-	testSqlServer2000Query(db)
+	// Create
+	testSqlServerLowCreate(db)
+	testSqlServerLowQuery(db)
 
 	// Find
-	testSqlServer2000Find(db)
-
-	// Create
-	testSqlServer2000Create(db)
-	testSqlServer2000Query(db)
+	testSqlServerLowFind(db)
 
 	// Modify
-	testSqlServer2000Modify(db)
-	testSqlServer2000Query(db)
+	testSqlServerLowModify(db)
+	testSqlServerLowQuery(db)
 
 	// Remove
-	testSqlServer2000Remove(db)
-	testSqlServer2000Query(db)
+	testSqlServerLowRemove(db)
+	testSqlServerLowQuery(db)
 }
 
-func testSqlServer2000Remove(db *sql.DB) {
+func testSqlServer2005() {
+	ds := _db.DataSource{HOST: "192.168.111.129", PORT: 1433, DATABASE: "kcloud_platform_alibaba_iot", USERNAME: "sa", PASSWORD: "123456"}
+	db, err := _db.ConnectSqlServerLow(ds)
+	defer _db.CloseDB(db)
+	if db == nil || err != nil {
+		log.Printf("连接失败，错误信息：%s", err.Error())
+	} else {
+		log.Println("连接成功")
+	}
+	// https://www.sjkjc.com/posts/golang-basic-sqlserver
+
+	// Create
+	testSqlServerLowCreate(db)
+	testSqlServerLowQuery(db)
+
+	// Find
+	testSqlServerLowFind(db)
+
+	// Modify
+	testSqlServerLowModify(db)
+	testSqlServerLowQuery(db)
+
+	// Remove
+	testSqlServerLowRemove(db)
+	testSqlServerLowQuery(db)
+}
+
+func testSqlServer2000() {
+	ds := _db.DataSource{HOST: "192.168.111.128", PORT: 1433, DATABASE: "kcloud_platform_alibaba_iot", USERNAME: "sa", PASSWORD: "123456"}
+	db, err := _db.ConnectSqlServerLow(ds)
+	defer _db.CloseDB(db)
+	if db == nil || err != nil {
+		log.Printf("连接失败，错误信息：%s", err.Error())
+	} else {
+		log.Println("连接成功")
+	}
+	// https://www.sjkjc.com/posts/golang-basic-sqlserver
+
+	// Create
+	testSqlServerLowCreate(db)
+	testSqlServerLowQuery(db)
+
+	// Find
+	testSqlServerLowFind(db)
+
+	// Modify
+	testSqlServerLowModify(db)
+	testSqlServerLowQuery(db)
+
+	// Remove
+	testSqlServerLowRemove(db)
+	testSqlServerLowQuery(db)
+}
+
+func testSqlServerLowRemove(db *sql.DB) {
 	// 删除
-	_db.ExecBySqlServer2000(db, "delete from t_user where username = 'lk'")
+	_db.ExecBySqlServerLow(db, "delete from t_user where username = 'lk'")
 	log.Printf("Exec Remove")
 }
 
-func testSqlServer2000Modify(db *sql.DB) {
+func testSqlServerLowModify(db *sql.DB) {
 	// 修改
-	_db.ExecBySqlServer2000(db, "update t_user set username = 'lk' where username = 'laokou123'")
+	_db.ExecBySqlServerLow(db, "update t_user set username = 'lk' where username = 'laokou123'")
 	log.Printf("Exec Modify")
 }
 
-func testSqlServer2000Find(db *sql.DB) {
+func testSqlServerLowFind(db *sql.DB) {
 	// 查看
-	rows := _db.QueryBySqlServer2000(db, "select username from t_user where username = 'laokou'")
+	rows := _db.QueryBySqlServerLow(db, "select username from t_user where username = 'laokou123'")
 	for rows.Next() {
 		var username string
 		err := rows.Scan(&username)
@@ -99,15 +152,15 @@ func testSqlServer2000Find(db *sql.DB) {
 	}
 }
 
-func testSqlServer2000Create(db *sql.DB) {
+func testSqlServerLowCreate(db *sql.DB) {
 	// 新增
-	_db.ExecBySqlServer2000(db, "insert into t_user(username) values('laokou123')")
+	_db.ExecBySqlServerLow(db, "insert into t_user(username) values('laokou123')")
 	log.Printf("Exec Create")
 }
 
-func testSqlServer2000Query(db *sql.DB) {
+func testSqlServerLowQuery(db *sql.DB) {
 	// 查询
-	rows := _db.QueryBySqlServer2000(db, "select username from t_user")
+	rows := _db.QueryBySqlServerLow(db, "select username from t_user")
 	for rows.Next() {
 		var username string
 		err := rows.Scan(&username)

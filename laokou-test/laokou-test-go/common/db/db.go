@@ -5,6 +5,7 @@ import (
 	"fmt"
 	_ "github.com/mattn/go-adodb"
 	"gorm.io/driver/mysql"
+	"gorm.io/driver/sqlserver"
 	"gorm.io/gorm"
 	"log"
 	"time"
@@ -22,13 +23,21 @@ type DataSource struct {
 	ConnMaxLifetime time.Duration
 }
 
-func ConnectSqlServer2000(ds DataSource) (*sql.DB, error) {
+func ConnectSqlServerHigh(ds DataSource) (*gorm.DB, *sql.DB, error) {
+	// github.com/denisenkom/go-mssqldb
+	dsn := fmt.Sprintf("sqlserver://%s:%s@%s:%d?database=%s", ds.USERNAME, ds.PASSWORD, ds.HOST, ds.PORT, ds.DATABASE)
+	db, err := gorm.Open(sqlserver.Open(dsn), &gorm.Config{})
+	pool, _ := db.DB()
+	return db, pool, err
+}
+
+func ConnectSqlServerLow(ds DataSource) (*sql.DB, error) {
 	config := fmt.Sprintf("Provider=SQLOLEDB;Initial Catalog=%s;Data Source=%s\\MSSQLSERVER", ds.DATABASE, ds.HOST)
 	config = fmt.Sprintf("%s,%d;user id=%s;password=%s", config, ds.PORT, ds.USERNAME, ds.PASSWORD)
 	return sql.Open("adodb", config)
 }
 
-func QueryBySqlServer2000(db *sql.DB, qrySql string) *sql.Rows {
+func QueryBySqlServerLow(db *sql.DB, qrySql string) *sql.Rows {
 	rows, err := db.Query(qrySql)
 	if err != nil {
 		log.Printf("Query failed，error：%s", err.Error())
@@ -36,7 +45,7 @@ func QueryBySqlServer2000(db *sql.DB, qrySql string) *sql.Rows {
 	return rows
 }
 
-func ExecBySqlServer2000(db *sql.DB, execSql string) {
+func ExecBySqlServerLow(db *sql.DB, execSql string) {
 	_, err := db.Exec(execSql)
 	if err != nil {
 		log.Printf("Exec failed，error：%s", err.Error())
