@@ -128,7 +128,7 @@ services:
     depends_on:
       - rocketmq-namesrv
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2
     container_name: elasticsearch
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -143,6 +143,7 @@ services:
       - ./elasticsearch8/data:/usr/share/elasticsearch/data
       - ./elasticsearch8/logs:/usr/share/elasticsearch/logs
       - ./elasticsearch8/plugins:/usr/share/elasticsearch/plugins
+      - ./elasticsearch8/config/certs/elastic-certificates.p12:/usr/share/elasticsearch/config/certs/elastic-certificates.p12
     environment:
       - TZ=Asia/Shanghai
       - ES_JAVA_OPTS=-Xmx512m -Xms512m
