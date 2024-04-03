@@ -28,7 +28,7 @@
 
     <properties>
         <!--nacos版本-->
-        <nacos.version>2.3.1</nacos.version>
+        <nacos.version>2.3.2</nacos.version>
         <!--spring-boot版本-->
         <spring-boot.version>2.7.18</spring-boot.version>
         <!--postgresql版本-->
