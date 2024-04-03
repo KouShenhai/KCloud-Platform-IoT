@@ -188,7 +188,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
                 └── laokou-flyway                  --- 数据库版本控制模块  
 ~~~
 
-### 🎵 项目截图
+### 🎵 项目截图(持续更新，仅供参考)
 <table>
     <tr>
         <td><img alt="暂无图片" src="doc/image/1.png"/></td>
