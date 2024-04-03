@@ -320,8 +320,8 @@ Gitee 前端地址（React版本）：[KCloud-React-Alibaba](https://gitee.com/l
 |:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|
 | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/48756217?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/26246537?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/50291874?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/21030225?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/127269482?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/69209385?s=64&amp;v=4'> |
 |                           [KouShenhai](https://github.com/KouShenhai)                            |                              [liang99](https://github.com/liang99)                               |                           [livk-cloud](https://github.com/livk-cloud)                            |                          [liukefu2050](https://github.com/liukefu2050)                           |                            [HalfPomelo](https://github.com/HalfPomelo)                            |                                [lixin](https://github.com/lixin)                                 |
-| <img height='50' width='50' src='https://avatars.githubusercontent.com/u/2041471?s=64&amp;v=4'>  | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/43296325?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/89563182?s=64&amp;v=4'> |
-|                               [simman](https://github.com/simman)                                |                             [suhengli](https://github.com/suhengli)                              |                            [gitkakafu](https://github.com/gitkakafu)                             |  
+| <img height='50' width='50' src='https://avatars.githubusercontent.com/u/2041471?s=64&amp;v=4'>  | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/43296325?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/89563182?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/32741993?s=64&v=4'> |
+|                               [simman](https://github.com/simman)                                |                             [suhengli](https://github.com/suhengli)                              |                            [gitkakafu](https://github.com/gitkakafu)                             |                                                [LeiZhiMin1](https://github.com/LeiZhiMin1)                                                 |
 
 ### ⛳️ 赞助列表（感谢各位大佬的赞助）
 <table>
@@ -366,6 +366,12 @@ Gitee 前端地址（React版本）：[KCloud-React-Alibaba](https://gitee.com/l
         <td>*迪</td>
         <td>￥20</td>
         <td>越来越好，继续干下去</td>
+    </tr>
+    <tr>
+        <td>2023/10/07</td>
+        <td>何*</td>
+        <td>￥399</td>
+        <td>作者说：感谢支持</td>
     </tr>
     <tr>
         <td>2023/08/27</td>
