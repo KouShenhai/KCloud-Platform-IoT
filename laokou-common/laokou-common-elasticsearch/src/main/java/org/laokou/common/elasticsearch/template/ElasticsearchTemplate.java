@@ -20,10 +20,15 @@ package org.laokou.common.elasticsearch.template;
 import co.elastic.clients.elasticsearch.ElasticsearchAsyncClient;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.Refresh;
+import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.analysis.TokenFilter;
 import co.elastic.clients.elasticsearch._types.mapping.DynamicMapping;
 import co.elastic.clients.elasticsearch._types.mapping.TypeMapping;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.bulk.BulkOperation;
 import co.elastic.clients.elasticsearch.indices.*;
 import co.elastic.clients.transport.endpoints.BooleanResponse;
@@ -34,6 +39,7 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.annotation.*;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
@@ -184,8 +190,134 @@ public class ElasticsearchTemplate {
 		return elasticsearchClient.indices().exists(getExists(names)).value();
 	}
 
+	@SneakyThrows
+	public <S, R> List<R> search(List<String> names, int pageNum, int pageSize, S obj, Class<R> clazz) {
+		Search search = convert(obj);
+		SearchRequest searchRequest = getSearchRequest(names, pageNum, pageSize, search);
+		SearchResponse<R> response = elasticsearchClient.search(searchRequest, clazz);
+		return response.hits().hits().stream().map(item -> {
+			R source = item.source();
+			if (source != null) {
+				// ID赋值
+				setId(source, item.id());
+				// 高亮字段赋值
+				setHighlightFields(source, item.highlight());
+			}
+			return source;
+		}).toList();
+	}
+
+	private <R> void setHighlightFields(R source, Map<String, List<String>> map) {
+		Class<?> clazz = source.getClass();
+		map.forEach((k, v) -> {
+			try {
+				Field field = clazz.getDeclaredField(k);
+				field.setAccessible(true);
+				field.set(source, v.getFirst());
+			}
+			catch (NoSuchFieldException | IllegalAccessException e) {
+				throw new RuntimeException(e);
+			}
+		});
+	}
+
+	private <R> void setId(R source, String id) {
+		try {
+			Field field = source.getClass().getDeclaredField("id");
+			field.setAccessible(true);
+			field.set(source, id);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public CompletableFuture<Boolean> asyncExist(List<String> names) {
 		return elasticsearchAsyncClient.indices().exists(getExists(names)).thenApplyAsync(BooleanResponse::value);
+	}
+
+	private SearchRequest getSearchRequest(List<String> names, int pageNum, int pageSize, Search search) {
+		SearchRequest.Builder builder = new SearchRequest.Builder();
+		builder.index(names);
+		builder.from((pageNum - 1) * pageSize);
+		builder.size(pageSize);
+		// 获取真实总数
+		builder.trackTotalHits(fn -> fn.enabled(true));
+		// 追踪分数开启
+		builder.trackScores(true);
+		// 注解
+		builder.explain(true);
+		// 匹配度倒排，数值越大匹配度越高
+		builder.sort(fn -> fn.score(s -> s.order(SortOrder.Desc)));
+		builder.highlight(getHighlight(search.getHighlight()));
+		builder.query(getQuery(search.getFields()));
+		return builder.build();
+	}
+
+	private co.elastic.clients.elasticsearch.core.search.Highlight getHighlight(Search.Highlight highlight) {
+		if (highlight == null) {
+			return new co.elastic.clients.elasticsearch.core.search.Highlight.Builder().build();
+		}
+		co.elastic.clients.elasticsearch.core.search.Highlight.Builder builder = new co.elastic.clients.elasticsearch.core.search.Highlight.Builder();
+		builder.preTags(highlight.getPreTags());
+		builder.postTags(highlight.getPostTags());
+		// 多个字段高亮，需要设置false
+		builder.requireFieldMatch(highlight.isRequireFieldMatch());
+		// numberOfFragments => 获取高亮片段位置
+		// fragmentSize => 最大高亮分片数
+		builder.fields(getHighlightFieldMap(highlight.getFields()));
+		return builder.build();
+	}
+
+	private Map<String, co.elastic.clients.elasticsearch.core.search.HighlightField> getHighlightFieldMap(
+			List<Search.HighlightField> fields) {
+		return fields.stream().collect(Collectors.toMap(Search.HighlightField::getName, j -> {
+			co.elastic.clients.elasticsearch.core.search.HighlightField.Builder builder = new co.elastic.clients.elasticsearch.core.search.HighlightField.Builder();
+			builder.fragmentSize(j.getFragmentSize());
+			builder.numberOfFragments(j.getNumberOfFragments());
+			return builder.build();
+		}));
+	}
+
+	private co.elastic.clients.elasticsearch._types.query_dsl.Query getQuery(List<Search.Field> fields) {
+		co.elastic.clients.elasticsearch._types.query_dsl.Query.Builder builder = new co.elastic.clients.elasticsearch._types.query_dsl.Query.Builder();
+		builder.bool(getBoolQuery(fields));
+		return builder.build();
+	}
+
+	private BoolQuery getBoolQuery(List<Search.Field> fields) {
+		// bool查询 => 布尔查询，允许组合多个查询条件
+		// must查询类似and查询
+		// must_not查询类似not查询
+		// should查询类似or查询
+		BoolQuery.Builder boolBuilder = new BoolQuery.Builder();
+		// query_string查询text类型字段，不需要连续，顺序还可以调换（分词）
+		// match_phrase查询text类型字段，顺序必须相同，而且必须都是连续的（分词）
+		// term精准匹配
+		// match模糊匹配（分词）
+		fields.forEach(item -> {
+			switch (item.getQuery()) {
+				case MUST -> boolBuilder.must(getQuery(item));
+				case SHOULD -> boolBuilder.should(getQuery(item));
+				case MUST_NOT -> boolBuilder.mustNot(getQuery(item));
+			}
+		});
+		return boolBuilder.build();
+	}
+
+	private co.elastic.clients.elasticsearch._types.query_dsl.Query getQuery(Search.Field field) {
+		co.elastic.clients.elasticsearch._types.query_dsl.Query.Builder builder = new Query.Builder();
+		List<String> names = field.getNames();
+		String value = field.getValue();
+		switch (field.getType()) {
+			case TERM -> builder.term(fn -> fn.field(names.getFirst()).value(value));
+			case MATCH -> builder.match(fn -> fn.field(names.getFirst()).query(value));
+			case MATCH_PHRASE -> builder.matchPhrase(fn -> fn.field(names.getFirst()).query(value));
+			case QUERY_STRING -> builder.queryString(fn -> fn.fields(names).query(value));
+			default -> {
+			}
+		}
+		return builder.build();
 	}
 
 	private List<BulkOperation> getBulkOperations(Map<String, Object> map) {
@@ -301,6 +433,49 @@ public class ElasticsearchTemplate {
 				.build();
 		}
 		throw new RuntimeException("Not found @Index");
+	}
+
+	private <S> Search convert(S obj) {
+		Class<?> clazz = obj.getClass();
+		boolean annotationPresent = clazz.isAnnotationPresent(Highlight.class);
+		Search.Highlight h = null;
+		if (annotationPresent) {
+			Highlight highlight = clazz.getAnnotation(Highlight.class);
+			h = getHighlight(highlight);
+		}
+		return new Search(h, getSearchFields(obj, clazz));
+	}
+
+	private <S> List<Search.Field> getSearchFields(S obj, Class<?> clazz) {
+		Field[] fields = clazz.getDeclaredFields();
+		List<Search.Field> list = Arrays.stream(fields)
+			.filter(item -> item.isAnnotationPresent(SearchField.class))
+			.map(item -> getSearchField(item, item.getAnnotation(SearchField.class), obj))
+			.toList();
+		if (CollectionUtils.isEmpty(list)) {
+			throw new RuntimeException("@SearchField not found");
+		}
+		return list;
+	}
+
+	@SneakyThrows
+	private <S> Search.Field getSearchField(Field field, SearchField searchField, S obj) {
+		String[] names = searchField.names();
+		// 允许访问私有属性
+		field.setAccessible(true);
+		String value = String.valueOf(field.get(obj));
+		return new Search.Field(Arrays.asList(names), value, searchField.type(), searchField.query());
+	}
+
+	private Search.Highlight getHighlight(Highlight highlight) {
+		return new Search.Highlight(Arrays.asList(highlight.preTags()), Arrays.asList(highlight.postTags()),
+				highlight.requireFieldMatch(), getHighlightField(highlight.fields()));
+	}
+
+	private List<Search.HighlightField> getHighlightField(HighlightField[] fields) {
+		return Arrays.stream(fields)
+			.map(item -> new Search.HighlightField(item.name(), item.numberOfFragments(), item.fragmentSize()))
+			.toList();
 	}
 
 	private Document.Analysis getAnalysis(Index index) {

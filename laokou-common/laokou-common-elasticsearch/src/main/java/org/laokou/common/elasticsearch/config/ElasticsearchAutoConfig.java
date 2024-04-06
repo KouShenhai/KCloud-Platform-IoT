@@ -28,6 +28,7 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 import org.apache.http.impl.nio.reactor.IOReactorConfig;
@@ -57,6 +58,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static org.laokou.common.core.utils.HttpUtil.sslContext;
 import static org.laokou.common.i18n.common.NetworkConstants.HTTPS_SCHEME;
 import static org.laokou.common.i18n.common.NetworkConstants.HTTP_SCHEME;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
@@ -96,6 +98,9 @@ class ElasticsearchAutoConfig {
 			if (StringUtils.hasText(sslBundleName)) {
 				configureSsl(httpClientBuilder, sslBundles.getObject().getBundle(sslBundleName));
 			}
+			else {
+				ignoreConfigureSsl(httpClientBuilder);
+			}
 			return httpClientBuilder;
 		});
 		builder.setRequestConfigCallback((requestConfigBuilder) -> {
@@ -133,6 +138,10 @@ class ElasticsearchAutoConfig {
 		SslOptions sslOptions = sslBundle.getOptions();
 		httpClientBuilder.setSSLStrategy(new SSLIOSessionStrategy(sslcontext, sslOptions.getEnabledProtocols(),
 				sslOptions.getCiphers(), (HostnameVerifier) null));
+	}
+
+	private void ignoreConfigureSsl(HttpAsyncClientBuilder httpClientBuilder) {
+		httpClientBuilder.setSSLContext(sslContext()).setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE);
 	}
 
 	static class DefaultRestClientBuilderCustomizer implements RestClientBuilderCustomizer {
