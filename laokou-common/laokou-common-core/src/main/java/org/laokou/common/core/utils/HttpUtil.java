@@ -28,6 +28,7 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
+import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
 import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactoryBuilder;
 import org.apache.hc.core5.http.HttpEntity;
@@ -37,17 +38,15 @@ import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.apache.hc.core5.net.URIBuilder;
 import org.laokou.common.i18n.utils.LogUtil;
 
-import javax.net.ssl.*;
+import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
 import java.util.List;
 import java.util.Map;
 
+import static org.laokou.common.core.utils.SslUtil.sslContext;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.SysConstants.TLS_PROTOCOL_VERSION;
 
 /**
  * http客户端工具类.
@@ -261,62 +260,17 @@ public class HttpUtil {
 	 * @param builder 构建器
 	 */
 	@SneakyThrows
-	public static void disableSsl(HttpClientBuilder builder) {
+	private static void disableSsl(HttpClientBuilder builder) {
 		SSLContext sslContext = sslContext();
 		SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactoryBuilder.create()
 			.setSslContext(sslContext)
-			.setHostnameVerifier(new TrustAllHostnames())
+			.setHostnameVerifier(NoopHostnameVerifier.INSTANCE)
 			.build();
 		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = PoolingHttpClientConnectionManagerBuilder
 			.create()
 			.setSSLSocketFactory(sslConnectionSocketFactory)
 			.build();
 		builder.setConnectionManager(poolingHttpClientConnectionManager);
-	}
-
-	/**
-	 * ssl上下文.
-	 * @return ssl上下文
-	 */
-	@SneakyThrows
-	public static SSLContext sslContext() {
-		// X.509是密码学里公钥证书的格式标准，作为证书标准
-		X509TrustManager disabledTrustManager = new DisableValidationTrustManager();
-		// 信任库
-		TrustManager[] trustManagers = new TrustManager[] { disabledTrustManager };
-		// 怎么选择加密协议，请看 ProtocolVersion
-		// 为什么能找到对应的加密协议 请查看 SSLContextSpi
-		SSLContext sslContext = SSLContext.getInstance(TLS_PROTOCOL_VERSION);
-		sslContext.init(null, trustManagers, new SecureRandom());
-		return sslContext;
-	}
-
-	public static class DisableValidationTrustManager implements X509TrustManager {
-
-		public DisableValidationTrustManager() {
-		}
-
-		public void checkClientTrusted(X509Certificate[] x509Certificates, String s) {
-		}
-
-		public void checkServerTrusted(X509Certificate[] x509Certificates, String s) {
-		}
-
-		public X509Certificate[] getAcceptedIssuers() {
-			return new X509Certificate[0];
-		}
-
-	}
-
-	static class TrustAllHostnames implements HostnameVerifier {
-
-		TrustAllHostnames() {
-		}
-
-		public boolean verify(String s, SSLSession sslSession) {
-			return true;
-		}
-
 	}
 
 }
