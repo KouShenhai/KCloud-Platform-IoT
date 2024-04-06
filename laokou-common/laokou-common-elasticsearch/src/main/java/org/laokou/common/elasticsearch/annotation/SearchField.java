@@ -15,15 +15,19 @@
  *
  */
 
-package org.laokou.common.elasticsearch.constants;
+package org.laokou.common.elasticsearch.annotation;
 
-/**
- * @author laokou
- */
-public interface ElasticsearchConstants {
+import java.lang.annotation.*;
 
-	String HIGHLIGHT_PRE_TAGS = "<font color='red'>";
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.FIELD })
+public @interface SearchField {
 
-	String HIGHLIGHT_POST_TAGS = "</font>";
+	String[] names();
+
+	QueryType type();
+
+	Query query();
 
 }

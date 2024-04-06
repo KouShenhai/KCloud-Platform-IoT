@@ -104,6 +104,14 @@ class Elasticsearch8ApiTest extends CommonTest {
 		log.info("索引信息：{}", JacksonUtil.toJsonStr(result));
 	}
 
+	// @Test
+	void testHighlightSearch() {
+		ResourceSearch resource = new ResourceSearch("任贤齐");
+		List<Result> results = elasticsearchTemplate.search(List.of("laokou_res", "laokou_res_1"), 1, 1, resource,
+				Result.class);
+		log.info("{}", results);
+	}
+
 	@Test
 	void testDeleteIndexApi() {
 		elasticsearchTemplate.deleteIndex(List.of("laokou_res_1", "laokou_pro_1", "laokou_resp_1"));
@@ -147,6 +155,26 @@ class Elasticsearch8ApiTest extends CommonTest {
 
 		@Field(type = Type.KEYWORD)
 		private String key;
+
+	}
+
+	@Data
+	@Highlight(fields = { @HighlightField(name = "name") })
+	@AllArgsConstructor
+	@NoArgsConstructor
+	static class ResourceSearch implements Serializable {
+
+		@SearchField(names = { "name" }, type = QueryType.QUERY_STRING, query = Query.SHOULD)
+		private String name;
+
+	}
+
+	@Data
+	static class Result implements Serializable {
+
+		private String id;
+
+		private String name;
 
 	}
 
