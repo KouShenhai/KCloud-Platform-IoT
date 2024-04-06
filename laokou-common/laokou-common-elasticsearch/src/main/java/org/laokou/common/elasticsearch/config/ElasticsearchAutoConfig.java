@@ -58,7 +58,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.laokou.common.core.utils.HttpUtil.sslContext;
+import static org.laokou.common.core.utils.SslUtil.sslContext;
 import static org.laokou.common.i18n.common.NetworkConstants.HTTPS_SCHEME;
 import static org.laokou.common.i18n.common.NetworkConstants.HTTP_SCHEME;
 import static org.laokou.common.i18n.common.StringConstants.EMPTY;
