@@ -26,7 +26,7 @@ func main() {
 	// testUdpServer()
 	// testConnectUdpServer()
 	// testSqlServer()
-	testSMB()
+	testSmb()
 }
 
 func testSqlServer() {
@@ -258,7 +258,7 @@ func testAMQP() {
 	_amqp.Receive(channel, queue)
 }
 
-func testSMB() {
+func testSmb() {
 	smb := _smb.Smb{Network: "tcp4", Host: net.IPv4(127, 0, 0, 1), Port: 445, Username: "laokou", Password: "123456", ShareName: "共享文件夹"}
 	client := _smb.ConnectSmb(smb)
 	defer _smb.CloseSmb(client)
