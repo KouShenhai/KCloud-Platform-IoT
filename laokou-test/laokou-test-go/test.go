@@ -8,6 +8,7 @@ import (
 	_amqp "laokou-test-go/common/amqp"
 	_db "laokou-test-go/common/db"
 	_rdb "laokou-test-go/common/rdb"
+	_smb "laokou-test-go/common/smb"
 	_tcp "laokou-test-go/common/tcp"
 	_udp "laokou-test-go/common/udp"
 	"log"
@@ -25,6 +26,7 @@ func main() {
 	// testUdpServer()
 	// testConnectUdpServer()
 	// testSqlServer()
+	testSMB()
 }
 
 func testSqlServer() {
@@ -254,4 +256,16 @@ func testAMQP() {
 	defer _amqp.CloseChannel(channel)
 	_amqp.Send(channel, exchange, key, payload)
 	_amqp.Receive(channel, queue)
+}
+
+func testSMB() {
+	smb := _smb.Smb{Network: "tcp4", Host: net.IPv4(127, 0, 0, 1), Port: 445, Username: "laokou", Password: "123456", ShareName: "共享文件夹"}
+	client := _smb.ConnectSmb(smb)
+	defer _smb.CloseSmb(client)
+	results := _smb.Search(client, "1", ".*")
+	log.Println(results)
+	for i := range results {
+		read := _smb.ReadAll(client, results[i])
+		log.Println(read)
+	}
 }
