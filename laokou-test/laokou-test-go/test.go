@@ -24,13 +24,13 @@ func main() {
 	// testConnectTcpServer()
 	// testUdpServer()
 	// testConnectUdpServer()
-	testSqlServer()
+	// testSqlServer()
 }
 
 func testSqlServer() {
 	// testSqlServer2000()
 	// testSqlServer2005()
-	testSqlServer2008()
+	// testSqlServer2008()
 }
 
 func testMysql() {
@@ -244,8 +244,9 @@ func testAMQP() {
 	payload := "hello world"
 	key := "laokou.iot"
 	routerKey := "*.iot"
+	typ := "topic"
 	conn := _amqp.InitAMQP(mq)
-	channel := _amqp.InitChannel(conn, exchange)
+	channel := _amqp.InitChannel(conn, exchange, typ)
 	queue := _amqp.DeclareQueue(channel)
 	_amqp.BindQueue(channel, exchange, routerKey, queue)
 	_amqp.ModifyQos(channel)

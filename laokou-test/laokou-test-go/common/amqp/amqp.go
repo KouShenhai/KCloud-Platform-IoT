@@ -28,12 +28,12 @@ func InitAMQP(mq AMQP) *amqp.Connection {
 	return conn
 }
 
-func InitChannel(conn *amqp.Connection, exchange string) *amqp.Channel {
+func InitChannel(conn *amqp.Connection, exchange string, typ string) *amqp.Channel {
 	channel, err := conn.Channel()
 	FailOnError(err, "Failed to open a channel")
 	err = channel.ExchangeDeclare(
 		exchange, // name
-		"topic",  // type
+		typ,      // type
 		true,     // durable
 		false,    // auto-deleted
 		false,    // internal
