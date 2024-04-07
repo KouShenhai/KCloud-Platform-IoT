@@ -19,6 +19,7 @@ package org.laokou.common.domain.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.ResultHandler;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.convertor.DomainEventConvertor;
 import org.laokou.common.domain.repository.DomainEventDO;
@@ -44,10 +45,12 @@ public class DomainEventServiceImpl implements DomainEventService {
 
 	@Override
 	public void create(List<DomainEvent<Long>> events) {
-		List<DomainEventDO> list = events.stream().map(DomainEventConvertor::toDataObject).toList();
-		mybatisUtil.batch(list, DomainEventMapper.class, events.getFirst().getSourceName(),
+		if (CollectionUtil.isNotEmpty(events)) {
+			List<DomainEventDO> list = events.stream().map(DomainEventConvertor::toDataObject).toList();
+			mybatisUtil.batch(list, DomainEventMapper.class, events.getFirst().getSourceName(),
 				DomainEventMapper::insertOne);
-		DomainEventContextHolder.set(events);
+			DomainEventContextHolder.set(events);
+		}
 	}
 
 	@Override

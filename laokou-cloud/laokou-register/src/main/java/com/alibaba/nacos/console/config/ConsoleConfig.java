@@ -48,51 +48,52 @@ import java.time.ZoneId;
 @Component
 @EnableScheduling
 @PropertySource("/application.yml")
-@ComponentScan(
-		excludeFilters = { @ComponentScan.Filter(type = FilterType.CUSTOM, classes = { NacosTypeExcludeFilter.class }),
-				@ComponentScan.Filter(type = FilterType.CUSTOM, classes = { TypeExcludeFilter.class }),
-				@ComponentScan.Filter(type = FilterType.CUSTOM, classes = { AutoConfigurationExcludeFilter.class }) })
+@ComponentScan(basePackages = "com.alibaba.nacos", excludeFilters = {
+	@ComponentScan.Filter(type = FilterType.CUSTOM, classes = {NacosTypeExcludeFilter.class}),
+	@ComponentScan.Filter(type = FilterType.CUSTOM, classes = {TypeExcludeFilter.class}),
+	@ComponentScan.Filter(type = FilterType.CUSTOM, classes = {AutoConfigurationExcludeFilter.class})
+})
 public class ConsoleConfig {
 
-	@Autowired
-	private ControllerMethodsCache methodsCache;
+    @Autowired
+    private ControllerMethodsCache methodsCache;
 
-	@Getter
+    @Getter
 	@Value("${nacos.console.ui.enabled:true}")
-	private boolean consoleUiEnabled;
+    private boolean consoleUiEnabled;
 
-	/**
-	 * Init.
-	 */
-	@PostConstruct
-	public void init() {
-		methodsCache.initClassMethod("com.alibaba.nacos.core.controller");
-		methodsCache.initClassMethod("com.alibaba.nacos.naming.controllers");
-		methodsCache.initClassMethod("com.alibaba.nacos.config.server.controller");
-		methodsCache.initClassMethod("com.alibaba.nacos.console.controller");
-	}
+    /**
+     * Init.
+     */
+    @PostConstruct
+    public void init() {
+        methodsCache.initClassMethod("com.alibaba.nacos.core.controller");
+        methodsCache.initClassMethod("com.alibaba.nacos.naming.controllers");
+        methodsCache.initClassMethod("com.alibaba.nacos.config.server.controller");
+        methodsCache.initClassMethod("com.alibaba.nacos.console.controller");
+    }
 
-	@Bean
-	public CorsFilter corsFilter() {
-		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowCredentials(true);
-		config.addAllowedHeader("*");
-		config.setMaxAge(18000L);
-		config.addAllowedMethod("*");
-		config.addAllowedOriginPattern("*");
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", config);
-		return new CorsFilter(source);
-	}
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedHeader("*");
+        config.setMaxAge(18000L);
+        config.addAllowedMethod("*");
+        config.addAllowedOriginPattern("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
 
-	@Bean
-	public XssFilter xssFilter() {
-		return new XssFilter();
-	}
+    @Bean
+    public XssFilter xssFilter() {
+        return new XssFilter();
+    }
 
-	@Bean
-	public Jackson2ObjectMapperBuilderCustomizer jacksonObjectMapperCustomization() {
-		return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.timeZone(ZoneId.systemDefault().toString());
-	}
+    @Bean
+    public Jackson2ObjectMapperBuilderCustomizer jacksonObjectMapperCustomization() {
+        return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.timeZone(ZoneId.systemDefault().toString());
+    }
 
 }
