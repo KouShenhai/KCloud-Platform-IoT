@@ -128,7 +128,7 @@ services:
     depends_on:
       - rocketmq-namesrv
   elasticsearch:
-    image: elasticsearch:8.12.2
+    image: elasticsearch:8.13.0
     container_name: elasticsearch
     # 保持容器在没有守护程序的情况下运行
     tty: true
