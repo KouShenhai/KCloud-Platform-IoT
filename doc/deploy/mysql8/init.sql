@@ -1,3 +1,4 @@
+/*!40101 SET NAMES utf8 */;
 create database if not exists kcloud_platform_alibaba;
 create database if not exists kcloud_platform_alibaba_flowable;
 create database if not exists kcloud_platform_alibaba_nacos;

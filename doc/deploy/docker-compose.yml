@@ -118,7 +118,7 @@ services:
       - "10911:10911"
       - "10909:10909"
       - "10912:10912"
-    command: sh mqbroker -n 192.168.30.130:9876 -c /home/rocketmq/conf/broker.conf autoCreateTopicEnable=true
+    command: sh mqbroker -n 0.0.0.0:9876 -c /home/rocketmq/conf/broker.conf autoCreateTopicEnable=true
     environment:
       - JAVA_OPT_EXT=-server -Xmx256m -Xms256m -Xmn128m
       - TZ=Asia/Shanghai
@@ -128,7 +128,7 @@ services:
     depends_on:
       - rocketmq-namesrv
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2
+    image: elasticsearch:8.12.2
     container_name: elasticsearch
     # 保持容器在没有守护程序的情况下运行
     tty: true
