@@ -24,9 +24,9 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.laokou.common.i18n.common.RocketMqConstants;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.client.producer.SendStatus.SEND_OK;
 import static org.laokou.common.i18n.common.StringConstants.NULL;
@@ -35,8 +35,8 @@ import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
 /**
  * @author laokou
  */
-@Component
 @Slf4j
+@AutoConfiguration
 @RequiredArgsConstructor
 public class RocketMqTemplate {
 
