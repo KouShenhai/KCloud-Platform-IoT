@@ -56,8 +56,10 @@
         <oshi.version>6.5.0</oshi.version>
         <!--elasticsearch版本-->
         <elasticsearch.version>8.13.1</elasticsearch.version>
+        <!--rocketmq-spring版本-->
+        <rocketmq-spring.version>2.3.0</rocketmq-spring.version>
         <!--rocketmq版本-->
-        <rocketmq.version>2.3.0</rocketmq.version>
+        <rocketmq.version>5.2.0</rocketmq.version>
         <!--jakarta.servlet-api版本-->
         <jakarta-servlet-api.version>6.1.0-M2</jakarta-servlet-api.version>
         <!--easyexcel版本-->
@@ -704,6 +706,31 @@
             <dependency>
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${rocketmq-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-acl</artifactId>
+                <version>${rocketmq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-client</artifactId>
+                <version>${rocketmq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-common</artifactId>
+                <version>${rocketmq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-remoting</artifactId>
+                <version>${rocketmq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-srvutil</artifactId>
                 <version>${rocketmq.version}</version>
             </dependency>
             <dependency>
