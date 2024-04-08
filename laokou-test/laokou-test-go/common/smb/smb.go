@@ -2,9 +2,13 @@ package smb
 
 import (
 	"bufio"
+	"encoding/csv"
+	"fmt"
 	"github.com/hirochachacha/go-smb2"
+	"io"
 	"log"
 	"net"
+	"path"
 	"regexp"
 )
 
@@ -48,8 +52,9 @@ func ReadAll(c *Client, path string) string {
 	return string(f)
 }
 
-func ReadLine(c *Client, path string) {
-	f, err := c.share.Open(path)
+func ReadLine(c *Client, p string) {
+	f, err := c.share.Open(p)
+	ext := path.Ext(f.Name())
 	if err != nil {
 		log.Printf("Open file failed：%s", err.Error())
 	}
@@ -59,10 +64,29 @@ func ReadLine(c *Client, path string) {
 			log.Printf("Close file failed：%s", err.Error())
 		}
 	}(f)
-	sc := bufio.NewScanner(f)
-	for sc.Scan() {
-		line := sc.Text()
-		log.Println(line)
+	switch ext {
+	case ".txt":
+		{
+			sc := bufio.NewScanner(f)
+			for sc.Scan() {
+				line := sc.Text()
+				log.Println(line)
+			}
+		}
+		break
+	case ".csv":
+		{
+			r := csv.NewReader(f)
+			for {
+				row, err := r.Read()
+				if err == io.EOF {
+					break
+				}
+				if row != nil {
+					fmt.Println(row)
+				}
+			}
+		}
 	}
 }
 
@@ -75,13 +99,13 @@ func Search(c *Client, basePath string, pattern string) []string {
 		return results
 	}
 	for _, fi := range fis {
-		path := basePath + "/" + fi.Name()
+		p := basePath + "/" + fi.Name()
 		if fi.IsDir() {
-			temp := Search(c, path, pattern)
+			temp := Search(c, p, pattern)
 			results = append(results, temp...)
 		}
 		if !fi.IsDir() && regex.MatchString(fi.Name()) {
-			results = append(results, path)
+			results = append(results, p)
 		}
 	}
 	return results
