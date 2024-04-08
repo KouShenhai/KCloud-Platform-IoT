@@ -13,6 +13,7 @@ import (
 	_udp "laokou-test-go/common/udp"
 	"log"
 	"net"
+	"sync"
 	"time"
 )
 
@@ -264,8 +265,16 @@ func testSmb() {
 	defer _smb.CloseSmb(client)
 	results := _smb.Search(client, "1", ".*")
 	log.Println(results)
+	var wg sync.WaitGroup
+	ch := make(chan struct{}, 5)
 	for i := range results {
-		read := _smb.ReadAll(client, results[i])
-		log.Println(read)
+		ch <- struct{}{}
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			_smb.ReadLine(client, results[i])
+			<-ch
+		}(i)
 	}
+	wg.Wait()
 }

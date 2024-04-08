@@ -1,6 +1,7 @@
 package smb
 
 import (
+	"bufio"
 	"github.com/hirochachacha/go-smb2"
 	"log"
 	"net"
@@ -45,6 +46,24 @@ func ReadAll(c *Client, path string) string {
 		return ""
 	}
 	return string(f)
+}
+
+func ReadLine(c *Client, path string) {
+	f, err := c.share.Open(path)
+	if err != nil {
+		log.Printf("Open file failed：%s", err.Error())
+	}
+	defer func(f *smb2.File) {
+		err := f.Close()
+		if err != nil {
+			log.Printf("Close file failed：%s", err.Error())
+		}
+	}(f)
+	sc := bufio.NewScanner(f)
+	for sc.Scan() {
+		line := sc.Text()
+		log.Println(line)
+	}
 }
 
 func Search(c *Client, basePath string, pattern string) []string {
