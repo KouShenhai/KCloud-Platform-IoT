@@ -25,6 +25,4 @@
 - ci：脚本文件配置
 
 ## 代码规范
-- 严格遵循COLA架构风格及Spring代码规范
-- 接口及实现类必须使用Javadoc（无需Swagger相关注解）
-- Controller、常量、ClientObject/DataObject/Domain需使用Swagger相关注解
+见文章
