@@ -3,7 +3,6 @@ module laokou-test-go
 go 1.22
 
 require (
-	github.com/go-ole/go-ole v1.3.0
 	github.com/hirochachacha/go-smb2 v1.1.0
 	github.com/mattn/go-adodb v0.0.1
 	github.com/rabbitmq/amqp091-go v1.9.0
@@ -18,6 +17,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/geoffgarside/ber v1.1.0 // indirect
+	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/go-sql-driver/mysql v1.8.1 // indirect
 	github.com/golang-sql/civil v0.0.0-20220223132316-b832511892a9 // indirect
 	github.com/golang-sql/sqlexp v0.1.0 // indirect
