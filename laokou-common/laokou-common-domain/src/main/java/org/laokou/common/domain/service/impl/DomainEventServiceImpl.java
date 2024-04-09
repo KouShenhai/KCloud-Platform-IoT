@@ -48,7 +48,7 @@ public class DomainEventServiceImpl implements DomainEventService {
 		if (CollectionUtil.isNotEmpty(events)) {
 			List<DomainEventDO> list = events.stream().map(DomainEventConvertor::toDataObject).toList();
 			mybatisUtil.batch(list, DomainEventMapper.class, events.getFirst().getSourceName(),
-				DomainEventMapper::insertOne);
+					DomainEventMapper::insertOne);
 			DomainEventContextHolder.set(events);
 		}
 	}
