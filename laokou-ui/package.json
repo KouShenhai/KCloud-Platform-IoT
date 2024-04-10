@@ -78,7 +78,7 @@
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
     "@commitlint/types": "^19.0.3",
-    "@eslint/js": "^8.57.0",
+    "@eslint/js": "^9.0.0",
     "@faker-js/faker": "^8.4.1",
     "@iconify-icons/ep": "^1.2.12",
     "@iconify-icons/ri": "^1.2.10",

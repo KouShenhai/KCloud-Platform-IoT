@@ -69,7 +69,7 @@ dependencies:
     specifier: ^3.4.21
     version: 3.4.21(typescript@5.4.3)
   vue-i18n:
-    specifier: ^9.11.1
+    specifier: ^9.10.2
     version: 9.11.1(vue@3.4.21)
   vue-router:
     specifier: ^4.3.0
@@ -92,8 +92,8 @@ devDependencies:
     specifier: ^19.0.3
     version: 19.0.3
   '@eslint/js':
-    specifier: ^8.57.0
-    version: 8.57.0
+    specifier: ^9.0.0
+    version: 9.0.0
   '@faker-js/faker':
     specifier: ^8.4.1
     version: 8.4.1
@@ -1219,6 +1219,11 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
+  /@eslint/js@9.0.0:
+    resolution: {integrity: sha512-RThY/MnKrhubF6+s1JflwUjPEsnCEmYCWwqa/aRISKWNXGZ9epUwft4bUMM35SdKF9xvBrLydAM1RDHd1Z//ZQ==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    dev: true
+
   /@faker-js/faker@8.4.1:
     resolution: {integrity: sha512-XQ3cU+Q8Uqmrbf2e0cIC/QN43sTBSC8KF12u29Mb47tWrt2hAgBXSgpZMj4Ao8Uk0iJcU99QsOCaIL8934obCg==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
@@ -1299,7 +1304,7 @@ packages:
         optional: true
     dependencies:
       '@intlify/message-compiler': 9.11.1
-      '@intlify/shared': 9.10.2
+      '@intlify/shared': 9.11.1
       acorn: 8.11.3
       escodegen: 2.1.0
       estree-walker: 2.0.2
