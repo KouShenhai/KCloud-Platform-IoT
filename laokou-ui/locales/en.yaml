@@ -1,0 +1,31 @@
+buttons:
+  pureLoginOut: LoginOut
+  pureLogin: Login
+  pureSystemSet: Open ProjectConfig
+  pureReload: Reload
+  pureCloseCurrentTab: Close CurrentTab
+  pureCloseLeftTabs: Close LeftTabs
+  pureCloseRightTabs: Close RightTabs
+  pureCloseOtherTabs: Close OtherTabs
+  pureCloseAllTabs: Close AllTabs
+  pureContentFullScreen: Content FullScreen
+  pureContentExitFullScreen: Content ExitFullScreen
+menus:
+  pureHome: Home
+  pureLogin: Login
+  pureAbnormal: Abnormal Page
+  pureFourZeroFour: "404"
+  pureFourZeroOne: "403"
+  pureFive: "500"
+  purePermission: Permission Manage
+  purePermissionPage: Page Permission
+  purePermissionButton: Button Permission
+status:
+  pureLoad: Loading...
+login:
+  pureUsername: Username
+  purePassword: Password
+  pureLogin: Login
+  pureUsernameReg: Please enter username
+  purePassWordReg: Please enter password
+  purePassWordRuleReg: The password format should be any combination of 8-18 digits
