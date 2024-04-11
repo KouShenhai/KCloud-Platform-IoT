@@ -22,6 +22,7 @@ import lombok.Data;
 import org.laokou.common.i18n.utils.MessageUtil;
 
 import java.io.Serial;
+import java.util.Objects;
 
 import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 import static org.laokou.common.i18n.common.StatusCodes.OK;
@@ -36,8 +37,8 @@ public class Result<T> extends DTO {
 	@Serial
 	private static final long serialVersionUID = -1286769110881865369L;
 
-	@Schema(name = "code", description = "状态编码", example = "200")
-	private int code;
+	@Schema(name = "code", description = "状态编码", example = "OK")
+	private String code;
 
 	@Schema(name = "msg", description = "响应描述", example = "请求成功")
 	private String msg;
@@ -49,7 +50,7 @@ public class Result<T> extends DTO {
 	private String traceId;
 
 	public boolean success() {
-		return this.code == OK;
+		return Objects.equals(this.code, "OK");
 	}
 
 	public boolean error() {
@@ -58,7 +59,7 @@ public class Result<T> extends DTO {
 
 	public static <T> Result<T> fail(int code) {
 		Result<T> result = new Result<>();
-		result.setCode(code);
+		result.setCode("" + code);
 		result.setMsg(MessageUtil.getMessage(code));
 		return result;
 	}
@@ -66,28 +67,28 @@ public class Result<T> extends DTO {
 	public static <T> Result<T> of(T data) {
 		Result<T> result = new Result<>();
 		result.setData(data);
-		result.setCode(OK);
+		result.setCode("OK");
 		result.setMsg(MessageUtil.getMessage(OK));
 		return result;
 	}
 
 	public static <T> Result<T> of(int code, String msg) {
 		Result<T> result = new Result<>();
-		result.setCode(code);
+		result.setCode("" + code);
 		result.setMsg(msg);
 		return result;
 	}
 
 	public static <T> Result<T> fail(int code, String msg) {
 		Result<T> result = new Result<>();
-		result.setCode(code);
+		result.setCode("" + code);
 		result.setMsg(msg);
 		return result;
 	}
 
 	public static <T> Result<T> fail(String msg) {
 		Result<T> result = new Result<>();
-		result.setCode(CUSTOM_SERVER_ERROR);
+		result.setCode("" + CUSTOM_SERVER_ERROR);
 		result.setMsg(msg);
 		return result;
 	}

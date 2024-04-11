@@ -77,7 +77,7 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 		}
 	}
 
-	public void checkNullTenantId() {
+	protected void checkNullTenantId() {
 		if (ObjectUtil.isNull(this.tenantId)) {
 			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
 		}

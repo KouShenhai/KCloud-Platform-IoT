@@ -74,12 +74,7 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticati
 				.username(encryptAes(mail))
 				.auth(authObj)
 				.build();
-			// 检查租户ID
-			user.checkNullTenantId();
-			// 检查验证码
-			captchaObj.checkNullCaptcha();
-			// 检查邮箱
-			user.checkMail();
+			user.checkMailAuth();
 			// 获取用户信息,并认证信息
 			return super.authenticationToken(user, request);
 		}

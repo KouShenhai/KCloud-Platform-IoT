@@ -77,16 +77,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
 				.password(password)
 				.captcha(captchaObj)
 				.build();
-			// 检查租户ID
-			user.checkNullTenantId();
-			// 检查UUID
-			captchaObj.checkNullUuid();
-			// 检查验证码
-			captchaObj.checkNullCaptcha();
-			// 检查账号
-			user.checkNullUsername();
-			// 检查密码
-			user.checkNullPassword();
+			user.checkUsernamePasswordAuth();
 			// 获取用户信息，并认证信息
 			return super.authenticationToken(user, request);
 		}

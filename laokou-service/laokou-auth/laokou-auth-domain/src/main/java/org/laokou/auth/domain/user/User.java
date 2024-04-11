@@ -85,6 +85,37 @@ public class User extends AggregateRoot<Long> {
 	@Schema(name = "auth", description = "认证")
 	private Auth auth;
 
+	public void checkUsernamePasswordAuth() {
+		// 检查租户ID
+		checkNullTenantId();
+		// 检查UUID
+		captcha.checkNullUuid();
+		// 检查验证码
+		captcha.checkNullCaptcha();
+		// 检查账号
+		checkNullUsername();
+		// 检查密码
+		checkNullPassword();
+	}
+
+	public void checkMailAuth() {
+		// 检查租户ID
+		checkNullTenantId();
+		// 检查验证码
+		captcha.checkNullCaptcha();
+		// 检查邮箱
+		checkMail();
+	}
+
+	public void checkMobileAuth() {
+		// 检查租户ID
+		checkNullTenantId();
+		// 检查验证码
+		captcha.checkNullCaptcha();
+		// 检查手机号
+		checkMobile();
+	}
+
 	public boolean isSuperAdministrator() {
 		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
 	}
@@ -107,13 +138,13 @@ public class User extends AggregateRoot<Long> {
 		}
 	}
 
-	public void checkNullPassword() {
+	private void checkNullPassword() {
 		if (StringUtil.isEmpty(this.password)) {
 			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE));
 		}
 	}
 
-	public void checkNullUsername() {
+	private void checkNullUsername() {
 		if (StringUtil.isEmpty(this.username)) {
 			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE));
 		}
