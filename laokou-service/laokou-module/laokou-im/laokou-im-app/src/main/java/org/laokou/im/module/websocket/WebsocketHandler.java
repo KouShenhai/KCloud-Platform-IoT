@@ -79,7 +79,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 			CLIENT_CACHE.put(id.toString(), channel);
 		}
 		else {
-			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
+			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail("" + UNAUTHORIZED))));
 			ctx.close();
 		}
 	}

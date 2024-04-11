@@ -37,8 +37,8 @@ public class MessageUtil {
 		RESOURCE_BUNDLE_MESSAGE_SOURCE.setBasename("classpath:i18n/message");
 	}
 
-	public static String getMessage(int code) {
-		return RESOURCE_BUNDLE_MESSAGE_SOURCE.getMessage(String.valueOf(code), null, LocaleContextHolder.getLocale());
+	public static String getMessage(String code) {
+		return RESOURCE_BUNDLE_MESSAGE_SOURCE.getMessage(code, null, LocaleContextHolder.getLocale());
 	}
 
 }

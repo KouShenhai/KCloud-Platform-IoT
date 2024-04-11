@@ -49,35 +49,35 @@ public class SentinelExceptionHandler implements BlockExceptionHandler {
 		if (e instanceof FlowException flowException) {
 			log.error("请求已限流，限流 FlowException，错误信息：{}，详情见日志", LogUtil.result(flowException.getMessage()),
 					flowException);
-			ResponseUtil.response(response, REQUEST_FLOW, MessageUtil.getMessage(REQUEST_FLOW));
+			ResponseUtil.response(response, REQUEST_FLOW, MessageUtil.getMessage(String.valueOf(REQUEST_FLOW)));
 			return;
 		}
 		// 降级
 		if (e instanceof DegradeException degradeException) {
 			log.error("已降级，降级 DegradeException，错误信息：{}，详情见日志", LogUtil.result(degradeException.getMessage()),
 					degradeException);
-			ResponseUtil.response(response, DEGRADE, MessageUtil.getMessage(DEGRADE));
+			ResponseUtil.response(response, DEGRADE, MessageUtil.getMessage(String.valueOf(DEGRADE)));
 			return;
 		}
 		// 热点参数限流
 		if (e instanceof ParamFlowException paramFlowException) {
 			log.error("热点参数已限流，热点参数限流 ParamFlowException，错误信息：{}，详情见日志",
 					LogUtil.result(paramFlowException.getMessage()), paramFlowException);
-			ResponseUtil.response(response, PARAM_FLOW, MessageUtil.getMessage(PARAM_FLOW));
+			ResponseUtil.response(response, PARAM_FLOW, MessageUtil.getMessage(String.valueOf(PARAM_FLOW)));
 			return;
 		}
 		// 系统规则
 		if (e instanceof SystemBlockException systemBlockException) {
 			log.error("系统规则错误，系统规则 SystemBlockException，错误信息：{}，详情见日志",
 					LogUtil.result(systemBlockException.getMessage()), systemBlockException);
-			ResponseUtil.response(response, SYSTEM_BLOCK, MessageUtil.getMessage(SYSTEM_BLOCK));
+			ResponseUtil.response(response, SYSTEM_BLOCK, MessageUtil.getMessage(String.valueOf(SYSTEM_BLOCK)));
 			return;
 		}
 		// 授权规则
 		if (e instanceof AuthorityException authorityException) {
 			log.error("授权规则错误，授权规则 AuthorityException，错误信息：{}，详情见日志", LogUtil.result(authorityException.getMessage()),
 					authorityException);
-			ResponseUtil.response(response, AUTHORITY, MessageUtil.getMessage(AUTHORITY));
+			ResponseUtil.response(response, AUTHORITY, MessageUtil.getMessage(String.valueOf(AUTHORITY)));
 		}
 	}
 

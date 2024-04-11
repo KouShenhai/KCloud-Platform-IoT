@@ -22,19 +22,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * @author laokou
  */
-@Schema(name = "FlowException", description = "工作流程异常")
-public final class FlowException extends GlobalException {
+@Schema(name = "BizException", description = "业务异常")
+public final class BizException extends GlobalException {
 
-	public FlowException(int code) {
+	public BizException(String code) {
 		super(code);
 	}
 
-	public FlowException(int code, String msg) {
+	public BizException(String code, String msg) {
 		super(code, msg);
-	}
-
-	public FlowException(String msg) {
-		super(msg);
 	}
 
 }

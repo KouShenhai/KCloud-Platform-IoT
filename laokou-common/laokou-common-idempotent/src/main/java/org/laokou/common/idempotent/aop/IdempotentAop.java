@@ -25,7 +25,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.ResourceUtil;
-import org.laokou.common.i18n.common.exception.ApiException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -69,12 +68,12 @@ public class IdempotentAop {
 	public void doBefore() {
 		String requestId = getRequestId();
 		if (StringUtil.isEmpty(requestId)) {
-			throw new ApiException("提交失败，令牌不能为空");
+			throw new RuntimeException("提交失败，令牌不能为空");
 		}
 		String apiIdempotentKey = RedisKeyUtil.getApiIdempotentKey(requestId);
 		Boolean result = redisUtil.execute(REDIS_SCRIPT, Collections.singletonList(apiIdempotentKey));
 		if (!result) {
-			throw new ApiException("不可重复提交请求");
+			throw new RuntimeException("不可重复提交请求");
 		}
 		IdempotentUtil.openIdempotent();
 	}

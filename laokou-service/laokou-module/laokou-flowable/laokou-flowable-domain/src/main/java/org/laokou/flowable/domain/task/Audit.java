@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
@@ -48,13 +47,13 @@ public class Audit extends AggregateRoot<Long> {
 
 	public void checkTask(Object obj) {
 		if (ObjectUtil.isNull(obj)) {
-			throw new FlowException("任务不存在");
+			throw new RuntimeException("任务不存在");
 		}
 	}
 
 	public void checkPending(boolean pending) {
 		if (pending) {
-			throw new FlowException("非审批任务，请处理任务");
+			throw new RuntimeException("非审批任务，请处理任务");
 		}
 	}
 

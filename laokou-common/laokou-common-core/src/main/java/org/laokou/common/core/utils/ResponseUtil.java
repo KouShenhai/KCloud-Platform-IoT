@@ -41,7 +41,7 @@ public class ResponseUtil {
 	 * @throws IOException 异常
 	 */
 	public static void response(HttpServletResponse response, int code, String message) throws IOException {
-		response(response, JacksonUtil.toJsonStr(Result.fail(code, message)));
+		response(response, JacksonUtil.toJsonStr(Result.fail("" + code, message)));
 	}
 
 	/**

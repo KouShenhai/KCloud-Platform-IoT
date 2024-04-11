@@ -20,7 +20,6 @@ package org.laokou.auth.config.authentication;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.auth.domain.gateway.*;
 import org.laokou.auth.domain.user.Captcha;
 import org.laokou.auth.domain.user.User;
@@ -28,7 +27,6 @@ import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.security.utils.UserDetail;
@@ -97,9 +95,9 @@ public class OAuth2AuthenticationProvider {
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
 					userDetail.getAuthorities());
 		}
-		catch (GlobalException e) {
-			throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg());
-		}
+		// catch (GlobalException e) {
+		// throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg());
+		// }
 		finally {
 			// 保存领域事件（事件溯源）
 			domainEventService.create(user.getEvents());

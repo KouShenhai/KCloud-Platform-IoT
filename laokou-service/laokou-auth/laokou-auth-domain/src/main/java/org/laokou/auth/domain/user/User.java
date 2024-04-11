@@ -24,29 +24,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.laokou.auth.domain.event.LoginFailedEvent;
-import org.laokou.auth.domain.event.LoginSucceededEvent;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
 
 import static lombok.AccessLevel.PRIVATE;
-import static org.laokou.common.i18n.common.BizCodes.LOGIN_SUCCEEDED;
-import static org.laokou.common.i18n.common.ErrorCodes.*;
 import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
 import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
-import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.StatusCodes.FORBIDDEN;
 import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
 import static org.laokou.common.i18n.common.UserStatusEnums.DISABLE;
-import static org.laokou.common.i18n.common.ValCodes.*;
 
 /**
  * @author laokou
@@ -122,38 +113,43 @@ public class User extends AggregateRoot<Long> {
 
 	public void checkMobile() {
 		if (StringUtil.isEmpty(this.mobile)) {
-			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_MOBILE_REQUIRE));
+			// throw new AuthException(CUSTOM_SERVER_ERROR,
+			// ValidatorUtil.getMessage(OAUTH2_MOBILE_REQUIRE));
 		}
 		if (!RegexUtil.mobileRegex(this.mobile)) {
-			throw new AuthException(MOBILE_ERROR);
+			// throw new AuthException(MOBILE_ERROR);
 		}
 	}
 
 	public void checkMail() {
 		if (StringUtil.isEmpty(this.mail)) {
-			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));
+			// throw new AuthException(CUSTOM_SERVER_ERROR,
+			// ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));
 		}
 		if (!RegexUtil.mailRegex(this.mail)) {
-			throw new AuthException(MAIL_ERROR, MessageUtil.getMessage(MAIL_ERROR));
+			// throw new AuthException(MAIL_ERROR, MessageUtil.getMessage(MAIL_ERROR));
 		}
 	}
 
 	private void checkNullPassword() {
 		if (StringUtil.isEmpty(this.password)) {
-			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE));
+			// throw new AuthException(CUSTOM_SERVER_ERROR,
+			// ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE));
 		}
 	}
 
 	private void checkNullUsername() {
 		if (StringUtil.isEmpty(this.username)) {
-			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE));
+			// throw new AuthException(CUSTOM_SERVER_ERROR,
+			// ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE));
 		}
 	}
 
 	public User create(User user, HttpServletRequest request, String sourceName, String appName, String authType) {
 		if (ObjectUtil.isNull(user)) {
-			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,
-					appName, authType);
+			// loginFail(ACCOUNT_PASSWORD_ERROR,
+			// MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,
+			// appName, authType);
 		}
 		return user;
 	}
@@ -161,43 +157,49 @@ public class User extends AggregateRoot<Long> {
 	public void checkPassword(String clientPassword, PasswordEncoder passwordEncoder, HttpServletRequest request,
 			String sourceName, String appName, String authType) {
 		if (StringUtil.isNotEmpty(clientPassword) && !passwordEncoder.matches(clientPassword, this.password)) {
-			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,
-					appName, authType);
+			// loginFail(ACCOUNT_PASSWORD_ERROR,
+			// MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,
+			// appName, authType);
 		}
 	}
 
 	public void checkStatus(HttpServletRequest request, String sourceName, String appName, String authType) {
 		if (ObjectUtil.equals(DISABLE.ordinal(), this.status)) {
-			loginFail(ACCOUNT_DISABLE, MessageUtil.getMessage(ACCOUNT_DISABLE), request, sourceName, appName, authType);
+			// loginFail(ACCOUNT_DISABLE, MessageUtil.getMessage(ACCOUNT_DISABLE),
+			// request, sourceName, appName, authType);
 		}
 	}
 
 	public void checkNullPermissions(Set<String> permissions, HttpServletRequest request, String sourceName,
 			String appName, String authType) {
 		if (CollectionUtil.isEmpty(permissions)) {
-			loginFail(FORBIDDEN, MessageUtil.getMessage(FORBIDDEN), request, sourceName, appName, authType);
+			// loginFail(FORBIDDEN, MessageUtil.getMessage(FORBIDDEN), request,
+			// sourceName, appName, authType);
 		}
 	}
 
 	public void checkCaptcha(Boolean checkResult, HttpServletRequest request, String sourceName, String appName,
 			String authType) {
 		if (ObjectUtil.isNull(checkResult)) {
-			loginFail(CAPTCHA_EXPIRED, MessageUtil.getMessage(CAPTCHA_EXPIRED), request, sourceName, appName, authType);
+			// loginFail(CAPTCHA_EXPIRED, MessageUtil.getMessage(CAPTCHA_EXPIRED),
+			// request, sourceName, appName, authType);
 		}
 		if (!checkResult) {
-			loginFail(CAPTCHA_ERROR, MessageUtil.getMessage(CAPTCHA_ERROR), request, sourceName, appName, authType);
+			// loginFail(CAPTCHA_ERROR, MessageUtil.getMessage(CAPTCHA_ERROR), request,
+			// sourceName, appName, authType);
 		}
 	}
 
 	public void loginSuccess(HttpServletRequest request, String sourceName, String appName, String authType) {
-		addEvent(new LoginSucceededEvent(this, request, MessageUtil.getMessage(LOGIN_SUCCEEDED), sourceName, appName,
-				authType));
+		// addEvent(new LoginSucceededEvent(this, request,
+		// MessageUtil.getMessage(LOGIN_SUCCEEDED), sourceName, appName,
+		// authType));
 	}
 
 	private void loginFail(int code, String message, HttpServletRequest request, String sourceName, String appName,
 			String authType) {
 		addEvent(new LoginFailedEvent(this, request, message, sourceName, appName, authType));
-		throw new AuthException(code, message);
+		// throw new AuthException(code, message);
 	}
 
 }

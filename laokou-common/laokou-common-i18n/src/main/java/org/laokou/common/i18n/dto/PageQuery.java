@@ -87,17 +87,12 @@ public class PageQuery extends Query {
 		if (ObjectUtil.isNull(this.endTime)) {
 			throw new SystemException("结束时间不能为空");
 		}
-		// 三年
-		int twoYearOfDays = 1095;
 		LocalDateTime startDate = DateUtil.parseTime(startTime, DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
 		LocalDateTime endDate = DateUtil.parseTime(endTime, DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
 		LocalDateTime minDate = LocalDateTime.of(2021, 12, 31, 23, 59, 59);
 		LocalDateTime maxDate = LocalDateTime.of(2100, 1, 1, 0, 0, 0);
 		if (DateUtil.isAfter(startDate, endDate)) {
 			throw new SystemException("结束时间必须大于开始时间");
-		}
-		if (DateUtil.getDays(startDate, endDate) > twoYearOfDays) {
-			throw new SystemException("开始时间和结束时间间隔不能超过三年");
 		}
 		if (DateUtil.isBefore(startDate, minDate) || DateUtil.isAfter(endDate, maxDate)) {
 			throw new SystemException("开始时间和结束时间只允许在2022-01-01 ~ 2099-12-31范围之内");

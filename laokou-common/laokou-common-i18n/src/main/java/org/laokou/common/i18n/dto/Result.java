@@ -24,9 +24,6 @@ import org.laokou.common.i18n.utils.MessageUtil;
 import java.io.Serial;
 import java.util.Objects;
 
-import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.StatusCodes.OK;
-
 /**
  * @author laokou
  */
@@ -57,38 +54,31 @@ public class Result<T> extends DTO {
 		return !success();
 	}
 
-	public static <T> Result<T> fail(int code) {
-		Result<T> result = new Result<>();
-		result.setCode("" + code);
-		result.setMsg(MessageUtil.getMessage(code));
-		return result;
-	}
-
 	public static <T> Result<T> of(T data) {
 		Result<T> result = new Result<>();
 		result.setData(data);
 		result.setCode("OK");
-		result.setMsg(MessageUtil.getMessage(OK));
+		result.setMsg(MessageUtil.getMessage("OK"));
 		return result;
 	}
 
-	public static <T> Result<T> of(int code, String msg) {
+	public static <T> Result<T> of(String code, String msg) {
 		Result<T> result = new Result<>();
-		result.setCode("" + code);
+		result.setCode(code);
 		result.setMsg(msg);
 		return result;
 	}
 
-	public static <T> Result<T> fail(int code, String msg) {
+	public static <T> Result<T> fail(String code) {
 		Result<T> result = new Result<>();
-		result.setCode("" + code);
-		result.setMsg(msg);
+		result.setCode(code);
+		result.setMsg(MessageUtil.getMessage(code));
 		return result;
 	}
 
-	public static <T> Result<T> fail(String msg) {
+	public static <T> Result<T> fail(String code, String msg) {
 		Result<T> result = new Result<>();
-		result.setCode("" + CUSTOM_SERVER_ERROR);
+		result.setCode(code);
 		result.setMsg(msg);
 		return result;
 	}

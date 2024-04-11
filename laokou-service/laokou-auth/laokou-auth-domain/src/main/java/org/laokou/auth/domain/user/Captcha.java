@@ -21,14 +21,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
-import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.i18n.utils.ValidatorUtil;
 
 import static lombok.AccessLevel.PRIVATE;
-import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.ValCodes.OAUTH2_CAPTCHA_REQUIRE;
-import static org.laokou.common.i18n.common.ValCodes.OAUTH2_UUID_REQUIRE;
 
 /**
  * @author laokou
@@ -47,13 +42,15 @@ public class Captcha {
 
 	public void checkNullCaptcha() {
 		if (StringUtil.isEmpty(this.captcha)) {
-			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
+			// throw new AuthException(CUSTOM_SERVER_ERROR,
+			// ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
 		}
 	}
 
 	public void checkNullUuid() {
 		if (StringUtil.isEmpty(this.uuid)) {
-			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
+			// throw new AuthException(CUSTOM_SERVER_ERROR,
+			// ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
 		}
 	}
 

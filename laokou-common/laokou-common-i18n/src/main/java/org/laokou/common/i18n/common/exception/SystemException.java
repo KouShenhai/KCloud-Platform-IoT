@@ -25,16 +25,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "SystemException", description = "系统异常")
 public final class SystemException extends GlobalException {
 
-	public SystemException(int code) {
+	public SystemException(String code) {
 		super(code);
 	}
 
-	public SystemException(int code, String msg) {
+	public SystemException(String code, String msg) {
 		super(code, msg);
-	}
-
-	public SystemException(String msg) {
-		super(msg);
 	}
 
 }

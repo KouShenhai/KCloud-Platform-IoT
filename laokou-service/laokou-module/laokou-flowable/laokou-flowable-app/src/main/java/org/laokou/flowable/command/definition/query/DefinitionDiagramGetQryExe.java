@@ -24,7 +24,6 @@ import org.apache.hc.client5.http.utils.Base64;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.RepositoryService;
 import org.flowable.image.impl.DefaultProcessDiagramGenerator;
-import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.flowable.dto.definition.DefinitionDiagramGetQry;
@@ -73,7 +72,7 @@ public class DefinitionDiagramGetQryExe {
 		}
 		catch (IOException e) {
 			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			throw new FlowException("流程图查看失败");
+			throw new RuntimeException("流程图查看失败");
 		}
 	}
 

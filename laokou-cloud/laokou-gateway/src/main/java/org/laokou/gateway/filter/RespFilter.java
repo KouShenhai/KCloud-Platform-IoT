@@ -127,7 +127,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 							code = ee.getCode();
 							msg = ee.getMsg() + CHINESE_COMMA + msg;
 						}
-						byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail(code, msg)).getBytes();
+						byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail("" + code, msg)).getBytes();
 						return dataBufferFactory.wrap(uppedContent);
 					}));
 				}

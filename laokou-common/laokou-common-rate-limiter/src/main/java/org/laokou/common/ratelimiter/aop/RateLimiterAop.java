@@ -23,7 +23,6 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.common.i18n.common.exception.ApiException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.ratelimiter.driver.KeyManager;
@@ -65,7 +64,7 @@ public class RateLimiterAop {
 		RateIntervalUnit unit = rateLimiter.unit();
 		RateType mode = rateLimiter.mode();
 		if (!redisUtil.rateLimiter(key, mode, rate, interval, unit)) {
-			throw new ApiException(TOO_MANY_REQUESTS);
+			throw new RuntimeException(String.valueOf(TOO_MANY_REQUESTS));
 		}
 	}
 

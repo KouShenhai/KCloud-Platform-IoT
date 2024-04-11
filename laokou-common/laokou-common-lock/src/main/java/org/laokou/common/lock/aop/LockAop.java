@@ -84,7 +84,7 @@ public class LockAop {
 				obj = joinPoint.proceed();
 			}
 			else {
-				throw new SystemException(TOO_MANY_REQUESTS);
+				throw new SystemException("" + TOO_MANY_REQUESTS);
 			}
 		}
 		catch (Throwable throwable) {

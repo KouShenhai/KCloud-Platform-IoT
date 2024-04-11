@@ -73,7 +73,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 		}
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, new OAuth2TokenType(FULL));
 		if (ObjectUtil.isNull(authorization)) {
-			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED, MessageUtil.getMessage(UNAUTHORIZED));
+			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED, MessageUtil.getMessage("" + UNAUTHORIZED));
 		}
 		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
 		Instant expiresAt = accessToken.getToken().getExpiresAt();
@@ -89,7 +89,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 			// 解密
 			return decryptInfo(userDetail);
 		}
-		throw OAuth2ExceptionHandler.getException(UNAUTHORIZED, MessageUtil.getMessage(UNAUTHORIZED));
+		throw OAuth2ExceptionHandler.getException(UNAUTHORIZED, MessageUtil.getMessage("" + UNAUTHORIZED));
 	}
 	// @formatter:on
 

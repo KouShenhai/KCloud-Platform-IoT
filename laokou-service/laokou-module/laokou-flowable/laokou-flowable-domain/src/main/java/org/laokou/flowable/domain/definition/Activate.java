@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 
 import static lombok.AccessLevel.PRIVATE;
@@ -42,7 +41,7 @@ public class Activate extends AggregateRoot<Long> {
 
 	public void checkActivated(boolean activated) {
 		if (activated) {
-			throw new FlowException("激活失败，流程已激活");
+			throw new RuntimeException("激活失败，流程已激活");
 		}
 	}
 

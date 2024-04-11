@@ -25,7 +25,6 @@ import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -66,10 +65,10 @@ public class TaskTransferCmdExe {
 				.taskId(taskId)
 				.singleResult();
 			if (ObjectUtil.isNull(task)) {
-				throw new FlowException("任务不存在");
+				throw new RuntimeException("任务不存在");
 			}
 			if (!owner.equals(task.getAssignee())) {
-				throw new FlowException("用户无权操作任务");
+				throw new RuntimeException("用户无权操作任务");
 			}
 			return Result.of(transfer(taskId, owner, assignee));
 		}

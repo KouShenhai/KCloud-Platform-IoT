@@ -18,7 +18,6 @@
 package org.laokou.common.openfeign.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.exception.FeignException;
 import org.laokou.common.i18n.dto.Result;
 
 /**
@@ -38,7 +37,7 @@ public class FeignUtil {
 
 	private static <T> void resultThrow(Result<T> result) {
 		if (result.error()) {
-			throw new FeignException(result.getMsg());
+			throw new RuntimeException(result.getMsg());
 		}
 	}
 

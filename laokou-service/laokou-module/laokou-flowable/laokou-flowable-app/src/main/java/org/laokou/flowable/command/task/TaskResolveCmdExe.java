@@ -26,7 +26,6 @@ import org.flowable.task.api.DelegationState;
 import org.flowable.task.api.Task;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -65,10 +64,10 @@ public class TaskResolveCmdExe {
 				.taskId(taskId)
 				.singleResult();
 			if (ObjectUtil.isNull(task)) {
-				throw new FlowException("任务不存在");
+				throw new RuntimeException("任务不存在");
 			}
 			if (DelegationState.RESOLVED.equals(task.getDelegationState())) {
-				throw new FlowException("非处理任务，请审批任务");
+				throw new RuntimeException("非处理任务，请审批任务");
 			}
 			return Result.of(resolve(taskId));
 		}

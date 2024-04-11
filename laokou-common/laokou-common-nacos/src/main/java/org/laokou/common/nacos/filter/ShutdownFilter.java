@@ -65,7 +65,8 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 			ResponseUtil.response((HttpServletResponse) response, JacksonUtil.toJsonStr(Result.of(EMPTY)));
 			return;
 		}
-		ResponseUtil.response((HttpServletResponse) response, JacksonUtil.toJsonStr(Result.fail(SERVICE_UNAVAILABLE)));
+		ResponseUtil.response((HttpServletResponse) response,
+				JacksonUtil.toJsonStr(Result.fail("" + SERVICE_UNAVAILABLE)));
 	}
 
 	@Override
@@ -79,7 +80,7 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 		if (open()) {
 			return ReactiveResponseUtil.response(exchange, JacksonUtil.toJsonStr(Result.of(EMPTY)));
 		}
-		return ReactiveResponseUtil.response(exchange, JacksonUtil.toJsonStr(Result.fail(SERVICE_UNAVAILABLE)));
+		return ReactiveResponseUtil.response(exchange, JacksonUtil.toJsonStr(Result.fail("" + SERVICE_UNAVAILABLE)));
 	}
 
 	private boolean open() {

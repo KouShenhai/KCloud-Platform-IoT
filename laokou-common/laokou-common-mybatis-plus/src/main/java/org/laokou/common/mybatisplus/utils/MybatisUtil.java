@@ -25,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.laokou.common.i18n.common.exception.DataSourceException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -95,7 +94,7 @@ public class MybatisUtil {
 			.toList();
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {
-			throw new DataSourceException("批量插入数据异常，数据已回滚");
+			throw new RuntimeException("批量插入数据异常，数据已回滚");
 		}
 	}
 

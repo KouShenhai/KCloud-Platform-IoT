@@ -27,7 +27,6 @@ import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.common.exception.DataSourceException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -45,8 +44,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.DatasourceConstants.SHOW_TABLES;
-import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.StringConstants.DROP;
 
 /**
  * 数据源工具类.
@@ -71,7 +68,7 @@ public class DsUtil {
 	 */
 	public String loadDs(String sourceName) {
 		if (StringUtil.isEmpty(sourceName)) {
-			throw new DataSourceException("数据源名称不能为空");
+			throw new RuntimeException("数据源名称不能为空");
 		}
 		if (validateDs(sourceName)) {
 			addDs(sourceName);
@@ -118,7 +115,7 @@ public class DsUtil {
 		}
 		catch (Exception e) {
 			log.error("加载数据源驱动失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			throw new DataSourceException(CUSTOM_SERVER_ERROR, "加载数据源驱动失败");
+			// throw new DataSourceException(CUSTOM_SERVER_ERROR, "加载数据源驱动失败");
 		}
 		try {
 			// 1秒后连接超时
@@ -128,7 +125,8 @@ public class DsUtil {
 		}
 		catch (Exception e) {
 			log.error("数据源连接超时，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			throw new DataSourceException(CUSTOM_SERVER_ERROR, "数据源连接超时");
+			throw e;
+			// throw new RuntimeException(CUSTOM_SERVER_ERROR, "数据源连接超时");
 		}
 		try {
 			ps = connection.prepareStatement(SHOW_TABLES);
@@ -151,8 +149,9 @@ public class DsUtil {
 				list = defaultTenantTables;
 			}
 			if (CollectionUtil.isNotEmpty(list)) {
-				throw new DataSourceException(
-						String.format("表 %s 不存在", StringUtil.collectionToDelimitedString(list, DROP)));
+				// throw new DataSourceException(
+				// String.format("表 %s 不存在", StringUtil.collectionToDelimitedString(list,
+				// DROP)));
 			}
 		}
 		finally {

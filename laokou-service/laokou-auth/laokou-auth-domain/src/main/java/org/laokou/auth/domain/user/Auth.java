@@ -22,12 +22,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.common.exception.AuthException;
 
 import java.util.List;
 
 import static lombok.AccessLevel.PRIVATE;
-import static org.laokou.common.i18n.common.ErrorCodes.INVALID_SCOPE;
 
 /**
  * @author laokou
@@ -46,7 +44,7 @@ public class Auth {
 
 	public void checkScopes(List<String> scopes) {
 		if (CollectionUtil.isNotEmpty(scopes) && scopes.size() != 1) {
-			throw new AuthException(INVALID_SCOPE);
+			// throw new AuthException(INVALID_SCOPE);
 		}
 	}
 

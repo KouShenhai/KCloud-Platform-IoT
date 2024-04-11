@@ -65,7 +65,7 @@ public class WhiteIp implements Ip {
 		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
 			if (Boolean.FALSE.equals(r)) {
 				log.error("IP为{}被限制", hostAddress);
-				return ReactiveResponseUtil.response(exchange, Result.fail(IP_WHITE));
+				return ReactiveResponseUtil.response(exchange, Result.fail("" + IP_WHITE));
 			}
 			return chain.filter(exchange);
 		});

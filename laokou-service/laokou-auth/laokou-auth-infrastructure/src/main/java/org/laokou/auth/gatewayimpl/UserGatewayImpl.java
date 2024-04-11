@@ -24,12 +24,9 @@ import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.user.User;
 import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.i18n.common.exception.DataSourceException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 
 /**
  * 用户.
@@ -59,7 +56,8 @@ public class UserGatewayImpl implements UserGateway {
 		}
 		catch (BadSqlGrammarException e) {
 			log.error("表 boot_sys_user 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			throw new DataSourceException(CUSTOM_SERVER_ERROR, "表 boot_sys_user 不存在");
+			// throw new RuntimeException(CUSTOM_SERVER_ERROR, "表 boot_sys_user 不存在");
+			throw e;
 		}
 	}
 

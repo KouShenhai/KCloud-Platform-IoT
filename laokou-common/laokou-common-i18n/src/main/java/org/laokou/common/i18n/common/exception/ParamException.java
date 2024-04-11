@@ -22,19 +22,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * @author laokou
  */
-@Schema(name = "DataSourceException", description = "数据源异常")
-public final class DataSourceException extends GlobalException {
+@Schema(name = "ParamException", description = "参数异常")
+public final class ParamException extends GlobalException {
 
-	public DataSourceException(int code) {
+	public ParamException(String code) {
 		super(code);
 	}
 
-	public DataSourceException(int code, String msg) {
+	public ParamException(String code, String msg) {
 		super(code, msg);
-	}
-
-	public DataSourceException(String msg) {
-		super(msg);
 	}
 
 }

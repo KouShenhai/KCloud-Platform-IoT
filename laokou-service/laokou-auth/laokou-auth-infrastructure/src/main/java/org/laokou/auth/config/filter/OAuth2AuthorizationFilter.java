@@ -47,7 +47,7 @@ public class OAuth2AuthorizationFilter extends OncePerRequestFilter {
 		try {
 			ThreadContext.put(TRACE_ID, request.getHeader(TRACE_ID));
 			if (ShutdownHolder.status()) {
-				ResponseUtil.response(response, SERVICE_UNAVAILABLE, MessageUtil.getMessage(SERVICE_UNAVAILABLE));
+				ResponseUtil.response(response, SERVICE_UNAVAILABLE, MessageUtil.getMessage("" + SERVICE_UNAVAILABLE));
 				return;
 			}
 			chain.doFilter(request, response);

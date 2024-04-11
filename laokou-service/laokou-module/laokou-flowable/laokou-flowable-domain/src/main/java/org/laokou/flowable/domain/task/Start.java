@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
@@ -49,19 +48,19 @@ public class Start extends AggregateRoot<Long> {
 
 	public void checkDefinition(Object obj) {
 		if (ObjectUtil.isNull(obj)) {
-			throw new FlowException("流程未定义");
+			throw new RuntimeException("流程未定义");
 		}
 	}
 
 	public void checkInstance(Object obj) {
 		if (ObjectUtil.isNull(obj)) {
-			throw new FlowException("流程不存在");
+			throw new RuntimeException("流程不存在");
 		}
 	}
 
 	public void checkSuspended(boolean suspended) {
 		if (suspended) {
-			throw new FlowException("挂起失败，流程已挂起");
+			throw new RuntimeException("挂起失败，流程已挂起");
 		}
 	}
 

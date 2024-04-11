@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
@@ -33,8 +32,6 @@ import java.util.List;
 
 import static lombok.AccessLevel.PROTECTED;
 import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
-import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
-import static org.laokou.common.i18n.common.ValCodes.OAUTH2_TENANT_ID_REQUIRE;
 import static org.laokou.common.i18n.common.ValCodes.SYSTEM_ID_REQUIRE;
 
 /**
@@ -79,7 +76,8 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 
 	protected void checkNullTenantId() {
 		if (ObjectUtil.isNull(this.tenantId)) {
-			throw new AuthException(CUSTOM_SERVER_ERROR, ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
+			// throw new AuthException(CUSTOM_SERVER_ERROR,
+			// ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
 		}
 	}
 

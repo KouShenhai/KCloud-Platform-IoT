@@ -110,7 +110,7 @@ public class ApiFilter implements WebFilter {
 		}
 		catch (Exception e) {
 			// 账号或密码错误
-			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
+			return ReactiveResponseUtil.response(exchange, Result.fail("" + ACCOUNT_PASSWORD_ERROR));
 		}
 		String pwd;
 		String name;
@@ -124,7 +124,7 @@ public class ApiFilter implements WebFilter {
 		}
 		if (!name.equals(username) || !pwd.equals(password)) {
 			// 账号或密码错误
-			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
+			return ReactiveResponseUtil.response(exchange, Result.fail("" + ACCOUNT_PASSWORD_ERROR));
 		}
 		return chain.filter(exchange);
 	}

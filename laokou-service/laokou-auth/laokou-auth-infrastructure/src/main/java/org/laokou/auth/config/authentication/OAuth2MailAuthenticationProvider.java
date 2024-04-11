@@ -23,7 +23,6 @@ import org.laokou.auth.domain.user.Auth;
 import org.laokou.auth.domain.user.Captcha;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.crypto.utils.AesUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -34,7 +33,6 @@ import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.OAuth2Constants.MAIL;
 import static org.laokou.common.i18n.common.TenantConstants.TENANT_ID;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CODE;
 
 /**
@@ -58,29 +56,29 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticati
 
 	@Override
 	Authentication principal(HttpServletRequest request) {
-		try {
-			String tenantId = request.getParameter(TENANT_ID);
-			String code = request.getParameter(CODE);
-			String mail = request.getParameter(MAIL);
-			// log.info("租户ID：{}", tenantId);
-			// log.info("验证码：{}", code);
-			// log.info("邮箱：{}", SensitiveUtil.format(Type.MAIL, mail));
-			Captcha captchaObj = Captcha.builder().captcha(code).uuid(mail).build();
-			Auth authObj = Auth.builder().type(getGrantType().getValue()).secretKey(AesUtil.getSecretKeyStr()).build();
-			User user = User.builder()
-				.tenantId(StringUtil.parseLong(tenantId))
-				.mail(mail)
-				.captcha(captchaObj)
-				.username(encryptAes(mail))
-				.auth(authObj)
-				.build();
-			user.checkMailAuth();
-			// 获取用户信息,并认证信息
-			return super.authenticationToken(user, request);
-		}
-		catch (GlobalException e) {
-			throw getException(e.getCode(), e.getMsg());
-		}
+		// try {
+		String tenantId = request.getParameter(TENANT_ID);
+		String code = request.getParameter(CODE);
+		String mail = request.getParameter(MAIL);
+		// log.info("租户ID：{}", tenantId);
+		// log.info("验证码：{}", code);
+		// log.info("邮箱：{}", SensitiveUtil.format(Type.MAIL, mail));
+		Captcha captchaObj = Captcha.builder().captcha(code).uuid(mail).build();
+		Auth authObj = Auth.builder().type(getGrantType().getValue()).secretKey(AesUtil.getSecretKeyStr()).build();
+		User user = User.builder()
+			.tenantId(StringUtil.parseLong(tenantId))
+			.mail(mail)
+			.captcha(captchaObj)
+			.username(encryptAes(mail))
+			.auth(authObj)
+			.build();
+		user.checkMailAuth();
+		// 获取用户信息,并认证信息
+		return super.authenticationToken(user, request);
+		// }
+		// catch (GlobalException e) {
+		// throw getException(e.getCode(), e.getMsg());
+		// }
 	}
 
 	@Override
