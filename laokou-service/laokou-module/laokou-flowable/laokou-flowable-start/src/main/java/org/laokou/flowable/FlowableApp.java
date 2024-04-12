@@ -52,8 +52,6 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @EnableRouter
 @EnableTaskExecutor
 @EnableAspectJAutoProxy(exposeProxy = true)
-@MapperScan({ "org.laokou.common.domain.repository", "org.laokou.flowable.gatewayimpl.database",
-		"org.laokou.common.mybatisplus.repository" })
 public class FlowableApp {
 
 	public static void main(String[] args) throws UnknownHostException {

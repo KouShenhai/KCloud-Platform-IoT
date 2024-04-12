@@ -29,7 +29,10 @@ import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.*;
+import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.NumberConstants;
@@ -54,7 +57,6 @@ import java.util.*;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.laokou.common.i18n.common.DatasourceConstants.*;
-import static org.laokou.common.i18n.common.OssConstants.ZIP_EXT;
 import static org.laokou.common.i18n.common.ResponseHeaderConstants.CONTENT_DISPOSITION;
 import static org.laokou.common.i18n.common.ResponseHeaderConstants.STREAM_CONTENT_TYPE;
 import static org.laokou.common.i18n.common.StringConstants.COMMA;
@@ -147,7 +149,7 @@ public class TenantGatewayImpl implements TenantGateway {
 		String name = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + fileExt;
 		response.setContentType(STREAM_CONTENT_TYPE);
 		response.setCharacterEncoding(UTF_8);
-		response.setHeader(CONTENT_DISPOSITION, "attachment;filename=" + UTF_8.encode(fileName + ZIP_EXT));
+		response.setHeader(CONTENT_DISPOSITION, "attachment;filename=" + UTF_8.encode(fileName + ".zip"));
 		TenantDO tenantDO = tenantMapper.selectById(id);
 		Assert.isTrue(ObjectUtil.isNotNull(tenantDO), "tenantDO is null");
 		try (ServletOutputStream outputStream = response.getOutputStream()) {

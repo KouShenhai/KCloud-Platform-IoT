@@ -55,7 +55,4 @@ public final class StatusCodes {
 	@Schema(name = "SERVICE_UNAVAILABLE", description = "服务正在维护")
 	public static final int SERVICE_UNAVAILABLE = 503;
 
-	@Schema(name = "CUSTOM_SERVER_ERROR", description = "自定义服务器错误")
-	public static final int CUSTOM_SERVER_ERROR = 512;
-
 }

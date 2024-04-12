@@ -28,7 +28,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.XXL_JOB_PREFIX;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = XXL_JOB_PREFIX)
+@ConfigurationProperties(prefix = "spring.xxl-job")
 public class XxlJobProperties {
 
 	private Admin admin;

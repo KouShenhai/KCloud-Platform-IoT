@@ -30,7 +30,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.IP_PREFIX;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = IP_PREFIX)
+@ConfigurationProperties(prefix = "spring.cloud.gateway.ip")
 public class IpProperties {
 
 	/**

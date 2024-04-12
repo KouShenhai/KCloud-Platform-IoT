@@ -25,14 +25,12 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import static org.laokou.common.i18n.common.OpenFeignConstants.LAOKOU_FLOWABLE_SERVICE;
-
 /**
  * 任务流程.
  *
  * @author laokou
  */
-@FeignClient(contextId = "tasks", name = LAOKOU_FLOWABLE_SERVICE, path = "v1/tasks",
+@FeignClient(contextId = "tasks", name = "laokou-flowable", path = "v1/tasks",
 		fallbackFactory = TasksFeignClientFallbackFactory.class)
 public interface FlowTaskFeignClient {
 

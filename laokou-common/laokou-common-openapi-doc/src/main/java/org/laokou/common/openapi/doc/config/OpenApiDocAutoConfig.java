@@ -40,7 +40,7 @@ import static org.laokou.common.i18n.common.SysConstants.VERSION;
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnProperty(prefix = OPENAPI_DOC_PREFIX, name = ENABLED, havingValue = TRUE, matchIfMissing = true)
+@ConditionalOnProperty(prefix = "openapi-doc", name = ENABLED, havingValue = TRUE, matchIfMissing = true)
 public class OpenApiDocAutoConfig {
 
 	@Bean

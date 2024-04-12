@@ -30,7 +30,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.MQTT_PREFIX;
  */
 @Component
 @Data
-@ConfigurationProperties(prefix = MQTT_PREFIX)
+@ConfigurationProperties(prefix = "spring.mqtt")
 public class SpringMqttProperties {
 
 	private String username;

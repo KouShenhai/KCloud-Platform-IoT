@@ -60,8 +60,6 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @EnableTaskExecutor
 @EnableXxlJob
 @EnableRouter
-@MapperScan({ "org.laokou.common.domain.repository", "org.laokou.admin.gatewayimpl.database",
-		"org.laokou.common.mybatisplus.repository" })
 public class AdminApp {
 
 	@SneakyThrows

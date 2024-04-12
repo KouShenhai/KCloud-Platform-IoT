@@ -55,8 +55,6 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @EnableTaskExecutor
 @EnableXxlJob
 @EnableRouter
-@MapperScan({ "org.laokou.common.domain.repository", "org.laokou.auth.gatewayimpl.database",
-		"org.laokou.common.mybatisplus.repository" })
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 @EnableAspectJAutoProxy(exposeProxy = true)
 public class AuthApp {

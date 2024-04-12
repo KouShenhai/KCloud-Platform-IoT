@@ -25,8 +25,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_RESOURCE_SERVER_PREFIX;
-
 // @formatter:off
 /**
  * @author laokou
@@ -36,7 +34,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_RESOURCE_
 // @formatter:on
 @Data
 @Component
-@ConfigurationProperties(prefix = OAUTH2_RESOURCE_SERVER_PREFIX)
+@ConfigurationProperties(prefix = "spring.security.oauth2.resource-server")
 public class OAuth2ResourceServerProperties {
 
 	private boolean enabled = true;
