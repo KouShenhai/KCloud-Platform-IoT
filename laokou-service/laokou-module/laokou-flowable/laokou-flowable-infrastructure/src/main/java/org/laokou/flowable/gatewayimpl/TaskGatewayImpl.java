@@ -27,6 +27,7 @@ import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.DelegationState;
 import org.flowable.task.api.Task;
 import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -87,9 +88,9 @@ public class TaskGatewayImpl implements TaskGateway {
 			}
 			catch (Exception e) {
 				String msg = e.getMessage();
-				log.error("错误信息：{}，详情见日志", LogUtil.result(msg), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(msg), e);
 				r.setRollbackOnly();
-				throw new SystemException(LogUtil.fail(msg));
+				throw new SystemException(StatusCode.INTERNAL_SERVER_ERROR, LogUtil.except(msg));
 			}
 		});
 	}
@@ -104,9 +105,9 @@ public class TaskGatewayImpl implements TaskGateway {
 			}
 			catch (Exception e) {
 				String msg = e.getMessage();
-				log.error("错误信息：{}，详情见日志", LogUtil.result(msg), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(msg), e);
 				r.setRollbackOnly();
-				throw new SystemException(LogUtil.fail(msg));
+				throw new SystemException(StatusCode.INTERNAL_SERVER_ERROR, LogUtil.except(msg));
 			}
 		});
 	}

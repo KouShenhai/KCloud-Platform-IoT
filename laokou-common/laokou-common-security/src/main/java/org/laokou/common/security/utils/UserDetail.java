@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Identifier;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,15 +36,17 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static lombok.AccessLevel.PRIVATE;
-import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
 import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
 import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
-import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
-import static org.laokou.common.i18n.common.UserStatusEnums.ENABLED;
+import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
+import static org.laokou.common.i18n.common.UserStatusEnum.ENABLED;
 
 /**
  * &#064;JsonTypeInfo(use = JsonTypeInfo.Id.NAME) => 多态子类与抽象类绑定.
@@ -112,7 +114,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (this == o) {
 			return true;
 		}
-		if (ObjectUtil.isNull(o) || getClass() != o.getClass()) {
+		if (ObjectUtils.isNull(o) || getClass() != o.getClass()) {
 			return false;
 		}
 		UserDetail that = (UserDetail) o;
@@ -183,7 +185,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 
 	@JsonIgnore
 	public boolean isSuperAdministrator() {
-		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
+		return ObjectUtils.equals(YES.ordinal(), this.superAdmin);
 	}
 
 	@Override
@@ -213,7 +215,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@Override
 	@JsonIgnore
 	public boolean isEnabled() {
-		return ObjectUtil.equals(ENABLED.ordinal(), this.status);
+		return ObjectUtils.equals(ENABLED.ordinal(), this.status);
 	}
 
 	/**

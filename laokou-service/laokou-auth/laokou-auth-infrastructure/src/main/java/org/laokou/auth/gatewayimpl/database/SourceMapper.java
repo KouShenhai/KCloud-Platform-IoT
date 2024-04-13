@@ -23,7 +23,7 @@ import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
-import static org.laokou.common.i18n.common.MybatisPlusConstants.TENANT_ID;
+import static org.laokou.common.i18n.dto.Identifier.TENANT_ID;
 
 /**
  * 数据源.

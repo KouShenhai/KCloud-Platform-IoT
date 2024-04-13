@@ -21,7 +21,6 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.PropertiesConstants.ROUTER_AUTH_PREFIX;
 import static org.laokou.common.i18n.common.SysConstants.DEFAULT_PASSWORD;
 import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
 
@@ -32,7 +31,7 @@ import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = ROUTER_AUTH_PREFIX)
+@ConfigurationProperties(prefix = "spring.cloud.gateway.router.auth")
 public class GatewayExtProperties {
 
 	/**

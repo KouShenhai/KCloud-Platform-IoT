@@ -33,7 +33,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static org.laokou.common.i18n.common.CacheNameConstants.MESSAGES;
+import static org.laokou.common.i18n.common.CacheNameConstant.MESSAGES;
 
 /**
  * @author laokou

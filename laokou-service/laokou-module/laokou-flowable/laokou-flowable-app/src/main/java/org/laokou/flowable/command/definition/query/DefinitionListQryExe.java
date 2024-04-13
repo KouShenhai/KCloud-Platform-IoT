@@ -32,8 +32,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
-import static org.laokou.common.i18n.common.StringConstants.PERCENT;
+import static org.laokou.common.i18n.common.DatasourceConstant.FLOWABLE;
+import static org.laokou.common.i18n.common.StringConstant.PERCENT;
 
 /**
  * 查询流程列表执行器.

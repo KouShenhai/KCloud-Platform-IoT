@@ -21,7 +21,7 @@ import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.*;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -45,10 +45,42 @@ public class GlobalExceptionHandler {
 	 * @param ex 异常
 	 * @return 响应结果
 	 */
-	@ExceptionHandler({ FeignException.class, SystemException.class, ApiException.class, FlowException.class,
-			DataSourceException.class, GatewayException.class, AuthException.class })
-	public Result<?> handle(GlobalException ex) {
-		// log.error("错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
+	@ExceptionHandler(SystemException.class)
+	public Result<?> handle(SystemException ex) {
+		log.error("系统异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
+		return Result.fail(ex.getCode(), ex.getMsg());
+	}
+
+	/**
+	 * 异常处理并响应.
+	 * @param ex 异常
+	 * @return 响应结果
+	 */
+	@ExceptionHandler(AuthException.class)
+	public Result<?> handle(AuthException ex) {
+		log.error("认证异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
+		return Result.fail(ex.getCode(), ex.getMsg());
+	}
+
+	/**
+	 * 异常处理并响应.
+	 * @param ex 异常
+	 * @return 响应结果
+	 */
+	@ExceptionHandler(BizException.class)
+	public Result<?> handle(BizException ex) {
+		log.error("业务异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
+		return Result.fail(ex.getCode(), ex.getMsg());
+	}
+
+	/**
+	 * 异常处理并响应.
+	 * @param ex 异常
+	 * @return 响应结果
+	 */
+	@ExceptionHandler(ParamException.class)
+	public Result<?> handle(ParamException ex) {
+		log.error("参数异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
 		return Result.fail(ex.getCode(), ex.getMsg());
 	}
 
@@ -61,11 +93,11 @@ public class GlobalExceptionHandler {
 	public Result<?> handle(Exception ex) {
 		if (ex instanceof MethodArgumentNotValidException mane) {
 			FieldError fieldError = mane.getFieldError();
-			if (ObjectUtil.isNotNull(fieldError)) {
-				return Result.fail(fieldError.getDefaultMessage());
+			if (ObjectUtils.isNotNull(fieldError)) {
+				return Result.fail(fieldError.getCode(), fieldError.getDefaultMessage());
 			}
 		}
-		return Result.fail("验证失败");
+		throw new RuntimeException();
 	}
 
 }

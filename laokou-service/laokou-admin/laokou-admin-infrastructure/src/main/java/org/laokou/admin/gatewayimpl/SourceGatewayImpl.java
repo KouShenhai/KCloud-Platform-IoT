@@ -89,7 +89,7 @@ public class SourceGatewayImpl implements SourceGateway {
 				sourceMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
-				String msg = LogUtil.result(e.getMessage());
+				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
 				throw new SystemException(msg);
@@ -107,7 +107,7 @@ public class SourceGatewayImpl implements SourceGateway {
 				sourceMapper.updateById(sourceDO);
 			}
 			catch (Exception e) {
-				String msg = LogUtil.result(e.getMessage());
+				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
 				throw new SystemException(msg);
@@ -125,7 +125,7 @@ public class SourceGatewayImpl implements SourceGateway {
 				sourceMapper.insert(sourceDO);
 			}
 			catch (Exception e) {
-				String msg = LogUtil.result(e.getMessage());
+				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
 				throw new SystemException(msg);

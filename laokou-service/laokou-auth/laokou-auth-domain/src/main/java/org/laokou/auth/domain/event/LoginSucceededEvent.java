@@ -23,7 +23,7 @@ import lombok.Data;
 import lombok.experimental.SuperBuilder;
 import org.laokou.auth.domain.user.User;
 
-import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
+import static org.laokou.common.i18n.common.NumberConstant.SUCCESS;
 
 /**
  * @author laokou

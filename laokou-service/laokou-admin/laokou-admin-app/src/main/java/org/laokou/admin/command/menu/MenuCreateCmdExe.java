@@ -26,7 +26,7 @@ import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 
 /**
  * 新增树菜单执行器.

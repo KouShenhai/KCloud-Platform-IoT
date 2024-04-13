@@ -44,13 +44,9 @@ import java.net.InetAddress;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import static com.baomidou.mybatisplus.core.toolkit.Constants.MYBATIS_PLUS;
-import static org.laokou.common.i18n.common.PropertiesConstants.SLOW_SQL_PREFIX;
-import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
-import static org.laokou.common.i18n.common.StringConstants.DOT;
-import static org.laokou.common.i18n.common.StringConstants.TRUE;
+import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
+import static org.laokou.common.i18n.common.StringConstant.TRUE;
 import static org.laokou.common.i18n.common.SysConstants.APPLICATION;
-import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 
 /**
  * mybatis-plus配置.
@@ -59,7 +55,7 @@ import static org.laokou.common.i18n.common.SysConstants.ENABLED;
  */
 @AutoConfiguration
 @ConditionalOnClass({ DataSource.class })
-@MapperScan("org.laokou.common.mybatisplus.database")
+@MapperScan("org.laokou.common.mybatisplus.repository")
 public class MybatisPlusAutoConfig {
 
 	// 静态注入缓存处理类
@@ -70,7 +66,7 @@ public class MybatisPlusAutoConfig {
 	}
 
 	@Bean
-	@ConditionalOnProperty(havingValue = TRUE, prefix = MYBATIS_PLUS + DOT + SLOW_SQL_PREFIX, name = ENABLED)
+	@ConditionalOnProperty(havingValue = TRUE, prefix = "mybatis-plus.slow-sql", name = "enabled")
 	public ConfigurationCustomizer slowSqlConfigurationCustomizer(ConfigurableEnvironment environment,
 			MybatisPlusExtProperties mybatisPlusExtProperties) {
 		SlowSqlInterceptor slowSqlInterceptor = new SlowSqlInterceptor();

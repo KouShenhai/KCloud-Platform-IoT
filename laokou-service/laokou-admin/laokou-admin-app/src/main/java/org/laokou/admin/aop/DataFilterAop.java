@@ -27,7 +27,7 @@ import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.security.utils.UserUtil;
@@ -39,9 +39,9 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.LIKE;
-import static org.laokou.common.i18n.common.DatasourceConstants.OR;
-import static org.laokou.common.i18n.common.StringConstants.*;
+import static org.laokou.common.i18n.common.DatasourceConstant.LIKE;
+import static org.laokou.common.i18n.common.DatasourceConstant.OR;
+import static org.laokou.common.i18n.common.StringConstant.*;
 
 /**
  * 数据权限切面.
@@ -68,7 +68,7 @@ public class DataFilterAop {
 				pageQuery.setSqlFilter(getSqlFilter(userDetail, point));
 			}
 			catch (Exception ex) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(ex.getMessage()), ex);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(ex.getMessage()), ex);
 			}
 		}
 	}
@@ -83,7 +83,7 @@ public class DataFilterAop {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		Method method = signature.getMethod();
 		DataFilter dataFilter = AnnotationUtils.findAnnotation(method, DataFilter.class);
-		Assert.isTrue(ObjectUtil.isNotNull(dataFilter), "@DataFilter is null");
+		Assert.isTrue(ObjectUtils.isNotNull(dataFilter), "@DataFilter is null");
 		String tableAlias = dataFilter.tableAlias();
 		String deptPathColumn = dataFilter.deptPath();
 		String creatorColumn = dataFilter.creator();

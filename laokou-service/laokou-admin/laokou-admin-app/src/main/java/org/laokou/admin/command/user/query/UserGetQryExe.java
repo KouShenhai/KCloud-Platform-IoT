@@ -26,13 +26,13 @@ import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
-import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
 
 /**
  * 查看用户执行器.
@@ -80,7 +80,7 @@ public class UserGetQryExe {
 	}
 
 	private boolean isSuperAdministrator(Integer superAdmin) {
-		return ObjectUtil.equals(YES.ordinal(), superAdmin);
+		return ObjectUtils.equals(YES.ordinal(), superAdmin);
 	}
 
 }

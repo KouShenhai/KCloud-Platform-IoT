@@ -18,11 +18,10 @@
 package org.laokou.common.core.utils;
 
 import jakarta.servlet.http.HttpServletResponse;
-import org.laokou.common.i18n.dto.Result;
+import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.MimeTypeUtils;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
@@ -36,26 +35,15 @@ public class ResponseUtil {
 	/**
 	 * 响应给视图解析.
 	 * @param response 响应对象
-	 * @param code 编码
-	 * @param message 消息
-	 * @throws IOException 异常
+	 * @param obj 对象
 	 */
-	public static void response(HttpServletResponse response, int code, String message) throws IOException {
-		response(response, JacksonUtil.toJsonStr(Result.fail(code, message)));
-	}
-
-	/**
-	 * 响应给视图解析.
-	 * @param response 响应对象
-	 * @param json json字符串
-	 * @throws IOException 异常
-	 */
-	public static void response(HttpServletResponse response, String json) throws IOException {
+	@SneakyThrows
+	public static void response(HttpServletResponse response, Object obj) {
 		response.setStatus(HttpStatus.OK.value());
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
 		try (PrintWriter writer = response.getWriter()) {
-			writer.write(json);
+			writer.write(JacksonUtil.toJsonStr(obj));
 			writer.flush();
 		}
 	}

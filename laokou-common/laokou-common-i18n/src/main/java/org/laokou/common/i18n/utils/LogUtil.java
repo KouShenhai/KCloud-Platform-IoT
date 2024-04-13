@@ -17,8 +17,7 @@
 
 package org.laokou.common.i18n.utils;
 
-import static org.laokou.common.i18n.common.StatusCodes.INTERNAL_SERVER_ERROR;
-import static org.laokou.common.i18n.common.SysConstants.EMPTY_LOG_MSG;
+import static org.laokou.common.i18n.common.StatusCode.INTERNAL_SERVER_ERROR;
 
 /**
  * 日志工具类.
@@ -27,12 +26,12 @@ import static org.laokou.common.i18n.common.SysConstants.EMPTY_LOG_MSG;
  */
 public class LogUtil {
 
-	public static String result(String msg) {
-		return StringUtil.isEmpty(msg) ? EMPTY_LOG_MSG : msg;
+	public static String record(String message) {
+		return StringUtil.isEmpty(message) ? "暂无信息" : message;
 	}
 
-	public static String fail(String msg) {
-		return StringUtil.isEmpty(msg) ? MessageUtil.getMessage(INTERNAL_SERVER_ERROR) : msg;
+	public static String except(String message) {
+		return StringUtil.isEmpty(message) ? MessageUtils.getMessage(INTERNAL_SERVER_ERROR) : message;
 	}
 
 }

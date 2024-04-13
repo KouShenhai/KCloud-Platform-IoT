@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.laokou.common.i18n.common.EventStatusEnums;
+import org.laokou.common.i18n.common.EventStatusEnum;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -34,7 +34,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Schema(name = "DecorateDomainEvent", description = "装饰领域事件")
 public class DecorateDomainEvent extends DomainEvent<Long> {
 
-	public DecorateDomainEvent(Long id, EventStatusEnums eventStatus, String sourceName) {
+	public DecorateDomainEvent(Long id, EventStatusEnum eventStatus, String sourceName) {
 		super(id, eventStatus, sourceName);
 	}
 

@@ -26,7 +26,7 @@ import org.springframework.test.context.TestConstructor;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Collections;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 
 /**
  * @author laokou

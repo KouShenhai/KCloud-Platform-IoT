@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 
 import static lombok.AccessLevel.PRIVATE;
@@ -42,7 +41,7 @@ public class Suspend extends AggregateRoot<Long> {
 
 	public void checkSuspended(boolean suspended) {
 		if (suspended) {
-			throw new FlowException("挂起失败，流程已挂起");
+			throw new RuntimeException("挂起失败，流程已挂起");
 		}
 	}
 

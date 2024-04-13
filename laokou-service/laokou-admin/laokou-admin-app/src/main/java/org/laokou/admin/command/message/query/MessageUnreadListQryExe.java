@@ -33,7 +33,7 @@ import org.springframework.transaction.TransactionDefinition;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 
 /**
  * 查询未读消息列表执行器.

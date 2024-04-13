@@ -53,7 +53,7 @@ public abstract class AbstractStorageDriver<O> implements StorageDriver<O> {
 			return getUrl(obj, file);
 		}
 		catch (Exception ex) {
-			String msg = LogUtil.result(ex.getMessage());
+			String msg = LogUtil.record(ex.getMessage());
 			log.error("文件上传失败，错误信息：{}，详情见日志", msg, ex);
 			throw new SystemException(String.format("文件上传失败，错误信息：%s", msg));
 		}

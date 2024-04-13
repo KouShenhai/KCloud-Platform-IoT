@@ -17,14 +17,14 @@
 
 package org.laokou.common.sensitive.utils;
 
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.sensitive.annotation.SensitiveField;
-import org.laokou.common.i18n.common.SensitiveTypeEnums;
+import org.laokou.common.i18n.common.SensitiveTypeEnum;
 
 import java.lang.reflect.Field;
 
-import static org.laokou.common.i18n.common.StringConstants.*;
+import static org.laokou.common.i18n.common.StringConstant.*;
 
 /**
  * @author laokou
@@ -39,7 +39,7 @@ public class SensitiveUtil {
 				// 私有属性
 				field.setAccessible(true);
 				Object o = field.get(obj);
-				if (ObjectUtil.isNull(o)) {
+				if (ObjectUtils.isNull(o)) {
 					continue;
 				}
 				String data = o.toString();
@@ -51,8 +51,8 @@ public class SensitiveUtil {
 		}
 	}
 
-	public static String format(SensitiveTypeEnums sensitiveTypeEnums, String str) {
-		return switch (sensitiveTypeEnums) {
+	public static String format(SensitiveTypeEnum sensitiveTypeEnum, String str) {
+		return switch (sensitiveTypeEnum) {
 			case MAIL -> formatMail(str);
 			case MOBILE -> formatMobile(str);
 		};

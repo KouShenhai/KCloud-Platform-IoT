@@ -17,7 +17,8 @@
 
 package org.laokou.common.redis.config;
 
-import org.laokou.common.i18n.utils.ObjectUtil;
+import io.swagger.v3.oas.annotations.media.Schema;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RBloomFilter;
@@ -33,9 +34,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.StringConstants.RISK;
-import static org.laokou.common.i18n.common.SysConstants.REDISS_PROTOCOL_PREFIX;
-import static org.laokou.common.i18n.common.SysConstants.REDIS_PROTOCOL_PREFIX;
+import static org.laokou.common.i18n.common.StringConstant.RISK;
 
 /**
  * @author livk
@@ -45,6 +44,12 @@ import static org.laokou.common.i18n.common.SysConstants.REDIS_PROTOCOL_PREFIX;
 @Configuration
 @EnableConfigurationProperties(RedisProperties.class)
 public class RedissonConfig {
+
+	@Schema(name = "REDIS_PROTOCOL_PREFIX", description = "Redis未加密连接")
+	public static final String REDIS_PROTOCOL_PREFIX = "redis://";
+
+	@Schema(name = "REDISS_PROTOCOL_PREFIX", description = "Redis加密连接")
+	public static final String REDISS_PROTOCOL_PREFIX = "rediss://";
 
 	@Bean
 	public RBloomFilter<String> bloomFilter(RedissonClient redisson) {
@@ -65,7 +70,7 @@ public class RedissonConfig {
 		int timeout = (int) properties.getTimeout().toMillis();
 		int connectTimeout = (int) properties.getConnectTimeout().toMillis();
 		boolean isSsl = properties.getSsl().isEnabled();
-		if (ObjectUtil.isNotNull(properties.getSentinel())) {
+		if (ObjectUtils.isNotNull(properties.getSentinel())) {
 			config.useSentinelServers()
 				.setMasterName(properties.getSentinel().getMaster())
 				.addSentinelAddress(convertNodes(isSsl, properties.getSentinel().getNodes()))
@@ -74,7 +79,7 @@ public class RedissonConfig {
 				.setConnectTimeout(connectTimeout)
 				.setPassword(properties.getPassword());
 		}
-		else if (ObjectUtil.isNotNull(properties.getCluster())) {
+		else if (ObjectUtils.isNotNull(properties.getCluster())) {
 			config.useClusterServers()
 				.addNodeAddress(convertNodes(isSsl, properties.getCluster().getNodes()))
 				.setPassword(properties.getPassword())

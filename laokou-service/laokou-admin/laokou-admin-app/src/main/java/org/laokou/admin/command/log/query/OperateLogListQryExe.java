@@ -35,8 +35,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_OPERATE_LOG;
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_OPERATE_LOG;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 
 /**
  * 查询操作日志列表执行器.

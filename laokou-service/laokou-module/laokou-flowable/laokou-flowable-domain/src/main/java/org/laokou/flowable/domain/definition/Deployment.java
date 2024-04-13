@@ -23,7 +23,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.SuperBuilder;
-import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -64,7 +63,7 @@ public class Deployment extends AggregateRoot<Long> {
 
 	public void checkKey(long count) {
 		if (count > 0) {
-			throw new FlowException("流程已存在，请更换流程图并上传");
+			throw new RuntimeException("流程已存在，请更换流程图并上传");
 		}
 	}
 

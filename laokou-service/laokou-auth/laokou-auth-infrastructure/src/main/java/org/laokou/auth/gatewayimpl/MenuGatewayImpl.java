@@ -22,15 +22,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.user.User;
 import org.laokou.auth.gatewayimpl.database.MenuMapper;
-import org.laokou.common.i18n.common.exception.DataSourceException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 
 /**
  * 菜单.
@@ -58,8 +55,9 @@ public class MenuGatewayImpl implements MenuGateway {
 			return new HashSet<>(menuMapper.selectPermissionsByUserId(user.getId()));
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 boot_sys_menu 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			throw new DataSourceException(CUSTOM_SERVER_ERROR, "表 boot_sys_menu 不存在");
+			log.error("表 boot_sys_menu 不存在，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+			// throw new DataSourceException(CUSTOM_SERVER_ERROR, "表 boot_sys_menu 不存在");
+			throw e;
 		}
 	}
 

@@ -21,7 +21,7 @@ import com.alibaba.nacos.api.config.ConfigService;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.common.exception.GatewayException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -42,8 +42,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.ErrorCodes.ROUTE_NOT_EXIST;
-import static org.laokou.common.i18n.common.RouterConstants.DATA_ID;
+import static org.laokou.common.i18n.common.RouterConstant.DATA_ID;
+import static org.laokou.common.i18n.common.exception.SystemException.ROUTER_NOT_EXIST;
 
 // @formatter:off
 /**
@@ -129,8 +129,8 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			return JacksonUtil.toList(configInfo, RouteDefinition.class);
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			throw new GatewayException(ROUTE_NOT_EXIST);
+			log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+			throw new SystemException(ROUTER_NOT_EXIST);
 		}
 	}
 

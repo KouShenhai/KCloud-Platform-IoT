@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.laokou.common.core.utils.SslUtil.sslContext;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 
 /**
  * http客户端工具类.
@@ -104,7 +104,7 @@ public class HttpUtil {
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
 			catch (Exception e) {
-				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			}
 			return resultString;
 		}
@@ -144,7 +144,7 @@ public class HttpUtil {
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
 			catch (IOException e) {
-				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			}
 			return resultString;
 		}
@@ -202,7 +202,7 @@ public class HttpUtil {
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
 			catch (IOException e) {
-				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			}
 			return resultString;
 		}
@@ -249,7 +249,7 @@ public class HttpUtil {
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
 			catch (IOException e) {
-				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			}
 			return resultString;
 		}

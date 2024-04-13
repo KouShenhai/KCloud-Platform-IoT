@@ -26,7 +26,7 @@ import org.laokou.flowable.domain.gateway.DefinitionGateway;
 import org.laokou.flowable.dto.definition.DefinitionCreateCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
+import static org.laokou.common.i18n.common.DatasourceConstant.FLOWABLE;
 
 /**
  * 新增流程执行器.

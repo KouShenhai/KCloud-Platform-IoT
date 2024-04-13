@@ -25,8 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.laokou.common.i18n.common.exception.DataSourceException;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -39,8 +38,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
-import static org.laokou.common.i18n.common.StringConstants.TRUE;
-import static org.laokou.common.i18n.common.SysConstants.THREADS_VIRTUAL_ENABLED;
+import static org.laokou.common.core.config.TaskExecutorConfig.THREADS_VIRTUAL_ENABLED;
+import static org.laokou.common.i18n.common.StringConstant.TRUE;
 
 /**
  * @author laokou
@@ -95,7 +94,7 @@ public class MybatisUtil {
 			.toList();
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {
-			throw new DataSourceException("批量插入数据异常，数据已回滚");
+			throw new RuntimeException("事务已回滚");
 		}
 	}
 
@@ -108,7 +107,7 @@ public class MybatisUtil {
 			M mapper = sqlSession.getMapper(clazz);
 			try {
 				item.forEach(i -> consumer.accept(mapper, i));
-				if (ObjectUtil.isNotNull(cyclicBarrier)) {
+				if (ObjectUtils.isNotNull(cyclicBarrier)) {
 					cyclicBarrier.await(180, TimeUnit.SECONDS);
 				}
 				sqlSession.commit();
@@ -133,7 +132,7 @@ public class MybatisUtil {
 		// 回滚标识
 		rollback.compareAndSet(false, true);
 		log.error("批量插入数据异常，已设置回滚标识，错误信息", e);
-		if (ObjectUtil.isNotNull(cyclicBarrier)) {
+		if (ObjectUtils.isNotNull(cyclicBarrier)) {
 			cyclicBarrier.reset();
 		}
 	}
@@ -145,7 +144,7 @@ public class MybatisUtil {
 	}
 
 	private boolean enabled() {
-		return ObjectUtil.equals(TRUE, environment.getProperty(THREADS_VIRTUAL_ENABLED));
+		return ObjectUtils.equals(TRUE, environment.getProperty(THREADS_VIRTUAL_ENABLED));
 	}
 
 }

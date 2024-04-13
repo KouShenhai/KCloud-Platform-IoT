@@ -25,7 +25,8 @@ import org.flowable.bpmn.model.Process;
 import org.flowable.common.engine.impl.util.io.InputStreamSource;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.ProcessDefinition;
-import org.laokou.common.i18n.common.exception.FlowException;
+import org.laokou.common.i18n.common.StatusCode;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.security.utils.UserUtil;
@@ -70,9 +71,9 @@ public class DefinitionGatewayImpl implements DefinitionGateway {
 				repositoryService.deleteDeployment(deploymentId, true);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new FlowException(LogUtil.fail(e.getMessage()));
+				throw new SystemException(StatusCode.INTERNAL_SERVER_ERROR, LogUtil.except(e.getMessage()));
 			}
 		});
 	}
@@ -110,9 +111,9 @@ public class DefinitionGatewayImpl implements DefinitionGateway {
 				repositoryService.activateProcessDefinitionById(definitionId, true, null);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new FlowException(LogUtil.fail(e.getMessage()));
+				throw new SystemException(StatusCode.INTERNAL_SERVER_ERROR, LogUtil.except(e.getMessage()));
 			}
 		});
 	}
@@ -128,9 +129,9 @@ public class DefinitionGatewayImpl implements DefinitionGateway {
 				repositoryService.suspendProcessDefinitionById(definitionId, true, null);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new FlowException(LogUtil.fail(e.getMessage()));
+				throw new SystemException(StatusCode.INTERNAL_SERVER_ERROR, LogUtil.except(e.getMessage()));
 			}
 		});
 	}
@@ -151,9 +152,9 @@ public class DefinitionGatewayImpl implements DefinitionGateway {
 					.deploy();
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new FlowException(LogUtil.fail(e.getMessage()));
+				throw new SystemException(StatusCode.INTERNAL_SERVER_ERROR, LogUtil.except(e.getMessage()));
 			}
 		});
 	}

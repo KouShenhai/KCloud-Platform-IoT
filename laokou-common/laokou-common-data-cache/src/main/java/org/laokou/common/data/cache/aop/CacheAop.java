@@ -25,8 +25,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.SpringExpressionUtil;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.common.CacheOperatorTypeEnum;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -50,11 +50,11 @@ public class CacheAop {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		String[] parameterNames = signature.getParameterNames();
 		DataCache dataCache = AnnotationUtils.findAnnotation(signature.getMethod(), DataCache.class);
-		Assert.isTrue(ObjectUtil.isNotNull(dataCache), "@DataCache is null");
-		CacheOperatorTypeEnums cacheOperatorTypeEnums = dataCache.type();
+		Assert.isTrue(ObjectUtils.isNotNull(dataCache), "@DataCache is null");
+		CacheOperatorTypeEnum cacheOperatorTypeEnum = dataCache.type();
 		String name = dataCache.name();
 		String field = SpringExpressionUtil.parse(dataCache.key(), parameterNames, point.getArgs(), String.class);
-		return switch (cacheOperatorTypeEnums) {
+		return switch (cacheOperatorTypeEnum) {
 			case GET -> get(name, field, point);
 			case DEL -> del(name, field, point);
 		};
@@ -64,7 +64,7 @@ public class CacheAop {
 	private Object get(String name, String field, ProceedingJoinPoint point) {
 		Cache cache = cache(name);
 		Cache.ValueWrapper valueWrapper = cache.get(field);
-		if (ObjectUtil.isNotNull(valueWrapper)) {
+		if (ObjectUtils.isNotNull(valueWrapper)) {
 			return valueWrapper.get();
 		}
 		Object value = point.proceed();
@@ -81,7 +81,7 @@ public class CacheAop {
 
 	private Cache cache(String name) {
 		Cache cache = cacheManager.getCache(name);
-		Assert.isTrue(ObjectUtil.isNotNull(cache), "cache is null");
+		Assert.isTrue(ObjectUtils.isNotNull(cache), "cache is null");
 		return cache;
 	}
 

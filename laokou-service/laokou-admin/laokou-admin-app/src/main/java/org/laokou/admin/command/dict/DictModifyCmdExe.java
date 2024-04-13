@@ -25,7 +25,7 @@ import org.laokou.admin.dto.dict.DictModifyCmd;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 
 /**
  * 修改字典执行器.

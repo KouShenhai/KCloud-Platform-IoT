@@ -24,14 +24,14 @@ import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.core.utils.TreeUtil;
-import org.laokou.common.i18n.common.FindTypeEnums;
+import org.laokou.common.i18n.common.FindTypeEnum;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 
 /**
  * 查看租户树菜单执行器.
@@ -51,7 +51,7 @@ public class MenuTenantListQryExe {
 	 */
 	@DS(TENANT)
 	public Result<List<MenuCO>> execute(MenuTenantListQry qry) {
-		return switch (FindTypeEnums.valueOf(qry.getType())) {
+		return switch (FindTypeEnum.valueOf(qry.getType())) {
 			case LIST, USER_TREE_LIST -> null;
 			case TREE_LIST ->
 				Result.of(buildTreeNode(menuMapper.selectTenantMenuList().stream().map(this::convert).toList())

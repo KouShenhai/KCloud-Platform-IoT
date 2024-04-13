@@ -28,7 +28,7 @@ import org.laokou.admin.domain.event.FileUploadSucceededEvent;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,7 +37,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 import static lombok.AccessLevel.PRIVATE;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 
 /**
  * @author laokou
@@ -84,7 +84,7 @@ public class File extends AggregateRoot<Long> {
 	}
 
 	public void modifyUrl(Exception e, String url, String appName) {
-		if (ObjectUtil.isNotNull(e)) {
+		if (ObjectUtils.isNotNull(e)) {
 			ossUploadFail(url, e, appName);
 		}
 		else {

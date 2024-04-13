@@ -19,39 +19,31 @@ package org.laokou.common.i18n.common.exception;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.utils.MessageUtils;
 
 import java.io.Serial;
-
-import static org.laokou.common.i18n.common.StatusCodes.CUSTOM_SERVER_ERROR;
 
 /**
  * @author laokou
  */
 @Data
 @Schema(name = "GlobalException", description = "全局异常")
-public abstract class GlobalException extends RuntimeException {
+abstract class GlobalException extends RuntimeException {
 
 	@Serial
 	private static final long serialVersionUID = 4102669900127613541L;
 
-	private final int code;
+	private final String code;
 
 	private final String msg;
 
-	protected GlobalException(int code) {
+	protected GlobalException(String code) {
 		this.code = code;
-		this.msg = MessageUtil.getMessage(code);
+		this.msg = MessageUtils.getMessage(code);
 	}
 
-	protected GlobalException(int code, String msg) {
+	protected GlobalException(String code, String msg) {
 		this.code = code;
-		this.msg = msg;
-	}
-
-	protected GlobalException(String msg) {
-		super(msg);
-		this.code = CUSTOM_SERVER_ERROR;
 		this.msg = msg;
 	}
 

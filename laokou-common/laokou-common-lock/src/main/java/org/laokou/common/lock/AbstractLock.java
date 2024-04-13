@@ -17,8 +17,6 @@
 
 package org.laokou.common.lock;
 
-import org.laokou.common.i18n.common.LockTypeEnums;
-
 /**
  * 分布式锁抽象类.
  *
@@ -28,7 +26,7 @@ public abstract class AbstractLock<T> implements Lock {
 
 	/**
 	 * 尝试加锁.
-	 * @param lockTypeEnums 类型
+	 * @param typeEnum 类型
 	 * @param key 键
 	 * @param expire 过期时间
 	 * @param timeout 锁等待超时时间
@@ -36,28 +34,27 @@ public abstract class AbstractLock<T> implements Lock {
 	 * @throws InterruptedException 线程中断异常
 	 */
 	@Override
-	public Boolean tryLock(LockTypeEnums lockTypeEnums, String key, long expire, long timeout)
-			throws InterruptedException {
-		return tryLock(getLock(lockTypeEnums, key), expire, timeout);
+	public Boolean tryLock(TypeEnum typeEnum, String key, long expire, long timeout) throws InterruptedException {
+		return tryLock(getLock(typeEnum, key), expire, timeout);
 	}
 
 	/**
 	 * 释放锁.
-	 * @param lockTypeEnums 锁类型
+	 * @param typeEnum 锁类型
 	 * @param key 键
 	 */
 	@Override
-	public void unlock(LockTypeEnums lockTypeEnums, String key) {
-		unlock(getLock(lockTypeEnums, key));
+	public void unlock(TypeEnum typeEnum, String key) {
+		unlock(getLock(typeEnum, key));
 	}
 
 	/**
 	 * 获取锁.
-	 * @param lockTypeEnums 锁类型
+	 * @param typeEnum 锁类型
 	 * @param key 键
 	 * @return T
 	 */
-	public abstract T getLock(LockTypeEnums lockTypeEnums, String key);
+	public abstract T getLock(TypeEnum typeEnum, String key);
 
 	/**
 	 * 尝试加锁.

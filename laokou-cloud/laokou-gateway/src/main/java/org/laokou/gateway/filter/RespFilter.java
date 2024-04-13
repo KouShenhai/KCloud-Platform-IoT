@@ -21,9 +21,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.common.StatusCodes;
+import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.gateway.exception.ExceptionEnum;
 import org.laokou.gateway.utils.I18nUtil;
 import org.reactivestreams.Publisher;
@@ -45,8 +45,7 @@ import reactor.core.publisher.Mono;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.laokou.common.i18n.common.OAuth2Constants.*;
-import static org.laokou.common.i18n.common.StringConstants.CHINESE_COMMA;
-import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
+import static org.laokou.common.i18n.common.StringConstant.CHINESE_COMMA;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.*;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpMethod.POST;
@@ -100,9 +99,9 @@ public class RespFilter implements GlobalFilter, Ordered {
 			@Override
 			public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
 				String contentType = getDelegate().getHeaders().getFirst(CONTENT_TYPE);
-				Assert.isTrue(ObjectUtil.isNotNull(contentType), "content type is null");
-				if (contentType.contains(APPLICATION_JSON_VALUE)
-						&& ObjectUtil.requireNotNull(response.getStatusCode()).value() != StatusCodes.OK
+				Assert.isTrue(ObjectUtils.isNotNull(contentType), "content type is null");
+				if (contentType.contains(APPLICATION_JSON_VALUE) && !ObjectUtils
+					.equals(ObjectUtils.requireNotNull(response.getStatusCode()).value(), StatusCode.OK)
 						&& body instanceof Flux) {
 					Flux<? extends DataBuffer> flux = Flux.from(body);
 					return super.writeWith(flux.map(dataBuffer -> {
@@ -117,17 +116,13 @@ public class RespFilter implements GlobalFilter, Ordered {
 						JsonNode node = JacksonUtil.readTree(str);
 						JsonNode msgNode = node.get(ERROR_DESCRIPTION);
 						JsonNode codeNode = node.get(ERROR);
-						if (msgNode == null) {
+						if (msgNode == null || codeNode == null) {
 							return dataBufferFactory.wrap(new byte[0]);
 						}
-						String msg = msgNode.asText();
-						int code = codeNode.asInt();
-						if (code == DEFAULT) {
-							ExceptionEnum ee = getException(codeNode.asText());
-							code = ee.getCode();
-							msg = ee.getMsg() + CHINESE_COMMA + msg;
-						}
-						byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail(code, msg)).getBytes();
+						ExceptionEnum ee = getException(codeNode.asText());
+						String code = ee.getCode();
+						String msg = ee.getMsg() + CHINESE_COMMA + msgNode.asText();
+						byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail(code, msg)).getBytes(UTF_8);
 						return dataBufferFactory.wrap(uppedContent);
 					}));
 				}
@@ -148,7 +143,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 	 * @return 自定义异常
 	 */
 	private ExceptionEnum getException(String code) {
-		return ObjectUtil.requireNotNull(ExceptionEnum.getInstance(code.toUpperCase()));
+		return ObjectUtils.requireNotNull(ExceptionEnum.getInstance(code.toUpperCase()));
 	}
 
 }

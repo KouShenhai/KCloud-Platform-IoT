@@ -27,12 +27,13 @@ import org.laokou.gateway.utils.I18nUtil;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import static org.laokou.common.i18n.common.StatusCodes.*;
+import static org.laokou.common.i18n.common.StatusCode.*;
 
 /**
  * 全局异常处理器.
@@ -56,33 +57,33 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 			// 国际化
 			I18nUtil.set(exchange);
 			if (e instanceof NotFoundException) {
-				log.error("服务正在维护，请联系管理员，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-				return ReactiveResponseUtil.response(exchange, Result.fail(SERVICE_UNAVAILABLE));
+				log.error("服务正在维护，请联系管理员，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+				return ReactiveResponseUtil.response(exchange, Result.fail("" + SERVICE_UNAVAILABLE));
 			}
 			if (e instanceof ResponseStatusException responseStatusException) {
 				int statusCode = responseStatusException.getStatusCode().value();
-				if (statusCode == NOT_FOUND) {
+				if (statusCode == HttpStatus.NOT_FOUND.value()) {
 					log.error("状态码：{}，无法找到请求URL为{}的资源，错误信息：{}，详情见日志", statusCode,
 							exchange.getRequest().getPath().pathWithinApplication().value(),
-							LogUtil.result(e.getMessage()), e);
-					return ReactiveResponseUtil.response(exchange, Result.fail(NOT_FOUND));
+							LogUtil.record(e.getMessage()), e);
+					return ReactiveResponseUtil.response(exchange, Result.fail("" + NOT_FOUND));
 				}
-				else if (statusCode == BAD_REQUEST) {
-					log.error("状态码：{}，错误请求，错误信息：{}，详情见日志", statusCode, LogUtil.result(e.getMessage()), e);
+				else if (statusCode == HttpStatus.BAD_REQUEST.value()) {
+					log.error("状态码：{}，错误请求，错误信息：{}，详情见日志", statusCode, LogUtil.record(e.getMessage()), e);
 					return ReactiveResponseUtil.response(exchange, Result.fail(BAD_REQUEST));
 				}
-				else if (statusCode == INTERNAL_SERVER_ERROR) {
-					log.error("状态码：{}，服务器内部错误，无法完成请求，错误信息：{}，详情见日志", statusCode, LogUtil.result(e.getMessage()), e);
-					return ReactiveResponseUtil.response(exchange, Result.fail(INTERNAL_SERVER_ERROR));
+				else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+					log.error("状态码：{}，服务器内部错误，无法完成请求，错误信息：{}，详情见日志", statusCode, LogUtil.record(e.getMessage()), e);
+					return ReactiveResponseUtil.response(exchange, Result.fail("" + INTERNAL_SERVER_ERROR));
 				}
 			}
 			if (BlockException.isBlockException(e)) {
 				// 思路来源于SentinelGatewayBlockExceptionHandler
-				log.error("请求太频繁，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-				return ReactiveResponseUtil.response(exchange, Result.fail(TOO_MANY_REQUESTS));
+				log.error("请求太频繁，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+				return ReactiveResponseUtil.response(exchange, Result.fail("" + TOO_MANY_REQUESTS));
 			}
-			log.error("错误网关，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			return ReactiveResponseUtil.response(exchange, Result.fail(BAD_GATEWAY));
+			log.error("错误网关，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+			return ReactiveResponseUtil.response(exchange, Result.fail("" + BAD_GATEWAY));
 		}
 		finally {
 			I18nUtil.reset();

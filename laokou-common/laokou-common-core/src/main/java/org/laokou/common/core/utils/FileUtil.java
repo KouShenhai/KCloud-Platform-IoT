@@ -31,8 +31,8 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import static org.laokou.common.i18n.common.StringConstants.COMMA;
-import static org.laokou.common.i18n.common.StringConstants.DOT;
+import static org.laokou.common.i18n.common.StringConstant.COMMA;
+import static org.laokou.common.i18n.common.StringConstant.DOT;
 
 /**
  * 文件工具类.

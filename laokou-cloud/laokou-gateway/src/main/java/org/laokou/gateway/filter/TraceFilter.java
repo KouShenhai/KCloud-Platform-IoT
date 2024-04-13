@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import static org.laokou.common.i18n.common.TraceConstants.*;
+import static org.laokou.common.i18n.common.TraceConstant.*;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.getHost;
 
 /**
@@ -58,8 +58,8 @@ public class TraceFilter implements GlobalFilter, Ordered {
 			ThreadContext.put(USER_NAME, username);
 			// 获取uri
 			String requestURL = ReactiveRequestUtil.getRequestURL(request);
-			log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}，主机：{}", requestURL, LogUtil.result(userId),
-					LogUtil.result(username), LogUtil.result(tenantId), LogUtil.result(traceId), host);
+			log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}，主机：{}", requestURL, LogUtil.record(userId),
+					LogUtil.record(username), LogUtil.record(tenantId), LogUtil.record(traceId), host);
 			return chain.filter(exchange.mutate()
 				.request(request.mutate()
 					.header(USER_NAME, username)

@@ -21,7 +21,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.FindTypeEnums;
+import org.laokou.common.i18n.common.FindTypeEnum;
 import org.laokou.admin.dto.dept.DeptListQry;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.admin.gatewayimpl.database.DeptMapper;
@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 
 /**
  * 查询部门列表执行器.
@@ -54,7 +54,7 @@ public class DeptListQryExe {
 	 */
 	@DS(TENANT)
 	public Result<List<DeptCO>> execute(DeptListQry qry) {
-		return switch (FindTypeEnums.valueOf(qry.getType())) {
+		return switch (FindTypeEnum.valueOf(qry.getType())) {
 			case LIST -> Result.of(getDeptList(qry).stream().map(this::convert).toList());
 			case TREE_LIST -> Result.of(buildTreeNode(getDeptList(qry).stream().map(this::convert).toList()));
 			case USER_TREE_LIST -> null;

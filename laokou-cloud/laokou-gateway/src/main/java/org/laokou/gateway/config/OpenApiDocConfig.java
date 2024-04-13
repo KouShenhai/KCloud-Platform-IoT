@@ -29,8 +29,8 @@ import reactor.core.scheduler.Schedulers;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.NetworkConstants.HTTPS_PROTOCOL;
-import static org.laokou.common.i18n.common.StringConstants.SLASH;
+import static org.laokou.common.i18n.common.NetworkConstant.HTTPS_PROTOCOL;
+import static org.laokou.common.i18n.common.StringConstant.SLASH;
 import static org.laokou.common.i18n.common.SysConstants.ALL_PATTERNS;
 
 /**

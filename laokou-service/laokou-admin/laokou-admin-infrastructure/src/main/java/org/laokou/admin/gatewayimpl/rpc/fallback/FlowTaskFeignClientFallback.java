@@ -20,7 +20,6 @@ package org.laokou.admin.gatewayimpl.rpc.fallback;
 import org.laokou.admin.dto.resource.TaskAuditCmd;
 import org.laokou.admin.dto.resource.TaskStartCmd;
 import org.laokou.admin.gatewayimpl.rpc.FlowTaskFeignClient;
-import org.laokou.common.i18n.common.exception.FeignException;
 import org.laokou.common.i18n.dto.Result;
 
 /**
@@ -37,7 +36,7 @@ public class FlowTaskFeignClientFallback implements FlowTaskFeignClient {
 	 */
 	@Override
 	public Result<Boolean> audit(TaskAuditCmd cmd) {
-		throw new FeignException("审批流程失败");
+		throw new RuntimeException("审批流程失败");
 	}
 
 	/**
@@ -47,7 +46,7 @@ public class FlowTaskFeignClientFallback implements FlowTaskFeignClient {
 	 */
 	@Override
 	public Result<Boolean> start(TaskStartCmd cmd) {
-		throw new FeignException("启动流程失败");
+		throw new RuntimeException("启动流程失败");
 	}
 
 }

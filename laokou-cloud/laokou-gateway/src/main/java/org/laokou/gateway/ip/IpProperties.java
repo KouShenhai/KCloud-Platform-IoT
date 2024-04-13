@@ -21,8 +21,6 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.PropertiesConstants.IP_PREFIX;
-
 /**
  * IP配置.
  *
@@ -30,7 +28,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.IP_PREFIX;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = IP_PREFIX)
+@ConfigurationProperties(prefix = "spring.cloud.gateway.ip")
 public class IpProperties {
 
 	/**

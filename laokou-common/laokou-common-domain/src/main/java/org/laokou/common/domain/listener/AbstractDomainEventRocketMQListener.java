@@ -33,8 +33,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.EventStatusEnums.CONSUME_FAILED;
-import static org.laokou.common.i18n.common.EventStatusEnums.CONSUME_SUCCEED;
+import static org.laokou.common.i18n.common.EventStatusEnum.CONSUME_FAILED;
+import static org.laokou.common.i18n.common.EventStatusEnum.CONSUME_SUCCEED;
 
 /**
  * @author laokou
@@ -64,7 +64,7 @@ public abstract class AbstractDomainEventRocketMQListener implements RocketMQLis
 			else {
 				// 消费失败
 				events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_FAILED, eventDO.getSourceName()));
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			}
 		}
 		finally {

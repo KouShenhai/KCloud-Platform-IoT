@@ -25,7 +25,7 @@ import org.laokou.admin.dto.user.UserStatusModifyCmd;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 
 /**
  * 修改用户状态执行器.

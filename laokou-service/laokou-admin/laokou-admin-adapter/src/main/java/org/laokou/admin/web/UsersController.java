@@ -26,7 +26,7 @@ import org.laokou.admin.dto.user.*;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
+import org.laokou.common.i18n.common.CacheOperatorTypeEnum;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.CacheNameConstants.USERS;
+import static org.laokou.common.i18n.common.CacheNameConstant.USERS;
 
 /**
  * @author laokou
@@ -54,7 +54,7 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "修改用户")
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@PreAuthorize("hasAuthority('users:modify')")
-	@DataCache(name = USERS, key = "#cmd.userCO.id", type = CacheOperatorTypeEnums.DEL)
+	@DataCache(name = USERS, key = "#cmd.userCO.id", type = CacheOperatorTypeEnum.DEL)
 	public void modify(@RequestBody UserModifyCmd cmd) {
 		usersServiceI.modify(cmd);
 	}

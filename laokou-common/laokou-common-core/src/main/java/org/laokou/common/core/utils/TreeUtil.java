@@ -23,7 +23,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import static lombok.AccessLevel.PROTECTED;
-import static org.laokou.common.i18n.common.StringConstants.COMMA;
+import static org.laokou.common.i18n.common.StringConstant.COMMA;
 
 /**
  * 树节菜单工具类.
@@ -80,7 +80,7 @@ public class TreeUtil {
 	 * @return 树节点
 	 */
 	public static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, T rootNode) {
-		if (ObjectUtil.isNull(rootNode)) {
+		if (ObjectUtils.isNull(rootNode)) {
 			throw new SystemException("请构造根节点");
 		}
 		List<T> nodes = new ArrayList<>(treeNodes);
@@ -92,7 +92,7 @@ public class TreeUtil {
 		}
 		for (T treeNo : nodes) {
 			T parent = nodeMap.get(treeNo.getPid());
-			if (ObjectUtil.isNotNull(parent) && treeNo.getPid().equals(parent.getId())) {
+			if (ObjectUtils.isNotNull(parent) && treeNo.getPid().equals(parent.getId())) {
 				treeNo.setPath(parent.getPath() + COMMA + treeNo.getId());
 				parent.getChildren().add(treeNo);
 			}

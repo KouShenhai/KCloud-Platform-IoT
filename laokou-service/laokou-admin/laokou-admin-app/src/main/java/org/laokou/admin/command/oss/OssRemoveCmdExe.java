@@ -23,7 +23,7 @@ import org.laokou.admin.domain.gateway.OssGateway;
 import org.laokou.admin.dto.oss.OssRemoveCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 
 /**
  * 删除OSS执行器.

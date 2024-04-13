@@ -17,20 +17,12 @@
 
 package org.laokou.common.nacos.config;
 
-import com.alibaba.nacos.client.naming.remote.NamingClientProxy;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.nacos.proxy.ProtocolProxy;
-import org.laokou.common.nacos.proxy.ProtocolProxyDelegate;
 import org.laokou.common.nacos.utils.ServiceUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.boot.web.server.Ssl;
 import org.springframework.cloud.client.serviceregistry.Registration;
-import org.springframework.context.annotation.Bean;
-
-import java.util.Optional;
 
 /**
  * @author laokou
@@ -43,16 +35,6 @@ public class NacosAutoConfig {
 	private final ServiceUtil serviceUtil;
 
 	private final Registration registration;
-
-	/**
-	 * 协议代理. {@link NamingClientProxy}
-	 * @param serverProperties server配置
-	 * @return ProtocolProxy
-	 */
-	@Bean
-	public ProtocolProxy protocolProxy(ServerProperties serverProperties) {
-		return new ProtocolProxyDelegate(Optional.ofNullable(serverProperties.getSsl()).orElse(new Ssl()).isEnabled());
-	}
 
 	@PreDestroy
 	public void close() {

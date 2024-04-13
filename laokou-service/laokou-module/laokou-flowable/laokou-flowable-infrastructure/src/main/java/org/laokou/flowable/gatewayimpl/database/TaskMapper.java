@@ -23,8 +23,8 @@ import org.apache.ibatis.annotations.Param;
 import org.laokou.flowable.gatewayimpl.database.dataobject.TaskDO;
 import org.springframework.stereotype.Repository;
 
-import static org.laokou.common.i18n.common.MybatisPlusConstants.TENANT_ID;
 import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
+import static org.laokou.common.i18n.dto.Identifier.TENANT_ID;
 
 /**
  * 任务流程.

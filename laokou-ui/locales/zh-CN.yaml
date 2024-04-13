@@ -1,5 +1,5 @@
 buttons:
-  pureLoginOut: 退出系统
+  pureLoginOut: 注销
   pureLogin: 登录
   pureSystemSet: 打开项目配置
   pureReload: 重新加载
