@@ -17,6 +17,7 @@
 
 package org.laokou.mqtt.config;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.client.MqttClient;
@@ -25,18 +26,23 @@ import org.eclipse.paho.mqttv5.client.persist.MemoryPersistence;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.laokou.common.i18n.common.MqttConstants.WILL_DATA;
-import static org.laokou.common.i18n.common.MqttConstants.WILL_TOPIC;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * @author laokou
  */
 @Slf4j
 public class MqttServer implements Server {
+
+	@Schema(name = "WILL_TOPIC", description = "服务停止前的消息主题")
+	private static final String WILL_TOPIC = "will_topic";
+
+	@Schema(name = "WILL_DATA", description = "服务下线")
+	private static final byte[] WILL_DATA = "offline".getBytes(UTF_8);
 
 	private volatile boolean running;
 
@@ -77,7 +83,7 @@ public class MqttServer implements Server {
 	@SneakyThrows
 	public synchronized void stop() {
 		running = false;
-		if (ObjectUtil.isNotNull(client)) {
+		if (ObjectUtils.isNotNull(client)) {
 			client.disconnectForcibly();
 		}
 		log.info("关闭MQTT");

@@ -22,7 +22,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
 
-import static org.laokou.common.i18n.common.SysConstants.SPRING;
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**
  * 角色转换器.

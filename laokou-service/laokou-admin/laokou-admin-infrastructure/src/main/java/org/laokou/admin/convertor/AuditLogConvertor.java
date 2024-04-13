@@ -21,7 +21,8 @@ import org.laokou.admin.domain.resource.AuditLog;
 import org.laokou.admin.gatewayimpl.database.dataobject.AuditLogDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
-import static org.laokou.common.i18n.common.SysConstants.SPRING;
+
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**
  * 审批日志转换器.

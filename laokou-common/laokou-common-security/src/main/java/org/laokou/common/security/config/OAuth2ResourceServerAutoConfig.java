@@ -39,13 +39,13 @@ import org.springframework.security.config.annotation.web.configurers.AuthorizeH
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_RESOURCE_SERVER_PREFIX;
-import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
-import static org.laokou.common.i18n.common.StringConstants.TRUE;
-import static org.laokou.common.i18n.common.SysConstants.ENABLED;
+import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
@@ -58,8 +58,8 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 @EnableWebSecurity
 @EnableMethodSecurity
 @AutoConfiguration(after = { OAuth2AuthorizationAutoConfig.class })
-@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = OAUTH2_RESOURCE_SERVER_PREFIX,
-		name = ENABLED)
+@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.security.oauth2.resource-server",
+		name = "enabled")
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class OAuth2ResourceServerAutoConfig {
 

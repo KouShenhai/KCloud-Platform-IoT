@@ -19,7 +19,7 @@ package org.laokou.common.domain.publish;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.context.DomainEventContextHolder;
-import org.laokou.common.i18n.common.JobModeEnums;
+import org.laokou.common.i18n.common.JobModeEnum;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,8 +32,8 @@ public class AsyncDomainEventPublisher implements DomainEventPublisher {
 	private final DomainEventPublishTask domainEventPublishTask;
 
 	@Override
-	public void publish(JobModeEnums jobModeEnums) {
-		domainEventPublishTask.publishEvent(DomainEventContextHolder.get(), jobModeEnums);
+	public void publish(JobModeEnum jobModeEnum) {
+		domainEventPublishTask.publishEvent(DomainEventContextHolder.get(), jobModeEnum);
 	}
 
 }

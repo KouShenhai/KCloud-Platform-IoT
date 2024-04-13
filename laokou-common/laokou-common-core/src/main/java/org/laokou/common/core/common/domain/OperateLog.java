@@ -31,14 +31,14 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
 import static lombok.AccessLevel.PRIVATE;
-import static org.laokou.common.i18n.common.StringConstants.*;
-import static org.laokou.common.i18n.common.SysConstants.EMPTY_JSON;
+import static org.laokou.common.core.utils.JacksonUtil.EMPTY_JSON;
+import static org.laokou.common.i18n.common.StringConstant.*;
 
 /**
  * @author laokou
@@ -92,7 +92,7 @@ public class OperateLog extends AggregateRoot<Long> {
 	private Long takeTime;
 
 	public void modifyStatus(Exception e, HttpServletRequest request, String appName) {
-		if (ObjectUtil.isNotNull(e)) {
+		if (ObjectUtils.isNotNull(e)) {
 			operateFail(e, request, appName);
 		}
 		else {

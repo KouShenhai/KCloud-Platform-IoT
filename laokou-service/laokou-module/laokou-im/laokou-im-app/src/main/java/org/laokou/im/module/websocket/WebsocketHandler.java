@@ -34,7 +34,7 @@ import org.laokou.common.security.utils.UserDetail;
 import org.springframework.stereotype.Component;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.laokou.common.i18n.common.StatusCodes.UNAUTHORIZED;
+import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
 import static org.laokou.common.redis.utils.RedisUtil.HOUR_ONE_EXPIRE;
 
 /**
@@ -79,7 +79,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 			CLIENT_CACHE.put(id.toString(), channel);
 		}
 		else {
-			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
+			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail("" + UNAUTHORIZED))));
 			ctx.close();
 		}
 	}

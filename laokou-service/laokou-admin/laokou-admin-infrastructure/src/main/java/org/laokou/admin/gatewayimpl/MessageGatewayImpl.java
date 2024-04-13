@@ -31,9 +31,9 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.common.MessageTypeEnums;
+import org.laokou.common.i18n.common.MessageTypeEnum;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.DateUtils;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -44,8 +44,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.RocketMqConstants.*;
-import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
+import static org.laokou.common.i18n.common.RocketMqConstant.*;
+import static org.laokou.common.i18n.common.TraceConstant.TRACE_ID;
 
 /**
  * 消息管理.
@@ -97,7 +97,7 @@ public class MessageGatewayImpl implements MessageGateway {
 				messageDetailMapper.updateById(messageDetailDO);
 			}
 			catch (Exception e) {
-				String msg = LogUtil.result(e.getMessage());
+				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				rollback.setRollbackOnly();
 				throw new SystemException(msg);
@@ -117,7 +117,7 @@ public class MessageGatewayImpl implements MessageGateway {
 				createMessageDetail(messageDO.getId(), message.getReceiver());
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				rollback.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -141,7 +141,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	 * @return 消息标签
 	 */
 	private String getMessageTag(Integer type) {
-		return type == MessageTypeEnums.NOTICE.ordinal() ? LAOKOU_NOTICE_MESSAGE_TAG : LAOKOU_REMIND_MESSAGE_TAG;
+		return type == MessageTypeEnum.NOTICE.ordinal() ? LAOKOU_NOTICE_MESSAGE_TAG : LAOKOU_REMIND_MESSAGE_TAG;
 	}
 
 	private MessageDetailDO convert(MessageDetail messageDetail) {
@@ -161,7 +161,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		MessageDetailDO messageDetailDO = new MessageDetailDO();
 		messageDetailDO.setUserId(Long.parseLong(userId));
 		messageDetailDO.setId(IdGenerator.defaultSnowflakeId());
-		messageDetailDO.setCreateDate(DateUtil.now());
+		messageDetailDO.setCreateDate(DateUtils.now());
 		messageDetailDO.setCreator(UserUtil.getUserId());
 		messageDetailDO.setEditor(UserUtil.getUserId());
 		messageDetailDO.setDeptId(UserUtil.getDeptId());

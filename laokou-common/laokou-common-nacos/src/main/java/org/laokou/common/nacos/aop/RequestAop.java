@@ -28,7 +28,7 @@ import org.laokou.common.core.context.ShutdownHolder;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.StatusCodes.SERVICE_UNAVAILABLE;
+import static org.laokou.common.i18n.common.StatusCode.SERVICE_UNAVAILABLE;
 
 /**
  * @author laokou
@@ -61,7 +61,7 @@ public class RequestAop {
 	@Before("postMapping() || getMapping() || putMapping() || deleteMapping() || requestMapping()")
 	public void doBefore() {
 		if (ShutdownHolder.status()) {
-			throw new SystemException(SERVICE_UNAVAILABLE);
+			throw new SystemException("" + SERVICE_UNAVAILABLE);
 		}
 		ShutdownHolder.add();
 	}

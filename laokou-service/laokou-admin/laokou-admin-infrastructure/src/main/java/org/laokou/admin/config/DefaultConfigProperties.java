@@ -24,8 +24,6 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.PropertiesConstants.DEFAULT_CONFIG_PREFIX;
-
 /**
  * 默认配置.
  *
@@ -33,7 +31,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.DEFAULT_CONFIG_P
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = DEFAULT_CONFIG_PREFIX)
+@ConfigurationProperties(prefix = "spring.default-config")
 public class DefaultConfigProperties {
 
 	/**

@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.OAuth2Constants.AUTHORIZATION_CODE;
 import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
-import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
+import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
 
 /**
  * 用户认证.

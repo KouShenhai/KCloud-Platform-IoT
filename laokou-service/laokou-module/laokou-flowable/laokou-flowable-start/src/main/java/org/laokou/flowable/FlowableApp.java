@@ -23,7 +23,6 @@ import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.security.annotation.EnableSecurity;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
@@ -36,7 +35,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import static org.laokou.common.i18n.common.NetworkConstants.IP;
+import static org.laokou.common.i18n.common.NetworkConstant.IP;
 
 /**
  * 启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
@@ -52,8 +51,6 @@ import static org.laokou.common.i18n.common.NetworkConstants.IP;
 @EnableRouter
 @EnableTaskExecutor
 @EnableAspectJAutoProxy(exposeProxy = true)
-@MapperScan({ "org.laokou.common.domain.repository", "org.laokou.flowable.gatewayimpl.database",
-		"org.laokou.common.mybatisplus.repository" })
 public class FlowableApp {
 
 	public static void main(String[] args) throws UnknownHostException {

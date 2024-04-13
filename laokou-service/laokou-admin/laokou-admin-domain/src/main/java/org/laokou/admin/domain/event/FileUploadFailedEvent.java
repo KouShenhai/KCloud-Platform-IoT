@@ -23,8 +23,8 @@ import lombok.experimental.SuperBuilder;
 import org.laokou.admin.domain.oss.OssLog;
 import org.laokou.common.core.context.UserContextHolder;
 
-import static org.laokou.common.i18n.common.EventTypeEnums.FILE_UPLOAD_FAILED;
-import static org.laokou.common.i18n.common.NumberConstants.FAIL;
+import static org.laokou.common.i18n.common.EventTypeEnum.FILE_UPLOAD_FAILED;
+import static org.laokou.common.i18n.common.NumberConstant.FAIL;
 
 /**
  * @author laokou

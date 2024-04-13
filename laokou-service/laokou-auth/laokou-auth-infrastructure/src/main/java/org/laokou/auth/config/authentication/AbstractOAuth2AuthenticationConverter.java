@@ -19,10 +19,8 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.auth.domain.user.Auth;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
@@ -56,30 +54,31 @@ public abstract class AbstractOAuth2AuthenticationConverter implements Authentic
 
 	@Override
 	public Authentication convert(HttpServletRequest request) {
-		try {
-			// 请求链 FilterOrderRegistration
-			String grantType = request.getParameter(OAuth2ParameterNames.GRANT_TYPE);
-			if (!getGrantType().equals(grantType)) {
-				return null;
+		// try {
+		// 请求链 FilterOrderRegistration
+		String grantType = request.getParameter(OAuth2ParameterNames.GRANT_TYPE);
+		if (!getGrantType().equals(grantType)) {
+			return null;
+		}
+		// 构建请求参数集合
+		MultiValueMap<String, String> parameters = MapUtil.getParameters(request);
+		List<String> scopes = parameters.get(OAuth2ParameterNames.SCOPE);
+		// 判断scopes
+		Auth.builder().build().checkScopes(scopes);
+		// 获取上下文认证信息
+		Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();
+		Map<String, Object> additionalParameters = new HashMap<>(parameters.size());
+		parameters.forEach((key, value) -> {
+			if (!key.equals(OAuth2ParameterNames.GRANT_TYPE) && !key.equals(OAuth2ParameterNames.CLIENT_ID)) {
+				additionalParameters.put(key, value.getFirst());
 			}
-			// 构建请求参数集合
-			MultiValueMap<String, String> parameters = MapUtil.getParameters(request);
-			List<String> scopes = parameters.get(OAuth2ParameterNames.SCOPE);
-			// 判断scopes
-			Auth.builder().build().checkScopes(scopes);
-			// 获取上下文认证信息
-			Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();
-			Map<String, Object> additionalParameters = new HashMap<>(parameters.size());
-			parameters.forEach((key, value) -> {
-				if (!key.equals(OAuth2ParameterNames.GRANT_TYPE) && !key.equals(OAuth2ParameterNames.CLIENT_ID)) {
-					additionalParameters.put(key, value.getFirst());
-				}
-			});
-			return convert(clientPrincipal, additionalParameters);
-		}
-		catch (GlobalException e) {
-			throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg());
-		}
+		});
+		return convert(clientPrincipal, additionalParameters);
+		// }
+
+		// catch (GlobalException e) {
+		// throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg());
+		// }
 	}
 
 }

@@ -20,11 +20,11 @@ package org.laokou.common.core.utils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.i18n.utils.StringUtil;
 
-import static org.laokou.common.i18n.common.NetworkConstants.*;
-import static org.laokou.common.i18n.common.StringConstants.COMMA;
+import static org.laokou.common.i18n.common.NetworkConstant.*;
+import static org.laokou.common.i18n.common.StringConstant.COMMA;
 
 /**
  * IP工具类.
@@ -40,7 +40,7 @@ public class IpUtil {
 	 * @return IP地址
 	 */
 	public static String getIpAddr(HttpServletRequest request) {
-		if (ObjectUtil.isNull(request)) {
+		if (ObjectUtils.isNull(request)) {
 			return UNKNOWN_IP;
 		}
 		String ip = request.getHeader("x-forwarded-for");
@@ -72,7 +72,7 @@ public class IpUtil {
 			return true;
 		}
 		byte[] bytes = textToNumericFormatV4(ip);
-		return ObjectUtil.isNotNull(bytes) && (internalIp(bytes) || LOCAL_IPV4.equals(ip));
+		return ObjectUtils.isNotNull(bytes) && (internalIp(bytes) || LOCAL_IPV4.equals(ip));
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class IpUtil {
 			}
 		}
 		catch (NumberFormatException e) {
-			log.error("格式化失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			log.error("格式化失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			return null;
 		}
 		return bytes;

@@ -17,11 +17,12 @@
 
 package org.laokou.common.crypto.utils;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
 import org.apache.hc.client5.http.utils.Base64;
 import org.laokou.common.core.utils.ResourceUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.crypto.annotation.Aes;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.springframework.util.Assert;
 
 import javax.crypto.Cipher;
@@ -32,14 +33,18 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 
-import static org.laokou.common.i18n.common.SysConstants.*;
-
 /**
  * AES加密工具类.
  *
  * @author laokou
  */
 public class AesUtil {
+
+	@Schema(name = "ALGORITHM_AES", description = "AES加密加密算法")
+	public static final String ALGORITHM_AES = "aes";
+
+	@Schema(name = "AES_INSTANCE", description = "AES128对称加密算法")
+	public static final String AES_INSTANCE = "AES/CBC/PKCS5Padding";
 
 	private final static byte[] SECRET_KEY;
 
@@ -113,7 +118,7 @@ public class AesUtil {
 				// 私有属性
 				field.setAccessible(true);
 				Object o = field.get(obj);
-				if (ObjectUtil.isNull(o)) {
+				if (ObjectUtils.isNull(o)) {
 					continue;
 				}
 				String data = o.toString();

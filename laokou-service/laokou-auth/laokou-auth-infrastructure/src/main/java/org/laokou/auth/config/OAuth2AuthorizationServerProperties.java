@@ -27,9 +27,10 @@ import org.springframework.security.oauth2.server.authorization.settings.Configu
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.*;
-
-import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_AUTHORIZATION_SERVER_PREFIX;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * OAuth 2.0 Authorization Server properties.
@@ -41,7 +42,7 @@ import static org.laokou.common.i18n.common.PropertiesConstants.OAUTH2_AUTHORIZA
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = OAUTH2_AUTHORIZATION_SERVER_PREFIX)
+@ConfigurationProperties(prefix = "spring.security.oauth2.authorization-server")
 public final class OAuth2AuthorizationServerProperties implements InitializingBean {
 
 	/**

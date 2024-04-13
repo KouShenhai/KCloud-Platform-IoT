@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.common.i18n.common.RocketMqConstants.*;
+import static org.laokou.common.i18n.common.RocketMqConstant.*;
 
 /**
  * OSS日志处理.

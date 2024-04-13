@@ -23,14 +23,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.PropertiesConstants.MQTT_PREFIX;
-
 /**
  * @author laokou
  */
 @Component
 @Data
-@ConfigurationProperties(prefix = MQTT_PREFIX)
+@ConfigurationProperties(prefix = "spring.mqtt")
 public class SpringMqttProperties {
 
 	private String username;

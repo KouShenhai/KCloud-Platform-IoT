@@ -27,7 +27,7 @@ import org.laokou.common.i18n.common.exception.AuthException;
 import java.util.List;
 
 import static lombok.AccessLevel.PRIVATE;
-import static org.laokou.common.i18n.common.ErrorCodes.INVALID_SCOPE;
+import static org.laokou.common.i18n.common.exception.AuthException.INVALID_SCOPE;
 
 /**
  * @author laokou

@@ -22,14 +22,12 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.PropertiesConstants.WEBSOCKET_PREFIX;
-
 /**
  * @author laokou
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = WEBSOCKET_PREFIX)
+@ConfigurationProperties(prefix = "spring.websocket")
 @Schema(name = "WebsocketProperties", description = "WebSocket属性配置")
 public class WebsocketProperties {
 

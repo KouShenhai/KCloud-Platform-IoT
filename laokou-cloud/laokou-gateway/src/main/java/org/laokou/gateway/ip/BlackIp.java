@@ -32,7 +32,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.InetSocketAddress;
 
-import static org.laokou.common.i18n.common.BizCodes.IP_BLACK;
+import static org.laokou.common.i18n.common.exception.SystemException.IP_BLACKED;
 
 /**
  * 黑名单IP.
@@ -65,7 +65,7 @@ public class BlackIp implements Ip {
 		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
 			if (Boolean.TRUE.equals(r)) {
 				log.error("IP为{}已列入黑名单", hostAddress);
-				return ReactiveResponseUtil.response(exchange, Result.fail(IP_BLACK));
+				return ReactiveResponseUtil.response(exchange, Result.fail(IP_BLACKED));
 			}
 			return chain.filter(exchange);
 		});

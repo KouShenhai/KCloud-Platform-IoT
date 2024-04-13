@@ -18,10 +18,9 @@
 package org.laokou.common.ratelimiter.driver.spi;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.laokou.common.i18n.common.RateLimiterTypeEnums;
 
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.RateLimiterTypeEnums.DEFAULT;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
+import static org.laokou.common.ratelimiter.driver.spi.RateLimiterTypeEnum.DEFAULT;
 
 /**
  * @author laokou
@@ -34,7 +33,7 @@ public class DefaultKeyProvider implements org.laokou.common.ratelimiter.driver.
 	}
 
 	@Override
-	public RateLimiterTypeEnums accept() {
+	public RateLimiterTypeEnum accept() {
 		return DEFAULT;
 	}
 

@@ -22,7 +22,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
 
-import static org.laokou.common.i18n.common.SysConstants.SPRING;
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**
  * 菜单转换器.

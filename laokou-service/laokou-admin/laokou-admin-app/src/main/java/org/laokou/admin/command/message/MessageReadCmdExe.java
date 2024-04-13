@@ -29,8 +29,8 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
-import static org.laokou.common.i18n.common.MessageReadEnums.YES;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.MessageReadEnum.YES;
 
 /**
  * 读取消息执行器.

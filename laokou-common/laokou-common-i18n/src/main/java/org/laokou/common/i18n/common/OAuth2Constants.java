@@ -61,14 +61,8 @@ public final class OAuth2Constants {
 	@Schema(name = "ERROR_DESCRIPTION", description = "错误信息")
 	public static final String ERROR_DESCRIPTION = "error_description";
 
-	@Schema(name = "FULL", description = "所有")
-	public static final String FULL = "full";
-
 	@Schema(name = "REDIS_OAUTH2_AUTHORIZATION_KEY", description = "存入Redis的Hash键")
 	public static final String REDIS_OAUTH2_AUTHORIZATION_KEY = "oauth2:authorization";
-
-	@Schema(name = "ERROR_URL", description = "错误地址")
-	public static final String ERROR_URL = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
 	@Schema(name = "AUTHORIZATION_CODE", description = "授权码")
 	public static final String AUTHORIZATION_CODE = "authorization_code";

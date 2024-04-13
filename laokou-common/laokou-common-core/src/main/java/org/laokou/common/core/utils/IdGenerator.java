@@ -18,8 +18,8 @@
 package org.laokou.common.core.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.Assert;
 
@@ -34,7 +34,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.laokou.common.i18n.common.StringConstants.AT;
+import static org.laokou.common.i18n.common.StringConstant.AT;
 
 /**
  *
@@ -81,7 +81,7 @@ public class IdGenerator {
 	public static LocalDateTime getLocalDateTime(long snowflakeId) {
 		// 第一段 时间戳部分 (反推 -> 右移left + start)
 		long timestamp = (snowflakeId >> Snowflake.TIMESTAMP_LEFT) + Snowflake.START_TIMESTAMP;
-		return DateUtil.getLocalDateTimeOfTimestamp(timestamp);
+		return DateUtils.getLocalDateTimeOfTimestamp(timestamp);
 	}
 
 	static class Snowflake {
@@ -199,11 +199,11 @@ public class IdGenerator {
 		private long getDatacenterId() {
 			long id = 0L;
 			try {
-				if (ObjectUtil.isNull(this.inetAddress)) {
+				if (ObjectUtils.isNull(this.inetAddress)) {
 					this.inetAddress = InetAddress.getLocalHost();
 				}
 				NetworkInterface network = NetworkInterface.getByInetAddress(this.inetAddress);
-				if (ObjectUtil.isNull(network)) {
+				if (ObjectUtils.isNull(network)) {
 					id = 1L;
 				}
 				else {

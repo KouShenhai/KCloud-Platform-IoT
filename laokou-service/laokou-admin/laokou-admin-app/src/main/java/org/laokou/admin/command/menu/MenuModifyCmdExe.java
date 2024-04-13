@@ -25,7 +25,7 @@ import org.laokou.admin.dto.menu.MenuModifyCmd;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 
 /**
  * 删除菜单执行器.

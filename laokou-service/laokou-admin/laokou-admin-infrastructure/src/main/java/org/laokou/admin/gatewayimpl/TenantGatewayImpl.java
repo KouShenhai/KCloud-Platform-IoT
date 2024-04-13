@@ -29,14 +29,17 @@ import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.*;
+import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.crypto.utils.AesUtil;
-import org.laokou.common.i18n.common.NumberConstants;
+import org.laokou.common.i18n.common.NumberConstant;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.DateUtils;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -53,14 +56,13 @@ import java.nio.channels.FileChannel;
 import java.util.*;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.laokou.common.i18n.common.DatasourceConstants.*;
-import static org.laokou.common.i18n.common.OssConstants.ZIP_EXT;
-import static org.laokou.common.i18n.common.ResponseHeaderConstants.CONTENT_DISPOSITION;
-import static org.laokou.common.i18n.common.ResponseHeaderConstants.STREAM_CONTENT_TYPE;
-import static org.laokou.common.i18n.common.StringConstants.COMMA;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
-import static org.laokou.common.i18n.common.TenantConstants.*;
+import static org.laokou.common.i18n.common.DatasourceConstant.*;
+import static org.laokou.common.i18n.common.ResponseHeaderConstant.CONTENT_DISPOSITION;
+import static org.laokou.common.i18n.common.ResponseHeaderConstant.STREAM_CONTENT_TYPE;
+import static org.laokou.common.i18n.common.StringConstant.COMMA;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
+import static org.laokou.common.i18n.common.TenantConstant.*;
 
 /**
  * 租户管理.
@@ -126,7 +128,7 @@ public class TenantGatewayImpl implements TenantGateway {
 				tenantMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
-				String msg = LogUtil.result(e.getMessage());
+				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
 				throw new SystemException(msg);
@@ -144,12 +146,12 @@ public class TenantGatewayImpl implements TenantGateway {
 	public void downloadDatasource(Long id, HttpServletResponse response) {
 		String fileName = "kcloud_platform_alibaba_tenant.sql";
 		String fileExt = FileUtil.getFileExt(fileName);
-		String name = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + fileExt;
+		String name = DateUtils.format(DateUtils.now(), DateUtils.YYYYMMDDHHMMSS) + fileExt;
 		response.setContentType(STREAM_CONTENT_TYPE);
 		response.setCharacterEncoding(UTF_8);
-		response.setHeader(CONTENT_DISPOSITION, "attachment;filename=" + UTF_8.encode(fileName + ZIP_EXT));
+		response.setHeader(CONTENT_DISPOSITION, "attachment;filename=" + UTF_8.encode(fileName + ".zip"));
 		TenantDO tenantDO = tenantMapper.selectById(id);
-		Assert.isTrue(ObjectUtil.isNotNull(tenantDO), "tenantDO is null");
+		Assert.isTrue(ObjectUtils.isNotNull(tenantDO), "tenantDO is null");
 		try (ServletOutputStream outputStream = response.getOutputStream()) {
 			File file = writeTempFile(fileName, name, id, tenantDO.getPackageId());
 			FileUtil.zip(file, outputStream);
@@ -167,7 +169,7 @@ public class TenantGatewayImpl implements TenantGateway {
 				tenantMapper.insert(tenantDO);
 			}
 			catch (Exception e) {
-				String msg = LogUtil.result(e.getMessage());
+				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
 				throw new SystemException(msg);
@@ -185,7 +187,7 @@ public class TenantGatewayImpl implements TenantGateway {
 				tenantMapper.updateById(tenantDO);
 			}
 			catch (Exception e) {
-				String msg = LogUtil.result(e.getMessage());
+				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
 				throw new SystemException(msg);
@@ -282,12 +284,12 @@ public class TenantGatewayImpl implements TenantGateway {
 		List<MenuDO> menuList = menuMapper.selectTenantMenuListByPackageId(packageId);
 		menuList.forEach(item -> {
 			item.setTenantId(tenantId);
-			item.setCreateDate(DateUtil.now());
-			item.setUpdateDate(DateUtil.now());
+			item.setCreateDate(DateUtils.now());
+			item.setUpdateDate(DateUtils.now());
 			item.setCreator(userId);
 			item.setEditor(userId);
-			item.setVersion(NumberConstants.DEFAULT);
-			item.setDelFlag(NumberConstants.DEFAULT);
+			item.setVersion(NumberConstant.DEFAULT);
+			item.setDelFlag(NumberConstant.DEFAULT);
 			item.setDeptId(deptId);
 			item.setDeptPath(deptPath);
 		});
@@ -312,13 +314,13 @@ public class TenantGatewayImpl implements TenantGateway {
 		userDO.setSuperAdmin(YES.ordinal());
 		userDO.setDeptId(deptId);
 		userDO.setDeptPath(deptPath);
-		userDO.setCreateDate(DateUtil.now());
-		userDO.setUpdateDate(DateUtil.now());
+		userDO.setCreateDate(DateUtils.now());
+		userDO.setUpdateDate(DateUtils.now());
 		userDO.setCreator(userId);
 		userDO.setEditor(userId);
-		userDO.setVersion(NumberConstants.DEFAULT);
-		userDO.setDelFlag(NumberConstants.DEFAULT);
-		userDO.setStatus(NumberConstants.DEFAULT);
+		userDO.setVersion(NumberConstant.DEFAULT);
+		userDO.setDelFlag(NumberConstant.DEFAULT);
+		userDO.setStatus(NumberConstant.DEFAULT);
 		return userDO;
 	}
 
@@ -340,12 +342,12 @@ public class TenantGatewayImpl implements TenantGateway {
 		deptDO.setDeptId(deptDO.getId());
 		deptDO.setPid(0L);
 		deptDO.setTenantId(tenantId);
-		deptDO.setCreateDate(DateUtil.now());
-		deptDO.setUpdateDate(DateUtil.now());
+		deptDO.setCreateDate(DateUtils.now());
+		deptDO.setUpdateDate(DateUtils.now());
 		deptDO.setCreator(userId);
 		deptDO.setEditor(userId);
-		deptDO.setVersion(NumberConstants.DEFAULT);
-		deptDO.setDelFlag(NumberConstants.DEFAULT);
+		deptDO.setVersion(NumberConstant.DEFAULT);
+		deptDO.setDelFlag(NumberConstant.DEFAULT);
 		return deptDO;
 	}
 

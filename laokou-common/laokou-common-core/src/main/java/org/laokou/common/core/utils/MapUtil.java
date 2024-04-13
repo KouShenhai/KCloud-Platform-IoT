@@ -20,7 +20,7 @@ package org.laokou.common.core.utils;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import jakarta.servlet.http.HttpServletRequest;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -32,7 +32,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.StringConstants.*;
+import static org.laokou.common.i18n.common.StringConstant.*;
 
 /**
  * map工具类.
@@ -56,7 +56,7 @@ public class MapUtil {
 	 * @return 判断结果
 	 */
 	public static boolean isEmpty(Map<?, ?> map) {
-		return ObjectUtil.isNull(map) || map.isEmpty();
+		return ObjectUtils.isNull(map) || map.isEmpty();
 	}
 
 	/**

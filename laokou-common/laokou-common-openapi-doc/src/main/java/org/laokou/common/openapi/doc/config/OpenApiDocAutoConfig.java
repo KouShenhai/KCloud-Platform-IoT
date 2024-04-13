@@ -30,17 +30,14 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
-import static org.laokou.common.i18n.common.PropertiesConstants.OPENAPI_DOC_PREFIX;
 import static org.laokou.common.i18n.common.RequestHeaderConstants.AUTHORIZATION;
-import static org.laokou.common.i18n.common.StringConstants.TRUE;
-import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 import static org.laokou.common.i18n.common.SysConstants.VERSION;
 
 /**
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnProperty(prefix = OPENAPI_DOC_PREFIX, name = ENABLED, havingValue = TRUE, matchIfMissing = true)
+@ConditionalOnProperty(prefix = "openapi-doc", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class OpenApiDocAutoConfig {
 
 	@Bean

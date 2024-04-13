@@ -19,9 +19,8 @@ package org.laokou.common.ratelimiter.driver.spi;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.common.core.utils.IpUtil;
-import org.laokou.common.i18n.common.RateLimiterTypeEnums;
 
-import static org.laokou.common.i18n.common.RateLimiterTypeEnums.IP;
+import static org.laokou.common.ratelimiter.driver.spi.RateLimiterTypeEnum.IP;
 
 /**
  * @author laokou
@@ -34,7 +33,7 @@ public class IpKeyProvider implements org.laokou.common.ratelimiter.driver.spi.K
 	}
 
 	@Override
-	public RateLimiterTypeEnums accept() {
+	public RateLimiterTypeEnum accept() {
 		return IP;
 	}
 

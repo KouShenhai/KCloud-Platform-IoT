@@ -30,7 +30,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.StatusCodes.OK;
+import static org.laokou.common.i18n.common.StatusCode.OK;
 
 /**
  * @author laokou

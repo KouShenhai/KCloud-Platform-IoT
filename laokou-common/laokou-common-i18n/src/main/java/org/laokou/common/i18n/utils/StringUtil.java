@@ -24,8 +24,8 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.regex.Matcher;
 
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.StringConstants.PERCENT;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.StringConstant.PERCENT;
 import static org.laokou.common.i18n.common.SysConstants.LINE_PATTERN;
 
 /**
@@ -90,12 +90,12 @@ public class StringUtil {
 	}
 
 	public static boolean allNotNull(Object... values) {
-		if (ObjectUtil.isNull(values)) {
+		if (ObjectUtils.isNull(values)) {
 			return false;
 		}
 		else {
 			for (Object val : values) {
-				if (ObjectUtil.isNull(val)) {
+				if (ObjectUtils.isNull(val)) {
 					return false;
 				}
 			}

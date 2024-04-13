@@ -24,8 +24,8 @@ import org.laokou.common.mybatisplus.repository.BaseDO;
 
 import java.io.Serial;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_LOGIN_LOG;
-import static org.laokou.common.i18n.common.MybatisPlusConstants.PLACE_HOLDER;
+import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_LOGIN_LOG;
+import static org.laokou.common.mybatisplus.config.DynamicTableNameHandler.PLACE_HOLDER;
 
 /**
  * @author laokou

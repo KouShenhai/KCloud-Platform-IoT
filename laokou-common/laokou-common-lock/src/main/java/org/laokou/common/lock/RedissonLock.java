@@ -19,9 +19,7 @@ package org.laokou.common.lock;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.common.LockTypeEnums;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.redisson.api.RLock;
 
@@ -38,13 +36,13 @@ public class RedissonLock extends AbstractLock<RLock> {
 
 	/**
 	 * 获取锁.
-	 * @param lockTypeEnums 锁类型
+	 * @param typeEnum 锁类型
 	 * @param key 键
 	 * @return RLock
 	 */
 	@Override
-	public RLock getLock(LockTypeEnums lockTypeEnums, String key) {
-		return switch (lockTypeEnums) {
+	public RLock getLock(TypeEnum typeEnum, String key) {
+		return switch (typeEnum) {
 			case LOCK -> redisUtil.getLock(key);
 			case FAIR_LOCK -> redisUtil.getFairLock(key);
 			case READ_LOCK -> redisUtil.getReadLock(key);
@@ -79,7 +77,7 @@ public class RedissonLock extends AbstractLock<RLock> {
 	 */
 	@Override
 	public void unlock(RLock lock) {
-		if (ObjectUtil.isNotNull(lock)) {
+		if (ObjectUtils.isNotNull(lock)) {
 			// 线程名称
 			String threadName = Thread.currentThread().getName();
 			if (redisUtil.isLocked(lock)) {

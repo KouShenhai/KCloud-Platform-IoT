@@ -27,7 +27,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import java.net.InetAddress;
 
-import static org.laokou.common.i18n.common.NetworkConstants.IP;
+import static org.laokou.common.i18n.common.NetworkConstant.IP;
 
 /**
  * 监控启动类.

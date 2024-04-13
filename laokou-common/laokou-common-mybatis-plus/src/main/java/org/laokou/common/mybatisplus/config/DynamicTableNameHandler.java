@@ -18,14 +18,16 @@
 package org.laokou.common.mybatisplus.config;
 
 import com.baomidou.mybatisplus.extension.plugins.handler.TableNameHandler;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
-
-import static org.laokou.common.i18n.common.MybatisPlusConstants.PLACE_HOLDER;
 
 /**
  * @author laokou
  */
 public class DynamicTableNameHandler implements TableNameHandler {
+
+	@Schema(name = "PLACE_HOLDER", description = "分表标识符")
+	public static final String PLACE_HOLDER = "$$";
 
 	@Override
 	public String dynamicTableName(String sql, String tableName) {

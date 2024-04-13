@@ -24,8 +24,9 @@ import org.laokou.common.mybatisplus.repository.BaseDO;
 
 import java.io.Serial;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_LOGIN_LOG;
-import static org.laokou.common.i18n.common.MybatisPlusConstants.PLACE_HOLDER;
+import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_LOGIN_LOG;
+import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
+import static org.laokou.common.mybatisplus.config.DynamicTableNameHandler.PLACE_HOLDER;
 
 /**
  * @author laokou
@@ -38,7 +39,7 @@ public class LoginLogDO extends BaseDO {
 	@Serial
 	private static final long serialVersionUID = 4289483981365827983L;
 
-	@Schema(name = "username", description = "登录的用户名")
+	@Schema(name = USERNAME, description = "登录的用户名")
 	private String username;
 
 	@Schema(name = "ip", description = "登录的IP地址")

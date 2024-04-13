@@ -26,7 +26,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 
 /**
  * 查看字典执行器.

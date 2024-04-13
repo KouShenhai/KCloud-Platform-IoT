@@ -23,7 +23,7 @@ import org.laokou.auth.domain.user.Auth;
 import org.laokou.auth.domain.user.Captcha;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.crypto.utils.AesUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -33,7 +33,8 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.OAuth2Constants.*;
-import static org.laokou.common.i18n.common.TenantConstants.TENANT_ID;
+import static org.laokou.common.i18n.common.TenantConstant.TENANT_ID;
+import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 
 /**
@@ -77,21 +78,12 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
 				.password(password)
 				.captcha(captchaObj)
 				.build();
-			// 检查租户ID
-			user.checkNullTenantId();
-			// 检查UUID
-			captchaObj.checkNullUuid();
-			// 检查验证码
-			captchaObj.checkNullCaptcha();
-			// 检查账号
-			user.checkNullUsername();
-			// 检查密码
-			user.checkNullPassword();
+			user.checkUsernamePasswordAuth();
 			// 获取用户信息，并认证信息
 			return super.authenticationToken(user, request);
 		}
-		catch (GlobalException e) {
-			throw getException(e.getCode(), e.getMsg());
+		catch (AuthException e) {
+			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 	}
 

@@ -40,10 +40,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.DateUtils;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.i18n.utils.ValidatorUtil;
+import org.laokou.common.i18n.utils.ValidatorUtils;
 import org.laokou.common.mybatisplus.repository.BaseDO;
 import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
@@ -57,9 +57,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-import static org.laokou.common.i18n.common.ResponseHeaderConstants.*;
-import static org.laokou.common.i18n.common.StringConstants.DROP;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.ResponseHeaderConstant.*;
+import static org.laokou.common.i18n.common.StringConstant.DROP;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.SysConstants.EXCEL_EXT;
 
 /**
@@ -110,12 +110,12 @@ public class ExcelUtil {
 			excelWriter.finish();
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 		}
 	}
 
 	private static void header(HttpServletResponse response) {
-		String fileName = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + EXCEL_EXT;
+		String fileName = DateUtils.format(DateUtils.now(), DateUtils.YYYYMMDDHHMMSS) + EXCEL_EXT;
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType(EXCEL_CONTENT_TYPE);
 		response.setHeader(CONTENT_DISPOSITION,
@@ -176,7 +176,7 @@ public class ExcelUtil {
 		public void invoke(T data, AnalysisContext context) {
 			int currentRowNum = context.readRowHolder().getRowIndex() + 1;
 			// 校验数据
-			Set<String> set = ValidatorUtil.validateEntity(data);
+			Set<String> set = ValidatorUtils.validateEntity(data);
 			if (CollectionUtil.isNotEmpty(set)) {
 				ERRORS.add(template(currentRowNum, StringUtil.collectionToDelimitedString(set, DROP)));
 			}
@@ -191,7 +191,7 @@ public class ExcelUtil {
 
 		@Override
 		public void onException(Exception exception, AnalysisContext context) {
-			log.error("Excel导入异常，错误信息：{}，详情见日志", LogUtil.result(exception.getMessage()));
+			log.error("Excel导入异常，错误信息：{}，详情见日志", LogUtil.record(exception.getMessage()));
 		}
 
 		@SneakyThrows

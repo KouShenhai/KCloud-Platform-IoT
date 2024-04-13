@@ -25,7 +25,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.context.ShutdownHolder;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Result;
@@ -38,8 +37,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static org.laokou.common.i18n.common.StatusCodes.SERVICE_UNAVAILABLE;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.StatusCode.SERVICE_UNAVAILABLE;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.SysConstants.GRACEFUL_SHUTDOWN_URL;
 
 /**
@@ -62,10 +61,10 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 	@SneakyThrows
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
 		if (open()) {
-			ResponseUtil.response((HttpServletResponse) response, JacksonUtil.toJsonStr(Result.of(EMPTY)));
+			ResponseUtil.response((HttpServletResponse) response, Result.of(EMPTY));
 			return;
 		}
-		ResponseUtil.response((HttpServletResponse) response, JacksonUtil.toJsonStr(Result.fail(SERVICE_UNAVAILABLE)));
+		ResponseUtil.response((HttpServletResponse) response, Result.fail(SERVICE_UNAVAILABLE));
 	}
 
 	@Override
@@ -77,9 +76,9 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 		if (open()) {
-			return ReactiveResponseUtil.response(exchange, JacksonUtil.toJsonStr(Result.of(EMPTY)));
+			return ReactiveResponseUtil.response(exchange, Result.of(EMPTY));
 		}
-		return ReactiveResponseUtil.response(exchange, JacksonUtil.toJsonStr(Result.fail(SERVICE_UNAVAILABLE)));
+		return ReactiveResponseUtil.response(exchange, Result.fail(SERVICE_UNAVAILABLE));
 	}
 
 	private boolean open() {

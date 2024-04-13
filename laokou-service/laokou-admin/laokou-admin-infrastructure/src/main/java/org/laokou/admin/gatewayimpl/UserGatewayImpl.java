@@ -32,7 +32,7 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.DateUtils;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
@@ -101,9 +101,9 @@ public class UserGatewayImpl implements UserGateway {
 				userMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new SystemException(LogUtil.result(e.getMessage()));
+				throw new SystemException(LogUtil.record(e.getMessage()));
 			}
 		});
 	}
@@ -137,9 +137,9 @@ public class UserGatewayImpl implements UserGateway {
 				createUserRole(userDO, roleIds);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new SystemException(LogUtil.result(e.getMessage()));
+				throw new SystemException(LogUtil.record(e.getMessage()));
 			}
 		});
 	}
@@ -153,9 +153,9 @@ public class UserGatewayImpl implements UserGateway {
 				modifyUserRole(userDO, roleIds);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new SystemException(LogUtil.result(e.getMessage()));
+				throw new SystemException(LogUtil.record(e.getMessage()));
 			}
 		});
 	}
@@ -191,8 +191,8 @@ public class UserGatewayImpl implements UserGateway {
 		userRoleDO.setDeptPath(userDO.getDeptPath());
 		userRoleDO.setRoleId(roleId);
 		userRoleDO.setUserId(userDO.getId());
-		userRoleDO.setCreateDate(DateUtil.now());
-		userRoleDO.setUpdateDate(DateUtil.now());
+		userRoleDO.setCreateDate(DateUtils.now());
+		userRoleDO.setUpdateDate(DateUtils.now());
 		userRoleDO.setCreator(userDO.getCreator());
 		userRoleDO.setEditor(userDO.getEditor());
 		return userRoleDO;

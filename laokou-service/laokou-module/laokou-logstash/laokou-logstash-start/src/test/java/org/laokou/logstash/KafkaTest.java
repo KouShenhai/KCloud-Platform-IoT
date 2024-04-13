@@ -24,7 +24,7 @@ import org.laokou.common.kafka.template.DefaultKafkaTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
-import static org.laokou.common.i18n.common.KafkaConstants.LAOKOU_TRACE_TOPIC;
+import static org.laokou.common.i18n.common.KafkaConstant.LAOKOU_TRACE_TOPIC;
 
 /**
  * @author laokou
