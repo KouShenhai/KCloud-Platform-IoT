@@ -12,9 +12,21 @@ const loginRules = reactive(<FormRules>{
     {
       validator: (rule, value, callback) => {
         if (value === "") {
-          callback(new Error(transformI18n($t("login.passwordReg"))));
+          callback(new Error(transformI18n($t("auth.passwordReg"))));
         } else if (!REGEXP_PWD.test(value)) {
-          callback(new Error(transformI18n($t("login.passwordRuleReg"))));
+          callback(new Error(transformI18n($t("auth.passwordRuleReg"))));
+        } else {
+          callback();
+        }
+      },
+      trigger: "blur"
+    }
+  ],
+  captcha: [
+    {
+      validator: (rule, value, callback) => {
+        if (value === "") {
+          callback(new Error(transformI18n($t("auth.captchaReg"))));
         } else {
           callback();
         }

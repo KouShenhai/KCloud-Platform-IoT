@@ -22,10 +22,12 @@ menus:
   purePermissionButton: Button Permission
 status:
   pureLoad: Loading...
-login:
+auth:
   username: Username
   password: Password
+  captcha: Captcha
   login: Login
   usernameReg: Please enter username
   passwordReg: Please enter password
+  captchaReg: Please enter captcha
   passwordRuleReg: The password format should be any combination of 8-18 digits
