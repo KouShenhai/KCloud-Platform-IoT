@@ -58,7 +58,7 @@ dependencies:
     version: 3.20.0
   qs:
     specifier: ^6.12.0
-    version: 6.12.0
+    version: 6.12.1
   responsive-storage:
     specifier: ^2.2.0
     version: 2.2.0
@@ -5494,8 +5494,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /qs@6.12.0:
-    resolution: {integrity: sha512-trVZiI6RMOkO476zLGaBIzszOdFPnCCXHPG9kn0yuS1uz6xdVxPfZdB3vUig9pxPFDM9BRAgz/YUIVQ1/vuiUg==}
+  /qs@6.12.1:
+    resolution: {integrity: sha512-zWmv4RSuB9r2mYQw3zxQuHWeU+42aKi1wWig/j4ele4ygELZ7PEO6MM7rim9oAQH2A5MWfsAVf/jPvTPgCbvUQ==}
     engines: {node: '>=0.6'}
     dependencies:
       side-channel: 1.0.6
