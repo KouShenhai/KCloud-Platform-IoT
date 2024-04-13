@@ -11,8 +11,8 @@ import { useLayout } from "@/layout/hooks/useLayout";
 import { useUserStoreHook } from "@/store/modules/user";
 import { initRouter, getTopMenu } from "@/router/utils";
 import { bg, avatar, illustration } from "./utils/static";
+import {ref, toRaw, reactive, onBeforeUnmount, onMounted} from "vue";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import { ref, reactive, toRaw, onMounted, onBeforeUnmount } from "vue";
 import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 
@@ -85,7 +85,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="select-none">
-    <img :src="bg" class="wave" />
+    <img :src="bg" class="wave"  alt="暂无图片"/>
     <div class="flex-c absolute right-5 top-3">
       <!-- 主题 -->
       <el-switch
@@ -150,7 +150,7 @@ onBeforeUnmount(() => {
                 :rules="[
                   {
                     required: true,
-                    message: transformI18n($t('login.pureUsernameReg')),
+                    message: transformI18n($t('login.usernameReg')),
                     trigger: 'blur'
                   }
                 ]"
@@ -159,7 +159,7 @@ onBeforeUnmount(() => {
                 <el-input
                   v-model="ruleForm.username"
                   clearable
-                  :placeholder="t('login.pureUsername')"
+                  :placeholder="t('login.username')"
                   :prefix-icon="useRenderIcon(User)"
                 />
               </el-form-item>
@@ -171,7 +171,7 @@ onBeforeUnmount(() => {
                   v-model="ruleForm.password"
                   clearable
                   show-password
-                  :placeholder="t('login.purePassword')"
+                  :placeholder="t('login.password')"
                   :prefix-icon="useRenderIcon(Lock)"
                 />
               </el-form-item>
@@ -185,7 +185,7 @@ onBeforeUnmount(() => {
                 :loading="loading"
                 @click="onLogin(ruleFormRef)"
               >
-                {{ t("login.pureLogin") }}
+                {{ t("login.login") }}
               </el-button>
             </Motion>
           </el-form>

@@ -23,9 +23,9 @@ menus:
 status:
   pureLoad: Loading...
 login:
-  pureUsername: Username
-  purePassword: Password
-  pureLogin: Login
-  pureUsernameReg: Please enter username
-  purePassWordReg: Please enter password
-  purePassWordRuleReg: The password format should be any combination of 8-18 digits
+  username: Username
+  password: Password
+  login: Login
+  usernameReg: Please enter username
+  passwordReg: Please enter password
+  passwordRuleReg: The password format should be any combination of 8-18 digits

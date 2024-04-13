@@ -23,10 +23,10 @@ menus:
 status:
   pureLoad: 加载中...
 login:
-  pureUsername: 账号
-  purePassword: 密码
-  pureLogin: 登录
-  pureUsernameReg: 请输入账号
-  purePassWordReg: 请输入密码
-  purePassWordRuleReg: 密码格式应为8-18位数字、字母、符号的任意两种组合
+  username: 账号
+  password: 密码
+  login: 登录
+  usernameReg: 请输入账号
+  passwordReg: 请输入密码
+  passwordRuleReg: 密码格式应为8-18位数字、字母、符号的任意两种组合
 
