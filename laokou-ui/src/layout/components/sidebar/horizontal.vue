@@ -113,14 +113,14 @@ nextTick(() => {
                 :icon="LogoutCircleRLine"
                 style="margin: 5px"
               />
-              {{ t("buttons.pureLoginOut") }}
+              {{ t("button.logout") }}
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
       <span
         class="set-icon navbar-bg-hover"
-        :title="t('buttons.pureSystemSet')"
+        :title="t('button.pureSystemSet')"
         @click="onPanel"
       >
         <IconifyIconOffline :icon="Setting" />

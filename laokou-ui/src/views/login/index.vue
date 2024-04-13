@@ -6,13 +6,12 @@ import { message } from "@/utils/message";
 import { loginRules } from "./utils/rule";
 import { useNav } from "@/layout/hooks/useNav";
 import type { FormInstance } from "element-plus";
-import { $t, transformI18n } from "@/plugins/i18n";
 import { useLayout } from "@/layout/hooks/useLayout";
 import { useUserStoreHook } from "@/store/modules/user";
 import { initRouter, getTopMenu } from "@/router/utils";
-import { bg, avatar, illustration } from "./utils/static";
+import { bg, illustration } from "./utils/static";
+import { ref, toRaw, reactive } from "vue";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import { ref, reactive, toRaw, onMounted, onBeforeUnmount } from "vue";
 import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 
@@ -22,35 +21,41 @@ import globalization from "@/assets/svg/globalization.svg?component";
 import Lock from "@iconify-icons/ri/lock-fill";
 import Check from "@iconify-icons/ep/check";
 import User from "@iconify-icons/ri/user-3-fill";
+import { useEventListener } from "@vueuse/core";
+import { debounce } from "@pureadmin/utils";
+import { v4 as uid } from "uuid";
 
 defineOptions({
   name: "Login"
 });
+
 const router = useRouter();
 const loading = ref(false);
 const ruleFormRef = ref<FormInstance>();
 
+const { t } = useI18n();
 const { initStorage } = useLayout();
 initStorage();
-
-const { t } = useI18n();
-const { dataTheme, dataThemeChange } = useDataThemeChange();
-dataThemeChange();
+const { dataTheme, overallStyle, dataThemeChange } = useDataThemeChange();
+dataThemeChange(overallStyle.value);
 const { title, getDropdownItemStyle, getDropdownItemClass } = useNav();
 const { locale, translationCh, translationEn } = useTranslationLang();
 
 const ruleForm = reactive({
-  username: "admin",
-  password: "admin123"
+  username: "",
+  password: "",
+  uuid: "",
+  captcha: "",
+  tenantId: "0"
 });
 
 const onLogin = async (formEl: FormInstance | undefined) => {
-  loading.value = true;
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
+      loading.value = true;
       useUserStoreHook()
-        .loginByUsername({ username: ruleForm.username, password: "admin123" })
+        .loginByUsername({ username: ruleForm.username, password: ruleForm.password, uuid: uid() })
         .then(res => {
           if (res.success) {
             // 获取后端路由
@@ -58,34 +63,31 @@ const onLogin = async (formEl: FormInstance | undefined) => {
               router.push(getTopMenu(true).path);
               message("登录成功", { type: "success" });
             });
+          } else {
+            message("登录失败", { type: "error" });
           }
-        });
+        }).finally(() => loading.value = false);
     } else {
-      loading.value = false;
       return fields;
     }
   });
 };
 
-/** 使用公共函数，避免`removeEventListener`失效 */
-function onkeypress({ code }: KeyboardEvent) {
-  if (code === "Enter") {
-    onLogin(ruleFormRef.value);
-  }
-}
+const immediateDebounce: any = debounce(
+  formRef => onLogin(formRef),
+  1000,
+  true
+);
 
-onMounted(() => {
-  window.document.addEventListener("keypress", onkeypress);
-});
-
-onBeforeUnmount(() => {
-  window.document.removeEventListener("keypress", onkeypress);
+useEventListener(document, "keypress", ({ code }) => {
+  if (code === "Enter" && !loading.value)
+    immediateDebounce(ruleFormRef.value);
 });
 </script>
 
 <template>
   <div class="select-none">
-    <img :src="bg" class="wave" />
+    <img :src="bg" class="wave"  alt="暂无图片"/>
     <div class="flex-c absolute right-5 top-3">
       <!-- 主题 -->
       <el-switch
@@ -134,7 +136,6 @@ onBeforeUnmount(() => {
       </div>
       <div class="login-box">
         <div class="login-form">
-          <avatar class="avatar" />
           <Motion>
             <h2 class="outline-none">{{ title }}</h2>
           </Motion>
@@ -150,16 +151,17 @@ onBeforeUnmount(() => {
                 :rules="[
                   {
                     required: true,
-                    message: transformI18n($t('login.pureUsernameReg')),
+                    message: t('auth.usernameReg'),
                     trigger: 'blur'
                   }
                 ]"
                 prop="username"
               >
                 <el-input
+                  autocomplete="new-password"
                   v-model="ruleForm.username"
                   clearable
-                  :placeholder="t('login.pureUsername')"
+                  :placeholder="t('auth.username')"
                   :prefix-icon="useRenderIcon(User)"
                 />
               </el-form-item>
@@ -168,12 +170,28 @@ onBeforeUnmount(() => {
             <Motion :delay="150">
               <el-form-item prop="password">
                 <el-input
+                  autocomplete="new-password"
                   v-model="ruleForm.password"
                   clearable
                   show-password
-                  :placeholder="t('login.purePassword')"
+                  :placeholder="t('auth.password')"
                   :prefix-icon="useRenderIcon(Lock)"
                 />
+              </el-form-item>
+            </Motion>
+
+            <Motion :delay="200">
+              <el-form-item prop="captcha">
+                <el-input
+                  v-model="ruleForm.captcha"
+                  clearable
+                  :placeholder="t('auth.captcha')"
+                  :prefix-icon="useRenderIcon('ri:shield-keyhole-line')"
+                >
+                  <template v-slot:append>
+
+                  </template>
+                </el-input>
               </el-form-item>
             </Motion>
 
@@ -185,7 +203,7 @@ onBeforeUnmount(() => {
                 :loading="loading"
                 @click="onLogin(ruleFormRef)"
               >
-                {{ t("login.pureLogin") }}
+                {{ t("auth.login") }}
               </el-button>
             </Motion>
           </el-form>
