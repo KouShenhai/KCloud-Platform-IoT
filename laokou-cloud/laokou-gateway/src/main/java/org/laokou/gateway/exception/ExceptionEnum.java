@@ -18,6 +18,7 @@
 package org.laokou.gateway.exception;
 
 import lombok.Getter;
+import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.MessageUtils;
 
 /**
@@ -31,24 +32,24 @@ public enum ExceptionEnum {
 	/**
 	 * 无效客户端.
 	 */
-	INVALID_CLIENT(ErrorCodes.INVALID_CLIENT, MessageUtils.getMessage("" + ErrorCodes.INVALID_CLIENT)),
+	INVALID_CLIENT(AuthException.INVALID_CLIENT, MessageUtils.getMessage(AuthException.INVALID_CLIENT)),
 
 	/**
 	 * 无效请求.
 	 */
-	INVALID_REQUEST(ErrorCodes.INVALID_REQUEST, MessageUtils.getMessage("" + ErrorCodes.INVALID_REQUEST));
+	INVALID_REQUEST(AuthException.INVALID_REQUEST, MessageUtils.getMessage(AuthException.INVALID_REQUEST));
 
 	/**
 	 * 编码.
 	 */
-	private final int code;
+	private final String code;
 
 	/**
 	 * 信息.
 	 */
 	private final String msg;
 
-	ExceptionEnum(int code, String msg) {
+	ExceptionEnum(String code, String msg) {
 		this.code = code;
 		this.msg = msg;
 	}

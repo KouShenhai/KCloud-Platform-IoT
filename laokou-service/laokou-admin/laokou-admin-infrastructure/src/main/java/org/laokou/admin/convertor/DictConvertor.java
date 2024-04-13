@@ -24,7 +24,6 @@ import org.mapstruct.Mapper;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
-
 /**
  * 字典转换器.
  *

@@ -60,9 +60,9 @@ public class OAuth2ExceptionHandler {
 	@SneakyThrows
 	public static void handleAuthentication(HttpServletRequest request, HttpServletResponse response, Throwable ex) {
 		if (ex instanceof OAuth2AuthenticationException authenticationException) {
-			String message = authenticationException.getError().getDescription();
+			String msg = authenticationException.getError().getDescription();
 			String code = authenticationException.getError().getErrorCode();
-			ResponseUtil.response(response, Result.fail(code, message));
+			ResponseUtil.response(response, Result.fail(code, msg));
 			return;
 		}
 		if (ex instanceof InsufficientAuthenticationException) {

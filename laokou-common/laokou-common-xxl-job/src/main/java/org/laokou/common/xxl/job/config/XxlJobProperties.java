@@ -21,8 +21,6 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.PropertiesConstant.XXL_JOB_PREFIX;
-
 /**
  * @author laokou
  */

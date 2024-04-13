@@ -40,6 +40,7 @@ import java.util.function.BiConsumer;
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.common.core.config.TaskExecutorConfig.THREADS_VIRTUAL_ENABLED;
 import static org.laokou.common.i18n.common.StringConstant.TRUE;
+
 /**
  * @author laokou
  */
@@ -93,7 +94,7 @@ public class MybatisUtil {
 			.toList();
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {
-			throw new RuntimeException("批量插入数据异常，数据已回滚");
+			throw new RuntimeException("事务已回滚");
 		}
 	}
 

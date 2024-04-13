@@ -36,7 +36,7 @@ public class ResponseUtil {
 	 * 响应给视图解析.
 	 * @param response 响应对象
 	 * @param obj 对象
-     */
+	 */
 	@SneakyThrows
 	public static void response(HttpServletResponse response, Object obj) {
 		response.setStatus(HttpStatus.OK.value());

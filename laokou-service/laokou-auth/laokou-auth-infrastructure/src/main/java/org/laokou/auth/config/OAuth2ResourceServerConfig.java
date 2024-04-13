@@ -38,8 +38,8 @@ import static org.laokou.common.security.config.OAuth2ResourceServerAutoConfig.c
  */
 @Data
 @Configuration
-@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.security.oauth2.authorization-server",
-		name = "enabled")
+@ConditionalOnProperty(havingValue = "true", matchIfMissing = true,
+		prefix = "spring.security.oauth2.authorization-server", name = "enabled")
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class OAuth2ResourceServerConfig {
 

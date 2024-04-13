@@ -39,6 +39,7 @@ import java.util.*;
 import static lombok.AccessLevel.PRIVATE;
 import static org.laokou.common.core.utils.JacksonUtil.EMPTY_JSON;
 import static org.laokou.common.i18n.common.StringConstant.*;
+
 /**
  * @author laokou
  */

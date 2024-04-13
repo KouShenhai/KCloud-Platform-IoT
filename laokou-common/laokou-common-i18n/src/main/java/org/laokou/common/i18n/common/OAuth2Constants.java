@@ -61,9 +61,6 @@ public final class OAuth2Constants {
 	@Schema(name = "ERROR_DESCRIPTION", description = "错误信息")
 	public static final String ERROR_DESCRIPTION = "error_description";
 
-	@Schema(name = "FULL", description = "所有")
-	public static final String FULL = "full";
-
 	@Schema(name = "REDIS_OAUTH2_AUTHORIZATION_KEY", description = "存入Redis的Hash键")
 	public static final String REDIS_OAUTH2_AUTHORIZATION_KEY = "oauth2:authorization";
 

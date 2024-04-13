@@ -23,8 +23,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.PropertiesConstant.MQTT_PREFIX;
-
 /**
  * @author laokou
  */

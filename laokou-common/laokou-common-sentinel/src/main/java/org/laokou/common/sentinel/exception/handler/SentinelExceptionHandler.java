@@ -47,8 +47,7 @@ public class SentinelExceptionHandler implements BlockExceptionHandler {
 	public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, BlockException e) {
 		// 限流
 		if (e instanceof FlowException flowException) {
-			log.error("FlowException -> 已限流，错误信息：{}，详情见日志", LogUtil.record(flowException.getMessage()),
-					flowException);
+			log.error("FlowException -> 已限流，错误信息：{}，详情见日志", LogUtil.record(flowException.getMessage()), flowException);
 			ResponseUtil.response(response, Result.fail(FLOWED));
 			return;
 		}
@@ -61,15 +60,15 @@ public class SentinelExceptionHandler implements BlockExceptionHandler {
 		}
 		// 热点参数限流
 		if (e instanceof ParamFlowException paramFlowException) {
-			log.error("ParamFlowException -> 热点参数已限流，错误信息：{}，详情见日志",
-					LogUtil.record(paramFlowException.getMessage()), paramFlowException);
+			log.error("ParamFlowException -> 热点参数已限流，错误信息：{}，详情见日志", LogUtil.record(paramFlowException.getMessage()),
+					paramFlowException);
 			ResponseUtil.response(response, Result.fail(PARAM_FLOWED));
 			return;
 		}
 		// 系统规则
 		if (e instanceof SystemBlockException systemBlockException) {
-			log.error("SystemBlockException -> 系统规则错误，错误信息：{}，详情见日志",
-					LogUtil.record(systemBlockException.getMessage()), systemBlockException);
+			log.error("SystemBlockException -> 系统规则错误，错误信息：{}，详情见日志", LogUtil.record(systemBlockException.getMessage()),
+					systemBlockException);
 			ResponseUtil.response(response, Result.fail(SYSTEM_BLOCKED));
 			return;
 		}

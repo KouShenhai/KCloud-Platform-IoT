@@ -20,7 +20,6 @@ package org.laokou.common.seata.handler;
 import io.seata.common.exception.FrameworkException;
 import io.seata.core.exception.RmTransactionException;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.MessageUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

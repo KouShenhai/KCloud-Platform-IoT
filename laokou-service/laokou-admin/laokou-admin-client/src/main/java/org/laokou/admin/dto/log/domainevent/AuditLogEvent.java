@@ -51,8 +51,8 @@ public class AuditLogEvent extends DomainEvent<Long> {
 	private String comment;
 
 	protected AuditLogEvent(Long aLong, Long aggregateId, EventTypeEnum eventType, EventStatusEnum eventStatus,
-                            String topic, String sourceName, String appName, Long creator, Long editor, Long deptId, String deptPath,
-                            Long tenantId, LocalDateTime createDate, LocalDateTime updateDate) {
+			String topic, String sourceName, String appName, Long creator, Long editor, Long deptId, String deptPath,
+			Long tenantId, LocalDateTime createDate, LocalDateTime updateDate) {
 		super(aLong, aggregateId, eventType, eventStatus, topic, sourceName, appName, creator, editor, deptId, deptPath,
 				tenantId, createDate, updateDate);
 	}

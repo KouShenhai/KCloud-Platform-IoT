@@ -48,11 +48,11 @@ public class NoticeMessageListener implements RocketMQListener<MessageExt> {
 	@Override
 	public void onMessage(MessageExt messageExt) {
 		try {
-			String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
+			String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
 			String traceId = messageExt.getProperty(TRACE_ID);
 			ThreadContext.put(TRACE_ID, traceId);
-			log.info("接收到通知消息：{}", message);
-			messageUtil.send(message);
+			log.info("接收到通知消息：{}", msg);
+			messageUtil.send(msg);
 		}
 		finally {
 			ThreadContext.clearMap();

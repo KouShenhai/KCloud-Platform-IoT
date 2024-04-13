@@ -24,7 +24,6 @@ import org.mapstruct.Mapper;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
-
 /**
  * 部门转换器.
  *

@@ -27,6 +27,7 @@ import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
+import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.DateUtils;
 import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.security.utils.UserDetail;
@@ -39,6 +40,8 @@ import java.util.Set;
 
 import static org.laokou.common.i18n.common.JobModeEnum.SYNC;
 import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
+import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
+import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 
 /**
  * @author laokou
@@ -95,9 +98,9 @@ public class OAuth2AuthenticationProvider {
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
 					userDetail.getAuthorities());
 		}
-		// catch (GlobalException e) {
-		// throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg());
-		// }
+		catch (AuthException e) {
+			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
+		}
 		finally {
 			// 保存领域事件（事件溯源）
 			domainEventService.create(user.getEvents());

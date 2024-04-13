@@ -46,7 +46,6 @@ import reactor.core.publisher.Mono;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.laokou.common.i18n.common.OAuth2Constants.*;
 import static org.laokou.common.i18n.common.StringConstant.CHINESE_COMMA;
-import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.*;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpMethod.POST;
@@ -101,8 +100,8 @@ public class RespFilter implements GlobalFilter, Ordered {
 			public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
 				String contentType = getDelegate().getHeaders().getFirst(CONTENT_TYPE);
 				Assert.isTrue(ObjectUtils.isNotNull(contentType), "content type is null");
-				if (contentType.contains(APPLICATION_JSON_VALUE)
-						&& !ObjectUtils.equals(ObjectUtils.requireNotNull(response.getStatusCode()).value(), StatusCode.OK)
+				if (contentType.contains(APPLICATION_JSON_VALUE) && !ObjectUtils
+					.equals(ObjectUtils.requireNotNull(response.getStatusCode()).value(), StatusCode.OK)
 						&& body instanceof Flux) {
 					Flux<? extends DataBuffer> flux = Flux.from(body);
 					return super.writeWith(flux.map(dataBuffer -> {
@@ -117,17 +116,13 @@ public class RespFilter implements GlobalFilter, Ordered {
 						JsonNode node = JacksonUtil.readTree(str);
 						JsonNode msgNode = node.get(ERROR_DESCRIPTION);
 						JsonNode codeNode = node.get(ERROR);
-						if (msgNode == null) {
+						if (msgNode == null || codeNode == null) {
 							return dataBufferFactory.wrap(new byte[0]);
 						}
-						String msg = msgNode.asText();
-						int code = codeNode.asInt();
-						if (code == DEFAULT) {
-							ExceptionEnum ee = getException(codeNode.asText());
-							code = ee.getCode();
-							msg = ee.getMsg() + CHINESE_COMMA + msg;
-						}
-						byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail("" + code, msg)).getBytes();
+						ExceptionEnum ee = getException(codeNode.asText());
+						String code = ee.getCode();
+						String msg = ee.getMsg() + CHINESE_COMMA + msgNode.asText();
+						byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail(code, msg)).getBytes(UTF_8);
 						return dataBufferFactory.wrap(uppedContent);
 					}));
 				}

@@ -42,8 +42,8 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-import static org.laokou.common.i18n.common.OAuth2Constants.FULL;
 import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
+import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ACCESS_TOKEN;
 
 /**
  * @author laokou
@@ -70,7 +70,8 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 			// 解密
 			return decryptInfo((UserDetail) obj);
 		}
-		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, new OAuth2TokenType(FULL));
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token,
+				new OAuth2TokenType(ACCESS_TOKEN));
 		if (ObjectUtils.isNull(authorization)) {
 			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED);
 		}

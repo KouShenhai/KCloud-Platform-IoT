@@ -43,6 +43,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static lombok.AccessLevel.PRIVATE;
+import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
+import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
 import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
 import static org.laokou.common.i18n.common.UserStatusEnum.ENABLED;
 
