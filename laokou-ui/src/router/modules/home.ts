@@ -9,7 +9,7 @@ export default {
   redirect: "/welcome",
   meta: {
     icon: "ep:home-filled",
-    title: $t("menus.pureHome"),
+    title: $t("menu.home"),
     rank: 0
   },
   children: [
@@ -18,8 +18,8 @@ export default {
       name: "Welcome",
       component: () => import("@/views/welcome/index.vue"),
       meta: {
-        title: $t("menus.pureHome"),
-        showLink: VITE_HIDE_HOME === "true" ? false : true
+        title: $t("menu.home"),
+        showLink: VITE_HIDE_HOME !== "true"
       }
     }
   ]
