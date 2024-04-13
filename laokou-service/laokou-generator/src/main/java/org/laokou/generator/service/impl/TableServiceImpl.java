@@ -19,7 +19,7 @@ package org.laokou.generator.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.DatasourceDataTypeEnums;
+import org.laokou.common.i18n.common.DatasourceDataTypeEnum;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.generator.domain.Table;
 import org.laokou.generator.domain.TableColumn;
@@ -35,8 +35,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.StringConstants.UNDER;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.StringConstant.UNDER;
 
 /**
  * @author laokou
@@ -74,7 +74,7 @@ public class TableServiceImpl implements TableService {
 			.fieldName(StringUtil.convertUnder(columnDO.getName()))
 			.dataType(columnDO.getDataType())
 			.comment(columnDO.getComment())
-			.fieldType(DatasourceDataTypeEnums.valueOf(columnDO.getDataType().toUpperCase()).getValue())
+			.fieldType(DatasourceDataTypeEnum.valueOf(columnDO.getDataType().toUpperCase()).getValue())
 			.build();
 	}
 

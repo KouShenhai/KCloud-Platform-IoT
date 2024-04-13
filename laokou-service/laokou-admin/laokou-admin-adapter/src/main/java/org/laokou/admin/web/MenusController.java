@@ -24,7 +24,7 @@ import org.laokou.admin.api.MenusServiceI;
 import org.laokou.admin.dto.menu.*;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
+import org.laokou.common.i18n.common.CacheOperatorTypeEnum;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.CacheNameConstants.MENUS;
+import static org.laokou.common.i18n.common.CacheNameConstant.MENUS;
 
 /**
  * @author laokou
@@ -67,7 +67,7 @@ public class MenusController {
 	@Operation(summary = "菜单管理", description = "修改菜单")
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
 	@PreAuthorize("hasAuthority('menus:modify')")
-	@DataCache(name = MENUS, key = "#cmd.menuCO.id", type = CacheOperatorTypeEnums.DEL)
+	@DataCache(name = MENUS, key = "#cmd.menuCO.id", type = CacheOperatorTypeEnum.DEL)
 	public void modify(@RequestBody MenuModifyCmd cmd) {
 		menusServiceI.modify(cmd);
 	}

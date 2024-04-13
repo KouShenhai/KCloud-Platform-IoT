@@ -18,10 +18,9 @@
 package org.laokou.common.ratelimiter.driver.spi;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.laokou.common.i18n.common.RateLimiterTypeEnums;
 
-import static org.laokou.common.i18n.common.TraceConstants.TENANT_ID;
-import static org.laokou.common.i18n.common.RateLimiterTypeEnums.TENANT;
+import static org.laokou.common.i18n.common.TraceConstant.TENANT_ID;
+import static org.laokou.common.ratelimiter.driver.spi.RateLimiterTypeEnum.TENANT;
 
 /**
  * @author laokou
@@ -34,7 +33,7 @@ public class TenantKeyProvider implements org.laokou.common.ratelimiter.driver.s
 	}
 
 	@Override
-	public RateLimiterTypeEnums accept() {
+	public RateLimiterTypeEnum accept() {
 		return TENANT;
 	}
 

@@ -32,7 +32,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import java.net.InetAddress;
 
-import static org.laokou.common.i18n.common.NetworkConstants.IP;
+import static org.laokou.common.i18n.common.NetworkConstant.IP;
 
 /**
  * 网关启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）

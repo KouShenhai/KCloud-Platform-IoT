@@ -50,7 +50,7 @@ public class AuditLogHandler implements ApplicationListener {
 	// execute(event);
 	// }
 	// catch (Exception e) {
-	// log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+	// log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 	// }
 	// finally {
 	// DynamicDataSourceContextHolder.clear();

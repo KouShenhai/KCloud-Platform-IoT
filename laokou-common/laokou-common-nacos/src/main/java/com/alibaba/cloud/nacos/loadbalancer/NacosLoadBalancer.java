@@ -38,11 +38,12 @@ import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.balancer.NacosBalancer;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
 import com.alibaba.nacos.client.naming.utils.CollectionUtils;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.utils.ReactiveRequestUtil;
 import org.springframework.beans.factory.ObjectProvider;
@@ -64,10 +65,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.core.utils.RegexUtil.URL_VERSION_REGEX;
-import static org.laokou.common.i18n.common.NacosConstants.CLUSTER_CONFIG;
-import static org.laokou.common.i18n.common.NetworkConstants.IPV4_REGEX;
-import static org.laokou.common.i18n.common.RouterConstants.*;
-import static org.laokou.common.i18n.common.StringConstants.*;
+import static org.laokou.common.i18n.common.NetworkConstant.IPV4_REGEX;
+import static org.laokou.common.i18n.common.StringConstant.*;
 import static org.laokou.common.i18n.common.SysConstants.GRACEFUL_SHUTDOWN_URL;
 
 /**
@@ -81,6 +80,18 @@ import static org.laokou.common.i18n.common.SysConstants.GRACEFUL_SHUTDOWN_URL;
  */
 @Slf4j
 public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
+
+	@Schema(name = "SERVICE_HOST", description = "服务IP")
+	private static final String SERVICE_HOST = "service-host";
+
+	@Schema(name = "SERVICE_PORT", description = "服务端口")
+	private static final String SERVICE_PORT = "service-port";
+
+	@Schema(name = "SERVICE-GRAY", description = "服务灰度")
+	private static final String SERVICE_GRAY = "service-gray";
+
+	@Schema(name = "CLUSTER_CONFIG", description = "Nacos集群配置")
+	private static final String CLUSTER_CONFIG = "nacos.cluster";
 
 	private final String serviceId;
 
@@ -183,7 +194,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 					.filter(instance -> match(instance, headers))
 					.findFirst()
 					.orElse(null);
-				if (ObjectUtil.isNotNull(serviceInstance)) {
+				if (ObjectUtils.isNotNull(serviceInstance)) {
 					return new DefaultResponse(serviceInstance);
 				}
 			}
@@ -244,7 +255,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 */
 	private boolean isGrayRouter(HttpHeaders headers) {
 		String gray = headers.getFirst(SERVICE_GRAY);
-		return ObjectUtil.equals(TRUE, gray);
+		return ObjectUtils.equals(TRUE, gray);
 	}
 
 	/**
@@ -258,7 +269,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		String port = headers.getFirst(SERVICE_PORT);
 		Assert.isTrue(StringUtil.isNotEmpty(host), "service-host is empty");
 		Assert.isTrue(StringUtil.isNotEmpty(port), "service-port is empty");
-		return ObjectUtil.equals(host, instance.getHost()) && Integer.parseInt(port) == instance.getPort();
+		return ObjectUtils.equals(host, instance.getHost()) && Integer.parseInt(port) == instance.getPort();
 	}
 
 }

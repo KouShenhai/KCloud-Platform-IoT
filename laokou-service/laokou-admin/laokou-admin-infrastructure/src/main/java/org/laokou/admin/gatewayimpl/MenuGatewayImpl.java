@@ -89,9 +89,9 @@ public class MenuGatewayImpl implements MenuGateway {
 				menuMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new SystemException(LogUtil.result(e.getMessage()));
+				throw new SystemException(LogUtil.record(e.getMessage()));
 			}
 		});
 	}
@@ -106,9 +106,9 @@ public class MenuGatewayImpl implements MenuGateway {
 				menuMapper.updateById(menuDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new SystemException(LogUtil.result(e.getMessage()));
+				throw new SystemException(LogUtil.record(e.getMessage()));
 			}
 		});
 	}
@@ -123,7 +123,7 @@ public class MenuGatewayImpl implements MenuGateway {
 				menuMapper.insert(menuDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

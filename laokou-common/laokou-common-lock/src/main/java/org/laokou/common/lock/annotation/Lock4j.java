@@ -17,11 +17,11 @@
 
 package org.laokou.common.lock.annotation;
 
-import org.laokou.common.i18n.common.LockTypeEnums;
+import org.laokou.common.lock.TypeEnum;
 
 import java.lang.annotation.*;
 
-import static org.laokou.common.i18n.common.LockTypeEnums.LOCK;
+import static org.laokou.common.lock.TypeEnum.LOCK;
 
 /**
  * 分布式式锁注解.
@@ -51,7 +51,7 @@ public @interface Lock4j {
 	/**
 	 * 分布式锁类型.
 	 */
-	LockTypeEnums type() default LOCK;
+	TypeEnum type() default LOCK;
 
 	/**
 	 * 开启标识(解决公共模块用同一把锁).

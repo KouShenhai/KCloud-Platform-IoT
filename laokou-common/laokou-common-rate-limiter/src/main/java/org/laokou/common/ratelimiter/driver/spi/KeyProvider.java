@@ -18,7 +18,6 @@
 package org.laokou.common.ratelimiter.driver.spi;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.laokou.common.i18n.common.RateLimiterTypeEnums;
 
 /**
  * @author laokou
@@ -27,6 +26,6 @@ public interface KeyProvider {
 
 	String resolve(HttpServletRequest request);
 
-	RateLimiterTypeEnums accept();
+	RateLimiterTypeEnum accept();
 
 }

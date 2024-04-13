@@ -52,10 +52,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.laokou.common.i18n.common.JobModeEnums.SYNC;
-import static org.laokou.common.i18n.common.NumberConstants.SUCCESS;
-import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.JobModeEnum.SYNC;
+import static org.laokou.common.i18n.common.NumberConstant.SUCCESS;
+import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 
 /**
  * OSS管理.
@@ -121,7 +121,7 @@ public class OssGatewayImpl implements OssGateway {
 				ossMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
-				String msg = LogUtil.result(e.getMessage());
+				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
 				throw new SystemException(msg);
@@ -199,7 +199,7 @@ public class OssGatewayImpl implements OssGateway {
 				ossMapper.insert(ossDO);
 			}
 			catch (Exception e) {
-				String msg = LogUtil.result(e.getMessage());
+				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
 				throw new SystemException(msg);
@@ -217,7 +217,7 @@ public class OssGatewayImpl implements OssGateway {
 				ossMapper.updateById(ossDO);
 			}
 			catch (Exception e) {
-				String msg = LogUtil.result(e.getMessage());
+				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
 				throw new SystemException(msg);

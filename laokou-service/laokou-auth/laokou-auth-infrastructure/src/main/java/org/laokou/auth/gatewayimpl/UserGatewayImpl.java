@@ -55,7 +55,7 @@ public class UserGatewayImpl implements UserGateway {
 			return userConvertor.convertEntity(userDO);
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 boot_sys_user 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			log.error("表 boot_sys_user 不存在，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			// throw new RuntimeException(CUSTOM_SERVER_ERROR, "表 boot_sys_user 不存在");
 			throw e;
 		}

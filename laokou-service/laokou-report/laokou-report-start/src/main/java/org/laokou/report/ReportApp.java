@@ -26,7 +26,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 import java.net.InetAddress;
 
-import static org.laokou.common.i18n.common.NetworkConstants.IP;
+import static org.laokou.common.i18n.common.NetworkConstant.IP;
 
 /**
  * @author laokou

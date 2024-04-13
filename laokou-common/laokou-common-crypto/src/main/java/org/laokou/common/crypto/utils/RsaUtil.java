@@ -17,10 +17,11 @@
 
 package org.laokou.common.crypto.utils;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.ResourceUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.i18n.utils.StringUtil;
 
 import javax.crypto.Cipher;
@@ -33,9 +34,6 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
-import static org.laokou.common.i18n.common.SysConstants.ALGORITHM_RSA;
-import static org.laokou.common.i18n.common.SysConstants.SUN_RSA_SIGN_PROVIDER;
-
 /**
  * RSA加密与解密.
  *
@@ -43,6 +41,12 @@ import static org.laokou.common.i18n.common.SysConstants.SUN_RSA_SIGN_PROVIDER;
  */
 @Slf4j
 public class RsaUtil {
+
+	@Schema(name = "ALGORITHM_RSA", description = "RSA加密算法")
+	public static final String ALGORITHM_RSA = "RSA";
+
+	@Schema(name = "SUN_RSA_SIGN_PROVIDER", description = "RSA签名提供者")
+	public static final String SUN_RSA_SIGN_PROVIDER = "SunRsaSign";
 
 	/**
 	 * 根据私钥解密.
@@ -54,7 +58,7 @@ public class RsaUtil {
 	public static String decryptByPrivateKey(String body, String key) {
 		byte[] privateKey = StringUtil.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(getPrivateKey());
 		byte[] bytes = decryptByPrivateKey(decryptBase64(body), privateKey);
-		return new String(ObjectUtil.requireNotNull(bytes), StandardCharsets.UTF_8);
+		return new String(ObjectUtils.requireNotNull(bytes), StandardCharsets.UTF_8);
 	}
 
 	/**
@@ -77,7 +81,7 @@ public class RsaUtil {
 	@SneakyThrows
 	public static String getPrivateKey() {
 		try (InputStream inputStream = ResourceUtil.getResource("/conf/privateKey.scr").getInputStream()) {
-			return new String(ObjectUtil.requireNotNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
+			return new String(ObjectUtils.requireNotNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
 		}
 	}
 
@@ -88,7 +92,7 @@ public class RsaUtil {
 	@SneakyThrows
 	public static String getPublicKey() {
 		try (InputStream inputStream = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream()) {
-			return new String(ObjectUtil.requireNotNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
+			return new String(ObjectUtils.requireNotNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
 		}
 	}
 

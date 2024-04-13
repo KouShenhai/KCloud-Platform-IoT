@@ -23,11 +23,10 @@ import de.codecentric.boot.admin.server.domain.events.InstanceEvent;
 import de.codecentric.boot.admin.server.domain.events.InstanceStatusChangedEvent;
 import de.codecentric.boot.admin.server.notify.AbstractStatusChangeNotifier;
 import io.micrometer.common.lang.NonNullApi;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-
-import static org.laokou.common.i18n.common.SysConstants.*;
 
 /**
  * 通知配置.
@@ -38,6 +37,18 @@ import static org.laokou.common.i18n.common.SysConstants.*;
 @Component
 @NonNullApi
 public class StatusChangeNotifier extends AbstractStatusChangeNotifier {
+
+	@Schema(name = "DOWN_STATUS", description = "未通过健康检查")
+	private static final String DOWN_STATUS = "DOWN";
+
+	@Schema(name = "OFFLINE_STATUS", description = "离线")
+	private static final String OFFLINE_STATUS = "OFFLINE";
+
+	@Schema(name = "UP_STATUS", description = "上线")
+	private static final String UP_STATUS = "UP";
+
+	@Schema(name = "UNKNOWN_STATUS", description = "未知异常")
+	private static final String UNKNOWN_STATUS = "UNKNOWN";
 
 	public StatusChangeNotifier(InstanceRepository instanceRepository) {
 		super(instanceRepository);

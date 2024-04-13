@@ -31,22 +31,4 @@ public final class RequestHeaderConstants {
 	@Schema(name = "AUTHORIZATION", description = "认证标识")
 	public static final String AUTHORIZATION = "Authorization";
 
-	@Schema(name = "CHUNKED", description = "Chunked")
-	public static final String CHUNKED = "chunked";
-
-	@Schema(name = "NONCE", description = "随机字符")
-	public static final String NONCE = "nonce";
-
-	@Schema(name = "SIGN", description = "签名（MD5）")
-	public static final String SIGN = "sign";
-
-	@Schema(name = "TIMESTAMP", description = "时间戳")
-	public static final String TIMESTAMP = "timestamp";
-
-	@Schema(name = "APP_KEY", description = "应用标识")
-	public static final String APP_KEY = "app-key";
-
-	@Schema(name = "APP_SECRET", description = "应用密钥")
-	public static final String APP_SECRET = "app-secret";
-
 }

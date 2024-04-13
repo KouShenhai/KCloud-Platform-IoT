@@ -29,13 +29,13 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.DateUtils;
 
 import java.io.Serial;
 
-import static org.laokou.common.i18n.common.EventStatusEnums.CREATED;
-import static org.laokou.common.i18n.common.EventTypeEnums.LOGIN_FAILED;
-import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_LOGIN_EVENT_TOPIC;
+import static org.laokou.common.i18n.common.EventStatusEnum.CREATED;
+import static org.laokou.common.i18n.common.EventTypeEnum.LOGIN_FAILED;
+import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_LOGIN_EVENT_TOPIC;
 
 /**
  * @author laokou
@@ -77,7 +77,7 @@ public class LoginEvent extends DomainEvent<Long> {
 			String type, Integer status) {
 		super(IdGenerator.defaultSnowflakeId(), user.getId(), LOGIN_FAILED, CREATED, LAOKOU_LOGIN_EVENT_TOPIC,
 				sourceName, appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(),
-				user.getTenantId(), DateUtil.now(), DateUtil.now());
+				user.getTenantId(), DateUtils.now(), DateUtils.now());
 		this.username = user.getUsername();
 		this.ip = IpUtil.getIpAddr(request);
 		this.address = AddressUtil.getRealAddress(this.ip);

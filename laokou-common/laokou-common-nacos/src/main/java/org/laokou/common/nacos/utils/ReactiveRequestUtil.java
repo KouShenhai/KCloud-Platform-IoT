@@ -26,7 +26,7 @@ import org.springframework.util.AntPathMatcher;
 import java.util.Map;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 
 /**
  * 响应式请求工具类.

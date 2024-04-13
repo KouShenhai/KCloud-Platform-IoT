@@ -26,8 +26,8 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.TRACE;
-import static org.laokou.common.i18n.common.MybatisPlusConstants.PRIMARY_KEY;
+import static org.laokou.common.i18n.common.ElasticsearchIndexConstant.TRACE;
+import static org.laokou.common.i18n.dto.Identifier.PRIMARY_KEY;
 
 /**
  * 查看分布式链路索引执行器.

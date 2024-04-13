@@ -20,8 +20,8 @@ package org.laokou.common.core.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.laokou.common.i18n.common.NetworkConstants.IPV4_REGEX;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.NetworkConstant.IPV4_REGEX;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 
 /**
  * 正则表达式工具类.

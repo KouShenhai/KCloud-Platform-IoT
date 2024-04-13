@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.TRACE;
+import static org.laokou.common.i18n.common.ElasticsearchIndexConstant.TRACE;
 
 /**
  * 查询分布式链路索引列表执行器.

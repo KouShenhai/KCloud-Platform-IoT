@@ -24,8 +24,8 @@ import lombok.experimental.SuperBuilder;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.common.domain.OperateLog;
 
-import static org.laokou.common.i18n.common.EventTypeEnums.OPERATE_FAILED;
-import static org.laokou.common.i18n.common.NumberConstants.FAIL;
+import static org.laokou.common.i18n.common.EventTypeEnum.OPERATE_FAILED;
+import static org.laokou.common.i18n.common.NumberConstant.FAIL;
 
 /**
  * @author laokou

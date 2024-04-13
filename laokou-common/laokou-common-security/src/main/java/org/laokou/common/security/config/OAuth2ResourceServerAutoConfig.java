@@ -45,7 +45,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
+import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**

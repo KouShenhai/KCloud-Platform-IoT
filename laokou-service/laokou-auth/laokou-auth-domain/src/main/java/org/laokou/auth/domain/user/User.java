@@ -27,7 +27,7 @@ import org.laokou.auth.domain.event.LoginFailedEvent;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -36,8 +36,8 @@ import java.util.Set;
 import static lombok.AccessLevel.PRIVATE;
 import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
 import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
-import static org.laokou.common.i18n.common.SuperAdminEnums.YES;
-import static org.laokou.common.i18n.common.UserStatusEnums.DISABLE;
+import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
+import static org.laokou.common.i18n.common.UserStatusEnum.DISABLE;
 
 /**
  * @author laokou
@@ -108,7 +108,7 @@ public class User extends AggregateRoot<Long> {
 	}
 
 	public boolean isSuperAdministrator() {
-		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
+		return ObjectUtils.equals(YES.ordinal(), this.superAdmin);
 	}
 
 	public void checkMobile() {
@@ -146,7 +146,7 @@ public class User extends AggregateRoot<Long> {
 	}
 
 	public User create(User user, HttpServletRequest request, String sourceName, String appName, String authType) {
-		if (ObjectUtil.isNull(user)) {
+		if (ObjectUtils.isNull(user)) {
 			// loginFail(ACCOUNT_PASSWORD_ERROR,
 			// MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,
 			// appName, authType);
@@ -164,7 +164,7 @@ public class User extends AggregateRoot<Long> {
 	}
 
 	public void checkStatus(HttpServletRequest request, String sourceName, String appName, String authType) {
-		if (ObjectUtil.equals(DISABLE.ordinal(), this.status)) {
+		if (ObjectUtils.equals(DISABLE.ordinal(), this.status)) {
 			// loginFail(ACCOUNT_DISABLE, MessageUtil.getMessage(ACCOUNT_DISABLE),
 			// request, sourceName, appName, authType);
 		}
@@ -180,7 +180,7 @@ public class User extends AggregateRoot<Long> {
 
 	public void checkCaptcha(Boolean checkResult, HttpServletRequest request, String sourceName, String appName,
 			String authType) {
-		if (ObjectUtil.isNull(checkResult)) {
+		if (ObjectUtils.isNull(checkResult)) {
 			// loginFail(CAPTCHA_EXPIRED, MessageUtil.getMessage(CAPTCHA_EXPIRED),
 			// request, sourceName, appName, authType);
 		}

@@ -51,7 +51,7 @@ A_OAuth2_InvalidScope
 A_OAuth2_RegisteredClientNotExist
 A_OAuth2_MailError
 A_OAuth2_MobileError
-A_OAuth2_AccountDisable
+A_OAuth2_AccountDisabled
 A_OAuth2_CaptchaExpired
 A_OAuth2_CaptchaError
 
@@ -68,15 +68,3 @@ B_Source_NameAlreadyExist
 B_User_UsernameAlreadyExist
 B_User_MailAlreadyExist
 B_User_MobileAlreadyExist
-
-OK
-Bad_Request
-Unauthorized
-Forbidden
-Not_Found
-Too_Many_Requests
-Internal_Server_Error
-Bad_Gateway
-Service_Unavailable
-
-OAuth2_LoginSucceeded

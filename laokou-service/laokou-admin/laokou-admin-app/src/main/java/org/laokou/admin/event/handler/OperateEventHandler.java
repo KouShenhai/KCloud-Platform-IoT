@@ -31,8 +31,8 @@ import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OPERATE_EVENT_CONSUMER_GROUP;
-import static org.laokou.common.i18n.common.RocketMqConstants.LAOKOU_OPERATE_EVENT_TOPIC;
+import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_OPERATE_EVENT_CONSUMER_GROUP;
+import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_OPERATE_EVENT_TOPIC;
 
 /**
  * 操作日志处理.

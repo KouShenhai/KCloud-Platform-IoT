@@ -21,14 +21,14 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.FindTypeEnums;
+import org.laokou.common.i18n.common.FindTypeEnum;
 import org.laokou.admin.dto.menu.MenuListQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -41,7 +41,7 @@ import java.util.List;
 
 import static org.laokou.admin.domain.menu.MenuTypeEnums.MENU;
 import static org.laokou.admin.domain.menu.VisibleEnums.YES;
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 
 /**
  * 查询菜单列表执行器.
@@ -63,7 +63,7 @@ public class MenuListQryExe {
 	 */
 	@DS(TENANT)
 	public Result<List<MenuCO>> execute(MenuListQry qry) {
-		return switch (FindTypeEnums.valueOf(qry.getType())) {
+		return switch (FindTypeEnum.valueOf(qry.getType())) {
 			case LIST -> Result.of(getMenuList(qry).stream().map(this::convert).toList());
 			case TREE_LIST ->
 				Result.of(buildTreeNode(getMenuList(qry).stream().map(this::convert).toList()).getChildren());
@@ -74,7 +74,7 @@ public class MenuListQryExe {
 	private List<MenuCO> getUserMenuList() {
 		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserUtil.getUserId());
 		Object obj = redisUtil.get(menuTreeKey);
-		if (ObjectUtil.isNotNull(obj)) {
+		if (ObjectUtils.isNotNull(obj)) {
 			return ((MenuCO) obj).getChildren();
 		}
 		MenuCO co = buildTreeNode(getMenuList().stream().map(this::convert).toList());

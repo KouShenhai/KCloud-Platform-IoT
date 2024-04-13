@@ -92,7 +92,7 @@ public class DictGatewayImpl implements DictGateway {
 				dictMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -109,7 +109,7 @@ public class DictGatewayImpl implements DictGateway {
 				dictMapper.insert(dictDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -126,7 +126,7 @@ public class DictGatewayImpl implements DictGateway {
 				dictMapper.updateById(dictDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

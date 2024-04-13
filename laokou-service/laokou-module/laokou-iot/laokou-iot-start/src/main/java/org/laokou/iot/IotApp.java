@@ -24,7 +24,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import static org.laokou.common.i18n.common.NetworkConstants.IP;
+import static org.laokou.common.i18n.common.NetworkConstant.IP;
 
 /**
  * @author laokou

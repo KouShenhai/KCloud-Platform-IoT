@@ -26,11 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
 import org.laokou.common.core.context.ShutdownHolder;
 import org.laokou.common.core.utils.ResponseUtil;
-import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import static org.laokou.common.i18n.common.StatusCodes.SERVICE_UNAVAILABLE;
-import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
+import static org.laokou.common.i18n.common.StatusCode.SERVICE_UNAVAILABLE;
+import static org.laokou.common.i18n.common.TraceConstant.TRACE_ID;
 
 /**
  * 认证过滤器.
@@ -47,7 +47,7 @@ public class OAuth2AuthorizationFilter extends OncePerRequestFilter {
 		try {
 			ThreadContext.put(TRACE_ID, request.getHeader(TRACE_ID));
 			if (ShutdownHolder.status()) {
-				ResponseUtil.response(response, SERVICE_UNAVAILABLE, MessageUtil.getMessage("" + SERVICE_UNAVAILABLE));
+				ResponseUtil.response(response, Result.fail(SERVICE_UNAVAILABLE));
 				return;
 			}
 			chain.doFilter(request, response);

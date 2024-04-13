@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import static lombok.AccessLevel.PRIVATE;
-import static org.laokou.common.i18n.common.NetworkConstants.IPV4_REGEX;
+import static org.laokou.common.i18n.common.NetworkConstant.IPV4_REGEX;
 
 /**
  * @author laokou

@@ -19,6 +19,7 @@ package org.laokou.gateway.filter;
 
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -68,11 +69,10 @@ import java.util.concurrent.Executors;
 import java.util.function.Function;
 
 import static org.laokou.common.i18n.common.OAuth2Constants.*;
-import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
+import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.RequestHeaderConstants.AUTHORIZATION;
-import static org.laokou.common.i18n.common.RequestHeaderConstants.CHUNKED;
-import static org.laokou.common.i18n.common.StatusCodes.UNAUTHORIZED;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.SysConstants.COMMON_DATA_ID;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.*;
 import static org.springframework.http.HttpHeaders.CONTENT_LENGTH;
@@ -91,6 +91,9 @@ import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VAL
 @RefreshScope
 @RequiredArgsConstructor
 public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
+
+	@Schema(name = "CHUNKED", description = "Chunked")
+	public static final String CHUNKED = "chunked";
 
 	private final Environment env;
 
@@ -124,7 +127,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			// 获取token
 			String token = ReactiveRequestUtil.getParamValue(request, AUTHORIZATION);
 			if (StringUtil.isEmpty(token)) {
-				return ReactiveResponseUtil.response(exchange, Result.fail("" + UNAUTHORIZED));
+				return ReactiveResponseUtil.response(exchange, Result.fail(UNAUTHORIZED));
 			}
 			// 增加令牌
 			return chain
@@ -195,7 +198,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 					}
 				}
 				catch (Exception e) {
-					log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				}
 			}
 			return Mono.just(MapUtil.parseParams(paramMap));

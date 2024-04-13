@@ -17,36 +17,43 @@
 
 package org.laokou.common.security.handler;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ResponseUtil;
-import org.laokou.common.i18n.common.StatusCodes;
-import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.common.StatusCode;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.MessageUtils;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
-
-import static org.laokou.common.i18n.common.OAuth2Constants.ERROR_URL;
 
 /**
  * @author laokou
  */
 public class OAuth2ExceptionHandler {
 
-	public static OAuth2AuthenticationException getException(String errorCode, String description, String uri) {
-		return new OAuth2AuthenticationException(new OAuth2Error(errorCode, description, uri));
+	@Schema(name = "ERROR_URL", description = "错误地址")
+	public static final String ERROR_URL = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
+
+	public static OAuth2AuthenticationException getException(String code, String desc, String uri) {
+		return new OAuth2AuthenticationException(new OAuth2Error(code, desc, uri));
 	}
 
-	public static OAuth2AuthenticationException getException(int errorCode, String description) {
-		return getException(String.valueOf(errorCode), description, ERROR_URL);
+	public static OAuth2AuthenticationException getException(String code, String uri) {
+		return getException(code, MessageUtils.getMessage(code), uri);
+	}
+
+	public static OAuth2AuthenticationException getException(String code) {
+		return getException(code, MessageUtils.getMessage(code), ERROR_URL);
 	}
 
 	@SneakyThrows
 	public static void handleAccessDenied(HttpServletRequest request, HttpServletResponse response, Throwable ex) {
 		if (ex instanceof AccessDeniedException) {
-			ResponseUtil.response(response, StatusCodes.FORBIDDEN, MessageUtil.getMessage("" + StatusCodes.FORBIDDEN));
+			ResponseUtil.response(response, Result.fail(StatusCode.FORBIDDEN));
 		}
 	}
 
@@ -54,13 +61,12 @@ public class OAuth2ExceptionHandler {
 	public static void handleAuthentication(HttpServletRequest request, HttpServletResponse response, Throwable ex) {
 		if (ex instanceof OAuth2AuthenticationException authenticationException) {
 			String message = authenticationException.getError().getDescription();
-			int errorCode = Integer.parseInt(authenticationException.getError().getErrorCode());
-			ResponseUtil.response(response, errorCode, message);
+			String code = authenticationException.getError().getErrorCode();
+			ResponseUtil.response(response, Result.fail(code, message));
 			return;
 		}
 		if (ex instanceof InsufficientAuthenticationException) {
-			ResponseUtil.response(response, StatusCodes.UNAUTHORIZED,
-					MessageUtil.getMessage("" + StatusCodes.UNAUTHORIZED));
+			ResponseUtil.response(response, Result.fail(StatusCode.UNAUTHORIZED));
 		}
 	}
 

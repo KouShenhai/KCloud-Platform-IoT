@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.laokou.common.i18n.common.RateLimiterTypeEnums.IP;
+import static org.laokou.common.ratelimiter.driver.spi.RateLimiterTypeEnum.IP;
 
 /**
  * @author laokou

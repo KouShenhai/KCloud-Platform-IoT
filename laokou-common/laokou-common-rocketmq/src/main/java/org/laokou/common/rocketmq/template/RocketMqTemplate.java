@@ -23,14 +23,14 @@ import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
-import org.laokou.common.i18n.common.RocketMqConstants;
+import org.laokou.common.i18n.common.RocketMqConstant;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 
 import static org.apache.rocketmq.client.producer.SendStatus.SEND_OK;
-import static org.laokou.common.i18n.common.StringConstants.NULL;
-import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
+import static org.laokou.common.i18n.common.StringConstant.NULL;
+import static org.laokou.common.i18n.common.TraceConstant.TRACE_ID;
 
 /**
  * @author laokou
@@ -260,7 +260,7 @@ public class RocketMqTemplate {
 	}
 
 	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message) {
-		rocketMQTemplate.asyncSend(String.format(RocketMqConstants.TOPIC_TAG, topic, tag), message, new SendCallback() {
+		rocketMQTemplate.asyncSend(String.format(RocketMqConstant.TOPIC_TAG, topic, tag), message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("RocketMQ消息发送成功");

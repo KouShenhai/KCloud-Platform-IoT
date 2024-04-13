@@ -21,13 +21,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.crypto.utils.AesUtil;
-import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -53,8 +52,8 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.ErrorCodes.*;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.exception.AuthException.*;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
 
@@ -120,9 +119,8 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 			OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(
 					auth2BaseAuthenticationToken);
 			RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
-			if (ObjectUtil.isNull(registeredClient)) {
-				throw OAuth2ExceptionHandler.getException(REGISTERED_CLIENT_NOT_EXIST,
-						MessageUtil.getMessage("" + REGISTERED_CLIENT_NOT_EXIST));
+			if (ObjectUtils.isNull(registeredClient)) {
+				throw OAuth2ExceptionHandler.getException(REGISTERED_CLIENT_NOT_EXIST);
 			}
 			// 获取认证范围
 			Set<String> scopes = registeredClient.getScopes();
@@ -141,8 +139,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 			DefaultOAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(ACCESS_TOKEN).build();
 			// 生成access_token
 			OAuth2Token generatedAccessToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
-				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ACCESS_TOKEN_FAIL,
-						MessageUtil.getMessage("" + GENERATE_ACCESS_TOKEN_FAIL)));
+				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ACCESS_TOKEN_FAIL));
 			OAuth2AccessToken accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
 					generatedAccessToken.getTokenValue(), generatedAccessToken.getIssuedAt(),
 					generatedAccessToken.getExpiresAt(), tokenContext.getAuthorizedScopes());
@@ -170,8 +167,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 					&& !clientPrincipal.getClientAuthenticationMethod().equals(ClientAuthenticationMethod.NONE)) {
 				tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
 				OAuth2Token generatedRefreshToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
-					.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_REFRESH_TOKEN_FAIL,
-							MessageUtil.getMessage("" + GENERATE_REFRESH_TOKEN_FAIL)));
+					.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_REFRESH_TOKEN_FAIL));
 				refreshToken = (OAuth2RefreshToken) generatedRefreshToken;
 				authorizationBuilder.refreshToken(refreshToken);
 			}
@@ -181,8 +177,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 					.authorization(authorizationBuilder.build())
 					.build();
 				OAuth2Token generatedIdToken = Optional.ofNullable(this.tokenGenerator.generate(tokenContext))
-					.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ID_TOKEN_FAIL,
-							MessageUtil.getMessage("" + GENERATE_ID_TOKEN_FAIL)));
+					.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ID_TOKEN_FAIL));
 				// 生成id_token
 				OidcIdToken idToken = new OidcIdToken(generatedIdToken.getTokenValue(), generatedIdToken.getIssuedAt(),
 						generatedIdToken.getExpiresAt(), ((Jwt) generatedIdToken).getClaims());
@@ -223,10 +218,10 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 		if (OAuth2ClientAuthenticationToken.class.isAssignableFrom(authentication.getPrincipal().getClass())) {
 			clientPrincipal = (OAuth2ClientAuthenticationToken) authentication.getPrincipal();
 		}
-		if (ObjectUtil.isNotNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {
+		if (ObjectUtils.isNotNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {
 			return clientPrincipal;
 		}
-		throw OAuth2ExceptionHandler.getException(INVALID_CLIENT, MessageUtil.getMessage("" + INVALID_CLIENT));
+		throw OAuth2ExceptionHandler.getException(INVALID_CLIENT);
 	}
 
 }

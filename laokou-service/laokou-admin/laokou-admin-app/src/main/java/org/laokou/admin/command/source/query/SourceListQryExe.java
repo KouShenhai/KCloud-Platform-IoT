@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_SOURCE;
+import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_SOURCE;
 
 /**
  * 查询数据源列表执行器.

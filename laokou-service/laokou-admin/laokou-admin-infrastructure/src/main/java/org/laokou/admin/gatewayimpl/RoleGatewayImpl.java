@@ -103,9 +103,9 @@ public class RoleGatewayImpl implements RoleGateway {
 				roleMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new SystemException(LogUtil.result(e.getMessage()));
+				throw new SystemException(LogUtil.record(e.getMessage()));
 			}
 		});
 	}
@@ -123,7 +123,7 @@ public class RoleGatewayImpl implements RoleGateway {
 				createRoleMenu(roleDO, role.getMenuIds());
 			}
 			catch (Exception e) {
-				String msg = LogUtil.result(e.getMessage());
+				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
 				throw new SystemException(msg);
@@ -145,7 +145,7 @@ public class RoleGatewayImpl implements RoleGateway {
 				modifyRoleMenu(roleDO, role.getMenuIds());
 			}
 			catch (Exception e) {
-				String msg = LogUtil.result(e.getMessage());
+				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
 				throw new SystemException(msg);

@@ -34,8 +34,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_OSS;
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_OSS;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 
 /**
  * 查询OSS列表执行器.

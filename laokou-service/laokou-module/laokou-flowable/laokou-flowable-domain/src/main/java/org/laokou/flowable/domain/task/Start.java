@@ -23,7 +23,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -47,13 +47,13 @@ public class Start extends AggregateRoot<Long> {
 	private String instanceName;
 
 	public void checkDefinition(Object obj) {
-		if (ObjectUtil.isNull(obj)) {
+		if (ObjectUtils.isNull(obj)) {
 			throw new RuntimeException("流程未定义");
 		}
 	}
 
 	public void checkInstance(Object obj) {
-		if (ObjectUtil.isNull(obj)) {
+		if (ObjectUtils.isNull(obj)) {
 			throw new RuntimeException("流程不存在");
 		}
 	}

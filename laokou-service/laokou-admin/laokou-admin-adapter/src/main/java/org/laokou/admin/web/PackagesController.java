@@ -25,7 +25,7 @@ import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.packages.*;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.i18n.common.CacheOperatorTypeEnums;
+import org.laokou.common.i18n.common.CacheOperatorTypeEnum;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.CacheNameConstants.PACKAGES;
+import static org.laokou.common.i18n.common.CacheNameConstant.PACKAGES;
 
 /**
  * @author laokou
@@ -78,7 +78,7 @@ public class PackagesController {
 	@Operation(summary = "套餐管理", description = "修改套餐")
 	@OperateLog(module = "套餐管理", operation = "修改套餐")
 	@PreAuthorize("hasAuthority('packages:modify')")
-	@DataCache(name = PACKAGES, key = "#cmd.packageCO.id", type = CacheOperatorTypeEnums.DEL)
+	@DataCache(name = PACKAGES, key = "#cmd.packageCO.id", type = CacheOperatorTypeEnum.DEL)
 	public void modify(@RequestBody PackageModifyCmd cmd) {
 		packagesServiceI.modify(cmd);
 	}

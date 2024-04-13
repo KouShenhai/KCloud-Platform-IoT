@@ -22,14 +22,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.laokou.common.i18n.common.EventStatusEnums;
-import org.laokou.common.i18n.common.EventTypeEnums;
+import org.laokou.common.i18n.common.EventStatusEnum;
+import org.laokou.common.i18n.common.EventTypeEnum;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
 
 import static lombok.AccessLevel.PROTECTED;
-import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
+import static org.laokou.common.i18n.dto.Identifier.*;
 
 /**
  * @author laokou
@@ -51,10 +51,10 @@ public abstract class DomainEvent<ID> implements Event {
 	protected ID aggregateId;
 
 	@Schema(name = "eventType", description = "事件类型")
-	protected EventTypeEnums eventType;
+	protected EventTypeEnum eventType;
 
 	@Schema(name = "eventStatus", description = "事件状态")
-	protected EventStatusEnums eventStatus;
+	protected EventStatusEnum eventStatus;
 
 	@Schema(name = "topic", description = "MQ主题")
 	protected String topic;
@@ -86,7 +86,7 @@ public abstract class DomainEvent<ID> implements Event {
 	@Schema(name = UPDATE_DATE, description = "修改时间")
 	protected LocalDateTime updateDate;
 
-	public DomainEvent(ID id, EventStatusEnums eventStatus, String sourceName) {
+	public DomainEvent(ID id, EventStatusEnum eventStatus, String sourceName) {
 		this.id = id;
 		this.eventStatus = eventStatus;
 		this.sourceName = sourceName;

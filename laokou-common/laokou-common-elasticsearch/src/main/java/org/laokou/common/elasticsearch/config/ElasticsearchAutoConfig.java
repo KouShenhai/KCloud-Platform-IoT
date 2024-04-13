@@ -59,10 +59,10 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.laokou.common.core.utils.SslUtil.sslContext;
-import static org.laokou.common.i18n.common.NetworkConstants.HTTPS_SCHEME;
-import static org.laokou.common.i18n.common.NetworkConstants.HTTP_SCHEME;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.StringConstants.RISK;
+import static org.laokou.common.i18n.common.NetworkConstant.HTTPS_SCHEME;
+import static org.laokou.common.i18n.common.NetworkConstant.HTTP_SCHEME;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.StringConstant.RISK;
 
 /**
  * @author laokou

@@ -25,7 +25,7 @@ import org.laokou.admin.dto.oss.OssModifyCmd;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 
 /**
  * 修改OSS执行器.

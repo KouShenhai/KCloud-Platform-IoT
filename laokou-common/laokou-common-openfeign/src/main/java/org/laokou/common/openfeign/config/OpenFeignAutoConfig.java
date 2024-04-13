@@ -20,6 +20,7 @@ package org.laokou.common.openfeign.config;
 import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
 import feign.*;
 import feign.codec.ErrorDecoder;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,10 +37,9 @@ import java.util.Map;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.laokou.common.i18n.common.RequestHeaderConstants.AUTHORIZATION;
-import static org.laokou.common.i18n.common.RouterConstants.SERVICE_GRAY;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.StringConstants.UNDER;
-import static org.laokou.common.i18n.common.TraceConstants.*;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.StringConstant.UNDER;
+import static org.laokou.common.i18n.common.TraceConstant.*;
 
 // @formatter:off
 /**
@@ -56,6 +56,9 @@ import static org.laokou.common.i18n.common.TraceConstants.*;
 @Import(FeignClientsConfiguration.class)
 @RequiredArgsConstructor
 public class OpenFeignAutoConfig extends ErrorDecoder.Default implements RequestInterceptor {
+
+	@Schema(name = "SERVICE-GRAY", description = "服务灰度")
+	private static final String SERVICE_GRAY = "service-gray";
 
 	private final IdempotentUtil idempotentUtil;
 
@@ -107,8 +110,8 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 			msg = String.format("，请求ID：%s", idMap.get(uniqueKey));
 		}
 		log.info("OpenFeign分布式调用，令牌：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}，灰度路由：{}" + msg, authorization,
-				LogUtil.result(userId), LogUtil.result(username), LogUtil.result(tenantId), LogUtil.result(traceId),
-				LogUtil.result(serviceGray));
+				LogUtil.record(userId), LogUtil.record(username), LogUtil.record(tenantId), LogUtil.record(traceId),
+				LogUtil.record(serviceGray));
 	}
 
 	@Bean

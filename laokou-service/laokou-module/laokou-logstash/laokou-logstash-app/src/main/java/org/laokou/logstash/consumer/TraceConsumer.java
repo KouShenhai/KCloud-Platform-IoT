@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.DateUtils;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceIndex;
@@ -36,11 +36,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.ElasticsearchIndexConstants.TRACE;
-import static org.laokou.common.i18n.common.KafkaConstants.LAOKOU_LOGSTASH_CONSUMER_GROUP;
-import static org.laokou.common.i18n.common.KafkaConstants.LAOKOU_TRACE_TOPIC;
-import static org.laokou.common.i18n.common.StringConstants.*;
-import static org.laokou.common.i18n.common.SysConstants.EMPTY_LOG_MSG;
+import static org.laokou.common.i18n.common.ElasticsearchIndexConstant.TRACE;
+import static org.laokou.common.i18n.common.KafkaConstant.LAOKOU_LOGSTASH_CONSUMER_GROUP;
+import static org.laokou.common.i18n.common.KafkaConstant.LAOKOU_TRACE_TOPIC;
+import static org.laokou.common.i18n.common.StringConstant.DOLLAR;
+import static org.laokou.common.i18n.common.StringConstant.UNDER;
 import static org.laokou.common.i18n.common.SysConstants.UNDEFINED;
 
 /**
@@ -66,7 +66,7 @@ public class TraceConsumer {
 		String ym = XxlJobHelper.getJobParam();
 		log.info("接收调度中心参数：{}", ym);
 		if (StringUtil.isEmpty(ym)) {
-			ym = DateUtil.format(DateUtil.plusMonths(DateUtil.nowDate(), 1), DateUtil.YYYYMM);
+			ym = DateUtils.format(DateUtils.plusMonths(DateUtils.nowDate(), 1), DateUtils.YYYYMM);
 		}
 		else {
 			if (!RegexUtil.numberRegex(ym) || ym.length() != 6) {
@@ -82,7 +82,7 @@ public class TraceConsumer {
 			XxlJobHelper.log("创建索引【{" + getIndexName(ym) + "}】执行成功");
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			XxlJobHelper.log("创建索引【{" + getIndexName(ym) + "}】执行失败");
 			XxlJobHelper.handleFail("创建索引【{" + getIndexName(ym) + "}】执行失败");
 		}
@@ -97,7 +97,7 @@ public class TraceConsumer {
 					traceIndex.setTenantId(replaceValue(traceIndex.getTenantId()));
 					traceIndex.setUserId(replaceValue(traceIndex.getUserId()));
 					traceIndex.setUsername(replaceValue(traceIndex.getUsername()));
-					String indexName = getIndexName(DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMM));
+					String indexName = getIndexName(DateUtils.format(DateUtils.nowDate(), DateUtils.YYYYMM));
 					// elasticsearchTemplate.syncIndexAsync(EMPTY, indexName,
 					// JacksonUtil.toJsonStr(traceIndex));
 				}
@@ -112,7 +112,7 @@ public class TraceConsumer {
 
 	@PostConstruct
 	public void createTraceIndex() {
-		String ym = DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMM);
+		String ym = DateUtils.format(DateUtils.nowDate(), DateUtils.YYYYMM);
 		// 创建索引
 		createIndex(ym);
 	}
@@ -123,7 +123,7 @@ public class TraceConsumer {
 
 	private String replaceValue(String value) {
 		if (value.startsWith(DOLLAR) || UNDEFINED.equals(value)) {
-			return EMPTY_LOG_MSG;
+			return "暂无信息";
 		}
 		return value;
 	}
@@ -142,7 +142,7 @@ public class TraceConsumer {
 		// }
 		// catch (Exception e) {
 		// log.error("创建索引【{}】失败，错误信息：{}，详情见日志", indexName,
-		// LogUtil.result(e.getMessage()), e);
+		// LogUtil.record(e.getMessage()), e);
 		// }
 	}
 

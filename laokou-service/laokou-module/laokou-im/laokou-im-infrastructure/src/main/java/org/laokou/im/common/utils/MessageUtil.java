@@ -30,7 +30,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.StatusCodes.OK;
+import static org.laokou.common.i18n.common.StatusCode.OK;
 
 /**
  * @author laokou
@@ -50,7 +50,7 @@ public class MessageUtil {
 		Message msg = JacksonUtil.toBean(message, Message.class);
 		String payload = msg.getPayload();
 		Set<String> receiver = msg.getReceiver();
-		TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.of("" + OK, payload)));
+		TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.of(OK, payload)));
 		receiver.parallelStream()
 			.forEach(clientId -> CompletableFuture.runAsync(() -> websocketServer.send(clientId, webSocketFrame),
 					executor));

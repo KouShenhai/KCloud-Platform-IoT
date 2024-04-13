@@ -30,8 +30,8 @@ import java.nio.charset.StandardCharsets;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
-import static org.laokou.common.i18n.common.RocketMqConstants.*;
-import static org.laokou.common.i18n.common.TraceConstants.TRACE_ID;
+import static org.laokou.common.i18n.common.RocketMqConstant.*;
+import static org.laokou.common.i18n.common.TraceConstant.TRACE_ID;
 
 /**
  * @author laokou

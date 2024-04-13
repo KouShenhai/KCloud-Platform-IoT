@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.laokou.common.i18n.common.ErrorCodes.ROUTE_NOT_EXIST;
-import static org.laokou.common.i18n.common.RouterConstants.DATA_ID;
+import static org.laokou.common.i18n.common.RouterConstant.DATA_ID;
 
 // @formatter:off
 /**
@@ -128,7 +128,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			return JacksonUtil.toList(configInfo, RouteDefinition.class);
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			throw new RuntimeException(String.valueOf(ROUTE_NOT_EXIST));
 		}
 	}

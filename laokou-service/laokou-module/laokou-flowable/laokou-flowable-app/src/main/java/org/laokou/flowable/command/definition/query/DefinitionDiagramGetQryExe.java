@@ -36,7 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
+import static org.laokou.common.i18n.common.DatasourceConstant.FLOWABLE;
 
 /**
  * 查看流程图执行器.
@@ -71,7 +71,7 @@ public class DefinitionDiagramGetQryExe {
 			return Result.of(Base64.encodeBase64String(outputStream.toByteArray()));
 		}
 		catch (IOException e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			throw new RuntimeException("流程图查看失败");
 		}
 	}

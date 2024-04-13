@@ -17,6 +17,7 @@
 
 package org.laokou.common.secret.utils;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -26,14 +27,17 @@ import org.springframework.util.DigestUtils;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.RequestSecretConstants.APP_KEY;
-import static org.laokou.common.i18n.common.RequestSecretConstants.APP_SECRET;
-
 /**
  * @author laokou
  */
 @Component
 public class SecretUtil {
+
+	@Schema(name = "APP_KEY", description = "应用Key")
+	public static final String APP_KEY = "laokou2023";
+
+	@Schema(name = "APP_SECRET", description = "应用密钥")
+	public static final String APP_SECRET = "vb05f6c45d67340zaz95v7fa6d49v99zx";
 
 	private static final long TIMEOUT_MILLIS = 60 * 1000L;
 

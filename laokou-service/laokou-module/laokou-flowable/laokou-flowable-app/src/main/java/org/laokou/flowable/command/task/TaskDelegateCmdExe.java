@@ -23,8 +23,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;
+import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -32,7 +33,7 @@ import org.laokou.common.security.utils.UserUtil;
 import org.laokou.flowable.dto.task.TaskDelegateCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.FLOWABLE;
+import static org.laokou.common.i18n.common.DatasourceConstant.FLOWABLE;
 
 /**
  * 委派任务流程执行器.
@@ -64,7 +65,7 @@ public class TaskDelegateCmdExe {
 				.taskTenantId(UserUtil.getTenantId().toString())
 				.taskId(taskId)
 				.singleResult();
-			if (ObjectUtil.isNull(task)) {
+			if (ObjectUtils.isNull(task)) {
 				throw new RuntimeException("任务不存在");
 			}
 			if (!owner.equals(task.getAssignee())) {
@@ -92,9 +93,9 @@ public class TaskDelegateCmdExe {
 				return true;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new SystemException(LogUtil.fail(e.getMessage()));
+				throw new SystemException(StatusCode.INTERNAL_SERVER_ERROR, LogUtil.except(e.getMessage()));
 			}
 		});
 	}

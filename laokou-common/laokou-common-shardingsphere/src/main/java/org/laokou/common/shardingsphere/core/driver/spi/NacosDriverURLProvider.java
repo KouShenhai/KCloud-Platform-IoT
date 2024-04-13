@@ -21,6 +21,7 @@ import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.cloud.nacos.NacosConfigProperties;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.google.common.base.Preconditions;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.driver.jdbc.core.driver.ShardingSphereURLProvider;
@@ -28,7 +29,7 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.PropertyUtil;
 import org.laokou.common.crypto.utils.RsaUtil;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.StringUtils;
 
@@ -42,16 +43,24 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import static com.alibaba.cloud.nacos.NacosDiscoveryProperties.PREFIX;
-import static org.laokou.common.i18n.common.ShardingSphereConstants.*;
-import static org.laokou.common.i18n.common.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.StringConstants.RISK;
-import static org.laokou.common.i18n.common.SysConstants.*;
+import static org.laokou.common.i18n.common.ShardingSphereConstant.*;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.StringConstant.RISK;
 
 /**
  * @author laokou
  */
 @Slf4j
 public class NacosDriverURLProvider implements ShardingSphereURLProvider {
+
+	@Schema(name = "CRYPTO_PREFIX", description = "加密前缀")
+	private static final String CRYPTO_PREFIX = "ENC(";
+
+	@Schema(name = "CRYPTO_SUFFIX", description = "加密后缀")
+	private static final String CRYPTO_SUFFIX = ")";
+
+	@Schema(name = "PRIVATE_KEY", description = "私钥Key")
+	private static final String PRIVATE_KEY = "private-key";
 
 	@Override
 	public boolean accept(String url) {
@@ -106,12 +115,12 @@ public class NacosDriverURLProvider implements ShardingSphereURLProvider {
 		try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(
 				new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8))) {
 			String str;
-			while (ObjectUtil.isNotNull((str = reader.readLine()))) {
+			while (ObjectUtils.isNotNull((str = reader.readLine()))) {
 				list.add(str);
 			}
 		}
 		catch (IOException e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 		}
 		return list;
 	}

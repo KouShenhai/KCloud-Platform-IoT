@@ -37,7 +37,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
+import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
 import static org.laokou.common.redis.utils.RedisUtil.NOT_EXPIRE;
 
 /**
@@ -78,7 +78,7 @@ public class IpGatewayImpl implements IpGateway {
 				ipMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
-				String msg = LogUtil.result(e.getMessage());
+				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
 				throw new SystemException(msg);
@@ -114,7 +114,7 @@ public class IpGatewayImpl implements IpGateway {
 				ipMapper.insert(ipDO);
 			}
 			catch (Exception e) {
-				String msg = LogUtil.result(e.getMessage());
+				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
 				throw new SystemException(msg);

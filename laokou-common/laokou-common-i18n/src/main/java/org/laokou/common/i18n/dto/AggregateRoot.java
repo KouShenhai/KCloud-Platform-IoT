@@ -22,17 +22,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.ValidatorUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ValidatorUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static lombok.AccessLevel.PROTECTED;
-import static org.laokou.common.i18n.common.MybatisPlusConstants.*;
-import static org.laokou.common.i18n.common.ValCodes.SYSTEM_ID_REQUIRE;
+import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_TENANT_ID_REQUIRE;
+import static org.laokou.common.i18n.common.exception.ParamException.SYSTEM_ID_REQUIRE;
 
 /**
  * @author laokou
@@ -69,15 +70,14 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	private List<DomainEvent<ID>> events;
 
 	public void checkNullId() {
-		if (ObjectUtil.isNull(this.id)) {
-			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
+		if (ObjectUtils.isNull(this.id)) {
+			throw new SystemException(SYSTEM_ID_REQUIRE, ValidatorUtils.getMessage(SYSTEM_ID_REQUIRE));
 		}
 	}
 
 	protected void checkNullTenantId() {
-		if (ObjectUtil.isNull(this.tenantId)) {
-			// throw new AuthException(CUSTOM_SERVER_ERROR,
-			// ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
+		if (ObjectUtils.isNull(this.tenantId)) {
+			throw new AuthException(OAUTH2_TENANT_ID_REQUIRE, ValidatorUtils.getMessage(OAUTH2_TENANT_ID_REQUIRE));
 		}
 	}
 
@@ -90,7 +90,7 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	}
 
 	private List<DomainEvent<ID>> events() {
-		if (ObjectUtil.isNull(events)) {
+		if (ObjectUtils.isNull(events)) {
 			events = new ArrayList<>(16);
 		}
 		return events;

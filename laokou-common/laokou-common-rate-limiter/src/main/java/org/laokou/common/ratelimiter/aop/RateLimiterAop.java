@@ -17,13 +17,14 @@
 
 package org.laokou.common.ratelimiter.aop;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.ratelimiter.driver.KeyManager;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -35,9 +36,8 @@ import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
 
-import static org.laokou.common.i18n.common.StatusCodes.TOO_MANY_REQUESTS;
-import static org.laokou.common.i18n.common.StringConstants.UNDER;
-import static org.laokou.common.i18n.common.SysConstants.RATE_LIMITER_KEY;
+import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
+import static org.laokou.common.i18n.common.StringConstant.UNDER;
 
 /**
  * 请查看 RequestRateLimiterGatewayFilterFactory.
@@ -50,6 +50,9 @@ import static org.laokou.common.i18n.common.SysConstants.RATE_LIMITER_KEY;
 @RequiredArgsConstructor
 public class RateLimiterAop {
 
+	@Schema(name = "RATE_LIMITER_KEY", description = "限流Key")
+	public static final String RATE_LIMITER_KEY = "___%s_KEY___";
+
 	private final RedisUtil redisUtil;
 
 	@Before("@annotation(org.laokou.common.ratelimiter.annotation.RateLimiter)")
@@ -57,7 +60,7 @@ public class RateLimiterAop {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		Method method = signature.getMethod();
 		RateLimiter rateLimiter = AnnotationUtils.findAnnotation(method, RateLimiter.class);
-		Assert.isTrue(ObjectUtil.isNotNull(rateLimiter), "@RateLimiter is null");
+		Assert.isTrue(ObjectUtils.isNotNull(rateLimiter), "@RateLimiter is null");
 		String key = getKey(rateLimiter.id().concat(UNDER).concat(KeyManager.key(rateLimiter.type())));
 		long rate = rateLimiter.rate();
 		long interval = rateLimiter.interval();

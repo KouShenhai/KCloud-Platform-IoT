@@ -26,9 +26,9 @@ import org.laokou.common.mybatisplus.handler.CryptoTypeHandler;
 
 import java.io.Serial;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_USER;
-import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
-import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
+import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_USER;
+import static org.laokou.common.i18n.dto.AggregateRoot.PASSWORD;
+import static org.laokou.common.i18n.dto.AggregateRoot.USERNAME;
 
 /**
  * @author laokou

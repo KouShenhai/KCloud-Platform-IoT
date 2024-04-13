@@ -29,11 +29,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 
-import static org.laokou.common.i18n.common.ErrorCodes.*;
+import static org.laokou.common.i18n.common.exception.SystemException.*;
 
 /**
  * @author laokou
@@ -47,37 +47,37 @@ public class SentinelExceptionHandler implements BlockExceptionHandler {
 	public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, BlockException e) {
 		// 限流
 		if (e instanceof FlowException flowException) {
-			log.error("FlowException -> 已限流，错误信息：{}，详情见日志", LogUtil.result(flowException.getMessage()),
+			log.error("FlowException -> 已限流，错误信息：{}，详情见日志", LogUtil.record(flowException.getMessage()),
 					flowException);
-			ResponseUtil.response(response, REQUEST_FLOW, MessageUtil.getMessage(String.valueOf(REQUEST_FLOW)));
+			ResponseUtil.response(response, Result.fail(FLOWED));
 			return;
 		}
 		// 降级
 		if (e instanceof DegradeException degradeException) {
-			log.error("DegradeException -> 已降级，错误信息：{}，详情见日志", LogUtil.result(degradeException.getMessage()),
+			log.error("DegradeException -> 已降级，错误信息：{}，详情见日志", LogUtil.record(degradeException.getMessage()),
 					degradeException);
-			ResponseUtil.response(response, DEGRADE, MessageUtil.getMessage(String.valueOf(DEGRADE)));
+			ResponseUtil.response(response, Result.fail(DEGRADED));
 			return;
 		}
 		// 热点参数限流
 		if (e instanceof ParamFlowException paramFlowException) {
 			log.error("ParamFlowException -> 热点参数已限流，错误信息：{}，详情见日志",
-					LogUtil.result(paramFlowException.getMessage()), paramFlowException);
-			ResponseUtil.response(response, PARAM_FLOW, MessageUtil.getMessage(String.valueOf(PARAM_FLOW)));
+					LogUtil.record(paramFlowException.getMessage()), paramFlowException);
+			ResponseUtil.response(response, Result.fail(PARAM_FLOWED));
 			return;
 		}
 		// 系统规则
 		if (e instanceof SystemBlockException systemBlockException) {
 			log.error("SystemBlockException -> 系统规则错误，错误信息：{}，详情见日志",
-					LogUtil.result(systemBlockException.getMessage()), systemBlockException);
-			ResponseUtil.response(response, SYSTEM_BLOCK, MessageUtil.getMessage(String.valueOf(SYSTEM_BLOCK)));
+					LogUtil.record(systemBlockException.getMessage()), systemBlockException);
+			ResponseUtil.response(response, Result.fail(SYSTEM_BLOCKED));
 			return;
 		}
 		// 授权规则
 		if (e instanceof AuthorityException authorityException) {
-			log.error("AuthorityException -> 授权规则错误，错误信息：{}，详情见日志", LogUtil.result(authorityException.getMessage()),
+			log.error("AuthorityException -> 授权规则错误，错误信息：{}，详情见日志", LogUtil.record(authorityException.getMessage()),
 					authorityException);
-			ResponseUtil.response(response, AUTHORITY, MessageUtil.getMessage(String.valueOf(AUTHORITY)));
+			ResponseUtil.response(response, Result.fail(AUTHORITY));
 		}
 	}
 

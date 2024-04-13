@@ -23,7 +23,7 @@ import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
-import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
+import static org.laokou.common.i18n.dto.AggregateRoot.USERNAME;
 
 /**
  * 用户.

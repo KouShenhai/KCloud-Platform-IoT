@@ -24,9 +24,6 @@ import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
-import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
-
 /**
  * 用户角色.
  *

@@ -27,7 +27,7 @@ import org.laokou.flowable.domain.task.Start;
 import org.laokou.flowable.dto.task.TaskStartCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.TENANT;
+import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 
 /**
  * 任务开始执行器.

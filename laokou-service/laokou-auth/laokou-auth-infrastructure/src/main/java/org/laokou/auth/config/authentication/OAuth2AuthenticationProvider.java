@@ -27,8 +27,8 @@ import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.security.utils.UserDetail;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,8 +37,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.JobModeEnums.SYNC;
-import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
+import static org.laokou.common.i18n.common.JobModeEnum.SYNC;
+import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
 
 /**
  * @author laokou
@@ -116,7 +116,7 @@ public class OAuth2AuthenticationProvider {
 			String sourceName) {
 		return UserDetail.builder()
 			.username(user.getUsername())
-			.loginDate(DateUtil.now())
+			.loginDate(DateUtils.now())
 			.loginIp(IpUtil.getIpAddr(request))
 			.id(user.getId())
 			.deptId(user.getDeptId())
@@ -136,7 +136,7 @@ public class OAuth2AuthenticationProvider {
 
 	private void checkCaptcha(User user, Captcha captchaObj, HttpServletRequest request, String sourceName,
 			String appName, String authType) {
-		if (ObjectUtil.isNotNull(captchaObj)) {
+		if (ObjectUtils.isNotNull(captchaObj)) {
 			Boolean checkResult = captchaGateway.check(captchaObj.getUuid(), captchaObj.getCaptcha());
 			// 检查验证码
 			user.checkCaptcha(checkResult, request, sourceName, appName, authType);

@@ -31,7 +31,7 @@ import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.core.common.domain.OperateLog;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -41,8 +41,8 @@ import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
 
-import static org.laokou.common.i18n.common.JobModeEnums.SYNC;
-import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
+import static org.laokou.common.i18n.common.JobModeEnum.SYNC;
+import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
 
 /**
  * 操作日志切面.
@@ -96,7 +96,7 @@ public class OperateLogAop {
 			Method method = methodSignature.getMethod();
 			org.laokou.common.log.annotation.OperateLog operateLog = AnnotationUtils.findAnnotation(method,
 					org.laokou.common.log.annotation.OperateLog.class);
-			Assert.isTrue(ObjectUtil.isNotNull(operateLog), "@OperateLog is null");
+			Assert.isTrue(ObjectUtils.isNotNull(operateLog), "@OperateLog is null");
 			String className = joinPoint.getTarget().getClass().getName();
 			String methodName = joinPoint.getSignature().getName();
 			Object[] args = joinPoint.getArgs();

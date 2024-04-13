@@ -33,6 +33,8 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 @Schema(name = "CrudMapper", description = "CRUD Mapper")
 public interface CrudMapper<ID, VERSION, DO> extends BaseMapper<DO> {
 
+	String USER_ID = "userId";
+
 	/**
 	 * 查看版本号.
 	 * @param id ID

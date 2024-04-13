@@ -37,8 +37,8 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.StringConstants.COMMA;
-import static org.laokou.common.i18n.common.TenantConstants.DEFAULT;
+import static org.laokou.common.i18n.common.StringConstant.COMMA;
+import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
 
 /**
  * 部门管理.
@@ -105,7 +105,7 @@ public class DeptGatewayImpl implements DeptGateway {
 				deptMapper.deleteBatchIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -127,7 +127,7 @@ public class DeptGatewayImpl implements DeptGateway {
 				modifyPath(oldPath, newPath, children);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -144,7 +144,7 @@ public class DeptGatewayImpl implements DeptGateway {
 				deptMapper.insert(deptDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

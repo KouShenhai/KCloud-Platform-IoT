@@ -32,7 +32,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.OAuth2Constants.*;
-import static org.laokou.common.i18n.common.TenantConstants.TENANT_ID;
+import static org.laokou.common.i18n.common.TenantConstant.TENANT_ID;
 
 /**
  * 密码处理器.

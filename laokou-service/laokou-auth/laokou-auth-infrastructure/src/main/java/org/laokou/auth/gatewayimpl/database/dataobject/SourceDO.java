@@ -24,7 +24,7 @@ import org.laokou.common.mybatisplus.repository.BaseDO;
 
 import java.io.Serial;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_SOURCE;
+import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_SOURCE;
 
 /**
  * @author laokou

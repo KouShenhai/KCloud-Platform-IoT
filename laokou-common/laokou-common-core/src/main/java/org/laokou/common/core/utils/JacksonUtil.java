@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,9 @@ import java.util.Map;
 @Slf4j
 @UtilityClass
 public class JacksonUtil {
+
+	@Schema(name = "EMPTY_JSON", description = "空JSON字符串")
+	public static final String EMPTY_JSON = "{}";
 
 	/**
 	 * 映射器配置.

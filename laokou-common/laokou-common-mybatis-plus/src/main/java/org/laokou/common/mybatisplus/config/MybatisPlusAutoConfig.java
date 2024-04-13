@@ -44,10 +44,9 @@ import java.net.InetAddress;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import static org.laokou.common.i18n.common.PropertiesConstants.SPRING_APPLICATION_NAME;
-import static org.laokou.common.i18n.common.StringConstants.TRUE;
+import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
+import static org.laokou.common.i18n.common.StringConstant.TRUE;
 import static org.laokou.common.i18n.common.SysConstants.APPLICATION;
-import static org.laokou.common.i18n.common.SysConstants.ENABLED;
 
 /**
  * mybatis-plus配置.
@@ -67,7 +66,7 @@ public class MybatisPlusAutoConfig {
 	}
 
 	@Bean
-	@ConditionalOnProperty(havingValue = TRUE, prefix = "mybatis-plus.slow-sql", name = ENABLED)
+	@ConditionalOnProperty(havingValue = TRUE, prefix = "mybatis-plus.slow-sql", name = "enabled")
 	public ConfigurationCustomizer slowSqlConfigurationCustomizer(ConfigurableEnvironment environment,
 			MybatisPlusExtProperties mybatisPlusExtProperties) {
 		SlowSqlInterceptor slowSqlInterceptor = new SlowSqlInterceptor();

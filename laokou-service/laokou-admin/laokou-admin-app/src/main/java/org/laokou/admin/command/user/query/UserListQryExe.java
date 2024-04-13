@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DatasourceConstants.BOOT_SYS_USER;
+import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_USER;
 
 /**
  * 查询用户列表执行器.
