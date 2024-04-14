@@ -58,7 +58,7 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 			I18nUtil.set(exchange);
 			if (e instanceof NotFoundException) {
 				log.error("服务正在维护，请联系管理员，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-				return ReactiveResponseUtil.response(exchange, Result.fail("" + SERVICE_UNAVAILABLE));
+				return ReactiveResponseUtil.response(exchange, Result.fail(SERVICE_UNAVAILABLE));
 			}
 			if (e instanceof ResponseStatusException responseStatusException) {
 				int statusCode = responseStatusException.getStatusCode().value();
@@ -66,7 +66,7 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 					log.error("状态码：{}，无法找到请求URL为{}的资源，错误信息：{}，详情见日志", statusCode,
 							exchange.getRequest().getPath().pathWithinApplication().value(),
 							LogUtil.record(e.getMessage()), e);
-					return ReactiveResponseUtil.response(exchange, Result.fail("" + NOT_FOUND));
+					return ReactiveResponseUtil.response(exchange, Result.fail(NOT_FOUND));
 				}
 				else if (statusCode == HttpStatus.BAD_REQUEST.value()) {
 					log.error("状态码：{}，错误请求，错误信息：{}，详情见日志", statusCode, LogUtil.record(e.getMessage()), e);
@@ -74,16 +74,16 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 				}
 				else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
 					log.error("状态码：{}，服务器内部错误，无法完成请求，错误信息：{}，详情见日志", statusCode, LogUtil.record(e.getMessage()), e);
-					return ReactiveResponseUtil.response(exchange, Result.fail("" + INTERNAL_SERVER_ERROR));
+					return ReactiveResponseUtil.response(exchange, Result.fail(INTERNAL_SERVER_ERROR));
 				}
 			}
 			if (BlockException.isBlockException(e)) {
 				// 思路来源于SentinelGatewayBlockExceptionHandler
 				log.error("请求太频繁，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-				return ReactiveResponseUtil.response(exchange, Result.fail("" + TOO_MANY_REQUESTS));
+				return ReactiveResponseUtil.response(exchange, Result.fail(TOO_MANY_REQUESTS));
 			}
 			log.error("错误网关，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-			return ReactiveResponseUtil.response(exchange, Result.fail("" + BAD_GATEWAY));
+			return ReactiveResponseUtil.response(exchange, Result.fail(BAD_GATEWAY));
 		}
 		finally {
 			I18nUtil.reset();

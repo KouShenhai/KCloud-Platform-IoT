@@ -7,6 +7,7 @@ npm install -g pnpm
 ```shell
 pnpm install
 pnpm add uuid
+pnpm add jsencrypt -S
 ```
 
 #### 运行

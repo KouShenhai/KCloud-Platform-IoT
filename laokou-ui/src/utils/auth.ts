@@ -2,17 +2,13 @@ import Cookies from "js-cookie";
 import { storageLocal } from "@pureadmin/utils";
 import { useUserStoreHook } from "@/store/modules/user";
 
-export interface DataInfo<T> {
+export interface DataInfo {
   /** token */
-  accessToken: string;
+  access_token: string;
   /** `accessToken`的过期时间（时间戳） */
-  expires: T;
+  expires_in: number;
   /** 用于调用刷新accessToken的接口时所需的token */
-  refreshToken: string;
-  /** 用户名 */
-  username?: string;
-  /** 当前登陆用户的角色 */
-  roles?: Array<string>;
+  refresh_token: string;
 }
 
 export const userKey = "user-info";
@@ -26,7 +22,7 @@ export const TokenKey = "authorized-token";
 export const multipleTabsKey = "multiple-tabs";
 
 /** 获取`token` */
-export function getToken(): DataInfo<number> {
+export function getToken(): DataInfo {
   // 此处与`TokenKey`相同，此写法解决初始化时`Cookies`中不存在`TokenKey`报错
   return Cookies.get(TokenKey)
     ? JSON.parse(Cookies.get(TokenKey))
@@ -39,12 +35,11 @@ export function getToken(): DataInfo<number> {
  * 将`accessToken`、`expires`这两条信息放在key值为authorized-token的cookie里（过期自动销毁）
  * 将`username`、`roles`、`refreshToken`、`expires`这四条信息放在key值为`user-info`的localStorage里（利用`multipleTabsKey`当浏览器完全关闭后自动销毁）
  */
-export function setToken(data: DataInfo<Date>) {
+export function setToken(data: DataInfo) {
   let expires = 0;
-  const { accessToken, refreshToken } = data;
-  const { isRemembered, loginDay } = useUserStoreHook();
-  expires = new Date(data.expires).getTime(); // 如果后端直接设置时间戳，将此处代码改为expires = data.expires，然后把上面的DataInfo<Date>改成DataInfo<number>即可
-  const cookieString = JSON.stringify({ accessToken, expires });
+  const { access_token, refresh_token } = data;
+  expires = new Date(data.expires_in).getTime(); // 如果后端直接设置时间戳，将此处代码改为expires = data.expires，然后把上面的DataInfo<Date>改成DataInfo<number>即可
+  const cookieString = JSON.stringify({ access_token, expires });
 
   expires > 0
     ? Cookies.set(TokenKey, cookieString, {
@@ -52,37 +47,27 @@ export function setToken(data: DataInfo<Date>) {
       })
     : Cookies.set(TokenKey, cookieString);
 
-  Cookies.set(
-    multipleTabsKey,
-    "true",
-    isRemembered
-      ? {
-          expires: loginDay
-        }
-      : {}
-  );
-
-  function setUserKey(username: string, roles: Array<string>) {
-    useUserStoreHook().SET_USERNAME(username);
-    useUserStoreHook().SET_ROLES(roles);
+  function setUserKey() {
+    // useUserStoreHook().SET_USERNAME(username);
+    // useUserStoreHook().SET_ROLES(roles);
     storageLocal().setItem(userKey, {
-      refreshToken,
-      expires,
-      username,
-      roles
+      refresh_token,
+      expires
     });
   }
 
-  if (data.username && data.roles) {
-    const { username, roles } = data;
-    setUserKey(username, roles);
-  } else {
-    const username =
-      storageLocal().getItem<DataInfo<number>>(userKey)?.username ?? "";
-    const roles =
-      storageLocal().getItem<DataInfo<number>>(userKey)?.roles ?? [];
-    setUserKey(username, roles);
-  }
+  setUserKey()
+  //
+  // if (data.username && data.roles) {
+  //   const { username, roles } = data;
+  //   setUserKey(username, roles);
+  // } else {
+  //   const username =
+  //     storageLocal().getItem<DataInfo<number>>(userKey)?.username ?? "";
+  //   const roles =
+  //     storageLocal().getItem<DataInfo<number>>(userKey)?.roles ?? [];
+  //   setUserKey(username, roles);
+  // }
 }
 
 /** 删除`token`以及key值为`user-info`的localStorage信息 */
