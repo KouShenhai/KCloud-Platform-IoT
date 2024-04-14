@@ -59,6 +59,7 @@
     "echarts": "^5.5.0",
     "element-plus": "^2.6.2",
     "js-cookie": "^3.0.5",
+    "jsencrypt": "^3.3.2",
     "localforage": "^1.10.0",
     "mitt": "^3.0.1",
     "nprogress": "^0.2.0",

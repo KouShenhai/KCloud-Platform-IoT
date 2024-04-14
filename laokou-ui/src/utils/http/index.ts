@@ -13,6 +13,7 @@ import { stringify } from "qs";
 import NProgress from "../progress";
 import { getToken, formatToken } from "@/utils/auth";
 import { useUserStoreHook } from "@/store/modules/user";
+import {message} from "@/utils/message";
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
@@ -28,6 +29,22 @@ const defaultConfig: AxiosRequestConfig = {
     serialize: stringify as unknown as CustomParamsSerializer
   }
 };
+
+// 异常拦截处理器
+const errorHandler = (error) => {
+  let { message } = error
+  if (message === 'Network Error') {
+    message = '后端接口连接异常'
+  } else if (message.includes('timeout')) {
+    message = '系统接口请求超时'
+  } else if (message.includes('Request failed with status code')) {
+    message = '网络请求错误,请稍后再试'
+  } else if (message.includes('Request aborted')) {
+    message = '请求已中断，请刷新页面'
+  }
+  message(message, { type: "error" });
+  return Promise.reject(error)
+}
 
 class PureHttp {
   constructor() {
@@ -73,7 +90,7 @@ class PureHttp {
           return config;
         }
         /** 请求白名单，放置一些不需要token的接口（通过设置请求白名单，防止token过期后再请求造成的死循环问题） */
-        const whiteList = ["/refresh-token", "/login"];
+        const whiteList = ["/refresh-token", "/login", "/api/auth/v1/captchas/{uuid}"];
         return whiteList.find(url => url === config.url)
           ? config
           : new Promise(resolve => {
@@ -110,7 +127,7 @@ class PureHttp {
             });
       },
       error => {
-        return Promise.reject(error);
+        return errorHandler(error);
       }
     );
   }
@@ -132,7 +149,22 @@ class PureHttp {
           PureHttp.initConfig.beforeResponseCallback(response);
           return response.data;
         }
-        return response.data;
+        const  res = response.data;
+        console.log(res)
+        // 状态码
+        const code = res.code
+        // 错误信息
+        const msg = res.msg
+        // 二进制数据直接返回
+        if (response.request.responseType === "blob") {
+          return res;
+        }
+        if (code !== "OK") {
+          message(msg, { type: "error" });
+        } else {
+          return res;
+        }
+        return Promise.reject(msg)
       },
       (error: PureHttpError) => {
         const $error = error;
@@ -140,7 +172,7 @@ class PureHttp {
         // 关闭进度条动画
         NProgress.done();
         // 所有的响应异常 区分来源为取消请求/非取消请求
-        return Promise.reject($error);
+        return errorHandler(error);
       }
     );
   }

@@ -16,6 +16,18 @@ export type UserResult = {
   };
 };
 
+export type CaptchaResult = {
+  code: string,
+  msg: string,
+  data: string
+}
+
+export type PublicKeyResult = {
+  code: string,
+  msg: string,
+  data: string
+}
+
 export type RefreshTokenResult = {
   success: boolean;
   data: {
@@ -29,9 +41,25 @@ export type RefreshTokenResult = {
 };
 
 /** 登录 */
-export const getLogin = (data?: object) => {
-  return http.request<UserResult>("post", "/login", { data });
+export const loginApi = (data?: object) => {
+  return http.request<UserResult>("post", "/api/auth/oauth2/token", { data }, {
+    // 设置序列化请求函数
+    transformRequest: (data = {}) => Object.entries(data).map(ent => ent.join('=')).join('&'),
+    headers: {
+      'Authorization': 'Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=',
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+  });
 };
+
+export const findCaptchaApi = (data?: string) => {
+  return http.request<CaptchaResult>("get", "/api/auth/v1/captchas/" + data);
+};
+
+export const findPublicKeyApi = (data?: string) => {
+  return http.request<PublicKeyResult>("get", "/api/auth/v1/secrets");
+
+}
 
 /** 刷新token */
 export const refreshTokenApi = (data?: object) => {

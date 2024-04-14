@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.MessageUtils;
 import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.gateway.exception.ExceptionEnum;
 import org.laokou.gateway.utils.I18nUtil;
@@ -119,11 +120,16 @@ public class RespFilter implements GlobalFilter, Ordered {
 						if (msgNode == null || codeNode == null) {
 							return dataBufferFactory.wrap(new byte[0]);
 						}
-						ExceptionEnum ee = getException(codeNode.asText());
-						String code = ee.getCode();
-						String msg = ee.getMsg() + CHINESE_COMMA + msgNode.asText();
-						byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail(code, msg)).getBytes(UTF_8);
-						return dataBufferFactory.wrap(uppedContent);
+						try {
+							ExceptionEnum ee = getException(codeNode.asText());
+							String code = ee.getCode();
+							String msg = MessageUtils.getMessage(code) + CHINESE_COMMA + msgNode.asText();
+							byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail(code, msg)).getBytes(UTF_8);
+							return dataBufferFactory.wrap(uppedContent);
+						} catch (Exception ex) {
+							byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail(codeNode.asText(), msgNode.asText())).getBytes(UTF_8);
+							return dataBufferFactory.wrap(uppedContent);
+						}
 					}));
 				}
 				return super.writeWith(body);
@@ -143,7 +149,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 	 * @return 自定义异常
 	 */
 	private ExceptionEnum getException(String code) {
-		return ObjectUtils.requireNotNull(ExceptionEnum.getInstance(code.toUpperCase()));
+		return ExceptionEnum.getInstance(code.toUpperCase());
 	}
 
 }

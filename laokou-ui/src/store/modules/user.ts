@@ -4,22 +4,18 @@ import type { userType } from "./types";
 import { routerArrays } from "@/layout/types";
 import { router, resetRouter } from "@/router";
 import { storageLocal } from "@pureadmin/utils";
-import { getLogin, refreshTokenApi } from "@/api/user";
-import type { UserResult, RefreshTokenResult } from "@/api/user";
+import { loginApi, refreshTokenApi } from "@/api/auth";
+import type { UserResult, RefreshTokenResult } from "@/api/auth";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { type DataInfo, setToken, removeToken, userKey } from "@/utils/auth";
 
 export const useUserStore = defineStore({
-  id: "pure-user",
+  id: "laokou-user",
   state: (): userType => ({
     // 用户名
     username: storageLocal().getItem<DataInfo<number>>(userKey)?.username ?? "",
     // 页面级别权限
     roles: storageLocal().getItem<DataInfo<number>>(userKey)?.roles ?? [],
-    // 是否勾选了登录页的免登录
-    isRemembered: false,
-    // 登录页的免登录存储几天，默认7天
-    loginDay: 7
   }),
   actions: {
     /** 存储用户名 */
@@ -30,18 +26,10 @@ export const useUserStore = defineStore({
     SET_ROLES(roles: Array<string>) {
       this.roles = roles;
     },
-    /** 存储是否勾选了登录页的免登录 */
-    SET_ISREMEMBERED(bool: boolean) {
-      this.isRemembered = bool;
-    },
-    /** 设置登录页的免登录存储几天 */
-    SET_LOGINDAY(value: number) {
-      this.loginDay = Number(value);
-    },
     /** 登入 */
     async loginByUsername(data) {
       return new Promise<UserResult>((resolve, reject) => {
-        getLogin(data)
+        loginApi(data)
           .then(data => {
             if (data) {
               setToken(data.data);
@@ -60,7 +48,7 @@ export const useUserStore = defineStore({
       removeToken();
       useMultiTagsStoreHook().handleTags("equal", [...routerArrays]);
       resetRouter();
-      router.push("/login");
+      router.push("/login").then(r => {});
     },
     /** 刷新`token` */
     async handRefreshToken(data) {
