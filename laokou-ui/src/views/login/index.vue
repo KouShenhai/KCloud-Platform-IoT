@@ -57,6 +57,7 @@ const params = reactive({
 })
 
 const initCaptcha = () => {
+  ruleForm.captcha = ""
   ruleForm.uuid = uid()
   findCaptchaApi(ruleForm.uuid).then(res => {
     params.captchaUrl = res.data
@@ -101,20 +102,20 @@ const onLogin = async (formEl: FormInstance | undefined) => {
       encrypt.setPublicKey(params.publicKey)
       const username = encodeURIComponent(encrypt.encrypt(ruleForm.username))
       const password = encodeURIComponent(encrypt.encrypt(ruleForm.password))
-      const authForm = { grant_type: 'password', username: username, password: password, uuid: ruleForm.uuid, tenantId: ruleForm.tenantId, captcha: ruleForm.captcha }
+      const authForm = { grant_type: 'password', username: username, password: password, uuid: ruleForm.uuid, tenant_id: ruleForm.tenantId, captcha: ruleForm.captcha }
       useUserStoreHook()
         .loginByUsername(authForm)
         .then(res => {
-          if (res.success) {
+          if (res.access_token != undefined ) {
             // 获取后端路由
             initRouter().then(() => {
               router.push(getTopMenu(true).path);
               message("登录成功", { type: "success" });
             });
-          } else {
-            message("登录失败", { type: "error" });
           }
-        }).finally(() => loading.value = false);
+        })
+        .catch(() => initCaptcha())
+        .finally(() => loading.value = false);
     } else {
       return fields;
     }

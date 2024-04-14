@@ -21,7 +21,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.MessageUtils;
 import org.laokou.common.i18n.utils.ObjectUtils;
@@ -101,8 +100,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 			public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
 				String contentType = getDelegate().getHeaders().getFirst(CONTENT_TYPE);
 				Assert.isTrue(ObjectUtils.isNotNull(contentType), "content type is null");
-				if (contentType.contains(APPLICATION_JSON_VALUE) && !ObjectUtils
-					.equals(ObjectUtils.requireNotNull(response.getStatusCode()).value(), StatusCode.OK)
+				if (contentType.contains(APPLICATION_JSON_VALUE) && ObjectUtils.requireNotNull(response.getStatusCode()).value() != OK.value()
 						&& body instanceof Flux) {
 					Flux<? extends DataBuffer> flux = Flux.from(body);
 					return super.writeWith(flux.map(dataBuffer -> {

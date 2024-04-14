@@ -4,37 +4,34 @@ import type { userType } from "./types";
 import { routerArrays } from "@/layout/types";
 import { router, resetRouter } from "@/router";
 import { storageLocal } from "@pureadmin/utils";
-import { loginApi, refreshTokenApi } from "@/api/auth";
-import type { UserResult, RefreshTokenResult } from "@/api/auth";
+import {AuthResult, loginApi, refreshTokenApi, RefreshTokenResult} from "@/api/auth";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { type DataInfo, setToken, removeToken, userKey } from "@/utils/auth";
 
 export const useUserStore = defineStore({
   id: "laokou-user",
-  state: (): userType => ({
-    // 用户名
-    username: storageLocal().getItem<DataInfo<number>>(userKey)?.username ?? "",
-    // 页面级别权限
-    roles: storageLocal().getItem<DataInfo<number>>(userKey)?.roles ?? [],
-  }),
+  // state: (): userType => ({
+  //   // 用户名
+  //   username: storageLocal().getItem<DataInfo<number>>(userKey)?.username ?? "",
+  //   // 页面级别权限
+  //   roles: storageLocal().getItem<DataInfo<number>>(userKey)?.roles ?? [],
+  // }),
   actions: {
-    /** 存储用户名 */
-    SET_USERNAME(username: string) {
-      this.username = username;
-    },
-    /** 存储角色 */
-    SET_ROLES(roles: Array<string>) {
-      this.roles = roles;
-    },
-    /** 登入 */
+    // /** 存储用户名 */
+    // SET_USERNAME(username: string) {
+    //   this.username = username;
+    // },
+    // /** 存储角色 */
+    // SET_ROLES(roles: Array<string>) {
+    //   this.roles = roles;
+    // },
+    /** 登录 */
     async loginByUsername(data) {
-      return new Promise<UserResult>((resolve, reject) => {
+      return new Promise<AuthResult>((resolve, reject) => {
         loginApi(data)
-          .then(data => {
-            if (data) {
-              setToken(data.data);
-              resolve(data);
-            }
+          .then(res => {
+            setToken(res);
+            resolve(res);
           })
           .catch(error => {
             reject(error);
@@ -56,7 +53,7 @@ export const useUserStore = defineStore({
         refreshTokenApi(data)
           .then(data => {
             if (data) {
-              setToken(data.data);
+              // setToken(data.data);
               resolve(data);
             }
           })

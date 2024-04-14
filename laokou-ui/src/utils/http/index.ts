@@ -42,7 +42,11 @@ const errorHandler = (error) => {
   } else if (message.includes('Request aborted')) {
     message = '请求已中断，请刷新页面'
   }
-  message(message, { type: "error" });
+  message(message, {
+    customClass: "el",
+    duration: 5000,
+    type: "error"
+  })
   return Promise.reject(error)
 }
 
@@ -90,20 +94,20 @@ class PureHttp {
           return config;
         }
         /** 请求白名单，放置一些不需要token的接口（通过设置请求白名单，防止token过期后再请求造成的死循环问题） */
-        const whiteList = ["/refresh-token", "/login", "/api/auth/v1/captchas/{uuid}"];
+        const whiteList = ["/refresh-token", "/api/auth/oauth2/token", "/api/auth/v1/captchas/{uuid}"];
         return whiteList.find(url => url === config.url)
           ? config
           : new Promise(resolve => {
               const data = getToken();
               if (data) {
                 const now = new Date().getTime();
-                const expired = parseInt(data.expires) - now <= 0;
+                const expired = parseInt(data.refresh_token) - now <= 0;
                 if (expired) {
                   if (!PureHttp.isRefreshing) {
                     PureHttp.isRefreshing = true;
                     // token过期刷新
                     useUserStoreHook()
-                      .handRefreshToken({ refreshToken: data.refreshToken })
+                      .handRefreshToken({ refreshToken: data.refresh_token })
                       .then(res => {
                         const token = res.data.accessToken;
                         config.headers["Authorization"] = formatToken(token);
@@ -117,7 +121,7 @@ class PureHttp {
                   resolve(PureHttp.retryOriginalRequest(config));
                 } else {
                   config.headers["Authorization"] = formatToken(
-                    data.accessToken
+                    data.access_token
                   );
                   resolve(config);
                 }
@@ -150,20 +154,19 @@ class PureHttp {
           return response.data;
         }
         const  res = response.data;
-        console.log(res)
         // 状态码
-        const code = res.code
+        const code = res.code || "OK"
         // 错误信息
         const msg = res.msg
         // 二进制数据直接返回
-        if (response.request.responseType === "blob") {
+        if (code === "OK" || response.request.responseType === "blob") {
           return res;
         }
-        if (code !== "OK") {
-          message(msg, { type: "error" });
-        } else {
-          return res;
-        }
+        message(msg, {
+          customClass: "el",
+          duration: 5000,
+          type: "error"
+        })
         return Promise.reject(msg)
       },
       (error: PureHttpError) => {
