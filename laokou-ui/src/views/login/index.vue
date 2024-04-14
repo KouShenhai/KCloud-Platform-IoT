@@ -24,6 +24,8 @@ import User from "@iconify-icons/ri/user-3-fill";
 import { useEventListener } from "@vueuse/core";
 import { debounce } from "@pureadmin/utils";
 import { v4 as uid } from "uuid";
+import { findCaptchaApi, findPublicKeyApi } from "@/api/auth";
+import { JSEncrypt } from "jsencrypt";
 
 defineOptions({
   name: "Login"
@@ -49,29 +51,79 @@ const ruleForm = reactive({
   tenantId: "0"
 });
 
+const params = reactive({
+  publicKey: "",
+  captchaUrl: ""
+})
+
+const initCaptcha = () => {
+  ruleForm.captcha = ""
+  ruleForm.uuid = uid()
+  findCaptchaApi(ruleForm.uuid).then(res => {
+    params.captchaUrl = res.data
+  });
+}
+
+const initPublicKey = () => {
+  findPublicKeyApi().then(res => {
+    params.publicKey = res.data
+  });
+}
+
+const accountForm = [
+  {
+    tenant: "老寇云集团",
+    username: "admin",
+    password: "admin123"
+  },
+  {
+    tenant: "老寇云集团",
+    username: "test",
+    password: "test123"
+  },
+  {
+    tenant: "老寇云集团",
+    username: "laok5",
+    password: "test123"
+  },
+  {
+    tenant: "阿里云集团",
+    username: "tenant",
+    password: "tenant123"
+  },
+];
+
 const onLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
       loading.value = true;
+      const encrypt = new JSEncrypt()
+      encrypt.setPublicKey(params.publicKey)
+      const username = encodeURIComponent(encrypt.encrypt(ruleForm.username))
+      const password = encodeURIComponent(encrypt.encrypt(ruleForm.password))
+      const authForm = { grant_type: 'password', username: username, password: password, uuid: ruleForm.uuid, tenant_id: ruleForm.tenantId, captcha: ruleForm.captcha }
       useUserStoreHook()
-        .loginByUsername({ username: ruleForm.username, password: ruleForm.password, uuid: uid() })
+        .loginByUsername(authForm)
         .then(res => {
-          if (res.success) {
+          if (res.access_token != undefined ) {
             // 获取后端路由
             initRouter().then(() => {
               router.push(getTopMenu(true).path);
               message("登录成功", { type: "success" });
             });
-          } else {
-            message("登录失败", { type: "error" });
           }
-        }).finally(() => loading.value = false);
+        })
+        .catch(() => initCaptcha())
+        .finally(() => loading.value = false);
     } else {
       return fields;
     }
   });
 };
+
+initCaptcha()
+initPublicKey()
 
 const immediateDebounce: any = debounce(
   formRef => onLogin(formRef),
@@ -181,31 +233,46 @@ useEventListener(document, "keypress", ({ code }) => {
             </Motion>
 
             <Motion :delay="200">
-              <el-form-item prop="captcha">
-                <el-input
-                  v-model="ruleForm.captcha"
-                  clearable
-                  :placeholder="t('auth.captcha')"
-                  :prefix-icon="useRenderIcon('ri:shield-keyhole-line')"
-                >
-                  <template v-slot:append>
-
-                  </template>
-                </el-input>
-              </el-form-item>
+              <el-row>
+                  <el-form-item prop="captcha">
+                    <el-col :span="16">
+                    <el-input
+                      v-model="ruleForm.captcha"
+                      clearable
+                      :placeholder="t('auth.captcha')"
+                      :prefix-icon="useRenderIcon('ri:shield-keyhole-line')">
+                    </el-input>
+                    </el-col>
+                    <el-col :span="8">
+                      <img alt="验证码" :src="params.captchaUrl"/>
+                    </el-col>
+                  </el-form-item>
+              </el-row>
             </Motion>
 
             <Motion :delay="250">
-              <el-button
-                class="w-full mt-4"
-                size="default"
-                type="primary"
-                :loading="loading"
-                @click="onLogin(ruleFormRef)"
-              >
-                {{ t("auth.login") }}
-              </el-button>
+              <el-form-item>
+                <el-button
+                  class="w-full"
+                  size="default"
+                  type="primary"
+                  :loading="loading"
+                  @click="onLogin(ruleFormRef)">
+                  {{ t("auth.login") }}
+                </el-button>
+              </el-form-item>
             </Motion>
+
+            <Motion :delay="300">
+              <el-form-item>
+                <el-table :data="accountForm" stripe border style="width: 100%">
+                  <el-table-column prop="tenant" label="租户" />
+                  <el-table-column prop="username" label="账号" />
+                  <el-table-column prop="password" label="密码" />
+                </el-table>
+              </el-form-item>
+            </Motion>
+
           </el-form>
         </div>
       </div>
@@ -236,5 +303,6 @@ useEventListener(document, "keypress", ({ code }) => {
     position: absolute;
     left: 20px;
   }
+
 }
 </style>
