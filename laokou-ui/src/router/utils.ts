@@ -19,7 +19,7 @@ import {
 import { getConfig } from "@/config";
 import type { menuType } from "@/layout/types";
 import { buildHierarchyTree } from "@/utils/tree";
-import { userKey, type DataInfo } from "@/utils/auth";
+import { userKey, type TokenInfo } from "@/utils/auth";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 const IFrame = () => import("@/layout/frameView.vue");
@@ -33,9 +33,7 @@ function handRank(routeInfo: any) {
   const { name, path, parentId, meta } = routeInfo;
   return isAllEmpty(parentId)
     ? isAllEmpty(meta?.rank) ||
-      (meta?.rank === 0 && name !== "Home" && path !== "/")
-      ? true
-      : false
+    (meta?.rank === 0 && name !== "Home" && path !== "/")
     : false;
 }
 
@@ -76,18 +74,12 @@ function filterChildrenTree(data: RouteComponent[]) {
 function isOneOfArray(a: Array<string>, b: Array<string>) {
   return Array.isArray(a) && Array.isArray(b)
     ? intersection(a, b).length > 0
-      ? true
-      : false
     : true;
 }
 
 /** 从localStorage里取出当前登陆用户的角色roles，过滤无权限的菜单 */
 function filterNoPermissionTree(data: RouteComponent[]) {
-  const currentRoles =
-    storageLocal().getItem<DataInfo<number>>(userKey)?.roles ?? [];
-  const newTree = cloneDeep(data).filter((v: any) =>
-    isOneOfArray(v.meta?.roles, currentRoles)
-  );
+  const newTree = cloneDeep(data)
   newTree.forEach(
     (v: any) => v.children && (v.children = filterNoPermissionTree(v.children))
   );
@@ -152,8 +144,10 @@ function addPathMatch() {
 /** 处理动态路由（后端返回的路由） */
 function handleAsyncRoutes(routeList) {
   if (routeList.length === 0) {
-    usePermissionStoreHook().handleWholeMenus(routeList);
+    // usePermissionStoreHook().handleWholeMenus(routeList);
   } else {
+    console.log("333")
+    console.log(routeList)
     formatFlatteningRoutes(addAsyncRoutes(routeList)).map(
       (v: RouteRecordRaw) => {
         // 防止重复添加路由
@@ -188,6 +182,8 @@ function initRouter() {
     const key = "async-routes";
     const asyncRouteList = storageLocal().getItem(key) as any;
     if (asyncRouteList && asyncRouteList?.length > 0) {
+      console.log("zzzz")
+      console.log(asyncRouteList)
       return new Promise(resolve => {
         handleAsyncRoutes(asyncRouteList);
         resolve(router);
@@ -209,6 +205,17 @@ function initRouter() {
       });
     });
   }
+}
+
+function formatMenuRoutes(routers?: Array<any>) {
+  routers.forEach(router => {
+    router.path = router.url
+    router.meta = { icon: "ri:settings-3-line", title: router.name  }
+    if (router.children && router.children.length > 0) {
+      return formatMenuRoutes(router.children)
+    }
+  })
+  return routers
 }
 
 /**
@@ -353,10 +360,9 @@ function hasAuth(value: string | Array<string>): boolean {
   /** 从当前路由的`meta`字段里获取按钮级别的所有自定义`code`值 */
   const metaAuths = getAuths();
   if (!metaAuths) return false;
-  const isAuths = isString(value)
+  return isString(value)
     ? metaAuths.includes(value)
     : isIncludeAllChildren(value, metaAuths);
-  return isAuths ? true : false;
 }
 
 /** 获取所有菜单中的第一个菜单（顶级菜单）*/

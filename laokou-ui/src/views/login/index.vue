@@ -103,16 +103,14 @@ const onLogin = async (formEl: FormInstance | undefined) => {
       const username = encodeURIComponent(encrypt.encrypt(ruleForm.username))
       const password = encodeURIComponent(encrypt.encrypt(ruleForm.password))
       const authForm = { grant_type: 'password', username: username, password: password, uuid: ruleForm.uuid, tenant_id: ruleForm.tenantId, captcha: ruleForm.captcha }
-      useUserStoreHook()
-        .loginByUsername(authForm)
-        .then(res => {
-          if (res.access_token != undefined ) {
-            // 获取后端路由
-            initRouter().then(() => {
-              router.push(getTopMenu(true).path);
-              message("登录成功", { type: "success" });
-            });
-          }
+      useUserStoreHook().loginByUsername(authForm)
+        .then(() => {
+          // 获取后端路由
+          return initRouter().then(() => {
+            router.push(getTopMenu(true).path).then(() => {
+                message("登录成功", { type: "success" });
+              });
+          });
         })
         .catch(() => initCaptcha())
         .finally(() => loading.value = false);
