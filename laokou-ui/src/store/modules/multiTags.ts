@@ -64,8 +64,9 @@ export const useMultiTagsStore = defineStore({
             // 如果title为空拒绝添加空信息到标签页
             if (tagVal?.meta?.title.length === 0) return;
             // showLink:false 不添加到标签页
-            if (isBoolean(tagVal?.meta?.showLink) && !tagVal?.meta?.showLink)
+            if (isBoolean(tagVal?.meta?.showLink) && !tagVal?.meta?.showLink) {
               return;
+            }
             const tagPath = tagVal.path;
             // 判断tag是否已存在
             const tagHasExits = this.multiTags.some(tag => {

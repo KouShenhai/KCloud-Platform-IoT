@@ -12,7 +12,6 @@ import {
   ascending,
   getTopMenu,
   initRouter,
-  isOneOfArray,
   getHistoryMode,
   findRouteByPath,
   handleAliveRoute,
@@ -26,7 +25,7 @@ import {
   type RouteComponent
 } from "vue-router";
 import {
-  type DataInfo,
+  type TokenInfo,
   userKey,
   removeToken,
   multipleTabsKey
@@ -76,8 +75,7 @@ export const router: Router = createRouter({
         return savedPosition;
       } else {
         if (from.meta.saveSrollTop) {
-          const top: number =
-            document.documentElement.scrollTop || document.body.scrollTop;
+          const top: number = document.documentElement.scrollTop || document.body.scrollTop;
           resolve({ left: 0, top });
         }
       }
@@ -114,7 +112,7 @@ router.beforeEach((to: ToRouteType, _from, next) => {
       handleAliveRoute(to);
     }
   }
-  const userInfo = storageLocal().getItem<DataInfo<number>>(userKey);
+  const userInfo = storageLocal().getItem<TokenInfo>(userKey);
   NProgress.start();
   const externalLink = isUrl(to?.name as string);
   if (!externalLink) {
@@ -132,9 +130,9 @@ router.beforeEach((to: ToRouteType, _from, next) => {
   }
   if (Cookies.get(multipleTabsKey) && userInfo) {
     // 无权限跳转403页面
-    if (to.meta?.roles && !isOneOfArray(to.meta?.roles, userInfo?.roles)) {
-      next({ path: "/error/403" });
-    }
+    //if (to.meta?.roles && !isOneOfArray(to.meta?.roles, userInfo?.roles)) {
+    //  next({ path: "/error/403" });
+    //}
     // 开启隐藏首页后在浏览器地址栏手动输入首页welcome路由则跳转到404页面
     if (VITE_HIDE_HOME === "true" && to.fullPath === "/home") {
       next({ path: "/error/404" });
@@ -182,7 +180,7 @@ router.beforeEach((to: ToRouteType, _from, next) => {
             }
           }
           // 确保动态路由完全加入路由列表并且不影响静态路由（注意：动态路由刷新时router.beforeEach可能会触发两次，第一次触发动态路由还未完全添加，第二次动态路由才完全添加到路由列表，如果需要在router.beforeEach做一些判断可以在to.name存在的条件下去判断，这样就只会触发一次）
-          if (isAllEmpty(to.name)) router.push(to.fullPath);
+          if (isAllEmpty(to.name)) router.push(to.fullPath).then(() => {});
         });
       }
       toCorrectRoute();
