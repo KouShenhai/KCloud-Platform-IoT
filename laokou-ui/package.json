@@ -30,7 +30,7 @@
     "vue-clipboard2": "^0.3.3",
     "vue-container-query": "^0.1.0",
     "vue-copy-to-clipboard": "^1.0.3",
-    "vue-cropper": "0.5.8",
+    "vue-cropper": "0.6.4",
     "vue-i18n": "^8.24.2",
     "vue-router": "^3.5.1",
     "vue-svg-component-runtime": "^1.0.1",
