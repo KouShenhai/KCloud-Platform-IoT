@@ -38,6 +38,8 @@ const assetsCDN = {
 }
 
 // vue.config.js
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const {env} = require(".eslintrc");
 const vueConfig = {
   configureWebpack: {
     // webpack plugins
@@ -51,6 +53,20 @@ const vueConfig = {
         APP_VERSION: `"${require('./package.json').version}"`,
         GIT_HASH: JSON.stringify(getGitHash()),
         BUILD_DATE: buildDate
+      }),
+      new CompressionWebpackPlugin({
+        // 压缩方式
+        algorithm: 'gzip',
+        filename: '[path][base].gz',
+        // 匹配压缩文件
+        test: new RegExp('\\.(js|css)$'),
+        // 对于大于10k压缩
+        threshold: 10240,
+        // 示例：一个1024b大小的文件，压缩后大小为768b，minRatio : 0.75
+        // 默认: 0.8
+        minRatio: 0.8,
+        // 是否删除源文件，默认: false
+        deleteOriginalAssets: false
       })
     ],
     // if prod, add externals
@@ -58,9 +74,14 @@ const vueConfig = {
   },
 
   chainWebpack: (config) => {
-    config.resolve.alias
-      .set('@$', resolve('src'))
-
+    config.resolve.alias.set('@$', resolve('src'))
+    // 生产模式下启用gzip压缩 需要配置nginx支持gzip
+    // 开启压缩js代码
+    config.optimization.minimize(true)
+    config.optimization.splitChunks({
+      // 开启代码分割
+      chunks: 'all'
+    })
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()
     svgRule
@@ -104,13 +125,19 @@ const vueConfig = {
   },
 
   devServer: {
+    disableHostCheck: true,
     // development server port 8000
     port: 8000,
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
-      [process.env.VUE_APP_BASE_API]: {
-        // target: `https://ruoyi.setworld.net`,
-        target: `http://127.0.0.1:8080`,
+      [env.VUE_APP_BASE_API]: {
+        // test 使用 HTTPS
+        // target: `https://127.0.0.1:5555`,
+        // dev 使用 HTTP
+        target: `http://127.0.0.1:5555`,
+        // target: `https://192.168.30.130:5555`,
+        // target: `https://nginx.laokou.org`,
+        secure: false,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
