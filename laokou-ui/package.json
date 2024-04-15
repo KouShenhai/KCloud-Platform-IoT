@@ -26,7 +26,7 @@
     "qs": "^6.10.1",
     "screenfull": "5.0.2",
     "store": "^2.0.12",
-    "vue": "^2.6.14",
+    "vue": "^3.4.21",
     "vue-clipboard2": "^0.3.3",
     "vue-container-query": "^0.1.0",
     "vue-copy-to-clipboard": "^1.0.3",
