@@ -39,7 +39,6 @@ const assetsCDN = {
 
 // vue.config.js
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
-const {env} = require(".eslintrc");
 const vueConfig = {
   configureWebpack: {
     // webpack plugins
@@ -130,7 +129,7 @@ const vueConfig = {
     port: 8000,
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
-      [env.VUE_APP_BASE_API]: {
+      [process.env.VUE_APP_BASE_API]: {
         // test 使用 HTTPS
         // target: `https://127.0.0.1:5555`,
         // dev 使用 HTTP
