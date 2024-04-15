@@ -24,7 +24,7 @@
     "moment": "^2.29.1",
     "nprogress": "^0.2.0",
     "qs": "^6.10.1",
-    "screenfull": "5.0.2",
+    "screenfull": "5.2.0",
     "store": "^2.0.12",
     "vue": "^2.6.14",
     "vue-clipboard2": "^0.3.3",
