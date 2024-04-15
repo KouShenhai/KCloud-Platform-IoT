@@ -38,7 +38,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 [老寇云平台在线文档（请点击我）](https://koushenhai.github.io)
 
 ### 😎 开发计划
-[开发计划](https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2)
+[开发计划（需要登录）](https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2)
 
 ### 💪 版本号
 特此说明，与Spring Boot版本保持一致
