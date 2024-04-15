@@ -38,7 +38,7 @@
     "wangeditor": "^4.7.10"
   },
   "devDependencies": {
-    "@ant-design/colors": "^6.0.0",
+    "@ant-design/colors": "^7.0.0",
     "@vue/cli-plugin-babel": "^4.0.4",
     "@vue/cli-plugin-eslint": "^4.0.4",
     "@vue/cli-plugin-router": "^4.0.4",
