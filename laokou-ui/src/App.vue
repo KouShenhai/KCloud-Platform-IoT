@@ -1,27 +1,28 @@
 <template>
-  <el-config-provider :locale="currentLocale">
-    <router-view />
-    <ReDialog />
-  </el-config-provider>
+  <a-config-provider :locale="locale">
+    <div id="app">
+      <router-view/>
+    </div>
+  </a-config-provider>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { ElConfigProvider } from "element-plus";
-import { ReDialog } from "@/components/ReDialog";
-import en from "element-plus/dist/locale/en.mjs";
-import zhCn from "element-plus/dist/locale/zh-cn.mjs";
+<script>
+import { domTitle, setDocumentTitle } from '@/utils/domUtil'
+import { i18nRender } from '@/locales'
 
-export default defineComponent({
-  name: "app",
-  components: {
-    [ElConfigProvider.name]: ElConfigProvider,
-    ReDialog
+export default {
+  data () {
+    return {
+    }
   },
   computed: {
-    currentLocale() {
-      return this.$storage.locale?.locale === "zh" ? zhCn : en;
+    locale () {
+      // 只是为了切换语言时，更新标题
+      const { title } = this.$route.meta
+      title && (setDocumentTitle(`${i18nRender(title)} - ${domTitle}`))
+
+      return this.$i18n.getLocaleMessage(this.$store.getters.lang).antLocale
     }
   }
-});
+}
 </script>

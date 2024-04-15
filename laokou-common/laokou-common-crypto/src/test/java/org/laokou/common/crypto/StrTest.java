@@ -30,7 +30,7 @@ public class StrTest {
 		String str = "_";
 		str += 1;
 		log.info("{}", str);
-		log.info("{}", StringUtil.convertUnder("_str_ee"));
+		log.info("{}", StringUtil.convertUnder("str_ee"));
 	}
 
 }

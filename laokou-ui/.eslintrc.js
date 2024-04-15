@@ -3,118 +3,73 @@ module.exports = {
   env: {
     node: true
   },
-  globals: {
-    // Ref sugar (take 2)
-    $: "readonly",
-    $$: "readonly",
-    $ref: "readonly",
-    $shallowRef: "readonly",
-    $computed: "readonly",
-
-    // index.d.ts
-    // global.d.ts
-    Fn: "readonly",
-    PromiseFn: "readonly",
-    RefType: "readonly",
-    LabelValueOptions: "readonly",
-    EmitType: "readonly",
-    TargetContext: "readonly",
-    ComponentElRef: "readonly",
-    ComponentRef: "readonly",
-    ElRef: "readonly",
-    global: "readonly",
-    ForDataType: "readonly",
-    ComponentRoutes: "readonly",
-
-    // script setup
-    defineProps: "readonly",
-    defineEmits: "readonly",
-    defineExpose: "readonly",
-    withDefaults: "readonly"
-  },
-  extends: [
-    "plugin:vue/vue3-essential",
-    "eslint:recommended",
-    "@vue/typescript/recommended",
-    "@vue/prettier",
-    "@vue/eslint-config-typescript"
+  'extends': [
+    'plugin:vue/strongly-recommended',
+    '@vue/standard'
   ],
-  parser: "vue-eslint-parser",
+  rules: {
+    'no-console': 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'generator-star-spacing': 'off',
+    'no-mixed-operators': 0,
+    'vue/max-attributes-per-line': [
+      2,
+      {
+        'singleline': 5,
+        'multiline': {
+          'max': 1,
+          'allowFirstLine': false
+        }
+      }
+    ],
+    'vue/attribute-hyphenation': 0,
+    'vue/html-self-closing': 0,
+    'vue/component-name-in-template-casing': 0,
+    'vue/html-closing-bracket-spacing': 0,
+    'vue/singleline-html-element-content-newline': 0,
+    'vue/no-unused-components': 0,
+    'vue/multiline-html-element-content-newline': 0,
+    'vue/no-use-v-if-with-v-for': 0,
+    'vue/html-closing-bracket-newline': 0,
+    'vue/no-parsing-error': 0,
+    'no-tabs': 0,
+    'quotes': [
+      2,
+      'single',
+      {
+        'avoidEscape': true,
+        'allowTemplateLiterals': true
+      }
+    ],
+    'semi': [
+      2,
+      'never',
+      {
+        'beforeStatementContinuationChars': 'never'
+      }
+    ],
+    'no-delete-var': 2,
+    'prefer-const': [
+      2,
+      {
+        'ignoreReadBeforeAssign': false
+      }
+    ],
+    'template-curly-spacing': 'off',
+    'indent': 'off'
+  },
   parserOptions: {
-    parser: "@typescript-eslint/parser",
-    ecmaVersion: 2020,
-    sourceType: "module",
-    jsxPragma: "React",
-    ecmaFeatures: {
-      jsx: true
-    }
+    parser: 'babel-eslint'
   },
   overrides: [
     {
-      files: ["*.ts", "*.vue"],
-      rules: {
-        "no-undef": "off"
-      }
-    },
-    {
-      files: ["*.vue"],
-      parser: "vue-eslint-parser",
-      parserOptions: {
-        parser: "@typescript-eslint/parser",
-        extraFileExtensions: [".vue"],
-        ecmaVersion: "latest",
-        ecmaFeatures: {
-          jsx: true
-        }
-      },
-      rules: {
-        "no-undef": "off"
+      files: [
+        '**/__tests__/*.{j,t}s?(x)',
+        '**/tests/unit/**/*.spec.{j,t}s?(x)'
+      ],
+      env: {
+        jest: true
       }
     }
-  ],
-  rules: {
-    "vue/no-v-html": "off",
-    "vue/require-default-prop": "off",
-    "vue/require-explicit-emits": "off",
-    "vue/multi-word-component-names": "off",
-    "@typescript-eslint/no-explicit-any": "off", // any
-    "no-debugger": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off", // setup()
-    "@typescript-eslint/ban-types": "off",
-    "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "vue/html-self-closing": [
-      "error",
-      {
-        html: {
-          void: "always",
-          normal: "always",
-          component: "always"
-        },
-        svg: "always",
-        math: "always"
-      }
-    ],
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_"
-      }
-    ],
-    "no-unused-vars": [
-      "error",
-      {
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_"
-      }
-    ],
-    "prettier/prettier": [
-      "error",
-      {
-        endOfLine: "auto"
-      }
-    ]
-  }
-};
+  ]
+}
