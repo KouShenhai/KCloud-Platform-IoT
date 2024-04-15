@@ -17,6 +17,7 @@
         <module>laokou-test-container-spring-boot</module>
         <module>laokou-test-container-dubbo</module>
         <module>laokou-test-container-rocketmq</module>
+        <module>laokou-test-container-base</module>
     </modules>
 
 </project>

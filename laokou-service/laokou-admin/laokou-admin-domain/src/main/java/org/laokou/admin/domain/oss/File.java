@@ -52,7 +52,7 @@ public class File extends AggregateRoot<Long> {
 	@Schema(name = "MAX_FILE_SIZE", description = "最大上传文件大小")
 	private static final long MAX_FILE_SIZE = 100 * 1024 * 1024;
 
-	@Schema(name = "cacheBOS", description = "字节输出流缓存")
+	@Schema(name = "bosCache", description = "字节输出流缓存")
 	private ByteArrayOutputStream bosCache;
 
 	@Schema(name = "limitRead", description = "一次性读取字节数")
