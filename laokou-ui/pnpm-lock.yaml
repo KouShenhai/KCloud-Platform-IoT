@@ -60,7 +60,7 @@ dependencies:
     specifier: ^1.0.0-alpha.3
     version: 1.0.0-alpha-rxjs-adapter-optional-metadata.0
   rsocket-websocket-client:
-    specifier: ^1.0.0-alpha-rxjs-adapter-optional-metadata.0
+    specifier: ^1.0.0-alpha.3
     version: 1.0.0-alpha-rxjs-adapter-optional-metadata.0
   screenfull:
     specifier: 5.0.2
@@ -170,10 +170,10 @@ devDependencies:
     specifier: ^2.6.12
     version: 2.7.16
   webpack:
-    specifier: ^4.46.0
+    specifier: ^4.47.0
     version: 4.47.0
   webpack-theme-color-replacer:
-    specifier: ^1.3.12
+    specifier: ^1.5.2
     version: 1.5.2
 
 packages:
@@ -3798,7 +3798,7 @@ packages:
       cipher-base: 1.0.4
       create-hash: 1.2.0
       evp_bytestokey: 1.0.3
-      inherits: 2.0.3
+      inherits: 2.0.4
       safe-buffer: 5.2.1
 
   /browserify-cipher@1.0.1:
@@ -3813,7 +3813,7 @@ packages:
     dependencies:
       cipher-base: 1.0.4
       des.js: 1.1.0
-      inherits: 2.0.3
+      inherits: 2.0.4
       safe-buffer: 5.2.1
 
   /browserify-rsa@4.1.0:
@@ -4124,7 +4124,7 @@ packages:
       async-each: 1.0.6
       braces: 2.3.2(supports-color@6.1.0)
       glob-parent: 3.1.0
-      inherits: 2.0.3
+      inherits: 2.0.4
       is-binary-path: 1.0.1
       is-glob: 4.0.3
       normalize-path: 3.0.0
@@ -4171,7 +4171,7 @@ packages:
   /cipher-base@1.0.4:
     resolution: {integrity: sha512-Kkht5ye6ZGmwv40uUDZztayT2ThLQGfnj/T71N/XzeZeo3nf8foyW7zGTsPYkEya3m5f3cAypH+qe7YOrM1U2Q==}
     dependencies:
-      inherits: 2.0.3
+      inherits: 2.0.4
       safe-buffer: 5.2.1
 
   /class-utils@0.3.6:
@@ -4749,7 +4749,7 @@ packages:
     resolution: {integrity: sha512-z00bCGNHDG8mHAkP7CtT1qVu+bFQUPjYq/4Iv3C3kWjTFV10zIjfSoeqXo9Asws8gwSHDGj/hl2u4OGIjapeCg==}
     dependencies:
       cipher-base: 1.0.4
-      inherits: 2.0.3
+      inherits: 2.0.4
       md5.js: 1.3.5
       ripemd160: 2.0.2
       sha.js: 2.4.11
@@ -4759,7 +4759,7 @@ packages:
     dependencies:
       cipher-base: 1.0.4
       create-hash: 1.2.0
-      inherits: 2.0.3
+      inherits: 2.0.4
       ripemd160: 2.0.2
       safe-buffer: 5.2.1
       sha.js: 2.4.11
@@ -4797,7 +4797,7 @@ packages:
       create-hash: 1.2.0
       create-hmac: 1.1.7
       diffie-hellman: 5.0.3
-      inherits: 2.0.3
+      inherits: 2.0.4
       pbkdf2: 3.1.2
       public-encrypt: 4.0.3
       randombytes: 2.1.0
@@ -5222,7 +5222,7 @@ packages:
   /des.js@1.1.0:
     resolution: {integrity: sha512-r17GxjhUCjSRy8aiJpr8/UadFIzMzJGexI3Nmz4ADi9LYSFx4gTBp80+NaX/YsXWWLhpZ7v/v/ubEc/bCNfKwg==}
     dependencies:
-      inherits: 2.0.3
+      inherits: 2.0.4
       minimalistic-assert: 1.0.1
 
   /destroy@1.2.0:
@@ -8553,7 +8553,7 @@ packages:
     resolution: {integrity: sha512-xitP+WxNPcTTOgnTJcrhM0xvdPepipPSf3I8EIpGKeFLjt3PlJLIDG3u8EX53ZIubkb+5U2+3rELYpEhHhzdkg==}
     dependencies:
       hash-base: 3.1.0
-      inherits: 2.0.3
+      inherits: 2.0.4
       safe-buffer: 5.2.1
 
   /md5@2.3.0:
@@ -10460,7 +10460,7 @@ packages:
     resolution: {integrity: sha512-ii4iagi25WusVoiC4B4lq7pbXfAp3D9v5CwfkY33vffw2+pkDjY1D8GaN7spsxvCSx8dkPqOZCEZyfxcmJG2IA==}
     dependencies:
       hash-base: 3.1.0
-      inherits: 2.0.3
+      inherits: 2.0.4
 
   /rsocket-core@1.0.0-alpha-rxjs-adapter-optional-metadata.0:
     resolution: {integrity: sha512-FXieO2E8d4UC7mW7K01IRMtgwZ1BZk7l4ZEvgnD8xEKdt//9ks5IfiDZPvi1w9P4YFp/IrI7lL3dqhkOF0Ez/g==}
@@ -10739,7 +10739,7 @@ packages:
     resolution: {integrity: sha512-QMEp5B7cftE7APOjk5Y6xgrbWu+WkLVQwk8JNjZ8nKRciZaByEW6MubieAiToS7+dwvrjGhH8jRXz3MVd0AYqQ==}
     hasBin: true
     dependencies:
-      inherits: 2.0.3
+      inherits: 2.0.4
       safe-buffer: 5.2.1
 
   /shallow-equal@1.2.1:
@@ -11065,7 +11065,7 @@ packages:
   /stream-browserify@2.0.2:
     resolution: {integrity: sha512-nX6hmklHs/gr2FuxYDltq8fJA1GDlxKQCz8O/IM4atRqBH8OORmBNgfvW5gG10GT/qQ9u0CzIvr2X5Pkt6ntqg==}
     dependencies:
-      inherits: 2.0.3
+      inherits: 2.0.4
       readable-stream: 2.3.8
 
   /stream-each@1.2.3:
@@ -11078,7 +11078,7 @@ packages:
     resolution: {integrity: sha512-+TSkfINHDo4J+ZobQLWiMouQYB+UVYFttRA94FpEzzJ7ZdqcL4uUUQ7WkdkI4DSozGmgBUE/a47L+38PenXhUw==}
     dependencies:
       builtin-status-codes: 3.0.0
-      inherits: 2.0.3
+      inherits: 2.0.4
       readable-stream: 2.3.8
       to-arraybuffer: 1.0.1
       xtend: 4.0.2
