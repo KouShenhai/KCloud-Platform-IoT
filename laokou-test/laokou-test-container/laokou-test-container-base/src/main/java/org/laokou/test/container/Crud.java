@@ -29,8 +29,12 @@ public interface Crud {
 
 	String imp(Map<String, Object> params);
 
-	String find(Map<String, Object> params);
+	String findList(Map<String, Object> params);
+
+	String findById(Map<String, Object> params);
 
 	String type(Map<String, Object> params);
+
+	String router(Map<String, Object> params);
 
 }

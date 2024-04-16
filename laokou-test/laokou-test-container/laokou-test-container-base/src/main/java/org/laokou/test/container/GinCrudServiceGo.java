@@ -27,17 +27,20 @@ import java.util.Map;
 public class GinCrudServiceGo implements Crud {
 
 	public static void main(String[] args) {
-		String inst = "pro";
-		String upper = "Protocol";
-		String lower = "protocol";
+		String inst = "out";
+		String upper = "OutputClient";
+		String lower = "outputClient";
 		Map<String, Object> params = Map.of("inst", inst, "upper", upper, "lower", lower);
 		Crud crud = new GinCrudServiceGo();
-		log.info(crud.imp(params));
-		log.info(crud.type(params));
-		log.info(crud.create(params));
-		log.info(crud.remove(params));
-		log.info(crud.modify(params));
-		log.info(crud.find(params));
+		StringBuilder s = new StringBuilder();
+		s.append("\n").append(crud.imp(params));
+		s.append("\n").append(crud.type(params));
+		s.append("\n").append(crud.create(params));
+		s.append("\n").append(crud.remove(params));
+		s.append("\n").append(crud.modify(params));
+		s.append("\n").append(crud.findList(params));
+		s.append("\n").append(crud.findById(params));
+		log.info("\n{}", s);
 	}
 
 	@Override
@@ -93,7 +96,7 @@ public class GinCrudServiceGo implements Crud {
 
 	@Override
 	@SneakyThrows
-	public String find(Map<String, Object> params) {
+	public String findList(Map<String, Object> params) {
 		String str = """
 				func (service *${upper}Service) Find${upper}List(info request.PageInfo) (list interface{}, total int64, err error) {
 					limit := info.PageSize
@@ -113,11 +116,28 @@ public class GinCrudServiceGo implements Crud {
 
 	@Override
 	@SneakyThrows
+	public String findById(Map<String, Object> params) {
+		String str = """
+func (service *${upper}Service) Find${upper}ById(id int64) (${inst} system.AtSys${upper}, err error) {
+	err = global.Db.Where("id = ?", id).First(&${inst}).Error
+	return
+}
+			""";
+		return TemplateUtil.getContent(str, params);
+	}
+
+	@Override
+	@SneakyThrows
 	public String type(Map<String, Object> params) {
 		String str = """
 				type ${upper}Service struct{}
 							""";
 		return TemplateUtil.getContent(str, params);
+	}
+
+	@Override
+	public String router(Map<String, Object> params) {
+		return null;
 	}
 
 }
