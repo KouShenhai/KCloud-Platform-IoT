@@ -18,6 +18,7 @@
 package org.laokou.admin.command.tenant.query;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.dto.tenant.TenantGetIDQry;
@@ -32,8 +33,6 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
-
-import static org.laokou.common.i18n.common.NetworkConstant.WWW;
 import static org.laokou.common.i18n.common.StringConstant.BACKSLASH;
 import static org.laokou.common.i18n.common.StringConstant.DOT;
 import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
@@ -46,6 +45,9 @@ import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
 @Component
 @RequiredArgsConstructor
 public class TenantGetIDQryExe {
+
+	@Schema(name = "WWW", description = "www三级域名")
+	private static final String WWW = "www";
 
 	private final DefaultConfigProperties defaultConfigProperties;
 

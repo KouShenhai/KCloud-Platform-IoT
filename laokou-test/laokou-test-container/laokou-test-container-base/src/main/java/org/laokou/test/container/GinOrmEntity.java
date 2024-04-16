@@ -40,38 +40,34 @@ public class GinOrmEntity {
 		ByteArrayInputStream bis = new ByteArrayInputStream(from().getBytes(StandardCharsets.UTF_8));
 		BufferedReader br = new BufferedReader(new InputStreamReader(bis));
 		String str;
+		StringBuilder sb = new StringBuilder();
 		while ((str = br.readLine()) != null) {
 			String[] s = str.split(" ");
-			log.info(StringUtil.convertUnder("_" + s[0]) + " " + MAP.get(s[1]) + " //" + s[2]);
+			sb.append(StringUtil.convertUnder("_" + s[0])).append(" ").append(MAP.get(s[1])).append(" //").append(s[2]).append("\n");
 		}
+		log.info("\n{}", sb);
 	}
 
 	private static String from() {
 		return """
-				mark varchar 标识
-				name varchar 名称
-				status tinyint 状态
-				protocol_id bigint 协议ID
-				protocol_name varchar 协议名称
-				type varchar 类型
-				read_timeout int 读超时时间
-				write_timeout int 写超时时间
-				read_interval int 读间隔时间
-				write_interval int 写间隔时间
-				conn_params varchar 连接参数
-				remote_directory varchar 远程目录
-				file_name varchar 文件名
-				databse varchar 数据库
-				addr varchar 服务器地址
-				username varchar 用户名
-				password varchar 密码
-				ip varchar 服务端IP
-				port int 服务端端口
-				serial_name varchar 串口名称
-				baud_rate varchar 波特率
-				check_bit varchar 校验位
-				data_bit varchar 数据位
-				stop_bit varchar 停止位
+status tinyint 状态
+mark varchar 标识
+name varchar 名称
+channel_id bigint 通道ID
+channel_name varchar 通道名称
+model_id bigint 模型ID
+model_name varchar 模型名称
+device_group varchar 设备组
+device_id varchar 设备ID
+type_id bigint 设备类型ID
+type_name varchar 设备类型名称
+mfr_id bigint 厂商ID
+mfr_name varchar 厂商名称
+mod_id bigint 设备型号ID
+mod_mark varchar 设备型号标识
+control_mfr varchar 控制器厂商
+control_model varchar 控制器型号
+desc varchar 模型描述
 							""";
 	}
 
