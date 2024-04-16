@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "ant-design-vue": "^1.7.8",
-    "axios": "^0.24.0",
+    "axios": "^0.28.0",
     "core-js": "^3.19.2",
     "echarts": "^5.2.2",
     "file-saver": "^2.0.5",
@@ -50,7 +50,7 @@
     "babel-eslint": "^10.0.1",
     "babel-plugin-import": "^1.12.2",
     "babel-plugin-transform-remove-console": "^6.9.4",
-    "eslint": "^5.16.0",
+    "eslint": "^9.0.0",
     "eslint-plugin-html": "^8.0.0",
     "eslint-plugin-vue": "^5.2.3",
     "git-revision-webpack-plugin": "^5.0.0",
