@@ -70,10 +70,10 @@ export default {
     }
   },
   created () {
-    this.getCode()
+    this.getVerifyCode()
   },
   methods: {
-    getCode () {
+    getVerifyCode () {
       // getCodeImg().then(res => {
       //   this.captchaEnabled = res.captchaEnabled === undefined ? true : res.captchaEnabled
       //   if (this.captchaEnabled) {
