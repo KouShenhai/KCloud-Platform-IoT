@@ -108,27 +108,27 @@ public class GinCrudApiGo implements Crud {
 	@SneakyThrows
 	public String findById(Map<String, Object> params) {
 		String str = """
-func (api *AtSys${upper}Api) Find${upper}ById(c *gin.Context) {
-	var ${inst} request.FindById
-	err := c.ShouldBindJSON(&${inst})
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	err = utils.Verify(${inst}, utils.IdVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	${lower}Detail, err := ${lower}Service.Find${upper}ById(${inst}.ID)
-	if err != nil {
-		logrus.Error("查询失败!", err)
-		response.FailWithMessage("查询失败", c)
-		return
-	}
-	response.OkWithDetailed(${lower}Detail, "查询成功", c)
-}
-			""";
+				func (api *AtSys${upper}Api) Find${upper}ById(c *gin.Context) {
+					var ${inst} request.FindById
+					err := c.ShouldBindJSON(&${inst})
+					if err != nil {
+						response.FailWithMessage(err.Error(), c)
+						return
+					}
+					err = utils.Verify(${inst}, utils.IdVerify)
+					if err != nil {
+						response.FailWithMessage(err.Error(), c)
+						return
+					}
+					${lower}Detail, err := ${lower}Service.Find${upper}ById(${inst}.ID)
+					if err != nil {
+						logrus.Error("查询失败!", err)
+						response.FailWithMessage("查询失败", c)
+						return
+					}
+					response.OkWithDetailed(${lower}Detail, "查询成功", c)
+				}
+							""";
 		return TemplateUtil.getContent(str, params);
 	}
 

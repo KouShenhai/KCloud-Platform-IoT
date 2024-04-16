@@ -43,32 +43,37 @@ public class GinOrmEntity {
 		StringBuilder sb = new StringBuilder();
 		while ((str = br.readLine()) != null) {
 			String[] s = str.split(" ");
-			sb.append(StringUtil.convertUnder("_" + s[0])).append(" ").append(MAP.get(s[1])).append(" //").append(s[2]).append("\n");
+			sb.append(StringUtil.convertUnder("_" + s[0]))
+				.append(" ")
+				.append(MAP.get(s[1]))
+				.append(" //")
+				.append(s[2])
+				.append("\n");
 		}
 		log.info("\n{}", sb);
 	}
 
 	private static String from() {
 		return """
-status tinyint 状态
-mark varchar 标识
-name varchar 名称
-channel_id bigint 通道ID
-channel_name varchar 通道名称
-model_id bigint 模型ID
-model_name varchar 模型名称
-device_group varchar 设备组
-device_id varchar 设备ID
-type_id bigint 设备类型ID
-type_name varchar 设备类型名称
-mfr_id bigint 厂商ID
-mfr_name varchar 厂商名称
-mod_id bigint 设备型号ID
-mod_mark varchar 设备型号标识
-control_mfr varchar 控制器厂商
-control_model varchar 控制器型号
-desc varchar 模型描述
-							""";
+				status tinyint 状态
+				mark varchar 标识
+				name varchar 名称
+				channel_id bigint 通道ID
+				channel_name varchar 通道名称
+				model_id bigint 模型ID
+				model_name varchar 模型名称
+				device_group varchar 设备组
+				device_id varchar 设备ID
+				type_id bigint 设备类型ID
+				type_name varchar 设备类型名称
+				mfr_id bigint 厂商ID
+				mfr_name varchar 厂商名称
+				mod_id bigint 设备型号ID
+				mod_mark varchar 设备型号标识
+				control_mfr varchar 控制器厂商
+				control_model varchar 控制器型号
+				desc varchar 模型描述
+											""";
 	}
 
 }

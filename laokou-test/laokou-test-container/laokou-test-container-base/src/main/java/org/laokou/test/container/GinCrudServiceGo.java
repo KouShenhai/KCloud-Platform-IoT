@@ -118,11 +118,11 @@ public class GinCrudServiceGo implements Crud {
 	@SneakyThrows
 	public String findById(Map<String, Object> params) {
 		String str = """
-func (service *${upper}Service) Find${upper}ById(id int64) (${inst} system.AtSys${upper}, err error) {
-	err = global.Db.Where("id = ?", id).First(&${inst}).Error
-	return
-}
-			""";
+				func (service *${upper}Service) Find${upper}ById(id int64) (${inst} system.AtSys${upper}, err error) {
+					err = global.Db.Where("id = ?", id).First(&${inst}).Error
+					return
+				}
+							""";
 		return TemplateUtil.getContent(str, params);
 	}
 
