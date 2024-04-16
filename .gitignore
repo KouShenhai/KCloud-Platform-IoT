@@ -49,3 +49,5 @@ work
 file_store
 sessionStore
 LOG_FILE_PATH_IS_UNDEFINED
+
+node_modules
