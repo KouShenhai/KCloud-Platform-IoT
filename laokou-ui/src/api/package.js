@@ -1,26 +1,26 @@
 import request from '@/utils/request'
 
-// 查询菜单列表
-export function list (data) {
+// 查询套擦
+export function list (query) {
   return request({
-    url: '/admin/v1/menus/list',
+    url: '/admin/v1/packages/list',
     method: 'post',
-    data: data
+    data: query
   })
 }
 
-// 查看菜单
+// 查询套餐详情
 export function findById (id) {
   return request({
-    url: '/admin/v1/menus' + '/' + id,
+    url: '/admin/v1/packages/' + id,
     method: 'get'
   })
 }
 
-// 新增菜单
+// 新增套餐
 export function create (data, token) {
   return request({
-    url: '/admin/v1/menus',
+    url: '/admin/v1/packages',
     method: 'post',
     data: data,
     headers: {
@@ -30,37 +30,28 @@ export function create (data, token) {
   })
 }
 
-// 修改菜单
+// 修改套餐
 export function modify (data) {
   return request({
-    url: '/admin/v1/menus',
+    url: '/admin/v1/packages',
     method: 'put',
     data: data
   })
 }
 
-// 删除菜单
+// 删除套餐
 export function remove (ids) {
   return request({
-    url: '/admin/v1/menus',
+    url: '/admin/v1/packages',
     method: 'delete',
     data: ids
   })
 }
 
-// 根据角色ID查询菜单树IDS
-export function findIds (roleId) {
+// 套餐下拉列表
+export function findOptionList () {
   return request({
-    url: '/admin/v1/menus/' + roleId + '/ids',
+    url: '/admin/v1/packages/option-list',
     method: 'get'
-  })
-}
-
-// 租户菜单
-export function findTenantMenuList (data) {
-  return request({
-    url: '/admin/v1/menus/tenant-menu-list',
-    method: 'post',
-    data: data
   })
 }

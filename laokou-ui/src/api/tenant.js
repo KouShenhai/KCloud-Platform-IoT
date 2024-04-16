@@ -1,26 +1,25 @@
 import request from '@/utils/request'
-
-// 查询菜单列表
-export function list (data) {
+// 查询租户列表
+export function list (query) {
   return request({
-    url: '/admin/v1/menus/list',
+    url: '/admin/v1/tenants/list',
     method: 'post',
-    data: data
+    data: query
   })
 }
 
-// 查看菜单
+// 查询租户详细
 export function findById (id) {
   return request({
-    url: '/admin/v1/menus' + '/' + id,
+    url: '/admin/v1/tenants/' + id,
     method: 'get'
   })
 }
 
-// 新增菜单
+// 新增租户
 export function create (data, token) {
   return request({
-    url: '/admin/v1/menus',
+    url: '/admin/v1/tenants',
     method: 'post',
     data: data,
     headers: {
@@ -30,37 +29,36 @@ export function create (data, token) {
   })
 }
 
-// 修改菜单
+// 修改租户
 export function modify (data) {
   return request({
-    url: '/admin/v1/menus',
+    url: '/admin/v1/tenants',
     method: 'put',
     data: data
   })
 }
 
-// 删除菜单
+// 删除租户
 export function remove (ids) {
   return request({
-    url: '/admin/v1/menus',
+    url: '/admin/v1/tenants',
     method: 'delete',
     data: ids
   })
 }
 
-// 根据角色ID查询菜单树IDS
-export function findIds (roleId) {
+// 解析域名查看ID
+export function findIdByDomainName () {
   return request({
-    url: '/admin/v1/menus/' + roleId + '/ids',
+    url: '/admin/v1/tenants/id',
     method: 'get'
   })
 }
 
-// 租户菜单
-export function findTenantMenuList (data) {
+export function downloadDatasource (id) {
   return request({
-    url: '/admin/v1/menus/tenant-menu-list',
-    method: 'post',
-    data: data
+    url: '/admin/v1/tenants/' + id + '/download-datasource',
+    method: 'get',
+    responseType: 'blob'
   })
 }

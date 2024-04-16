@@ -26,6 +26,6 @@ public interface KeyProvider {
 
 	String resolve(HttpServletRequest request);
 
-	RateLimiterTypeEnum accept();
+	TypeEnum accept();
 
 }

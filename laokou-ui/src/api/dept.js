@@ -1,26 +1,26 @@
 import request from '@/utils/request'
 
-// 查询菜单列表
+// 查询部门列表
 export function list (data) {
   return request({
-    url: '/admin/v1/menus/list',
+    url: '/admin/v1/depts/list',
     method: 'post',
     data: data
   })
 }
 
-// 查看菜单
+// 查询部门详细
 export function findById (id) {
   return request({
-    url: '/admin/v1/menus' + '/' + id,
+    url: '/admin/v1/depts/' + id,
     method: 'get'
   })
 }
 
-// 新增菜单
+// 新增部门
 export function create (data, token) {
   return request({
-    url: '/admin/v1/menus',
+    url: '/admin/v1/depts',
     method: 'post',
     data: data,
     headers: {
@@ -30,37 +30,28 @@ export function create (data, token) {
   })
 }
 
-// 修改菜单
+// 修改部门
 export function modify (data) {
   return request({
-    url: '/admin/v1/menus',
+    url: '/admin/v1/depts',
     method: 'put',
     data: data
   })
 }
 
-// 删除菜单
+// 删除部门
 export function remove (ids) {
   return request({
-    url: '/admin/v1/menus',
+    url: '/admin/v1/depts',
     method: 'delete',
     data: ids
   })
 }
 
-// 根据角色ID查询菜单树IDS
+// 根据角色ID查询部门IDS
 export function findIds (roleId) {
   return request({
-    url: '/admin/v1/menus/' + roleId + '/ids',
+    url: '/admin/v1/depts/' + roleId + '/ids',
     method: 'get'
-  })
-}
-
-// 租户菜单
-export function findTenantMenuList (data) {
-  return request({
-    url: '/admin/v1/menus/tenant-menu-list',
-    method: 'post',
-    data: data
   })
 }

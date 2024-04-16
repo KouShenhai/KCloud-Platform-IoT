@@ -22,8 +22,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * @author laokou
  */
-@Schema(name = "RateLimiterTypeEnum", description = "限流类型枚举")
-public enum RateLimiterTypeEnum {
+@Schema(name = "TypeEnum", description = "类型枚举")
+public enum TypeEnum {
 
 	@Schema(name = "DEFAULT", description = "默认")
 	DEFAULT,

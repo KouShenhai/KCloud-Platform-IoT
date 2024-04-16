@@ -1,26 +1,26 @@
 import request from '@/utils/request'
 
-// 查询菜单列表
-export function list (data) {
+// 查询数据源列表
+export function list (query) {
   return request({
-    url: '/admin/v1/menus/list',
+    url: '/admin/v1/sources/list',
     method: 'post',
-    data: data
+    data: query
   })
 }
 
-// 查看菜单
+// 查询数据源
 export function findById (id) {
   return request({
-    url: '/admin/v1/menus' + '/' + id,
+    url: '/admin/v1/sources/' + id,
     method: 'get'
   })
 }
 
-// 新增菜单
+// 新增数据源
 export function create (data, token) {
   return request({
-    url: '/admin/v1/menus',
+    url: '/admin/v1/sources',
     method: 'post',
     data: data,
     headers: {
@@ -30,37 +30,28 @@ export function create (data, token) {
   })
 }
 
-// 修改菜单
+// 修改数据源
 export function modify (data) {
   return request({
-    url: '/admin/v1/menus',
+    url: '/admin/v1/sources',
     method: 'put',
     data: data
   })
 }
 
-// 删除菜单
+// 删除数据源
 export function remove (ids) {
   return request({
-    url: '/admin/v1/menus',
+    url: '/admin/v1/sources',
     method: 'delete',
     data: ids
   })
 }
 
-// 根据角色ID查询菜单树IDS
-export function findIds (roleId) {
+// 数据源下拉列表
+export function findOptionList () {
   return request({
-    url: '/admin/v1/menus/' + roleId + '/ids',
+    url: '/admin/v1/sources/option-list',
     method: 'get'
-  })
-}
-
-// 租户菜单
-export function findTenantMenuList (data) {
-  return request({
-    url: '/admin/v1/menus/tenant-menu-list',
-    method: 'post',
-    data: data
   })
 }

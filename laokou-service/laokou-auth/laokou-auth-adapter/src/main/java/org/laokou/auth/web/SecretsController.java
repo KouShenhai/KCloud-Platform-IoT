@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.laokou.common.ratelimiter.driver.spi.RateLimiterTypeEnum.IP;
+import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
 
 /**
  * @author laokou
@@ -37,13 +37,13 @@ import static org.laokou.common.ratelimiter.driver.spi.RateLimiterTypeEnum.IP;
 @RestController
 @Tag(name = "SecretsController", description = "安全配置")
 @RequiredArgsConstructor
-@RequestMapping("v1/secrets")
+@RequestMapping("secrets")
 public class SecretsController {
 
 	private final SecretsServiceI secretsServiceI;
 
 	@TraceLog
-	@GetMapping
+	@GetMapping("v1")
 	@RateLimiter(id = "AUTH_SECRET", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
 	@Operation(summary = "安全配置", description = "获取密钥")
 	public Result<String> find() {

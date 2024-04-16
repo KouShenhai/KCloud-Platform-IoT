@@ -20,7 +20,7 @@ package org.laokou.common.ratelimiter.driver.spi;
 import jakarta.servlet.http.HttpServletRequest;
 
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.ratelimiter.driver.spi.RateLimiterTypeEnum.DEFAULT;
+import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.DEFAULT;
 
 /**
  * @author laokou
@@ -33,7 +33,7 @@ public class DefaultKeyProvider implements org.laokou.common.ratelimiter.driver.
 	}
 
 	@Override
-	public RateLimiterTypeEnum accept() {
+	public TypeEnum accept() {
 		return DEFAULT;
 	}
 

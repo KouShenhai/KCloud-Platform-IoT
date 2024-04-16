@@ -19,7 +19,7 @@ package org.laokou.common.ratelimiter.driver;
 
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.ratelimiter.driver.spi.KeyProvider;
-import org.laokou.common.ratelimiter.driver.spi.RateLimiterTypeEnum;
+import org.laokou.common.ratelimiter.driver.spi.TypeEnum;
 
 import java.util.ServiceLoader;
 
@@ -30,10 +30,10 @@ import static org.laokou.common.i18n.common.StringConstant.EMPTY;
  */
 public class KeyManager {
 
-	public static String key(RateLimiterTypeEnum rateLimiterTypeEnum) {
+	public static String key(TypeEnum typeEnum) {
 		ServiceLoader<KeyProvider> keyProviders = ServiceLoader.load(KeyProvider.class);
 		for (KeyProvider keyProvider : keyProviders) {
-			if (rateLimiterTypeEnum.equals(keyProvider.accept())) {
+			if (typeEnum.equals(keyProvider.accept())) {
 				return keyProvider.resolve(RequestUtil.getHttpServletRequest());
 			}
 		}

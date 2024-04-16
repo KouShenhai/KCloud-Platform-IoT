@@ -1,41 +1,53 @@
 import request from '@/utils/request'
 
-const userApi = {
-  Login: '/login',
-  Logout: '/logout',
-  Register: '/register',
-  // get my info
-  UserInfo: '/getInfo'
+export const userApi = {
+  Token: '/auth/oauth2/token',
+  Logout: '/admin/v1/logouts',
+  Out: '/auth/logout?logout',
+  Info: '/admin/v1/users/profile',
+  Captcha: '/auth/v1/captchas/',
+  Tenant: '/admin/v1/tenants/option-list',
+  Secret: '/auth/v1/secrets'
 }
 
-/**
- * login func
- * @param parameter
- * @returns {*}
- */
-export function login (parameter) {
+export function login (params) {
   return request({
-    url: userApi.Login,
+    url: userApi.Token,
     method: 'post',
-    data: parameter
-  })
-}
-
-// 注册方法
-export function register (data) {
-  return request({
-    url: userApi.Register,
+    data: params,
+    // 设置序列化请求函数
+    transformRequest: (data = {}) => Object.entries(data).map(ent => ent.join('=')).join('&'),
     headers: {
-      isToken: false
-    },
-    method: 'post',
-    data: data
+      'Authorization': 'Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=',
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
   })
 }
 
-export function getInfo () {
+export function out () {
   return request({
-    url: userApi.UserInfo,
+    url: userApi.Out,
+    method: 'get'
+  })
+}
+
+export function tenant () {
+  return request({
+    url: userApi.Tenant,
+    method: 'get'
+  })
+}
+
+export function captcha (uuid) {
+  return request({
+    url: userApi.Captcha + uuid,
+    method: 'get'
+  })
+}
+
+export function info () {
+  return request({
+    url: userApi.Info,
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -43,9 +55,10 @@ export function getInfo () {
   })
 }
 
-export function logout () {
+export function logout (token) {
   return request({
     url: userApi.Logout,
+    data: { token: token },
     method: 'delete',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -53,10 +66,12 @@ export function logout () {
   })
 }
 
-// 获取验证码
-export function getCodeImg () {
+export function secret () {
   return request({
-    url: '/captchaImage',
-    method: 'get'
+    url: userApi.Secret,
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
   })
 }
