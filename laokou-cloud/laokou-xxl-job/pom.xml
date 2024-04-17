@@ -10,7 +10,7 @@
 
     <properties>
         <!--xxl-job版本-->
-        <xxl-job.version>2.4.0</xxl-job.version>
+        <xxl-job.version>2.4.1</xxl-job.version>
         <!--mybatis版本-->
         <mybatis.version>3.0.3</mybatis.version>
     </properties>
