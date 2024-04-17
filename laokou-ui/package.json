@@ -18,7 +18,7 @@
     "echarts": "^5.2.2",
     "file-saver": "^2.0.5",
     "highlight.js": "9.18.5",
-    "js-md5": "^0.7.3",
+    "js-md5": "^0.8.0",
     "jsencrypt": "^3.2.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.get": "^4.4.2",
