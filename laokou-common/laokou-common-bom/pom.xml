@@ -65,7 +65,7 @@
         <!--easyexcel版本-->
         <easyexcel.version>3.3.4</easyexcel.version>
         <!--spring-security-oauth2-authorization-server版本-->
-        <spring-security-oauth2-authorization-server.version>1.2.4-SNAPSHOT</spring-security-oauth2-authorization-server.version>
+        <spring-security-oauth2-authorization-server.version>1.2.4</spring-security-oauth2-authorization-server.version>
         <!--spring-boot-starter-oauth2-resource-server版本-->
         <spring-boot-starter-oauth2-resource-server.version>3.2.5-SNAPSHOT</spring-boot-starter-oauth2-resource-server.version>
         <!--aws-java-sdk-s3版本-->
@@ -81,7 +81,7 @@
         <!--jackson版本-->
         <jackson.version>2.17.0</jackson.version>
         <!--xxl-job版本-->
-        <xxl-job.version>2.4.0</xxl-job.version>
+        <xxl-job.version>2.4.1</xxl-job.version>
         <!--shardingsphere版本-->
         <shardingsphere.version>5.4.1</shardingsphere.version>
         <!--p6spy版本-->
@@ -103,7 +103,7 @@
         <!--mapstruct版本-->
         <mapstruct.version>1.6.0.Beta1</mapstruct.version>
         <!--spring-integration-mqtt版本-->
-        <spring-integration-mqtt.version>6.2.3</spring-integration-mqtt.version>
+        <spring-integration-mqtt.version>6.2.4</spring-integration-mqtt.version>
         <!--log4j2-ttl-thread-context-map版本-->
         <log4j2-ttl-thread-context-map.version>1.4.0</log4j2-ttl-thread-context-map.version>
         <!--transmittable-thread-local版本-->
