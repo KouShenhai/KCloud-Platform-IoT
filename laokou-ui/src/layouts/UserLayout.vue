@@ -9,7 +9,7 @@
           </a>
         </div>
         <div class="desc">
-          KCloud-Platform-Alibaba是基于SpringCloud Alibaba，SpringSecurity，Mysql，Vue 的多租户SaaS云平台
+          KCloud-Platform-Alibaba是基于SpringCloud Alibaba，SpringSecurity，Mysql，Vue 的云服务多租户平台
         </div>
       </div>
       <router-view />

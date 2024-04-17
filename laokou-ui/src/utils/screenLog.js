@@ -1,7 +1,5 @@
 /* eslint-disable */
 export const printANSI = () => {
-  // console.clear()
-  console.log('[KCloud-Platform-Alibaba] created');
   // ASCII - ANSI Shadow
   let text = `
  ██   ██   ██████   ██                       ██       ███████   ██             ██     ████                                       ██      ██ ██ ██                ██
