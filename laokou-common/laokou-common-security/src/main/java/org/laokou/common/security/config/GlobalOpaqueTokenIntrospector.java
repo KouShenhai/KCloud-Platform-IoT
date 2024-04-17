@@ -79,13 +79,13 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 		Instant expiresAt = accessToken.getToken().getExpiresAt();
 		Instant nowAt = Instant.now();
 		long expireTime = ChronoUnit.SECONDS.between(nowAt, expiresAt);
-		// 5秒后过期
-		long minTime = 5;
+		// 10秒后过期
+		long minTime = 10;
 		if (expireTime > minTime) {
 			Object principal = ((UsernamePasswordAuthenticationToken) Objects
 				.requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
 			UserDetail userDetail = (UserDetail) principal;
-			redisUtil.set(userInfoKey, userDetail, expireTime - 1);
+			redisUtil.set(userInfoKey, userDetail, expireTime - 3);
 			// 解密
 			return decryptInfo(userDetail);
 		}
