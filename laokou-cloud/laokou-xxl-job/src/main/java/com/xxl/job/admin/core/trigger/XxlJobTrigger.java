@@ -23,7 +23,7 @@ import java.util.Date;
  */
 public class XxlJobTrigger {
 
-	private static Logger logger = LoggerFactory.getLogger(XxlJobTrigger.class);
+	private static final Logger logger = LoggerFactory.getLogger(XxlJobTrigger.class);
 
 	/**
 	 * trigger job
@@ -50,7 +50,7 @@ public class XxlJobTrigger {
 		XxlJobGroup group = XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().load(jobInfo.getJobGroup());
 
 		// cover addressList
-		if (addressList != null && addressList.trim().length() > 0) {
+		if (addressList != null && !addressList.trim().isEmpty()) {
 			group.setAddressType(1);
 			group.setAddressList(addressList.trim());
 		}
@@ -61,8 +61,8 @@ public class XxlJobTrigger {
 			String[] shardingArr = executorShardingParam.split("/");
 			if (shardingArr.length == 2 && isNumeric(shardingArr[0]) && isNumeric(shardingArr[1])) {
 				shardingParam = new int[2];
-				shardingParam[0] = Integer.valueOf(shardingArr[0]);
-				shardingParam[1] = Integer.valueOf(shardingArr[1]);
+				shardingParam[0] = Integer.parseInt(shardingArr[0]);
+				shardingParam[1] = Integer.parseInt(shardingArr[1]);
 			}
 		}
 		if (ExecutorRouteStrategyEnum.SHARDING_BROADCAST == ExecutorRouteStrategyEnum
@@ -142,7 +142,7 @@ public class XxlJobTrigger {
 					address = group.getRegistryList().get(index);
 				}
 				else {
-					address = group.getRegistryList().get(0);
+					address = group.getRegistryList().getFirst();
 				}
 			}
 			else {
@@ -167,7 +167,7 @@ public class XxlJobTrigger {
 		}
 
 		// 5、collection trigger info
-		StringBuffer triggerMsgSb = new StringBuffer();
+		StringBuilder triggerMsgSb = new StringBuilder();
 		triggerMsgSb.append(I18nUtil.getString("jobconf_trigger_type")).append("：").append(triggerType.getTitle());
 		triggerMsgSb.append("<br>")
 			.append(I18nUtil.getString("jobconf_trigger_admin_adress"))
@@ -202,9 +202,7 @@ public class XxlJobTrigger {
 			.append("：")
 			.append(finalFailRetryCount);
 
-		triggerMsgSb
-			.append("<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>" + I18nUtil.getString("jobconf_trigger_run")
-					+ "<<<<<<<<<<< </span><br>")
+		triggerMsgSb.append("<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>").append(I18nUtil.getString("jobconf_trigger_run")).append("<<<<<<<<<<< </span><br>")
 			.append((routeAddressResult != null && routeAddressResult.getMsg() != null)
 					? routeAddressResult.getMsg() + "<br><br>" : "")
 			.append(triggerResult.getMsg() != null ? triggerResult.getMsg() : "");
@@ -240,12 +238,11 @@ public class XxlJobTrigger {
 			runResult = new ReturnT<String>(ReturnT.FAIL_CODE, ThrowableUtil.toString(e));
 		}
 
-		StringBuffer runResultSB = new StringBuffer(I18nUtil.getString("jobconf_trigger_run") + "：");
-		runResultSB.append("<br>address：").append(address);
-		runResultSB.append("<br>code：").append(runResult.getCode());
-		runResultSB.append("<br>msg：").append(runResult.getMsg());
+        String runResultSB = I18nUtil.getString("jobconf_trigger_run") + "：" + "<br>address：" + address +
+                "<br>code：" + runResult.getCode() +
+                "<br>msg：" + runResult.getMsg();
 
-		runResult.setMsg(runResultSB.toString());
+		runResult.setMsg(runResultSB);
 		return runResult;
 	}
 

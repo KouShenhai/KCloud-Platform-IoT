@@ -54,7 +54,7 @@ $(function() {
 				"render": function ( data, type, row ) {
 					return row.registryList
 						?'<a class="show_registryList" href="javascript:;" _id="'+ row.id +'" >'
-							+ I18n.system_show +' ( ' + row.registryList.length+ ' ）</a>'
+						+ I18n.system_show +' ( ' + row.registryList.length+ ' ）</a>'
 						:I18n.system_empty;
 				}
 			},
@@ -123,7 +123,7 @@ $(function() {
 		var id = $(this).attr("_id");
 		var row = tableData['key'+id];
 
-		var html = '<div>';
+		/*var html = '<div>';
 		if (row.registryList) {
 			for (var index in row.registryList) {
 				html += (parseInt(index)+1) + '. <span class="badge bg-green" >' + row.registryList[index] + '</span><br>';
@@ -135,8 +135,19 @@ $(function() {
 			title: I18n.jobinfo_opt_registryinfo ,
 			btn: [ I18n.system_ok ],
 			content: html
-		});
+		});*/
 
+		var html = '<table class="table table-bordered"><tbody>';
+		if (row.registryList) {
+			for (var index in row.registryList) {
+				html += '<tr><th>' + (parseInt(index)+1) + '</th>';
+				html += '<th><span class="badge bg-green" >' + row.registryList[index] + '</span></th><tr>';
+			}
+		}
+		html += '</tbody></table>';
+
+		$('#showRegistryListModal .data').html(html);
+		$('#showRegistryListModal').modal({backdrop: false, keyboard: false}).modal('show');
 	});
 
 
@@ -233,7 +244,7 @@ $(function() {
 					$('#addModal').modal('hide');
 					layer.open({
 						title: I18n.system_tips ,
-                        btn: [ I18n.system_ok ],
+						btn: [ I18n.system_ok ],
 						content: I18n.system_add_suc ,
 						icon: '1',
 						end: function(layero, index){
@@ -243,7 +254,7 @@ $(function() {
 				} else {
 					layer.open({
 						title: I18n.system_tips,
-                        btn: [ I18n.system_ok ],
+						btn: [ I18n.system_ok ],
 						content: (data.msg || I18n.system_add_fail  ),
 						icon: '2'
 					});
@@ -262,11 +273,11 @@ $(function() {
 		var addressType = $(this).val();
 		var $addressList = $(this).parents("form").find("textarea[name=addressList]");
 		if (addressType == 0) {
-            $addressList.css("background-color", "#eee");	// 自动注册
-            $addressList.attr("readonly","readonly");
+			$addressList.css("background-color", "#eee");	// 自动注册
+			$addressList.attr("readonly","readonly");
 			$addressList.val("");
 		} else {
-            $addressList.css("background-color", "white");
+			$addressList.css("background-color", "white");
 			$addressList.removeAttr("readonly");
 		}
 	});
@@ -305,14 +316,14 @@ $(function() {
 		},
 		messages : {
 			appname : {
-                required : I18n.system_please_input+"AppName",
-                rangelength: I18n.jobgroup_field_appname_length ,
-                myValid01: I18n.jobgroup_field_appname_limit
-            },
-            title : {
-                required : I18n.system_please_input + I18n.jobgroup_field_title ,
-                rangelength: I18n.jobgroup_field_title_length
-            }
+				required : I18n.system_please_input+"AppName",
+				rangelength: I18n.jobgroup_field_appname_length ,
+				myValid01: I18n.jobgroup_field_appname_limit
+			},
+			title : {
+				required : I18n.system_please_input + I18n.jobgroup_field_title ,
+				rangelength: I18n.jobgroup_field_title_length
+			}
 		},
 		highlight : function(element) {
 			$(element).closest('.form-group').addClass('has-error');
@@ -326,12 +337,12 @@ $(function() {
 		},
 		submitHandler : function(form) {
 			$.post(base_url + "/jobgroup/update",  $("#updateModal .form").serialize(), function(data, status) {
-				if (data.code == "200") {
+				if (data.code === "200") {
 					$('#updateModal').modal('hide');
 
 					layer.open({
 						title: I18n.system_tips ,
-                        btn: [ I18n.system_ok ],
+						btn: [ I18n.system_ok ],
 						content: I18n.system_update_suc ,
 						icon: '1',
 						end: function(layero, index){
@@ -341,7 +352,7 @@ $(function() {
 				} else {
 					layer.open({
 						title: I18n.system_tips,
-                        btn: [ I18n.system_ok ],
+						btn: [ I18n.system_ok ],
 						content: (data.msg || I18n.system_update_fail  ),
 						icon: '2'
 					});
@@ -355,5 +366,5 @@ $(function() {
 		$("#updateModal .form .form-group").removeClass("has-error");
 	});
 
-	
+
 });

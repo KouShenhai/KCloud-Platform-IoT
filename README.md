@@ -279,8 +279,8 @@ KCloud-Platform-Alibaba 开源软件遵循 [Apache 2.0 协议](https://www.apach
 请查看 [提交规范（请点击我）](CONTRIBUTING.md)  
 
 ### 👀 项目地址
-Github 后端地址：[KCloud-Platform-Alibaba](https://github.com/KouShenhai/KCloud-Platform-Alibaba)    
-Gtiee 后端地址：[KCloud-Platform-Alibaba](https://gitee.com/laokouyun/KCloud-Platform-Alibaba)  
+Github 地址：[KCloud-Platform-Alibaba](https://github.com/KouShenhai/KCloud-Platform-Alibaba)    
+Gtiee 地址：[KCloud-Platform-Alibaba](https://gitee.com/laokouyun/KCloud-Platform-Alibaba)  
 
 ### 🍚 赞助打赏（用于服务器日常维护）
 <div>
