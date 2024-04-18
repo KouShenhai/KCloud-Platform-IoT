@@ -151,8 +151,8 @@ importers:
         specifier: ^5.2.3
         version: 5.2.3(eslint@9.0.0)
       git-revision-webpack-plugin:
-        specifier: ^3.0.6
-        version: 3.0.6
+        specifier: ^5.0.0
+        version: 5.0.0(webpack@4.47.0)
       less:
         specifier: ^3.0.4
         version: 3.13.1
@@ -3372,9 +3372,11 @@ packages:
   getpass@0.1.7:
     resolution: {integrity: sha512-0fzj9JxOLfJ+XGLhR8ze3unN0KZCgZwiSSDz168VERjK8Wl8kVSdcu2kspd4s4wtAa1y/qrVRiAA0WclVsu0ng==}
 
-  git-revision-webpack-plugin@3.0.6:
-    resolution: {integrity: sha512-vW/9dBahGbpKPcccy3xKkHgdWoH/cAPPc3lQw+3edl7b4j29JfNGVrja0a1d8ZoRe4nTN8GCPrF9aBErDnzx5Q==}
-    engines: {node: '>=6.11.5'}
+  git-revision-webpack-plugin@5.0.0:
+    resolution: {integrity: sha512-RptQN/4UKcEPkCBmRy8kLPo5i8MnF8+XfAgFYN9gbwmKLTLx4YHsQw726H+C5+sIGDixDkmGL3IxPA2gKo+u4w==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      webpack: ^5.0.0
 
   glob-parent@3.1.0:
     resolution: {integrity: sha512-E8Ak/2+dZY6fnzlR7+ueWvhsH1SjHr4jjss4YS/h4py44jY9MhK/VFdaZJAWDz6BbL21KeteKxFSFpq8OS5gVA==}
@@ -10899,7 +10901,9 @@ snapshots:
     dependencies:
       assert-plus: 1.0.0
 
-  git-revision-webpack-plugin@3.0.6: {}
+  git-revision-webpack-plugin@5.0.0(webpack@4.47.0):
+    dependencies:
+      webpack: 4.47.0
 
   glob-parent@3.1.0:
     dependencies:
