@@ -43,8 +43,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static lombok.AccessLevel.PRIVATE;
-import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
-import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
 import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
 import static org.laokou.common.i18n.common.UserStatusEnum.ENABLED;
 
@@ -64,7 +62,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
 
-	@Schema(name = USERNAME, description = "用户名")
+	@Schema(name = "username", description = "用户名")
 	private String username;
 
 	@Schema(name = "avatar", description = "头像")
@@ -82,7 +80,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@Schema(name = "mobile", description = "手机号")
 	private String mobile;
 
-	@Schema(name = PASSWORD, description = "密码")
+	@Schema(name = "password", description = "密码")
 	private transient String password;
 
 	@Schema(name = DEPT_ID, description = "部门ID")

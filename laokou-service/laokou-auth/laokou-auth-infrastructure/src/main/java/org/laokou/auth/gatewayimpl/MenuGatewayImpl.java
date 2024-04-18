@@ -20,7 +20,7 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.MenuGateway;
-import org.laokou.auth.domain.user.User;
+import org.laokou.auth.domain.auth.Auth;
 import org.laokou.auth.gatewayimpl.database.MenuMapper;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -43,16 +43,16 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	/**
 	 * 查看菜单权限标识集合.
-	 * @param user 用户对象
+	 * @param auth 用户对象
 	 * @return 菜单权限标识集合
 	 */
 	@Override
-	public Set<String> findPermissions(User user) {
+	public Set<String> findPermissions(Auth auth) {
 		try {
-			if (user.isSuperAdministrator()) {
+			if (auth.isSuperAdministrator()) {
 				return new HashSet<>(menuMapper.selectPermissions());
 			}
-			return new HashSet<>(menuMapper.selectPermissionsByUserId(user.getId()));
+			return new HashSet<>(menuMapper.selectPermissionsByUserId(auth.getId()));
 		}
 		catch (BadSqlGrammarException e) {
 			log.error("表 boot_sys_menu 不存在，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);

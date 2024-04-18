@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
-import org.laokou.auth.domain.user.User;
+import org.laokou.auth.domain.auth.Auth;
 
 import static org.laokou.common.i18n.common.NumberConstant.SUCCESS;
 
@@ -33,9 +33,9 @@ import static org.laokou.common.i18n.common.NumberConstant.SUCCESS;
 @Schema(name = "LoginSucceededEvent", description = "登录成功事件")
 public class LoginSucceededEvent extends LoginEvent {
 
-	public LoginSucceededEvent(User user, HttpServletRequest request, String message, String sourceName, String appName,
-			String type) {
-		super(user, request, message, sourceName, appName, type, SUCCESS);
+	public LoginSucceededEvent(Auth auth, HttpServletRequest request, String message, String sourceName, String appName,
+							   String type) {
+		super(auth, request, message, sourceName, appName, type, SUCCESS);
 	}
 
 }

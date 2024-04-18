@@ -15,26 +15,13 @@
  *
  */
 
-package org.laokou.common.i18n.common;
-
-import io.swagger.v3.oas.annotations.media.Schema;
+package org.laokou.auth.domain.auth;
 
 /**
  * @author laokou
  */
-@Schema(name = "RouterConstants", description = "路由常量")
-public final class RouterConstant {
+public enum LoginStatusEnums {
 
-	private RouterConstant() {
-	}
-
-	@Schema(name = "GENERATED_NAME_PREFIX", description = "生成名称前缀")
-	public static final String GENERATED_NAME_PREFIX = "_genkey_";
-
-	@Schema(name = "DATA_ID", description = "Nacos配置标识")
-	public static final String DATA_ID = "router.json";
-
-	@Schema(name = "API_URL_PREFIX", description = "Api路径前缀")
-	public static final String API_URL_PREFIX = "/v1/routers";
+	SUCCESS, FAIL
 
 }

@@ -19,9 +19,9 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.user.Auth;
-import org.laokou.auth.domain.user.Captcha;
-import org.laokou.auth.domain.user.User;
+import org.laokou.auth.domain.auth.SecretKey;
+import org.laokou.auth.domain.auth.Captcha;
+import org.laokou.auth.domain.auth.Auth;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -32,7 +32,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.OAuth2Constants.MAIL;
+import static org.laokou.auth.config.authentication.AbstractOAuth2AuthenticationConverter.MAIL;
 import static org.laokou.common.i18n.common.TenantConstant.TENANT_ID;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
@@ -67,17 +67,17 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticati
 			// log.info("验证码：{}", code);
 			// log.info("邮箱：{}", SensitiveUtil.format(Type.MAIL, mail));
 			Captcha captchaObj = Captcha.builder().captcha(code).uuid(mail).build();
-			Auth authObj = Auth.builder().type(getGrantType().getValue()).secretKey(AesUtil.getSecretKeyStr()).build();
-			User user = User.builder()
+			SecretKey secretKeyObj = SecretKey.builder().type(getGrantType().getValue()).secretKey(AesUtil.getSecretKeyStr()).build();
+			Auth auth = Auth.builder()
 				.tenantId(StringUtil.parseLong(tenantId))
 				.mail(mail)
 				.captcha(captchaObj)
 				.username(encryptAes(mail))
-				.auth(authObj)
+				.secretKey(secretKeyObj)
 				.build();
-			user.checkMailAuth();
+			auth.checkMailAuth();
 			// 获取用户信息,并认证信息
-			return super.authenticationToken(user, request);
+			return super.authenticationToken(auth, request);
 		}
 		catch (AuthException e) {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);

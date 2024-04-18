@@ -17,22 +17,22 @@
 
 package org.laokou.auth.config.authentication;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.user.Auth;
-import org.laokou.auth.domain.user.Captcha;
-import org.laokou.auth.domain.user.User;
+import org.laokou.auth.domain.auth.SecretKey;
+import org.laokou.auth.domain.auth.Captcha;
+import org.laokou.auth.domain.auth.Auth;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.OAuth2Constants.*;
 import static org.laokou.common.i18n.common.TenantConstant.TENANT_ID;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
@@ -45,6 +45,12 @@ import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getExcep
 @Slf4j
 @Component("passwordAuthenticationProvider")
 public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
+
+	@Schema(name = "CAPTCHA", description = "验证码")
+	private static final String CAPTCHA = "captcha";
+
+	@Schema(name = "UUID", description = "唯一标识")
+	private static final String UUID = "uuid";
 
 	public OAuth2PasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
 			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProvider authProvider) {
@@ -62,25 +68,25 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
 			String tenantId = request.getParameter(TENANT_ID);
 			String uuid = request.getParameter(UUID);
 			String captcha = request.getParameter(CAPTCHA);
-			String username = request.getParameter(USERNAME);
-			String password = request.getParameter(PASSWORD);
+			String username = request.getParameter(OAuth2ParameterNames.USERNAME);
+			String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
 			// log.info("UUID：{}", uuid);
 			// log.info("验证码：{}", captcha);
 			// log.info("账号：{}", username);
 			// log.info("密码：{}", password);
 			// log.info("租户ID：{}", tenantId);
 			Captcha captchaObj = Captcha.builder().uuid(uuid).captcha(captcha).build();
-			Auth authObj = Auth.builder().secretKey(AesUtil.getSecretKeyStr()).type(getGrantType().getValue()).build();
-			User user = User.builder()
+			SecretKey secretKeyObj = SecretKey.builder().secretKey(AesUtil.getSecretKeyStr()).type(getGrantType().getValue()).build();
+			Auth auth = Auth.builder()
 				.tenantId(StringUtil.parseLong(tenantId))
-				.auth(authObj)
+				.secretKey(secretKeyObj)
 				.username(username)
 				.password(password)
 				.captcha(captchaObj)
 				.build();
-			user.checkUsernamePasswordAuth();
+			auth.checkUsernamePasswordAuth();
 			// 获取用户信息，并认证信息
-			return super.authenticationToken(user, request);
+			return super.authenticationToken(auth, request);
 		}
 		catch (AuthException e) {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
@@ -89,7 +95,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
 
 	@Override
 	AuthorizationGrantType getGrantType() {
-		return new AuthorizationGrantType(PASSWORD);
+		return new AuthorizationGrantType(OAuth2ParameterNames.PASSWORD);
 	}
 
 }

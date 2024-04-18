@@ -25,8 +25,6 @@ import org.laokou.common.mybatisplus.repository.BaseDO;
 import java.io.Serial;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_SOURCE;
-import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
-import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
 
 /**
  * @author laokou
@@ -48,10 +46,10 @@ public class SourceDO extends BaseDO {
 	@Schema(name = "url", description = "数据源的连接信息")
 	private String url;
 
-	@Schema(name = USERNAME, description = "数据源的用户名")
+	@Schema(name = "username", description = "数据源的用户名")
 	private String username;
 
-	@Schema(name = PASSWORD, description = "数据源的密码")
+	@Schema(name = "password", description = "数据源的密码")
 	private String password;
 
 }

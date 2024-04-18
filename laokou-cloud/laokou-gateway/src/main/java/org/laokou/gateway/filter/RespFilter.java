@@ -19,6 +19,7 @@ package org.laokou.gateway.filter;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.common.lang.NonNullApi;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
@@ -44,9 +45,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.laokou.common.i18n.common.OAuth2Constants.*;
 import static org.laokou.common.i18n.common.StringConstant.CHINESE_COMMA;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.*;
+import static org.laokou.gateway.filter.AuthFilter.TOKEN_URL;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpStatus.OK;
@@ -62,6 +63,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Slf4j
 @NonNullApi
 public class RespFilter implements GlobalFilter, Ordered {
+
+	@Schema(name = "ERROR", description = "错误")
+	private static final String ERROR = "error";
+
+	@Schema(name = "ERROR_DESCRIPTION", description = "错误信息")
+	private static final String ERROR_DESCRIPTION = "error_description";
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

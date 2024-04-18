@@ -20,7 +20,7 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.DeptGateway;
-import org.laokou.auth.domain.user.User;
+import org.laokou.auth.domain.auth.Auth;
 import org.laokou.auth.gatewayimpl.database.DeptMapper;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -43,16 +43,16 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	/**
 	 * 查看部门PATHS.
-	 * @param user 用户对象
+	 * @param auth 用户对象
 	 * @return 部门PATHS
 	 */
 	@Override
-	public Set<String> findDeptPaths(User user) {
+	public Set<String> findDeptPaths(Auth auth) {
 		try {
-			if (user.isSuperAdministrator()) {
+			if (auth.isSuperAdministrator()) {
 				return new HashSet<>(deptMapper.selectDeptPaths());
 			}
-			return new HashSet<>(deptMapper.selectDeptPathsByUserId(user.getId()));
+			return new HashSet<>(deptMapper.selectDeptPathsByUserId(auth.getId()));
 		}
 		catch (BadSqlGrammarException e) {
 			log.error("表 boot_sys_dept 不存在，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);

@@ -27,7 +27,6 @@ import org.laokou.common.mybatisplus.handler.CryptoTypeHandler;
 import java.io.Serial;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_USER;
-import static org.laokou.common.i18n.common.OAuth2Constants.*;
 
 /**
  * @author laokou
@@ -40,10 +39,10 @@ public class UserDO extends BaseDO {
 	@Serial
 	private static final long serialVersionUID = 1181289215379287683L;
 
-	@Schema(name = USERNAME, description = "用户名", example = "admin")
+	@Schema(name = "username", description = "用户名", example = "admin")
 	private String username;
 
-	@Schema(name = PASSWORD, description = "密码", example = "123456")
+	@Schema(name = "password", description = "密码", example = "123456")
 	private String password;
 
 	@Schema(name = "superAdmin", description = "超级管理员标识 0否 1是", example = "1")
@@ -52,15 +51,15 @@ public class UserDO extends BaseDO {
 	@Schema(name = "avatar", description = "头像", example = "https://pic.cnblogs.com/avatar/simple_avatar.gif")
 	private String avatar;
 
-	@Schema(name = MAIL, description = "邮箱", example = "2413176044@qq.com")
-	@TableField(value = MAIL, typeHandler = CryptoTypeHandler.class)
+	@Schema(name = "mail", description = "邮箱", example = "2413176044@qq.com")
+	@TableField(value = "mail", typeHandler = CryptoTypeHandler.class)
 	private String mail;
 
 	@Schema(name = "status", description = "用户状态 0正常 1锁定", example = "0")
 	private Integer status;
 
-	@Schema(name = MOBILE, description = "手机号", example = "18974432500")
-	@TableField(value = MOBILE, typeHandler = CryptoTypeHandler.class)
+	@Schema(name = "mobile", description = "手机号", example = "18974432500")
+	@TableField(value = "mobile", typeHandler = CryptoTypeHandler.class)
 	private String mobile;
 
 }

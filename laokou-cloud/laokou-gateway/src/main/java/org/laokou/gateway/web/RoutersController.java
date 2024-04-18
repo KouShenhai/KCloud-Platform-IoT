@@ -18,6 +18,7 @@
 package org.laokou.gateway.web;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.gateway.annotation.Auth;
@@ -28,8 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import static org.laokou.common.i18n.common.RouterConstant.API_URL_PREFIX;
+import static org.laokou.gateway.web.RoutersController.API_URL_PREFIX;
 
 /**
  * 路由管理.
@@ -41,6 +41,9 @@ import static org.laokou.common.i18n.common.RouterConstant.API_URL_PREFIX;
 @RequiredArgsConstructor
 @RequestMapping(API_URL_PREFIX)
 public class RoutersController {
+
+	@Schema(name = "API_URL_PREFIX", description = "Api路径前缀")
+	public static final String API_URL_PREFIX = "/v1/routers";
 
 	private final NacosRouteDefinitionRepository nacosRouteDefinitionRepository;
 

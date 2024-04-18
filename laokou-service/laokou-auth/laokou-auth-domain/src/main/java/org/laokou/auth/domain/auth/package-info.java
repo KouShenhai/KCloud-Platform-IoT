@@ -15,13 +15,7 @@
  *
  */
 
-package org.laokou.auth.domain.user;
-
 /**
  * @author laokou
  */
-public enum LoginStatusEnums {
-
-	SUCCESS, FAIL
-
-}
+package org.laokou.auth.domain.auth;

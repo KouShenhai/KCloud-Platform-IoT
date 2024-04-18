@@ -15,19 +15,19 @@
  *
  */
 
-package org.laokou.auth.domain.user;
+package org.laokou.auth.domain.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.i18n.utils.ValidatorUtils;
+
+import java.util.List;
 
 import static lombok.AccessLevel.PRIVATE;
-import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_CAPTCHA_REQUIRE;
-import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_UUID_REQUIRE;
+import static org.laokou.common.i18n.common.exception.AuthException.INVALID_SCOPE;
 
 /**
  * @author laokou
@@ -35,24 +35,18 @@ import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_UUID
 @Value
 @Builder
 @AllArgsConstructor(access = PRIVATE)
-@Schema(name = "Captcha", description = "验证码")
-public class Captcha {
+@Schema(name = "Auth", description = "认证")
+public class SecretKey {
 
-	@Schema(name = "uuid", description = "唯一标识")
-	String uuid;
+	@Schema(name = "type", description = "类型 mail邮箱 mobile手机号 password密码 authorization_code授权码")
+	String type;
 
-	@Schema(name = "captcha", description = "验证码")
-	String captcha;
+	@Schema(name = "secretKey", description = "密钥Key")
+	String secretKey;
 
-	public void checkNullCaptcha() {
-		if (StringUtil.isEmpty(this.captcha)) {
-			throw new AuthException(OAUTH2_CAPTCHA_REQUIRE, ValidatorUtils.getMessage(OAUTH2_CAPTCHA_REQUIRE));
-		}
-	}
-
-	public void checkNullUuid() {
-		if (StringUtil.isEmpty(this.uuid)) {
-			throw new AuthException(OAUTH2_UUID_REQUIRE, ValidatorUtils.getMessage(OAUTH2_UUID_REQUIRE));
+	public void checkScopes(List<String> scopes) {
+		if (CollectionUtil.isNotEmpty(scopes) && scopes.size() != 1) {
+			throw new AuthException(INVALID_SCOPE);
 		}
 	}
 

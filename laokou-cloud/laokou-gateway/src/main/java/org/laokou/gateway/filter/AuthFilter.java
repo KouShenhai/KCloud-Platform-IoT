@@ -67,8 +67,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
-
-import static org.laokou.common.i18n.common.OAuth2Constants.*;
 import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.RequestHeaderConstants.AUTHORIZATION;
 import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
@@ -92,8 +90,17 @@ import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VAL
 @RequiredArgsConstructor
 public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
+	@Schema(name = "USERNAME", description = "用户名")
+	public static final String USERNAME = "username";
+
+	@Schema(name = "PASSWORD", description = "密码")
+	public static final String PASSWORD = "password";
+
 	@Schema(name = "CHUNKED", description = "Chunked")
-	public static final String CHUNKED = "chunked";
+	private static final String CHUNKED = "chunked";
+
+	@Schema(name = "TOKEN_URL", description = "令牌路径")
+	public static final String TOKEN_URL = "/oauth2/token";
 
 	private final Environment env;
 

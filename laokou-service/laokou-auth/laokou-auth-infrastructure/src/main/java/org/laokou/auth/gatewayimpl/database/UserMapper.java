@@ -22,9 +22,6 @@ import org.apache.ibatis.annotations.Param;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
-
-import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
-
 /**
  * 用户.
  *
@@ -41,7 +38,7 @@ public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 	 * @param secretKey 密钥Key
 	 * @return 用户信息
 	 */
-	UserDO selectByConditions(@Param(USERNAME) String username, @Param("type") String type,
+	UserDO selectByConditions(@Param("username") String username, @Param("type") String type,
 			@Param("secretKey") String secretKey);
 
 }

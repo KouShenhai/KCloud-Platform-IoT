@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.user.User;
+import org.laokou.auth.domain.auth.Auth;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.utils.ObjectUtils;
@@ -197,12 +197,12 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 
 	/**
 	 * 获取用户信息.
-	 * @param user 用户对象
+	 * @param auth 用户对象
 	 * @param request 请求参数
 	 * @return 用户信息
 	 */
-	protected UsernamePasswordAuthenticationToken authenticationToken(User user, HttpServletRequest request) {
-		return authProvider.authenticationToken(user, request);
+	protected UsernamePasswordAuthenticationToken authenticationToken(Auth auth, HttpServletRequest request) {
+		return authProvider.authenticationToken(auth, request);
 	}
 
 	protected String encryptAes(String str) {

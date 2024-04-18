@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.domain.user;
+package org.laokou.auth.domain.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,9 +38,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Set;
 
 import static lombok.AccessLevel.PRIVATE;
-import static org.laokou.common.i18n.common.I18nCode.LOGIN_SUCCEEDED;
-import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
-import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
 import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
 import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
 import static org.laokou.common.i18n.common.UserStatusEnum.DISABLE;
@@ -54,13 +51,16 @@ import static org.laokou.common.i18n.common.exception.ParamException.*;
 @SuperBuilder
 @AllArgsConstructor(access = PRIVATE)
 @NoArgsConstructor(access = PRIVATE)
-@Schema(name = "User", description = "用户信息")
-public class User extends AggregateRoot<Long> {
+@Schema(name = "Auth", description = "认证")
+public class Auth extends AggregateRoot<Long> {
 
-	@Schema(name = USERNAME, description = "用户名")
+	@Schema(name = "LOGIN_SUCCEEDED", description = "登录成功")
+	private static final String LOGIN_SUCCEEDED = "OAuth2_LoginSucceeded";
+
+	@Schema(name = "username", description = "用户名")
 	private String username;
 
-	@Schema(name = PASSWORD, description = "密码", example = "123456")
+	@Schema(name = "password", description = "密码", example = "123456")
 	private String password;
 
 	@Schema(name = "superAdmin", description = "超级管理员标识 0否 1是", example = "1")
@@ -81,8 +81,8 @@ public class User extends AggregateRoot<Long> {
 	@Schema(name = "captcha", description = "验证码")
 	private Captcha captcha;
 
-	@Schema(name = "auth", description = "认证")
-	private Auth auth;
+	@Schema(name = "secretKey", description = "认证密钥")
+	private SecretKey secretKey;
 
 	public void checkUsernamePasswordAuth() {
 		// 检查租户ID
@@ -149,12 +149,12 @@ public class User extends AggregateRoot<Long> {
 		}
 	}
 
-	public User create(User user, HttpServletRequest request, String sourceName, String appName, String authType) {
-		if (ObjectUtils.isNull(user)) {
+	public Auth create(Auth auth, HttpServletRequest request, String sourceName, String appName, String authType) {
+		if (ObjectUtils.isNull(auth)) {
 			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtils.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,
 					appName, authType);
 		}
-		return user;
+		return auth;
 	}
 
 	public void checkPassword(String clientPassword, PasswordEncoder passwordEncoder, HttpServletRequest request,

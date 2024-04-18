@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.laokou.auth.domain.user.User;
+import org.laokou.auth.domain.auth.Auth;
 import org.laokou.common.core.utils.AddressUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.IpUtil;
@@ -73,12 +73,12 @@ public class LoginEvent extends DomainEvent<Long> {
 	@Schema(name = "type", description = "登录类型")
 	protected String type;
 
-	public LoginEvent(User user, HttpServletRequest request, String message, String sourceName, String appName,
-			String type, Integer status) {
-		super(IdGenerator.defaultSnowflakeId(), user.getId(), LOGIN_FAILED, CREATED, LAOKOU_LOGIN_EVENT_TOPIC,
-				sourceName, appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(),
-				user.getTenantId(), DateUtils.now(), DateUtils.now());
-		this.username = user.getUsername();
+	public LoginEvent(Auth auth, HttpServletRequest request, String message, String sourceName, String appName,
+					  String type, Integer status) {
+		super(IdGenerator.defaultSnowflakeId(), auth.getId(), LOGIN_FAILED, CREATED, LAOKOU_LOGIN_EVENT_TOPIC,
+				sourceName, appName, auth.getId(), auth.getId(), auth.getDeptId(), auth.getDeptPath(),
+				auth.getTenantId(), DateUtils.now(), DateUtils.now());
+		this.username = auth.getUsername();
 		this.ip = IpUtil.getIpAddr(request);
 		this.address = AddressUtil.getRealAddress(this.ip);
 		UserAgent userAgent = RequestUtil.getUserAgent(request);

@@ -39,12 +39,12 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 import static com.alibaba.nacos.api.common.Constants.ALL_PATTERN;
-import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
-import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
-import static org.laokou.common.i18n.common.RouterConstant.API_URL_PREFIX;
 import static org.laokou.common.i18n.common.exception.AuthException.ACCOUNT_PASSWORD_ERROR;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_PASSWORD_REQUIRE;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_USERNAME_REQUIRE;
+import static org.laokou.gateway.filter.AuthFilter.PASSWORD;
+import static org.laokou.gateway.filter.AuthFilter.USERNAME;
+import static org.laokou.gateway.web.RoutersController.API_URL_PREFIX;
 
 /**
  * API过滤器.
@@ -110,7 +110,7 @@ public class ApiFilter implements WebFilter {
 		}
 		catch (Exception e) {
 			// 账号或密码错误
-			return ReactiveResponseUtil.response(exchange, Result.fail("" + ACCOUNT_PASSWORD_ERROR));
+			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
 		}
 		String pwd;
 		String name;
