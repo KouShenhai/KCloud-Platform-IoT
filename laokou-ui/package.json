@@ -40,7 +40,7 @@
     "vue-cropper": "0.5.8",
     "vue-i18n": "^8.24.2",
     "vue-json-viewer": "^2.2.22",
-    "vue-router": "^3.5.1",
+    "vue-router": "^4.0.0",
     "vue-svg-component-runtime": "^1.0.1",
     "vuex": "^3.6.2",
     "wangeditor": "^4.7.10"
