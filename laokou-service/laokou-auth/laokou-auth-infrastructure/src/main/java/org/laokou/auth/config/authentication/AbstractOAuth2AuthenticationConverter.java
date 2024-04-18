@@ -20,7 +20,6 @@ package org.laokou.auth.config.authentication;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.auth.SecretKey;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.springframework.security.core.Authentication;

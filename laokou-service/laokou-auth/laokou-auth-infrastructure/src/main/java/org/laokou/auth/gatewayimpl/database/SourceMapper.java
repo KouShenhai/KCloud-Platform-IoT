@@ -23,8 +23,6 @@ import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.mybatisplus.repository.CrudMapper;
 import org.springframework.stereotype.Repository;
 
-import static org.laokou.common.i18n.dto.Identifier.TENANT_ID;
-
 /**
  * 数据源.
  *
@@ -39,6 +37,6 @@ public interface SourceMapper extends CrudMapper<Long, Integer, SourceDO> {
 	 * @param tenantId 租户ID
 	 * @return 数据源
 	 */
-	SourceDO selectByTenantId(@Param(TENANT_ID) Long tenantId);
+	SourceDO selectByTenantId(@Param("tenantId") Long tenantId);
 
 }

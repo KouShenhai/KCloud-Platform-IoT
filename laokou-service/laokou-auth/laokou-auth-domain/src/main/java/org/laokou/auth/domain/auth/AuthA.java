@@ -21,11 +21,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.laokou.auth.domain.event.LoginFailedEvent;
 import org.laokou.auth.domain.event.LoginSucceededEvent;
 import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.dto.AggregateRoot;
@@ -35,6 +37,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
 import java.util.Set;
 
 import static lombok.AccessLevel.PRIVATE;
@@ -47,15 +50,9 @@ import static org.laokou.common.i18n.common.exception.ParamException.*;
 /**
  * @author laokou
  */
-@Data
-@SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
-@Schema(name = "Auth", description = "认证")
-public class Auth extends AggregateRoot<Long> {
-
-	@Schema(name = "LOGIN_SUCCEEDED", description = "登录成功")
-	private static final String LOGIN_SUCCEEDED = "OAuth2_LoginSucceeded";
+@Getter
+@Schema(name = "AuthA", description = "认证聚合")
+public class AuthA extends AggregateRoot<Long> {
 
 	@Schema(name = "username", description = "用户名")
 	private String username;
@@ -63,34 +60,43 @@ public class Auth extends AggregateRoot<Long> {
 	@Schema(name = "password", description = "密码", example = "123456")
 	private String password;
 
-	@Schema(name = "superAdmin", description = "超级管理员标识 0否 1是", example = "1")
-	private Integer superAdmin;
+	@Schema(name = "type", description = "类型 mail邮箱 mobile手机号 password密码 authorization_code授权码")
+	private String type;
 
-	@Schema(name = "avatar", description = "头像", example = "https://pic.cnblogs.com/avatar/simple_avatar.gif")
-	private String avatar;
+	@Schema(name = "secretKey", description = "密钥Key")
+	private String secretKey;
 
-	@Schema(name = "mail", description = "邮箱", example = "2413176044@qq.com")
-	private String mail;
+	@Schema(name = "captcha", description = "验证码值对象")
+	private CaptchaV captcha;
 
-	@Schema(name = "status", description = "用户状态 0正常 1锁定", example = "0")
-	private Integer status;
+	@Schema(name = "user", description = "用户实体")
+	private UserE user;
 
-	@Schema(name = "mobile", description = "手机号", example = "18974432500")
-	private String mobile;
+	@Schema(name = "menu", description = "菜单实体")
+	private MenuE menu;
 
-	@Schema(name = "captcha", description = "验证码")
-	private Captcha captcha;
+	@Schema(name = "source", description = "数据源实体")
+	private SourceE source;
 
-	@Schema(name = "secretKey", description = "认证密钥")
-	private SecretKey secretKey;
+	@Schema(name = "LOGIN_SUCCEEDED", description = "登录成功")
+	private final String LOGIN_SUCCEEDED = "OAuth2_LoginSucceeded";
+
+	public AuthA(String username, String password, Long tenantId, String type, CaptchaV captcha) {
+		this.id = IdGenerator.defaultSnowflakeId();
+		this.username = username;
+		this.password = password;
+		this.tenantId = tenantId;
+		this.type = type;
+		this.captcha = captcha;
+	}
 
 	public void checkUsernamePasswordAuth() {
 		// 检查租户ID
 		checkNullTenantId();
 		// 检查UUID
-		captcha.checkNullUuid();
+		captchaV.checkNullUuid();
 		// 检查验证码
-		captcha.checkNullCaptcha();
+		captchaV.checkNullCaptcha();
 		// 检查账号
 		checkNullUsername();
 		// 检查密码
@@ -101,7 +107,7 @@ public class Auth extends AggregateRoot<Long> {
 		// 检查租户ID
 		checkNullTenantId();
 		// 检查验证码
-		captcha.checkNullCaptcha();
+		captchaV.checkNullCaptcha();
 		// 检查邮箱
 		checkMail();
 	}
@@ -110,9 +116,15 @@ public class Auth extends AggregateRoot<Long> {
 		// 检查租户ID
 		checkNullTenantId();
 		// 检查验证码
-		captcha.checkNullCaptcha();
+		captchaV.checkNullCaptcha();
 		// 检查手机号
 		checkMobile();
+	}
+
+	public void checkScopes(List<String> scopes) {
+		if (CollectionUtil.isNotEmpty(scopes) && scopes.size() != 1) {
+			throw new AuthException(INVALID_SCOPE);
+		}
 	}
 
 	public boolean isSuperAdministrator() {
@@ -149,12 +161,12 @@ public class Auth extends AggregateRoot<Long> {
 		}
 	}
 
-	public Auth create(Auth auth, HttpServletRequest request, String sourceName, String appName, String authType) {
-		if (ObjectUtils.isNull(auth)) {
+	public AuthA create(AuthA authA, HttpServletRequest request, String sourceName, String appName, String authType) {
+		if (ObjectUtils.isNull(authA)) {
 			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtils.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,
 					appName, authType);
 		}
-		return auth;
+		return authA;
 	}
 
 	public void checkPassword(String clientPassword, PasswordEncoder passwordEncoder, HttpServletRequest request,

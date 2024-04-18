@@ -83,10 +83,10 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@Schema(name = "password", description = "密码")
 	private transient String password;
 
-	@Schema(name = DEPT_ID, description = "部门ID")
+	@Schema(name = "dept_id", description = "部门ID")
 	private Long deptId;
 
-	@Schema(name = DEPT_PATH, description = "部门PATH")
+	@Schema(name = "dept_path", description = "部门PATH")
 	private String deptPath;
 
 	@Schema(name = "deptPaths", description = "部门PATH集合")
@@ -95,7 +95,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@Schema(name = "permissions", description = "菜单权限标识集合")
 	private Set<String> permissions;
 
-	@Schema(name = TENANT_ID, description = "租户ID")
+	@Schema(name = "tenantId", description = "租户ID")
 	private Long tenantId;
 
 	@Schema(name = "sourceName", description = "数据源名称")

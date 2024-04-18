@@ -17,7 +17,9 @@
 
 package org.laokou.auth.convertor;
 
+import org.laokou.auth.domain.auth.UserE;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
@@ -28,6 +30,6 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * @author laokou
  */
 @Mapper(componentModel = SPRING)
-public interface UserConvertor extends Convertor<User, UserDO> {
+public interface UserConvertor extends Convertor<UserE, UserDO> {
 
 }

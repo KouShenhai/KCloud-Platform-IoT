@@ -216,7 +216,7 @@ public class IdGenerator {
 				}
 			}
 			catch (Exception e) {
-				log.warn(" getDatacenterId: " + e.getMessage());
+				log.error("Error message：{}", e.getMessage(), e);
 			}
 			return id;
 		}

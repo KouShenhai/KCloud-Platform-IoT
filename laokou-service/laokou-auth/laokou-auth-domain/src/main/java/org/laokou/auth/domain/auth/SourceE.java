@@ -15,16 +15,23 @@
  *
  */
 
-package org.laokou.common.mybatisplus.repository;
+package org.laokou.auth.domain.auth;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 /**
  * @author laokou
  */
-@Repository
-@Mapper
-public interface SqlLogMapper extends CrudMapper<Long, Integer, SqlLogDO> {
+@Data
+@Schema(name = "SourceE", description = "数据源实体")
+public class SourceE {
+
+	@Schema(name = "name", description = "名称")
+	private String name;
+
+	public SourceE(String name) {
+		this.name = name;
+	}
 
 }

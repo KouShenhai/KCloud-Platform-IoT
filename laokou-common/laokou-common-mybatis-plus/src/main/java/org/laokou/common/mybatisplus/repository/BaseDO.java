@@ -27,7 +27,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serial;
 import java.time.LocalDateTime;
 
-import static org.laokou.common.i18n.dto.Identifier.*;
 import static org.laokou.common.i18n.utils.DateUtils.Constant.DEFAULT_TIMEZONE;
 import static org.laokou.common.i18n.utils.DateUtils.Constant.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS;
 
@@ -37,6 +36,36 @@ import static org.laokou.common.i18n.utils.DateUtils.Constant.YYYY_ROD_MM_ROD_DD
 @Data
 @Schema(name = "BaseDO", description = "映射基类")
 public class BaseDO extends DTO {
+
+	@Schema(name = "PRIMARY_KEY", description = "ID")
+	public static final String PRIMARY_KEY = "id";
+
+	@Schema(name = "CREATOR", description = "创建人")
+	public static final String CREATOR = "creator";
+
+	@Schema(name = "EDITOR", description = "编辑人")
+	public static final String EDITOR = "editor";
+
+	@Schema(name = "CREATE_DATE", description = "创建时间")
+	public static final String CREATE_DATE = "createDate";
+
+	@Schema(name = "UPDATE_DATE", description = "修改时间")
+	public static final String UPDATE_DATE = "updateDate";
+
+	@Schema(name = "DEL_FLAG", description = "删除标识")
+	public static final String DEL_FLAG = "delFlag";
+
+	@Schema(name = "VERSION", description = "版本")
+	public static final String VERSION = "version";
+
+	@Schema(name = "DEPT_ID", description = "部门ID")
+	public static final String DEPT_ID = "deptId";
+
+	@Schema(name = "DEPT_PATH", description = "部门PATH")
+	public static final String DEPT_PATH = "deptPath";
+
+	@Schema(name = "TENANT_ID", description = "租户ID")
+	public static final String TENANT_ID = "tenantId";
 
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;

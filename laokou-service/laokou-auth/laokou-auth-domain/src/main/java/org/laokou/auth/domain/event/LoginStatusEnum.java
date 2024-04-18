@@ -15,24 +15,13 @@
  *
  */
 
-package org.laokou.auth.domain.gateway;
-
-import org.laokou.auth.domain.auth.AuthA;
-
-import java.util.Set;
+package org.laokou.auth.domain.event;
 
 /**
- * 菜单.
- *
  * @author laokou
  */
-public interface MenuGateway {
+public enum LoginStatusEnum {
 
-	/**
-	 * 查询菜单权限标识集合.
-	 * @param authA 用户对象
-	 * @return 菜单权限标识集合
-	 */
-	Set<String> findPermissions(AuthA authA);
+	SUCCESS, FAIL
 
 }

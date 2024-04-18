@@ -21,8 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.auth.Auth;
-import org.laokou.auth.domain.auth.SecretKey;
+import org.laokou.auth.domain.auth.AuthA;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,8 +59,8 @@ public class UsersServiceImpl implements UserDetailsService {
 			HttpServletRequest request = RequestUtil.getHttpServletRequest();
 			String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
 			SecretKey secretKeyObj = SecretKey.builder().type(AUTHORIZATION_CODE).secretKey(AesUtil.getSecretKeyStr()).build();
-			Auth auth = Auth.builder().secretKey(secretKeyObj).tenantId(DEFAULT).username(username).password(password).build();
-			return (UserDetails) authProvider.authenticationToken(auth, request).getPrincipal();
+			AuthA authA = AuthA.builder().secretKey(secretKeyObj).tenantId(DEFAULT).username(username).password(password).build();
+			return (UserDetails) authProvider.authenticationToken(authA, request).getPrincipal();
 		}
 		catch (OAuth2AuthenticationException e) {
 			throw new UsernameNotFoundException(e.getError().getDescription(), e);

@@ -20,9 +20,8 @@ package org.laokou.auth.config.authentication;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.auth.SecretKey;
-import org.laokou.auth.domain.auth.Captcha;
-import org.laokou.auth.domain.auth.Auth;
+import org.laokou.auth.domain.auth.CaptchaV;
+import org.laokou.auth.domain.auth.AuthA;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -75,18 +74,18 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
 			// log.info("账号：{}", username);
 			// log.info("密码：{}", password);
 			// log.info("租户ID：{}", tenantId);
-			Captcha captchaObj = Captcha.builder().uuid(uuid).captcha(captcha).build();
+			CaptchaV captchaVObj = CaptchaV.builder().uuid(uuid).captcha(captcha).build();
 			SecretKey secretKeyObj = SecretKey.builder().secretKey(AesUtil.getSecretKeyStr()).type(getGrantType().getValue()).build();
-			Auth auth = Auth.builder()
+			AuthA authA = AuthA.builder()
 				.tenantId(StringUtil.parseLong(tenantId))
 				.secretKey(secretKeyObj)
 				.username(username)
 				.password(password)
-				.captcha(captchaObj)
+				.captchaV(captchaVObj)
 				.build();
-			auth.checkUsernamePasswordAuth();
+			authA.checkUsernamePasswordAuth();
 			// 获取用户信息，并认证信息
-			return super.authenticationToken(auth, request);
+			return super.authenticationToken(authA, request);
 		}
 		catch (AuthException e) {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);

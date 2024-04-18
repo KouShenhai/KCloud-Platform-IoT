@@ -45,25 +45,25 @@ import static org.laokou.common.i18n.common.exception.ParamException.SYSTEM_ID_R
 @Schema(name = "AggregateRoot", description = "聚合根")
 public abstract class AggregateRoot<ID> extends Identifier<ID> {
 
-	@Schema(name = CREATOR, description = "创建人")
+	@Schema(name = "creator", description = "创建人")
 	protected ID creator;
 
-	@Schema(name = EDITOR, description = "编辑人")
+	@Schema(name = "editor", description = "编辑人")
 	protected ID editor;
 
-	@Schema(name = DEPT_ID, description = "部门ID")
+	@Schema(name = "deptId", description = "部门ID")
 	protected ID deptId;
 
-	@Schema(name = DEPT_PATH, description = "部门PATH")
+	@Schema(name = "deptPath", description = "部门PATH")
 	protected String deptPath;
 
-	@Schema(name = TENANT_ID, description = "租户ID")
+	@Schema(name = "tenantId", description = "租户ID")
 	protected ID tenantId;
 
-	@Schema(name = CREATE_DATE, description = "创建时间")
+	@Schema(name = "createDate", description = "创建时间")
 	protected LocalDateTime createDate;
 
-	@Schema(name = UPDATE_DATE, description = "修改时间")
+	@Schema(name = "updateDate", description = "修改时间")
 	protected LocalDateTime updateDate;
 
 	@Schema(name = "events", description = "事件集合")

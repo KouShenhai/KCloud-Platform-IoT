@@ -15,24 +15,16 @@
  *
  */
 
-package org.laokou.auth.domain.gateway;
+package org.laokou.common.mybatisplus.repository;
 
-import org.laokou.auth.domain.auth.AuthA;
-
-import java.util.Set;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
- * 菜单.
- *
  * @author laokou
  */
-public interface MenuGateway {
-
-	/**
-	 * 查询菜单权限标识集合.
-	 * @param authA 用户对象
-	 * @return 菜单权限标识集合
-	 */
-	Set<String> findPermissions(AuthA authA);
+@Repository
+@Mapper
+public interface SqlLogRepository extends CrudMapper<Long, Integer, SqlLogDO> {
 
 }

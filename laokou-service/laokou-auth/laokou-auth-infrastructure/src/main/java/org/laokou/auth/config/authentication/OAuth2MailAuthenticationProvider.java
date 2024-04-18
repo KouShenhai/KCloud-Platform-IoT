@@ -19,9 +19,8 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.auth.SecretKey;
-import org.laokou.auth.domain.auth.Captcha;
-import org.laokou.auth.domain.auth.Auth;
+import org.laokou.auth.domain.auth.CaptchaV;
+import org.laokou.auth.domain.auth.AuthA;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -66,18 +65,18 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticati
 			// log.info("租户ID：{}", tenantId);
 			// log.info("验证码：{}", code);
 			// log.info("邮箱：{}", SensitiveUtil.format(Type.MAIL, mail));
-			Captcha captchaObj = Captcha.builder().captcha(code).uuid(mail).build();
+			CaptchaV captchaVObj = CaptchaV.builder().captcha(code).uuid(mail).build();
 			SecretKey secretKeyObj = SecretKey.builder().type(getGrantType().getValue()).secretKey(AesUtil.getSecretKeyStr()).build();
-			Auth auth = Auth.builder()
+			AuthA authA = AuthA.builder()
 				.tenantId(StringUtil.parseLong(tenantId))
 				.mail(mail)
-				.captcha(captchaObj)
+				.captcha(captchaVObj)
 				.username(encryptAes(mail))
 				.secretKey(secretKeyObj)
 				.build();
-			auth.checkMailAuth();
+			authA.checkMailAuth();
 			// 获取用户信息,并认证信息
-			return super.authenticationToken(auth, request);
+			return super.authenticationToken(authA, request);
 		}
 		catch (AuthException e) {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);

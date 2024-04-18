@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
-import org.laokou.auth.domain.auth.Auth;
+import org.laokou.auth.domain.auth.AuthA;
 
 import static org.laokou.common.i18n.common.NumberConstant.FAIL;
 
@@ -33,9 +33,9 @@ import static org.laokou.common.i18n.common.NumberConstant.FAIL;
 @Schema(name = "LoginFailedEvent", description = "登录失败事件")
 public class LoginFailedEvent extends LoginEvent {
 
-	public LoginFailedEvent(Auth auth, HttpServletRequest request, String message, String sourceName, String appName,
-							String type) {
-		super(auth, request, message, sourceName, appName, type, FAIL);
+	public LoginFailedEvent(AuthA authA, HttpServletRequest request, String message, String sourceName, String appName,
+                            String type) {
+		super(authA, request, message, sourceName, appName, type, FAIL);
 	}
 
 }

@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.domain.gateway.UserGateway;
-import org.laokou.auth.domain.auth.Auth;
+import org.laokou.auth.domain.auth.AuthA;
 import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -44,14 +44,14 @@ public class UserGatewayImpl implements UserGateway {
 
 	/**
 	 * 查看用户信息.
-	 * @param auth 用户对象
+	 * @param authA 用户对象
 	 * @return 用户信息
 	 */
 	@Override
-	public Auth find(Auth auth) {
+	public AuthA find(AuthA authA) {
 		try {
-			UserDO userDO = userMapper.selectByConditions(auth.getUsername(), auth.getSecretKey().getType(),
-					auth.getSecretKey().getSecretKey());
+			UserDO userDO = userMapper.selectByConditions(authA.getUsername(), authA.getSecretKey().getType(),
+					authA.getSecretKey().getSecretKey());
 			return userConvertor.convertEntity(userDO);
 		}
 		catch (BadSqlGrammarException e) {

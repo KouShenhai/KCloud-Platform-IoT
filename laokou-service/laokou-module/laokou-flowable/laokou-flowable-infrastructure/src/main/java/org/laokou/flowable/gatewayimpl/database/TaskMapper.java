@@ -24,7 +24,6 @@ import org.laokou.flowable.gatewayimpl.database.dataobject.TaskDO;
 import org.springframework.stereotype.Repository;
 
 import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
-import static org.laokou.common.i18n.dto.Identifier.TENANT_ID;
 
 /**
  * 任务流程.
@@ -41,7 +40,7 @@ public interface TaskMapper {
 	 * @param tenantId 租户ID
 	 * @return 执行人员
 	 */
-	String getAssigneeByInstanceId(@Param("instanceId") String instanceId, @Param(TENANT_ID) Long tenantId);
+	String getAssigneeByInstanceId(@Param("instanceId") String instanceId, @Param("tenantId") Long tenantId);
 
 	/**
 	 * 查询任务流程列表.
@@ -53,6 +52,6 @@ public interface TaskMapper {
 	 * @return 任务流程列表
 	 */
 	IPage<TaskDO> getTaskList(IPage<TaskDO> page, @Param("key") String key, @Param(USER_ID) Long userId,
-			@Param("name") String name, @Param(TENANT_ID) Long tenantId);
+			@Param("name") String name, @Param("tenantId") Long tenantId);
 
 }

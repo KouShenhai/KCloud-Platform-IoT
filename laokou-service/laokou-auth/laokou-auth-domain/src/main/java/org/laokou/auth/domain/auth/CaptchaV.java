@@ -18,39 +18,39 @@
 package org.laokou.auth.domain.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Value;
+import lombok.Getter;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtils;
 
-import static lombok.AccessLevel.PRIVATE;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_CAPTCHA_REQUIRE;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_UUID_REQUIRE;
 
 /**
  * @author laokou
  */
-@Value
-@Builder
-@AllArgsConstructor(access = PRIVATE)
-@Schema(name = "Captcha", description = "验证码")
-public class Captcha {
+@Getter
+@Schema(name = "CaptchaV", description = "验证码值对象")
+public class CaptchaV {
 
 	@Schema(name = "uuid", description = "唯一标识")
-	String uuid;
+	private final String uuid;
 
 	@Schema(name = "captcha", description = "验证码")
-	String captcha;
+	private final String captcha;
 
-	public void checkNullCaptcha() {
+	public CaptchaV(String uuid, String captcha) {
+		this.uuid = uuid;
+		this.captcha = captcha;
+	}
+
+	private void checkNullCaptcha() {
 		if (StringUtil.isEmpty(this.captcha)) {
 			throw new AuthException(OAUTH2_CAPTCHA_REQUIRE, ValidatorUtils.getMessage(OAUTH2_CAPTCHA_REQUIRE));
 		}
 	}
 
-	public void checkNullUuid() {
+	private void checkNullUuid() {
 		if (StringUtil.isEmpty(this.uuid)) {
 			throw new AuthException(OAUTH2_UUID_REQUIRE, ValidatorUtils.getMessage(OAUTH2_UUID_REQUIRE));
 		}
