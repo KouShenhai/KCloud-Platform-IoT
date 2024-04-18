@@ -73,7 +73,7 @@ public class GinOrmEntity {
 				control_mfr varchar 控制器厂商
 				control_model varchar 控制器型号
 				desc varchar 模型描述
-											""";
+				""";
 	}
 
 }

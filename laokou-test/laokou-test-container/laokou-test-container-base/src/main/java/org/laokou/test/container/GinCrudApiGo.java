@@ -27,9 +27,9 @@ import java.util.Map;
 public class GinCrudApiGo implements Crud {
 
 	public static void main(String[] args) {
-		String inst = "out";
-		String upper = "OutputClient";
-		String lower = "outputClient";
+		String inst = "pro";
+		String upper = "Protocol";
+		String lower = "protocol";
 		Map<String, Object> params = Map.of("inst", inst, "upper", upper, "lower", lower);
 		Crud crud = new GinCrudApiGo();
 		StringBuilder s = new StringBuilder();
@@ -40,6 +40,7 @@ public class GinCrudApiGo implements Crud {
 		s.append("\n").append(crud.modify(params));
 		s.append("\n").append(crud.findList(params));
 		s.append("\n").append(crud.findById(params));
+		s.append("\n").append(crud.findOptionList(params));
 		log.info("\n{}", s);
 	}
 
@@ -55,7 +56,7 @@ public class GinCrudApiGo implements Crud {
 					"lc-base-frame/model/system"
 					"lc-base-frame/utils"
 				)
-							""";
+				""";
 		return TemplateUtil.getContent(str, params);
 	}
 
@@ -63,7 +64,7 @@ public class GinCrudApiGo implements Crud {
 	public String type(Map<String, Object> params) {
 		String str = """
 				type AtSys${upper}Api struct{}
-							""";
+				""";
 		return TemplateUtil.getContent(str, params);
 	}
 
@@ -100,7 +101,7 @@ public class GinCrudApiGo implements Crud {
 						PageSize: pageInfo.PageSize,
 					}, "获取成功", c)
 				}
-							""";
+				""";
 		return TemplateUtil.getContent(str, params);
 	}
 
@@ -128,7 +129,32 @@ public class GinCrudApiGo implements Crud {
 					}
 					response.OkWithDetailed(${lower}Detail, "查询成功", c)
 				}
-							""";
+				""";
+		return TemplateUtil.getContent(str, params);
+	}
+
+	@SneakyThrows
+	@Override
+	public String findOptionList(Map<String, Object> params) {
+		String str = """
+func (api *AtSys${upper}Api) Find${upper}OptionList(c *gin.Context) {
+	var search request.Search
+	err := c.ShouldBindJSON(&search)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	list, err := ${lower}Service.Find${upper}OptionList(search)
+	if err != nil {
+		logrus.Error("获取失败!", err)
+		response.FailWithMessage("获取失败", c)
+		return
+	}
+	response.OkWithDetailed(response.Result{
+		List: list,
+	}, "获取成功", c)
+}
+			""";
 		return TemplateUtil.getContent(str, params);
 	}
 
@@ -155,7 +181,7 @@ public class GinCrudApiGo implements Crud {
 					}
 					response.OkWithMessage("添加成功", c)
 				}
-							""";
+				""";
 		return TemplateUtil.getContent(str, params);
 	}
 
@@ -182,7 +208,7 @@ public class GinCrudApiGo implements Crud {
 					}
 					response.OkWithMessage("更新成功", c)
 				}
-							""";
+				""";
 		return TemplateUtil.getContent(str, params);
 	}
 
@@ -209,7 +235,7 @@ public class GinCrudApiGo implements Crud {
 					}
 					response.OkWithMessage("删除成功", c)
 				}
-							""";
+				""";
 		return TemplateUtil.getContent(str, params);
 	}
 

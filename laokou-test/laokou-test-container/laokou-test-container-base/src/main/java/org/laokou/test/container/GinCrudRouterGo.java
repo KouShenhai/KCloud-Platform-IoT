@@ -64,7 +64,7 @@ public class GinCrudRouterGo implements Crud {
 					v1 "lc-base-frame/api/v1"
 					"lc-base-frame/middleware"
 				)
-							""";
+				""";
 		return TemplateUtil.getContent(str, params);
 	}
 
@@ -79,11 +79,16 @@ public class GinCrudRouterGo implements Crud {
 	}
 
 	@Override
+	public String findOptionList(Map<String, Object> params) {
+		return "";
+	}
+
+	@Override
 	@SneakyThrows
 	public String type(Map<String, Object> params) {
 		String str = """
 				type ${upper}Router struct{}
-							""";
+				""";
 		return TemplateUtil.getContent(str, params);
 	}
 
@@ -104,7 +109,7 @@ public class GinCrudRouterGo implements Crud {
 					}
 					return ${lower}Router
 				}
-							""";
+				""";
 		return TemplateUtil.getContent(str, params);
 	}
 

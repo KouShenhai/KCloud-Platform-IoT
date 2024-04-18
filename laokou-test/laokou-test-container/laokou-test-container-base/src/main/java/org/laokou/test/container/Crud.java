@@ -33,6 +33,8 @@ public interface Crud {
 
 	String findById(Map<String, Object> params);
 
+	String findOptionList(Map<String, Object> params);
+
 	String type(Map<String, Object> params);
 
 	String router(Map<String, Object> params);
