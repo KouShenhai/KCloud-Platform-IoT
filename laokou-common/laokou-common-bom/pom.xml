@@ -81,7 +81,7 @@
         <!--jackson版本-->
         <jackson.version>2.17.0</jackson.version>
         <!--xxl-job版本-->
-        <xxl-job.version>2.4.0</xxl-job.version>
+        <xxl-job.version>2.4.1</xxl-job.version>
         <!--shardingsphere版本-->
         <shardingsphere.version>5.4.1</shardingsphere.version>
         <!--p6spy版本-->
@@ -580,11 +580,6 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
