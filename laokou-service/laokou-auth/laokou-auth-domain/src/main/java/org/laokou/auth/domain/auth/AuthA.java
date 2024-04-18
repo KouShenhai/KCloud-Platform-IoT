@@ -63,9 +63,6 @@ public class AuthA extends AggregateRoot<Long> {
 	@Schema(name = "type", description = "类型 mail邮箱 mobile手机号 password密码 authorization_code授权码")
 	private String type;
 
-	@Schema(name = "secretKey", description = "密钥Key")
-	private String secretKey;
-
 	@Schema(name = "captcha", description = "验证码值对象")
 	private CaptchaV captcha;
 
