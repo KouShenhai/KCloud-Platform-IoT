@@ -61,7 +61,7 @@
     "eslint-plugin-html": "^5.0.0",
     "eslint-plugin-vue": "^5.2.3",
     "git-revision-webpack-plugin": "^3.0.6",
-    "less": "^3.0.4",
+    "less": "^4.0.0",
     "less-loader": "^5.0.0",
     "opencollective": "^1.0.3",
     "opencollective-postinstall": "^2.0.2",
