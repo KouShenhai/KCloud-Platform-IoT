@@ -67,7 +67,7 @@
     "opencollective-postinstall": "^2.0.2",
     "vue-svg-icon-loader": "^2.1.1",
     "vue-template-compiler": "^2.6.12",
-    "webpack": "^4.46.0",
+    "webpack": "^5.0.0",
     "webpack-theme-color-replacer": "^1.3.12"
   }
 }
