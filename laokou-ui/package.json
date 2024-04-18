@@ -42,7 +42,7 @@
     "vue-json-viewer": "^2.2.22",
     "vue-router": "^3.5.1",
     "vue-svg-component-runtime": "^1.0.1",
-    "vuex": "^3.6.2",
+    "vuex": "^4.0.0",
     "wangeditor": "^4.7.10"
   },
   "devDependencies": {
