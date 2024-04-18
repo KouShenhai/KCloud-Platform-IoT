@@ -38,7 +38,7 @@
     "vue-container-query": "^0.1.0",
     "vue-copy-to-clipboard": "^1.0.3",
     "vue-cropper": "0.5.8",
-    "vue-i18n": "^8.24.2",
+    "vue-i18n": "^9.0.0",
     "vue-json-viewer": "^2.2.22",
     "vue-router": "^3.5.1",
     "vue-svg-component-runtime": "^1.0.1",
