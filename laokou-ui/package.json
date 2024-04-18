@@ -58,7 +58,7 @@
     "babel-plugin-import": "^1.12.2",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "eslint": "^9.0.0",
-    "eslint-plugin-html": "^5.0.0",
+    "eslint-plugin-html": "^8.0.0",
     "eslint-plugin-vue": "^5.2.3",
     "git-revision-webpack-plugin": "^3.0.6",
     "less": "^3.0.4",
