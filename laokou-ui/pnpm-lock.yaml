@@ -113,19 +113,19 @@ importers:
         version: 6.0.0
       '@vue/cli-plugin-babel':
         specifier: ^4.0.4
-        version: 4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))(core-js@3.36.1)(vue@2.7.16)
+        version: 4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))(core-js@3.36.1)(vue@2.7.16)
       '@vue/cli-plugin-router':
         specifier: ^4.0.4
-        version: 4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))
+        version: 4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))
       '@vue/cli-plugin-unit-jest':
         specifier: ^4.0.4
-        version: 4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))(vue-template-compiler@2.7.16)(vue@2.7.16)
+        version: 4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))(vue-template-compiler@2.7.16)(vue@2.7.16)
       '@vue/cli-plugin-vuex':
         specifier: ^4.0.4
-        version: 4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))
+        version: 4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))
       '@vue/cli-service':
         specifier: ^4.0.4
-        version: 4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16)
+        version: 4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16)
       '@vue/eslint-config-standard':
         specifier: ^4.0.0
         version: 4.0.0(eslint@9.0.0)
@@ -157,8 +157,8 @@ importers:
         specifier: ^3.0.4
         version: 3.13.1
       less-loader:
-        specifier: ^5.0.0
-        version: 5.0.0(less@3.13.1)(webpack@4.47.0)
+        specifier: ^12.0.0
+        version: 12.2.0(less@3.13.1)(webpack@4.47.0)
       opencollective:
         specifier: ^1.0.3
         version: 1.0.3
@@ -4290,12 +4290,18 @@ packages:
     resolution: {integrity: sha512-XI5MPzVNApjAyhQzphX8BkmKsKUxD4LdyK24iZeQGinBN9yTQT3bFlCBy/aVx2HrNcqQGsdot8ghrjyrvMCoEA==}
     deprecated: use String.prototype.padStart()
 
-  less-loader@5.0.0:
-    resolution: {integrity: sha512-bquCU89mO/yWLaUq0Clk7qCsKhsF/TZpJUzETRvJa9KSVEL9SO3ovCvdEHISBhrC81OwC8QSVX7E0bzElZj9cg==}
-    engines: {node: '>= 4.8.0'}
+  less-loader@12.2.0:
+    resolution: {integrity: sha512-MYUxjSQSBUQmowc0l5nPieOYwMzGPUaTzB6inNW/bdPEG9zOL3eAAD1Qw5ZxSPk7we5dMojHwNODYMV1hq4EVg==}
+    engines: {node: '>= 18.12.0'}
     peerDependencies:
-      less: ^2.3.1 || ^3.0.0
-      webpack: ^2.0.0 || ^3.0.0 || ^4.0.0
+      '@rspack/core': 0.x || 1.x
+      less: ^3.5.0 || ^4.0.0
+      webpack: ^5.0.0
+    peerDependenciesMeta:
+      '@rspack/core':
+        optional: true
+      webpack:
+        optional: true
 
   less@3.13.1:
     resolution: {integrity: sha512-SwA1aQXGUvp+P5XdZslUOhhLnClSLIjWvJhmd+Vgib5BFIr9lMNlQwmwUNOjXThF/A0x+MCYYPeWEfeWiLRnTw==}
@@ -8148,11 +8154,11 @@ snapshots:
 
   '@vue/cli-overlay@4.5.19': {}
 
-  '@vue/cli-plugin-babel@4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))(core-js@3.36.1)(vue@2.7.16)':
+  '@vue/cli-plugin-babel@4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))(core-js@3.36.1)(vue@2.7.16)':
     dependencies:
       '@babel/core': 7.24.4
       '@vue/babel-preset-app': 4.5.19(@babel/core@7.24.4)(core-js@3.36.1)(vue@2.7.16)
-      '@vue/cli-service': 4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16)
+      '@vue/cli-service': 4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16)
       '@vue/cli-shared-utils': 4.5.19
       babel-loader: 8.3.0(@babel/core@7.24.4)(webpack@4.47.0)
       cache-loader: 4.1.0(webpack@4.47.0)
@@ -8165,17 +8171,17 @@ snapshots:
       - webpack-cli
       - webpack-command
 
-  '@vue/cli-plugin-router@4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))':
+  '@vue/cli-plugin-router@4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))':
     dependencies:
-      '@vue/cli-service': 4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16)
+      '@vue/cli-service': 4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16)
       '@vue/cli-shared-utils': 4.5.19
 
-  '@vue/cli-plugin-unit-jest@4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))(vue-template-compiler@2.7.16)(vue@2.7.16)':
+  '@vue/cli-plugin-unit-jest@4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))(vue-template-compiler@2.7.16)(vue@2.7.16)':
     dependencies:
       '@babel/core': 7.24.4
       '@babel/plugin-transform-modules-commonjs': 7.24.1(@babel/core@7.24.4)
       '@types/jest': 24.9.1
-      '@vue/cli-service': 4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16)
+      '@vue/cli-service': 4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16)
       '@vue/cli-shared-utils': 4.5.19
       babel-core: 7.0.0-bridge.0(@babel/core@7.24.4)
       babel-jest: 24.9.0(@babel/core@7.24.4)
@@ -8196,11 +8202,11 @@ snapshots:
       - vue
       - vue-template-compiler
 
-  '@vue/cli-plugin-vuex@4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))':
+  '@vue/cli-plugin-vuex@4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))':
     dependencies:
-      '@vue/cli-service': 4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16)
+      '@vue/cli-service': 4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16)
 
-  '@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16)':
+  '@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16)':
     dependencies:
       '@intervolga/optimize-cssnano-plugin': 1.0.6(webpack@4.47.0)
       '@soda/friendly-errors-webpack-plugin': 1.8.1(webpack@4.47.0)
@@ -8209,8 +8215,8 @@ snapshots:
       '@types/webpack': 4.41.38
       '@types/webpack-dev-server': 3.11.6(debug@4.3.4)
       '@vue/cli-overlay': 4.5.19
-      '@vue/cli-plugin-router': 4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))
-      '@vue/cli-plugin-vuex': 4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@5.0.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))
+      '@vue/cli-plugin-router': 4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))
+      '@vue/cli-plugin-vuex': 4.5.19(@vue/cli-service@4.5.19(@vue/compiler-sfc@3.4.22)(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(less-loader@12.2.0(less@3.13.1)(webpack@4.47.0))(lodash@4.17.21)(vue-template-compiler@2.7.16)(vue@2.7.16))
       '@vue/cli-shared-utils': 4.5.19
       '@vue/component-compiler-utils': 3.3.0(babel-core@7.0.0-bridge.0(@babel/core@7.24.4))(ejs@2.7.4)(lodash@4.17.21)
       '@vue/preload-webpack-plugin': 1.1.2(html-webpack-plugin@3.2.0(webpack@4.47.0))(webpack@4.47.0)
@@ -8259,7 +8265,7 @@ snapshots:
       webpack-merge: 4.2.2
     optionalDependencies:
       '@vue/compiler-sfc': 3.4.22
-      less-loader: 5.0.0(less@3.13.1)(webpack@4.47.0)
+      less-loader: 12.2.0(less@3.13.1)(webpack@4.47.0)
       vue-loader-v16: vue-loader@16.8.3(@vue/compiler-sfc@3.4.22)(vue@2.7.16)(webpack@4.47.0)
       vue-template-compiler: 2.7.16
     transitivePeerDependencies:
@@ -12085,12 +12091,10 @@ snapshots:
 
   left-pad@1.3.0: {}
 
-  less-loader@5.0.0(less@3.13.1)(webpack@4.47.0):
+  less-loader@12.2.0(less@3.13.1)(webpack@4.47.0):
     dependencies:
-      clone: 2.1.2
       less: 3.13.1
-      loader-utils: 1.4.2
-      pify: 4.0.1
+    optionalDependencies:
       webpack: 4.47.0
 
   less@3.13.1:
