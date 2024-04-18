@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
-import org.laokou.auth.domain.auth.AuthA;
+import org.laokou.auth.domain.model.auth.AuthA;
 
 import static org.laokou.common.i18n.common.NumberConstant.FAIL;
 

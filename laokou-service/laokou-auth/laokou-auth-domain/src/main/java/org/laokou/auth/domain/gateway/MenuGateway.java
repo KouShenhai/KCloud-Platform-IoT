@@ -17,7 +17,7 @@
 
 package org.laokou.auth.domain.gateway;
 
-import org.laokou.auth.domain.auth.AuthA;
+import org.laokou.auth.domain.model.auth.AuthA;
 
 import java.util.Set;
 

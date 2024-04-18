@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.domain.auth;
+package org.laokou.auth.domain.model.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -56,5 +56,11 @@ public class UserE {
 
 	@Schema(name = "dept_path", description = "部门PATH")
 	private String deptPath;
+
+	public UserE(String username, String mail, String mobile) {
+		this.username = username;
+		this.mail = mail;
+		this.mobile = mobile;
+	}
 
 }

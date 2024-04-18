@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.domain.gateway.UserGateway;
-import org.laokou.auth.domain.auth.AuthA;
+import org.laokou.auth.domain.model.auth.AuthA;
 import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.i18n.utils.LogUtil;

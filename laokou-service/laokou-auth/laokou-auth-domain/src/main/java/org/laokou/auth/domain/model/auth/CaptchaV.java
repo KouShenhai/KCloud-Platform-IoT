@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.domain.auth;
+package org.laokou.auth.domain.model.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

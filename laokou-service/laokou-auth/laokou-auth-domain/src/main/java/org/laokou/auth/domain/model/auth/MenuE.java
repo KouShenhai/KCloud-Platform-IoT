@@ -15,24 +15,25 @@
  *
  */
 
-package org.laokou.auth.domain.gateway;
+package org.laokou.auth.domain.model.auth;
 
-import org.laokou.auth.domain.model.auth.AuthA;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 import java.util.Set;
 
 /**
- * 部门.
- *
  * @author laokou
  */
-public interface DeptGateway {
+@Data
+@Schema(name = "MenuE", description = "菜单实体")
+public class MenuE {
 
-	/**
-	 * 查询部门PATHS列表.
-	 * @param authA 用户对象
-	 * @return 部门PATHS列表
-	 */
-	Set<String> findDeptPaths(AuthA authA);
+	@Schema(name = "permissions", description = "菜单权限标识集合")
+	private Set<String> permissions;
+
+	public MenuE(Set<String> permissions) {
+		this.permissions = permissions;
+	}
 
 }

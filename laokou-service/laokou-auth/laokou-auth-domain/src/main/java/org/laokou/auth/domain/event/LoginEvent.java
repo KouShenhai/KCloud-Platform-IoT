@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.laokou.auth.domain.auth.AuthA;
+import org.laokou.auth.domain.model.auth.AuthA;
 import org.laokou.common.core.utils.AddressUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.IpUtil;

@@ -15,24 +15,10 @@
  *
  */
 
-package org.laokou.auth.domain.gateway;
-
-import org.laokou.auth.domain.model.auth.AuthA;
-
-import java.util.Set;
+package org.laokou.auth.domain.ability;
 
 /**
- * 部门.
- *
  * @author laokou
  */
-public interface DeptGateway {
-
-	/**
-	 * 查询部门PATHS列表.
-	 * @param authA 用户对象
-	 * @return 部门PATHS列表
-	 */
-	Set<String> findDeptPaths(AuthA authA);
-
+public class DomainService {
 }

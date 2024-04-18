@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.auth.AuthA;
+import org.laokou.auth.domain.model.auth.AuthA;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.springframework.security.core.userdetails.UserDetails;

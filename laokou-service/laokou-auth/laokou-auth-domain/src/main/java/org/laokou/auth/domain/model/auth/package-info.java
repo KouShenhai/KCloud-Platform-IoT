@@ -15,25 +15,7 @@
  *
  */
 
-package org.laokou.auth.domain.auth;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-
-import java.util.Set;
-
 /**
  * @author laokou
  */
-@Data
-@Schema(name = "MenuE", description = "菜单实体")
-public class MenuE {
-
-	@Schema(name = "permissions", description = "菜单权限标识集合")
-	private Set<String> permissions;
-
-	public MenuE(Set<String> permissions) {
-		this.permissions = permissions;
-	}
-
-}
+package org.laokou.auth.domain.model.auth;

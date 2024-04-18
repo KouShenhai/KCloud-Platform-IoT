@@ -15,15 +15,11 @@
  *
  */
 
-package org.laokou.auth.domain.auth;
+package org.laokou.auth.domain.model.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.auth.domain.event.LoginFailedEvent;
 import org.laokou.auth.domain.event.LoginSucceededEvent;
 import org.laokou.common.core.utils.CollectionUtil;
@@ -40,7 +36,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 import java.util.Set;
 
-import static lombok.AccessLevel.PRIVATE;
 import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
 import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
 import static org.laokou.common.i18n.common.UserStatusEnum.DISABLE;

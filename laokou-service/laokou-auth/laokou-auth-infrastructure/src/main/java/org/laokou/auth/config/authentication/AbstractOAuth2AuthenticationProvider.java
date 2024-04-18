@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.auth.AuthA;
+import org.laokou.auth.domain.model.auth.AuthA;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.utils.ObjectUtils;

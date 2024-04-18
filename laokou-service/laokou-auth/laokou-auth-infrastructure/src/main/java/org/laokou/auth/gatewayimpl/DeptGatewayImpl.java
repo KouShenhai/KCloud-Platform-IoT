@@ -20,7 +20,7 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.DeptGateway;
-import org.laokou.auth.domain.auth.AuthA;
+import org.laokou.auth.domain.model.auth.AuthA;
 import org.laokou.auth.gatewayimpl.database.DeptMapper;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.springframework.jdbc.BadSqlGrammarException;

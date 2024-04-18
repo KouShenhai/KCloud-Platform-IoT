@@ -15,7 +15,23 @@
  *
  */
 
+package org.laokou.auth.domain.model.auth;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
 /**
  * @author laokou
  */
-package org.laokou.auth.domain.auth;
+@Data
+@Schema(name = "SourceE", description = "数据源实体")
+public class SourceE {
+
+	@Schema(name = "name", description = "名称")
+	private String name;
+
+	public SourceE(String name) {
+		this.name = name;
+	}
+
+}

@@ -17,7 +17,7 @@
 
 package org.laokou.auth.convertor;
 
-import org.laokou.auth.domain.auth.UserE;
+import org.laokou.auth.domain.model.auth.UserE;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
