@@ -327,6 +327,12 @@ Gtiee 地址：[KCloud-Platform-Alibaba](https://gitee.com/laokouyun/KCloud-Plat
         <th>备注</th>
     </tr>
     <tr>
+        <td>2024/04/19</td>
+        <td>*保熟</td>
+        <td>￥188.00</td>
+        <td>越做越好</td>
+    </tr>
+    <tr>
         <td>2024/03/20</td>
         <td>A细节*</td>
         <td>￥66.00</td>
