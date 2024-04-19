@@ -169,7 +169,7 @@ public class JobLogController {
 			}
 
 			// fix xss
-			if (logResult.getContent()!=null && StringUtils.hasText(logResult.getContent().getLogContent())) {
+			if (logResult.getContent() != null && StringUtils.hasText(logResult.getContent().getLogContent())) {
 				String newLogContent = logResult.getContent().getLogContent();
 				newLogContent = HtmlUtils.htmlEscape(newLogContent, "UTF-8");
 				logResult.getContent().setLogContent(newLogContent);

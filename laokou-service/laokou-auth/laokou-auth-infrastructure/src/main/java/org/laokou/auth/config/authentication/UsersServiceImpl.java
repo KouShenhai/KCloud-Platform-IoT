@@ -58,8 +58,16 @@ public class UsersServiceImpl implements UserDetailsService {
 		try {
 			HttpServletRequest request = RequestUtil.getHttpServletRequest();
 			String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
-			SecretKey secretKeyObj = SecretKey.builder().type(AUTHORIZATION_CODE).secretKey(AesUtil.getSecretKeyStr()).build();
-			AuthA authA = AuthA.builder().secretKey(secretKeyObj).tenantId(DEFAULT).username(username).password(password).build();
+			SecretKey secretKeyObj = SecretKey.builder()
+				.type(AUTHORIZATION_CODE)
+				.secretKey(AesUtil.getSecretKeyStr())
+				.build();
+			AuthA authA = AuthA.builder()
+				.secretKey(secretKeyObj)
+				.tenantId(DEFAULT)
+				.username(username)
+				.password(password)
+				.build();
 			return (UserDetails) authProvider.authenticationToken(authA, request).getPrincipal();
 		}
 		catch (OAuth2AuthenticationException e) {

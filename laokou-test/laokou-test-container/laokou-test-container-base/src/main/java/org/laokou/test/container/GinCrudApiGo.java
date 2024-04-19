@@ -137,24 +137,24 @@ public class GinCrudApiGo implements Crud {
 	@Override
 	public String findOptionList(Map<String, Object> params) {
 		String str = """
-func (api *AtSys${upper}Api) Find${upper}OptionList(c *gin.Context) {
-	var search request.Search
-	err := c.ShouldBindJSON(&search)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
-	}
-	list, err := ${lower}Service.Find${upper}OptionList(search)
-	if err != nil {
-		logrus.Error("获取失败!", err)
-		response.FailWithMessage("获取失败", c)
-		return
-	}
-	response.OkWithDetailed(response.Result{
-		List: list,
-	}, "获取成功", c)
-}
-			""";
+				func (api *AtSys${upper}Api) Find${upper}OptionList(c *gin.Context) {
+					var search request.Search
+					err := c.ShouldBindJSON(&search)
+					if err != nil {
+						response.FailWithMessage(err.Error(), c)
+						return
+					}
+					list, err := ${lower}Service.Find${upper}OptionList(search)
+					if err != nil {
+						logrus.Error("获取失败!", err)
+						response.FailWithMessage("获取失败", c)
+						return
+					}
+					response.OkWithDetailed(response.Result{
+						List: list,
+					}, "获取成功", c)
+				}
+							""";
 		return TemplateUtil.getContent(str, params);
 	}
 

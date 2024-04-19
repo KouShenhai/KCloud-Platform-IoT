@@ -33,8 +33,8 @@ import static org.laokou.common.i18n.common.NumberConstant.SUCCESS;
 @Schema(name = "LoginSucceededEvent", description = "登录成功事件")
 public class LoginSucceededEvent extends LoginEvent {
 
-	public LoginSucceededEvent(AuthA authA, HttpServletRequest request, String message, String sourceName, String appName,
-                               String type) {
+	public LoginSucceededEvent(AuthA authA, HttpServletRequest request, String message, String sourceName,
+			String appName, String type) {
 		super(authA, request, message, sourceName, appName, type, SUCCESS);
 	}
 

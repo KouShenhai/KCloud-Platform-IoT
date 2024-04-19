@@ -21,4 +21,5 @@ package org.laokou.auth.domain.ability;
  * @author laokou
  */
 public class DomainService {
+
 }

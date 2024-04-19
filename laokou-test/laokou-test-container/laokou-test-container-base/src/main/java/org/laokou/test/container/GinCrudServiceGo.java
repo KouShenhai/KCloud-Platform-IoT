@@ -131,17 +131,17 @@ public class GinCrudServiceGo implements Crud {
 	@Override
 	public String findOptionList(Map<String, Object> params) {
 		String str = """
-func (service *${upper}Service) Find${upper}OptionList(search request.Search) (list interface{}, err error) {
-	keyword := search.Keyword
-	var ${lower}List []system.${upper}Option
-	sql := " del_flag = 0 "
-	if keyword != "" {
-		sql = " name like '%" + keyword + "%'"
-	}
-	err = global.Db.Model(&system.AtSys${upper}{}).Select([]string{"name", "id"}).Where(sql).Find(&${lower}List).Error
-	return ${lower}List, err
-}
-			""";
+				func (service *${upper}Service) Find${upper}OptionList(search request.Search) (list interface{}, err error) {
+					keyword := search.Keyword
+					var ${lower}List []system.${upper}Option
+					sql := " del_flag = 0 "
+					if keyword != "" {
+						sql = " name like '%" + keyword + "%'"
+					}
+					err = global.Db.Model(&system.AtSys${upper}{}).Select([]string{"name", "id"}).Where(sql).Find(&${lower}List).Error
+					return ${lower}List, err
+				}
+							""";
 		return TemplateUtil.getContent(str, params);
 	}
 

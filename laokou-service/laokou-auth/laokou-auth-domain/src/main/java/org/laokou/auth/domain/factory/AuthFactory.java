@@ -21,4 +21,5 @@ package org.laokou.auth.domain.factory;
  * @author laokou
  */
 public class AuthFactory {
+
 }

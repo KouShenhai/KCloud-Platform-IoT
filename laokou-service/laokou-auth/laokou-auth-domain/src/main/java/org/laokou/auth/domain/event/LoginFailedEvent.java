@@ -34,7 +34,7 @@ import static org.laokou.common.i18n.common.NumberConstant.FAIL;
 public class LoginFailedEvent extends LoginEvent {
 
 	public LoginFailedEvent(AuthA authA, HttpServletRequest request, String message, String sourceName, String appName,
-                            String type) {
+			String type) {
 		super(authA, request, message, sourceName, appName, type, FAIL);
 	}
 

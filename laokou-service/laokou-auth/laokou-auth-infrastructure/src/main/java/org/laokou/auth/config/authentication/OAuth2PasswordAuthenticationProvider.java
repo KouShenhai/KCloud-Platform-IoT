@@ -75,7 +75,10 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
 			// log.info("密码：{}", password);
 			// log.info("租户ID：{}", tenantId);
 			CaptchaV captchaVObj = CaptchaV.builder().uuid(uuid).captcha(captcha).build();
-			SecretKey secretKeyObj = SecretKey.builder().secretKey(AesUtil.getSecretKeyStr()).type(getGrantType().getValue()).build();
+			SecretKey secretKeyObj = SecretKey.builder()
+				.secretKey(AesUtil.getSecretKeyStr())
+				.type(getGrantType().getValue())
+				.build();
 			AuthA authA = AuthA.builder()
 				.tenantId(StringUtil.parseLong(tenantId))
 				.secretKey(secretKeyObj)

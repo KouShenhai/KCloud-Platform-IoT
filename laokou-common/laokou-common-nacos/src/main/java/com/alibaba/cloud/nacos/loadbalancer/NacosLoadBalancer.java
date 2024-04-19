@@ -273,7 +273,8 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		String port = headers.getFirst(SERVICE_PORT);
 		Assert.isTrue(StringUtil.isNotEmpty(host), "service-host is empty");
 		Assert.isTrue(StringUtil.isNotEmpty(port), "service-port is empty");
-		return ObjectUtils.equals(host, serviceInstance.getHost()) && Integer.parseInt(port) == serviceInstance.getPort();
+		return ObjectUtils.equals(host, serviceInstance.getHost())
+				&& Integer.parseInt(port) == serviceInstance.getPort();
 	}
 
 }

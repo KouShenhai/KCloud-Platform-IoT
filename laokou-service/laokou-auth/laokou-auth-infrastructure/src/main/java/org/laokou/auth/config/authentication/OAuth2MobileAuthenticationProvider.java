@@ -66,7 +66,10 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authentica
 			// log.info("验证码：{}", code);
 			// log.info("手机：{}", SensitiveUtil.format(Type.MOBILE, mobile));
 			CaptchaV captchaVObj = CaptchaV.builder().captcha(code).uuid(mobile).build();
-			SecretKey secretKeyObj = SecretKey.builder().type(getGrantType().getValue()).secretKey(AesUtil.getSecretKeyStr()).build();
+			SecretKey secretKeyObj = SecretKey.builder()
+				.type(getGrantType().getValue())
+				.secretKey(AesUtil.getSecretKeyStr())
+				.build();
 			AuthA authA = AuthA.builder()
 				.tenantId(StringUtil.parseLong(tenantId))
 				.mobile(mobile)

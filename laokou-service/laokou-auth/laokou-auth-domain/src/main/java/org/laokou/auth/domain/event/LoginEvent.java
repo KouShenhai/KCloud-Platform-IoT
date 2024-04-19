@@ -74,7 +74,7 @@ public class LoginEvent extends DomainEvent<Long> {
 	protected String type;
 
 	public LoginEvent(AuthA authA, HttpServletRequest request, String message, String sourceName, String appName,
-					  String type, Integer status) {
+			String type, Integer status) {
 		super(IdGenerator.defaultSnowflakeId(), authA.getId(), LOGIN_FAILED, CREATED, LAOKOU_LOGIN_EVENT_TOPIC,
 				sourceName, appName, authA.getId(), authA.getId(), authA.getDeptId(), authA.getDeptPath(),
 				authA.getTenantId(), DateUtils.now(), DateUtils.now());

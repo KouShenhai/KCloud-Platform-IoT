@@ -116,7 +116,7 @@ public class OAuth2AuthenticationProvider {
 	}
 
 	private UserDetail convert(AuthA authA, HttpServletRequest request, Set<String> deptPaths, Set<String> permissions,
-                               String sourceName) {
+			String sourceName) {
 		return UserDetail.builder()
 			.username(authA.getUsername())
 			.loginDate(DateUtils.now())
@@ -138,9 +138,9 @@ public class OAuth2AuthenticationProvider {
 	}
 
 	private void checkCaptcha(AuthA authA, CaptchaV captchaVObj, HttpServletRequest request, String sourceName,
-							  String appName, String authType) {
+			String appName, String authType) {
 		if (ObjectUtils.isNotNull(captchaVObj)) {
-			Boolean checkResult = captchaGateway.check(captchaVObj.getUuid(), captchaVObj.getCaptcha());
+			Boolean checkResult = captchaGateway.check(captchaVObj.uuid(), captchaVObj.captcha());
 			// 检查验证码
 			authA.checkCaptcha(checkResult, request, sourceName, appName, authType);
 		}

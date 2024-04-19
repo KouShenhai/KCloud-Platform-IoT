@@ -66,7 +66,10 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticati
 			// log.info("验证码：{}", code);
 			// log.info("邮箱：{}", SensitiveUtil.format(Type.MAIL, mail));
 			CaptchaV captchaVObj = CaptchaV.builder().captcha(code).uuid(mail).build();
-			SecretKey secretKeyObj = SecretKey.builder().type(getGrantType().getValue()).secretKey(AesUtil.getSecretKeyStr()).build();
+			SecretKey secretKeyObj = SecretKey.builder()
+				.type(getGrantType().getValue())
+				.secretKey(AesUtil.getSecretKeyStr())
+				.build();
 			AuthA authA = AuthA.builder()
 				.tenantId(StringUtil.parseLong(tenantId))
 				.mail(mail)

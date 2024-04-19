@@ -31,13 +31,8 @@ import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_UUID
  */
 @Getter
 @Schema(name = "CaptchaV", description = "验证码值对象")
-public class CaptchaV {
-
-	@Schema(name = "uuid", description = "唯一标识")
-	private final String uuid;
-
-	@Schema(name = "captcha", description = "验证码")
-	private final String captcha;
+public record CaptchaV(@Schema(name = "uuid", description = "唯一标识") String uuid,
+		@Schema(name = "captcha", description = "验证码") String captcha) {
 
 	public CaptchaV(String uuid, String captcha) {
 		this.uuid = uuid;

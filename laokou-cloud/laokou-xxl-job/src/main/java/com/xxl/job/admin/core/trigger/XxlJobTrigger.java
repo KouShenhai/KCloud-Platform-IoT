@@ -202,7 +202,9 @@ public class XxlJobTrigger {
 			.append("：")
 			.append(finalFailRetryCount);
 
-		triggerMsgSb.append("<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>").append(I18nUtil.getString("jobconf_trigger_run")).append("<<<<<<<<<<< </span><br>")
+		triggerMsgSb.append("<br><br><span style=\"color:#00c0ef;\" > >>>>>>>>>>>")
+			.append(I18nUtil.getString("jobconf_trigger_run"))
+			.append("<<<<<<<<<<< </span><br>")
 			.append((routeAddressResult != null && routeAddressResult.getMsg() != null)
 					? routeAddressResult.getMsg() + "<br><br>" : "")
 			.append(triggerResult.getMsg() != null ? triggerResult.getMsg() : "");
@@ -238,9 +240,8 @@ public class XxlJobTrigger {
 			runResult = new ReturnT<String>(ReturnT.FAIL_CODE, ThrowableUtil.toString(e));
 		}
 
-        String runResultSB = I18nUtil.getString("jobconf_trigger_run") + "：" + "<br>address：" + address +
-                "<br>code：" + runResult.getCode() +
-                "<br>msg：" + runResult.getMsg();
+		String runResultSB = I18nUtil.getString("jobconf_trigger_run") + "：" + "<br>address：" + address + "<br>code："
+				+ runResult.getCode() + "<br>msg：" + runResult.getMsg();
 
 		runResult.setMsg(runResultSB);
 		return runResult;
