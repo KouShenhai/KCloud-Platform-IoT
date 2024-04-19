@@ -47,7 +47,11 @@ public class ValidatorUtils {
 	}
 
 	public static String getMessage(String code) {
-		return VALIDATE_BUNDLE_MESSAGE_SOURCE.getMessage(code, null, LocaleContextHolder.getLocale());
+		return getMessage(code, null);
+	}
+
+	public static String getMessage(String code, Object[] args) {
+		return VALIDATE_BUNDLE_MESSAGE_SOURCE.getMessage(code, args, LocaleContextHolder.getLocale());
 	}
 
 	/**

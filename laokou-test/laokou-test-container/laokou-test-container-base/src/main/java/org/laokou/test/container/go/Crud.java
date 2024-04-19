@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.test.container;
+package org.laokou.test.container.go;
 
 import java.util.Map;
 

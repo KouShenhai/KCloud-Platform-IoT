@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.test.container;
+package org.laokou.test.container.go;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.StringUtil;

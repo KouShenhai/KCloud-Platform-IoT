@@ -60,6 +60,8 @@ import static org.laokou.common.i18n.common.StringConstant.COMMA;
 @RequiredArgsConstructor
 public class ElasticsearchTemplate {
 
+	private static final String PRIMARY_KEY = "id";
+
 	private final ElasticsearchClient elasticsearchClient;
 
 	private final ElasticsearchAsyncClient elasticsearchAsyncClient;
@@ -223,12 +225,12 @@ public class ElasticsearchTemplate {
 
 	private <R> void setId(R source, String id) {
 		try {
-			Field field = source.getClass().getDeclaredField("id");
-			field.setAccessible(true);
-			field.set(source, id);
-		}
+			Field field = source.getClass().getDeclaredField(PRIMARY_KEY);
+            field.setAccessible(true);
+            field.set(source, id);
+        }
 		catch (Exception e) {
-			throw new RuntimeException(e);
+			log.error("ID赋值失败，错误信息：{}", e.getMessage(), e);
 		}
 	}
 

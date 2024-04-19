@@ -77,7 +77,7 @@ class ElasticsearchAutoConfig {
 	private static final String HTTP_SCHEME = "http://";
 
 	@Schema(name = "HTTPS_SCHEME", description = "HTTPS协议头")
-	public static final String HTTPS_SCHEME = "https://";
+	private static final String HTTPS_SCHEME = "https://";
 
 	@Bean
 	@ConditionalOnMissingBean(ElasticsearchConnectionDetails.class)

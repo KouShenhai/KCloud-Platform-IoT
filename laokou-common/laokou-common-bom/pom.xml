@@ -55,7 +55,7 @@
         <!--oshi版本-->
         <oshi.version>6.6.0</oshi.version>
         <!--elasticsearch版本-->
-        <elasticsearch.version>8.13.1</elasticsearch.version>
+        <elasticsearch.version>8.13.2</elasticsearch.version>
         <!--rocketmq-spring版本-->
         <rocketmq-spring.version>2.3.0</rocketmq-spring.version>
         <!--rocketmq版本-->
@@ -118,11 +118,18 @@
         <retry.version>2.0.5</retry.version>
         <!--nacos版本-->
         <nacos.version>2.3.2</nacos.version>
+        <!--hanlp版本-->
+        <hanlp.version>portable-1.8.4</hanlp.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.hankcs</groupId>
+                <artifactId>hanlp</artifactId>
+                <version>${hanlp.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.alibaba.nacos</groupId>
                 <artifactId>nacos-client</artifactId>

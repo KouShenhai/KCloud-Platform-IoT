@@ -38,7 +38,11 @@ public class MessageUtils {
 	}
 
 	public static String getMessage(String code) {
-		return RESOURCE_BUNDLE_MESSAGE_SOURCE.getMessage(code, null, LocaleContextHolder.getLocale());
+		return getMessage(code, null);
+	}
+
+	public static String getMessage(String code, Object[] args) {
+		return RESOURCE_BUNDLE_MESSAGE_SOURCE.getMessage(code, args, LocaleContextHolder.getLocale());
 	}
 
 }
