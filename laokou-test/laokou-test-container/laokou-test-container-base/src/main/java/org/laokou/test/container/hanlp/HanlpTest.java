@@ -22,8 +22,11 @@ import com.hankcs.hanlp.tokenizer.IndexTokenizer;
 import com.hankcs.hanlp.tokenizer.StandardTokenizer;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author laokou
@@ -32,31 +35,27 @@ import java.util.List;
 public class HanlpTest {
 
 	public static void main(String[] args) {
-		String str = "admin211";
+		// 600 => 长度25
+		String str = "admin123456789qwerty12345";
+		String mail = "@dmin123456789qwerty1@3.55";
 		index(str);
 		standard(str);
-		aes();
+		aes(str, 4);
+		aes(mail, 4);
 	}
 
-	private static void aes() {
-		log.info("{}", AesUtil.encrypt("a"));
-		log.info("{}", AesUtil.encrypt("ad"));
-		log.info("{}", AesUtil.encrypt("adm"));
-		log.info("{}", AesUtil.encrypt("admi"));
-		log.info("{}", AesUtil.encrypt("admin"));
-		log.info("{}", AesUtil.encrypt("admin1"));
-		log.info("{}", AesUtil.encrypt("admin12"));
-		log.info("{}", AesUtil.encrypt("admin123"));
-		log.info("{}", AesUtil.encrypt("admin1234"));
-		log.info("{}", AesUtil.encrypt("admin12345"));
-		log.info("{}", AesUtil.encrypt("admin123456"));
-		log.info("{}", AesUtil.encrypt("admin1234567"));
-		log.info("{}", AesUtil.encrypt("admin12345678"));
-		log.info("{}", AesUtil.encrypt("admin123456789"));
-		log.info("{}", AesUtil.encrypt("ZZZZZ9999999999"));
-		log.info("{}", "j1jNpxMAqyu0mO5vtG6mnQ==".length());
-		log.info("{}",24 * 20 + 23);
-		log.info("{}", AesUtil.decrypt("NzCOSafMP3ezJtTgyMasGg=="));
+	private static void aes(String str, int sliceNum) {
+		int length = str.length();
+		if (length < sliceNum) {
+			return;
+		}
+		Set<String> set = new HashSet<>(length + 1);
+		for (int i = 0; i <= length - sliceNum; i++) {
+			set.add(AesUtil.encrypt(str.substring(i, i + sliceNum)));
+		}
+		String s = StringUtil.collectionToDelimitedString(set, "~");
+		log.info("{}", s.length());
+		log.info("{}", s);
 	}
 
 	private static void standard(String str) {
