@@ -9,6 +9,7 @@ import (
 	_db "laokou-test-go/common/db"
 	_rdb "laokou-test-go/common/rdb"
 	_smb "laokou-test-go/common/smb"
+	_sys "laokou-test-go/common/sys"
 	_tcp "laokou-test-go/common/tcp"
 	_udp "laokou-test-go/common/udp"
 	"log"
@@ -27,13 +28,19 @@ func main() {
 	// testUdpServer()
 	// testConnectUdpServer()
 	// testSqlServer()
-	testSmb()
+	// testSmb()
+	testSysInfo()
 }
 
 func testSqlServer() {
 	// testSqlServer2000()
 	// testSqlServer2005()
 	// testSqlServer2008()
+}
+
+func testSysInfo() {
+	info := _sys.GetSysInfo()
+	log.Printf("系统信息：%s", info)
 }
 
 func testMysql() {
