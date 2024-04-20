@@ -82,7 +82,6 @@ public class UserE {
 	public boolean isSuperAdministrator() {
 		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
 	}
-
 	public boolean isDefaultTenant() {
 		return ObjectUtil.equals(DEFAULT, this.tenantId);
 	}

@@ -82,6 +82,11 @@ public class AuthA extends AggregateRoot<Long> {
 		this.captcha = captcha;
 	}
 
+	public void checkPasswordAuth() {
+
+	}
+
+
 	public void checkUsernamePasswordAuth() {
 		// 检查租户ID
 		checkNullTenantId();

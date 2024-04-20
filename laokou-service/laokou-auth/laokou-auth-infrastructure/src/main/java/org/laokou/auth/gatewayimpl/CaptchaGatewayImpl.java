@@ -78,10 +78,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	@Override
 	public String key(String uuid) {
 		String key = RedisKeyUtil.getUserCaptchaKey(uuid);
-		// before(key);
-		key = DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
-		// after(key);
-		return key;
+		return DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
@@ -108,22 +105,6 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 		// 保存五分钟
 		redisUtil.delete(key);
 		redisUtil.set(key, code, MINUTE_FIVE_EXPIRE);
-	}
-
-	/**
-	 * MD5加密前.
-	 * @param key key
-	 */
-	private void before(String key) {
-		log.info("MD5加密前：{}", key);
-	}
-
-	/**
-	 * MD5加密后.
-	 * @param key key
-	 */
-	private void after(String key) {
-		log.info("MD5加密后：{}", key);
 	}
 
 }
