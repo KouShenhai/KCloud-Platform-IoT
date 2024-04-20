@@ -25,15 +25,15 @@ import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
 import org.laokou.admin.domain.message.MessageDetail;
-import org.laokou.admin.gatewayimpl.database.MessageDetailMapper;
-import org.laokou.admin.gatewayimpl.database.MessageMapper;
+import org.laokou.admin.gatewayimpl.database.MessageDetailRepository;
+import org.laokou.admin.gatewayimpl.database.MessageRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.MessageTypeEnum;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -57,7 +57,7 @@ import static org.laokou.common.i18n.common.TraceConstant.TRACE_ID;
 @RequiredArgsConstructor
 public class MessageGatewayImpl implements MessageGateway {
 
-	private final MessageMapper messageMapper;
+	private final MessageRepository messageMapper;
 
 	private final RocketMqTemplate rocketMqTemplate;
 
@@ -65,7 +65,7 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	private final MessageConvertor messageConvertor;
 
-	private final MessageDetailMapper messageDetailMapper;
+	private final MessageDetailRepository messageDetailMapper;
 
 	private final MybatisUtil mybatisUtil;
 
@@ -131,8 +131,8 @@ public class MessageGatewayImpl implements MessageGateway {
 	 */
 	private void createMessageDetail(Long messageId, Set<String> receiver) {
 		List<MessageDetailDO> list = receiver.parallelStream().map(userId -> convert(messageId, userId)).toList();
-		mybatisUtil.batch(list, MessageDetailMapper.class, DynamicDataSourceContextHolder.peek(),
-				MessageDetailMapper::insertOne);
+		mybatisUtil.batch(list, MessageDetailRepository.class, DynamicDataSourceContextHolder.peek(),
+				MessageDetailRepository::insertOne);
 	}
 
 	/**
@@ -161,7 +161,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		MessageDetailDO messageDetailDO = new MessageDetailDO();
 		messageDetailDO.setUserId(Long.parseLong(userId));
 		messageDetailDO.setId(IdGenerator.defaultSnowflakeId());
-		messageDetailDO.setCreateDate(DateUtils.now());
+		messageDetailDO.setCreateDate(DateUtil.now());
 		messageDetailDO.setCreator(UserUtil.getUserId());
 		messageDetailDO.setEditor(UserUtil.getUserId());
 		messageDetailDO.setDeptId(UserUtil.getDeptId());

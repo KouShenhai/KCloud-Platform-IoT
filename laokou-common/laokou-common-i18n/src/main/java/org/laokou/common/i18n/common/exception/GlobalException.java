@@ -19,7 +19,7 @@ package org.laokou.common.i18n.common.exception;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.i18n.utils.MessageUtils;
+import org.laokou.common.i18n.utils.MessageUtil;
 
 import java.io.Serial;
 
@@ -39,7 +39,7 @@ abstract class GlobalException extends RuntimeException {
 
 	protected GlobalException(String code) {
 		this.code = code;
-		this.msg = MessageUtils.getMessage(code);
+		this.msg = MessageUtil.getMessage(code);
 	}
 
 	protected GlobalException(String code, String msg) {

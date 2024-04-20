@@ -17,6 +17,9 @@
 
 package org.laokou.auth.domain.gateway;
 
+import org.laokou.auth.domain.model.auth.SourceE;
+import org.laokou.auth.domain.model.auth.UserE;
+
 /**
  * 数据源.
  *
@@ -25,10 +28,10 @@ package org.laokou.auth.domain.gateway;
 public interface SourceGateway {
 
 	/**
-	 * 根据租户ID查看数据源名称.
-	 * @param tenantId 租户ID
+	 * 查看数据源名称.
+	 * @param user 用户信息
 	 * @return 数据源名称
 	 */
-	String findSourceNameByTenantId(Long tenantId);
+	SourceE findSourceName(UserE user);
 
 }

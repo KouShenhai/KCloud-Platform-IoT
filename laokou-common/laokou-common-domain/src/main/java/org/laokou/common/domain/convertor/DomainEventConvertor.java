@@ -20,7 +20,7 @@ package org.laokou.common.domain.convertor;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.repository.DomainEventDO;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
  * @author laokou
@@ -39,8 +39,8 @@ public class DomainEventConvertor {
 		domainEventDO.setTenantId(event.getTenantId());
 		domainEventDO.setAggregateId(event.getAggregateId());
 		domainEventDO
-			.setEventStatus(ObjectUtils.isNotNull(event.getEventStatus()) ? event.getEventStatus().name() : null);
-		domainEventDO.setEventType(ObjectUtils.isNotNull(event.getEventType()) ? event.getEventType().name() : null);
+			.setEventStatus(ObjectUtil.isNotNull(event.getEventStatus()) ? event.getEventStatus().name() : null);
+		domainEventDO.setEventType(ObjectUtil.isNotNull(event.getEventType()) ? event.getEventType().name() : null);
 		domainEventDO.setTopic(event.getTopic());
 		domainEventDO.setSourceName(event.getSourceName());
 		domainEventDO.setAttribute(JacksonUtil.toJsonStr(event));

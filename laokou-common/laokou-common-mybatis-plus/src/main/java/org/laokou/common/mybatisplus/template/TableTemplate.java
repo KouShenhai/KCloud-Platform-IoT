@@ -19,7 +19,7 @@ package org.laokou.common.mybatisplus.template;
 
 import com.google.common.base.CaseFormat;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
 import java.time.LocalDate;
@@ -39,11 +39,11 @@ public class TableTemplate {
 	public static List<String> getDynamicTables(String start, String end, String tableName) {
 		LocalDate date1 = toDate(start);
 		LocalDate date2 = toDate(end);
-		int subMonths = (int) (DateUtils.getMonths(date1, date2) + 1);
+		int subMonths = (int) (DateUtil.getMonths(date1, date2) + 1);
 		List<String> list = new ArrayList<>(subMonths);
-		while (DateUtils.isBefore(date1, date2) || date1.equals(date2)) {
-			list.add(tableName.concat(UNDER).concat(DateUtils.format(date1, DateUtils.YYYYMM)));
-			date1 = DateUtils.plusMonths(date1, 1);
+		while (DateUtil.isBefore(date1, date2) || date1.equals(date2)) {
+			list.add(tableName.concat(UNDER).concat(DateUtil.format(date1, DateUtil.YYYYMM)));
+			date1 = DateUtil.plusMonths(date1, 1);
 		}
 		return list;
 	}

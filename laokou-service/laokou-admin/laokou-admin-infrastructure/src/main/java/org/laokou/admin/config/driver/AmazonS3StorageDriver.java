@@ -30,7 +30,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.jetbrains.annotations.NotNull;
 import org.laokou.admin.domain.oss.File;
 import org.laokou.admin.domain.oss.Oss;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
@@ -96,7 +96,7 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 	 */
 	@Override
 	public String getFileName(String fileName) {
-		return DateUtils.format(DateUtils.now(), DateUtils.YYYYMMDDHHMMSS) + getFileExt(fileName);
+		return DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + getFileExt(fileName);
 	}
 
 	/**

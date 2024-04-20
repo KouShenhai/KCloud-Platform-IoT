@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.user.UserOptionListQry;
-import org.laokou.admin.gatewayimpl.database.UserMapper;
+import org.laokou.admin.gatewayimpl.database.UserRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.dto.Result;
@@ -42,7 +42,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class UserOptionListQryExe {
 
-	private final UserMapper userMapper;
+	private final UserRepository userMapper;
 
 	/**
 	 * 执行查询用户下拉框选择项列表.

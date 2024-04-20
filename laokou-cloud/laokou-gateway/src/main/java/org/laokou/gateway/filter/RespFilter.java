@@ -23,8 +23,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.MessageUtils;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.gateway.exception.ExceptionEnum;
 import org.laokou.gateway.utils.I18nUtil;
 import org.reactivestreams.Publisher;
@@ -106,9 +106,9 @@ public class RespFilter implements GlobalFilter, Ordered {
 			@Override
 			public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
 				String contentType = getDelegate().getHeaders().getFirst(CONTENT_TYPE);
-				Assert.isTrue(ObjectUtils.isNotNull(contentType), "content type is null");
+				Assert.isTrue(ObjectUtil.isNotNull(contentType), "content type is null");
 				if (contentType.contains(APPLICATION_JSON_VALUE)
-						&& ObjectUtils.requireNotNull(response.getStatusCode()).value() != OK.value()
+						&& ObjectUtil.requireNotNull(response.getStatusCode()).value() != OK.value()
 						&& body instanceof Flux) {
 					Flux<? extends DataBuffer> flux = Flux.from(body);
 					return super.writeWith(flux.map(dataBuffer -> {
@@ -129,7 +129,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 						try {
 							ExceptionEnum ee = getException(codeNode.asText());
 							String code = ee.getCode();
-							String msg = MessageUtils.getMessage(code) + CHINESE_COMMA + msgNode.asText();
+							String msg = MessageUtil.getMessage(code) + CHINESE_COMMA + msgNode.asText();
 							byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail(code, msg)).getBytes(UTF_8);
 							return dataBufferFactory.wrap(uppedContent);
 						}

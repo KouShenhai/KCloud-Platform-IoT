@@ -18,7 +18,7 @@
 package org.laokou.common.security;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 
 import java.time.LocalDate;
 
@@ -30,7 +30,7 @@ public class LocalDateTest {
 
 	public static void main(String[] args) {
 		LocalDate localDate = LocalDate.of(2023, 2, 28);
-		log.info("{}", DateUtils.format(DateUtils.plusMonths(localDate, 1), DateUtils.YYYYMM));
+		log.info("{}", DateUtil.format(DateUtil.plusMonths(localDate, 1), DateUtil.YYYYMM));
 	}
 
 }

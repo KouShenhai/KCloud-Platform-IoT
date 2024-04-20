@@ -26,7 +26,7 @@ import java.util.regex.Matcher;
 
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.StringConstant.PERCENT;
-import static org.laokou.common.i18n.common.SysConstants.LINE_PATTERN;
+import static org.laokou.common.i18n.common.SysConstant.LINE_PATTERN;
 
 /**
  * 字符串工具类.
@@ -90,12 +90,12 @@ public class StringUtil {
 	}
 
 	public static boolean allNotNull(Object... values) {
-		if (ObjectUtils.isNull(values)) {
+		if (ObjectUtil.isNull(values)) {
 			return false;
 		}
 		else {
 			for (Object val : values) {
-				if (ObjectUtils.isNull(val)) {
+				if (ObjectUtil.isNull(val)) {
 					return false;
 				}
 			}

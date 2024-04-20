@@ -23,8 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.PackageConvertor;
 import org.laokou.admin.domain.gateway.PackageGateway;
 import org.laokou.admin.domain.packages.Package;
-import org.laokou.admin.gatewayimpl.database.PackageMapper;
-import org.laokou.admin.gatewayimpl.database.PackageMenuMapper;
+import org.laokou.admin.gatewayimpl.database.PackageRepository;
+import org.laokou.admin.gatewayimpl.database.PackageMenuRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageMenuDO;
 import org.laokou.common.core.utils.CollectionUtil;
@@ -49,9 +49,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PackageGatewayImpl implements PackageGateway {
 
-	private final PackageMapper packageMapper;
+	private final PackageRepository packageMapper;
 
-	private final PackageMenuMapper packageMenuMapper;
+	private final PackageMenuRepository packageMenuMapper;
 
 	private final TransactionalUtil transactionalUtil;
 
@@ -164,7 +164,7 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	private void createPackageMenu(PackageDO packageDO, List<Long> menuIds) {
 		List<PackageMenuDO> list = menuIds.parallelStream().map(menuId -> convert(packageDO.getId(), menuId)).toList();
-		mybatisUtil.batch(list, PackageMenuMapper.class, PackageMenuMapper::insertOne);
+		mybatisUtil.batch(list, PackageMenuRepository.class, PackageMenuRepository::insertOne);
 	}
 
 	/**

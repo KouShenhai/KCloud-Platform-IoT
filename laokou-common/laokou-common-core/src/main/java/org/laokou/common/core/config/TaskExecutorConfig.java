@@ -20,7 +20,7 @@ package org.laokou.common.core.config;
 import com.alibaba.ttl.threadpool.TtlExecutors;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
@@ -52,7 +52,7 @@ public class TaskExecutorConfig {
 	public Executor executor(SpringTaskExecutionProperties springTaskExecutionProperties, Environment environment) {
 		String threadNamePrefix = springTaskExecutionProperties.getThreadNamePrefix();
 		String enabled = environment.getProperty(THREADS_VIRTUAL_ENABLED);
-		if (ObjectUtils.equals(TRUE, enabled)) {
+		if (ObjectUtil.equals(TRUE, enabled)) {
 			// 虚拟线程
 			return new VirtualThreadTaskExecutor(threadNamePrefix);
 		}

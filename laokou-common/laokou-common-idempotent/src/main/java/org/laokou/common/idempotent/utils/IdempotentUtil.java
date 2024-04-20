@@ -19,7 +19,7 @@ package org.laokou.common.idempotent.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
@@ -65,7 +65,7 @@ public class IdempotentUtil {
 	 */
 	public static boolean isIdempotent() {
 		Boolean status = IS_IDEMPOTENT_LOCAL.get();
-		return ObjectUtils.isNotNull(status) && status;
+		return ObjectUtil.isNotNull(status) && status;
 	}
 
 	/**

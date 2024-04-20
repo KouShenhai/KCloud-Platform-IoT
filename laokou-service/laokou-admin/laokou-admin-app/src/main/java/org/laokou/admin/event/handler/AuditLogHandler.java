@@ -21,7 +21,7 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.log.domainevent.AuditLogEvent;
-import org.laokou.admin.gatewayimpl.database.AuditLogMapper;
+import org.laokou.admin.gatewayimpl.database.AuditLogRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.AuditLogDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.springframework.context.ApplicationEvent;
@@ -39,7 +39,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AuditLogHandler implements ApplicationListener {
 
-	private final AuditLogMapper auditLogMapper;
+	private final AuditLogRepository auditLogMapper;
 
 	// @Override
 	// public void onApplicationEvent(AuditLogEvent event) {

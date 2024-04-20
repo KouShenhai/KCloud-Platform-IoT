@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.i18n.utils.ValidatorUtils;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_CAPTCHA_REQUIRE;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_UUID_REQUIRE;
@@ -41,13 +41,13 @@ public record CaptchaV(@Schema(name = "uuid", description = "唯一标识") Stri
 
 	private void checkNullCaptcha() {
 		if (StringUtil.isEmpty(this.captcha)) {
-			throw new AuthException(OAUTH2_CAPTCHA_REQUIRE, ValidatorUtils.getMessage(OAUTH2_CAPTCHA_REQUIRE));
+			throw new AuthException(OAUTH2_CAPTCHA_REQUIRE, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
 		}
 	}
 
 	private void checkNullUuid() {
 		if (StringUtil.isEmpty(this.uuid)) {
-			throw new AuthException(OAUTH2_UUID_REQUIRE, ValidatorUtils.getMessage(OAUTH2_UUID_REQUIRE));
+			throw new AuthException(OAUTH2_UUID_REQUIRE, ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
 		}
 	}
 

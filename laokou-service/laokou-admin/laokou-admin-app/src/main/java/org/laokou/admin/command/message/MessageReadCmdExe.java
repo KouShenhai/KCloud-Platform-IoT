@@ -24,7 +24,7 @@ import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.MessageDetail;
 import org.laokou.admin.dto.message.MessageReadCmd;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
-import org.laokou.admin.gatewayimpl.database.MessageMapper;
+import org.laokou.admin.gatewayimpl.database.MessageRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -44,7 +44,7 @@ public class MessageReadCmdExe {
 
 	private final MessageGateway messageGateway;
 
-	private final MessageMapper messageMapper;
+	private final MessageRepository messageMapper;
 
 	/**
 	 * 执行读取消息.

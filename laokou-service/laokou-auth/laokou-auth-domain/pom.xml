@@ -17,7 +17,7 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-core</artifactId>
+            <artifactId>laokou-common-crypto</artifactId>
         </dependency>
     </dependencies>
 

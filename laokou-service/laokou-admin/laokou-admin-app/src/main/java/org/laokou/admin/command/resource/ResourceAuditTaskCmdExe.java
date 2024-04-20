@@ -24,13 +24,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.dto.log.domainevent.AuditLogEvent;
 import org.laokou.admin.dto.resource.ResourceAuditTaskCmd;
-import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
-import org.laokou.admin.gatewayimpl.database.ResourceMapper;
+import org.laokou.admin.gatewayimpl.database.ResourceAuditRepository;
+import org.laokou.admin.gatewayimpl.database.ResourceRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -49,9 +49,9 @@ public class ResourceAuditTaskCmdExe {
 
 	// private final TasksFeignClient tasksFeignClient;
 
-	private final ResourceAuditMapper resourceAuditMapper;
+	private final ResourceAuditRepository resourceAuditMapper;
 
-	private final ResourceMapper resourceMapper;
+	private final ResourceRepository resourceMapper;
 
 	private final EventUtil eventUtil;
 
@@ -105,13 +105,13 @@ public class ResourceAuditTaskCmdExe {
 	 */
 	private Boolean updateResource(Long id, int version, int status, ResourceAuditDO resourceAuditDO) {
 		ResourceDO resourceDO;
-		if (ObjectUtils.isNotNull(resourceAuditDO)) {
+		if (ObjectUtil.isNotNull(resourceAuditDO)) {
 			resourceDO = ConvertUtil.sourceToTarget(resourceAuditDO, ResourceDO.class);
 		}
 		else {
 			resourceDO = new ResourceDO();
 		}
-		Assert.isTrue(ObjectUtils.isNotNull(resourceDO), "resourceDO is null");
+		Assert.isTrue(ObjectUtil.isNotNull(resourceDO), "resourceDO is null");
 		resourceDO.setId(id);
 		resourceDO.setStatus(status);
 		resourceDO.setVersion(version);

@@ -17,9 +17,8 @@
 
 package org.laokou.auth.domain.gateway;
 
-import org.laokou.auth.domain.model.auth.AuthA;
-
-import java.util.Set;
+import org.laokou.auth.domain.model.auth.DeptE;
+import org.laokou.auth.domain.model.auth.UserE;
 
 /**
  * 部门.
@@ -30,9 +29,9 @@ public interface DeptGateway {
 
 	/**
 	 * 查询部门PATHS列表.
-	 * @param authA 用户对象
+	 * @param user 用户对象
 	 * @return 部门PATHS列表
 	 */
-	Set<String> findDeptPaths(AuthA authA);
+	DeptE findDeptPaths(UserE user);
 
 }

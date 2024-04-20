@@ -24,15 +24,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
-import org.laokou.admin.gatewayimpl.database.UserMapper;
-import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
+import org.laokou.admin.gatewayimpl.database.UserRepository;
+import org.laokou.admin.gatewayimpl.database.UserRoleRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
@@ -53,7 +53,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserGatewayImpl implements UserGateway {
 
-	private final UserMapper userMapper;
+	private final UserRepository userMapper;
 
 	private final UserConvertor userConvertor;
 
@@ -61,7 +61,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final MybatisUtil mybatisUtil;
 
-	private final UserRoleMapper userRoleMapper;
+	private final UserRoleRepository userRoleMapper;
 
 	private final TransactionalUtil transactionalUtil;
 
@@ -171,7 +171,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	private void createUserRole(UserDO userDO, List<Long> roleIds) {
 		List<UserRoleDO> list = roleIds.parallelStream().map(roleId -> convert(userDO, roleId)).toList();
-		mybatisUtil.batch(list, UserRoleMapper.class, DynamicDataSourceContextHolder.peek(), UserRoleMapper::insertOne);
+		mybatisUtil.batch(list, UserRoleRepository.class, DynamicDataSourceContextHolder.peek(), UserRoleRepository::insertOne);
 	}
 
 	private void removeUserRole(UserDO userDO) {
@@ -191,8 +191,8 @@ public class UserGatewayImpl implements UserGateway {
 		userRoleDO.setDeptPath(userDO.getDeptPath());
 		userRoleDO.setRoleId(roleId);
 		userRoleDO.setUserId(userDO.getId());
-		userRoleDO.setCreateDate(DateUtils.now());
-		userRoleDO.setUpdateDate(DateUtils.now());
+		userRoleDO.setCreateDate(DateUtil.now());
+		userRoleDO.setUpdateDate(DateUtil.now());
 		userRoleDO.setCreator(userDO.getCreator());
 		userRoleDO.setEditor(userDO.getEditor());
 		return userRoleDO;

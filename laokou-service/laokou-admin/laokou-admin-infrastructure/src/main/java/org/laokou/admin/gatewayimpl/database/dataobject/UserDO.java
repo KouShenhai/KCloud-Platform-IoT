@@ -40,6 +40,7 @@ public class UserDO extends BaseDO {
 	private static final long serialVersionUID = 1181289215379287683L;
 
 	@Schema(name = "username", description = "用户名", example = "admin")
+	@TableField(value = "username", typeHandler = CryptoTypeHandler.class)
 	private String username;
 
 	@Schema(name = "password", description = "密码", example = "123456")
@@ -61,5 +62,14 @@ public class UserDO extends BaseDO {
 	@Schema(name = "mobile", description = "手机号", example = "18974432500")
 	@TableField(value = "mobile", typeHandler = CryptoTypeHandler.class)
 	private String mobile;
+
+	@Schema(name = "usernamePhrase", description = "用户名短语", example = "xxx")
+	private String usernamePhrase;
+
+	@Schema(name = "mailPhrase", description = "邮箱短语", example = "xxx")
+	private String mailPhrase;
+
+	@Schema(name = "mobilePhrase", description = "手机号短语", example = "xxx")
+	private String mobilePhrase;
 
 }

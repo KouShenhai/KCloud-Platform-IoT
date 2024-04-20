@@ -20,8 +20,8 @@ package org.laokou.admin.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.event.FileUploadEvent;
 import org.laokou.admin.domain.gateway.LogGateway;
-import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
-import org.laokou.admin.gatewayimpl.database.OssLogMapper;
+import org.laokou.admin.gatewayimpl.database.OperateLogRepository;
+import org.laokou.admin.gatewayimpl.database.OssLogRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.common.core.common.event.OperateEvent;
@@ -38,9 +38,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LogGatewayImpl implements LogGateway {
 
-	private final OperateLogMapper operateLogMapper;
+	private final OperateLogRepository operateLogMapper;
 
-	private final OssLogMapper ossLogMapper;
+	private final OssLogRepository ossLogMapper;
 
 	@Override
 	public void create(OperateEvent event, DecorateDomainEvent evt) {

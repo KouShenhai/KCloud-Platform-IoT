@@ -24,11 +24,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.SourceGateway;
-import org.laokou.auth.gatewayimpl.database.SourceMapper;
+import org.laokou.auth.domain.model.auth.SourceE;
+import org.laokou.auth.domain.model.auth.UserE;
+import org.laokou.auth.gatewayimpl.database.SourceRepository;
 import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.springframework.stereotype.Component;
 
@@ -49,29 +51,29 @@ import static org.laokou.common.i18n.common.NumberConstant.DEFAULT;
 @RequiredArgsConstructor
 public class SourceGatewayImpl implements SourceGateway {
 
-	private final SourceMapper sourceMapper;
+	private final SourceRepository sourceMapper;
 
 	private final DynamicUtil dynamicUtil;
 
 	/**
-	 * 根据租户ID查看数据源.
-	 * @param tenantId 租户ID
+	 * 查看数据源.
+	 * @param user 用户对象
 	 * @return 数据源
 	 */
 	@Override
-	public String findSourceNameByTenantId(Long tenantId) {
+	public SourceE findSourceName(UserE user) {
 		// 默认主表
-		if (DEFAULT == tenantId) {
-			return MASTER;
+		if (user.isDefaultTenant()) {
+			return new SourceE(MASTER);
 		}
-		SourceDO sourceDO = sourceMapper.selectByTenantId(tenantId);
+		SourceDO sourceDO = sourceMapper.selectByTenantId(user.getTenantId());
 		// 验证数据源
 		checkNullSource(sourceDO);
 		return getSourceName(sourceDO);
 	}
 
 	private void checkNullSource(SourceDO sourceDO) {
-		if (ObjectUtils.isNull(sourceDO)) {
+		if (ObjectUtil.isNull(sourceDO)) {
 			throw new SystemException("数据不存在");
 		}
 	}
@@ -141,7 +143,7 @@ public class SourceGatewayImpl implements SourceGateway {
 			// throw new DataSourceException(CUSTOM_SERVER_ERROR, "数据源连接超时");
 		}
 		finally {
-			if (ObjectUtils.isNotNull(connection)) {
+			if (ObjectUtil.isNotNull(connection)) {
 				connection.close();
 			}
 		}

@@ -19,7 +19,7 @@ package org.laokou.admin.command.message.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.gatewayimpl.database.MessageDetailMapper;
+import org.laokou.admin.gatewayimpl.database.MessageDetailRepository;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.security.utils.UserUtil;
@@ -37,7 +37,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class MessageUnreadCountGetQryExe {
 
-	private final MessageDetailMapper messageDetailMapper;
+	private final MessageDetailRepository messageDetailMapper;
 
 	private final TransactionalUtil transactionalUtil;
 

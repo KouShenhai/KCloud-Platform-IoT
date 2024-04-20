@@ -32,7 +32,11 @@ import java.security.cert.X509Certificate;
 public class SslUtil {
 
 	@Schema(name = "TLS_PROTOCOL_VERSION", description = "TLS协议版本")
-	public static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
+	private static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
+
+	public static String getVersion() {
+		return TLS_PROTOCOL_VERSION;
+	}
 
 	/**
 	 * ssl上下文.

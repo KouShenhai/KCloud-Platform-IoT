@@ -28,8 +28,8 @@ import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.exception.AuthException;
-import org.laokou.common.i18n.utils.DateUtils;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.security.utils.UserDetail;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -119,7 +119,7 @@ public class OAuth2AuthenticationProvider {
 			String sourceName) {
 		return UserDetail.builder()
 			.username(authA.getUsername())
-			.loginDate(DateUtils.now())
+			.loginDate(DateUtil.now())
 			.loginIp(IpUtil.getIpAddr(request))
 			.id(authA.getId())
 			.deptId(authA.getDeptId())
@@ -139,7 +139,7 @@ public class OAuth2AuthenticationProvider {
 
 	private void checkCaptcha(AuthA authA, CaptchaV captchaVObj, HttpServletRequest request, String sourceName,
 			String appName, String authType) {
-		if (ObjectUtils.isNotNull(captchaVObj)) {
+		if (ObjectUtil.isNotNull(captchaVObj)) {
 			Boolean checkResult = captchaGateway.check(captchaVObj.uuid(), captchaVObj.captcha());
 			// 检查验证码
 			authA.checkCaptcha(checkResult, request, sourceName, appName, authType);

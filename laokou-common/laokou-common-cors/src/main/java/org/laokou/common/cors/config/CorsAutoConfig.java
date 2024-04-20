@@ -26,7 +26,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import static org.laokou.common.i18n.common.SysConstants.ALL_PATTERNS;
+import static org.laokou.common.i18n.common.SysConstant.ALL_PATTERNS;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**

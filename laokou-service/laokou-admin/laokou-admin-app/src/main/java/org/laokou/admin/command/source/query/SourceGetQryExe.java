@@ -20,7 +20,7 @@ package org.laokou.admin.command.source.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.source.SourceGetQry;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
-import org.laokou.admin.gatewayimpl.database.SourceMapper;
+import org.laokou.admin.gatewayimpl.database.SourceRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SourceGetQryExe {
 
-	private final SourceMapper sourceMapper;
+	private final SourceRepository sourceMapper;
 
 	/**
 	 * 执行查看数据源.

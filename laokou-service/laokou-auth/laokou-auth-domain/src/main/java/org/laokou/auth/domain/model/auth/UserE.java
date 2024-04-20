@@ -19,6 +19,12 @@ package org.laokou.auth.domain.model.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
+
+import static org.laokou.common.i18n.common.NumberConstant.DEFAULT;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
 
 /**
  * @author laokou
@@ -51,16 +57,35 @@ public class UserE {
 	@Schema(name = "mobile", description = "手机号", example = "18974432500")
 	private String mobile;
 
-	@Schema(name = "dept_id", description = "部门ID")
+	@Schema(name = "deptId", description = "部门ID")
 	private Long deptId;
 
-	@Schema(name = "dept_path", description = "部门PATH")
+	@Schema(name = "tenantId", description = "租户ID")
+	private Long tenantId;
+
+	@Schema(name = "deptPath", description = "部门PATH")
 	private String deptPath;
 
+	public UserE(Long tenantId) {
+		this.tenantId = tenantId;
+	}
+
 	public UserE(String username, String mail, String mobile) {
-		this.username = username;
-		this.mail = mail;
-		this.mobile = mobile;
+		this.username = encrypt(username);
+		this.mail = encrypt(mail);
+		this.mobile = encrypt(mobile);
+	}
+
+	public boolean isSuperAdministrator() {
+		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
+	}
+
+	public boolean isDefaultTenant() {
+		return ObjectUtil.equals(DEFAULT, this.tenantId);
+	}
+
+	private String encrypt(String str) {
+		return ObjectUtil.isNotNull(str) ? AesUtil.encrypt(str) : EMPTY;
 	}
 
 }

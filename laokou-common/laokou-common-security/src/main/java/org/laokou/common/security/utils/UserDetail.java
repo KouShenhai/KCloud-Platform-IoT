@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Identifier;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -112,7 +112,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (this == o) {
 			return true;
 		}
-		if (ObjectUtils.isNull(o) || getClass() != o.getClass()) {
+		if (ObjectUtil.isNull(o) || getClass() != o.getClass()) {
 			return false;
 		}
 		UserDetail that = (UserDetail) o;
@@ -183,7 +183,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 
 	@JsonIgnore
 	public boolean isSuperAdministrator() {
-		return ObjectUtils.equals(YES.ordinal(), this.superAdmin);
+		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
 	}
 
 	@Override
@@ -213,7 +213,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@Override
 	@JsonIgnore
 	public boolean isEnabled() {
-		return ObjectUtils.equals(ENABLED.ordinal(), this.status);
+		return ObjectUtil.equals(ENABLED.ordinal(), this.status);
 	}
 
 	/**

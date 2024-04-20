@@ -20,7 +20,7 @@ package org.laokou.admin.command.source.query;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
-import org.laokou.admin.gatewayimpl.database.SourceMapper;
+import org.laokou.admin.gatewayimpl.database.SourceRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -36,7 +36,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SourceOptionListQryExe {
 
-	private final SourceMapper sourceMapper;
+	private final SourceRepository sourceMapper;
 
 	/**
 	 * 执行查询数据源下拉框选择项列表.

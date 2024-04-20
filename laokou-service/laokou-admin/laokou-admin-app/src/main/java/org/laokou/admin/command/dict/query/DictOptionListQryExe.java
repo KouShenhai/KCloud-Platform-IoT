@@ -22,7 +22,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.dict.DictOptionListQry;
-import org.laokou.admin.gatewayimpl.database.DictMapper;
+import org.laokou.admin.gatewayimpl.database.DictRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -40,7 +40,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class DictOptionListQryExe {
 
-	private final DictMapper dictMapper;
+	private final DictRepository dictMapper;
 
 	/**
 	 * 执行查询字典下拉框选择项列表.

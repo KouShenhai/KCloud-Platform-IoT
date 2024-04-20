@@ -27,8 +27,8 @@ import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
-import org.laokou.admin.gatewayimpl.database.MenuMapper;
-import org.laokou.admin.gatewayimpl.database.TenantMapper;
+import org.laokou.admin.gatewayimpl.database.MenuRepository;
+import org.laokou.admin.gatewayimpl.database.TenantRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
@@ -71,13 +71,13 @@ import static org.laokou.common.i18n.common.TenantConstant.*;
 @RequiredArgsConstructor
 public class TenantGatewayImpl implements TenantGateway {
 
-	private final TenantMapper tenantMapper;
+	private final TenantRepository tenantMapper;
 
 	private final TransactionalUtil transactionalUtil;
 
 	private final PasswordEncoder passwordEncoder;
 
-	private final MenuMapper menuMapper;
+	private final MenuRepository menuMapper;
 
 	private final TenantConvertor tenantConvertor;
 
@@ -143,12 +143,12 @@ public class TenantGatewayImpl implements TenantGateway {
 	public void downloadDatasource(Long id, HttpServletResponse response) {
 		String fileName = "kcloud_platform_alibaba_tenant.sql";
 		String fileExt = FileUtil.getFileExt(fileName);
-		String name = DateUtils.format(DateUtils.now(), DateUtils.YYYYMMDDHHMMSS) + fileExt;
+		String name = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + fileExt;
 		response.setContentType(STREAM_CONTENT_TYPE);
 		response.setCharacterEncoding(UTF_8);
 		response.setHeader(CONTENT_DISPOSITION, "attachment;filename=" + UTF_8.encode(fileName + ".zip"));
 		TenantDO tenantDO = tenantMapper.selectById(id);
-		Assert.isTrue(ObjectUtils.isNotNull(tenantDO), "tenantDO is null");
+		Assert.isTrue(ObjectUtil.isNotNull(tenantDO), "tenantDO is null");
 		try (ServletOutputStream outputStream = response.getOutputStream()) {
 			File file = writeTempFile(fileName, name, id, tenantDO.getPackageId());
 			FileUtil.zip(file, outputStream);
@@ -281,8 +281,8 @@ public class TenantGatewayImpl implements TenantGateway {
 		List<MenuDO> menuList = menuMapper.selectTenantMenuListByPackageId(packageId);
 		menuList.forEach(item -> {
 			item.setTenantId(tenantId);
-			item.setCreateDate(DateUtils.now());
-			item.setUpdateDate(DateUtils.now());
+			item.setCreateDate(DateUtil.now());
+			item.setUpdateDate(DateUtil.now());
 			item.setCreator(userId);
 			item.setEditor(userId);
 			item.setVersion(NumberConstant.DEFAULT);
@@ -311,8 +311,8 @@ public class TenantGatewayImpl implements TenantGateway {
 		userDO.setSuperAdmin(YES.ordinal());
 		userDO.setDeptId(deptId);
 		userDO.setDeptPath(deptPath);
-		userDO.setCreateDate(DateUtils.now());
-		userDO.setUpdateDate(DateUtils.now());
+		userDO.setCreateDate(DateUtil.now());
+		userDO.setUpdateDate(DateUtil.now());
 		userDO.setCreator(userId);
 		userDO.setEditor(userId);
 		userDO.setVersion(NumberConstant.DEFAULT);
@@ -339,8 +339,8 @@ public class TenantGatewayImpl implements TenantGateway {
 		deptDO.setDeptId(deptDO.getId());
 		deptDO.setPid(0L);
 		deptDO.setTenantId(tenantId);
-		deptDO.setCreateDate(DateUtils.now());
-		deptDO.setUpdateDate(DateUtils.now());
+		deptDO.setCreateDate(DateUtil.now());
+		deptDO.setUpdateDate(DateUtil.now());
 		deptDO.setCreator(userId);
 		deptDO.setEditor(userId);
 		deptDO.setVersion(NumberConstant.DEFAULT);

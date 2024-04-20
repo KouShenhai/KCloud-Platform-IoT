@@ -21,8 +21,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.SysConstants.DEFAULT_PASSWORD;
-import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
+import static org.laokou.common.i18n.common.SysConstant.DEFAULT_PASSWORD;
+import static org.laokou.common.i18n.common.SysConstant.DEFAULT_USERNAME;
 
 /**
  * 网关扩展属性配置.

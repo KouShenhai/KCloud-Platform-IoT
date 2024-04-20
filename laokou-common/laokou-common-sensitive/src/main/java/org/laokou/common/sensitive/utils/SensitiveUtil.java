@@ -17,7 +17,7 @@
 
 package org.laokou.common.sensitive.utils;
 
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.sensitive.annotation.SensitiveField;
 import org.laokou.common.i18n.common.SensitiveTypeEnum;
@@ -39,7 +39,7 @@ public class SensitiveUtil {
 				// 私有属性
 				field.setAccessible(true);
 				Object o = field.get(obj);
-				if (ObjectUtils.isNull(o)) {
+				if (ObjectUtil.isNull(o)) {
 					continue;
 				}
 				String data = o.toString();

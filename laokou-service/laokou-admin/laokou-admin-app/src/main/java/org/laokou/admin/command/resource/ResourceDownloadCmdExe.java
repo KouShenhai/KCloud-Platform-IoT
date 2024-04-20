@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.laokou.admin.dto.resource.ResourceDownloadCmd;
-import org.laokou.admin.gatewayimpl.database.ResourceMapper;
+import org.laokou.admin.gatewayimpl.database.ResourceRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -47,7 +47,7 @@ import static org.laokou.common.i18n.common.ResponseHeaderConstant.STREAM_CONTEN
 @RequiredArgsConstructor
 public class ResourceDownloadCmdExe {
 
-	private final ResourceMapper resourceMapper;
+	private final ResourceRepository resourceMapper;
 
 	/**
 	 * 执行资源下载.

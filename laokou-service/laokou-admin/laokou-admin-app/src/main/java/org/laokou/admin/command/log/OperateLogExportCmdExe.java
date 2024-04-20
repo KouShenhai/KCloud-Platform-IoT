@@ -23,7 +23,7 @@ import org.laokou.admin.common.utils.ExcelUtil;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.log.OperateLogExportCmd;
 import org.laokou.admin.dto.log.clientobject.OperateLogExcel;
-import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
+import org.laokou.admin.gatewayimpl.database.OperateLogRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -42,7 +42,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class OperateLogExportCmdExe {
 
-	private final OperateLogMapper operateLogMapper;
+	private final OperateLogRepository operateLogMapper;
 
 	/**
 	 * 执行导出操作日志.

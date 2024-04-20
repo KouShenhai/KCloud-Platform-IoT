@@ -25,6 +25,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface SqlLogRepository extends CrudMapper<Long, Integer, SqlLogDO> {
+public interface SqlLogRepository extends CrudRepository<Long, Integer, SqlLogDO> {
 
 }

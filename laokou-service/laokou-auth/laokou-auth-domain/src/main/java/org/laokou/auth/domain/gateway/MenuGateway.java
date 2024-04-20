@@ -17,9 +17,8 @@
 
 package org.laokou.auth.domain.gateway;
 
-import org.laokou.auth.domain.model.auth.AuthA;
-
-import java.util.Set;
+import org.laokou.auth.domain.model.auth.MenuE;
+import org.laokou.auth.domain.model.auth.UserE;
 
 /**
  * 菜单.
@@ -30,9 +29,9 @@ public interface MenuGateway {
 
 	/**
 	 * 查询菜单权限标识集合.
-	 * @param authA 用户对象
+	 * @param user 用户对象
 	 * @return 菜单权限标识集合
 	 */
-	Set<String> findPermissions(AuthA authA);
+	MenuE findPermissions(UserE user);
 
 }

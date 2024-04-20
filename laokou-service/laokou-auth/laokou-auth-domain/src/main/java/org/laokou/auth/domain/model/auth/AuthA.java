@@ -27,10 +27,10 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.MessageUtils;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.i18n.utils.ValidatorUtils;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -119,13 +119,9 @@ public class AuthA extends AggregateRoot<Long> {
 		}
 	}
 
-	public boolean isSuperAdministrator() {
-		return ObjectUtils.equals(YES.ordinal(), this.superAdmin);
-	}
-
 	public void checkMobile() {
 		if (StringUtil.isEmpty(this.mobile)) {
-			throw new AuthException(OAUTH2_MOBILE_REQUIRE, ValidatorUtils.getMessage(OAUTH2_MOBILE_REQUIRE));
+			throw new AuthException(OAUTH2_MOBILE_REQUIRE, ValidatorUtil.getMessage(OAUTH2_MOBILE_REQUIRE));
 		}
 		if (!RegexUtil.mobileRegex(this.mobile)) {
 			throw new AuthException(MOBILE_ERROR);
@@ -134,28 +130,28 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void checkMail() {
 		if (StringUtil.isEmpty(this.mail)) {
-			throw new AuthException(OAUTH2_MAIL_REQUIRE, ValidatorUtils.getMessage(OAUTH2_MAIL_REQUIRE));
+			throw new AuthException(OAUTH2_MAIL_REQUIRE, ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));
 		}
 		if (!RegexUtil.mailRegex(this.mail)) {
-			throw new AuthException(MAIL_ERROR, MessageUtils.getMessage(MAIL_ERROR));
+			throw new AuthException(MAIL_ERROR, MessageUtil.getMessage(MAIL_ERROR));
 		}
 	}
 
 	private void checkNullPassword() {
 		if (StringUtil.isEmpty(this.password)) {
-			throw new AuthException(OAUTH2_PASSWORD_REQUIRE, ValidatorUtils.getMessage(OAUTH2_PASSWORD_REQUIRE));
+			throw new AuthException(OAUTH2_PASSWORD_REQUIRE, ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE));
 		}
 	}
 
 	private void checkNullUsername() {
 		if (StringUtil.isEmpty(this.username)) {
-			throw new AuthException(OAUTH2_USERNAME_REQUIRE, ValidatorUtils.getMessage(OAUTH2_USERNAME_REQUIRE));
+			throw new AuthException(OAUTH2_USERNAME_REQUIRE, ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE));
 		}
 	}
 
 	public AuthA create(AuthA authA, HttpServletRequest request, String sourceName, String appName, String authType) {
-		if (ObjectUtils.isNull(authA)) {
-			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtils.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,
+		if (ObjectUtil.isNull(authA)) {
+			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,
 					appName, authType);
 		}
 		return authA;
@@ -164,14 +160,14 @@ public class AuthA extends AggregateRoot<Long> {
 	public void checkPassword(String clientPassword, PasswordEncoder passwordEncoder, HttpServletRequest request,
 			String sourceName, String appName, String authType) {
 		if (StringUtil.isNotEmpty(clientPassword) && !passwordEncoder.matches(clientPassword, this.password)) {
-			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtils.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,
+			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,
 					appName, authType);
 		}
 	}
 
 	public void checkStatus(HttpServletRequest request, String sourceName, String appName, String authType) {
-		if (ObjectUtils.equals(DISABLE.ordinal(), this.status)) {
-			loginFail(ACCOUNT_DISABLED, MessageUtils.getMessage(ACCOUNT_DISABLED), request, sourceName, appName,
+		if (ObjectUtil.equals(DISABLE.ordinal(), this.status)) {
+			loginFail(ACCOUNT_DISABLED, MessageUtil.getMessage(ACCOUNT_DISABLED), request, sourceName, appName,
 					authType);
 		}
 	}
@@ -179,23 +175,23 @@ public class AuthA extends AggregateRoot<Long> {
 	public void checkNullPermissions(Set<String> permissions, HttpServletRequest request, String sourceName,
 			String appName, String authType) {
 		if (CollectionUtil.isEmpty(permissions)) {
-			loginFail(FORBIDDEN, MessageUtils.getMessage(FORBIDDEN), request, sourceName, appName, authType);
+			loginFail(FORBIDDEN, MessageUtil.getMessage(FORBIDDEN), request, sourceName, appName, authType);
 		}
 	}
 
 	public void checkCaptcha(Boolean checkResult, HttpServletRequest request, String sourceName, String appName,
 			String authType) {
-		if (ObjectUtils.isNull(checkResult)) {
-			loginFail(CAPTCHA_EXPIRED, MessageUtils.getMessage(CAPTCHA_EXPIRED), request, sourceName, appName,
+		if (ObjectUtil.isNull(checkResult)) {
+			loginFail(CAPTCHA_EXPIRED, MessageUtil.getMessage(CAPTCHA_EXPIRED), request, sourceName, appName,
 					authType);
 		}
 		if (!checkResult) {
-			loginFail(CAPTCHA_ERROR, MessageUtils.getMessage(CAPTCHA_ERROR), request, sourceName, appName, authType);
+			loginFail(CAPTCHA_ERROR, MessageUtil.getMessage(CAPTCHA_ERROR), request, sourceName, appName, authType);
 		}
 	}
 
 	public void loginSuccess(HttpServletRequest request, String sourceName, String appName, String authType) {
-		addEvent(new LoginSucceededEvent(this, request, MessageUtils.getMessage(LOGIN_SUCCEEDED), sourceName, appName,
+		addEvent(new LoginSucceededEvent(this, request, MessageUtil.getMessage(LOGIN_SUCCEEDED), sourceName, appName,
 				authType));
 	}
 

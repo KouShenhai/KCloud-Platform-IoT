@@ -21,7 +21,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.role.RoleGetQry;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
-import org.laokou.admin.gatewayimpl.database.RoleMapper;
+import org.laokou.admin.gatewayimpl.database.RoleRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -37,7 +37,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class RoleGetQryExe {
 
-	private final RoleMapper roleMapper;
+	private final RoleRepository roleMapper;
 
 	/**
 	 * 执行查看角色.

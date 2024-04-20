@@ -22,7 +22,7 @@ import lombok.SneakyThrows;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
-import org.laokou.admin.gatewayimpl.database.UserMapper;
+import org.laokou.admin.gatewayimpl.database.UserRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.dto.Datas;
@@ -45,7 +45,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_USER;
 @RequiredArgsConstructor
 public class UserListQryExe {
 
-	private final UserMapper userMapper;
+	private final UserRepository userMapper;
 
 	private final Executor executor;
 

@@ -21,9 +21,9 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.crypto.utils.RsaUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.i18n.utils.ValidatorUtils;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.nacos.utils.ReactiveRequestUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.laokou.gateway.annotation.Auth;
@@ -72,7 +72,7 @@ public class ApiFilter implements WebFilter {
 					if (handler instanceof HandlerMethod handlerMethod) {
 						if (handlerMethod.hasMethodAnnotation(Auth.class)) {
 							Auth auth = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Auth.class);
-							Assert.isTrue(ObjectUtils.isNotNull(auth), "@Auth is null");
+							Assert.isTrue(ObjectUtil.isNotNull(auth), "@Auth is null");
 							return validate(exchange, request, auth, chain);
 						}
 					}
@@ -96,12 +96,12 @@ public class ApiFilter implements WebFilter {
 		if (StringUtil.isEmpty(username)) {
 			// 账号不能为空
 			return ReactiveResponseUtil.response(exchange,
-					Result.fail(ValidatorUtils.getMessage(OAUTH2_USERNAME_REQUIRE)));
+					Result.fail(ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE)));
 		}
 		if (StringUtil.isEmpty(password)) {
 			// 密码不能为空
 			return ReactiveResponseUtil.response(exchange,
-					Result.fail(ValidatorUtils.getMessage(OAUTH2_PASSWORD_REQUIRE)));
+					Result.fail(ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE)));
 		}
 		try {
 			String privateKey = RsaUtil.getPrivateKey();

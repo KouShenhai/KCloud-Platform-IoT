@@ -43,7 +43,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.utils.ReactiveRequestUtil;
 import org.springframework.beans.factory.ObjectProvider;
@@ -67,7 +67,7 @@ import java.util.stream.Collectors;
 import static org.laokou.common.core.utils.RegexUtil.URL_VERSION_REGEX;
 import static org.laokou.common.i18n.common.NetworkConstant.IPV4_REGEX;
 import static org.laokou.common.i18n.common.StringConstant.*;
-import static org.laokou.common.i18n.common.SysConstants.GRACEFUL_SHUTDOWN_URL;
+import static org.laokou.common.i18n.common.SysConstant.GRACEFUL_SHUTDOWN_URL;
 
 /**
  * nacos路由负载均衡.
@@ -198,7 +198,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 					.filter(instance -> match(instance, headers))
 					.findFirst()
 					.orElse(null);
-				if (ObjectUtils.isNotNull(serviceInstance)) {
+				if (ObjectUtil.isNotNull(serviceInstance)) {
 					return new DefaultResponse(serviceInstance);
 				}
 			}
@@ -259,7 +259,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 */
 	private boolean isGrayRouter(HttpHeaders headers) {
 		String gray = headers.getFirst(SERVICE_GRAY);
-		return ObjectUtils.equals(TRUE, gray);
+		return ObjectUtil.equals(TRUE, gray);
 	}
 
 	/**
@@ -273,7 +273,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		String port = headers.getFirst(SERVICE_PORT);
 		Assert.isTrue(StringUtil.isNotEmpty(host), "service-host is empty");
 		Assert.isTrue(StringUtil.isNotEmpty(port), "service-port is empty");
-		return ObjectUtils.equals(host, serviceInstance.getHost())
+		return ObjectUtil.equals(host, serviceInstance.getHost())
 				&& Integer.parseInt(port) == serviceInstance.getPort();
 	}
 

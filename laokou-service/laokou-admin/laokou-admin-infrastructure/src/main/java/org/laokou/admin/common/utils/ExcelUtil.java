@@ -40,12 +40,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.i18n.utils.ValidatorUtils;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.repository.BaseDO;
-import org.laokou.common.mybatisplus.repository.CrudMapper;
+import org.laokou.common.mybatisplus.repository.CrudRepository;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 
 import java.io.InputStream;
@@ -60,7 +60,7 @@ import java.util.function.BiConsumer;
 import static org.laokou.common.i18n.common.ResponseHeaderConstant.*;
 import static org.laokou.common.i18n.common.StringConstant.DROP;
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.SysConstants.EXCEL_EXT;
+import static org.laokou.common.i18n.common.SysConstant.EXCEL_EXT;
 
 /**
  * Excel工具类.
@@ -78,21 +78,21 @@ public class ExcelUtil {
 	}
 
 	public static <DO extends BaseDO> void doExport(List<String> tables, HttpServletResponse response, DO param,
-			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
-		doExport(tables, DEFAULT_SIZE, response, param, pageQuery, crudMapper, clazz);
+													PageQuery pageQuery, CrudRepository<Long, Integer, DO> crudRepository, Class<?> clazz) {
+		doExport(tables, DEFAULT_SIZE, response, param, pageQuery, crudRepository, clazz);
 	}
 
 	@SneakyThrows
 	public static <DO extends BaseDO> void doExport(List<String> tables, int size, HttpServletResponse response,
-			DO param, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
+													DO param, PageQuery pageQuery, CrudRepository<Long, Integer, DO> crudRepository, Class<?> clazz) {
 		try (ServletOutputStream out = response.getOutputStream();
 				ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
 			// 设置请求头
 			header(response);
-			if (crudMapper.selectObjCount(tables, param, pageQuery) > 0) {
+			if (crudRepository.selectObjCount(tables, param, pageQuery) > 0) {
 				// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
-				crudMapper.selectObjList(tables, param, pageQuery, resultContext -> {
+				crudRepository.selectObjList(tables, param, pageQuery, resultContext -> {
 					list.add(resultContext.getResultObject());
 					if (list.size() % size == 0) {
 						writeSheet(list, clazz, excelWriter);
@@ -115,7 +115,7 @@ public class ExcelUtil {
 	}
 
 	private static void header(HttpServletResponse response) {
-		String fileName = DateUtils.format(DateUtils.now(), DateUtils.YYYYMMDDHHMMSS) + EXCEL_EXT;
+		String fileName = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + EXCEL_EXT;
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType(EXCEL_CONTENT_TYPE);
 		response.setHeader(CONTENT_DISPOSITION,
@@ -176,7 +176,7 @@ public class ExcelUtil {
 		public void invoke(T data, AnalysisContext context) {
 			int currentRowNum = context.readRowHolder().getRowIndex() + 1;
 			// 校验数据
-			Set<String> set = ValidatorUtils.validateEntity(data);
+			Set<String> set = ValidatorUtil.validateEntity(data);
 			if (CollectionUtil.isNotEmpty(set)) {
 				ERRORS.add(template(currentRowNum, StringUtil.collectionToDelimitedString(set, DROP)));
 			}

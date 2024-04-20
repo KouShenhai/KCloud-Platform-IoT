@@ -24,8 +24,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.ObjectUtils;
-import org.laokou.common.i18n.utils.ValidatorUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -70,14 +70,14 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	private List<DomainEvent<ID>> events;
 
 	public void checkNullId() {
-		if (ObjectUtils.isNull(this.id)) {
-			throw new SystemException(SYSTEM_ID_REQUIRE, ValidatorUtils.getMessage(SYSTEM_ID_REQUIRE));
+		if (ObjectUtil.isNull(this.id)) {
+			throw new SystemException(SYSTEM_ID_REQUIRE, ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 	}
 
 	protected void checkNullTenantId() {
-		if (ObjectUtils.isNull(this.tenantId)) {
-			throw new AuthException(OAUTH2_TENANT_ID_REQUIRE, ValidatorUtils.getMessage(OAUTH2_TENANT_ID_REQUIRE));
+		if (ObjectUtil.isNull(this.tenantId)) {
+			throw new AuthException(OAUTH2_TENANT_ID_REQUIRE, ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
 		}
 	}
 
@@ -90,7 +90,7 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	}
 
 	private List<DomainEvent<ID>> events() {
-		if (ObjectUtils.isNull(events)) {
+		if (ObjectUtil.isNull(events)) {
 			events = new ArrayList<>(16);
 		}
 		return events;

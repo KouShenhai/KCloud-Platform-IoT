@@ -23,7 +23,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import static org.laokou.common.i18n.common.SysConstants.ALL_PATTERNS;
+import static org.laokou.common.i18n.common.SysConstant.ALL_PATTERNS;
 
 /**
  * @author laokou

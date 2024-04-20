@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.laokou.common.i18n.common.StatusCode.SERVICE_UNAVAILABLE;
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.SysConstants.GRACEFUL_SHUTDOWN_URL;
+import static org.laokou.common.i18n.common.SysConstant.GRACEFUL_SHUTDOWN_URL;
 
 /**
  * @author laokou

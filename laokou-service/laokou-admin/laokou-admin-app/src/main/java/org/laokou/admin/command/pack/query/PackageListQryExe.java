@@ -22,7 +22,7 @@ import lombok.SneakyThrows;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.packages.PackageListQry;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
-import org.laokou.admin.gatewayimpl.database.PackageMapper;
+import org.laokou.admin.gatewayimpl.database.PackageRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -44,7 +44,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_PACKAGE;
 @RequiredArgsConstructor
 public class PackageListQryExe {
 
-	private final PackageMapper packageMapper;
+	private final PackageRepository packageMapper;
 
 	private final Executor executor;
 

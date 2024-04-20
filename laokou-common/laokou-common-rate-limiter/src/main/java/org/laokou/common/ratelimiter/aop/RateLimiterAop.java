@@ -24,7 +24,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.ratelimiter.driver.KeyManager;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -60,7 +60,7 @@ public class RateLimiterAop {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		Method method = signature.getMethod();
 		RateLimiter rateLimiter = AnnotationUtils.findAnnotation(method, RateLimiter.class);
-		Assert.isTrue(ObjectUtils.isNotNull(rateLimiter), "@RateLimiter is null");
+		Assert.isTrue(ObjectUtil.isNotNull(rateLimiter), "@RateLimiter is null");
 		String key = getKey(rateLimiter.id().concat(UNDER).concat(KeyManager.key(rateLimiter.type())));
 		long rate = rateLimiter.rate();
 		long interval = rateLimiter.interval();

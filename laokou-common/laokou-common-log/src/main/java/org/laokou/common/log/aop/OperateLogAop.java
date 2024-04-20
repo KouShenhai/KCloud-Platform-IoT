@@ -31,7 +31,7 @@ import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.core.common.domain.OperateLog;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -96,7 +96,7 @@ public class OperateLogAop {
 			Method method = methodSignature.getMethod();
 			org.laokou.common.log.annotation.OperateLog operateLog = AnnotationUtils.findAnnotation(method,
 					org.laokou.common.log.annotation.OperateLog.class);
-			Assert.isTrue(ObjectUtils.isNotNull(operateLog), "@OperateLog is null");
+			Assert.isTrue(ObjectUtil.isNotNull(operateLog), "@OperateLog is null");
 			String className = joinPoint.getTarget().getClass().getName();
 			String methodName = joinPoint.getSignature().getName();
 			Object[] args = joinPoint.getArgs();

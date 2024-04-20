@@ -23,9 +23,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.domain.role.Role;
-import org.laokou.admin.gatewayimpl.database.RoleDeptMapper;
-import org.laokou.admin.gatewayimpl.database.RoleMapper;
-import org.laokou.admin.gatewayimpl.database.RoleMenuMapper;
+import org.laokou.admin.gatewayimpl.database.RoleDeptRepository;
+import org.laokou.admin.gatewayimpl.database.RoleRepository;
+import org.laokou.admin.gatewayimpl.database.RoleMenuRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleMenuDO;
@@ -52,11 +52,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoleGatewayImpl implements RoleGateway {
 
-	private final RoleMapper roleMapper;
+	private final RoleRepository roleMapper;
 
-	private final RoleMenuMapper roleMenuMapper;
+	private final RoleMenuRepository roleMenuMapper;
 
-	private final RoleDeptMapper roleDeptMapper;
+	private final RoleDeptRepository roleDeptMapper;
 
 	private final MybatisUtil mybatisUtil;
 
@@ -160,8 +160,8 @@ public class RoleGatewayImpl implements RoleGateway {
 	 */
 	private void createRoleDept(RoleDO roleDO, List<Long> deptIds) {
 		List<RoleDeptDO> list = deptIds.parallelStream().map(deptId -> to(roleDO.getId(), deptId)).toList();
-		mybatisUtil.batch(list, RoleDeptMapper.class, UserContextHolder.get().getSourceName(),
-				RoleDeptMapper::insertOne);
+		mybatisUtil.batch(list, RoleDeptRepository.class, UserContextHolder.get().getSourceName(),
+				RoleDeptRepository::insertOne);
 	}
 
 	/**
@@ -171,8 +171,8 @@ public class RoleGatewayImpl implements RoleGateway {
 	 */
 	private void createRoleMenu(RoleDO roleDO, List<Long> menuIds) {
 		List<RoleMenuDO> list = menuIds.parallelStream().map(menuId -> convert(roleDO.getId(), menuId)).toList();
-		mybatisUtil.batch(list, RoleMenuMapper.class, UserContextHolder.get().getSourceName(),
-				RoleMenuMapper::insertOne);
+		mybatisUtil.batch(list, RoleMenuRepository.class, UserContextHolder.get().getSourceName(),
+				RoleMenuRepository::insertOne);
 	}
 
 	private void modifyRoleMenu(RoleDO roleDO, List<Long> menuIds) {

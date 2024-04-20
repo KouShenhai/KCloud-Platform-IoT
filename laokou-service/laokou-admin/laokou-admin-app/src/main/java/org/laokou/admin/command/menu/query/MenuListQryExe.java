@@ -24,11 +24,11 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.common.FindTypeEnum;
 import org.laokou.admin.dto.menu.MenuListQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
-import org.laokou.admin.gatewayimpl.database.MenuMapper;
+import org.laokou.admin.gatewayimpl.database.MenuRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -52,7 +52,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class MenuListQryExe {
 
-	private final MenuMapper menuMapper;
+	private final MenuRepository menuMapper;
 
 	private final RedisUtil redisUtil;
 
@@ -74,7 +74,7 @@ public class MenuListQryExe {
 	private List<MenuCO> getUserMenuList() {
 		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserUtil.getUserId());
 		Object obj = redisUtil.get(menuTreeKey);
-		if (ObjectUtils.isNotNull(obj)) {
+		if (ObjectUtil.isNotNull(obj)) {
 			return ((MenuCO) obj).getChildren();
 		}
 		MenuCO co = buildTreeNode(getMenuList().stream().map(this::convert).toList());

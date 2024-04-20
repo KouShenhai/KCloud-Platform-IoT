@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.model.auth.AuthA;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.crypto.utils.AesUtil;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -119,7 +119,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 			OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(
 					auth2BaseAuthenticationToken);
 			RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
-			if (ObjectUtils.isNull(registeredClient)) {
+			if (ObjectUtil.isNull(registeredClient)) {
 				throw OAuth2ExceptionHandler.getException(REGISTERED_CLIENT_NOT_EXIST);
 			}
 			// 获取认证范围
@@ -218,7 +218,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 		if (OAuth2ClientAuthenticationToken.class.isAssignableFrom(authentication.getPrincipal().getClass())) {
 			clientPrincipal = (OAuth2ClientAuthenticationToken) authentication.getPrincipal();
 		}
-		if (ObjectUtils.isNotNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {
+		if (ObjectUtil.isNotNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {
 			return clientPrincipal;
 		}
 		throw OAuth2ExceptionHandler.getException(INVALID_CLIENT);

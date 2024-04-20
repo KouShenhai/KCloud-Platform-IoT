@@ -29,7 +29,7 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 
 import java.io.Serial;
 
@@ -77,7 +77,7 @@ public class LoginEvent extends DomainEvent<Long> {
 			String type, Integer status) {
 		super(IdGenerator.defaultSnowflakeId(), authA.getId(), LOGIN_FAILED, CREATED, LAOKOU_LOGIN_EVENT_TOPIC,
 				sourceName, appName, authA.getId(), authA.getId(), authA.getDeptId(), authA.getDeptPath(),
-				authA.getTenantId(), DateUtils.now(), DateUtils.now());
+				authA.getTenantId(), DateUtil.now(), DateUtil.now());
 		this.username = authA.getUsername();
 		this.ip = IpUtil.getIpAddr(request);
 		this.address = AddressUtil.getRealAddress(this.ip);

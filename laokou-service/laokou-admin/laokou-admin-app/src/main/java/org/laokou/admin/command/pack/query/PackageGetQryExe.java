@@ -20,8 +20,8 @@ package org.laokou.admin.command.pack.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.packages.PackageGetQry;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
-import org.laokou.admin.gatewayimpl.database.PackageMapper;
-import org.laokou.admin.gatewayimpl.database.PackageMenuMapper;
+import org.laokou.admin.gatewayimpl.database.PackageRepository;
+import org.laokou.admin.gatewayimpl.database.PackageMenuRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -35,9 +35,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PackageGetQryExe {
 
-	private final PackageMapper packageMapper;
+	private final PackageRepository packageMapper;
 
-	private final PackageMenuMapper packageMenuMapper;
+	private final PackageMenuRepository packageMenuMapper;
 
 	/**
 	 * 执行查看套餐.

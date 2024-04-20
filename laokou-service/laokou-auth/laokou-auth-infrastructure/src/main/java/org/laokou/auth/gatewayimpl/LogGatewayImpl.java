@@ -21,11 +21,11 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.domain.event.LoginEvent;
 import org.laokou.auth.domain.gateway.LogGateway;
-import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
+import org.laokou.auth.gatewayimpl.database.LoginLogRepository;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.DecorateDomainEvent;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -38,13 +38,13 @@ import static org.laokou.common.i18n.common.StringConstant.UNDER;
 @RequiredArgsConstructor
 public class LogGatewayImpl implements LogGateway {
 
-	private final LoginLogMapper loginLogMapper;
+	private final LoginLogRepository loginLogMapper;
 
 	@Override
 	public void create(LoginEvent event, DecorateDomainEvent evt) {
 		try {
 			DynamicDataSourceContextHolder.push(evt.getSourceName());
-			DynamicTableSuffixContextHolder.set(UNDER.concat(DateUtils.format(DateUtils.now(), DateUtils.YYYYMM)));
+			DynamicTableSuffixContextHolder.set(UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
 			loginLogMapper.insert(convert(event, evt));
 		}
 		finally {

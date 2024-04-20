@@ -24,11 +24,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.config.DefaultConfigProperties;
-import org.laokou.admin.gatewayimpl.database.SourceMapper;
+import org.laokou.admin.gatewayimpl.database.SourceRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.springframework.jdbc.support.JdbcUtils;
@@ -55,7 +55,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.SHOW_TABLES;
 @RequiredArgsConstructor
 public class DsUtil {
 
-	private final SourceMapper sourceMapper;
+	private final SourceRepository sourceMapper;
 
 	private final DynamicUtil dynamicUtil;
 
@@ -155,7 +155,7 @@ public class DsUtil {
 			}
 		}
 		finally {
-			if (ObjectUtils.isNotNull(connection)) {
+			if (ObjectUtil.isNotNull(connection)) {
 				connection.close();
 			}
 			JdbcUtils.closeStatement(ps);

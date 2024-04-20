@@ -22,8 +22,8 @@ import jakarta.validation.constraints.Min;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.DateUtils;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
@@ -81,20 +81,20 @@ public class PageQuery extends Query {
 	}
 
 	public PageQuery time() {
-		if (ObjectUtils.isNull(this.startTime)) {
+		if (ObjectUtil.isNull(this.startTime)) {
 			throw new SystemException("开始时间不能为空");
 		}
-		if (ObjectUtils.isNull(this.endTime)) {
+		if (ObjectUtil.isNull(this.endTime)) {
 			throw new SystemException("结束时间不能为空");
 		}
-		LocalDateTime startDate = DateUtils.parseTime(startTime, DateUtils.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
-		LocalDateTime endDate = DateUtils.parseTime(endTime, DateUtils.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
+		LocalDateTime startDate = DateUtil.parseTime(startTime, DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
+		LocalDateTime endDate = DateUtil.parseTime(endTime, DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
 		LocalDateTime minDate = LocalDateTime.of(2021, 12, 31, 23, 59, 59);
 		LocalDateTime maxDate = LocalDateTime.of(2100, 1, 1, 0, 0, 0);
-		if (DateUtils.isAfter(startDate, endDate)) {
+		if (DateUtil.isAfter(startDate, endDate)) {
 			throw new SystemException("结束时间必须大于开始时间");
 		}
-		if (DateUtils.isBefore(startDate, minDate) || DateUtils.isAfter(endDate, maxDate)) {
+		if (DateUtil.isBefore(startDate, minDate) || DateUtil.isAfter(endDate, maxDate)) {
 			throw new SystemException("开始时间和结束时间只允许在2022-01-01 ~ 2099-12-31范围之内");
 		}
 		return this;

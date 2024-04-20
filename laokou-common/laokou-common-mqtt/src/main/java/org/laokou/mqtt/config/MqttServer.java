@@ -26,7 +26,7 @@ import org.eclipse.paho.mqttv5.client.persist.MemoryPersistence;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.nio.charset.StandardCharsets;
 
@@ -83,7 +83,7 @@ public class MqttServer implements Server {
 	@SneakyThrows
 	public synchronized void stop() {
 		running = false;
-		if (ObjectUtils.isNotNull(client)) {
+		if (ObjectUtil.isNotNull(client)) {
 			client.disconnectForcibly();
 		}
 		log.info("关闭MQTT");

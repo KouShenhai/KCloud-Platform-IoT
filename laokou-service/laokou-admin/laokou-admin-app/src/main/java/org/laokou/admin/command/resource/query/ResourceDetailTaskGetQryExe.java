@@ -21,7 +21,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.resource.ResourceDetailTaskGetQry;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
-import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
+import org.laokou.admin.gatewayimpl.database.ResourceAuditRepository;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +36,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class ResourceDetailTaskGetQryExe {
 
-	private final ResourceAuditMapper resourceAuditMapper;
+	private final ResourceAuditRepository resourceAuditMapper;
 
 	/**
 	 * 执行查看资源任务详情.

@@ -20,7 +20,7 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.CaptchaGateway;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -92,10 +92,10 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	private String get(String uuid) {
 		String key = key(uuid);
 		Object captcha = redisUtil.get(key);
-		if (ObjectUtils.isNotNull(captcha)) {
+		if (ObjectUtil.isNotNull(captcha)) {
 			redisUtil.delete(key);
 		}
-		return ObjectUtils.isNotNull(captcha) ? captcha.toString() : EMPTY;
+		return ObjectUtil.isNotNull(captcha) ? captcha.toString() : EMPTY;
 	}
 
 	/**

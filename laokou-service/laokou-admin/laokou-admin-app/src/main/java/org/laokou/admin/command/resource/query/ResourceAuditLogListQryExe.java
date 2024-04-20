@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.AuditLogConvertor;
 import org.laokou.admin.dto.resource.ResourceAuditLogListQry;
 import org.laokou.admin.dto.resource.clientobject.AuditLogCO;
-import org.laokou.admin.gatewayimpl.database.AuditLogMapper;
+import org.laokou.admin.gatewayimpl.database.AuditLogRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.AuditLogDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -41,7 +41,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class ResourceAuditLogListQryExe {
 
-	private final AuditLogMapper auditLogMapper;
+	private final AuditLogRepository auditLogMapper;
 
 	private final AuditLogConvertor auditLogConvertor;
 

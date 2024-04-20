@@ -31,7 +31,7 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
@@ -92,7 +92,7 @@ public class OperateLog extends AggregateRoot<Long> {
 	private Long takeTime;
 
 	public void modifyStatus(Exception e, HttpServletRequest request, String appName) {
-		if (ObjectUtils.isNotNull(e)) {
+		if (ObjectUtil.isNotNull(e)) {
 			operateFail(e, request, appName);
 		}
 		else {

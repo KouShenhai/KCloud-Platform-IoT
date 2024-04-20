@@ -28,8 +28,8 @@ import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.laokou.admin.domain.resource.Resource;
-import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
-import org.laokou.admin.gatewayimpl.database.ResourceMapper;
+import org.laokou.admin.gatewayimpl.database.ResourceAuditRepository;
+import org.laokou.admin.gatewayimpl.database.ResourceRepository;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceIndex;
@@ -39,7 +39,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -62,9 +62,9 @@ import static org.laokou.common.i18n.common.StringConstant.UNDER;
 @RequiredArgsConstructor
 public class ResourceGatewayImpl implements ResourceGateway {
 
-	private final ResourceMapper resourceMapper;
+	private final ResourceRepository resourceMapper;
 
-	private final ResourceAuditMapper resourceAuditMapper;
+	private final ResourceAuditRepository resourceAuditMapper;
 
 	private final ResourceConvertor resourceConvertor;
 
@@ -225,7 +225,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	 */
 	private void insertResourceAudit(Resource resource) {
 		ResourceAuditDO resourceAuditDO = ConvertUtil.sourceToTarget(resource, ResourceAuditDO.class);
-		Assert.isTrue(ObjectUtils.isNotNull(resourceAuditDO), "resource audit is null");
+		Assert.isTrue(ObjectUtil.isNotNull(resourceAuditDO), "resource audit is null");
 		resourceAuditDO.setResourceId(resource.getId());
 		// resourceAuditMapper.insertTable(resourceAuditDO);
 	}
