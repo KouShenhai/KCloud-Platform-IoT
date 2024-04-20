@@ -73,13 +73,13 @@ public class AuthA extends AggregateRoot<Long> {
 	@Schema(name = "LOGIN_SUCCEEDED", description = "登录成功")
 	private final String LOGIN_SUCCEEDED = "OAuth2_LoginSucceeded";
 
-	public AuthA(String username, String password, Long tenantId, String type, CaptchaV captcha) {
+	public AuthA(String username, String password, Long tenantId, String type, String uuid, String captcha) {
 		this.id = IdGenerator.defaultSnowflakeId();
+		this.type = type;
 		this.username = username;
 		this.password = password;
 		this.tenantId = tenantId;
-		this.type = type;
-		this.captcha = captcha;
+		this.captcha = new CaptchaV(uuid, captcha);
 	}
 
 	public void checkPasswordAuth() {
