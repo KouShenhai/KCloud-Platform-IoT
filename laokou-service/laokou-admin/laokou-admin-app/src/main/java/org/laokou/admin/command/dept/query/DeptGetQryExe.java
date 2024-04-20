@@ -21,7 +21,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.dept.DeptGetQry;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
-import org.laokou.admin.gatewayimpl.database.DeptRepository;
+import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -37,7 +37,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class DeptGetQryExe {
 
-	private final DeptRepository deptMapper;
+	private final DeptMapper deptMapper;
 
 	/**
 	 * 执行查看部门.

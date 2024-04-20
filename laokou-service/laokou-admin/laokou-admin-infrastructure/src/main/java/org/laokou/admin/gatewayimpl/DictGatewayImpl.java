@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.DictConvertor;
 import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;
-import org.laokou.admin.gatewayimpl.database.DictRepository;
+import org.laokou.admin.gatewayimpl.database.DictMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -42,7 +42,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class DictGatewayImpl implements DictGateway {
 
-	private final DictRepository dictMapper;
+	private final DictMapper dictMapper;
 
 	private final TransactionalUtil transactionalUtil;
 

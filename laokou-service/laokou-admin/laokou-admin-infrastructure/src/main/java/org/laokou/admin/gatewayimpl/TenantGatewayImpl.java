@@ -27,8 +27,8 @@ import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
-import org.laokou.admin.gatewayimpl.database.MenuRepository;
-import org.laokou.admin.gatewayimpl.database.TenantRepository;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
+import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
@@ -71,13 +71,13 @@ import static org.laokou.common.i18n.common.TenantConstant.*;
 @RequiredArgsConstructor
 public class TenantGatewayImpl implements TenantGateway {
 
-	private final TenantRepository tenantMapper;
+	private final TenantMapper tenantMapper;
 
 	private final TransactionalUtil transactionalUtil;
 
 	private final PasswordEncoder passwordEncoder;
 
-	private final MenuRepository menuMapper;
+	private final MenuMapper menuMapper;
 
 	private final TenantConvertor tenantConvertor;
 

@@ -25,8 +25,8 @@ import org.laokou.admin.convertor.OssConvertor;
 import org.laokou.admin.domain.gateway.OssGateway;
 import org.laokou.admin.domain.oss.File;
 import org.laokou.admin.domain.oss.Oss;
-import org.laokou.admin.gatewayimpl.database.OssLogRepository;
-import org.laokou.admin.gatewayimpl.database.OssRepository;
+import org.laokou.admin.gatewayimpl.database.OssLogMapper;
+import org.laokou.admin.gatewayimpl.database.OssMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.common.algorithm.template.Algorithm;
@@ -67,9 +67,9 @@ import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 @RequiredArgsConstructor
 public class OssGatewayImpl implements OssGateway {
 
-	private final OssRepository ossMapper;
+	private final OssMapper ossMapper;
 
-	private final OssLogRepository ossLogMapper;
+	private final OssLogMapper ossLogMapper;
 
 	private final TransactionalUtil transactionalUtil;
 

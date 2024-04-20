@@ -21,9 +21,9 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.user.UserGetQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
-import org.laokou.admin.gatewayimpl.database.RoleRepository;
-import org.laokou.admin.gatewayimpl.database.UserRepository;
-import org.laokou.admin.gatewayimpl.database.UserRoleRepository;
+import org.laokou.admin.gatewayimpl.database.RoleMapper;
+import org.laokou.admin.gatewayimpl.database.UserMapper;
+import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -43,11 +43,11 @@ import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
 @RequiredArgsConstructor
 public class UserGetQryExe {
 
-	private final UserRepository userMapper;
+	private final UserMapper userMapper;
 
-	private final RoleRepository roleMapper;
+	private final RoleMapper roleMapper;
 
-	private final UserRoleRepository userRoleMapper;
+	private final UserRoleMapper userRoleMapper;
 
 	/**
 	 * 执行查看用户.

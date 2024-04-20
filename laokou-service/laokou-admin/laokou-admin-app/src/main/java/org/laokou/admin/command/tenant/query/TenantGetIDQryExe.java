@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.dto.tenant.TenantGetIDQry;
-import org.laokou.admin.gatewayimpl.database.TenantRepository;
+import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.RequestUtil;
@@ -51,7 +51,7 @@ public class TenantGetIDQryExe {
 
 	private final DefaultConfigProperties defaultConfigProperties;
 
-	private final TenantRepository tenantMapper;
+	private final TenantMapper tenantMapper;
 
 	private final RedisUtil redisUtil;
 

@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.SourceGateway;
 import org.laokou.auth.domain.model.auth.SourceE;
 import org.laokou.auth.domain.model.auth.UserE;
-import org.laokou.auth.gatewayimpl.database.SourceRepository;
+import org.laokou.auth.gatewayimpl.database.SourceMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -39,7 +39,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
-import static org.laokou.common.i18n.common.NumberConstant.DEFAULT;
 
 /**
  * 数据源.
@@ -51,7 +50,7 @@ import static org.laokou.common.i18n.common.NumberConstant.DEFAULT;
 @RequiredArgsConstructor
 public class SourceGatewayImpl implements SourceGateway {
 
-	private final SourceRepository sourceMapper;
+	private final SourceMapper sourceMapper;
 
 	private final DynamicUtil dynamicUtil;
 
@@ -67,6 +66,7 @@ public class SourceGatewayImpl implements SourceGateway {
 			return new SourceE(MASTER);
 		}
 		SourceDO sourceDO = sourceMapper.selectByTenantId(user.getTenantId());
+		return ObjectUtil.isNotNull(sourceDO) ? null : null;
 		// 验证数据源
 		checkNullSource(sourceDO);
 		return getSourceName(sourceDO);

@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.admin.domain.menu.Menu;
-import org.laokou.admin.gatewayimpl.database.MenuRepository;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -42,7 +42,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class MenuGatewayImpl implements MenuGateway {
 
-	private final MenuRepository menuMapper;
+	private final MenuMapper menuMapper;
 
 	private final TransactionalUtil transactionalUtil;
 

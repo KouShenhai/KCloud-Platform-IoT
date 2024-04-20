@@ -18,14 +18,14 @@
 package org.laokou.auth.domain.model.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.Set;
 
 /**
  * @author laokou
  */
-@Data
+@Getter
 @Schema(name = "DeptE", description = "部门实体")
 public class DeptE {
 

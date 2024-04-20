@@ -23,7 +23,7 @@ import lombok.SneakyThrows;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.log.OperateLogListQry;
 import org.laokou.admin.dto.log.clientobject.OperateLogCO;
-import org.laokou.admin.gatewayimpl.database.OperateLogRepository;
+import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -47,7 +47,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class OperateLogListQryExe {
 
-	private final OperateLogRepository operateLogMapper;
+	private final OperateLogMapper operateLogMapper;
 
 	private final Executor executor;
 

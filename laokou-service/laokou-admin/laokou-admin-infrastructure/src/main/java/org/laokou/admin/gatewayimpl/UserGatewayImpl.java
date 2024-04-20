@@ -24,8 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
-import org.laokou.admin.gatewayimpl.database.UserRepository;
-import org.laokou.admin.gatewayimpl.database.UserRoleRepository;
+import org.laokou.admin.gatewayimpl.database.UserMapper;
+import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
@@ -53,7 +53,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserGatewayImpl implements UserGateway {
 
-	private final UserRepository userMapper;
+	private final UserMapper userMapper;
 
 	private final UserConvertor userConvertor;
 
@@ -61,7 +61,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final MybatisUtil mybatisUtil;
 
-	private final UserRoleRepository userRoleMapper;
+	private final UserRoleMapper userRoleMapper;
 
 	private final TransactionalUtil transactionalUtil;
 
@@ -171,7 +171,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	private void createUserRole(UserDO userDO, List<Long> roleIds) {
 		List<UserRoleDO> list = roleIds.parallelStream().map(roleId -> convert(userDO, roleId)).toList();
-		mybatisUtil.batch(list, UserRoleRepository.class, DynamicDataSourceContextHolder.peek(), UserRoleRepository::insertOne);
+		mybatisUtil.batch(list, UserRoleMapper.class, DynamicDataSourceContextHolder.peek(), UserRoleMapper::insertOne);
 	}
 
 	private void removeUserRole(UserDO userDO) {

@@ -25,8 +25,8 @@ import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
 import org.laokou.admin.domain.message.MessageDetail;
-import org.laokou.admin.gatewayimpl.database.MessageDetailRepository;
-import org.laokou.admin.gatewayimpl.database.MessageRepository;
+import org.laokou.admin.gatewayimpl.database.MessageDetailMapper;
+import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
 import org.laokou.common.core.utils.IdGenerator;
@@ -57,7 +57,7 @@ import static org.laokou.common.i18n.common.TraceConstant.TRACE_ID;
 @RequiredArgsConstructor
 public class MessageGatewayImpl implements MessageGateway {
 
-	private final MessageRepository messageMapper;
+	private final MessageMapper messageMapper;
 
 	private final RocketMqTemplate rocketMqTemplate;
 
@@ -65,7 +65,7 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	private final MessageConvertor messageConvertor;
 
-	private final MessageDetailRepository messageDetailMapper;
+	private final MessageDetailMapper messageDetailMapper;
 
 	private final MybatisUtil mybatisUtil;
 
@@ -131,8 +131,8 @@ public class MessageGatewayImpl implements MessageGateway {
 	 */
 	private void createMessageDetail(Long messageId, Set<String> receiver) {
 		List<MessageDetailDO> list = receiver.parallelStream().map(userId -> convert(messageId, userId)).toList();
-		mybatisUtil.batch(list, MessageDetailRepository.class, DynamicDataSourceContextHolder.peek(),
-				MessageDetailRepository::insertOne);
+		mybatisUtil.batch(list, MessageDetailMapper.class, DynamicDataSourceContextHolder.peek(),
+				MessageDetailMapper::insertOne);
 	}
 
 	/**

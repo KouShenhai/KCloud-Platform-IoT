@@ -18,20 +18,12 @@
 package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-
-import static lombok.AccessLevel.PROTECTED;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-@Data
-@SuperBuilder
-@AllArgsConstructor(access = PROTECTED)
-@NoArgsConstructor(access = PROTECTED)
+@Getter
 @Schema(name = "Identifier", description = "标识")
 public abstract class Identifier<ID> implements Entity {
 

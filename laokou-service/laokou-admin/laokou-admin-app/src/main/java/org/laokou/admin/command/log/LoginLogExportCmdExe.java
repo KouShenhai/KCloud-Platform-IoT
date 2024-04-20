@@ -23,7 +23,7 @@ import org.laokou.admin.common.utils.ExcelUtil;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.log.LoginLogExportCmd;
 import org.laokou.admin.dto.log.clientobject.LoginLogExcel;
-import org.laokou.admin.gatewayimpl.database.LoginLogRepository;
+import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.template.TableTemplate;
@@ -44,7 +44,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class LoginLogExportCmdExe {
 
-	private final LoginLogRepository loginLogMapper;
+	private final LoginLogMapper loginLogMapper;
 
 	/**
 	 * 执行导出登录日志.

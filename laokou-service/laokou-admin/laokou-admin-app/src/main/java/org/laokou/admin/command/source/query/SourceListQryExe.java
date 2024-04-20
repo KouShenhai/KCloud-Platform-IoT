@@ -22,7 +22,7 @@ import lombok.SneakyThrows;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.source.SourceListQry;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
-import org.laokou.admin.gatewayimpl.database.SourceRepository;
+import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -44,7 +44,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_SOURCE;
 @RequiredArgsConstructor
 public class SourceListQryExe {
 
-	private final SourceRepository sourceMapper;
+	private final SourceMapper sourceMapper;
 
 	private final Executor executor;
 

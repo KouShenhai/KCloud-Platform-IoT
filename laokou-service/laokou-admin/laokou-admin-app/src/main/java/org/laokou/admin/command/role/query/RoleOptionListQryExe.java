@@ -21,7 +21,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
-import org.laokou.admin.gatewayimpl.database.RoleRepository;
+import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -39,7 +39,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class RoleOptionListQryExe {
 
-	private final RoleRepository roleMapper;
+	private final RoleMapper roleMapper;
 
 	/**
 	 * 执行查询角色下拉框选择项列表.

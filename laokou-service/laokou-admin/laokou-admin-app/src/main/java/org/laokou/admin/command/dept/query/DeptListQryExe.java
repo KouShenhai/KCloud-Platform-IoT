@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.common.FindTypeEnum;
 import org.laokou.admin.dto.dept.DeptListQry;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
-import org.laokou.admin.gatewayimpl.database.DeptRepository;
+import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
@@ -45,7 +45,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class DeptListQryExe {
 
-	private final DeptRepository deptMapper;
+	private final DeptMapper deptMapper;
 
 	/**
 	 * 执行查询部门列表.

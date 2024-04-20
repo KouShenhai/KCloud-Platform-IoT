@@ -21,7 +21,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.menu.MenuTenantListQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
-import org.laokou.admin.gatewayimpl.database.MenuRepository;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.common.FindTypeEnum;
@@ -42,7 +42,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class MenuTenantListQryExe {
 
-	private final MenuRepository menuMapper;
+	private final MenuMapper menuMapper;
 
 	/**
 	 * 执行查看租户树菜单.

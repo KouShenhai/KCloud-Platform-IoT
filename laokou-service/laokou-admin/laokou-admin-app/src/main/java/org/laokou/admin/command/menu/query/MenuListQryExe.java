@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.common.FindTypeEnum;
 import org.laokou.admin.dto.menu.MenuListQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
-import org.laokou.admin.gatewayimpl.database.MenuRepository;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
@@ -52,7 +52,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class MenuListQryExe {
 
-	private final MenuRepository menuMapper;
+	private final MenuMapper menuMapper;
 
 	private final RedisUtil redisUtil;
 

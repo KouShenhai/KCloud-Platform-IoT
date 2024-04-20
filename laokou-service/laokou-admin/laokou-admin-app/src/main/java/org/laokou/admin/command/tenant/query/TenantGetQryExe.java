@@ -20,7 +20,7 @@ package org.laokou.admin.command.tenant.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.tenant.TenantGetQry;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
-import org.laokou.admin.gatewayimpl.database.TenantRepository;
+import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TenantGetQryExe {
 
-	private final TenantRepository tenantMapper;
+	private final TenantMapper tenantMapper;
 
 	/**
 	 * 执行查看租户.

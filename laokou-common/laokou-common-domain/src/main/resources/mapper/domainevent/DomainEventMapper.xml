@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.laokou.common.domain.database.DomainEventMapper">
+
+    <sql id="columns">
+        `id`,
+        creator,
+        editor,
+        create_date,
+        update_date,
+        dept_id,
+        dept_path,
+        tenant_id,
+        aggregate_id,
+        event_type,
+        event_status,
+        topic,
+        source_name,
+        app_name,
+        `attribute`
+    </sql>
+    <update id="updateStatus">
+        <choose>
+            <when test="evt.eventStatus == 'PUBLISH_SUCCEED' or evt.eventStatus == 'PUBLISH_FAILED'">
+                update boot_sys_domain_event set event_status = #{evt.eventStatus} where id = #{evt.id} and event_status = 'CREATED'
+            </when>
+            <when test="evt.eventStatus == 'CONSUME_SUCCEED' or evt.eventStatus == 'CONSUME_FAILED'">
+                update boot_sys_domain_event set event_status = #{evt.eventStatus} where id = #{evt.id} and (event_status = 'CREATED' or event_status = 'PUBLISH_SUCCEED' or event_status = 'PUBLISH_FAILED')
+            </when>
+        </choose>
+    </update>
+
+    <select id="selectObjects" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.common.domain.database.dataobject.DomainEventDO">
+        select <include refid="columns"/>
+            from boot_sys_domain_event
+        where del_flag = 0
+            and event_status in ('CREATED','PUBLISH_FAILED','CONSUME_FAILED','PUBLISH_SUCCEED')
+        <if test="sourceNames != null and sourceNames.size() > 0">
+            and source_name in
+            <foreach collection="sourceNames" item="item" open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="appName != null and appName != ''">
+            and app_name = #{appName}
+        </if>
+    </select>
+    <select id="selectTotal" resultType="long">
+        select count(1)
+        from boot_sys_domain_event
+        where del_flag = 0
+        and event_status in ('CREATED','PUBLISH_FAILED','CONSUME_FAILED', 'PUBLISH_SUCCEED')
+        <if test="sourceNames != null and sourceNames.size() > 0">
+            and source_name in
+            <foreach collection="sourceNames" item="item" open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="appName != null and appName != ''">
+            and app_name = #{appName}
+        </if>
+    </select>
+
+    <insert id="insertOne" useGeneratedKeys="false">
+        insert into boot_sys_domain_event(<include refid="columns"/>)
+            values (
+                    #{id},
+                    #{creator},
+                    #{editor},
+                    #{createDate},
+                    #{updateDate},
+                    #{deptId},
+                    #{deptPath},
+                    #{tenantId},
+                    #{aggregateId},
+                    #{eventType},
+                    #{eventStatus},
+                    #{topic},
+                    #{sourceName},
+                    #{appName},
+                    #{attribute}
+        )
+    </insert>
+
+    <delete id="deleteByYmd">
+        delete from boot_sys_domain_event where date_format(create_date, '%Y%m%d') <![CDATA[ < ]]> #{ymd}
+    </delete>
+
+</mapper>

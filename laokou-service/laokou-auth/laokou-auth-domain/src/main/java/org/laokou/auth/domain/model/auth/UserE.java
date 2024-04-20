@@ -66,6 +66,9 @@ public class UserE {
 	@Schema(name = "deptPath", description = "部门PATH")
 	private String deptPath;
 
+	public UserE() {
+	}
+
 	public UserE(Long tenantId) {
 		this.tenantId = tenantId;
 	}

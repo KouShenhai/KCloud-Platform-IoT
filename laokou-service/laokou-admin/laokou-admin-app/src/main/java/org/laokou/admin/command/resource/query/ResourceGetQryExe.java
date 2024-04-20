@@ -21,7 +21,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.resource.ResourceGetQry;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
-import org.laokou.admin.gatewayimpl.database.ResourceRepository;
+import org.laokou.admin.gatewayimpl.database.ResourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -37,7 +37,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class ResourceGetQryExe {
 
-	private final ResourceRepository resourceMapper;
+	private final ResourceMapper resourceMapper;
 
 	/**
 	 * 执行查看资源.

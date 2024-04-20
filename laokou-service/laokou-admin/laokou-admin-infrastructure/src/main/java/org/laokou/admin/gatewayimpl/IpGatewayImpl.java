@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.IpConvertor;
 import org.laokou.admin.domain.gateway.IpGateway;
 import org.laokou.admin.domain.ip.Ip;
-import org.laokou.admin.gatewayimpl.database.IpRepository;
+import org.laokou.admin.gatewayimpl.database.IpMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.IpDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -50,7 +50,7 @@ import static org.laokou.common.redis.utils.RedisUtil.NOT_EXPIRE;
 @RequiredArgsConstructor
 public class IpGatewayImpl implements IpGateway {
 
-	private final IpRepository ipMapper;
+	private final IpMapper ipMapper;
 
 	private final IpConvertor ipConvertor;
 

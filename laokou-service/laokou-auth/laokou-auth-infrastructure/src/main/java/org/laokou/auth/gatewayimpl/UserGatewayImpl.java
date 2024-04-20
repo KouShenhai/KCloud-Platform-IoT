@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.model.auth.UserE;
-import org.laokou.auth.gatewayimpl.database.UserRepository;
+import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -44,7 +44,7 @@ import static org.laokou.common.i18n.common.exception.SystemException.TABLE_NOT_
 @RequiredArgsConstructor
 public class UserGatewayImpl implements UserGateway {
 
-	private final UserRepository userMapper;
+	private final UserMapper userMapper;
 
 	private final UserConvertor userConvertor;
 

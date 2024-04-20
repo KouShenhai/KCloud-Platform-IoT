@@ -21,7 +21,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.oss.OssGetQry;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
-import org.laokou.admin.gatewayimpl.database.OssRepository;
+import org.laokou.admin.gatewayimpl.database.OssMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -37,7 +37,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class OssGetQryExe {
 
-	private final OssRepository ossMapper;
+	private final OssMapper ossMapper;
 
 	/**
 	 * 执行查看OSS.

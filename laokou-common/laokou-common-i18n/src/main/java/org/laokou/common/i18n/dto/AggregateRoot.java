@@ -18,10 +18,7 @@
 package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.Getter;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -31,17 +28,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static lombok.AccessLevel.PROTECTED;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_TENANT_ID_REQUIRE;
 import static org.laokou.common.i18n.common.exception.ParamException.SYSTEM_ID_REQUIRE;
 
 /**
  * @author laokou
  */
-@Data
-@SuperBuilder
-@AllArgsConstructor(access = PROTECTED)
-@NoArgsConstructor(access = PROTECTED)
+@Getter
 @Schema(name = "AggregateRoot", description = "聚合根")
 public abstract class AggregateRoot<ID> extends Identifier<ID> {
 

@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.admin.dto.ip.IpListQry;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
-import org.laokou.admin.gatewayimpl.database.IpRepository;
+import org.laokou.admin.gatewayimpl.database.IpMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.IpDO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -41,7 +41,7 @@ import java.util.concurrent.Executor;
 @RequiredArgsConstructor
 public class IpListQryExe {
 
-	private final IpRepository ipMapper;
+	private final IpMapper ipMapper;
 
 	private final Executor executor;
 

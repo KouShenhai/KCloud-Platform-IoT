@@ -22,8 +22,8 @@ import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.convertor.DomainEventConvertor;
-import org.laokou.common.domain.repository.DomainEventDO;
-import org.laokou.common.domain.repository.DomainEventRepository;
+import org.laokou.common.domain.database.dataobject.DomainEventDO;
+import org.laokou.common.domain.database.DomainEventMapper;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
@@ -39,7 +39,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class DomainEventServiceImpl implements DomainEventService {
 
-	private final DomainEventRepository domainEventMapper;
+	private final DomainEventMapper domainEventMapper;
 
 	private final MybatisUtil mybatisUtil;
 
@@ -47,8 +47,8 @@ public class DomainEventServiceImpl implements DomainEventService {
 	public void create(List<DomainEvent<Long>> events) {
 		if (CollectionUtil.isNotEmpty(events)) {
 			List<DomainEventDO> list = events.stream().map(DomainEventConvertor::toDataObject).toList();
-			mybatisUtil.batch(list, DomainEventRepository.class, events.getFirst().getSourceName(),
-					DomainEventRepository::insertOne);
+			mybatisUtil.batch(list, DomainEventMapper.class, events.getFirst().getSourceName(),
+					DomainEventMapper::insertOne);
 			DomainEventContextHolder.set(events);
 		}
 	}
@@ -56,8 +56,8 @@ public class DomainEventServiceImpl implements DomainEventService {
 	@Override
 	public void modify(List<DomainEvent<Long>> events) {
 		List<DomainEventDO> list = events.stream().map(DomainEventConvertor::toDataObject).toList();
-		mybatisUtil.batch(list, DomainEventRepository.class, events.getFirst().getSourceName(),
-				DomainEventRepository::updateStatus);
+		mybatisUtil.batch(list, DomainEventMapper.class, events.getFirst().getSourceName(),
+				DomainEventMapper::updateStatus);
 	}
 
 	@Override

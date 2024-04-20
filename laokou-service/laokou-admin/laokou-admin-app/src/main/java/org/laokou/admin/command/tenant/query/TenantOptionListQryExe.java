@@ -20,7 +20,7 @@ package org.laokou.admin.command.tenant.query;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
-import org.laokou.admin.gatewayimpl.database.TenantRepository;
+import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -36,7 +36,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TenantOptionListQryExe {
 
-	private final TenantRepository tenantMapper;
+	private final TenantMapper tenantMapper;
 
 	/**
 	 * 执行查询租户下拉框选择项列表.

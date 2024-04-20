@@ -21,7 +21,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.message.MessageUnreadListQry;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
-import org.laokou.admin.gatewayimpl.database.MessageRepository;
+import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -44,7 +44,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class MessageUnreadListQryExe {
 
-	private final MessageRepository messageMapper;
+	private final MessageMapper messageMapper;
 
 	private final TransactionalUtil transactionalUtil;
 

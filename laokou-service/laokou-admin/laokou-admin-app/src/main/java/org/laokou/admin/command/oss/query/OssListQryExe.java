@@ -23,7 +23,7 @@ import lombok.SneakyThrows;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.oss.OssListQry;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
-import org.laokou.admin.gatewayimpl.database.OssRepository;
+import org.laokou.admin.gatewayimpl.database.OssMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -46,7 +46,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class OssListQryExe {
 
-	private final OssRepository ossMapper;
+	private final OssMapper ossMapper;
 
 	private final Executor executor;
 

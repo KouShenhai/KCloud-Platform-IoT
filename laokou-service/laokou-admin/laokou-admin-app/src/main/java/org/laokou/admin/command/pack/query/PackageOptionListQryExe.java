@@ -20,7 +20,7 @@ package org.laokou.admin.command.pack.query;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
-import org.laokou.admin.gatewayimpl.database.PackageRepository;
+import org.laokou.admin.gatewayimpl.database.PackageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -36,7 +36,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PackageOptionListQryExe {
 
-	private final PackageRepository packageMapper;
+	private final PackageMapper packageMapper;
 
 	/**
 	 * 执行查询套餐下拉框选择项列表.

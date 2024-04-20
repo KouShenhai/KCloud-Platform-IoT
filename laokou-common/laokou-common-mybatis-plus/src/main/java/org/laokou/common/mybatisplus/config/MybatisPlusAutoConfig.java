@@ -55,7 +55,7 @@ import static org.laokou.common.i18n.common.SysConstant.APPLICATION;
  */
 @AutoConfiguration
 @ConditionalOnClass({ DataSource.class })
-@MapperScan("org.laokou.common.mybatisplus.repository")
+@MapperScan("org.laokou.common.mybatisplus.mapper")
 public class MybatisPlusAutoConfig {
 
 	// 静态注入缓存处理类

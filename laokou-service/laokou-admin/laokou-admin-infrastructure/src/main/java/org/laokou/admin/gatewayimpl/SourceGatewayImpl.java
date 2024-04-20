@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.SourceConvertor;
 import org.laokou.admin.domain.gateway.SourceGateway;
 import org.laokou.admin.domain.source.Source;
-import org.laokou.admin.gatewayimpl.database.SourceRepository;
+import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -42,7 +42,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SourceGatewayImpl implements SourceGateway {
 
-	private final SourceRepository sourceMapper;
+	private final SourceMapper sourceMapper;
 
 	private final TransactionalUtil transactionalUtil;
 

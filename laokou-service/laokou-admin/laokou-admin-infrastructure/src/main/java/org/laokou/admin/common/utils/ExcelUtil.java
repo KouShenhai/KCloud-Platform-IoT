@@ -44,8 +44,8 @@ import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
-import org.laokou.common.mybatisplus.repository.BaseDO;
-import org.laokou.common.mybatisplus.repository.CrudRepository;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 
 import java.io.InputStream;
@@ -78,21 +78,21 @@ public class ExcelUtil {
 	}
 
 	public static <DO extends BaseDO> void doExport(List<String> tables, HttpServletResponse response, DO param,
-													PageQuery pageQuery, CrudRepository<Long, Integer, DO> crudRepository, Class<?> clazz) {
-		doExport(tables, DEFAULT_SIZE, response, param, pageQuery, crudRepository, clazz);
+													PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
+		doExport(tables, DEFAULT_SIZE, response, param, pageQuery, crudMapper, clazz);
 	}
 
 	@SneakyThrows
 	public static <DO extends BaseDO> void doExport(List<String> tables, int size, HttpServletResponse response,
-													DO param, PageQuery pageQuery, CrudRepository<Long, Integer, DO> crudRepository, Class<?> clazz) {
+													DO param, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
 		try (ServletOutputStream out = response.getOutputStream();
 				ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
 			// 设置请求头
 			header(response);
-			if (crudRepository.selectObjCount(tables, param, pageQuery) > 0) {
+			if (crudMapper.selectObjCount(tables, param, pageQuery) > 0) {
 				// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
-				crudRepository.selectObjList(tables, param, pageQuery, resultContext -> {
+				crudMapper.selectObjList(tables, param, pageQuery, resultContext -> {
 					list.add(resultContext.getResultObject());
 					if (list.size() % size == 0) {
 						writeSheet(list, clazz, excelWriter);

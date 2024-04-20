@@ -18,7 +18,7 @@
 package org.laokou.common.domain.convertor;
 
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.repository.DomainEventDO;
+import org.laokou.common.domain.database.dataobject.DomainEventDO;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.ObjectUtil;
 

@@ -20,7 +20,7 @@ package org.laokou.admin.command.menu.query;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.menu.MenuIdsGetQry;
-import org.laokou.admin.gatewayimpl.database.MenuRepository;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +37,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
 @RequiredArgsConstructor
 public class MenuIdsGetQryExe {
 
-	private final MenuRepository menuMapper;
+	private final MenuMapper menuMapper;
 
 	/**
 	 * 执行查看菜单IDS.

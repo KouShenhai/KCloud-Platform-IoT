@@ -19,7 +19,7 @@ package org.laokou.common.domain.service;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.ibatis.session.ResultHandler;
-import org.laokou.common.domain.repository.DomainEventDO;
+import org.laokou.common.domain.database.dataobject.DomainEventDO;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 import java.util.List;

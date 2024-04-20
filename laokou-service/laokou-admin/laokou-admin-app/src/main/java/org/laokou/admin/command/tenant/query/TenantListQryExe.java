@@ -22,7 +22,7 @@ import lombok.SneakyThrows;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.tenant.TenantListQry;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
-import org.laokou.admin.gatewayimpl.database.TenantRepository;
+import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -44,7 +44,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_TENANT;
 @RequiredArgsConstructor
 public class TenantListQryExe {
 
-	private final TenantRepository tenantMapper;
+	private final TenantMapper tenantMapper;
 
 	private final Executor executor;
 

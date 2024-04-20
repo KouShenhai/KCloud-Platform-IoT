@@ -24,8 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.dto.log.domainevent.AuditLogEvent;
 import org.laokou.admin.dto.resource.ResourceAuditTaskCmd;
-import org.laokou.admin.gatewayimpl.database.ResourceAuditRepository;
-import org.laokou.admin.gatewayimpl.database.ResourceRepository;
+import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
+import org.laokou.admin.gatewayimpl.database.ResourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.common.core.utils.ConvertUtil;
@@ -49,9 +49,9 @@ public class ResourceAuditTaskCmdExe {
 
 	// private final TasksFeignClient tasksFeignClient;
 
-	private final ResourceAuditRepository resourceAuditMapper;
+	private final ResourceAuditMapper resourceAuditMapper;
 
-	private final ResourceRepository resourceMapper;
+	private final ResourceMapper resourceMapper;
 
 	private final EventUtil eventUtil;
 

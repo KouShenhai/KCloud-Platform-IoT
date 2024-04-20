@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.DeptConvertor;
 import org.laokou.admin.domain.dept.Dept;
 import org.laokou.admin.domain.gateway.DeptGateway;
-import org.laokou.admin.gatewayimpl.database.DeptRepository;
+import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -50,7 +50,7 @@ import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
 @RequiredArgsConstructor
 public class DeptGatewayImpl implements DeptGateway {
 
-	private final DeptRepository deptMapper;
+	private final DeptMapper deptMapper;
 
 	private final TransactionalUtil transactionalUtil;
 
@@ -160,8 +160,8 @@ public class DeptGatewayImpl implements DeptGateway {
 	private void modifyPath(String oldPath, String newPath, List<DeptDO> children) {
 		if (CollectionUtil.isNotEmpty(children)) {
 			children.parallelStream().forEach(item -> item.setPath(item.getPath().replace(oldPath, newPath)));
-			mybatisUtil.batch(children, DeptRepository.class, DynamicDataSourceContextHolder.peek(),
-					DeptRepository::updateById);
+			mybatisUtil.batch(children, DeptMapper.class, DynamicDataSourceContextHolder.peek(),
+					DeptMapper::updateById);
 		}
 	}
 

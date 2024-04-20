@@ -28,8 +28,8 @@ import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.laokou.admin.domain.resource.Resource;
-import org.laokou.admin.gatewayimpl.database.ResourceAuditRepository;
-import org.laokou.admin.gatewayimpl.database.ResourceRepository;
+import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
+import org.laokou.admin.gatewayimpl.database.ResourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceIndex;
@@ -62,9 +62,9 @@ import static org.laokou.common.i18n.common.StringConstant.UNDER;
 @RequiredArgsConstructor
 public class ResourceGatewayImpl implements ResourceGateway {
 
-	private final ResourceRepository resourceMapper;
+	private final ResourceMapper resourceMapper;
 
-	private final ResourceAuditRepository resourceAuditMapper;
+	private final ResourceAuditMapper resourceAuditMapper;
 
 	private final ResourceConvertor resourceConvertor;
 

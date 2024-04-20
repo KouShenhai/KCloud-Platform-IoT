@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.config.DefaultConfigProperties;
-import org.laokou.admin.gatewayimpl.database.SourceRepository;
+import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -55,7 +55,7 @@ import static org.laokou.common.i18n.common.DatasourceConstant.SHOW_TABLES;
 @RequiredArgsConstructor
 public class DsUtil {
 
-	private final SourceRepository sourceMapper;
+	private final SourceMapper sourceMapper;
 
 	private final DynamicUtil dynamicUtil;
 
