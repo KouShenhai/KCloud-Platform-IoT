@@ -36,15 +36,29 @@ public class HanlpTest {
 
 	public static void main(String[] args) {
 		// 600 => 长度25
-		String str = "admin123456789qwerty12345";
-		String mail = "@dmin123456789qwerty1@3.55";
-		index(str);
-		standard(str);
+		String str = "laok5";
+		// String mail = "@dmin123456789qwerty1@3.55";
+		// index(str);
+		// standard(str);
 		aes(str, 4);
-		aes(mail, 4);
+		// aes(mail, 4);
+		// aes();
+		// log.info("{}", str.length());
+		// log.info("<<<<<<<<<<{}", AesUtil.encrypt(str).length());
+	}
+
+	private static void aes() {
+		Set<String> set = new HashSet<>();
+		set.add(AesUtil.encrypt("xxx"));
+		set.add(AesUtil.encrypt("xxxx"));
+		set.add(AesUtil.encrypt("xxxx"));
+		String s = StringUtil.collectionToDelimitedString(set, "~");
+		log.info("{}", s);
+		log.info(">>>>>>>>>>>{}", s.length());
 	}
 
 	private static void aes(String str, int sliceNum) {
+		log.info(">>>>>>>>>>>>>   {}", AesUtil.encrypt(str));
 		int length = str.length();
 		if (length < sliceNum) {
 			return;
