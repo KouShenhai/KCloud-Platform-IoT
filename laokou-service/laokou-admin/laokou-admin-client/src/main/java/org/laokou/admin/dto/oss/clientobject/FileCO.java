@@ -30,9 +30,6 @@ import static lombok.AccessLevel.PRIVATE;
  * @author laokou
  */
 @Data
-@Builder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "FileCO", description = "文件")
 public class FileCO extends ClientObject {
 

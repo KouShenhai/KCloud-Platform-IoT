@@ -61,9 +61,6 @@ public class UserContextHolder {
 	}
 
 	@Data
-	@Builder
-	@AllArgsConstructor(access = PRIVATE)
-	@NoArgsConstructor(access = PRIVATE)
 	@Schema(name = "User", description = "用户")
 	public static class User {
 
