@@ -46,7 +46,7 @@ public class DeptIdsGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<List<Long>> execute(DeptIdsGetQry qry) {
-		return Result.of(deptMapper.selectIdsByRoleId(qry.getRoleId()));
+		return Result.ok(deptMapper.selectIdsByRoleId(qry.getRoleId()));
 	}
 
 }

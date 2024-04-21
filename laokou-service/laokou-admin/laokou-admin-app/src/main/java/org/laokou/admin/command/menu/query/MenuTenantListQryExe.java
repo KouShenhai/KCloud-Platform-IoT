@@ -54,7 +54,7 @@ public class MenuTenantListQryExe {
 		return switch (FindTypeEnum.valueOf(qry.getType())) {
 			case LIST, USER_TREE_LIST -> null;
 			case TREE_LIST ->
-				Result.of(buildTreeNode(menuMapper.selectTenantMenuList().stream().map(this::convert).toList())
+				Result.ok(buildTreeNode(menuMapper.selectTenantMenuList().stream().map(this::convert).toList())
 					.getChildren());
 		};
 	}

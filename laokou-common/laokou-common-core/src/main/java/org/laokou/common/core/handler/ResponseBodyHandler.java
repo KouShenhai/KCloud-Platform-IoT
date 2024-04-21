@@ -58,7 +58,7 @@ public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
 			return result;
 		}
 		if (ObjectUtil.isNull(body)) {
-			return Result.of(EMPTY);
+			return Result.ok(EMPTY);
 		}
 		return body;
 	}

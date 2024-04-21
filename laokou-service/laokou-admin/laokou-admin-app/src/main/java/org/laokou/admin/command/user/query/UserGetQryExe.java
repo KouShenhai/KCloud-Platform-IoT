@@ -57,7 +57,7 @@ public class UserGetQryExe {
 	@DS(TENANT)
 	public Result<UserCO> execute(UserGetQry qry) {
 		UserDO userDO = userMapper.selectById(qry.getId());
-		return Result.of(convert(userDO));
+		return Result.ok(convert(userDO));
 	}
 
 	private UserCO convert(UserDO userDO) {

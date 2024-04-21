@@ -21,6 +21,8 @@ import org.springframework.security.core.Authentication;
 
 import java.util.Map;
 
+import static org.laokou.auth.domain.model.auth.AuthA.MAIL;
+
 /**
  * 邮箱转换器.
  *

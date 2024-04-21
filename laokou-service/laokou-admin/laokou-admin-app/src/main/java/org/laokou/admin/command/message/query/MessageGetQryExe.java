@@ -46,7 +46,7 @@ public class MessageGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<MessageCO> execute(MessageGetQry qry) {
-		return Result.of(convert(messageMapper.selectById(qry.getId())));
+		return Result.ok(convert(messageMapper.selectById(qry.getId())));
 	}
 
 	private MessageCO convert(MessageDO messageDO) {

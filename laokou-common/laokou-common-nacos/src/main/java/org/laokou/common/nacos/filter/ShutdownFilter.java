@@ -61,7 +61,7 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 	@SneakyThrows
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
 		if (open()) {
-			ResponseUtil.response((HttpServletResponse) response, Result.of(EMPTY));
+			ResponseUtil.response((HttpServletResponse) response, Result.ok(EMPTY));
 			return;
 		}
 		ResponseUtil.response((HttpServletResponse) response, Result.fail(SERVICE_UNAVAILABLE));
@@ -76,7 +76,7 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 		if (open()) {
-			return ReactiveResponseUtil.response(exchange, Result.of(EMPTY));
+			return ReactiveResponseUtil.response(exchange, Result.ok(EMPTY));
 		}
 		return ReactiveResponseUtil.response(exchange, Result.fail(SERVICE_UNAVAILABLE));
 	}

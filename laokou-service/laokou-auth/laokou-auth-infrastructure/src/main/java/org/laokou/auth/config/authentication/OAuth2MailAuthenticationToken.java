@@ -22,7 +22,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 import java.util.Map;
 
-import static org.laokou.auth.config.authentication.AbstractOAuth2AuthenticationConverter.MAIL;
+import static org.laokou.auth.domain.model.auth.AuthA.MAIL;
 
 /**
  * 邮箱令牌.

@@ -18,15 +18,25 @@
 package org.laokou.auth.domain.model.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_PASSWORD_REQUIRE;
-import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_USERNAME_REQUIRE;
+import java.util.List;
+
+import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
+import static org.laokou.common.i18n.common.UserStatusEnum.DISABLE;
+import static org.laokou.common.i18n.common.exception.AuthException.*;
+import static org.laokou.common.i18n.common.exception.ParamException.*;
 
 /**
  * @author laokou
@@ -41,6 +51,9 @@ public class AuthA extends AggregateRoot<Long> {
 	@Schema(name = "password", description = "密码", example = "123456")
 	private String password;
 
+	@Schema(name = "grantType", description = "类型 mail邮箱 mobile手机号 password密码 authorization_code授权码")
+	private String grantType;
+
 	@Schema(name = "captcha", description = "验证码值对象")
 	private CaptchaV captcha;
 
@@ -52,6 +65,12 @@ public class AuthA extends AggregateRoot<Long> {
 
 	@Schema(name = "source", description = "数据源实体")
 	private SourceE source;
+
+	@Schema(name = "dept", description = "部门实体")
+	private DeptE dept;
+
+	@Schema(name = "request", description = "请求")
+	private HttpServletRequest request;
 
 	@Schema(name = "LOGIN_SUCCEEDED", description = "登录成功")
 	private final String LOGIN_SUCCEEDED = "OAuth2_LoginSucceeded";
@@ -92,44 +111,48 @@ public class AuthA extends AggregateRoot<Long> {
 	public AuthA() {
 	}
 
-	public AuthA(String username, String password, String tenantId, String type, String uuid, String captcha) {
+	public AuthA(String username, String password, String tenantId, String grantType, String uuid, String captcha, HttpServletRequest request) {
 		this.id = IdGenerator.defaultSnowflakeId();
 		this.username = username;
 		this.password = password;
+		this.grantType = grantType;
 		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : DEFAULT_TENANT;
-		this.captcha = new CaptchaV(uuid, type, captcha);
+		this.captcha = new CaptchaV(uuid, captcha);
+		this.user = createUser();
+		this.request = request;
 	}
 
-	public UserE createUser() {
-		String uuid = this.captcha.uuid();
-		return new UserE(this.username, uuid, uuid);
-	}
-
-	public String getGrantType() {
-		return captcha.type();
+	public void modifyAppName(String appName) {
+		this.appName = appName;
 	}
 
 	public void checkNullByMail() {
 		// 检查租户ID
 		checkNullTenantId();
+		// 检查邮箱
+		checkNullMail();
 		// 检查验证码
 		checkNullCaptcha();
 		// 检查邮箱
-		captcha.checkMail();
+		checkMail();
 	}
 
 	public void checkNullByMobile() {
 		// 检查租户ID
 		checkNullTenantId();
+		// 检查手机号
+		checkNullMobile();
 		// 检查验证码
 		checkNullCaptcha();
 		// 检查手机号
-		captcha.checkMobile();
+		checkMobile();
 	}
 
 	public void checkNullByPassword() {
 		// 检查租户ID
 		checkNullTenantId();
+		// 检查UUID
+		checkNullUuid();
 		// 检查验证码
 		checkNullCaptcha();
 		// 检查账号
@@ -138,11 +161,69 @@ public class AuthA extends AggregateRoot<Long> {
 		checkNullPassword();
 	}
 
-	private void checkNullCaptcha() {
-		// 检查UUID
-		captcha.checkNullUuid();
-		// 检查验证码
-		captcha.checkNullCaptcha();
+	public void modifyUser(UserE user) {
+		if (ObjectUtil.isNull(user)) {
+			throw new AuthException(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR));
+		}
+		this.user = user;
+	}
+
+	public void modifySource(SourceE source) {
+		if (ObjectUtil.isNull(source)) {
+			throw new AuthException(SOURCE_NOT_EXIST, MessageUtil.getMessage(SOURCE_NOT_EXIST));
+		}
+		this.source = source;
+	}
+
+	public void modifyMenu(MenuE menu) {
+		this.menu = menu;
+	}
+
+	public void modifyDept(DeptE dept) {
+		this.dept = dept;
+	}
+
+	public boolean isUseCaptcha() {
+		return List.of(PASSWORD, MOBILE, MAIL).contains(grantType);
+	}
+
+	public void checkCaptcha(Boolean result) {
+		if (ObjectUtil.isNull(result)) {
+			throw new AuthException(CAPTCHA_EXPIRED, MessageUtil.getMessage(CAPTCHA_EXPIRED));
+		}
+		if (!result) {
+			throw new AuthException(CAPTCHA_ERROR, MessageUtil.getMessage(CAPTCHA_ERROR));
+		}
+	}
+
+	public void checkUserPassword(PasswordEncoder passwordEncoder) {
+		if (StringUtil.isNotEmpty(this.password) && !passwordEncoder.matches(this.password, user.getPassword())) {
+			throw new AuthException(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR));
+		}
+	}
+
+	public void checkUserStatus() {
+		if (ObjectUtil.equals(DISABLE.ordinal(), this.user.getStatus())) {
+			throw new AuthException(ACCOUNT_DISABLED, MessageUtil.getMessage(ACCOUNT_DISABLED));
+		}
+	}
+
+	public void checkMenuPermissions() {
+		if (CollectionUtil.isEmpty(this.menu.getPermissions())) {
+			throw new AuthException(FORBIDDEN, MessageUtil.getMessage(FORBIDDEN));
+		}
+	}
+
+	private void fail() {
+
+	}
+
+	public void ok() {
+	}
+
+	private UserE createUser() {
+		String uuid = this.captcha.uuid();
+		return new UserE(this.username, uuid, uuid, this.tenantId);
 	}
 
 	private void checkNullPassword() {
@@ -157,58 +238,40 @@ public class AuthA extends AggregateRoot<Long> {
 		}
 	}
 
-/*
-
-	public AuthA create(AuthA authA, HttpServletRequest request, String sourceName, String appName, String authType) {
-		if (ObjectUtil.isNull(authA)) {
-			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,
-					appName, authType);
-		}
-		return authA;
-	}
-
-	public void checkPassword(String clientPassword, PasswordEncoder passwordEncoder, HttpServletRequest request,
-			String sourceName, String appName, String authType) {
-		if (StringUtil.isNotEmpty(clientPassword) && !passwordEncoder.matches(clientPassword, this.password)) {
-			loginFail(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR), request, sourceName,
-					appName, authType);
+	private void checkNullCaptcha() {
+		if (StringUtil.isEmpty(this.captcha.captcha())) {
+			throw new AuthException(OAUTH2_CAPTCHA_REQUIRE, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
 		}
 	}
 
-	public void checkStatus(HttpServletRequest request, String sourceName, String appName, String authType) {
-		if (ObjectUtil.equals(DISABLE.ordinal(), this.status)) {
-			loginFail(ACCOUNT_DISABLED, MessageUtil.getMessage(ACCOUNT_DISABLED), request, sourceName, appName,
-					authType);
+	private void checkMobile() {
+		if (!RegexUtil.mobileRegex(this.captcha.uuid())) {
+			throw new AuthException(MOBILE_ERROR, MessageUtil.getMessage(MOBILE_ERROR));
 		}
 	}
 
-	public void checkNullPermissions(Set<String> permissions, HttpServletRequest request, String sourceName,
-			String appName, String authType) {
-		if (CollectionUtil.isEmpty(permissions)) {
-			loginFail(FORBIDDEN, MessageUtil.getMessage(FORBIDDEN), request, sourceName, appName, authType);
+	private void checkMail() {
+		if (!RegexUtil.mailRegex(this.captcha.uuid())) {
+			throw new AuthException(MAIL_ERROR, MessageUtil.getMessage(MAIL_ERROR));
 		}
 	}
 
-	public void checkCaptcha(Boolean checkResult, HttpServletRequest request, String sourceName, String appName,
-			String authType) {
-		if (ObjectUtil.isNull(checkResult)) {
-			loginFail(CAPTCHA_EXPIRED, MessageUtil.getMessage(CAPTCHA_EXPIRED), request, sourceName, appName,
-					authType);
-		}
-		if (!checkResult) {
-			loginFail(CAPTCHA_ERROR, MessageUtil.getMessage(CAPTCHA_ERROR), request, sourceName, appName, authType);
+	private void checkNullUuid() {
+		if (StringUtil.isEmpty(this.captcha.uuid())) {
+			throw new AuthException(OAUTH2_UUID_REQUIRE, ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
 		}
 	}
 
-	public void loginSuccess(HttpServletRequest request, String sourceName, String appName, String authType) {
-		addEvent(new LoginSucceededEvent(this, request, MessageUtil.getMessage(LOGIN_SUCCEEDED), sourceName, appName,
-				authType));
+	private void checkNullMail() {
+		if (StringUtil.isEmpty(this.captcha.uuid())) {
+			throw new AuthException(OAUTH2_MAIL_REQUIRE, ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));
+		}
 	}
 
-	private void loginFail(String code, String message, HttpServletRequest request, String sourceName, String appName,
-			String authType) {
-		addEvent(new LoginFailedEvent(this, request, message, sourceName, appName, authType));
-		throw new AuthException(code, message);
-	}*/
+	private void checkNullMobile() {
+		if (StringUtil.isEmpty(this.captcha.uuid())) {
+			throw new AuthException(OAUTH2_MOBILE_REQUIRE, ValidatorUtil.getMessage(OAUTH2_MOBILE_REQUIRE));
+		}
+	}
 
 }

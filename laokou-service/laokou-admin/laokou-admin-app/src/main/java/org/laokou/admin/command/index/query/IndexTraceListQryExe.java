@@ -52,7 +52,7 @@ public class IndexTraceListQryExe {
 		search.setPageNum(qry.getPageNum());
 		search.setOrQueryList(Collections.singletonList(new Search.Query(TRACE_ID, qry.getTraceId())));
 		return null;
-		// return Result.of(elasticsearchTemplate.highlightSearchIndex(search));
+		// return Result.ok(elasticsearchTemplate.highlightSearchIndex(search));
 	}
 
 }

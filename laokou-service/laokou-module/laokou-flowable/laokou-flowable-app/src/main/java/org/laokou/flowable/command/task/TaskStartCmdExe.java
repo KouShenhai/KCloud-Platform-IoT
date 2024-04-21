@@ -49,7 +49,7 @@ public class TaskStartCmdExe {
 	public Result<Boolean> execute(TaskStartCmd cmd) {
 		log.info("开始流程分布式事务 XID：{}", RootContext.getXID());
 		taskGateway.start(convert(cmd));
-		return Result.of(Boolean.TRUE);
+		return Result.ok(Boolean.TRUE);
 	}
 
 	private Start convert(TaskStartCmd cmd) {

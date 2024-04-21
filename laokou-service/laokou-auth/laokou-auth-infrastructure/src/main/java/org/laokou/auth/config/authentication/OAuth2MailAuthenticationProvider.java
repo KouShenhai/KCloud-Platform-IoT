@@ -19,11 +19,7 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.model.auth.CaptchaV;
-import org.laokou.auth.domain.model.auth.AuthA;
-import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -31,11 +27,9 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.config.authentication.AbstractOAuth2AuthenticationConverter.MAIL;
-import static org.laokou.common.i18n.common.TenantConstant.TENANT_ID;
+import static org.laokou.auth.domain.model.auth.AuthA.MAIL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
-import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CODE;
 
 /**
  * 邮箱处理器.
@@ -59,24 +53,25 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticati
 	@Override
 	Authentication principal(HttpServletRequest request) {
 		try {
-			String tenantId = request.getParameter(TENANT_ID);
-			String code = request.getParameter(CODE);
-			String mail = request.getParameter(MAIL);
-			CaptchaV captchaVObj = CaptchaV.builder().captcha(code).uuid(mail).build();
-			SecretKey secretKeyObj = SecretKey.builder()
-				.type(getGrantType().getValue())
-				.secretKey(AesUtil.getSecretKeyStr())
-				.build();
-			AuthA authA = AuthA.builder()
-				.tenantId(StringUtil.parseLong(tenantId))
-				.mail(mail)
-				.captcha(captchaVObj)
-				.username(encryptAes(mail))
-				.secretKey(secretKeyObj)
-				.build();
-			authA.checkMailAuth();
-			// 获取用户信息,并认证信息
-			return super.authenticationToken(authA, request);
+//			String tenantId = request.getParameter(TENANT_ID);
+//			String code = request.getParameter(CODE);
+//			String mail = request.getParameter(MAIL);
+//			CaptchaV captchaVObj = CaptchaV.builder().captcha(code).uuid(mail).build();
+//			SecretKey secretKeyObj = SecretKey.builder()
+//				.type(getGrantType().getValue())
+//				.secretKey(AesUtil.getSecretKeyStr())
+//				.build();
+//			AuthA authA = AuthA.builder()
+//				.tenantId(StringUtil.parseLong(tenantId))
+//				.mail(mail)
+//				.captcha(captchaVObj)
+//				.username(encryptAes(mail))
+//				.secretKey(secretKeyObj)
+//				.build();
+//			authA.checkMailAuth();
+//			// 获取用户信息,并认证信息
+//			return super.authenticationToken(authA, request);
+			return null;
 		}
 		catch (AuthException e) {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);

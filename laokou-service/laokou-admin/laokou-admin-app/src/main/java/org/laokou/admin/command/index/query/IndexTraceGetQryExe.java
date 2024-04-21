@@ -50,7 +50,7 @@ public class IndexTraceGetQryExe {
 		search.setOrQueryList(Collections.singletonList(new Search.Query("id", qry.getId())));
 		return null;
 		// return
-		// Result.of(elasticsearchTemplate.highlightSearchIndex(search).getRecords().getFirst());
+		// Result.ok(elasticsearchTemplate.highlightSearchIndex(search).getRecords().getFirst());
 	}
 
 }

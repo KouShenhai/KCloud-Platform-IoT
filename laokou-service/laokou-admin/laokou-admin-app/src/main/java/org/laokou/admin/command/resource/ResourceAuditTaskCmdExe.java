@@ -79,7 +79,7 @@ public class ResourceAuditTaskCmdExe {
 		 * updateResource(id, version, status, resourceAuditDO); // 审批日志 //
 		 * domainEventPublisher.publish(toAuditLogEvent(cmd, auditStatus)); //
 		 * 审批中，则发送审批通知消息 if (status == IN_APPROVAL.getValue()) { publishMessage(assignee,
-		 * cmd); } return Result.of(flag);
+		 * cmd); } return Result.ok(flag);
 		 */
 		return null;
 	}

@@ -50,7 +50,7 @@ public class MessageUtil {
 		Message msg = JacksonUtil.toBean(message, Message.class);
 		String payload = msg.getPayload();
 		Set<String> receiver = msg.getReceiver();
-		TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.of(OK, payload)));
+		TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.ok(payload)));
 		receiver.parallelStream()
 			.forEach(clientId -> CompletableFuture.runAsync(() -> websocketServer.send(clientId, webSocketFrame),
 					executor));

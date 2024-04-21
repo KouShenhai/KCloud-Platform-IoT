@@ -53,7 +53,7 @@ public class DictOptionListQryExe {
 			.eq(DictDO::getType, qry.getType())
 			.select(DictDO::getLabel, DictDO::getValue)
 			.orderByDesc(DictDO::getId));
-		return Result.of(list.stream().map(this::convert).toList());
+		return Result.ok(list.stream().map(this::convert).toList());
 	}
 
 	private OptionCO convert(DictDO dictDO) {

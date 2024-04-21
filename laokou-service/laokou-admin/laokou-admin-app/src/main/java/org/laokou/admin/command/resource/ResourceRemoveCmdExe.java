@@ -40,7 +40,7 @@ public class ResourceRemoveCmdExe {
 	 * @return 执行删除结果
 	 */
 	public Result<Boolean> execute(ResourceRemoveCmd cmd) {
-		return Result.of(resourceGateway.deleteById(cmd.getId()));
+		return Result.ok(resourceGateway.deleteById(cmd.getId()));
 	}
 
 }

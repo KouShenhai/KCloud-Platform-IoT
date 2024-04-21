@@ -71,7 +71,7 @@ public class TaskDelegateCmdExe {
 			if (!owner.equals(task.getAssignee())) {
 				throw new RuntimeException("用户无权操作任务");
 			}
-			return Result.of(delegate(taskId, owner, deleteReason));
+			return Result.ok(delegate(taskId, owner, deleteReason));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

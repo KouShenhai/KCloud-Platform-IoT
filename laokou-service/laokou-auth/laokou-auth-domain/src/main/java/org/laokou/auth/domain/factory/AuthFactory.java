@@ -30,38 +30,27 @@ import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 @Slf4j
 public class AuthFactory {
 
-	public static AuthA build(HttpServletRequest request) {
-		String grantType = request.getParameter(GRANT_TYPE);
-		return switch (grantType) {
-            case MAIL -> mail(request, grantType);
-			case MOBILE -> mobile(request, grantType);
-			case PASSWORD -> password(request, grantType);
-			case AUTHORIZATION_CODE -> authorizationCode(request, grantType);
-			default -> new AuthA();
-		};
-	}
-
-	private static AuthA mail(HttpServletRequest request, String grantType) {
+	public static AuthA mail(HttpServletRequest request) {
 		String tenantId = request.getParameter(TENANT_ID);
 		String code = request.getParameter(CODE);
 		String mail = request.getParameter(MAIL);
 		// log.info("租户ID：{}", tenantId);
 		// log.info("验证码：{}", code);
 		// log.info("邮箱：{}", mail);
-		return new AuthA(EMPTY, EMPTY, tenantId, grantType, mail, code);
+		return new AuthA(EMPTY, EMPTY, tenantId, MAIL, mail, code, request);
 	}
 
-	private static AuthA mobile(HttpServletRequest request, String grantType) {
+	public static AuthA mobile(HttpServletRequest request) {
 		String tenantId = request.getParameter(TENANT_ID);
 		String code = request.getParameter(CODE);
 		String mobile = request.getParameter(MOBILE);
 		// log.info("租户ID：{}", tenantId);
 		// log.info("验证码：{}", code);
 		// log.info("手机：{}", mobile);
-		return new AuthA(EMPTY, EMPTY, tenantId, grantType, mobile, code);
+		return new AuthA(EMPTY, EMPTY, tenantId, MOBILE, mobile, code, request);
 	}
 
-	private static AuthA password(HttpServletRequest request, String grantType) {
+	public static AuthA password(HttpServletRequest request) {
 		String tenantId = request.getParameter(TENANT_ID);
 		String uuid = request.getParameter(UUID);
 		String captcha = request.getParameter(CAPTCHA);
@@ -72,15 +61,15 @@ public class AuthFactory {
 		// log.info("账号：{}", username);
 		// log.info("密码：{}", password);
 		// log.info("租户ID：{}", tenantId);
-		return new AuthA(username, password, tenantId, grantType, uuid, captcha);
+		return new AuthA(username, password, tenantId, PASSWORD, uuid, captcha, request);
 	}
 
-	private static AuthA authorizationCode(HttpServletRequest request, String grantType) {
+	public static AuthA authorizationCode(HttpServletRequest request) {
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
 		// log.info("账号：{}", username);
 		// log.info("密码：{}", password);
-		return new AuthA(username, password, EMPTY, grantType, EMPTY, EMPTY);
+		return new AuthA(username, password, EMPTY, AUTHORIZATION_CODE, EMPTY, EMPTY, request);
 	}
 
 }

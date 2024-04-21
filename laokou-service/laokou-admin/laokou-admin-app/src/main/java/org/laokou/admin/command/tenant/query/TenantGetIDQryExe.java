@@ -63,18 +63,18 @@ public class TenantGetIDQryExe {
 	public Result<Long> execute(TenantGetIDQry qry) {
 		String domainName = RequestUtil.getDomainName(qry.getRequest());
 		if (RegexUtil.ipRegex(domainName)) {
-			return Result.of(DEFAULT);
+			return Result.ok(DEFAULT);
 		}
 		String[] split = domainName.split(BACKSLASH + DOT);
 		if (split.length < 3 || WWW.equals(split[0])) {
-			return Result.of(DEFAULT);
+			return Result.ok(DEFAULT);
 		}
 		Set<String> domainNames = defaultConfigProperties.getDomainNames();
 		// 租户域名
 		if (domainNames.parallelStream().anyMatch(domainName::contains)) {
-			return Result.of(getTenantCache(split[0]));
+			return Result.ok(getTenantCache(split[0]));
 		}
-		return Result.of(DEFAULT);
+		return Result.ok(DEFAULT);
 	}
 
 	/**

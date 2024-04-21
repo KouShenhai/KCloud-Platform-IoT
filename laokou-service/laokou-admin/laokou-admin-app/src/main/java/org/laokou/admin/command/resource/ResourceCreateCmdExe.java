@@ -51,7 +51,7 @@ public class ResourceCreateCmdExe {
 		/*
 		 * Resource resource = resourceConvertor.toEntity(cmd.getResourceCO());
 		 * BusinessUtil.checkResource(resource); return
-		 * Result.of(resourceGateway.insert(resource));
+		 * Result.ok(resourceGateway.insert(resource));
 		 */
 	}
 

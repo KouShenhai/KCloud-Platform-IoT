@@ -34,7 +34,7 @@ public class SecretGetQryExe {
 	 * @return 密钥
 	 */
 	public Result<String> execute() {
-		return Result.of(RsaUtil.getPublicKey());
+		return Result.ok(RsaUtil.getPublicKey());
 	}
 
 }

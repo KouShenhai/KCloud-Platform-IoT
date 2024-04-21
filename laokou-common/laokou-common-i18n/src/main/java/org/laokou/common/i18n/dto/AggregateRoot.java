@@ -59,6 +59,12 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	@Schema(name = "updateDate", description = "修改时间")
 	protected LocalDateTime updateDate;
 
+	@Schema(name = "sourceName", description = "数据源名称")
+	protected String sourceName;
+
+	@Schema(name = "appName", description = "应用名称")
+	protected String appName;
+
 	@Schema(name = "events", description = "事件集合")
 	private List<DomainEvent<ID>> events;
 

@@ -18,9 +18,10 @@
 package org.laokou.auth.config.authentication;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 
 import java.util.Map;
+
+import static org.laokou.auth.domain.model.auth.AuthA.PASSWORD;
 
 /**
  * 密码转换器.
@@ -31,7 +32,7 @@ public class OAuth2PasswordAuthenticationConverter extends AbstractOAuth2Authent
 
 	@Override
 	String getGrantType() {
-		return OAuth2ParameterNames.PASSWORD;
+		return PASSWORD;
 	}
 
 	@Override

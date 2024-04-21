@@ -46,7 +46,7 @@ public class DeptGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<DeptCO> execute(DeptGetQry qry) {
-		return Result.of(convert(deptMapper.selectById(qry.getId())));
+		return Result.ok(convert(deptMapper.selectById(qry.getId())));
 	}
 
 	private DeptCO convert(DeptDO deptDO) {

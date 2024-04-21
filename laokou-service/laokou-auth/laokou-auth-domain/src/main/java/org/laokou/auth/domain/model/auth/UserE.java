@@ -69,14 +69,11 @@ public class UserE {
 	public UserE() {
 	}
 
-	public UserE(Long tenantId) {
-		this.tenantId = tenantId;
-	}
-
-	public UserE(String username, String mail, String mobile) {
+	public UserE(String username, String mail, String mobile, Long tenantId) {
 		this.username = encrypt(username);
 		this.mail = encrypt(mail);
 		this.mobile = encrypt(mobile);
+		this.tenantId = tenantId;
 	}
 
 	public boolean isSuperAdministrator() {

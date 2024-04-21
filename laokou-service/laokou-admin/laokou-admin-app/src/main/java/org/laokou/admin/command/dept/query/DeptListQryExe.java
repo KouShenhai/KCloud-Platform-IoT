@@ -55,8 +55,8 @@ public class DeptListQryExe {
 	@DS(TENANT)
 	public Result<List<DeptCO>> execute(DeptListQry qry) {
 		return switch (FindTypeEnum.valueOf(qry.getType())) {
-			case LIST -> Result.of(getDeptList(qry).stream().map(this::convert).toList());
-			case TREE_LIST -> Result.of(buildTreeNode(getDeptList(qry).stream().map(this::convert).toList()));
+			case LIST -> Result.ok(getDeptList(qry).stream().map(this::convert).toList());
+			case TREE_LIST -> Result.ok(buildTreeNode(getDeptList(qry).stream().map(this::convert).toList()));
 			case USER_TREE_LIST -> null;
 		};
 	}

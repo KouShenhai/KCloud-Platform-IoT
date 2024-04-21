@@ -56,18 +56,11 @@ public class Result<T> extends DTO {
 		return !success();
 	}
 
-	public static <T> Result<T> of(T data) {
+	public static <T> Result<T> ok(T data) {
 		Result<T> result = new Result<>();
 		result.setData(data);
 		result.setCode(OK);
 		result.setMsg(MessageUtil.getMessage(OK));
-		return result;
-	}
-
-	public static <T> Result<T> of(String code, String msg) {
-		Result<T> result = new Result<>();
-		result.setCode(code);
-		result.setMsg(msg);
 		return result;
 	}
 

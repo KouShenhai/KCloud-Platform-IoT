@@ -62,7 +62,7 @@ public class MessageUnreadListQryExe {
 		Long count = transactionalUtil.defaultExecute(
 				r -> messageMapper.selectUnreadCountByCondition(UserUtil.getUserId(), qry.getType(), pageQuery),
 				TransactionDefinition.ISOLATION_READ_UNCOMMITTED, true);
-		return Result.of(Datas.of(list.stream().map(this::convert).toList(), count));
+		return Result.ok(Datas.of(list.stream().map(this::convert).toList(), count));
 	}
 
 	private MessageCO convert(MessageDO messageDO) {

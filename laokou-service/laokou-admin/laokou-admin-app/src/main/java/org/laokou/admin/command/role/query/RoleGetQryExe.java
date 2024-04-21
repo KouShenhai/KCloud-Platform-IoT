@@ -46,7 +46,7 @@ public class RoleGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<RoleCO> execute(RoleGetQry qry) {
-		return Result.of(convert(roleMapper.selectById(qry.getId())));
+		return Result.ok(convert(roleMapper.selectById(qry.getId())));
 	}
 
 	private RoleCO convert(RoleDO roleDO) {

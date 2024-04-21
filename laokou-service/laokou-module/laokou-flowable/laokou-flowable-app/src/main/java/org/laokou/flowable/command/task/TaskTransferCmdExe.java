@@ -71,7 +71,7 @@ public class TaskTransferCmdExe {
 			if (!owner.equals(task.getAssignee())) {
 				throw new RuntimeException("用户无权操作任务");
 			}
-			return Result.of(transfer(taskId, owner, assignee));
+			return Result.ok(transfer(taskId, owner, assignee));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

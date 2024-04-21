@@ -49,7 +49,7 @@ public class RoleOptionListQryExe {
 	public Result<List<OptionCO>> execute() {
 		List<RoleDO> list = roleMapper.selectList(
 				Wrappers.lambdaQuery(RoleDO.class).select(RoleDO::getId, RoleDO::getName).orderByDesc(RoleDO::getSort));
-		return Result.of(list.stream().map(this::convert).toList());
+		return Result.ok(list.stream().map(this::convert).toList());
 	}
 
 	private OptionCO convert(RoleDO roleDO) {

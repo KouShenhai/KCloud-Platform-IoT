@@ -46,7 +46,7 @@ public class MenuIdsGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<List<Long>> execute(MenuIdsGetQry qry) {
-		return Result.of(menuMapper.selectIdsByRoleId(qry.getRoleId()));
+		return Result.ok(menuMapper.selectIdsByRoleId(qry.getRoleId()));
 	}
 
 }

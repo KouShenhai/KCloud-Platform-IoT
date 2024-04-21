@@ -21,6 +21,8 @@ import org.springframework.security.core.Authentication;
 
 import java.util.Map;
 
+import static org.laokou.auth.domain.model.auth.AuthA.MOBILE;
+
 /**
  * 手机号转换器.
  *

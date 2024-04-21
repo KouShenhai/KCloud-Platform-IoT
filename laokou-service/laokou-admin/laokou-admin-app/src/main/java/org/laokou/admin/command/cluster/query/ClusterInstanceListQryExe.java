@@ -49,7 +49,7 @@ public class ClusterInstanceListQryExe {
 		Integer pageSize = qry.getPageSize();
 		String serviceId = qry.getServiceId();
 		List<ServiceInstance> instances = serviceUtil.getInstances(serviceId);
-		return Result.of(Datas.of(instances.stream()
+		return Result.ok(Datas.of(instances.stream()
 			.map(item -> convert(item, serviceId.substring(7)))
 			.skip((long) (pageNum - 1) * pageSize)
 			.limit(pageSize)

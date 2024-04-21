@@ -70,7 +70,7 @@ public class TaskResolveCmdExe {
 			if (DelegationState.RESOLVED.equals(task.getDelegationState())) {
 				throw new RuntimeException("非处理任务，请审批任务");
 			}
-			return Result.of(resolve(taskId));
+			return Result.ok(resolve(taskId));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

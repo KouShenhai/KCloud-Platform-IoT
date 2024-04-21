@@ -64,10 +64,10 @@ public class MenuListQryExe {
 	@DS(TENANT)
 	public Result<List<MenuCO>> execute(MenuListQry qry) {
 		return switch (FindTypeEnum.valueOf(qry.getType())) {
-			case LIST -> Result.of(getMenuList(qry).stream().map(this::convert).toList());
+			case LIST -> Result.ok(getMenuList(qry).stream().map(this::convert).toList());
 			case TREE_LIST ->
-				Result.of(buildTreeNode(getMenuList(qry).stream().map(this::convert).toList()).getChildren());
-			case USER_TREE_LIST -> Result.of(getUserMenuList());
+				Result.ok(buildTreeNode(getMenuList(qry).stream().map(this::convert).toList()).getChildren());
+			case USER_TREE_LIST -> Result.ok(getUserMenuList());
 		};
 	}
 

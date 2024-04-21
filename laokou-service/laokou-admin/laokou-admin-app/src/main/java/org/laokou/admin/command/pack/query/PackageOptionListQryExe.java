@@ -46,7 +46,7 @@ public class PackageOptionListQryExe {
 		List<PackageDO> list = packageMapper.selectList(Wrappers.lambdaQuery(PackageDO.class)
 			.select(PackageDO::getId, PackageDO::getName)
 			.orderByDesc(PackageDO::getId));
-		return Result.of(list.stream().map(this::convert).toList());
+		return Result.ok(list.stream().map(this::convert).toList());
 	}
 
 	private OptionCO convert(PackageDO packageDO) {
