@@ -22,7 +22,8 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 import java.util.Map;
 
-import static org.laokou.auth.config.authentication.AbstractOAuth2AuthenticationConverter.MOBILE;
+import static org.laokou.auth.domain.model.auth.AuthA.MOBILE;
+
 
 /**
  * 手机号令牌.

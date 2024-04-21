@@ -20,10 +20,7 @@ package org.laokou.common.core.common.domain;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.core.common.event.OperateFailedEvent;
 import org.laokou.common.core.common.event.OperateSucceededEvent;
 import org.laokou.common.core.context.UserContextHolder;
@@ -36,7 +33,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
-import static lombok.AccessLevel.PRIVATE;
 import static org.laokou.common.core.utils.JacksonUtil.EMPTY_JSON;
 import static org.laokou.common.i18n.common.StringConstant.*;
 
@@ -44,9 +40,6 @@ import static org.laokou.common.i18n.common.StringConstant.*;
  * @author laokou
  */
 @Data
-@SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "OperateLog", description = "操作日志")
 public class OperateLog extends AggregateRoot<Long> {
 

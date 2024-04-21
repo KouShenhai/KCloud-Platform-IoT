@@ -45,12 +45,6 @@ import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getExcep
 @Component("passwordAuthenticationProvider")
 public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
-	@Schema(name = "CAPTCHA", description = "验证码")
-	private static final String CAPTCHA = "captcha";
-
-	@Schema(name = "UUID", description = "唯一标识")
-	private static final String UUID = "uuid";
-
 	public OAuth2PasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
 			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProvider authProvider) {
 		super(authorizationService, tokenGenerator, authProvider);
@@ -64,16 +58,12 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
 	@Override
 	Authentication principal(HttpServletRequest request) {
 		try {
-			String tenantId = request.getParameter(TENANT_ID);
-			String uuid = request.getParameter(UUID);
-			String captcha = request.getParameter(CAPTCHA);
-			String username = request.getParameter(OAuth2ParameterNames.USERNAME);
-			String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
-			// log.info("UUID：{}", uuid);
-			// log.info("验证码：{}", captcha);
-			// log.info("账号：{}", username);
-			// log.info("密码：{}", password);
-			// log.info("租户ID：{}", tenantId);
+
+//			 log.info("UUID：{}", uuid);
+//			 log.info("验证码：{}", captcha);
+//			 log.info("账号：{}", username);
+//			 log.info("密码：{}", password);
+//			 log.info("租户ID：{}", tenantId);
 			CaptchaV captchaVObj = CaptchaV.builder().uuid(uuid).captcha(captcha).build();
 			SecretKey secretKeyObj = SecretKey.builder()
 				.secretKey(AesUtil.getSecretKeyStr())

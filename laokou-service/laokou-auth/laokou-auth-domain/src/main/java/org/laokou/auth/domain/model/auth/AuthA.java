@@ -18,29 +18,15 @@
 package org.laokou.auth.domain.model.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
-import org.laokou.auth.domain.event.LoginFailedEvent;
-import org.laokou.auth.domain.event.LoginSucceededEvent;
-import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.List;
-import java.util.Set;
-
-import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
-import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
-import static org.laokou.common.i18n.common.UserStatusEnum.DISABLE;
-import static org.laokou.common.i18n.common.exception.AuthException.*;
-import static org.laokou.common.i18n.common.exception.ParamException.*;
+import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_PASSWORD_REQUIRE;
+import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_USERNAME_REQUIRE;
 
 /**
  * @author laokou
@@ -54,9 +40,6 @@ public class AuthA extends AggregateRoot<Long> {
 
 	@Schema(name = "password", description = "密码", example = "123456")
 	private String password;
-
-	@Schema(name = "type", description = "类型 mail邮箱 mobile手机号 password密码 authorization_code授权码")
-	private String type;
 
 	@Schema(name = "captcha", description = "验证码值对象")
 	private CaptchaV captcha;
@@ -73,73 +56,93 @@ public class AuthA extends AggregateRoot<Long> {
 	@Schema(name = "LOGIN_SUCCEEDED", description = "登录成功")
 	private final String LOGIN_SUCCEEDED = "OAuth2_LoginSucceeded";
 
-	public AuthA(String username, String password, Long tenantId, String type, String uuid, String captcha) {
+	@Schema(name = "MAIL", description = "邮箱")
+	public static final String MAIL = "mail";
+
+	@Schema(name = "MOBILE", description = "手机")
+	public static final String MOBILE = "mobile";
+
+	@Schema(name = "PASSWORD", description = "密码")
+	public static final String PASSWORD = "password";
+
+	@Schema(name = "AUTHORIZATION_CODE", description = "授权码")
+	public static final String AUTHORIZATION_CODE = "authorization_code";
+
+	@Schema(name = "USERNAME", description = "账号")
+	public static final String USERNAME = "username";
+
+	@Schema(name = "CAPTCHA", description = "验证码")
+	public static final String CAPTCHA = "captcha";
+
+	@Schema(name = "UUID", description = "UUID")
+	public static final String UUID = "uuid";
+
+	@Schema(name = "GRANT_TYPE", description = "认证类型")
+	public static final String GRANT_TYPE = "grant_type";
+
+	@Schema(name = "CODE", description = "验证码")
+	public static final String CODE = "code";
+
+	@Schema(name = "TENANT_ID", description = "租户ID")
+	public static final String TENANT_ID = "tenant_id";
+
+	@Schema(name = "DEFAULT_TENANT", description = "默认租户")
+	private static final Long DEFAULT_TENANT = 0L;
+
+	public AuthA() {
+	}
+
+	public AuthA(String username, String password, String tenantId, String type, String uuid, String captcha) {
 		this.id = IdGenerator.defaultSnowflakeId();
-		this.type = type;
 		this.username = username;
 		this.password = password;
-		this.tenantId = tenantId;
-		this.captcha = new CaptchaV(uuid, captcha);
+		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : DEFAULT_TENANT;
+		this.captcha = new CaptchaV(uuid, type, captcha);
 	}
 
-	public void checkPasswordAuth() {
-
+	public UserE createUser() {
+		String uuid = this.captcha.uuid();
+		return new UserE(this.username, uuid, uuid);
 	}
 
+	public String getGrantType() {
+		return captcha.type();
+	}
 
-	public void checkUsernamePasswordAuth() {
+	public void checkNullByMail() {
 		// 检查租户ID
 		checkNullTenantId();
-		// 检查UUID
-		captchaV.checkNullUuid();
 		// 检查验证码
-		captchaV.checkNullCaptcha();
+		checkNullCaptcha();
+		// 检查邮箱
+		captcha.checkMail();
+	}
+
+	public void checkNullByMobile() {
+		// 检查租户ID
+		checkNullTenantId();
+		// 检查验证码
+		checkNullCaptcha();
+		// 检查手机号
+		captcha.checkMobile();
+	}
+
+	public void checkNullByPassword() {
+		// 检查租户ID
+		checkNullTenantId();
+		// 检查验证码
+		checkNullCaptcha();
 		// 检查账号
 		checkNullUsername();
 		// 检查密码
 		checkNullPassword();
 	}
 
-	public void checkMailAuth() {
-		// 检查租户ID
-		checkNullTenantId();
+	private void checkNullCaptcha() {
+		// 检查UUID
+		captcha.checkNullUuid();
 		// 检查验证码
-		captchaV.checkNullCaptcha();
-		// 检查邮箱
-		checkMail();
-	}
-
-	public void checkMobileAuth() {
-		// 检查租户ID
-		checkNullTenantId();
-		// 检查验证码
-		captchaV.checkNullCaptcha();
-		// 检查手机号
-		checkMobile();
-	}
-
-	public void checkScopes(List<String> scopes) {
-		if (CollectionUtil.isNotEmpty(scopes) && scopes.size() != 1) {
-			throw new AuthException(INVALID_SCOPE);
-		}
-	}
-
-	public void checkMobile() {
-		if (StringUtil.isEmpty(this.mobile)) {
-			throw new AuthException(OAUTH2_MOBILE_REQUIRE, ValidatorUtil.getMessage(OAUTH2_MOBILE_REQUIRE));
-		}
-		if (!RegexUtil.mobileRegex(this.mobile)) {
-			throw new AuthException(MOBILE_ERROR);
-		}
-	}
-
-	public void checkMail() {
-		if (StringUtil.isEmpty(this.mail)) {
-			throw new AuthException(OAUTH2_MAIL_REQUIRE, ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));
-		}
-		if (!RegexUtil.mailRegex(this.mail)) {
-			throw new AuthException(MAIL_ERROR, MessageUtil.getMessage(MAIL_ERROR));
-		}
+		captcha.checkNullCaptcha();
 	}
 
 	private void checkNullPassword() {
@@ -153,6 +156,8 @@ public class AuthA extends AggregateRoot<Long> {
 			throw new AuthException(OAUTH2_USERNAME_REQUIRE, ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE));
 		}
 	}
+
+/*
 
 	public AuthA create(AuthA authA, HttpServletRequest request, String sourceName, String appName, String authType) {
 		if (ObjectUtil.isNull(authA)) {
@@ -204,6 +209,6 @@ public class AuthA extends AggregateRoot<Long> {
 			String authType) {
 		addEvent(new LoginFailedEvent(this, request, message, sourceName, appName, authType));
 		throw new AuthException(code, message);
-	}
+	}*/
 
 }

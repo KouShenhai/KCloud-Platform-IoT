@@ -46,7 +46,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	/**
 	 * 写入Redis.
-	 * @param uuid 唯一标识
+	 * @param uuid UUID
 	 * @param code 验证码
 	 */
 	@Override
@@ -56,7 +56,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	/**
 	 * 检查验证码.
-	 * @param uuid 唯一标识
+	 * @param uuid UUID
 	 * @param code 验证码
 	 * @return 校验结果
 	 */
@@ -72,7 +72,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	/**
 	 * 获取key（MD5加密）.
-	 * @param uuid 唯一标识
+	 * @param uuid UUID
 	 * @return key
 	 */
 	@Override
@@ -82,8 +82,8 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	}
 
 	/**
-	 * 从Redis根据唯一标识查看验证码.
-	 * @param uuid 唯一标识
+	 * 从Redis根据UUID查看验证码.
+	 * @param uuid UUID
 	 * @return 验证码
 	 */
 	private String get(String uuid) {
@@ -97,7 +97,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	/**
 	 * 写入Redis.
-	 * @param uuid 唯一标识
+	 * @param uuid UUID
 	 * @param code 验证码
 	 */
 	private void setValue(String uuid, String code) {

@@ -31,8 +31,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.config.authentication.AbstractOAuth2AuthenticationConverter.MOBILE;
-import static org.laokou.common.i18n.common.TenantConstant.TENANT_ID;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.CODE;
@@ -59,12 +57,9 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authentica
 	@Override
 	Authentication principal(HttpServletRequest request) {
 		try {
-			String tenantId = request.getParameter(TENANT_ID);
-			String code = request.getParameter(CODE);
-			String mobile = request.getParameter(MOBILE);
-			// log.info("租户ID：{}", tenantId);
-			// log.info("验证码：{}", code);
-			// log.info("手机：{}", SensitiveUtil.format(Type.MOBILE, mobile));
+//			 log.info("租户ID：{}", tenantId);
+//			 log.info("验证码：{}", code);
+//			 log.info("手机：{}", SensitiveUtil.format(Type.MOBILE, mobile));
 			CaptchaV captchaVObj = CaptchaV.builder().captcha(code).uuid(mobile).build();
 			SecretKey secretKeyObj = SecretKey.builder()
 				.type(getGrantType().getValue())

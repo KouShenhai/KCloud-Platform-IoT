@@ -26,14 +26,14 @@ public interface CaptchaGateway {
 
 	/**
 	 * 写入Redis.
-	 * @param uuid 唯一标识
+	 * @param uuid UUID
 	 * @param code 验证码
 	 */
 	void set(String uuid, String code);
 
 	/**
 	 * 检查验证码.
-	 * @param uuid 唯一标识
+	 * @param uuid UUID
 	 * @param code 验证码
 	 * @return 校验结果
 	 */
@@ -41,7 +41,7 @@ public interface CaptchaGateway {
 
 	/**
 	 * 获取key.
-	 * @param uuid 唯一标识
+	 * @param uuid UUID
 	 * @return key
 	 */
 	String key(String uuid);

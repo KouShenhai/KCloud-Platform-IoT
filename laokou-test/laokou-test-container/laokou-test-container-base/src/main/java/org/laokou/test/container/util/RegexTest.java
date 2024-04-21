@@ -15,22 +15,20 @@
  *
  */
 
-package org.laokou.auth.dto;
+package org.laokou.test.container.util;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.RegexUtil;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@Schema(name = "CaptchaGetQry", description = "查看验证码命令请求")
-public class CaptchaGetQry extends CommonCommand {
+@Slf4j
+public class RegexTest {
 
-	@Schema(name = "uuid", description = "UUID")
-	private String uuid;
+	public static void main(String[] args) {
+		boolean b = RegexUtil.mailRegex("");
+		log.info("{}",b);
+	}
 
 }

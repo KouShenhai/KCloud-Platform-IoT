@@ -62,9 +62,6 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticati
 			String tenantId = request.getParameter(TENANT_ID);
 			String code = request.getParameter(CODE);
 			String mail = request.getParameter(MAIL);
-			// log.info("租户ID：{}", tenantId);
-			// log.info("验证码：{}", code);
-			// log.info("邮箱：{}", SensitiveUtil.format(Type.MAIL, mail));
 			CaptchaV captchaVObj = CaptchaV.builder().captcha(code).uuid(mail).build();
 			SecretKey secretKeyObj = SecretKey.builder()
 				.type(getGrantType().getValue())
