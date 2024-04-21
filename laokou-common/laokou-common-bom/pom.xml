@@ -697,11 +697,6 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-im-client</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
                 <artifactId>laokou-im-app</artifactId>
                 <version>${laokou.version}</version>
             </dependency>

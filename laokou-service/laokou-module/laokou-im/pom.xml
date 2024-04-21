@@ -28,7 +28,6 @@
     <version>3.2.5</version>
     <packaging>pom</packaging>
     <modules>
-        <module>laokou-im-client</module>
         <module>laokou-im-app</module>
         <module>laokou-im-infrastructure</module>
         <module>laokou-im-start</module>
