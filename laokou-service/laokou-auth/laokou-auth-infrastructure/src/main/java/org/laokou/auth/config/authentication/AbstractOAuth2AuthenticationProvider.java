@@ -23,9 +23,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.model.auth.AuthA;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -52,7 +50,6 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.exception.AuthException.*;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
@@ -203,13 +200,6 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 	 */
 	protected UsernamePasswordAuthenticationToken authenticationToken(AuthA authA, HttpServletRequest request) {
 		return authProvider.authenticationToken(authA, request);
-	}
-
-	protected String encryptAes(String str) {
-		if (StringUtil.isEmpty(str)) {
-			return EMPTY;
-		}
-		return AesUtil.encrypt(str);
 	}
 
 	private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(

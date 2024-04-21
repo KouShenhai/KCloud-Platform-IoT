@@ -23,10 +23,6 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-rate-limiter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-auth-client</artifactId>
-        </dependency>
     </dependencies>
 
 </project>
