@@ -20,10 +20,7 @@ package org.laokou.common.security.utils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Identifier;
@@ -41,8 +38,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static lombok.AccessLevel.PRIVATE;
 import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
 import static org.laokou.common.i18n.common.UserStatusEnum.ENABLED;
 
@@ -52,9 +47,6 @@ import static org.laokou.common.i18n.common.UserStatusEnum.ENABLED;
  * @author laokou
  */
 @Data
-@SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "UserDetail", description = "用户详细信息")
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
 public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2AuthenticatedPrincipal {
@@ -184,6 +176,15 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@JsonIgnore
 	public boolean isSuperAdministrator() {
 		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
+	}
+
+	@JsonIgnore
+	public void modify(Set<String> permissions, Set<String> deptPaths, String sourceName, String loginIp, LocalDateTime loginDate) {
+		this.permissions = permissions;
+		this.deptPaths = deptPaths;
+		this.sourceName = sourceName;
+		this.loginIp = loginIp;
+		this.loginDate = loginDate;
 	}
 
 	@Override
