@@ -43,6 +43,7 @@
         <if test="user.mobile != null and user.mobile != ''">
             and `mobile` = #{user.mobile}
         </if>
+        and tenant_id = #{user.tenantId}
         limit 1
     </select>
 
