@@ -59,6 +59,8 @@ public class UserContextHolder {
 	}
 
 	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
 	@Schema(name = "User", description = "用户")
 	public static class User {
 
