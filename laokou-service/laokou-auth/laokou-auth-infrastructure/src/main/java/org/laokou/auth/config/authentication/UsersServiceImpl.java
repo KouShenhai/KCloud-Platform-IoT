@@ -17,20 +17,13 @@
 
 package org.laokou.auth.config.authentication;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.model.auth.AuthA;
-import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.crypto.utils.AesUtil;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Component;
-import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
 
 /**
  * 用户认证.
@@ -41,9 +34,6 @@ import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
 @Component
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UserDetailsService {
-
-	@Schema(name = "AUTHORIZATION_CODE", description = "授权码")
-	private static final String AUTHORIZATION_CODE = "authorization_code";
 
 	private final OAuth2AuthenticationProvider authProvider;
 
@@ -56,19 +46,7 @@ public class UsersServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
-			HttpServletRequest request = RequestUtil.getHttpServletRequest();
-			String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
-			SecretKey secretKeyObj = SecretKey.builder()
-				.type(AUTHORIZATION_CODE)
-				.secretKey(AesUtil.getSecretKeyStr())
-				.build();
-			AuthA authA = AuthA.builder()
-				.secretKey(secretKeyObj)
-				.tenantId(DEFAULT)
-				.username(username)
-				.password(password)
-				.build();
-			return (UserDetails) authProvider.authenticationToken(authA, request).getPrincipal();
+			return (UserDetails) authProvider.authenticationToken(null).getPrincipal();
 		}
 		catch (OAuth2AuthenticationException e) {
 			throw new UsernameNotFoundException(e.getError().getDescription(), e);

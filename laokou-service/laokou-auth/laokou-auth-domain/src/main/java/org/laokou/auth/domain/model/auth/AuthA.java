@@ -17,13 +17,13 @@
 
 package org.laokou.auth.domain.model.auth;
 
+import eu.bitwalker.useragentutils.UserAgent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.IpUtil;
-import org.laokou.common.core.utils.RegexUtil;
+import org.laokou.auth.domain.event.LoginEvent;
+import org.laokou.common.core.utils.*;
+import org.laokou.common.i18n.common.EventTypeEnum;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.*;
@@ -31,6 +31,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
+import static org.laokou.common.i18n.common.EventTypeEnum.LOGIN_FAILED;
 import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
 import static org.laokou.common.i18n.common.UserStatusEnum.DISABLE;
 import static org.laokou.common.i18n.common.exception.AuthException.*;
@@ -61,17 +62,11 @@ public class AuthA extends AggregateRoot<Long> {
 	@Schema(name = "menu", description = "菜单实体")
 	private MenuE menu;
 
-	@Schema(name = "source", description = "数据源实体")
-	private SourceE source;
-
 	@Schema(name = "dept", description = "部门实体")
 	private DeptE dept;
 
 	@Schema(name = "log", description = "日志")
 	private LogV log;
-
-	@Schema(name = "request", description = "请求")
-	private HttpServletRequest request;
 
 	@Schema(name = "LOGIN_SUCCEEDED", description = "登录成功")
 	private final String LOGIN_SUCCEEDED = "OAuth2_LoginSucceeded";
@@ -109,6 +104,12 @@ public class AuthA extends AggregateRoot<Long> {
 	@Schema(name = "DEFAULT_TENANT", description = "默认租户")
 	private static final Long DEFAULT_TENANT = 0L;
 
+	@Schema(name = "OK", description = "成功")
+	private static final Integer OK = 0;
+
+	@Schema(name = "FAIL", description = "失败")
+	private static final Integer FAIL = 1;
+
 	public AuthA() {
 	}
 
@@ -120,7 +121,7 @@ public class AuthA extends AggregateRoot<Long> {
 		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : DEFAULT_TENANT;
 		this.captcha = new CaptchaV(uuid, captcha);
 		this.user = createUser();
-		this.request = request;
+		this.log = createLog(request);
 	}
 
 	public void modifyAppName(String appName) {
@@ -164,16 +165,21 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void modifyUser(UserE user) {
 		if (ObjectUtil.isNull(user)) {
-			throw new AuthException(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR));
+			fail(ACCOUNT_PASSWORD_ERROR);
 		}
 		this.user = user;
+		this.creator = user.getId();
+		this.editor = user.getId();
+		this.deptId = user.getDeptId();
+		this.deptPath = user.getDeptPath();
+		this.tenantId = user.getTenantId();
 	}
 
 	public void modifySource(SourceE source) {
 		if (ObjectUtil.isNull(source)) {
-			throw new AuthException(SOURCE_NOT_EXIST, MessageUtil.getMessage(SOURCE_NOT_EXIST));
+			fail(SOURCE_NOT_EXIST);
 		}
-		this.source = source;
+		this.sourceName = source.getName();
 	}
 
 	public void modifyMenu(MenuE menu) {
@@ -190,37 +196,48 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void checkCaptcha(Boolean result) {
 		if (ObjectUtil.isNull(result)) {
-			throw new AuthException(CAPTCHA_EXPIRED, MessageUtil.getMessage(CAPTCHA_EXPIRED));
+			fail(CAPTCHA_EXPIRED);
 		}
 		if (!result) {
-			throw new AuthException(CAPTCHA_ERROR, MessageUtil.getMessage(CAPTCHA_ERROR));
+			fail(CAPTCHA_ERROR);
 		}
 	}
 
 	public void checkUserPassword(PasswordEncoder passwordEncoder) {
 		if (StringUtil.isNotEmpty(this.password) && !passwordEncoder.matches(this.password, user.getPassword())) {
-			throw new AuthException(ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ACCOUNT_PASSWORD_ERROR));
+			fail(ACCOUNT_PASSWORD_ERROR);
 		}
 	}
 
 	public void checkUserStatus() {
 		if (ObjectUtil.equals(DISABLE.ordinal(), this.user.getStatus())) {
-			throw new AuthException(ACCOUNT_DISABLED, MessageUtil.getMessage(ACCOUNT_DISABLED));
+			fail(ACCOUNT_DISABLED);
 		}
 	}
 
 	public void checkMenuPermissions() {
 		if (CollectionUtil.isEmpty(this.menu.getPermissions())) {
-			throw new AuthException(FORBIDDEN, MessageUtil.getMessage(FORBIDDEN));
+			fail(FORBIDDEN);
 		}
 	}
 
-	private void fail(String code) {
-
+	public void ok() {
+		addEvent(new LoginEvent(this, EventTypeEnum.LOGIN_SUCCEEDED, MessageUtil.getMessage(LOGIN_SUCCEEDED), OK));
 	}
 
-	public void ok() {
-		this.log = new LogV(IpUtil.getIpAddr(request), DateUtil.now());
+	private void fail(String code) {
+		String message = MessageUtil.getMessage(code);
+		addEvent(new LoginEvent(this, LOGIN_FAILED, message, FAIL));
+		throw new AuthException(code, message);
+	}
+
+	private LogV createLog(HttpServletRequest request) {
+		String ip = IpUtil.getIpAddr(request);
+		String address = AddressUtil.getRealAddress(ip);
+		UserAgent userAgent = RequestUtil.getUserAgent(request);
+		String os = userAgent.getOperatingSystem().getName();
+		String browser = userAgent.getBrowser().getName();
+		return new LogV(ip, address, browser, os, DateUtil.now());
 	}
 
 	private UserE createUser() {
@@ -248,13 +265,13 @@ public class AuthA extends AggregateRoot<Long> {
 
 	private void checkMobile() {
 		if (!RegexUtil.mobileRegex(this.captcha.uuid())) {
-			throw new AuthException(MOBILE_ERROR, MessageUtil.getMessage(MOBILE_ERROR));
+			fail(MOBILE_ERROR);
 		}
 	}
 
 	private void checkMail() {
 		if (!RegexUtil.mailRegex(this.captcha.uuid())) {
-			throw new AuthException(MAIL_ERROR, MessageUtil.getMessage(MAIL_ERROR));
+			fail(MAIL_ERROR);
 		}
 	}
 

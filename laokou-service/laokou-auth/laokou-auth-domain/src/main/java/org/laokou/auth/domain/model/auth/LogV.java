@@ -21,21 +21,18 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 
-//@Schema(name = "address", description = "登录的归属地")
-//protected String address;
-//
-//@Schema(name = "browser", description = "登录的浏览器")
-//protected String browser;
-//
-//@Schema(name = "os", description = "登录的操作系统")
-//protected String os;
-
 @Schema(name = "LogV", description = "日志值对象")
 public record LogV (@Schema(name = "loginIp", description = "登录IP") String loginIp,
+					@Schema(name = "address", description = "登录的归属地") String address,
+					@Schema(name = "browser", description = "登录的浏览器") String browser,
+					@Schema(name = "os", description = "登录的操作系统") String os,
 				   @Schema(name = "loginDate", description = "登录时间") LocalDateTime loginDate) {
 
-	public LogV(String loginIp, LocalDateTime loginDate) {
+	public LogV(String loginIp,String address,String browser,String os, LocalDateTime loginDate) {
 		this.loginIp = loginIp;
+		this.address = address;
+		this.browser = browser;
+		this.os = os;
 		this.loginDate = loginDate;
 	}
 

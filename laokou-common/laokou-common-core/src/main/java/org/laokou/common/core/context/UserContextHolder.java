@@ -23,8 +23,6 @@ import lombok.*;
 
 import java.util.Optional;
 
-import static lombok.AccessLevel.PRIVATE;
-
 /**
  * 用户上下文.
  *
