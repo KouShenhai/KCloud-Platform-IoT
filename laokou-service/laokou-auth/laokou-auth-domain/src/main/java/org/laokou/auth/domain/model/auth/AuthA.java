@@ -22,13 +22,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.i18n.utils.ValidatorUtil;
+import org.laokou.common.i18n.utils.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -68,6 +66,9 @@ public class AuthA extends AggregateRoot<Long> {
 
 	@Schema(name = "dept", description = "部门实体")
 	private DeptE dept;
+
+	@Schema(name = "log", description = "日志")
+	private LogV log;
 
 	@Schema(name = "request", description = "请求")
 	private HttpServletRequest request;
@@ -214,11 +215,12 @@ public class AuthA extends AggregateRoot<Long> {
 		}
 	}
 
-	private void fail() {
+	private void fail(String code) {
 
 	}
 
 	public void ok() {
+		this.log = new LogV(IpUtil.getIpAddr(request), DateUtil.now());
 	}
 
 	private UserE createUser() {

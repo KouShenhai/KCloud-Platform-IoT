@@ -27,10 +27,10 @@ import java.util.Map;
 public class GinCrudRouterGo implements Crud {
 
 	public static void main(String[] args) {
-		String inst = "out";
-		String upper = "OutputClient";
-		String lower = "outputClient";
-		String desc = "输出端";
+		String inst = "p";
+		String upper = "Param";
+		String lower = "param";
+		String desc = "参数";
 		Map<String, Object> params = Map.of("inst", inst, "upper", upper, "lower", lower, "desc", desc);
 		Crud crud = new GinCrudRouterGo();
 		StringBuilder s = new StringBuilder();
@@ -106,6 +106,7 @@ public class GinCrudRouterGo implements Crud {
 						${lower}Router.PUT("modify", atSys${upper}Api.Modify${upper})      // 修改${desc}
 						${lower}Router.POST("list", atSys${upper}Api.Find${upper}List)     // 查询${desc}
 						${lower}Router.POST("findById", atSys${upper}Api.Find${upper}ById) // 查询${desc}
+						${lower}Router.POST("optionList", atSys${upper}Api.Find${upper}OptionList) // 查询${desc}下拉框
 					}
 					return ${lower}Router
 				}

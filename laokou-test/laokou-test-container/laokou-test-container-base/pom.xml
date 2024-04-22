@@ -27,6 +27,11 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-crypto</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hankcs</groupId>
+            <artifactId>hanlp</artifactId>
+            <version>portable-1.8.4</version>
+        </dependency>
     </dependencies>
 
 </project>

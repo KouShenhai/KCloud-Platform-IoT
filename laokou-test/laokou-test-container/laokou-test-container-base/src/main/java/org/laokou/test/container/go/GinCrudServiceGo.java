@@ -27,9 +27,9 @@ import java.util.Map;
 public class GinCrudServiceGo implements Crud {
 
 	public static void main(String[] args) {
-		String inst = "pro";
-		String upper = "Protocol";
-		String lower = "protocol";
+		String inst = "p";
+		String upper = "Param";
+		String lower = "param";
 		Map<String, Object> params = Map.of("inst", inst, "upper", upper, "lower", lower);
 		Crud crud = new GinCrudServiceGo();
 		StringBuilder s = new StringBuilder();
