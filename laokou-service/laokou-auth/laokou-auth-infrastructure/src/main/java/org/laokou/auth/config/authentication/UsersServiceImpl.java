@@ -19,6 +19,9 @@ package org.laokou.auth.config.authentication;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.auth.domain.factory.AuthFactory;
+import org.laokou.auth.domain.model.auth.AuthA;
+import org.laokou.common.core.utils.RequestUtil;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -46,7 +49,8 @@ public class UsersServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
-			return (UserDetails) authProvider.authenticationToken(null).getPrincipal();
+			AuthA auth = AuthFactory.authorizationCode(RequestUtil.getHttpServletRequest());
+			return (UserDetails) authProvider.authenticationToken(auth).getPrincipal();
 		}
 		catch (OAuth2AuthenticationException e) {
 			throw new UsernameNotFoundException(e.getError().getDescription(), e);
