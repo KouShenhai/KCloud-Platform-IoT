@@ -44,10 +44,10 @@ import static org.laokou.common.i18n.common.exception.ParamException.*;
 @Schema(name = "AuthA", description = "认证聚合")
 public class AuthA extends AggregateRoot<Long> {
 
-	@Schema(name = "username", description = "用户名")
+	@Schema(name = "username", description = "用户名", example = "admin")
 	private String username;
 
-	@Schema(name = "password", description = "密码", example = "123456")
+	@Schema(name = "password", description = "密码", example = "admin123")
 	private String password;
 
 	@Schema(name = "grantType", description = "类型 mail邮箱 mobile手机号 password密码 authorization_code授权码")
