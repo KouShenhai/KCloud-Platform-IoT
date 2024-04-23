@@ -265,6 +265,7 @@ class OAuth2ApiTest {
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "trace-id",
 					String.valueOf(System.currentTimeMillis()));
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			log.info("账号密码认证模式，返回信息；{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
@@ -282,6 +283,7 @@ class OAuth2ApiTest {
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			log.info("刷新令牌模式，返回信息；{}", json);
 			return JacksonUtil.readTree(json).get("access_token").asText();
 		}
 		catch (Exception e) {
@@ -291,8 +293,7 @@ class OAuth2ApiTest {
 
 	@SneakyThrows
 	private String getCaptcha(String uuid) {
-		String apiUrl = "/v1/captchas/";
-		mockMvc.perform(get(apiUrl + uuid).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+		mockMvc.perform(get(getCaptchaApiUrl(uuid)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 		String key = captchaGateway.key(uuid);
 		String captcha = redisUtil.get(key).toString();
 		Assert.isTrue(StringUtil.isNotEmpty(captcha), "captcha is empty");
@@ -301,8 +302,7 @@ class OAuth2ApiTest {
 
 	@SneakyThrows
 	private String getSecret() {
-		String apiUrl = "/v1/secrets";
-		MvcResult mvcResult = mockMvc.perform(get(apiUrl).contentType(MediaType.APPLICATION_JSON))
+		MvcResult mvcResult = mockMvc.perform(get(getSecretApiUrl()).contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			// 打印到控制台
 			.andDo(print())
@@ -333,6 +333,14 @@ class OAuth2ApiTest {
 	private String getDeviceCodeApiUrl() {
 		return getSchema(disabledSsl()) + LOCAL_IPV4 + RISK + serverProperties.getPort()
 				+ "/oauth2/device_authorization";
+	}
+
+	private String getCaptchaApiUrl(String uuid) {
+		return getSchema(disabledSsl()) + LOCAL_IPV4 + RISK + serverProperties.getPort() + "/captchas/v1/" + uuid;
+	}
+
+	private String getSecretApiUrl() {
+		return getSchema(disabledSsl()) + LOCAL_IPV4 + RISK + serverProperties.getPort() + "/secrets/v1";
 	}
 
 	private String getSchema(boolean disabled) {

@@ -33,6 +33,7 @@ import java.util.List;
 
 import static org.laokou.common.i18n.common.EventTypeEnum.LOGIN_FAILED;
 import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.UserStatusEnum.DISABLE;
 import static org.laokou.common.i18n.common.exception.AuthException.*;
 import static org.laokou.common.i18n.common.exception.ParamException.*;
@@ -102,13 +103,13 @@ public class AuthA extends AggregateRoot<Long> {
 	public static final String TENANT_ID = "tenant_id";
 
 	@Schema(name = "DEFAULT_TENANT", description = "默认租户")
-	private static final Long DEFAULT_TENANT = 0L;
+	static final long DEFAULT_TENANT = 0;
 
 	@Schema(name = "OK", description = "成功")
-	private static final Integer OK = 0;
+	private static final int OK = 0;
 
 	@Schema(name = "FAIL", description = "失败")
-	private static final Integer FAIL = 1;
+	private static final int FAIL = 1;
 
 	public AuthA() {
 	}
@@ -242,8 +243,12 @@ public class AuthA extends AggregateRoot<Long> {
 	}
 
 	private UserE createUser() {
-		String uuid = this.captcha.uuid();
-		return new UserE(this.username, uuid, uuid, this.tenantId);
+		return switch (this.grantType) {
+			case PASSWORD, AUTHORIZATION_CODE -> new UserE(this.username, EMPTY, EMPTY, this.tenantId);
+			case MAIL -> new UserE(EMPTY, this.captcha.uuid(), EMPTY, this.tenantId);
+			case MOBILE -> new UserE(EMPTY, EMPTY, this.captcha.uuid(), this.tenantId);
+            default -> new UserE();
+        };
 	}
 
 	private void checkNullPassword() {

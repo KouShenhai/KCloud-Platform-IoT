@@ -53,7 +53,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
 		AuthA auth = AuthFactory.password(request);
 		// 校验
 		auth.checkNullByPassword();
-		return authenticationToken(auth);
+		return authentication(auth);
 	}
 
 	@Override

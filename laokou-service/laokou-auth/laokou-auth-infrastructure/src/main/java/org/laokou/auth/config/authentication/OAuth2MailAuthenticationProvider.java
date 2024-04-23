@@ -54,7 +54,7 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticati
 		AuthA auth = AuthFactory.mail(request);
 		// 校验
 		auth.checkNullByMail();
-		return authenticationToken(auth);
+		return authentication(auth);
 	}
 
 	@Override

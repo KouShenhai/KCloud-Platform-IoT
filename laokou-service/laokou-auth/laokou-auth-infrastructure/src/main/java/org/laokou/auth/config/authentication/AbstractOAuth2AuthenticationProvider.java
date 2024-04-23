@@ -197,8 +197,8 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 	 * @param auth 认证聚合根
 	 * @return 用户信息
 	 */
-	protected UsernamePasswordAuthenticationToken authenticationToken(AuthA auth) {
-		return authProvider.authenticationToken(auth);
+	protected UsernamePasswordAuthenticationToken authentication(AuthA auth) {
+		return authProvider.authentication(auth);
 	}
 
 	private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(

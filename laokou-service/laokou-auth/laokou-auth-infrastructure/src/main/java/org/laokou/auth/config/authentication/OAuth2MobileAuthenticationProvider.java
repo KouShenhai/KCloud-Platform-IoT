@@ -54,7 +54,7 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authentica
 		AuthA auth = AuthFactory.mobile(request);
 		// 校验
 		auth.checkNullByMobile();
-		return authenticationToken(auth);
+		return authentication(auth);
 	}
 
 	@Override

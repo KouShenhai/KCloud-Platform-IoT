@@ -33,7 +33,6 @@ import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.JobModeEnum.SYNC;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 
@@ -52,7 +51,7 @@ public class OAuth2AuthenticationProvider {
 
 	private final UserConvertor userConvertor;
 
-	public UsernamePasswordAuthenticationToken authenticationToken(AuthA auth) {
+	public UsernamePasswordAuthenticationToken authentication(AuthA auth) {
 		try {
 			// 认证
 			authDomainService.auth(auth);
@@ -65,11 +64,11 @@ public class OAuth2AuthenticationProvider {
 		}
 		finally {
 			// 保存领域事件（事件溯源）
-			domainEventService.create(auth.getEvents());
+			// domainEventService.create(auth.getEvents());
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();
 			// 发布当前线程的领域事件(同步发布)
-			domainEventPublisher.publish(SYNC);
+			// domainEventPublisher.publish(SYNC);
 			// 清除领域事件上下文
 			DomainEventContextHolder.clear();
 			// 清空领域事件

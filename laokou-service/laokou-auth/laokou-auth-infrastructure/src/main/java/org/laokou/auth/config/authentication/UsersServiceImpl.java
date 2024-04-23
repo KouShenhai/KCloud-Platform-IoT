@@ -50,7 +50,7 @@ public class UsersServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
 			AuthA auth = AuthFactory.authorizationCode(RequestUtil.getHttpServletRequest());
-			return (UserDetails) authProvider.authenticationToken(auth).getPrincipal();
+			return (UserDetails) authProvider.authentication(auth).getPrincipal();
 		}
 		catch (OAuth2AuthenticationException e) {
 			throw new UsernameNotFoundException(e.getError().getDescription(), e);
