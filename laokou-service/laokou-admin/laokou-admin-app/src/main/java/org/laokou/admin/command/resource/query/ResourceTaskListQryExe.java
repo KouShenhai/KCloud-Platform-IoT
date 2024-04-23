@@ -53,7 +53,7 @@ public class ResourceTaskListQryExe {
 		// if (CollectionUtil.isNotEmpty(records)) {
 		// records.parallelStream().forEach(item -> item.setUsername(userName));
 		// }
-		// return Result.of(result);
+		// return Result.ok(result);
 	}
 
 	/**

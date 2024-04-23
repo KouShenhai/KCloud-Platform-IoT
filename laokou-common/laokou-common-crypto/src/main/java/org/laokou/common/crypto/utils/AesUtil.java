@@ -22,7 +22,7 @@ import lombok.SneakyThrows;
 import org.apache.hc.client5.http.utils.Base64;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.crypto.annotation.Aes;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.util.Assert;
 
 import javax.crypto.Cipher;
@@ -118,7 +118,7 @@ public class AesUtil {
 				// 私有属性
 				field.setAccessible(true);
 				Object o = field.get(obj);
-				if (ObjectUtils.isNull(o)) {
+				if (ObjectUtil.isNull(o)) {
 					continue;
 				}
 				String data = o.toString();

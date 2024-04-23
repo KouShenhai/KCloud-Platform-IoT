@@ -55,6 +55,9 @@ public final class SystemException extends GlobalException {
 	@Schema(name = "DISTRIBUTED_TRANSACTION_TIMEOUT", description = "分布式事务已超时")
 	public static final String DISTRIBUTED_TRANSACTION_TIMEOUT = "S_Seata_TransactionTimeout";
 
+	@Schema(name = "S_DS_TableNotExist", description = "表不存在")
+	public static final String TABLE_NOT_EXIST = "S_DS_TableNotExist";
+
 	public SystemException(String code) {
 		super(code);
 	}

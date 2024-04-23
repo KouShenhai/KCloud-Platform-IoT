@@ -25,7 +25,7 @@ import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.handler.event.SqlLogEvent;
 import org.laokou.common.mybatisplus.utils.SqlUtil;
@@ -56,7 +56,7 @@ public class SlowSqlInterceptor implements Interceptor {
 		Object target = invocation.getTarget();
 		if (target instanceof StatementHandler statementHandler) {
 			String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
-			SpringContextUtil.publishEvent(new SqlLogEvent("慢SQL事件", getAppName(), sql, time, DateUtils.now()));
+			SpringContextUtil.publishEvent(new SqlLogEvent("慢SQL事件", getAppName(), sql, time, DateUtil.now()));
 			sql = StringUtil.isNotEmpty(sql)
 					? " Consume Time：" + time + " ms " + "\n Execute SQL：" + sql.replaceAll("\\s+", " ") + "\n" : "";
 			log.info("\n{}", sql);

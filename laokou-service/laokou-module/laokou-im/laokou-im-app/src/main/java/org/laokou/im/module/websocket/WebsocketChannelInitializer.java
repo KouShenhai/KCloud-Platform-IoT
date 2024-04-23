@@ -31,6 +31,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ResourceUtil;
+import org.laokou.common.core.utils.SslUtil;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.server.Ssl;
 import org.springframework.stereotype.Component;
@@ -42,7 +43,6 @@ import java.io.InputStream;
 import java.security.KeyStore;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.laokou.common.core.utils.SslUtil.TLS_PROTOCOL_VERSION;
 
 /**
  * WebSocket处理类.
@@ -54,7 +54,7 @@ import static org.laokou.common.core.utils.SslUtil.TLS_PROTOCOL_VERSION;
 public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketChannel> {
 
 	@Schema(name = "WEBSOCKET_PATH", description = "WebSocket路径")
-	public static final String WEBSOCKET_PATH = "/ws";
+	private static final String WEBSOCKET_PATH = "/ws";
 
 	private final WebsocketHandler websocketHandler;
 
@@ -96,7 +96,7 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		try (InputStream inputStream = ResourceUtil.getResource(path).getInputStream()) {
 			char[] passArray = password.toCharArray();
 			KeyStore keyStore = KeyStore.getInstance(type);
-			SSLContext sslContext = SSLContext.getInstance(TLS_PROTOCOL_VERSION);
+			SSLContext sslContext = SSLContext.getInstance(SslUtil.getVersion());
 			keyStore.load(inputStream, passArray);
 			KeyManagerFactory keyManagerFactory = KeyManagerFactory
 				.getInstance(KeyManagerFactory.getDefaultAlgorithm());

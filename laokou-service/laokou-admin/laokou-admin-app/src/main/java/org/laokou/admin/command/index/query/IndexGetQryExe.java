@@ -40,7 +40,7 @@ public class IndexGetQryExe {
 	 */
 	public Result<Map<String, Object>> execute(IndexGetQry qry) {
 		return null;
-		// return Result.of(elasticsearchTemplate.getIndexProperties(qry.getIndexName()));
+		// return Result.ok(elasticsearchTemplate.getIndexProperties(qry.getIndexName()));
 	}
 
 }

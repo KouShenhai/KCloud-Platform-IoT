@@ -20,14 +20,19 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.MenuGateway;
-import org.laokou.auth.domain.user.User;
+import org.laokou.auth.domain.model.auth.MenuE;
+import org.laokou.auth.domain.model.auth.UserE;
 import org.laokou.auth.gatewayimpl.database.MenuMapper;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
-import java.util.Set;
+
+import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_MENU;
+import static org.laokou.common.i18n.common.exception.SystemException.TABLE_NOT_EXIST;
 
 /**
  * 菜单.
@@ -47,17 +52,17 @@ public class MenuGatewayImpl implements MenuGateway {
 	 * @return 菜单权限标识集合
 	 */
 	@Override
-	public Set<String> findPermissions(User user) {
+	public MenuE findPermissions(UserE user) {
 		try {
 			if (user.isSuperAdministrator()) {
-				return new HashSet<>(menuMapper.selectPermissions());
+				return new MenuE(new HashSet<>(menuMapper.selectPermissions()));
 			}
-			return new HashSet<>(menuMapper.selectPermissionsByUserId(user.getId()));
+			return new MenuE(new HashSet<>(menuMapper.selectPermissionsByUserId(user.getId())));
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 boot_sys_menu 不存在，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-			// throw new DataSourceException(CUSTOM_SERVER_ERROR, "表 boot_sys_menu 不存在");
-			throw e;
+			log.error("表 {} 不存在，错误信息：{}，详情见日志", BOOT_SYS_MENU, LogUtil.record(e.getMessage()), e);
+			throw new SystemException(TABLE_NOT_EXIST,
+					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { BOOT_SYS_MENU }));
 		}
 	}
 

@@ -41,7 +41,7 @@ public class ResourceSearchGetQryExe {
 	 */
 	public Result<Datas<Map<String, Object>>> execute(ResourceSearchGetQry qry) {
 		return null;
-		// return Result.of(elasticsearchTemplate.highlightSearchIndex(qry.getSearch()));
+		// return Result.ok(elasticsearchTemplate.highlightSearchIndex(qry.getSearch()));
 	}
 
 }

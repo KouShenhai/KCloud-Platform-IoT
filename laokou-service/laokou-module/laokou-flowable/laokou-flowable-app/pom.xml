@@ -15,10 +15,6 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-flowable-infrastructure</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-flowable-client</artifactId>
-        </dependency>
     </dependencies>
 
 </project>

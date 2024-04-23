@@ -66,7 +66,7 @@ public class DictListQryExe {
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> dictMapper.selectCountByCondition(dictDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.of(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
+		return Result.ok(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
 	}
 
 	private DictDO convert(DictListQry qry) {

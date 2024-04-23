@@ -65,7 +65,7 @@ public class DefinitionListQryExe {
 		int pageNum = qry.getPageNum();
 		int pageSize = qry.getPageSize();
 		List<ProcessDefinition> definitionList = query.listPage(pageSize * (pageNum - 1), pageSize);
-		return Result.of(Datas.of(definitionList.stream().map(this::convert).toList(), query.count()));
+		return Result.ok(Datas.of(definitionList.stream().map(this::convert).toList(), query.count()));
 	}
 
 	/**

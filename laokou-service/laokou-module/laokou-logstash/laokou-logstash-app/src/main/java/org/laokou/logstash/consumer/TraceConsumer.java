@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceIndex;
@@ -41,7 +41,7 @@ import static org.laokou.common.i18n.common.KafkaConstant.LAOKOU_LOGSTASH_CONSUM
 import static org.laokou.common.i18n.common.KafkaConstant.LAOKOU_TRACE_TOPIC;
 import static org.laokou.common.i18n.common.StringConstant.DOLLAR;
 import static org.laokou.common.i18n.common.StringConstant.UNDER;
-import static org.laokou.common.i18n.common.SysConstants.UNDEFINED;
+import static org.laokou.common.i18n.common.SysConstant.UNDEFINED;
 
 /**
  * @author laokou
@@ -66,7 +66,7 @@ public class TraceConsumer {
 		String ym = XxlJobHelper.getJobParam();
 		log.info("接收调度中心参数：{}", ym);
 		if (StringUtil.isEmpty(ym)) {
-			ym = DateUtils.format(DateUtils.plusMonths(DateUtils.nowDate(), 1), DateUtils.YYYYMM);
+			ym = DateUtil.format(DateUtil.plusMonths(DateUtil.nowDate(), 1), DateUtil.YYYYMM);
 		}
 		else {
 			if (!RegexUtil.numberRegex(ym) || ym.length() != 6) {
@@ -97,7 +97,7 @@ public class TraceConsumer {
 					traceIndex.setTenantId(replaceValue(traceIndex.getTenantId()));
 					traceIndex.setUserId(replaceValue(traceIndex.getUserId()));
 					traceIndex.setUsername(replaceValue(traceIndex.getUsername()));
-					String indexName = getIndexName(DateUtils.format(DateUtils.nowDate(), DateUtils.YYYYMM));
+					String indexName = getIndexName(DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMM));
 					// elasticsearchTemplate.syncIndexAsync(EMPTY, indexName,
 					// JacksonUtil.toJsonStr(traceIndex));
 				}
@@ -112,7 +112,7 @@ public class TraceConsumer {
 
 	@PostConstruct
 	public void createTraceIndex() {
-		String ym = DateUtils.format(DateUtils.nowDate(), DateUtils.YYYYMM);
+		String ym = DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMM);
 		// 创建索引
 		createIndex(ym);
 	}

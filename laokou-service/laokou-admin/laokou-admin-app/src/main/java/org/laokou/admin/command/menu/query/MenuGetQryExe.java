@@ -45,7 +45,7 @@ public class MenuGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<MenuCO> execute(MenuGetQry qry) {
-		return Result.of(convert(menuMapper.selectById(qry.getId())));
+		return Result.ok(convert(menuMapper.selectById(qry.getId())));
 	}
 
 	private MenuCO convert(MenuDO menuDO) {

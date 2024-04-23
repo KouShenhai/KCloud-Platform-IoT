@@ -46,7 +46,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.StringConstant.TRUE;
-import static org.laokou.common.i18n.common.SysConstants.APPLICATION;
+import static org.laokou.common.i18n.common.SysConstant.APPLICATION;
 
 /**
  * mybatis-plus配置.
@@ -55,7 +55,7 @@ import static org.laokou.common.i18n.common.SysConstants.APPLICATION;
  */
 @AutoConfiguration
 @ConditionalOnClass({ DataSource.class })
-@MapperScan("org.laokou.common.mybatisplus.repository")
+@MapperScan("org.laokou.common.mybatisplus.mapper")
 public class MybatisPlusAutoConfig {
 
 	// 静态注入缓存处理类

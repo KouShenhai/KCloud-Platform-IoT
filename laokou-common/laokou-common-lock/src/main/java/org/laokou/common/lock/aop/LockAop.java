@@ -27,7 +27,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.lock.Lock;
 import org.laokou.common.lock.TypeEnum;
 import org.laokou.common.lock.RedissonLock;
@@ -66,7 +66,7 @@ public class LockAop {
 		MethodSignature methodSignature = (MethodSignature) signature;
 		Method method = methodSignature.getMethod();
 		Lock4j lock4j = AnnotationUtils.findAnnotation(method, Lock4j.class);
-		Assert.isTrue(ObjectUtils.isNotNull(lock4j), "@Lock4j is null");
+		Assert.isTrue(ObjectUtil.isNotNull(lock4j), "@Lock4j is null");
 		String appName = UNDER;
 		if (lock4j.enable()) {
 			appName += environment.getProperty(SPRING_APPLICATION_NAME);

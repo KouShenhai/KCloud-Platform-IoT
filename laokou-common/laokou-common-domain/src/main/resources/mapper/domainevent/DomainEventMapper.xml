@@ -18,7 +18,7 @@
  */
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.common.domain.repository.DomainEventMapper">
+<mapper namespace="org.laokou.common.domain.database.DomainEventMapper">
 
     <sql id="columns">
         `id`,
@@ -48,7 +48,7 @@
         </choose>
     </update>
 
-    <select id="selectObjects" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.common.domain.repository.DomainEventDO">
+    <select id="selectObjects" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.common.domain.database.dataobject.DomainEventDO">
         select <include refid="columns"/>
             from boot_sys_domain_event
         where del_flag = 0

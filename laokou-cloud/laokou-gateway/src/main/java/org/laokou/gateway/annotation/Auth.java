@@ -19,8 +19,8 @@ package org.laokou.gateway.annotation;
 
 import java.lang.annotation.*;
 
-import static org.laokou.common.i18n.common.SysConstants.DEFAULT_PASSWORD;
-import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
+import static org.laokou.common.i18n.common.SysConstant.DEFAULT_PASSWORD;
+import static org.laokou.common.i18n.common.SysConstant.DEFAULT_USERNAME;
 
 /**
  * API认证注解.

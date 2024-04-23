@@ -20,7 +20,7 @@ package org.laokou.common.domain.publish;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.lock.annotation.Lock4j;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +48,7 @@ public class DomainEventJob {
 	@XxlJob("removeDomainEventJobHandler")
 	public void removeDomainEventJob() {
 		// 定时任务 => 每天00:20执行一次（保留一个月的领域事件）
-		String ymd = DateUtils.format(DateUtils.plusMonths(DateUtils.now(), -1), DateUtils.YYYYMMDD);
+		String ymd = DateUtil.format(DateUtil.plusMonths(DateUtil.now(), -1), DateUtil.YYYYMMDD);
 		domainEventService.removeLastMonth(ymd);
 	}
 

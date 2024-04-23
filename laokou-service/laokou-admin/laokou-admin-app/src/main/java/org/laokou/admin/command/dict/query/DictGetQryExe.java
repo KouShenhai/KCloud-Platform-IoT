@@ -46,7 +46,7 @@ public class DictGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<DictCO> execute(DictGetQry qry) {
-		return Result.of(convert(dictMapper.selectById(qry.getId())));
+		return Result.ok(convert(dictMapper.selectById(qry.getId())));
 	}
 
 	private DictCO convert(DictDO dictDO) {

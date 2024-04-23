@@ -18,7 +18,7 @@
 package org.laokou.auth.config;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
@@ -134,7 +134,7 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 	private JwsAlgorithm jwsAlgorithm(String signingAlgorithm) {
 		String name = signingAlgorithm.toUpperCase();
 		JwsAlgorithm jwsAlgorithm = SignatureAlgorithm.from(name);
-		if (ObjectUtils.isNull(jwsAlgorithm)) {
+		if (ObjectUtil.isNull(jwsAlgorithm)) {
 			jwsAlgorithm = MacAlgorithm.from(name);
 		}
 		return jwsAlgorithm;

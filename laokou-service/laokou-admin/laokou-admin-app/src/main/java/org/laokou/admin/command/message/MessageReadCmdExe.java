@@ -55,7 +55,7 @@ public class MessageReadCmdExe {
 	public Result<MessageCO> execute(MessageReadCmd cmd) {
 		Long detailId = cmd.getDetailId();
 		messageGateway.read(convert(detailId));
-		return Result.of(convert(messageMapper.selectByDetailId(detailId)));
+		return Result.ok(convert(messageMapper.selectByDetailId(detailId)));
 	}
 
 	private MessageDetail convert(Long detailId) {

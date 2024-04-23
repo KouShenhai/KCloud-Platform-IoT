@@ -44,7 +44,7 @@ public class ResourceSyncCmdExe {
 	 */
 	@DS(TENANT)
 	public Result<Boolean> execute(ResourceSyncCmd cmd) {
-		return Result.of(resourceGateway.sync());
+		return Result.ok(resourceGateway.sync());
 	}
 
 }

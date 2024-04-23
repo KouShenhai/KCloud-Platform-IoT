@@ -48,7 +48,7 @@ public class OssUploadCmdExe {
 	 */
 	@DS(TENANT)
 	public Result<FileCO> execute(OssUploadCmd cmd) {
-		return Result.of(convert(ossGateway.upload(cmd.getFile())));
+		return Result.ok(convert(ossGateway.upload(cmd.getFile())));
 	}
 
 	private FileCO convert(File file) {

@@ -29,7 +29,7 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.PropertyUtil;
 import org.laokou.common.crypto.utils.RsaUtil;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.StringUtils;
 
@@ -115,7 +115,7 @@ public class NacosDriverURLProvider implements ShardingSphereURLProvider {
 		try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(
 				new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8))) {
 			String str;
-			while (ObjectUtils.isNotNull((str = reader.readLine()))) {
+			while (ObjectUtil.isNotNull((str = reader.readLine()))) {
 				list.add(str);
 			}
 		}

@@ -20,10 +20,8 @@ package org.laokou.auth.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.mybatisplus.repository.CrudMapper;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
-
-import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
 
 /**
  * 用户.
@@ -35,13 +33,10 @@ import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
 public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 
 	/**
-	 * 根据用户名和登录类型查看用户信息.
-	 * @param username 用户名
-	 * @param type 类型 mail邮箱 mobile手机号 password密码 authorization_code授权码
-	 * @param secretKey 密钥Key
+	 * 查看用户信息.
+	 * @param user 用户对象
 	 * @return 用户信息
 	 */
-	UserDO selectByConditions(@Param(USERNAME) String username, @Param("type") String type,
-			@Param("secretKey") String secretKey);
+	UserDO selectByConditions(@Param("user") UserDO user);
 
 }

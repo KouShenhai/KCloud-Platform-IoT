@@ -31,7 +31,7 @@ public class LogUtil {
 	}
 
 	public static String except(String message) {
-		return StringUtil.isEmpty(message) ? MessageUtils.getMessage(INTERNAL_SERVER_ERROR) : message;
+		return StringUtil.isEmpty(message) ? MessageUtil.getMessage(INTERNAL_SERVER_ERROR) : message;
 	}
 
 }

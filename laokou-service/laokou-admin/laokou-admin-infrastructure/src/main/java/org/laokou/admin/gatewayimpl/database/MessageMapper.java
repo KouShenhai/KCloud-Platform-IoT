@@ -21,7 +21,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.repository.CrudMapper;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

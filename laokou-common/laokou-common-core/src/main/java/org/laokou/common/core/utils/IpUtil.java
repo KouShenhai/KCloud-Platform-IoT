@@ -17,10 +17,11 @@
 
 package org.laokou.common.core.utils;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
 import static org.laokou.common.i18n.common.NetworkConstant.*;
@@ -34,13 +35,19 @@ import static org.laokou.common.i18n.common.StringConstant.COMMA;
 @Slf4j
 public class IpUtil {
 
+	@Schema(name = "UNKNOWN_IP", description = "未知IP")
+	private static final String UNKNOWN_IP = "unknown";
+
+	@Schema(name = "LOCAL_IPV6", description = "本地IP-IPV6")
+	private static final String LOCAL_IPV6 = "0:0:0:0:0:0:0:1";
+
 	/**
 	 * 解析IP地址.
 	 * @param request 请求对象
 	 * @return IP地址
 	 */
 	public static String getIpAddr(HttpServletRequest request) {
-		if (ObjectUtils.isNull(request)) {
+		if (ObjectUtil.isNull(request)) {
 			return UNKNOWN_IP;
 		}
 		String ip = request.getHeader("x-forwarded-for");
@@ -72,7 +79,7 @@ public class IpUtil {
 			return true;
 		}
 		byte[] bytes = textToNumericFormatV4(ip);
-		return ObjectUtils.isNotNull(bytes) && (internalIp(bytes) || LOCAL_IPV4.equals(ip));
+		return ObjectUtil.isNotNull(bytes) && (internalIp(bytes) || LOCAL_IPV4.equals(ip));
 	}
 
 	/**

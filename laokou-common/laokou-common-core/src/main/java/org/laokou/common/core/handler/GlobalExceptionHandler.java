@@ -21,7 +21,7 @@ import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.*;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -93,7 +93,7 @@ public class GlobalExceptionHandler {
 	public Result<?> handle(Exception ex) {
 		if (ex instanceof MethodArgumentNotValidException mane) {
 			FieldError fieldError = mane.getFieldError();
-			if (ObjectUtils.isNotNull(fieldError)) {
+			if (ObjectUtil.isNotNull(fieldError)) {
 				return Result.fail(fieldError.getCode(), fieldError.getDefaultMessage());
 			}
 		}

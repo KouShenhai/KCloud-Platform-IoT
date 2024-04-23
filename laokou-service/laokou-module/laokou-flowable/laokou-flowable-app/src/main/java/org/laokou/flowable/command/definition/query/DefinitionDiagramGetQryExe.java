@@ -68,7 +68,7 @@ public class DefinitionDiagramGetQryExe {
 			if (null != image) {
 				ImageIO.write(image, "png", outputStream);
 			}
-			return Result.of(Base64.encodeBase64String(outputStream.toByteArray()));
+			return Result.ok(Base64.encodeBase64String(outputStream.toByteArray()));
 		}
 		catch (IOException e) {
 			log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);

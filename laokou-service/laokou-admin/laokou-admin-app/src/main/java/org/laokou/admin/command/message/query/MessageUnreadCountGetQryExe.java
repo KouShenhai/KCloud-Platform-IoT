@@ -50,7 +50,7 @@ public class MessageUnreadCountGetQryExe {
 		Integer count = transactionalUtil.defaultExecute(
 				r -> messageDetailMapper.selectUnreadCountByUserId(UserUtil.getUserId()),
 				TransactionDefinition.ISOLATION_READ_UNCOMMITTED, true);
-		return Result.of(count);
+		return Result.ok(count);
 	}
 
 }

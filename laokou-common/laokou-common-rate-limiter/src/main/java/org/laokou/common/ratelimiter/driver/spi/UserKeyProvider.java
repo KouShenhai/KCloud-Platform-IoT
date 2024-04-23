@@ -20,7 +20,7 @@ package org.laokou.common.ratelimiter.driver.spi;
 import jakarta.servlet.http.HttpServletRequest;
 
 import static org.laokou.common.i18n.common.TraceConstant.USER_ID;
-import static org.laokou.common.ratelimiter.driver.spi.RateLimiterTypeEnum.USER;
+import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.USER;
 
 /**
  * @author laokou
@@ -33,7 +33,7 @@ public class UserKeyProvider implements org.laokou.common.ratelimiter.driver.spi
 	}
 
 	@Override
-	public RateLimiterTypeEnum accept() {
+	public TypeEnum accept() {
 		return USER;
 	}
 

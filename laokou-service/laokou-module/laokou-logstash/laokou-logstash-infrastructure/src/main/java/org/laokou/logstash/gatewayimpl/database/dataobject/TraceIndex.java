@@ -26,7 +26,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
-import static org.laokou.common.i18n.utils.DateUtils.Constant.*;
+import static org.laokou.common.i18n.utils.DateUtil.Constant.*;
 
 /**
  * @author laokou

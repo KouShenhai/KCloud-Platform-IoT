@@ -18,8 +18,8 @@
 package org.laokou.common.core.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.DateUtils;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.Assert;
 
@@ -81,7 +81,7 @@ public class IdGenerator {
 	public static LocalDateTime getLocalDateTime(long snowflakeId) {
 		// 第一段 时间戳部分 (反推 -> 右移left + start)
 		long timestamp = (snowflakeId >> Snowflake.TIMESTAMP_LEFT) + Snowflake.START_TIMESTAMP;
-		return DateUtils.getLocalDateTimeOfTimestamp(timestamp);
+		return DateUtil.getLocalDateTimeOfTimestamp(timestamp);
 	}
 
 	static class Snowflake {
@@ -199,11 +199,11 @@ public class IdGenerator {
 		private long getDatacenterId() {
 			long id = 0L;
 			try {
-				if (ObjectUtils.isNull(this.inetAddress)) {
+				if (ObjectUtil.isNull(this.inetAddress)) {
 					this.inetAddress = InetAddress.getLocalHost();
 				}
 				NetworkInterface network = NetworkInterface.getByInetAddress(this.inetAddress);
-				if (ObjectUtils.isNull(network)) {
+				if (ObjectUtil.isNull(network)) {
 					id = 1L;
 				}
 				else {
@@ -216,7 +216,7 @@ public class IdGenerator {
 				}
 			}
 			catch (Exception e) {
-				log.warn(" getDatacenterId: " + e.getMessage());
+				log.error("Error message：{}", e.getMessage(), e);
 			}
 			return id;
 		}

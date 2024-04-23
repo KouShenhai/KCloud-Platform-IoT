@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
+import static org.laokou.common.i18n.common.MybatisPlusConstant.USER_ID;
 
 /**
  * 部门.

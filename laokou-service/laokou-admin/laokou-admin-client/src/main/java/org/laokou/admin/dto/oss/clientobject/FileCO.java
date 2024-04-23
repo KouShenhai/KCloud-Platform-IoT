@@ -24,15 +24,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
-import static lombok.AccessLevel.PRIVATE;
-
 /**
  * @author laokou
  */
 @Data
 @Builder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(name = "FileCO", description = "文件")
 public class FileCO extends ClientObject {
 

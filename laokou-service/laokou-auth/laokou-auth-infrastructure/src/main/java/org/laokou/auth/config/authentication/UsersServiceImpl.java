@@ -17,22 +17,16 @@
 
 package org.laokou.auth.config.authentication;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.user.Auth;
-import org.laokou.auth.domain.user.User;
+import org.laokou.auth.domain.factory.AuthFactory;
+import org.laokou.auth.domain.model.auth.AuthA;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.crypto.utils.AesUtil;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.OAuth2Constants.AUTHORIZATION_CODE;
-import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
-import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
 
 /**
  * 用户认证.
@@ -55,11 +49,8 @@ public class UsersServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
-			HttpServletRequest request = RequestUtil.getHttpServletRequest();
-			String password = request.getParameter(PASSWORD);
-			Auth authObj = Auth.builder().type(AUTHORIZATION_CODE).secretKey(AesUtil.getSecretKeyStr()).build();
-			User user = User.builder().auth(authObj).tenantId(DEFAULT).username(username).password(password).build();
-			return (UserDetails) authProvider.authenticationToken(user, request).getPrincipal();
+			AuthA auth = AuthFactory.authorizationCode(RequestUtil.getHttpServletRequest());
+			return (UserDetails) authProvider.authenticationToken(auth).getPrincipal();
 		}
 		catch (OAuth2AuthenticationException e) {
 			throw new UsernameNotFoundException(e.getError().getDescription(), e);

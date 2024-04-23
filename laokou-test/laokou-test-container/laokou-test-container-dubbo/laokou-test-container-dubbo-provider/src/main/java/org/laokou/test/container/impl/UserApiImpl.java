@@ -20,7 +20,7 @@ package org.laokou.test.container.impl;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.laokou.test.container.UserApi;
 
-import static org.laokou.common.i18n.common.SysConstants.VERSION;
+import static org.laokou.common.i18n.common.SysConstant.VERSION;
 
 /**
  * @author laokou

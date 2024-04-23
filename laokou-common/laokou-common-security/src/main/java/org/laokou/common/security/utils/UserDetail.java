@@ -20,14 +20,11 @@ package org.laokou.common.security.utils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Identifier;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -41,10 +38,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static lombok.AccessLevel.PRIVATE;
-import static org.laokou.common.i18n.common.OAuth2Constants.PASSWORD;
-import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
 import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
 import static org.laokou.common.i18n.common.UserStatusEnum.ENABLED;
 
@@ -54,9 +47,6 @@ import static org.laokou.common.i18n.common.UserStatusEnum.ENABLED;
  * @author laokou
  */
 @Data
-@SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "UserDetail", description = "用户详细信息")
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
 public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2AuthenticatedPrincipal {
@@ -64,7 +54,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
 
-	@Schema(name = USERNAME, description = "用户名")
+	@Schema(name = "username", description = "用户名")
 	private String username;
 
 	@Schema(name = "avatar", description = "头像")
@@ -82,13 +72,13 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@Schema(name = "mobile", description = "手机号")
 	private String mobile;
 
-	@Schema(name = PASSWORD, description = "密码")
+	@Schema(name = "password", description = "密码")
 	private transient String password;
 
-	@Schema(name = DEPT_ID, description = "部门ID")
+	@Schema(name = "dept_id", description = "部门ID")
 	private Long deptId;
 
-	@Schema(name = DEPT_PATH, description = "部门PATH")
+	@Schema(name = "dept_path", description = "部门PATH")
 	private String deptPath;
 
 	@Schema(name = "deptPaths", description = "部门PATH集合")
@@ -97,7 +87,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@Schema(name = "permissions", description = "菜单权限标识集合")
 	private Set<String> permissions;
 
-	@Schema(name = TENANT_ID, description = "租户ID")
+	@Schema(name = "tenantId", description = "租户ID")
 	private Long tenantId;
 
 	@Schema(name = "sourceName", description = "数据源名称")
@@ -114,7 +104,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (this == o) {
 			return true;
 		}
-		if (ObjectUtils.isNull(o) || getClass() != o.getClass()) {
+		if (ObjectUtil.isNull(o) || getClass() != o.getClass()) {
 			return false;
 		}
 		UserDetail that = (UserDetail) o;
@@ -185,7 +175,17 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 
 	@JsonIgnore
 	public boolean isSuperAdministrator() {
-		return ObjectUtils.equals(YES.ordinal(), this.superAdmin);
+		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
+	}
+
+	@JsonIgnore
+	public void modify(Set<String> permissions, Set<String> deptPaths, String sourceName, String loginIp,
+			LocalDateTime loginDate) {
+		this.permissions = permissions;
+		this.deptPaths = deptPaths;
+		this.sourceName = sourceName;
+		this.loginIp = loginIp;
+		this.loginDate = loginDate;
 	}
 
 	@Override
@@ -215,7 +215,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@Override
 	@JsonIgnore
 	public boolean isEnabled() {
-		return ObjectUtils.equals(ENABLED.ordinal(), this.status);
+		return ObjectUtil.equals(ENABLED.ordinal(), this.status);
 	}
 
 	/**

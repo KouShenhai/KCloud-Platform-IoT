@@ -23,7 +23,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceIndex;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.repository.CrudMapper;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

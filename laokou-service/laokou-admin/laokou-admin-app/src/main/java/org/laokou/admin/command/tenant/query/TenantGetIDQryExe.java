@@ -18,6 +18,7 @@
 package org.laokou.admin.command.tenant.query;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.dto.tenant.TenantGetIDQry;
@@ -26,14 +27,12 @@ import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
-
-import static org.laokou.common.i18n.common.NetworkConstant.WWW;
 import static org.laokou.common.i18n.common.StringConstant.BACKSLASH;
 import static org.laokou.common.i18n.common.StringConstant.DOT;
 import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
@@ -46,6 +45,9 @@ import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
 @Component
 @RequiredArgsConstructor
 public class TenantGetIDQryExe {
+
+	@Schema(name = "WWW", description = "www三级域名")
+	private static final String WWW = "www";
 
 	private final DefaultConfigProperties defaultConfigProperties;
 
@@ -61,18 +63,18 @@ public class TenantGetIDQryExe {
 	public Result<Long> execute(TenantGetIDQry qry) {
 		String domainName = RequestUtil.getDomainName(qry.getRequest());
 		if (RegexUtil.ipRegex(domainName)) {
-			return Result.of(DEFAULT);
+			return Result.ok(DEFAULT);
 		}
 		String[] split = domainName.split(BACKSLASH + DOT);
 		if (split.length < 3 || WWW.equals(split[0])) {
-			return Result.of(DEFAULT);
+			return Result.ok(DEFAULT);
 		}
 		Set<String> domainNames = defaultConfigProperties.getDomainNames();
 		// 租户域名
 		if (domainNames.parallelStream().anyMatch(domainName::contains)) {
-			return Result.of(getTenantCache(split[0]));
+			return Result.ok(getTenantCache(split[0]));
 		}
-		return Result.of(DEFAULT);
+		return Result.ok(DEFAULT);
 	}
 
 	/**
@@ -83,12 +85,12 @@ public class TenantGetIDQryExe {
 	private Long getTenantCache(String str) {
 		String tenantDomainNameHashKey = RedisKeyUtil.getTenantDomainNameHashKey();
 		Object o = redisUtil.hGet(tenantDomainNameHashKey, str);
-		if (ObjectUtils.isNotNull(o)) {
+		if (ObjectUtil.isNotNull(o)) {
 			return Long.valueOf(o.toString());
 		}
 		TenantDO tenantDO = tenantMapper
 			.selectOne(Wrappers.lambdaQuery(TenantDO.class).eq(TenantDO::getLabel, str).select(TenantDO::getId));
-		if (ObjectUtils.isNotNull(tenantDO)) {
+		if (ObjectUtil.isNotNull(tenantDO)) {
 			Long id = tenantDO.getId();
 			redisUtil.hSet(tenantDomainNameHashKey, str, id, RedisUtil.HOUR_ONE_EXPIRE);
 			return id;

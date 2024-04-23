@@ -46,7 +46,7 @@ public class OssGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<OssCO> execute(OssGetQry qry) {
-		return Result.of(convert(ossMapper.selectById(qry.getId())));
+		return Result.ok(convert(ossMapper.selectById(qry.getId())));
 	}
 
 	private OssCO convert(OssDO ossDO) {

@@ -19,65 +19,72 @@ package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.ObjectUtils;
-import org.laokou.common.i18n.utils.ValidatorUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static lombok.AccessLevel.PROTECTED;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_TENANT_ID_REQUIRE;
 import static org.laokou.common.i18n.common.exception.ParamException.SYSTEM_ID_REQUIRE;
 
 /**
  * @author laokou
  */
-@Data
 @SuperBuilder
-@AllArgsConstructor(access = PROTECTED)
-@NoArgsConstructor(access = PROTECTED)
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(name = "AggregateRoot", description = "聚合根")
 public abstract class AggregateRoot<ID> extends Identifier<ID> {
 
-	@Schema(name = CREATOR, description = "创建人")
+	@Schema(name = "creator", description = "创建人")
 	protected ID creator;
 
-	@Schema(name = EDITOR, description = "编辑人")
+	@Schema(name = "editor", description = "编辑人")
 	protected ID editor;
 
-	@Schema(name = DEPT_ID, description = "部门ID")
+	@Schema(name = "deptId", description = "部门ID")
 	protected ID deptId;
 
-	@Schema(name = DEPT_PATH, description = "部门PATH")
+	@Schema(name = "deptPath", description = "部门PATH")
 	protected String deptPath;
 
-	@Schema(name = TENANT_ID, description = "租户ID")
+	@Schema(name = "tenantId", description = "租户ID")
 	protected ID tenantId;
 
-	@Schema(name = CREATE_DATE, description = "创建时间")
+	@Schema(name = "createDate", description = "创建时间")
 	protected LocalDateTime createDate;
 
-	@Schema(name = UPDATE_DATE, description = "修改时间")
+	@Schema(name = "updateDate", description = "修改时间")
 	protected LocalDateTime updateDate;
+
+	@Schema(name = "sourceName", description = "数据源名称")
+	protected String sourceName;
+
+	@Schema(name = "appName", description = "应用名称")
+	protected String appName;
 
 	@Schema(name = "events", description = "事件集合")
 	private List<DomainEvent<ID>> events;
 
 	public void checkNullId() {
-		if (ObjectUtils.isNull(this.id)) {
-			throw new SystemException(SYSTEM_ID_REQUIRE, ValidatorUtils.getMessage(SYSTEM_ID_REQUIRE));
+		if (ObjectUtil.isNull(this.id)) {
+			throw new SystemException(SYSTEM_ID_REQUIRE, ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 	}
 
 	protected void checkNullTenantId() {
-		if (ObjectUtils.isNull(this.tenantId)) {
-			throw new AuthException(OAUTH2_TENANT_ID_REQUIRE, ValidatorUtils.getMessage(OAUTH2_TENANT_ID_REQUIRE));
+		if (ObjectUtil.isNull(this.tenantId)) {
+			throw new AuthException(OAUTH2_TENANT_ID_REQUIRE, ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
 		}
 	}
 
@@ -90,7 +97,7 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	}
 
 	private List<DomainEvent<ID>> events() {
-		if (ObjectUtils.isNull(events)) {
+		if (ObjectUtil.isNull(events)) {
 			events = new ArrayList<>(16);
 		}
 		return events;

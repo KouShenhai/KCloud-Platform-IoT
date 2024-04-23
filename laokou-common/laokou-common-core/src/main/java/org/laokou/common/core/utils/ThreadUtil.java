@@ -17,7 +17,7 @@
 
 package org.laokou.common.core.utils;
 
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.concurrent.ExecutorService;
 
@@ -36,7 +36,7 @@ public class ThreadUtil {
 	 * @param timeout 超时时间
 	 */
 	public static void shutdown(ExecutorService executorService, int timeout) {
-		if (ObjectUtils.isNotNull(executorService) && !executorService.isShutdown()) {
+		if (ObjectUtil.isNotNull(executorService) && !executorService.isShutdown()) {
 			executorService.shutdown();
 			try {
 				if (!executorService.awaitTermination(timeout, SECONDS)) {

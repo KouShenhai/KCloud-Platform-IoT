@@ -39,7 +39,7 @@ public class TokenGetQryExe {
 	 * @return 令牌
 	 */
 	public Result<TokenCO> execute() {
-		return Result.of(new TokenCO(idempotentUtil.getIdempotentKey()));
+		return Result.ok(new TokenCO(idempotentUtil.getIdempotentKey()));
 	}
 
 }

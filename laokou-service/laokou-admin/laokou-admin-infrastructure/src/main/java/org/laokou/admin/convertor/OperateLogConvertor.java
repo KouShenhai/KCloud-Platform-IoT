@@ -17,6 +17,7 @@
 
 package org.laokou.admin.convertor;
 
+import org.laokou.admin.dto.log.clientobject.OperateLogCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.common.core.common.domain.OperateLog;
 import org.laokou.common.i18n.dto.Convertor;
@@ -30,6 +31,6 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * @author laokou
  */
 @Mapper(componentModel = SPRING)
-public interface OperateLogConvertor extends Convertor<OperateLog, OperateLogDO> {
+public interface OperateLogConvertor extends Convertor<OperateLogCO, OperateLog, OperateLogDO> {
 
 }

@@ -19,7 +19,7 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.user.Auth;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.springframework.security.core.Authentication;
@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.laokou.common.i18n.common.exception.AuthException.INVALID_SCOPE;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 
@@ -68,7 +69,9 @@ public abstract class AbstractOAuth2AuthenticationConverter implements Authentic
 			MultiValueMap<String, String> parameters = MapUtil.getParameters(request);
 			List<String> scopes = parameters.get(OAuth2ParameterNames.SCOPE);
 			// 判断scopes
-			Auth.builder().build().checkScopes(scopes);
+			if (CollectionUtil.isNotEmpty(scopes) && scopes.size() != 1) {
+				throw new AuthException(INVALID_SCOPE);
+			}
 			// 获取上下文认证信息
 			Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();
 			Map<String, Object> additionalParameters = new HashMap<>(parameters.size());

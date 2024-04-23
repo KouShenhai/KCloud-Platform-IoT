@@ -42,7 +42,7 @@ public class SourceGetQryExe {
 	 * @return 数据源
 	 */
 	public Result<SourceCO> execute(SourceGetQry qry) {
-		return Result.of(convert(sourceMapper.selectById(qry.getId())));
+		return Result.ok(convert(sourceMapper.selectById(qry.getId())));
 	}
 
 	private SourceCO convert(SourceDO sourceDO) {

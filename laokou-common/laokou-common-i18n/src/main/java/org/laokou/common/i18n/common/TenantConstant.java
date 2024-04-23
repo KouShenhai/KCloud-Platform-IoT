@@ -34,9 +34,6 @@ public final class TenantConstant {
 	@Schema(name = "TENANT_PASSWORD", description = "默认租户密码")
 	public static final String TENANT_PASSWORD = "tenant123";
 
-	@Schema(name = "TENANT_ID", description = "租户ID")
-	public static final String TENANT_ID = "tenant_id";
-
 	@Schema(name = "DEFAULT", description = "默认租户ID")
 	public static final long DEFAULT = 0;
 

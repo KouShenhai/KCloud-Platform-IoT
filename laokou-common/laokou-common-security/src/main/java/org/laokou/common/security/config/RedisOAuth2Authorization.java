@@ -27,7 +27,7 @@ import org.springframework.data.redis.core.index.Indexed;
 
 import java.time.Instant;
 
-import static org.laokou.common.i18n.common.OAuth2Constants.REDIS_OAUTH2_AUTHORIZATION_KEY;
+import static org.laokou.common.security.config.RedisOAuth2Authorization.REDIS_OAUTH2_AUTHORIZATION_KEY;
 
 // @formatter:off
 /**
@@ -43,6 +43,9 @@ import static org.laokou.common.i18n.common.OAuth2Constants.REDIS_OAUTH2_AUTHORI
 @RedisHash(REDIS_OAUTH2_AUTHORIZATION_KEY)
 @Schema(name = "RedisOAuth2Authorization", description = "Redis认证")
 public class RedisOAuth2Authorization extends Authorization {
+
+	@Schema(name = "REDIS_OAUTH2_AUTHORIZATION_KEY", description = "存入Redis的Hash键")
+	protected static final String REDIS_OAUTH2_AUTHORIZATION_KEY = "OAuth2:Authorization";
 
 	@Id
 	@Schema(name = "id", description = "ID")

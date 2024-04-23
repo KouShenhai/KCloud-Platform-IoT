@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.domain.convertor.DomainEventConvertor;
-import org.laokou.common.domain.repository.DomainEventDO;
+import org.laokou.common.domain.database.dataobject.DomainEventDO;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.EventStatusEnum;
 import org.laokou.common.i18n.common.JobModeEnum;

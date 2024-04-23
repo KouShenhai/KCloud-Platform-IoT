@@ -34,7 +34,7 @@ public class MonitorServerGetQryExe {
 	 * @return 服务器监控
 	 */
 	public Result<ServerCO> execute() {
-		return Result.of(convert());
+		return Result.ok(convert());
 	}
 
 	private ServerCO convert() {

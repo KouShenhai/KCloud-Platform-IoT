@@ -42,7 +42,7 @@ public class TenantGetQryExe {
 	 * @return 租户
 	 */
 	public Result<TenantCO> execute(TenantGetQry qry) {
-		return Result.of(convert(tenantMapper.selectById(qry.getId())));
+		return Result.ok(convert(tenantMapper.selectById(qry.getId())));
 	}
 
 	private TenantCO convert(TenantDO tenantDO) {

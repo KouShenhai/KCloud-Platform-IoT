@@ -19,7 +19,7 @@ package org.laokou.admin.command.logout;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.logout.LogoutCmd;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -55,10 +55,10 @@ public class LogoutCmdExe {
 			return;
 		}
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
-		if (ObjectUtils.isNull(authorization)) {
+		if (ObjectUtil.isNull(authorization)) {
 			return;
 		}
-		UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) ObjectUtils
+		UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) ObjectUtil
 			.requireNotNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
 		// 删除token
 		removeToken(authorization);

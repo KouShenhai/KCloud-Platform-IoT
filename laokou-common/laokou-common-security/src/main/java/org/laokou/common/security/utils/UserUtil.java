@@ -30,7 +30,7 @@ public class UserUtil {
 			return (UserDetail) getAuthentication().getPrincipal();
 		}
 		catch (Exception e) {
-			return UserDetail.builder().build();
+			return new UserDetail();
 		}
 	}
 

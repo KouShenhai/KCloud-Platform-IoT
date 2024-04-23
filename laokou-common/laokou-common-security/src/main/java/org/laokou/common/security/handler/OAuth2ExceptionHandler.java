@@ -24,7 +24,7 @@ import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.MessageUtils;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -43,11 +43,11 @@ public class OAuth2ExceptionHandler {
 	}
 
 	public static OAuth2AuthenticationException getException(String code, String uri) {
-		return getException(code, MessageUtils.getMessage(code), uri);
+		return getException(code, MessageUtil.getMessage(code), uri);
 	}
 
 	public static OAuth2AuthenticationException getException(String code) {
-		return getException(code, MessageUtils.getMessage(code), ERROR_URL);
+		return getException(code, MessageUtil.getMessage(code), ERROR_URL);
 	}
 
 	@SneakyThrows

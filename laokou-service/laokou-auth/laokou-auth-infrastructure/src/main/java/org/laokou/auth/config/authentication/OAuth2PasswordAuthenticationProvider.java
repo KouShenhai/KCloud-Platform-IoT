@@ -19,23 +19,15 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.user.Auth;
-import org.laokou.auth.domain.user.Captcha;
-import org.laokou.auth.domain.user.User;
-import org.laokou.common.crypto.utils.AesUtil;
-import org.laokou.common.i18n.common.exception.AuthException;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.auth.domain.factory.AuthFactory;
+import org.laokou.auth.domain.model.auth.AuthA;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.OAuth2Constants.*;
-import static org.laokou.common.i18n.common.TenantConstant.TENANT_ID;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 
 /**
  * 密码处理器.
@@ -58,38 +50,15 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
 
 	@Override
 	Authentication principal(HttpServletRequest request) {
-		try {
-			String tenantId = request.getParameter(TENANT_ID);
-			String uuid = request.getParameter(UUID);
-			String captcha = request.getParameter(CAPTCHA);
-			String username = request.getParameter(USERNAME);
-			String password = request.getParameter(PASSWORD);
-			// log.info("UUID：{}", uuid);
-			// log.info("验证码：{}", captcha);
-			// log.info("账号：{}", username);
-			// log.info("密码：{}", password);
-			// log.info("租户ID：{}", tenantId);
-			Captcha captchaObj = Captcha.builder().uuid(uuid).captcha(captcha).build();
-			Auth authObj = Auth.builder().secretKey(AesUtil.getSecretKeyStr()).type(getGrantType().getValue()).build();
-			User user = User.builder()
-				.tenantId(StringUtil.parseLong(tenantId))
-				.auth(authObj)
-				.username(username)
-				.password(password)
-				.captcha(captchaObj)
-				.build();
-			user.checkUsernamePasswordAuth();
-			// 获取用户信息，并认证信息
-			return super.authenticationToken(user, request);
-		}
-		catch (AuthException e) {
-			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
-		}
+		AuthA auth = AuthFactory.password(request);
+		// 校验
+		auth.checkNullByPassword();
+		return authenticationToken(auth);
 	}
 
 	@Override
 	AuthorizationGrantType getGrantType() {
-		return new AuthorizationGrantType(PASSWORD);
+		return new AuthorizationGrantType(OAuth2ParameterNames.PASSWORD);
 	}
 
 }

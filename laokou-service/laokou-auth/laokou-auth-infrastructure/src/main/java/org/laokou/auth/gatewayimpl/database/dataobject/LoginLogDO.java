@@ -20,12 +20,11 @@ package org.laokou.auth.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.mybatisplus.repository.BaseDO;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 import java.io.Serial;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_LOGIN_LOG;
-import static org.laokou.common.i18n.common.OAuth2Constants.USERNAME;
 import static org.laokou.common.mybatisplus.config.DynamicTableNameHandler.PLACE_HOLDER;
 
 /**
@@ -39,7 +38,7 @@ public class LoginLogDO extends BaseDO {
 	@Serial
 	private static final long serialVersionUID = 4289483981365827983L;
 
-	@Schema(name = USERNAME, description = "登录的用户名")
+	@Schema(name = "username", description = "登录的用户名")
 	private String username;
 
 	@Schema(name = "ip", description = "登录的IP地址")

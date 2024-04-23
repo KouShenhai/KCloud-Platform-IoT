@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.laokou.common.ratelimiter.driver.spi.RateLimiterTypeEnum.IP;
+import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
 
 /**
  * @author laokou
@@ -39,13 +39,13 @@ import static org.laokou.common.ratelimiter.driver.spi.RateLimiterTypeEnum.IP;
 @RestController
 @Tag(name = "CaptchasController", description = "验证码")
 @RequiredArgsConstructor
-@RequestMapping("v1/captchas")
+@RequestMapping("captchas")
 public class CaptchasController {
 
 	private final CaptchasServiceI captchasServiceI;
 
 	@TraceLog
-	@GetMapping("{uuid}")
+	@GetMapping("v1/{uuid}")
 	@RateLimiter(id = "AUTH_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
 	@Operation(summary = "验证码", description = "获取验证码")
 	public Result<String> find(@PathVariable("uuid") String uuid) {

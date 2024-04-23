@@ -36,7 +36,7 @@ public class UserProfileGetQryExe {
 	 * @return 用户信息
 	 */
 	public Result<UserProfileCO> execute() {
-		return Result.of(convert());
+		return Result.ok(convert());
 	}
 
 	/**

@@ -46,7 +46,7 @@ public class ResourceGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<ResourceCO> execute(ResourceGetQry qry) {
-		return Result.of(convert(resourceMapper.selectById(qry.getId())));
+		return Result.ok(convert(resourceMapper.selectById(qry.getId())));
 	}
 
 	private ResourceCO convert(ResourceDO resourceDO) {

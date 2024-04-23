@@ -39,7 +39,7 @@ public class MonitorRedisCacheGetQryExe {
 	 * @return Redis缓存监控
 	 */
 	public Result<RedisCacheCO> execute() {
-		return Result.of(convert());
+		return Result.ok(convert());
 	}
 
 	private RedisCacheCO convert() {

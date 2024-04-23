@@ -20,7 +20,7 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.CaptchaGateway;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -46,7 +46,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	/**
 	 * 写入Redis.
-	 * @param uuid 唯一标识
+	 * @param uuid UUID
 	 * @param code 验证码
 	 */
 	@Override
@@ -56,7 +56,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	/**
 	 * 检查验证码.
-	 * @param uuid 唯一标识
+	 * @param uuid UUID
 	 * @param code 验证码
 	 * @return 校验结果
 	 */
@@ -72,35 +72,32 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	/**
 	 * 获取key（MD5加密）.
-	 * @param uuid 唯一标识
+	 * @param uuid UUID
 	 * @return key
 	 */
 	@Override
 	public String key(String uuid) {
 		String key = RedisKeyUtil.getUserCaptchaKey(uuid);
-		// before(key);
-		key = DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
-		// after(key);
-		return key;
+		return DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
-	 * 从Redis根据唯一标识查看验证码.
-	 * @param uuid 唯一标识
+	 * 从Redis根据UUID查看验证码.
+	 * @param uuid UUID
 	 * @return 验证码
 	 */
 	private String get(String uuid) {
 		String key = key(uuid);
 		Object captcha = redisUtil.get(key);
-		if (ObjectUtils.isNotNull(captcha)) {
+		if (ObjectUtil.isNotNull(captcha)) {
 			redisUtil.delete(key);
 		}
-		return ObjectUtils.isNotNull(captcha) ? captcha.toString() : EMPTY;
+		return ObjectUtil.isNotNull(captcha) ? captcha.toString() : EMPTY;
 	}
 
 	/**
 	 * 写入Redis.
-	 * @param uuid 唯一标识
+	 * @param uuid UUID
 	 * @param code 验证码
 	 */
 	private void setValue(String uuid, String code) {
@@ -108,22 +105,6 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 		// 保存五分钟
 		redisUtil.delete(key);
 		redisUtil.set(key, code, MINUTE_FIVE_EXPIRE);
-	}
-
-	/**
-	 * MD5加密前.
-	 * @param key key
-	 */
-	private void before(String key) {
-		log.info("MD5加密前：{}", key);
-	}
-
-	/**
-	 * MD5加密后.
-	 * @param key key
-	 */
-	private void after(String key) {
-		log.info("MD5加密后：{}", key);
 	}
 
 }

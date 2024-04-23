@@ -73,7 +73,7 @@ public class TaskDiagramGetQryExe {
 			if (null != image) {
 				ImageIO.write(image, PNG, outputStream);
 			}
-			return Result.of(Base64.encodeBase64String(outputStream.toByteArray()));
+			return Result.ok(Base64.encodeBase64String(outputStream.toByteArray()));
 		}
 	}
 

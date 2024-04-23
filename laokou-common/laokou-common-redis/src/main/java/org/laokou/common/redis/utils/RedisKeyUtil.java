@@ -24,7 +24,7 @@ public final class RedisKeyUtil {
 
 	/**
 	 * 验证码Key.
-	 * @param uuid 唯一标识
+	 * @param uuid UUID
 	 */
 	public static String getUserCaptchaKey(String uuid) {
 		return "user:captcha:" + uuid;

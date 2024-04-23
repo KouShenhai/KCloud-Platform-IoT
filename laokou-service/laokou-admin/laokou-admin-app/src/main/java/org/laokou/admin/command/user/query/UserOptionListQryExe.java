@@ -53,7 +53,7 @@ public class UserOptionListQryExe {
 	@DataFilter(tableAlias = BOOT_SYS_USER)
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
 		List<UserDO> list = userMapper.selectOptionList(qry, AesUtil.getSecretKeyStr());
-		return Result.of(list.stream().map(this::convert).toList());
+		return Result.ok(list.stream().map(this::convert).toList());
 	}
 
 	/**

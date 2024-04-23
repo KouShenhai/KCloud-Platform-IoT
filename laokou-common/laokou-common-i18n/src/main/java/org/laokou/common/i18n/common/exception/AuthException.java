@@ -64,6 +64,9 @@ public final class AuthException extends GlobalException {
 	@Schema(name = "ACCOUNT_PASSWORD_ERROR", description = "账号或密码错误")
 	public static final String ACCOUNT_PASSWORD_ERROR = "A_OAuth2_AccountPasswordError";
 
+	@Schema(name = "SOURCE_NOT_EXIST", description = "数据源不存在")
+	public static final String SOURCE_NOT_EXIST = "A_OAuth2_SourceNotExist";
+
 	public AuthException(String code) {
 		super(code);
 	}

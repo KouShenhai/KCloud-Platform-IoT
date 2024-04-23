@@ -20,10 +20,7 @@ package org.laokou.common.core.common.domain;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.core.common.event.OperateFailedEvent;
 import org.laokou.common.core.common.event.OperateSucceededEvent;
 import org.laokou.common.core.context.UserContextHolder;
@@ -31,12 +28,11 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
-import static lombok.AccessLevel.PRIVATE;
 import static org.laokou.common.core.utils.JacksonUtil.EMPTY_JSON;
 import static org.laokou.common.i18n.common.StringConstant.*;
 
@@ -44,9 +40,6 @@ import static org.laokou.common.i18n.common.StringConstant.*;
  * @author laokou
  */
 @Data
-@SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "OperateLog", description = "操作日志")
 public class OperateLog extends AggregateRoot<Long> {
 
@@ -91,8 +84,13 @@ public class OperateLog extends AggregateRoot<Long> {
 	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
 	private Long takeTime;
 
+	public OperateLog(String moduleName, String name) {
+		this.moduleName = moduleName;
+		this.name = name;
+	}
+
 	public void modifyStatus(Exception e, HttpServletRequest request, String appName) {
-		if (ObjectUtils.isNotNull(e)) {
+		if (ObjectUtil.isNotNull(e)) {
 			operateFail(e, request, appName);
 		}
 		else {

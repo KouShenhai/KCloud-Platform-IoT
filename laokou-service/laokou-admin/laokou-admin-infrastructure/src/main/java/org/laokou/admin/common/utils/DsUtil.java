@@ -28,7 +28,7 @@ import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.springframework.jdbc.support.JdbcUtils;
@@ -155,7 +155,7 @@ public class DsUtil {
 			}
 		}
 		finally {
-			if (ObjectUtils.isNotNull(connection)) {
+			if (ObjectUtil.isNotNull(connection)) {
 				connection.close();
 			}
 			JdbcUtils.closeStatement(ps);

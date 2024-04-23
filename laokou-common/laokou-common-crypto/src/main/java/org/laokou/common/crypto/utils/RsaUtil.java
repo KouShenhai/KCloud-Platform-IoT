@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.ResourceUtil;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
 import javax.crypto.Cipher;
@@ -58,7 +58,7 @@ public class RsaUtil {
 	public static String decryptByPrivateKey(String body, String key) {
 		byte[] privateKey = StringUtil.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(getPrivateKey());
 		byte[] bytes = decryptByPrivateKey(decryptBase64(body), privateKey);
-		return new String(ObjectUtils.requireNotNull(bytes), StandardCharsets.UTF_8);
+		return new String(ObjectUtil.requireNotNull(bytes), StandardCharsets.UTF_8);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class RsaUtil {
 	@SneakyThrows
 	public static String getPrivateKey() {
 		try (InputStream inputStream = ResourceUtil.getResource("/conf/privateKey.scr").getInputStream()) {
-			return new String(ObjectUtils.requireNotNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
+			return new String(ObjectUtil.requireNotNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
 		}
 	}
 
@@ -92,7 +92,7 @@ public class RsaUtil {
 	@SneakyThrows
 	public static String getPublicKey() {
 		try (InputStream inputStream = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream()) {
-			return new String(ObjectUtils.requireNotNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
+			return new String(ObjectUtil.requireNotNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
 		}
 	}
 

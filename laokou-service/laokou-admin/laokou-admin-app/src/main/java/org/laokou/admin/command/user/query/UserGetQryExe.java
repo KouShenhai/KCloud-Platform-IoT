@@ -26,7 +26,7 @@ import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -57,7 +57,7 @@ public class UserGetQryExe {
 	@DS(TENANT)
 	public Result<UserCO> execute(UserGetQry qry) {
 		UserDO userDO = userMapper.selectById(qry.getId());
-		return Result.of(convert(userDO));
+		return Result.ok(convert(userDO));
 	}
 
 	private UserCO convert(UserDO userDO) {
@@ -80,7 +80,7 @@ public class UserGetQryExe {
 	}
 
 	private boolean isSuperAdministrator(Integer superAdmin) {
-		return ObjectUtils.equals(YES.ordinal(), superAdmin);
+		return ObjectUtil.equals(YES.ordinal(), superAdmin);
 	}
 
 }

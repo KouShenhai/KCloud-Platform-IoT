@@ -19,11 +19,12 @@ package org.laokou.gateway.filter;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.common.lang.NonNullApi;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.MessageUtils;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.gateway.exception.ExceptionEnum;
 import org.laokou.gateway.utils.I18nUtil;
 import org.reactivestreams.Publisher;
@@ -44,9 +45,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.laokou.common.i18n.common.OAuth2Constants.*;
 import static org.laokou.common.i18n.common.StringConstant.CHINESE_COMMA;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.*;
+import static org.laokou.gateway.filter.AuthFilter.TOKEN_URL;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpStatus.OK;
@@ -62,6 +63,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Slf4j
 @NonNullApi
 public class RespFilter implements GlobalFilter, Ordered {
+
+	@Schema(name = "ERROR", description = "错误")
+	private static final String ERROR = "error";
+
+	@Schema(name = "ERROR_DESCRIPTION", description = "错误信息")
+	private static final String ERROR_DESCRIPTION = "error_description";
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -99,9 +106,9 @@ public class RespFilter implements GlobalFilter, Ordered {
 			@Override
 			public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
 				String contentType = getDelegate().getHeaders().getFirst(CONTENT_TYPE);
-				Assert.isTrue(ObjectUtils.isNotNull(contentType), "content type is null");
+				Assert.isTrue(ObjectUtil.isNotNull(contentType), "content type is null");
 				if (contentType.contains(APPLICATION_JSON_VALUE)
-						&& ObjectUtils.requireNotNull(response.getStatusCode()).value() != OK.value()
+						&& ObjectUtil.requireNotNull(response.getStatusCode()).value() != OK.value()
 						&& body instanceof Flux) {
 					Flux<? extends DataBuffer> flux = Flux.from(body);
 					return super.writeWith(flux.map(dataBuffer -> {
@@ -122,7 +129,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 						try {
 							ExceptionEnum ee = getException(codeNode.asText());
 							String code = ee.getCode();
-							String msg = MessageUtils.getMessage(code) + CHINESE_COMMA + msgNode.asText();
+							String msg = MessageUtil.getMessage(code) + CHINESE_COMMA + msgNode.asText();
 							byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail(code, msg)).getBytes(UTF_8);
 							return dataBufferFactory.wrap(uppedContent);
 						}

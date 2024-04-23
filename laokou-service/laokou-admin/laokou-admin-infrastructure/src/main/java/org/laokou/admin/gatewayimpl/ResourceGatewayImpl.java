@@ -39,7 +39,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -225,7 +225,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	 */
 	private void insertResourceAudit(Resource resource) {
 		ResourceAuditDO resourceAuditDO = ConvertUtil.sourceToTarget(resource, ResourceAuditDO.class);
-		Assert.isTrue(ObjectUtils.isNotNull(resourceAuditDO), "resource audit is null");
+		Assert.isTrue(ObjectUtil.isNotNull(resourceAuditDO), "resource audit is null");
 		resourceAuditDO.setResourceId(resource.getId());
 		// resourceAuditMapper.insertTable(resourceAuditDO);
 	}

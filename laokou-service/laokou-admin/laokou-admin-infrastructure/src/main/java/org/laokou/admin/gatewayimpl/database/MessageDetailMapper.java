@@ -20,10 +20,8 @@ package org.laokou.admin.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
-import org.laokou.common.mybatisplus.repository.CrudMapper;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
-
-import static org.laokou.common.i18n.common.MybatisPlusConstants.USER_ID;
 
 /**
  * 消息详情.
@@ -39,6 +37,6 @@ public interface MessageDetailMapper extends CrudMapper<Long, Integer, MessageDe
 	 * @param userId 用户ID
 	 * @return 未读消息数
 	 */
-	Integer selectUnreadCountByUserId(@Param(USER_ID) Long userId);
+	Integer selectUnreadCountByUserId(@Param("userId") Long userId);
 
 }

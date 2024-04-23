@@ -17,6 +17,7 @@
 
 package org.laokou.common.core.utils;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.xdb.Searcher;
@@ -25,7 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import static org.laokou.common.i18n.common.NetworkConstant.LOCAL_DESC;
 import static org.laokou.common.i18n.common.StringConstant.*;
 
 /**
@@ -35,6 +35,9 @@ import static org.laokou.common.i18n.common.StringConstant.*;
  */
 @Slf4j
 public class AddressUtil {
+
+	@Schema(name = "LOCAL_DESC", description = "本地IP描述")
+	private static final String LOCAL_DESC = "内网";
 
 	/**
 	 * IP搜索器.

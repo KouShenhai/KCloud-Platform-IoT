@@ -18,28 +18,22 @@
 package org.laokou.auth.config.authentication;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.domain.gateway.*;
-import org.laokou.auth.domain.user.Captcha;
-import org.laokou.auth.domain.user.User;
-import org.laokou.common.core.utils.IpUtil;
+import org.laokou.auth.convertor.UserConvertor;
+import org.laokou.auth.domain.ability.AuthDomainService;
+import org.laokou.auth.domain.model.auth.AuthA;
+import org.laokou.auth.domain.model.auth.DeptE;
+import org.laokou.auth.domain.model.auth.LogV;
+import org.laokou.auth.domain.model.auth.MenuE;
 import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.exception.AuthException;
-import org.laokou.common.i18n.utils.DateUtils;
-import org.laokou.common.i18n.utils.ObjectUtils;
 import org.laokou.common.security.utils.UserDetail;
-import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
-
 import static org.laokou.common.i18n.common.JobModeEnum.SYNC;
-import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 
@@ -50,51 +44,19 @@ import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getExcep
 @Component("authProvider")
 public class OAuth2AuthenticationProvider {
 
-	private final UserGateway userGateway;
-
-	private final MenuGateway menuGateway;
-
-	private final DeptGateway deptGateway;
-
-	private final PasswordEncoder passwordEncoder;
-
-	private final CaptchaGateway captchaGateway;
-
-	private final SourceGateway sourceGateway;
+	private final AuthDomainService authDomainService;
 
 	private final DomainEventService domainEventService;
 
 	private final DomainEventPublisher domainEventPublisher;
 
-	private final Environment environment;
+	private final UserConvertor userConvertor;
 
-	public UsernamePasswordAuthenticationToken authenticationToken(User user, HttpServletRequest request) {
+	public UsernamePasswordAuthenticationToken authenticationToken(AuthA auth) {
 		try {
-			// 认证类型
-			String authType = user.getAuth().getType();
-			// 应用名称
-			String appName = environment.getProperty(SPRING_APPLICATION_NAME);
-			Captcha captchaObj = user.getCaptcha();
-			Long tenantId = user.getTenantId();
-			String clientPassword = user.getPassword();
-			// 数据源名称
-			String sourceName = sourceGateway.findSourceNameByTenantId(tenantId);
-			// 检查验证码
-			checkCaptcha(user, captchaObj, request, sourceName, appName, authType);
-			User u = userGateway.find(user);
-			// 检查空对象
-			user = user.create(u, request, sourceName, appName, authType);
-			// 检查密码
-			user.checkPassword(clientPassword, passwordEncoder, request, sourceName, appName, authType);
-			// 检查状态
-			user.checkStatus(request, sourceName, appName, authType);
-			Set<String> permissions = menuGateway.findPermissions(user);
-			// 检查权限标识集合
-			user.checkNullPermissions(permissions, request, sourceName, appName, authType);
-			Set<String> deptPaths = deptGateway.findDeptPaths(user);
-			UserDetail userDetail = convert(user, request, deptPaths, permissions, sourceName);
-			// 登录成功
-			user.loginSuccess(request, sourceName, appName, authType);
+			// 认证
+			authDomainService.auth(auth);
+			UserDetail userDetail = convert(auth);
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
 					userDetail.getAuthorities());
 		}
@@ -103,7 +65,7 @@ public class OAuth2AuthenticationProvider {
 		}
 		finally {
 			// 保存领域事件（事件溯源）
-			domainEventService.create(user.getEvents());
+			domainEventService.create(auth.getEvents());
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();
 			// 发布当前线程的领域事件(同步发布)
@@ -111,39 +73,18 @@ public class OAuth2AuthenticationProvider {
 			// 清除领域事件上下文
 			DomainEventContextHolder.clear();
 			// 清空领域事件
-			user.clearEvents();
+			auth.clearEvents();
 		}
 	}
 
-	private UserDetail convert(User user, HttpServletRequest request, Set<String> deptPaths, Set<String> permissions,
-			String sourceName) {
-		return UserDetail.builder()
-			.username(user.getUsername())
-			.loginDate(DateUtils.now())
-			.loginIp(IpUtil.getIpAddr(request))
-			.id(user.getId())
-			.deptId(user.getDeptId())
-			.tenantId(user.getTenantId())
-			.deptPath(user.getDeptPath())
-			.sourceName(sourceName)
-			.deptPaths(deptPaths)
-			.permissions(permissions)
-			.avatar(user.getAvatar())
-			.password(user.getPassword())
-			.superAdmin(user.getSuperAdmin())
-			.mail(user.getMail())
-			.mobile(user.getMobile())
-			.status(user.getStatus())
-			.build();
-	}
-
-	private void checkCaptcha(User user, Captcha captchaObj, HttpServletRequest request, String sourceName,
-			String appName, String authType) {
-		if (ObjectUtils.isNotNull(captchaObj)) {
-			Boolean checkResult = captchaGateway.check(captchaObj.getUuid(), captchaObj.getCaptcha());
-			// 检查验证码
-			user.checkCaptcha(checkResult, request, sourceName, appName, authType);
-		}
+	private UserDetail convert(AuthA auth) {
+		LogV log = auth.getLog();
+		MenuE menu = auth.getMenu();
+		DeptE dept = auth.getDept();
+		UserDetail userDetail = userConvertor.convertClientObject(auth.getUser());
+		userDetail.modify(menu.getPermissions(), dept.getDeptPaths(), auth.getSourceName(), log.loginIp(),
+				log.loginDate());
+		return userDetail;
 	}
 
 }

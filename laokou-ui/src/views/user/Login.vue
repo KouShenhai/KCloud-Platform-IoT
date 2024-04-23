@@ -1,58 +1,39 @@
 <template>
   <div class="main">
     <a-form-model id="formLogin" ref="form" class="user-layout-login" :model="form" :rules="rules">
-      <a-alert
-        v-if="isLoginError"
-        type="error"
-        showIcon
-        style="margin-bottom: 24px;"
-        :message="loginErrorInfo"
-        closable
-        :after-close="handleCloseLoginError"
-      />
       <a-form-model-item prop="username">
-        <a-input v-model="form.username" size="large" placeholder="账户: admin" >
+        <a-input v-model="form.username" size="large" allow-clear autocomplete="new-password" placeholder="账号" >
           <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
         </a-input>
       </a-form-model-item>
       <a-form-model-item prop="password">
-        <a-input-password v-model="form.password" size="large" placeholder="密码: admin123">
+        <a-input-password v-model="form.password" allow-clear autocomplete="new-password" size="large" placeholder="密码">
           <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
         </a-input-password>
       </a-form-model-item>
       <a-row :gutter="16" v-if="captchaEnabled">
         <a-col class="gutter-row" :span="16">
           <a-form-model-item prop="code">
-            <a-input v-model="form.code" size="large" type="text" autocomplete="off" placeholder="验证码">
+            <a-input v-model="form.code" size="large" allow-clear type="text" autocomplete="off" placeholder="验证码">
               <a-icon slot="prefix" type="security-scan" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-model-item>
         </a-col>
         <a-col class="gutter-row" :span="8">
-          <img class="getCaptcha" :src="codeUrl" @click="getCode">
+          <img class="getCaptcha" :src="codeUrl" @click="getCode" alt="暂无验证码">
         </a-col>
       </a-row>
-      <a-form-model-item prop="rememberMe">
-        <a-checkbox :checked="form.rememberMe" @change="rememberMe">记住密码</a-checkbox>
-      </a-form-model-item>
-      <a-form-item style="margin-top:24px">
+      <a-form-item>
         <a-button
           size="large"
           type="primary"
           htmlType="submit"
           class="login-button"
-          :loading="logining"
-          :disabled="logining"
+          :loading="loginIng"
+          :disabled="loginIng"
           @click="handleSubmit"
         >确定</a-button>
       </a-form-item>
-      <div class="user-login-other">
-        <!--
-          ruoyi后台不支持获取是否开启账户.
-          故此处不做隐藏处理. 在ruoyi原前端中是在注册页面定义一个属性手动修改处理.
-        -->
-        <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>
-      </div>
     </a-form-model>
   </div>
 </template>
@@ -60,91 +41,66 @@
 <script>
 import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
-import { getCodeImg } from '@/api/login'
-import { LOGIN_USERNAME, LOGIN_PASSWORD, LOGIN_REMEMBERME } from '@/store/mutation-types'
 import storage from 'store'
+import { v4 as uid } from 'uuid'
+import { JSEncrypt } from 'jsencrypt'
 
 export default {
   components: {
   },
   data () {
     return {
-      codeUrl: '',
+      publicKey: '',
+      tenantOptions: [],
       isLoginError: false,
       loginErrorInfo: '',
       form: {
-        username: 'admin',
-        password: 'admin123',
-        code: undefined,
+        username: '',
+        password: '',
+        captcha: '',
         uuid: '',
-        rememberMe: false
       },
       rules: {
-        username: [{ required: true, message: '请输入帐户名', trigger: 'blur' }],
+        username: [{ required: true, message: '请输入帐号', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         code: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
       },
-      logining: false,
+      loginIng: false,
       captchaEnabled: true
     }
   },
   created () {
-    this.getStorage()
-    this.getCode()
+    this.getVerifyCode()
   },
   methods: {
-    getCode () {
-      getCodeImg().then(res => {
-        this.captchaEnabled = res.captchaEnabled === undefined ? true : res.captchaEnabled
-        if (this.captchaEnabled) {
-          this.codeUrl = 'data:image/gif;base64,' + res.img
-          this.form.uuid = res.uuid
-        }
-      })
-    },
-    getStorage () {
-      const username = storage.get(LOGIN_USERNAME)
-      const password = storage.get(LOGIN_PASSWORD)
-      const rememberMe = storage.get(LOGIN_REMEMBERME)
-      if (username) {
-        this.form = {
-          username: username,
-          password: password,
-          rememberMe: rememberMe
-        }
-      }
-    },
-    rememberMe (e) {
-      this.form.rememberMe = e.target.checked
+    getVerifyCode () {
+      // getCodeImg().then(res => {
+      //   this.captchaEnabled = res.captchaEnabled === undefined ? true : res.captchaEnabled
+      //   if (this.captchaEnabled) {
+      //     this.codeUrl = 'data:image/gif;base64,' + res.img
+      //     this.form.uuid = res.uuid
+      //   }
+      // })
     },
     ...mapActions(['Login', 'Logout']),
     handleSubmit () {
-      this.logining = true
+      this.loginIng = true
       this.$refs.form.validate(valid => {
         if (valid) {
-          if (this.form.rememberMe) {
-            storage.set(LOGIN_USERNAME, this.form.username)
-            storage.set(LOGIN_PASSWORD, this.form.password)
-            storage.set(LOGIN_REMEMBERME, this.form.rememberMe)
-          } else {
-            storage.remove(LOGIN_USERNAME)
-            storage.remove(LOGIN_PASSWORD)
-            storage.remove(LOGIN_REMEMBERME)
-          }
           this.Login(this.form)
-            .then((res) => this.loginSuccess(res))
+            .then((res) => this.loginSuccess())
             .catch(err => this.requestFailed(err))
             .finally(() => {
-              this.logining = false
+              this.loginIng = false
             })
         } else {
           setTimeout(() => {
-            this.logining = false
+            this.loginIng = false
           }, 600)
         }
       })
     },
-    loginSuccess (res) {
+    loginSuccess () {
       this.$router.push({ path: '/' })
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
@@ -156,17 +112,11 @@ export default {
       this.handleCloseLoginError()
     },
     requestFailed (err) {
-      this.isLoginError = true
-      this.loginErrorInfo = err
-      this.form.code = undefined
+      this.form.captcha = ''
       if (this.captchaEnabled) {
         this.getCode()
       }
     },
-    handleCloseLoginError () {
-      this.isLoginError = false
-      this.loginErrorInfo = ''
-    }
   }
 }
 </script>

@@ -19,6 +19,7 @@ package org.laokou.gateway.repository;
 
 import com.alibaba.nacos.api.config.ConfigService;
 import io.micrometer.common.lang.NonNullApi;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -42,7 +43,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.RouterConstant.DATA_ID;
 import static org.laokou.common.i18n.common.exception.SystemException.ROUTER_NOT_EXIST;
 
 // @formatter:off
@@ -58,6 +58,9 @@ import static org.laokou.common.i18n.common.exception.SystemException.ROUTER_NOT
 @NonNullApi
 @Repository
 public class NacosRouteDefinitionRepository implements RouteDefinitionRepository, ApplicationEventPublisherAware {
+
+	@Schema(name = "DATA_ID", description = "Nacos配置标识")
+	private static final String DATA_ID = "router.json";
 
 	private final ConfigUtil configUtil;
 

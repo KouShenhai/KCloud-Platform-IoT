@@ -26,7 +26,7 @@ import org.laokou.common.crypto.annotation.Crypto;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.AlgorithmEnum;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +48,7 @@ public class AesAop {
 		Method method = signature.getMethod();
 		Crypto crypto = AnnotationUtils.findAnnotation(method, Crypto.class);
 		Object proceed = point.proceed();
-		if (ObjectUtils.requireNotNull(crypto).type() == AlgorithmEnum.AES) {
+		if (ObjectUtil.requireNotNull(crypto).type() == AlgorithmEnum.AES) {
 			if (proceed instanceof Result<?> result) {
 				Object data = result.getData();
 				AesUtil.transform(data);

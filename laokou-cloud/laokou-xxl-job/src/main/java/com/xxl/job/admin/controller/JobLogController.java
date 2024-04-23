@@ -22,9 +22,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -150,7 +152,7 @@ public class JobLogController {
 			XxlJobLog jobLog = xxlJobLogDao.load(logId); // todo, need to improve
 															// performance
 			if (jobLog == null) {
-				return new ReturnT<LogResult>(ReturnT.FAIL_CODE, I18nUtil.getString("joblog_logid_unvalid"));
+				return new ReturnT<>(ReturnT.FAIL_CODE, I18nUtil.getString("joblog_logid_unvalid"));
 			}
 
 			// log cat
@@ -166,11 +168,18 @@ public class JobLogController {
 				}
 			}
 
+			// fix xss
+			if (logResult.getContent() != null && StringUtils.hasText(logResult.getContent().getLogContent())) {
+				String newLogContent = logResult.getContent().getLogContent();
+				newLogContent = HtmlUtils.htmlEscape(newLogContent, "UTF-8");
+				logResult.getContent().setLogContent(newLogContent);
+			}
+
 			return logResult;
 		}
 		catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			return new ReturnT<LogResult>(ReturnT.FAIL_CODE, e.getMessage());
+			return new ReturnT<>(ReturnT.FAIL_CODE, e.getMessage());
 		}
 	}
 

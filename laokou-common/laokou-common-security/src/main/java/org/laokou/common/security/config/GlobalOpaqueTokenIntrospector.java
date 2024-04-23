@@ -21,7 +21,7 @@ import com.baomidou.dynamic.datasource.annotation.Master;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
@@ -66,26 +66,26 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 		// 用户相关数据，低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
 		Object obj = redisUtil.get(userInfoKey);
-		if (ObjectUtils.isNotNull(obj)) {
+		if (ObjectUtil.isNotNull(obj)) {
 			// 解密
 			return decryptInfo((UserDetail) obj);
 		}
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token,
 				new OAuth2TokenType(ACCESS_TOKEN));
-		if (ObjectUtils.isNull(authorization)) {
+		if (ObjectUtil.isNull(authorization)) {
 			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED);
 		}
 		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
 		Instant expiresAt = accessToken.getToken().getExpiresAt();
 		Instant nowAt = Instant.now();
 		long expireTime = ChronoUnit.SECONDS.between(nowAt, expiresAt);
-		// 5秒后过期
-		long minTime = 5;
+		// 10秒后过期
+		long minTime = 10;
 		if (expireTime > minTime) {
 			Object principal = ((UsernamePasswordAuthenticationToken) Objects
 				.requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
 			UserDetail userDetail = (UserDetail) principal;
-			redisUtil.set(userInfoKey, userDetail, expireTime - 1);
+			redisUtil.set(userInfoKey, userDetail, expireTime - 3);
 			// 解密
 			return decryptInfo(userDetail);
 		}

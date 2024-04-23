@@ -19,8 +19,8 @@ package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.i18n.utils.MessageUtils;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.io.Serial;
 
@@ -49,32 +49,25 @@ public class Result<T> extends DTO {
 	private String traceId;
 
 	public boolean success() {
-		return ObjectUtils.equals(this.code, OK);
+		return ObjectUtil.equals(this.code, OK);
 	}
 
 	public boolean error() {
 		return !success();
 	}
 
-	public static <T> Result<T> of(T data) {
+	public static <T> Result<T> ok(T data) {
 		Result<T> result = new Result<>();
 		result.setData(data);
 		result.setCode(OK);
-		result.setMsg(MessageUtils.getMessage(OK));
-		return result;
-	}
-
-	public static <T> Result<T> of(String code, String msg) {
-		Result<T> result = new Result<>();
-		result.setCode(code);
-		result.setMsg(msg);
+		result.setMsg(MessageUtil.getMessage(OK));
 		return result;
 	}
 
 	public static <T> Result<T> fail(String code) {
 		Result<T> result = new Result<>();
 		result.setCode(code);
-		result.setMsg(MessageUtils.getMessage(code));
+		result.setMsg(MessageUtil.getMessage(code));
 		return result;
 	}
 

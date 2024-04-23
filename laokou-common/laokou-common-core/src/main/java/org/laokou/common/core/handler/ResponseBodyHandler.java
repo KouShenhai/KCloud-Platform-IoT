@@ -20,7 +20,7 @@ package org.laokou.common.core.handler;
 import io.micrometer.common.lang.NonNullApi;
 import io.micrometer.common.lang.Nullable;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.core.MethodParameter;
@@ -57,8 +57,8 @@ public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
 		if (body instanceof Result<?> result) {
 			return result;
 		}
-		if (ObjectUtils.isNull(body)) {
-			return Result.of(EMPTY);
+		if (ObjectUtil.isNull(body)) {
+			return Result.ok(EMPTY);
 		}
 		return body;
 	}

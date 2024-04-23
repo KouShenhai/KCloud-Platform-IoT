@@ -19,7 +19,7 @@ package org.laokou.admin.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssLogDO;
-import org.laokou.common.mybatisplus.repository.CrudMapper;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 /**

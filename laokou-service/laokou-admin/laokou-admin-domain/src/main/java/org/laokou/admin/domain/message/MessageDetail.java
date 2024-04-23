@@ -24,15 +24,13 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.dto.AggregateRoot;
 
-import static lombok.AccessLevel.PRIVATE;
-
 /**
  * @author laokou
  */
 @Data
 @SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(name = "Message", description = "消息")
 public class MessageDetail extends AggregateRoot<Long> {
 

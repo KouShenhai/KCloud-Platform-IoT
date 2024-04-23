@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
-import static org.laokou.common.i18n.common.SysConstants.VERSION;
+import static org.laokou.common.i18n.common.SysConstant.VERSION;
 
 /**
  * @author laokou

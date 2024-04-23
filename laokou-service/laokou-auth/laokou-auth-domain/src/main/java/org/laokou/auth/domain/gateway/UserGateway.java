@@ -17,7 +17,7 @@
 
 package org.laokou.auth.domain.gateway;
 
-import org.laokou.auth.domain.user.User;
+import org.laokou.auth.domain.model.auth.UserE;
 
 /**
  * 用户.
@@ -31,6 +31,6 @@ public interface UserGateway {
 	 * @param user 用户对象
 	 * @return 用户信息
 	 */
-	User find(User user);
+	UserE findProfile(UserE user);
 
 }

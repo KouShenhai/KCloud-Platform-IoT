@@ -20,8 +20,8 @@ package org.laokou.common.crypto;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.crypto.utils.RsaUtil;
 
-import static org.laokou.common.i18n.common.SysConstants.DEFAULT_PASSWORD;
-import static org.laokou.common.i18n.common.SysConstants.DEFAULT_USERNAME;
+import static org.laokou.common.i18n.common.SysConstant.DEFAULT_PASSWORD;
+import static org.laokou.common.i18n.common.SysConstant.DEFAULT_USERNAME;
 
 /**
  * @author laokou

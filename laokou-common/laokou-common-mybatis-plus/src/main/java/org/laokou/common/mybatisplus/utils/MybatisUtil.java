@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -107,7 +107,7 @@ public class MybatisUtil {
 			M mapper = sqlSession.getMapper(clazz);
 			try {
 				item.forEach(i -> consumer.accept(mapper, i));
-				if (ObjectUtils.isNotNull(cyclicBarrier)) {
+				if (ObjectUtil.isNotNull(cyclicBarrier)) {
 					cyclicBarrier.await(180, TimeUnit.SECONDS);
 				}
 				sqlSession.commit();
@@ -132,7 +132,7 @@ public class MybatisUtil {
 		// 回滚标识
 		rollback.compareAndSet(false, true);
 		log.error("批量插入数据异常，已设置回滚标识，错误信息", e);
-		if (ObjectUtils.isNotNull(cyclicBarrier)) {
+		if (ObjectUtil.isNotNull(cyclicBarrier)) {
 			cyclicBarrier.reset();
 		}
 	}
@@ -144,7 +144,7 @@ public class MybatisUtil {
 	}
 
 	private boolean enabled() {
-		return ObjectUtils.equals(TRUE, environment.getProperty(THREADS_VIRTUAL_ENABLED));
+		return ObjectUtil.equals(TRUE, environment.getProperty(THREADS_VIRTUAL_ENABLED));
 	}
 
 }

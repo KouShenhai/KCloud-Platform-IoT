@@ -18,6 +18,7 @@
 package org.laokou.admin.convertor;
 
 import org.laokou.admin.domain.source.Source;
+import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
@@ -29,6 +30,6 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * @author laokou
  */
 @Mapper(componentModel = SPRING)
-public interface SourceConvertor extends Convertor<Source, SourceDO> {
+public interface SourceConvertor extends Convertor<SourceCO, Source, SourceDO> {
 
 }

@@ -20,7 +20,7 @@ package org.laokou.admin.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.mybatisplus.repository.CrudMapper;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public interface MenuMapper extends CrudMapper<Long, Integer, MenuDO> {
 	 * @param userId 用户ID
 	 * @return 菜单列表
 	 */
-	List<MenuDO> selectListByUserId(@Param(USER_ID) Long userId);
+	List<MenuDO> selectListByUserId(@Param("userId") Long userId);
 
 	/**
 	 * 根据角色ID查看菜单IDS.

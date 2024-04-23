@@ -18,7 +18,7 @@
 package org.laokou.mybatisplus;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 
 import java.time.LocalDate;
 
@@ -32,8 +32,8 @@ public class ShardTest {
 		String tablePrefix = "boot_sys_login_log_";
 		LocalDate localDate = LocalDate.of(2022, 1, 1);
 		for (int i = 0; i < 936; i++) {
-			LocalDate now = DateUtils.plusMonths(localDate, i);
-			String table = tablePrefix + DateUtils.format(now, DateUtils.YYYYMM);
+			LocalDate now = DateUtil.plusMonths(localDate, i);
+			String table = tablePrefix + DateUtil.format(now, DateUtil.YYYYMM);
 			System.out.printf("alter table %s add column `event_id` bigint(21) comment '事件ID';%n", table);
 			System.out.printf("alter table %s add unique idx_event_id(`event_id`) comment '事件ID_唯一索引';%n", table);
 		}

@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.CacheNameConstant.TENANTS;
-import static org.laokou.common.ratelimiter.driver.spi.RateLimiterTypeEnum.IP;
+import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
 import static org.redisson.api.RateIntervalUnit.MINUTES;
 
 /**

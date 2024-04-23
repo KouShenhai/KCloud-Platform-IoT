@@ -48,7 +48,7 @@ public class CaptchaGetQryExe {
 		String code = captcha.text();
 		String base64 = captcha.toBase64();
 		captchaGateway.set(uuid, code);
-		return Result.of(base64);
+		return Result.ok(base64);
 	}
 
 	/**

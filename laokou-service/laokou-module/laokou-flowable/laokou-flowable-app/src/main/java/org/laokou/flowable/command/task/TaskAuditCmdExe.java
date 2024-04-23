@@ -49,7 +49,7 @@ public class TaskAuditCmdExe {
 	public Result<Boolean> execute(TaskAuditCmd cmd) {
 		log.info("审批流程分布式事务 XID：{}", RootContext.getXID());
 		taskGateway.audit(convert(cmd));
-		return Result.of(Boolean.TRUE);
+		return Result.ok(Boolean.TRUE);
 	}
 
 	private Audit convert(TaskAuditCmd cmd) {

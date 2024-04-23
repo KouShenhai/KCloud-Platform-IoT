@@ -30,7 +30,7 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.utils.SqlUtil;
 
@@ -52,7 +52,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
 		if (parameter instanceof Map<?, ?> map) {
 			try {
 				Object obj = map.get(PAGE_QUERY);
-				if (ObjectUtils.isNotNull(obj)) {
+				if (ObjectUtil.isNotNull(obj)) {
 					// 获取aop拼接的sql
 					PageQuery pageQuery = (PageQuery) obj;
 					if (pageQuery.isIgnore()) {
@@ -66,7 +66,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
 					PlainSelect plainSelect = SqlUtil.plainSelect(boundSql.getSql());
 					// 获取where
 					Expression expression = plainSelect.getWhere();
-					if (ObjectUtils.isNull(expression)) {
+					if (ObjectUtil.isNull(expression)) {
 						plainSelect.setWhere(new StringValue(sqlFilter));
 					}
 					else {

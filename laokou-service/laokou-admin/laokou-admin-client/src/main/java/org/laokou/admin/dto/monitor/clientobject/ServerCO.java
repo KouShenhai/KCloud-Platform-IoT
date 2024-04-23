@@ -24,7 +24,7 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.BigDecimalUtil;
 import org.laokou.common.i18n.dto.ClientObject;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.CentralProcessor.TickType;
@@ -248,8 +248,8 @@ class Jvm extends ClientObject {
 	 */
 	public String getStartTime() {
 		long timestamp = ManagementFactory.getRuntimeMXBean().getStartTime();
-		LocalDateTime localDateTime = DateUtils.getLocalDateTimeOfTimestamp(timestamp);
-		return DateUtils.format(localDateTime, DateUtils.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
+		LocalDateTime localDateTime = DateUtil.getLocalDateTimeOfTimestamp(timestamp);
+		return DateUtil.format(localDateTime, DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
 	}
 
 	/**
@@ -257,11 +257,11 @@ class Jvm extends ClientObject {
 	 */
 	public String getRunTime() {
 		long timestamp = ManagementFactory.getRuntimeMXBean().getStartTime();
-		LocalDateTime start = DateUtils.getLocalDateTimeOfTimestamp(timestamp);
-		LocalDateTime end = DateUtils.now();
-		long day = DateUtils.getDays(start, end);
-		long hour = DateUtils.getHours(start, end) - 24 * day;
-		long min = DateUtils.getMinutes(start, end) - 60 * hour - 60 * 24 * day;
+		LocalDateTime start = DateUtil.getLocalDateTimeOfTimestamp(timestamp);
+		LocalDateTime end = DateUtil.now();
+		long day = DateUtil.getDays(start, end);
+		long hour = DateUtil.getHours(start, end) - 24 * day;
+		long min = DateUtil.getMinutes(start, end) - 60 * hour - 60 * 24 * day;
 		return day + "天" + hour + "小时" + min + "分钟";
 	}
 

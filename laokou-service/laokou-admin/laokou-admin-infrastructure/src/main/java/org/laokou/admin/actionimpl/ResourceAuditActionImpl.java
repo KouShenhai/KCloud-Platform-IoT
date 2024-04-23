@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.domain.action.ResourceAuditAction;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
@@ -58,8 +58,8 @@ public class ResourceAuditActionImpl implements ResourceAuditAction {
 		resourceAuditDO.setRemark(remark);
 		resourceAuditDO.setCode(code);
 		resourceAuditDO.setUrl(url);
-		resourceAuditDO.setCreateDate(DateUtils.now());
-		resourceAuditDO.setUpdateDate(DateUtils.now());
+		resourceAuditDO.setCreateDate(DateUtil.now());
+		resourceAuditDO.setUpdateDate(DateUtil.now());
 		resourceAuditDO.setTenantId(UserUtil.getTenantId());
 		resourceAuditDO.setCreator(UserUtil.getUserId());
 		resourceAuditDO.setEditor(UserUtil.getUserId());

@@ -17,6 +17,7 @@
 
 package org.laokou.gateway.config;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -28,10 +29,8 @@ import reactor.core.scheduler.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.laokou.common.i18n.common.NetworkConstant.HTTPS_PROTOCOL;
 import static org.laokou.common.i18n.common.StringConstant.SLASH;
-import static org.laokou.common.i18n.common.SysConstants.ALL_PATTERNS;
+import static org.laokou.common.i18n.common.SysConstant.ALL_PATTERNS;
 
 /**
  * API文档配置.
@@ -40,6 +39,9 @@ import static org.laokou.common.i18n.common.SysConstants.ALL_PATTERNS;
  */
 @Configuration
 public class OpenApiDocConfig {
+
+	@Schema(name = "HTTPS_PROTOCOL", description = "https协议")
+	private static final String HTTPS_PROTOCOL = "https";
 
 	@Bean
 	@Lazy(false)

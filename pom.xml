@@ -30,7 +30,7 @@
         <module>laokou-test</module>
     </modules>
     <name>KCloud-Platform-Alibaba</name>
-    <description>一个企业级微服务架构的云服务多租户SaaS平台</description>
+    <description>一个企业级微服务架构的云服务多租户平台</description>
     <url>https://koushenhai.github.io/KCloud-Platform-Alibaba</url>
     <properties>
         <laokou.version>3.2.5</laokou.version>
@@ -39,10 +39,10 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-        <spring-boot-maven-plugin.version>3.2.4</spring-boot-maven-plugin.version>
+        <spring-boot-maven-plugin.version>3.2.5</spring-boot-maven-plugin.version>
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.2.5-SNAPSHOT</spring-boot.version>
+        <spring-boot.version>3.2.5</spring-boot.version>
         <!--spring-cloud版本-->
         <spring-cloud.version>2023.0.1</spring-cloud.version>
         <!--spring-framework版本-->

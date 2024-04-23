@@ -23,7 +23,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.ObjectUtils;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.Map;
 
@@ -46,7 +46,7 @@ public class Audit extends AggregateRoot<Long> {
 	private Map<String, Object> values;
 
 	public void checkTask(Object obj) {
-		if (ObjectUtils.isNull(obj)) {
+		if (ObjectUtil.isNull(obj)) {
 			throw new RuntimeException("任务不存在");
 		}
 	}

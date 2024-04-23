@@ -33,7 +33,7 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.MessageTypeEnum;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -161,7 +161,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		MessageDetailDO messageDetailDO = new MessageDetailDO();
 		messageDetailDO.setUserId(Long.parseLong(userId));
 		messageDetailDO.setId(IdGenerator.defaultSnowflakeId());
-		messageDetailDO.setCreateDate(DateUtils.now());
+		messageDetailDO.setCreateDate(DateUtil.now());
 		messageDetailDO.setCreator(UserUtil.getUserId());
 		messageDetailDO.setEditor(UserUtil.getUserId());
 		messageDetailDO.setDeptId(UserUtil.getDeptId());

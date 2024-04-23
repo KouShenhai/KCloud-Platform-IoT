@@ -18,6 +18,7 @@
 package org.laokou.admin.convertor;
 
 import org.laokou.admin.domain.dict.Dict;
+import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
@@ -30,6 +31,6 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * @author laokou
  */
 @Mapper(componentModel = SPRING)
-public interface DictConvertor extends Convertor<Dict, DictDO> {
+public interface DictConvertor extends Convertor<DictCO, Dict, DictDO> {
 
 }

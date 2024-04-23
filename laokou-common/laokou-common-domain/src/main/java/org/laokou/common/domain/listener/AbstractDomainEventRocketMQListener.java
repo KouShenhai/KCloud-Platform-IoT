@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.repository.DomainEventDO;
+import org.laokou.common.domain.database.dataobject.DomainEventDO;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.dto.DecorateDomainEvent;
 import org.laokou.common.i18n.dto.DomainEvent;

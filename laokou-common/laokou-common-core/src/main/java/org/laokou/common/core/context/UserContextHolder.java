@@ -23,8 +23,6 @@ import lombok.*;
 
 import java.util.Optional;
 
-import static lombok.AccessLevel.PRIVATE;
-
 /**
  * 用户上下文.
  *
@@ -61,9 +59,8 @@ public class UserContextHolder {
 	}
 
 	@Data
-	@Builder
-	@AllArgsConstructor(access = PRIVATE)
-	@NoArgsConstructor(access = PRIVATE)
+	@NoArgsConstructor
+	@AllArgsConstructor
 	@Schema(name = "User", description = "用户")
 	public static class User {
 

@@ -17,24 +17,19 @@
 
 package org.laokou.auth.domain.event;
 
-import eu.bitwalker.useragentutils.UserAgent;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.laokou.auth.domain.user.User;
-import org.laokou.common.core.utils.AddressUtil;
+import org.laokou.auth.domain.model.auth.AuthA;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.IpUtil;
-import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.i18n.common.EventTypeEnum;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.DateUtils;
+import org.laokou.common.i18n.utils.DateUtil;
 
 import java.io.Serial;
 
 import static org.laokou.common.i18n.common.EventStatusEnum.CREATED;
-import static org.laokou.common.i18n.common.EventTypeEnum.LOGIN_FAILED;
 import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_LOGIN_EVENT_TOPIC;
 
 /**
@@ -73,19 +68,17 @@ public class LoginEvent extends DomainEvent<Long> {
 	@Schema(name = "type", description = "登录类型")
 	protected String type;
 
-	public LoginEvent(User user, HttpServletRequest request, String message, String sourceName, String appName,
-			String type, Integer status) {
-		super(IdGenerator.defaultSnowflakeId(), user.getId(), LOGIN_FAILED, CREATED, LAOKOU_LOGIN_EVENT_TOPIC,
-				sourceName, appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(),
-				user.getTenantId(), DateUtils.now(), DateUtils.now());
-		this.username = user.getUsername();
-		this.ip = IpUtil.getIpAddr(request);
-		this.address = AddressUtil.getRealAddress(this.ip);
-		UserAgent userAgent = RequestUtil.getUserAgent(request);
-		this.os = userAgent.getOperatingSystem().getName();
-		this.browser = userAgent.getBrowser().getName();
+	public LoginEvent(AuthA authA, EventTypeEnum eventType, String message, Integer status) {
+		super(IdGenerator.defaultSnowflakeId(), authA.getId(), eventType, CREATED, LAOKOU_LOGIN_EVENT_TOPIC,
+				authA.getSourceName(), authA.getAppName(), authA.getCreator(), authA.getEditor(), authA.getDeptId(),
+				authA.getDeptPath(), authA.getTenantId(), DateUtil.now(), DateUtil.now());
+		this.username = authA.getUsername();
+		this.ip = authA.getLog().loginIp();
+		this.address = authA.getLog().address();
+		this.os = authA.getLog().os();
+		this.browser = authA.getLog().browser();
 		this.message = message;
-		this.type = type;
+		this.type = authA.getGrantType();
 		this.status = status;
 	}
 
