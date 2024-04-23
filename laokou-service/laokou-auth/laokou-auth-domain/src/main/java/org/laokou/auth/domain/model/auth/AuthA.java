@@ -113,7 +113,8 @@ public class AuthA extends AggregateRoot<Long> {
 	public AuthA() {
 	}
 
-	public AuthA(String username, String password, String tenantId, String grantType, String uuid, String captcha, HttpServletRequest request) {
+	public AuthA(String username, String password, String tenantId, String grantType, String uuid, String captcha,
+			HttpServletRequest request) {
 		this.id = IdGenerator.defaultSnowflakeId();
 		this.username = username;
 		this.password = password;

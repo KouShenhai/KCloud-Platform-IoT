@@ -24,7 +24,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Schema(name = "CaptchaV", description = "验证码值对象")
 public record CaptchaV(@Schema(name = "uuid", description = "UUID") String uuid,
-					   @Schema(name = "captcha", description = "验证码") String captcha) {
+		@Schema(name = "captcha", description = "验证码") String captcha) {
 
 	public CaptchaV(String uuid, String captcha) {
 		this.uuid = uuid;

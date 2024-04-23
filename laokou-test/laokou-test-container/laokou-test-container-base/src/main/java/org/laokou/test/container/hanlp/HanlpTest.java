@@ -55,7 +55,7 @@ public class HanlpTest {
 		log.info("{}", AesUtil.encrypt("admin123456789"));
 		log.info("{}", AesUtil.encrypt("ZZZZZ9999999999"));
 		log.info("{}", "j1jNpxMAqyu0mO5vtG6mnQ==".length());
-		log.info("{}",24 * 20 + 23);
+		log.info("{}", 24 * 20 + 23);
 		log.info("{}", AesUtil.decrypt("NzCOSafMP3ezJtTgyMasGg=="));
 	}
 

@@ -50,7 +50,7 @@ public class TaskAssigneeGetQryExe {
 		try {
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			return Result
-				.of(new AssigneeCO(taskMapper.getAssigneeByInstanceId(qry.getInstanceId(), UserUtil.getTenantId())));
+				.ok(new AssigneeCO(taskMapper.getAssigneeByInstanceId(qry.getInstanceId(), UserUtil.getTenantId())));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

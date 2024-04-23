@@ -47,12 +47,8 @@ public class UserContextInterceptor implements HandlerInterceptor {
 	}
 
 	private UserContextHolder.User convert(UserDetail userDetail) {
-		return new UserContextHolder.User(userDetail.getId()
-			, userDetail.getUsername()
-			, userDetail.getTenantId()
-			, userDetail.getDeptPath()
-			, userDetail.getDeptId()
-			, userDetail.getSourceName());
+		return new UserContextHolder.User(userDetail.getId(), userDetail.getUsername(), userDetail.getTenantId(),
+				userDetail.getDeptPath(), userDetail.getDeptId(), userDetail.getSourceName());
 	}
 
 }

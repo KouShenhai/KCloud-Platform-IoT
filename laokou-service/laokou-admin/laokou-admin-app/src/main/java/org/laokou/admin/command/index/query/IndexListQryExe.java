@@ -56,7 +56,8 @@ public class IndexListQryExe {
 				list.add(new IndexCO(indexName, indexAlias));
 			}
 		});
-		return Result.ok(Datas.of(list.stream().skip((long) (pageNum - 1) * pageSize).limit(pageSize).toList(), list.size()));
+		return Result
+			.ok(Datas.of(list.stream().skip((long) (pageNum - 1) * pageSize).limit(pageSize).toList(), list.size()));
 	}
 
 }

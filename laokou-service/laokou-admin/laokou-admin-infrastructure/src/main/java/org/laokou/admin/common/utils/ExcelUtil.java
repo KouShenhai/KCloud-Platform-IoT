@@ -78,13 +78,13 @@ public class ExcelUtil {
 	}
 
 	public static <DO extends BaseDO> void doExport(List<String> tables, HttpServletResponse response, DO param,
-													PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
+			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
 		doExport(tables, DEFAULT_SIZE, response, param, pageQuery, crudMapper, clazz);
 	}
 
 	@SneakyThrows
 	public static <DO extends BaseDO> void doExport(List<String> tables, int size, HttpServletResponse response,
-													DO param, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
+			DO param, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
 		try (ServletOutputStream out = response.getOutputStream();
 				ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
 			// 设置请求头

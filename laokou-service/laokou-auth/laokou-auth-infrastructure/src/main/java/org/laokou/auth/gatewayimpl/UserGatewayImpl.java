@@ -61,7 +61,8 @@ public class UserGatewayImpl implements UserGateway {
 		}
 		catch (BadSqlGrammarException e) {
 			log.error("表 {} 不存在，错误信息：{}，详情见日志", BOOT_SYS_USER, LogUtil.record(e.getMessage()), e);
-			throw new SystemException(TABLE_NOT_EXIST, MessageUtil.getMessage(TABLE_NOT_EXIST, new String[]{ BOOT_SYS_USER }));
+			throw new SystemException(TABLE_NOT_EXIST,
+					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { BOOT_SYS_USER }));
 		}
 	}
 

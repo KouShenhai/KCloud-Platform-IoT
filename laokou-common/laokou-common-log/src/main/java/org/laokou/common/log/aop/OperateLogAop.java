@@ -100,10 +100,7 @@ public class OperateLogAop {
 			String className = joinPoint.getTarget().getClass().getName();
 			String methodName = joinPoint.getSignature().getName();
 			Object[] args = joinPoint.getArgs();
-			OperateLog operate = OperateLog.builder()
-				.moduleName(operateLog.module())
-				.name(operateLog.operation())
-				.build();
+			OperateLog operate = new OperateLog(operateLog.module(), operateLog.operation());
 			// 组装类名
 			operate.decorateMethodName(className, methodName);
 			// 组装请求参数

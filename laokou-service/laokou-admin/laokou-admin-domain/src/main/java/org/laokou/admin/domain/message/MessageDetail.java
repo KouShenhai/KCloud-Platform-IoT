@@ -18,13 +18,19 @@
 package org.laokou.admin.domain.message;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.dto.AggregateRoot;
 
 /**
  * @author laokou
  */
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(name = "Message", description = "消息")
 public class MessageDetail extends AggregateRoot<Long> {
 

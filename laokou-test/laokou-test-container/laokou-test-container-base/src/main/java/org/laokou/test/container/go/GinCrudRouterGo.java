@@ -27,10 +27,10 @@ import java.util.Map;
 public class GinCrudRouterGo implements Crud {
 
 	public static void main(String[] args) {
-		String inst = "p";
-		String upper = "Param";
-		String lower = "param";
-		String desc = "参数";
+		String inst = "t";
+		String upper = "Template";
+		String lower = "template";
+		String desc = "模板";
 		Map<String, Object> params = Map.of("inst", inst, "upper", upper, "lower", lower, "desc", desc);
 		Crud crud = new GinCrudRouterGo();
 		StringBuilder s = new StringBuilder();

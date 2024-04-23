@@ -31,6 +31,6 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * @author laokou
  */
 @Mapper(componentModel = SPRING)
-public interface UserConvertor extends Convertor<UserDetail , UserE, UserDO> {
+public interface UserConvertor extends Convertor<UserDetail, UserE, UserDO> {
 
 }

@@ -84,6 +84,11 @@ public class OperateLog extends AggregateRoot<Long> {
 	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
 	private Long takeTime;
 
+	public OperateLog(String moduleName, String name) {
+		this.moduleName = moduleName;
+		this.name = name;
+	}
+
 	public void modifyStatus(Exception e, HttpServletRequest request, String appName) {
 		if (ObjectUtil.isNotNull(e)) {
 			operateFail(e, request, appName);

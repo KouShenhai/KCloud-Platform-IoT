@@ -317,8 +317,7 @@ public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerato
 			else if (flowNode instanceof Gateway) {
 				defaultFlow = ((Gateway) flowNode).getDefaultFlow();
 			}
-			boolean isDefault = ObjectUtil.isNotNull(defaultFlow)
-					&& defaultFlow.equalsIgnoreCase(sequenceFlow.getId());
+			boolean isDefault = ObjectUtil.isNotNull(defaultFlow) && defaultFlow.equalsIgnoreCase(sequenceFlow.getId());
 			boolean drawConditionalIndicator = ObjectUtil.isNotNull(sequenceFlow.getConditionExpression())
 					&& !(flowNode instanceof Gateway);
 			String sourceRef = sequenceFlow.getSourceRef();

@@ -28,7 +28,7 @@ public class RegexTest {
 
 	public static void main(String[] args) {
 		boolean b = RegexUtil.mailRegex("");
-		log.info("{}",b);
+		log.info("{}", b);
 	}
 
 }

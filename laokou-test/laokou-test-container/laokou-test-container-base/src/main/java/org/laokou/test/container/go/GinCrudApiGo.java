@@ -27,9 +27,9 @@ import java.util.Map;
 public class GinCrudApiGo implements Crud {
 
 	public static void main(String[] args) {
-		String inst = "p";
-		String upper = "Param";
-		String lower = "param";
+		String inst = "t";
+		String upper = "Template";
+		String lower = "template";
 		Map<String, Object> params = Map.of("inst", inst, "upper", upper, "lower", lower);
 		Crud crud = new GinCrudApiGo();
 		StringBuilder s = new StringBuilder();

@@ -18,6 +18,7 @@
 package org.laokou.admin.convertor;
 
 import org.laokou.admin.domain.log.LoginLog;
+import org.laokou.admin.dto.log.clientobject.LoginLogCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
@@ -30,6 +31,6 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * @author laokou
  */
 @Mapper(componentModel = SPRING)
-public interface LoginLogConvertor extends Convertor<LoginLog, LoginLogDO> {
+public interface LoginLogConvertor extends Convertor<LoginLogCO, LoginLog, LoginLogDO> {
 
 }

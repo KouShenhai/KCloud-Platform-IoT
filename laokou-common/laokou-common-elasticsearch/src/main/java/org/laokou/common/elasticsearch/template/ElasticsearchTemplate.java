@@ -226,9 +226,9 @@ public class ElasticsearchTemplate {
 	private <R> void setId(R source, String id) {
 		try {
 			Field field = source.getClass().getDeclaredField(PRIMARY_KEY);
-            field.setAccessible(true);
-            field.set(source, id);
-        }
+			field.setAccessible(true);
+			field.set(source, id);
+		}
 		catch (Exception e) {
 			log.error("ID赋值失败，错误信息：{}", e.getMessage(), e);
 		}

@@ -34,11 +34,17 @@ import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATIO
 public class AuthDomainService {
 
 	private final UserGateway userGateway;
+
 	private final MenuGateway menuGateway;
+
 	private final DeptGateway deptGateway;
+
 	private final SourceGateway sourceGateway;
+
 	private final Environment environment;
+
 	private final CaptchaGateway captchaGateway;
+
 	private final PasswordEncoder passwordEncoder;
 
 	public void auth(AuthA auth) {

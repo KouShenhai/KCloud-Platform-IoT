@@ -61,7 +61,8 @@ public class MenuGatewayImpl implements MenuGateway {
 		}
 		catch (BadSqlGrammarException e) {
 			log.error("表 {} 不存在，错误信息：{}，详情见日志", BOOT_SYS_MENU, LogUtil.record(e.getMessage()), e);
-			throw new SystemException(TABLE_NOT_EXIST, MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { BOOT_SYS_MENU }));
+			throw new SystemException(TABLE_NOT_EXIST,
+					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { BOOT_SYS_MENU }));
 		}
 	}
 

@@ -19,8 +19,12 @@ package org.laokou.auth.config.authentication;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.domain.ability.AuthDomainService;
 import org.laokou.auth.domain.model.auth.AuthA;
+import org.laokou.auth.domain.model.auth.DeptE;
+import org.laokou.auth.domain.model.auth.LogV;
+import org.laokou.auth.domain.model.auth.MenuE;
 import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
@@ -46,19 +50,22 @@ public class OAuth2AuthenticationProvider {
 
 	private final DomainEventPublisher domainEventPublisher;
 
-	public UsernamePasswordAuthenticationToken authenticationToken(AuthA authA) {
+	private final UserConvertor userConvertor;
+
+	public UsernamePasswordAuthenticationToken authenticationToken(AuthA auth) {
 		try {
 			// 认证
-			authDomainService.auth(authA);
-			UserDetail userDetail = new UserDetail();
-			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(), userDetail.getAuthorities());
+			authDomainService.auth(auth);
+			UserDetail userDetail = convert(auth);
+			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
+					userDetail.getAuthorities());
 		}
 		catch (AuthException e) {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 		finally {
 			// 保存领域事件（事件溯源）
-			domainEventService.create(authA.getEvents());
+			domainEventService.create(auth.getEvents());
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();
 			// 发布当前线程的领域事件(同步发布)
@@ -66,8 +73,18 @@ public class OAuth2AuthenticationProvider {
 			// 清除领域事件上下文
 			DomainEventContextHolder.clear();
 			// 清空领域事件
-			authA.clearEvents();
+			auth.clearEvents();
 		}
+	}
+
+	private UserDetail convert(AuthA auth) {
+		LogV log = auth.getLog();
+		MenuE menu = auth.getMenu();
+		DeptE dept = auth.getDept();
+		UserDetail userDetail = userConvertor.convertClientObject(auth.getUser());
+		userDetail.modify(menu.getPermissions(), dept.getDeptPaths(), auth.getSourceName(), log.loginIp(),
+				log.loginDate());
+		return userDetail;
 	}
 
 }

@@ -18,6 +18,7 @@
 package org.laokou.admin.convertor;
 
 import org.laokou.admin.domain.role.Role;
+import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
@@ -30,6 +31,6 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * @author laokou
  */
 @Mapper(componentModel = SPRING)
-public interface RoleConvertor extends Convertor<Role, RoleDO> {
+public interface RoleConvertor extends Convertor<RoleCO, Role, RoleDO> {
 
 }
