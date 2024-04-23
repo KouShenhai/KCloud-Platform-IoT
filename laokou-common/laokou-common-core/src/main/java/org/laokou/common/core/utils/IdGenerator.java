@@ -344,6 +344,7 @@ public class IdGenerator {
 		}
 
 		private void scheduleClockUpdating() {
+			// System.currentTimeMillis() => 线程安全
 			ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(runnable -> {
 				Thread thread = new Thread(runnable, "System Clock");
 				thread.setDaemon(true);
