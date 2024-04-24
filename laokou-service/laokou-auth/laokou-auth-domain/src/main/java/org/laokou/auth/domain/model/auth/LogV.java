@@ -29,10 +29,10 @@ public record LogV(@Schema(name = "loginIp", description = "登录IP") String lo
 		@Schema(name = "loginDate", description = "登录时间") LocalDateTime loginDate) {
 
 	public LogV(String loginIp, String address, String browser, String os, LocalDateTime loginDate) {
+		this.os = os;
 		this.loginIp = loginIp;
 		this.address = address;
 		this.browser = browser;
-		this.os = os;
 		this.loginDate = loginDate;
 	}
 

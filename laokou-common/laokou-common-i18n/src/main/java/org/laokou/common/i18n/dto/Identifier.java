@@ -27,11 +27,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * @author laokou
  */
-@SuperBuilder
 @Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Schema(name = "Identifier", description = "标识")
 public abstract class Identifier<ID> implements Entity {
 

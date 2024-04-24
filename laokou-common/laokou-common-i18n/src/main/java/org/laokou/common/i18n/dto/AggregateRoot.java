@@ -38,11 +38,7 @@ import static org.laokou.common.i18n.common.exception.ParamException.SYSTEM_ID_R
 /**
  * @author laokou
  */
-@SuperBuilder
 @Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Schema(name = "AggregateRoot", description = "聚合根")
 public abstract class AggregateRoot<ID> extends Identifier<ID> {
 
