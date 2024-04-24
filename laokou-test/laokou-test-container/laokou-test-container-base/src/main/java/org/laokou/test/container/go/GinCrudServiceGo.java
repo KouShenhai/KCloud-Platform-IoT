@@ -27,10 +27,11 @@ import java.util.Map;
 public class GinCrudServiceGo implements Crud {
 
 	public static void main(String[] args) {
-		String inst = "t";
-		String upper = "Template";
-		String lower = "template";
-		Map<String, Object> params = Map.of("inst", inst, "upper", upper, "lower", lower);
+		String inst = "d";
+		String upper = "Dict";
+		String lower = "dict";
+		String pack = "AixotBeat/app";
+		Map<String, Object> params = Map.of("inst", inst, "upper", upper, "lower", lower, "pack", pack);
 		Crud crud = new GinCrudServiceGo();
 		StringBuilder s = new StringBuilder();
 		s.append("\n").append(crud.imp(params));
@@ -86,9 +87,9 @@ public class GinCrudServiceGo implements Crud {
 	public String imp(Map<String, Object> params) {
 		String str = """
 				import (
-					"lc-base-frame/global"
-					"lc-base-frame/model/common/request"
-					"lc-base-frame/model/system"
+					"${pack}/global"
+					"${pack}/model/common/request"
+					"${pack}/model/system"
 					"time"
 				)
 				""";
@@ -146,7 +147,7 @@ public class GinCrudServiceGo implements Crud {
 					err = global.Db.Model(&system.AtSys${upper}{}).Select([]string{"name", "id"}).Where(sql).Find(&${lower}List).Error
 					return ${lower}List, err
 				}
-							""";
+						\t""";
 		return TemplateUtil.getContent(str, params);
 	}
 
