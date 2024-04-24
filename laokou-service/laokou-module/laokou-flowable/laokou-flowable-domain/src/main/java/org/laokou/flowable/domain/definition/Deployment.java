@@ -18,25 +18,17 @@
 package org.laokou.flowable.domain.definition;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 
-import static lombok.AccessLevel.PRIVATE;
-
 /**
  * @author laokou
  */
 @Data
-@SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "Deployment", description = "部署")
 public class Deployment extends AggregateRoot<Long> {
 

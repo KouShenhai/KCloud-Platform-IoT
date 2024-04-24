@@ -19,10 +19,10 @@ package org.laokou.admin.command.role.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.dto.role.RoleGetQry;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -39,6 +39,8 @@ public class RoleGetQryExe {
 
 	private final RoleMapper roleMapper;
 
+	private final RoleConvertor roleConvertor;
+
 	/**
 	 * 执行查看角色.
 	 * @param qry 查看角色参数
@@ -46,11 +48,7 @@ public class RoleGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<RoleCO> execute(RoleGetQry qry) {
-		return Result.ok(convert(roleMapper.selectById(qry.getId())));
-	}
-
-	private RoleCO convert(RoleDO roleDO) {
-		return RoleCO.builder().id(roleDO.getId()).sort(roleDO.getSort()).name(roleDO.getName()).build();
+		return Result.ok(roleConvertor.convertClientObj(roleMapper.selectById(qry.getId())));
 	}
 
 }

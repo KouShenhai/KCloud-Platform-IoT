@@ -47,4 +47,8 @@ public class TenantDO extends BaseDO {
 	@Schema(name = "packageId", description = "套餐ID")
 	private Long packageId;
 
+	public TenantDO(String name) {
+		this.name = name;
+	}
+
 }

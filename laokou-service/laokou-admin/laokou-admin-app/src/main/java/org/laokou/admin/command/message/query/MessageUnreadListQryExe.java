@@ -19,6 +19,7 @@ package org.laokou.admin.command.message.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.dto.message.MessageUnreadListQry;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
@@ -48,6 +49,8 @@ public class MessageUnreadListQryExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	private final MessageConvertor messageConvertor;
+
 	/**
 	 * 执行查询未读消息列表.
 	 * @param qry 查询未读消息列表参数
@@ -62,16 +65,7 @@ public class MessageUnreadListQryExe {
 		Long count = transactionalUtil.defaultExecute(
 				r -> messageMapper.selectUnreadCountByCondition(UserUtil.getUserId(), qry.getType(), pageQuery),
 				TransactionDefinition.ISOLATION_READ_UNCOMMITTED, true);
-		return Result.ok(Datas.of(list.stream().map(this::convert).toList(), count));
-	}
-
-	private MessageCO convert(MessageDO messageDO) {
-		return MessageCO.builder()
-			.id(messageDO.getId())
-			.type(messageDO.getType())
-			.title(messageDO.getTitle())
-			.content(messageDO.getContent())
-			.build();
+		return Result.ok(Datas.to(list.stream().map(messageConvertor::convertClientObj).toList(), count));
 	}
 
 }

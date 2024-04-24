@@ -19,10 +19,9 @@ package org.laokou.admin.command.resource;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.gateway.ResourceGateway;
-import org.laokou.admin.domain.resource.Resource;
 import org.laokou.admin.dto.resource.ResourceModifyCmd;
-import org.laokou.admin.dto.resource.clientobject.ResourceCO;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -38,23 +37,15 @@ public class ResourceModifyCmdExe {
 
 	private final ResourceGateway resourceGateway;
 
+	private final ResourceConvertor resourceConvertor;
+
 	/**
 	 * 执行修改资源.
 	 * @param cmd 修改资源参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(ResourceModifyCmd cmd) {
-		resourceGateway.modify(convert(cmd.getResourceCO()));
-	}
-
-	private Resource convert(ResourceCO resourceCO) {
-		return Resource.builder()
-			.id(resourceCO.getId())
-			.title(resourceCO.getTitle())
-			.remark(resourceCO.getRemark())
-			.code(resourceCO.getCode())
-			.url(resourceCO.getUrl())
-			.build();
+		resourceGateway.modify(resourceConvertor.toEntity(cmd.getResourceCO()));
 	}
 
 }

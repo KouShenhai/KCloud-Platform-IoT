@@ -48,11 +48,8 @@ public class OssUploadCmdExe {
 	 */
 	@DS(TENANT)
 	public Result<FileCO> execute(OssUploadCmd cmd) {
-		return Result.ok(convert(ossGateway.upload(cmd.getFile())));
-	}
-
-	private FileCO convert(File file) {
-		return FileCO.builder().md5(file.getMd5()).url(file.getUrl()).build();
+		File file = ossGateway.upload(cmd.getFile());
+		return Result.ok(new FileCO(file.getUrl(), file.getMd5()));
 	}
 
 }

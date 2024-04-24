@@ -18,17 +18,13 @@
 package org.laokou.admin.dto.index.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Schema(name = "IndexCO", description = "索引")
 public class IndexCO extends ClientObject {
 
@@ -37,5 +33,10 @@ public class IndexCO extends ClientObject {
 
 	@Schema(name = "indexAlias", description = "索引别名")
 	private String indexAlias;
+
+	public IndexCO(String indexName, String indexAlias) {
+		this.indexName = indexName;
+		this.indexAlias = indexAlias;
+	}
 
 }

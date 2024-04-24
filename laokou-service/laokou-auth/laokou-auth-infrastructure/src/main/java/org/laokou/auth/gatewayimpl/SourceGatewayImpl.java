@@ -47,7 +47,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	 * @return 数据源
 	 */
 	@Override
-	public SourceE findSourceName(UserE user) {
+	public SourceE getSourceName(UserE user) {
 		// 默认主表
 		if (user.isDefaultTenant()) {
 			return new SourceE(MASTER);

@@ -19,23 +19,15 @@ package org.laokou.admin.dto.menu.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.core.utils.TreeUtil;
 
 import java.io.Serial;
-
-import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
-@SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "MenuCO", description = "菜单")
 public class MenuCO extends TreeUtil.TreeNode<MenuCO> {
 

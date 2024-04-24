@@ -22,7 +22,6 @@ import org.laokou.admin.domain.event.FileUploadEvent;
 import org.laokou.admin.domain.gateway.LogGateway;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.OssLogMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.common.core.common.event.OperateEvent;
 import org.laokou.common.core.utils.IdGenerator;
@@ -44,7 +43,7 @@ public class LogGatewayImpl implements LogGateway {
 
 	@Override
 	public void create(OperateEvent event, DecorateDomainEvent evt) {
-		operateLogMapper.insert(convert(event, evt));
+		operateLogMapper.insert(null);
 	}
 
 	@Override
@@ -72,31 +71,31 @@ public class LogGatewayImpl implements LogGateway {
 		return logDO;
 	}
 
-	private OperateLogDO convert(OperateEvent operateEvent, DecorateDomainEvent evt) {
-		OperateLogDO logDO = new OperateLogDO();
-		logDO.setName(operateEvent.getName());
-		logDO.setModuleName(operateEvent.getModuleName());
-		logDO.setUri(operateEvent.getUri());
-		logDO.setMethodName(operateEvent.getMethodName());
-		logDO.setRequestType(operateEvent.getRequestType());
-		logDO.setRequestParams(operateEvent.getRequestParams());
-		logDO.setUserAgent(operateEvent.getUserAgent());
-		logDO.setIp(operateEvent.getIp());
-		logDO.setStatus(operateEvent.getStatus());
-		logDO.setOperator(operateEvent.getOperator());
-		logDO.setErrorMessage(operateEvent.getErrorMessage());
-		logDO.setTakeTime(operateEvent.getTakeTime());
-		logDO.setAddress(operateEvent.getAddress());
-		logDO.setId(IdGenerator.defaultSnowflakeId());
-		logDO.setEditor(evt.getEditor());
-		logDO.setCreator(evt.getCreator());
-		logDO.setCreateDate(evt.getCreateDate());
-		logDO.setUpdateDate(evt.getUpdateDate());
-		logDO.setDeptId(evt.getDeptId());
-		logDO.setDeptPath(evt.getDeptPath());
-		logDO.setTenantId(evt.getTenantId());
-		logDO.setEventId(evt.getId());
-		return logDO;
-	}
+	// private OperateLogDO convert(OperateEvent operateEvent, DecorateDomainEvent evt) {
+	// OperateLogDO logDO = new OperateLogDO();
+	// logDO.setName(operateEvent.getName());
+	// logDO.setModuleName(operateEvent.getModuleName());
+	// logDO.setUri(operateEvent.getUri());
+	// logDO.setMethodName(operateEvent.getMethodName());
+	// logDO.setRequestType(operateEvent.getRequestType());
+	// logDO.setRequestParams(operateEvent.getRequestParams());
+	// logDO.setUserAgent(operateEvent.getUserAgent());
+	// logDO.setIp(operateEvent.getIp());
+	// logDO.setStatus(operateEvent.getStatus());
+	// logDO.setOperator(operateEvent.getOperator());
+	// logDO.setErrorMessage(operateEvent.getErrorMessage());
+	// logDO.setTakeTime(operateEvent.getTakeTime());
+	// logDO.setAddress(operateEvent.getAddress());
+	// logDO.setId(IdGenerator.defaultSnowflakeId());
+	// logDO.setEditor(evt.getEditor());
+	// logDO.setCreator(evt.getCreator());
+	// logDO.setCreateDate(evt.getCreateDate());
+	// logDO.setUpdateDate(evt.getUpdateDate());
+	// logDO.setDeptId(evt.getDeptId());
+	// logDO.setDeptPath(evt.getDeptPath());
+	// logDO.setTenantId(evt.getTenantId());
+	// logDO.setEventId(evt.getId());
+	// return logDO;
+	// }
 
 }

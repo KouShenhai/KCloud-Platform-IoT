@@ -19,6 +19,7 @@ package org.laokou.admin.command.tenant.query;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.tenant.TenantListQry;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
@@ -48,6 +49,8 @@ public class TenantListQryExe {
 
 	private final Executor executor;
 
+	private final TenantConvertor tenantConvertor;
+
 	/**
 	 * 执行查询租户列表.
 	 * @param qry 查询租户列表参数
@@ -56,24 +59,14 @@ public class TenantListQryExe {
 	@SneakyThrows
 	@DataFilter(tableAlias = BOOT_SYS_TENANT)
 	public Result<Datas<TenantCO>> execute(TenantListQry qry) {
-		TenantDO tenantDO = convert(qry);
+		TenantDO tenantDO = new TenantDO(qry.getName());
 		PageQuery page = qry.page();
 		CompletableFuture<List<TenantDO>> c1 = CompletableFuture
 			.supplyAsync(() -> tenantMapper.selectListByCondition(tenantDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> tenantMapper.selectCountByCondition(tenantDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
-	}
-
-	private TenantDO convert(TenantListQry qry) {
-		TenantDO tenantDO = new TenantDO();
-		tenantDO.setName(qry.getName());
-		return tenantDO;
-	}
-
-	private TenantCO convert(TenantDO tenantDO) {
-		return TenantCO.builder().id(tenantDO.getId()).name(tenantDO.getName()).label(tenantDO.getLabel()).build();
+		return Result.ok(Datas.to(c1.get().stream().map(tenantConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

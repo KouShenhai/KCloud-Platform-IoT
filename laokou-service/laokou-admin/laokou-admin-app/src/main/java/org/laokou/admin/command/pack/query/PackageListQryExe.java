@@ -19,6 +19,7 @@ package org.laokou.admin.command.pack.query;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.admin.convertor.PackageConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.packages.PackageListQry;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
@@ -48,6 +49,8 @@ public class PackageListQryExe {
 
 	private final Executor executor;
 
+	private final PackageConvertor packageConvertor;
+
 	/**
 	 * 执行查询套餐列表.
 	 * @param qry 查询套餐列表
@@ -56,24 +59,14 @@ public class PackageListQryExe {
 	@SneakyThrows
 	@DataFilter(tableAlias = BOOT_SYS_PACKAGE)
 	public Result<Datas<PackageCO>> execute(PackageListQry qry) {
-		PackageDO packageDO = convert(qry);
+		PackageDO packageDO = new PackageDO(qry.getName());
 		PageQuery page = qry.page();
 		CompletableFuture<List<PackageDO>> c1 = CompletableFuture
 			.supplyAsync(() -> packageMapper.selectListByCondition(packageDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> packageMapper.selectCountByCondition(packageDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
-	}
-
-	private PackageDO convert(PackageListQry qry) {
-		PackageDO packageDO = new PackageDO();
-		packageDO.setName(qry.getName());
-		return packageDO;
-	}
-
-	private PackageCO convert(PackageDO packageDO) {
-		return PackageCO.builder().id(packageDO.getId()).name(packageDO.getName()).build();
+		return Result.ok(Datas.to(c1.get().stream().map(packageConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

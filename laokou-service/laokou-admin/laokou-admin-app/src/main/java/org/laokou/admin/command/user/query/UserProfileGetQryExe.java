@@ -18,8 +18,8 @@
 package org.laokou.admin.command.user.query;
 
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
-import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
@@ -36,25 +36,11 @@ public class UserProfileGetQryExe {
 	 * @return 用户信息
 	 */
 	public Result<UserProfileCO> execute() {
-		return Result.ok(convert());
-	}
-
-	/**
-	 * 转换为用户信息视图.
-	 * @return 用户信息视图
-	 */
-	private UserProfileCO convert() {
 		UserDetail userDetail = UserUtil.user();
-		return UserProfileCO.builder()
-			.id(userDetail.getId())
-			.avatar(userDetail.getAvatar())
-			.username(userDetail.getUsername())
-			.mobile(userDetail.getMobile())
-			.mail(userDetail.getMail())
-			.permissions(userDetail.getPermissions())
-			.tenantId(userDetail.getTenantId())
-			.superAdmin(userDetail.getSuperAdmin())
-			.build();
+		UserProfileCO co = new UserProfileCO(userDetail.getDeptId(), userDetail.getAvatar(), userDetail.getUsername(),
+				userDetail.getMobile(), userDetail.getMail(), userDetail.getPermissions(), userDetail.getTenantId(),
+				userDetail.getSuperAdmin());
+		return Result.ok(co);
 	}
 
 }

@@ -48,4 +48,14 @@ public class ResourceDO extends BaseDO {
 	@Schema(name = "instanceId", description = "实例ID")
 	private String instanceId;
 
+	public ResourceDO() {
+	}
+
+	public ResourceDO(Long id, String title, Integer status, String code) {
+		this.title = title;
+		this.id = id;
+		this.status = status;
+		this.code = code;
+	}
+
 }

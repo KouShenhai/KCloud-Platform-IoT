@@ -18,11 +18,9 @@
 package org.laokou.admin.command.source;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.SourceConvertor;
 import org.laokou.admin.domain.gateway.SourceGateway;
-import org.laokou.admin.domain.source.Source;
 import org.laokou.admin.dto.source.SourceCreateCmd;
-import org.laokou.admin.dto.source.clientobject.SourceCO;
-import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,23 +34,14 @@ public class SourceCreateCmdExe {
 
 	private final SourceGateway sourceGateway;
 
+	private final SourceConvertor sourceConvertor;
+
 	/**
 	 * 执行新增数据源.
 	 * @param cmd 新增数据源参数
 	 */
 	public void executeVoid(SourceCreateCmd cmd) {
-		sourceGateway.create(convert(cmd.getSourceCO()));
-	}
-
-	private Source convert(SourceCO sourceCO) {
-		return Source.builder()
-			.id(IdGenerator.defaultSnowflakeId())
-			.url(sourceCO.getUrl())
-			.password(sourceCO.getPassword())
-			.username(sourceCO.getUsername())
-			.driverClassName(sourceCO.getDriverClassName())
-			.name(sourceCO.getName())
-			.build();
+		sourceGateway.create(sourceConvertor.toEntity(cmd.getSourceCO()));
 	}
 
 }

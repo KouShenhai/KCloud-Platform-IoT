@@ -19,11 +19,9 @@ package org.laokou.admin.command.role;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.domain.gateway.RoleGateway;
-import org.laokou.admin.domain.role.Role;
 import org.laokou.admin.dto.role.RoleCreateCmd;
-import org.laokou.admin.dto.role.clientobject.RoleCO;
-import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -39,23 +37,15 @@ public class RoleCreateCmdExe {
 
 	private final RoleGateway roleGateway;
 
+	private final RoleConvertor roleConvertor;
+
 	/**
 	 * 执行新增角色.
 	 * @param cmd 新增角色参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(RoleCreateCmd cmd) {
-		roleGateway.create(convert(cmd.getRoleCO()));
-	}
-
-	private Role convert(RoleCO roleCO) {
-		return Role.builder()
-			.id(IdGenerator.defaultSnowflakeId())
-			.name(roleCO.getName())
-			.sort(roleCO.getSort())
-			.menuIds(roleCO.getMenuIds())
-			.deptIds(roleCO.getDeptIds())
-			.build();
+		roleGateway.create(roleConvertor.toEntity(cmd.getRoleCO()));
 	}
 
 }

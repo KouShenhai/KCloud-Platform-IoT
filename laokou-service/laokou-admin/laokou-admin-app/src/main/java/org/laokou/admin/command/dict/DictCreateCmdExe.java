@@ -19,11 +19,9 @@ package org.laokou.admin.command.dict;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.dict.Dict;
+import org.laokou.admin.convertor.DictConvertor;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.dto.dict.DictCreateCmd;
-import org.laokou.admin.dto.dict.clientobject.DictCO;
-import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -39,24 +37,15 @@ public class DictCreateCmdExe {
 
 	private final DictGateway dictGateway;
 
+	private final DictConvertor dictConvertor;
+
 	/**
 	 * 执行新增字典.
 	 * @param cmd 新增字典参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(DictCreateCmd cmd) {
-		dictGateway.create(convert(cmd.getDictCO()));
-	}
-
-	private Dict convert(DictCO dictCO) {
-		return Dict.builder()
-			.id(IdGenerator.defaultSnowflakeId())
-			.value(dictCO.getValue())
-			.label(dictCO.getLabel())
-			.type(dictCO.getType())
-			.remark(dictCO.getRemark())
-			.sort(dictCO.getSort())
-			.build();
+		dictGateway.create(dictConvertor.toEntity(cmd.getDictCO()));
 	}
 
 }

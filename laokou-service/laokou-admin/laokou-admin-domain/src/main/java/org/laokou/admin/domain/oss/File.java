@@ -18,14 +18,8 @@
 package org.laokou.admin.domain.oss;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
-import lombok.experimental.SuperBuilder;
-import org.laokou.admin.domain.event.FileUploadFailedEvent;
-import org.laokou.admin.domain.event.FileUploadSucceededEvent;
-import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -36,16 +30,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-import static lombok.AccessLevel.PRIVATE;
-import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-
 /**
  * @author laokou
  */
 @Data
-@SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "File", description = "文件")
 public class File extends AggregateRoot<Long> {
 
@@ -94,11 +82,13 @@ public class File extends AggregateRoot<Long> {
 	}
 
 	private void ossUploadSuccess(String url, String appName) {
-		addEvent(new FileUploadSucceededEvent(convert(this, url, EMPTY), UserContextHolder.get(), appName));
+		// addEvent(new FileUploadSucceededEvent(convert(this, url, EMPTY),
+		// UserContextHolder.get(), appName));
 	}
 
 	private void ossUploadFail(String url, Exception e, String appName) {
-		addEvent(new FileUploadFailedEvent(convert(this, url, e.getMessage()), UserContextHolder.get(), appName));
+		// addEvent(new FileUploadFailedEvent(convert(this, url, e.getMessage()),
+		// UserContextHolder.get(), appName));
 	}
 
 	public void checkSize() {
@@ -114,14 +104,14 @@ public class File extends AggregateRoot<Long> {
 		return bos;
 	}
 
-	private OssLog convert(File file, String url, String errorMessage) {
-		return OssLog.builder()
-			.md5(file.getMd5())
-			.url(url)
-			.name(file.getName())
-			.size(file.getSize())
-			.errorMessage(errorMessage)
-			.build();
-	}
+	// private OssLog convert(File file, String url, String errorMessage) {
+	// return OssLog.builder()
+	// .md5(file.getMd5())
+	// .url(url)
+	// .name(file.getName())
+	// .size(file.getSize())
+	// .errorMessage(errorMessage)
+	// .build();
+	// }
 
 }

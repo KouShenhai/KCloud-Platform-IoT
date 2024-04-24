@@ -45,7 +45,7 @@ public class IndexListQryExe {
 	public Result<Datas<IndexCO>> execute(IndexListQry qry) {
 		Map<String, String> indexNames = Collections.emptyMap();
 		if (MapUtil.isEmpty(indexNames)) {
-			return Result.ok(Datas.of());
+			return Result.ok(Datas.empty());
 		}
 		Integer pageNum = qry.getPageNum();
 		Integer pageSize = qry.getPageSize();
@@ -57,7 +57,7 @@ public class IndexListQryExe {
 			}
 		});
 		return Result
-			.ok(Datas.of(list.stream().skip((long) (pageNum - 1) * pageSize).limit(pageSize).toList(), list.size()));
+			.ok(Datas.to(list.stream().skip((long) (pageNum - 1) * pageSize).limit(pageSize).toList(), list.size()));
 	}
 
 }

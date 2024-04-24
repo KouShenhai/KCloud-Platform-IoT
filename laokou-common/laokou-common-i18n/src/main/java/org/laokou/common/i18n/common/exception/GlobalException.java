@@ -28,7 +28,7 @@ import java.io.Serial;
  */
 @Data
 @Schema(name = "GlobalException", description = "全局异常")
-abstract class GlobalException extends RuntimeException {
+public abstract class GlobalException extends RuntimeException {
 
 	@Serial
 	private static final long serialVersionUID = 4102669900127613541L;

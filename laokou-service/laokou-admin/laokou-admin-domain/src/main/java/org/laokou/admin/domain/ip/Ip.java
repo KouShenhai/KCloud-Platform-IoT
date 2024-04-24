@@ -18,21 +18,13 @@
 package org.laokou.admin.domain.ip;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.dto.AggregateRoot;
-
-import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
-@SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "Ip", description = "IP")
 public class Ip extends AggregateRoot<Long> {
 
@@ -41,5 +33,9 @@ public class Ip extends AggregateRoot<Long> {
 
 	@Schema(name = "label", description = "标签")
 	private String label;
+
+	public Ip(String label) {
+		this.label = label;
+	}
 
 }

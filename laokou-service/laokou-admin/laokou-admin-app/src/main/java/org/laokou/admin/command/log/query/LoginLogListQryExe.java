@@ -20,6 +20,7 @@ package org.laokou.admin.command.log.query;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.admin.convertor.LoginLogConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.log.LoginLogListQry;
 import org.laokou.admin.dto.log.clientobject.LoginLogCO;
@@ -29,7 +30,6 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.template.TableTemplate;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -52,6 +52,8 @@ public class LoginLogListQryExe {
 
 	private final Executor executor;
 
+	private final LoginLogConvertor loginLogConvertor;
+
 	/**
 	 * 执行查询登录日志列表.
 	 * @param qry 查询登录日志列表参数
@@ -61,7 +63,7 @@ public class LoginLogListQryExe {
 	@SneakyThrows
 	@DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
 	public Result<Datas<LoginLogCO>> execute(LoginLogListQry qry) {
-		LoginLogDO loginLogDO = convert(qry);
+		LoginLogDO loginLogDO = null;
 		PageQuery page = qry.time().page().ignore();
 		List<String> dynamicTables = TableTemplate.getDynamicTables(qry.getStartTime(), qry.getEndTime(),
 				BOOT_SYS_LOGIN_LOG);
@@ -70,30 +72,15 @@ public class LoginLogListQryExe {
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> loginLogMapper.selectObjCount(dynamicTables, loginLogDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
+		return Result.ok(Datas.to(c1.get().stream().map(loginLogConvertor::convertClientObj).toList(), c2.get()));
 	}
 
-	private LoginLogDO convert(LoginLogListQry qry) {
-		LoginLogDO loginLogDO = new LoginLogDO();
-		loginLogDO.setUsername(qry.getUsername());
-		loginLogDO.setTenantId(UserUtil.getTenantId());
-		loginLogDO.setStatus(qry.getStatus());
-		return loginLogDO;
-	}
-
-	private LoginLogCO convert(LoginLogDO loginLogDO) {
-		return LoginLogCO.builder()
-			.id(loginLogDO.getId())
-			.createDate(loginLogDO.getCreateDate())
-			.username(loginLogDO.getUsername())
-			.ip(loginLogDO.getIp())
-			.address(loginLogDO.getAddress())
-			.browser(loginLogDO.getBrowser())
-			.os(loginLogDO.getOs())
-			.status(loginLogDO.getStatus())
-			.type(loginLogDO.getType())
-			.message(loginLogDO.getMessage())
-			.build();
-	}
+	// private LoginLogDO convert(LoginLogListQry qry) {
+	// LoginLogDO loginLogDO = new LoginLogDO();
+	// loginLogDO.setUsername(qry.getUsername());
+	// loginLogDO.setTenantId(UserUtil.getTenantId());
+	// loginLogDO.setStatus(qry.getStatus());
+	// return loginLogDO;
+	// }
 
 }

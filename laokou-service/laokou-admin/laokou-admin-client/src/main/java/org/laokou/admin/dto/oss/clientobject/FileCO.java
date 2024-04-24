@@ -18,19 +18,13 @@
 package org.laokou.admin.dto.oss.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Schema(name = "FileCO", description = "文件")
 public class FileCO extends ClientObject {
 
@@ -39,5 +33,10 @@ public class FileCO extends ClientObject {
 
 	@Schema(name = "md5", description = "文件的MD5标识")
 	private String md5;
+
+	public FileCO(String url, String md5) {
+		this.url = url;
+		this.md5 = md5;
+	}
 
 }

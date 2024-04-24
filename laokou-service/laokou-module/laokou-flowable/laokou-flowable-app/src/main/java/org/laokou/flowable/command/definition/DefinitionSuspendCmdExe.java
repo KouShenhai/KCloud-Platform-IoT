@@ -20,7 +20,6 @@ package org.laokou.flowable.command.definition;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.flowable.domain.definition.Suspend;
 import org.laokou.flowable.domain.gateway.DefinitionGateway;
 import org.laokou.flowable.dto.definition.DefinitionSuspendCmd;
 import org.springframework.stereotype.Component;
@@ -45,7 +44,7 @@ public class DefinitionSuspendCmdExe {
 	 */
 	@DS(FLOWABLE)
 	public void executeVoid(DefinitionSuspendCmd cmd) {
-		definitionGateway.suspend(Suspend.builder().definitionId(cmd.getDefinitionId()).build());
+		// definitionGateway.suspend(Suspend.builder().definitionId(cmd.getDefinitionId()).build());
 	}
 
 }

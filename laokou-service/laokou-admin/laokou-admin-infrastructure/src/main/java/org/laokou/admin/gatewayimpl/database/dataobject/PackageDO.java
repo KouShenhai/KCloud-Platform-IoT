@@ -38,4 +38,8 @@ public class PackageDO extends BaseDO {
 	@Schema(name = "name", description = "套餐名称")
 	private String name;
 
+	public PackageDO(String name) {
+		this.name = name;
+	}
+
 }

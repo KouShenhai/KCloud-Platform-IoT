@@ -20,6 +20,7 @@ package org.laokou.admin.command.role.query;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.role.RoleListQry;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
@@ -50,6 +51,8 @@ public class RoleListQryExe {
 
 	private final Executor executor;
 
+	private final RoleConvertor roleConvertor;
+
 	/**
 	 * 执行查询角色列表.
 	 * @param qry 查询角色列表参数
@@ -59,24 +62,14 @@ public class RoleListQryExe {
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_ROLE)
 	public Result<Datas<RoleCO>> execute(RoleListQry qry) {
-		RoleDO roleDO = convert(qry);
+		RoleDO roleDO = new RoleDO(qry.getName());
 		PageQuery page = qry.page();
 		CompletableFuture<List<RoleDO>> c1 = CompletableFuture
 			.supplyAsync(() -> roleMapper.selectListByCondition(roleDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> roleMapper.selectCountByCondition(roleDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
-	}
-
-	private RoleDO convert(RoleListQry qry) {
-		RoleDO role = new RoleDO();
-		role.setName(qry.getName());
-		return role;
-	}
-
-	private RoleCO convert(RoleDO roleDO) {
-		return RoleCO.builder().id(roleDO.getId()).name(roleDO.getName()).sort(roleDO.getSort()).build();
+		return Result.ok(Datas.to(c1.get().stream().map(roleConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

@@ -19,10 +19,9 @@ package org.laokou.admin.command.user;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
-import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserModifyCmd;
-import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -38,30 +37,15 @@ public class UserModifyCmdExe {
 
 	private final UserGateway userGateway;
 
+	private final UserConvertor userConvertor;
+
 	/**
 	 * 执行修改用户.
 	 * @param cmd 修改用户参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(UserModifyCmd cmd) {
-		userGateway.modify(convert(cmd.getUserCO()));
-	}
-
-	/**
-	 * 转换为用户领域.
-	 * @param co 用户对象
-	 * @return 用户领域
-	 */
-	private User convert(UserCO co) {
-		return User.builder()
-			.roleIds(co.getRoleIds())
-			.id(co.getId())
-			.avatar(co.getAvatar())
-			.mail(co.getMail())
-			.mobile(co.getMobile())
-			.password(co.getPassword())
-			.deptId(co.getDeptId())
-			.build();
+		userGateway.modify(userConvertor.toEntity(cmd.getUserCO()));
 	}
 
 }

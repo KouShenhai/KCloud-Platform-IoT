@@ -20,6 +20,7 @@ package org.laokou.admin.command.oss.query;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.admin.convertor.OssConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.oss.OssListQry;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
@@ -50,6 +51,8 @@ public class OssListQryExe {
 
 	private final Executor executor;
 
+	private final OssConvertor ossConvertor;
+
 	/**
 	 * 执行查询OSS列表.
 	 * @param qry 查询OSS列表参数
@@ -59,33 +62,14 @@ public class OssListQryExe {
 	@SneakyThrows
 	@DataFilter(tableAlias = BOOT_SYS_OSS)
 	public Result<Datas<OssCO>> execute(OssListQry qry) {
-		OssDO ossDO = convert(qry);
+		OssDO ossDO = new OssDO(qry.getName());
 		PageQuery page = qry.page();
 		CompletableFuture<List<OssDO>> c1 = CompletableFuture
 			.supplyAsync(() -> ossMapper.selectListByCondition(ossDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ossMapper.selectCountByCondition(ossDO, page),
 				executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
-	}
-
-	private OssDO convert(OssListQry qry) {
-		OssDO ossDO = new OssDO();
-		ossDO.setName(qry.getName());
-		return ossDO;
-	}
-
-	private OssCO convert(OssDO ossDO) {
-		return OssCO.builder()
-			.id(ossDO.getId())
-			.name(ossDO.getName())
-			.accessKey(ossDO.getAccessKey())
-			.secretKey(ossDO.getSecretKey())
-			.bucketName(ossDO.getBucketName())
-			.pathStyleAccessEnabled(ossDO.getPathStyleAccessEnabled())
-			.region(ossDO.getRegion())
-			.endpoint(ossDO.getEndpoint())
-			.build();
+		return Result.ok(Datas.to(c1.get().stream().map(ossConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

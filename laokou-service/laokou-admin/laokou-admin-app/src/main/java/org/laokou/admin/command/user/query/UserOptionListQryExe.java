@@ -53,16 +53,8 @@ public class UserOptionListQryExe {
 	@DataFilter(tableAlias = BOOT_SYS_USER)
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
 		List<UserDO> list = userMapper.selectOptionList(qry, AesUtil.getSecretKeyStr());
-		return Result.ok(list.stream().map(this::convert).toList());
-	}
-
-	/**
-	 * 转换为用户下拉框选择项视图.
-	 * @param userDO 用户对象
-	 * @return 下拉框命令请求
-	 */
-	private OptionCO convert(UserDO userDO) {
-		return OptionCO.builder().value(userDO.getId().toString()).label(userDO.getUsername()).build();
+		return Result
+			.ok(list.stream().map(item -> new OptionCO(item.getUsername(), String.valueOf(item.getId()))).toList());
 	}
 
 }

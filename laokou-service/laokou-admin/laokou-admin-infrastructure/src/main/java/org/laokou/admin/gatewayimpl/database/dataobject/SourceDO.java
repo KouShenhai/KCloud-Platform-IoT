@@ -50,4 +50,8 @@ public class SourceDO extends BaseDO {
 	@Schema(name = "password", description = "数据源的密码")
 	private String password;
 
+	public SourceDO(String name) {
+		this.name = name;
+	}
+
 }

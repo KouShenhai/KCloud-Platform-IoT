@@ -56,21 +56,9 @@ public class LoginLogExportCmdExe {
 		PageQuery pageQuery = cmd.time().ignore();
 		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
 				BOOT_SYS_LOGIN_LOG);
-		ExcelUtil.doExport(dynamicTables, cmd.getResponse(), convert(cmd), pageQuery, loginLogMapper,
+		ExcelUtil.doExport(dynamicTables, cmd.getResponse(),
+				new LoginLogDO(cmd.getUsername(), cmd.getStatus(), UserUtil.getTenantId()), pageQuery, loginLogMapper,
 				LoginLogExcel.class);
-	}
-
-	/**
-	 * 构建登录日志数据对象.
-	 * @param cmd 导出登录日志参数
-	 * @return 登录日志数据模型
-	 */
-	private LoginLogDO convert(LoginLogExportCmd cmd) {
-		LoginLogDO loginLogDO = new LoginLogDO();
-		loginLogDO.setTenantId(UserUtil.getTenantId());
-		loginLogDO.setUsername(cmd.getUsername());
-		loginLogDO.setStatus(cmd.getStatus());
-		return loginLogDO;
 	}
 
 }

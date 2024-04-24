@@ -21,12 +21,13 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.FindTypeEnum;
+import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.dto.menu.MenuListQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.core.utils.TreeUtil;
+import org.laokou.common.i18n.common.FindTypeEnum;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -36,7 +37,6 @@ import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.admin.domain.menu.MenuTypeEnums.MENU;
@@ -56,6 +56,8 @@ public class MenuListQryExe {
 
 	private final RedisUtil redisUtil;
 
+	private final MenuConvertor menuConvertor;
+
 	/**
 	 * 执行查询菜单列表.
 	 * @param qry 查询菜单列表参数
@@ -64,9 +66,10 @@ public class MenuListQryExe {
 	@DS(TENANT)
 	public Result<List<MenuCO>> execute(MenuListQry qry) {
 		return switch (FindTypeEnum.valueOf(qry.getType())) {
-			case LIST -> Result.ok(getMenuList(qry).stream().map(this::convert).toList());
+			case LIST -> Result.ok(getMenuList(qry).stream().map(menuConvertor::convertClientObj).toList());
 			case TREE_LIST ->
-				Result.ok(buildTreeNode(getMenuList(qry).stream().map(this::convert).toList()).getChildren());
+				Result.ok(buildTreeNode(getMenuList(qry).stream().map(menuConvertor::convertClientObj).toList())
+					.getChildren());
 			case USER_TREE_LIST -> Result.ok(getUserMenuList());
 		};
 	}
@@ -77,7 +80,7 @@ public class MenuListQryExe {
 		if (ObjectUtil.isNotNull(obj)) {
 			return ((MenuCO) obj).getChildren();
 		}
-		MenuCO co = buildTreeNode(getMenuList().stream().map(this::convert).toList());
+		MenuCO co = buildTreeNode(getMenuList().stream().map(menuConvertor::convertClientObj).toList());
 		redisUtil.set(menuTreeKey, co, RedisUtil.HOUR_ONE_EXPIRE);
 		return co.getChildren();
 	}
@@ -103,21 +106,6 @@ public class MenuListQryExe {
 			.like(StringUtil.isNotEmpty(qry.getName()), MenuDO::getName, qry.getName())
 			.orderByDesc(MenuDO::getSort);
 		return menuMapper.selectList(wrapper);
-	}
-
-	private MenuCO convert(MenuDO menuDO) {
-		return MenuCO.builder()
-			.url(menuDO.getUrl())
-			.icon(menuDO.getIcon())
-			.name(menuDO.getName())
-			.pid(menuDO.getPid())
-			.sort(menuDO.getSort())
-			.type(menuDO.getType())
-			.id(menuDO.getId())
-			.permission(menuDO.getPermission())
-			.visible(menuDO.getVisible())
-			.children(new ArrayList<>(16))
-			.build();
 	}
 
 }

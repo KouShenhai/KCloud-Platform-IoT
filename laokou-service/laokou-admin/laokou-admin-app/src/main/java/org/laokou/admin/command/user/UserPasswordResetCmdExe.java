@@ -43,11 +43,7 @@ public class UserPasswordResetCmdExe {
 	 */
 	@DS(TENANT)
 	public void executeVoid(UserPasswordResetCmd cmd) {
-		userGateway.modify(convert(cmd));
-	}
-
-	private User convert(UserPasswordResetCmd cmd) {
-		return User.builder().id(cmd.getId()).password(cmd.getPassword()).build();
+		userGateway.modify(new User(cmd.getId(), cmd.getPassword()));
 	}
 
 }

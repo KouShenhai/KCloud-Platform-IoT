@@ -18,21 +18,21 @@
 package org.laokou.admin.dto.token.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Schema(name = "TokenCO", description = "令牌")
 public class TokenCO extends ClientObject {
 
 	@Schema(name = "token", description = "令牌")
 	private String token;
+
+	public TokenCO(String token) {
+		this.token = token;
+	}
 
 }

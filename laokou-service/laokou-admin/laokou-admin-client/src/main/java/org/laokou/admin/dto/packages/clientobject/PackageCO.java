@@ -18,23 +18,15 @@
 package org.laokou.admin.dto.packages.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.util.List;
-
-import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
-@Builder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "PackageCO", description = "套餐")
 public class PackageCO extends ClientObject {
 
@@ -46,5 +38,11 @@ public class PackageCO extends ClientObject {
 
 	@Schema(name = "menuIds", description = "菜单IDS")
 	private List<Long> menuIds;
+
+	public PackageCO(Long id, String name, List<Long> menuIds) {
+		this.id = id;
+		this.name = name;
+		this.menuIds = menuIds;
+	}
 
 }

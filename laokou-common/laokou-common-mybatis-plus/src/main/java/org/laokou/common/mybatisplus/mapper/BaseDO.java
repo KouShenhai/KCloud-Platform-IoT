@@ -35,7 +35,7 @@ import static org.laokou.common.i18n.utils.DateUtil.Constant.YYYY_ROD_MM_ROD_DD_
  */
 @Data
 @Schema(name = "BaseDO", description = "映射基类")
-public class BaseDO extends DTO {
+public abstract class BaseDO extends DTO {
 
 	@Schema(name = "PRIMARY_KEY", description = "ID")
 	public static final String PRIMARY_KEY = "id";
@@ -72,48 +72,48 @@ public class BaseDO extends DTO {
 
 	@TableId(type = IdType.INPUT)
 	@Schema(name = PRIMARY_KEY, description = "ID")
-	private Long id;
+	protected Long id;
 
 	@Schema(name = CREATOR, description = "创建人")
 	@TableField(fill = FieldFill.INSERT)
-	private Long creator;
+	protected Long creator;
 
 	@Schema(name = EDITOR, description = "编辑人")
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	private Long editor;
+	protected Long editor;
 
 	@Schema(name = CREATE_DATE, description = "创建时间")
 	@TableField(fill = FieldFill.INSERT)
 	@JsonFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
 	@DateTimeFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS)
-	private LocalDateTime createDate;
+	protected LocalDateTime createDate;
 
 	@Schema(name = UPDATE_DATE, description = "修改时间")
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	@JsonFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
 	@DateTimeFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS)
-	private LocalDateTime updateDate;
+	protected LocalDateTime updateDate;
 
 	@Schema(name = DEL_FLAG, description = "删除标识 0未删除 1已删除")
 	@TableField(fill = FieldFill.INSERT)
 	@TableLogic
-	private Integer delFlag;
+	protected Integer delFlag;
 
 	@Version
 	@Schema(name = VERSION, description = "版本号")
 	@TableField(fill = FieldFill.INSERT)
-	private Integer version;
+	protected Integer version;
 
 	@Schema(name = DEPT_ID, description = "部门ID")
 	@TableField(fill = FieldFill.INSERT)
-	private Long deptId;
+	protected Long deptId;
 
 	@Schema(name = DEPT_PATH, description = "部门PATH")
 	@TableField(fill = FieldFill.INSERT)
-	private String deptPath;
+	protected String deptPath;
 
 	@Schema(name = TENANT_ID, description = "租户ID")
 	@TableField(fill = FieldFill.INSERT)
-	private Long tenantId;
+	protected Long tenantId;
 
 }

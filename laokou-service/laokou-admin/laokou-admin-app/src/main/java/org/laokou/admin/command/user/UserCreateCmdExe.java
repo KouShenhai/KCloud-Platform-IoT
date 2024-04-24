@@ -19,12 +19,9 @@ package org.laokou.admin.command.user;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
-import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserCreateCmd;
-import org.laokou.admin.dto.user.clientobject.UserCO;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -40,32 +37,15 @@ public class UserCreateCmdExe {
 
 	private final UserGateway userGateway;
 
+	private final UserConvertor userConvertor;
+
 	/**
 	 * 执行新增用户.
 	 * @param cmd 新增用户参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(UserCreateCmd cmd) {
-		userGateway.create(convert(cmd.getUserCO()));
-	}
-
-	/**
-	 * 转换为用户领域.
-	 * @param co 用户对象
-	 * @return 用户领域
-	 */
-	private User convert(UserCO co) {
-		return User.builder()
-			.tenantId(UserUtil.getTenantId())
-			.creator(UserUtil.getUserId())
-			.deptId(co.getDeptId())
-			.deptPath(co.getDeptPath())
-			.editor(UserUtil.getUserId())
-			.roleIds(co.getRoleIds())
-			.username(co.getUsername())
-			.password(co.getPassword())
-			.id(IdGenerator.defaultSnowflakeId())
-			.build();
+		userGateway.create(userConvertor.toEntity(cmd.getUserCO()));
 	}
 
 }

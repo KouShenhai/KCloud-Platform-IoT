@@ -52,7 +52,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	 * @return 部门PATHS
 	 */
 	@Override
-	public DeptE findDeptPaths(UserE user) {
+	public DeptE getDeptPaths(UserE user) {
 		try {
 			if (user.isSuperAdministrator()) {
 				return new DeptE(new HashSet<>(deptMapper.selectDeptPaths()));

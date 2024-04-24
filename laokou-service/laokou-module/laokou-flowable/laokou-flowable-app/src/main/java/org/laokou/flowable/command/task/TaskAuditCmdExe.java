@@ -53,7 +53,8 @@ public class TaskAuditCmdExe {
 	}
 
 	private Audit convert(TaskAuditCmd cmd) {
-		return Audit.builder().values(cmd.getValues()).taskId(cmd.getTaskId()).build();
+		return null;
+		// return Audit.builder().values(cmd.getValues()).taskId(cmd.getTaskId()).build();
 	}
 
 }

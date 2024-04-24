@@ -18,21 +18,13 @@
 package org.laokou.admin.dto.cluster.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
-
-import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
-@Builder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "ClusterInstanceCO", description = "集群服务实例")
 public class ClusterInstanceCO extends ClientObject {
 
@@ -44,5 +36,14 @@ public class ClusterInstanceCO extends ClientObject {
 
 	@Schema(name = "port", description = "端口")
 	private Integer port;
+
+	public ClusterInstanceCO() {
+	}
+
+	public ClusterInstanceCO(String router, String host, Integer port) {
+		this.router = router;
+		this.host = host;
+		this.port = port;
+	}
 
 }

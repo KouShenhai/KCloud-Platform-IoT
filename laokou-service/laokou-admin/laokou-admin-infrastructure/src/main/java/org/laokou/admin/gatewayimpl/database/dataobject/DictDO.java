@@ -52,4 +52,9 @@ public class DictDO extends BaseDO {
 	@Schema(name = "sort", description = "字典排序")
 	private Integer sort;
 
+	public DictDO(String label, String type) {
+		this.label = label;
+		this.type = type;
+	}
+
 }

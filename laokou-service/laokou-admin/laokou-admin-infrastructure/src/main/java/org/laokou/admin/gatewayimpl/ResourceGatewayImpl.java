@@ -158,7 +158,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private Resource insertTable(Resource resource) {
 		ResourceDO resourceDO = resourceConvertor.toDataObject(resource);
 		// resourceMapper.insertTable(resourceDO);
-		resource.setId(resourceDO.getId());
+		// resource.setId(resourceDO.getId());
 		return resource;
 	}
 

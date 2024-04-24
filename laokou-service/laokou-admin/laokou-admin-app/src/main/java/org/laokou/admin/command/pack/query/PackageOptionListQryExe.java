@@ -46,11 +46,13 @@ public class PackageOptionListQryExe {
 		List<PackageDO> list = packageMapper.selectList(Wrappers.lambdaQuery(PackageDO.class)
 			.select(PackageDO::getId, PackageDO::getName)
 			.orderByDesc(PackageDO::getId));
-		return Result.ok(list.stream().map(this::convert).toList());
+		// return Result.ok(list.stream().map(this::convert).toList());
+		return null;
 	}
 
-	private OptionCO convert(PackageDO packageDO) {
-		return OptionCO.builder().label(packageDO.getName()).value(String.valueOf(packageDO.getId())).build();
-	}
+	// private OptionCO convert(PackageDO packageDO) {
+	// return
+	// OptionCO.builder().label(packageDO.getName()).value(String.valueOf(packageDO.getId())).build();
+	// }
 
 }

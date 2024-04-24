@@ -20,6 +20,7 @@ package org.laokou.admin.command.message.query;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.message.MessageListQry;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
@@ -50,6 +51,8 @@ public class MessageListQryExe {
 
 	private final Executor executor;
 
+	private final MessageConvertor messageConvertor;
+
 	/**
 	 * 执行查询消息列表.
 	 * @param qry 查询消息列表参数
@@ -66,22 +69,13 @@ public class MessageListQryExe {
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> messageMapper.selectCountByCondition(messageDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
+		return Result.ok(Datas.to(c1.get().stream().map(messageConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 	private MessageDO convert(MessageListQry qry) {
 		MessageDO messageDO = new MessageDO();
 		messageDO.setTitle(qry.getTitle());
 		return messageDO;
-	}
-
-	private MessageCO convert(MessageDO messageDO) {
-		return MessageCO.builder()
-			.id(messageDO.getId())
-			.title(messageDO.getTitle())
-			.type(messageDO.getType())
-			.createDate(messageDO.getCreateDate())
-			.build();
 	}
 
 }

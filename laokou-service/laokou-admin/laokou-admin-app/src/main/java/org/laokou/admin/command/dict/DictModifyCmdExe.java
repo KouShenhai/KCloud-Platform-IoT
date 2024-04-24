@@ -19,10 +19,9 @@ package org.laokou.admin.command.dict;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.dict.Dict;
+import org.laokou.admin.convertor.DictConvertor;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.dto.dict.DictModifyCmd;
-import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -38,24 +37,15 @@ public class DictModifyCmdExe {
 
 	private final DictGateway dictGateway;
 
+	private final DictConvertor dictConvertor;
+
 	/**
 	 * 执行修改字典.
 	 * @param cmd 修改字典参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(DictModifyCmd cmd) {
-		dictGateway.modify(convert(cmd.getDictCO()));
-	}
-
-	private Dict convert(DictCO co) {
-		return Dict.builder()
-			.id(co.getId())
-			.value(co.getValue())
-			.type(co.getType())
-			.label(co.getLabel())
-			.sort(co.getSort())
-			.remark(co.getRemark())
-			.build();
+		dictGateway.modify(dictConvertor.toEntity(cmd.getDictCO()));
 	}
 
 }

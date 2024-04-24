@@ -56,4 +56,8 @@ public class OssDO extends BaseDO {
 	@Schema(name = "pathStyleAccessEnabled", description = "路径样式访问 1已开启 0未启用")
 	private Integer pathStyleAccessEnabled;
 
+	public OssDO(String name) {
+		this.name = name;
+	}
+
 }

@@ -125,7 +125,7 @@ public class AuthA extends AggregateRoot<Long> {
 		this.log = createLog(request);
 	}
 
-	public void modifyAppName(String appName) {
+	public void updateAppName(String appName) {
 		this.appName = appName;
 	}
 
@@ -187,7 +187,7 @@ public class AuthA extends AggregateRoot<Long> {
 		this.user = new UserE(this.username, EMPTY, EMPTY, this.tenantId);
 	}
 
-	public void modifyUser(UserE user) {
+	public void updateUser(UserE user) {
 		if (ObjectUtil.isNull(user)) {
 			fail(ACCOUNT_PASSWORD_ERROR);
 		}
@@ -199,18 +199,18 @@ public class AuthA extends AggregateRoot<Long> {
 		this.tenantId = user.getTenantId();
 	}
 
-	public void modifySource(SourceE source) {
+	public void updateSource(SourceE source) {
 		if (ObjectUtil.isNull(source)) {
 			fail(SOURCE_NOT_EXIST);
 		}
 		this.sourceName = source.getName();
 	}
 
-	public void modifyMenu(MenuE menu) {
+	public void updateMenu(MenuE menu) {
 		this.menu = menu;
 	}
 
-	public void modifyDept(DeptE dept) {
+	public void updateDept(DeptE dept) {
 		this.dept = dept;
 	}
 

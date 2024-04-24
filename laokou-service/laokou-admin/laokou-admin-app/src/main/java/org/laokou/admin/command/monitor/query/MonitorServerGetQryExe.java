@@ -34,10 +34,10 @@ public class MonitorServerGetQryExe {
 	 * @return 服务器监控
 	 */
 	public Result<ServerCO> execute() {
-		return Result.ok(convert());
+		return Result.ok(copyTo());
 	}
 
-	private ServerCO convert() {
+	private ServerCO copyTo() {
 		ServerCO serverCO = new ServerCO();
 		serverCO.copyTo();
 		return serverCO;

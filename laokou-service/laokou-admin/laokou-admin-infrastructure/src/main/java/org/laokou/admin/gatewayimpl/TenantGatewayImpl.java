@@ -37,7 +37,10 @@ import org.laokou.common.core.utils.*;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.NumberConstant;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.*;
+import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.core.env.Environment;
@@ -58,8 +61,8 @@ import static org.laokou.common.i18n.common.ResponseHeaderConstant.CONTENT_DISPO
 import static org.laokou.common.i18n.common.ResponseHeaderConstant.STREAM_CONTENT_TYPE;
 import static org.laokou.common.i18n.common.StringConstant.COMMA;
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
-import static org.laokou.common.i18n.common.TenantConstant.*;
+import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
+import static org.laokou.common.i18n.common.TenantConstant.TENANT_USERNAME;
 
 /**
  * 租户管理.
@@ -303,22 +306,22 @@ public class TenantGatewayImpl implements TenantGateway {
 	 */
 	private UserDO getUser(long tenantId, long userId, long deptId, String deptPath) {
 		// 初始化超级管理员
-		UserDO userDO = new UserDO();
-		userDO.setId(userId);
-		userDO.setUsername(TENANT_USERNAME);
-		userDO.setTenantId(tenantId);
-		userDO.setPassword(passwordEncoder.encode(TENANT_PASSWORD));
-		userDO.setSuperAdmin(YES.ordinal());
-		userDO.setDeptId(deptId);
-		userDO.setDeptPath(deptPath);
-		userDO.setCreateDate(DateUtil.now());
-		userDO.setUpdateDate(DateUtil.now());
-		userDO.setCreator(userId);
-		userDO.setEditor(userId);
-		userDO.setVersion(NumberConstant.DEFAULT);
-		userDO.setDelFlag(NumberConstant.DEFAULT);
-		userDO.setStatus(NumberConstant.DEFAULT);
-		return userDO;
+		// UserDO userDO = new UserDO();
+		// userDO.setId(userId);
+		// userDO.setUsername(TENANT_USERNAME);
+		// userDO.setTenantId(tenantId);
+		// userDO.setPassword(passwordEncoder.encode(TENANT_PASSWORD));
+		// userDO.setSuperAdmin(YES.ordinal());
+		// userDO.setDeptId(deptId);
+		// userDO.setDeptPath(deptPath);
+		// userDO.setCreateDate(DateUtil.now());
+		// userDO.setUpdateDate(DateUtil.now());
+		// userDO.setCreator(userId);
+		// userDO.setEditor(userId);
+		// userDO.setVersion(NumberConstant.DEFAULT);
+		// userDO.setDelFlag(NumberConstant.DEFAULT);
+		// userDO.setStatus(NumberConstant.DEFAULT);
+		return null;
 	}
 
 	/**

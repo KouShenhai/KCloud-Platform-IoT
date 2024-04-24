@@ -19,11 +19,9 @@ package org.laokou.admin.command.dept;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.dept.Dept;
+import org.laokou.admin.convertor.DeptConvertor;
 import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.admin.dto.dept.DeptCreateCmd;
-import org.laokou.admin.dto.dept.clientobject.DeptCO;
-import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -39,22 +37,15 @@ public class DeptCreateCmdExe {
 
 	private final DeptGateway deptGateway;
 
+	private final DeptConvertor deptConvertor;
+
 	/**
 	 * 执行新增部门.
 	 * @param cmd 新增部门参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(DeptCreateCmd cmd) {
-		deptGateway.create(convert(cmd.getDeptCO()));
-	}
-
-	private Dept convert(DeptCO deptCO) {
-		return Dept.builder()
-			.id(IdGenerator.defaultSnowflakeId())
-			.pid(deptCO.getPid())
-			.name(deptCO.getName())
-			.sort(deptCO.getSort())
-			.build();
+		deptGateway.create(deptConvertor.toEntity(cmd.getDeptCO()));
 	}
 
 }

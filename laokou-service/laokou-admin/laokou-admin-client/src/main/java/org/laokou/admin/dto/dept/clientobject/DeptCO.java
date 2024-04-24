@@ -18,23 +18,15 @@
 package org.laokou.admin.dto.dept.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.core.utils.TreeUtil;
 
 import java.io.Serial;
-
-import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
-@SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "DeptCO", description = "部门")
 public class DeptCO extends TreeUtil.TreeNode<DeptCO> {
 

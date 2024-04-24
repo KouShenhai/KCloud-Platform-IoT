@@ -49,7 +49,7 @@ public class ClusterInstanceListQryExe {
 		Integer pageSize = qry.getPageSize();
 		String serviceId = qry.getServiceId();
 		List<ServiceInstance> instances = serviceUtil.getInstances(serviceId);
-		return Result.ok(Datas.of(instances.stream()
+		return Result.ok(Datas.to(instances.stream()
 			.map(item -> convert(item, serviceId.substring(7)))
 			.skip((long) (pageNum - 1) * pageSize)
 			.limit(pageSize)
@@ -63,7 +63,7 @@ public class ClusterInstanceListQryExe {
 	 * @return 服务实例视图
 	 */
 	private ClusterInstanceCO convert(ServiceInstance instance, String router) {
-		return ClusterInstanceCO.builder().host(instance.getHost()).port(instance.getPort()).router(router).build();
+		return new ClusterInstanceCO(router, instance.getHost(), instance.getPort());
 	}
 
 }

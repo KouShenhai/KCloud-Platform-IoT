@@ -18,6 +18,7 @@
 package org.laokou.admin.command.ip;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.IpConvertor;
 import org.laokou.admin.domain.gateway.IpGateway;
 import org.laokou.admin.domain.ip.Ip;
 import org.laokou.admin.dto.ip.IpRefreshCmd;
@@ -34,16 +35,14 @@ public class IpRefreshCmdExe {
 
 	private final IpGateway ipGateway;
 
+	private final IpConvertor ipConvertor;
+
 	/**
 	 * 执行IP刷新至Redis.
 	 * @param cmd IP刷新至Redis参数
 	 */
 	public void executeVoid(IpRefreshCmd cmd) {
-		ipGateway.refresh(convert(cmd.getLabel()));
-	}
-
-	private Ip convert(String label) {
-		return Ip.builder().label(label).build();
+		ipGateway.refresh(new Ip(cmd.getLabel()));
 	}
 
 }

@@ -18,11 +18,7 @@
 package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -38,11 +34,7 @@ import static org.laokou.common.i18n.common.exception.ParamException.SYSTEM_ID_R
 /**
  * @author laokou
  */
-@SuperBuilder
 @Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Schema(name = "AggregateRoot", description = "聚合根")
 public abstract class AggregateRoot<ID> extends Identifier<ID> {
 

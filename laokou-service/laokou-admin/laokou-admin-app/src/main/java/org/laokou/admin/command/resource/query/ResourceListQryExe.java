@@ -20,6 +20,7 @@ package org.laokou.admin.command.resource.query;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.resource.ResourceListQry;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
@@ -50,6 +51,8 @@ public class ResourceListQryExe {
 
 	private final Executor executor;
 
+	private final ResourceConvertor resourceConvertor;
+
 	/**
 	 * 执行查询资源列表.
 	 * @param qry 查询资源列表参数
@@ -59,34 +62,14 @@ public class ResourceListQryExe {
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_RESOURCE)
 	public Result<Datas<ResourceCO>> execute(ResourceListQry qry) {
-		ResourceDO resourceDO = convert(qry);
+		ResourceDO resourceDO = new ResourceDO(qry.getId(), qry.getTitle(), qry.getStatus(), qry.getCode());
 		PageQuery page = qry.page();
 		CompletableFuture<List<ResourceDO>> c1 = CompletableFuture
 			.supplyAsync(() -> resourceMapper.selectListByCondition(resourceDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> resourceMapper.selectCountByCondition(resourceDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
-	}
-
-	private ResourceDO convert(ResourceListQry qry) {
-		ResourceDO resourceDO = new ResourceDO();
-		resourceDO.setId(qry.getId());
-		resourceDO.setCode(qry.getCode());
-		resourceDO.setTitle(qry.getTitle());
-		resourceDO.setStatus(qry.getStatus());
-		return resourceDO;
-	}
-
-	private ResourceCO convert(ResourceDO resourceDO) {
-		return ResourceCO.builder()
-			.id(resourceDO.getId())
-			.title(resourceDO.getTitle())
-			.remark(resourceDO.getRemark())
-			.instanceId(resourceDO.getInstanceId())
-			.code(resourceDO.getCode())
-			.status(resourceDO.getStatus())
-			.build();
+		return Result.ok(Datas.to(c1.get().stream().map(resourceConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }
