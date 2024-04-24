@@ -21,8 +21,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 
-import static org.laokou.common.i18n.common.NumberConstant.DEFAULT;
+import static org.laokou.auth.domain.model.auth.AuthA.DEFAULT_TENANT;
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
 
@@ -81,11 +82,11 @@ public class UserE {
 	}
 
 	public boolean isDefaultTenant() {
-		return ObjectUtil.equals(DEFAULT, this.tenantId);
+		return DEFAULT_TENANT == this.tenantId;
 	}
 
 	private String encrypt(String str) {
-		return ObjectUtil.isNotNull(str) ? AesUtil.encrypt(str) : EMPTY;
+		return StringUtil.isNotEmpty(str) ? AesUtil.encrypt(str) : EMPTY;
 	}
 
 }

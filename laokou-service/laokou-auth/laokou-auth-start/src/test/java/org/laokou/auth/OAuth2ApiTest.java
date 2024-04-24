@@ -41,8 +41,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Collections;
 import java.util.Map;
-
-import static org.laokou.common.i18n.common.NetworkConstant.LOCAL_IPV4;
 import static org.laokou.common.i18n.common.StringConstant.RISK;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -68,6 +66,8 @@ class OAuth2ApiTest {
 	private static final String MAIL = "2413176044@qq.com";
 
 	private static final String MOBILE = "xxx";
+
+	private static final String DEVICE_CODE = "device_code";
 
 	private static final String CODE = "iQWEh8YSpdwZ8_5QsA8C_1tVpR-6_fcLMYDKGnhozJW9MmTzf30aYvq6F_O3sSL0PP0bEVVdoXeau8QOuTln3ABn2c-00x7irutqFKAHRJVFZGln_6Wmuab4ostt-3-y";
 
@@ -98,7 +98,7 @@ class OAuth2ApiTest {
 		String encryptPassword = RsaUtil.encryptByPublicKey(PASSWORD, publicKey);
 		String decryptUsername = RsaUtil.decryptByPrivateKey(encryptUsername, privateKey);
 		String decryptPassword = RsaUtil.decryptByPrivateKey(encryptPassword, privateKey);
-		Map<String, String> tokenMap = usernamePasswordAuth(SNOWFLAKE_ID, captcha, decryptUsername, decryptPassword);
+		Map<String, String> tokenMap = usernamePasswordAuth(captcha, decryptUsername, decryptPassword);
 		log.info("验证码：{}", captcha);
 		log.info("加密用户名：{}", encryptUsername);
 		log.info("加密密码：{}", encryptPassword);
@@ -172,6 +172,7 @@ class OAuth2ApiTest {
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			log.info("设备授权码认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
@@ -189,6 +190,7 @@ class OAuth2ApiTest {
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			log.info("客户端认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken);
@@ -206,6 +208,7 @@ class OAuth2ApiTest {
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			log.info("授权码认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
@@ -228,6 +231,7 @@ class OAuth2ApiTest {
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			log.info("手机号认证，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
@@ -245,6 +249,7 @@ class OAuth2ApiTest {
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			log.info("邮箱认证，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
@@ -256,15 +261,16 @@ class OAuth2ApiTest {
 	}
 
 	@SneakyThrows
-	private Map<String, String> usernamePasswordAuth(long uuid, String captcha, String username, String password) {
+	private Map<String, String> usernamePasswordAuth(String captcha, String username, String password) {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("uuid", String.valueOf(uuid), "username", username, "password",
-					password, "tenant_id", "0", "grant_type", "password", "captcha", captcha);
+			Map<String, String> params = Map.of("uuid", String.valueOf((long) OAuth2ApiTest.SNOWFLAKE_ID), "username",
+					username, "password", password, "tenant_id", "0", "grant_type", "password", "captcha", captcha);
 			Map<String, String> headers = Map.of("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "trace-id",
 					String.valueOf(System.currentTimeMillis()));
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			log.info("账号密码认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
@@ -282,6 +288,7 @@ class OAuth2ApiTest {
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			log.info("刷新令牌模式，返回信息；{}", json);
 			return JacksonUtil.readTree(json).get("access_token").asText();
 		}
 		catch (Exception e) {
@@ -291,8 +298,7 @@ class OAuth2ApiTest {
 
 	@SneakyThrows
 	private String getCaptcha(String uuid) {
-		String apiUrl = "/v1/captchas/";
-		mockMvc.perform(get(apiUrl + uuid).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+		mockMvc.perform(get(getCaptchaApiUrl(uuid)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 		String key = captchaGateway.key(uuid);
 		String captcha = redisUtil.get(key).toString();
 		Assert.isTrue(StringUtil.isNotEmpty(captcha), "captcha is empty");
@@ -301,8 +307,7 @@ class OAuth2ApiTest {
 
 	@SneakyThrows
 	private String getSecret() {
-		String apiUrl = "/v1/secrets";
-		MvcResult mvcResult = mockMvc.perform(get(apiUrl).contentType(MediaType.APPLICATION_JSON))
+		MvcResult mvcResult = mockMvc.perform(get(getSecretApiUrl()).contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			// 打印到控制台
 			.andDo(print())
@@ -319,7 +324,7 @@ class OAuth2ApiTest {
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
-			return JacksonUtil.readTree(json).get("device_code").asText();
+			return JacksonUtil.readTree(json).get(DEVICE_CODE).asText();
 		}
 		catch (Exception e) {
 			return null;
@@ -327,12 +332,20 @@ class OAuth2ApiTest {
 	}
 
 	private String getOAuthApiUrl() {
-		return getSchema(disabledSsl()) + LOCAL_IPV4 + RISK + serverProperties.getPort() + "/oauth2/token";
+		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/oauth2/token";
 	}
 
 	private String getDeviceCodeApiUrl() {
-		return getSchema(disabledSsl()) + LOCAL_IPV4 + RISK + serverProperties.getPort()
+		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort()
 				+ "/oauth2/device_authorization";
+	}
+
+	private String getCaptchaApiUrl(String uuid) {
+		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/captchas/v1/" + uuid;
+	}
+
+	private String getSecretApiUrl() {
+		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/secrets/v1";
 	}
 
 	private String getSchema(boolean disabled) {

@@ -100,15 +100,20 @@ public class GinCrudServiceGo implements Crud {
 	public String findList(Map<String, Object> params) {
 		String str = """
 				func (service *${upper}Service) Find${upper}List(info request.PageInfo) (list interface{}, total int64, err error) {
+					name := info.Keyword
+					var sql = " del_flag = 0 "
+					if name != "" {
+						sql += " and name like '%" + name + "%'"
+					}
 					limit := info.PageSize
 					offset := info.PageSize * (info.Page - 1)
 					db := global.Db.Model(&system.AtSys${upper}{})
 					var ${lower}List []system.AtSys${upper}
-					err = db.Count(&total).Error
+					err = db.Where(sql).Count(&total).Error
 					if err != nil {
 						return
 					}
-					err = db.Limit(limit).Offset(offset).Find(&${lower}List).Error
+					err = db.Limit(limit).Offset(offset).Where(sql).Find(&${lower}List).Error
 					return ${lower}List, total, err
 				}
 				""";

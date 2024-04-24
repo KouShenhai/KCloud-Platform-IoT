@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.factory.AuthFactory;
 import org.laokou.auth.domain.model.auth.AuthA;
+import org.laokou.common.i18n.common.exception.AuthException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -29,6 +30,8 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.stereotype.Component;
 
 import static org.laokou.auth.domain.model.auth.AuthA.MAIL;
+import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
+import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 
 /**
  * 邮箱处理器.
@@ -51,10 +54,16 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticati
 
 	@Override
 	Authentication principal(HttpServletRequest request) {
-		AuthA auth = AuthFactory.mail(request);
-		// 校验
-		auth.checkNullByMail();
-		return authenticationToken(auth);
+		try {
+			AuthA auth = AuthFactory.mail(request);
+			// 校验
+			auth.checkNullByMail();
+			auth.createUserByMail();
+			return authentication(auth);
+		}
+		catch (AuthException ex) {
+			throw getException(ex.getCode(), ex.getMsg(), ERROR_URL);
+		}
 	}
 
 	@Override

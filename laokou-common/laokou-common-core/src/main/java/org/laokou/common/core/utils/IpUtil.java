@@ -41,6 +41,9 @@ public class IpUtil {
 	@Schema(name = "LOCAL_IPV6", description = "本地IP-IPV6")
 	private static final String LOCAL_IPV6 = "0:0:0:0:0:0:0:1";
 
+	@Schema(name = "LOCAL_IPV4", description = "本地IP-IPV4")
+	private static final String LOCAL_IPV4 = "127.0.0.1";
+
 	/**
 	 * 解析IP地址.
 	 * @param request 请求对象

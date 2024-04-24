@@ -24,7 +24,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
  * @author laokou
  */
 @AutoConfiguration
-@MapperScan("org.laokou.common.domain.repository")
+@MapperScan("org.laokou.common.domain.database")
 public class DomainConfig {
 
 }

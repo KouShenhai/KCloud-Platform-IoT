@@ -18,7 +18,6 @@
 package org.laokou.common.security.handler;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ResponseUtil;
@@ -38,8 +37,8 @@ public class OAuth2ExceptionHandler {
 	@Schema(name = "ERROR_URL", description = "错误地址")
 	public static final String ERROR_URL = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
-	public static OAuth2AuthenticationException getException(String code, String desc, String uri) {
-		return new OAuth2AuthenticationException(new OAuth2Error(code, desc, uri));
+	public static OAuth2AuthenticationException getException(String code, String message, String uri) {
+		return new OAuth2AuthenticationException(new OAuth2Error(code, message, uri));
 	}
 
 	public static OAuth2AuthenticationException getException(String code, String uri) {
@@ -51,14 +50,14 @@ public class OAuth2ExceptionHandler {
 	}
 
 	@SneakyThrows
-	public static void handleAccessDenied(HttpServletRequest request, HttpServletResponse response, Throwable ex) {
+	public static void handleAccessDenied(HttpServletResponse response, Throwable ex) {
 		if (ex instanceof AccessDeniedException) {
 			ResponseUtil.response(response, Result.fail(StatusCode.FORBIDDEN));
 		}
 	}
 
 	@SneakyThrows
-	public static void handleAuthentication(HttpServletRequest request, HttpServletResponse response, Throwable ex) {
+	public static void handleAuthentication(HttpServletResponse response, Throwable ex) {
 		if (ex instanceof OAuth2AuthenticationException authenticationException) {
 			String msg = authenticationException.getError().getDescription();
 			String code = authenticationException.getError().getErrorCode();

@@ -33,6 +33,7 @@ import java.util.List;
 
 import static org.laokou.common.i18n.common.EventTypeEnum.LOGIN_FAILED;
 import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.UserStatusEnum.DISABLE;
 import static org.laokou.common.i18n.common.exception.AuthException.*;
 import static org.laokou.common.i18n.common.exception.ParamException.*;
@@ -102,13 +103,13 @@ public class AuthA extends AggregateRoot<Long> {
 	public static final String TENANT_ID = "tenant_id";
 
 	@Schema(name = "DEFAULT_TENANT", description = "默认租户")
-	private static final Long DEFAULT_TENANT = 0L;
+	static final long DEFAULT_TENANT = 0;
 
 	@Schema(name = "OK", description = "成功")
-	private static final Integer OK = 0;
+	private static final int OK = 0;
 
 	@Schema(name = "FAIL", description = "失败")
-	private static final Integer FAIL = 1;
+	private static final int FAIL = 1;
 
 	public AuthA() {
 	}
@@ -121,7 +122,6 @@ public class AuthA extends AggregateRoot<Long> {
 		this.grantType = grantType;
 		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : DEFAULT_TENANT;
 		this.captcha = new CaptchaV(uuid, captcha);
-		this.user = createUser();
 		this.log = createLog(request);
 	}
 
@@ -162,6 +162,29 @@ public class AuthA extends AggregateRoot<Long> {
 		checkNullUsername();
 		// 检查密码
 		checkNullPassword();
+	}
+
+	public void checkNullByAuthorizationCode() {
+		// 检查账号
+		checkNullUsername();
+		// 检查密码
+		checkNullPassword();
+	}
+
+	public void createUserByPassword() {
+		this.user = new UserE(this.username, EMPTY, EMPTY, this.tenantId);
+	}
+
+	public void createUserByMobile() {
+		this.user = new UserE(EMPTY, EMPTY, this.captcha.uuid(), this.tenantId);
+	}
+
+	public void createUserByMail() {
+		this.user = new UserE(EMPTY, this.captcha.uuid(), EMPTY, this.tenantId);
+	}
+
+	public void createUserByAuthorizationCode() {
+		this.user = new UserE(this.username, EMPTY, EMPTY, this.tenantId);
 	}
 
 	public void modifyUser(UserE user) {
@@ -239,11 +262,6 @@ public class AuthA extends AggregateRoot<Long> {
 		String os = userAgent.getOperatingSystem().getName();
 		String browser = userAgent.getBrowser().getName();
 		return new LogV(ip, address, browser, os, DateUtil.now());
-	}
-
-	private UserE createUser() {
-		String uuid = this.captcha.uuid();
-		return new UserE(this.username, uuid, uuid, this.tenantId);
 	}
 
 	private void checkNullPassword() {

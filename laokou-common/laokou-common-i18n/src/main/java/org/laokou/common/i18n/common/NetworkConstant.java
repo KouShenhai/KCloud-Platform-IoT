@@ -34,7 +34,4 @@ public final class NetworkConstant {
 	@Schema(name = "IP", description = "IP参数")
 	public static final String IP = "ip";
 
-	@Schema(name = "LOCAL_IPV4", description = "本地IP-IPV4")
-	public static final String LOCAL_IPV4 = "127.0.0.1";
-
 }
