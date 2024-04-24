@@ -51,21 +51,9 @@ public class OperateLogExportCmdExe {
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_OPERATE_LOG)
 	public void executeVoid(OperateLogExportCmd cmd) {
-		ExcelUtil.doExport(Collections.emptyList(), cmd.getResponse(), convert(cmd), cmd, operateLogMapper,
+		ExcelUtil.doExport(Collections.emptyList(), cmd.getResponse(),
+				new OperateLogDO(cmd.getModuleName(), cmd.getStatus(), UserUtil.getTenantId()), cmd, operateLogMapper,
 				OperateLogExcel.class);
-	}
-
-	/**
-	 * 构建操作日志数据对象.
-	 * @param cmd 导出操作日志参数
-	 * @return 操作日志数据对象
-	 */
-	private OperateLogDO convert(OperateLogExportCmd cmd) {
-		OperateLogDO operateLogDO = new OperateLogDO();
-		operateLogDO.setTenantId(UserUtil.getTenantId());
-		operateLogDO.setModuleName(cmd.getModuleName());
-		operateLogDO.setStatus(cmd.getStatus());
-		return operateLogDO;
 	}
 
 }

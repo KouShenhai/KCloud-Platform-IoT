@@ -19,10 +19,9 @@ package org.laokou.admin.command.dept;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.dept.Dept;
+import org.laokou.admin.convertor.DeptConvertor;
 import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.admin.dto.dept.DeptModifyCmd;
-import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -38,22 +37,15 @@ public class DeptModifyCmdExe {
 
 	private final DeptGateway deptGateway;
 
+	private final DeptConvertor deptConvertor;
+
 	/**
 	 * 执行修改部门.
 	 * @param cmd 修改部门参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(DeptModifyCmd cmd) {
-		deptGateway.modify(convert(cmd.getDeptCO()));
-	}
-
-	private Dept convert(DeptCO deptCO) {
-		return Dept.builder()
-			.id(deptCO.getId())
-			.pid(deptCO.getPid())
-			.name(deptCO.getName())
-			.sort(deptCO.getSort())
-			.build();
+		deptGateway.modify(deptConvertor.toEntity(cmd.getDeptCO()));
 	}
 
 }

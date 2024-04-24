@@ -19,10 +19,10 @@ package org.laokou.admin.command.message.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.dto.message.MessageGetQry;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -39,6 +39,8 @@ public class MessageGetQryExe {
 
 	private final MessageMapper messageMapper;
 
+	private final MessageConvertor messageConvertor;
+
 	/**
 	 * 执行查看消息.
 	 * @param qry 查看消息参数
@@ -46,16 +48,7 @@ public class MessageGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<MessageCO> execute(MessageGetQry qry) {
-		return Result.ok(convert(messageMapper.selectById(qry.getId())));
-	}
-
-	private MessageCO convert(MessageDO messageDO) {
-		return MessageCO.builder()
-			.id(messageDO.getId())
-			.content(messageDO.getContent())
-			.title(messageDO.getTitle())
-			.type(messageDO.getType())
-			.build();
+		return Result.ok(messageConvertor.convertClientObj(messageMapper.selectById(qry.getId())));
 	}
 
 }

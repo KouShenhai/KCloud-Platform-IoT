@@ -19,10 +19,9 @@ package org.laokou.admin.command.menu;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
-import org.laokou.admin.domain.menu.Menu;
 import org.laokou.admin.dto.menu.MenuModifyCmd;
-import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -38,27 +37,15 @@ public class MenuModifyCmdExe {
 
 	private final MenuGateway menuGateway;
 
+	private final MenuConvertor menuConvertor;
+
 	/**
 	 * 执行删除菜单.
 	 * @param cmd 删除菜单参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(MenuModifyCmd cmd) {
-		menuGateway.modify(convert(cmd.getMenuCO()));
-	}
-
-	private Menu convert(MenuCO co) {
-		return Menu.builder()
-			.id(co.getId())
-			.pid(co.getPid())
-			.name(co.getName())
-			.type(co.getType())
-			.sort(co.getSort())
-			.permission(co.getPermission())
-			.icon(co.getIcon())
-			.url(co.getUrl())
-			.visible(co.getVisible())
-			.build();
+		menuGateway.modify(menuConvertor.toEntity(cmd.getMenuCO()));
 	}
 
 }

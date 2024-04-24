@@ -18,22 +18,15 @@
 package org.laokou.admin.domain.dept;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-
-import static lombok.AccessLevel.PRIVATE;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
  * @author laokou
  */
 @Data
-@SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "Dept", description = "部门")
 public class Dept extends AggregateRoot<Long> {
 
@@ -56,7 +49,7 @@ public class Dept extends AggregateRoot<Long> {
 	}
 
 	public void checkIdAndPid() {
-		if (id.equals(pid)) {
+		if (ObjectUtil.equals(id, pid)) {
 			throw new SystemException("上级部门不能为当前部门");
 		}
 	}

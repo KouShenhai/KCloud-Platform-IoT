@@ -20,9 +20,7 @@ package org.laokou.admin.command.user;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
-import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserStatusModifyCmd;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -44,16 +42,7 @@ public class UserStatusModifyCmdExe {
 	 */
 	@DS(TENANT)
 	public void executeVoid(UserStatusModifyCmd cmd) {
-		userGateway.modify(convert(cmd));
-	}
-
-	/**
-	 * 转换为用户领域.
-	 * @param cmd 修改用户状态参数
-	 * @return 用户领域
-	 */
-	private User convert(UserStatusModifyCmd cmd) {
-		return User.builder().id(cmd.getId()).status(cmd.getStatus()).editor(UserUtil.getUserId()).build();
+		userGateway.modify(null);
 	}
 
 }

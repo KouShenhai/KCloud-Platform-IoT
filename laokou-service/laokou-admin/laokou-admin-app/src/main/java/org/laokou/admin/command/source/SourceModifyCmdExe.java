@@ -18,10 +18,9 @@
 package org.laokou.admin.command.source;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.SourceConvertor;
 import org.laokou.admin.domain.gateway.SourceGateway;
-import org.laokou.admin.domain.source.Source;
 import org.laokou.admin.dto.source.SourceModifyCmd;
-import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,23 +34,14 @@ public class SourceModifyCmdExe {
 
 	private final SourceGateway sourceGateway;
 
+	private final SourceConvertor sourceConvertor;
+
 	/**
 	 * 执行修改数据源.
 	 * @param cmd 修改数据源
 	 */
 	public void executeVoid(SourceModifyCmd cmd) {
-		sourceGateway.modify(convert(cmd.getSourceCO()));
-	}
-
-	private Source convert(SourceCO sourceCO) {
-		return Source.builder()
-			.id(sourceCO.getId())
-			.url(sourceCO.getUrl())
-			.password(sourceCO.getPassword())
-			.username(sourceCO.getUsername())
-			.driverClassName(sourceCO.getDriverClassName())
-			.name(sourceCO.getName())
-			.build();
+		sourceGateway.modify(sourceConvertor.toEntity(cmd.getSourceCO()));
 	}
 
 }

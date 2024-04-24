@@ -20,22 +20,14 @@ package org.laokou.admin.dto.resource.clientobject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.URL;
 import org.laokou.common.i18n.dto.ClientObject;
-
-import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
-@Builder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "ResourceCO", description = "资源")
 public class ResourceCO extends ClientObject {
 

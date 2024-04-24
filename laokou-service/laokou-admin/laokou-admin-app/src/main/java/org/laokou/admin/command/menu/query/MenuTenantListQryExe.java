@@ -19,16 +19,15 @@ package org.laokou.admin.command.menu.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.dto.menu.MenuTenantListQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.common.FindTypeEnum;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -44,6 +43,8 @@ public class MenuTenantListQryExe {
 
 	private final MenuMapper menuMapper;
 
+	private final MenuConvertor menuConvertor;
+
 	/**
 	 * 执行查看租户树菜单.
 	 * @param qry 查看租户树菜单参数
@@ -53,25 +54,10 @@ public class MenuTenantListQryExe {
 	public Result<List<MenuCO>> execute(MenuTenantListQry qry) {
 		return switch (FindTypeEnum.valueOf(qry.getType())) {
 			case LIST, USER_TREE_LIST -> null;
-			case TREE_LIST ->
-				Result.ok(buildTreeNode(menuMapper.selectTenantMenuList().stream().map(this::convert).toList())
-					.getChildren());
+			case TREE_LIST -> Result.ok(buildTreeNode(
+					menuMapper.selectTenantMenuList().stream().map(menuConvertor::convertClientObj).toList())
+				.getChildren());
 		};
-	}
-
-	private MenuCO convert(MenuDO menuDO) {
-		return MenuCO.builder()
-			.url(menuDO.getUrl())
-			.icon(menuDO.getIcon())
-			.name(menuDO.getName())
-			.pid(menuDO.getPid())
-			.sort(menuDO.getSort())
-			.type(menuDO.getType())
-			.id(menuDO.getId())
-			.permission(menuDO.getPermission())
-			.visible(menuDO.getVisible())
-			.children(new ArrayList<>(16))
-			.build();
 	}
 
 	private MenuCO buildTreeNode(List<MenuCO> list) {

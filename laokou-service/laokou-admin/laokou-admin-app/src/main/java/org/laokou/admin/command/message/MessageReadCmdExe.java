@@ -20,12 +20,12 @@ package org.laokou.admin.command.message;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.MessageDetail;
 import org.laokou.admin.dto.message.MessageReadCmd;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -46,6 +46,8 @@ public class MessageReadCmdExe {
 
 	private final MessageMapper messageMapper;
 
+	private final MessageConvertor messageConvertor;
+
 	/**
 	 * 执行读取消息.
 	 * @param cmd 读取消息参数
@@ -54,16 +56,8 @@ public class MessageReadCmdExe {
 	@DS(TENANT)
 	public Result<MessageCO> execute(MessageReadCmd cmd) {
 		Long detailId = cmd.getDetailId();
-		messageGateway.read(convert(detailId));
-		return Result.ok(convert(messageMapper.selectByDetailId(detailId)));
-	}
-
-	private MessageDetail convert(Long detailId) {
-		return MessageDetail.builder().id(detailId).readFlag(YES.ordinal()).build();
-	}
-
-	private MessageCO convert(MessageDO messageDO) {
-		return MessageCO.builder().title(messageDO.getTitle()).content(messageDO.getContent()).build();
+		messageGateway.read(new MessageDetail(detailId, YES.ordinal()));
+		return Result.ok(messageConvertor.convertClientObj(messageMapper.selectByDetailId(detailId)));
 	}
 
 }

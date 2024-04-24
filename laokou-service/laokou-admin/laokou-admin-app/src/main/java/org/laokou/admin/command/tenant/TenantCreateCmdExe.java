@@ -18,11 +18,9 @@
 package org.laokou.admin.command.tenant;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.gateway.TenantGateway;
-import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.dto.tenant.TenantCreateCmd;
-import org.laokou.admin.dto.tenant.clientobject.TenantCO;
-import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,22 +34,14 @@ public class TenantCreateCmdExe {
 
 	private final TenantGateway tenantGateway;
 
+	private final TenantConvertor tenantConvertor;
+
 	/**
 	 * 执行新增租户.
 	 * @param cmd 新增租户参数
 	 */
 	public void executeVoid(TenantCreateCmd cmd) {
-		tenantGateway.create(convert(cmd.getTenantCO()));
-	}
-
-	private Tenant convert(TenantCO tenantCO) {
-		return Tenant.builder()
-			.id(IdGenerator.defaultSnowflakeId())
-			.name(tenantCO.getName())
-			.label(tenantCO.getLabel())
-			.packageId(tenantCO.getPackageId())
-			.sourceId(tenantCO.getSourceId())
-			.build();
+		tenantGateway.create(tenantConvertor.toEntity(cmd.getTenantCO()));
 	}
 
 }

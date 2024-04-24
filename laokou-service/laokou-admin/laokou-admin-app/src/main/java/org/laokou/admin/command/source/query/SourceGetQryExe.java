@@ -18,10 +18,10 @@
 package org.laokou.admin.command.source.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.SourceConvertor;
 import org.laokou.admin.dto.source.SourceGetQry;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -36,24 +36,15 @@ public class SourceGetQryExe {
 
 	private final SourceMapper sourceMapper;
 
+	private final SourceConvertor sourceConvertor;
+
 	/**
 	 * 执行查看数据源.
 	 * @param qry 查看数据源参数
 	 * @return 数据源
 	 */
 	public Result<SourceCO> execute(SourceGetQry qry) {
-		return Result.ok(convert(sourceMapper.selectById(qry.getId())));
-	}
-
-	private SourceCO convert(SourceDO sourceDO) {
-		return SourceCO.builder()
-			.id(sourceDO.getId())
-			.name(sourceDO.getName())
-			.url(sourceDO.getUrl())
-			.driverClassName(sourceDO.getDriverClassName())
-			.username(sourceDO.getUsername())
-			.password(sourceDO.getPassword())
-			.build();
+		return Result.ok(sourceConvertor.convertClientObj(sourceMapper.selectById(qry.getId())));
 	}
 
 }

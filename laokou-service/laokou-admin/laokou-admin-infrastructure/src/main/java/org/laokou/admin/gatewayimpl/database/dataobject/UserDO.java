@@ -72,4 +72,8 @@ public class UserDO extends BaseDO {
 	@Schema(name = "mobilePhrase", description = "手机号短语", example = "xxx")
 	private String mobilePhrase;
 
+	public UserDO(String username) {
+		this.username = username;
+	}
+
 }

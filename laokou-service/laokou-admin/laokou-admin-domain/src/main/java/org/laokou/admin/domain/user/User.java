@@ -18,10 +18,7 @@
 package org.laokou.admin.domain.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -29,15 +26,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
-import static lombok.AccessLevel.PRIVATE;
-
 /**
  * @author laokou
  */
 @Data
-@SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "User", description = "用户信息")
 public class User extends AggregateRoot<Long> {
 
@@ -87,6 +79,11 @@ public class User extends AggregateRoot<Long> {
 		if (StringUtil.isNotEmpty(pwd)) {
 			this.password = passwordEncoder.encode(pwd);
 		}
+	}
+
+	public User(Long id, String password) {
+		this.password = password;
+		this.id = id;
 	}
 
 }

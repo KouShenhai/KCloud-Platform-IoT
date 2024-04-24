@@ -19,6 +19,7 @@ package org.laokou.admin.command.source.query;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.admin.convertor.SourceConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.source.SourceListQry;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
@@ -48,6 +49,8 @@ public class SourceListQryExe {
 
 	private final Executor executor;
 
+	private final SourceConvertor sourceConvertor;
+
 	/**
 	 * 执行查询数据源列表.
 	 * @param qry 查询数据源列表参数
@@ -56,30 +59,14 @@ public class SourceListQryExe {
 	@SneakyThrows
 	@DataFilter(tableAlias = BOOT_SYS_SOURCE)
 	public Result<Datas<SourceCO>> execute(SourceListQry qry) {
-		SourceDO sourceDO = convert(qry);
+		SourceDO sourceDO = new SourceDO(qry.getName());
 		PageQuery page = qry.page();
 		CompletableFuture<List<SourceDO>> c1 = CompletableFuture
 			.supplyAsync(() -> sourceMapper.selectListByCondition(sourceDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> sourceMapper.selectCountByCondition(sourceDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
-	}
-
-	private SourceDO convert(SourceListQry qry) {
-		SourceDO sourceDO = new SourceDO();
-		sourceDO.setName(qry.getName());
-		return sourceDO;
-	}
-
-	private SourceCO convert(SourceDO sourceDO) {
-		return SourceCO.builder()
-			.id(sourceDO.getId())
-			.name(sourceDO.getName())
-			.url(sourceDO.getUrl())
-			.driverClassName(sourceDO.getDriverClassName())
-			.username(sourceDO.getUsername())
-			.build();
+		return Result.ok(Datas.to(c1.get().stream().map(sourceConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

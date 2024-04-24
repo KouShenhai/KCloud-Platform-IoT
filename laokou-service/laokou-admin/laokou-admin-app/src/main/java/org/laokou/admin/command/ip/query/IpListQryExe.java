@@ -19,6 +19,7 @@ package org.laokou.admin.command.ip.query;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.admin.convertor.IpConvertor;
 import org.laokou.admin.dto.ip.IpListQry;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
 import org.laokou.admin.gatewayimpl.database.IpMapper;
@@ -45,6 +46,8 @@ public class IpListQryExe {
 
 	private final Executor executor;
 
+	private final IpConvertor ipConvertor;
+
 	/**
 	 * 查询IP列表.
 	 * @param qry 查询IP列表参数
@@ -52,24 +55,14 @@ public class IpListQryExe {
 	 */
 	@SneakyThrows
 	public Result<Datas<IpCO>> execute(IpListQry qry) {
-		IpDO ipDO = convert(qry.getLabel());
+		IpDO ipDO = new IpDO(qry.getLabel());
 		PageQuery page = qry.page();
 		CompletableFuture<List<IpDO>> c1 = CompletableFuture
 			.supplyAsync(() -> ipMapper.selectListByCondition(ipDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ipMapper.selectCountByCondition(ipDO, page),
 				executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
-	}
-
-	private IpDO convert(String label) {
-		IpDO ipDO = new IpDO();
-		ipDO.setLabel(label);
-		return ipDO;
-	}
-
-	private IpCO convert(IpDO ipDO) {
-		return IpCO.builder().id(ipDO.getId()).value(ipDO.getValue()).build();
+		return Result.ok(Datas.to(c1.get().stream().map(ipConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

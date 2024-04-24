@@ -19,10 +19,10 @@ package org.laokou.admin.command.oss.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.OssConvertor;
 import org.laokou.admin.dto.oss.OssGetQry;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.admin.gatewayimpl.database.OssMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -39,6 +39,8 @@ public class OssGetQryExe {
 
 	private final OssMapper ossMapper;
 
+	private final OssConvertor ossConvertor;
+
 	/**
 	 * 执行查看OSS.
 	 * @param qry 查看OSS参数
@@ -46,20 +48,7 @@ public class OssGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<OssCO> execute(OssGetQry qry) {
-		return Result.ok(convert(ossMapper.selectById(qry.getId())));
-	}
-
-	private OssCO convert(OssDO ossDO) {
-		return OssCO.builder()
-			.id(ossDO.getId())
-			.name(ossDO.getName())
-			.accessKey(ossDO.getAccessKey())
-			.secretKey(ossDO.getSecretKey())
-			.bucketName(ossDO.getBucketName())
-			.pathStyleAccessEnabled(ossDO.getPathStyleAccessEnabled())
-			.region(ossDO.getRegion())
-			.endpoint(ossDO.getEndpoint())
-			.build();
+		return Result.ok(ossConvertor.convertClientObj(ossMapper.selectById(qry.getId())));
 	}
 
 }

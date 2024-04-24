@@ -20,9 +20,7 @@ package org.laokou.admin.command.user;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
-import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserProfileModifyCmd;
-import org.laokou.admin.dto.user.clientobject.UserProfileCO;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -44,11 +42,7 @@ public class UserProfileModifyCmdExe {
 	 */
 	@DS(TENANT)
 	public void executeVoid(UserProfileModifyCmd cmd) {
-		userGateway.modify(convert(cmd.getUserProfileCO()));
-	}
-
-	private User convert(UserProfileCO co) {
-		return User.builder().id(co.getId()).avatar(co.getAvatar()).mobile(co.getMobile()).mail(co.getMail()).build();
+		userGateway.modify(null);
 	}
 
 }

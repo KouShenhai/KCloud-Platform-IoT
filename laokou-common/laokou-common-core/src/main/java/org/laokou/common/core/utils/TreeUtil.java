@@ -18,20 +18,16 @@
 package org.laokou.common.core.utils;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.DTO;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static lombok.AccessLevel.PROTECTED;
 import static org.laokou.common.i18n.common.StringConstant.COMMA;
 
 /**
@@ -41,25 +37,6 @@ import static org.laokou.common.i18n.common.StringConstant.COMMA;
  */
 @Data
 public class TreeUtil {
-
-	/**
-	 * 顶级菜单节点.
-	 * @param name 名称
-	 * @param <T> 泛型
-	 * @return 顶级菜单节点
-	 */
-	public static <T> TreeNode<T> rootRootNode(String name) {
-		return new TreeNode<>(0L, name, null, "0", new ArrayList<>(0));
-	}
-
-	/**
-	 * 顶级菜单节点.
-	 * @param <T> 泛型
-	 * @return 顶级菜单节点
-	 */
-	public static <T> TreeNode<T> rootRootNode() {
-		return rootRootNode("根节点");
-	}
 
 	/**
 	 * 构建树节点.
@@ -73,13 +50,22 @@ public class TreeUtil {
 	}
 
 	/**
+	 * 顶级菜单节点.
+	 * @param <T> 泛型
+	 * @return 顶级菜单节点
+	 */
+	private static <T> TreeNode<T> rootRootNode() {
+		return new TreeNode<>(0L, "根节点", null, "0");
+	}
+
+	/**
 	 * 构建树节点.
 	 * @param treeNodes 菜单列表
 	 * @param rootNode 顶级节点
 	 * @param <T> 泛型
 	 * @return 树节点
 	 */
-	public static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, T rootNode) {
+	private static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, T rootNode) {
 		if (ObjectUtil.isNull(rootNode)) {
 			throw new SystemException("请构造根节点");
 		}
@@ -101,11 +87,8 @@ public class TreeUtil {
 	}
 
 	@Data
-	@SuperBuilder
-	@AllArgsConstructor(access = PROTECTED)
-	@NoArgsConstructor(access = PROTECTED)
 	@Schema(name = "TreeNode", description = "树节点")
-	public static class TreeNode<T> implements Serializable {
+	public static class TreeNode<T> extends DTO {
 
 		@Schema(name = "id", description = "ID")
 		private Long id;
@@ -120,7 +103,19 @@ public class TreeUtil {
 		private String path;
 
 		@Schema(name = "children", description = "子节点")
-		private List<T> children = new ArrayList<>(16);
+		private List<T> children;
+
+		public TreeNode() {
+			this.children = new ArrayList<>(16);
+		}
+
+		public TreeNode(Long id, String name, Long pid, String path) {
+			this.id = id;
+			this.name = name;
+			this.pid = pid;
+			this.path = path;
+			this.children = new ArrayList<>(16);
+		}
 
 	}
 

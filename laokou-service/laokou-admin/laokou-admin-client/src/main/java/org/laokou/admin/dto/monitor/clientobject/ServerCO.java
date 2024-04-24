@@ -20,7 +20,6 @@ package org.laokou.admin.dto.monitor.clientobject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.BigDecimalUtil;
 import org.laokou.common.i18n.dto.ClientObject;
@@ -46,8 +45,7 @@ import java.util.Properties;
 /**
  * @author laokou
  */
-@Setter
-@Getter
+@Data
 @Schema(name = "ServerCO", description = "服务器")
 public class ServerCO extends ClientObject {
 

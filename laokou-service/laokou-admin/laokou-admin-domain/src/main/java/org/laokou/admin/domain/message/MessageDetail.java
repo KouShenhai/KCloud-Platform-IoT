@@ -18,23 +18,22 @@
 package org.laokou.admin.domain.message;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.dto.AggregateRoot;
 
 /**
  * @author laokou
  */
 @Data
-@SuperBuilder
-@NoArgsConstructor
-@AllArgsConstructor
 @Schema(name = "Message", description = "消息")
 public class MessageDetail extends AggregateRoot<Long> {
 
 	@Schema(name = "readFlag", description = "消息已读标识 0未读 1已读")
 	private Integer readFlag;
+
+	public MessageDetail(Long id, Integer readFlag) {
+		this.id = id;
+		this.readFlag = readFlag;
+	}
 
 }

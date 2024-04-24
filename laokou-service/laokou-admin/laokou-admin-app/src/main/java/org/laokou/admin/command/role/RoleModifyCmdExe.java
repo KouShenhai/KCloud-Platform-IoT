@@ -19,10 +19,9 @@ package org.laokou.admin.command.role;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.domain.gateway.RoleGateway;
-import org.laokou.admin.domain.role.Role;
 import org.laokou.admin.dto.role.RoleModifyCmd;
-import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -38,23 +37,15 @@ public class RoleModifyCmdExe {
 
 	private final RoleGateway roleGateway;
 
+	private final RoleConvertor roleConvertor;
+
 	/**
 	 * 执行修改角色.
 	 * @param cmd 修改角色参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(RoleModifyCmd cmd) {
-		roleGateway.modify(convert(cmd.getRoleCO()));
-	}
-
-	private Role convert(RoleCO roleCO) {
-		return Role.builder()
-			.id(roleCO.getId())
-			.name(roleCO.getName())
-			.sort(roleCO.getSort())
-			.menuIds(roleCO.getMenuIds())
-			.deptIds(roleCO.getDeptIds())
-			.build();
+		roleGateway.modify(roleConvertor.toEntity(cmd.getRoleCO()));
 	}
 
 }

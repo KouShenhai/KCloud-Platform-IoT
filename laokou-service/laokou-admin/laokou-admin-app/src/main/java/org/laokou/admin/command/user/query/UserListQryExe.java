@@ -19,6 +19,7 @@ package org.laokou.admin.command.user.query;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
@@ -49,6 +50,8 @@ public class UserListQryExe {
 
 	private final Executor executor;
 
+	private final UserConvertor userConvertor;
+
 	/**
 	 * 执行查询用户列表.
 	 * @param qry 查询用户列表参数
@@ -57,7 +60,7 @@ public class UserListQryExe {
 	@SneakyThrows
 	@DataFilter(tableAlias = BOOT_SYS_USER)
 	public Result<Datas<UserCO>> execute(UserListQry qry) {
-		UserDO userDO = convert(qry);
+		UserDO userDO = new UserDO(qry.getUsername());
 		String secretKey = AesUtil.getSecretKeyStr();
 		PageQuery page = qry.page();
 		CompletableFuture<List<UserDO>> c1 = CompletableFuture
@@ -65,23 +68,7 @@ public class UserListQryExe {
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> userMapper.selectCountByCondition(userDO, page, secretKey), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
-	}
-
-	private UserDO convert(UserListQry qry) {
-		UserDO userDO = new UserDO();
-		userDO.setUsername(qry.getUsername());
-		return userDO;
-	}
-
-	private UserCO convert(UserDO userDO) {
-		return UserCO.builder()
-			.id(userDO.getId())
-			.username(userDO.getUsername())
-			.status(userDO.getStatus())
-			.avatar(userDO.getAvatar())
-			.createDate(userDO.getCreateDate())
-			.build();
+		return Result.ok(Datas.to(c1.get().stream().map(userConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

@@ -19,10 +19,10 @@ package org.laokou.admin.command.resource.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.dto.resource.ResourceGetQry;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
 import org.laokou.admin.gatewayimpl.database.ResourceMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -39,6 +39,8 @@ public class ResourceGetQryExe {
 
 	private final ResourceMapper resourceMapper;
 
+	private final ResourceConvertor resourceConvertor;
+
 	/**
 	 * 执行查看资源.
 	 * @param qry 查看资源参数
@@ -46,18 +48,7 @@ public class ResourceGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<ResourceCO> execute(ResourceGetQry qry) {
-		return Result.ok(convert(resourceMapper.selectById(qry.getId())));
-	}
-
-	private ResourceCO convert(ResourceDO resourceDO) {
-		return ResourceCO.builder()
-			.id(resourceDO.getId())
-			.title(resourceDO.getTitle())
-			.remark(resourceDO.getRemark())
-			.code(resourceDO.getCode())
-			.status(resourceDO.getStatus())
-			.url(resourceDO.getUrl())
-			.build();
+		return Result.ok(resourceConvertor.convertClientObj(resourceMapper.selectById(qry.getId())));
 	}
 
 }

@@ -19,11 +19,9 @@ package org.laokou.admin.command.message;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.gateway.MessageGateway;
-import org.laokou.admin.domain.message.Message;
 import org.laokou.admin.dto.message.MessageCreateCmd;
-import org.laokou.admin.dto.message.clientobject.MessageCO;
-import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -39,23 +37,15 @@ public class MessageCreateCmdExe {
 
 	private final MessageGateway messageGateway;
 
+	private final MessageConvertor messageConvertor;
+
 	/**
 	 * 执行新增消息.
 	 * @param cmd 新增消息参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(MessageCreateCmd cmd) {
-		messageGateway.create(convert(cmd.getMessageCO()));
-	}
-
-	private Message convert(MessageCO messageCO) {
-		return Message.builder()
-			.id(IdGenerator.defaultSnowflakeId())
-			.title(messageCO.getTitle())
-			.content(messageCO.getContent())
-			.type(messageCO.getType())
-			.receiver(messageCO.getReceiver())
-			.build();
+		messageGateway.create(messageConvertor.toEntity(cmd.getMessageCO()));
 	}
 
 }

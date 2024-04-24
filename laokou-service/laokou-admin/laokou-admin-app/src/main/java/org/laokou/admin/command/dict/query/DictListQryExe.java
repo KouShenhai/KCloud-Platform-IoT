@@ -20,6 +20,7 @@ package org.laokou.admin.command.dict.query;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.admin.convertor.DictConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.dict.DictListQry;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
@@ -50,6 +51,8 @@ public class DictListQryExe {
 
 	private final Executor executor;
 
+	private final DictConvertor dictConvertor;
+
 	/**
 	 * 执行查询部门列表.
 	 * @param qry 查询部门列表参数
@@ -59,33 +62,14 @@ public class DictListQryExe {
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_DICT)
 	public Result<Datas<DictCO>> execute(DictListQry qry) {
-		DictDO dictDO = convert(qry);
+		DictDO dictDO = new DictDO(qry.getLabel(), qry.getType());
 		PageQuery page = qry.page();
 		CompletableFuture<List<DictDO>> c1 = CompletableFuture
 			.supplyAsync(() -> dictMapper.selectListByCondition(dictDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> dictMapper.selectCountByCondition(dictDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.of(c1.get().stream().map(this::convert).toList(), c2.get()));
-	}
-
-	private DictDO convert(DictListQry qry) {
-		DictDO dictDO = new DictDO();
-		dictDO.setLabel(qry.getLabel());
-		dictDO.setType(qry.getType());
-		return dictDO;
-	}
-
-	private DictCO convert(DictDO dictDO) {
-		return DictCO.builder()
-			.id(dictDO.getId())
-			.value(dictDO.getValue())
-			.label(dictDO.getLabel())
-			.type(dictDO.getType())
-			.createDate(dictDO.getCreateDate())
-			.remark(dictDO.getRemark())
-			.sort(dictDO.getSort())
-			.build();
+		return Result.ok(Datas.to(c1.get().stream().map(dictConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

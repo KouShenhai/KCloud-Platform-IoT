@@ -18,21 +18,13 @@
 package org.laokou.admin.domain.oss;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.dto.AggregateRoot;
-
-import static lombok.AccessLevel.PRIVATE;
 
 /**
  * @author laokou
  */
 @Data
-@SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "OssLog", description = "OSS日志")
 public class OssLog extends AggregateRoot<Long> {
 

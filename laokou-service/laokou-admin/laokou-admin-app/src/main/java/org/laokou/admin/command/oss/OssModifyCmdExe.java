@@ -19,10 +19,9 @@ package org.laokou.admin.command.oss;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.OssConvertor;
 import org.laokou.admin.domain.gateway.OssGateway;
-import org.laokou.admin.domain.oss.Oss;
 import org.laokou.admin.dto.oss.OssModifyCmd;
-import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -38,26 +37,15 @@ public class OssModifyCmdExe {
 
 	private final OssGateway ossGateway;
 
+	private final OssConvertor ossConvertor;
+
 	/**
 	 * 执行修改OSS.
 	 * @param cmd 修改OSS参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(OssModifyCmd cmd) {
-		ossGateway.modify(convert(cmd.getOssCO()));
-	}
-
-	private Oss convert(OssCO ossCO) {
-		return Oss.builder()
-			.id(ossCO.getId())
-			.name(ossCO.getName())
-			.accessKey(ossCO.getAccessKey())
-			.secretKey(ossCO.getSecretKey())
-			.bucketName(ossCO.getBucketName())
-			.endpoint(ossCO.getEndpoint())
-			.pathStyleAccessEnabled(ossCO.getPathStyleAccessEnabled())
-			.region(ossCO.getRegion())
-			.build();
+		ossGateway.modify(ossConvertor.toEntity(cmd.getOssCO()));
 	}
 
 }

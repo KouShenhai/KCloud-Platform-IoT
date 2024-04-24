@@ -38,4 +38,8 @@ public class IpDO extends BaseDO {
 	@Schema(name = "label", description = "标签")
 	private String label;
 
+	public IpDO(String label) {
+		this.label = label;
+	}
+
 }

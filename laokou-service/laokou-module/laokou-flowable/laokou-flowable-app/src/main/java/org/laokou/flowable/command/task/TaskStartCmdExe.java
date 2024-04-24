@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.domain.gateway.TaskGateway;
-import org.laokou.flowable.domain.task.Start;
 import org.laokou.flowable.dto.task.TaskStartCmd;
 import org.springframework.stereotype.Component;
 
@@ -48,16 +47,16 @@ public class TaskStartCmdExe {
 	@DS(TENANT)
 	public Result<Boolean> execute(TaskStartCmd cmd) {
 		log.info("开始流程分布式事务 XID：{}", RootContext.getXID());
-		taskGateway.start(convert(cmd));
+		// taskGateway.start(convert(cmd));
 		return Result.ok(Boolean.TRUE);
 	}
 
-	private Start convert(TaskStartCmd cmd) {
-		return Start.builder()
-			.instanceName(cmd.getInstanceName())
-			.definitionKey(cmd.getDefinitionKey())
-			.businessKey(cmd.getBusinessKey())
-			.build();
-	}
+	// private Start convert(TaskStartCmd cmd) {
+	// return Start.builder()
+	// .instanceName(cmd.getInstanceName())
+	// .definitionKey(cmd.getDefinitionKey())
+	// .businessKey(cmd.getBusinessKey())
+	// .build();
+	// }
 
 }

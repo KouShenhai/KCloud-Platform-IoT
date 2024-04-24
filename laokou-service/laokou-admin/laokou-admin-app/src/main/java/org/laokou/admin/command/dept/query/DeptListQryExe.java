@@ -21,17 +21,17 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.FindTypeEnum;
+import org.laokou.admin.convertor.DeptConvertor;
 import org.laokou.admin.dto.dept.DeptListQry;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.core.utils.TreeUtil;
+import org.laokou.common.i18n.common.FindTypeEnum;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
@@ -47,6 +47,8 @@ public class DeptListQryExe {
 
 	private final DeptMapper deptMapper;
 
+	private final DeptConvertor deptConvertor;
+
 	/**
 	 * 执行查询部门列表.
 	 * @param qry 查询部门列表参数
@@ -55,24 +57,15 @@ public class DeptListQryExe {
 	@DS(TENANT)
 	public Result<List<DeptCO>> execute(DeptListQry qry) {
 		return switch (FindTypeEnum.valueOf(qry.getType())) {
-			case LIST -> Result.ok(getDeptList(qry).stream().map(this::convert).toList());
-			case TREE_LIST -> Result.ok(buildTreeNode(getDeptList(qry).stream().map(this::convert).toList()));
+			case LIST -> Result.ok(getDeptList(qry).stream().map(deptConvertor::convertClientObj).toList());
+			case TREE_LIST ->
+				Result.ok(buildTreeNode(getDeptList(qry).stream().map(deptConvertor::convertClientObj).toList()));
 			case USER_TREE_LIST -> null;
 		};
 	}
 
 	private List<DeptCO> buildTreeNode(List<DeptCO> list) {
 		return TreeUtil.buildTreeNode(list, DeptCO.class).getChildren();
-	}
-
-	private DeptCO convert(DeptDO deptDO) {
-		return DeptCO.builder()
-			.id(deptDO.getId())
-			.pid(deptDO.getPid())
-			.name(deptDO.getName())
-			.sort(deptDO.getSort())
-			.children(new ArrayList<>(16))
-			.build();
 	}
 
 	private List<DeptDO> getDeptList(DeptListQry qry) {

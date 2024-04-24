@@ -46,11 +46,8 @@ public class SourceOptionListQryExe {
 		List<SourceDO> list = sourceMapper.selectList(Wrappers.lambdaQuery(SourceDO.class)
 			.select(SourceDO::getId, SourceDO::getName)
 			.orderByDesc(SourceDO::getId));
-		return Result.ok(list.stream().map(this::convert).toList());
-	}
-
-	public OptionCO convert(SourceDO sourceDO) {
-		return OptionCO.builder().value(String.valueOf(sourceDO.getId())).label(sourceDO.getName()).build();
+		return Result
+			.ok(list.stream().map(item -> new OptionCO(item.getName(), String.valueOf(item.getId()))).toList());
 	}
 
 }

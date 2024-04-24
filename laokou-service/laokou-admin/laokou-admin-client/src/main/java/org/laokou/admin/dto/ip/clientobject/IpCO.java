@@ -20,22 +20,15 @@ package org.laokou.admin.dto.ip.clientobject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
-import static lombok.AccessLevel.PRIVATE;
 import static org.laokou.common.i18n.common.NetworkConstant.IPV4_REGEX;
 
 /**
  * @author laokou
  */
 @Data
-@Builder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "IpCO", description = "IP")
 public class IpCO extends ClientObject {
 

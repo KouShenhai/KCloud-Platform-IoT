@@ -32,6 +32,6 @@ public interface MenuGateway {
 	 * @param user 用户对象
 	 * @return 菜单权限标识集合
 	 */
-	MenuE findPermissions(UserE user);
+	MenuE getPermissions(UserE user);
 
 }

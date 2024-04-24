@@ -41,4 +41,8 @@ public class RoleDO extends BaseDO {
 	@Schema(name = "sort", description = "角色排序", example = "1")
 	private Integer sort;
 
+	public RoleDO(String name) {
+		this.name = name;
+	}
+
 }

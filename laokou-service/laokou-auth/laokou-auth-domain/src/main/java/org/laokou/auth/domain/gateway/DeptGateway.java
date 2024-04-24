@@ -32,6 +32,6 @@ public interface DeptGateway {
 	 * @param user 用户对象
 	 * @return 部门PATHS列表
 	 */
-	DeptE findDeptPaths(UserE user);
+	DeptE getDeptPaths(UserE user);
 
 }

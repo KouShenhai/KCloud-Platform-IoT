@@ -45,15 +45,9 @@ public class PackageGetQryExe {
 	 * @return 套餐
 	 */
 	public Result<PackageCO> execute(PackageGetQry qry) {
-		return Result.ok(convert(packageMapper.selectById(qry.getId())));
-	}
-
-	private PackageCO convert(PackageDO packageDO) {
-		return PackageCO.builder()
-			.id(packageDO.getId())
-			.name(packageDO.getName())
-			.menuIds(packageMenuMapper.selectMenuIdsByPackageId(packageDO.getId()))
-			.build();
+		PackageDO packDO = packageMapper.selectById(qry.getId());
+		return Result.ok(new PackageCO(packDO.getId(), packDO.getName(),
+				packageMenuMapper.selectMenuIdsByPackageId(packDO.getId())));
 	}
 
 }

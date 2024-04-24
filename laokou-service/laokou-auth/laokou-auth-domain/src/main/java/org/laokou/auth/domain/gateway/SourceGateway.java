@@ -32,6 +32,6 @@ public interface SourceGateway {
 	 * @param user 用户信息
 	 * @return 数据源名称
 	 */
-	SourceE findSourceName(UserE user);
+	SourceE getSourceName(UserE user);
 
 }

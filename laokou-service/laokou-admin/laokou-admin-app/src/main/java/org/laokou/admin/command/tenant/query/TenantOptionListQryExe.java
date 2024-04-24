@@ -46,11 +46,8 @@ public class TenantOptionListQryExe {
 		List<TenantDO> list = tenantMapper.selectList(Wrappers.lambdaQuery(TenantDO.class)
 			.select(TenantDO::getId, TenantDO::getName)
 			.orderByDesc(TenantDO::getId));
-		return Result.ok(list.stream().map(this::convert).toList());
-	}
-
-	private OptionCO convert(TenantDO tenantDO) {
-		return OptionCO.builder().label(tenantDO.getName()).value(String.valueOf(tenantDO.getId())).build();
+		return Result
+			.ok(list.stream().map(item -> new OptionCO(item.getName(), String.valueOf(item.getId()))).toList());
 	}
 
 }

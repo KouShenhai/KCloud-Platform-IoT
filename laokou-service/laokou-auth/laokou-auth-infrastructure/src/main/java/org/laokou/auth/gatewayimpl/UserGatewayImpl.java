@@ -54,7 +54,7 @@ public class UserGatewayImpl implements UserGateway {
 	 * @return 用户信息
 	 */
 	@Override
-	public UserE findProfile(UserE user) {
+	public UserE getProfile(UserE user) {
 		try {
 			UserDO userDO = userMapper.selectByConditions(userConvertor.toDataObject(user));
 			return ObjectUtil.isNotNull(userDO) ? userConvertor.convertEntity(userDO) : null;

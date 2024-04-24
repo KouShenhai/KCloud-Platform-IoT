@@ -29,6 +29,7 @@ import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.exception.AuthException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
@@ -56,10 +57,9 @@ public class OAuth2AuthenticationProvider {
 			// 认证
 			authDomainService.auth(auth);
 			UserDetail userDetail = convert(auth);
-			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
-					userDetail.getAuthorities());
+			return new UsernamePasswordAuthenticationToken(userDetail, auth.getUsername(), userDetail.getAuthorities());
 		}
-		catch (AuthException e) {
+		catch (AuthException | SystemException e) {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 		finally {

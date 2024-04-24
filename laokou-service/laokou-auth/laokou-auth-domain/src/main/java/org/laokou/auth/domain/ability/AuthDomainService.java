@@ -48,19 +48,19 @@ public class AuthDomainService {
 	private final PasswordEncoder passwordEncoder;
 
 	public void auth(AuthA auth) {
-		auth.modifyAppName(environment.getProperty(SPRING_APPLICATION_NAME));
-		auth.modifySource(sourceGateway.findSourceName(auth.getUser()));
+		auth.updateAppName(environment.getProperty(SPRING_APPLICATION_NAME));
+		auth.updateSource(sourceGateway.getSourceName(auth.getUser()));
 		// 校验验证码
 		checkCaptcha(auth);
-		auth.modifyUser(userGateway.findProfile(auth.getUser()));
+		auth.updateUser(userGateway.getProfile(auth.getUser()));
 		// 校验密码
 		auth.checkUserPassword(passwordEncoder);
 		// 校验用户状态
 		auth.checkUserStatus();
-		auth.modifyMenu(menuGateway.findPermissions(auth.getUser()));
+		auth.updateMenu(menuGateway.getPermissions(auth.getUser()));
 		// 校验权限
 		auth.checkMenuPermissions();
-		auth.modifyDept(deptGateway.findDeptPaths(auth.getUser()));
+		auth.updateDept(deptGateway.getDeptPaths(auth.getUser()));
 		// 成功
 		auth.ok();
 	}

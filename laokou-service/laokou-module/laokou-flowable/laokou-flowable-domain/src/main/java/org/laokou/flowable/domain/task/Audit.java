@@ -18,24 +18,16 @@
 package org.laokou.flowable.domain.task;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.Map;
 
-import static lombok.AccessLevel.PRIVATE;
-
 /**
  * @author laokou
  */
 @Data
-@SuperBuilder
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor(access = PRIVATE)
 @Schema(name = "Audit", description = "审批")
 public class Audit extends AggregateRoot<Long> {
 
