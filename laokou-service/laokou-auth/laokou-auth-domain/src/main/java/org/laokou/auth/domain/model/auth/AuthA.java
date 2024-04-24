@@ -122,7 +122,6 @@ public class AuthA extends AggregateRoot<Long> {
 		this.grantType = grantType;
 		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : DEFAULT_TENANT;
 		this.captcha = new CaptchaV(uuid, captcha);
-		this.user = createUser();
 		this.log = createLog(request);
 	}
 
@@ -163,6 +162,29 @@ public class AuthA extends AggregateRoot<Long> {
 		checkNullUsername();
 		// 检查密码
 		checkNullPassword();
+	}
+
+	public void checkNullByAuthorizationCode() {
+		// 检查账号
+		checkNullUsername();
+		// 检查密码
+		checkNullPassword();
+	}
+
+	public void createUserByPassword() {
+		this.user = new UserE(this.username, EMPTY, EMPTY, this.tenantId);
+	}
+
+	public void createUserByMobile() {
+		this.user = new UserE(EMPTY, EMPTY, this.captcha.uuid(), this.tenantId);
+	}
+
+	public void createUserByMail() {
+		this.user = new UserE(EMPTY, this.captcha.uuid(), EMPTY, this.tenantId);
+	}
+
+	public void createUserByAuthorizationCode() {
+		this.user = new UserE(this.username, EMPTY, EMPTY, this.tenantId);
 	}
 
 	public void modifyUser(UserE user) {
@@ -240,15 +262,6 @@ public class AuthA extends AggregateRoot<Long> {
 		String os = userAgent.getOperatingSystem().getName();
 		String browser = userAgent.getBrowser().getName();
 		return new LogV(ip, address, browser, os, DateUtil.now());
-	}
-
-	private UserE createUser() {
-		return switch (this.grantType) {
-			case PASSWORD, AUTHORIZATION_CODE -> new UserE(this.username, EMPTY, EMPTY, this.tenantId);
-			case MAIL -> new UserE(EMPTY, this.captcha.uuid(), EMPTY, this.tenantId);
-			case MOBILE -> new UserE(EMPTY, EMPTY, this.captcha.uuid(), this.tenantId);
-            default -> new UserE();
-        };
 	}
 
 	private void checkNullPassword() {
