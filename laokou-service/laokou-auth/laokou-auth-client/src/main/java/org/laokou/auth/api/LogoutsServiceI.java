@@ -15,7 +15,21 @@
  *
  */
 
+package org.laokou.auth.api;
+
+import org.laokou.auth.dto.logout.LogoutCmd;
+
 /**
+ * 退出登录.
+ *
  * @author laokou
  */
-package org.laokou.admin.dto.logout;
+public interface LogoutsServiceI {
+
+	/**
+	 * 移除Token.
+	 * @param cmd 退出登录参数
+	 */
+	void removeToken(LogoutCmd cmd);
+
+}

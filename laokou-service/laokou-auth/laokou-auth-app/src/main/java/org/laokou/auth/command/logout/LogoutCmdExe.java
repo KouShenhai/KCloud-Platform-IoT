@@ -15,10 +15,10 @@
  *
  */
 
-package org.laokou.admin.command.logout;
+package org.laokou.auth.command.logout;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.logout.LogoutCmd;
+import org.laokou.auth.dto.logout.LogoutCmd;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -27,10 +27,11 @@ import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.stereotype.Component;
 
 import java.security.Principal;
+
+import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
 
 /**
  * 退出登录执行器.
@@ -54,14 +55,14 @@ public class LogoutCmdExe {
 		if (StringUtil.isEmpty(token)) {
 			return;
 		}
-		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, ACCESS_TOKEN);
 		if (ObjectUtil.isNull(authorization)) {
 			return;
 		}
 		UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) ObjectUtil
 			.requireNotNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
 		// 删除token
-		removeToken(authorization);
+		removeAuthorization(authorization);
 		// 删除菜单key
 		removeMenuTreeKey(userDetail.getId());
 		// 删除用户key
@@ -72,7 +73,7 @@ public class LogoutCmdExe {
 	 * 移除令牌.
 	 * @param authorization 认证对象
 	 */
-	private void removeToken(OAuth2Authorization authorization) {
+	private void removeAuthorization(OAuth2Authorization authorization) {
 		oAuth2AuthorizationService.remove(authorization);
 	}
 

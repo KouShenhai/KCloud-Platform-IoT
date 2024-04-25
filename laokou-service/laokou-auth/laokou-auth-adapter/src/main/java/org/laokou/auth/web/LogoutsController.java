@@ -20,6 +20,8 @@ package org.laokou.auth.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.auth.api.LogoutsServiceI;
+import org.laokou.auth.dto.logout.LogoutCmd;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,16 +30,16 @@ import org.springframework.web.bind.annotation.RestController;
  * @author laokou
  */
 @RestController
-@Tag(name = "LogoutsController", description = "注销认证控制器")
+@Tag(name = "LogoutsController", description = "退出登录控制器")
 @RequiredArgsConstructor
 public class LogoutsController {
 
-	//private final LogoutsServiceI logoutsServiceI;
+	private final LogoutsServiceI logoutsServiceI;
 
 	@DeleteMapping("v1/logouts")
-	@Operation(summary = "注销认证", description = "退出登录")
-	public void logout_v1(@RequestBody Object obj) {
-		//logoutsServiceI.remove(cmd);
+	@Operation(summary = "退出登录", description = "清除令牌")
+	public void removeToken_v1(@RequestBody LogoutCmd cmd) {
+		logoutsServiceI.removeToken(cmd);
 	}
 
 }

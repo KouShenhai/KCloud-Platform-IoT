@@ -15,12 +15,12 @@
  *
  */
 
-package org.laokou.admin.service;
+package org.laokou.auth.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.api.LogoutsServiceI;
-import org.laokou.admin.command.logout.LogoutCmdExe;
-import org.laokou.admin.dto.logout.LogoutCmd;
+import org.laokou.auth.api.LogoutsServiceI;
+import org.laokou.auth.command.logout.LogoutCmdExe;
+import org.laokou.auth.dto.logout.LogoutCmd;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,11 +35,11 @@ public class LogoutsServiceImpl implements LogoutsServiceI {
 	private final LogoutCmdExe logoutCmdExe;
 
 	/**
-	 * 退出登录.
+	 * 移除Token.
 	 * @param cmd 退出登录参数
 	 */
 	@Override
-	public void remove(LogoutCmd cmd) {
+	public void removeToken(LogoutCmd cmd) {
 		logoutCmdExe.executeVoid(cmd);
 	}
 
