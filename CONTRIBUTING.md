@@ -25,4 +25,4 @@
 - ci：脚本文件配置
 
 ## 代码规范
-见文章
+[COLA代码规范](https://koushenhai.github.io/pages/59afe2)
