@@ -41,7 +41,7 @@ public class CaptchasServiceImpl implements CaptchasServiceI {
 	 * @return 验证码
 	 */
 	@Override
-	public Result<String> getByUUID(CaptchaGetQry qry) {
+	public Result<String> getByUuid(CaptchaGetQry qry) {
 		return captchaGetQryExe.execute(qry);
 	}
 

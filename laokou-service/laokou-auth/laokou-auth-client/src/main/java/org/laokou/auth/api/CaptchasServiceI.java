@@ -32,6 +32,6 @@ public interface CaptchasServiceI {
 	 * @param qry 获取验证码参数
 	 * @return 验证码
 	 */
-	Result<String> getByUUID(CaptchaGetQry qry);
+	Result<String> getByUuid(CaptchaGetQry qry);
 
 }
