@@ -17,7 +17,7 @@
 
 package org.laokou.auth.api;
 
-import org.laokou.auth.dto.CaptchaGetQry;
+import org.laokou.auth.dto.captcha.CaptchaGetQry;
 import org.laokou.common.i18n.dto.Result;
 
 /**
@@ -32,6 +32,6 @@ public interface CaptchasServiceI {
 	 * @param qry 获取验证码参数
 	 * @return 验证码
 	 */
-	Result<String> find(CaptchaGetQry qry);
+	Result<String> getByUUID(CaptchaGetQry qry);
 
 }

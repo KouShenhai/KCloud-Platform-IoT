@@ -21,14 +21,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.CaptchasServiceI;
-import org.laokou.auth.dto.CaptchaGetQry;
+import org.laokou.auth.dto.captcha.CaptchaGetQry;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.redisson.api.RateIntervalUnit;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
@@ -37,19 +36,18 @@ import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
  * @author laokou
  */
 @RestController
-@Tag(name = "CaptchasController", description = "验证码")
+@Tag(name = "CaptchasController", description = "验证码控制器")
 @RequiredArgsConstructor
-@RequestMapping("captchas")
 public class CaptchasController {
 
 	private final CaptchasServiceI captchasServiceI;
 
 	@TraceLog
-	@GetMapping("v1/{uuid}")
+	@GetMapping("v1/captchas/{uuid}")
 	@RateLimiter(id = "AUTH_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
 	@Operation(summary = "验证码", description = "获取验证码")
-	public Result<String> find(@PathVariable("uuid") String uuid) {
-		return captchasServiceI.find(new CaptchaGetQry(uuid));
+	public Result<String> getByUUID_v1(@PathVariable("uuid") String uuid) {
+		return captchasServiceI.getByUUID(new CaptchaGetQry(uuid));
 	}
 
 }

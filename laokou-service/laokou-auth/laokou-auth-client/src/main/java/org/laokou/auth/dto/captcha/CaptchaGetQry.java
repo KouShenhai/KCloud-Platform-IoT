@@ -15,22 +15,24 @@
  *
  */
 
-package org.laokou.auth.api;
+package org.laokou.auth.dto.captcha;
 
-import org.laokou.auth.dto.secret.clientobject.SecretCO;
-import org.laokou.common.i18n.dto.Result;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
- * 密钥.
- *
  * @author laokou
  */
-public interface SecretsServiceI {
+@Getter
+@Schema(name = "CaptchaGetQry", description = "查看验证码命令请求")
+public class CaptchaGetQry extends CommonCommand {
 
-	/**
-	 * 获取密钥.
-	 * @return 密钥
-	 */
-	Result<SecretCO> getInfo();
+	@Schema(name = "uuid", description = "UUID")
+	private final String uuid;
+
+	public CaptchaGetQry(String uuid) {
+		this.uuid = uuid;
+	}
 
 }
