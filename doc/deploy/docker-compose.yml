@@ -395,6 +395,7 @@ services:
       - ./nginx/dist:/usr/share/nginx/dist
       - ./nginx/ssl:/etc/nginx/ssl
       - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/logs:/var/log/nginx
     extra_hosts:
       - "vue.laokou.org:192.168.30.130"
       - "api.laokou.org:192.168.30.130"
