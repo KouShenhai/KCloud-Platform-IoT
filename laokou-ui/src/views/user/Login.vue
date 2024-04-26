@@ -11,16 +11,22 @@
           <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
         </a-input-password>
       </a-form-model-item>
-      <a-row :gutter="16" v-if="captchaEnabled">
+      <a-row :gutter="16">
         <a-col class="gutter-row" :span="16">
-          <a-form-model-item prop="code">
-            <a-input v-model="form.code" size="large" allow-clear type="text" autocomplete="off" placeholder="验证码">
+          <a-form-model-item prop="captcha">
+            <a-input
+              v-model="form.captcha"
+              size="large"
+              allow-clear
+              type="text"
+              autocomplete="off"
+              placeholder="验证码">
               <a-icon slot="prefix" type="security-scan" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-model-item>
         </a-col>
         <a-col class="gutter-row" :span="8">
-          <img class="getCaptcha" :src="codeUrl" @click="getCode" alt="暂无验证码">
+          <img class="getCaptcha" :src="verifyCodeUrl" @click="getVerifyCode" alt="暂无验证码">
         </a-col>
       </a-row>
       <a-form-item>
@@ -41,9 +47,9 @@
 <script>
 import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
-import storage from 'store'
 import { v4 as uid } from 'uuid'
 import { JSEncrypt } from 'jsencrypt'
+import { getCaptcha, getSecret } from '@/api/login'
 
 export default {
   components: {
@@ -52,44 +58,46 @@ export default {
     return {
       publicKey: '',
       tenantOptions: [],
-      isLoginError: false,
-      loginErrorInfo: '',
+      verifyCodeUrl: '',
       form: {
         username: '',
         password: '',
         captcha: '',
         uuid: '',
+        tenantId: 0
       },
       rules: {
         username: [{ required: true, message: '请输入帐号', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-        code: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
+        captcha: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
       },
-      loginIng: false,
-      captchaEnabled: true
+      loginIng: false
     }
   },
   created () {
+    this.getPublicKey()
     this.getVerifyCode()
   },
   methods: {
+    getPublicKey () {
+      getSecret().then(res => {
+        this.publicKey = res.data.publicKey
+      })
+    },
     getVerifyCode () {
-      // getCodeImg().then(res => {
-      //   this.captchaEnabled = res.captchaEnabled === undefined ? true : res.captchaEnabled
-      //   if (this.captchaEnabled) {
-      //     this.codeUrl = 'data:image/gif;base64,' + res.img
-      //     this.form.uuid = res.uuid
-      //   }
-      // })
+      this.form.uuid = uid()
+      getCaptcha(this.form.uuid).then(res => {
+        this.verifyCodeUrl = res.data
+      })
     },
     ...mapActions(['Login', 'Logout']),
     handleSubmit () {
       this.loginIng = true
       this.$refs.form.validate(valid => {
         if (valid) {
-          this.Login(this.form)
-            .then((res) => this.loginSuccess())
-            .catch(err => this.requestFailed(err))
+          this.Login(this.getParams())
+            .then(() => this.loginSuccess())
+            .catch(() => this.requestFailed())
             .finally(() => {
               this.loginIng = false
             })
@@ -109,14 +117,24 @@ export default {
           description: `${timeFix()}，欢迎回来`
         })
       }, 1000)
-      this.handleCloseLoginError()
     },
-    requestFailed (err) {
+    // eslint-disable-next-line handle-callback-err
+    requestFailed () {
       this.form.captcha = ''
-      if (this.captchaEnabled) {
-        this.getCode()
-      }
+      this.getVerifyCode()
     },
+    getParams () {
+      const encrypt = new JSEncrypt()
+      encrypt.setPublicKey(this.publicKey)
+      return {
+        username: encodeURIComponent(encrypt.encrypt(this.form.username)),
+        password: encodeURIComponent(encrypt.encrypt(this.form.password)),
+        captcha: this.form.captcha,
+        uuid: this.form.uuid,
+        grant_type: 'password',
+        tenant_id: this.form.tenantId
+      }
+    }
   }
 }
 </script>

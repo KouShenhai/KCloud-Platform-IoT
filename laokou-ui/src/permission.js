@@ -43,7 +43,7 @@ router.beforeEach((to, from, next) => {
             notification.error({
               message: '错误',
               description: '请求用户信息失败，请重试'
-            })
+            }, 5000)
             // 失败时，获取用户信息失败时，调用登出，来清空历史保留信息
             store.dispatch('Logout').then(() => {
               location.href = '/index'

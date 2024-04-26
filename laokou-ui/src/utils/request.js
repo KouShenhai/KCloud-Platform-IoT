@@ -9,6 +9,7 @@ import errorCode from '@/utils/errorCode'
 import qs from 'qs'
 import { blobValidate } from '@/utils/ruoyi'
 import { saveAs } from 'file-saver'
+import moment from 'moment'
 
 // 是否显示重新登录
 let isReloginShow
@@ -25,29 +26,42 @@ const request = axios.create({
 const errorHandler = (error) => {
   console.log('err' + error)
     let { message } = error
-    if (message === 'Network Error') {
-      message = '后端接口连接异常'
-    } else if (message.includes('timeout')) {
-      message = '系统接口请求超时'
-    } else if (message.includes('Request failed with status code')) {
-      message = '系统接口' + message.substr(message.length - 3) + '异常'
-    }
+  if (message === 'Network Error') {
+    message = '后端接口连接异常'
+  } else if (message.includes('timeout')) {
+    message = '系统接口请求超时'
+  } else if (message.includes('Request failed with status code')) {
+    message = '网络请求错误，请稍后再试'
+  } else if (message.includes('Request aborted')) {
+    message = '请求已中断，请刷新页面'
+  }
     notification.error({
-      message: message,
-      duration: 5 * 1000
-    })
+      message: '错误',
+      description: message
+    }, 5000)
     return Promise.reject(error)
 }
 
 // request interceptor
 request.interceptors.request.use(config => {
   const token = storage.get(ACCESS_TOKEN)
+  // const userId = storage.get(USER_ID)
+  // const userName = storage.get(USER_NAME)
+  // const tenantId = storage.get(TENANT_ID)
   // 如果 token 存在
   // 让每个请求携带自定义 token 请根据实际情况自行修改
   if (token) {
     config.headers['Authorization'] = 'Bearer ' + token // 让每个请求携带自定义token 请根据实际情况自行修改
-    // config.headers['accessAccess-Token'] = token
+    // config.headers['User-Id'] = userId
+    // config.headers['User-Name'] = userName
+    // config.headers['Tenant-Id'] = tenantId
+    config.headers['Service-Gray'] = 'true'
   }
+  // if (userId) {
+  //   config.headers['Trace-Id'] = userId + moment().valueOf()
+  // } else {
+  //   config.headers['Trace-Id'] = '' + moment().valueOf()
+  // }
   // 处理params参数
   if (config.params) {
     const url = config.url + '?' + qs.stringify(config.params, { indices: false })
@@ -59,22 +73,20 @@ request.interceptors.request.use(config => {
 
 // response interceptor
 request.interceptors.response.use((res) => {
-  // 请求rul
-  const requestUrl = res.config.url
   // 未设置状态码则默认成功状态
-  const code = res.data.code || 200
+  const code = res.data.code || 'OK'
   // 获取错误信息
   const msg = errorCode[code] || res.data.msg || errorCode['default']
   // 二进制数据则直接返回
-  if (res.request.responseType === 'blob' || res.request.responseType === 'arraybuffer') {
+  if (code === 'OK' || res.request.responseType === 'blob' || res.request.responseType === 'arraybuffer') {
     return res.data
   }
-  if (code === 401) {
+  if (code === 'Unauthorized') {
     if (!isReloginShow) {
       isReloginShow = true
       notification.open({
         message: '系统提示',
-        description: '登录状态已过期，请重新登录',
+        description: msg,
         btn: h => {
           return h(
             'a-button',
@@ -87,7 +99,7 @@ request.interceptors.response.use((res) => {
                 click: () => {
                   store.dispatch('Logout').then(() => {
                     isReloginShow = false
-                    location.href = '/index'
+                    location.href = '/'
                   })
                 }
               }
@@ -101,19 +113,11 @@ request.interceptors.response.use((res) => {
         }
       })
     }
-  } else if (code === 500) {
-    if (requestUrl !== '/login') {
-      notification.error({
-        message: msg,
-        description: msg
-      })
-    }
-  } else if (code !== 200) {
-    notification.error({
-      message: msg
-    })
   } else {
-    return res.data
+    notification.error({
+      message: '错误',
+      description: msg
+    }, 5000)
   }
   return Promise.reject(msg)
 }, errorHandler)
