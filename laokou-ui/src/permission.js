@@ -24,15 +24,13 @@ router.beforeEach((to, from, next) => {
       NProgress.done()
     } else {
       // check login user.roles is null
-      if (store.getters.roles.length === 0) {
+      if (store.getters.permissions.length === 0) {
         // request login userInfo
         store
           .dispatch('GetInfo')
-          .then(res => {
-            // const roles = res.result && res.result.role
-            const roles = res.roles
+          .then(() => {
             // generate dynamic router
-            store.dispatch('GenerateRoutes', { roles }).then(() => {
+            store.dispatch('GenerateRoutes', {}).then(() => {
               router.addRoutes(store.getters.routers)
 
               // 请求带有 redirect 重定向时，登录自动重定向到该地址

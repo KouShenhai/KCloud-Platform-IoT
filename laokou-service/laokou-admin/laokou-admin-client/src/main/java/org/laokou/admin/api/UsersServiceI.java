@@ -50,7 +50,7 @@ public interface UsersServiceI {
 	 * 查看用户信息.
 	 * @return 用户信息
 	 */
-	Result<UserProfileCO> findProfile();
+	Result<UserProfileCO> getProfile();
 
 	/**
 	 * 修改用户信息.

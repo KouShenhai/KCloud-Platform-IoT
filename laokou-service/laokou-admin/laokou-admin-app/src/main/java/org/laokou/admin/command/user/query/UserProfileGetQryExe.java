@@ -36,11 +36,14 @@ public class UserProfileGetQryExe {
 	 * @return 用户信息
 	 */
 	public Result<UserProfileCO> execute() {
+		return Result.ok(convert());
+	}
+
+	private UserProfileCO convert() {
 		UserDetail userDetail = UserUtil.user();
-		UserProfileCO co = new UserProfileCO(userDetail.getDeptId(), userDetail.getAvatar(), userDetail.getUsername(),
-				userDetail.getMobile(), userDetail.getMail(), userDetail.getPermissions(), userDetail.getTenantId(),
-				userDetail.getSuperAdmin());
-		return Result.ok(co);
+		return new UserProfileCO(userDetail.getDeptId(), userDetail.getAvatar(), userDetail.getUsername(),
+			userDetail.getPermissions(), userDetail.getTenantId()
+		);
 	}
 
 }

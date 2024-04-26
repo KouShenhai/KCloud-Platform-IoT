@@ -1,8 +1,6 @@
 import request from '@/utils/request'
 
 export const userApi = {
-  Logout: '/admin/v1/logouts',
-  Info: '/admin/v1/users/profile',
   Tenant: '/admin/v1/tenants/option-list'
 }
 
@@ -34,9 +32,9 @@ export function getCaptcha (uuid) {
   })
 }
 
-export function info () {
+export function getInfo () {
   return request({
-    url: userApi.Info,
+    url: '/admin/v1/users/profile',
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -46,7 +44,7 @@ export function info () {
 
 export function logout (token) {
   return request({
-    url: userApi.Logout,
+    url: '/auth/v1/logouts',
     data: { token: token },
     method: 'delete',
     headers: {

@@ -86,7 +86,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	 * @return 用户信息
 	 */
 	@Override
-	public Result<UserProfileCO> findProfile() {
+	public Result<UserProfileCO> getProfile() {
 		return userProfileGetQryExe.execute();
 	}
 
