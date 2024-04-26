@@ -82,8 +82,7 @@ public class LogoutCmdExe {
 	 * @param token 令牌
 	 */
 	private void removeUserInfoKey(String token) {
-		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-		redisUtil.delete(userInfoKey);
+		redisUtil.delete(RedisKeyUtil.getUserInfoKey(token));
 	}
 
 	/**
@@ -91,8 +90,7 @@ public class LogoutCmdExe {
 	 * @param userId 用户ID
 	 */
 	private void removeMenuTreeKey(Long userId) {
-		String resourceTreeKey = RedisKeyUtil.getMenuTreeKey(userId);
-		redisUtil.delete(resourceTreeKey);
+		redisUtil.delete(RedisKeyUtil.getMenuTreeKey(userId));
 	}
 
 }

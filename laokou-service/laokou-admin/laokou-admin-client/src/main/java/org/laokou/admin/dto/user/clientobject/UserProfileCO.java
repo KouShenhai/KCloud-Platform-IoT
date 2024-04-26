@@ -43,31 +43,18 @@ public class UserProfileCO extends ClientObject {
 	@Schema(name = "username", description = "用户名")
 	private String username;
 
-	@Schema(name = "mobile", description = "手机号")
-	private String mobile;
-
-	@Schema(name = "mail", description = "邮箱")
-	private String mail;
+	@Schema(name = "tenantId", description = "租户ID")
+	private Long tenantId;
 
 	@Schema(name = "permissions", description = "菜单权限标识集合")
 	private Set<String> permissions;
 
-	@Schema(name = "tenantId", description = "租户ID")
-	private Long tenantId;
-
-	@Schema(name = "superAdmin", description = "超级管理员标识 0否 1是")
-	private Integer superAdmin;
-
-	public UserProfileCO(Long id, String avatar, String username, String mobile, String mail, Set<String> permissions,
-			Long tenantId, Integer superAdmin) {
+	public UserProfileCO(Long id, String avatar, String username, Set<String> permissions, Long tenantId) {
 		this.id = id;
 		this.avatar = avatar;
 		this.username = username;
-		this.mobile = mobile;
-		this.mail = mail;
 		this.permissions = permissions;
 		this.tenantId = tenantId;
-		this.superAdmin = superAdmin;
 	}
 
 }

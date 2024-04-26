@@ -92,18 +92,18 @@ export default {
     // 查询表数据
     getList (userId) {
       this.loading = true
-      getAuthRole(userId).then(res => {
-        if (res.code === 200) {
-          this.list = res.roles
-          this.user = res.user
-          this.$nextTick(() => {
-            const roleIds = res.user.roles.map(item => item.roleId)
-            this.roleIds = roleIds
-            this.selectedRowKeys = roleIds
-          })
-          this.loading = false
-        }
-      })
+      // getAuthRole(userId).then(res => {
+      //   if (res.code === 200) {
+      //     this.list = res.roles
+      //     this.user = res.user
+      //     this.$nextTick(() => {
+      //       const roleIds = res.user.roles.map(item => item.roleId)
+      //       this.roleIds = roleIds
+      //       this.selectedRowKeys = roleIds
+      //     })
+      //     this.loading = false
+      //   }
+      // })
     },
     // 关闭模态框
     close () {

@@ -45,12 +45,11 @@ import static org.laokou.common.i18n.common.CacheNameConstant.USERS;
 @RestController
 @Tag(name = "UsersController", description = "用户管理")
 @RequiredArgsConstructor
-@RequestMapping("v1/users")
 public class UsersController {
 
 	private final UsersServiceI usersServiceI;
 
-	@PutMapping
+	@PutMapping("v1/users")
 	@Operation(summary = "用户管理", description = "修改用户")
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@PreAuthorize("hasAuthority('users:modify')")
@@ -60,26 +59,26 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@GetMapping("profile")
+	@GetMapping("v1/users/profile")
 	@Operation(summary = "个人中心", description = "查看个人信息")
-	public Result<UserProfileCO> findProfile() {
-		return usersServiceI.findProfile();
+	public Result<UserProfileCO> getProfile() {
+		return usersServiceI.getProfile();
 	}
 
 	@TraceLog
-	@GetMapping("option-list")
+	@GetMapping("v1/users/option-list")
 	@Operation(summary = "用户管理", description = "下拉列表")
 	public Result<List<OptionCO>> findOptionList() {
 		return usersServiceI.findOptionList(new UserOptionListQry());
 	}
 
-	@PutMapping("profile")
+	@PutMapping("v1/users/profile")
 	@Operation(summary = "个人中心", description = "修改个人信息")
 	public void modifyProfile(@RequestBody UserProfileModifyCmd cmd) {
 		usersServiceI.modifyProfile(cmd);
 	}
 
-	@PutMapping("status")
+	@PutMapping("v1/users/status")
 	@Operation(summary = "用户管理", description = "修改用户状态")
 	@OperateLog(module = "用户管理", operation = "修改用户状态")
 	@PreAuthorize("hasAuthority('users:modify-status')")
@@ -87,7 +86,7 @@ public class UsersController {
 		usersServiceI.modifyStatus(cmd);
 	}
 
-	@PutMapping("reset-password")
+	@PutMapping("v1/users/reset-password")
 	@Operation(summary = "用户管理", description = "重置密码")
 	@OperateLog(module = "用户管理", operation = "重置密码")
 	@PreAuthorize("hasAuthority('users:reset-password')")
@@ -95,14 +94,14 @@ public class UsersController {
 		usersServiceI.resetPassword(cmd);
 	}
 
-	@PutMapping("password")
+	@PutMapping("v1/users/password")
 	@Operation(summary = "个人中心", description = "修改密码")
 	public void modifyPassword(@RequestBody UserPasswordResetCmd cmd) {
 		usersServiceI.resetPassword(cmd);
 	}
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("v1/users")
 	@Operation(summary = "用户管理", description = "新增用户")
 	@OperateLog(module = "用户管理", operation = "新增用户")
 	@PreAuthorize("hasAuthority('users:create')")
@@ -111,14 +110,14 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("v1/users/{id}")
 	@Operation(summary = "用户管理", description = "查看用户")
 	@DataCache(name = USERS, key = "#id")
 	public Result<UserCO> findById(@PathVariable("id") Long id) {
 		return usersServiceI.findById(new UserGetQry(id));
 	}
 
-	@DeleteMapping
+	@DeleteMapping("v1/users")
 	@Operation(summary = "用户管理", description = "删除用户")
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@PreAuthorize("hasAuthority('users:remove')")
@@ -127,7 +126,7 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@PostMapping("list")
+	@PostMapping("v1/users/list")
 	@Operation(summary = "用户管理", description = "查询用户列表")
 	@PreAuthorize("hasAuthority('users:list')")
 	public Result<Datas<UserCO>> findList(@RequestBody UserListQry qry) {

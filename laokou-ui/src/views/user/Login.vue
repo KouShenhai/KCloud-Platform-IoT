@@ -41,6 +41,15 @@
         >确定</a-button>
       </a-form-item>
     </a-form-model>
+    <div>
+      <a-table
+        bordered
+        :size="tableSize"
+        :columns="columns"
+        rowKey="id"
+        :data-source="list"
+        :pagination="false" />
+    </div>
   </div>
 </template>
 
@@ -50,15 +59,69 @@ import { timeFix } from '@/utils/util'
 import { v4 as uid } from 'uuid'
 import { JSEncrypt } from 'jsencrypt'
 import { getCaptcha, getSecret } from '@/api/login'
+import { tableMixin } from '@/store/table-mixin'
 
 export default {
   components: {
   },
+  mixins: [tableMixin],
   data () {
     return {
       publicKey: '',
       tenantOptions: [],
       verifyCodeUrl: '',
+      list: [
+        {
+          id: 1,
+          tenant: '老寇云集团',
+          username: 'admin',
+          password: 'admin123'
+        },
+        {
+          id: 2,
+          tenant: '老寇云集团',
+          username: 'test',
+          password: 'test123'
+        },
+        {
+          id: 3,
+          tenant: '老寇云集团',
+          username: 'laok5',
+          password: 'test123'
+        },
+        {
+          id: 4,
+          tenant: '阿里云集团',
+          username: 'tenant',
+          password: 'tenant123'
+        }
+      ],
+      columns: [
+        {
+          title: '序号',
+          dataIndex: 'id',
+          ellipsis: true,
+          align: 'center'
+        },
+        {
+          title: '租户',
+          dataIndex: 'tenant',
+          ellipsis: true,
+          align: 'center'
+        },
+        {
+          title: '账号',
+          dataIndex: 'username',
+          ellipsis: true,
+          align: 'center'
+        },
+        {
+          title: '密码',
+          dataIndex: 'password',
+          ellipsis: true,
+          align: 'center'
+        }
+      ],
       form: {
         username: '',
         password: '',
@@ -140,6 +203,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/* 表格斑马样式 **/
+/deep/.ant-table-tbody tr:nth-child(2n)
+{
+  background-color:#fafafa;
+}
 .user-layout-login {
   label {
     font-size: 14px;
