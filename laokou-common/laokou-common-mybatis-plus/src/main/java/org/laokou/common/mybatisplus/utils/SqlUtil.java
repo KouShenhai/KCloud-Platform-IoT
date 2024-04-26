@@ -46,7 +46,7 @@ public class SqlUtil {
 	}
 
 	public static PlainSelect plainSelect(String sql) {
-		return (PlainSelect) ((Select) parseSql(sql)).getSelectBody();
+		return ((Select) parseSql(sql)).getPlainSelect();
 	}
 
 }
