@@ -35,9 +35,9 @@ const user = {
 
   actions: {
     // 登录
-    Login ({ commit }, userInfo) {
+    Login ({ commit }, params) {
       return new Promise((resolve, reject) => {
-        login(userInfo).then(res => {
+        login(params).then(res => {
           storage.set(ACCESS_TOKEN, res.token, 7 * 24 * 60 * 60 * 1000)
           commit('SET_TOKEN', res.token)
           resolve()

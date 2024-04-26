@@ -21,7 +21,7 @@ import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.base.Captcha;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.domain.gateway.CaptchaGateway;
-import org.laokou.auth.dto.CaptchaGetQry;
+import org.laokou.auth.dto.captcha.CaptchaGetQry;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 import java.awt.*;

@@ -20,6 +20,7 @@ package org.laokou.auth.service;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.SecretsServiceI;
 import org.laokou.auth.command.secret.query.SecretGetQryExe;
+import org.laokou.auth.dto.secret.clientobject.SecretCO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +40,7 @@ public class SecretsServiceImpl implements SecretsServiceI {
 	 * @return 密钥
 	 */
 	@Override
-	public Result<String> find() {
+	public Result<SecretCO> getInfo() {
 		return secretGetQryExe.execute();
 	}
 

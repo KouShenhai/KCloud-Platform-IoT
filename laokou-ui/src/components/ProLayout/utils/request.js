@@ -27,7 +27,7 @@ const errorHandler = (error) => {
   notification.error({
     message: `请求错误 ${status}: ${url}`,
     description: errortext
-  })
+  }, 5000)
 }
 
 export const BASE_URL = process.env.VUE_APP_API_URL || '/api/v1'

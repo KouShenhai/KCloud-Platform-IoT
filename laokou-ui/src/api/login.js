@@ -1,18 +1,14 @@
 import request from '@/utils/request'
 
 export const userApi = {
-  Token: '/auth/oauth2/token',
   Logout: '/admin/v1/logouts',
-  Out: '/auth/logout?logout',
   Info: '/admin/v1/users/profile',
-  Captcha: '/auth/v1/captchas/',
-  Tenant: '/admin/v1/tenants/option-list',
-  Secret: '/auth/v1/secrets'
+  Tenant: '/admin/v1/tenants/option-list'
 }
 
 export function login (params) {
   return request({
-    url: userApi.Token,
+    url: '/auth/oauth2/token',
     method: 'post',
     data: params,
     // 设置序列化请求函数
@@ -24,13 +20,6 @@ export function login (params) {
   })
 }
 
-export function out () {
-  return request({
-    url: userApi.Out,
-    method: 'get'
-  })
-}
-
 export function tenant () {
   return request({
     url: userApi.Tenant,
@@ -38,9 +27,9 @@ export function tenant () {
   })
 }
 
-export function captcha (uuid) {
+export function getCaptcha (uuid) {
   return request({
-    url: userApi.Captcha + uuid,
+    url: '/auth/v1/captchas/' + uuid,
     method: 'get'
   })
 }
@@ -66,9 +55,9 @@ export function logout (token) {
   })
 }
 
-export function secret () {
+export function getSecret () {
   return request({
-    url: userApi.Secret,
+    url: '/auth/v1/secrets',
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
