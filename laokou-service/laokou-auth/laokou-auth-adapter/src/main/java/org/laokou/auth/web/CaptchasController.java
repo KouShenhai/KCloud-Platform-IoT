@@ -46,7 +46,7 @@ public class CaptchasController {
 	@GetMapping("v1/captchas/{uuid}")
 	@RateLimiter(id = "AUTH_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
 	@Operation(summary = "验证码", description = "获取验证码")
-	public Result<String> getByUuid_v1(@PathVariable("uuid") String uuid) {
+	public Result<String> getByUuidV1(@PathVariable("uuid") String uuid) {
 		return captchasServiceI.getByUuid(new CaptchaGetQry(uuid));
 	}
 

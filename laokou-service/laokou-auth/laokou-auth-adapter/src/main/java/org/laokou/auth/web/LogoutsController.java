@@ -38,7 +38,7 @@ public class LogoutsController {
 
 	@DeleteMapping("v1/logouts")
 	@Operation(summary = "退出登录", description = "清除令牌")
-	public void removeToken_v1(@RequestBody LogoutCmd cmd) {
+	public void removeTokenV1(@RequestBody LogoutCmd cmd) {
 		logoutsServiceI.removeToken(cmd);
 	}
 
