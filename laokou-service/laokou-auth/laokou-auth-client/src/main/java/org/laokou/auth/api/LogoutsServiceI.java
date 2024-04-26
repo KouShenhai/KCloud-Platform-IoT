@@ -17,20 +17,19 @@
 
 package org.laokou.auth.api;
 
-import org.laokou.auth.dto.secret.clientobject.SecretCO;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.auth.dto.logout.LogoutCmd;
 
 /**
- * 密钥.
+ * 退出登录.
  *
  * @author laokou
  */
-public interface SecretsServiceI {
+public interface LogoutsServiceI {
 
 	/**
-	 * 获取密钥.
-	 * @return 密钥
+	 * 移除Token.
+	 * @param cmd 退出登录参数
 	 */
-	Result<SecretCO> getInfo();
+	void removeToken(LogoutCmd cmd);
 
 }

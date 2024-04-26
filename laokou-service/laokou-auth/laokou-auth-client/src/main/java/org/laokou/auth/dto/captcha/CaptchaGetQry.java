@@ -15,22 +15,24 @@
  *
  */
 
-package org.laokou.auth.dto;
+package org.laokou.auth.dto.captcha;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
+@Getter
 @Schema(name = "CaptchaGetQry", description = "查看验证码命令请求")
 public class CaptchaGetQry extends CommonCommand {
 
 	@Schema(name = "uuid", description = "UUID")
-	private String uuid;
+	private final String uuid;
+
+	public CaptchaGetQry(String uuid) {
+		this.uuid = uuid;
+	}
 
 }

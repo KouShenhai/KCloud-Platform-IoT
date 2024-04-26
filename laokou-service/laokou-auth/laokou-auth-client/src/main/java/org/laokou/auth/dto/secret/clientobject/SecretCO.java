@@ -15,7 +15,21 @@
  *
  */
 
+package org.laokou.auth.dto.secret.clientobject;
+
+import lombok.Getter;
+import org.laokou.common.i18n.dto.ClientObject;
+
 /**
  * @author laokou
  */
-package org.laokou.admin.command.logout;
+@Getter
+public class SecretCO extends ClientObject {
+
+	private final String publicKey;
+
+	public SecretCO(String publicKey) {
+		this.publicKey = publicKey;
+	}
+
+}
