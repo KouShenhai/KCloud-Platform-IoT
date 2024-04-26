@@ -54,27 +54,27 @@ public class UsersController {
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@PreAuthorize("hasAuthority('users:modify')")
 	@DataCache(name = USERS, key = "#cmd.userCO.id", type = CacheOperatorTypeEnum.DEL)
-	public void modify(@RequestBody UserModifyCmd cmd) {
+	public void modifyV1(@RequestBody UserModifyCmd cmd) {
 		usersServiceI.modify(cmd);
 	}
 
 	@TraceLog
 	@GetMapping("v1/users/profile")
 	@Operation(summary = "个人中心", description = "查看个人信息")
-	public Result<UserProfileCO> getProfile() {
+	public Result<UserProfileCO> getProfileV1() {
 		return usersServiceI.getProfile();
 	}
 
 	@TraceLog
 	@GetMapping("v1/users/option-list")
 	@Operation(summary = "用户管理", description = "下拉列表")
-	public Result<List<OptionCO>> findOptionList() {
+	public Result<List<OptionCO>> findOptionListV1() {
 		return usersServiceI.findOptionList(new UserOptionListQry());
 	}
 
 	@PutMapping("v1/users/profile")
 	@Operation(summary = "个人中心", description = "修改个人信息")
-	public void modifyProfile(@RequestBody UserProfileModifyCmd cmd) {
+	public void modifyProfileV1(@RequestBody UserProfileModifyCmd cmd) {
 		usersServiceI.modifyProfile(cmd);
 	}
 
@@ -82,7 +82,7 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "修改用户状态")
 	@OperateLog(module = "用户管理", operation = "修改用户状态")
 	@PreAuthorize("hasAuthority('users:modify-status')")
-	public void modifyStatus(@RequestBody UserStatusModifyCmd cmd) {
+	public void modifyStatusV1(@RequestBody UserStatusModifyCmd cmd) {
 		usersServiceI.modifyStatus(cmd);
 	}
 
@@ -90,13 +90,13 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "重置密码")
 	@OperateLog(module = "用户管理", operation = "重置密码")
 	@PreAuthorize("hasAuthority('users:reset-password')")
-	public void resetPassword(@RequestBody UserPasswordResetCmd cmd) {
+	public void resetPasswordV1(@RequestBody UserPasswordResetCmd cmd) {
 		usersServiceI.resetPassword(cmd);
 	}
 
 	@PutMapping("v1/users/password")
 	@Operation(summary = "个人中心", description = "修改密码")
-	public void modifyPassword(@RequestBody UserPasswordResetCmd cmd) {
+	public void modifyPasswordV1(@RequestBody UserPasswordResetCmd cmd) {
 		usersServiceI.resetPassword(cmd);
 	}
 
@@ -105,7 +105,7 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "新增用户")
 	@OperateLog(module = "用户管理", operation = "新增用户")
 	@PreAuthorize("hasAuthority('users:create')")
-	public void create(@RequestBody UserCreateCmd cmd) {
+	public void createV1(@RequestBody UserCreateCmd cmd) {
 		usersServiceI.create(cmd);
 	}
 
@@ -113,7 +113,7 @@ public class UsersController {
 	@GetMapping("v1/users/{id}")
 	@Operation(summary = "用户管理", description = "查看用户")
 	@DataCache(name = USERS, key = "#id")
-	public Result<UserCO> findById(@PathVariable("id") Long id) {
+	public Result<UserCO> findByIdV1(@PathVariable("id") Long id) {
 		return usersServiceI.findById(new UserGetQry(id));
 	}
 
@@ -121,7 +121,7 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "删除用户")
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@PreAuthorize("hasAuthority('users:remove')")
-	public void remove(@RequestBody Long[] ids) {
+	public void removeV1(@RequestBody Long[] ids) {
 		usersServiceI.remove(new UserRemoveCmd(ids));
 	}
 
@@ -129,7 +129,7 @@ public class UsersController {
 	@PostMapping("v1/users/list")
 	@Operation(summary = "用户管理", description = "查询用户列表")
 	@PreAuthorize("hasAuthority('users:list')")
-	public Result<Datas<UserCO>> findList(@RequestBody UserListQry qry) {
+	public Result<Datas<UserCO>> findListV1(@RequestBody UserListQry qry) {
 		return usersServiceI.findList(qry);
 	}
 
