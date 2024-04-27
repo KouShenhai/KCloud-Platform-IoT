@@ -41,6 +41,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
    ```shel
    npm install mavon-editor --save
    npm i spark-md5 -S
+   npm install vue-i18n
    npm install --save js-md5
    npm install vue-json-viewer --save
    npm install compression-webpack-plugin@5.0.1 --save-dev
