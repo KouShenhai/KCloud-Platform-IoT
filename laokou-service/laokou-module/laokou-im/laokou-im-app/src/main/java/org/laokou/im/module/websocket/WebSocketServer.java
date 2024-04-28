@@ -26,9 +26,7 @@ import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioChannelOption;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.config.SpringTaskExecutionProperties;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.netty.config.AbstractServer;
 import static org.laokou.im.module.websocket.WebsocketHandler.getChannel;
@@ -41,19 +39,20 @@ import static org.laokou.im.module.websocket.WebsocketHandler.getChannel;
 @Slf4j
 public class WebSocketServer extends AbstractServer {
 
-	public WebSocketServer(int port, String poolName, ChannelInitializer<?> channelInitializer,
-			SpringTaskExecutionProperties springTaskExecutionProperties) {
-		super(port, poolName, channelInitializer, springTaskExecutionProperties);
+	public WebSocketServer(int port, String poolName, ChannelInitializer<?> channelInitializer) {
+		super(port, poolName, channelInitializer);
 	}
 
+	/**
+	 * 主从Reactor多线程模式.
+	 * @return AbstractBootstrap
+	 */
 	@Override
 	protected AbstractBootstrap<ServerBootstrap, ServerChannel> init() {
-		// 核心线程数
-		int coreSize = springTaskExecutionProperties.getPool().getCoreSize();
 		// boss负责监听端口
-		boss = new NioEventLoopGroup(1, new DefaultThreadFactory(poolName, Thread.MAX_PRIORITY));
+		boss = new NioEventLoopGroup();
 		// work负责线程读写
-		work = new NioEventLoopGroup(coreSize, new DefaultThreadFactory(poolName, Thread.MAX_PRIORITY));
+		work = new NioEventLoopGroup();
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组

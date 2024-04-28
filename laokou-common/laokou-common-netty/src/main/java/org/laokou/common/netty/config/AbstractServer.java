@@ -22,7 +22,6 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.config.SpringTaskExecutionProperties;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
@@ -53,14 +52,10 @@ public abstract class AbstractServer implements Server {
 
 	protected final ChannelInitializer<?> channelInitializer;
 
-	protected final SpringTaskExecutionProperties springTaskExecutionProperties;
-
-	public AbstractServer(int port, String poolName, ChannelInitializer<?> channelInitializer,
-			SpringTaskExecutionProperties springTaskExecutionProperties) {
+	public AbstractServer(int port, String poolName, ChannelInitializer<?> channelInitializer) {
 		this.port = port;
 		this.poolName = poolName;
 		this.channelInitializer = channelInitializer;
-		this.springTaskExecutionProperties = springTaskExecutionProperties;
 	}
 
 	/**
