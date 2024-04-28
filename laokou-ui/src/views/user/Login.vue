@@ -142,19 +142,19 @@ export default {
     this.getVerifyCode()
   },
   methods: {
-    getPublicKey () {
+    async getPublicKey () {
       getSecret().then(res => {
         this.publicKey = res.data.publicKey
       })
     },
-    getVerifyCode () {
+    async getVerifyCode () {
       this.form.uuid = uid()
       getCaptcha(this.form.uuid).then(res => {
         this.verifyCodeUrl = res.data
       })
     },
     ...mapActions(['Login', 'Logout']),
-    handleSubmit () {
+    async handleSubmit () {
       this.loginIng = true
       this.$refs.form.validate(valid => {
         if (valid) {
