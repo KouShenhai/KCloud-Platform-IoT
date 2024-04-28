@@ -57,7 +57,7 @@ const user = {
       })
     },
     // 获取密码
-    GetCaptcha (uuid) {
+    GetCaptcha ({ commit }, uuid) {
       return new Promise((resolve, reject) => {
         getCaptcha(uuid).then(res => {
           resolve(res)
