@@ -28,10 +28,9 @@ import io.netty.channel.socket.nio.NioChannelOption;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.config.SpringTaskExecutionProperties;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.netty.config.AbstractServer;
-import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
-
 import static org.laokou.im.module.websocket.WebsocketHandler.getChannel;
 
 /**
@@ -43,14 +42,14 @@ import static org.laokou.im.module.websocket.WebsocketHandler.getChannel;
 public class WebSocketServer extends AbstractServer {
 
 	public WebSocketServer(int port, String poolName, ChannelInitializer<?> channelInitializer,
-			TaskExecutionProperties taskExecutionProperties) {
-		super(port, poolName, channelInitializer, taskExecutionProperties);
+			SpringTaskExecutionProperties springTaskExecutionProperties) {
+		super(port, poolName, channelInitializer, springTaskExecutionProperties);
 	}
 
 	@Override
 	protected AbstractBootstrap<ServerBootstrap, ServerChannel> init() {
 		// 核心线程数
-		int coreSize = taskExecutionProperties.getPool().getCoreSize();
+		int coreSize = springTaskExecutionProperties.getPool().getCoreSize();
 		// boss负责监听端口
 		boss = new NioEventLoopGroup(1, new DefaultThreadFactory(poolName, Thread.MAX_PRIORITY));
 		// work负责线程读写
@@ -63,6 +62,7 @@ public class WebSocketServer extends AbstractServer {
 			.channel(NioServerSocketChannel.class)
 			// 开启TCP底层心跳，维持长连接
 			.childOption(ChannelOption.SO_KEEPALIVE, true)
+			.childOption(NioChannelOption.SO_KEEPALIVE, true)
 			// 请求队列最大长度（如果连接建立频繁，服务器处理创建新连接较慢，可以适当调整参数）
 			.option(ChannelOption.SO_BACKLOG, 2048)
 			// 重复使用端口
