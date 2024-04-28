@@ -26,12 +26,8 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.nacos.utils.ReactiveRequestUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
-import org.laokou.gateway.annotation.Auth;
 import org.laokou.gateway.config.GatewayExtProperties;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.util.Assert;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.reactive.result.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
@@ -69,13 +65,7 @@ public class ApiFilter implements WebFilter {
 				ServerHttpRequest request = exchange.getRequest();
 				String requestURL = ReactiveRequestUtil.getRequestURL(request);
 				if (ReactiveRequestUtil.pathMatcher(requestURL, API_PATTERN)) {
-					if (handler instanceof HandlerMethod handlerMethod) {
-						if (handlerMethod.hasMethodAnnotation(Auth.class)) {
-							Auth auth = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Auth.class);
-							Assert.isTrue(ObjectUtil.isNotNull(auth), "@Auth is null");
-							return validate(exchange, request, auth, chain);
-						}
-					}
+					return checkUsernamePassword(exchange, request, chain);
 				}
 				return chain.filter(exchange);
 			});
@@ -85,11 +75,10 @@ public class ApiFilter implements WebFilter {
 	 * 校验账号和密码.
 	 * @param exchange 服务网络交换机
 	 * @param request 请求对象
-	 * @param auth auth注解
 	 * @param chain 链式过滤器
 	 * @return 响应结果
 	 */
-	private Mono<Void> validate(ServerWebExchange exchange, ServerHttpRequest request, Auth auth,
+	private Mono<Void> checkUsernamePassword(ServerWebExchange exchange, ServerHttpRequest request,
 			WebFilterChain chain) {
 		String username = ReactiveRequestUtil.getParamValue(request, USERNAME);
 		String password = ReactiveRequestUtil.getParamValue(request, PASSWORD);
@@ -112,19 +101,12 @@ public class ApiFilter implements WebFilter {
 			// 账号或密码错误
 			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
 		}
-		String pwd;
-		String name;
 		if (gatewayExtProperties.isEnabled()) {
-			pwd = gatewayExtProperties.getPassword();
-			name = gatewayExtProperties.getUsername();
-		}
-		else {
-			pwd = auth.password();
-			name = auth.username();
-		}
-		if (!name.equals(username) || !pwd.equals(password)) {
-			// 账号或密码错误
-			return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
+			if (!ObjectUtil.equals(gatewayExtProperties.getPassword(), password)
+				|| !ObjectUtil.equals(gatewayExtProperties.getUsername(), username)) {
+				// 账号或密码错误
+				return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
+			}
 		}
 		return chain.filter(exchange);
 	}

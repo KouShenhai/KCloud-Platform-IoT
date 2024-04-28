@@ -19,7 +19,7 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.RolesServiceI;
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.role.*;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.command.role.RoleRemoveCmdExe;
@@ -70,7 +70,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	 * @return 角色下拉框选择项列表
 	 */
 	@Override
-	public Result<List<OptionCO>> findOptionList() {
+	public Result<List<Option>> findOptionList() {
 		return roleOptionListQryExe.execute();
 	}
 

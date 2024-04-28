@@ -17,7 +17,7 @@
 
 package org.laokou.admin.api;
 
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.admin.dto.tenant.*;
 import org.laokou.common.i18n.dto.Datas;
@@ -36,7 +36,7 @@ public interface TenantsServiceI {
 	 * 查询租户下拉框选择项列表.
 	 * @return 租户下拉框选择项列表
 	 */
-	Result<List<OptionCO>> findOptionList();
+	Result<List<Option>> findOptionList();
 
 	/**
 	 * 新增租户.

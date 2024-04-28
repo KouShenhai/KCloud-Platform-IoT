@@ -25,14 +25,12 @@ import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.baomidou.mybatisplus.core.toolkit.Constants.MYBATIS_PLUS;
-
 /**
  * @author laokou
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = MYBATIS_PLUS)
+@ConfigurationProperties(prefix = "mybatis-plus")
 public class MybatisPlusExtProperties {
 
 	private SlowSql slowSql = new SlowSql();

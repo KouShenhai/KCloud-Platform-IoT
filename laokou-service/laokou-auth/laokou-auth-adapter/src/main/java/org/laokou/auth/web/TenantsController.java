@@ -19,34 +19,40 @@ package org.laokou.auth.web;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.api.SecretsServiceI;
-import org.laokou.auth.dto.secret.clientobject.SecretCO;
+import org.laokou.auth.dto.tenant.TenantGetIDQry;
+import org.laokou.auth.api.TenantsServiceI;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
-import org.redisson.api.RateIntervalUnit;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
+import java.util.List;
 
 /**
  * @author laokou
  */
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "SecretsController", description = "安全配置控制器")
-public class SecretsController {
+@Tag(name = "TenantsController", description = "租户管理")
+public class TenantsController {
 
-	private final SecretsServiceI secretsServiceI;
+	private final TenantsServiceI tenantsServiceI;
 
 	@TraceLog
-	@GetMapping("v1/secrets")
-	@Operation(summary = "安全配置", description = "获取密钥")
-	@RateLimiter(id = "AUTH_SECRET", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
-	public Result<SecretCO> getInfoV1() {
-		return secretsServiceI.getInfo();
+	@GetMapping("v1/tenants/option-list")
+	@Operation(summary = "租户管理", description = "租户下拉列表")
+	public Result<List<Option>> listOptionV1() {
+		return tenantsServiceI.listOption();
+	}
+
+	@TraceLog
+	@GetMapping("v1/tenants/id")
+	@Operation(summary = "租户管理", description = "根据域名查看ID")
+	public Result<Long> getIdByDomainNameV1(HttpServletRequest request) {
+		return tenantsServiceI.getIdByDomainName(new TenantGetIDQry(request));
 	}
 
 }

@@ -66,11 +66,11 @@ public class AuthApp {
 		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
 		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		// SpringSecurity 子线程读取父线程的上下文
-		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
-		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");
+		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
+		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 		new SpringApplicationBuilder(AuthApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

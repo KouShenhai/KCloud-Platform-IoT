@@ -54,10 +54,4 @@ public final class SysConstant {
 	@Schema(name = "LINE_PATTERN", description = "下划线正则表达式")
 	public static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
 
-	@Schema(name = "DEFAULT_USERNAME", description = "默认账号")
-	public static final String DEFAULT_USERNAME = "laokou";
-
-	@Schema(name = "DEFAULT_PASSWORD", description = "默认密码")
-	public static final String DEFAULT_PASSWORD = "laokou123";
-
 }

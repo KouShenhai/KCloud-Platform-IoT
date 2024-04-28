@@ -46,10 +46,10 @@ import static org.laokou.common.i18n.common.StringConstant.RISK;
 public class RedissonConfig {
 
 	@Schema(name = "REDIS_PROTOCOL_PREFIX", description = "Redis未加密连接")
-	public static final String REDIS_PROTOCOL_PREFIX = "redis://";
+	private static final String REDIS_PROTOCOL_PREFIX = "redis://";
 
 	@Schema(name = "REDISS_PROTOCOL_PREFIX", description = "Redis加密连接")
-	public static final String REDISS_PROTOCOL_PREFIX = "rediss://";
+	private static final String REDISS_PROTOCOL_PREFIX = "rediss://";
 
 	@Bean
 	public RBloomFilter<String> bloomFilter(RedissonClient redisson) {

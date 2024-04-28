@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.TenantsServiceI;
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.tenant.*;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.common.data.cache.annotation.DataCache;
@@ -99,7 +99,7 @@ public class TenantsController {
 	@TraceLog
 	@GetMapping("option-list")
 	@Operation(summary = "租户管理", description = "下拉列表")
-	public Result<List<OptionCO>> findOptionList() {
+	public Result<List<Option>> findOptionList() {
 		return tenantsServiceI.findOptionList();
 	}
 

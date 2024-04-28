@@ -15,36 +15,7 @@
  *
  */
 
-package org.laokou.admin.dto.common.clientobject;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import org.laokou.common.i18n.dto.ClientObject;
-
-import java.io.Serial;
-
 /**
  * @author laokou
  */
-@Data
-@Schema(name = "OptionCO", description = "下拉框选择参数项参数")
-public class OptionCO extends ClientObject {
-
-	@Serial
-	private static final long serialVersionUID = -4146348495335527374L;
-
-	@Schema(name = "label", description = "标签")
-	private String label;
-
-	@Schema(name = "value", description = "值")
-	private String value;
-
-	public OptionCO() {
-	}
-
-	public OptionCO(String label, String value) {
-		this.label = label;
-		this.value = value;
-	}
-
-}
+package org.laokou.auth.command.tenant.query;

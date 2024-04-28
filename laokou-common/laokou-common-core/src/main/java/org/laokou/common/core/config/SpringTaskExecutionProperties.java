@@ -23,17 +23,13 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 
-import static org.laokou.common.core.config.SpringTaskExecutionProperties.PREFIX;
-
 /**
  * @author laokou
  */
 @Data
 @Component
-@ConfigurationProperties(PREFIX)
+@ConfigurationProperties(prefix = "spring.task-execution")
 public class SpringTaskExecutionProperties {
-
-	protected static final String PREFIX = "spring.task-execution";
 
 	private String threadNamePrefix = "ttl-task-";
 

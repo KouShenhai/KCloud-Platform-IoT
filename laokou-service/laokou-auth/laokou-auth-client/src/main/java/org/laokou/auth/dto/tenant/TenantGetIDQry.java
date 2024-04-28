@@ -15,26 +15,26 @@
  *
  */
 
-package org.laokou.common.crypto;
+package org.laokou.auth.dto.tenant;
 
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.crypto.utils.RsaUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.Data;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-@Slf4j
-public class RsaTest {
+@Data
+@Schema(name = "TenantGetIDQry", description = "查看租户ID命令请求")
+public class TenantGetIDQry extends CommonCommand {
 
-	public static void main(String[] args) {
-		String publicKey = RsaUtil.getPublicKey();
-		String privateKey = RsaUtil.getPrivateKey();
-		String username = RsaUtil.encryptByPublicKey("laokou", publicKey);
-		String pwd = RsaUtil.encryptByPublicKey("laokou123", publicKey);
-		log.info(username);
-		log.info(pwd);
-		log.info(RsaUtil.decryptByPrivateKey(username, privateKey));
-		log.info(RsaUtil.decryptByPrivateKey(pwd, privateKey));
+	@JsonIgnore
+	@Schema(name = "request", description = "响应")
+	private HttpServletRequest request;
+
+	public TenantGetIDQry(HttpServletRequest request) {
+		this.request = request;
 	}
-
 }

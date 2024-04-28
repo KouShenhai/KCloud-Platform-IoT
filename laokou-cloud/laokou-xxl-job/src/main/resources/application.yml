@@ -29,6 +29,9 @@ server:
     accesslog:
       enabled: true
 spring:
+  threads:
+    virtual:
+      enabled: true
   application:
     name: @pom.artifactId@
   profiles:

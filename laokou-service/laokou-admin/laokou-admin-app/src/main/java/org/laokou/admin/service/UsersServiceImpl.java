@@ -24,7 +24,7 @@ import org.laokou.admin.command.user.query.UserGetQryExe;
 import org.laokou.admin.command.user.query.UserListQryExe;
 import org.laokou.admin.command.user.query.UserOptionListQryExe;
 import org.laokou.admin.command.user.query.UserProfileGetQryExe;
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.user.*;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
@@ -105,7 +105,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	 * @return 用户下拉框选择项列表
 	 */
 	@Override
-	public Result<List<OptionCO>> findOptionList(UserOptionListQry qry) {
+	public Result<List<Option>> findOptionList(UserOptionListQry qry) {
 		return userOptionListQryExe.execute(qry);
 	}
 

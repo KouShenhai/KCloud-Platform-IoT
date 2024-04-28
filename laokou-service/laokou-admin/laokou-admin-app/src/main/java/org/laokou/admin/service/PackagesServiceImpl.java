@@ -19,7 +19,7 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.PackagesServiceI;
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.packages.*;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.laokou.admin.command.pack.PackageRemoveCmdExe;
@@ -107,7 +107,7 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	 * @return 套餐下拉框选择项列表
 	 */
 	@Override
-	public Result<List<OptionCO>> findOptionList() {
+	public Result<List<Option>> findOptionList() {
 		return packageOptionListQryExe.execute();
 	}
 

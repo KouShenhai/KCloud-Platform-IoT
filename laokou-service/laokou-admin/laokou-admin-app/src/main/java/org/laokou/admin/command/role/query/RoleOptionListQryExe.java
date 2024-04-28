@@ -20,7 +20,7 @@ package org.laokou.admin.command.role.query;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.i18n.dto.Result;
@@ -46,11 +46,11 @@ public class RoleOptionListQryExe {
 	 * @return 角色下拉框选择项列表
 	 */
 	@DS(TENANT)
-	public Result<List<OptionCO>> execute() {
+	public Result<List<Option>> execute() {
 		List<RoleDO> list = roleMapper.selectList(
 				Wrappers.lambdaQuery(RoleDO.class).select(RoleDO::getId, RoleDO::getName).orderByDesc(RoleDO::getSort));
 		return Result
-			.ok(list.stream().map(item -> new OptionCO(item.getName(), String.valueOf(item.getId()))).toList());
+			.ok(list.stream().map(item -> new Option(item.getName(), String.valueOf(item.getId()))).toList());
 	}
 
 }

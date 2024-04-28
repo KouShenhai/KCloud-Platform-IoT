@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.gateway.annotation.Auth;
 import org.laokou.gateway.repository.NacosRouteDefinitionRepository;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 import static org.laokou.gateway.web.RoutersController.API_URL_PREFIX;
 
 /**
@@ -47,14 +47,12 @@ public class RoutersController {
 
 	private final NacosRouteDefinitionRepository nacosRouteDefinitionRepository;
 
-	@Auth
 	@PostMapping
 	@Operation(summary = "路由管理", description = "同步路由")
 	public Flux<Boolean> sync() {
 		return nacosRouteDefinitionRepository.syncRouters();
 	}
 
-	@Auth
 	@DeleteMapping
 	@Operation(summary = "路由管理", description = "删除路由")
 	public Mono<Boolean> delete() {

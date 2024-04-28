@@ -20,7 +20,7 @@ package org.laokou.admin.command.dict.query;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.dict.DictOptionListQry;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
@@ -48,12 +48,12 @@ public class DictOptionListQryExe {
 	 * @return 字典下拉框选择项列表
 	 */
 	@DS(TENANT)
-	public Result<List<OptionCO>> execute(DictOptionListQry qry) {
+	public Result<List<Option>> execute(DictOptionListQry qry) {
 		List<DictDO> list = dictMapper.selectList(Wrappers.lambdaQuery(DictDO.class)
 			.eq(DictDO::getType, qry.getType())
 			.select(DictDO::getLabel, DictDO::getValue)
 			.orderByDesc(DictDO::getId));
-		return Result.ok(list.stream().map(dict -> new OptionCO(dict.getLabel(), dict.getValue())).toList());
+		return Result.ok(list.stream().map(dict -> new Option(dict.getLabel(), dict.getValue())).toList());
 	}
 
 }

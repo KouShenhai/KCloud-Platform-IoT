@@ -1,6 +1,17 @@
 <template>
   <div class="main">
     <a-form-model id="formLogin" ref="form" class="user-layout-login" :model="form" :rules="rules">
+      <a-form-model-item prop="tenantId">
+        <a-select
+          size="large"
+          v-model="form.tenantId"
+          placeholder="请选择租户">
+          <a-select-option key="0" value="0">老寇云集团</a-select-option>
+          <a-select-option v-for="(d, index) in tenantOptions" :key="index + 1" :value="d.value">
+            {{ d.label }}
+          </a-select-option>
+        </a-select>
+      </a-form-model-item>
       <a-form-model-item prop="username">
         <a-input v-model="form.username" size="large" allow-clear autocomplete="new-password" placeholder="账号" >
           <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -58,7 +69,6 @@ import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
 import { v4 as uid } from 'uuid'
 import { JSEncrypt } from 'jsencrypt'
-import { getCaptcha, getSecret } from '@/api/login'
 import { tableMixin } from '@/store/table-mixin'
 
 export default {
@@ -127,7 +137,7 @@ export default {
         password: '',
         captcha: '',
         uuid: '',
-        tenantId: 0
+        tenantId: '0'
       },
       rules: {
         username: [{ required: true, message: '请输入帐号', trigger: 'blur' }],
@@ -140,20 +150,25 @@ export default {
   created () {
     this.getPublicKey()
     this.getVerifyCode()
+    this.getTenantIdByDomainName()
   },
   methods: {
+    ...mapActions(['Login', 'GetSecret', 'GetCaptcha', 'ListTenantOption', 'GetTenantIdByDomainName']),
     async getPublicKey () {
-      getSecret().then(res => {
+      this.GetSecret().then(res => {
         this.publicKey = res.data.publicKey
       })
     },
     async getVerifyCode () {
       this.form.uuid = uid()
-      getCaptcha(this.form.uuid).then(res => {
+      this.GetCaptcha(this.form.uuid).then(res => {
         this.verifyCodeUrl = res.data
       })
     },
-    ...mapActions(['Login', 'Logout']),
+    async getTenantIdByDomainName () {
+      this.tenantOptions = await this.ListTenantOption()
+      this.form.tenantId = await this.GetTenantIdByDomainName()
+    },
     async handleSubmit () {
       this.loginIng = true
       this.$refs.form.validate(valid => {

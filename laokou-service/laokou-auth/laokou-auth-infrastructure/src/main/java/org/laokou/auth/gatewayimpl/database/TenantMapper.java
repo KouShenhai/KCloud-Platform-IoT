@@ -15,26 +15,20 @@
  *
  */
 
-package org.laokou.common.crypto;
+package org.laokou.auth.gatewayimpl.database;
 
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.crypto.utils.RsaUtil;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.auth.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
+import org.springframework.stereotype.Repository;
 
 /**
+ * 租户.
+ *
  * @author laokou
  */
-@Slf4j
-public class RsaTest {
-
-	public static void main(String[] args) {
-		String publicKey = RsaUtil.getPublicKey();
-		String privateKey = RsaUtil.getPrivateKey();
-		String username = RsaUtil.encryptByPublicKey("laokou", publicKey);
-		String pwd = RsaUtil.encryptByPublicKey("laokou123", publicKey);
-		log.info(username);
-		log.info(pwd);
-		log.info(RsaUtil.decryptByPrivateKey(username, privateKey));
-		log.info(RsaUtil.decryptByPrivateKey(pwd, privateKey));
-	}
+@Mapper
+@Repository
+public interface TenantMapper extends CrudMapper<Long, Integer, TenantDO> {
 
 }

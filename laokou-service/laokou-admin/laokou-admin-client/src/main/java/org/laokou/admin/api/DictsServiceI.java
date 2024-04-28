@@ -17,7 +17,7 @@
 
 package org.laokou.admin.api;
 
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.dto.dict.*;
 import org.laokou.common.i18n.dto.Datas;
@@ -62,7 +62,7 @@ public interface DictsServiceI {
 	 * @param qry 查询字典下拉框选择项列表参数
 	 * @return 字典下拉框选择项列表
 	 */
-	Result<List<OptionCO>> optionList(DictOptionListQry qry);
+	Result<List<Option>> optionList(DictOptionListQry qry);
 
 	/**
 	 * 查询字典列表.

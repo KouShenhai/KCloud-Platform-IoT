@@ -19,7 +19,7 @@ package org.laokou.admin.command.pack.query;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.gatewayimpl.database.PackageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
 import org.laokou.common.i18n.dto.Result;
@@ -42,7 +42,7 @@ public class PackageOptionListQryExe {
 	 * 执行查询套餐下拉框选择项列表.
 	 * @return 套餐下拉框选择项列表
 	 */
-	public Result<List<OptionCO>> execute() {
+	public Result<List<Option>> execute() {
 		List<PackageDO> list = packageMapper.selectList(Wrappers.lambdaQuery(PackageDO.class)
 			.select(PackageDO::getId, PackageDO::getName)
 			.orderByDesc(PackageDO::getId));

@@ -1,5 +1,5 @@
 import storage from 'store'
-import { login, getInfo, logout } from '@/api/login'
+import { login, getInfo, logout, getSecret, getCaptcha, listTenantOption, getTenantIdByDomainName } from '@/api/login'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 
 const user = {
@@ -41,8 +41,47 @@ const user = {
           storage.set(ACCESS_TOKEN, res.access_token, 60 * 60 * 1000)
           commit('SET_TOKEN', res.access_token)
           resolve()
+        }).catch(error => {
+          reject(error)
         })
-        .catch(error => {
+      })
+    },
+    // 获取密码
+    GetSecret () {
+      return new Promise((resolve, reject) => {
+        getSecret().then(res => {
+          resolve(res)
+        }).catch(error => {
+            reject(error)
+          })
+      })
+    },
+    // 获取密码
+    GetCaptcha ({ commit }, uuid) {
+      return new Promise((resolve, reject) => {
+        getCaptcha(uuid).then(res => {
+          resolve(res)
+        }).catch(error => {
+            reject(error)
+          })
+      })
+    },
+    // 租户选项下拉列表
+    ListTenantOption () {
+      return new Promise((resolve, reject) => {
+        listTenantOption().then(res => {
+          resolve(res.data)
+        }).catch(error => {
+            reject(error)
+          })
+      })
+    },
+    // 根据域名查看租户ID
+    GetTenantIdByDomainName () {
+      return new Promise((resolve, reject) => {
+        getTenantIdByDomainName().then(res => {
+          resolve(res.data)
+        }).catch(error => {
           reject(error)
         })
       })

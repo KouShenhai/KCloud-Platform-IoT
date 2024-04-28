@@ -19,7 +19,7 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.DictsServiceI;
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.dict.*;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.command.dict.DictRemoveCmdExe;
@@ -98,7 +98,7 @@ public class DictsServiceImpl implements DictsServiceI {
 	 * @return 字典下拉框选择项列表
 	 */
 	@Override
-	public Result<List<OptionCO>> optionList(DictOptionListQry qry) {
+	public Result<List<Option>> optionList(DictOptionListQry qry) {
 		return dictOptionListQryExe.execute(qry);
 	}
 

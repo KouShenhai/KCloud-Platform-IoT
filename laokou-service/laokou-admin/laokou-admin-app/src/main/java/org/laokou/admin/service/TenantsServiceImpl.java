@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.TenantsServiceI;
 import org.laokou.admin.command.tenant.TenantDownloadDatasourceCmdExe;
 import org.laokou.admin.command.tenant.query.TenantGetIDQryExe;
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.tenant.*;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.admin.command.tenant.TenantRemoveCmdExe;
@@ -66,7 +66,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	 * @return 租户下拉框选择项列表
 	 */
 	@Override
-	public Result<List<OptionCO>> findOptionList() {
+	public Result<List<Option>> findOptionList() {
 		return tenantOptionListQryExe.execute();
 	}
 
