@@ -5,20 +5,20 @@
         <a-select
           size="large"
           v-model="form.tenantId"
-          placeholder="请选择租户">
-          <a-select-option key="0" value="0">老寇云集团</a-select-option>
+          :placeholder="$t('user.login.tenant')">
+          <a-select-option key="0" value="0">{{ $t('user.login.default-tenant-option') }}</a-select-option>
           <a-select-option v-for="(d, index) in tenantOptions" :key="index + 1" :value="d.value">
             {{ d.label }}
           </a-select-option>
         </a-select>
       </a-form-model-item>
       <a-form-model-item prop="username">
-        <a-input v-model="form.username" size="large" allow-clear autocomplete="new-password" placeholder="账号" >
+        <a-input v-model="form.username" size="large" allow-clear autocomplete="new-password" :placeholder="$t('user.login.username')" >
           <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
         </a-input>
       </a-form-model-item>
       <a-form-model-item prop="password">
-        <a-input-password v-model="form.password" allow-clear autocomplete="new-password" size="large" placeholder="密码">
+        <a-input-password v-model="form.password" allow-clear autocomplete="new-password" size="large" :placeholder="$t('user.login.password')">
           <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
         </a-input-password>
       </a-form-model-item>
@@ -31,13 +31,13 @@
               allow-clear
               type="text"
               autocomplete="off"
-              placeholder="验证码">
+              :placeholder="$t('user.login.captcha')">
               <a-icon slot="prefix" type="security-scan" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-model-item>
         </a-col>
         <a-col class="gutter-row" :span="8">
-          <img class="getCaptcha" :src="verifyCodeUrl" @click="getVerifyCode" alt="暂无验证码">
+          <img class="getCaptcha" :src="verifyCodeUrl" @click="getVerifyCode" alt="Not found">
         </a-col>
       </a-row>
       <a-form-item>
@@ -70,11 +70,19 @@ import { timeFix } from '@/utils/util'
 import { v4 as uid } from 'uuid'
 import { JSEncrypt } from 'jsencrypt'
 import { tableMixin } from '@/store/table-mixin'
+import SelectLang from '@/components/SelectLang'
 
 export default {
   components: {
+    SelectLang
   },
   mixins: [tableMixin],
+  props: {
+    prefixCls: {
+      type: String,
+      default: 'ant-pro-global-header-index-action'
+    }
+  },
   data () {
     return {
       publicKey: '',
