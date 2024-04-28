@@ -46,8 +46,7 @@ public class TenantListOptionQryExe {
 		List<TenantDO> list = tenantMapper.selectList(Wrappers.lambdaQuery(TenantDO.class)
 			.select(TenantDO::getId, TenantDO::getName)
 			.orderByDesc(TenantDO::getId));
-		return Result
-			.ok(list.stream().map(item -> new Option(item.getName(), String.valueOf(item.getId()))).toList());
+		return Result.ok(list.stream().map(item -> new Option(item.getName(), String.valueOf(item.getId()))).toList());
 	}
 
 }

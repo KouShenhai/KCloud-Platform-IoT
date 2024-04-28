@@ -57,7 +57,8 @@ public class OAuth2AuthenticationProvider {
 			// 认证
 			authDomainService.auth(auth);
 			UserDetail userDetail = convert(auth);
-			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(), userDetail.getAuthorities());
+			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
+					userDetail.getAuthorities());
 		}
 		catch (AuthException | SystemException e) {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);

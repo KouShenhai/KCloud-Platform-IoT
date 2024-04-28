@@ -312,7 +312,10 @@ class OAuth2ApiTest {
 			// 打印到控制台
 			.andDo(print())
 			.andReturn();
-		String publicKey = JacksonUtil.readTree(mvcResult.getResponse().getContentAsString()).get("data").get("publicKey").asText();
+		String publicKey = JacksonUtil.readTree(mvcResult.getResponse().getContentAsString())
+			.get("data")
+			.get("publicKey")
+			.asText();
 		Assert.isTrue(StringUtil.isNotEmpty(publicKey), "publicKey is empty");
 		return publicKey;
 	}

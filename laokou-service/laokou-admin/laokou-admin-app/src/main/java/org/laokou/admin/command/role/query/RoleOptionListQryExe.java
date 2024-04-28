@@ -49,8 +49,7 @@ public class RoleOptionListQryExe {
 	public Result<List<Option>> execute() {
 		List<RoleDO> list = roleMapper.selectList(
 				Wrappers.lambdaQuery(RoleDO.class).select(RoleDO::getId, RoleDO::getName).orderByDesc(RoleDO::getSort));
-		return Result
-			.ok(list.stream().map(item -> new Option(item.getName(), String.valueOf(item.getId()))).toList());
+		return Result.ok(list.stream().map(item -> new Option(item.getName(), String.valueOf(item.getId()))).toList());
 	}
 
 }

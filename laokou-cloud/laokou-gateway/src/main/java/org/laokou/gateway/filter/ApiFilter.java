@@ -103,7 +103,7 @@ public class ApiFilter implements WebFilter {
 		}
 		if (gatewayExtProperties.isEnabled()) {
 			if (!ObjectUtil.equals(gatewayExtProperties.getPassword(), password)
-				|| !ObjectUtil.equals(gatewayExtProperties.getUsername(), username)) {
+					|| !ObjectUtil.equals(gatewayExtProperties.getUsername(), username)) {
 				// 账号或密码错误
 				return ReactiveResponseUtil.response(exchange, Result.fail(ACCOUNT_PASSWORD_ERROR));
 			}

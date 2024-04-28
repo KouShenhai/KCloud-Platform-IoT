@@ -57,7 +57,7 @@ const user = {
       })
     },
     // 获取密码
-    GetCaptcha ({ commit }, uuid) {
+    GetCaptcha (uuid) {
       return new Promise((resolve, reject) => {
         getCaptcha(uuid).then(res => {
           resolve(res)
@@ -101,7 +101,7 @@ const user = {
       })
     },
 
-    // 登出
+    // 注销
     Logout ({ commit, state }) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {

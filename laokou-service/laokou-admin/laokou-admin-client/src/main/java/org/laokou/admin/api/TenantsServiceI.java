@@ -17,13 +17,10 @@
 
 package org.laokou.admin.api;
 
-import org.laokou.common.i18n.dto.Option;
-import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.admin.dto.tenant.*;
+import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-
-import java.util.List;
 
 /**
  * 租户管理.
@@ -31,12 +28,6 @@ import java.util.List;
  * @author laokou
  */
 public interface TenantsServiceI {
-
-	/**
-	 * 查询租户下拉框选择项列表.
-	 * @return 租户下拉框选择项列表
-	 */
-	Result<List<Option>> findOptionList();
 
 	/**
 	 * 新增租户.
@@ -69,13 +60,6 @@ public interface TenantsServiceI {
 	 * @return 租户
 	 */
 	Result<TenantCO> findById(TenantGetQry qry);
-
-	/**
-	 * 根据域名查看租户ID.
-	 * @param qry 根据域名查看租户ID
-	 * @return 租户ID
-	 */
-	Result<Long> findIdByDomainName(TenantGetIDQry qry);
 
 	/**
 	 * 下载租户数据源压缩包.

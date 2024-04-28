@@ -19,11 +19,9 @@ package org.laokou.admin.web;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.TenantsServiceI;
-import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.tenant.*;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.common.data.cache.annotation.DataCache;
@@ -36,8 +34,6 @@ import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static org.laokou.common.i18n.common.CacheNameConstant.TENANTS;
 import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
@@ -94,20 +90,6 @@ public class TenantsController {
 	@PreAuthorize("hasAuthority('tenants:remove')")
 	public void remove(@RequestBody Long[] ids) {
 		tenantsServiceI.remove(new TenantRemoveCmd(ids));
-	}
-
-	@TraceLog
-	@GetMapping("option-list")
-	@Operation(summary = "租户管理", description = "下拉列表")
-	public Result<List<Option>> findOptionList() {
-		return tenantsServiceI.findOptionList();
-	}
-
-	@TraceLog
-	@GetMapping("id")
-	@Operation(summary = "租户管理", description = "解析域名查看ID")
-	public Result<Long> findIdByDomainName(HttpServletRequest request) {
-		return tenantsServiceI.findIdByDomainName(new TenantGetIDQry(request));
 	}
 
 	@GetMapping("{id}/download-datasource")

@@ -37,4 +37,5 @@ public class TenantGetIDQry extends CommonCommand {
 	public TenantGetIDQry(HttpServletRequest request) {
 		this.request = request;
 	}
+
 }
