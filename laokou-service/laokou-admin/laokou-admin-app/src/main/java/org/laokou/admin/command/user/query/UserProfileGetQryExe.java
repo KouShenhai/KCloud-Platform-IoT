@@ -42,8 +42,7 @@ public class UserProfileGetQryExe {
 	private UserProfileCO convert() {
 		UserDetail userDetail = UserUtil.user();
 		return new UserProfileCO(userDetail.getDeptId(), userDetail.getAvatar(), userDetail.getUsername(),
-			userDetail.getPermissions(), userDetail.getTenantId()
-		);
+				userDetail.getPermissions(), userDetail.getTenantId());
 	}
 
 }
