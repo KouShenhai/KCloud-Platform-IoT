@@ -30,8 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author laokou
  */
 @RestController
-@Tag(name = "LogoutsController", description = "退出登录控制器")
 @RequiredArgsConstructor
+@Tag(name = "LogoutsController", description = "退出登录控制器")
 public class LogoutsController {
 
 	private final LogoutsServiceI logoutsServiceI;

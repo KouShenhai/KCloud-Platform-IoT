@@ -21,9 +21,6 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.SysConstant.DEFAULT_PASSWORD;
-import static org.laokou.common.i18n.common.SysConstant.DEFAULT_USERNAME;
-
 /**
  * 网关扩展属性配置.
  *
@@ -42,11 +39,11 @@ public class GatewayExtProperties {
 	/**
 	 * 用户名.
 	 */
-	private String username = DEFAULT_USERNAME;
+	private String username = "laokou";
 
 	/**
 	 * 密码.
 	 */
-	private String password = DEFAULT_PASSWORD;
+	private String password = "laokou123";
 
 }

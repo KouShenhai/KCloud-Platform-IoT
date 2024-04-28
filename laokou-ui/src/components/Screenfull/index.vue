@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import screenfull from 'screenfull'
+import ScreenFull from 'screenfull'
 
 export default {
-  name: 'Screenfull',
+  name: 'ScreenFull',
   data () {
     return {
       isFullscreen: false
@@ -27,23 +27,23 @@ export default {
   },
   methods: {
     click () {
-      if (!screenfull.isEnabled) {
+      if (!ScreenFull.isEnabled) {
         this.$message.warning('你的浏览器不支持全屏')
         return false
       }
-      screenfull.toggle()
+      ScreenFull.toggle()
     },
     change () {
-      this.isFullscreen = screenfull.isFullscreen
+      this.isFullscreen = ScreenFull.isFullscreen
     },
     init () {
-      if (screenfull.isEnabled) {
-        screenfull.on('change', this.change)
+      if (ScreenFull.isEnabled) {
+        ScreenFull.on('change', this.change)
       }
     },
     destroy () {
-      if (screenfull.isEnabled) {
-        screenfull.off('change', this.change)
+      if (ScreenFull.isEnabled) {
+        ScreenFull.off('change', this.change)
       }
     }
   }

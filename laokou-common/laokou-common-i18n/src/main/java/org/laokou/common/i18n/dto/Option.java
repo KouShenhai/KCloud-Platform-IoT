@@ -15,26 +15,35 @@
  *
  */
 
-package org.laokou.common.crypto;
+package org.laokou.common.i18n.dto;
 
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.crypto.utils.RsaUtil;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+import java.io.Serial;
 
 /**
  * @author laokou
  */
-@Slf4j
-public class RsaTest {
+@Data
+@Schema(name = "Option", description = "下拉框选择参数项参数")
+public class Option extends DTO {
 
-	public static void main(String[] args) {
-		String publicKey = RsaUtil.getPublicKey();
-		String privateKey = RsaUtil.getPrivateKey();
-		String username = RsaUtil.encryptByPublicKey("laokou", publicKey);
-		String pwd = RsaUtil.encryptByPublicKey("laokou123", publicKey);
-		log.info(username);
-		log.info(pwd);
-		log.info(RsaUtil.decryptByPrivateKey(username, privateKey));
-		log.info(RsaUtil.decryptByPrivateKey(pwd, privateKey));
+	@Serial
+	private static final long serialVersionUID = -4146348495335527374L;
+
+	@Schema(name = "label", description = "标签")
+	private String label;
+
+	@Schema(name = "value", description = "值")
+	private String value;
+
+	public Option() {
+	}
+
+	public Option(String label, String value) {
+		this.label = label;
+		this.value = value;
 	}
 
 }

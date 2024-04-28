@@ -15,15 +15,15 @@
  *
  */
 
-package org.laokou.admin.command.tenant.query;
+package org.laokou.auth.command.tenant.query;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.config.DefaultConfigProperties;
-import org.laokou.admin.dto.tenant.TenantGetIDQry;
-import org.laokou.admin.gatewayimpl.database.TenantMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.auth.dto.tenant.TenantGetIDQry;
+import org.laokou.auth.gatewayimpl.database.TenantMapper;
+import org.laokou.auth.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.common.core.config.TenantProperties;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.dto.Result;
@@ -33,6 +33,7 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
+
 import static org.laokou.common.i18n.common.StringConstant.BACKSLASH;
 import static org.laokou.common.i18n.common.StringConstant.DOT;
 import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
@@ -49,7 +50,7 @@ public class TenantGetIDQryExe {
 	@Schema(name = "WWW", description = "www三级域名")
 	private static final String WWW = "www";
 
-	private final DefaultConfigProperties defaultConfigProperties;
+	private final TenantProperties tenantProperties;
 
 	private final TenantMapper tenantMapper;
 
@@ -69,7 +70,7 @@ public class TenantGetIDQryExe {
 		if (split.length < 3 || WWW.equals(split[0])) {
 			return Result.ok(DEFAULT);
 		}
-		Set<String> domainNames = defaultConfigProperties.getDomainNames();
+		Set<String> domainNames = tenantProperties.getDomainNames();
 		// 租户域名
 		if (domainNames.parallelStream().anyMatch(domainName::contains)) {
 			return Result.ok(getTenantCache(split[0]));

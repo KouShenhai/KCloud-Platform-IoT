@@ -19,7 +19,7 @@ package org.laokou.admin.command.source.query;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.i18n.dto.Result;
@@ -42,12 +42,11 @@ public class SourceOptionListQryExe {
 	 * 执行查询数据源下拉框选择项列表.
 	 * @return 数据源下拉框选择项列表
 	 */
-	public Result<List<OptionCO>> execute() {
+	public Result<List<Option>> execute() {
 		List<SourceDO> list = sourceMapper.selectList(Wrappers.lambdaQuery(SourceDO.class)
 			.select(SourceDO::getId, SourceDO::getName)
 			.orderByDesc(SourceDO::getId));
-		return Result
-			.ok(list.stream().map(item -> new OptionCO(item.getName(), String.valueOf(item.getId()))).toList());
+		return Result.ok(list.stream().map(item -> new Option(item.getName(), String.valueOf(item.getId()))).toList());
 	}
 
 }

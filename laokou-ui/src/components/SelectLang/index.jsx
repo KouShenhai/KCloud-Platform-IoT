@@ -32,7 +32,7 @@ const SelectLang = {
     const langMenu = (
       <Menu class={['menu', 'ant-pro-header-menu']} selectedKeys={[this.currentLang]} onClick={changeLang}>
         {locales.map(locale => (
-          <Menu.Item key={locale} disabled={locale !== 'zh-CN'}>
+          <Menu.Item key={locale}>
             <span role="img" aria-label={languageLabels[locale]}>
               {languageIcons[locale]}
             </span>{' '}

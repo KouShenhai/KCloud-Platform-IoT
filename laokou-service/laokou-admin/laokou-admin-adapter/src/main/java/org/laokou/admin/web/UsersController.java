@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.UsersServiceI;
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.user.*;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
@@ -68,7 +68,7 @@ public class UsersController {
 	@TraceLog
 	@GetMapping("v1/users/option-list")
 	@Operation(summary = "用户管理", description = "下拉列表")
-	public Result<List<OptionCO>> findOptionListV1() {
+	public Result<List<Option>> findOptionListV1() {
 		return usersServiceI.findOptionList(new UserOptionListQry());
 	}
 

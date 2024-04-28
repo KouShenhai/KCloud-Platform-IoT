@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.SourcesServiceI;
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.source.*;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.laokou.common.data.cache.annotation.DataCache;
@@ -94,7 +94,7 @@ public class SourcesController {
 	@TraceLog
 	@GetMapping("option-list")
 	@Operation(summary = "数据源管理", description = "下拉列表")
-	public Result<List<OptionCO>> findOptionList() {
+	public Result<List<Option>> findOptionList() {
 		return sourcesServiceI.findOptionList();
 	}
 

@@ -15,25 +15,26 @@
  *
  */
 
-package org.laokou.gateway.annotation;
+package org.laokou.common.core.config;
 
-import java.lang.annotation.*;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.SysConstant.DEFAULT_PASSWORD;
-import static org.laokou.common.i18n.common.SysConstant.DEFAULT_USERNAME;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * API认证注解.
- *
  * @author laokou
  */
-@Documented
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Auth {
+@Data
+@Component
+@ConfigurationProperties(prefix = "tenant")
+public class TenantProperties {
 
-	String username() default DEFAULT_USERNAME;
-
-	String password() default DEFAULT_PASSWORD;
+	/**
+	 * 域名列表.
+	 */
+	private Set<String> domainNames = new HashSet<>(0);
 
 }

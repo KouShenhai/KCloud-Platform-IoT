@@ -17,7 +17,7 @@
 
 package org.laokou.admin.api;
 
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.user.*;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
@@ -63,7 +63,7 @@ public interface UsersServiceI {
 	 * @param qry 查询用户下拉框选择项列表参数
 	 * @return 用户下拉框选择项列表
 	 */
-	Result<List<OptionCO>> findOptionList(UserOptionListQry qry);
+	Result<List<Option>> findOptionList(UserOptionListQry qry);
 
 	/**
 	 * 修改用户状态.

@@ -1,9 +1,5 @@
 import request from '@/utils/request'
 
-export const userApi = {
-  Tenant: '/admin/v1/tenants/option-list'
-}
-
 export function login (params) {
   return request({
     url: '/auth/oauth2/token',
@@ -18,9 +14,16 @@ export function login (params) {
   })
 }
 
-export function tenant () {
+export function getTenantIdByDomainName () {
   return request({
-    url: userApi.Tenant,
+    url: '/auth/v1/tenants/id',
+    method: 'get'
+  })
+}
+
+export function listTenantOption () {
+  return request({
+    url: '/auth/v1/tenants/option-list',
     method: 'get'
   })
 }

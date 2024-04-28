@@ -25,7 +25,7 @@
 <script>
 import AvatarDropdown from './AvatarDropdown'
 import NoticeIcon from '@/components/NoticeIcon'
-import Screenfull from '@/components/Screenfull'
+import ScreenFull from '@/components/Screenfull'
 import SelectLang from '@/components/SelectLang'
 
 export default {
@@ -33,7 +33,7 @@ export default {
   components: {
     AvatarDropdown,
     NoticeIcon,
-    Screenfull,
+    ScreenFull,
     SelectLang
   },
   props: {

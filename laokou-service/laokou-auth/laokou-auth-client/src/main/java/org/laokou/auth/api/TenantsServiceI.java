@@ -15,26 +15,32 @@
  *
  */
 
-package org.laokou.common.crypto;
+package org.laokou.auth.api;
 
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.crypto.utils.RsaUtil;
+import org.laokou.auth.dto.tenant.TenantGetIDQry;
+import org.laokou.common.i18n.dto.Option;
+import org.laokou.common.i18n.dto.Result;
+
+import java.util.List;
 
 /**
+ * 租户管理.
+ *
  * @author laokou
  */
-@Slf4j
-public class RsaTest {
+public interface TenantsServiceI {
 
-	public static void main(String[] args) {
-		String publicKey = RsaUtil.getPublicKey();
-		String privateKey = RsaUtil.getPrivateKey();
-		String username = RsaUtil.encryptByPublicKey("laokou", publicKey);
-		String pwd = RsaUtil.encryptByPublicKey("laokou123", publicKey);
-		log.info(username);
-		log.info(pwd);
-		log.info(RsaUtil.decryptByPrivateKey(username, privateKey));
-		log.info(RsaUtil.decryptByPrivateKey(pwd, privateKey));
-	}
+	/**
+	 * 查询租户下拉框选择项列表.
+	 * @return 租户下拉框选择项列表
+	 */
+	Result<List<Option>> listOption();
+
+	/**
+	 * 根据域名查看租户ID.
+	 * @param qry 根据域名查看租户ID
+	 * @return 租户ID
+	 */
+	Result<Long> getIdByDomainName(TenantGetIDQry qry);
 
 }

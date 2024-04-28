@@ -19,22 +19,17 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.TenantsServiceI;
-import org.laokou.admin.command.tenant.TenantDownloadDatasourceCmdExe;
-import org.laokou.admin.command.tenant.query.TenantGetIDQryExe;
-import org.laokou.admin.dto.common.clientobject.OptionCO;
-import org.laokou.admin.dto.tenant.*;
-import org.laokou.admin.dto.tenant.clientobject.TenantCO;
-import org.laokou.admin.command.tenant.TenantRemoveCmdExe;
 import org.laokou.admin.command.tenant.TenantCreateCmdExe;
+import org.laokou.admin.command.tenant.TenantDownloadDatasourceCmdExe;
 import org.laokou.admin.command.tenant.TenantModifyCmdExe;
+import org.laokou.admin.command.tenant.TenantRemoveCmdExe;
 import org.laokou.admin.command.tenant.query.TenantGetQryExe;
 import org.laokou.admin.command.tenant.query.TenantListQryExe;
-import org.laokou.admin.command.tenant.query.TenantOptionListQryExe;
+import org.laokou.admin.dto.tenant.*;
+import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * 租户管理.
@@ -47,8 +42,6 @@ public class TenantsServiceImpl implements TenantsServiceI {
 
 	private final TenantCreateCmdExe tenantCreateCmdExe;
 
-	private final TenantOptionListQryExe tenantOptionListQryExe;
-
 	private final TenantModifyCmdExe tenantModifyCmdExe;
 
 	private final TenantRemoveCmdExe tenantRemoveCmdExe;
@@ -57,18 +50,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 
 	private final TenantGetQryExe tenantGetQryExe;
 
-	private final TenantGetIDQryExe tenantGetIDQryExe;
-
 	private final TenantDownloadDatasourceCmdExe tenantDownloadDatasourceCmdExe;
-
-	/**
-	 * 查询租户下拉框选择项列表.
-	 * @return 租户下拉框选择项列表
-	 */
-	@Override
-	public Result<List<OptionCO>> findOptionList() {
-		return tenantOptionListQryExe.execute();
-	}
 
 	/**
 	 * 新增租户.
@@ -115,16 +97,6 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	@Override
 	public Result<TenantCO> findById(TenantGetQry qry) {
 		return tenantGetQryExe.execute(qry);
-	}
-
-	/**
-	 * 根据域名查看租户ID.
-	 * @param qry 根据域名查看租户ID
-	 * @return 租户ID
-	 */
-	@Override
-	public Result<Long> findIdByDomainName(TenantGetIDQry qry) {
-		return tenantGetIDQryExe.execute(qry);
 	}
 
 	/**

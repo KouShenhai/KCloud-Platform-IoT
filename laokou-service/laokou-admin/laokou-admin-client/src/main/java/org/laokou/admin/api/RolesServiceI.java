@@ -17,7 +17,7 @@
 
 package org.laokou.admin.api;
 
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.role.*;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.common.i18n.dto.Datas;
@@ -43,7 +43,7 @@ public interface RolesServiceI {
 	 * 查询角色下拉框选择项列表.
 	 * @return 角色下拉框选择项列表
 	 */
-	Result<List<OptionCO>> findOptionList();
+	Result<List<Option>> findOptionList();
 
 	/**
 	 * 根据ID查看角色.

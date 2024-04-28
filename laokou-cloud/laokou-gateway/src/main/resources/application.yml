@@ -42,6 +42,9 @@ server:
     max-initial-line-length: 4096
 # spring
 spring:
+  threads:
+    virtual:
+      enabled: true
   application:
     name: @pom.artifactId@
   profiles:

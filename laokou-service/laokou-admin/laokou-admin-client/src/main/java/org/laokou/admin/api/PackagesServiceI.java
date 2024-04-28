@@ -17,7 +17,7 @@
 
 package org.laokou.admin.api;
 
-import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.laokou.admin.dto.packages.*;
 import org.laokou.common.i18n.dto.Datas;
@@ -68,6 +68,6 @@ public interface PackagesServiceI {
 	 * 查询套餐下拉框选择项列表.
 	 * @return 套餐下拉框选择项列表
 	 */
-	Result<List<OptionCO>> findOptionList();
+	Result<List<Option>> findOptionList();
 
 }
