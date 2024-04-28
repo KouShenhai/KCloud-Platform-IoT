@@ -92,7 +92,7 @@ class OAuth2ApiTest {
 	void testUsernamePasswordAuthApi() {
 		log.info("---------- 账号密码认证模式开始 ----------");
 		String captcha = getCaptcha(SNOWFLAKE_ID.toString());
-		String publicKey = getSecret();
+		String publicKey = getPublicKey();
 		String privateKey = RsaUtil.getPrivateKey();
 		String encryptUsername = RsaUtil.encryptByPublicKey(USERNAME, publicKey);
 		String encryptPassword = RsaUtil.encryptByPublicKey(PASSWORD, publicKey);
@@ -306,15 +306,15 @@ class OAuth2ApiTest {
 	}
 
 	@SneakyThrows
-	private String getSecret() {
+	private String getPublicKey() {
 		MvcResult mvcResult = mockMvc.perform(get(getSecretApiUrl()).contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			// 打印到控制台
 			.andDo(print())
 			.andReturn();
-		String secret = JacksonUtil.readTree(mvcResult.getResponse().getContentAsString()).get("data").asText();
-		Assert.isTrue(StringUtil.isNotEmpty(secret), "secret is empty");
-		return secret;
+		String publicKey = JacksonUtil.readTree(mvcResult.getResponse().getContentAsString()).get("data").get("publicKey").asText();
+		Assert.isTrue(StringUtil.isNotEmpty(publicKey), "publicKey is empty");
+		return publicKey;
 	}
 
 	private String getDeviceCode() {
@@ -341,11 +341,11 @@ class OAuth2ApiTest {
 	}
 
 	private String getCaptchaApiUrl(String uuid) {
-		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/captchas/v1/" + uuid;
+		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v1/captchas/" + uuid;
 	}
 
 	private String getSecretApiUrl() {
-		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/secrets/v1";
+		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v1/secrets";
 	}
 
 	private String getSchema(boolean disabled) {
