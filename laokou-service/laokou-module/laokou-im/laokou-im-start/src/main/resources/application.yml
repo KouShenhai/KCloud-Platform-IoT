@@ -16,6 +16,9 @@ server:
   shutdown: graceful
 #spring
 spring:
+  threads:
+      virtual:
+          enabled: true
   websocket:
     port: 1000
     app-name: @pom.parent.artifactId@
