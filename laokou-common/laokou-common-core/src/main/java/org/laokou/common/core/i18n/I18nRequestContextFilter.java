@@ -22,10 +22,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.laokou.common.i18n.utils.LocaleUtil;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpHeaders;
+import org.laokou.common.core.utils.I18nUtil;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.filter.RequestContextFilter;
@@ -40,7 +37,7 @@ import java.io.IOException;
 @NonNullApi
 public final class I18nRequestContextFilter extends RequestContextFilter {
 
-	public static final String LANG = "lang";
+	public static final String LANG = "Lang";
 
 	private I18nRequestContextFilter() {
 	}
@@ -68,9 +65,7 @@ public final class I18nRequestContextFilter extends RequestContextFilter {
 	 * @param requestAttributes 请求属性
 	 */
 	private void initContextHolders(HttpServletRequest request, ServletRequestAttributes requestAttributes) {
-		String language = request.getHeader(LANG);
-		language = StringUtil.isNotEmpty(language) ? language : request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
-		LocaleContextHolder.setLocale(LocaleUtil.toLocale(language), true);
+		I18nUtil.set(request);
 		RequestContextHolder.setRequestAttributes(requestAttributes, true);
 		if (logger.isTraceEnabled()) {
 			logger.trace("Bound request context to thread: " + request);
@@ -81,7 +76,7 @@ public final class I18nRequestContextFilter extends RequestContextFilter {
 	 * 注销国际化本地线程变量.
 	 */
 	private void resetContextHolders() {
-		LocaleContextHolder.resetLocaleContext();
+		I18nUtil.reset();
 		RequestContextHolder.resetRequestAttributes();
 	}
 

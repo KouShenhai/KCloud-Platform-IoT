@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.gateway.ip.Ip;
 import org.laokou.gateway.ip.IpProperties;
 import org.laokou.gateway.ip.Label;
-import org.laokou.gateway.utils.I18nUtil;
+import org.laokou.gateway.utils.I18nReactiveUtil;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -53,7 +53,7 @@ public class IpFilter implements GlobalFilter, Ordered {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		try {
 			// 国际化
-			I18nUtil.set(exchange);
+			I18nReactiveUtil.set(exchange);
 			if (ipProperties.isEnabled()) {
 				return validate(exchange, ipProperties.getLabel(), chain);
 			}
@@ -62,7 +62,7 @@ public class IpFilter implements GlobalFilter, Ordered {
 			}
 		}
 		finally {
-			I18nUtil.reset();
+			I18nReactiveUtil.reset();
 		}
 	}
 
