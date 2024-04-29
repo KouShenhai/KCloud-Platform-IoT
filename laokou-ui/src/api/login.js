@@ -17,21 +17,30 @@ export function login (params) {
 export function getTenantIdByDomainName () {
   return request({
     url: '/auth/v1/tenants/id',
-    method: 'get'
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
   })
 }
 
 export function listTenantOption () {
   return request({
     url: '/auth/v1/tenants/option-list',
-    method: 'get'
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
   })
 }
 
 export function getCaptcha (uuid) {
   return request({
     url: '/auth/v1/captchas/' + uuid,
-    method: 'get'
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
   })
 }
 
