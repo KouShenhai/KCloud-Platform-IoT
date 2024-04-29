@@ -1,6 +1,6 @@
 import storage from 'store'
 import { login, getInfo, logout, getSecret, getCaptcha, listTenantOption, getTenantIdByDomainName } from '@/api/login'
-import { ACCESS_TOKEN } from '@/store/mutation-types'
+import { ACCESS_TOKEN, TENANT_ID, USER_ID, USER_NAME } from '@/store/mutation-types'
 
 const user = {
   state: {
@@ -57,7 +57,8 @@ const user = {
       })
     },
     // 获取密码
-    GetCaptcha ({ commit }, uuid) {
+    // eslint-disable-next-line no-empty-pattern
+    GetCaptcha ({}, uuid) {
       return new Promise((resolve, reject) => {
         getCaptcha(uuid).then(res => {
           resolve(res)
@@ -90,10 +91,16 @@ const user = {
     GetInfo ({ commit, state }) {
       return new Promise((resolve, reject) => {
         getInfo(state.token).then(res => {
-          const user = res.user
+          const user = res.data
           const avatar = user.avatar === '' ? require('@/assets/images/profile.jpg') : process.env.VUE_APP_BASE_API + user.avatar
-          commit('SET_USERNAME', user.nickName)
+          commit('SET_ID', user.id)
+          commit('SET_USERNAME', user.username)
           commit('SET_AVATAR', avatar)
+          commit('SET_PERMISSIONS', user.permissions)
+          commit('SET_TENANT_ID', user.tenantId)
+          storage.set(USER_ID, user.id, 60 * 60 * 1000)
+          storage.set(USER_NAME, user.username, 60 * 60 * 1000)
+          storage.set(TENANT_ID, user.tenantId, 60 * 60 * 1000)
           resolve(res)
         }).catch(error => {
           reject(error)
@@ -109,11 +116,16 @@ const user = {
         }).catch(error => {
           reject(error)
         }).finally(() => {
+          commit('SET_ID', '')
           commit('SET_TOKEN', '')
           commit('SET_PERMISSIONS', [])
           commit('SET_USERNAME', '')
+          commit('SET_TENANT_ID', '')
           commit('SET_AVATAR', '')
           storage.remove(ACCESS_TOKEN)
+          storage.remove(USER_ID)
+          storage.remove(USER_NAME)
+          storage.remove(TENANT_ID)
         })
       })
     }

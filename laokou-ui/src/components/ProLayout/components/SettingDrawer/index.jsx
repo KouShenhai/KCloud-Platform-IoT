@@ -65,12 +65,12 @@ const getThemeList = (i18nRender) => {
     {
       key: 'light',
       url: 'https://gw.alipayobjects.com/zos/antfincdn/NQ%24zoisaD2/jpRkZQMyYRryryPNtyIC.svg',
-      title: i18nRender('app.setting.pagestyle.light')
+      title: i18nRender('app.setting.page-style.light')
     },
     {
       key: 'dark',
       url: 'https://gw.alipayobjects.com/zos/antfincdn/XwFOFbLkSM/LCkqqYNmvBEbokSDscrm.svg',
-      title: i18nRender('app.setting.pagestyle.dark')
+      title: i18nRender('app.setting.page-style.dark')
     }
   ]
 
@@ -96,7 +96,7 @@ const getThemeList = (i18nRender) => {
     //   // disable: true,
     //   key: 'realDark',
     //   url: 'https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg',
-    //   title: i18nRender('app.setting.pagestyle.realdark')
+    //   title: i18nRender('app.setting.page-style.realdark')
     // })
   }
   // insert  theme color List
@@ -241,7 +241,7 @@ const SettingDrawer = {
           </div>
         </template>
         <div class={`${baseClassName}-content`}>
-          <Body title={i18n('app.setting.pagestyle')}>
+          <Body title={i18n('app.setting.page-style')}>
             <BlockCheckbox i18nRender={i18n} list={themeList.themeList} value={theme} onChange={(val) => {
               changeSetting('theme', val)
             }} />

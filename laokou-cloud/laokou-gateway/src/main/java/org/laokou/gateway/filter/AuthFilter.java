@@ -33,7 +33,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.nacos.utils.ReactiveRequestUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
-import org.laokou.gateway.utils.I18nUtil;
+import org.laokou.gateway.utils.I18nReactiveUtil;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -114,7 +114,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		try {
 			// 国际化
-			I18nUtil.set(exchange);
+			I18nReactiveUtil.set(exchange);
 			// 获取request对象
 			ServerHttpRequest request = exchange.getRequest();
 			// 获取uri
@@ -141,7 +141,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 				.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, token).build()).build());
 		}
 		finally {
-			I18nUtil.reset();
+			I18nReactiveUtil.reset();
 		}
 	}
 
