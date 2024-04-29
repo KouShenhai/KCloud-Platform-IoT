@@ -70,19 +70,11 @@ import { timeFix } from '@/utils/util'
 import { v4 as uid } from 'uuid'
 import { JSEncrypt } from 'jsencrypt'
 import { tableMixin } from '@/store/table-mixin'
-import SelectLang from '@/components/SelectLang'
 
 export default {
   components: {
-    SelectLang
   },
   mixins: [tableMixin],
-  props: {
-    prefixCls: {
-      type: String,
-      default: 'ant-pro-global-header-index-action'
-    }
-  },
   data () {
     return {
       publicKey: '',

@@ -15,12 +15,12 @@
       <router-view />
       <div class="footer">
         <div class="links">
-          <a href="#" target="_blank">帮助</a>
-          <a href="#" target="_blank">隐私</a>
-          <a href="#" target="_blank">条款</a>
+          <a href="#">帮助</a>
+          <a href="#">隐私</a>
+          <a href="#">条款</a>
         </div>
         <div class="copyright">
-          Copyright &copy; 2022 <a href="#" target="_blank">KCloud-Platform-Alibaba</a><br/>
+          Copyright &copy; 2022 <a href="#" target="https://github.com/KouShenhai/KCloud-Platform-Alibaba">KCloud-Platform-Alibaba</a><br/>
         </div>
       </div>
     </div>
