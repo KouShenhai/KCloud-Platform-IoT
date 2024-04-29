@@ -18,10 +18,13 @@
 package org.laokou.gateway.utils;
 
 import org.laokou.common.i18n.utils.LocaleUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.utils.ReactiveRequestUtil;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.server.ServerWebExchange;
+
+import static org.laokou.common.core.i18n.I18nRequestContextFilter.LANG;
 
 /**
  * I18n工具类.
@@ -35,7 +38,8 @@ public class I18nUtil {
 	 * @param exchange 服务网络交换机
 	 */
 	public static void set(ServerWebExchange exchange) {
-		String language = ReactiveRequestUtil.getParamValue(exchange.getRequest(), HttpHeaders.ACCEPT_LANGUAGE);
+		String language = ReactiveRequestUtil.getParamValue(exchange.getRequest(), LANG);
+		language = StringUtil.isNotEmpty(language) ? language : ReactiveRequestUtil.getParamValue(exchange.getRequest(), HttpHeaders.ACCEPT_LANGUAGE);
 		LocaleContextHolder.setLocale(LocaleUtil.toLocale(language), true);
 	}
 
