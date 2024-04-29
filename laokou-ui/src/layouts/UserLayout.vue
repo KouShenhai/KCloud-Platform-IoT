@@ -23,7 +23,7 @@
           <a href="#">条款</a>
         </div>
         <div class="copyright">
-          Copyright &copy; 2022 <a href="#" target="https://github.com/KouShenhai/KCloud-Platform-Alibaba">KCloud-Platform-Alibaba</a><br/>
+          Copyright &copy; 2022 <a href="https://github.com/KouShenhai/KCloud-Platform-Alibaba" target="_blank">KCloud-Platform-Alibaba</a><br/>
         </div>
       </div>
     </div>
