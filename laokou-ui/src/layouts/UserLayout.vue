@@ -1,6 +1,9 @@
 <template>
   <div id="userLayout" :class="['user-layout-wrapper', isMobile && 'mobile']">
     <div class="container">
+      <div class="user-layout-lang">
+        <select-lang class="select-lang-trigger" />
+      </div>
       <div class="top">
         <div class="header">
           <a href="/">
@@ -15,12 +18,12 @@
       <router-view />
       <div class="footer">
         <div class="links">
-          <a href="#" target="_blank">帮助</a>
-          <a href="#" target="_blank">隐私</a>
-          <a href="#" target="_blank">条款</a>
+          <a href="#">帮助</a>
+          <a href="#">隐私</a>
+          <a href="#">条款</a>
         </div>
         <div class="copyright">
-          Copyright &copy; 2022 <a href="#" target="_blank">KCloud-Platform-Alibaba</a><br/>
+          Copyright &copy; 2022 <a href="https://github.com/KouShenhai/KCloud-Platform-Alibaba" target="_blank">KCloud-Platform-Alibaba</a><br/>
         </div>
       </div>
     </div>
@@ -29,9 +32,13 @@
 
 <script>
 import { deviceMixin } from '@/store/device-mixin'
+import SelectLang from '@/components/SelectLang'
 
 export default {
   name: 'UserLayout',
+  components: {
+    SelectLang
+  },
   mixins: [deviceMixin],
   mounted () {
     document.body.classList.add('userLayout')
@@ -60,8 +67,26 @@ export default {
     min-height: 100%;
     background: #f0f2f5 url(~@/assets/background.svg) no-repeat 50%;
     background-size: 100%;
-    padding: 110px 0 144px;
+    // padding: 110px 0 144px;
     position: relative;
+
+    .user-layout-lang {
+      width: 100%;
+      height: 40px;
+      line-height: 44px;
+      text-align: right;
+
+      .select-lang-trigger {
+        cursor: pointer;
+        padding: 12px;
+        margin-right: 24px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        vertical-align: middle;
+      }
+    }
 
     a {
       text-decoration: none;
@@ -115,7 +140,7 @@ export default {
     }
 
     .footer {
-      position: absolute;
+      // position: absolute;
       width: 100%;
       bottom: 0;
       padding: 0 16px;
