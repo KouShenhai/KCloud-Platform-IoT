@@ -92,10 +92,8 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
 | Redis                       | 7.2.4         |
 | Elasticsearch               | 8.12.2        |
 | RocketMQ                    | 5.2.0         |
-| ShardingSphere              | 5.4.1         |
 | OpenResty                   | 1.21.4.1      |
 | Netty                       | 4.1.109.Final |
-| Dubbo                       | 3.3.0-beta.1  |
 | Kafka                       | 3.6.1         |
 | EMQX                        | 5.3.0         |
 | Postgresql                  | 16.1          |
@@ -105,10 +103,10 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
 - 认证授权：Spring Security OAuth2 Authorization Server
-- 远程调用：Dubbo & Spring Cloud OpenFeign & OkHttp & HttpClient & WebClient
+- 远程调用：Spring Cloud OpenFeign & OkHttp & HttpClient & WebClient
 - 负载均衡：Spring Cloud Loadbalancer & OpenResty
 - 服务熔断&降级&限流：Sentinel
-- 分库分表&读写分离：Mybatis Plus & ShardingSphere
+- 分库分表：Mybatis Plus
 - 分布式事务：Seata & RocketMQ
 - 消息队列：RocketMQ & Kafka & MQTT
 - 服务监控：Spring Boot Admin & Prometheus
@@ -151,7 +149,6 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
         └── laokou-common-sensitive                --- 敏感词组件  
         └── laokou-common-lock                     --- 分布式锁组件  
         └── laokou-common-trace                    --- 链路跟踪组件  
-        └── laokou-common-dubbo                    --- 远程调用组件   
         └── laokou-common-nacos                    --- 注册发现组件  
         └── laokou-common-netty                    --- 网络通讯组件  
         └── laokou-common-domain                   --- 领域事件组件  
@@ -162,7 +159,6 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
         └── laokou-common-openfeign                --- 远程调用组件   
         └── laokou-common-data-cache               --- 数据缓存组件  
         └── laokou-common-mybatis-plus             --- 对象映射组件  
-        └── laokou-common-shardingsphere           --- 分库分表组件  
         └── laokou-common-seata                    --- 分布式事务组件  
         └── laokou-common-sentinel                 --- 服务限流&熔断降级组件  
 ├── laokou-cloud  

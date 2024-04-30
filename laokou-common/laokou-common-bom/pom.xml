@@ -80,10 +80,6 @@
         <jackson.version>2.17.0</jackson.version>
         <!--xxl-job版本-->
         <xxl-job.version>2.4.1</xxl-job.version>
-        <!--shardingsphere版本-->
-        <shardingsphere.version>5.4.1</shardingsphere.version>
-        <!--p6spy版本-->
-        <p6spy.version>3.9.1</p6spy.version>
         <!--spring-kafka版本-->
         <spring-kafka.version>3.1.4</spring-kafka.version>
         <!--netty版本-->
@@ -94,8 +90,6 @@
         <swagger-annotations-jakarta.version>2.2.21</swagger-annotations-jakarta.version>
         <!--disruptor版本-->
         <disruptor.version>3.4.4</disruptor.version>
-        <!--dubbo版本-->
-        <dubbo.version>3.3.0-beta.2</dubbo.version>
         <!--lombok-mapstruct-binding版本-->
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <!--mapstruct版本-->
@@ -132,11 +126,6 @@
                 <groupId>com.alibaba.nacos</groupId>
                 <artifactId>nacos-client</artifactId>
                 <version>${nacos.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-test-container-dubbo-api</artifactId>
-                <version>${laokou.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.retry</groupId>
@@ -255,11 +244,6 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-dubbo</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
                 <artifactId>laokou-report-app</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -277,16 +261,6 @@
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-im-infrastructure</artifactId>
                 <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-spring-boot-starter</artifactId>
-                <version>${dubbo.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-registry-nacos</artifactId>
-                <version>${dubbo.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.lmax</groupId>
@@ -404,11 +378,6 @@
                 <version>${spring-kafka.version}</version>
             </dependency>
             <dependency>
-                <groupId>p6spy</groupId>
-                <artifactId>p6spy</artifactId>
-                <version>${p6spy.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.fasterxml.jackson.module</groupId>
                 <artifactId>jackson-module-kotlin</artifactId>
                 <version>${jackson.version}</version>
@@ -481,16 +450,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-i18n</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shardingsphere</groupId>
-                <artifactId>shardingsphere-jdbc-core</artifactId>
-                <version>${shardingsphere.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-shardingsphere</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

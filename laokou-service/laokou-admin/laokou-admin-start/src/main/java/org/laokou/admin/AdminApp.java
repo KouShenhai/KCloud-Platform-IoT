@@ -17,9 +17,9 @@
 
 package org.laokou.admin;
 
+import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
-import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.nacos.filter.ShutdownFilter;
@@ -36,10 +36,12 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.ResourceUtils;
 
 import java.net.InetAddress;
 
 import static org.laokou.common.i18n.common.NetworkConstant.IP;
+import static org.laokou.common.i18n.common.StringConstant.TRUE;
 
 /**
  * 启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
@@ -52,7 +54,6 @@ import static org.laokou.common.i18n.common.NetworkConstant.IP;
 @EnableAspectJAutoProxy(exposeProxy = true)
 @EnableEncryptableProperties
 @EnableFeignClients
-@EnableDubbo
 @EnableRedisRepository
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 @EnableSecurity
@@ -63,15 +64,15 @@ public class AdminApp {
 
 	@SneakyThrows
 	public static void main(String[] args) {
-		// System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		// SpringSecurity 子线程读取父线程的上下文
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");
+		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, ResourceUtils.getFile("classpath:nacos.cer").getCanonicalPath());
 		new SpringApplicationBuilder(AdminApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
