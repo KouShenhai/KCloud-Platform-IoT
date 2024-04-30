@@ -27,6 +27,8 @@ GitHub：https://github.com/KouShenhai
 Gitee：https://gitee.com/laokouyun
 CSDN：https://kcloud.blog.csdn.net
 
+
+端口：${server.port}
 操作系统：${os.name}
 JDK版本：${java.version}
 SpringBoot版本：${spring-boot.version}
