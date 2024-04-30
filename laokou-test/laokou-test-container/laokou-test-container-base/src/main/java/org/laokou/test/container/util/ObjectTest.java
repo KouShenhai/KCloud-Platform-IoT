@@ -22,13 +22,15 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 
 @Slf4j
 public class ObjectTest {
+
 	public static void main(String[] args) {
 		long a = 0;
 		Long b = 0L;
 		int c = 0;
 		Integer d = 0;
 		log.info("{}", ObjectUtil.equals(a, b));
-		log.info("{}", ObjectUtil.equals((long)c, b));
+		log.info("{}", ObjectUtil.equals((long) c, b));
 		log.info("{}", ObjectUtil.equals(c, d));
 	}
+
 }
