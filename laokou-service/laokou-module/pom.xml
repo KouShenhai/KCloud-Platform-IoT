@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-IOT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>laokou-im</module>
-        <module>laokou-flowable</module>
         <module>laokou-api</module>
         <module>laokou-flyway</module>
         <module>laokou-logstash</module>

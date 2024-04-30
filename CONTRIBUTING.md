@@ -1,5 +1,5 @@
 ## 代码贡献
-欢迎各路英雄好汉参与KCloud-Platform-Alibaba代码贡献，期待您的加入！Fork本仓库 新建 feat_xxx_环境_时间（如 feat_laokou_dev_20230116） 分支提交代码，新建Pull Request！我觉得没问题就会合并到主干分支，你也就成为正式贡献者啦！    
+欢迎各路英雄好汉参与KCloud-Platform-IOT代码贡献，期待您的加入！Fork本仓库 新建 feat_xxx_环境_时间（如 feat_laokou_dev_20230116） 分支提交代码，新建Pull Request！我觉得没问题就会合并到主干分支，你也就成为正式贡献者啦！    
 
 ## RESTFul代码风格
 - url路径名词均为复数

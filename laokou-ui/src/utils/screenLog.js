@@ -10,7 +10,7 @@ export const printANSI = () => {
 |__|\\__\\  \\______||_______| \\______/   \\______/  |_______/       | _|      |_______/__/     \\__\\  |__|     |__|      \\______/  | _| \`._____||__|  |__|      /__/     \\__\\ |_______||__| |______/  /__/     \\__\\ |______/  /__/     \\__\\
   `;
   console.log(`%c${text}`, 'color: #fc4d50');
-  console.log('%cGithub: https://github.com/KouShenhai/KCloud-Platform-Alibaba', 'color: #fff; font-size: 14px; font-weight: 300; text-shadow:#000 1px 0 0,#000 0 1px 0,#000 -1px 0 0,#000 0 -1px 0;')
-  console.log('%cGitee: https://gitee.com/laokouyun/KCloud-Platform-Alibaba', 'color: #fff; font-size: 14px; font-weight: 300; text-shadow:#000 1px 0 0,#000 0 1px 0,#000 -1px 0 0,#000 0 -1px 0;')
+  console.log('%cGithub: https://github.com/KouShenhai/KCloud-Platform-IOT', 'color: #fff; font-size: 14px; font-weight: 300; text-shadow:#000 1px 0 0,#000 0 1px 0,#000 -1px 0 0,#000 0 -1px 0;')
+  console.log('%cGitee: https://gitee.com/laokouyun/KCloud-Platform-IOT', 'color: #fff; font-size: 14px; font-weight: 300; text-shadow:#000 1px 0 0,#000 0 1px 0,#000 -1px 0 0,#000 0 -1px 0;')
 };
 

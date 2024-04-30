@@ -1,5 +1,5 @@
 # /*
-#  * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+#  * Copyright (c) 2022-2024 KCloud-Platform-IOT Author or Authors. All Rights Reserved.
 #  * <p>
 #  * Licensed under the Apache License, Version 2.0 (the "License");
 #  * you may not use this file except in compliance with the License.
@@ -335,30 +335,6 @@ services:
       - laokou-register
       - laokou-seata
       - elasticsearch
-  laokou-flowable:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-flowable-start:3.2.1
-    container_name: laokou-flowable
-    tty: true
-    env_file:
-      - env/common.env
-      - env/flowable.env
-    ports:
-      - "10000:10000"
-    volumes:
-      - ./flowable/logs:/opt
-    extra_hosts:
-      - "nacos.laokou.org:192.168.30.130"
-      - "kafka.laokou.org:192.168.30.130"
-      - "redis.laokou.org:192.168.30.130"
-      - "mysql.laokou.org:192.168.30.130"
-      - "seata.laokou.org:192.168.30.130"
-    restart: always
-    privileged: true
-    network_mode: bridge
-    depends_on:
-      - laokou-register
-      - laokou-seata
-      - laokou-admin
   laokou-logstash:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.2.1
     container_name: laokou-logstash
@@ -403,4 +379,3 @@ services:
     network_mode: bridge
     depends_on:
       - laokou-admin
-      - laokou-flowable

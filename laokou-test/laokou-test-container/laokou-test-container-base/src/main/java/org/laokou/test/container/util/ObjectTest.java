@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-IOT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,22 @@
  *
  */
 
-package org.laokou.flowable.domain.gateway;
+package org.laokou.test.container.util;
 
-import org.laokou.flowable.domain.definition.Activate;
-import org.laokou.flowable.domain.definition.Deployment;
-import org.laokou.flowable.domain.definition.Suspend;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
-/**
- * @author laokou
- */
-public interface DefinitionGateway {
+@Slf4j
+public class ObjectTest {
 
-	void create(Deployment deployment);
-
-	void remove(String deploymentId);
-
-	void activate(Activate activate);
-
-	void suspend(Suspend suspend);
+	public static void main(String[] args) {
+		long a = 0;
+		Long b = 0L;
+		int c = 0;
+		Integer d = 0;
+		log.info("{}", ObjectUtil.equals(a, b));
+		log.info("{}", ObjectUtil.equals((long) c, b));
+		log.info("{}", ObjectUtil.equals(c, d));
+	}
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-IOT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.laokou</groupId>
-        <artifactId>KCloud-Platform-Alibaba</artifactId>
+        <artifactId>KCloud-Platform-IOT</artifactId>
         <version>3.2.5</version>
         <relativePath>../pom.xml</relativePath>
     </parent>

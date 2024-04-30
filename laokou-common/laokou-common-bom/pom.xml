@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-IOT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,8 +34,6 @@
         <mysql.version>8.3.0</mysql.version>
         <!--admin版本-->
         <spring-boot-admin.version>3.2.3</spring-boot-admin.version>
-        <!--flowable版本-->
-        <flowable.version>7.0.1</flowable.version>
         <!--mybatis-plus版本 -->
         <mybatis-plus.version>3.5.6</mybatis-plus.version>
         <!--mybatis-spring版本-->
@@ -181,11 +179,6 @@
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-flowable-domain</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-mysql</artifactId>
                 <version>${flyway.version}</version>
@@ -311,21 +304,6 @@
                 <version>${swagger-annotations-jakarta.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-flowable-infrastructure</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-flowable-start</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-flowable-app</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
                 <version>${gson.version}</version>
@@ -353,11 +331,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-auth-infrastructure</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-flowable-adapter</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -562,12 +535,6 @@
                 <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
-            <!-- 定义 flowable 版本 -->
-            <dependency>
-                <groupId>org.flowable</groupId>
-                <artifactId>flowable-spring-boot-starter-process</artifactId>
-                <version>${flowable.version}</version>
-            </dependency>
             <!-- 定义 spring boot admin 版本 -->
             <dependency>
                 <groupId>de.codecentric</groupId>
@@ -734,11 +701,6 @@
                 <groupId>jakarta.servlet</groupId>
                 <artifactId>jakarta.servlet-api</artifactId>
                 <version>${jakarta-servlet-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-flowable-client</artifactId>
-                <version>${laokou.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
