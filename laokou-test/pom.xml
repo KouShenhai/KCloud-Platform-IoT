@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.laokou</groupId>
-        <artifactId>KCloud-Platform-Alibaba</artifactId>
+        <artifactId>KCloud-Platform-IOT</artifactId>
         <version>3.2.5</version>
         <relativePath>../pom.xml</relativePath>
     </parent>

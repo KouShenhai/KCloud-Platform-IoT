@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-IOT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.laokou</groupId>
-        <artifactId>KCloud-Platform-Alibaba</artifactId>
+        <artifactId>KCloud-Platform-IOT</artifactId>
         <version>3.2.5</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
@@ -31,8 +31,8 @@
     <artifactId>laokou-release</artifactId>
     <version>3.2.5</version>
     <name>laokou-release</name>
-    <description>一个企业级微服务架构的云服务多租户平台</description>
-    <url>https://koushenhai.github.io/KCloud-Platform-Alibaba</url>
+    <description>一个企业级微服务架构的云服务多租户IOT平台</description>
+    <url>https://koushenhai.github.io/KCloud-Platform-IOT</url>
     <properties>
         <nacos.version>2.3.2</nacos.version>
         <java.version>21</java.version>
@@ -92,10 +92,10 @@
         </developer>
     </developers>
     <scm>
-        <tag>kcloud-platform-alibaba-3.2.5.RELEASE</tag>
-        <url>https://github.com/KouShenhai/KCloud-Platform-Alibaba</url>
-        <connection>scm:git:https://github.com/KouShenhai/KCloud-Platform-Alibaba.git</connection>
-        <developerConnection>scm:git:https://github.com/KouShenhai/KCloud-Platform-Alibaba.git</developerConnection>
+        <tag>KCloud-Platform-IOT-3.2.5.RELEASE</tag>
+        <url>https://github.com/KouShenhai/KCloud-Platform-IOT</url>
+        <connection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IOT.git</connection>
+        <developerConnection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IOT.git</developerConnection>
     </scm>
     <licenses>
         <license>
