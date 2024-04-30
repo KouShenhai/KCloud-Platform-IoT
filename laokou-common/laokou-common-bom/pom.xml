@@ -31,7 +31,7 @@
         <!--lombok版本-->
         <lombok.version>1.18.32</lombok.version>
         <!--mysql版本-->
-        <mysql.version>8.3.0</mysql.version>
+        <mysql.version>8.4.0</mysql.version>
         <!--admin版本-->
         <spring-boot-admin.version>3.2.3</spring-boot-admin.version>
         <!--mybatis-plus版本 -->
