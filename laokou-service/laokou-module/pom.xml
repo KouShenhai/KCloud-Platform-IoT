@@ -29,7 +29,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>laokou-im</module>
-        <module>laokou-flowable</module>
         <module>laokou-api</module>
         <module>laokou-flyway</module>
         <module>laokou-logstash</module>

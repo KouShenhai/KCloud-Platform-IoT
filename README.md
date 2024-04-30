@@ -92,7 +92,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | Redis                       | 7.2.4         |
 | Elasticsearch               | 8.12.2        |
 | RocketMQ                    | 5.2.0         |
-| Flowable                    | 7.0.1         |
 | ShardingSphere              | 5.4.1         |
 | OpenResty                   | 1.21.4.1      |
 | Netty                       | 4.1.109.Final |
@@ -127,7 +126,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 - JSON序列化：Jackson
 - 对象转换：MapStruct
 - 数据库：Mysql & Postgresql
-- 工作流：Flowable
 - 数据库迁移：Flyway
 - 数据同步：Canal
 
@@ -183,7 +181,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
                 └── laokou-api                     --- API模块  
                 └── laokou-iot                     --- 物联网模块  
                 └── laokou-im                      --- 即时通讯模块  
-                └── laokou-flowable                --- 工作流程模块  
                 └── laokou-logstash                --- 日志收集模块  
                 └── laokou-flyway                  --- 数据库版本控制模块  
 ~~~
