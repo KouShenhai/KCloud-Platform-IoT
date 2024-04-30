@@ -82,7 +82,7 @@ public class UserE {
 	}
 
 	public boolean isDefaultTenant() {
-		return DEFAULT_TENANT == this.tenantId;
+		return ObjectUtil.equals(DEFAULT_TENANT, this.tenantId);
 	}
 
 	private String encrypt(String str) {
