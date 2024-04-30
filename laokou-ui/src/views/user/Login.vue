@@ -6,7 +6,7 @@
           size="large"
           v-model="form.tenantId"
           :placeholder="$t('user.login.tenant')">
-          <a-select-option key="0" value="0">{{ $t('user.login.default-tenant-option') }}</a-select-option>
+          <a-select-option key="0" value="0">{{ $t('tenant.manage.name.default') }}</a-select-option>
           <a-select-option v-for="(d, index) in tenantOptions" :key="index + 1" :value="d.value">
             {{ d.label }}
           </a-select-option>

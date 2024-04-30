@@ -32,7 +32,7 @@ import static org.laokou.common.core.i18n.I18nRequestContextFilter.LANG;
  *
  * @author laokou
  */
-public class I18nUtil {
+public class I18nReactiveUtil {
 
 	/**
 	 * 请求头数据写入本地线程.
@@ -41,7 +41,8 @@ public class I18nUtil {
 	public static void set(ServerWebExchange exchange) {
 		ServerHttpRequest request = exchange.getRequest();
 		String language = ReactiveRequestUtil.getParamValue(request, LANG);
-		language = StringUtil.isNotEmpty(language) ? language : ReactiveRequestUtil.getParamValue(request, HttpHeaders.ACCEPT_LANGUAGE);
+		language = StringUtil.isNotEmpty(language) ? language
+				: ReactiveRequestUtil.getParamValue(request, HttpHeaders.ACCEPT_LANGUAGE);
 		LocaleContextHolder.setLocale(LocaleUtil.toLocale(language), true);
 	}
 

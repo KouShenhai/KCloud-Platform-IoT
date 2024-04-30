@@ -26,7 +26,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.gateway.exception.ExceptionEnum;
-import org.laokou.gateway.utils.I18nUtil;
+import org.laokou.gateway.utils.I18nReactiveUtil;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -74,7 +74,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		try {
 			// 国际化
-			I18nUtil.set(exchange);
+			I18nReactiveUtil.set(exchange);
 			// 获取request对象
 			ServerHttpRequest request = exchange.getRequest();
 			// 获取uri
@@ -90,7 +90,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 			}
 		}
 		finally {
-			I18nUtil.reset();
+			I18nReactiveUtil.reset();
 		}
 	}
 

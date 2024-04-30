@@ -215,7 +215,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@Override
 	@JsonIgnore
 	public boolean isEnabled() {
-		return ObjectUtil.equals(ENABLED.ordinal(), this.status);
+		return ENABLED.ordinal() == this.status;
 	}
 
 	/**
@@ -237,26 +237,38 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	public void decrypt() {
 		decryptMail();
 		decryptMobile();
+		decryptUsername();
 	}
 
-	public void decryptMail() {
-		if (StringUtil.isNotEmpty(this.mail)) {
+	private void decryptUsername() {
+		if (StringUtil.isNotEmpty(this.username)) {
 			try {
-				this.setMail(AesUtil.decrypt(this.mail));
+				this.username = AesUtil.decrypt(this.username);
 			}
 			catch (Exception e) {
-				throw new SystemException("邮箱解密失败，请使用AES加密");
+				throw new SystemException("S_Error", "用户名解密失败");
 			}
 		}
 	}
 
-	public void decryptMobile() {
-		if (StringUtil.isNotEmpty(this.mobile)) {
+	private void decryptMail() {
+		if (StringUtil.isNotEmpty(this.mail)) {
 			try {
-				this.setMobile(AesUtil.decrypt(this.mobile));
+				this.mail = AesUtil.decrypt(this.mail);
 			}
 			catch (Exception e) {
-				throw new SystemException("手机号解密失败，请使用AES加密");
+				throw new SystemException("S_Error", "邮箱解密失败");
+			}
+		}
+	}
+
+	private void decryptMobile() {
+		if (StringUtil.isNotEmpty(this.mobile)) {
+			try {
+				this.mobile = AesUtil.decrypt(this.mobile);
+			}
+			catch (Exception e) {
+				throw new SystemException("S_Error", "手机号解密失败");
 			}
 		}
 	}

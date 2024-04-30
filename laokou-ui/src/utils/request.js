@@ -4,7 +4,7 @@ import storage from 'store'
 import notification from 'ant-design-vue/es/notification'
 import message from 'ant-design-vue/es/message'
 import { VueAxios } from './axios'
-import { ACCESS_TOKEN } from '@/store/mutation-types'
+import { ACCESS_TOKEN, LANG, TENANT_ID, USER_ID, USER_NAME } from '@/store/mutation-types'
 import errorCode from '@/utils/errorCode'
 import qs from 'qs'
 import { blobValidate } from '@/utils/ruoyi'
@@ -12,7 +12,7 @@ import { saveAs } from 'file-saver'
 import moment from 'moment'
 
 // 是否显示重新登录
-let isReloginShow
+let isReloadLoginShow
 
 // 创建 axios 实例
 const request = axios.create({
@@ -44,24 +44,22 @@ const errorHandler = (error) => {
 
 // request interceptor
 request.interceptors.request.use(config => {
-  const token = storage.get(ACCESS_TOKEN)
-  // const userId = storage.get(USER_ID)
-  // const userName = storage.get(USER_NAME)
-  // const tenantId = storage.get(TENANT_ID)
+  const token = storage.get(ACCESS_TOKEN) || ''
+  const userId = storage.get(USER_ID) || ''
+  const userName = storage.get(USER_NAME) || ''
+  const tenantId = storage.get(TENANT_ID) || ''
+  const lang = storage.get(LANG) || ''
   // 如果 token 存在
   // 让每个请求携带自定义 token 请根据实际情况自行修改
   if (token) {
     config.headers['Authorization'] = 'Bearer ' + token // 让每个请求携带自定义token 请根据实际情况自行修改
-    // config.headers['User-Id'] = userId
-    // config.headers['User-Name'] = userName
-    // config.headers['Tenant-Id'] = tenantId
-    config.headers['Service-Gray'] = 'true'
+    config.headers['User-Id'] = userId
+    config.headers['User-Name'] = userName
+    config.headers['Tenant-Id'] = tenantId
   }
-  // if (userId) {
-  //   config.headers['Trace-Id'] = userId + moment().valueOf()
-  // } else {
-  //   config.headers['Trace-Id'] = '' + moment().valueOf()
-  // }
+  config.headers['Service-Gray'] = 'true'
+  config.headers['Lang'] = lang
+  config.headers['Trace-Id'] = userId + moment().valueOf()
   // 处理params参数
   if (config.params) {
     const url = config.url + '?' + qs.stringify(config.params, { indices: false })
@@ -82,8 +80,8 @@ request.interceptors.response.use((res) => {
     return res.data
   }
   if (code === 'Unauthorized') {
-    if (!isReloginShow) {
-      isReloginShow = true
+    if (!isReloadLoginShow) {
+      isReloadLoginShow = true
       notification.open({
         message: '系统提示',
         description: msg,
@@ -98,7 +96,7 @@ request.interceptors.response.use((res) => {
               on: {
                 click: () => {
                   store.dispatch('Logout').then(() => {
-                    isReloginShow = false
+                    isReloadLoginShow = false
                     location.href = '/'
                   })
                 }
@@ -109,7 +107,7 @@ request.interceptors.response.use((res) => {
         },
         duration: 0,
         onClose: () => {
-          isReloginShow = false
+          isReloadLoginShow = false
         }
       })
     }
@@ -164,7 +162,7 @@ export function download (url, params, filename) {
       message.error(errMsg)
     }
     notification.close(notificationKey)
-  }).catch((r) => {
+  }).catch(() => {
     message.error('下载文件出现错误，请联系管理员！')
     notification.close(notificationKey)
   })
