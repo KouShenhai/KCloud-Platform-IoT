@@ -1,2 +1,0 @@
-DELETE FROM `boot_sys_menu` WHERE ID = '1883512351328796673';
-INSERT INTO `boot_sys_menu` (`id`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `version`, `dept_id`, `dept_path`, `tenant_id`, `pid`, `permission`, `type`, `name`, `url`, `icon`, `sort`, `visible`) VALUES (1883512351328796673, 1707428076142559234, 1707428076142559234, '2024-01-08 15:23:55', '2024-01-08 15:27:04', 0, 1, 1535887940687765505, '0,1535887940687765505', 0, 1564996817056710672, 'tenants:download-datasource', 1, '下载租户数据库', '/v1/tenants/download-datasource', 'download', 5, 0);

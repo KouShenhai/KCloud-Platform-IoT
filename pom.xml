@@ -168,12 +168,12 @@
                 <DATASOURCE-USERNAME>root</DATASOURCE-USERNAME>
                 <DATASOURCE-PASSWORD>laokou123</DATASOURCE-PASSWORD>
                 <DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>
-                <DATASOURCE-PARAM>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false</DATASOURCE-PARAM>
+                <DATASOURCE-PARAM>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true</DATASOURCE-PARAM>
                 <DATASOURCE-PORT>5432</DATASOURCE-PORT>
                 <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
                 <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
-                <DATASOURCE-DB-NACOS>kcloud_platform_alibaba_nacos</DATASOURCE-DB-NACOS>
-                <DATASOURCE-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</DATASOURCE-DB-XXL-JOB>
+                <DATASOURCE-DB-NACOS>kcloud_platform_iot_nacos</DATASOURCE-DB-NACOS>
+                <DATASOURCE-DB-XXL-JOB>kcloud_platform_iot_xxl_job</DATASOURCE-DB-XXL-JOB>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
@@ -209,12 +209,12 @@
                 <DATASOURCE-USERNAME>ENC(aEwhK+oj5wQ/pJfRcfwXAw==)</DATASOURCE-USERNAME>
                 <DATASOURCE-PASSWORD>ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)</DATASOURCE-PASSWORD>
                 <DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>
-                <DATASOURCE-PARAM>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false</DATASOURCE-PARAM>
+                <DATASOURCE-PARAM>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true</DATASOURCE-PARAM>
                 <DATASOURCE-PORT>5432</DATASOURCE-PORT>
                 <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
                 <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
-                <DATASOURCE-DB-NACOS>kcloud_platform_alibaba_nacos</DATASOURCE-DB-NACOS>
-                <DATASOURCE-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</DATASOURCE-DB-XXL-JOB>
+                <DATASOURCE-DB-NACOS>kcloud_platform_iot_nacos</DATASOURCE-DB-NACOS>
+                <DATASOURCE-DB-XXL-JOB>kcloud_platform_iot_xxl_job</DATASOURCE-DB-XXL-JOB>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
@@ -251,17 +251,17 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <DATASOURCE-HOST>${DATASOURCE_HOST:postgresql.laokou.org}</DATASOURCE-HOST>
                 <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-PARAM>${DATASOURCE_PARAM:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false}</DATASOURCE-PARAM>
+                <DATASOURCE-PARAM>${DATASOURCE_PARAM:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true}</DATASOURCE-PARAM>
                 <!--suppress UnresolvedMavenProperty -->
                 <DATASOURCE-PORT>${DATASOURCE_PORT:5432}</DATASOURCE-PORT>
                 <!--suppress UnresolvedMavenProperty -->
                 <DATASOURCE-DRIVER-CLASS-NAME>${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}</DATASOURCE-DRIVER-CLASS-NAME>
                 <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-PLATFORM>${DATASOURCE_PLATFORM:mysql}</DATASOURCE-PLATFORM>
+                <DATASOURCE-PLATFORM>${DATASOURCE_PLATFORM:postgresql}</DATASOURCE-PLATFORM>
                 <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-DB-NACOS>${DATASOURCE_DB_NACOS:kcloud_platform_alibaba_nacos}</DATASOURCE-DB-NACOS>
+                <DATASOURCE-DB-NACOS>${DATASOURCE_DB_NACOS:kcloud_platform_iot_nacos}</DATASOURCE-DB-NACOS>
                 <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-DB-XXL-JOB>${DATASOURCE_DB_XXL_JOB:kcloud_platform_alibaba_xxl_job}</DATASOURCE-DB-XXL-JOB>
+                <DATASOURCE-DB-XXL-JOB>${DATASOURCE_DB_XXL_JOB:kcloud_platform_iot_xxl_job}</DATASOURCE-DB-XXL-JOB>
                 <!--suppress UnresolvedMavenProperty -->
                 <NACOS-NAMESPACE>${NACOS_NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
                 <!--suppress UnresolvedMavenProperty -->

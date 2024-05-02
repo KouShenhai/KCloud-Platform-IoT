@@ -156,7 +156,7 @@ services:
     env_file:
       - env/nacos.env
     extra_hosts:
-      - "mysql.laokou.org:192.168.30.130"
+      - "postgresql.laokou.org:192.168.30.130"
     network_mode: bridge
     depends_on:
       mysql:
@@ -209,7 +209,7 @@ services:
     volumes:
       - ./seata/logs:/opt
     extra_hosts:
-      - "mysql.laokou.org:192.168.30.130"
+      - "postgresql.laokou.org:192.168.30.130"
       - "nacos.laokou.org:192.168.30.130"
       - "redis.laokou.org:192.168.30.130"
     restart: always
@@ -228,7 +228,7 @@ services:
     volumes:
       - ./xxl-job/logs:/opt
     extra_hosts:
-      - "mysql.laokou.org:192.168.30.130"
+      - "postgresql.laokou.org:192.168.30.130"
     restart: always
     privileged: true
     network_mode: bridge
@@ -288,7 +288,7 @@ services:
       - "nacos.laokou.org:192.168.30.130"
       - "kafka.laokou.org:192.168.30.130"
       - "redis.laokou.org:192.168.30.130"
-      - "mysql.laokou.org:192.168.30.130"
+      - "postgresql.laokou.org:192.168.30.130"
       - "vue.laokou.org:192.168.30.130"
     restart: always
     privileged: true
@@ -311,7 +311,7 @@ services:
       - "nacos.laokou.org:192.168.30.130"
       - "kafka.laokou.org:192.168.30.130"
       - "redis.laokou.org:192.168.30.130"
-      - "mysql.laokou.org:192.168.30.130"
+      - "postgresql.laokou.org:192.168.30.130"
       - "rocketmq.laokou.org:192.168.30.130"
       - "elasticsearch.laokou.org:192.168.30.130"
       - "seata.laokou.org:192.168.30.130"

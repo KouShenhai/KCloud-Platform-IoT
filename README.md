@@ -88,7 +88,6 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
 | Nacos                       | 2.3.2         |
 | Seata                       | 2.0.0         |
 | Sentinel                    | 1.8.7         |
-| Mysql                       | 8.3.0         |
 | Redis                       | 7.2.4         |
 | Elasticsearch               | 8.12.2        |
 | RocketMQ                    | 5.2.0         |
@@ -96,8 +95,8 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
 | Netty                       | 4.1.109.Final |
 | Kafka                       | 3.6.1         |
 | EMQX                        | 5.3.0         |
-| Postgresql                  | 16.1          |
-| Flyway                      | 10.12.0       |
+| Postgresql                  | 16.2          |
+| Flyway                      | 10.11.1       |
 | Canal                       | 1.1.7         |
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
@@ -123,7 +122,7 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
 - 持久层框架：Mybatis Plus
 - JSON序列化：Jackson
 - 对象转换：MapStruct
-- 数据库：Mysql & Postgresql
+- 数据库：Postgresql
 - 数据库迁移：Flyway
 - 数据同步：Canal
 

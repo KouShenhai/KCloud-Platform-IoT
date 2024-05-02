@@ -25,7 +25,6 @@ import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.security.annotation.EnableSecurity;
-import org.laokou.common.xxl.job.annotation.EnableXxlJob;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
@@ -58,7 +57,6 @@ import static org.laokou.common.i18n.common.StringConstant.TRUE;
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 @EnableSecurity
 @EnableTaskExecutor
-@EnableXxlJob
 @EnableRouter
 public class AdminApp {
 
@@ -72,7 +70,8 @@ public class AdminApp {
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
 		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, ResourceUtils.getFile("classpath:nacos.cer").getCanonicalPath());
+		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT,
+				ResourceUtils.getFile("classpath:nacos.cer").getCanonicalPath());
 		new SpringApplicationBuilder(AdminApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

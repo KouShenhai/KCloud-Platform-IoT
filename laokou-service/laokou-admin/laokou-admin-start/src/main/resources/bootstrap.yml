@@ -62,3 +62,6 @@ spring:
           - data-id: application-common-flyway.yaml
             group: ${NACOS-GROUP}
             refresh: true
+          - data-id: application-admin.yaml
+            group: ${NACOS-GROUP}
+            refresh: true
