@@ -17,8 +17,6 @@
 
 package org.laokou.logstash.consumer;
 
-import com.xxl.job.core.context.XxlJobHelper;
-import com.xxl.job.core.handler.annotation.XxlJob;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -60,31 +58,30 @@ public class TraceConsumer {
 	/**
 	 * 每个月最后一天的23：50：00创建下一个月的索引.
 	 */
-	@XxlJob("createTraceIndexJobHandler")
 	public void createTraceIndexJob() {
 		// 单个参数
-		String ym = XxlJobHelper.getJobParam();
+		String ym = "123";
 		log.info("接收调度中心参数：{}", ym);
 		if (StringUtil.isEmpty(ym)) {
 			ym = DateUtil.format(DateUtil.plusMonths(DateUtil.nowDate(), 1), DateUtil.YYYYMM);
 		}
 		else {
 			if (!RegexUtil.numberRegex(ym) || ym.length() != 6) {
-				XxlJobHelper.log("时间格式错误");
-				XxlJobHelper.handleFail("时间格式错误");
+				//XxlJobHelper.log("时间格式错误");
+				//XxlJobHelper.handleFail("时间格式错误");
 				return;
 			}
 		}
 		try {
 			// 创建索引
 			createIndex(ym);
-			XxlJobHelper.handleSuccess("创建索引【{" + getIndexName(ym) + "}】执行成功");
-			XxlJobHelper.log("创建索引【{" + getIndexName(ym) + "}】执行成功");
+			//XxlJobHelper.handleSuccess("创建索引【{" + getIndexName(ym) + "}】执行成功");
+			//XxlJobHelper.log("创建索引【{" + getIndexName(ym) + "}】执行成功");
 		}
 		catch (Exception e) {
 			log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-			XxlJobHelper.log("创建索引【{" + getIndexName(ym) + "}】执行失败");
-			XxlJobHelper.handleFail("创建索引【{" + getIndexName(ym) + "}】执行失败");
+			//XxlJobHelper.log("创建索引【{" + getIndexName(ym) + "}】执行失败");
+			//XxlJobHelper.handleFail("创建索引【{" + getIndexName(ym) + "}】执行失败");
 		}
 	}
 

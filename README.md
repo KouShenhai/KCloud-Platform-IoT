@@ -153,7 +153,6 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
         └── laokou-common-domain                   --- 领域事件组件  
         └── laokou-common-crypto                   --- 加密解密组件  
         └── laokou-common-secret                   --- 接口验签组件  
-        └── laokou-common-xxl-job                  --- 任务调度组件  
         └── laokou-common-security                 --- 认证授权组件  
         └── laokou-common-openfeign                --- 远程调用组件   
         └── laokou-common-data-cache               --- 数据缓存组件  
@@ -163,7 +162,6 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
 ├── laokou-cloud  
         └── laokou-gateway                         --- API网关  
         └── laokou-monitor                         --- 服务监控  
-        └── laokou-xxl-job                         --- 任务调度  
         └── laokou-register                        --- 服务治理  
         └── laokou-sentinel                        --- 流量治理  
         └── laokou-seata                           --- 分布式事务  
