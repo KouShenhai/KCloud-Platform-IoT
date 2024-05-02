@@ -19,7 +19,6 @@ package org.laokou.logstash;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
-import org.laokou.common.xxl.job.annotation.EnableXxlJob;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -37,7 +36,6 @@ import static org.laokou.common.i18n.common.NetworkConstant.IP;
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableEncryptableProperties
-@EnableXxlJob
 public class LogtashApp {
 
 	@SneakyThrows

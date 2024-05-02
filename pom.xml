@@ -173,7 +173,7 @@
                 <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
                 <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
                 <DATASOURCE-DB-NACOS>kcloud_platform_iot_nacos</DATASOURCE-DB-NACOS>
-                <DATASOURCE-DB-XXL-JOB>kcloud_platform_iot_xxl_job</DATASOURCE-DB-XXL-JOB>
+                <DATASOURCE-DB-POWER-JOB>kcloud_platform_iot_power_job</DATASOURCE-DB-POWER-JOB>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
@@ -185,7 +185,6 @@
                 <SEATA-USERNAME>seata</SEATA-USERNAME>
                 <SEATA-PASSWORD>seata</SEATA-PASSWORD>
                 <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
-                <XXL-JOB-LOG-PATH>./logs/xxl-job</XXL-JOB-LOG-PATH>
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
@@ -214,7 +213,7 @@
                 <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
                 <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
                 <DATASOURCE-DB-NACOS>kcloud_platform_iot_nacos</DATASOURCE-DB-NACOS>
-                <DATASOURCE-DB-XXL-JOB>kcloud_platform_iot_xxl_job</DATASOURCE-DB-XXL-JOB>
+                <DATASOURCE-DB-POWER-JOB>kcloud_platform_iot_power_job</DATASOURCE-DB-POWER-JOB>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
@@ -226,7 +225,6 @@
                 <SEATA-USERNAME>seata</SEATA-USERNAME>
                 <SEATA-PASSWORD>seata</SEATA-PASSWORD>
                 <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
-                <XXL-JOB-LOG-PATH>./logs/xxl-job</XXL-JOB-LOG-PATH>
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
@@ -261,7 +259,7 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <DATASOURCE-DB-NACOS>${DATASOURCE_DB_NACOS:kcloud_platform_iot_nacos}</DATASOURCE-DB-NACOS>
                 <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-DB-XXL-JOB>${DATASOURCE_DB_XXL_JOB:kcloud_platform_iot_xxl_job}</DATASOURCE-DB-XXL-JOB>
+                <DATASOURCE-DB-POWER-JOB>${DATASOURCE_DB_POWER_JOB:kcloud_platform_iot_power_job}</DATASOURCE-DB-POWER-JOB>
                 <!--suppress UnresolvedMavenProperty -->
                 <NACOS-NAMESPACE>${NACOS_NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
                 <!--suppress UnresolvedMavenProperty -->
@@ -284,8 +282,6 @@
                 <SEATA-PASSWORD>${SEATA_PASSWORD:seata}</SEATA-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
                 <SEATA-LOG-PATH>${SEATA_LOG_PATH:/opt}</SEATA-LOG-PATH>
-                <!--suppress UnresolvedMavenProperty -->
-                <XXL-JOB-LOG-PATH>${XXL_JOB_LOG_PATH:/opt}</XXL-JOB-LOG-PATH>
                 <!--suppress UnresolvedMavenProperty -->
                 <SENTINEL-USERNAME>${SENTINEL_USERNAME:sentinel}</SENTINEL-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->

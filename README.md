@@ -111,7 +111,7 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
 - 服务监控：Spring Boot Admin & Prometheus
 - 高亮搜索：Elasticsearch
 - 链路跟踪：SkyWalking
-- 任务调度：XXL Job
+- 任务调度：Power Job（待调研）
 - 日志分析：EFK
 - 缓存&分布式锁：Redis & Redisson
 - 统计报表：MongoDB
@@ -153,7 +153,6 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
         └── laokou-common-domain                   --- 领域事件组件  
         └── laokou-common-crypto                   --- 加密解密组件  
         └── laokou-common-secret                   --- 接口验签组件  
-        └── laokou-common-xxl-job                  --- 任务调度组件  
         └── laokou-common-security                 --- 认证授权组件  
         └── laokou-common-openfeign                --- 远程调用组件   
         └── laokou-common-data-cache               --- 数据缓存组件  
@@ -163,21 +162,19 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
 ├── laokou-cloud  
         └── laokou-gateway                         --- API网关  
         └── laokou-monitor                         --- 服务监控  
-        └── laokou-xxl-job                         --- 任务调度  
         └── laokou-register                        --- 服务治理  
         └── laokou-sentinel                        --- 流量治理  
         └── laokou-seata                           --- 分布式事务  
-├── laokou-service         
+├── laokou-service  
+        └── laokou-iot                             --- 物联网模块         
         └── laokou-auth                            --- 认证授权模块  
         └── laokou-admin                           --- 后台管理模块  
         └── laokou-report                          --- 报表统计模块  
         └── laokou-generator                       --- 模板生成模块  
         └── laokou-modlule  
                 └── laokou-api                     --- API模块  
-                └── laokou-iot                     --- 物联网模块  
                 └── laokou-im                      --- 即时通讯模块  
                 └── laokou-logstash                --- 日志收集模块  
-                └── laokou-flyway                  --- 数据库版本控制模块  
 ~~~
 
 ### 🎵 项目截图(持续更新，仅供参考)

@@ -217,21 +217,6 @@ services:
     depends_on:
       - laokou-register
     network_mode: bridge
-  laokou-xxl-job:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-xxl-job:3.2.1
-    container_name: laokou-xxl-job
-    tty: true
-    env_file:
-      - env/xxl-job.env
-    ports:
-      - "9095:9095"
-    volumes:
-      - ./xxl-job/logs:/opt
-    extra_hosts:
-      - "postgresql.laokou.org:192.168.30.130"
-    restart: always
-    privileged: true
-    network_mode: bridge
   laokou-gateway:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.2.1
     container_name: laokou-gateway
@@ -337,7 +322,6 @@ services:
       - "nacos.laokou.org:192.168.30.130"
       - "kafka.laokou.org:192.168.30.130"
       - "elasticsearch.laokou.org:192.168.30.130"
-      - "xxl.job.laokou.org:192.168.30.130"
     restart: always
     privileged: true
     network_mode: bridge
