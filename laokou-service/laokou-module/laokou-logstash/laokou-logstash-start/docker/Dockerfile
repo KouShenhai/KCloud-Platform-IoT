@@ -15,7 +15,7 @@
 #  */
 FROM docker.io/tabatad/jdk21
 LABEL maintainer="laokou"
-LABEL description="laokou-xxl-job"
+LABEL description="laokou-logstash"
 COPY laokou-logstash-start.jar app.jar
 EXPOSE 10003
 CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1

@@ -111,7 +111,7 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
 - 服务监控：Spring Boot Admin & Prometheus
 - 高亮搜索：Elasticsearch
 - 链路跟踪：SkyWalking
-- 任务调度：XXL Job
+- 任务调度：Power Job（待调研）
 - 日志分析：EFK
 - 缓存&分布式锁：Redis & Redisson
 - 统计报表：MongoDB
