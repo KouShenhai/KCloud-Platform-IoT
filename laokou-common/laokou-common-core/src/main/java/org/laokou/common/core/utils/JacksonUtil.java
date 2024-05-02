@@ -23,9 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.InputStream;
@@ -40,10 +38,11 @@ import java.util.Map;
  * @author laokou
  */
 @Slf4j
-@UtilityClass
 public class JacksonUtil {
 
-	@Schema(name = "EMPTY_JSON", description = "空JSON字符串")
+	/**
+	 * 空JSON字符串.
+	 */
 	public static final String EMPTY_JSON = "{}";
 
 	/**
@@ -59,7 +58,7 @@ public class JacksonUtil {
 	 * @return Bean
 	 */
 	@SneakyThrows
-	public <T> T toBean(String json, Class<T> clazz) {
+	public static <T> T toBean(String json, Class<T> clazz) {
 		return MAPPER.readValue(json, javaType(clazz));
 
 	}
@@ -70,7 +69,7 @@ public class JacksonUtil {
 	 * @param <T> 泛型
 	 * @return JavaType
 	 */
-	public <T> JavaType javaType(Class<T> clazz) {
+	public static <T> JavaType javaType(Class<T> clazz) {
 		return MAPPER.getTypeFactory().constructType(clazz);
 	}
 
@@ -82,7 +81,7 @@ public class JacksonUtil {
 	 * @return Bean
 	 */
 	@SneakyThrows
-	public <T> T toBean(InputStream inputStream, Class<T> clazz) {
+	public static <T> T toBean(InputStream inputStream, Class<T> clazz) {
 		return MAPPER.readValue(inputStream, javaType(clazz));
 	}
 
@@ -92,7 +91,7 @@ public class JacksonUtil {
 	 * @return json字符串
 	 */
 	@SneakyThrows
-	public String toJsonStr(Object obj) {
+	public static String toJsonStr(Object obj) {
 		return toJsonStr(obj, false);
 	}
 
@@ -103,7 +102,7 @@ public class JacksonUtil {
 	 * @return json字符串
 	 */
 	@SneakyThrows
-	public String toJsonStr(Object obj, boolean isFormat) {
+	public static String toJsonStr(Object obj, boolean isFormat) {
 		if (obj instanceof String str) {
 			return str;
 		}
@@ -121,11 +120,11 @@ public class JacksonUtil {
 	 * @return 对象集合
 	 */
 	@SneakyThrows
-	public <T> List<T> toList(String json, Class<T> clazz) {
+	public static <T> List<T> toList(String json, Class<T> clazz) {
 		return MAPPER.readValue(json, collectionType(clazz));
 	}
 
-	public <T> CollectionType collectionType(Class<T> clazz) {
+	public static <T> CollectionType collectionType(Class<T> clazz) {
 		return MAPPER.getTypeFactory().constructCollectionType(Collection.class, clazz);
 	}
 
@@ -139,7 +138,7 @@ public class JacksonUtil {
 	 * @return map
 	 */
 	@SneakyThrows
-	public <K, V> Map<K, V> toMap(String json, Class<K> keyClass, Class<V> valueClass) {
+	public static <K, V> Map<K, V> toMap(String json, Class<K> keyClass, Class<V> valueClass) {
 		return MAPPER.readValue(json, mapType(keyClass, valueClass));
 	}
 
@@ -151,7 +150,7 @@ public class JacksonUtil {
 	 * @param <V> 值泛型
 	 * @return MapType
 	 */
-	public <K, V> MapType mapType(Class<K> keyClass, Class<V> valueClass) {
+	public static <K, V> MapType mapType(Class<K> keyClass, Class<V> valueClass) {
 		return MAPPER.getTypeFactory().constructMapType(Map.class, keyClass, valueClass);
 	}
 
@@ -162,7 +161,7 @@ public class JacksonUtil {
 	 * @param <T> 泛型
 	 * @return 对象
 	 */
-	public <T> T toValue(Object obj, Class<T> clazz) {
+	public static <T> T toValue(Object obj, Class<T> clazz) {
 		return MAPPER.convertValue(obj, clazz);
 	}
 
@@ -176,7 +175,7 @@ public class JacksonUtil {
 	 * @param <V> 值泛型
 	 * @return 对象
 	 */
-	public <T, K, V> T toMap(Object obj, Class<K> keyClass, Class<V> valueClass) {
+	public static <T, K, V> T toMap(Object obj, Class<K> keyClass, Class<V> valueClass) {
 		return MAPPER.convertValue(obj, mapType(keyClass, valueClass));
 	}
 
@@ -186,7 +185,7 @@ public class JacksonUtil {
 	 * @return 树节点
 	 */
 	@SneakyThrows
-	public JsonNode readTree(String json) {
+	public static JsonNode readTree(String json) {
 		return MAPPER.readTree(json);
 	}
 
