@@ -24,14 +24,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import static org.laokou.common.i18n.common.StringConstant.COMMA;
 import static org.laokou.common.i18n.common.StringConstant.DOT;
 
 /**
@@ -41,33 +36,6 @@ import static org.laokou.common.i18n.common.StringConstant.DOT;
  */
 @Slf4j
 public class FileUtil {
-
-	/**
-	 * 定义允许上传的文件扩展名.
-	 */
-	private static final Map<String, String> EXT_MAP = new HashMap<>(3);
-
-	static {
-		// 其中image,audio,video对应文件夹名称,对应dirName
-		// key文件夹名称
-		// value该文件夹内可以上传文件的后缀名
-		EXT_MAP.put("image", ".gif,.GIF,.jpg,.JPG,.jpeg,.JPEG,.png,.PNG,.bmp,.BMP,.webp,.WEBP");
-		EXT_MAP.put("audio",
-				".flac,.FLAC,.cda,.wav,.mp3,.aif,.aiff,.mid,.wma,.ra,.vqf,.ape,.CDA,.WAV,.MP3,.AIF,.AIFF,.MID,.WMA,.RA,.VQF,.APE");
-		EXT_MAP.put("video", ".mp4,.MP4,.AVI,.mov,.rmvb,.rm,.FLV,.mp4,.3GP,.flv");
-	}
-
-	/**
-	 * 校验文件扩展名.
-	 * @param type 类型
-	 * @param fileExt 文件扩展名
-	 * @return 校验结果
-	 */
-	public static boolean validateFileExt(String type, String fileExt) {
-		String extValue = EXT_MAP.get(type);
-		List<String> extList = Arrays.asList(extValue.split(COMMA));
-		return extList.contains(fileExt);
-	}
 
 	/**
 	 * 创建目录及文件.
