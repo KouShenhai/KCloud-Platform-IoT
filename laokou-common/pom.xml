@@ -50,7 +50,6 @@
         <module>laokou-common-cors</module>
         <module>laokou-common-seata</module>
         <module>laokou-common-xxl-job</module>
-        <module>laokou-common-shardingsphere</module>
         <module>laokou-common-log4j2</module>
         <module>laokou-common-trace</module>
         <module>laokou-common-algorithm</module>
@@ -59,7 +58,6 @@
         <module>laokou-common-idempotent</module>
         <module>laokou-common-lock</module>
         <module>laokou-common-sensitive</module>
-        <module>laokou-common-dubbo</module>
         <module>laokou-common-mqtt</module>
         <module>laokou-common-rate-limiter</module>
         <module>laokou-common-domain</module>

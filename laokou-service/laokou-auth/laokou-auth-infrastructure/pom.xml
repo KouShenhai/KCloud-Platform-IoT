@@ -41,24 +41,6 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-auth-client</artifactId>
         </dependency>
-<!--        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-shardingsphere</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>ch.qos.logback</groupId>
-                    <artifactId>logback-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>ch.qos.logback</groupId>
-                    <artifactId>logback-classic</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>-->
     </dependencies>
 
 </project>

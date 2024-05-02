@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: laokou-test-container-spring-boot
-
-logging:
-  level:
-    root: info
