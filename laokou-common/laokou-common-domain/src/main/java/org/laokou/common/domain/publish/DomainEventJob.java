@@ -17,7 +17,6 @@
 
 package org.laokou.common.domain.publish;
 
-import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.utils.DateUtil;
@@ -38,14 +37,14 @@ public class DomainEventJob {
 	private final DomainEventService domainEventService;
 
 	@Lock4j(key = "public_domain_event_job_lock", expire = 280000, enable = true)
-	@XxlJob("publishDomainEventJobHandler")
+	// @XxlJob("publishDomainEventJobHandler")
 	public void publishDomainEventJob() {
 		// 定时任务 => 每5分钟运行一次
 		domainEventPublisher.publish(ASYNC);
 	}
 
 	@Lock4j(key = "remove_domain_event_job_lock", expire = 600000, enable = true)
-	@XxlJob("removeDomainEventJobHandler")
+	// @XxlJob("removeDomainEventJobHandler")
 	public void removeDomainEventJob() {
 		// 定时任务 => 每天00:20执行一次（保留一个月的领域事件）
 		String ymd = DateUtil.format(DateUtil.plusMonths(DateUtil.now(), -1), DateUtil.YYYYMMDD);

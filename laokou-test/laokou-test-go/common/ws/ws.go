@@ -1,5 +1,0 @@
-package ws
-
-func main() {
-
-}

@@ -30,8 +30,6 @@
     <modules>
         <module>laokou-im</module>
         <module>laokou-api</module>
-        <module>laokou-flyway</module>
         <module>laokou-logstash</module>
-        <module>laokou-iot</module>
     </modules>
 </project>

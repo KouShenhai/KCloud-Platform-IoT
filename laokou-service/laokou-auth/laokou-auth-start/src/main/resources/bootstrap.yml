@@ -53,3 +53,6 @@ spring:
           - data-id: application-common-rocketmq.yaml
             group: ${NACOS-GROUP}
             refresh: true
+          - data-id: application-auth.yaml
+            group: ${NACOS-GROUP}
+            refresh: true

@@ -17,13 +17,13 @@
 
 package org.laokou.auth;
 
+import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
-import org.laokou.common.xxl.job.annotation.EnableXxlJob;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerAutoConfiguration;
@@ -34,10 +34,12 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.ResourceUtils;
 
 import java.net.InetAddress;
 
 import static org.laokou.common.i18n.common.NetworkConstant.IP;
+import static org.laokou.common.i18n.common.StringConstant.TRUE;
 
 /**
  * 启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
@@ -52,7 +54,6 @@ import static org.laokou.common.i18n.common.NetworkConstant.IP;
 @EnableDiscoveryClient
 @EnableRedisRepository
 @EnableTaskExecutor
-@EnableXxlJob
 @EnableRouter
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 @EnableAspectJAutoProxy(exposeProxy = true)
@@ -60,17 +61,18 @@ public class AuthApp {
 
 	@SneakyThrows
 	public static void main(String[] args) {
-		// https://github.com/alibaba/nacos/pull/3654
-		// 请查看 HttpLoginProcessor
-		// System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		// SpringSecurity 子线程读取父线程的上下文
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+		// https://github.com/alibaba/nacos/pull/3654
+		// 请查看 HttpLoginProcessor
+		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT,
+				ResourceUtils.getFile("classpath:nacos.cer").getCanonicalPath());
 		new SpringApplicationBuilder(AuthApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

@@ -68,3 +68,4 @@ B_Source_NameAlreadyExist
 B_User_UsernameAlreadyExist
 B_User_MailAlreadyExist
 B_User_MobileAlreadyExist
+B_User_Password
