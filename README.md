@@ -167,17 +167,16 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
         └── laokou-register                        --- 服务治理  
         └── laokou-sentinel                        --- 流量治理  
         └── laokou-seata                           --- 分布式事务  
-├── laokou-service         
+├── laokou-service  
+        └── laokou-iot                             --- 物联网模块         
         └── laokou-auth                            --- 认证授权模块  
         └── laokou-admin                           --- 后台管理模块  
         └── laokou-report                          --- 报表统计模块  
         └── laokou-generator                       --- 模板生成模块  
         └── laokou-modlule  
                 └── laokou-api                     --- API模块  
-                └── laokou-iot                     --- 物联网模块  
                 └── laokou-im                      --- 即时通讯模块  
                 └── laokou-logstash                --- 日志收集模块  
-                └── laokou-flyway                  --- 数据库版本控制模块  
 ~~~
 
 ### 🎵 项目截图(持续更新，仅供参考)
