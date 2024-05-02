@@ -167,16 +167,11 @@
             <properties>
                 <DATASOURCE-USERNAME>root</DATASOURCE-USERNAME>
                 <DATASOURCE-PASSWORD>laokou123</DATASOURCE-PASSWORD>
-                <DATASOURCE-HOST>mysql.laokou.org</DATASOURCE-HOST>
-                <!--<DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>-->
-                <DATASOURCE-PARAM>characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</DATASOURCE-PARAM>
-                <!--<DATASOURCE-PARAM>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false</DATASOURCE-PARAM>-->
-                <DATASOURCE-PORT>3306</DATASOURCE-PORT>
-                <!--<DATASOURCE-PORT>5432</DATASOURCE-PORT>-->
-                <DATASOURCE-DRIVER-CLASS-NAME>com.mysql.cj.jdbc.Driver</DATASOURCE-DRIVER-CLASS-NAME>
-                <!--<DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>-->
-                <DATASOURCE-PLATFORM>mysql</DATASOURCE-PLATFORM>
-                <!--<DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>-->
+                <DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>
+                <DATASOURCE-PARAM>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false</DATASOURCE-PARAM>
+                <DATASOURCE-PORT>5432</DATASOURCE-PORT>
+                <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
+                <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
                 <DATASOURCE-DB-NACOS>kcloud_platform_alibaba_nacos</DATASOURCE-DB-NACOS>
                 <DATASOURCE-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</DATASOURCE-DB-XXL-JOB>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
@@ -213,16 +208,11 @@
             <properties>
                 <DATASOURCE-USERNAME>ENC(aEwhK+oj5wQ/pJfRcfwXAw==)</DATASOURCE-USERNAME>
                 <DATASOURCE-PASSWORD>ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)</DATASOURCE-PASSWORD>
-                <DATASOURCE-HOST>mysql.laokou.org</DATASOURCE-HOST>
-                <!--<DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>-->
-                <DATASOURCE-PARAM>characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</DATASOURCE-PARAM>
-                <!--<DATASOURCE-PARAM>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false</DATASOURCE-PARAM>-->
-                <DATASOURCE-PORT>3306</DATASOURCE-PORT>
-                <!--<DATASOURCE-PORT>5432</DATASOURCE-PORT>-->
-                <DATASOURCE-DRIVER-CLASS-NAME>com.mysql.cj.jdbc.Driver</DATASOURCE-DRIVER-CLASS-NAME>
-                <!--<DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>-->
-                <DATASOURCE-PLATFORM>mysql</DATASOURCE-PLATFORM>
-                <!--<DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>-->
+                <DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>
+                <DATASOURCE-PARAM>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false</DATASOURCE-PARAM>
+                <DATASOURCE-PORT>5432</DATASOURCE-PORT>
+                <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
+                <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
                 <DATASOURCE-DB-NACOS>kcloud_platform_alibaba_nacos</DATASOURCE-DB-NACOS>
                 <DATASOURCE-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</DATASOURCE-DB-XXL-JOB>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
@@ -259,13 +249,13 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <DATASOURCE-PASSWORD>${DATASOURCE_PASSWORD:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}</DATASOURCE-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-HOST>${DATASOURCE_HOST:mysql.laokou.org}</DATASOURCE-HOST>
+                <DATASOURCE-HOST>${DATASOURCE_HOST:postgresql.laokou.org}</DATASOURCE-HOST>
                 <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-PARAM>${DATASOURCE_PARAM:characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true}</DATASOURCE-PARAM>
+                <DATASOURCE-PARAM>${DATASOURCE_PARAM:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false}</DATASOURCE-PARAM>
                 <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-PORT>${DATASOURCE_PORT:3306}</DATASOURCE-PORT>
+                <DATASOURCE-PORT>${DATASOURCE_PORT:5432}</DATASOURCE-PORT>
                 <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-DRIVER-CLASS-NAME>${DATASOURCE_DRIVER_CLASS_NAME:com.mysql.cj.jdbc.Driver}</DATASOURCE-DRIVER-CLASS-NAME>
+                <DATASOURCE-DRIVER-CLASS-NAME>${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}</DATASOURCE-DRIVER-CLASS-NAME>
                 <!--suppress UnresolvedMavenProperty -->
                 <DATASOURCE-PLATFORM>${DATASOURCE_PLATFORM:mysql}</DATASOURCE-PLATFORM>
                 <!--suppress UnresolvedMavenProperty -->
