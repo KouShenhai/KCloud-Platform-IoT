@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.DTO;
+import org.laokou.common.i18n.dto.ClientObject;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.ArrayList;
@@ -87,11 +87,10 @@ public class TreeUtil {
 		return rootNode;
 	}
 
-
 	@Data
 	@NoArgsConstructor
 	@Schema(name = "TreeNode", description = "树节点")
-	public static class TreeNode<T> extends DTO {
+	public static class TreeNode<T> extends ClientObject {
 
 		@Schema(name = "id", description = "ID")
 		private Long id;

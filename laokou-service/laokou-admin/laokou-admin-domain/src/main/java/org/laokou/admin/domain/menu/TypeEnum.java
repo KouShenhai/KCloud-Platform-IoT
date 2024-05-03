@@ -20,8 +20,8 @@ package org.laokou.admin.domain.menu;
 /**
  * @author laokou
  */
-public enum VisibleEnums {
+public enum TypeEnum {
 
-	YES, NO
+	MENU, BUTTON
 
 }

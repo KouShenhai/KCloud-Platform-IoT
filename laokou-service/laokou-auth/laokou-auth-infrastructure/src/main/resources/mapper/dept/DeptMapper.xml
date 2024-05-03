@@ -21,24 +21,24 @@
 <mapper namespace="org.laokou.auth.gatewayimpl.database.DeptMapper">
 
     <select id="selectDeptPaths" resultType="string">
-        select path
+        select "path"
         from boot_sys_dept
-        where del_flag = 0
-        and pid = 0
+        where "del_flag" = 0
+        and "pid" = 0
     </select>
 
     <select id="selectDeptPathsByUserId" resultType="string">
-        select a.path
+        select a."path"
         from boot_sys_dept as a
            , boot_sys_role as b
            , boot_sys_role_dept as c
            , boot_sys_user_role as e
-        where a.id = c.dept_id
-          and c.role_id = b.id
-          and b.id = e.role_id
-          and e.user_id = #{userId}
-          and a.del_flag = 0
-        group by a.path
+        where a."id" = c."dept_id"
+          and c."role_id" = b."id"
+          and b."id" = e."role_id"
+          and e."user_id" = #{userId}
+          and a."del_flag" = 0
+        group by a."path"
     </select>
 
 </mapper>

@@ -53,12 +53,12 @@ request.interceptors.request.use(config => {
   // 让每个请求携带自定义 token 请根据实际情况自行修改
   if (token) {
     config.headers['Authorization'] = 'Bearer ' + token // 让每个请求携带自定义token 请根据实际情况自行修改
-    config.headers['User-Id'] = userId
-    config.headers['User-Name'] = userName
-    config.headers['Tenant-Id'] = tenantId
   }
-  config.headers['Service-Gray'] = 'true'
   config.headers['Lang'] = lang
+  config.headers['User-Id'] = userId
+  config.headers['User-Name'] = userName
+  config.headers['Tenant-Id'] = tenantId
+  config.headers['Service-Gray'] = 'true'
   config.headers['Trace-Id'] = userId + moment().valueOf()
   // 处理params参数
   if (config.params) {

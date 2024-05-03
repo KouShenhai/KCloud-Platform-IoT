@@ -19,12 +19,13 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.MenusServiceI;
-import org.laokou.admin.dto.menu.*;
-import org.laokou.admin.dto.menu.clientobject.MenuCO;
-import org.laokou.admin.command.menu.MenuRemoveCmdExe;
 import org.laokou.admin.command.menu.MenuCreateCmdExe;
 import org.laokou.admin.command.menu.MenuModifyCmdExe;
+import org.laokou.admin.command.menu.MenuRemoveCmdExe;
 import org.laokou.admin.command.menu.query.*;
+import org.laokou.admin.dto.menu.*;
+import org.laokou.admin.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.dto.menu.clientobject.RouterCO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,13 @@ public class MenusServiceImpl implements MenusServiceI {
 	private final MenuIdsGetQryExe menuIDSGetQryExe;
 
 	private final MenuTenantListQryExe menuTenantListQryExe;
+
+	private final MenuListRouterQryExe menuListRouterQryExe;
+
+	@Override
+	public Result<List<RouterCO>> getRouters() {
+		return menuListRouterQryExe.execute();
+	}
 
 	/**
 	 * 查询菜单列表.

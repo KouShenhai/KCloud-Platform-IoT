@@ -20,8 +20,8 @@ package org.laokou.admin.domain.menu;
 /**
  * @author laokou
  */
-public enum MenuTypeEnums {
+public enum HiddenEnum {
 
-	MENU, BUTTON
+	NO, YES
 
 }

@@ -3458,3 +3458,118 @@ mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl' WHERE "id" = 2022;
+
+UPDATE "public"."config_info" SET "content" = '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: false
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            pool-name: HikariCP
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  xxl-job:
+    admin:
+      address: http://xxl.job.laokou.org:9095/xxl-job-admin
+    executor:
+      app-name: laokou-admin
+      port: -1
+      log-path: ./logs/xxl-job/laokou-admin
+      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
+      intentionalities: 7
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+      - boot_sys_login_log
+    enabled: true
+  slow-sql:
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl' WHERE "id" = 2022;
+
+UPDATE "public"."config_info" SET  "content" = '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: false
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 60000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            is-read-only: false
+  xxl-job:
+    admin:
+      address: http://xxl.job.laokou.org:9095/xxl-job-admin
+    executor:
+      app-name: laokou-auth
+      port: -1
+      log-path: ./logs/xxl-job/laokou-auth
+      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
+      intentionalities: 7
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: true
+    ignore-tables:
+      - boot_sys_source
+      - boot_sys_tenant
+  slow-sql:
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl' WHERE "id" = 2025;

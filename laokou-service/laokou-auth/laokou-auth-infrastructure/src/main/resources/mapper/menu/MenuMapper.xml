@@ -20,25 +20,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.auth.gatewayimpl.database.MenuMapper">
     <select id="selectPermissions" resultType="string">
-        SELECT permission
+        SELECT "permission"
         FROM boot_sys_menu
-        where del_flag = 0
-          and type = 1
-        GROUP BY permission
+        where "del_flag" = 0
+          and "type" = 1
+        GROUP BY "permission"
     </select>
 
     <select id="selectPermissionsByUserId" resultType="string">
-        SELECT a.permission
+        SELECT a."permission"
         FROM boot_sys_menu as a
         ,boot_sys_role as b
         ,boot_sys_role_menu as c
         ,boot_sys_user_role as e
-        WHERE a.id = c.menu_id
-            AND c.role_id = b.id
-            AND b.id = e.role_id
-            AND e.user_id = #{userId}
-            and a.del_flag = 0 and a.type = 1
-        GROUP BY a.permission
+        WHERE a."id" = c."menu_id"
+            AND c."role_id" = b."id"
+            AND b."id" = e.role_id
+            AND e."user_id" = #{userId}
+            and a."del_flag" = 0 and a."type" = 1
+        GROUP BY a."permission"
     </select>
 
 </mapper>
