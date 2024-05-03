@@ -44,19 +44,19 @@
       </div>
       <!-- 操作 -->
       <div class="table-operations">
-        <a-button type="primary" @click="$refs.createForm.handleAdd()" v-hasPermi="['system:dict:add']">
+        <a-button type="primary" @click="$refs.createForm.handleAdd()" v-hasPermi="['sys:dict:add']">
           <a-icon type="plus" />新增
         </a-button>
-        <a-button type="primary" :disabled="single" @click="$refs.createForm.handleUpdate(undefined, ids)" v-hasPermi="['system:dict:edit']">
+        <a-button type="primary" :disabled="single" @click="$refs.createForm.handleUpdate(undefined, ids)" v-hasPermi="['sys:dict:edit']">
           <a-icon type="edit" />修改
         </a-button>
-        <a-button type="danger" :disabled="multiple" @click="handleDelete" v-hasPermi="['system:dict:remove']">
+        <a-button type="danger" :disabled="multiple" @click="handleDelete" v-hasPermi="['sys:dict:remove']">
           <a-icon type="delete" />删除
         </a-button>
-        <a-button type="primary" @click="handleExport" v-hasPermi="['system:dict:export']">
+        <a-button type="primary" @click="handleExport" v-hasPermi="['sys:dict:export']">
           <a-icon type="download" />导出
         </a-button>
-        <a-button type="dashed" :loading="refreshing" @click="handleRefreshCache" v-hasPermi="['system:dict:remove']">
+        <a-button type="dashed" :loading="refreshing" @click="handleRefreshCache" v-hasPermi="['sys:dict:remove']">
           <a-icon type="redo" />刷新缓存
         </a-button>
         <table-setting
@@ -101,11 +101,11 @@
           {{ parseTime(record.createTime) }}
         </span>
         <span slot="operation" slot-scope="text, record">
-          <a @click="$refs.createForm.handleUpdate(record, undefined)" v-hasPermi="['system:dict:edit']">
+          <a @click="$refs.createForm.handleUpdate(record, undefined)" v-hasPermi="['sys:dict:edit']">
             <a-icon type="edit" />修改
           </a>
           <a-divider type="vertical" />
-          <a @click="handleDelete(record)" v-hasPermi="['system:dict:remove']">
+          <a @click="handleDelete(record)" v-hasPermi="['sys:dict:remove']">
             <a-icon type="delete" />删除
           </a>
         </span>

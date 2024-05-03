@@ -3,6 +3,7 @@ import momentEU from 'moment/locale/eu'
 import setting from './en-US/setting'
 import user from './en-US/user'
 import tenant from './en-US/tenant'
+import menu from './en-US/menu'
 
 const components = {
   antLocale: antdEnUS,
@@ -15,5 +16,6 @@ export default {
   ...components,
   ...setting,
   ...user,
-  ...tenant
+  ...tenant,
+  ...menu
 }

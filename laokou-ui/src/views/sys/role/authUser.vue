@@ -26,11 +26,11 @@
       </div>
       <!-- 操作 -->
       <div class="table-operations">
-        <a-button type="primary" @click="$refs.selectUser.handleAuthUser()" v-hasPermi="['system:role:add']">
+        <a-button type="primary" @click="$refs.selectUser.handleAuthUser()" v-hasPermi="['sys:role:add']">
           <a-icon type="plus" />
           添加用户
         </a-button>
-        <a-button type="danger" :loading="authing" :disabled="multiple" @click="cancelAuthUserAll" v-hasPermi="['system:role:remove']">
+        <a-button type="danger" :loading="authing" :disabled="multiple" @click="cancelAuthUserAll" v-hasPermi="['sys:role:remove']">
           <a-icon type="delete" />
           取消批量授权
         </a-button>
@@ -68,7 +68,7 @@
           {{ parseTime(record.createTime) }}
         </span>
         <span slot="operation" slot-scope="text, record">
-          <a @click="cancelAuthUser(record)" v-hasPermi="['system:role:remove']">
+          <a @click="cancelAuthUser(record)" v-hasPermi="['sys:role:remove']">
             <a-icon type="edit" />
             取消授权
           </a>
@@ -284,7 +284,7 @@ export default {
       })
     },
     back () {
-      this.$router.push({ path: '/system/role' })
+      this.$router.push({ path: '/sys/role' })
     }
   }
 }

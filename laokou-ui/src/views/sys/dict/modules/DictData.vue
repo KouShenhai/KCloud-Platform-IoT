@@ -8,7 +8,7 @@
     />
     <a-card :bordered="false" :style="{ background: '#f2f4f5'}">
       <div class="table-operations">
-        <a-button type="primary" size="small" @click="$refs.createDataForm.handleAdd()" v-hasPermi="['system:dict:add']" ghost>
+        <a-button type="primary" size="small" @click="$refs.createDataForm.handleAdd()" v-hasPermi="['sys:dict:add']" ghost>
           <a-icon type="plus" />新增
         </a-button>
         <a-button
@@ -16,7 +16,7 @@
           :disabled="multiple"
           @click="handleDelete"
           size="small"
-          v-hasPermi="['system:dict:remove']"
+          v-hasPermi="['sys:dict:remove']"
           ghost>
           <a-icon type="delete" />删除
         </a-button>
@@ -43,11 +43,11 @@
           {{ parseTime(record.createTime) }}
         </span>
         <span slot="operation" slot-scope="text, record">
-          <a @click="$refs.createDataForm.handleUpdate(record)" v-hasPermi="['system:dict:edit']">
+          <a @click="$refs.createDataForm.handleUpdate(record)" v-hasPermi="['sys:dict:edit']">
             <a-icon type="edit" />修改
           </a>
           <a-divider type="vertical" />
-          <a @click="handleDelete(record)" v-hasPermi="['system:dict:remove']">
+          <a @click="handleDelete(record)" v-hasPermi="['sys:dict:remove']">
             <a-icon type="delete" />删除
           </a>
         </span>

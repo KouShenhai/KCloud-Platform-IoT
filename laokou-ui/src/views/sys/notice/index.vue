@@ -39,13 +39,13 @@
       </div>
       <!-- 操作 -->
       <div class="table-operations">
-        <a-button type="primary" @click="handleAdd()" v-hasPermi="['system:notice:add']">
+        <a-button type="primary" @click="handleAdd()" v-hasPermi="['sys:notice:add']">
           <a-icon type="plus" />新增
         </a-button>
-        <a-button type="primary" :disabled="single" @click="handleUpdate(undefined, ids)" v-hasPermi="['system:notice:edit']">
+        <a-button type="primary" :disabled="single" @click="handleUpdate(undefined, ids)" v-hasPermi="['sys:notice:edit']">
           <a-icon type="edit" />修改
         </a-button>
-        <a-button type="danger" :disabled="multiple" @click="handleDelete" v-hasPermi="['system:notice:remove']">
+        <a-button type="danger" :disabled="multiple" @click="handleDelete" v-hasPermi="['sys:notice:remove']">
           <a-icon type="delete" />删除
         </a-button>
         <table-setting
@@ -75,11 +75,11 @@
           {{ parseTime(record.createTime) }}
         </span>
         <span slot="operation" slot-scope="text, record">
-          <a @click="handleUpdate(record, undefined)" v-hasPermi="['system:notice:edit']">
+          <a @click="handleUpdate(record, undefined)" v-hasPermi="['sys:notice:edit']">
             <a-icon type="edit" />修改
           </a>
-          <a-divider type="vertical" v-hasPermi="['system:notice:remove']" />
-          <a @click="handleDelete(record)" v-hasPermi="['system:notice:remove']">
+          <a-divider type="vertical" v-hasPermi="['sys:notice:remove']" />
+          <a @click="handleDelete(record)" v-hasPermi="['sys:notice:remove']">
             <a-icon type="delete" />删除
           </a>
         </span>

@@ -6,13 +6,13 @@
         <a-form layout="inline">
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
-              <a-form-item label="岗位编码">
-                <a-input v-model="queryParam.postCode" placeholder="请输入" allow-clear/>
+              <a-form-item label="角色名">
+                <a-input v-model="queryParam.roleName" placeholder="请输入" allow-clear/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
-              <a-form-item label="岗位名称">
-                <a-input v-model="queryParam.postName" placeholder="请输入" allow-clear/>
+              <a-form-item label="权限字符">
+                <a-input v-model="queryParam.roleKey" placeholder="请输入" allow-clear/>
               </a-form-item>
             </a-col>
             <template v-if="advanced">
@@ -21,6 +21,11 @@
                   <a-select placeholder="请选择" v-model="queryParam.status" style="width: 100%" allow-clear>
                     <a-select-option v-for="(d, index) in dict.type['sys_normal_disable']" :key="index" :value="d.value">{{ d.label }}</a-select-option>
                   </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :md="8" :sm="24">
+                <a-form-item label="创建时间">
+                  <a-range-picker style="width: 100%" v-model="dateRange" valueFormat="YYYY-MM-DD" format="YYYY-MM-DD" allow-clear/>
                 </a-form-item>
               </a-col>
             </template>
@@ -39,16 +44,16 @@
       </div>
       <!-- 操作 -->
       <div class="table-operations">
-        <a-button type="primary" @click="$refs.createForm.handleAdd()" v-hasPermi="['system:post:add']">
+        <a-button type="primary" @click="$refs.createForm.handleAdd()" v-hasPermi="['sys:role:add']">
           <a-icon type="plus" />新增
         </a-button>
-        <a-button type="primary" :disabled="single" @click="$refs.createForm.handleUpdate(undefined, ids)" v-hasPermi="['system:post:edit']">
+        <a-button type="primary" :disabled="single" @click="$refs.createForm.handleUpdate(undefined,ids)" v-hasPermi="['sys:role:edit']">
           <a-icon type="edit" />修改
         </a-button>
-        <a-button type="danger" :disabled="multiple" @click="handleDelete" v-hasPermi="['system:post:remove']">
+        <a-button type="danger" :disabled="multiple" @click="handleDelete" v-hasPermi="['sys:role:remove']">
           <a-icon type="delete" />删除
         </a-button>
-        <a-button type="primary" @click="handleExport" v-hasPermi="['system:post:export']">
+        <a-button type="primary" @click="handleExport" v-hasPermi="['sys:role:export']">
           <a-icon type="download" />导出
         </a-button>
         <table-setting
@@ -64,30 +69,67 @@
         :statusOptions="dict.type['sys_normal_disable']"
         @ok="getList"
       />
+
+      <!-- 分配角色数据权限对话框 -->
+      <create-data-scope-form
+        ref="createDataScopeForm"
+        @ok="getList"
+      />
       <!-- 数据展示 -->
       <a-table
         :loading="loading"
         :size="tableSize"
-        rowKey="postId"
+        rowKey="roleId"
         :columns="columns"
         :data-source="list"
         :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         :pagination="false"
         :bordered="tableBordered">
         <span slot="status" slot-scope="text, record">
-          <dict-tag :options="dict.type['sys_normal_disable']" :value="record.status"/>
+          <a-popconfirm
+            ok-text="是"
+            cancel-text="否"
+            @confirm="confirmHandleStatus(record)"
+            @cancel="cancelHandleStatus(record)"
+          >
+            <span slot="title">确认<b>{{ record.status === '1' ? '启用' : '停用' }}</b>{{ record.roleName }}的角色吗?</span>
+            <a-switch checked-children="开" un-checked-children="关" :checked="record.status == 0" />
+          </a-popconfirm>
         </span>
         <span slot="createTime" slot-scope="text, record">
           {{ parseTime(record.createTime) }}
         </span>
         <span slot="operation" slot-scope="text, record">
-          <a @click="$refs.createForm.handleUpdate(record, undefined)" v-hasPermi="['system:post:edit']">
-            <a-icon type="edit" />修改
+          <a @click="$refs.createForm.handleUpdate(record, undefined)" v-hasPermi="['sys:role:edit']">
+            <a-icon type="edit" />
+            修改
           </a>
-          <a-divider type="vertical" v-hasPermi="['system:post:remove']" />
-          <a @click="handleDelete(record)" v-hasPermi="['system:post:remove']">
-            <a-icon type="delete" />删除
+          <a-divider type="vertical" v-hasPermi="['sys:role:remove']" />
+          <a @click="handleDelete(record)" v-hasPermi="['sys:role:remove']">
+            <a-icon type="delete" />
+            删除
           </a>
+          <a-divider type="vertical" v-hasPermi="['sys:role:edit']" />
+          <a-dropdown v-hasPermi="['sys:role:edit']">
+            <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+              <a-icon type="double-right" />
+              更多
+            </a>
+            <a-menu slot="overlay">
+              <a-menu-item>
+                <a @click="$refs.createDataScopeForm.handleDataScope(record)">
+                  <a-icon type="lock" />
+                  数据权限
+                </a>
+              </a-menu-item>
+              <a-menu-item>
+                <a @click="handleAuthUser(record)">
+                  <a-icon type="user-add" />
+                  分配用户
+                </a>
+              </a-menu-item>
+            </a-menu>
+          </a-dropdown>
         </span>
       </a-table>
       <!-- 分页 -->
@@ -108,14 +150,16 @@
 
 <script>
 
-import { listPost, delPost } from '@/api/system/post'
+import { listRole, delRole, changeRoleStatus } from '@/api/system/role'
 import CreateForm from './modules/CreateForm'
+import CreateDataScopeForm from './modules/CreateDataScopeForm'
 import { tableMixin } from '@/store/table-mixin'
 
 export default {
-  name: 'Post',
+  name: 'Role',
   components: {
-    CreateForm
+    CreateForm,
+    CreateDataScopeForm
   },
   mixins: [tableMixin],
   dicts: ['sys_normal_disable'],
@@ -133,34 +177,36 @@ export default {
       ids: [],
       loading: false,
       total: 0,
+      // 日期范围
+      dateRange: [],
       queryParam: {
         pageNum: 1,
         pageSize: 10,
-        postCode: undefined,
-        postName: undefined,
+        roleName: undefined,
+        roleKey: undefined,
         status: undefined
       },
       columns: [
         {
-          title: '岗位编号',
-          dataIndex: 'postId',
+          title: '角色编号',
+          dataIndex: 'roleId',
           align: 'center'
         },
         {
-          title: '岗位编码',
-          dataIndex: 'postCode',
+          title: '角色名',
+          dataIndex: 'roleName',
           ellipsis: true,
           align: 'center'
         },
         {
-          title: '岗位名称',
-          dataIndex: 'postName',
+          title: '权限标识',
+          dataIndex: 'roleKey',
           ellipsis: true,
           align: 'center'
         },
         {
-          title: '显示顺序',
-          dataIndex: 'postSort',
+          title: '排序',
+          dataIndex: 'roleSort',
           align: 'center'
         },
         {
@@ -172,14 +218,13 @@ export default {
         {
           title: '创建时间',
           dataIndex: 'createTime',
-          ellipsis: true,
           scopedSlots: { customRender: 'createTime' },
           align: 'center'
         },
         {
           title: '操作',
           dataIndex: 'operation',
-          width: '15%',
+          width: '20%',
           scopedSlots: { customRender: 'operation' },
           align: 'center'
         }
@@ -196,10 +241,10 @@ export default {
   watch: {
   },
   methods: {
-    /** 查询部门列表 */
+    /** 查询角色列表 */
     getList () {
       this.loading = true
-      listPost(this.queryParam).then(response => {
+      listRole(this.addDateRange(this.queryParam, this.dateRange)).then(response => {
           this.list = response.rows
           this.total = response.total
           this.loading = false
@@ -213,11 +258,12 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery () {
+      this.dateRange = []
       this.queryParam = {
         pageNum: 1,
         pageSize: 10,
-        postCode: undefined,
-        postName: undefined,
+        roleName: undefined,
+        roleKey: undefined,
         status: undefined
       }
       this.handleQuery()
@@ -234,22 +280,41 @@ export default {
     onSelectChange (selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
-      this.ids = this.selectedRows.map(item => item.postId)
+      this.ids = this.selectedRows.map(item => item.roleId)
       this.single = selectedRowKeys.length !== 1
       this.multiple = !selectedRowKeys.length
     },
     toggleAdvanced () {
       this.advanced = !this.advanced
     },
+    /* 角色状态修改 */
+    confirmHandleStatus (row) {
+      const text = row.status === '1' ? '启用' : '停用'
+      row.status = row.status === '0' ? '1' : '0'
+      changeRoleStatus(row.roleId, row.status)
+      .then(() => {
+        this.$message.success(
+          text + '成功',
+          3
+        )
+      }).catch(function () {
+        this.$message.error(
+          text + '异常',
+          3
+        )
+      })
+    },
+    cancelHandleStatus (row) {
+    },
     /** 删除按钮操作 */
     handleDelete (row) {
       var that = this
-      const postIds = row.postId || this.ids
+      const roleIds = row.roleId || this.ids
       this.$confirm({
         title: '确认删除所选中数据?',
-        content: '当前选中编号为' + postIds + '的数据',
+        content: '当前选中编号为' + roleIds + '的数据',
         onOk () {
-          return delPost(postIds)
+          return delRole(roleIds)
             .then(() => {
               that.onSelectChange([], [])
               that.getList()
@@ -269,12 +334,17 @@ export default {
         title: '是否确认导出?',
         content: '此操作将导出当前条件下所有数据而非选中数据',
         onOk () {
-          that.download('system/post/export', {
+          that.download('system/role/export', {
             ...that.queryParam
-          }, `post_${new Date().getTime()}.xlsx`)
+          }, `role_${new Date().getTime()}.xlsx`)
         },
         onCancel () {}
       })
+    },
+    /** 分配用户操作 */
+    handleAuthUser (row) {
+      const roleId = row.roleId
+      this.$router.push({ path: '/sys/role/authUser', query: { roleId: roleId } })
     }
   }
 }

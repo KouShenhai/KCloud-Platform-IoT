@@ -6,20 +6,20 @@
         <a-form layout="inline">
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
-              <a-form-item label="角色名">
-                <a-input v-model="queryParam.roleName" placeholder="请输入" allow-clear/>
+              <a-form-item label="参数名称">
+                <a-input v-model="queryParam.configName" placeholder="请输入" allow-clear/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
-              <a-form-item label="权限字符">
-                <a-input v-model="queryParam.roleKey" placeholder="请输入" allow-clear/>
+              <a-form-item label="参数键名">
+                <a-input v-model="queryParam.configKey" placeholder="请输入" allow-clear/>
               </a-form-item>
             </a-col>
             <template v-if="advanced">
               <a-col :md="8" :sm="24">
-                <a-form-item label="状态">
-                  <a-select placeholder="请选择" v-model="queryParam.status" style="width: 100%" allow-clear>
-                    <a-select-option v-for="(d, index) in dict.type['sys_normal_disable']" :key="index" :value="d.value">{{ d.label }}</a-select-option>
+                <a-form-item label="参数类型">
+                  <a-select placeholder="请选择" v-model="queryParam.configType" style="width: 100%" allow-clear>
+                    <a-select-option v-for="(d, index) in dict.type['sys_yes_no']" :key="index" :value="d.value">{{ d.label }}</a-select-option>
                   </a-select>
                 </a-form-item>
               </a-col>
@@ -44,17 +44,20 @@
       </div>
       <!-- 操作 -->
       <div class="table-operations">
-        <a-button type="primary" @click="$refs.createForm.handleAdd()" v-hasPermi="['system:role:add']">
+        <a-button type="primary" @click="$refs.createForm.handleAdd()" v-hasPermi="['sys:config:add']">
           <a-icon type="plus" />新增
         </a-button>
-        <a-button type="primary" :disabled="single" @click="$refs.createForm.handleUpdate(undefined,ids)" v-hasPermi="['system:role:edit']">
+        <a-button type="primary" :disabled="single" @click="$refs.createForm.handleUpdate(undefined, ids)" v-hasPermi="['sys:config:edit']">
           <a-icon type="edit" />修改
         </a-button>
-        <a-button type="danger" :disabled="multiple" @click="handleDelete" v-hasPermi="['system:role:remove']">
+        <a-button type="danger" :disabled="multiple" @click="handleDelete" v-hasPermi="['sys:config:remove']">
           <a-icon type="delete" />删除
         </a-button>
-        <a-button type="primary" @click="handleExport" v-hasPermi="['system:role:export']">
+        <a-button type="primary" @click="handleExport" v-hasPermi="['sys:config:export']">
           <a-icon type="download" />导出
+        </a-button>
+        <a-button type="dashed" :loading="refreshing" @click="handleRefreshCache" v-hasPermi="['sys:config:remove']">
+          <a-icon type="redo" />刷新缓存
         </a-button>
         <table-setting
           :style="{float: 'right'}"
@@ -66,70 +69,33 @@
       <!-- 增加修改 -->
       <create-form
         ref="createForm"
-        :statusOptions="dict.type['sys_normal_disable']"
-        @ok="getList"
-      />
-
-      <!-- 分配角色数据权限对话框 -->
-      <create-data-scope-form
-        ref="createDataScopeForm"
+        :typeOptions="dict.type['sys_yes_no']"
         @ok="getList"
       />
       <!-- 数据展示 -->
       <a-table
         :loading="loading"
         :size="tableSize"
-        rowKey="roleId"
+        rowKey="configId"
         :columns="columns"
         :data-source="list"
         :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         :pagination="false"
         :bordered="tableBordered">
-        <span slot="status" slot-scope="text, record">
-          <a-popconfirm
-            ok-text="是"
-            cancel-text="否"
-            @confirm="confirmHandleStatus(record)"
-            @cancel="cancelHandleStatus(record)"
-          >
-            <span slot="title">确认<b>{{ record.status === '1' ? '启用' : '停用' }}</b>{{ record.roleName }}的角色吗?</span>
-            <a-switch checked-children="开" un-checked-children="关" :checked="record.status == 0" />
-          </a-popconfirm>
+        <span slot="configType" slot-scope="text, record">
+          <dict-tag :options="dict.type['sys_yes_no']" :value="record.configType" />
         </span>
         <span slot="createTime" slot-scope="text, record">
           {{ parseTime(record.createTime) }}
         </span>
         <span slot="operation" slot-scope="text, record">
-          <a @click="$refs.createForm.handleUpdate(record, undefined)" v-hasPermi="['system:role:edit']">
-            <a-icon type="edit" />
-            修改
+          <a @click="$refs.createForm.handleUpdate(record, undefined)" v-hasPermi="['sys:config:edit']">
+            <a-icon type="edit" />修改
           </a>
-          <a-divider type="vertical" v-hasPermi="['system:role:remove']" />
-          <a @click="handleDelete(record)" v-hasPermi="['system:role:remove']">
-            <a-icon type="delete" />
-            删除
+          <a-divider type="vertical" v-hasPermi="['sys:config:remove']" />
+          <a @click="handleDelete(record)" v-hasPermi="['sys:config:remove']">
+            <a-icon type="delete" />删除
           </a>
-          <a-divider type="vertical" v-hasPermi="['system:role:edit']" />
-          <a-dropdown v-hasPermi="['system:role:edit']">
-            <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-              <a-icon type="double-right" />
-              更多
-            </a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a @click="$refs.createDataScopeForm.handleDataScope(record)">
-                  <a-icon type="lock" />
-                  数据权限
-                </a>
-              </a-menu-item>
-              <a-menu-item>
-                <a @click="handleAuthUser(record)">
-                  <a-icon type="user-add" />
-                  分配用户
-                </a>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
         </span>
       </a-table>
       <!-- 分页 -->
@@ -150,19 +116,17 @@
 
 <script>
 
-import { listRole, delRole, changeRoleStatus } from '@/api/system/role'
+import { listConfig, delConfig, refreshCache } from '@/api/system/config'
 import CreateForm from './modules/CreateForm'
-import CreateDataScopeForm from './modules/CreateDataScopeForm'
 import { tableMixin } from '@/store/table-mixin'
 
 export default {
-  name: 'Role',
+  name: 'Config',
   components: {
-    CreateForm,
-    CreateDataScopeForm
+    CreateForm
   },
   mixins: [tableMixin],
-  dicts: ['sys_normal_disable'],
+  dicts: ['sys_yes_no'],
   data () {
     return {
       list: [],
@@ -176,55 +140,64 @@ export default {
       multiple: true,
       ids: [],
       loading: false,
+      refreshing: false,
       total: 0,
       // 日期范围
       dateRange: [],
       queryParam: {
         pageNum: 1,
         pageSize: 10,
-        roleName: undefined,
-        roleKey: undefined,
-        status: undefined
+        configName: undefined,
+        configKey: undefined,
+        configType: undefined
       },
       columns: [
         {
-          title: '角色编号',
-          dataIndex: 'roleId',
+          title: '参数主键',
+          dataIndex: 'configId',
           align: 'center'
         },
         {
-          title: '角色名',
-          dataIndex: 'roleName',
+          title: '参数名称',
+          dataIndex: 'configName',
           ellipsis: true,
           align: 'center'
         },
         {
-          title: '权限标识',
-          dataIndex: 'roleKey',
+          title: '参数键名',
+          dataIndex: 'configKey',
           ellipsis: true,
           align: 'center'
         },
         {
-          title: '排序',
-          dataIndex: 'roleSort',
+          title: '参数键值',
+          dataIndex: 'configValue',
+          ellipsis: true,
           align: 'center'
         },
         {
-          title: '状态',
-          dataIndex: 'status',
-          scopedSlots: { customRender: 'status' },
+          title: '系统内置',
+          dataIndex: 'configType',
+          scopedSlots: { customRender: 'configType' },
+          align: 'center'
+        },
+        {
+          title: '备注',
+          dataIndex: 'remark',
+          ellipsis: true,
           align: 'center'
         },
         {
           title: '创建时间',
           dataIndex: 'createTime',
           scopedSlots: { customRender: 'createTime' },
+          ellipsis: true,
           align: 'center'
         },
         {
           title: '操作',
           dataIndex: 'operation',
-          width: '20%',
+          width: '15%',
           scopedSlots: { customRender: 'operation' },
           align: 'center'
         }
@@ -241,10 +214,10 @@ export default {
   watch: {
   },
   methods: {
-    /** 查询角色列表 */
+    /** 查询参数列表 */
     getList () {
       this.loading = true
-      listRole(this.addDateRange(this.queryParam, this.dateRange)).then(response => {
+      listConfig(this.addDateRange(this.queryParam, this.dateRange)).then(response => {
           this.list = response.rows
           this.total = response.total
           this.loading = false
@@ -262,9 +235,9 @@ export default {
       this.queryParam = {
         pageNum: 1,
         pageSize: 10,
-        roleName: undefined,
-        roleKey: undefined,
-        status: undefined
+        configName: undefined,
+        configKey: undefined,
+        configType: undefined
       }
       this.handleQuery()
     },
@@ -280,41 +253,22 @@ export default {
     onSelectChange (selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
-      this.ids = this.selectedRows.map(item => item.roleId)
+      this.ids = this.selectedRows.map(item => item.configId)
       this.single = selectedRowKeys.length !== 1
       this.multiple = !selectedRowKeys.length
     },
     toggleAdvanced () {
       this.advanced = !this.advanced
     },
-    /* 角色状态修改 */
-    confirmHandleStatus (row) {
-      const text = row.status === '1' ? '启用' : '停用'
-      row.status = row.status === '0' ? '1' : '0'
-      changeRoleStatus(row.roleId, row.status)
-      .then(() => {
-        this.$message.success(
-          text + '成功',
-          3
-        )
-      }).catch(function () {
-        this.$message.error(
-          text + '异常',
-          3
-        )
-      })
-    },
-    cancelHandleStatus (row) {
-    },
     /** 删除按钮操作 */
     handleDelete (row) {
       var that = this
-      const roleIds = row.roleId || this.ids
+      const configIds = row.configId || this.ids
       this.$confirm({
         title: '确认删除所选中数据?',
-        content: '当前选中编号为' + roleIds + '的数据',
+        content: '当前选中编号为' + configIds + '的数据',
         onOk () {
-          return delRole(roleIds)
+          return delConfig(configIds)
             .then(() => {
               that.onSelectChange([], [])
               that.getList()
@@ -334,17 +288,24 @@ export default {
         title: '是否确认导出?',
         content: '此操作将导出当前条件下所有数据而非选中数据',
         onOk () {
-          that.download('system/role/export', {
+          that.download('system/config/export', {
             ...that.queryParam
-          }, `role_${new Date().getTime()}.xlsx`)
+          }, `config_${new Date().getTime()}.xlsx`)
         },
         onCancel () {}
       })
     },
-    /** 分配用户操作 */
-    handleAuthUser (row) {
-      const roleId = row.roleId
-      this.$router.push({ path: '/system/role/authUser', query: { roleId: roleId } })
+    /** 刷新缓存按钮操作 */
+    handleRefreshCache () {
+      this.refreshing = true
+      refreshCache().then(() => {
+        this.$message.success(
+          '刷新成功',
+          3
+        )
+      }).finally(() => {
+        this.refreshing = false
+      })
     }
   }
 }

@@ -54,19 +54,19 @@
           </div>
           <!-- 操作 -->
           <div class="table-operations">
-            <a-button type="primary" @click="$refs.createForm.handleAdd()" v-hasPermi="['system:user:add']">
+            <a-button type="primary" @click="$refs.createForm.handleAdd()" v-hasPermi="['sys:user:add']">
               <a-icon type="plus" />新增
             </a-button>
-            <a-button type="primary" :disabled="single" @click="$refs.createForm.handleUpdate(undefined,ids)" v-hasPermi="['system:user:edit']">
+            <a-button type="primary" :disabled="single" @click="$refs.createForm.handleUpdate(undefined,ids)" v-hasPermi="['sys:user:edit']">
               <a-icon type="edit" />修改
             </a-button>
-            <a-button type="danger" :disabled="multiple" @click="handleDelete" v-hasPermi="['system:user:remove']">
+            <a-button type="danger" :disabled="multiple" @click="handleDelete" v-hasPermi="['sys:user:remove']">
               <a-icon type="delete" />删除
             </a-button>
-            <a-button type="dashed" @click="$refs.importExcel.importExcelHandleOpen()" v-hasPermi="['system:user:import']">
+            <a-button type="dashed" @click="$refs.importExcel.importExcelHandleOpen()" v-hasPermi="['sys:user:import']">
               <a-icon type="import" />导入
             </a-button>
-            <a-button type="primary" @click="handleExport" v-hasPermi="['system:user:export']">
+            <a-button type="primary" @click="handleExport" v-hasPermi="['sys:user:export']">
               <a-icon type="download" />导出
             </a-button>
             <table-setting
@@ -124,29 +124,29 @@
               {{ parseTime(record.createTime) }}
             </span>
             <span slot="operation" slot-scope="text, record" v-if="record.userId !== 1">
-              <a @click="$refs.createForm.handleUpdate(record,undefined)" v-hasPermi="['system:user:edit']">
+              <a @click="$refs.createForm.handleUpdate(record,undefined)" v-hasPermi="['sys:user:edit']">
                 <a-icon type="edit" />
                 修改
               </a>
-              <a-divider type="vertical" v-hasPermi="['system:user:remove']" />
-              <a @click="handleDelete(record)" v-hasPermi="['system:user:remove']">
+              <a-divider type="vertical" v-hasPermi="['sys:user:remove']" />
+              <a @click="handleDelete(record)" v-hasPermi="['sys:user:remove']">
                 <a-icon type="delete" />
                 删除
               </a>
-              <a-divider type="vertical" v-hasPermi="['system:user:resetPwd', 'system:user:edit']" />
-              <a-dropdown v-hasPermi="['system:user:resetPwd', 'system:user:edit']">
+              <a-divider type="vertical" v-hasPermi="['sys:user:resetPwd', 'sys:user:edit']" />
+              <a-dropdown v-hasPermi="['sys:user:resetPwd', 'sys:user:edit']">
                 <a class="ant-dropdown-link" @click="e => e.preventDefault()">
                   <a-icon type="double-right" />
                   更多
                 </a>
                 <a-menu slot="overlay">
-                  <a-menu-item v-hasPermi="['system:user:resetPwd']">
+                  <a-menu-item v-hasPermi="['sys:user:resetPwd']">
                     <a @click="$refs.resetPassword.handleResetPwd(record)">
                       <a-icon type="key" />
                       重置密码
                     </a>
                   </a-menu-item>
-                  <a-menu-item v-hasPermi="['system:user:edit']">
+                  <a-menu-item v-hasPermi="['sys:user:edit']">
                     <a @click="$refs.authRole.handleAuthRole(record)">
                       <a-icon type="check-circle" />
                       分配角色

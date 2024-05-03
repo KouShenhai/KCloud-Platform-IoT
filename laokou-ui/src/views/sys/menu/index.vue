@@ -6,8 +6,8 @@
         <a-form layout="inline">
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
-              <a-form-item label="部门名称">
-                <a-input v-model="queryParam.deptName" placeholder="请输入" allow-clear/>
+              <a-form-item label="菜单名称">
+                <a-input v-model="queryParam.menuName" placeholder="请输入" allow-clear/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
@@ -28,7 +28,7 @@
       </div>
       <!-- 操作 -->
       <div class="table-operations">
-        <a-button type="primary" @click="$refs.createForm.handleAdd()" v-hasPermi="['system:dept:add']">
+        <a-button type="primary" @click="$refs.createForm.handleAdd()" v-hasPermi="['sys:menu:add']">
           <a-icon type="plus" />新增
         </a-button>
         <table-setting
@@ -41,8 +41,9 @@
       <!-- 增加修改 -->
       <create-form
         ref="createForm"
-        :deptOptions="deptOptions"
+        :menuOptions="menuOptions"
         :statusOptions="dict.type['sys_normal_disable']"
+        :visibleOptions="dict.type['sys_show_hide']"
         @ok="getList"
         @select-tree="getTreeselect"
       />
@@ -50,11 +51,15 @@
       <a-table
         :loading="loading"
         :size="tableSize"
-        rowKey="deptId"
+        rowKey="menuId"
         :columns="columns"
         :data-source="list"
         :pagination="false"
         :bordered="tableBordered">
+        <span slot="icon" slot-scope="text">
+          <a-icon :component="allIcon[text + 'Icon']" v-if="allIcon[text + 'Icon']"/>
+          <a-icon :type="text" v-if="!allIcon[text + 'Icon']"/>
+        </span>
         <span slot="status" slot-scope="text, record">
           <dict-tag :options="dict.type['sys_normal_disable']" :value="record.status" />
         </span>
@@ -62,15 +67,15 @@
           {{ parseTime(record.createTime) }}
         </span>
         <span slot="operation" slot-scope="text, record">
-          <a @click="$refs.createForm.handleUpdate(record)" v-hasPermi="['system:dept:edit']">
+          <a @click="$refs.createForm.handleUpdate(record)" v-hasPermi="['sys:menu:edit']">
             <a-icon type="edit" />修改
           </a>
-          <a-divider type="vertical" v-hasPermi="['system:dept:add']" />
-          <a @click="$refs.createForm.handleAdd(record)" v-hasPermi="['system:dept:add']">
+          <a-divider type="vertical" v-hasPermi="['sys:menu:add']" />
+          <a @click="$refs.createForm.handleAdd(record)" v-hasPermi="['sys:menu:add']">
             <a-icon type="plus" />新增
           </a>
-          <a-divider type="vertical" v-if="record.parentId != 0" v-hasPermi="['system:dept:remove']" />
-          <a @click="handleDelete(record)" v-if="record.parentId != 0" v-hasPermi="['system:dept:remove']">
+          <a-divider type="vertical" v-if="record.menuId != 0" v-hasPermi="['sys:menu:remove']" />
+          <a @click="handleDelete(record)" v-if="record.menuId != 0" v-hasPermi="['sys:menu:remove']">
             <a-icon type="delete" />删除
           </a>
         </span>
@@ -81,35 +86,61 @@
 
 <script>
 
-import { listDept, delDept, listDeptExcludeChild } from '@/api/system/dept'
+import { listMenu, delMenu } from '@/api/system/menu'
 import CreateForm from './modules/CreateForm'
+import allIcon from '@/core/icons'
 import { tableMixin } from '@/store/table-mixin'
 
 export default {
-  name: 'Dept',
+  name: 'Menu',
   components: {
     CreateForm
   },
   mixins: [tableMixin],
-  dicts: ['sys_normal_disable'],
+  dicts: ['sys_normal_disable', 'sys_show_hide'],
   data () {
     return {
+      allIcon,
+      iconVisible: false,
       list: [],
       // 部门树选项
-      deptOptions: [],
+      menuOptions: [],
       loading: false,
       queryParam: {
-        deptName: undefined,
-        status: undefined
+        menuName: undefined,
+        visible: undefined
       },
       columns: [
         {
-          title: '部门名称',
-          dataIndex: 'deptName'
+          title: '菜单名称',
+          dataIndex: 'menuName',
+          ellipsis: true,
+          width: '15%'
+        },
+        {
+          title: '图标',
+          dataIndex: 'icon',
+          scopedSlots: { customRender: 'icon' },
+          width: '5%',
+          align: 'center'
         },
         {
           title: '排序',
           dataIndex: 'orderNum',
+          width: '5%',
+          align: 'center'
+        },
+        {
+          title: '权限标识',
+          dataIndex: 'perms',
+          ellipsis: true,
+          align: 'center'
+        },
+        {
+          title: '组件路径',
+          dataIndex: 'component',
+          scopedSlots: { customRender: 'component' },
+          ellipsis: true,
           align: 'center'
         },
         {
@@ -128,7 +159,7 @@ export default {
         {
           title: '操作',
           dataIndex: 'operation',
-          width: '30%',
+          width: '20%',
           scopedSlots: { customRender: 'operation' },
           align: 'center'
         }
@@ -145,26 +176,14 @@ export default {
   watch: {
   },
   methods: {
-    /** 查询部门列表 */
+    /** 查询菜单列表 */
     getList () {
       this.loading = true
-      listDept(this.queryParam).then(response => {
-          this.list = this.handleTree(response.data, 'deptId')
+      listMenu(this.queryParam).then(response => {
+          this.list = this.handleTree(response.data, 'menuId')
           this.loading = false
         }
       )
-    },
-    /** 查询菜单下拉树结构 */
-    getTreeselect (row) {
-      if (!row) {
-        listDept().then(response => {
-          this.deptOptions = this.handleTree(response.data, 'deptId')
-        })
-      } else {
-        listDeptExcludeChild(row.deptId).then(response => {
-          this.deptOptions = this.handleTree(response.data, 'deptId')
-        })
-      }
     },
     /** 搜索按钮操作 */
     handleQuery () {
@@ -173,20 +192,29 @@ export default {
     /** 重置按钮操作 */
     resetQuery () {
       this.queryParam = {
-        deptName: undefined,
+        memuName: undefined,
         status: undefined
       }
       this.handleQuery()
     },
+    /** 查询菜单下拉树结构 */
+    getTreeselect () {
+      listMenu().then(response => {
+        this.menuOptions = []
+        const menu = { menuId: 0, menuName: '主目录', children: [] }
+        menu.children = this.handleTree(response.data, 'menuId')
+        this.menuOptions.push(menu)
+      })
+    },
     /** 删除按钮操作 */
     handleDelete (row) {
       var that = this
-      const deptId = row.deptId
+      const menuId = row.menuId
       this.$confirm({
         title: '确认删除所选中数据?',
-        content: '当前选中编号为' + deptId + '的数据',
+        content: '当前选中编号为' + menuId + '的数据',
         onOk () {
-          return delDept(deptId)
+          return delMenu(menuId)
             .then(() => {
               that.getList()
               that.$message.success(

@@ -174,7 +174,7 @@ export default {
       })
     },
     back () {
-      this.$router.push('/system/notice')
+      this.$router.push('/sys/notice')
     },
     onClose () {
       this.open = false
