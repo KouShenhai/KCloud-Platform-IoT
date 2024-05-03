@@ -1,11 +1,10 @@
 import request from '@/utils/request'
 
 // 查询菜单列表
-export function getRouters (data) {
+export function getRouters () {
   return request({
-    url: '/admin/v1/menus/list',
-    method: 'post',
-    data: data
+    url: '/admin/v1/menus/routers',
+    method: 'get'
   })
 }
 

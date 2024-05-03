@@ -96,7 +96,7 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		try (InputStream inputStream = ResourceUtil.getResource(path).getInputStream()) {
 			char[] passArray = password.toCharArray();
 			KeyStore keyStore = KeyStore.getInstance(type);
-			SSLContext sslContext = SSLContext.getInstance(SslUtil.getVersion());
+			SSLContext sslContext = SSLContext.getInstance(SslUtil.TLS_PROTOCOL_VERSION);
 			keyStore.load(inputStream, passArray);
 			KeyManagerFactory keyManagerFactory = KeyManagerFactory
 				.getInstance(KeyManagerFactory.getDefaultAlgorithm());

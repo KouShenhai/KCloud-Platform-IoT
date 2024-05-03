@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.MenusServiceI;
 import org.laokou.admin.dto.menu.*;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.dto.menu.clientobject.RouterCO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.common.CacheOperatorTypeEnum;
 import org.laokou.common.i18n.dto.Result;
@@ -42,13 +43,19 @@ import static org.laokou.common.i18n.common.CacheNameConstant.MENUS;
 @RestController
 @Tag(name = "MenusController", description = "菜单管理")
 @RequiredArgsConstructor
-@RequestMapping("v1/menus")
 public class MenusController {
 
 	private final MenusServiceI menusServiceI;
 
 	@TraceLog
-	@PostMapping("list")
+	@GetMapping("v1/menus/routers")
+	@Operation(summary = "菜单管理", description = "查询用户菜单路由列表")
+	public Result<List<RouterCO>> getRouters() {
+		return menusServiceI.getRouters();
+	}
+
+	@TraceLog
+	@PostMapping("v1/menus/list")
 	@Operation(summary = "菜单管理", description = "查询菜单列表")
 	@PreAuthorize("hasAuthority('menus:list')")
 	public Result<List<MenuCO>> findList(@RequestBody MenuListQry qry) {
@@ -56,14 +63,14 @@ public class MenusController {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("v1/menus/{id}")
 	@Operation(summary = "菜单管理", description = "查看菜单")
 	@DataCache(name = MENUS, key = "#id")
 	public Result<MenuCO> findById(@PathVariable("id") Long id) {
 		return menusServiceI.findById(new MenuGetQry(id));
 	}
 
-	@PutMapping
+	@PutMapping("v1/menus")
 	@Operation(summary = "菜单管理", description = "修改菜单")
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
 	@PreAuthorize("hasAuthority('menus:modify')")
@@ -73,7 +80,7 @@ public class MenusController {
 	}
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("v1/menus")
 	@Operation(summary = "菜单管理", description = "新增菜单")
 	@OperateLog(module = "菜单管理", operation = "新增菜单")
 	@PreAuthorize("hasAuthority('menus:create')")
@@ -81,7 +88,7 @@ public class MenusController {
 		menusServiceI.create(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("v1/menus")
 	@Operation(summary = "菜单管理", description = "删除菜单")
 	@OperateLog(module = "菜单管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('menus:remove')")
@@ -90,14 +97,14 @@ public class MenusController {
 	}
 
 	@TraceLog
-	@GetMapping("{roleId}/ids")
+	@GetMapping("v1/menus/{roleId}/ids")
 	@Operation(summary = "菜单管理", description = "菜单树IDS")
 	public Result<List<Long>> findIds(@PathVariable("roleId") Long roleId) {
 		return menusServiceI.findIds(new MenuIdsGetQry(roleId));
 	}
 
 	@TraceLog
-	@PostMapping("tenant-menu-list")
+	@PostMapping("v1/menus/tenant-menu-list")
 	@Operation(summary = "菜单管理", description = "查询租户菜单列表")
 	public Result<List<MenuCO>> findTenantMenuList(@RequestBody MenuTenantListQry qry) {
 		return menusServiceI.findTenantMenuList(qry);

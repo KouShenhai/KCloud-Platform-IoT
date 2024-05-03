@@ -17,7 +17,6 @@
 
 package org.laokou.common.core.utils;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
 
 import javax.net.ssl.SSLContext;
@@ -31,12 +30,10 @@ import java.security.cert.X509Certificate;
  */
 public class SslUtil {
 
-	@Schema(name = "TLS_PROTOCOL_VERSION", description = "TLS协议版本")
-	private static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
-
-	public static String getVersion() {
-		return TLS_PROTOCOL_VERSION;
-	}
+	/**
+	 * TLS协议版本.
+	 */
+	public static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
 
 	/**
 	 * ssl上下文.

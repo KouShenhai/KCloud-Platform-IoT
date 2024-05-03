@@ -17,8 +17,9 @@
 
 package org.laokou.admin.api;
 
-import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.dto.menu.*;
+import org.laokou.admin.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.dto.menu.clientobject.RouterCO;
 import org.laokou.common.i18n.dto.Result;
 
 import java.util.List;
@@ -29,6 +30,8 @@ import java.util.List;
  * @author laokou
  */
 public interface MenusServiceI {
+
+	Result<List<RouterCO>> getRouters();
 
 	/**
 	 * 查询菜单列表.

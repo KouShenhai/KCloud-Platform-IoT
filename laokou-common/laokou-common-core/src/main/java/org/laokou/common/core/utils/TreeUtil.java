@@ -19,8 +19,9 @@ package org.laokou.common.core.utils;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.DTO;
+import org.laokou.common.i18n.dto.ClientObject;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.ArrayList;
@@ -87,8 +88,9 @@ public class TreeUtil {
 	}
 
 	@Data
+	@NoArgsConstructor
 	@Schema(name = "TreeNode", description = "树节点")
-	public static class TreeNode<T> extends DTO {
+	public static class TreeNode<T> extends ClientObject {
 
 		@Schema(name = "id", description = "ID")
 		private Long id;
@@ -103,18 +105,13 @@ public class TreeUtil {
 		private String path;
 
 		@Schema(name = "children", description = "子节点")
-		private List<T> children;
-
-		public TreeNode() {
-			this.children = new ArrayList<>(16);
-		}
+		private List<T> children = new ArrayList<>(16);
 
 		public TreeNode(Long id, String name, Long pid, String path) {
 			this.id = id;
 			this.name = name;
 			this.pid = pid;
 			this.path = path;
-			this.children = new ArrayList<>(16);
 		}
 
 	}

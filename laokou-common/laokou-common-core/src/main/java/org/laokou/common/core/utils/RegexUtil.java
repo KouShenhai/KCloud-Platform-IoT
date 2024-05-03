@@ -106,7 +106,7 @@ public class RegexUtil {
 	 * @param regex 正则表达式
 	 * @return 值
 	 */
-	public static String find(String input, String regex) {
+	public static String getRegexValue(String input, String regex) {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(input);
 		if (matcher.find()) {

@@ -20,20 +20,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.MenuMapper">
 
-    <sql id="columns">
-         a.url
-        ,a.type
-        ,a.sort
-        ,a.id
-        ,a.pid
-        ,a.name
-        ,a.icon
-        ,a.permission
-        ,a.visible
-    </sql>
-
     <select id="selectListByUserId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
-        SELECT <include refid="columns"/>
+        SELECT a.component
+             ,a.type
+             ,a.sort
+             ,a.id
+             ,a.pid
+             ,a.name
+             ,a.icon
+             ,a.permission
+             ,a.hidden
+             ,a.keep_alive
+             ,a.target
+             ,a.redirect
         FROM boot_sys_menu a
             ,boot_sys_role b
             ,boot_sys_role_menu c
@@ -43,8 +42,7 @@
             AND e.user_id = #{userId}
             AND a.del_flag = 0
             AND a.type = 0
-            AND a.visible = 0
-        GROUP BY <include refid="columns"/>
+            AND a.hidden = 0
         ORDER BY a.sort desc
     </select>
     <select id="selectIdsByRoleId" resultType="java.lang.Long">

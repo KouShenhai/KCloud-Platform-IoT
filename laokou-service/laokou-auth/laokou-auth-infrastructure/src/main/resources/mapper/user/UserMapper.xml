@@ -21,27 +21,27 @@
 <mapper namespace="org.laokou.auth.gatewayimpl.database.UserMapper">
 
     <select id="selectByConditions" resultType="org.laokou.auth.gatewayimpl.database.dataobject.UserDO">
-        select `id`
-        ,`username`
-        ,`password`
-        ,`avatar`
-        ,`super_admin`
-        ,`status`
-        ,`mail`
-        ,`mobile`
-        ,`dept_id`
-        ,`dept_path`
-        ,`tenant_id`
+        select "id"
+        ,"username"
+        ,"password"
+        ,"avatar"
+        ,"super_admin"
+        ,"status"
+        ,"mail"
+        ,"mobile"
+        ,"dept_id"
+        ,"dept_path"
+        ,"tenant_id"
         from boot_sys_user
-        where del_flag = 0
+        where "del_flag" = 0
         <if test="user.username != null and user.username != ''">
-            and `username` = #{user.username}
+            and "username" = #{user.username}
         </if>
         <if test="user.mail != null and user.mail != ''">
-            and `mail` = #{user.mail}
+            and "mail" = #{user.mail}
         </if>
         <if test="user.mobile != null and user.mobile != ''">
-            and `mobile` = #{user.mobile}
+            and "mobile" = #{user.mobile}
         </if>
         limit 1
     </select>

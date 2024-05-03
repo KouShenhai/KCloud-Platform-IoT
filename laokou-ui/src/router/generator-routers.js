@@ -15,18 +15,7 @@ const constantRouterComponents = {
   UserLayout: UserLayout, // 登陆注册页面的通用布局
 
   // 你需要动态引入的页面组件
-  'Index': () => import('@/views/index'),
-  // account
-  'AccountCenter': () => import('@/views/account/center'),
-  'AccountSettings': () => import('@/views/account/settings'),
-  // job log
-  'JobLog': () => import('@/views/monitor/job/log'),
-  // 授权用户
-  'AuthUser': () => import('@/views/system/role/authUser'),
-  // 公告新增修改
-  'NoticeForm': () => import('@/views/system/notice/CreateForm'),
-  // 修改生成配置
-  'GenEdit': () => import('@/views/tool/gen/modules/GenEdit')
+  'Index': () => import('@/views/index')
 }
 
 // 前端未找到页面路由（固定不用改）
@@ -62,10 +51,9 @@ const rootRouter = {
 
 /**
  * 动态生成菜单
- * @param token
  * @returns {Promise<Router>}
  */
-export const generatorDynamicRouter = (token) => {
+export const generatorDynamicRouter = () => {
   return new Promise((resolve, reject) => {
     // 向后端请求路由数据
     getRouters().then(res => {

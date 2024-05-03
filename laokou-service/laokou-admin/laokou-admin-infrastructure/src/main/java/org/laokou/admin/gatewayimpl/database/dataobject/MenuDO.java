@@ -43,8 +43,8 @@ public class MenuDO extends BaseDO {
 	@Schema(name = "name", description = "菜单名称", example = "用户管理")
 	private String name;
 
-	@Schema(name = "url", description = "菜单URL", example = "/v1/users/profile")
-	private String url;
+	@Schema(name = "component", description = "菜单路由", example = "/v1/users/profile")
+	private String component;
 
 	@Schema(name = "permission", description = "菜单权限标识", example = "users:list")
 	private String permission;
@@ -58,7 +58,16 @@ public class MenuDO extends BaseDO {
 	@Schema(name = "type", description = "菜单类型 0菜单 1按钮", example = "0")
 	private Integer type;
 
-	@Schema(name = "visible", description = "菜单状态 0显示 1隐藏", example = "0")
-	private Integer visible;
+	@Schema(name = "hidden", description = "菜单隐藏 0否 1是", example = "0")
+	private Boolean hidden;
+
+	@Schema(name = "keepAlive", description = "路由缓存 0否 1是", example = "0")
+	private Boolean keepAlive;
+
+	@Schema(name = "target", description = "菜单链接跳转目标", example = "https://baidu.com")
+	private String target;
+
+	@Schema(name = "redirect", description = "重定向地址", example = "https://baidu.com")
+	private String redirect;
 
 }

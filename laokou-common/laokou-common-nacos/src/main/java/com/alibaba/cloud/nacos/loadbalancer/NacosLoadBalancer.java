@@ -204,7 +204,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			}
 			// 服务灰度路由
 			if (isGrayRouter(headers)) {
-				String version = RegexUtil.find(path, URL_VERSION_REGEX);
+				String version = RegexUtil.getRegexValue(path, URL_VERSION_REGEX);
 				if (StringUtils.isNotEmpty(version)) {
 					serviceInstances = serviceInstances.stream()
 						.filter(item -> item.getMetadata().getOrDefault(VERSION, EMPTY).equals(version))

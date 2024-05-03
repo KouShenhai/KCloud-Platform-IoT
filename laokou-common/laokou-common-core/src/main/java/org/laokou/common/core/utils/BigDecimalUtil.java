@@ -27,13 +27,13 @@ import java.math.RoundingMode;
  */
 public final class BigDecimalUtil {
 
+	private BigDecimalUtil() {
+	}
+
 	/**
 	 * 默认除法运算精度.
 	 */
 	private static final int DEF_DIV_SCALE = 10;
-
-	private BigDecimalUtil() {
-	}
 
 	/**
 	 * 提供精确的加法运算.

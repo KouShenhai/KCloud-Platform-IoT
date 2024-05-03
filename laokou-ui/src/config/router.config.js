@@ -22,52 +22,6 @@ export const indexRouterMap = [
     name: 'Index',
     component: 'Index',
     meta: { title: '首页', noCache: false, hidden: true, icon: 'dashboard', hiddenHeaderContent: true }
-  },
-  {
-    path: '/account/center',
-    name: 'Center',
-    component: 'AccountCenter',
-    meta: { title: '个人中心', noCache: true },
-    hidden: true
-  },
-  {
-    path: '/account/settings',
-    name: 'Settings',
-    component: 'AccountSettings',
-    meta: { title: '个人设置', noCache: true },
-    hidden: true
-  },
-  {
-    path: '/monitor/job/log',
-    name: 'JobLog',
-    component: 'JobLog',
-    meta: { title: '调度日志', noCache: true },
-    permissions: ['monitor:job:list'],
-    hidden: true
-  },
-  {
-    path: '/system/role/authUser',
-    name: 'AuthUser',
-    component: 'AuthUser',
-    meta: { title: '分配用户', noCache: true },
-    permissions: ['system:role:edit'],
-    hidden: true
-  },
-  {
-    path: '/system/notice/form',
-    name: 'NoticeForm',
-    component: 'NoticeForm',
-    meta: { title: '公告编辑', noCache: true },
-    permissions: ['system:notice:edit'],
-    hidden: true
-  },
-  {
-    path: '/gen/edit',
-    name: 'GenEdit',
-    component: 'GenEdit',
-    meta: { title: '修改生成配置', noCache: true },
-    permissions: ['tool:gen:edit'],
-    hidden: true
   }
 ]
 
