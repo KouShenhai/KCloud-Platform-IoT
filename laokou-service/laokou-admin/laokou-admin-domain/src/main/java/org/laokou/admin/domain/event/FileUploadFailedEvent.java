@@ -30,7 +30,6 @@ import static org.laokou.common.i18n.common.NumberConstant.FAIL;
  * @author laokou
  */
 @Data
-@SuperBuilder
 @Schema(name = "FileLogFailedEvent", description = "文件上传失败事件")
 public class FileUploadFailedEvent extends FileUploadEvent {
 

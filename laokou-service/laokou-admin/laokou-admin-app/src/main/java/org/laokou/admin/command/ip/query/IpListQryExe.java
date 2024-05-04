@@ -56,13 +56,13 @@ public class IpListQryExe {
 	@SneakyThrows
 	public Result<Datas<IpCO>> execute(IpListQry qry) {
 		IpDO ipDO = new IpDO(qry.getLabel());
-		PageQuery page = qry.page();
+		PageQuery page = qry;
 		CompletableFuture<List<IpDO>> c1 = CompletableFuture
 			.supplyAsync(() -> ipMapper.selectListByCondition(ipDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ipMapper.selectCountByCondition(ipDO, page),
 				executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.to(c1.get().stream().map(ipConvertor::convertClientObj).toList(), c2.get()));
+		return Result.ok(Datas.create(c1.get().stream().map(ipConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

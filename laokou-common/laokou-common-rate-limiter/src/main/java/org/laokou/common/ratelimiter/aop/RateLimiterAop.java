@@ -17,7 +17,6 @@
 
 package org.laokou.common.ratelimiter.aop;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -44,14 +43,16 @@ import static org.laokou.common.i18n.common.StringConstant.UNDER;
  *
  * @author laokou
  */
-@Component
-@Aspect
 @Slf4j
+@Aspect
+@Component
 @RequiredArgsConstructor
 public class RateLimiterAop {
 
-	@Schema(name = "RATE_LIMITER_KEY", description = "限流Key")
-	public static final String RATE_LIMITER_KEY = "___%s_KEY___";
+	/**
+	 * 限流Key.
+	 */
+	private static final String RATE_LIMITER_KEY = "___%s_KEY___";
 
 	private final RedisUtil redisUtil;
 

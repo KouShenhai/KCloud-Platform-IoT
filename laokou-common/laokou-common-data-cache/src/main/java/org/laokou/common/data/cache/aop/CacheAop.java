@@ -25,7 +25,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.SpringExpressionUtil;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.i18n.common.CacheOperatorTypeEnum;
+import org.laokou.common.data.cache.constant.TypeEnum;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -51,10 +51,10 @@ public class CacheAop {
 		String[] parameterNames = signature.getParameterNames();
 		DataCache dataCache = AnnotationUtils.findAnnotation(signature.getMethod(), DataCache.class);
 		Assert.isTrue(ObjectUtil.isNotNull(dataCache), "@DataCache is null");
-		CacheOperatorTypeEnum cacheOperatorTypeEnum = dataCache.type();
+		TypeEnum typeEnum = dataCache.type();
 		String name = dataCache.name();
 		String field = SpringExpressionUtil.parse(dataCache.key(), parameterNames, point.getArgs(), String.class);
-		return switch (cacheOperatorTypeEnum) {
+		return switch (typeEnum) {
 			case GET -> get(name, field, point);
 			case DEL -> del(name, field, point);
 		};

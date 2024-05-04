@@ -24,7 +24,7 @@ import org.laokou.admin.dto.resource.ResourceSyncCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 同步资源执行器.

@@ -57,7 +57,7 @@ public class IndexListQryExe {
 			}
 		});
 		return Result
-			.ok(Datas.to(list.stream().skip((long) (pageNum - 1) * pageSize).limit(pageSize).toList(), list.size()));
+			.ok(Datas.create(list.stream().skip((long) (pageNum - 1) * pageSize).limit(pageSize).toList(), list.size()));
 	}
 
 }

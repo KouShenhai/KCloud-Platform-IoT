@@ -17,18 +17,18 @@
 
 package org.laokou.common.i18n.common;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
+ * 请求头常量.
  * @author laokou
  */
-@Schema(name = "RequestHeaderConstants", description = "请求头常量")
 public final class RequestHeaderConstant {
 
 	private RequestHeaderConstant() {
 	}
 
-	@Schema(name = "AUTHORIZATION", description = "认证标识")
+	/**
+	 * 认证标识.
+	 */
 	public static final String AUTHORIZATION = "Authorization";
 
 }

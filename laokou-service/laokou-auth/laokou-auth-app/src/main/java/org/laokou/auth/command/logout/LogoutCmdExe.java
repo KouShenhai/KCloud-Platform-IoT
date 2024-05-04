@@ -23,13 +23,9 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.security.utils.UserDetail;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.stereotype.Component;
-
-import java.security.Principal;
 
 import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
 
@@ -55,18 +51,15 @@ public class LogoutCmdExe {
 		if (StringUtil.isEmpty(token)) {
 			return;
 		}
-		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, ACCESS_TOKEN);
-		if (ObjectUtil.isNull(authorization)) {
-			return;
-		}
-		UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) ObjectUtil
-			.requireNotNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
-		// 删除token
-		removeAuthorization(authorization);
 		// 删除菜单key
-		removeMenuTreeKey(userDetail.getId());
+		removeMenuTreeKey(token);
 		// 删除用户key
 		removeUserInfoKey(token);
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, ACCESS_TOKEN);
+		if (ObjectUtil.isNotNull(authorization)) {
+			// 删除token
+			removeAuthorization(authorization);
+		}
 	}
 
 	/**
@@ -87,10 +80,10 @@ public class LogoutCmdExe {
 
 	/**
 	 * 删除树菜单Key.
-	 * @param userId 用户ID
+	 * @param token 令牌
 	 */
-	private void removeMenuTreeKey(Long userId) {
-		redisUtil.delete(RedisKeyUtil.getMenuTreeKey(userId));
+	private void removeMenuTreeKey(String token) {
+		redisUtil.delete(RedisKeyUtil.getMenuTreeKey(token));
 	}
 
 }

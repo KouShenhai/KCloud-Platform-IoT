@@ -217,7 +217,7 @@ export default {
   tableSize: '${this.tableSize}',
   tableBordered: ${this.tableBordered},
   hideFooter: ${this.hideFooter},
-  title: '若依管理系统',
+  title: '老寇IOT云平台',
   production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true'
 }`
       this.$copyText(text).then(message => {

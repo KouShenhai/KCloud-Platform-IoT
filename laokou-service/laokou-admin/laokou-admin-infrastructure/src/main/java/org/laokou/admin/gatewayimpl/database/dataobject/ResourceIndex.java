@@ -21,16 +21,16 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.i18n.dto.Index;
 
 import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
 @Data
 @Schema(name = "ResourceIndex", description = "资源索引")
-public class ResourceIndex extends Index {
+public class ResourceIndex  implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -3715061850731611381L;

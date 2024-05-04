@@ -36,8 +36,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_LOGIN_LOG;
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_LOGIN_LOG;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 查询登录日志列表执行器.
@@ -64,7 +64,7 @@ public class LoginLogListQryExe {
 	@DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
 	public Result<Datas<LoginLogCO>> execute(LoginLogListQry qry) {
 		LoginLogDO loginLogDO = null;
-		PageQuery page = qry.time().page().ignore();
+		PageQuery page = qry;
 		List<String> dynamicTables = TableTemplate.getDynamicTables(qry.getStartTime(), qry.getEndTime(),
 				BOOT_SYS_LOGIN_LOG);
 		CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture
@@ -72,7 +72,7 @@ public class LoginLogListQryExe {
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> loginLogMapper.selectObjCount(dynamicTables, loginLogDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.to(c1.get().stream().map(loginLogConvertor::convertClientObj).toList(), c2.get()));
+		return Result.ok(Datas.create(c1.get().stream().map(loginLogConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 	// private LoginLogDO convert(LoginLogListQry qry) {

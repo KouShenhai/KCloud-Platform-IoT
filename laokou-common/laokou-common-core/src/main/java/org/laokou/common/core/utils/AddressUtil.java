@@ -18,6 +18,7 @@
 package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.lionsoul.ip2region.xdb.Searcher;
 
 import java.io.IOException;
@@ -34,9 +35,14 @@ import static org.laokou.common.i18n.common.StringConstant.*;
 public class AddressUtil {
 
 	/**
-	 * 本地IP描述.
+	 * 空位置
 	 */
-	private static final String LOCAL_DESC = "内网";
+	private static final String EMPTY_ADDR = "0";
+
+	/**
+	 * 本地
+	 */
+	private static final String LOCAL_ADDR = "内网";
 
 	/**
 	 * IP搜索器.
@@ -59,7 +65,7 @@ public class AddressUtil {
 	 */
 	@SneakyThrows
 	public static String getRealAddress(String ip) {
-		return IpUtil.internalIp(ip) ? LOCAL_DESC : addressFormat(SEARCHER.search(ip));
+		return IpUtil.internalIp(ip) ? LOCAL_ADDR : addressFormat(SEARCHER.search(ip));
 	}
 
 	/**
@@ -70,7 +76,7 @@ public class AddressUtil {
 	private static String addressFormat(String address) {
 		StringBuilder stringBuilder = new StringBuilder(address.length());
 		String[] info = address.split(BACKSLASH + ERECT);
-		Arrays.stream(info).forEach(str -> stringBuilder.append(ZERO.equals(str) ? EMPTY : str + SPACE));
+		Arrays.stream(info).forEach(str -> stringBuilder.append(ObjectUtil.equals(EMPTY_ADDR, str) ? EMPTY : str + SPACE));
 		return stringBuilder.toString().trim();
 	}
 

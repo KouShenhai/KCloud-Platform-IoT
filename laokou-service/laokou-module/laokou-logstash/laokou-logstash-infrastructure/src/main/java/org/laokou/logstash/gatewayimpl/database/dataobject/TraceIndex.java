@@ -21,9 +21,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
-import org.laokou.common.i18n.dto.Index;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import static org.laokou.common.i18n.utils.DateUtil.Constant.*;
@@ -32,7 +32,7 @@ import static org.laokou.common.i18n.utils.DateUtil.Constant.*;
  * @author laokou
  */
 @Data
-public class TraceIndex extends Index {
+public class TraceIndex  implements Serializable {
 
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;

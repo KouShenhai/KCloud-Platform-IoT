@@ -39,14 +39,13 @@ import java.util.concurrent.TimeUnit;
 
 import static org.laokou.common.i18n.common.StatusCode.SERVICE_UNAVAILABLE;
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.SysConstant.GRACEFUL_SHUTDOWN_URL;
 
 /**
  * @author laokou
  */
 @Slf4j
 @NonNullApi
-@WebFilter(filterName = "shutdownFilter", urlPatterns = GRACEFUL_SHUTDOWN_URL)
+@WebFilter(filterName = "shutdownFilter", urlPatterns = "/graceful-shutdown")
 public class ShutdownFilter implements Filter, org.springframework.web.server.WebFilter {
 
 	private static final ScheduledExecutorService NEWED_SCHEDULED_THREAD_POOL = Executors.newScheduledThreadPool(1);

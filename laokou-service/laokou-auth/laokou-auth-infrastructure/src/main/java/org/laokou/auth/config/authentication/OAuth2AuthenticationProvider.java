@@ -23,7 +23,6 @@ import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.domain.ability.AuthDomainService;
 import org.laokou.auth.domain.model.auth.AuthA;
 import org.laokou.auth.domain.model.auth.DeptE;
-import org.laokou.auth.domain.model.auth.LogV;
 import org.laokou.auth.domain.model.auth.MenuE;
 import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
@@ -78,12 +77,11 @@ public class OAuth2AuthenticationProvider {
 	}
 
 	private UserDetail convert(AuthA auth) {
-		LogV log = auth.getLog();
 		MenuE menu = auth.getMenu();
 		DeptE dept = auth.getDept();
 		UserDetail userDetail = userConvertor.convertClientObject(auth.getUser());
-		userDetail.modify(menu.getPermissions(), dept.getDeptPaths(), auth.getSourceName(), log.loginIp(),
-				log.loginDate());
+		userDetail.modify(menu.getPermissions(), dept.getDeptPaths(), auth.getSourceName()
+		);
 		return userDetail;
 	}
 

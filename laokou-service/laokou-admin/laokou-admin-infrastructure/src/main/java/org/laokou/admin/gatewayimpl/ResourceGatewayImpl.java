@@ -23,7 +23,6 @@ import io.seata.saga.statelang.domain.StateMachineInstance;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.gateway.ResourceGateway;
@@ -48,9 +47,7 @@ import org.springframework.util.Assert;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.ElasticsearchIndexConstant.RESOURCE;
 import static org.laokou.common.i18n.common.NumberConstant.DEFAULT;
-import static org.laokou.common.i18n.common.StringConstant.UNDER;
 
 /**
  * 资源管理.
@@ -75,8 +72,6 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private final StateMachineEngine stateMachineEngine;
 
 	private final FlowTaskFeignClient flowTaskFeignClient;
-
-	private final EventUtil eventUtil;
 
 	/**
 	 * 新增资源.
@@ -307,7 +302,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	 * @return 索引
 	 */
 	private String index(String ym) {
-		return RESOURCE + UNDER + ym;
+		return null;
 	}
 
 	/**

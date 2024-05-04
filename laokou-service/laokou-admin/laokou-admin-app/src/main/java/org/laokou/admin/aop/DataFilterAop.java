@@ -39,8 +39,8 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.LIKE;
-import static org.laokou.common.i18n.common.DatasourceConstant.OR;
+import static org.laokou.common.i18n.common.DSConstant.LIKE;
+import static org.laokou.common.i18n.common.DSConstant.OR;
 import static org.laokou.common.i18n.common.StringConstant.*;
 
 /**

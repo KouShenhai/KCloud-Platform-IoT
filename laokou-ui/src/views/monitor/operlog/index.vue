@@ -57,7 +57,7 @@
         <a-button type="danger" @click="handleClean" v-hasPermi="['monitor:operlog:remove']">
           <a-icon type="delete" />清空
         </a-button>
-        <a-button type="primary" @click="handleExport" v-hasPermi="['system:config:export']">
+        <a-button type="primary" @click="handleExport" v-hasPermi="['sys:config:export']">
           <a-icon type="download" />导出
         </a-button>
         <table-setting

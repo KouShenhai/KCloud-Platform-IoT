@@ -35,8 +35,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_MESSAGE;
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_MESSAGE;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 查询消息列表执行器.
@@ -63,13 +63,13 @@ public class MessageListQryExe {
 	@DataFilter(tableAlias = BOOT_SYS_MESSAGE)
 	public Result<Datas<MessageCO>> execute(MessageListQry qry) {
 		MessageDO messageDO = convert(qry);
-		PageQuery page = qry.page();
+		PageQuery page = qry;
 		CompletableFuture<List<MessageDO>> c1 = CompletableFuture
 			.supplyAsync(() -> messageMapper.selectListByCondition(messageDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> messageMapper.selectCountByCondition(messageDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.to(c1.get().stream().map(messageConvertor::convertClientObj).toList(), c2.get()));
+		return Result.ok(Datas.create(c1.get().stream().map(messageConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 	private MessageDO convert(MessageListQry qry) {

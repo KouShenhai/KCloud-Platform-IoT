@@ -24,7 +24,7 @@ import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserPasswordResetCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 重置用户密码执行器.

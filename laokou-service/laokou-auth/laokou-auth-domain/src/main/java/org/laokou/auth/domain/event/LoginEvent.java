@@ -20,7 +20,6 @@ package org.laokou.auth.domain.event;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.auth.domain.model.auth.AuthA;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.EventTypeEnum;
@@ -36,7 +35,6 @@ import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_LOGIN_EVENT_
  * @author laokou
  */
 @Data
-@SuperBuilder
 @NoArgsConstructor
 @Schema(name = "LoginEvent", description = "登录事件")
 public class LoginEvent extends DomainEvent<Long> {

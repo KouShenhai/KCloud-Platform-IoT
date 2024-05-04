@@ -17,14 +17,12 @@
 
 package org.laokou.common.i18n.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.List;
 
 /**
+ * 对象转换器.
  * @author laokou
  */
-@Schema(name = "Convertor", description = "对象转换器")
 public interface Convertor<CO, Entity, DO> {
 
 	/**

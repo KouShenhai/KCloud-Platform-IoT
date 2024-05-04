@@ -20,7 +20,6 @@ package org.laokou.admin.command.resource;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.dto.resource.ResourceResolveTaskCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -37,7 +36,6 @@ public class ResourceResolveTaskCmdExe {
 
 	// private final TasksFeignClient tasksFeignClient;
 
-	private final EventUtil eventUtil;
 
 	/**
 	 * 执行处理资源任务流程.

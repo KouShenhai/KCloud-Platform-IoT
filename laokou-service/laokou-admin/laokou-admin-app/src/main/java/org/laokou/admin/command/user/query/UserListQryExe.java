@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_USER;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_USER;
 
 /**
  * 查询用户列表执行器.
@@ -62,13 +62,13 @@ public class UserListQryExe {
 	public Result<Datas<UserCO>> execute(UserListQry qry) {
 		UserDO userDO = new UserDO(qry.getUsername());
 		String secretKey = AesUtil.getSecretKeyStr();
-		PageQuery page = qry.page();
+		PageQuery page = qry;
 		CompletableFuture<List<UserDO>> c1 = CompletableFuture
 			.supplyAsync(() -> userMapper.selectListByCondition(userDO, page, secretKey), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> userMapper.selectCountByCondition(userDO, page, secretKey), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.to(c1.get().stream().map(userConvertor::convertClientObj).toList(), c2.get()));
+		return Result.ok(Datas.create(c1.get().stream().map(userConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

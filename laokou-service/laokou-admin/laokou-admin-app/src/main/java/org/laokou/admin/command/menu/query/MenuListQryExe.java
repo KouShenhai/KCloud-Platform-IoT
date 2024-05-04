@@ -26,6 +26,7 @@ import org.laokou.admin.dto.menu.MenuListQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.common.FindTypeEnum;
 import org.laokou.common.i18n.dto.Result;
@@ -41,7 +42,7 @@ import java.util.List;
 
 import static org.laokou.admin.domain.menu.HiddenEnum.NO;
 import static org.laokou.admin.domain.menu.TypeEnum.MENU;
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 查询菜单列表执行器.
@@ -75,7 +76,7 @@ public class MenuListQryExe {
 	}
 
 	private List<MenuCO> getUserMenuList() {
-		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserUtil.getUserId());
+		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserContextHolder.get().getToken());
 		Object obj = redisUtil.get(menuTreeKey);
 		if (ObjectUtil.isNotNull(obj)) {
 			return ((MenuCO) obj).getChildren();

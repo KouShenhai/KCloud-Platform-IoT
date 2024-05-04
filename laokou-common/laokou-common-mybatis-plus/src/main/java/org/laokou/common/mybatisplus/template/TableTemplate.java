@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.INSERT_SQL_TEMPLATE;
+import static org.laokou.common.i18n.common.DSConstant.INSERT_SQL_TEMPLATE;
 import static org.laokou.common.i18n.common.StringConstant.*;
 
 /**

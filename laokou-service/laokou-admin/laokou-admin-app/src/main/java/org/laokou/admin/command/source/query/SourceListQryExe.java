@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_SOURCE;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_SOURCE;
 
 /**
  * 查询数据源列表执行器.
@@ -60,13 +60,13 @@ public class SourceListQryExe {
 	@DataFilter(tableAlias = BOOT_SYS_SOURCE)
 	public Result<Datas<SourceCO>> execute(SourceListQry qry) {
 		SourceDO sourceDO = new SourceDO(qry.getName());
-		PageQuery page = qry.page();
+		PageQuery page = qry;
 		CompletableFuture<List<SourceDO>> c1 = CompletableFuture
 			.supplyAsync(() -> sourceMapper.selectListByCondition(sourceDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> sourceMapper.selectCountByCondition(sourceDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.to(c1.get().stream().map(sourceConvertor::convertClientObj).toList(), c2.get()));
+		return Result.ok(Datas.create(c1.get().stream().map(sourceConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

@@ -20,9 +20,9 @@ package org.laokou.common.i18n.common;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
+ * 字符串常量.
  * @author laokou
  */
-@Schema(name = "StringConstants", description = "字符串常量")
 public final class StringConstant {
 
 	private StringConstant() {
@@ -111,11 +111,5 @@ public final class StringConstant {
 
 	@Schema(name = "START_START", description = "分割参数")
 	public static final String START_START = "**";
-
-	@Schema(name = "ZERO", description = "零")
-	public static final String ZERO = "0";
-
-	@Schema(name = "VERSION", description = "版本")
-	public static final String VERSION = "version";
 
 }

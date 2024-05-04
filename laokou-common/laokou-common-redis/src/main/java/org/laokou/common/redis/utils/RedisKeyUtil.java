@@ -32,10 +32,10 @@ public final class RedisKeyUtil {
 
 	/**
 	 * 菜单树Key.
-	 * @param userId 用户ID
+	 * @param token 令牌
 	 */
-	public static String getMenuTreeKey(Long userId) {
-		return "menu:tree:" + userId;
+	public static String getMenuTreeKey(String token) {
+		return "menu:tree:" + token;
 	}
 
 	/**

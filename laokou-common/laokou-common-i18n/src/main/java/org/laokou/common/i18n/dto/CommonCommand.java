@@ -17,14 +17,12 @@
 
 package org.laokou.common.i18n.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serial;
 
 /**
+ *  CommonCommand request from Client.
  * @author laokou
  */
-@Schema(name = "CommonCommand", description = "客户端通用命令请求")
 public class CommonCommand extends Command {
 
 	@Serial

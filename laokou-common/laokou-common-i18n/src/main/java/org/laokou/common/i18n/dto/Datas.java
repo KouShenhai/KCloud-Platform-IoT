@@ -17,29 +17,33 @@
 
 package org.laokou.common.i18n.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
 /**
+ * 集合.
  * @author laokou
  */
 @Data
-@Schema(name = "Datas", description = "对象集合")
-public final class Datas<T> extends DTO {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public final class Datas<T> implements Serializable {
 
-	@Schema(name = "total", description = "总数")
+	/**
+	 * 总数.
+	 */
 	private long total;
 
-	@Schema(name = "records", description = "对象集合")
+	/**
+	 * 数据项集合.
+	 */
 	private List<T> records;
-
-	private Datas(long total, List<T> records) {
-		this.total = total;
-		this.records = records;
-	}
 
 	/**
 	 * 构建空对象集合.
@@ -50,7 +54,7 @@ public final class Datas<T> extends DTO {
 		return new Datas<>(0, Collections.emptyList());
 	}
 
-	public static <T> Datas<T> to(List<T> list, long total) {
+	public static <T> Datas<T> create(List<T> list, long total) {
 		return new Datas<>(total, list);
 	}
 

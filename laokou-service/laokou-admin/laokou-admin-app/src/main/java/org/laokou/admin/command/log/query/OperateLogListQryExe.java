@@ -37,8 +37,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_OPERATE_LOG;
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_OPERATE_LOG;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 查询操作日志列表执行器.
@@ -65,13 +65,13 @@ public class OperateLogListQryExe {
 	@DataFilter(tableAlias = BOOT_SYS_OPERATE_LOG)
 	public Result<Datas<OperateLogCO>> execute(OperateLogListQry qry) {
 		OperateLogDO operateLogDO = new OperateLogDO(qry.getModuleName(), qry.getStatus(), UserUtil.getTenantId());
-		PageQuery page = qry.page();
+		PageQuery page = qry;
 		CompletableFuture<List<OperateLogDO>> c1 = CompletableFuture
 			.supplyAsync(() -> operateLogMapper.selectListByCondition(operateLogDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> operateLogMapper.selectObjCount(Collections.emptyList(), operateLogDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.to(c1.get().stream().map(operateLogConvertor::convertClientObj).toList(), c2.get()));
+		return Result.ok(Datas.create(c1.get().stream().map(operateLogConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

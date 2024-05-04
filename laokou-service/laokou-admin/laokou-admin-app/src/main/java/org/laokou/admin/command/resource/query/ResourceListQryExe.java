@@ -35,8 +35,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_RESOURCE;
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_RESOURCE;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 查询资源列表执行器.
@@ -63,13 +63,13 @@ public class ResourceListQryExe {
 	@DataFilter(tableAlias = BOOT_SYS_RESOURCE)
 	public Result<Datas<ResourceCO>> execute(ResourceListQry qry) {
 		ResourceDO resourceDO = new ResourceDO(qry.getId(), qry.getTitle(), qry.getStatus(), qry.getCode());
-		PageQuery page = qry.page();
+		PageQuery page = qry;
 		CompletableFuture<List<ResourceDO>> c1 = CompletableFuture
 			.supplyAsync(() -> resourceMapper.selectListByCondition(resourceDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> resourceMapper.selectCountByCondition(resourceDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.to(c1.get().stream().map(resourceConvertor::convertClientObj).toList(), c2.get()));
+		return Result.ok(Datas.create(c1.get().stream().map(resourceConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

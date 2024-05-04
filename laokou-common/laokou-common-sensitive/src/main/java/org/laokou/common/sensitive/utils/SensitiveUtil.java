@@ -20,7 +20,7 @@ package org.laokou.common.sensitive.utils;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.sensitive.annotation.SensitiveField;
-import org.laokou.common.i18n.common.SensitiveTypeEnum;
+import org.laokou.common.i18n.common.SensitiveType;
 
 import java.lang.reflect.Field;
 
@@ -51,8 +51,8 @@ public class SensitiveUtil {
 		}
 	}
 
-	public static String format(SensitiveTypeEnum sensitiveTypeEnum, String str) {
-		return switch (sensitiveTypeEnum) {
+	public static String format(SensitiveType sensitiveType, String str) {
+		return switch (sensitiveType) {
 			case MAIL -> formatMail(str);
 			case MOBILE -> formatMobile(str);
 		};

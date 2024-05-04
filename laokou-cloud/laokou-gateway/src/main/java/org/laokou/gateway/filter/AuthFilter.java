@@ -19,7 +19,6 @@ package org.laokou.gateway.filter;
 
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -67,11 +66,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
+
 import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.RequestHeaderConstant.AUTHORIZATION;
 import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.SysConstant.COMMON_DATA_ID;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.*;
 import static org.springframework.http.HttpHeaders.CONTENT_LENGTH;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
@@ -90,17 +89,30 @@ import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VAL
 @RequiredArgsConstructor
 public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
-	@Schema(name = "USERNAME", description = "用户名")
+	/**
+	 * 用户名.
+	 */
 	public static final String USERNAME = "username";
 
-	@Schema(name = "PASSWORD", description = "密码")
+	/**
+	 * 密码.
+	 */
 	public static final String PASSWORD = "password";
 
-	@Schema(name = "CHUNKED", description = "Chunked")
+	/**
+	 * Chunked.
+	 */
 	private static final String CHUNKED = "chunked";
 
-	@Schema(name = "TOKEN_URL", description = "令牌路径")
+	/**
+	 * 令牌URL.
+	 */
 	public static final String TOKEN_URL = "/oauth2/token";
+
+	/**
+	 * Nacos公共配置标识.
+	 */
+	private static final String COMMON_DATA_ID = "application-common.yaml";
 
 	private final Environment env;
 

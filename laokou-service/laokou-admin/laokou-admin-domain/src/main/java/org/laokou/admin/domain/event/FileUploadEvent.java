@@ -35,7 +35,6 @@ import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_FILE_UPLOAD_
  * @author laokou
  */
 @Data
-@SuperBuilder
 @NoArgsConstructor
 @Schema(name = "FileUploadEvent", description = "文件上传事件")
 public class FileUploadEvent extends DomainEvent<Long> {

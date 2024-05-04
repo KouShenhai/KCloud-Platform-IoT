@@ -17,28 +17,30 @@
 
 package org.laokou.common.i18n.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
+ * 消息.
  * @author laokou
  */
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "Message", description = "消息")
-public class Message extends DTO {
+public class Message implements Serializable {
 
-	@Schema(name = "receiver", description = "接收者集合")
+	/**
+	 * 接收者集合.
+	 */
 	private Set<String> receiver;
 
-	@Schema(name = "payload", description = "消息")
+	/**
+	 * 内容.
+	 */
 	private String payload;
 
 }

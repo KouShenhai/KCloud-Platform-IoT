@@ -30,8 +30,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_OPERATE_LOG;
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_OPERATE_LOG;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 导出操作日志执行器.

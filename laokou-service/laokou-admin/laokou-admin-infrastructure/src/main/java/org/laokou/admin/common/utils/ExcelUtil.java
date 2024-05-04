@@ -60,7 +60,6 @@ import java.util.function.BiConsumer;
 import static org.laokou.common.i18n.common.ResponseHeaderConstant.*;
 import static org.laokou.common.i18n.common.StringConstant.DROP;
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.SysConstant.EXCEL_EXT;
 
 /**
  * Excel工具类.
@@ -69,6 +68,8 @@ import static org.laokou.common.i18n.common.SysConstant.EXCEL_EXT;
  */
 @Slf4j
 public class ExcelUtil {
+
+	private static final String EXCEL_EXT = ".xlsx";
 
 	private static final int DEFAULT_SIZE = 1000;
 

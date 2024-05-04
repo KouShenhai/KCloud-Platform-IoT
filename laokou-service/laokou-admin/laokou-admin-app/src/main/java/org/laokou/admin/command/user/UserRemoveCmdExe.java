@@ -23,7 +23,7 @@ import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.dto.user.UserRemoveCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 删除用户执行器.

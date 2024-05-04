@@ -25,7 +25,7 @@ import org.laokou.auth.domain.gateway.LogGateway;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.listener.AbstractDomainEventRocketMQListener;
 import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.dto.DecorateDomainEvent;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
@@ -52,7 +52,7 @@ public class LoginEventHandler extends AbstractDomainEventRocketMQListener {
 	}
 
 	@Override
-	protected void handleDomainEvent(DecorateDomainEvent evt, String attribute) {
+	protected void handleDomainEvent(DefaultDomainEvent evt, String attribute) {
 		LoginEvent event = JacksonUtil.toBean(attribute, LoginEvent.class);
 		logGateway.create(event, evt);
 	}

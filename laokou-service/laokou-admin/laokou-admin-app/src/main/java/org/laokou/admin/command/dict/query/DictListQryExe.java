@@ -35,8 +35,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_DICT;
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_DICT;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 查询部门列表执行器.
@@ -63,13 +63,13 @@ public class DictListQryExe {
 	@DataFilter(tableAlias = BOOT_SYS_DICT)
 	public Result<Datas<DictCO>> execute(DictListQry qry) {
 		DictDO dictDO = new DictDO(qry.getLabel(), qry.getType());
-		PageQuery page = qry.page();
+		PageQuery page = qry;
 		CompletableFuture<List<DictDO>> c1 = CompletableFuture
 			.supplyAsync(() -> dictMapper.selectListByCondition(dictDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> dictMapper.selectCountByCondition(dictDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.to(c1.get().stream().map(dictConvertor::convertClientObj).toList(), c2.get()));
+		return Result.ok(Datas.create(c1.get().stream().map(dictConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

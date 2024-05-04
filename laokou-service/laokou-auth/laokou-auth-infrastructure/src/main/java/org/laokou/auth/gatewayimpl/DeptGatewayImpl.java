@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_DEPT;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_DEPT;
 import static org.laokou.common.i18n.common.exception.SystemException.TABLE_NOT_EXIST;
 
 /**

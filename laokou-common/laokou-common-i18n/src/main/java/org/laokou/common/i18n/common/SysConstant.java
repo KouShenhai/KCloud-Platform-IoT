@@ -19,8 +19,6 @@ package org.laokou.common.i18n.common;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.util.regex.Pattern;
-
 /**
  * @author laokou
  */
@@ -30,28 +28,10 @@ public final class SysConstant {
 	private SysConstant() {
 	}
 
-	@Schema(name = "VERSION", description = "版本")
-	public static final String VERSION = "3.2.5";
-
-	@Schema(name = "GRACEFUL_SHUTDOWN_URL", description = "优雅停机URL")
-	public static final String GRACEFUL_SHUTDOWN_URL = "/graceful-shutdown";
-
-	@Schema(name = "UNDEFINED", description = "UNDEFINED")
-	public static final String UNDEFINED = "undefined";
-
-	@Schema(name = "COMMON_DATA_ID", description = "Nacos公共配置标识")
-	public static final String COMMON_DATA_ID = "application-common.yaml";
-
 	@Schema(name = "APPLICATION", description = "应用")
 	public static final String APPLICATION = "application";
 
-	@Schema(name = "ALL_PATTERNS", description = "拦截所有路径")
+	@Schema(name = "ALL_PATTERNS", description = "拦截所有URL")
 	public static final String ALL_PATTERNS = "/**";
-
-	@Schema(name = "EXCEL_EXT", description = "Excel文件后缀")
-	public static final String EXCEL_EXT = ".xlsx";
-
-	@Schema(name = "LINE_PATTERN", description = "下划线正则表达式")
-	public static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
 
 }

@@ -107,8 +107,8 @@
             <a-icon type="delete" />
             删除
           </a>
-          <a-divider type="vertical" v-hasPermi="['system:job:edit', 'monitor:job:query']" />
-          <a-dropdown v-hasPermi="['system:job:edit', 'monitor:job:query']">
+          <a-divider type="vertical" v-hasPermi="['sys:job:edit', 'monitor:job:query']" />
+          <a-dropdown v-hasPermi="['sys:job:edit', 'monitor:job:query']">
             <a class="ant-dropdown-link" @click="e => e.preventDefault()">
               <a-icon type="double-right" />
               更多

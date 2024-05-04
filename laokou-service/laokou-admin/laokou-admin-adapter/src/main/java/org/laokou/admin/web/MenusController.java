@@ -25,7 +25,7 @@ import org.laokou.admin.dto.menu.*;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.dto.menu.clientobject.RouterCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.i18n.common.CacheOperatorTypeEnum;
+import org.laokou.common.data.cache.constant.TypeEnum;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.CacheNameConstant.MENUS;
+import static org.laokou.common.data.cache.constant.NameConstant.MENUS;
 
 /**
  * @author laokou
@@ -57,7 +57,7 @@ public class MenusController {
 	@TraceLog
 	@PostMapping("v1/menus/list")
 	@Operation(summary = "菜单管理", description = "查询菜单列表")
-	@PreAuthorize("hasAuthority('menus:list')")
+	@PreAuthorize("hasAuthority('menu:list')")
 	public Result<List<MenuCO>> findList(@RequestBody MenuListQry qry) {
 		return menusServiceI.findList(qry);
 	}
@@ -73,8 +73,8 @@ public class MenusController {
 	@PutMapping("v1/menus")
 	@Operation(summary = "菜单管理", description = "修改菜单")
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
-	@PreAuthorize("hasAuthority('menus:modify')")
-	@DataCache(name = MENUS, key = "#cmd.menuCO.id", type = CacheOperatorTypeEnum.DEL)
+	@PreAuthorize("hasAuthority('menu:modify')")
+	@DataCache(name = MENUS, key = "#cmd.menuCO.id", type = TypeEnum.DEL)
 	public void modify(@RequestBody MenuModifyCmd cmd) {
 		menusServiceI.modify(cmd);
 	}
@@ -83,7 +83,7 @@ public class MenusController {
 	@PostMapping("v1/menus")
 	@Operation(summary = "菜单管理", description = "新增菜单")
 	@OperateLog(module = "菜单管理", operation = "新增菜单")
-	@PreAuthorize("hasAuthority('menus:create')")
+	@PreAuthorize("hasAuthority('menu:create')")
 	public void create(@RequestBody MenuCreateCmd cmd) {
 		menusServiceI.create(cmd);
 	}
@@ -91,7 +91,7 @@ public class MenusController {
 	@DeleteMapping("v1/menus")
 	@Operation(summary = "菜单管理", description = "删除菜单")
 	@OperateLog(module = "菜单管理", operation = "删除菜单")
-	@PreAuthorize("hasAuthority('menus:remove')")
+	@PreAuthorize("hasAuthority('menu:remove')")
 	public void remove(@RequestBody Long[] ids) {
 		menusServiceI.remove(new MenuRemoveCmd(ids));
 	}

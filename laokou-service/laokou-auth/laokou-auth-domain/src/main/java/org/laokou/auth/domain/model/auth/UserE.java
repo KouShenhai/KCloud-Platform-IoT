@@ -25,7 +25,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 
 import static org.laokou.auth.domain.model.auth.AuthA.DEFAULT_TENANT;
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
+import static org.laokou.common.i18n.common.SuperAdmin.YES;
 
 /**
  * @author laokou

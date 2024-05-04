@@ -5,6 +5,8 @@ import allIcon from '@/core/icons'
 import { validURL } from '@/utils/validate'
 import { UserLayout, BlankLayout, PageView } from '@/layouts'
 import auth from '@/plugins/auth'
+import { i18nRender } from '@/locales'
+
 // 前端路由表
 const constantRouterComponents = {
   // 基础页面 layout 必须引入
@@ -122,7 +124,7 @@ export const generator = (routerMap, parent, routers) => {
       hidden: item.hidden,
       // meta: 页面标题, 菜单图标, 页面权限(供指令权限用，可去掉)
       meta: {
-        title: title,
+        title: i18nRender(title),
         icon: allIcon[icon + 'Icon'] || icon,
         hiddenHeaderContent: hiddenHeaderContent,
         // 目前只能通过判断path的http链接来判断是否外链，适配若依

@@ -53,7 +53,7 @@
         <a-button type="danger" @click="handleClean" v-hasPermi="['monitor:logininfor:remove']">
           <a-icon type="delete" />清空
         </a-button>
-        <a-button type="primary" @click="handleExport" v-hasPermi="['system:logininfor:export']">
+        <a-button type="primary" @click="handleExport" v-hasPermi="['sys:logininfor:export']">
           <a-icon type="download" />导出
         </a-button>
         <table-setting
