@@ -24,7 +24,7 @@ import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.database.dataobject.DomainEventDO;
 import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.dto.DecorateDomainEvent;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -54,16 +54,16 @@ public abstract class AbstractDomainEventRocketMQListener implements RocketMQLis
 			// 处理领域事件
 			handleDomainEvent(convert(eventDO), eventDO.getAttribute());
 			// 消费成功
-			events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
+			events.add(new DefaultDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
 		}
 		catch (Exception e) {
 			if (e instanceof DataIntegrityViolationException) {
 				// 消费成功（数据重复直接改为消费成功）
-				events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
+				events.add(new DefaultDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
 			}
 			else {
 				// 消费失败
-				events.add(new DecorateDomainEvent(eventDO.getId(), CONSUME_FAILED, eventDO.getSourceName()));
+				events.add(new DefaultDomainEvent(eventDO.getId(), CONSUME_FAILED, eventDO.getSourceName()));
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			}
 		}
@@ -72,20 +72,21 @@ public abstract class AbstractDomainEventRocketMQListener implements RocketMQLis
 		}
 	}
 
-	private DecorateDomainEvent convert(DomainEventDO eventDO) {
-		return DecorateDomainEvent.builder()
-			.sourceName(eventDO.getSourceName())
-			.editor(eventDO.getEditor())
-			.creator(eventDO.getCreator())
-			.updateDate(eventDO.getUpdateDate())
-			.createDate(eventDO.getCreateDate())
-			.deptId(eventDO.getDeptId())
-			.deptPath(eventDO.getDeptPath())
-			.tenantId(eventDO.getTenantId())
-			.id(eventDO.getId())
-			.build();
+	private DefaultDomainEvent convert(DomainEventDO eventDO) {
+		return null;
+//		return DefaultDomainEvent.builder()
+//			.sourceName(eventDO.getSourceName())
+//			.editor(eventDO.getEditor())
+//			.creator(eventDO.getCreator())
+//			.updateDate(eventDO.getUpdateDate())
+//			.createDate(eventDO.getCreateDate())
+//			.deptId(eventDO.getDeptId())
+//			.deptPath(eventDO.getDeptPath())
+//			.tenantId(eventDO.getTenantId())
+//			.id(eventDO.getId())
+//			.build();
 	}
 
-	protected abstract void handleDomainEvent(DecorateDomainEvent evt, String attribute);
+	protected abstract void handleDomainEvent(DefaultDomainEvent evt, String attribute);
 
 }

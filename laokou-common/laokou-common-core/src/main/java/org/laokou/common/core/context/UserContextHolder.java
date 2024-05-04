@@ -58,10 +58,12 @@ public class UserContextHolder {
 		USER_LOCAL.set(user);
 	}
 
+	/**
+	 * 用户.
+	 */
 	@Data
 	@NoArgsConstructor
 	@AllArgsConstructor
-	@Schema(name = "User", description = "用户")
 	public static class User {
 
 		@Schema(name = "id", description = "ID")
@@ -81,6 +83,11 @@ public class UserContextHolder {
 
 		@Schema(name = "sourceName", description = "数据源名称")
 		private String sourceName;
+
+		/**
+		 * 令牌.
+		 */
+		private String token;
 
 	}
 

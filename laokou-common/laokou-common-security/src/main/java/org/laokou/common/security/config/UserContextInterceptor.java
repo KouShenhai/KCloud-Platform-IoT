@@ -27,6 +27,8 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import static org.laokou.common.i18n.common.RequestHeaderConstant.AUTHORIZATION;
+
 /**
  * @author laokou
  */
@@ -36,7 +38,7 @@ public class UserContextInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		UserContextHolder.set(convert(UserUtil.user()));
+		UserContextHolder.set(convert(UserUtil.user(), request));
 		return true;
 	}
 
@@ -46,9 +48,9 @@ public class UserContextInterceptor implements HandlerInterceptor {
 		UserContextHolder.clear();
 	}
 
-	private UserContextHolder.User convert(UserDetail userDetail) {
+	private UserContextHolder.User convert(UserDetail userDetail, HttpServletRequest request) {
 		return new UserContextHolder.User(userDetail.getId(), userDetail.getUsername(), userDetail.getTenantId(),
-				userDetail.getDeptPath(), userDetail.getDeptId(), userDetail.getSourceName());
+				userDetail.getDeptPath(), userDetail.getDeptId(), userDetail.getSourceName(), request.getHeader(AUTHORIZATION).substring(7));
 	}
 
 }

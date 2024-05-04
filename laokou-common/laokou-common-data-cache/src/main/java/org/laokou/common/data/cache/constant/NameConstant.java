@@ -15,12 +15,13 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.common.data.cache.constant;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
 // @formatter:off
 /**
+ * 命名格式如下：
  * name 		=> 缓存名称.
  * ttl 			=> 过期时间，默认为0（不过期）.
  * maxIdleTime 	=> 最大空闲时间（保持存活的最长时间），默认为0 maxSize => 最大长度，默认为0（没有长度限制）.
@@ -28,11 +29,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author laokou
  */
 // @formatter:on
+public final class NameConstant {
 
-@Schema(name = "CacheConstants", description = "缓存名称变量")
-public final class CacheNameConstant {
-
-	private CacheNameConstant() {
+	private NameConstant() {
 	}
 
 	@Schema(name = "DEFAULT", description = "默认缓存配置")

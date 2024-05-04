@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_PACKAGE;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_PACKAGE;
 
 /**
  * 查询套餐列表执行器.
@@ -60,13 +60,13 @@ public class PackageListQryExe {
 	@DataFilter(tableAlias = BOOT_SYS_PACKAGE)
 	public Result<Datas<PackageCO>> execute(PackageListQry qry) {
 		PackageDO packageDO = new PackageDO(qry.getName());
-		PageQuery page = qry.page();
+		PageQuery page = qry;
 		CompletableFuture<List<PackageDO>> c1 = CompletableFuture
 			.supplyAsync(() -> packageMapper.selectListByCondition(packageDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> packageMapper.selectCountByCondition(packageDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.to(c1.get().stream().map(packageConvertor::convertClientObj).toList(), c2.get()));
+		return Result.ok(Datas.create(c1.get().stream().map(packageConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }

@@ -32,8 +32,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_LOGIN_LOG;
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_LOGIN_LOG;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 导出登录日志执行器.
@@ -53,7 +53,7 @@ public class LoginLogExportCmdExe {
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
 	public void executeVoid(LoginLogExportCmd cmd) {
-		PageQuery pageQuery = cmd.time().ignore();
+		PageQuery pageQuery = cmd;
 		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
 				BOOT_SYS_LOGIN_LOG);
 		ExcelUtil.doExport(dynamicTables, cmd.getResponse(),

@@ -23,9 +23,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author laokou
  */
 @Schema(name = "DatasourceConstants", description = "数据源常量")
-public final class DatasourceConstant {
+public final class DSConstant {
 
-	private DatasourceConstant() {
+	private DSConstant() {
 	}
 
 	@Schema(name = "LIKE", description = "模糊匹配")
@@ -36,9 +36,6 @@ public final class DatasourceConstant {
 
 	@Schema(name = "AND", description = "和")
 	public static final String AND = "and";
-
-	@Schema(name = "FLOWABLE", description = "流程")
-	public static final String FLOWABLE = "flowable";
 
 	@Schema(name = "BOOT_SYS_DICT", description = "字典表")
 	public static final String BOOT_SYS_DICT = "boot_sys_dict";

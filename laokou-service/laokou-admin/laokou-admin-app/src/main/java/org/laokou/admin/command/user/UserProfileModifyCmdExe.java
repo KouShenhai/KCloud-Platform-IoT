@@ -23,7 +23,7 @@ import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.dto.user.UserProfileModifyCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 修改用户信息执行器.

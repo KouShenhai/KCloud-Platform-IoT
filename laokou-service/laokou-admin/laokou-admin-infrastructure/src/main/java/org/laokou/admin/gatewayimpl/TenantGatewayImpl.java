@@ -56,7 +56,7 @@ import java.nio.channels.FileChannel;
 import java.util.*;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.laokou.common.i18n.common.DatasourceConstant.*;
+import static org.laokou.common.i18n.common.DSConstant.*;
 import static org.laokou.common.i18n.common.ResponseHeaderConstant.CONTENT_DISPOSITION;
 import static org.laokou.common.i18n.common.ResponseHeaderConstant.STREAM_CONTENT_TYPE;
 import static org.laokou.common.i18n.common.StringConstant.COMMA;

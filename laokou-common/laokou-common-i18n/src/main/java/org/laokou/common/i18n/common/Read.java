@@ -22,13 +22,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * @author laokou
  */
-@Schema(name = "SuperAdminEnums", description = "超级管理员枚举")
-public enum SuperAdminEnum {
+@Schema(name = "MessageReadEnums", description = "消息读取枚举")
+public enum Read {
 
-	@Schema(name = "NO", description = "否")
+	@Schema(name = "NO", description = "未读")
 	NO,
 
-	@Schema(name = "YES", description = "是")
+	@Schema(name = "YES", description = "已读")
 	YES
 
 }

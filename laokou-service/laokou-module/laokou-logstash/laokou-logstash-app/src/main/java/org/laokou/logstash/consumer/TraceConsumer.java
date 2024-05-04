@@ -34,12 +34,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.ElasticsearchIndexConstant.TRACE;
 import static org.laokou.common.i18n.common.KafkaConstant.LAOKOU_LOGSTASH_CONSUMER_GROUP;
 import static org.laokou.common.i18n.common.KafkaConstant.LAOKOU_TRACE_TOPIC;
 import static org.laokou.common.i18n.common.StringConstant.DOLLAR;
 import static org.laokou.common.i18n.common.StringConstant.UNDER;
-import static org.laokou.common.i18n.common.SysConstant.UNDEFINED;
 
 /**
  * @author laokou
@@ -48,6 +46,10 @@ import static org.laokou.common.i18n.common.SysConstant.UNDEFINED;
 @Component
 @RequiredArgsConstructor
 public class TraceConsumer {
+
+	private static final String UNDEFINED = "undefined";
+
+	private static final String TRACE = "laokou_trace";
 
 	@KafkaListener(topics = LAOKOU_TRACE_TOPIC, groupId = LAOKOU_LOGSTASH_CONSUMER_GROUP)
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {

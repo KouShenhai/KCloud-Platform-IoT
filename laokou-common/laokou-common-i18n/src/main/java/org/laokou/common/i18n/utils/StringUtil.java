@@ -23,10 +23,10 @@ import org.springframework.util.StringUtils;
 import java.util.Collection;
 import java.util.Set;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.StringConstant.PERCENT;
-import static org.laokou.common.i18n.common.SysConstant.LINE_PATTERN;
 
 /**
  * 字符串工具类.
@@ -34,6 +34,8 @@ import static org.laokou.common.i18n.common.SysConstant.LINE_PATTERN;
  * @author laokou
  */
 public class StringUtil {
+
+	private static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
 
 	public static boolean isNotEmpty(String str) {
 		return hasText(str);

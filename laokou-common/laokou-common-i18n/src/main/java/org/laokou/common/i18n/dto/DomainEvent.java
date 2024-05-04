@@ -17,72 +17,98 @@
 
 package org.laokou.common.i18n.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.common.EventStatusEnum;
 import org.laokou.common.i18n.common.EventTypeEnum;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import static lombok.AccessLevel.PROTECTED;
 
 /**
+ * 领域事件.
  * @author laokou
  */
 @Data
-@SuperBuilder
-@AllArgsConstructor(access = PROTECTED)
 @NoArgsConstructor(access = PROTECTED)
-@Schema(name = "DomainEvent", description = "领域事件")
-public abstract class DomainEvent<ID> implements Event {
+@AllArgsConstructor(access = PROTECTED)
+public abstract class DomainEvent<ID> implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
 
-	@Schema(name = "id", description = "ID")
+	/**
+	 * ID.
+	 */
 	protected ID id;
 
-	@Schema(name = "aggregateId", description = "聚合根ID")
+	/**
+	 * 聚合根ID.
+	 */
 	protected ID aggregateId;
 
-	@Schema(name = "eventType", description = "事件类型")
+	/**
+	 * 事件类型.
+	 */
 	protected EventTypeEnum eventType;
 
-	@Schema(name = "eventStatus", description = "事件状态")
+	/**
+	 * 事件状态.
+	 */
 	protected EventStatusEnum eventStatus;
 
-	@Schema(name = "topic", description = "MQ主题")
+	/**
+	 * MQ主题.
+	 */
 	protected String topic;
 
-	@Schema(name = "sourceName", description = "数据源名称")
+	/**
+	 * 数据源名称.
+	 */
 	private String sourceName;
 
-	@Schema(name = "appName", description = "应用名称")
+	/**
+	 * 应用名称.
+	 */
 	private String appName;
 
-	@Schema(name = "creator", description = "创建人")
+	/**
+	 * 创建人.
+	 */
 	protected ID creator;
 
-	@Schema(name = "editor;", description = "编辑人")
+	/**
+	 * 编辑人.
+	 */
 	protected ID editor;
 
-	@Schema(name = "deptId", description = "部门ID")
+	/**
+	 * 部门ID.
+	 */
 	protected ID deptId;
 
-	@Schema(name = "deptPath", description = "部门PATH")
+	/**
+	 * 部门PATH.
+	 */
 	protected String deptPath;
 
-	@Schema(name = "tenantId", description = "租户ID")
+	/**
+	 * 租户ID.
+	 */
 	protected ID tenantId;
 
-	@Schema(name = "createDate", description = "创建时间")
+	/**
+	 * 创建时间.
+	 */
 	protected LocalDateTime createDate;
 
-	@Schema(name = "updateDate", description = "修改时间")
+	/**
+	 * 修改时间.
+	 */
 	protected LocalDateTime updateDate;
 
 	public DomainEvent(ID id, EventStatusEnum eventStatus, String sourceName) {

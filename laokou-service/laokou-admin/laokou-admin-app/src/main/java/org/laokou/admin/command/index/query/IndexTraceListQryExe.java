@@ -21,13 +21,9 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.index.IndexTraceListQry;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.dto.Search;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.Map;
-
-import static org.laokou.common.i18n.common.ElasticsearchIndexConstant.TRACE;
 
 /**
  * 查询分布式链路索引列表执行器.
@@ -46,11 +42,11 @@ public class IndexTraceListQryExe {
 	 * @return 分布式链路索引列表
 	 */
 	public Result<Datas<Map<String, Object>>> execute(IndexTraceListQry qry) {
-		Search search = new Search();
-		search.setIndexNames(new String[] { TRACE });
-		search.setPageSize(qry.getPageSize());
-		search.setPageNum(qry.getPageNum());
-		search.setOrQueryList(Collections.singletonList(new Search.Query(TRACE_ID, qry.getTraceId())));
+//		Search search = new Search();
+//		search.setIndexNames(new String[] { TRACE });
+//		search.setPageSize(qry.getPageSize());
+//		search.setPageNum(qry.getPageNum());
+		//search.setOrQueryList(Collections.singletonList(new Search.Query(TRACE_ID, qry.getTraceId())));
 		return null;
 		// return Result.ok(elasticsearchTemplate.highlightSearchIndex(search));
 	}

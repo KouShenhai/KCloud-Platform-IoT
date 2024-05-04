@@ -22,13 +22,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * @author laokou
  */
-@Schema(name = "MessageReadEnums", description = "消息读取枚举")
-public enum MessageReadEnum {
+@Schema(name = "SensitiveTypeEnums", description = "铭感词类型枚举")
+public enum SensitiveType {
 
-	@Schema(name = "NO", description = "未读")
-	NO,
+	@Schema(name = "MOBILE", description = "手机号")
+	MOBILE,
 
-	@Schema(name = "YES", description = "已读")
-	YES
+	@Schema(name = "MAIL", description = "邮箱")
+	MAIL
 
 }

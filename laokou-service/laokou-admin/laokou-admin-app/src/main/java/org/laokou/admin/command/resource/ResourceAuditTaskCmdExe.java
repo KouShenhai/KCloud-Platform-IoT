@@ -21,7 +21,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.dto.log.domainevent.AuditLogEvent;
 import org.laokou.admin.dto.resource.ResourceAuditTaskCmd;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
@@ -35,7 +34,7 @@ import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 审批资源任务流程执行器.
@@ -53,7 +52,6 @@ public class ResourceAuditTaskCmdExe {
 
 	private final ResourceMapper resourceMapper;
 
-	private final EventUtil eventUtil;
 
 	/**
 	 * 执行审批资源任务流程.

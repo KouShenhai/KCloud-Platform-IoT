@@ -25,8 +25,8 @@ import com.alibaba.excel.enums.poi.HorizontalAlignmentEnum;
 import com.alibaba.excel.enums.poi.VerticalAlignmentEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.i18n.dto.Excel;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -34,7 +34,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Schema(name = "OperateLogExcel", description = "操作日志")
-public class OperateLogExcel extends Excel {
+public class OperateLogExcel implements Serializable {
 
 	@ColumnWidth(40)
 	@Schema(name = "moduleName", description = "操作的模块名称")

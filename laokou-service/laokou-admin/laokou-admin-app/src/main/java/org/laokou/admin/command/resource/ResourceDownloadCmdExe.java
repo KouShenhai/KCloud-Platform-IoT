@@ -34,7 +34,7 @@ import java.net.URI;
 import java.net.URL;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 import static org.laokou.common.i18n.common.ResponseHeaderConstant.CONTENT_DISPOSITION;
 import static org.laokou.common.i18n.common.ResponseHeaderConstant.STREAM_CONTENT_TYPE;
 

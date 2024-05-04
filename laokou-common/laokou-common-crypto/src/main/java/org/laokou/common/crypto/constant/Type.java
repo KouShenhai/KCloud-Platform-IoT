@@ -15,20 +15,20 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.common.crypto.constant;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
+ * 操作类型枚举.
  * @author laokou
  */
-@Schema(name = "AuditConstants", description = "审批常量")
-public final class AuditConstant {
+public enum Type {
 
-	private AuditConstant() {
-	}
+	@Schema(name = "ENCRYPT", description = "加密")
+	ENCRYPT,
 
-	@Schema(name = "STATUS", description = "审批状态")
-	public static final String STATUS = "auditStatus";
+	@Schema(name = "DECRYPT", description = "解密")
+	DECRYPT
 
 }

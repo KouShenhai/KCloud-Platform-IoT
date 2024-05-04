@@ -25,7 +25,7 @@ import org.laokou.admin.api.TenantsServiceI;
 import org.laokou.admin.dto.tenant.*;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.i18n.common.CacheOperatorTypeEnum;
+import org.laokou.common.data.cache.constant.TypeEnum;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -35,7 +35,7 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import static org.laokou.common.i18n.common.CacheNameConstant.TENANTS;
+import static org.laokou.common.data.cache.constant.NameConstant.TENANTS;
 import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
 import static org.redisson.api.RateIntervalUnit.MINUTES;
 
@@ -79,7 +79,7 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "修改租户")
 	@OperateLog(module = "租户管理", operation = "修改租户")
 	@PreAuthorize("hasAuthority('tenants:modify')")
-	@DataCache(name = TENANTS, key = "#cmd.tenantCO.id", type = CacheOperatorTypeEnum.DEL)
+	@DataCache(name = TENANTS, key = "#cmd.tenantCO.id", type = TypeEnum.DEL)
 	public void modify(@RequestBody TenantModifyCmd cmd) {
 		tenantsServiceI.modify(cmd);
 	}

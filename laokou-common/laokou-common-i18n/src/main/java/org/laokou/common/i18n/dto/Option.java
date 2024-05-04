@@ -17,33 +17,33 @@
 
 package org.laokou.common.i18n.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
+import java.io.Serializable;
 
 /**
+ * 下拉框选择项参数.
  * @author laokou
  */
 @Data
-@Schema(name = "Option", description = "下拉框选择参数项参数")
-public class Option extends DTO {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Option implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -4146348495335527374L;
 
-	@Schema(name = "label", description = "标签")
+	/**
+	 * 标签
+	 */
 	private String label;
 
-	@Schema(name = "value", description = "值")
+	/**
+	 * 值
+	 */
 	private String value;
-
-	public Option() {
-	}
-
-	public Option(String label, String value) {
-		this.label = label;
-		this.value = value;
-	}
 
 }

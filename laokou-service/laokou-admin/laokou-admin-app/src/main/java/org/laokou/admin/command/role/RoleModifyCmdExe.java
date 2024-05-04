@@ -24,7 +24,7 @@ import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.dto.role.RoleModifyCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 修改角色执行器.

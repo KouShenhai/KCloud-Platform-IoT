@@ -19,7 +19,6 @@ package org.laokou.common.security.utils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -32,72 +31,91 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.io.Serial;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import static org.laokou.common.i18n.common.SuperAdminEnum.YES;
-import static org.laokou.common.i18n.common.UserStatusEnum.ENABLED;
+
+import static org.laokou.common.i18n.common.SuperAdmin.YES;
 
 /**
+ * 用户详细信息.
  * &#064;JsonTypeInfo(use = JsonTypeInfo.Id.NAME) => 多态子类与抽象类绑定.
  *
  * @author laokou
  */
 @Data
-@Schema(name = "UserDetail", description = "用户详细信息")
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
 public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2AuthenticatedPrincipal {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
 
-	@Schema(name = "username", description = "用户名")
+	/**
+	 * 用户名.
+	 */
 	private String username;
 
-	@Schema(name = "avatar", description = "头像")
+	/**
+	 * 头像.
+	 */
 	private String avatar;
 
-	@Schema(name = "superAdmin", description = "超级管理员标识 0否 1是")
+	/**
+	 * 超级管理员标识 0否 1是.
+	 */
 	private Integer superAdmin;
 
-	@Schema(name = "status", description = "用户状态 0正常 1锁定")
+	/**
+	 * 用户状态 0正常 1禁用.
+	 */
 	private Integer status;
 
-	@Schema(name = "mail", description = "邮箱")
+	/**
+	 * 邮箱.
+	 */
 	private String mail;
 
-	@Schema(name = "mobile", description = "手机号")
+	/**
+	 * 手机号.
+	 */
 	private String mobile;
 
-	@Schema(name = "password", description = "密码")
+	/**
+	 * 密码.
+	 */
 	private transient String password;
 
-	@Schema(name = "dept_id", description = "部门ID")
+	/**
+	 * 部门ID.
+	 */
 	private Long deptId;
 
-	@Schema(name = "dept_path", description = "部门PATH")
+	/**
+	 * 部门PATH.
+	 */
 	private String deptPath;
 
-	@Schema(name = "deptPaths", description = "部门PATH集合")
+	/**
+	 * 部门PATH集合.
+	 */
 	private Set<String> deptPaths;
 
-	@Schema(name = "permissions", description = "菜单权限标识集合")
+	/**
+	 * 菜单权限标识集合.
+	 */
 	private Set<String> permissions;
 
-	@Schema(name = "tenantId", description = "租户ID")
+	/**
+	 * 租户ID.
+	 */
 	private Long tenantId;
 
-	@Schema(name = "sourceName", description = "数据源名称")
+	/**
+	 * 数据源名称.
+	 */
 	private String sourceName;
-
-	@Schema(name = "loginIp", description = "登录IP")
-	private String loginIp;
-
-	@Schema(name = "loginDate", description = "登录时间")
-	private LocalDateTime loginDate;
 
 	@Override
 	public boolean equals(Object o) {
@@ -141,12 +159,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (!sourceName.equals(that.sourceName)) {
 			return false;
 		}
-		if (!loginIp.equals(that.loginIp)) {
-			return false;
-		}
-		if (!loginDate.equals(that.loginDate)) {
-			return false;
-		}
 		if (!mobile.equals(that.mobile)) {
 			return false;
 		}
@@ -166,8 +178,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		result = 31 * result + permissions.hashCode();
 		result = 31 * result + tenantId.hashCode();
 		result = 31 * result + sourceName.hashCode();
-		result = 31 * result + loginIp.hashCode();
-		result = 31 * result + loginDate.hashCode();
 		result = 31 * result + mail.hashCode();
 		result = 31 * result + mobile.hashCode();
 		return result;
@@ -179,13 +189,10 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	}
 
 	@JsonIgnore
-	public void modify(Set<String> permissions, Set<String> deptPaths, String sourceName, String loginIp,
-			LocalDateTime loginDate) {
+	public void modify(Set<String> permissions, Set<String> deptPaths, String sourceName) {
 		this.permissions = permissions;
 		this.deptPaths = deptPaths;
 		this.sourceName = sourceName;
-		this.loginIp = loginIp;
-		this.loginDate = loginDate;
 	}
 
 	@Override
@@ -215,7 +222,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	@Override
 	@JsonIgnore
 	public boolean isEnabled() {
-		return ENABLED.ordinal() == this.status;
+		return true;
 	}
 
 	/**
@@ -234,12 +241,14 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		return this.username;
 	}
 
+	@JsonIgnore
 	public void decrypt() {
 		decryptMail();
 		decryptMobile();
 		decryptUsername();
 	}
 
+	@JsonIgnore
 	private void decryptUsername() {
 		if (StringUtil.isNotEmpty(this.username)) {
 			try {
@@ -251,6 +260,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		}
 	}
 
+	@JsonIgnore
 	private void decryptMail() {
 		if (StringUtil.isNotEmpty(this.mail)) {
 			try {
@@ -262,6 +272,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		}
 	}
 
+	@JsonIgnore
 	private void decryptMobile() {
 		if (StringUtil.isNotEmpty(this.mobile)) {
 			try {

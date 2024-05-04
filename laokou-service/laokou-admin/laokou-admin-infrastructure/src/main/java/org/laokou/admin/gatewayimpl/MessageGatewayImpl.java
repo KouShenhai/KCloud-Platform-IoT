@@ -20,7 +20,6 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.ThreadContext;
 import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
@@ -30,8 +29,7 @@ import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.common.MessageTypeEnum;
+import org.laokou.common.i18n.common.TypeEnum;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -44,8 +42,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.RocketMqConstant.*;
-import static org.laokou.common.i18n.common.TraceConstant.TRACE_ID;
+import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_NOTICE_MESSAGE_TAG;
+import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_REMIND_MESSAGE_TAG;
 
 /**
  * 消息管理.
@@ -76,12 +74,12 @@ public class MessageGatewayImpl implements MessageGateway {
 	@Override
 	public void create(Message message) {
 		create(messageConvertor.toDataObject(message), message);
-		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(message.getType()),
-				JacksonUtil.toJsonStr(org.laokou.common.i18n.dto.Message.builder()
-					.payload(message.getDefaultMessage())
-					.receiver(message.getReceiver())
-					.build()),
-				ThreadContext.get(TRACE_ID));
+//		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(message.getType()),
+//				JacksonUtil.toJsonStr(org.laokou.common.i18n.dto.Message.builder()
+//					.payload(message.getDefaultMessage())
+//					.receiver(message.getReceiver())
+//					.build()),
+//				ThreadContext.get(TRACE_ID));
 	}
 
 	@Override
@@ -141,7 +139,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	 * @return 消息标签
 	 */
 	private String getMessageTag(Integer type) {
-		return type == MessageTypeEnum.NOTICE.ordinal() ? LAOKOU_NOTICE_MESSAGE_TAG : LAOKOU_REMIND_MESSAGE_TAG;
+		return type == TypeEnum.NOTICE.ordinal() ? LAOKOU_NOTICE_MESSAGE_TAG : LAOKOU_REMIND_MESSAGE_TAG;
 	}
 
 	private MessageDetailDO convert(MessageDetail messageDetail) {

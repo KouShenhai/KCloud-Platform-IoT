@@ -30,8 +30,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_USER;
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_USER;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 查询用户下拉框选择项列表执行器.

@@ -17,17 +17,20 @@
 
 package org.laokou.common.i18n.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
+import java.io.Serializable;
+
 /**
+ * 标识.
  * @author laokou
  */
 @Getter
-@Schema(name = "Identifier", description = "标识")
-public abstract class Identifier<ID> implements Entity {
+public abstract class Identifier<ID> implements Serializable {
 
-	@Schema(name = "id", description = "ID")
+	/**
+	 * ID.
+	 */
 	protected ID id;
 
 }

@@ -34,7 +34,7 @@ import org.springframework.transaction.TransactionDefinition;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.TENANT;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 查询未读消息列表执行器.
@@ -58,14 +58,14 @@ public class MessageUnreadListQryExe {
 	 */
 	@DS(TENANT)
 	public Result<Datas<MessageCO>> execute(MessageUnreadListQry qry) {
-		PageQuery pageQuery = qry.page().ignore();
+		PageQuery pageQuery = qry;
 		List<MessageDO> list = transactionalUtil.defaultExecute(
 				r -> messageMapper.selectUnreadListByCondition(UserUtil.getUserId(), qry.getType(), pageQuery),
 				TransactionDefinition.ISOLATION_READ_UNCOMMITTED, true);
 		Long count = transactionalUtil.defaultExecute(
 				r -> messageMapper.selectUnreadCountByCondition(UserUtil.getUserId(), qry.getType(), pageQuery),
 				TransactionDefinition.ISOLATION_READ_UNCOMMITTED, true);
-		return Result.ok(Datas.to(list.stream().map(messageConvertor::convertClientObj).toList(), count));
+		return Result.ok(Datas.create(list.stream().map(messageConvertor::convertClientObj).toList(), count));
 	}
 
 }

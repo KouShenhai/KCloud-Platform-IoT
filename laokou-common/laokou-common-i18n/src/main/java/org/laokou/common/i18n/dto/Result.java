@@ -23,6 +23,7 @@ import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.io.Serial;
+import java.io.Serializable;
 
 import static org.laokou.common.i18n.common.StatusCode.OK;
 
@@ -31,7 +32,7 @@ import static org.laokou.common.i18n.common.StatusCode.OK;
  */
 @Data
 @Schema(name = "Result", description = "请求响应统一格式")
-public class Result<T> extends DTO {
+public class Result<T> implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -1286769110881865369L;

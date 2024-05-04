@@ -23,8 +23,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.MybatisPlusConstant.USER_ID;
-
 /**
  * 菜单.
  *
@@ -45,6 +43,6 @@ public interface MenuMapper {
 	 * @param userId 用户ID
 	 * @return 菜单权限标识集合
 	 */
-	List<String> selectPermissionsByUserId(@Param(USER_ID) Long userId);
+	List<String> selectPermissionsByUserId(@Param("userId") Long userId);
 
 }

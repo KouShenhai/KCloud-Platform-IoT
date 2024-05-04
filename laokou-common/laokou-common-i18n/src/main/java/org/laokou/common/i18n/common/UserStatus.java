@@ -15,16 +15,21 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-
-import java.io.Serializable;
-
+package org.laokou.common.i18n.common;
 /**
+ * 用户状态常量.
  * @author laokou
  */
-@Schema(name = "Entity", description = "实体")
-public interface Entity extends Serializable {
+public enum UserStatus {
+
+	/**
+	 * 正常.
+	 */
+	ENABLED,
+
+	/**
+	 * 禁用.
+	 */
+	DISABLE
 
 }

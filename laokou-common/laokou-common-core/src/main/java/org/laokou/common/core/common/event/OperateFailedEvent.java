@@ -20,9 +20,8 @@ package org.laokou.common.core.common.event;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
-import lombok.experimental.SuperBuilder;
-import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.common.domain.OperateLog;
+import org.laokou.common.core.context.UserContextHolder;
 
 import static org.laokou.common.i18n.common.EventTypeEnum.OPERATE_FAILED;
 import static org.laokou.common.i18n.common.NumberConstant.FAIL;
@@ -31,7 +30,6 @@ import static org.laokou.common.i18n.common.NumberConstant.FAIL;
  * @author laokou
  */
 @Data
-@SuperBuilder
 @Schema(name = "OperateFailedEvent", description = "操作失败事件")
 public class OperateFailedEvent extends OperateEvent {
 

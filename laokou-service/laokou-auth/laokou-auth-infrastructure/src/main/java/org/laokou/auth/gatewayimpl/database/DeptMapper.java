@@ -23,8 +23,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.MybatisPlusConstant.USER_ID;
-
 /**
  * 部门.
  *
@@ -45,6 +43,6 @@ public interface DeptMapper {
 	 * @param userId 用户ID
 	 * @return 部门PATHS
 	 */
-	List<String> selectDeptPathsByUserId(@Param(USER_ID) Long userId);
+	List<String> selectDeptPathsByUserId(@Param("userId") Long userId);
 
 }

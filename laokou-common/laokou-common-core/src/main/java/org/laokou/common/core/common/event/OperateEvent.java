@@ -41,7 +41,6 @@ import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_OPERATE_EVEN
  * @author laokou
  */
 @Data
-@SuperBuilder
 @NoArgsConstructor
 @Schema(name = "OperateEvent", description = "操作事件")
 public class OperateEvent extends DomainEvent<Long> {

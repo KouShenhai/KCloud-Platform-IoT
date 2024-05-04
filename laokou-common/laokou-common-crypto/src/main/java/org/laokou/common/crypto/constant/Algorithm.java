@@ -15,19 +15,20 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.common.crypto.constant;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.io.Serial;
-
 /**
+ * 加密类型枚举
  * @author laokou
  */
-@Schema(name = "Index", description = "索引")
-public abstract class Index extends DTO {
+public enum Algorithm {
 
-	@Serial
-	private static final long serialVersionUID = -4314847178115273665L;
+	@Schema(name = "AES", description = "AES加密算法")
+	AES,
+
+	@Schema(name = "MD5", description = "MD5摘要算法")
+	MD5
 
 }

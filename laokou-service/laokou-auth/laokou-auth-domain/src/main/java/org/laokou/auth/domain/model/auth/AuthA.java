@@ -34,7 +34,7 @@ import java.util.List;
 import static org.laokou.common.i18n.common.EventTypeEnum.LOGIN_FAILED;
 import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.UserStatusEnum.DISABLE;
+import static org.laokou.common.i18n.common.UserStatus.DISABLE;
 import static org.laokou.common.i18n.common.exception.AuthException.*;
 import static org.laokou.common.i18n.common.exception.ParamException.*;
 

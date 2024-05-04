@@ -17,14 +17,22 @@
 
 package org.laokou.common.i18n.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.common.EventStatusEnum;
 
-import java.io.Serializable;
+import static lombok.AccessLevel.PRIVATE;
 
 /**
+ * 默认领域事件.
  * @author laokou
  */
-@Schema(name = "Event", description = "事件")
-public interface Event extends Serializable {
+@Data
+@NoArgsConstructor(access = PRIVATE)
+public class DefaultDomainEvent extends DomainEvent<Long> {
+
+	public DefaultDomainEvent(Long id, EventStatusEnum eventStatus, String sourceName) {
+		super(id, eventStatus, sourceName);
+	}
 
 }

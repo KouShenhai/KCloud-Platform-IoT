@@ -26,8 +26,10 @@ import static org.laokou.common.i18n.common.StatusCode.INTERNAL_SERVER_ERROR;
  */
 public class LogUtil {
 
+	private static final String NO_MSG = "暂无信息";
+
 	public static String record(String message) {
-		return StringUtil.isEmpty(message) ? "暂无信息" : message;
+		return StringUtil.isEmpty(message) ? NO_MSG : message;
 	}
 
 	public static String except(String message) {

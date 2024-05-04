@@ -24,7 +24,7 @@ import org.laokou.auth.domain.gateway.LogGateway;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.dto.DecorateDomainEvent;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
 import org.springframework.stereotype.Component;
@@ -41,7 +41,7 @@ public class LogGatewayImpl implements LogGateway {
 	private final LoginLogMapper loginLogMapper;
 
 	@Override
-	public void create(LoginEvent event, DecorateDomainEvent evt) {
+	public void create(LoginEvent event, DefaultDomainEvent evt) {
 		try {
 			DynamicDataSourceContextHolder.push(evt.getSourceName());
 			DynamicTableSuffixContextHolder.set(UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
@@ -53,7 +53,7 @@ public class LogGatewayImpl implements LogGateway {
 		}
 	}
 
-	private LoginLogDO convert(LoginEvent loginEvent, DecorateDomainEvent evt) {
+	private LoginLogDO convert(LoginEvent loginEvent, DefaultDomainEvent evt) {
 		LoginLogDO logDO = new LoginLogDO();
 		logDO.setUsername(loginEvent.getUsername());
 		logDO.setIp(loginEvent.getIp());

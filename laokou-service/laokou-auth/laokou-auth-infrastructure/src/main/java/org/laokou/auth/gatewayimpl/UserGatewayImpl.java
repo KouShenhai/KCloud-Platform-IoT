@@ -31,7 +31,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_USER;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_USER;
 import static org.laokou.common.i18n.common.exception.SystemException.TABLE_NOT_EXIST;
 
 /**

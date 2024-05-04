@@ -25,7 +25,7 @@ import org.laokou.common.domain.database.dataobject.DomainEventDO;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.EventStatusEnum;
 import org.laokou.common.i18n.common.JobModeEnum;
-import org.laokou.common.i18n.dto.DecorateDomainEvent;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
@@ -143,7 +143,7 @@ public class DomainEventPublishTask {
 
 	private void addEvent(List<DomainEvent<Long>> modifyList, Long id, String sourceName,
 			EventStatusEnum eventStatusEnum) {
-		modifyList.add(new DecorateDomainEvent(id, eventStatusEnum, sourceName));
+		modifyList.add(new DefaultDomainEvent(id, eventStatusEnum, sourceName));
 	}
 
 }

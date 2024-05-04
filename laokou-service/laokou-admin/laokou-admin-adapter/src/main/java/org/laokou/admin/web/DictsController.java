@@ -25,7 +25,7 @@ import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.dict.*;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.i18n.common.CacheOperatorTypeEnum;
+import org.laokou.common.data.cache.constant.TypeEnum;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.CacheNameConstant.DICTS;
+import static org.laokou.common.data.cache.constant.NameConstant.DICTS;
 
 /**
  * @author laokou
@@ -85,7 +85,7 @@ public class DictsController {
 	@Operation(summary = "字典管理", description = "修改字典")
 	@OperateLog(module = "字典管理", operation = "修改字典")
 	@PreAuthorize("hasAuthority('dicts:modify')")
-	@DataCache(name = DICTS, key = "#cmd.dictCO.id", type = CacheOperatorTypeEnum.DEL)
+	@DataCache(name = DICTS, key = "#cmd.dictCO.id", type = TypeEnum.DEL)
 	public void modify(@RequestBody DictModifyCmd cmd) {
 		dictsServiceI.modify(cmd);
 	}

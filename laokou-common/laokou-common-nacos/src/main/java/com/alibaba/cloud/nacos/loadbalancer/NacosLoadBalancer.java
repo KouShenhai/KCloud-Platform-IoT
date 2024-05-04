@@ -38,7 +38,6 @@ import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.balancer.NacosBalancer;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
 import com.alibaba.nacos.client.naming.utils.CollectionUtils;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RegexUtil;
@@ -66,8 +65,8 @@ import java.util.stream.Collectors;
 
 import static org.laokou.common.core.utils.RegexUtil.URL_VERSION_REGEX;
 import static org.laokou.common.i18n.common.NetworkConstant.IPV4_REGEX;
-import static org.laokou.common.i18n.common.StringConstant.*;
-import static org.laokou.common.i18n.common.SysConstant.GRACEFUL_SHUTDOWN_URL;
+import static org.laokou.common.i18n.common.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.StringConstant.TRUE;
 
 /**
  * nacos路由负载均衡.
@@ -81,18 +80,39 @@ import static org.laokou.common.i18n.common.SysConstant.GRACEFUL_SHUTDOWN_URL;
 @Slf4j
 public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
-	@Schema(name = "SERVICE_HOST", description = "服务IP")
+	/**
+	 * 服务主机.
+	 */
 	private static final String SERVICE_HOST = "service-host";
 
-	@Schema(name = "SERVICE_PORT", description = "服务端口")
+	/**
+	 * 服务端口.
+	 */
 	private static final String SERVICE_PORT = "service-port";
 
-	@Schema(name = "SERVICE-GRAY", description = "服务灰度")
+	/**
+	 * 服务灰度.
+	 */
 	private static final String SERVICE_GRAY = "service-gray";
 
-	@Schema(name = "CLUSTER_CONFIG", description = "Nacos集群配置")
+	/**
+	 * Nacos集群配置.
+	 */
 	private static final String CLUSTER_CONFIG = "nacos.cluster";
 
+	/**
+	 * 版本.
+	 */
+	private static final String VERSION = "version";
+
+	/**
+	 * 优雅停机URL.
+	 */
+	public static final String GRACEFUL_SHUTDOWN_URL = "/graceful-shutdown";
+
+	/**
+	 * 服务ID.
+	 */
 	private final String serviceId;
 
 	private final ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;

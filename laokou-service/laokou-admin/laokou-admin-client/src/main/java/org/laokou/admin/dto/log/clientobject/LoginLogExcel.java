@@ -21,8 +21,8 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.i18n.dto.Excel;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Schema(name = "LoginLogExcel", description = "登录日志")
-public class LoginLogExcel extends Excel {
+public class LoginLogExcel  implements Serializable {
 
 	@ColumnWidth(30)
 	@Schema(name = "username", description = "登录的用户名")

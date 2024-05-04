@@ -15,14 +15,21 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.common.i18n.common;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
+ * 超级管理员枚举
  * @author laokou
  */
-@Schema(name = "Authorization", description = "认证")
-public abstract class Authorization extends DTO {
+@Schema(name = "SuperAdminEnums", description = "")
+public enum SuperAdmin {
+
+	@Schema(name = "NO", description = "否")
+	NO,
+
+	@Schema(name = "YES", description = "是")
+	YES
 
 }

@@ -17,7 +17,7 @@
 
 package org.laokou.common.crypto.annotation;
 
-import org.laokou.common.crypto.enums.OperatorTypeEnum;
+import org.laokou.common.crypto.constant.Type;
 
 import java.lang.annotation.*;
 
@@ -31,6 +31,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface Aes {
 
-	OperatorTypeEnum type() default OperatorTypeEnum.ENCRYPT;
+	Type type() default Type.ENCRYPT;
 
 }

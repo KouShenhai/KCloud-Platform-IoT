@@ -43,7 +43,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.SHOW_TABLES;
+import static org.laokou.common.i18n.common.DSConstant.SHOW_TABLES;
 
 /**
  * 数据源工具类.

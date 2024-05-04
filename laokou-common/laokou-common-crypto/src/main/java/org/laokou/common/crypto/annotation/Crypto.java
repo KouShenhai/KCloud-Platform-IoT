@@ -17,11 +17,11 @@
 
 package org.laokou.common.crypto.annotation;
 
-import org.laokou.common.i18n.common.AlgorithmEnum;
+import org.laokou.common.crypto.constant.Algorithm;
 
 import java.lang.annotation.*;
 
-import static org.laokou.common.i18n.common.AlgorithmEnum.AES;
+import static org.laokou.common.crypto.constant.Algorithm.AES;
 
 /**
  * 加密.
@@ -33,6 +33,6 @@ import static org.laokou.common.i18n.common.AlgorithmEnum.AES;
 @Documented
 public @interface Crypto {
 
-	AlgorithmEnum type() default AES;
+	Algorithm type() default AES;
 
 }

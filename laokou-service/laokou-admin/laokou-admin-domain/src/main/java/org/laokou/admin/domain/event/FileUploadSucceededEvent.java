@@ -30,7 +30,6 @@ import static org.laokou.common.i18n.common.NumberConstant.SUCCESS;
  * @author laokou
  */
 @Data
-@SuperBuilder
 @Schema(name = "FileLogSucceededEvent", description = "文件上传成功事件")
 public class FileUploadSucceededEvent extends FileUploadEvent {
 

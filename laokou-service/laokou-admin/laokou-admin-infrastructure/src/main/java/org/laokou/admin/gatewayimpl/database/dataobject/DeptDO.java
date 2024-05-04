@@ -24,7 +24,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 import java.io.Serial;
 
-import static org.laokou.common.i18n.common.DatasourceConstant.BOOT_SYS_DEPT;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_DEPT;
 
 /**
  * @author laokou

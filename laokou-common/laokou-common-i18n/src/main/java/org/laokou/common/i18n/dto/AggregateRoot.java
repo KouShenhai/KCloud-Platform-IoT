@@ -17,7 +17,6 @@
 
 package org.laokou.common.i18n.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -32,40 +31,60 @@ import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_TENA
 import static org.laokou.common.i18n.common.exception.ParamException.SYSTEM_ID_REQUIRE;
 
 /**
+ * 聚合根.
  * @author laokou
  */
 @Getter
-@Schema(name = "AggregateRoot", description = "聚合根")
 public abstract class AggregateRoot<ID> extends Identifier<ID> {
 
-	@Schema(name = "creator", description = "创建人")
+	/**
+	 * 创建人.
+	 */
 	protected ID creator;
 
-	@Schema(name = "editor", description = "编辑人")
+	/**
+	 * 编辑人.
+	 */
 	protected ID editor;
 
-	@Schema(name = "deptId", description = "部门ID")
+	/**
+	 * 部门ID.
+	 */
 	protected ID deptId;
 
-	@Schema(name = "deptPath", description = "部门PATH")
+	/**
+	 * 部门PATH.
+	 */
 	protected String deptPath;
 
-	@Schema(name = "tenantId", description = "租户ID")
+	/**
+	 * 租户ID.
+	 */
 	protected ID tenantId;
 
-	@Schema(name = "createDate", description = "创建时间")
+	/**
+	 * 创建时间.
+	 */
 	protected LocalDateTime createDate;
 
-	@Schema(name = "updateDate", description = "修改时间")
+	/**
+	 * 修改时间.
+	 */
 	protected LocalDateTime updateDate;
 
-	@Schema(name = "sourceName", description = "数据源名称")
+	/**
+	 * 数据源名称.
+	 */
 	protected String sourceName;
 
-	@Schema(name = "appName", description = "应用名称")
+	/**
+	 * 应用名称.
+	 */
 	protected String appName;
 
-	@Schema(name = "events", description = "事件集合")
+	/**
+	 * 事件集合.
+	 */
 	private List<DomainEvent<ID>> events;
 
 	public void checkNullId() {

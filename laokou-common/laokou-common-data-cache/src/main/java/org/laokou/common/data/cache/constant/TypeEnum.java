@@ -15,20 +15,20 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.common.data.cache.constant;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
+ * 操作类型枚举
  * @author laokou
  */
-@Schema(name = "UserStatusEnums", description = "用户状态常量")
-public enum UserStatusEnum {
+public enum TypeEnum {
 
-	@Schema(name = "ENABLED", description = "正常")
-	ENABLED,
+	@Schema(name = "GET", description = "查看")
+	GET,
 
-	@Schema(name = "DISABLE", description = "禁用")
-	DISABLE
+	@Schema(name = "DEL", description = "删除")
+	DEL
 
 }
