@@ -80,8 +80,7 @@ public class OAuth2AuthenticationProvider {
 		MenuE menu = auth.getMenu();
 		DeptE dept = auth.getDept();
 		UserDetail userDetail = userConvertor.convertClientObject(auth.getUser());
-		userDetail.modify(menu.getPermissions(), dept.getDeptPaths(), auth.getSourceName()
-		);
+		userDetail.modify(menu.getPermissions(), dept.getDeptPaths(), auth.getSourceName());
 		return userDetail;
 	}
 

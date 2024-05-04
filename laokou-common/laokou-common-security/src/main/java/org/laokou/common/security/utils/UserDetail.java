@@ -40,8 +40,7 @@ import java.util.stream.Collectors;
 import static org.laokou.common.i18n.common.SuperAdmin.YES;
 
 /**
- * 用户详细信息.
- * &#064;JsonTypeInfo(use = JsonTypeInfo.Id.NAME) => 多态子类与抽象类绑定.
+ * 用户详细信息. &#064;JsonTypeInfo(use = JsonTypeInfo.Id.NAME) => 多态子类与抽象类绑定.
  *
  * @author laokou
  */

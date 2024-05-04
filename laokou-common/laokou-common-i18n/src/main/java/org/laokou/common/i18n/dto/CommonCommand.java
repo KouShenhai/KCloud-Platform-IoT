@@ -20,7 +20,8 @@ package org.laokou.common.i18n.dto;
 import java.io.Serial;
 
 /**
- *  CommonCommand request from Client.
+ * CommonCommand request from Client.
+ *
  * @author laokou
  */
 public class CommonCommand extends Command {

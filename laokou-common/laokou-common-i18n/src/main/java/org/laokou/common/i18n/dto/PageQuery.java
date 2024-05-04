@@ -27,6 +27,7 @@ import java.io.Serial;
 
 /**
  * 分页查询参数.
+ *
  * @author laokou
  */
 @Data

@@ -23,6 +23,7 @@ import java.io.Serializable;
 
 /**
  * 标识.
+ *
  * @author laokou
  */
 @Getter

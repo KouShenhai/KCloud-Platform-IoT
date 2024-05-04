@@ -39,11 +39,12 @@ public class IndexTraceGetQryExe {
 	 * @return 分布式链路索引
 	 */
 	public Result<Map<String, Object>> execute(IndexTraceGetQry qry) {
-//		Search search = new Search();
-//		search.setIndexNames(new String[] { TRACE });
-//		search.setPageSize(1);
-//		search.setPageNum(1);
-//		search.setOrQueryList(Collections.singletonList(new Search.Query("id", qry.getId())));
+		// Search search = new Search();
+		// search.setIndexNames(new String[] { TRACE });
+		// search.setPageSize(1);
+		// search.setPageNum(1);
+		// search.setOrQueryList(Collections.singletonList(new Search.Query("id",
+		// qry.getId())));
 		return null;
 		// return
 		// Result.ok(elasticsearchTemplate.highlightSearchIndex(search).getRecords().getFirst());

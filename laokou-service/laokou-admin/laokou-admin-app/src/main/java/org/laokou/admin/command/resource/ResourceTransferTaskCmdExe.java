@@ -36,7 +36,6 @@ public class ResourceTransferTaskCmdExe {
 
 	// private final TasksFeignClient tasksFeignClient;
 
-
 	/**
 	 * 执行转办资源任务流程.
 	 * @param cmd 转办资源任务流程参数

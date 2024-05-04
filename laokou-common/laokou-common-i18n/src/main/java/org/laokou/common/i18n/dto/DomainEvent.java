@@ -31,6 +31,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 /**
  * 领域事件.
+ *
  * @author laokou
  */
 @Data

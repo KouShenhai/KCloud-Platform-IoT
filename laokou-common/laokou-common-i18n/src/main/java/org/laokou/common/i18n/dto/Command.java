@@ -16,6 +16,7 @@
  */
 
 package org.laokou.common.i18n.dto;
+
 import java.io.Serial;
 
 /**

@@ -20,7 +20,8 @@ package org.laokou.common.data.cache.constant;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * 操作类型枚举
+ * 操作类型枚举.
+ *
  * @author laokou
  */
 public enum TypeEnum {

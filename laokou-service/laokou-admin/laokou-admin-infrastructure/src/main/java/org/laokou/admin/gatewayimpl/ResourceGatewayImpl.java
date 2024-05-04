@@ -18,8 +18,6 @@
 package org.laokou.admin.gatewayimpl;
 
 import io.seata.core.context.RootContext;
-import io.seata.saga.engine.StateMachineEngine;
-import io.seata.saga.statelang.domain.StateMachineInstance;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +30,6 @@ import org.laokou.admin.gatewayimpl.database.ResourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceIndex;
-import org.laokou.admin.gatewayimpl.rpc.FlowTaskFeignClient;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
@@ -40,7 +37,6 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -69,9 +65,9 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final StateMachineEngine stateMachineEngine;
-
-	private final FlowTaskFeignClient flowTaskFeignClient;
+	/*
+	 * private final StateMachineEngine stateMachineEngine;
+	 */
 
 	/**
 	 * 新增资源.
@@ -328,10 +324,11 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		map.put("code", resource.getCode());
 		map.put("url", resource.getUrl());
 		map.put("resourceId", resource.getId());
-		StateMachineInstance smi = stateMachineEngine.startWithBusinessKey("resourceModify",
-				UserUtil.getTenantId().toString(), businessKey, map);
+		// StateMachineInstance smi =
+		// stateMachineEngine.startWithBusinessKey("resourceModify",
+		// UserUtil.getTenantId().toString(), businessKey, map);
 		// waitingForFinish(smi);
-		log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
+		// log.info("Saga事务 XID：{}，事务状态：{}", smi.getId(), smi.getStatus());
 	}
 
 }

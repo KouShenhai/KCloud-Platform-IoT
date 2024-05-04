@@ -52,7 +52,6 @@ public class ResourceAuditTaskCmdExe {
 
 	private final ResourceMapper resourceMapper;
 
-
 	/**
 	 * 执行审批资源任务流程.
 	 * @param cmd 审批资源任务流程参数

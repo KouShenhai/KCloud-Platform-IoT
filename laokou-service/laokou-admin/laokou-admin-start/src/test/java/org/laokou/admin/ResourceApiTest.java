@@ -69,19 +69,20 @@ class ResourceApiTest extends CommonTest {
 	public void testResourceSearchApi() {
 		String apiUrl = API_PREFIX + "search";
 		ResourceSearchGetQry qry = new ResourceSearchGetQry();
-//		Search search = new Search();
-//		search.setIndexNames(new String[] { RESOURCE });
-//		qry.setSearch(search);
-//		MvcResult mvcResult = super.mockMvc
-//			.perform(post(apiUrl).contentType(MediaType.APPLICATION_JSON)
-//				.accept(MediaType.APPLICATION_JSON)
-//				.content(JacksonUtil.toJsonStr(qry)))
-//			.andExpect(status().isOk())
-//			.andDo(print())
-//			.andReturn();
-//		String body = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
-//		Assert.isTrue(StringUtil.isNotEmpty(body), "response body is empty");
-		//log.info("返回值：{}", body);
+		// Search search = new Search();
+		// search.setIndexNames(new String[] { RESOURCE });
+		// qry.setSearch(search);
+		// MvcResult mvcResult = super.mockMvc
+		// .perform(post(apiUrl).contentType(MediaType.APPLICATION_JSON)
+		// .accept(MediaType.APPLICATION_JSON)
+		// .content(JacksonUtil.toJsonStr(qry)))
+		// .andExpect(status().isOk())
+		// .andDo(print())
+		// .andReturn();
+		// String body =
+		// mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+		// Assert.isTrue(StringUtil.isNotEmpty(body), "response body is empty");
+		// log.info("返回值：{}", body);
 	}
 
 }

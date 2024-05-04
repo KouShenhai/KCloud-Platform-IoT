@@ -36,7 +36,6 @@ public class ResourceDelegateTaskCmdExe {
 
 	// private final TasksFeignClient tasksFeignClient;
 
-
 	/**
 	 * 执行委派资源任务流程.
 	 * @param cmd 委派资源任务流程参数
