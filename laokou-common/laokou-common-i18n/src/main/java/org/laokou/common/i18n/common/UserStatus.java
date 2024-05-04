@@ -16,8 +16,10 @@
  */
 
 package org.laokou.common.i18n.common;
+
 /**
  * 用户状态常量.
+ *
  * @author laokou
  */
 public enum UserStatus {

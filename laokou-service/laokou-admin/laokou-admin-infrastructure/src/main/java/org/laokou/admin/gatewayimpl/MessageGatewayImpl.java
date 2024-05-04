@@ -74,12 +74,13 @@ public class MessageGatewayImpl implements MessageGateway {
 	@Override
 	public void create(Message message) {
 		create(messageConvertor.toDataObject(message), message);
-//		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(message.getType()),
-//				JacksonUtil.toJsonStr(org.laokou.common.i18n.dto.Message.builder()
-//					.payload(message.getDefaultMessage())
-//					.receiver(message.getReceiver())
-//					.build()),
-//				ThreadContext.get(TRACE_ID));
+		// rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC,
+		// getMessageTag(message.getType()),
+		// JacksonUtil.toJsonStr(org.laokou.common.i18n.dto.Message.builder()
+		// .payload(message.getDefaultMessage())
+		// .receiver(message.getReceiver())
+		// .build()),
+		// ThreadContext.get(TRACE_ID));
 	}
 
 	@Override

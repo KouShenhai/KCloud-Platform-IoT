@@ -36,7 +36,6 @@ public class ResourceResolveTaskCmdExe {
 
 	// private final TasksFeignClient tasksFeignClient;
 
-
 	/**
 	 * 执行处理资源任务流程.
 	 * @param cmd 处理资源任务流程参数

@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.apache.hc.core5.http.HttpHeaders;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.AddressUtil;

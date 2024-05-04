@@ -32,7 +32,7 @@ import static org.laokou.common.i18n.utils.DateUtil.Constant.*;
  * @author laokou
  */
 @Data
-public class TraceIndex  implements Serializable {
+public class TraceIndex implements Serializable {
 
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;

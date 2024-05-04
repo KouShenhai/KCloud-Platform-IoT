@@ -30,7 +30,7 @@ import java.io.Serializable;
  */
 @Data
 @Schema(name = "ResourceIndex", description = "资源索引")
-public class ResourceIndex  implements Serializable {
+public class ResourceIndex implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -3715061850731611381L;

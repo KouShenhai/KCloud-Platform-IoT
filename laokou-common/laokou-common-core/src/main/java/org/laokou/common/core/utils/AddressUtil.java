@@ -35,12 +35,12 @@ import static org.laokou.common.i18n.common.StringConstant.*;
 public class AddressUtil {
 
 	/**
-	 * 空位置
+	 * 未解析的位置.
 	 */
 	private static final String EMPTY_ADDR = "0";
 
 	/**
-	 * 本地
+	 * 本地的位置.
 	 */
 	private static final String LOCAL_ADDR = "内网";
 
@@ -76,7 +76,8 @@ public class AddressUtil {
 	private static String addressFormat(String address) {
 		StringBuilder stringBuilder = new StringBuilder(address.length());
 		String[] info = address.split(BACKSLASH + ERECT);
-		Arrays.stream(info).forEach(str -> stringBuilder.append(ObjectUtil.equals(EMPTY_ADDR, str) ? EMPTY : str + SPACE));
+		Arrays.stream(info)
+			.forEach(str -> stringBuilder.append(ObjectUtil.equals(EMPTY_ADDR, str) ? EMPTY : str + SPACE));
 		return stringBuilder.toString().trim();
 	}
 

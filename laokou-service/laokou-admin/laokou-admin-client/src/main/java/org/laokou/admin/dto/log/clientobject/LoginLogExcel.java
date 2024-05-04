@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Schema(name = "LoginLogExcel", description = "登录日志")
-public class LoginLogExcel  implements Serializable {
+public class LoginLogExcel implements Serializable {
 
 	@ColumnWidth(30)
 	@Schema(name = "username", description = "登录的用户名")

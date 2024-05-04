@@ -32,6 +32,7 @@ import static org.laokou.common.i18n.common.exception.ParamException.SYSTEM_ID_R
 
 /**
  * 聚合根.
+ *
  * @author laokou
  */
 @Getter

@@ -25,6 +25,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 /**
  * 默认领域事件.
+ *
  * @author laokou
  */
 @Data

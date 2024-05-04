@@ -39,7 +39,7 @@ public class RouterCO extends TreeUtil.TreeNode<RouterCO> {
 	private Boolean hidden;
 
 	public RouterCO(Long id, Long pid, String name, String redirect, Boolean hidden, String icon, Boolean keepAlive,
-					String target, String permission) {
+			String target, String permission) {
 		super(id, name, pid, "0");
 		this.redirect = redirect;
 		this.hidden = hidden;

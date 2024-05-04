@@ -26,6 +26,7 @@ import java.util.Set;
 
 /**
  * 消息.
+ *
  * @author laokou
  */
 @Data

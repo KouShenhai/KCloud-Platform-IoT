@@ -42,11 +42,12 @@ public class IndexTraceListQryExe {
 	 * @return 分布式链路索引列表
 	 */
 	public Result<Datas<Map<String, Object>>> execute(IndexTraceListQry qry) {
-//		Search search = new Search();
-//		search.setIndexNames(new String[] { TRACE });
-//		search.setPageSize(qry.getPageSize());
-//		search.setPageNum(qry.getPageNum());
-		//search.setOrQueryList(Collections.singletonList(new Search.Query(TRACE_ID, qry.getTraceId())));
+		// Search search = new Search();
+		// search.setIndexNames(new String[] { TRACE });
+		// search.setPageSize(qry.getPageSize());
+		// search.setPageNum(qry.getPageNum());
+		// search.setOrQueryList(Collections.singletonList(new Search.Query(TRACE_ID,
+		// qry.getTraceId())));
 		return null;
 		// return Result.ok(elasticsearchTemplate.highlightSearchIndex(search));
 	}

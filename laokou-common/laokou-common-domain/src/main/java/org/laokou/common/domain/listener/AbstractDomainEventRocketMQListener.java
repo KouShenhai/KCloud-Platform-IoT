@@ -74,17 +74,17 @@ public abstract class AbstractDomainEventRocketMQListener implements RocketMQLis
 
 	private DefaultDomainEvent convert(DomainEventDO eventDO) {
 		return null;
-//		return DefaultDomainEvent.builder()
-//			.sourceName(eventDO.getSourceName())
-//			.editor(eventDO.getEditor())
-//			.creator(eventDO.getCreator())
-//			.updateDate(eventDO.getUpdateDate())
-//			.createDate(eventDO.getCreateDate())
-//			.deptId(eventDO.getDeptId())
-//			.deptPath(eventDO.getDeptPath())
-//			.tenantId(eventDO.getTenantId())
-//			.id(eventDO.getId())
-//			.build();
+		// return DefaultDomainEvent.builder()
+		// .sourceName(eventDO.getSourceName())
+		// .editor(eventDO.getEditor())
+		// .creator(eventDO.getCreator())
+		// .updateDate(eventDO.getUpdateDate())
+		// .createDate(eventDO.getCreateDate())
+		// .deptId(eventDO.getDeptId())
+		// .deptPath(eventDO.getDeptPath())
+		// .tenantId(eventDO.getTenantId())
+		// .id(eventDO.getId())
+		// .build();
 	}
 
 	protected abstract void handleDomainEvent(DefaultDomainEvent evt, String attribute);

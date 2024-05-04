@@ -20,7 +20,8 @@ package org.laokou.common.crypto.constant;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * 加密类型枚举
+ * 加密类型枚举.
+ *
  * @author laokou
  */
 public enum Algorithm {

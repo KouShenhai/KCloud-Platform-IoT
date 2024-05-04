@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * 字符串常量.
+ *
  * @author laokou
  */
 public final class StringConstant {

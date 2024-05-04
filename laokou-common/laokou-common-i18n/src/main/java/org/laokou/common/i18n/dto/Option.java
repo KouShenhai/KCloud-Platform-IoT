@@ -26,6 +26,7 @@ import java.io.Serializable;
 
 /**
  * 下拉框选择项参数.
+ *
  * @author laokou
  */
 @Data
@@ -37,12 +38,12 @@ public class Option implements Serializable {
 	private static final long serialVersionUID = -4146348495335527374L;
 
 	/**
-	 * 标签
+	 * 标签.
 	 */
 	private String label;
 
 	/**
-	 * 值
+	 * 值.
 	 */
 	private String value;
 

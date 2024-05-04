@@ -50,7 +50,8 @@ public class UserContextInterceptor implements HandlerInterceptor {
 
 	private UserContextHolder.User convert(UserDetail userDetail, HttpServletRequest request) {
 		return new UserContextHolder.User(userDetail.getId(), userDetail.getUsername(), userDetail.getTenantId(),
-				userDetail.getDeptPath(), userDetail.getDeptId(), userDetail.getSourceName(), request.getHeader(AUTHORIZATION).substring(7));
+				userDetail.getDeptPath(), userDetail.getDeptId(), userDetail.getSourceName(),
+				request.getHeader(AUTHORIZATION).substring(7));
 	}
 
 }
