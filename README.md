@@ -257,9 +257,9 @@ KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的I
 [请点击我，查看详情](性能测试.md)
 
 ### 😛 用户权益（点个Star，拜托啦~🙏）
-- 采用Apache2.0开源协议，免费商用无需授权（如需书面授权请联系作者），请保留作者、Copyright信息
-- 采用Apache2.0开源协议，免费商用无需授权（如需书面授权请联系作者），请保留作者、Copyright信息
-- 采用Apache2.0开源协议，免费商用无需授权（如需书面授权请联系作者），请保留作者、Copyright信息
+- 采用Apache2.0开源协议，请保留作者、Copyright信息（商用需谨慎）  
+- 采用Apache2.0开源协议，请保留作者、Copyright信息（商用需谨慎）  
+- 采用Apache2.0开源协议，请保留作者、Copyright信息（商用需谨慎）  
 
 ### 😻 开源协议
 KCloud-Platform-IOT 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息  
