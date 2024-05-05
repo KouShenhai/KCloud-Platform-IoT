@@ -32,7 +32,6 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -69,7 +68,7 @@ public class OperateLogListQryExe {
 		CompletableFuture<List<OperateLogDO>> c1 = CompletableFuture
 			.supplyAsync(() -> operateLogMapper.selectListByCondition(operateLogDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
-			.supplyAsync(() -> operateLogMapper.selectObjCount(Collections.emptyList(), operateLogDO, page), executor);
+			.supplyAsync(() -> operateLogMapper.selectObjCount(operateLogDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.ok(Datas.create(c1.get().stream().map(operateLogConvertor::convertClientObj).toList(), c2.get()));
 	}

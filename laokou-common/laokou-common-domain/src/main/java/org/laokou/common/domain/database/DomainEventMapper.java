@@ -29,8 +29,8 @@ import java.util.Set;
 /**
  * @author laokou
  */
-@Repository
 @Mapper
+@Repository
 public interface DomainEventMapper extends CrudMapper<Long, Integer, DomainEventDO> {
 
 	long selectTotal(@Param("sourceNames") Set<String> sourceNames, @Param("appName") String appName);

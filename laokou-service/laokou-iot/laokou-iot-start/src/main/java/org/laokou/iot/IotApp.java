@@ -33,9 +33,6 @@ import static org.laokou.common.i18n.common.NetworkConstant.IP;
 public class IotApp {
 
 	public static void main(String[] args) throws UnknownHostException {
-		// System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
 		new SpringApplicationBuilder(IotApp.class).web(WebApplicationType.SERVLET).run(args);
 	}

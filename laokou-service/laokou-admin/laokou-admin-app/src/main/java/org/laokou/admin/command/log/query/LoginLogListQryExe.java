@@ -29,7 +29,6 @@ import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -65,12 +64,10 @@ public class LoginLogListQryExe {
 	public Result<Datas<LoginLogCO>> execute(LoginLogListQry qry) {
 		LoginLogDO loginLogDO = null;
 		PageQuery page = qry;
-		List<String> dynamicTables = TableTemplate.getDynamicTables(qry.getStartTime(), qry.getEndTime(),
-				BOOT_SYS_LOGIN_LOG);
 		CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture
-			.supplyAsync(() -> loginLogMapper.selectListByCondition(dynamicTables, loginLogDO, page), executor);
+			.supplyAsync(() -> loginLogMapper.selectListByCondition(loginLogDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
-			.supplyAsync(() -> loginLogMapper.selectObjCount(dynamicTables, loginLogDO, page), executor);
+			.supplyAsync(() -> loginLogMapper.selectObjCount(loginLogDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.ok(Datas.create(c1.get().stream().map(loginLogConvertor::convertClientObj).toList(), c2.get()));
 	}

@@ -59,8 +59,4 @@ public class CommonTest {
 		SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 	}
 
-	protected String getToken() {
-		return "Bearer " + TOKEN;
-	}
-
 }

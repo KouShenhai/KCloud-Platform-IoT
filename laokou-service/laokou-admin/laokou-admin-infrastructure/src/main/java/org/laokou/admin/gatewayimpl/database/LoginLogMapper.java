@@ -39,12 +39,10 @@ public interface LoginLogMapper extends CrudMapper<Long, Integer, LoginLogDO> {
 
 	/**
 	 * 查询登录日志列表.
-	 * @param tables 表集合
 	 * @param log 登录日志数据模型
 	 * @param pageQuery 分页参数
 	 * @return 登录日志列表
 	 */
-	List<LoginLogDO> selectListByCondition(@Param("tables") List<String> tables, @Param("log") LoginLogDO log,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+	List<LoginLogDO> selectListByCondition(@Param("log") LoginLogDO log, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

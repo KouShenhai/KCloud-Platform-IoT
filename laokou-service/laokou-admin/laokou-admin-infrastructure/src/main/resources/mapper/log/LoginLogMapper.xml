@@ -21,39 +21,39 @@
 <mapper namespace="org.laokou.admin.gatewayimpl.database.LoginLogMapper">
 
     <select id="selectListByCondition" resultType="org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO">
-        <if test="tables != null and tables.size() > 0">
-        select * from (<foreach collection="tables" item="table" separator=" union all ">
-            select id
-                ,create_date
-                , username
-                , ip
-                , address
-                , browser
-                , os
-                , `status`
-                , `type`
-                , message
-            from ${table} as boot_sys_login_log
-            where boot_sys_login_log.del_flag = 0
-            and boot_sys_login_log.tenant_id = #{log.tenantId}
-            and boot_sys_login_log.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
-            <if test="log.username != null and log.username != ''">
-                and boot_sys_login_log.`username` like #{log.username}
-            </if>
-            <if test="log.status != null">
-                and boot_sys_login_log.`status` = #{log.status}
-            </if>
-            <if test="pageQuery.sqlFilter != null and pageQuery.sqlFilter != ''">
-                and ${pageQuery.sqlFilter}
-            </if>
-            </foreach>) a
-            order by id desc
-            limit ${pageQuery.pageIndex},${pageQuery.pageSize}
-        </if>
+      <!--        <if test="tables != null and tables.size() > 0">
+              select * from (<foreach collection="tables" item="table" separator=" union all ">
+                  select id
+                      ,create_date
+                      , username
+                      , ip
+                      , address
+                      , browser
+                      , os
+                      , `status`
+                      , `type`
+                      , message
+                  from ${table} as boot_sys_login_log
+                  where boot_sys_login_log.del_flag = 0
+                  and boot_sys_login_log.tenant_id = #{log.tenantId}
+                  and boot_sys_login_log.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
+                  <if test="log.username != null and log.username != ''">
+                      and boot_sys_login_log.`username` like #{log.username}
+                  </if>
+                  <if test="log.status != null">
+                      and boot_sys_login_log.`status` = #{log.status}
+                  </if>
+                  <if test="pageQuery.sqlFilter != null and pageQuery.sqlFilter != ''">
+                      and ${pageQuery.sqlFilter}
+                  </if>
+                  </foreach>) a
+                  order by id desc
+                  limit ${pageQuery.pageIndex},${pageQuery.pageSize}
+              </if>-->
     </select>
 
     <select id="selectObjList" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO">
-        <if test="tables != null and tables.size() > 0">
+<!--        <if test="tables != null and tables.size() > 0">
             select * from (<foreach collection="tables" item="table" separator=" union all ">
                 select id
                 , create_date
@@ -80,10 +80,10 @@
                 </if>
             </foreach>)a
             order by id desc
-        </if>
+        </if>-->
     </select>
     <select id="selectObjCount" resultType="java.lang.Long">
-        <if test="tables != null and tables.size() > 0">
+<!--        <if test="tables != null and tables.size() > 0">
             select sum(a.n) from(<foreach collection="tables" item="table" separator=" union all ">
             select 1 as n
             from ${table} as boot_sys_login_log
@@ -100,7 +100,7 @@
                 and ${pageQuery.sqlFilter}
             </if>
         </foreach>) a
-        </if>
+        </if>-->
     </select>
 
 </mapper>

@@ -26,12 +26,8 @@ import org.laokou.admin.dto.log.clientobject.LoginLogExcel;
 import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-
 import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_LOGIN_LOG;
 import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
@@ -54,9 +50,7 @@ public class LoginLogExportCmdExe {
 	@DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
 	public void executeVoid(LoginLogExportCmd cmd) {
 		PageQuery pageQuery = cmd;
-		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
-				BOOT_SYS_LOGIN_LOG);
-		ExcelUtil.doExport(dynamicTables, cmd.getResponse(),
+		ExcelUtil.doExport(cmd.getResponse(),
 				new LoginLogDO(cmd.getUsername(), cmd.getStatus(), UserUtil.getTenantId()), pageQuery, loginLogMapper,
 				LoginLogExcel.class);
 	}

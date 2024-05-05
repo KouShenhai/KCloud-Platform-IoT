@@ -78,22 +78,22 @@ public class ExcelUtil {
 		EasyExcel.read(inputStream, new DataListener<>(clazz, consumer, response, mybatisUtil)).sheet().doRead();
 	}
 
-	public static <DO extends BaseDO> void doExport(List<String> tables, HttpServletResponse response, DO param,
-			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
-		doExport(tables, DEFAULT_SIZE, response, param, pageQuery, crudMapper, clazz);
+	public static <DO extends BaseDO> void doExport(HttpServletResponse response, DO param, PageQuery pageQuery,
+			CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
+		doExport(DEFAULT_SIZE, response, param, pageQuery, crudMapper, clazz);
 	}
 
 	@SneakyThrows
-	public static <DO extends BaseDO> void doExport(List<String> tables, int size, HttpServletResponse response,
-			DO param, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
+	public static <DO extends BaseDO> void doExport(int size, HttpServletResponse response, DO param,
+			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
 		try (ServletOutputStream out = response.getOutputStream();
 				ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
 			// 设置请求头
 			header(response);
-			if (crudMapper.selectObjCount(tables, param, pageQuery) > 0) {
+			if (crudMapper.selectObjCount(param, pageQuery) > 0) {
 				// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
-				crudMapper.selectObjList(tables, param, pageQuery, resultContext -> {
+				crudMapper.selectObjList(param, pageQuery, resultContext -> {
 					list.add(resultContext.getResultObject());
 					if (list.size() % size == 0) {
 						writeSheet(list, clazz, excelWriter);
