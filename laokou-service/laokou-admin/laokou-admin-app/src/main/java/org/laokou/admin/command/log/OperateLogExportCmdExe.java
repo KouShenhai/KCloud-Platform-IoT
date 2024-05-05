@@ -28,8 +28,6 @@ import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-
 import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_OPERATE_LOG;
 import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
@@ -51,7 +49,7 @@ public class OperateLogExportCmdExe {
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_OPERATE_LOG)
 	public void executeVoid(OperateLogExportCmd cmd) {
-		ExcelUtil.doExport(Collections.emptyList(), cmd.getResponse(),
+		ExcelUtil.doExport(cmd.getResponse(),
 				new OperateLogDO(cmd.getModuleName(), cmd.getStatus(), UserUtil.getTenantId()), cmd, operateLogMapper,
 				OperateLogExcel.class);
 	}

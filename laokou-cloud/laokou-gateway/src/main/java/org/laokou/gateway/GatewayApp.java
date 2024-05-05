@@ -17,6 +17,7 @@
 
 package org.laokou.gateway;
 
+import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
@@ -29,10 +30,12 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.util.ResourceUtils;
 
 import java.net.InetAddress;
 
 import static org.laokou.common.i18n.common.NetworkConstant.IP;
+import static org.laokou.common.i18n.common.StringConstant.TRUE;
 
 /**
  * 网关启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
@@ -51,13 +54,14 @@ public class GatewayApp {
 
 	@SneakyThrows
 	public static void main(String[] args) {
-		// System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");
+		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT,
+				ResourceUtils.getFile("classpath:nacos.cer").getCanonicalPath());
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 

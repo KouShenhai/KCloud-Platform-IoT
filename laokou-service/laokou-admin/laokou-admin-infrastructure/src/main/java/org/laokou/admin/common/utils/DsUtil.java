@@ -43,8 +43,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.DSConstant.SHOW_TABLES;
-
 /**
  * 数据源工具类.
  *
@@ -54,6 +52,8 @@ import static org.laokou.common.i18n.common.DSConstant.SHOW_TABLES;
 @Component
 @RequiredArgsConstructor
 public class DsUtil {
+
+	private static final String SHOW_TABLES = "show tables";
 
 	private final SourceMapper sourceMapper;
 

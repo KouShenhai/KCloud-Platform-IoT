@@ -23,8 +23,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.i18n.dto.PageQuery;
 
-import java.util.List;
-
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
@@ -46,10 +44,8 @@ public interface CrudMapper<ID, VERSION, DO> extends BaseMapper<DO> {
 	 */
 	void insertOne(DO entity);
 
-	void selectObjList(@Param("tables") List<String> tables, @Param("param") DO param,
-			@Param(PAGE_QUERY) PageQuery pageQuery, ResultHandler<DO> handler);
+	void selectObjList(@Param("param") DO param, @Param(PAGE_QUERY) PageQuery pageQuery, ResultHandler<DO> handler);
 
-	long selectObjCount(@Param("tables") List<String> tables, @Param("param") DO param,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+	long selectObjCount(@Param("param") DO param, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

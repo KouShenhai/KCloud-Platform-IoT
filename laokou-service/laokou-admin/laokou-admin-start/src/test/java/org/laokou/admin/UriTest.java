@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.crypto.utils.AesUtil;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
@@ -44,6 +45,9 @@ class UriTest {
 		map.forEach((k, v) -> map.put(k,
 				v.stream().filter(i -> i.contains(str)).map(i -> i.substring(0, i.indexOf("="))).toList()));
 		log.info(JacksonUtil.toJsonStr(map));
+		log.info("{}", AesUtil.decrypt("F7DrovVEEoW/h2naDjJr8Q=="));
+		log.info("{}", AesUtil.decrypt("qqdU8kUm1NXfSIRrATxPUA=="));
+		log.info("{}", AesUtil.decrypt("3hBB1tQAkRhfub9xlSHSSQ=="));
 	}
 
 }

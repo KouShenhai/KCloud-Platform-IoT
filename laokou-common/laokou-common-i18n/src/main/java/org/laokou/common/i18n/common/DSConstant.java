@@ -94,7 +94,4 @@ public final class DSConstant {
 	@Schema(name = "UPDATE_USERNAME_BY_ID_SQL_TEMPLATE", description = "根据ID修改用户名SQL模板")
 	public static final String UPDATE_USERNAME_BY_ID_SQL_TEMPLATE = "UPDATE %s SET username = AES_ENCRYPT('%s','%s') WHERE ID = %s;\n";
 
-	@Schema(name = "SHOW_TABLES", description = "查询所有表名")
-	public static final String SHOW_TABLES = "show tables";
-
 }

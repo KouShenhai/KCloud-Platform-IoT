@@ -139,6 +139,8 @@ services:
       memlock:
         soft: -1
         hard: -1
+    extra_hosts:
+      - "elasticsearch.laokou.org:192.168.30.130"
   kibana:
     image: kibana:8.12.2
     container_name: kibana
