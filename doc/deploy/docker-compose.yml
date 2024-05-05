@@ -103,15 +103,16 @@ services:
       - "10911:10911"
       - "10909:10909"
       - "10912:10912"
-    command: sh mqbroker -n 192.168.30.1:9876 -c /home/rocketmq/conf/broker.conf autoCreateTopicEnable=true
+    command: sh mqbroker -n 192.168.30.1:9876 -c /home/rocketmq/config/broker.config autoCreateTopicEnable=true
     environment:
       - JAVA_OPT_EXT=-server -Xmx256m -Xms256m -Xmn128m
       - TZ=Asia/Shanghai
     volumes:
-      - ./rocketmq5/broker/conf/broker.conf:/home/rocketmq/conf/broker.conf
+      - ./rocketmq5/broker/config/broker.config:/home/rocketmq/config/broker.config
     network_mode: bridge
     depends_on:
       - rocketmq-namesrv
+  # curl -s -X POST https://elasticsearch.laokou.org:9200/_security/user/kibana_system/_password -d "{\"password\":\"laokou123\"}"
   elasticsearch:
     image: elasticsearch:8.12.2
     container_name: elasticsearch
@@ -138,6 +139,23 @@ services:
       memlock:
         soft: -1
         hard: -1
+  kibana:
+    image: kibana:8.12.2
+    container_name: kibana
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - "5601:5601"
+    volumes:
+      - ./kibana8/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    depends_on:
+      - elasticsearch
+    extra_hosts:
+      - "elasticsearch.laokou.org:192.168.30.130"
   laokou-register:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.2.1
     container_name: laokou-register
@@ -339,7 +357,7 @@ services:
     volumes:
       - ./nginx/dist:/usr/share/nginx/dist
       - ./nginx/ssl:/etc/nginx/ssl
-      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/config/nginx.config:/etc/nginx/nginx.config
       - ./nginx/logs:/var/log/nginx
     extra_hosts:
       - "vue.laokou.org:192.168.30.130"
