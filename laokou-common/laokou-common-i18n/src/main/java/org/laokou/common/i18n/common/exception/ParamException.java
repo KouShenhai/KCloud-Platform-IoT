@@ -31,7 +31,7 @@ public final class ParamException extends GlobalException {
 	@Schema(name = "OAUTH2_CAPTCHA_REQUIRE", description = "验证码不能为空")
 	public static final String OAUTH2_CAPTCHA_REQUIRE = "P_OAuth2_CaptchaIsNull";
 
-	@Schema(name = "OAUTH2_USERNAME_REQUIRE", description = "账号不能为空")
+	@Schema(name = "OAUTH2_USERNAME_REQUIRE", description = "用户名不能为空")
 	public static final String OAUTH2_USERNAME_REQUIRE = "P_OAuth2_UsernameIsNull";
 
 	@Schema(name = "OAUTH2_PASSWORD_REQUIRE", description = "密码不能为空")
