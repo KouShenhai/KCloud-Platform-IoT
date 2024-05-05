@@ -120,7 +120,7 @@ export default {
           align: 'center'
         },
         {
-          title: '账号',
+          title: '用户名',
           dataIndex: 'username',
           ellipsis: true,
           align: 'center'

@@ -90,7 +90,7 @@ class OAuth2ApiTest {
 
 	@Test
 	void testUsernamePasswordAuthApi() {
-		log.info("---------- 账号密码认证模式开始 ----------");
+		log.info("---------- 用户名密码认证模式开始 ----------");
 		String captcha = getCaptcha(SNOWFLAKE_ID.toString());
 		String publicKey = getPublicKey();
 		String privateKey = RsaUtil.getPrivateKey();
@@ -107,7 +107,7 @@ class OAuth2ApiTest {
 		log.info("uuid：{}", SNOWFLAKE_ID);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
 		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
-		log.info("---------- 账号密码认证模式结束 ----------");
+		log.info("---------- 用户名密码认证模式结束 ----------");
 	}
 
 	@Test
@@ -270,7 +270,7 @@ class OAuth2ApiTest {
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "trace-id",
 					String.valueOf(System.currentTimeMillis()));
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
-			log.info("账号密码认证模式，返回信息：{}", json);
+			log.info("用户名密码认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
