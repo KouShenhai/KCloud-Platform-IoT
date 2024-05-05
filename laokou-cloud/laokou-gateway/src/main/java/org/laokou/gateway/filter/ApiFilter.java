@@ -98,13 +98,13 @@ public class ApiFilter implements WebFilter {
 			password = RsaUtil.decryptByPrivateKey(password, privateKey);
 		}
 		catch (Exception e) {
-			// 账号或密码错误
+			// 用户名或密码错误
 			return ReactiveResponseUtil.response(exchange, Result.fail(USERNAME_PASSWORD_ERROR));
 		}
 		if (gatewayExtProperties.isEnabled()) {
 			if (!ObjectUtil.equals(gatewayExtProperties.getPassword(), password)
 					|| !ObjectUtil.equals(gatewayExtProperties.getUsername(), username)) {
-				// 账号或密码错误
+				// 用户名或密码错误
 				return ReactiveResponseUtil.response(exchange, Result.fail(USERNAME_PASSWORD_ERROR));
 			}
 		}
