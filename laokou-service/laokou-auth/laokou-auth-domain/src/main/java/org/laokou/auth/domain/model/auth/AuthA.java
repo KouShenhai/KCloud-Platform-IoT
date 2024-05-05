@@ -84,7 +84,7 @@ public class AuthA extends AggregateRoot<Long> {
 	@Schema(name = "AUTHORIZATION_CODE", description = "授权码")
 	public static final String AUTHORIZATION_CODE = "authorization_code";
 
-	@Schema(name = "USERNAME", description = "账号")
+	@Schema(name = "USERNAME", description = "用户名")
 	public static final String USERNAME = "username";
 
 	@Schema(name = "CAPTCHA", description = "验证码")
@@ -158,14 +158,14 @@ public class AuthA extends AggregateRoot<Long> {
 		checkNullUuid();
 		// 检查验证码
 		checkNullCaptcha();
-		// 检查账号
+		// 检查用户名
 		checkNullUsername();
 		// 检查密码
 		checkNullPassword();
 	}
 
 	public void checkNullByAuthorizationCode() {
-		// 检查账号
+		// 检查用户名
 		checkNullUsername();
 		// 检查密码
 		checkNullPassword();
@@ -235,7 +235,7 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void checkUserStatus() {
 		if (ObjectUtil.equals(DISABLE.ordinal(), this.user.getStatus())) {
-			fail(ACCOUNT_DISABLED);
+			fail(USER_DISABLED);
 		}
 	}
 

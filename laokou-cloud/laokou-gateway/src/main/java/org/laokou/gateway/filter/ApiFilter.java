@@ -72,7 +72,7 @@ public class ApiFilter implements WebFilter {
 	}
 
 	/**
-	 * 校验账号和密码.
+	 * 校验用户名和密码.
 	 * @param exchange 服务网络交换机
 	 * @param request 请求对象
 	 * @param chain 链式过滤器
@@ -83,7 +83,7 @@ public class ApiFilter implements WebFilter {
 		String username = ReactiveRequestUtil.getParamValue(request, USERNAME);
 		String password = ReactiveRequestUtil.getParamValue(request, PASSWORD);
 		if (StringUtil.isEmpty(username)) {
-			// 账号不能为空
+			// 用户名不能为空
 			return ReactiveResponseUtil.response(exchange,
 					Result.fail(ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE)));
 		}
@@ -98,13 +98,13 @@ public class ApiFilter implements WebFilter {
 			password = RsaUtil.decryptByPrivateKey(password, privateKey);
 		}
 		catch (Exception e) {
-			// 账号或密码错误
+			// 用户名或密码错误
 			return ReactiveResponseUtil.response(exchange, Result.fail(USERNAME_PASSWORD_ERROR));
 		}
 		if (gatewayExtProperties.isEnabled()) {
 			if (!ObjectUtil.equals(gatewayExtProperties.getPassword(), password)
 					|| !ObjectUtil.equals(gatewayExtProperties.getUsername(), username)) {
-				// 账号或密码错误
+				// 用户名或密码错误
 				return ReactiveResponseUtil.response(exchange, Result.fail(USERNAME_PASSWORD_ERROR));
 			}
 		}

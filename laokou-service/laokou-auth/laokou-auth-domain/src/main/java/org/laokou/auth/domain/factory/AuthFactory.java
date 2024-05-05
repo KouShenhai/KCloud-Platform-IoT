@@ -58,7 +58,7 @@ public class AuthFactory {
 		String password = request.getParameter(PASSWORD);
 		// log.info("UUID：{}", uuid);
 		// log.info("验证码：{}", captcha);
-		// log.info("账号：{}", username);
+		// log.info("用户名：{}", username);
 		// log.info("密码：{}", password);
 		// log.info("租户ID：{}", tenantId);
 		return new AuthA(username, password, tenantId, PASSWORD, uuid, captcha, request);
@@ -67,7 +67,7 @@ public class AuthFactory {
 	public static AuthA authorizationCode(HttpServletRequest request) {
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
-		// log.info("账号：{}", username);
+		// log.info("用户名：{}", username);
 		// log.info("密码：{}", password);
 		return new AuthA(username, password, EMPTY, AUTHORIZATION_CODE, EMPTY, EMPTY, request);
 	}
