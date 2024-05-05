@@ -30,8 +30,6 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=laokou123
       - TZ=Asia/Shanghai
-    extra_hosts:
-      - "postgresql.laokou.org:192.168.30.130"
     network_mode: bridge
   redis:
     image: redis:7.2.4
