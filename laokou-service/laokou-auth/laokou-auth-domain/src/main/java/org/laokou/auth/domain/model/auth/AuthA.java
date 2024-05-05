@@ -189,7 +189,7 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void updateUser(UserE user) {
 		if (ObjectUtil.isNull(user)) {
-			fail(ACCOUNT_PASSWORD_ERROR);
+			fail(USERNAME_PASSWORD_ERROR);
 		}
 		this.user = user;
 		this.creator = user.getId();
@@ -229,7 +229,7 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void checkUserPassword(PasswordEncoder passwordEncoder) {
 		if (StringUtil.isNotEmpty(this.password) && !passwordEncoder.matches(this.password, user.getPassword())) {
-			fail(ACCOUNT_PASSWORD_ERROR);
+			fail(USERNAME_PASSWORD_ERROR);
 		}
 	}
 
