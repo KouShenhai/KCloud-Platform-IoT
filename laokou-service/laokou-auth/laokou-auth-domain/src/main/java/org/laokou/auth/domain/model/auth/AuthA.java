@@ -235,7 +235,7 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void checkUserStatus() {
 		if (ObjectUtil.equals(DISABLE.ordinal(), this.user.getStatus())) {
-			fail(ACCOUNT_DISABLED);
+			fail(USER_DISABLED);
 		}
 	}
 

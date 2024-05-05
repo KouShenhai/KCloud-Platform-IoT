@@ -51,7 +51,7 @@ A_OAuth2_InvalidScope
 A_OAuth2_RegisteredClientNotExist
 A_OAuth2_MailError
 A_OAuth2_MobileError
-A_OAuth2_AccountDisabled
+A_OAuth2_UserDisabled
 A_OAuth2_CaptchaExpired
 A_OAuth2_CaptchaError
 

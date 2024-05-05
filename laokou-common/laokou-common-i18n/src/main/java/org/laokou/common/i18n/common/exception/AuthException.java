@@ -52,8 +52,8 @@ public final class AuthException extends GlobalException {
 	@Schema(name = "MOBILE_ERROR", description = "手机号错误")
 	public static final String MOBILE_ERROR = "A_OAuth2_MobileError";
 
-	@Schema(name = "ACCOUNT_DISABLED", description = "账号已禁用")
-	public static final String ACCOUNT_DISABLED = "A_OAuth2_AccountDisabled";
+	@Schema(name = "USER_DISABLED", description = "用户已禁用")
+	public static final String USER_DISABLED = "A_OAuth2_UserDisabled";
 
 	@Schema(name = "CAPTCHA_EXPIRED", description = "验证码已过期")
 	public static final String CAPTCHA_EXPIRED = "A_OAuth2_CaptchaExpired";
