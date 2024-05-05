@@ -160,7 +160,7 @@ services:
       resources:
         limits:
           cpus: '0.50'
-          memory: 512M
+          memory: 1G
   laokou-register:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.2.1
     container_name: laokou-register
