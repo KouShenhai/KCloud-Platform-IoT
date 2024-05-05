@@ -156,6 +156,11 @@ services:
       - elasticsearch
     extra_hosts:
       - "elasticsearch.laokou.org:192.168.30.130"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
   laokou-register:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.2.1
     container_name: laokou-register
