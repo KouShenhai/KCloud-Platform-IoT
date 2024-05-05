@@ -1,0 +1,10 @@
+server.name: kibana
+server.host: 0.0.0.0
+server.port: 5601
+server.ssl.enabled: false
+elasticsearch.hosts: [ "https://elasticsearch.laokou.org:9200" ]
+xpack.monitoring.ui.container.elasticsearch.enabled: true
+elasticsearch.ssl.verificationMode: none
+elasticsearch.username: "kibana_system"
+elasticsearch.password: "laokou123"
+i18n.locale: zh-CN
