@@ -1,4 +1,4 @@
-﻿/*
+/*
  Navicat Premium Data Transfer
 
  Source Server         : 127.0.0.1
@@ -12,7 +12,7 @@
  Target Server Version : 160002 (160002)
  File Encoding         : 65001
 
- Date: 02/05/2024 22:42:21
+ Date: 05/05/2024 20:36:12
 */
 
 
@@ -20,7 +20,7 @@
 -- Sequence structure for config_info_aggr_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -31,7 +31,18 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq1";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq1"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_aggr_id_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq2";
+CREATE SEQUENCE "public"."config_info_aggr_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -42,7 +53,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq";
-CREATE SEQUENCE "public"."config_info_beta_id_seq"
+CREATE SEQUENCE "public"."config_info_beta_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -53,7 +64,18 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq1";
-CREATE SEQUENCE "public"."config_info_beta_id_seq1"
+CREATE SEQUENCE "public"."config_info_beta_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_beta_id_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq2";
+CREATE SEQUENCE "public"."config_info_beta_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -64,7 +86,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq";
-CREATE SEQUENCE "public"."config_info_id_seq"
+CREATE SEQUENCE "public"."config_info_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -75,7 +97,18 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq1";
-CREATE SEQUENCE "public"."config_info_id_seq1"
+CREATE SEQUENCE "public"."config_info_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_id_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_id_seq2";
+CREATE SEQUENCE "public"."config_info_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -86,7 +119,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq";
-CREATE SEQUENCE "public"."config_info_tag_id_seq"
+CREATE SEQUENCE "public"."config_info_tag_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -97,7 +130,18 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq1";
-CREATE SEQUENCE "public"."config_info_tag_id_seq1"
+CREATE SEQUENCE "public"."config_info_tag_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_tag_id_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq2";
+CREATE SEQUENCE "public"."config_info_tag_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -108,7 +152,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -119,7 +163,18 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq1";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq1"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_tags_relation_nid_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq2";
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -130,7 +185,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq";
-CREATE SEQUENCE "public"."group_capacity_id_seq"
+CREATE SEQUENCE "public"."group_capacity_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -141,7 +196,18 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq1";
-CREATE SEQUENCE "public"."group_capacity_id_seq1"
+CREATE SEQUENCE "public"."group_capacity_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for group_capacity_id_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq2";
+CREATE SEQUENCE "public"."group_capacity_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -152,7 +218,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq";
-CREATE SEQUENCE "public"."his_config_info_nid_seq"
+CREATE SEQUENCE "public"."his_config_info_nid_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -163,7 +229,18 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq1";
-CREATE SEQUENCE "public"."his_config_info_nid_seq1"
+CREATE SEQUENCE "public"."his_config_info_nid_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for his_config_info_nid_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq2";
+CREATE SEQUENCE "public"."his_config_info_nid_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -174,7 +251,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -185,7 +262,18 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq1";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq1"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for tenant_capacity_id_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq2";
+CREATE SEQUENCE "public"."tenant_capacity_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -196,7 +284,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq";
-CREATE SEQUENCE "public"."tenant_info_id_seq"
+CREATE SEQUENCE "public"."tenant_info_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -207,7 +295,18 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq1";
-CREATE SEQUENCE "public"."tenant_info_id_seq1"
+CREATE SEQUENCE "public"."tenant_info_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for tenant_info_id_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq2";
+CREATE SEQUENCE "public"."tenant_info_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -754,24 +853,6 @@ INSERT INTO "public"."config_info" VALUES (1569, 'admin-flow.json', 'LAOKOU_GROU
     "controlBehavior": 0
   }
 ]', '9860e7087b9cf7707d78c2fedb740cab', '2023-02-26 15:03:07', '2023-09-12 02:27:49', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "POST:https://laokou-flowable/work/task/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  },
-  {
-    "resource": "POST:https://laokou-flowable/work/definition/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  }
-]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2023-02-26 15:55:49', '2023-09-20 11:02:30', NULL, '127.0.0.1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel degrade rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info" VALUES (1799, 'application-common-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -991,6 +1072,24 @@ INSERT INTO "public"."config_info" VALUES (2307, 'application-common-flyway.yaml
     baseline-on-migrate: true
     # 避免数据被意外清空
     clean-disabled: false', 'd3ec18f7c8327f45c48a7783f6d48b64', '2024-01-03 07:54:41', '2024-01-03 07:54:41', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'flyway公共配置', NULL, NULL, 'yaml', NULL, '');
+INSERT INTO "public"."config_info" VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "POST:https://laokou-flowable/work/task/api/query",
+    "count": 200,
+    "grade": 0,
+    "slowRatioThreshold": 0.1,
+    "minRequestAmount": 5,
+    "timeWindow": 30
+  },
+  {
+    "resource": "POST:https://laokou-flowable/work/definition/api/query",
+    "count": 200,
+    "grade": 0,
+    "slowRatioThreshold": 0.1,
+    "minRequestAmount": 5,
+    "timeWindow": 30
+  }
+]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2023-02-26 15:55:49', '2024-05-03 09:24:56.976', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel degrade rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info" VALUES (2022, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -1008,7 +1107,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_alibaba?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -1036,7 +1135,7 @@ mybatis-plus:
   # 全局处理
   global-config:
     db-config:
-      column-format: "`%s`"
+      column-format: "\"%s\""
   tenant:
     ignore-tables:
       - boot_sys_tenant
@@ -1049,7 +1148,7 @@ mybatis-plus:
     enabled: true
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'f76bc2377d5e6d17a93abaacc7acaf3b', '2023-09-28 11:37:33', '2024-05-02 22:04:32.901', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'a5e7423e4eba360cefa9c30669aa3463', '2023-09-28 11:37:33', '2024-05-03 09:37:05.13', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (2025, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -1067,7 +1166,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_alibaba?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -1093,17 +1192,17 @@ mybatis-plus:
   # 全局处理
   global-config:
     db-config:
-      column-format: "`%s`"
+      column-format: "\"%s\""
   tenant:
     enabled: true
     ignore-tables:
       - boot_sys_source
       - boot_sys_tenant
   slow-sql:
-    enabled: false
+    enabled: true
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '353f00bf9da6492ec4a97057de2bb332', '2023-09-28 11:51:44', '2024-05-02 22:05:32.256', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'f7854751f96f663b7afac6e1cf2ec627', '2023-09-28 11:51:44', '2024-05-03 14:36:02.072', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
@@ -1262,7 +1361,6 @@ INSERT INTO "public"."config_tags_relation" VALUES (1477, 'mail', '', 'applicati
 INSERT INTO "public"."config_tags_relation" VALUES (1475, 'sms', '', 'application-sms.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 346);
 INSERT INTO "public"."config_tags_relation" VALUES (1567, 'gateway', '', 'gateway-flow.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 358);
 INSERT INTO "public"."config_tags_relation" VALUES (82, 'monitor', '', 'application-monitor.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 469);
-INSERT INTO "public"."config_tags_relation" VALUES (1570, 'admin', '', 'admin-degrade.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 496);
 INSERT INTO "public"."config_tags_relation" VALUES (16, 'redis', '', 'application-common-redis.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 672);
 INSERT INTO "public"."config_tags_relation" VALUES (1254, 'seata', '', 'application-common-seata.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 675);
 INSERT INTO "public"."config_tags_relation" VALUES (1270, 'rocketmq', '', 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 678);
@@ -1273,8 +1371,9 @@ INSERT INTO "public"."config_tags_relation" VALUES (26, 'gateway', '', 'router.j
 INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 714);
 INSERT INTO "public"."config_tags_relation" VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 717);
 INSERT INTO "public"."config_tags_relation" VALUES (2118, 'report', '', 'application-report.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 720);
-INSERT INTO "public"."config_tags_relation" VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 1);
-INSERT INTO "public"."config_tags_relation" VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 2);
+INSERT INTO "public"."config_tags_relation" VALUES (1570, 'admin', '', 'admin-degrade.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 4);
+INSERT INTO "public"."config_tags_relation" VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 11);
+INSERT INTO "public"."config_tags_relation" VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 12);
 
 -- ----------------------------
 -- Table structure for group_capacity
@@ -2890,6 +2989,473 @@ mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'c5e285742492d088cfbd6b3e8f9c0a0b', '2024-05-02 22:05:32.256382', '2024-05-02 22:05:32.261', 'nacos', '0:0:0:0:0:0:0:1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
+INSERT INTO "public"."his_config_info" VALUES (1570, 3, 'admin-degrade.json', 'LAOKOU_GROUP', 'laokou-admin', '[
+  {
+    "resource": "POST:https://laokou-flowable/work/task/api/query",
+    "count": 200,
+    "grade": 0,
+    "slowRatioThreshold": 0.1,
+    "minRequestAmount": 5,
+    "timeWindow": 30
+  },
+  {
+    "resource": "POST:https://laokou-flowable/work/definition/api/query",
+    "count": 200,
+    "grade": 0,
+    "slowRatioThreshold": 0.1,
+    "minRequestAmount": 5,
+    "timeWindow": 30
+  }
+]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2024-05-03 09:24:56.976255', '2024-05-03 09:24:56.979', 'nacos', '0:0:0:0:0:0:0:1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
+INSERT INTO "public"."his_config_info" VALUES (2022, 4, 'application-admin.yaml', 'LAOKOU_GROUP', 'laokou-admin', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: false
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            pool-name: HikariCP
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  xxl-job:
+    admin:
+      address: http://xxl.job.laokou.org:9095/xxl-job-admin
+    executor:
+      app-name: laokou-admin
+      port: -1
+      log-path: ./logs/xxl-job/laokou-admin
+      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
+      intentionalities: 7
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "`%s`"
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+      - boot_sys_login_log
+    enabled: true
+  slow-sql:
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '017eb63e4b472478fa64975edf2c5460', '2024-05-03 09:25:08.017396', '2024-05-03 09:25:08.054', 'nacos', '0:0:0:0:0:0:0:1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
+INSERT INTO "public"."his_config_info" VALUES (2022, 5, 'application-admin.yaml', 'LAOKOU_GROUP', 'laokou-admin', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: false
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            pool-name: HikariCP
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  xxl-job:
+    admin:
+      address: http://xxl.job.laokou.org:9095/xxl-job-admin
+    executor:
+      app-name: laokou-admin
+      port: -1
+      log-path: ./logs/xxl-job/laokou-admin
+      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
+      intentionalities: 7
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "`%s`"
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+      - boot_sys_login_log
+    enabled: true
+  slow-sql:
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '017eb63e4b472478fa64975edf2c5460', '2024-05-03 09:26:23.663947', '2024-05-03 09:26:23.668', 'nacos', '0:0:0:0:0:0:0:1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
+INSERT INTO "public"."his_config_info" VALUES (2025, 6, 'application-auth.yaml', 'LAOKOU_GROUP', 'laokou-auth', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: false
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 60000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            is-read-only: false
+  xxl-job:
+    admin:
+      address: http://xxl.job.laokou.org:9095/xxl-job-admin
+    executor:
+      app-name: laokou-auth
+      port: -1
+      log-path: ./logs/xxl-job/laokou-auth
+      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
+      intentionalities: 7
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "`%s`"
+  tenant:
+    enabled: true
+    ignore-tables:
+      - boot_sys_source
+      - boot_sys_tenant
+  slow-sql:
+    enabled: false
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '5b663a2a912ad974f65f93d7972ece8e', '2024-05-03 09:26:52.997223', '2024-05-03 09:26:53.001', 'nacos', '0:0:0:0:0:0:0:1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
+INSERT INTO "public"."his_config_info" VALUES (2025, 7, 'application-auth.yaml', 'LAOKOU_GROUP', 'laokou-auth', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: false
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 60000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            is-read-only: false
+  xxl-job:
+    admin:
+      address: http://xxl.job.laokou.org:9095/xxl-job-admin
+    executor:
+      app-name: laokou-auth
+      port: -1
+      log-path: ./logs/xxl-job/laokou-auth
+      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
+      intentionalities: 7
+# mybatis-plus
+mybatis-plus:
+  tenant:
+    enabled: true
+    ignore-tables:
+      - boot_sys_source
+      - boot_sys_tenant
+  slow-sql:
+    enabled: false
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '08700c900cd0e78ec37bca86a7d9b80d', '2024-05-03 09:32:12.046711', '2024-05-03 09:32:12.05', 'nacos', '0:0:0:0:0:0:0:1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
+INSERT INTO "public"."his_config_info" VALUES (2022, 8, 'application-admin.yaml', 'LAOKOU_GROUP', 'laokou-admin', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: false
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            pool-name: HikariCP
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  xxl-job:
+    admin:
+      address: http://xxl.job.laokou.org:9095/xxl-job-admin
+    executor:
+      app-name: laokou-admin
+      port: -1
+      log-path: ./logs/xxl-job/laokou-admin
+      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
+      intentionalities: 7
+
+# mybatis-plus
+mybatis-plus:
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+      - boot_sys_login_log
+    enabled: true
+  slow-sql:
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '61fc8860f83b4b3b9ea7e3ab50c96964', '2024-05-03 09:32:33.496301', '2024-05-03 09:32:33.499', 'nacos', '0:0:0:0:0:0:0:1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
+INSERT INTO "public"."his_config_info" VALUES (2022, 9, 'application-admin.yaml', 'LAOKOU_GROUP', 'laokou-admin', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: false
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            pool-name: HikariCP
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  xxl-job:
+    admin:
+      address: http://xxl.job.laokou.org:9095/xxl-job-admin
+    executor:
+      app-name: laokou-admin
+      port: -1
+      log-path: ./logs/xxl-job/laokou-admin
+      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
+      intentionalities: 7
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+      - boot_sys_login_log
+    enabled: true
+  slow-sql:
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'a5e7423e4eba360cefa9c30669aa3463', '2024-05-03 09:33:52.74363', '2024-05-03 09:33:52.746', 'nacos', '0:0:0:0:0:0:0:1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
+INSERT INTO "public"."his_config_info" VALUES (2022, 10, 'application-admin.yaml', 'LAOKOU_GROUP', 'laokou-admin', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: false
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            pool-name: HikariCP
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  xxl-job:
+    admin:
+      address: http://xxl.job.laokou.org:9095/xxl-job-admin
+    executor:
+      app-name: laokou-admin
+      port: -1
+      log-path: ./logs/xxl-job/laokou-admin
+      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
+      intentionalities: 7
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+      - boot_sys_login_log
+    enabled: true
+  slow-sql:
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'c3c00c378cf557d3e5e304d56f0cc90f', '2024-05-03 09:37:05.128846', '2024-05-03 09:37:05.136', 'nacos', '0:0:0:0:0:0:0:1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
+INSERT INTO "public"."his_config_info" VALUES (2025, 11, 'application-auth.yaml', 'LAOKOU_GROUP', 'laokou-auth', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: false
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 60000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            is-read-only: false
+  xxl-job:
+    admin:
+      address: http://xxl.job.laokou.org:9095/xxl-job-admin
+    executor:
+      app-name: laokou-auth
+      port: -1
+      log-path: ./logs/xxl-job/laokou-auth
+      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
+      intentionalities: 7
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: true
+    ignore-tables:
+      - boot_sys_source
+      - boot_sys_tenant
+  slow-sql:
+    enabled: false
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '2f71d34655a152bebcb95411f6c963fe', '2024-05-03 14:36:02.071352', '2024-05-03 14:36:02.087', 'nacos', '0:0:0:0:0:0:0:1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
 
 -- ----------------------------
 -- Table structure for permissions
@@ -3035,6 +3601,13 @@ SELECT setval('"public"."config_info_aggr_id_seq1"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_info_aggr_id_seq2"
+OWNED BY "public"."config_info_aggr"."id";
+SELECT setval('"public"."config_info_aggr_id_seq2"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."config_info_beta_id_seq"
 OWNED BY "public"."config_info_beta"."id";
 SELECT setval('"public"."config_info_beta_id_seq"', 1, false);
@@ -3045,6 +3618,13 @@ SELECT setval('"public"."config_info_beta_id_seq"', 1, false);
 ALTER SEQUENCE "public"."config_info_beta_id_seq1"
 OWNED BY "public"."config_info_beta"."id";
 SELECT setval('"public"."config_info_beta_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_info_beta_id_seq2"
+OWNED BY "public"."config_info_beta"."id";
+SELECT setval('"public"."config_info_beta_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -3063,6 +3643,13 @@ SELECT setval('"public"."config_info_id_seq1"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_info_id_seq2"
+OWNED BY "public"."config_info"."id";
+SELECT setval('"public"."config_info_id_seq2"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."config_info_tag_id_seq"
 OWNED BY "public"."config_info_tag"."id";
 SELECT setval('"public"."config_info_tag_id_seq"', 1, false);
@@ -3073,6 +3660,13 @@ SELECT setval('"public"."config_info_tag_id_seq"', 1, false);
 ALTER SEQUENCE "public"."config_info_tag_id_seq1"
 OWNED BY "public"."config_info_tag"."id";
 SELECT setval('"public"."config_info_tag_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_info_tag_id_seq2"
+OWNED BY "public"."config_info_tag"."id";
+SELECT setval('"public"."config_info_tag_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -3091,6 +3685,13 @@ SELECT setval('"public"."config_tags_relation_nid_seq1"', 2, true);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_tags_relation_nid_seq2"
+OWNED BY "public"."config_tags_relation"."nid";
+SELECT setval('"public"."config_tags_relation_nid_seq2"', 12, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."group_capacity_id_seq"
 OWNED BY "public"."group_capacity"."id";
 SELECT setval('"public"."group_capacity_id_seq"', 1, false);
@@ -3101,6 +3702,13 @@ SELECT setval('"public"."group_capacity_id_seq"', 1, false);
 ALTER SEQUENCE "public"."group_capacity_id_seq1"
 OWNED BY "public"."group_capacity"."id";
 SELECT setval('"public"."group_capacity_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."group_capacity_id_seq2"
+OWNED BY "public"."group_capacity"."id";
+SELECT setval('"public"."group_capacity_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -3119,6 +3727,13 @@ SELECT setval('"public"."his_config_info_nid_seq1"', 2, true);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."his_config_info_nid_seq2"
+OWNED BY "public"."his_config_info"."nid";
+SELECT setval('"public"."his_config_info_nid_seq2"', 11, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."tenant_capacity_id_seq"
 OWNED BY "public"."tenant_capacity"."id";
 SELECT setval('"public"."tenant_capacity_id_seq"', 1, false);
@@ -3129,6 +3744,13 @@ SELECT setval('"public"."tenant_capacity_id_seq"', 1, false);
 ALTER SEQUENCE "public"."tenant_capacity_id_seq1"
 OWNED BY "public"."tenant_capacity"."id";
 SELECT setval('"public"."tenant_capacity_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."tenant_capacity_id_seq2"
+OWNED BY "public"."tenant_capacity"."id";
+SELECT setval('"public"."tenant_capacity_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -3145,9 +3767,16 @@ OWNED BY "public"."tenant_info"."id";
 SELECT setval('"public"."tenant_info_id_seq1"', 1, false);
 
 -- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."tenant_info_id_seq2"
+OWNED BY "public"."tenant_info"."id";
+SELECT setval('"public"."tenant_info_id_seq2"', 1, false);
+
+-- ----------------------------
 -- Auto increment value for config_info
 -- ----------------------------
-SELECT setval('"public"."config_info_id_seq1"', 1, false);
+SELECT setval('"public"."config_info_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info
@@ -3166,7 +3795,7 @@ ALTER TABLE "public"."config_info" ADD CONSTRAINT "config_info_pkey" PRIMARY KEY
 -- ----------------------------
 -- Auto increment value for config_info_aggr
 -- ----------------------------
-SELECT setval('"public"."config_info_aggr_id_seq1"', 1, false);
+SELECT setval('"public"."config_info_aggr_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_aggr
@@ -3186,7 +3815,7 @@ ALTER TABLE "public"."config_info_aggr" ADD CONSTRAINT "config_info_aggr_pkey" P
 -- ----------------------------
 -- Auto increment value for config_info_beta
 -- ----------------------------
-SELECT setval('"public"."config_info_beta_id_seq1"', 1, false);
+SELECT setval('"public"."config_info_beta_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_beta
@@ -3205,7 +3834,7 @@ ALTER TABLE "public"."config_info_beta" ADD CONSTRAINT "config_info_beta_pkey" P
 -- ----------------------------
 -- Auto increment value for config_info_tag
 -- ----------------------------
-SELECT setval('"public"."config_info_tag_id_seq1"', 1, false);
+SELECT setval('"public"."config_info_tag_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_tag
@@ -3225,7 +3854,7 @@ ALTER TABLE "public"."config_info_tag" ADD CONSTRAINT "config_info_tag_pkey" PRI
 -- ----------------------------
 -- Auto increment value for config_tags_relation
 -- ----------------------------
-SELECT setval('"public"."config_tags_relation_nid_seq1"', 2, true);
+SELECT setval('"public"."config_tags_relation_nid_seq2"', 12, true);
 
 -- ----------------------------
 -- Indexes structure for table config_tags_relation
@@ -3247,7 +3876,7 @@ ALTER TABLE "public"."config_tags_relation" ADD CONSTRAINT "config_tags_relation
 -- ----------------------------
 -- Auto increment value for group_capacity
 -- ----------------------------
-SELECT setval('"public"."group_capacity_id_seq1"', 1, false);
+SELECT setval('"public"."group_capacity_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table group_capacity
@@ -3264,7 +3893,7 @@ ALTER TABLE "public"."group_capacity" ADD CONSTRAINT "group_capacity_pkey" PRIMA
 -- ----------------------------
 -- Auto increment value for his_config_info
 -- ----------------------------
-SELECT setval('"public"."his_config_info_nid_seq1"', 2, true);
+SELECT setval('"public"."his_config_info_nid_seq2"', 11, true);
 
 -- ----------------------------
 -- Indexes structure for table his_config_info
@@ -3304,7 +3933,7 @@ CREATE UNIQUE INDEX "roles_username_role_idx" ON "public"."roles" USING btree (
 -- ----------------------------
 -- Auto increment value for tenant_capacity
 -- ----------------------------
-SELECT setval('"public"."tenant_capacity_id_seq1"', 1, false);
+SELECT setval('"public"."tenant_capacity_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table tenant_capacity
@@ -3321,7 +3950,7 @@ ALTER TABLE "public"."tenant_capacity" ADD CONSTRAINT "tenant_capacity_pkey" PRI
 -- ----------------------------
 -- Auto increment value for tenant_info
 -- ----------------------------
-SELECT setval('"public"."tenant_info_id_seq1"', 1, false);
+SELECT setval('"public"."tenant_info_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table tenant_info
@@ -3343,233 +3972,3 @@ ALTER TABLE "public"."tenant_info" ADD CONSTRAINT "tenant_info_pkey" PRIMARY KEY
 -- Primary Key structure for table users
 -- ----------------------------
 ALTER TABLE "public"."users" ADD CONSTRAINT "users_pkey" PRIMARY KEY ("username");
-
-UPDATE "public"."config_info" SET "content" = '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: false
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-  xxl-job:
-    admin:
-      address: http://xxl.job.laokou.org:9095/xxl-job-admin
-    executor:
-      app-name: laokou-auth
-      port: -1
-      log-path: ./logs/xxl-job/laokou-auth
-      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
-      intentionalities: 7
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "`%s`"
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-  slow-sql:
-    enabled: false
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl' WHERE "id" = 2025;
-
-UPDATE "public"."config_info" SET "content" = '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: false
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-  xxl-job:
-    admin:
-      address: http://xxl.job.laokou.org:9095/xxl-job-admin
-    executor:
-      app-name: laokou-admin
-      port: -1
-      log-path: ./logs/xxl-job/laokou-admin
-      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
-      intentionalities: 7
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "`%s`"
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-      - boot_sys_login_log
-    enabled: true
-  slow-sql:
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl' WHERE "id" = 2022;
-
-UPDATE "public"."config_info" SET "content" = '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: false
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-  xxl-job:
-    admin:
-      address: http://xxl.job.laokou.org:9095/xxl-job-admin
-    executor:
-      app-name: laokou-admin
-      port: -1
-      log-path: ./logs/xxl-job/laokou-admin
-      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
-      intentionalities: 7
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-      - boot_sys_login_log
-    enabled: true
-  slow-sql:
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl' WHERE "id" = 2022;
-
-UPDATE "public"."config_info" SET  "content" = '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: false
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-  xxl-job:
-    admin:
-      address: http://xxl.job.laokou.org:9095/xxl-job-admin
-    executor:
-      app-name: laokou-auth
-      port: -1
-      log-path: ./logs/xxl-job/laokou-auth
-      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
-      intentionalities: 7
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-  slow-sql:
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl' WHERE "id" = 2025;
