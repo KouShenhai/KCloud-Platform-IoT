@@ -77,7 +77,7 @@
         <!--ip2region版本-->
         <ip2region.version>2.7.0</ip2region.version>
         <!--jackson版本-->
-        <jackson.version>2.17.0</jackson.version>
+        <jackson.version>2.17.1</jackson.version>
         <!--spring-kafka版本-->
         <spring-kafka.version>3.1.4</spring-kafka.version>
         <!--netty版本-->
@@ -103,7 +103,7 @@
         <!--mockito版本-->
         <mockito.version>5.11.0</mockito.version>
         <!--flyway版本-->
-        <flyway.version>10.11.1</flyway.version>
+        <flyway.version>10.12.0</flyway.version>
         <!--retry版本-->
         <retry.version>2.0.5</retry.version>
         <!--nacos版本-->
@@ -152,6 +152,11 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-log</artifactId>
             <version>${laokou.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.laokou</groupId>
+          <artifactId>laokou-common-extension</artifactId>
+          <version>${laokou.version}</version>
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>

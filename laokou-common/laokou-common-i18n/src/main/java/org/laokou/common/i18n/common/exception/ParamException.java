@@ -49,6 +49,12 @@ public final class ParamException extends GlobalException {
 	@Schema(name = "SYSTEM_ID_REQUIRE", description = "ID不能为空")
 	public static final String SYSTEM_ID_REQUIRE = "P_System_IdIsNull";
 
+	@Schema(name = "OAUTH2_MAIL_ERROR", description = "邮箱错误")
+	public static final String OAUTH2_MAIL_ERROR = "A_OAuth2_MailError";
+
+	@Schema(name = "OAUTH2_MOBILE_ERROR", description = "手机号错误")
+	public static final String OAUTH2_MOBILE_ERROR = "A_OAuth2_MobileError";
+
 	public ParamException(String code) {
 		super(code);
 	}

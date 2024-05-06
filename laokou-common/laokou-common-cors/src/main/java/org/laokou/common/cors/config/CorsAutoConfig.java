@@ -25,8 +25,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-import static org.laokou.common.i18n.common.SysConstant.ALL_PATTERNS;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
@@ -54,7 +52,7 @@ public class CorsAutoConfig {
 		// 每一个小时，异步请求都发起预检请求 => 发送两次请求 第一次OPTION 第二次GET/POT/PUT/DELETE
 		config.setMaxAge(3600L);
 		UrlBasedCorsConfigurationSource configurationSource = new UrlBasedCorsConfigurationSource();
-		configurationSource.registerCorsConfiguration(ALL_PATTERNS, config);
+		configurationSource.registerCorsConfiguration("/**", config);
 		log.info("cors加载完毕");
 		return new CorsFilter(configurationSource);
 	}

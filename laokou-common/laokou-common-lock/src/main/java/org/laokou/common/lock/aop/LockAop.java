@@ -40,8 +40,7 @@ import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
 
-import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
-import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
+import static org.laokou.common.i18n.common.exception.StatusCode.TOO_MANY_REQUESTS;
 import static org.laokou.common.i18n.common.StringConstant.UNDER;
 
 /**
@@ -69,7 +68,7 @@ public class LockAop {
 		Assert.isTrue(ObjectUtil.isNotNull(lock4j), "@Lock4j is null");
 		String appName = UNDER;
 		if (lock4j.enable()) {
-			appName += environment.getProperty(SPRING_APPLICATION_NAME);
+			appName += environment.getProperty("spring.application.name");
 		}
 		// key + 时间戳 + 应用名称
 		String key = lock4j.key() + IdGenerator.SystemClock.now() + appName;

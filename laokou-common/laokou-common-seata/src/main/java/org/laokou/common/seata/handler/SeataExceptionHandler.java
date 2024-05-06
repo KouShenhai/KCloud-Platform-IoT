@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import static org.laokou.common.i18n.common.StatusCode.INTERNAL_SERVER_ERROR;
+import static org.laokou.common.i18n.common.exception.StatusCode.INTERNAL_SERVER_ERROR;
 import static org.laokou.common.i18n.common.exception.SystemException.DISTRIBUTED_TRANSACTION_DOWNTIME;
 import static org.laokou.common.i18n.common.exception.SystemException.DISTRIBUTED_TRANSACTION_TIMEOUT;
 

@@ -42,7 +42,6 @@ import org.springframework.util.Assert;
 import java.lang.reflect.Method;
 
 import static org.laokou.common.i18n.common.JobModeEnum.SYNC;
-import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
 
 /**
  * 操作日志切面.
@@ -90,7 +89,7 @@ public class OperateLogAop {
 	private void handleLog(final JoinPoint joinPoint, final Exception e) {
 		try {
 			// 应用名称
-			String appName = environment.getProperty(SPRING_APPLICATION_NAME);
+			String appName = environment.getProperty("spring.application.name");
 			HttpServletRequest request = RequestUtil.getHttpServletRequest();
 			MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 			Method method = methodSignature.getMethod();

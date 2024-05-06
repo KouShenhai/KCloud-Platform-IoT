@@ -15,20 +15,16 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.auth.domain.extensionpoint;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import org.laokou.auth.domain.model.auth.AuthA;
+import org.laokou.common.extension.ExtensionPointI;
 
 /**
  * @author laokou
  */
-@Schema(name = "PropertiesConstants", description = "Properties常量")
-public final class PropertiesConstant {
+public interface AuthValidatorExtPt extends ExtensionPointI {
 
-	private PropertiesConstant() {
-	}
-
-	@Schema(name = "SPRING_APPLICATION_NAME", description = "应用名称")
-	public static final String SPRING_APPLICATION_NAME = "spring.application.name";
+	void validate(AuthA auth);
 
 }

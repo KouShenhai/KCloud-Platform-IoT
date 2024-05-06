@@ -50,8 +50,6 @@ public class UsersServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
 			AuthA auth = AuthFactory.authorizationCode(RequestUtil.getHttpServletRequest());
-			// 校验
-			auth.checkNullByAuthorizationCode();
 			auth.createUserByAuthorizationCode();
 			return (UserDetails) authProvider.authentication(auth).getPrincipal();
 		}

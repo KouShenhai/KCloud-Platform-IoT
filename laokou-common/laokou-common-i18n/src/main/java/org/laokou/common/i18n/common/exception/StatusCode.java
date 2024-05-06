@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.common.i18n.common.exception;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

@@ -35,7 +35,7 @@ import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
 
-import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
+import static org.laokou.common.i18n.common.exception.StatusCode.TOO_MANY_REQUESTS;
 import static org.laokou.common.i18n.common.StringConstant.UNDER;
 
 /**

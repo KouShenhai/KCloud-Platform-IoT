@@ -33,7 +33,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import static org.laokou.common.i18n.common.StatusCode.*;
+import static org.laokou.common.i18n.common.exception.StatusCode.*;
 
 /**
  * 全局异常处理器.

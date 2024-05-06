@@ -18,7 +18,6 @@
 package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
-import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
@@ -27,7 +26,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_TENANT_ID_REQUIRE;
 import static org.laokou.common.i18n.common.exception.ParamException.SYSTEM_ID_REQUIRE;
 
 /**
@@ -95,9 +93,7 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	}
 
 	protected void checkNullTenantId() {
-		if (ObjectUtil.isNull(this.tenantId)) {
-			throw new AuthException(OAUTH2_TENANT_ID_REQUIRE, ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
-		}
+
 	}
 
 	protected void addEvent(DomainEvent<ID> event) {

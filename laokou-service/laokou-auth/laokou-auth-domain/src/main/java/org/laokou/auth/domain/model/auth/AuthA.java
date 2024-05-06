@@ -32,11 +32,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.EventTypeEnum.LOGIN_FAILED;
-import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
+import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.UserStatus.DISABLE;
+import static org.laokou.auth.domain.model.auth.UserStatus.DISABLE;
 import static org.laokou.common.i18n.common.exception.AuthException.*;
-import static org.laokou.common.i18n.common.exception.ParamException.*;
 
 /**
  * @author laokou
@@ -129,48 +128,6 @@ public class AuthA extends AggregateRoot<Long> {
 		this.appName = appName;
 	}
 
-	public void checkNullByMail() {
-		// 检查租户ID
-		checkNullTenantId();
-		// 检查邮箱
-		checkNullMail();
-		// 检查验证码
-		checkNullCaptcha();
-		// 检查邮箱
-		checkMail();
-	}
-
-	public void checkNullByMobile() {
-		// 检查租户ID
-		checkNullTenantId();
-		// 检查手机号
-		checkNullMobile();
-		// 检查验证码
-		checkNullCaptcha();
-		// 检查手机号
-		checkMobile();
-	}
-
-	public void checkNullByPassword() {
-		// 检查租户ID
-		checkNullTenantId();
-		// 检查UUID
-		checkNullUuid();
-		// 检查验证码
-		checkNullCaptcha();
-		// 检查用户名
-		checkNullUsername();
-		// 检查密码
-		checkNullPassword();
-	}
-
-	public void checkNullByAuthorizationCode() {
-		// 检查用户名
-		checkNullUsername();
-		// 检查密码
-		checkNullPassword();
-	}
-
 	public void createUserByPassword() {
 		this.user = new UserE(this.username, EMPTY, EMPTY, this.tenantId);
 	}
@@ -189,7 +146,7 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void updateUser(UserE user) {
 		if (ObjectUtil.isNull(user)) {
-			fail(USERNAME_PASSWORD_ERROR);
+			fail(OAUTH2_USERNAME_PASSWORD_ERROR);
 		}
 		this.user = user;
 		this.creator = user.getId();
@@ -201,7 +158,7 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void updateSource(SourceE source) {
 		if (ObjectUtil.isNull(source)) {
-			fail(SOURCE_NOT_EXIST);
+			fail(OAUTH2_SOURCE_NOT_EXIST);
 		}
 		this.sourceName = source.getName();
 	}
@@ -220,22 +177,22 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void checkCaptcha(Boolean result) {
 		if (ObjectUtil.isNull(result)) {
-			fail(CAPTCHA_EXPIRED);
+			fail(OAUTH2_CAPTCHA_EXPIRED);
 		}
 		if (!result) {
-			fail(CAPTCHA_ERROR);
+			fail(OAUTH2_CAPTCHA_ERROR);
 		}
 	}
 
 	public void checkUserPassword(PasswordEncoder passwordEncoder) {
 		if (StringUtil.isNotEmpty(this.password) && !passwordEncoder.matches(this.password, user.getPassword())) {
-			fail(USERNAME_PASSWORD_ERROR);
+			fail(OAUTH2_USERNAME_PASSWORD_ERROR);
 		}
 	}
 
 	public void checkUserStatus() {
 		if (ObjectUtil.equals(DISABLE.ordinal(), this.user.getStatus())) {
-			fail(USER_DISABLED);
+			fail(OAUTH2_USER_DISABLED);
 		}
 	}
 
@@ -262,54 +219,6 @@ public class AuthA extends AggregateRoot<Long> {
 		String os = userAgent.getOperatingSystem().getName();
 		String browser = userAgent.getBrowser().getName();
 		return new LogV(ip, address, browser, os, DateUtil.now());
-	}
-
-	private void checkNullPassword() {
-		if (StringUtil.isEmpty(this.password)) {
-			throw new AuthException(OAUTH2_PASSWORD_REQUIRE, ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE));
-		}
-	}
-
-	private void checkNullUsername() {
-		if (StringUtil.isEmpty(this.username)) {
-			throw new AuthException(OAUTH2_USERNAME_REQUIRE, ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE));
-		}
-	}
-
-	private void checkNullCaptcha() {
-		if (StringUtil.isEmpty(this.captcha.captcha())) {
-			throw new AuthException(OAUTH2_CAPTCHA_REQUIRE, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
-		}
-	}
-
-	private void checkMobile() {
-		if (!RegexUtil.mobileRegex(this.captcha.uuid())) {
-			fail(MOBILE_ERROR);
-		}
-	}
-
-	private void checkMail() {
-		if (!RegexUtil.mailRegex(this.captcha.uuid())) {
-			fail(MAIL_ERROR);
-		}
-	}
-
-	private void checkNullUuid() {
-		if (StringUtil.isEmpty(this.captcha.uuid())) {
-			throw new AuthException(OAUTH2_UUID_REQUIRE, ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
-		}
-	}
-
-	private void checkNullMail() {
-		if (StringUtil.isEmpty(this.captcha.uuid())) {
-			throw new AuthException(OAUTH2_MAIL_REQUIRE, ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));
-		}
-	}
-
-	private void checkNullMobile() {
-		if (StringUtil.isEmpty(this.captcha.uuid())) {
-			throw new AuthException(OAUTH2_MOBILE_REQUIRE, ValidatorUtil.getMessage(OAUTH2_MOBILE_REQUIRE));
-		}
 	}
 
 }
