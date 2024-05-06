@@ -14015,7 +14015,7 @@ COMMENT ON COLUMN "public"."boot_sys_user"."password" IS '密码';
 COMMENT ON COLUMN "public"."boot_sys_user"."super_admin" IS '超级管理员标识 0否 1是';
 COMMENT ON COLUMN "public"."boot_sys_user"."mail" IS '邮箱';
 COMMENT ON COLUMN "public"."boot_sys_user"."mobile" IS '手机号';
-COMMENT ON COLUMN "public"."boot_sys_user"."status" IS '用户状态 0正常 1锁定';
+COMMENT ON COLUMN "public"."boot_sys_user"."status" IS '用户状态 0正常 1禁用';
 COMMENT ON COLUMN "public"."boot_sys_user"."avatar" IS '头像';
 COMMENT ON COLUMN "public"."boot_sys_user"."username_phrase" IS '用户名短语';
 COMMENT ON COLUMN "public"."boot_sys_user"."mail_phrase" IS '邮箱短语';

@@ -25638,7 +25638,7 @@ CREATE TABLE `boot_sys_user` (
   `super_admin` tinyint(1) NOT NULL DEFAULT '0' COMMENT '超级管理员标识 0否 1是',
   `mail` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '邮箱',
   `mobile` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '手机号',
-  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '用户状态 0正常 1锁定',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '用户状态 0正常 1禁用',
   `avatar` varchar(400) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT 'https://i.postimg.cc/FsHgVKzX/1.gif' COMMENT '头像',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `idx_mail_tenant_id` (`mail`,`tenant_id`) USING BTREE COMMENT '邮箱_租户_唯一索引',

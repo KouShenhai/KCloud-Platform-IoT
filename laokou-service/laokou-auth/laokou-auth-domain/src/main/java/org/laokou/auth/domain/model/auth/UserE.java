@@ -52,7 +52,7 @@ public class UserE {
 	@Schema(name = "mail", description = "邮箱", example = "2413176044@qq.com")
 	private String mail;
 
-	@Schema(name = "status", description = "用户状态 0正常 1锁定", example = "0")
+	@Schema(name = "status", description = "用户状态 0正常 1禁用", example = "0")
 	private Integer status;
 
 	@Schema(name = "mobile", description = "手机号", example = "18974432500")

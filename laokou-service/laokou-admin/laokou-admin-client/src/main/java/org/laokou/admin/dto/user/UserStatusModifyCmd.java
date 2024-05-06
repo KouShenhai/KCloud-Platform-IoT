@@ -31,7 +31,7 @@ public class UserStatusModifyCmd extends CommonCommand {
 	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	@Schema(name = "status", description = "用户状态 0正常 1锁定")
+	@Schema(name = "status", description = "用户状态 0正常 1禁用")
 	private Integer status;
 
 }
