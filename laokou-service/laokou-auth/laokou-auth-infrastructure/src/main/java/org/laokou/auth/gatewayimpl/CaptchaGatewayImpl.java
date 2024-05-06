@@ -63,7 +63,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	@Override
 	public Boolean check(String uuid, String code) {
 		// 获取验证码
-		String captcha = get(uuid);
+		String captcha = getValue(uuid);
 		if (StringUtil.isEmpty(captcha)) {
 			return null;
 		}
@@ -76,7 +76,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	 * @return key
 	 */
 	@Override
-	public String key(String uuid) {
+	public String getKey(String uuid) {
 		String key = RedisKeyUtil.getUserCaptchaKey(uuid);
 		return DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
 	}
@@ -86,8 +86,8 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	 * @param uuid UUID
 	 * @return 验证码
 	 */
-	private String get(String uuid) {
-		String key = key(uuid);
+	private String getValue(String uuid) {
+		String key = getKey(uuid);
 		Object captcha = redisUtil.get(key);
 		if (ObjectUtil.isNotNull(captcha)) {
 			redisUtil.delete(key);
@@ -101,7 +101,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	 * @param code 验证码
 	 */
 	private void setValue(String uuid, String code) {
-		String key = key(uuid);
+		String key = getKey(uuid);
 		// 保存五分钟
 		redisUtil.delete(key);
 		redisUtil.set(key, code, MINUTE_FIVE_EXPIRE);

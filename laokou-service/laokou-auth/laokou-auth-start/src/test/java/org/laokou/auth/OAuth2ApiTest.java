@@ -299,7 +299,7 @@ class OAuth2ApiTest {
 	@SneakyThrows
 	private String getCaptcha(String uuid) {
 		mockMvc.perform(get(getCaptchaApiUrl(uuid)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-		String key = captchaGateway.key(uuid);
+		String key = captchaGateway.getKey(uuid);
 		String captcha = redisUtil.get(key).toString();
 		Assert.isTrue(StringUtil.isNotEmpty(captcha), "captcha is empty");
 		return captcha;

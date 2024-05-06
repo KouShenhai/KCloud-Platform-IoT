@@ -44,6 +44,6 @@ public interface CaptchaGateway {
 	 * @param uuid UUID
 	 * @return key
 	 */
-	String key(String uuid);
+	String getKey(String uuid);
 
 }
