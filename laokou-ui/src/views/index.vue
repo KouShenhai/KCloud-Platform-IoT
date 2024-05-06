@@ -12,11 +12,11 @@
           <div style="margin: 0;padding: 0;">
             <iframe
               scrolling="no"
-              src="http://tianqiapi.com/api.php?style=tq&skin=baidu&align=left"
+              src="https://widget.tianqiapi.com/?style=tq&skin=sogou&paddingtop=0&paddingleft=0&align=left"
               frameborder="0"
               width="100%"
               height="20"
-              allowtransparency="true"></iframe>
+              allowtransparency="true"/>
           </div>
         </div>
       </div>
