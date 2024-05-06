@@ -67,9 +67,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
 
-import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.RequestHeaderConstant.AUTHORIZATION;
-import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
+import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.*;
 import static org.springframework.http.HttpHeaders.CONTENT_LENGTH;
@@ -286,7 +285,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	private void initURLMap() {
 		urlMap = Optional.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
-				env.getProperty(SPRING_APPLICATION_NAME)))
+				env.getProperty("spring.application.name")))
 			.orElseGet(ConcurrentHashMap::new);
 	}
 

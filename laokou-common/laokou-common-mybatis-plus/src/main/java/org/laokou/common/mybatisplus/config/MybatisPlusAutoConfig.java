@@ -44,9 +44,6 @@ import java.net.InetAddress;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
-import static org.laokou.common.i18n.common.SysConstant.APPLICATION;
-
 /**
  * mybatis-plus配置.
  *
@@ -162,8 +159,8 @@ public class MybatisPlusAutoConfig {
 	}
 
 	private String getApplicationId(ConfigurableEnvironment environment) {
-		String name = environment.getProperty(SPRING_APPLICATION_NAME);
-		return StringUtils.hasText(name) ? name : APPLICATION;
+		String name = environment.getProperty("spring.application.name");
+		return StringUtils.hasText(name) ? name : "application";
 	}
 
 }

@@ -25,7 +25,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import java.io.Serial;
 import java.io.Serializable;
 
-import static org.laokou.common.i18n.common.StatusCode.OK;
+import static org.laokou.common.i18n.common.exception.StatusCode.OK;
 
 /**
  * @author laokou

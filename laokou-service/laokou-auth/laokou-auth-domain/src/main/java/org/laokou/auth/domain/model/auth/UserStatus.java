@@ -15,23 +15,23 @@
  *
  */
 
-package org.laokou.common.i18n.common;
-
-import io.swagger.v3.oas.annotations.media.Schema;
+package org.laokou.auth.domain.model.auth;
 
 /**
+ * 用户状态常量.
+ *
  * @author laokou
  */
-@Schema(name = "SysConstants", description = "系统变量")
-public final class SysConstant {
+public enum UserStatus {
 
-	private SysConstant() {
-	}
+	/**
+	 * 正常.
+	 */
+	ENABLED,
 
-	@Schema(name = "APPLICATION", description = "应用")
-	public static final String APPLICATION = "application";
-
-	@Schema(name = "ALL_PATTERNS", description = "拦截所有URL")
-	public static final String ALL_PATTERNS = "/**";
+	/**
+	 * 禁用.
+	 */
+	DISABLE
 
 }

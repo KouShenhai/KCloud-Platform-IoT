@@ -31,12 +31,12 @@ public enum ExceptionEnum {
 	/**
 	 * 无效客户端.
 	 */
-	INVALID_CLIENT(AuthException.INVALID_CLIENT),
+	INVALID_CLIENT(AuthException.OAUTH2_INVALID_CLIENT),
 
 	/**
 	 * 无效请求.
 	 */
-	INVALID_REQUEST(AuthException.INVALID_REQUEST);
+	INVALID_REQUEST(AuthException.OAUTH2_INVALID_REQUEST);
 
 	/**
 	 * 编码.
