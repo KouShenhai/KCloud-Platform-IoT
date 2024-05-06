@@ -92,7 +92,7 @@ const user = {
       return new Promise((resolve, reject) => {
         getInfo(state.token).then(res => {
           const user = res.data
-          const avatar = user.avatar === '' ? require('@/assets/images/profile.jpg') : process.env.VUE_APP_BASE_API + user.avatar
+          const avatar = user.avatar === '' ? require('@/assets/images/profile.jpg') : user.avatar
           commit('SET_ID', user.id)
           commit('SET_USERNAME', user.username)
           commit('SET_AVATAR', avatar)
