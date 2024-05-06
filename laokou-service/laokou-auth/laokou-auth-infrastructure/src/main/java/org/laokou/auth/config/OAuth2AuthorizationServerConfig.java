@@ -21,10 +21,6 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import org.laokou.auth.config.authentication.OAuth2MailAuthenticationConverter;
-import org.laokou.auth.config.authentication.OAuth2MobileAuthenticationConverter;
-import org.laokou.auth.config.authentication.OAuth2PasswordAuthenticationConverter;
-import org.laokou.auth.config.authentication.UsersServiceImpl;
 import org.laokou.auth.config.filter.OAuth2AuthorizationFilter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -38,6 +34,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -54,6 +51,7 @@ import org.springframework.security.oauth2.server.authorization.settings.Authori
 import org.springframework.security.oauth2.server.authorization.token.*;
 import org.springframework.security.oauth2.server.authorization.web.authentication.DelegatingAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -92,6 +90,9 @@ class OAuth2AuthorizationServerConfig {
 	 * @param mobileAuthenticationProvider 手机号认证Provider
 	 * @param authorizationServerSettings OAuth2配置
 	 * @param authorizationService 认证配置
+	 * @param mailAuthenticationConverter 邮箱认证Converter
+	 * @param mobileAuthenticationConverter 手机号认证Converter
+	 * @param passwordAuthenticationConverter 密码认证Converter
 	 * @return 认证过滤器
 	 * @throws Exception 异常
 	 */
@@ -101,6 +102,9 @@ class OAuth2AuthorizationServerConfig {
 			AuthenticationProvider passwordAuthenticationProvider,
 			AuthenticationProvider mailAuthenticationProvider,
 			AuthenticationProvider mobileAuthenticationProvider,
+			AuthenticationConverter passwordAuthenticationConverter,
+			AuthenticationConverter mailAuthenticationConverter,
+			AuthenticationConverter mobileAuthenticationConverter,
 			AuthorizationServerSettings authorizationServerSettings,
 			OAuth2AuthorizationService authorizationService) throws Exception {
 		// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/configuration-model.html
@@ -108,9 +112,9 @@ class OAuth2AuthorizationServerConfig {
 		http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
 			// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
 			.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(new DelegatingAuthenticationConverter(List.of(
-						new OAuth2MailAuthenticationConverter(),
-						new OAuth2PasswordAuthenticationConverter(),
-						new OAuth2MobileAuthenticationConverter())))
+						passwordAuthenticationConverter,
+						mobileAuthenticationConverter,
+						mailAuthenticationConverter)))
 				.authenticationProvider(passwordAuthenticationProvider)
 				.authenticationProvider(mobileAuthenticationProvider)
 				.authenticationProvider(mailAuthenticationProvider))
@@ -195,14 +199,14 @@ class OAuth2AuthorizationServerConfig {
 	/**
 	 * 单点登录配置.
 	 * @param passwordEncoder 密码编码器
-	 * @param usersServiceImpl 用户认证对象
+	 * @param userDetailsServiceImpl 用户认证对象
 	 * @return 单点登录配置
 	 */
 	@Bean
-	AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder, UsersServiceImpl usersServiceImpl) {
+	AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder, UserDetailsService userDetailsServiceImpl) {
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-		daoAuthenticationProvider.setUserDetailsService(usersServiceImpl);
+		daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl);
 		return daoAuthenticationProvider;
 	}
 

@@ -35,8 +35,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.StringConstant.UNDER;
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constants.StringConstant.UNDER;
 
 /**
  * @author laokou

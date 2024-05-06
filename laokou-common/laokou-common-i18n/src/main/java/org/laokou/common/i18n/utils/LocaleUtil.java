@@ -22,7 +22,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import java.util.Arrays;
 import java.util.Locale;
 
-import static org.laokou.common.i18n.common.StringConstant.*;
+import static org.laokou.common.i18n.common.constants.StringConstant.*;
 
 /**
  * 本地工具类.

@@ -36,8 +36,8 @@ import org.laokou.common.mybatisplus.utils.SqlUtil;
 
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.StringConstant.SINGLE_QUOT;
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constants.StringConstant.SINGLE_QUOT;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**

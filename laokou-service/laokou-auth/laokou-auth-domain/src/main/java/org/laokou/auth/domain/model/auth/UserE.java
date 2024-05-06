@@ -23,9 +23,9 @@ import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
-import static org.laokou.auth.domain.model.auth.AuthA.DEFAULT_TENANT;
-import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.SuperAdmin.YES;
+import static org.laokou.auth.domain.model.auth.AuthA.DEFAULT_TENANT_ID;
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constants.SuperAdmin.YES;
 
 /**
  * @author laokou
@@ -52,7 +52,7 @@ public class UserE {
 	@Schema(name = "mail", description = "邮箱", example = "2413176044@qq.com")
 	private String mail;
 
-	@Schema(name = "status", description = "用户状态 0正常 1锁定", example = "0")
+	@Schema(name = "status", description = "用户状态 0正常 1禁用", example = "0")
 	private Integer status;
 
 	@Schema(name = "mobile", description = "手机号", example = "18974432500")
@@ -82,7 +82,7 @@ public class UserE {
 	}
 
 	public boolean isDefaultTenant() {
-		return ObjectUtil.equals(DEFAULT_TENANT, this.tenantId);
+		return ObjectUtil.equals(DEFAULT_TENANT_ID, this.tenantId);
 	}
 
 	private String encrypt(String str) {

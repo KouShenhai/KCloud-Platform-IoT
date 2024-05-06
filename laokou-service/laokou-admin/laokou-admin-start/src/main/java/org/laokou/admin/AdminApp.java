@@ -38,9 +38,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ResourceUtils;
 
 import java.net.InetAddress;
-
-import static org.laokou.common.i18n.common.NetworkConstant.IP;
-import static org.laokou.common.i18n.common.StringConstant.TRUE;
+import static org.laokou.common.i18n.common.constants.StringConstant.TRUE;
 
 /**
  * 启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
@@ -64,7 +62,7 @@ public class AdminApp {
 	public static void main(String[] args) {
 		// SpringSecurity 子线程读取父线程的上下文
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
-		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
+		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");

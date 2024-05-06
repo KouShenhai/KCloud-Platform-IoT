@@ -37,7 +37,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
+import static org.laokou.common.mybatisplus.mapper.BaseDO.DEFAULT_TENANT_ID;
 import static org.laokou.common.redis.utils.RedisUtil.NOT_EXPIRE;
 
 /**
@@ -100,8 +100,8 @@ public class IpGatewayImpl implements IpGateway {
 		}
 		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(label);
 		redisUtil.hDel(ipCacheHashKey);
-		redisUtil.hSet(ipCacheHashKey, list.stream().collect(Collectors.toMap(IpDO::getValue, val -> DEFAULT)),
-				NOT_EXPIRE);
+		redisUtil.hSet(ipCacheHashKey,
+				list.stream().collect(Collectors.toMap(IpDO::getValue, val -> DEFAULT_TENANT_ID)), NOT_EXPIRE);
 	}
 
 	/**

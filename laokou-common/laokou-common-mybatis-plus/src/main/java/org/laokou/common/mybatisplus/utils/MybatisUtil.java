@@ -39,7 +39,7 @@ import java.util.function.BiConsumer;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.common.core.config.TaskExecutorConfig.THREADS_VIRTUAL_ENABLED;
-import static org.laokou.common.i18n.common.StringConstant.TRUE;
+import static org.laokou.common.i18n.common.constants.StringConstant.TRUE;
 
 /**
  * @author laokou

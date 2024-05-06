@@ -23,8 +23,7 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.domain.convertor.DomainEventConvertor;
 import org.laokou.common.domain.database.dataobject.DomainEventDO;
 import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.common.EventStatusEnum;
-import org.laokou.common.i18n.common.JobModeEnum;
+import org.laokou.common.i18n.common.constants.EventStatus;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
@@ -41,8 +40,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 import static org.laokou.common.core.config.TaskExecutorConfig.THREAD_POOL_TASK_EXECUTOR_NAME;
-import static org.laokou.common.i18n.common.EventStatusEnum.PUBLISH_FAILED;
-import static org.laokou.common.i18n.common.EventStatusEnum.PUBLISH_SUCCEED;
+import static org.laokou.common.i18n.common.constants.EventStatus.PUBLISH_FAILED;
+import static org.laokou.common.i18n.common.constants.EventStatus.PUBLISH_SUCCEED;
 
 /**
  * @author laokou
@@ -63,7 +62,7 @@ public class DomainEventPublishTask {
 	private final DynamicUtil dynamicUtil;
 
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
-	public void publishEvent(List<DomainEvent<Long>> list, JobModeEnum jobMode) {
+	public void publishEvent(List<DomainEvent<Long>> list, JobMode jobMode) {
 		List<DomainEvent<Long>> modifyList = Collections.synchronizedList(new ArrayList<>(16));
 		switch (jobMode) {
 			case SYNC -> {
@@ -140,9 +139,8 @@ public class DomainEventPublishTask {
 		}
 	}
 
-	private void addEvent(List<DomainEvent<Long>> modifyList, Long id, String sourceName,
-			EventStatusEnum eventStatusEnum) {
-		modifyList.add(new DefaultDomainEvent(id, eventStatusEnum, sourceName));
+	private void addEvent(List<DomainEvent<Long>> modifyList, Long id, String sourceName, EventStatus eventStatus) {
+		modifyList.add(new DefaultDomainEvent(id, eventStatus, sourceName));
 	}
 
 }

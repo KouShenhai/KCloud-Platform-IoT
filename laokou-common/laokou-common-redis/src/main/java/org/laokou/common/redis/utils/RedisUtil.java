@@ -33,8 +33,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
-
 /**
  * Redis工具类.
  *
@@ -273,7 +271,7 @@ public class RedisUtil {
 
 	public long getKeysSize() {
 		final Object obj = redisTemplate.execute(RedisServerCommands::dbSize);
-		return ObjectUtil.isNull(obj) ? DEFAULT : Long.parseLong(obj.toString());
+		return ObjectUtil.isNull(obj) ? 0 : Long.parseLong(obj.toString());
 	}
 
 	public List<Map<String, String>> getCommandStatus() {

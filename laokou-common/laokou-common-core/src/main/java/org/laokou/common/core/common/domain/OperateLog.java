@@ -34,7 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
 
 import static org.laokou.common.core.utils.JacksonUtil.EMPTY_JSON;
-import static org.laokou.common.i18n.common.StringConstant.*;
+import static org.laokou.common.i18n.common.constants.StringConstant.*;
 
 /**
  * @author laokou

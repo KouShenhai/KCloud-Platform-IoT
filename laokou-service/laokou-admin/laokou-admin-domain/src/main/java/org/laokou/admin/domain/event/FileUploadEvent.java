@@ -23,11 +23,11 @@ import lombok.NoArgsConstructor;
 import org.laokou.admin.domain.oss.OssLog;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.common.EventTypeEnum;
+import org.laokou.common.i18n.common.constants.EventType;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.DateUtil;
 
-import static org.laokou.common.i18n.common.EventStatusEnum.CREATED;
+import static org.laokou.common.i18n.common.constants.EventStatus.CREATED;
 import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_FILE_UPLOAD_EVENT_TOPIC;
 
 /**
@@ -57,7 +57,7 @@ public class FileUploadEvent extends DomainEvent<Long> {
 	private String errorMessage;
 
 	public FileUploadEvent(OssLog ossLog, UserContextHolder.User user, String appName, Integer status,
-			EventTypeEnum eventType) {
+			EventType eventType) {
 		super(IdGenerator.defaultSnowflakeId(), user.getId(), eventType, CREATED, LAOKOU_FILE_UPLOAD_EVENT_TOPIC,
 				user.getSourceName(), appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(),
 				user.getTenantId(), DateUtil.now(), DateUtil.now());

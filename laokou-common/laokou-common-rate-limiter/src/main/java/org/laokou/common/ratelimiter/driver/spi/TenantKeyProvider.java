@@ -19,7 +19,7 @@ package org.laokou.common.ratelimiter.driver.spi;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import static org.laokou.common.i18n.common.TraceConstant.TENANT_ID;
+import static org.laokou.common.i18n.common.constants.TraceConstant.TENANT_ID;
 import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.TENANT;
 
 /**

@@ -23,7 +23,7 @@ import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
-import static org.laokou.common.i18n.common.StringConstant.COMMA;
+import static org.laokou.common.i18n.common.constants.StringConstant.COMMA;
 
 /**
  * IP工具类.

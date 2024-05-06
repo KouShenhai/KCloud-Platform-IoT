@@ -29,7 +29,7 @@ import reactor.core.scheduler.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
-import static org.laokou.common.i18n.common.StringConstant.SLASH;
+import static org.laokou.common.i18n.common.constants.StringConstant.SLASH;
 
 /**
  * API文档配置.

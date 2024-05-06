@@ -29,7 +29,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.StringConstant.COMMA;
+import static org.laokou.common.i18n.common.constants.StringConstant.COMMA;
 
 /**
  * 树节菜单工具类.

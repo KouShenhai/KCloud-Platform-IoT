@@ -41,7 +41,7 @@ public class UserCO extends ClientObject {
 	@Schema(name = "username", description = "用户名")
 	private String username;
 
-	@Schema(name = "status", description = "用户状态 0正常 1锁定")
+	@Schema(name = "status", description = "用户状态 0正常 1禁用")
 	private Integer status;
 
 	@Schema(name = "roleIds", description = "角色IDS")

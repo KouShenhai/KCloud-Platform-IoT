@@ -33,7 +33,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.DSConstant.TENANT;
-import static org.laokou.common.i18n.common.SuperAdmin.YES;
+import static org.laokou.common.i18n.common.constants.SuperAdmin.YES;
 
 /**
  * 查看用户执行器.

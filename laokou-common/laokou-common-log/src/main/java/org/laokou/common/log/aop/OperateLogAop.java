@@ -41,7 +41,7 @@ import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
 
-import static org.laokou.common.i18n.common.JobModeEnum.SYNC;
+import static org.laokou.common.domain.publish.JobMode.SYNC;
 
 /**
  * 操作日志切面.

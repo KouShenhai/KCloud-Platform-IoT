@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.model.auth.AuthA;
 
 import static org.laokou.auth.domain.model.auth.AuthA.*;
-import static org.laokou.common.i18n.common.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
 
 /**
  * @author laokou

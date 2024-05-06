@@ -19,7 +19,7 @@ package org.laokou.common.i18n.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.common.EventStatusEnum;
+import org.laokou.common.i18n.common.constants.EventStatus;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -32,7 +32,7 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor(access = PRIVATE)
 public class DefaultDomainEvent extends DomainEvent<Long> {
 
-	public DefaultDomainEvent(Long id, EventStatusEnum eventStatus, String sourceName) {
+	public DefaultDomainEvent(Long id, EventStatus eventStatus, String sourceName) {
 		super(id, eventStatus, sourceName);
 	}
 

@@ -34,7 +34,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.laokou.common.i18n.common.StringConstant.AT;
+import static org.laokou.common.i18n.common.constants.StringConstant.AT;
 
 /**
  *

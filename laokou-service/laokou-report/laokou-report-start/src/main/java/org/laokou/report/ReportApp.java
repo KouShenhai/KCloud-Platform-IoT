@@ -25,8 +25,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 import java.net.InetAddress;
 
-import static org.laokou.common.i18n.common.NetworkConstant.IP;
-
 /**
  * @author laokou
  */
@@ -36,7 +34,7 @@ public class ReportApp {
 
 	@SneakyThrows
 	public static void main(String[] args) {
-		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
+		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");

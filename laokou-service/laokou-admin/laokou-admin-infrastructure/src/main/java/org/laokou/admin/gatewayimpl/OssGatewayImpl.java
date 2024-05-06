@@ -52,9 +52,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.laokou.common.i18n.common.JobModeEnum.SYNC;
-import static org.laokou.common.i18n.common.NumberConstant.SUCCESS;
-import static org.laokou.common.i18n.common.StringConstant.EMPTY;
+import static org.laokou.common.domain.publish.JobMode.SYNC;
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
 
 /**
  * OSS管理.
@@ -137,7 +136,7 @@ public class OssGatewayImpl implements OssGateway {
 
 	private File upload(File file) {
 		file.setUrl(Optional.ofNullable(ossLogMapper.selectOne(Wrappers.lambdaQuery(OssLogDO.class)
-			.eq(OssLogDO::getStatus, SUCCESS)
+			.eq(OssLogDO::getStatus, 0)
 			.eq(OssLogDO::getMd5, file.getMd5())
 			.select(OssLogDO::getUrl))).orElse(new OssLogDO()).getUrl());
 		if (StringUtil.isNotEmpty(file.getUrl())) {

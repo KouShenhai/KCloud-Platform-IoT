@@ -20,8 +20,8 @@ package org.laokou.common.i18n.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.common.EventStatusEnum;
-import org.laokou.common.i18n.common.EventTypeEnum;
+import org.laokou.common.i18n.common.constants.EventStatus;
+import org.laokou.common.i18n.common.constants.EventType;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -55,12 +55,12 @@ public abstract class DomainEvent<ID> implements Serializable {
 	/**
 	 * 事件类型.
 	 */
-	protected EventTypeEnum eventType;
+	protected EventType eventType;
 
 	/**
 	 * 事件状态.
 	 */
-	protected EventStatusEnum eventStatus;
+	protected EventStatus eventStatus;
 
 	/**
 	 * MQ主题.
@@ -112,7 +112,7 @@ public abstract class DomainEvent<ID> implements Serializable {
 	 */
 	protected LocalDateTime updateDate;
 
-	public DomainEvent(ID id, EventStatusEnum eventStatus, String sourceName) {
+	public DomainEvent(ID id, EventStatus eventStatus, String sourceName) {
 		this.id = id;
 		this.eventStatus = eventStatus;
 		this.sourceName = sourceName;

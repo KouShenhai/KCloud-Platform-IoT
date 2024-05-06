@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import org.laokou.auth.domain.event.LoginEvent;
 import org.laokou.common.core.utils.*;
-import org.laokou.common.i18n.common.EventTypeEnum;
+import org.laokou.common.i18n.common.constants.EventType;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.*;
@@ -31,17 +31,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.EventTypeEnum.LOGIN_FAILED;
-import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
-import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.auth.domain.model.auth.UserStatus.DISABLE;
+import static org.laokou.common.i18n.common.constants.EventType.LOGIN_FAILED;
 import static org.laokou.common.i18n.common.exception.AuthException.*;
+import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.auth.domain.model.auth.UserStatus.DISABLE;
 
 /**
+ * 认证聚合.
+ *
  * @author laokou
  */
 @Getter
-@Schema(name = "AuthA", description = "认证聚合")
 public class AuthA extends AggregateRoot<Long> {
 
 	@Schema(name = "username", description = "用户名", example = "admin")
@@ -101,8 +102,8 @@ public class AuthA extends AggregateRoot<Long> {
 	@Schema(name = "TENANT_ID", description = "租户ID")
 	public static final String TENANT_ID = "tenant_id";
 
-	@Schema(name = "DEFAULT_TENANT", description = "默认租户")
-	static final long DEFAULT_TENANT = 0;
+	@Schema(name = "DEFAULT_TENANT_ID", description = "默认租户ID")
+	static final long DEFAULT_TENANT_ID = 0;
 
 	@Schema(name = "OK", description = "成功")
 	private static final int OK = 0;
@@ -119,7 +120,7 @@ public class AuthA extends AggregateRoot<Long> {
 		this.username = username;
 		this.password = password;
 		this.grantType = grantType;
-		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : DEFAULT_TENANT;
+		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : DEFAULT_TENANT_ID;
 		this.captcha = new CaptchaV(uuid, captcha);
 		this.log = createLog(request);
 	}
@@ -203,7 +204,7 @@ public class AuthA extends AggregateRoot<Long> {
 	}
 
 	public void ok() {
-		addEvent(new LoginEvent(this, EventTypeEnum.LOGIN_SUCCEEDED, MessageUtil.getMessage(LOGIN_SUCCEEDED), OK));
+		addEvent(new LoginEvent(this, EventType.LOGIN_SUCCEEDED, MessageUtil.getMessage(LOGIN_SUCCEEDED), OK));
 	}
 
 	private void fail(String code) {

@@ -26,14 +26,14 @@ import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.AddressUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.IpUtil;
-import org.laokou.common.i18n.common.EventTypeEnum;
+import org.laokou.common.i18n.common.constants.EventType;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.core.common.domain.OperateLog;
 
 import java.io.Serial;
 
-import static org.laokou.common.i18n.common.EventStatusEnum.CREATED;
+import static org.laokou.common.i18n.common.constants.EventStatus.CREATED;
 import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_OPERATE_EVENT_TOPIC;
 
 /**
@@ -87,7 +87,7 @@ public class OperateEvent extends DomainEvent<Long> {
 	protected Long takeTime;
 
 	public OperateEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user, String appName,
-			Integer status, EventTypeEnum eventType) {
+			Integer status, EventType eventType) {
 		super(IdGenerator.defaultSnowflakeId(), user.getId(), eventType, CREATED, LAOKOU_OPERATE_EVENT_TOPIC,
 				user.getSourceName(), appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(),
 				user.getTenantId(), DateUtil.now(), DateUtil.now());

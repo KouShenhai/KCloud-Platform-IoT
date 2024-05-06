@@ -33,9 +33,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.util.ResourceUtils;
 
 import java.net.InetAddress;
-
-import static org.laokou.common.i18n.common.NetworkConstant.IP;
-import static org.laokou.common.i18n.common.StringConstant.TRUE;
+import static org.laokou.common.i18n.common.constants.StringConstant.TRUE;
 
 /**
  * @author laokou
@@ -52,7 +50,7 @@ public class ImApp {
 
 	@SneakyThrows
 	public static void main(final String[] args) {
-		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
+		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");

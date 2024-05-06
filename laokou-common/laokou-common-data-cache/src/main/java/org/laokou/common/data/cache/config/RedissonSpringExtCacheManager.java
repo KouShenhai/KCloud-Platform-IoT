@@ -60,7 +60,7 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import static org.laokou.common.i18n.common.StringConstant.UNDER;
+import static org.laokou.common.i18n.common.constants.StringConstant.UNDER;
 
 /**
  * 数据缓存扩展管理类. A {@link org.springframework.cache.CacheManager} implementation backed by

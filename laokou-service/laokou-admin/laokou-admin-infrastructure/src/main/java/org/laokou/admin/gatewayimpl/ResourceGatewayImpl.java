@@ -43,8 +43,6 @@ import org.springframework.util.Assert;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.NumberConstant.DEFAULT;
-
 /**
  * 资源管理.
  *
@@ -138,7 +136,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	 * @return 修改结果
 	 */
 	private Boolean insertResource(Resource resource) {
-		return updateResource(insertTable(resource), DEFAULT);
+		return updateResource(insertTable(resource), 0);
 	}
 
 	/**

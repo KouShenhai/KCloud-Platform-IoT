@@ -28,7 +28,6 @@ import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.TreeUtil;
-import org.laokou.common.i18n.common.FindTypeEnum;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -66,13 +65,15 @@ public class MenuListQryExe {
 	 */
 	@DS(TENANT)
 	public Result<List<MenuCO>> execute(MenuListQry qry) {
-		return switch (FindTypeEnum.valueOf(qry.getType())) {
-			case LIST -> Result.ok(getMenuList(qry).stream().map(menuConvertor::convertClientObj).toList());
-			case TREE_LIST ->
-				Result.ok(buildTreeNode(getMenuList(qry).stream().map(menuConvertor::convertClientObj).toList())
-					.getChildren());
-			case USER_TREE_LIST -> Result.ok(getUserMenuList());
-		};
+		return null;
+		// return switch (FindTypeEnum.valueOf(qry.getType())) {
+		// case LIST ->
+		// Result.ok(getMenuList(qry).stream().map(menuConvertor::convertClientObj).toList());
+		// case TREE_LIST ->
+		// Result.ok(buildTreeNode(getMenuList(qry).stream().map(menuConvertor::convertClientObj).toList())
+		// .getChildren());
+		// case USER_TREE_LIST -> Result.ok(getUserMenuList());
+		// };
 	}
 
 	private List<MenuCO> getUserMenuList() {

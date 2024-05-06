@@ -23,8 +23,7 @@ import lombok.Data;
 import org.laokou.common.core.common.domain.OperateLog;
 import org.laokou.common.core.context.UserContextHolder;
 
-import static org.laokou.common.i18n.common.EventTypeEnum.OPERATE_SUCCEEDED;
-import static org.laokou.common.i18n.common.NumberConstant.SUCCESS;
+import static org.laokou.common.i18n.common.constants.EventType.OPERATE_SUCCEEDED;
 
 /**
  * @author laokou
@@ -35,7 +34,7 @@ public class OperateSucceededEvent extends OperateEvent {
 
 	public OperateSucceededEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user,
 			String appName) {
-		super(operateLog, request, user, appName, SUCCESS, OPERATE_SUCCEEDED);
+		super(operateLog, request, user, appName, 0, OPERATE_SUCCEEDED);
 	}
 
 }

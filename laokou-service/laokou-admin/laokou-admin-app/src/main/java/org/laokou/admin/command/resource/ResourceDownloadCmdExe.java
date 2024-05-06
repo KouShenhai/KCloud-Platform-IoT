@@ -35,8 +35,6 @@ import java.net.URL;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.laokou.common.i18n.common.DSConstant.TENANT;
-import static org.laokou.common.i18n.common.ResponseHeaderConstant.CONTENT_DISPOSITION;
-import static org.laokou.common.i18n.common.ResponseHeaderConstant.STREAM_CONTENT_TYPE;
 
 /**
  * 资源下载执行器.
@@ -58,9 +56,9 @@ public class ResourceDownloadCmdExe {
 	public void executeVoid(ResourceDownloadCmd cmd) {
 		ResourceDO resourceDO = resourceMapper.selectById(cmd.getId());
 		HttpServletResponse response = cmd.getResponse();
-		response.setContentType(STREAM_CONTENT_TYPE);
+		response.setContentType("application/octet-stream");
 		response.setCharacterEncoding(UTF_8);
-		response.setHeader(CONTENT_DISPOSITION, "attachment;filename=" + UTF_8.encode(resourceDO.getTitle()));
+		response.setHeader("Content-disposition", "attachment;filename=" + UTF_8.encode(resourceDO.getTitle()));
 		try (ServletOutputStream outputStream = response.getOutputStream()) {
 			URL u = URI.create(resourceDO.getUrl()).toURL();
 			HttpURLConnection conn = (HttpURLConnection) u.openConnection();

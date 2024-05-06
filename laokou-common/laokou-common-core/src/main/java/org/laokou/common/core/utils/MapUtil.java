@@ -32,7 +32,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.StringConstant.*;
+import static org.laokou.common.i18n.common.constants.StringConstant.*;
 
 /**
  * map工具类.

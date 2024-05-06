@@ -41,7 +41,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Collections;
 import java.util.Map;
-import static org.laokou.common.i18n.common.StringConstant.RISK;
+import static org.laokou.common.i18n.common.constants.StringConstant.RISK;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -299,7 +299,7 @@ class OAuth2ApiTest {
 	@SneakyThrows
 	private String getCaptcha(String uuid) {
 		mockMvc.perform(get(getCaptchaApiUrl(uuid)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-		String key = captchaGateway.key(uuid);
+		String key = captchaGateway.getKey(uuid);
 		String captcha = redisUtil.get(key).toString();
 		Assert.isTrue(StringUtil.isNotEmpty(captcha), "captcha is empty");
 		return captcha;

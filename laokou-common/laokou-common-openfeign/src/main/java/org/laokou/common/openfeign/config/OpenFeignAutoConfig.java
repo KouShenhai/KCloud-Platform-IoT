@@ -36,10 +36,10 @@ import org.springframework.context.annotation.Import;
 import java.util.Map;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.laokou.common.i18n.common.RequestHeaderConstant.AUTHORIZATION;
-import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.StringConstant.UNDER;
-import static org.laokou.common.i18n.common.TraceConstant.*;
+import static org.laokou.common.i18n.common.constants.Constant.AUTHORIZATION;
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constants.StringConstant.UNDER;
+import static org.laokou.common.i18n.common.constants.TraceConstant.*;
 
 // @formatter:off
 /**
