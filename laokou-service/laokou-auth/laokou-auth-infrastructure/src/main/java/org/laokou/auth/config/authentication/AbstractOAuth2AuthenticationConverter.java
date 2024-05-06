@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.exception.AuthException.INVALID_SCOPE;
+import static org.laokou.common.i18n.common.exception.AuthException.OAUTH2_INVALID_SCOPE;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 
@@ -70,7 +70,7 @@ public abstract class AbstractOAuth2AuthenticationConverter implements Authentic
 			List<String> scopes = parameters.get(OAuth2ParameterNames.SCOPE);
 			// 判断scopes
 			if (CollectionUtil.isNotEmpty(scopes) && scopes.size() != 1) {
-				throw new AuthException(INVALID_SCOPE);
+				throw new AuthException(OAUTH2_INVALID_SCOPE);
 			}
 			// 获取上下文认证信息
 			Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();

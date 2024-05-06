@@ -25,6 +25,7 @@
 
 package org.laokou.common.extension;
 
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -35,11 +36,14 @@ import java.util.Map;
  *
  * @author fulan.zjf 2017-11-05
  */
+@Getter
 @Component
 public class ExtensionRepository {
 
+	private final Map<ExtensionCoordinate, ExtensionPointI> EXTENSION_REPO = new HashMap<>();
+
 	public Map<ExtensionCoordinate, ExtensionPointI> getExtensionRepo() {
-		return new HashMap<>();
+		return EXTENSION_REPO;
 	}
 
 }

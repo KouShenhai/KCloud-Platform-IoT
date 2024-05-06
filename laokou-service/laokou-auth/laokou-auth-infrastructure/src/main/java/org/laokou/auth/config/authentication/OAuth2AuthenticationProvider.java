@@ -21,12 +21,15 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.domain.ability.AuthDomainService;
+import org.laokou.auth.domain.extensionpoint.AuthValidatorExtPt;
 import org.laokou.auth.domain.model.auth.AuthA;
 import org.laokou.auth.domain.model.auth.DeptE;
 import org.laokou.auth.domain.model.auth.MenuE;
 import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
+import org.laokou.common.extension.BizScenario;
+import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.security.utils.UserDetail;
@@ -51,8 +54,13 @@ public class OAuth2AuthenticationProvider {
 
 	private final UserConvertor userConvertor;
 
+	private final ExtensionExecutor extensionExecutor;
+
 	public UsernamePasswordAuthenticationToken authentication(AuthA auth) {
 		try {
+			// 校验
+			extensionExecutor.executeVoid(AuthValidatorExtPt.class, BizScenario.valueOf(auth.getGrantType()),
+					extension -> extension.validate(auth));
 			// 认证
 			authDomainService.auth(auth);
 			UserDetail userDetail = convert(auth);

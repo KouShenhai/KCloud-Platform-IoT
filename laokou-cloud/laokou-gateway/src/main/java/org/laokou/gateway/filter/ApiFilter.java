@@ -35,7 +35,7 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 import static com.alibaba.nacos.api.common.Constants.ALL_PATTERN;
-import static org.laokou.common.i18n.common.exception.AuthException.USERNAME_PASSWORD_ERROR;
+import static org.laokou.common.i18n.common.exception.AuthException.OAUTH2_USERNAME_PASSWORD_ERROR;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_PASSWORD_REQUIRE;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_USERNAME_REQUIRE;
 import static org.laokou.gateway.filter.AuthFilter.PASSWORD;
@@ -99,13 +99,13 @@ public class ApiFilter implements WebFilter {
 		}
 		catch (Exception e) {
 			// 用户名或密码错误
-			return ReactiveResponseUtil.response(exchange, Result.fail(USERNAME_PASSWORD_ERROR));
+			return ReactiveResponseUtil.response(exchange, Result.fail(OAUTH2_USERNAME_PASSWORD_ERROR));
 		}
 		if (gatewayExtProperties.isEnabled()) {
 			if (!ObjectUtil.equals(gatewayExtProperties.getPassword(), password)
 					|| !ObjectUtil.equals(gatewayExtProperties.getUsername(), username)) {
 				// 用户名或密码错误
-				return ReactiveResponseUtil.response(exchange, Result.fail(USERNAME_PASSWORD_ERROR));
+				return ReactiveResponseUtil.response(exchange, Result.fail(OAUTH2_USERNAME_PASSWORD_ERROR));
 			}
 		}
 		return chain.filter(exchange);

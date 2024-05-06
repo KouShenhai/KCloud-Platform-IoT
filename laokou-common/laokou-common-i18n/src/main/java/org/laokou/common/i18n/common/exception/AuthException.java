@@ -25,47 +25,41 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "AuthException", description = "认证异常")
 public final class AuthException extends GlobalException {
 
-	@Schema(name = "INVALID_REQUEST", description = "无效请求")
-	public static final String INVALID_REQUEST = "A_OAuth2_InvalidRequest";
+	@Schema(name = "OAUTH2_INVALID_REQUEST", description = "无效请求")
+	public static final String OAUTH2_INVALID_REQUEST = "A_OAuth2_InvalidRequest";
 
-	@Schema(name = "GENERATE_ID_TOKEN_FAIL", description = "令牌生成器无法生成标识令牌")
-	public static final String GENERATE_ID_TOKEN_FAIL = "A_OAuth2_GenerateIdTokenFail";
+	@Schema(name = "OAUTH2_GENERATE_ID_TOKEN_FAIL", description = "令牌生成器无法生成标识令牌")
+	public static final String OAUTH2_GENERATE_ID_TOKEN_FAIL = "A_OAuth2_GenerateIdTokenFail";
 
-	@Schema(name = "GENERATE_REFRESH_TOKEN_FAIL", description = "令牌生成器无法生成刷新令牌")
-	public static final String GENERATE_REFRESH_TOKEN_FAIL = "A_OAuth2_GenerateRefreshTokenFail";
+	@Schema(name = "OAUTH2_GENERATE_REFRESH_TOKEN_FAIL", description = "令牌生成器无法生成刷新令牌")
+	public static final String OAUTH2_GENERATE_REFRESH_TOKEN_FAIL = "A_OAuth2_GenerateRefreshTokenFail";
 
-	@Schema(name = "GENERATE_ACCESS_TOKEN_FAIL", description = "令牌生成器无法生成访问令牌")
-	public static final String GENERATE_ACCESS_TOKEN_FAIL = "A_OAuth2_GenerateAccessTokenFail";
+	@Schema(name = "OAUTH2_GENERATE_ACCESS_TOKEN_FAIL", description = "令牌生成器无法生成访问令牌")
+	public static final String OAUTH2_GENERATE_ACCESS_TOKEN_FAIL = "A_OAuth2_GenerateAccessTokenFail";
 
-	@Schema(name = "REGISTERED_CLIENT_NOT_EXIST", description = "注册客户端不存在")
-	public static final String REGISTERED_CLIENT_NOT_EXIST = "A_OAuth2_RegisteredClientNotExist";
+	@Schema(name = "OAUTH2_REGISTERED_CLIENT_NOT_EXIST", description = "注册客户端不存在")
+	public static final String OAUTH2_REGISTERED_CLIENT_NOT_EXIST = "A_OAuth2_RegisteredClientNotExist";
 
-	@Schema(name = "INVALID_CLIENT", description = "无效客户端")
-	public static final String INVALID_CLIENT = "A_OAuth2_InvalidClient";
+	@Schema(name = "OAUTH2_INVALID_CLIENT", description = "无效客户端")
+	public static final String OAUTH2_INVALID_CLIENT = "A_OAuth2_InvalidClient";
 
-	@Schema(name = "INVALID_SCOPE", description = "无效作用域")
-	public static final String INVALID_SCOPE = "A_OAuth2_InvalidScope";
+	@Schema(name = "OAUTH2_INVALID_SCOPE", description = "无效作用域")
+	public static final String OAUTH2_INVALID_SCOPE = "A_OAuth2_InvalidScope";
 
-	@Schema(name = "MAIL_ERROR", description = "邮箱错误")
-	public static final String MAIL_ERROR = "A_OAuth2_MailError";
+	@Schema(name = "OAUTH2_USER_DISABLED", description = "用户已禁用")
+	public static final String OAUTH2_USER_DISABLED = "A_OAuth2_UserDisabled";
 
-	@Schema(name = "MOBILE_ERROR", description = "手机号错误")
-	public static final String MOBILE_ERROR = "A_OAuth2_MobileError";
+	@Schema(name = "OAUTH2_CAPTCHA_EXPIRED", description = "验证码已过期")
+	public static final String OAUTH2_CAPTCHA_EXPIRED = "A_OAuth2_CaptchaExpired";
 
-	@Schema(name = "USER_DISABLED", description = "用户已禁用")
-	public static final String USER_DISABLED = "A_OAuth2_UserDisabled";
+	@Schema(name = "OAUTH2_CAPTCHA_ERROR", description = "验证码错误")
+	public static final String OAUTH2_CAPTCHA_ERROR = "A_OAuth2_CaptchaError";
 
-	@Schema(name = "CAPTCHA_EXPIRED", description = "验证码已过期")
-	public static final String CAPTCHA_EXPIRED = "A_OAuth2_CaptchaExpired";
+	@Schema(name = "OAUTH2_USERNAME_PASSWORD_ERROR", description = "用户名或密码错误")
+	public static final String OAUTH2_USERNAME_PASSWORD_ERROR = "A_OAuth2_UsernamePasswordError";
 
-	@Schema(name = "CAPTCHA_ERROR", description = "验证码错误")
-	public static final String CAPTCHA_ERROR = "A_OAuth2_CaptchaError";
-
-	@Schema(name = "USERNAME_PASSWORD_ERROR", description = "用户名或密码错误")
-	public static final String USERNAME_PASSWORD_ERROR = "A_OAuth2_UsernamePasswordError";
-
-	@Schema(name = "SOURCE_NOT_EXIST", description = "数据源不存在")
-	public static final String SOURCE_NOT_EXIST = "A_OAuth2_SourceNotExist";
+	@Schema(name = "OAUTH2_SOURCE_NOT_EXIST", description = "数据源不存在")
+	public static final String OAUTH2_SOURCE_NOT_EXIST = "A_OAuth2_SourceNotExist";
 
 	public AuthException(String code) {
 		super(code);

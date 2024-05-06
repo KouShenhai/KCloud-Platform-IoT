@@ -15,40 +15,16 @@
  *
  */
 
-package org.laokou.gateway.exception;
+package org.laokou.auth.domain.extensionpoint;
 
-import lombok.Getter;
-import org.laokou.common.i18n.common.exception.AuthException;
+import org.laokou.auth.domain.model.auth.AuthA;
+import org.laokou.common.extension.ExtensionPointI;
 
 /**
- * 拦截响应的异常枚举.
- *
  * @author laokou
  */
-@Getter
-public enum ExceptionEnum {
+public interface AuthValidatorExtPt extends ExtensionPointI {
 
-	/**
-	 * 无效客户端.
-	 */
-	INVALID_CLIENT(AuthException.OAUTH2_INVALID_CLIENT),
-
-	/**
-	 * 无效请求.
-	 */
-	INVALID_REQUEST(AuthException.OAUTH2_INVALID_REQUEST);
-
-	/**
-	 * 编码.
-	 */
-	private final String code;
-
-	ExceptionEnum(String code) {
-		this.code = code;
-	}
-
-	public static ExceptionEnum getInstance(String code) {
-		return ExceptionEnum.valueOf(code);
-	}
+	void validate(AuthA auth);
 
 }
