@@ -32,10 +32,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.EventTypeEnum.LOGIN_FAILED;
+import static org.laokou.common.i18n.common.exception.AuthException.*;
 import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 import static org.laokou.auth.domain.model.auth.UserStatus.DISABLE;
-import static org.laokou.common.i18n.common.exception.AuthException.*;
 
 /**
  * @author laokou
