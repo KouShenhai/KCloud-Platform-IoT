@@ -15,29 +15,16 @@
  *
  */
 
-package org.laokou.auth.config.authentication;
+package org.laokou.auth.extensionpoint;
 
-import org.springframework.security.core.Authentication;
-
-import java.util.Map;
-
-import static org.laokou.auth.domain.model.auth.AuthA.PASSWORD;
+import org.laokou.auth.domain.model.auth.AuthA;
+import org.laokou.common.extension.ExtensionPointI;
 
 /**
- * 密码转换器.
- *
  * @author laokou
  */
-public class OAuth2PasswordAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
+public interface AuthValidatorExtPt extends ExtensionPointI {
 
-	@Override
-	String getGrantType() {
-		return PASSWORD;
-	}
-
-	@Override
-	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		return new OAuth2PasswordAuthenticationToken(clientPrincipal, additionalParameters);
-	}
+	void validate(AuthA auth);
 
 }

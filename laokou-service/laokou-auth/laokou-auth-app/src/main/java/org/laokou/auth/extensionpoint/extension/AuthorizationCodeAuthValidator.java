@@ -15,9 +15,9 @@
  *
  */
 
-package org.laokou.auth.domain.extension;
+package org.laokou.auth.extensionpoint.extension;
 
-import org.laokou.auth.domain.extensionpoint.AuthValidatorExtPt;
+import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
 import org.laokou.auth.domain.model.auth.AuthA;
 import org.laokou.common.extension.Extension;
 import org.laokou.common.i18n.common.exception.AuthException;

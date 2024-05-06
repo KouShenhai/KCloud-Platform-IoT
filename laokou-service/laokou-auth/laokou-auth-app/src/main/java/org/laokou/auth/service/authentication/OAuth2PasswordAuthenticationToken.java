@@ -15,29 +15,29 @@
  *
  */
 
-package org.laokou.auth.config.authentication;
+package org.laokou.auth.service.authentication;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 
 import java.util.Map;
 
-import static org.laokou.auth.domain.model.auth.AuthA.MOBILE;
-
 /**
- * 手机号转换器.
+ * 密码令牌.
  *
  * @author laokou
  */
-public class OAuth2MobileAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
+public class OAuth2PasswordAuthenticationToken extends AbstractOAuth2AuthenticationToken {
 
-	@Override
-	String getGrantType() {
-		return MOBILE;
-	}
-
-	@Override
-	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		return new OAuth2MobileAuthenticationToken(clientPrincipal, additionalParameters);
+	/**
+	 * Sub-class constructor.
+	 * @param clientPrincipal the authenticated client principal
+	 * @param additionalParameters the additional parameters
+	 */
+	protected OAuth2PasswordAuthenticationToken(Authentication clientPrincipal,
+			Map<String, Object> additionalParameters) {
+		super(new AuthorizationGrantType(OAuth2ParameterNames.PASSWORD), clientPrincipal, additionalParameters);
 	}
 
 }

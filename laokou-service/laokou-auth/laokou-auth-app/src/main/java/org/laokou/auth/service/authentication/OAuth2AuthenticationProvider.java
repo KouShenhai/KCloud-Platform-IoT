@@ -15,13 +15,13 @@
  *
  */
 
-package org.laokou.auth.config.authentication;
+package org.laokou.auth.service.authentication;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.domain.ability.AuthDomainService;
-import org.laokou.auth.domain.extensionpoint.AuthValidatorExtPt;
+import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
 import org.laokou.auth.domain.model.auth.AuthA;
 import org.laokou.auth.domain.model.auth.DeptE;
 import org.laokou.auth.domain.model.auth.MenuE;

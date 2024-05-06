@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.config.authentication;
+package org.laokou.auth.service.authentication;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +34,9 @@ import org.springframework.stereotype.Component;
  * @author laokou
  */
 @Slf4j
-@Component
 @RequiredArgsConstructor
-public class UsersServiceImpl implements UserDetailsService {
+@Component("userDetailsServiceImpl")
+public class UserDetailsServiceImpl implements UserDetailsService {
 
 	private final OAuth2AuthenticationProvider authProvider;
 

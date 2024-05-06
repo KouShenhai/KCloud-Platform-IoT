@@ -15,16 +15,7 @@
  *
  */
 
-package org.laokou.auth.domain.extensionpoint;
-
-import org.laokou.auth.domain.model.auth.AuthA;
-import org.laokou.common.extension.ExtensionPointI;
-
 /**
  * @author laokou
  */
-public interface AuthValidatorExtPt extends ExtensionPointI {
-
-	void validate(AuthA auth);
-
-}
+package org.laokou.auth.service.authentication;

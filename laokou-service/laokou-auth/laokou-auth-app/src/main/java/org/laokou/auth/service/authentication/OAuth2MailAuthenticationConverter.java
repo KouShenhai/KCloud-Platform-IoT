@@ -15,9 +15,10 @@
  *
  */
 
-package org.laokou.auth.config.authentication;
+package org.laokou.auth.service.authentication;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
@@ -28,6 +29,7 @@ import static org.laokou.auth.domain.model.auth.AuthA.MAIL;
  *
  * @author laokou
  */
+@Component("mailAuthenticationConverter")
 public class OAuth2MailAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
 
 	@Override
