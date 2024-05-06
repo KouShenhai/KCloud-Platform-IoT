@@ -117,7 +117,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 					auth2BaseAuthenticationToken);
 			RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 			if (ObjectUtil.isNull(registeredClient)) {
-				throw getException(REGISTERED_CLIENT_NOT_EXIST);
+				throw getException(OAUTH2_REGISTERED_CLIENT_NOT_EXIST);
 			}
 			// 获取认证范围
 			Set<String> scopes = registeredClient.getScopes();
@@ -136,7 +136,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 			DefaultOAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(ACCESS_TOKEN).build();
 			// 生成access_token
 			OAuth2Token generatedAccessToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
-				.orElseThrow(() -> getException(GENERATE_ACCESS_TOKEN_FAIL));
+				.orElseThrow(() -> getException(OAUTH2_GENERATE_ACCESS_TOKEN_FAIL));
 			OAuth2AccessToken accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
 					generatedAccessToken.getTokenValue(), generatedAccessToken.getIssuedAt(),
 					generatedAccessToken.getExpiresAt(), tokenContext.getAuthorizedScopes());
@@ -164,7 +164,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 					&& !clientPrincipal.getClientAuthenticationMethod().equals(ClientAuthenticationMethod.NONE)) {
 				tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
 				OAuth2Token generatedRefreshToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
-					.orElseThrow(() -> getException(GENERATE_REFRESH_TOKEN_FAIL));
+					.orElseThrow(() -> getException(OAUTH2_GENERATE_REFRESH_TOKEN_FAIL));
 				refreshToken = (OAuth2RefreshToken) generatedRefreshToken;
 				authorizationBuilder.refreshToken(refreshToken);
 			}
@@ -174,7 +174,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 					.authorization(authorizationBuilder.build())
 					.build();
 				OAuth2Token generatedIdToken = Optional.ofNullable(this.tokenGenerator.generate(tokenContext))
-					.orElseThrow(() -> getException(GENERATE_ID_TOKEN_FAIL));
+					.orElseThrow(() -> getException(OAUTH2_GENERATE_ID_TOKEN_FAIL));
 				// 生成id_token
 				OidcIdToken idToken = new OidcIdToken(generatedIdToken.getTokenValue(), generatedIdToken.getIssuedAt(),
 						generatedIdToken.getExpiresAt(), ((Jwt) generatedIdToken).getClaims());
@@ -210,7 +210,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 		if (ObjectUtil.isNotNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {
 			return clientPrincipal;
 		}
-		throw getException(INVALID_CLIENT);
+		throw getException(OAUTH2_INVALID_CLIENT);
 	}
 
 }

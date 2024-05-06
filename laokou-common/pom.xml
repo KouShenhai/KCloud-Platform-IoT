@@ -63,6 +63,7 @@
         <module>laokou-common-log</module>
         <module>laokou-common-test</module>
         <module>laokou-common-support</module>
+        <module>laokou-common-extension</module>
     </modules>
 
 </project>

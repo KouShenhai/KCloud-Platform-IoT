@@ -42,7 +42,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
+import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ACCESS_TOKEN;
 
 /**

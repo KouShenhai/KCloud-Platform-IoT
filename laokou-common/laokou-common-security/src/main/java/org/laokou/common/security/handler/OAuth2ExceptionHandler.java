@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ResponseUtil;
-import org.laokou.common.i18n.common.StatusCode;
+import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.security.access.AccessDeniedException;

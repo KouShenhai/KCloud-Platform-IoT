@@ -37,7 +37,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static org.laokou.common.i18n.common.StatusCode.SERVICE_UNAVAILABLE;
+import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAILABLE;
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 
 /**

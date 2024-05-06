@@ -54,7 +54,6 @@ import java.util.Optional;
 
 import static org.laokou.common.i18n.common.JobModeEnum.SYNC;
 import static org.laokou.common.i18n.common.NumberConstant.SUCCESS;
-import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
 import static org.laokou.common.i18n.common.StringConstant.EMPTY;
 
 /**
@@ -150,11 +149,11 @@ public class OssGatewayImpl implements OssGateway {
 			OssDO ossDO = algorithm.select(getOssListCache(), EMPTY);
 			// 修改URL
 			file.modifyUrl(null, new AmazonS3StorageDriver(ossConvertor.convertEntity(ossDO)).upload(file),
-					environment.getProperty(SPRING_APPLICATION_NAME));
+					environment.getProperty("spring.application.name"));
 			return file;
 		}
 		catch (Exception e) {
-			file.modifyUrl(e, EMPTY, environment.getProperty(SPRING_APPLICATION_NAME));
+			file.modifyUrl(e, EMPTY, environment.getProperty("spring.application.name"));
 			throw e;
 		}
 		finally {

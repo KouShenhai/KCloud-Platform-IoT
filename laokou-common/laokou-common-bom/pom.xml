@@ -154,6 +154,11 @@
             <version>${laokou.version}</version>
         </dependency>
         <dependency>
+          <groupId>org.laokou</groupId>
+          <artifactId>laokou-common-extension</artifactId>
+          <version>${laokou.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-test</artifactId>
             <version>${laokou.version}</version>

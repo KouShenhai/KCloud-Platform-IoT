@@ -34,7 +34,7 @@ import org.laokou.common.security.utils.UserDetail;
 import org.springframework.stereotype.Component;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
+import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 import static org.laokou.common.redis.utils.RedisUtil.HOUR_ONE_EXPIRE;
 
 /**

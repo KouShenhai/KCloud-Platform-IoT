@@ -24,8 +24,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
-
 /**
  * @author laokou
  */
@@ -48,7 +46,7 @@ public class AuthDomainService {
 	private final PasswordEncoder passwordEncoder;
 
 	public void auth(AuthA auth) {
-		auth.updateAppName(environment.getProperty(SPRING_APPLICATION_NAME));
+		auth.updateAppName(environment.getProperty("spring.application.name"));
 		auth.updateSource(sourceGateway.getSourceName(auth.getUser()));
 		// 校验验证码
 		checkCaptcha(auth);

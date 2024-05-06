@@ -45,7 +45,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
@@ -96,7 +95,7 @@ public class OAuth2ResourceServerAutoConfig {
 			Environment env, OAuth2ResourceServerProperties oAuth2ResourceServerProperties) {
 		Map<String, Set<String>> uriMap = Optional
 			.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
-					env.getProperty(SPRING_APPLICATION_NAME)))
+					env.getProperty("spring.application.name")))
 			.orElseGet(ConcurrentHashMap::new);
 		return request -> request.requestMatchers(HttpMethod.GET,
 				Optional.ofNullable(uriMap.get(HttpMethod.GET.name())).orElseGet(HashSet::new).toArray(String[]::new))
