@@ -67,9 +67,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
 
-import static org.laokou.common.i18n.common.RequestHeaderConstant.AUTHORIZATION;
+import static org.laokou.common.i18n.common.constants.Constant.AUTHORIZATION;
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
-import static org.laokou.common.i18n.common.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.*;
 import static org.springframework.http.HttpHeaders.CONTENT_LENGTH;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;

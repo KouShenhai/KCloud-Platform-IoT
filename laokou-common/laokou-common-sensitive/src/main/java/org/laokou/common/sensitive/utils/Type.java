@@ -15,21 +15,21 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.common.sensitive.utils;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * 请求头常量.
+ * 铭感词类型枚举.
  *
  * @author laokou
  */
-public final class RequestHeaderConstant {
+public enum Type {
 
-	private RequestHeaderConstant() {
-	}
+	@Schema(name = "MOBILE", description = "手机号")
+	MOBILE,
 
-	/**
-	 * 认证标识.
-	 */
-	public static final String AUTHORIZATION = "Authorization";
+	@Schema(name = "MAIL", description = "邮箱")
+	MAIL
 
 }

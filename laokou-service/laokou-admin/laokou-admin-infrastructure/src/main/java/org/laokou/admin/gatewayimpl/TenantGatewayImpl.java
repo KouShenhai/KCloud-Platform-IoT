@@ -18,6 +18,7 @@
 package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,6 @@ import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.crypto.utils.AesUtil;
-import org.laokou.common.i18n.common.NumberConstant;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -57,12 +57,8 @@ import java.util.*;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.laokou.common.i18n.common.DSConstant.*;
-import static org.laokou.common.i18n.common.ResponseHeaderConstant.CONTENT_DISPOSITION;
-import static org.laokou.common.i18n.common.ResponseHeaderConstant.STREAM_CONTENT_TYPE;
-import static org.laokou.common.i18n.common.StringConstant.COMMA;
-import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
-import static org.laokou.common.i18n.common.TenantConstant.TENANT_USERNAME;
+import static org.laokou.common.i18n.common.constants.StringConstant.COMMA;
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
 
 /**
  * 租户管理.
@@ -73,6 +69,12 @@ import static org.laokou.common.i18n.common.TenantConstant.TENANT_USERNAME;
 @Component
 @RequiredArgsConstructor
 public class TenantGatewayImpl implements TenantGateway {
+
+	@Schema(name = "TENANT_USERNAME", description = "默认租户用户名")
+	private static final String TENANT_USERNAME = "tenant";
+
+	@Schema(name = "TENANT_PASSWORD", description = "默认租户密码")
+	private static final String TENANT_PASSWORD = "tenant123";
 
 	private final TenantMapper tenantMapper;
 
@@ -147,9 +149,9 @@ public class TenantGatewayImpl implements TenantGateway {
 		String fileName = "kcloud_platform_iot_tenant.sql";
 		String fileExt = FileUtil.getFileExt(fileName);
 		String name = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + fileExt;
-		response.setContentType(STREAM_CONTENT_TYPE);
+		response.setContentType("application/octet-stream");
 		response.setCharacterEncoding(UTF_8);
-		response.setHeader(CONTENT_DISPOSITION, "attachment;filename=" + UTF_8.encode(fileName + ".zip"));
+		response.setHeader("Content-disposition", "attachment;filename=" + UTF_8.encode(fileName + ".zip"));
 		TenantDO tenantDO = tenantMapper.selectById(id);
 		Assert.isTrue(ObjectUtil.isNotNull(tenantDO), "tenantDO is null");
 		try (ServletOutputStream outputStream = response.getOutputStream()) {
@@ -240,7 +242,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	private List<String> getSql(long tenantId, long packageId) {
 		long userId = IdGenerator.defaultSnowflakeId();
 		long deptId = IdGenerator.defaultSnowflakeId();
-		String deptPath = DEFAULT + COMMA + deptId;
+		String deptPath = 0 + COMMA + deptId;
 		UserDO user = getUser(tenantId, userId, deptId, deptPath);
 		DeptDO dept = getDept(tenantId, userId, deptId, deptPath);
 		List<MenuDO> menuList = getMenuList(tenantId, userId, deptId, deptPath, packageId);
@@ -288,8 +290,8 @@ public class TenantGatewayImpl implements TenantGateway {
 			item.setUpdateDate(DateUtil.now());
 			item.setCreator(userId);
 			item.setEditor(userId);
-			item.setVersion(NumberConstant.DEFAULT);
-			item.setDelFlag(NumberConstant.DEFAULT);
+			item.setVersion(0);
+			item.setDelFlag(0);
 			item.setDeptId(deptId);
 			item.setDeptPath(deptPath);
 		});
@@ -346,8 +348,8 @@ public class TenantGatewayImpl implements TenantGateway {
 		deptDO.setUpdateDate(DateUtil.now());
 		deptDO.setCreator(userId);
 		deptDO.setEditor(userId);
-		deptDO.setVersion(NumberConstant.DEFAULT);
-		deptDO.setDelFlag(NumberConstant.DEFAULT);
+		deptDO.setVersion(0);
+		deptDO.setDelFlag(0);
 		return deptDO;
 	}
 

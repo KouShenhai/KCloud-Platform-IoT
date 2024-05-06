@@ -29,7 +29,7 @@ import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.StringConstant.UNDER;
+import static org.laokou.common.i18n.common.constants.StringConstant.UNDER;
 
 /**
  * @author laokou

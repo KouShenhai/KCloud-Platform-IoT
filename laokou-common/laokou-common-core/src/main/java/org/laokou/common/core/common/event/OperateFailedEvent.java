@@ -23,8 +23,7 @@ import lombok.Data;
 import org.laokou.common.core.common.domain.OperateLog;
 import org.laokou.common.core.context.UserContextHolder;
 
-import static org.laokou.common.i18n.common.EventTypeEnum.OPERATE_FAILED;
-import static org.laokou.common.i18n.common.NumberConstant.FAIL;
+import static org.laokou.common.i18n.common.constants.EventType.OPERATE_FAILED;
 
 /**
  * @author laokou
@@ -35,7 +34,7 @@ public class OperateFailedEvent extends OperateEvent {
 
 	public OperateFailedEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user,
 			String appName) {
-		super(operateLog, request, user, appName, FAIL, OPERATE_FAILED);
+		super(operateLog, request, user, appName, 1, OPERATE_FAILED);
 	}
 
 }

@@ -23,7 +23,7 @@ import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.lock.annotation.Lock4j;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.JobModeEnum.ASYNC;
+import static org.laokou.common.domain.publish.JobMode.ASYNC;
 
 /**
  * @author laokou

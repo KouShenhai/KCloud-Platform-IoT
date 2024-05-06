@@ -15,23 +15,38 @@
  *
  */
 
-package org.laokou.common.i18n.common;
-
-import io.swagger.v3.oas.annotations.media.Schema;
+package org.laokou.common.i18n.common.constants;
 
 /**
+ * 事件状态枚举.
+ *
  * @author laokou
  */
-@Schema(name = "KafkaConstants", description = "Kafka消息常量")
-public final class KafkaConstant {
+public enum EventStatus {
 
-	private KafkaConstant() {
-	}
+	/**
+	 * 创建.
+	 */
+	CREATED,
 
-	@Schema(name = "LAOKOU_TRACE_TOPIC", description = "分布式链路主题")
-	public static final String LAOKOU_TRACE_TOPIC = "laokou_trace_topic";
+	/**
+	 * 发布成功.
+	 */
+	PUBLISH_SUCCEED,
 
-	@Schema(name = "LAOKOU_LOGSTASH_CONSUMER_GROUP", description = "日志存储消费者组")
-	public static final String LAOKOU_LOGSTASH_CONSUMER_GROUP = "laokou_logstash_consumer_group";
+	/**
+	 * 发布失败.
+	 */
+	PUBLISH_FAILED,
+
+	/**
+	 * 消费成功.
+	 */
+	CONSUME_SUCCEED,
+
+	/**
+	 * 消费失败.
+	 */
+	CONSUME_FAILED
 
 }

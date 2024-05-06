@@ -15,22 +15,21 @@
  *
  */
 
-package org.laokou.common.i18n.common;
-
-import io.swagger.v3.oas.annotations.media.Schema;
+package org.laokou.common.i18n.common.constants;
 
 /**
- * 超级管理员枚举.
+ * 请求头常量.
  *
  * @author laokou
  */
-@Schema(name = "SuperAdminEnums", description = "")
-public enum SuperAdmin {
+public final class Constant {
 
-	@Schema(name = "NO", description = "否")
-	NO,
+	private Constant() {
+	}
 
-	@Schema(name = "YES", description = "是")
-	YES
+	/**
+	 * 认证标识.
+	 */
+	public static final String AUTHORIZATION = "Authorization";
 
 }

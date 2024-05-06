@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.common.i18n.common.constants;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -100,9 +100,6 @@ public final class StringConstant {
 
 	@Schema(name = "AND", description = "并")
 	public static final String AND = "&";
-
-	@Schema(name = "MARK", description = "分割参数")
-	public static final String MARK = "?";
 
 	@Schema(name = "ROD", description = "分割参数")
 	public static final String ROD = "-";

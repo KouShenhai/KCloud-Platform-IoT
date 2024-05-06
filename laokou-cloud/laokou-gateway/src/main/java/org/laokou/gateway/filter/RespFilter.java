@@ -45,7 +45,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.laokou.common.i18n.common.StringConstant.CHINESE_COMMA;
+import static org.laokou.common.i18n.common.constants.StringConstant.CHINESE_COMMA;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.*;
 import static org.laokou.gateway.filter.AuthFilter.TOKEN_URL;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;

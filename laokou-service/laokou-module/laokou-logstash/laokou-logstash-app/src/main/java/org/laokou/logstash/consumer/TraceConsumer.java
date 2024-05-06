@@ -33,11 +33,8 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static org.laokou.common.i18n.common.KafkaConstant.LAOKOU_LOGSTASH_CONSUMER_GROUP;
-import static org.laokou.common.i18n.common.KafkaConstant.LAOKOU_TRACE_TOPIC;
-import static org.laokou.common.i18n.common.StringConstant.DOLLAR;
-import static org.laokou.common.i18n.common.StringConstant.UNDER;
+import static org.laokou.common.i18n.common.constants.StringConstant.DOLLAR;
+import static org.laokou.common.i18n.common.constants.StringConstant.UNDER;
 
 /**
  * @author laokou
@@ -51,7 +48,7 @@ public class TraceConsumer {
 
 	private static final String TRACE = "laokou_trace";
 
-	@KafkaListener(topics = LAOKOU_TRACE_TOPIC, groupId = LAOKOU_LOGSTASH_CONSUMER_GROUP)
+	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_logstash_consumer_group")
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
 		messages.parallelStream().forEach(this::saveIndex);
 		ack.acknowledge();

@@ -67,6 +67,11 @@ public abstract class BaseDO extends DTO {
 	@Schema(name = "TENANT_ID", description = "租户ID")
 	public static final String TENANT_ID = "tenantId";
 
+	/**
+	 * 默认租户ID.
+	 */
+	public static final long DEFAULT_TENANT_ID = 0;
+
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;
 

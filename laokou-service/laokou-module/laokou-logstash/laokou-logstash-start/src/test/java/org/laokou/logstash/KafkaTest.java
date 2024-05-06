@@ -24,8 +24,6 @@ import org.laokou.common.kafka.template.DefaultKafkaTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
-import static org.laokou.common.i18n.common.KafkaConstant.LAOKOU_TRACE_TOPIC;
-
 /**
  * @author laokou
  */
@@ -39,7 +37,7 @@ class KafkaTest {
 
 	@Test
 	void kafkaSenderTest() {
-		defaultKafkaTemplate.send(LAOKOU_TRACE_TOPIC, "测试数据");
+		defaultKafkaTemplate.send("laokou_trace_topic", "测试数据");
 	}
 
 }

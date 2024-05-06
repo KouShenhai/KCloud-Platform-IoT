@@ -31,7 +31,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAILABLE;
-import static org.laokou.common.i18n.common.TraceConstant.TRACE_ID;
+import static org.laokou.common.i18n.common.constants.TraceConstant.TRACE_ID;
 
 /**
  * 认证过滤器.

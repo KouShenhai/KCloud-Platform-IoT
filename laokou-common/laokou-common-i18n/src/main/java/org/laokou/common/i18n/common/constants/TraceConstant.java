@@ -15,26 +15,46 @@
  *
  */
 
-package org.laokou.common.i18n.common;
-
-import io.swagger.v3.oas.annotations.media.Schema;
+package org.laokou.common.i18n.common.constants;
 
 /**
+ * 链路常量.
+ *
  * @author laokou
  */
-@Schema(name = "NumberConstants", description = "数字常量")
-public final class NumberConstant {
+public final class TraceConstant {
 
-	private NumberConstant() {
+	private TraceConstant() {
 	}
 
-	@Schema(name = "DEFAULT", description = "默认")
-	public static final int DEFAULT = 0;
+	/**
+	 * 用户名.
+	 */
+	public static final String USER_NAME = "user-name";
 
-	@Schema(name = "SUCCESS", description = "成功")
-	public static final int SUCCESS = 0;
+	/**
+	 * 链路ID.
+	 */
+	public static final String TRACE_ID = "trace-id";
 
-	@Schema(name = "FAIL", description = "失败")
-	public static final int FAIL = 1;
+	/**
+	 * 用户ID.
+	 */
+	public static final String USER_ID = "user-id";
+
+	/**
+	 * 租户ID.
+	 */
+	public static final String TENANT_ID = "tenant-id";
+
+	/**
+	 * 域名.
+	 */
+	public static final String DOMAIN_NAME = "domain-name";
+
+	/**
+	 * 请求ID.
+	 */
+	public static final String REQUEST_ID = "request-id";
 
 }

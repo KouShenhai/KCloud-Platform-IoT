@@ -60,8 +60,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.laokou.common.core.utils.SslUtil.sslContext;
-import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.StringConstant.RISK;
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constants.StringConstant.RISK;
 
 /**
  * @author laokou

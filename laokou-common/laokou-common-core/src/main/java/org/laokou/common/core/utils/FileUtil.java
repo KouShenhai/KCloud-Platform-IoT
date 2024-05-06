@@ -27,7 +27,7 @@ import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import static org.laokou.common.i18n.common.StringConstant.DOT;
+import static org.laokou.common.i18n.common.constants.StringConstant.DOT;
 
 /**
  * 文件工具类.

@@ -25,7 +25,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
-import static org.laokou.common.i18n.common.NumberConstant.DEFAULT;
 import static org.laokou.common.mybatisplus.mapper.BaseDO.*;
 
 /**
@@ -42,8 +41,8 @@ public class DataObjectHandler implements MetaObjectHandler {
 		this.strictInsertFill(metaObject, EDITOR, user::getId, Long.class);
 		this.strictInsertFill(metaObject, CREATE_DATE, LocalDateTime::now, LocalDateTime.class);
 		this.strictInsertFill(metaObject, UPDATE_DATE, LocalDateTime::now, LocalDateTime.class);
-		this.strictInsertFill(metaObject, DEL_FLAG, () -> DEFAULT, Integer.class);
-		this.strictInsertFill(metaObject, VERSION, () -> DEFAULT, Integer.class);
+		this.strictInsertFill(metaObject, DEL_FLAG, () -> 0, Integer.class);
+		this.strictInsertFill(metaObject, VERSION, () -> 0, Integer.class);
 		this.strictInsertFill(metaObject, DEPT_ID, user::getDeptId, Long.class);
 		this.strictInsertFill(metaObject, DEPT_PATH, user::getDeptPath, String.class);
 		this.strictInsertFill(metaObject, TENANT_ID, user::getTenantId, Long.class);

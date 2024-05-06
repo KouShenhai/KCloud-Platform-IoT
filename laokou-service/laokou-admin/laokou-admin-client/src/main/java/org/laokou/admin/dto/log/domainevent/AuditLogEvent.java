@@ -20,8 +20,8 @@ package org.laokou.admin.dto.log.domainevent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.common.i18n.common.EventStatusEnum;
-import org.laokou.common.i18n.common.EventTypeEnum;
+import org.laokou.common.i18n.common.constants.EventStatus;
+import org.laokou.common.i18n.common.constants.EventType;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 import java.io.Serial;
@@ -50,9 +50,9 @@ public class AuditLogEvent extends DomainEvent<Long> {
 	@Schema(name = "comment", description = "审批意见")
 	private String comment;
 
-	protected AuditLogEvent(Long aLong, Long aggregateId, EventTypeEnum eventType, EventStatusEnum eventStatus,
-			String topic, String sourceName, String appName, Long creator, Long editor, Long deptId, String deptPath,
-			Long tenantId, LocalDateTime createDate, LocalDateTime updateDate) {
+	protected AuditLogEvent(Long aLong, Long aggregateId, EventType eventType, EventStatus eventStatus, String topic,
+			String sourceName, String appName, Long creator, Long editor, Long deptId, String deptPath, Long tenantId,
+			LocalDateTime createDate, LocalDateTime updateDate) {
 		super(aLong, aggregateId, eventType, eventStatus, topic, sourceName, appName, creator, editor, deptId, deptPath,
 				tenantId, createDate, updateDate);
 	}

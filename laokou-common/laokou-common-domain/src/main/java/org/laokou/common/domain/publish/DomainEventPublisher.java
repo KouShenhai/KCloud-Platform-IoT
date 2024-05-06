@@ -17,8 +17,6 @@
 
 package org.laokou.common.domain.publish;
 
-import org.laokou.common.i18n.common.JobModeEnum;
-
 /**
  * 领域事件推送器.
  *
@@ -28,8 +26,8 @@ public interface DomainEventPublisher {
 
 	/**
 	 * 推送事件.
-	 * @param jobModeEnum 工作模式 同步/异步
+	 * @param jobMode 工作模式 同步/异步
 	 */
-	void publish(JobModeEnum jobModeEnum);
+	void publish(JobMode jobMode);
 
 }

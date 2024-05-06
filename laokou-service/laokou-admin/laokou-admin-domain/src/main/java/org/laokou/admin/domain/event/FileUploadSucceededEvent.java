@@ -22,8 +22,7 @@ import lombok.Data;
 import org.laokou.admin.domain.oss.OssLog;
 import org.laokou.common.core.context.UserContextHolder;
 
-import static org.laokou.common.i18n.common.EventTypeEnum.FILE_UPLOAD_SUCCEEDED;
-import static org.laokou.common.i18n.common.NumberConstant.SUCCESS;
+import static org.laokou.common.i18n.common.constants.EventType.FILE_UPLOAD_SUCCEEDED;
 
 /**
  * @author laokou
@@ -33,7 +32,7 @@ import static org.laokou.common.i18n.common.NumberConstant.SUCCESS;
 public class FileUploadSucceededEvent extends FileUploadEvent {
 
 	public FileUploadSucceededEvent(OssLog ossLog, UserContextHolder.User user, String appName) {
-		super(ossLog, user, appName, SUCCESS, FILE_UPLOAD_SUCCEEDED);
+		super(ossLog, user, appName, 0, FILE_UPLOAD_SUCCEEDED);
 	}
 
 }

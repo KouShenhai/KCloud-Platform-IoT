@@ -15,46 +15,22 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.common.i18n.common.constants;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * 链路常量.
+ * 超级管理员枚举.
  *
  * @author laokou
  */
-public final class TraceConstant {
+@Schema(name = "SuperAdminEnums", description = "")
+public enum SuperAdmin {
 
-	private TraceConstant() {
-	}
+	@Schema(name = "NO", description = "否")
+	NO,
 
-	/**
-	 * 用户名.
-	 */
-	public static final String USER_NAME = "user-name";
-
-	/**
-	 * 链路ID.
-	 */
-	public static final String TRACE_ID = "trace-id";
-
-	/**
-	 * 用户ID.
-	 */
-	public static final String USER_ID = "user-id";
-
-	/**
-	 * 租户ID.
-	 */
-	public static final String TENANT_ID = "tenant-id";
-
-	/**
-	 * 域名.
-	 */
-	public static final String DOMAIN_NAME = "domain-name";
-
-	/**
-	 * 请求ID.
-	 */
-	public static final String REQUEST_ID = "request-id";
+	@Schema(name = "YES", description = "是")
+	YES
 
 }

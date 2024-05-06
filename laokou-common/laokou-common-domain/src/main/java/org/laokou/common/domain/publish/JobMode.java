@@ -15,13 +15,13 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.common.domain.publish;
 
 /**
  * @author laokou
  */
-public enum FindTypeEnum {
+public enum JobMode {
 
-	LIST, TREE_LIST, USER_TREE_LIST
+	SYNC, ASYNC
 
 }

@@ -15,20 +15,15 @@
  *
  */
 
-package org.laokou.common.i18n.common;
-
-import io.swagger.v3.oas.annotations.media.Schema;
+package org.laokou.common.i18n.common.constants;
 
 /**
+ * 事件类型枚举.
+ *
  * @author laokou
  */
-@Schema(name = "SensitiveTypeEnums", description = "铭感词类型枚举")
-public enum SensitiveType {
+public enum EventType {
 
-	@Schema(name = "MOBILE", description = "手机号")
-	MOBILE,
-
-	@Schema(name = "MAIL", description = "邮箱")
-	MAIL
+	LOGIN_FAILED, LOGIN_SUCCEEDED, OPERATE_FAILED, OPERATE_SUCCEEDED, FILE_UPLOAD_FAILED, FILE_UPLOAD_SUCCEEDED
 
 }

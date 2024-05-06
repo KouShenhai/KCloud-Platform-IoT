@@ -33,8 +33,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.EventStatusEnum.CONSUME_FAILED;
-import static org.laokou.common.i18n.common.EventStatusEnum.CONSUME_SUCCEED;
+import static org.laokou.common.i18n.common.constants.EventStatus.CONSUME_FAILED;
+import static org.laokou.common.i18n.common.constants.EventStatus.CONSUME_SUCCEED;
 
 /**
  * @author laokou

@@ -27,7 +27,6 @@ import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.core.utils.TreeUtil;
-import org.laokou.common.i18n.common.FindTypeEnum;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
@@ -56,12 +55,14 @@ public class DeptListQryExe {
 	 */
 	@DS(TENANT)
 	public Result<List<DeptCO>> execute(DeptListQry qry) {
-		return switch (FindTypeEnum.valueOf(qry.getType())) {
-			case LIST -> Result.ok(getDeptList(qry).stream().map(deptConvertor::convertClientObj).toList());
-			case TREE_LIST ->
-				Result.ok(buildTreeNode(getDeptList(qry).stream().map(deptConvertor::convertClientObj).toList()));
-			case USER_TREE_LIST -> null;
-		};
+		return null;
+		// return switch (FindTypeEnum.valueOf(qry.getType())) {
+		// case LIST ->
+		// Result.ok(getDeptList(qry).stream().map(deptConvertor::convertClientObj).toList());
+		// case TREE_LIST ->
+		// Result.ok(buildTreeNode(getDeptList(qry).stream().map(deptConvertor::convertClientObj).toList()));
+		// case USER_TREE_LIST -> null;
+		// };
 	}
 
 	private List<DeptCO> buildTreeNode(List<DeptCO> list) {

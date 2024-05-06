@@ -63,10 +63,10 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static org.laokou.common.core.utils.RegexUtil.IPV4_REGEX;
 import static org.laokou.common.core.utils.RegexUtil.URL_VERSION_REGEX;
-import static org.laokou.common.i18n.common.NetworkConstant.IPV4_REGEX;
-import static org.laokou.common.i18n.common.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.StringConstant.TRUE;
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constants.StringConstant.TRUE;
 
 /**
  * nacos路由负载均衡.

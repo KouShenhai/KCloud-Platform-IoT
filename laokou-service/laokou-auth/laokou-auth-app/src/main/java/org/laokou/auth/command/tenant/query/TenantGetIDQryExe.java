@@ -34,9 +34,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.StringConstant.BACKSLASH;
-import static org.laokou.common.i18n.common.StringConstant.DOT;
-import static org.laokou.common.i18n.common.TenantConstant.DEFAULT;
+import static org.laokou.common.i18n.common.constants.StringConstant.BACKSLASH;
+import static org.laokou.common.i18n.common.constants.StringConstant.DOT;
+import static org.laokou.common.mybatisplus.mapper.BaseDO.DEFAULT_TENANT_ID;
 
 /**
  * 根据域名查看租户ID执行器.
@@ -64,18 +64,18 @@ public class TenantGetIDQryExe {
 	public Result<Long> execute(TenantGetIDQry qry) {
 		String domainName = RequestUtil.getDomainName(qry.getRequest());
 		if (RegexUtil.ipRegex(domainName)) {
-			return Result.ok(DEFAULT);
+			return Result.ok(DEFAULT_TENANT_ID);
 		}
 		String[] split = domainName.split(BACKSLASH + DOT);
 		if (split.length < 3 || WWW.equals(split[0])) {
-			return Result.ok(DEFAULT);
+			return Result.ok(DEFAULT_TENANT_ID);
 		}
 		Set<String> domainNames = tenantProperties.getDomainNames();
 		// 租户域名
 		if (domainNames.parallelStream().anyMatch(domainName::contains)) {
 			return Result.ok(getTenantCache(split[0]));
 		}
-		return Result.ok(DEFAULT);
+		return Result.ok(DEFAULT_TENANT_ID);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class TenantGetIDQryExe {
 			redisUtil.hSet(tenantDomainNameHashKey, str, id, RedisUtil.HOUR_ONE_EXPIRE);
 			return id;
 		}
-		return DEFAULT;
+		return DEFAULT_TENANT_ID;
 	}
 
 }

@@ -24,7 +24,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import static org.laokou.common.i18n.common.TraceConstant.DOMAIN_NAME;
+import static org.laokou.common.i18n.common.constants.TraceConstant.DOMAIN_NAME;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 /**

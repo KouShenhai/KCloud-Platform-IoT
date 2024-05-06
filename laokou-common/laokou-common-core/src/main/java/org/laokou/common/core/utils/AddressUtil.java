@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import static org.laokou.common.i18n.common.StringConstant.*;
+import static org.laokou.common.i18n.common.constants.StringConstant.*;
 
 /**
  * IP所属位置解析.

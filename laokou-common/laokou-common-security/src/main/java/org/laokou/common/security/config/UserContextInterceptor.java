@@ -27,7 +27,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import static org.laokou.common.i18n.common.RequestHeaderConstant.AUTHORIZATION;
+import static org.laokou.common.i18n.common.constants.Constant.AUTHORIZATION;
 
 /**
  * @author laokou

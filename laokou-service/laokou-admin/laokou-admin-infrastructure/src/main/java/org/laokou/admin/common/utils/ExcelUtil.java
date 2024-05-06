@@ -57,9 +57,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-import static org.laokou.common.i18n.common.ResponseHeaderConstant.*;
-import static org.laokou.common.i18n.common.StringConstant.DROP;
-import static org.laokou.common.i18n.common.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constants.StringConstant.DROP;
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
 
 /**
  * Excel工具类.
@@ -118,10 +117,10 @@ public class ExcelUtil {
 	private static void header(HttpServletResponse response) {
 		String fileName = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + EXCEL_EXT;
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-		response.setContentType(EXCEL_CONTENT_TYPE);
-		response.setHeader(CONTENT_DISPOSITION,
+		response.setContentType("application/vnd.ms-excel");
+		response.setHeader("Content-disposition",
 				"attachment;filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + EXCEL_EXT);
-		response.addHeader(ACCESS_CONTROL_EXPOSE_HEADERS, CONTENT_DISPOSITION);
+		response.addHeader("Access-Control-Expose-Headers", "Content-disposition");
 	}
 
 	private static <DO> void writeSheet(List<DO> list, Class<?> clazz, ExcelWriter excelWriter) {

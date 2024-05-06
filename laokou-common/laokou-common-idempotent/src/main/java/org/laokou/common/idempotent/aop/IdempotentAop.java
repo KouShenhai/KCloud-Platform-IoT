@@ -37,7 +37,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
-import static org.laokou.common.i18n.common.TraceConstant.REQUEST_ID;
+import static org.laokou.common.i18n.common.constants.TraceConstant.REQUEST_ID;
 
 /**
  * 幂等性Aop.
