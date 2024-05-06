@@ -4,6 +4,7 @@ import setting from './en-US/setting'
 import user from './en-US/user'
 import tenant from './en-US/tenant'
 import menu from './en-US/menu'
+import home from './en-US/home'
 
 const components = {
   antLocale: antdEnUS,
@@ -17,5 +18,6 @@ export default {
   ...setting,
   ...user,
   ...tenant,
-  ...menu
+  ...menu,
+  ...home
 }

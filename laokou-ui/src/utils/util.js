@@ -1,7 +1,8 @@
+import { i18nRender } from '@/locales'
 export function timeFix () {
   const time = new Date()
   const hour = time.getHours()
-  return hour < 9 ? '早上好' : hour <= 11 ? '上午好' : hour <= 13 ? '中午好' : hour < 20 ? '下午好' : '晚上好'
+  return hour < 9 ? i18nRender('home.say.am') : hour <= 11 ? i18nRender('home.say.sw') : hour <= 13 ? i18nRender('home.say.zw') : hour < 20 ? i18nRender('home.say.pm') : i18nRender('home.say.ws')
 }
 
 export function welcome () {
