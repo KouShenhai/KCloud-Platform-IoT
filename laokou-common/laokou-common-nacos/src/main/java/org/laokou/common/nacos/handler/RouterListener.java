@@ -35,8 +35,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
-
 /**
  * 服务监听.
  *
@@ -52,7 +50,7 @@ public class RouterListener implements ApplicationListener<ApplicationReadyEvent
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
-		String appName = env.getProperty(SPRING_APPLICATION_NAME);
+		String appName = env.getProperty("spring.application.name");
 		Assert.isTrue(StringUtil.isNotEmpty(appName), " app name is empty");
 		Map<String, Object> map = new HashMap<>(2);
 		String abbr = appName.substring(7);

@@ -43,7 +43,6 @@ import java.util.concurrent.Executor;
 import static org.laokou.common.core.config.TaskExecutorConfig.THREAD_POOL_TASK_EXECUTOR_NAME;
 import static org.laokou.common.i18n.common.EventStatusEnum.PUBLISH_FAILED;
 import static org.laokou.common.i18n.common.EventStatusEnum.PUBLISH_SUCCEED;
-import static org.laokou.common.i18n.common.PropertiesConstant.SPRING_APPLICATION_NAME;
 
 /**
  * @author laokou
@@ -110,7 +109,7 @@ public class DomainEventPublishTask {
 	}
 
 	private String getAppName() {
-		return environment.getProperty(SPRING_APPLICATION_NAME);
+		return environment.getProperty("spring.application.name");
 	}
 
 	private Set<String> getSourceNames() {

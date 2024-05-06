@@ -17,7 +17,7 @@
 
 package org.laokou.common.i18n.utils;
 
-import static org.laokou.common.i18n.common.StatusCode.INTERNAL_SERVER_ERROR;
+import static org.laokou.common.i18n.common.exception.StatusCode.INTERNAL_SERVER_ERROR;
 
 /**
  * 日志工具类.

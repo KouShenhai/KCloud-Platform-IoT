@@ -28,7 +28,7 @@ import org.laokou.common.core.context.ShutdownHolder;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.StatusCode.SERVICE_UNAVAILABLE;
+import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAILABLE;
 
 /**
  * @author laokou

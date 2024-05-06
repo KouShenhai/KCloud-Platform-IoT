@@ -30,7 +30,7 @@ import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import static org.laokou.common.i18n.common.StatusCode.SERVICE_UNAVAILABLE;
+import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAILABLE;
 import static org.laokou.common.i18n.common.TraceConstant.TRACE_ID;
 
 /**
