@@ -65,7 +65,7 @@ public class AuthDomainService {
 
 	private void checkCaptcha(AuthA auth) {
 		if (auth.isUseCaptcha()) {
-			Boolean result = captchaGateway.check(auth.getCaptcha().uuid(), auth.getCaptcha().captcha());
+			Boolean result = captchaGateway.checkValue(auth.getCaptcha().uuid(), auth.getCaptcha().captcha());
 			auth.checkCaptcha(result);
 		}
 	}

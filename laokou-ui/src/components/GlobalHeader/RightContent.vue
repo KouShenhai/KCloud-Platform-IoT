@@ -1,20 +1,8 @@
 <template>
   <div :class="wrpCls">
     <a-space size="middle">
-      <a-tooltip placement="bottom">
-        <template slot="title">
-          源码地址
-        </template>
-        <a-icon type="github" @click="toGithub" :style="{ fontSize: '20px' }"/>
-      </a-tooltip>
-      <a-tooltip placement="bottom">
-        <template slot="title">
-          文档地址
-        </template>
-        <a-icon type="question-circle-o" @click="toDoc" :style="{ fontSize: '20px' }"/>
-      </a-tooltip>
-      <screenfull />
-      <notice-icon v-hasPermi="['sys:notice:list']" />
+      <ScreenFull />
+      <notice-icon />
       <avatar-dropdown :menu="showMenu" :current-user="currentUser" :class="prefixCls" />
       <!-- 暂只支持中文，国际化可自行扩展 -->
       <select-lang :class="prefixCls" />
@@ -78,12 +66,6 @@ export default {
     }, 1500)
   },
   methods: {
-    toDoc () {
-      window.open(this.docUrl)
-    },
-    toGithub () {
-      window.open(this.githubUrl)
-    }
   }
 }
 </script>

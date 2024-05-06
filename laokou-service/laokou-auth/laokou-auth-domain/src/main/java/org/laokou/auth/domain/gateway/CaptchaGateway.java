@@ -29,7 +29,7 @@ public interface CaptchaGateway {
 	 * @param uuid UUID
 	 * @param code 验证码
 	 */
-	void set(String uuid, String code);
+	void setValue(String uuid, String code);
 
 	/**
 	 * 检查验证码.
@@ -37,7 +37,7 @@ public interface CaptchaGateway {
 	 * @param code 验证码
 	 * @return 校验结果
 	 */
-	Boolean check(String uuid, String code);
+	Boolean checkValue(String uuid, String code);
 
 	/**
 	 * 获取key.
