@@ -4,8 +4,9 @@
       <ScreenFull />
       <notice-icon />
       <avatar-dropdown :menu="showMenu" :current-user="currentUser" :class="prefixCls" />
-      <!-- 暂只支持中文，国际化可自行扩展 -->
-      <select-lang :class="prefixCls" />
+      <div class="user-layout-lang">
+        <select-lang class="select-lang-trigger" />
+      </div>
     </a-space>
   </div>
 </template>

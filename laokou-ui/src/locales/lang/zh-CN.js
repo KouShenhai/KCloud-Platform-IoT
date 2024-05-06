@@ -4,10 +4,11 @@ import setting from './zh-CN/setting'
 import user from './zh-CN/user'
 import tenant from './zh-CN/tenant'
 import menu from './zh-CN/menu'
+import home from './zh-CN/home'
 
 const components = {
   antLocale: antd,
-  momentName: 'zh-cn',
+  momentName: 'zh',
   momentLocale: momentCN
 }
 
@@ -17,5 +18,6 @@ export default {
   ...setting,
   ...user,
   ...tenant,
-  ...menu
+  ...menu,
+  ...home
 }
