@@ -96,7 +96,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 | Kafka                       | 3.6.1         |
 | EMQX                        | 5.3.0         |
 | Postgresql                  | 16.2          |
-| Flyway                      | 10.11.1       |
+| Flyway                      | 10.12.0       |
 | Canal                       | 1.1.7         |
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
