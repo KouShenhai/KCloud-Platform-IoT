@@ -79,6 +79,10 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-admin-client</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-support</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

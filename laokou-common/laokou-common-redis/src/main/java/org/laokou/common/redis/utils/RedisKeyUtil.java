@@ -33,9 +33,10 @@ public final class RedisKeyUtil {
 	/**
 	 * 菜单树Key.
 	 * @param token 令牌
+	 * @param language 语言
 	 */
-	public static String getMenuTreeKey(String token) {
-		return "menu:tree:" + token;
+	public static String getMenuTreeKey(String token, String language) {
+		return "menu:tree:" + token + ":" + language;
 	}
 
 	/**

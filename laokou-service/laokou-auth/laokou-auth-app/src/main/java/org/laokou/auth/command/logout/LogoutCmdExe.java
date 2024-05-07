@@ -27,6 +27,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.common.i18n.common.constants.StringConstant.STAR;
 import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
 
 /**
@@ -83,7 +84,7 @@ public class LogoutCmdExe {
 	 * @param token 令牌
 	 */
 	private void removeMenuTreeKey(String token) {
-		redisUtil.delete(RedisKeyUtil.getMenuTreeKey(token));
+		redisUtil.delete(RedisKeyUtil.getMenuTreeKey(token, STAR));
 	}
 
 }

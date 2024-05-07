@@ -102,9 +102,6 @@ public class AuthA extends AggregateRoot<Long> {
 	@Schema(name = "TENANT_ID", description = "租户ID")
 	public static final String TENANT_ID = "tenant_id";
 
-	@Schema(name = "DEFAULT_TENANT_ID", description = "默认租户ID")
-	static final long DEFAULT_TENANT_ID = 0;
-
 	@Schema(name = "OK", description = "成功")
 	private static final int OK = 0;
 
@@ -120,7 +117,7 @@ public class AuthA extends AggregateRoot<Long> {
 		this.username = username;
 		this.password = password;
 		this.grantType = grantType;
-		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : DEFAULT_TENANT_ID;
+		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : 0L;
 		this.captcha = new CaptchaV(uuid, captcha);
 		this.log = createLog(request);
 	}

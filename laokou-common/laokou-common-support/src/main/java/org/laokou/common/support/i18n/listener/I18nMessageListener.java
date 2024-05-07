@@ -28,6 +28,9 @@ import org.springframework.context.ApplicationListener;
 
 import static org.laokou.common.redis.utils.RedisKeyUtil.getI18nMessageKey;
 
+/**
+ * @author laokou
+ */
 @NonNullApi
 @AutoConfiguration
 @RequiredArgsConstructor
