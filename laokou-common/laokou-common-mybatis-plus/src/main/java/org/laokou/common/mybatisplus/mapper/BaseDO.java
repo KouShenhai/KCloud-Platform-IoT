@@ -31,6 +31,7 @@ import static org.laokou.common.i18n.utils.DateUtil.Constant.YYYY_ROD_MM_ROD_DD_
 
 /**
  * 基类映射.
+ *
  * @author laokou
  */
 @Data

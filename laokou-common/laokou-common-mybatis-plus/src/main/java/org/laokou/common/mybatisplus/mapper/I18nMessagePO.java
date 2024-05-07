@@ -17,24 +17,17 @@
 
 package org.laokou.common.mybatisplus.mapper;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_I18N_MESSAGE;
+import java.io.Serializable;
 
-/**
- * 国际化.
- *
- * @author laokou
- */
 @Data
-@TableName(BOOT_SYS_I18N_MESSAGE)
-public class I18nMessageDO extends BaseDO {
+public class I18nMessagePO implements Serializable {
 
 	private String code;
 
-	private String zhMessage;
+	private String lang;
 
-	private String enMessage;
+	private String message;
 
 }
