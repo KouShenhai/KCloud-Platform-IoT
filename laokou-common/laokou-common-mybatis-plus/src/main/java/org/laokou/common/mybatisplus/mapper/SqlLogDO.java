@@ -18,13 +18,13 @@
 package org.laokou.common.mybatisplus.mapper;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_SQL_LOG;
 
 /**
  * SQL日志.
+ *
  * @author laokou
  */
 @Data

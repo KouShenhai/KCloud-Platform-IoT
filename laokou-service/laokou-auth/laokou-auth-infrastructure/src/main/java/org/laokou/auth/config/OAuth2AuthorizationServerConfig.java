@@ -203,7 +203,8 @@ class OAuth2AuthorizationServerConfig {
 	 * @return 单点登录配置
 	 */
 	@Bean
-	AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder, UserDetailsService userDetailsServiceImpl) {
+	AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder,
+			UserDetailsService userDetailsServiceImpl) {
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
 		daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl);
