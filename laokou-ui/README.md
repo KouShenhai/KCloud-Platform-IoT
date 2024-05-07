@@ -2,7 +2,7 @@
 
 ## 简介
 
-KCloud-Platform-IOT（老寇IOT云平台）是一个企业级微服务架构的云服务IOT平台。采用DDD(领域驱动设计)思想，基于Spring Boot 3.2.5、Spring Cloud 2023.0.1、Spring Cloud Alibaba 2023.0.1.0 最新版本开发的云服务多租户IOT平台，家人们，点个star！拜托啦~
+KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的云服务IoT平台。采用DDD(领域驱动设计)思想，基于Spring Boot 3.2.5、Spring Cloud 2023.0.1、Spring Cloud Alibaba 2023.0.1.0 最新版本开发的云服务多租户IoT平台，家人们，点个star！拜托啦~
 
 ## 开始使用
 

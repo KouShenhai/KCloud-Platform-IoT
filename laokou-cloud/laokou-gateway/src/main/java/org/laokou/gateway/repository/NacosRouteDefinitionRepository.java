@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IOT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package org.laokou.gateway.repository;
 
 import com.alibaba.nacos.api.config.ConfigService;
 import io.micrometer.common.lang.NonNullApi;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -59,7 +58,9 @@ import static org.laokou.common.i18n.common.exception.SystemException.ROUTER_NOT
 @Repository
 public class NacosRouteDefinitionRepository implements RouteDefinitionRepository, ApplicationEventPublisherAware {
 
-	@Schema(name = "DATA_ID", description = "Nacos配置标识")
+	/**
+	 * 动态路由配置.
+	 */
 	private static final String DATA_ID = "router.json";
 
 	private final ConfigUtil configUtil;
@@ -86,7 +87,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			.mapNotNull(Map.Entry::getValue)
 			.onErrorContinue((throwable, routeDefinition) -> {
 				if (log.isErrorEnabled()) {
-					log.error("get routes from redis error cause : {}", throwable.toString(), throwable);
+					log.error("Get routes from redis error cause : {}", throwable.toString(), throwable);
 				}
 			});
 	}

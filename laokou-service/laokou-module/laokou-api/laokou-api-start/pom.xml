@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>laokou-api</artifactId>
-        <groupId>org.laokou</groupId>
-        <version>3.2.5</version>
-    </parent>
-    <artifactId>laokou-api-start</artifactId>
-    <dependencies>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-api-adapter</artifactId>
-        </dependency>
-    </dependencies>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>laokou-api</artifactId>
+    <groupId>org.laokou</groupId>
+    <version>3.2.5</version>
+  </parent>
+  <artifactId>laokou-api-start</artifactId>
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-api-adapter</artifactId>
+    </dependency>
+  </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot-maven-plugin.version}</version>
-                <configuration>
-                    <finalName>${project.artifactId}</finalName>
-                    <!-- main方法的地址 只需要修改这个地址-->
-                    <mainClass>org.laokou.api.ApiApp</mainClass>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>${docker.version}</version>
-            </plugin>
-        </plugins>
-    </build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring-boot-maven-plugin.version}</version>
+        <configuration>
+          <finalName>${project.artifactId}</finalName>
+          <!-- main方法的地址 只需要修改这个地址-->
+          <mainClass>org.laokou.api.ApiApp</mainClass>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>${docker.version}</version>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

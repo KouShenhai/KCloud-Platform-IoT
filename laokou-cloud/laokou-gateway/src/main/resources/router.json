@@ -142,43 +142,5 @@
       "version": "2.0"
     },
     "order": 1
-  },
-  {
-    "id": "laokou-flowable",
-    "uri": "lb://laokou-flowable",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/flowable/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "flowable",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/flowable/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "2.0"
-    },
-    "order": 1
   }
 ]

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IOT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,26 +18,32 @@
 package org.laokou.common.mybatisplus.mapper;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_SQL_LOG;
 
 /**
+ * SQL日志.
+ *
  * @author laokou
  */
 @Data
 @TableName(BOOT_SYS_SQL_LOG)
-@Schema(name = "SqlLogDO", description = "SQL日志")
 public class SqlLogDO extends BaseDO {
 
-	@Schema(name = "appName", description = "应用名称")
+	/**
+	 * 应用名称.
+	 */
 	private String appName;
 
-	@Schema(name = "sql", description = "查询语句")
+	/**
+	 * SQL.
+	 */
 	private String sql;
 
-	@Schema(name = "costTime", description = "消耗时间")
+	/**
+	 * 消耗时间.
+	 */
 	private Long costTime;
 
 }

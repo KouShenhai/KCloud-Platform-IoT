@@ -11,4 +11,15 @@
 
   <artifactId>laokou-common-support</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-redis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-mybatis-plus</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

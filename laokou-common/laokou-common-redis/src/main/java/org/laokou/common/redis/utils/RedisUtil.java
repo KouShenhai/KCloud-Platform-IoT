@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IOT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -253,6 +253,34 @@ public class RedisUtil {
 		RMap<String, Object> map = redissonClient.getMap(key);
 		map.expire(Duration.ofSeconds(expire));
 		map.put(field, value);
+	}
+
+	public void hSetIfAbsentNative(String key, String field, Object value) {
+		redisTemplate.opsForHash().putIfAbsent(key, field, value);
+	}
+
+	public void hSetFastAsync(String key, String field, Object value, long expire) {
+		RMap<String, Object> map = redissonClient.getMap(key);
+		map.expire(Duration.ofSeconds(expire));
+		map.fastPutAsync(field, value);
+	}
+
+	public void hSetFast(String key, String field, Object value, long expire) {
+		RMap<String, Object> map = redissonClient.getMap(key);
+		map.expire(Duration.ofSeconds(expire));
+		map.fastPut(field, value);
+	}
+
+	public void hSetIfAbsent(String key, String field, Object value, long expire) {
+		RMap<String, Object> map = redissonClient.getMap(key);
+		map.expire(Duration.ofSeconds(expire));
+		map.putIfAbsent(field, value);
+	}
+
+	public void hSetIfAbsentAsync(String key, String field, Object value, long expire) {
+		RMap<String, Object> map = redissonClient.getMap(key);
+		map.expire(Duration.ofSeconds(expire));
+		map.putIfAbsentAsync(field, value);
 	}
 
 	public void hSet(String key, Map<String, Object> map, long expire) {
