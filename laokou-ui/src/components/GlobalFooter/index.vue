@@ -6,7 +6,7 @@
       <a href="#">条款</a>
     </template>
     <template v-slot:copyright>
-      Copyright &copy; 2022 <a href="https://github.com/KouShenhai/KCloud-Platform-IOT" target="_blank">KCloud-Platform-IOT</a><br/>
+      Copyright &copy; 2022 <a href="https://github.com/KouShenhai/KCloud-Platform-IoT" target="_blank">KCloud-Platform-IoT</a><br/>
     </template>
   </global-footer>
 </template>
