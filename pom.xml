@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IOT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
-    <artifactId>KCloud-Platform-IOT</artifactId>
+    <artifactId>KCloud-Platform-IoT</artifactId>
     <version>3.2.5</version>
     <packaging>pom</packaging>
     <modules>
@@ -28,9 +28,9 @@
         <module>laokou-cloud</module>
         <module>laokou-service</module>
     </modules>
-    <name>KCloud-Platform-IOT</name>
-    <description>一个企业级微服务架构的云服务多租户IOT平台</description>
-    <url>https://koushenhai.github.io/KCloud-Platform-IOT</url>
+    <name>KCloud-Platform-IoT</name>
+    <description>一个企业级微服务架构的云服务多租户IoT平台</description>
+    <url>https://koushenhai.github.io/KCloud-Platform-IoT</url>
     <properties>
         <laokou.version>3.2.5</laokou.version>
         <java.version>21</java.version>

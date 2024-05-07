@@ -8,11 +8,11 @@
         <div class="header">
           <a href="/">
             <img src="~@/assets/logo.png" class="logo" alt="logo">
-            <span class="title">老寇IOT云平台</span>
+            <span class="title">老寇IoT云平台</span>
           </a>
         </div>
         <div class="desc">
-          KCloud-Platform-IOT是基于SpringCloud Alibaba，SpringSecurity，Mysql，Vue开发的云服务多租户IOT平台
+          KCloud-Platform-IoT是基于SpringCloud Alibaba，SpringSecurity，Mysql，Vue开发的云服务多租户IoT平台
         </div>
       </div>
       <router-view />
@@ -23,7 +23,7 @@
           <a href="#">条款</a>
         </div>
         <div class="copyright">
-          Copyright &copy; 2022 <a href="https://github.com/KouShenhai/KCloud-Platform-IOT" target="_blank">KCloud-Platform-IOT</a><br/>
+          Copyright &copy; 2022 <a href="https://github.com/KouShenhai/KCloud-Platform-IoT" target="_blank">KCloud-Platform-IoT</a><br/>
         </div>
       </div>
     </div>

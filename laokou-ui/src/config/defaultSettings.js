@@ -24,6 +24,6 @@ export default {
   tableSize: 'middle',
   tableBordered: false,
   hideFooter: false,
-  title: '老寇IOT云平台',
+  title: '老寇IoT云平台',
   production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true'
 }
