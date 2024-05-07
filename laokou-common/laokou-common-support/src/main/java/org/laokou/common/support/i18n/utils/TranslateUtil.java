@@ -33,8 +33,8 @@ public class TranslateUtil {
 
 	private final RedisUtil redisUtil;
 
-	public String getMessage(String code, String lang) {
-		Object o = redisUtil.hGetNative(RedisKeyUtil.getI18nMessageKey(lang), code);
+	public String getMessage(String code, String language) {
+		Object o = redisUtil.hGetNative(RedisKeyUtil.getI18nMessageKey(language), code);
 		if (ObjectUtil.isNull(o)) {
 			return code;
 		}

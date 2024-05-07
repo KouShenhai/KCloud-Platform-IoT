@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IOT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,22 +17,33 @@
 
 package org.laokou.common.core.config;
 
+import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.i18n.I18nRequestContextFilter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.RequestContextFilter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author laokou
  */
 @Configuration
-public class WebMvcConfig {
+@RequiredArgsConstructor
+public class WebMvcConfig implements WebMvcConfigurer {
+
+	private final I18nInterceptor i18nInterceptor;
 
 	@Bean
 	@ConditionalOnMissingBean(name = "requestContextFilter")
 	public static RequestContextFilter requestContextFilter() {
 		return new I18nRequestContextFilter();
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(i18nInterceptor);
 	}
 
 }

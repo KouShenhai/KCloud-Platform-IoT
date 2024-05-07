@@ -25,7 +25,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import(I18nMessageListener.class)
+@Import({ I18nMessageListener.class })
 public @interface EnableI18nMessage {
 
 }

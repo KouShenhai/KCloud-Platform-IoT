@@ -32,6 +32,7 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.security.utils.UserUtil;
 import org.laokou.common.support.i18n.utils.TranslateUtil;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -57,19 +58,19 @@ public class MenuListRouterQryExe {
 	}
 
 	private List<RouterCO> getRouter() {
-		String lang = UserContextHolder.get().getLang();
-		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserContextHolder.get().getToken(), lang);
+		String language = LocaleContextHolder.getLocale().getLanguage();
+		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserContextHolder.get().getToken(), language);
 		Object obj = redisUtil.get(menuTreeKey);
 		if (ObjectUtil.isNotNull(obj)) {
 			return ((RouterCO) obj).getChildren();
 		}
-		RouterCO co = buildTreeNode(getMenuList().stream().map(item -> convert(item, lang)).toList());
+		RouterCO co = buildTreeNode(getMenuList().stream().map(item -> convert(item, language)).toList());
 		redisUtil.set(menuTreeKey, co, RedisUtil.HOUR_ONE_EXPIRE);
 		return co.getChildren();
 	}
 
-	private RouterCO convert(MenuDO menuDO, String lang) {
-		return new RouterCO(menuDO.getId(), menuDO.getPid(), translateUtil.getMessage(menuDO.getName(), lang),
+	private RouterCO convert(MenuDO menuDO, String language) {
+		return new RouterCO(menuDO.getId(), menuDO.getPid(), translateUtil.getMessage(menuDO.getName(), language),
 				menuDO.getRedirect(), menuDO.getHidden(), menuDO.getIcon(), menuDO.getKeepAlive(), menuDO.getTarget(),
 				menuDO.getPermission());
 	}
