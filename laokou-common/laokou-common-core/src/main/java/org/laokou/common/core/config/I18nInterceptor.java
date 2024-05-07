@@ -15,43 +15,33 @@
  *
  */
 
-package org.laokou.common.security.config;
+package org.laokou.common.core.config;
 
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.laokou.common.core.context.UserContextHolder;
-import org.laokou.common.security.utils.UserDetail;
-import org.laokou.common.security.utils.UserUtil;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.laokou.common.core.utils.I18nUtil;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-
-import static org.laokou.common.i18n.common.constants.Constant.AUTHORIZATION;
 
 /**
  * @author laokou
  */
 @NonNullApi
-@AutoConfiguration
-public class UserContextInterceptor implements HandlerInterceptor {
+@Component
+public class I18nInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		UserContextHolder.set(convert(UserUtil.user(), request));
+		I18nUtil.set(request);
 		return true;
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
 			@Nullable Exception ex) {
-		UserContextHolder.clear();
-	}
-
-	private UserContextHolder.User convert(UserDetail userDetail, HttpServletRequest request) {
-		return new UserContextHolder.User(userDetail.getId(), userDetail.getUsername(), userDetail.getTenantId(),
-				userDetail.getDeptPath(), userDetail.getDeptId(), userDetail.getSourceName(),
-				request.getHeader(AUTHORIZATION).substring(7));
+		I18nUtil.reset();
 	}
 
 }

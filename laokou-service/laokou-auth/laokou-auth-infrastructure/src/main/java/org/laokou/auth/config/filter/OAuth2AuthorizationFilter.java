@@ -25,13 +25,12 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
 import org.laokou.common.core.context.ShutdownHolder;
-import org.laokou.common.core.utils.I18nUtil;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAILABLE;
 import static org.laokou.common.i18n.common.constants.TraceConstant.TRACE_ID;
+import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAILABLE;
 
 /**
  * 认证过滤器.
@@ -46,8 +45,6 @@ public class OAuth2AuthorizationFilter extends OncePerRequestFilter {
 	@SneakyThrows
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
 		try {
-			// 国际化
-			I18nUtil.set(request);
 			ThreadContext.put(TRACE_ID, request.getHeader(TRACE_ID));
 			if (ShutdownHolder.status()) {
 				ResponseUtil.response(response, Result.fail(SERVICE_UNAVAILABLE));
@@ -57,7 +54,6 @@ public class OAuth2AuthorizationFilter extends OncePerRequestFilter {
 		}
 		finally {
 			ThreadContext.clearMap();
-			I18nUtil.reset();
 		}
 	}
 

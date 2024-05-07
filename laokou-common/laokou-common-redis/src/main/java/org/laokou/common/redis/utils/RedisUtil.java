@@ -297,6 +297,10 @@ public class RedisUtil {
 		return redissonClient.getMap(key).get(field);
 	}
 
+	public Object hGetNative(String key, String field) {
+		return redisTemplate.opsForHash().get(key, field);
+	}
+
 	public long getKeysSize() {
 		final Object obj = redisTemplate.execute(RedisServerCommands::dbSize);
 		return ObjectUtil.isNull(obj) ? 0 : Long.parseLong(obj.toString());

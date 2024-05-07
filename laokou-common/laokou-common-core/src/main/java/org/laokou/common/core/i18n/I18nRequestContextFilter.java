@@ -22,10 +22,11 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Setter;
 import org.laokou.common.core.utils.I18nUtil;
+import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.filter.RequestContextFilter;
 
 import java.io.IOException;
 
@@ -34,12 +35,13 @@ import java.io.IOException;
  *
  * @author laokou
  */
+@Setter
 @NonNullApi
-public final class I18nRequestContextFilter extends RequestContextFilter {
+public final class I18nRequestContextFilter extends OrderedRequestContextFilter {
 
 	public static final String LANG = "Lang";
 
-	private I18nRequestContextFilter() {
+	public I18nRequestContextFilter() {
 	}
 
 	@Override

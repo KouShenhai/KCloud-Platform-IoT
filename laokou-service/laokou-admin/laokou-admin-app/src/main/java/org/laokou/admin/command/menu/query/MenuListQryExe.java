@@ -26,21 +26,14 @@ import org.laokou.admin.dto.menu.MenuListQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.security.utils.UserDetail;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.admin.domain.menu.HiddenEnum.NO;
-import static org.laokou.admin.domain.menu.TypeEnum.MENU;
 import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
@@ -74,29 +67,6 @@ public class MenuListQryExe {
 		// .getChildren());
 		// case USER_TREE_LIST -> Result.ok(getUserMenuList());
 		// };
-	}
-
-	private List<MenuCO> getUserMenuList() {
-		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserContextHolder.get().getToken());
-		Object obj = redisUtil.get(menuTreeKey);
-		if (ObjectUtil.isNotNull(obj)) {
-			return ((MenuCO) obj).getChildren();
-		}
-		MenuCO co = buildTreeNode(getMenuList().stream().map(menuConvertor::convertClientObj).toList());
-		redisUtil.set(menuTreeKey, co, RedisUtil.HOUR_ONE_EXPIRE);
-		return co.getChildren();
-	}
-
-	private List<MenuDO> getMenuList() {
-		UserDetail user = UserUtil.user();
-		if (user.isSuperAdministrator()) {
-			LambdaQueryWrapper<MenuDO> wrapper = Wrappers.lambdaQuery(MenuDO.class)
-				.eq(MenuDO::getType, MENU.ordinal())
-				.eq(MenuDO::getHidden, NO.ordinal())
-				.orderByDesc(MenuDO::getSort);
-			return menuMapper.selectList(wrapper);
-		}
-		return menuMapper.selectListByUserId(user.getId());
 	}
 
 	private MenuCO buildTreeNode(List<MenuCO> list) {
