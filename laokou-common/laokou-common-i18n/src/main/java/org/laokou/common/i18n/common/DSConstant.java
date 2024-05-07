@@ -79,6 +79,8 @@ public final class DSConstant {
 	@Schema(name = "BOOT_SYS_SQL_LOG", description = "SQL日志表")
 	public static final String BOOT_SYS_SQL_LOG = "boot_sys_sql_log";
 
+	public static final String BOOT_SYS_I18N_MESSAGE = "boot_sys_i18n_message";
+
 	@Schema(name = "BOOT_SYS_IP", description = "IP表")
 	public static final String BOOT_SYS_IP = "boot_sys_ip";
 

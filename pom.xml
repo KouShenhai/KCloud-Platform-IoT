@@ -17,453 +17,457 @@
  *
  */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.laokou</groupId>
-    <artifactId>KCloud-Platform-IoT</artifactId>
-    <version>3.2.5</version>
-    <packaging>pom</packaging>
-    <modules>
-        <module>laokou-common</module>
-        <module>laokou-cloud</module>
-        <module>laokou-service</module>
-    </modules>
-    <name>KCloud-Platform-IoT</name>
-    <description>一个企业级微服务架构的云服务多租户IoT平台</description>
-    <url>https://koushenhai.github.io/KCloud-Platform-IoT</url>
-    <properties>
-        <laokou.version>3.2.5</laokou.version>
-        <java.version>21</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-        <spring-boot-maven-plugin.version>3.2.5</spring-boot-maven-plugin.version>
-        <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
-        <!--spring-boot版本-->
-        <spring-boot.version>3.2.5</spring-boot.version>
-        <!--spring-cloud版本-->
-        <spring-cloud.version>2023.0.1</spring-cloud.version>
-        <!--spring-framework版本-->
-        <spring-framework.version>6.1.6</spring-framework.version>
-        <!--cloud-alibaba版本-->
-        <spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
-        <!--springdoc-openapi版本-->
-        <springdoc-openapi.version>2.5.0</springdoc-openapi.version>
-        <!--mapstruct版本-->
-        <mapstruct.version>1.6.0.Beta1</mapstruct.version>
-        <!--lombok-mapstruct-binding版本-->
-        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
-        <!--lombok版本-->
-        <lombok.version>1.18.32</lombok.version>
-        <docker.repostory>registry.cn-shenzhen.aliyuncs.com</docker.repostory>
-        <docker.registry.name>koushenhai</docker.registry.name>
-        <docker.version>1.2.2</docker.version>
-        <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
-        <spring-javaformat-maven-plugin.version>0.0.41</spring-javaformat-maven-plugin.version>
-        <native-maven-plugin.version>0.10.1</native-maven-plugin.version>
-        <versions-maven-plugin.version>2.16.2</versions-maven-plugin.version>
-    </properties>
-    <dependencyManagement>
-        <dependencies>
-            <!-- 定义 mapstruct 版本 -->
-            <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct-parent</artifactId>
-                <version>${mapstruct.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- 定义 common 版本 -->
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-bom</artifactId>
-                <version>${laokou.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- 定义 spring boot 版本 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-parent</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- 定义 spring cloud 版本 -->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- 定义 spring cloud alibaba 版本 -->
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- 定义spring framework 版本 -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-framework-bom</artifactId>
-                <version>${spring-framework.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- 定义 springdoc openapi 版本 -->
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi</artifactId>
-                <version>${springdoc-openapi.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-    <repositories>
-        <repository>
-            <id>spring-release</id>
-            <name>Spring Release</name>
-            <url>https://repo.spring.io/release</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>spring-milestone</id>
-            <name>Spring Milestone</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-    </repositories>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.laokou</groupId>
+  <artifactId>KCloud-Platform-IoT</artifactId>
+  <version>3.2.5</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>laokou-common</module>
+    <module>laokou-cloud</module>
+    <module>laokou-service</module>
+  </modules>
+  <name>KCloud-Platform-IoT</name>
+  <description>一个企业级微服务架构的云服务多租户IoT平台</description>
+  <url>https://koushenhai.github.io/KCloud-Platform-IoT</url>
+  <properties>
+    <laokou.version>3.2.5</laokou.version>
+    <java.version>21</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+    <spring-boot-maven-plugin.version>3.2.5</spring-boot-maven-plugin.version>
+    <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
+    <!--spring-boot版本-->
+    <spring-boot.version>3.2.5</spring-boot.version>
+    <!--spring-cloud版本-->
+    <spring-cloud.version>2023.0.1</spring-cloud.version>
+    <!--spring-framework版本-->
+    <spring-framework.version>6.1.6</spring-framework.version>
+    <!--cloud-alibaba版本-->
+    <spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
+    <!--springdoc-openapi版本-->
+    <springdoc-openapi.version>2.5.0</springdoc-openapi.version>
+    <!--mapstruct版本-->
+    <mapstruct.version>1.6.0.Beta1</mapstruct.version>
+    <!--lombok-mapstruct-binding版本-->
+    <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+    <!--lombok版本-->
+    <lombok.version>1.18.32</lombok.version>
+    <docker.repostory>registry.cn-shenzhen.aliyuncs.com</docker.repostory>
+    <docker.registry.name>koushenhai</docker.registry.name>
+    <docker.version>1.2.2</docker.version>
+    <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
+    <spring-javaformat-maven-plugin.version>0.0.41</spring-javaformat-maven-plugin.version>
+    <native-maven-plugin.version>0.10.1</native-maven-plugin.version>
+    <versions-maven-plugin.version>2.16.2</versions-maven-plugin.version>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <!-- 定义 mapstruct 版本 -->
+      <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct-parent</artifactId>
+        <version>${mapstruct.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- 定义 common 版本 -->
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-bom</artifactId>
+        <version>${laokou.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- 定义 spring boot 版本 -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- 定义 spring cloud 版本 -->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- 定义 spring cloud alibaba 版本 -->
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>${spring-cloud-alibaba.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- 定义spring framework 版本 -->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-framework-bom</artifactId>
+        <version>${spring-framework.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- 定义 springdoc openapi 版本 -->
+      <dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi</artifactId>
+        <version>${springdoc-openapi.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <repositories>
+    <repository>
+      <id>spring-release</id>
+      <name>Spring Release</name>
+      <url>https://repo.spring.io/release</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
+    <repository>
+      <id>spring-milestone</id>
+      <name>Spring Milestone</name>
+      <url>https://repo.spring.io/milestone</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
+    <repository>
+      <id>spring-snapshots</id>
+      <name>Spring Snapshots</name>
+      <url>https://repo.spring.io/snapshot</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </repository>
+  </repositories>
 
-    <profiles>
-        <!-- 开发环境 -->
-        <profile>
-            <id>dev</id>
-            <properties>
-                <DATASOURCE-USERNAME>root</DATASOURCE-USERNAME>
-                <DATASOURCE-PASSWORD>laokou123</DATASOURCE-PASSWORD>
-                <DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>
-                <DATASOURCE-PARAM>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true</DATASOURCE-PARAM>
-                <DATASOURCE-PORT>5432</DATASOURCE-PORT>
-                <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
-                <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
-                <DATASOURCE-DB-NACOS>kcloud_platform_iot_nacos</DATASOURCE-DB-NACOS>
-                <DATASOURCE-DB-POWER-JOB>kcloud_platform_iot_power_job</DATASOURCE-DB-POWER-JOB>
-                <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
-                <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
-                <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
-                <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
-                <NACOS-USERNAME>nacos</NACOS-USERNAME>
-                <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-                <NACOS-VERSION>v1</NACOS-VERSION>
-                <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
-                <SEATA-USERNAME>seata</SEATA-USERNAME>
-                <SEATA-PASSWORD>seata</SEATA-PASSWORD>
-                <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
-                <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
-                <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
-                <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
-                <SSL-ENABLED>false</SSL-ENABLED>
-                <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
-                <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
-                <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
-                <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
-                <ROUTER-AUTH-ENABLED>false</ROUTER-AUTH-ENABLED>
-                <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
-                <ROUTER-AUTH-PASSWORD>laokou123</ROUTER-AUTH-PASSWORD>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <!-- 测试环境 -->
-        <profile>
-            <id>test</id>
-            <properties>
-                <DATASOURCE-USERNAME>ENC(aEwhK+oj5wQ/pJfRcfwXAw==)</DATASOURCE-USERNAME>
-                <DATASOURCE-PASSWORD>ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)</DATASOURCE-PASSWORD>
-                <DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>
-                <DATASOURCE-PARAM>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true</DATASOURCE-PARAM>
-                <DATASOURCE-PORT>5432</DATASOURCE-PORT>
-                <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
-                <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
-                <DATASOURCE-DB-NACOS>kcloud_platform_iot_nacos</DATASOURCE-DB-NACOS>
-                <DATASOURCE-DB-POWER-JOB>kcloud_platform_iot_power_job</DATASOURCE-DB-POWER-JOB>
-                <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
-                <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
-                <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
-                <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
-                <NACOS-USERNAME>nacos</NACOS-USERNAME>
-                <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-                <NACOS-VERSION>v1</NACOS-VERSION>
-                <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
-                <SEATA-USERNAME>seata</SEATA-USERNAME>
-                <SEATA-PASSWORD>seata</SEATA-PASSWORD>
-                <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
-                <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
-                <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
-                <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
-                <SSL-ENABLED>true</SSL-ENABLED>
-                <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
-                <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
-                <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
-                <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
-                <ROUTER-AUTH-ENABLED>false</ROUTER-AUTH-ENABLED>
-                <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
-                <ROUTER-AUTH-PASSWORD>laokou123</ROUTER-AUTH-PASSWORD>
-            </properties>
-        </profile>
-        <!-- 正式环境 -->
-        <profile>
-            <id>prod</id>
-            <properties>
-                <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-USERNAME>${DATASOURCE_USERNAME:ENC(aEwhK+oj5wQ/pJfRcfwXAw==)}</DATASOURCE-USERNAME>
-                <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-PASSWORD>${DATASOURCE_PASSWORD:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}</DATASOURCE-PASSWORD>
-                <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-HOST>${DATASOURCE_HOST:postgresql.laokou.org}</DATASOURCE-HOST>
-                <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-PARAM>${DATASOURCE_PARAM:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true}</DATASOURCE-PARAM>
-                <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-PORT>${DATASOURCE_PORT:5432}</DATASOURCE-PORT>
-                <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-DRIVER-CLASS-NAME>${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}</DATASOURCE-DRIVER-CLASS-NAME>
-                <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-PLATFORM>${DATASOURCE_PLATFORM:postgresql}</DATASOURCE-PLATFORM>
-                <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-DB-NACOS>${DATASOURCE_DB_NACOS:kcloud_platform_iot_nacos}</DATASOURCE-DB-NACOS>
-                <!--suppress UnresolvedMavenProperty -->
-                <DATASOURCE-DB-POWER-JOB>${DATASOURCE_DB_POWER_JOB:kcloud_platform_iot_power_job}</DATASOURCE-DB-POWER-JOB>
-                <!--suppress UnresolvedMavenProperty -->
-                <NACOS-NAMESPACE>${NACOS_NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
-                <!--suppress UnresolvedMavenProperty -->
-                <NACOS-DISCOVERY-ADDRESS>${NACOS_DISCOVERY_ADDRESS:nacos.laokou.org}</NACOS-DISCOVERY-ADDRESS>
-                <!--suppress UnresolvedMavenProperty -->
-                <NACOS-CONFIG-ADDRESS>${NACOS_CONFIG_ADDRESS:nacos.laokou.org}</NACOS-CONFIG-ADDRESS>
-                <!--suppress UnresolvedMavenProperty -->
-                <NACOS-GROUP>${NACOS_GROUP:LAOKOU_GROUP}</NACOS-GROUP>
-                <!--suppress UnresolvedMavenProperty -->
-                <NACOS-USERNAME>${NACOS_USERNAME:nacos}</NACOS-USERNAME>
-                <!--suppress UnresolvedMavenProperty -->
-                <NACOS-PASSWORD>${NACOS_PASSWORD:nacos}</NACOS-PASSWORD>
-                <!--suppress UnresolvedMavenProperty -->
-                <NACOS-VERSION>${NACOS_VERSION:v1}</NACOS-VERSION>
-                <!--suppress UnresolvedMavenProperty -->
-                <SEATA-GROUP>${SEATA_GROUP:SEATA_GROUP}</SEATA-GROUP>
-                <!--suppress UnresolvedMavenProperty -->
-                <SEATA-USERNAME>${SEATA_USERNAME:seata}</SEATA-USERNAME>
-                <!--suppress UnresolvedMavenProperty -->
-                <SEATA-PASSWORD>${SEATA_PASSWORD:seata}</SEATA-PASSWORD>
-                <!--suppress UnresolvedMavenProperty -->
-                <SEATA-LOG-PATH>${SEATA_LOG_PATH:/opt}</SEATA-LOG-PATH>
-                <!--suppress UnresolvedMavenProperty -->
-                <SENTINEL-USERNAME>${SENTINEL_USERNAME:sentinel}</SENTINEL-USERNAME>
-                <!--suppress UnresolvedMavenProperty -->
-                <SENTINEL-PASSWORD>${SENTINEL_PASSWORD:sentinel}</SENTINEL-PASSWORD>
-                <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
-                <SSL-ENABLED>true</SSL-ENABLED>
-                <!--suppress UnresolvedMavenProperty -->
-                <MAIL-PASSWORD>${MAIL_PASSWORD:ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)}</MAIL-PASSWORD>
-                <!--suppress UnresolvedMavenProperty -->
-                <MAIL-USERNAME>${MAIL_USERNAME:2413176044@qq.com}</MAIL-USERNAME>
-                <!--suppress UnresolvedMavenProperty -->
-                <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
-                <!--suppress UnresolvedMavenProperty -->
-                <FILE-TEMP-PATH>${FILE_TEMP_PATH:/opt/temp}</FILE-TEMP-PATH>
-                <!--suppress UnresolvedMavenProperty -->
-                <ROUTER-AUTH-ENABLED>${ROUTER_AUTH_ENABLED:false}</ROUTER-AUTH-ENABLED>
-                <!--suppress UnresolvedMavenProperty -->
-                <ROUTER-AUTH-USERNAME>${ROUTER_AUTH_USERNAME:laokou}</ROUTER-AUTH-USERNAME>
-                <!--suppress UnresolvedMavenProperty -->
-                <ROUTER-AUTH-PASSWORD>${ROUTER_AUTH_PASSWORD:laokou123}</ROUTER-AUTH-PASSWORD>
-            </properties>
-        </profile>
-    </profiles>
+  <profiles>
+    <!-- 开发环境 -->
+    <profile>
+      <id>dev</id>
+      <properties>
+        <DATASOURCE-USERNAME>root</DATASOURCE-USERNAME>
+        <DATASOURCE-PASSWORD>laokou123</DATASOURCE-PASSWORD>
+        <DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>
+        <DATASOURCE-PARAM>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true</DATASOURCE-PARAM>
+        <DATASOURCE-PORT>5432</DATASOURCE-PORT>
+        <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
+        <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
+        <DATASOURCE-DB-NACOS>kcloud_platform_iot_nacos</DATASOURCE-DB-NACOS>
+        <DATASOURCE-DB-POWER-JOB>kcloud_platform_iot_power_job</DATASOURCE-DB-POWER-JOB>
+        <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
+        <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
+        <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
+        <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
+        <NACOS-USERNAME>nacos</NACOS-USERNAME>
+        <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
+        <NACOS-VERSION>v1</NACOS-VERSION>
+        <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
+        <SEATA-USERNAME>seata</SEATA-USERNAME>
+        <SEATA-PASSWORD>seata</SEATA-PASSWORD>
+        <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
+        <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
+        <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
+        <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
+        <SSL-ENABLED>false</SSL-ENABLED>
+        <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
+        <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
+        <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
+        <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
+        <ROUTER-AUTH-ENABLED>false</ROUTER-AUTH-ENABLED>
+        <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
+        <ROUTER-AUTH-PASSWORD>laokou123</ROUTER-AUTH-PASSWORD>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+    <!-- 测试环境 -->
+    <profile>
+      <id>test</id>
+      <properties>
+        <DATASOURCE-USERNAME>ENC(aEwhK+oj5wQ/pJfRcfwXAw==)</DATASOURCE-USERNAME>
+        <DATASOURCE-PASSWORD>ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)</DATASOURCE-PASSWORD>
+        <DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>
+        <DATASOURCE-PARAM>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true</DATASOURCE-PARAM>
+        <DATASOURCE-PORT>5432</DATASOURCE-PORT>
+        <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
+        <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
+        <DATASOURCE-DB-NACOS>kcloud_platform_iot_nacos</DATASOURCE-DB-NACOS>
+        <DATASOURCE-DB-POWER-JOB>kcloud_platform_iot_power_job</DATASOURCE-DB-POWER-JOB>
+        <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
+        <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
+        <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
+        <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
+        <NACOS-USERNAME>nacos</NACOS-USERNAME>
+        <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
+        <NACOS-VERSION>v1</NACOS-VERSION>
+        <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
+        <SEATA-USERNAME>seata</SEATA-USERNAME>
+        <SEATA-PASSWORD>seata</SEATA-PASSWORD>
+        <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
+        <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
+        <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
+        <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
+        <SSL-ENABLED>true</SSL-ENABLED>
+        <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
+        <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
+        <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
+        <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
+        <ROUTER-AUTH-ENABLED>false</ROUTER-AUTH-ENABLED>
+        <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
+        <ROUTER-AUTH-PASSWORD>laokou123</ROUTER-AUTH-PASSWORD>
+      </properties>
+    </profile>
+    <!-- 正式环境 -->
+    <profile>
+      <id>prod</id>
+      <properties>
+        <!--suppress UnresolvedMavenProperty -->
+        <DATASOURCE-USERNAME>${DATASOURCE_USERNAME:ENC(aEwhK+oj5wQ/pJfRcfwXAw==)}</DATASOURCE-USERNAME>
+        <!--suppress UnresolvedMavenProperty -->
+        <DATASOURCE-PASSWORD>${DATASOURCE_PASSWORD:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}</DATASOURCE-PASSWORD>
+        <!--suppress UnresolvedMavenProperty -->
+        <DATASOURCE-HOST>${DATASOURCE_HOST:postgresql.laokou.org}</DATASOURCE-HOST>
+        <!--suppress UnresolvedMavenProperty -->
+        <DATASOURCE-PARAM>
+          ${DATASOURCE_PARAM:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true}
+        </DATASOURCE-PARAM>
+        <!--suppress UnresolvedMavenProperty -->
+        <DATASOURCE-PORT>${DATASOURCE_PORT:5432}</DATASOURCE-PORT>
+        <!--suppress UnresolvedMavenProperty -->
+        <DATASOURCE-DRIVER-CLASS-NAME>${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
+        </DATASOURCE-DRIVER-CLASS-NAME>
+        <!--suppress UnresolvedMavenProperty -->
+        <DATASOURCE-PLATFORM>${DATASOURCE_PLATFORM:postgresql}</DATASOURCE-PLATFORM>
+        <!--suppress UnresolvedMavenProperty -->
+        <DATASOURCE-DB-NACOS>${DATASOURCE_DB_NACOS:kcloud_platform_iot_nacos}</DATASOURCE-DB-NACOS>
+        <!--suppress UnresolvedMavenProperty -->
+        <DATASOURCE-DB-POWER-JOB>${DATASOURCE_DB_POWER_JOB:kcloud_platform_iot_power_job}</DATASOURCE-DB-POWER-JOB>
+        <!--suppress UnresolvedMavenProperty -->
+        <NACOS-NAMESPACE>${NACOS_NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
+        <!--suppress UnresolvedMavenProperty -->
+        <NACOS-DISCOVERY-ADDRESS>${NACOS_DISCOVERY_ADDRESS:nacos.laokou.org}</NACOS-DISCOVERY-ADDRESS>
+        <!--suppress UnresolvedMavenProperty -->
+        <NACOS-CONFIG-ADDRESS>${NACOS_CONFIG_ADDRESS:nacos.laokou.org}</NACOS-CONFIG-ADDRESS>
+        <!--suppress UnresolvedMavenProperty -->
+        <NACOS-GROUP>${NACOS_GROUP:LAOKOU_GROUP}</NACOS-GROUP>
+        <!--suppress UnresolvedMavenProperty -->
+        <NACOS-USERNAME>${NACOS_USERNAME:nacos}</NACOS-USERNAME>
+        <!--suppress UnresolvedMavenProperty -->
+        <NACOS-PASSWORD>${NACOS_PASSWORD:nacos}</NACOS-PASSWORD>
+        <!--suppress UnresolvedMavenProperty -->
+        <NACOS-VERSION>${NACOS_VERSION:v1}</NACOS-VERSION>
+        <!--suppress UnresolvedMavenProperty -->
+        <SEATA-GROUP>${SEATA_GROUP:SEATA_GROUP}</SEATA-GROUP>
+        <!--suppress UnresolvedMavenProperty -->
+        <SEATA-USERNAME>${SEATA_USERNAME:seata}</SEATA-USERNAME>
+        <!--suppress UnresolvedMavenProperty -->
+        <SEATA-PASSWORD>${SEATA_PASSWORD:seata}</SEATA-PASSWORD>
+        <!--suppress UnresolvedMavenProperty -->
+        <SEATA-LOG-PATH>${SEATA_LOG_PATH:/opt}</SEATA-LOG-PATH>
+        <!--suppress UnresolvedMavenProperty -->
+        <SENTINEL-USERNAME>${SENTINEL_USERNAME:sentinel}</SENTINEL-USERNAME>
+        <!--suppress UnresolvedMavenProperty -->
+        <SENTINEL-PASSWORD>${SENTINEL_PASSWORD:sentinel}</SENTINEL-PASSWORD>
+        <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
+        <SSL-ENABLED>true</SSL-ENABLED>
+        <!--suppress UnresolvedMavenProperty -->
+        <MAIL-PASSWORD>${MAIL_PASSWORD:ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)}</MAIL-PASSWORD>
+        <!--suppress UnresolvedMavenProperty -->
+        <MAIL-USERNAME>${MAIL_USERNAME:2413176044@qq.com}</MAIL-USERNAME>
+        <!--suppress UnresolvedMavenProperty -->
+        <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
+        <!--suppress UnresolvedMavenProperty -->
+        <FILE-TEMP-PATH>${FILE_TEMP_PATH:/opt/temp}</FILE-TEMP-PATH>
+        <!--suppress UnresolvedMavenProperty -->
+        <ROUTER-AUTH-ENABLED>${ROUTER_AUTH_ENABLED:false}</ROUTER-AUTH-ENABLED>
+        <!--suppress UnresolvedMavenProperty -->
+        <ROUTER-AUTH-USERNAME>${ROUTER_AUTH_USERNAME:laokou}</ROUTER-AUTH-USERNAME>
+        <!--suppress UnresolvedMavenProperty -->
+        <ROUTER-AUTH-PASSWORD>${ROUTER_AUTH_PASSWORD:laokou123}</ROUTER-AUTH-PASSWORD>
+      </properties>
+    </profile>
+  </profiles>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>${versions-maven-plugin.version}</version>
-                <configuration>
-                    <!--备份版本-->
-                    <generateBackupPoms>true</generateBackupPoms>
-                    <newVersion>3.2.6</newVersion>
-                    <oldVersion>3.2.5</oldVersion>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>io.spring.javaformat</groupId>
-                <artifactId>spring-javaformat-maven-plugin</artifactId>
-                <version>0.0.41</version>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.12</version>
-                <executions>
-                    <execution>
-                        <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven-checkstyle-plugin.version}</version>
-                <configuration>
-                    <configLocation>checkstyle.xml</configLocation>
-                    <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
-                    <consoleOutput>true</consoleOutput>
-                    <failsOnError>true</failsOnError>
-                    <failOnViolation>true</failOnViolation>
-                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                    <skip>false</skip>
-                    <linkXRef>false</linkXRef>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>install</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>checkstyle</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <encoding>UTF-8</encoding>
-                    <compilerArgs>
-                        <arg>-Xlint:-options</arg>
-                        <arg>-Xlint:varargs</arg>
-                        <arg>-Xlint:rawtypes</arg>
-                        <arg>-Xlint:unchecked</arg>
-                        <arg>-Xlint:deprecation</arg>
-                        <arg>-parameters</arg>
-                    </compilerArgs>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${mapstruct.version}</version>
-                        </path>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </path>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok-mapstruct-binding</artifactId>
-                            <version>${lombok-mapstruct-binding.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>${docker.version}</version>
-                <configuration>
-                    <!-- 推送至阿里云Docker仓库 -->
-                    <serverId>docker-aliyun</serverId>
-                    <registryUrl>${docker.repostory}</registryUrl>
-                    <pushImage>true</pushImage>
-                    <!-- 指定生成的镜像名 推送阿里云镜像仓库用 -->
-                    <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
-                    <!-- 指定 Dockerfile 路径 , 根据实际情况改动! ${project.basedir}：项目根路径-->
-                    <dockerDirectory>${project.basedir}/docker</dockerDirectory>
-                    <dockerHost>http://192.168.30.130:2375</dockerHost>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.artifactId}.jar</include>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-        <!-- profile对资源的操作 -->
-        <resources>
-            <!-- 打包的时候先去掉所有的配置文件 -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>${versions-maven-plugin.version}</version>
+        <configuration>
+          <!--备份版本-->
+          <generateBackupPoms>true</generateBackupPoms>
+          <newVersion>3.2.6</newVersion>
+          <oldVersion>3.2.5</oldVersion>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>io.spring.javaformat</groupId>
+        <artifactId>spring-javaformat-maven-plugin</artifactId>
+        <version>0.0.41</version>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.12</version>
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${maven-checkstyle-plugin.version}</version>
+        <configuration>
+          <configLocation>checkstyle.xml</configLocation>
+          <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+          <consoleOutput>true</consoleOutput>
+          <failsOnError>true</failsOnError>
+          <failOnViolation>true</failOnViolation>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+          <skip>false</skip>
+          <linkXRef>false</linkXRef>
+        </configuration>
+        <executions>
+          <execution>
+            <id>install</id>
+            <phase>install</phase>
+            <goals>
+              <goal>checkstyle</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+          <encoding>UTF-8</encoding>
+          <compilerArgs>
+            <arg>-Xlint:-options</arg>
+            <arg>-Xlint:varargs</arg>
+            <arg>-Xlint:rawtypes</arg>
+            <arg>-Xlint:unchecked</arg>
+            <arg>-Xlint:deprecation</arg>
+            <arg>-parameters</arg>
+          </compilerArgs>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>${mapstruct.version}</version>
+            </path>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok-mapstruct-binding</artifactId>
+              <version>${lombok-mapstruct-binding.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>${docker.version}</version>
+        <configuration>
+          <!-- 推送至阿里云Docker仓库 -->
+          <serverId>docker-aliyun</serverId>
+          <registryUrl>${docker.repostory}</registryUrl>
+          <pushImage>true</pushImage>
+          <!-- 指定生成的镜像名 推送阿里云镜像仓库用 -->
+          <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
+          <!-- 指定 Dockerfile 路径 , 根据实际情况改动! ${project.basedir}：项目根路径-->
+          <dockerDirectory>${project.basedir}/docker</dockerDirectory>
+          <dockerHost>http://192.168.30.130:2375</dockerHost>
+          <resources>
             <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>application*.yml</exclude>
-                    <exclude>bootstrap*.yml</exclude>
-                    <exclude>log4j2*.xml</exclude>
-                    <exclude>*.json</exclude>
-                    <exclude>*.properties</exclude>
-                </excludes>
+              <targetPath>/</targetPath>
+              <directory>${project.build.directory}</directory>
+              <include>${project.artifactId}.jar</include>
             </resource>
-            <!-- 添加需要包含的文件 -->
-            <resource>
-                <directory>src/main/resources</directory>
-                <!-- 是否替换yml或者properties里@xx@表示的maven properties属性值 -->
-                <filtering>true</filtering>
-                <!-- 在打包的时候，根据-P参数，加上需要的yml配置文件 -->
-                <includes>
-                    <include>application.yml</include>
-                    <include>application-${PROFILE-ACTIVE}.yml</include>
-                    <include>bootstrap.yml</include>
-                    <include>bootstrap-${PROFILE-ACTIVE}.yml</include>
-                    <include>log4j2.xml</include>
-                    <include>log4j2-${PROFILE-ACTIVE}.xml</include>
-                    <include>init_router.json</include>
-                    <include>log4j2.component.properties</include>
-                </includes>
-            </resource>
-        </resources>
-    </build>
+          </resources>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin.version}</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+    <!-- profile对资源的操作 -->
+    <resources>
+      <!-- 打包的时候先去掉所有的配置文件 -->
+      <resource>
+        <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>application*.yml</exclude>
+          <exclude>bootstrap*.yml</exclude>
+          <exclude>log4j2*.xml</exclude>
+          <exclude>*.json</exclude>
+          <exclude>*.properties</exclude>
+        </excludes>
+      </resource>
+      <!-- 添加需要包含的文件 -->
+      <resource>
+        <directory>src/main/resources</directory>
+        <!-- 是否替换yml或者properties里@xx@表示的maven properties属性值 -->
+        <filtering>true</filtering>
+        <!-- 在打包的时候，根据-P参数，加上需要的yml配置文件 -->
+        <includes>
+          <include>application.yml</include>
+          <include>application-${PROFILE-ACTIVE}.yml</include>
+          <include>bootstrap.yml</include>
+          <include>bootstrap-${PROFILE-ACTIVE}.yml</include>
+          <include>log4j2.xml</include>
+          <include>log4j2-${PROFILE-ACTIVE}.xml</include>
+          <include>init_router.json</include>
+          <include>log4j2.component.properties</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
 </project>
