@@ -21,12 +21,14 @@ import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.context.UserContextHolder;
+import org.laokou.common.i18n.utils.LocaleUtil;
 import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import static org.laokou.common.core.i18n.I18nRequestContextFilter.LANG;
 import static org.laokou.common.i18n.common.constants.Constant.AUTHORIZATION;
 
 /**
@@ -51,7 +53,7 @@ public class UserContextInterceptor implements HandlerInterceptor {
 	private UserContextHolder.User convert(UserDetail userDetail, HttpServletRequest request) {
 		return new UserContextHolder.User(userDetail.getId(), userDetail.getUsername(), userDetail.getTenantId(),
 				userDetail.getDeptPath(), userDetail.getDeptId(), userDetail.getSourceName(),
-				request.getHeader(AUTHORIZATION).substring(7));
+				request.getHeader(AUTHORIZATION).substring(7), LocaleUtil.toLocale(request.getHeader(LANG)).getLanguage());
 	}
 
 }

@@ -298,7 +298,7 @@ public class RedisUtil {
 	}
 
 	public Object hGetNative(String key, String field) {
-		return redisTemplate.opsForHash().get(key,field);
+		return redisTemplate.opsForHash().get(key, field);
 	}
 
 	public long getKeysSize() {

@@ -23,6 +23,7 @@ import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
+
 /**
  * @author laokou
  */
@@ -32,8 +33,8 @@ public class TranslateUtil {
 
 	private final RedisUtil redisUtil;
 
-	public String getMessage(String code, String language) {
-		Object o = redisUtil.hGetNative(RedisKeyUtil.getI18nMessageKey(language), code);
+	public String getMessage(String code, String lang) {
+		Object o = redisUtil.hGetNative(RedisKeyUtil.getI18nMessageKey(lang), code);
 		if (ObjectUtil.isNull(o)) {
 			return code;
 		}

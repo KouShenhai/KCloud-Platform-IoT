@@ -89,6 +89,8 @@ public class UserContextHolder {
 		 */
 		private String token;
 
+		private String lang;
+
 	}
 
 }

@@ -26,21 +26,14 @@ import org.laokou.admin.dto.menu.MenuListQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.security.utils.UserDetail;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.admin.domain.menu.HiddenEnum.NO;
-import static org.laokou.admin.domain.menu.TypeEnum.MENU;
 import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
