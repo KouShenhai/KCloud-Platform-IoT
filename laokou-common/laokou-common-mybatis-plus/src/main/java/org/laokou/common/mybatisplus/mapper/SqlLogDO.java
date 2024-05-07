@@ -24,20 +24,26 @@ import lombok.Data;
 import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_SQL_LOG;
 
 /**
+ * SQL日志.
  * @author laokou
  */
 @Data
 @TableName(BOOT_SYS_SQL_LOG)
-@Schema(name = "SqlLogDO", description = "SQL日志")
 public class SqlLogDO extends BaseDO {
 
-	@Schema(name = "appName", description = "应用名称")
+	/**
+	 * 应用名称.
+	 */
 	private String appName;
 
-	@Schema(name = "sql", description = "查询语句")
+	/**
+	 * SQL.
+	 */
 	private String sql;
 
-	@Schema(name = "costTime", description = "消耗时间")
+	/**
+	 * 消耗时间.
+	 */
 	private Long costTime;
 
 }

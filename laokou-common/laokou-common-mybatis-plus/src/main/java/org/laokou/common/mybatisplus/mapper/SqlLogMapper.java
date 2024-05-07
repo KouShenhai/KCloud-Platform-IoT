@@ -23,8 +23,8 @@ import org.springframework.stereotype.Repository;
 /**
  * @author laokou
  */
-@Repository
 @Mapper
+@Repository
 public interface SqlLogMapper extends CrudMapper<Long, Integer, SqlLogDO> {
 
 }

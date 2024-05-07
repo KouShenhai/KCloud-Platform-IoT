@@ -17,32 +17,33 @@
  *
  */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>laokou-im</artifactId>
-        <groupId>org.laokou</groupId>
-        <version>3.2.5</version>
-    </parent>
-    <artifactId>laokou-im-app</artifactId>
-    <dependencies>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-security</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.laokou</groupId>
-                    <artifactId>laokou-common-mybatis-plus</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-im-infrastructure</artifactId>
-        </dependency>
-    </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>laokou-im</artifactId>
+    <groupId>org.laokou</groupId>
+    <version>3.2.5</version>
+  </parent>
+  <artifactId>laokou-im-app</artifactId>
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-security</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.laokou</groupId>
+          <artifactId>laokou-common-mybatis-plus</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.github.ben-manes.caffeine</groupId>
+      <artifactId>caffeine</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-im-infrastructure</artifactId>
+    </dependency>
+  </dependencies>
 </project>

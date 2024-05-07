@@ -17,53 +17,54 @@
  *
  */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <groupId>org.laokou</groupId>
-        <artifactId>KCloud-Platform-IoT</artifactId>
-        <version>3.2.5</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>laokou-common</artifactId>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>org.laokou</groupId>
+    <artifactId>KCloud-Platform-IoT</artifactId>
     <version>3.2.5</version>
-    <packaging>pom</packaging>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>laokou-common</artifactId>
+  <version>3.2.5</version>
+  <packaging>pom</packaging>
 
-    <modules>
-        <module>laokou-common-core</module>
-        <module>laokou-common-mybatis-plus</module>
-        <module>laokou-common-bom</module>
-        <module>laokou-common-openapi-doc</module>
-        <module>laokou-common-security</module>
-        <module>laokou-common-data-cache</module>
-        <module>laokou-common-secret</module>
-        <module>laokou-common-i18n</module>
-        <module>laokou-common-crypto</module>
-        <module>laokou-common-elasticsearch</module>
-        <module>laokou-common-redis</module>
-        <module>laokou-common-rocketmq</module>
-        <module>laokou-common-mongodb</module>
-        <module>laokou-common-sentinel</module>
-        <module>laokou-common-openfeign</module>
-        <module>laokou-common-prometheus</module>
-        <module>laokou-common-kafka</module>
-        <module>laokou-common-cors</module>
-        <module>laokou-common-seata</module>
-        <module>laokou-common-log4j2</module>
-        <module>laokou-common-trace</module>
-        <module>laokou-common-algorithm</module>
-        <module>laokou-common-nacos</module>
-		    <module>laokou-common-netty</module>
-        <module>laokou-common-idempotent</module>
-        <module>laokou-common-lock</module>
-        <module>laokou-common-sensitive</module>
-        <module>laokou-common-mqtt</module>
-        <module>laokou-common-rate-limiter</module>
-        <module>laokou-common-domain</module>
-        <module>laokou-common-log</module>
-        <module>laokou-common-test</module>
-        <module>laokou-common-support</module>
-        <module>laokou-common-extension</module>
-    </modules>
+  <modules>
+    <module>laokou-common-core</module>
+    <module>laokou-common-mybatis-plus</module>
+    <module>laokou-common-bom</module>
+    <module>laokou-common-openapi-doc</module>
+    <module>laokou-common-security</module>
+    <module>laokou-common-data-cache</module>
+    <module>laokou-common-secret</module>
+    <module>laokou-common-i18n</module>
+    <module>laokou-common-crypto</module>
+    <module>laokou-common-elasticsearch</module>
+    <module>laokou-common-redis</module>
+    <module>laokou-common-rocketmq</module>
+    <module>laokou-common-mongodb</module>
+    <module>laokou-common-sentinel</module>
+    <module>laokou-common-openfeign</module>
+    <module>laokou-common-prometheus</module>
+    <module>laokou-common-kafka</module>
+    <module>laokou-common-cors</module>
+    <module>laokou-common-seata</module>
+    <module>laokou-common-log4j2</module>
+    <module>laokou-common-trace</module>
+    <module>laokou-common-algorithm</module>
+    <module>laokou-common-nacos</module>
+    <module>laokou-common-netty</module>
+    <module>laokou-common-idempotent</module>
+    <module>laokou-common-lock</module>
+    <module>laokou-common-sensitive</module>
+    <module>laokou-common-mqtt</module>
+    <module>laokou-common-rate-limiter</module>
+    <module>laokou-common-domain</module>
+    <module>laokou-common-log</module>
+    <module>laokou-common-test</module>
+    <module>laokou-common-support</module>
+    <module>laokou-common-extension</module>
+  </modules>
 
 </project>
