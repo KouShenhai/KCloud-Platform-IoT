@@ -23,6 +23,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.utils.I18nUtil;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.filter.RequestContextFilter;
@@ -35,6 +36,7 @@ import java.io.IOException;
  * @author laokou
  */
 @NonNullApi
+@Component
 public final class I18nRequestContextFilter extends RequestContextFilter {
 
 	public static final String LANG = "Lang";
