@@ -18,7 +18,6 @@
 package org.laokou.auth.domain.model.auth;
 
 import eu.bitwalker.useragentutils.UserAgent;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import org.laokou.auth.domain.event.LoginEvent;
@@ -45,68 +44,115 @@ import static org.laokou.auth.domain.model.auth.UserStatus.DISABLE;
 @Getter
 public class AuthA extends AggregateRoot<Long> {
 
-	@Schema(name = "username", description = "用户名", example = "admin")
+	/**
+	 * 用户名.
+	 */
 	private String username;
 
-	@Schema(name = "password", description = "密码", example = "admin123")
+	/**
+	 * 密码.
+	 */
 	private String password;
 
-	@Schema(name = "grantType", description = "类型 mail邮箱 mobile手机号 password密码 authorization_code授权码")
+	/**
+	 * 认证类型 mail邮箱 mobile手机号 password密码 authorization_code授权码.
+	 */
 	private String grantType;
 
-	@Schema(name = "captcha", description = "验证码值对象")
+	/**
+	 * 验证码值对象.
+	 */
 	private CaptchaV captcha;
 
-	@Schema(name = "user", description = "用户实体")
+	/**
+	 * 用户实体.
+	 */
 	private UserE user;
 
-	@Schema(name = "menu", description = "菜单实体")
+	/**
+	 * 菜单实体.
+	 */
 	private MenuE menu;
 
-	@Schema(name = "dept", description = "部门实体")
+	/**
+	 * 部门实体.
+	 */
 	private DeptE dept;
 
-	@Schema(name = "log", description = "日志")
+	/**
+	 * 日志值对象.
+	 */
 	private LogV log;
 
-	@Schema(name = "LOGIN_SUCCEEDED", description = "登录成功")
+	/**
+	 * 登录成功.
+	 */
 	private final String LOGIN_SUCCEEDED = "OAuth2_LoginSucceeded";
 
-	@Schema(name = "MAIL", description = "邮箱")
+	/**
+	 * 邮箱.
+	 */
 	public static final String MAIL = "mail";
 
-	@Schema(name = "MOBILE", description = "手机")
+	/**
+	 * 手机号.
+	 */
 	public static final String MOBILE = "mobile";
 
-	@Schema(name = "PASSWORD", description = "密码")
+	/**
+	 * 密码.
+	 */
 	public static final String PASSWORD = "password";
 
-	@Schema(name = "AUTHORIZATION_CODE", description = "授权码")
+	/**
+	 * 授权码.
+	 */
 	public static final String AUTHORIZATION_CODE = "authorization_code";
 
-	@Schema(name = "USERNAME", description = "用户名")
+	/**
+	 * 用户名.
+	 */
 	public static final String USERNAME = "username";
 
-	@Schema(name = "CAPTCHA", description = "验证码")
+	/**
+	 * 验证码.
+	 */
 	public static final String CAPTCHA = "captcha";
 
-	@Schema(name = "UUID", description = "UUID")
+	/**
+	 * UUID.
+	 */
 	public static final String UUID = "uuid";
 
-	@Schema(name = "GRANT_TYPE", description = "认证类型")
+	/**
+	 * 认证类型.
+	 */
 	public static final String GRANT_TYPE = "grant_type";
 
-	@Schema(name = "CODE", description = "验证码")
+	/**
+	 * 验证码.
+	 */
 	public static final String CODE = "code";
 
-	@Schema(name = "TENANT_ID", description = "租户ID")
+	/**
+	 * 租户ID.
+	 */
 	public static final String TENANT_ID = "tenant_id";
 
-	@Schema(name = "OK", description = "成功")
+	/**
+	 * 成功.
+	 */
 	private static final int OK = 0;
 
-	@Schema(name = "FAIL", description = "失败")
+	/**
+	 * 失败.
+	 */
 	private static final int FAIL = 1;
+
+	/**
+	 * 业务标识.
+	 */
+	public static final String BIZ_ID = "Auth";
 
 	public AuthA() {
 	}

@@ -26,6 +26,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 
+import static org.laokou.auth.domain.model.auth.AuthA.BIZ_ID;
 import static org.laokou.auth.domain.model.auth.AuthA.MOBILE;
 import static org.laokou.common.i18n.common.exception.ParamException.*;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_CAPTCHA_REQUIRE;
@@ -33,7 +34,7 @@ import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_CAPT
 /**
  * @author laokou
  */
-@Extension(bizId = MOBILE)
+@Extension(bizId = BIZ_ID, useCase = MOBILE)
 public class MobileAuthValidator implements AuthValidatorExtPt {
 
 	@Override
