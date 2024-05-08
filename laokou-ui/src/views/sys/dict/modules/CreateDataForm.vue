@@ -40,7 +40,7 @@
 
 <script>
 
-import { getData, addData, updateData } from '@/api/system/dict/data'
+import { getData, addData, updateData } from '@/api/sys/dict/item'
 
 export default {
   name: 'CreateDataForm',

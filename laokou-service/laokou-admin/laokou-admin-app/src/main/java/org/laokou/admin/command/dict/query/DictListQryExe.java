@@ -21,7 +21,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.admin.convertor.DictConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.dict.DictListQry;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
@@ -30,12 +29,9 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
-
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_DICT;
 import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
@@ -60,7 +56,7 @@ public class DictListQryExe {
 	 */
 	@SneakyThrows
 	@DS(TENANT)
-	@DataFilter(tableAlias = BOOT_SYS_DICT)
+//	@DataFilter(tableAlias = BOOT_SYS_DICT)
 	public Result<Datas<DictCO>> execute(DictListQry qry) {
 		DictDO dictDO = new DictDO(qry.getLabel(), qry.getType());
 		PageQuery page = qry;

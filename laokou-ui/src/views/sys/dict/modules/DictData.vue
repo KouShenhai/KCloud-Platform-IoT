@@ -58,7 +58,7 @@
 
 <script>
 
-import { listData, delData } from '@/api/system/dict/data'
+import { listData, delData } from '@/api/sys/dict/item'
 import CreateDataForm from './CreateDataForm'
 
 export default {
