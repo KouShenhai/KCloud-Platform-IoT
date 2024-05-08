@@ -56,7 +56,7 @@ public class DictGatewayImpl implements DictGateway {
 	public void create(Dict dict) {
 		// 验证类型和值
 		long count = dictMapper.selectCount(Wrappers.lambdaQuery(DictTypeDO.class)
-			//.eq(DictTypeDO::getValue, dict.getValue())
+			// .eq(DictTypeDO::getValue, dict.getValue())
 			.eq(DictTypeDO::getType, dict.getType()));
 		dict.checkTypeAndValue(count);
 		create(dictConvertor.toDataObject(dict));
@@ -71,7 +71,7 @@ public class DictGatewayImpl implements DictGateway {
 		// dict.checkNullId();
 		// 验证类型和值
 		long count = dictMapper.selectCount(Wrappers.lambdaQuery(DictTypeDO.class)
-			//.eq(DictTypeDO::getValue, dict.getValue())
+			// .eq(DictTypeDO::getValue, dict.getValue())
 			.eq(DictTypeDO::getType, dict.getType())
 			.ne(DictTypeDO::getId, dict.getId()));
 		dict.checkTypeAndValue(count);

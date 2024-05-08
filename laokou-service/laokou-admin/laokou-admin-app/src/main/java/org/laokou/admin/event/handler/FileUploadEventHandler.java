@@ -57,7 +57,7 @@ public class FileUploadEventHandler extends AbstractDomainEventRocketMQListener 
 		try {
 			FileUploadEvent event = JacksonUtil.toBean(attribute, FileUploadEvent.class);
 			DynamicDataSourceContextHolder.push(evt.getSourceName());
-			//logGateway.create(event, evt);
+			// logGateway.create(event, evt);
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

@@ -42,4 +42,5 @@ public class DictListQry extends PageQuery {
 	public void setName(String name) {
 		this.name = StringUtil.like(name.trim());
 	}
+
 }

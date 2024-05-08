@@ -55,8 +55,8 @@ public class TreeUtil {
 	 * @param treeNodes 菜单列表
 	 * @param clazz 类
 	 * @param <T> 泛型
-	 * @return 树节点
 	 * @param isPath 是否开启节点
+	 * @return 树节点
 	 */
 	public static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, Class<T> clazz, boolean isPath) {
 		return buildTreeNode(treeNodes, ConvertUtil.sourceToTarget(rootRootNode(), clazz), isPath);
@@ -76,6 +76,7 @@ public class TreeUtil {
 	 * @param treeNodes 菜单列表
 	 * @param rootNode 顶级节点
 	 * @param <T> 泛型
+	 * @param isPath 是否开启节点
 	 * @return 树节点
 	 */
 	private static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, T rootNode, boolean isPath) {

@@ -61,8 +61,8 @@ public class OAuth2AuthenticationProvider {
 	public UsernamePasswordAuthenticationToken authentication(AuthA auth) {
 		try {
 			// 校验
-			extensionExecutor.executeVoid(AuthValidatorExtPt.class, BizScenario.valueOf(BIZ_ID, USE_CASE, auth.getGrantType()),
-					extension -> extension.validate(auth));
+			extensionExecutor.executeVoid(AuthValidatorExtPt.class,
+					BizScenario.valueOf(BIZ_ID, USE_CASE, auth.getGrantType()), extension -> extension.validate(auth));
 			// 认证
 			authDomainService.auth(auth);
 			UserDetail userDetail = convert(auth);
@@ -82,7 +82,7 @@ public class OAuth2AuthenticationProvider {
 			// 清除领域事件上下文
 			DomainEventContextHolder.clear();
 			// 清空领域事件
-			//auth.clearEvents();
+			// auth.clearEvents();
 		}
 	}
 

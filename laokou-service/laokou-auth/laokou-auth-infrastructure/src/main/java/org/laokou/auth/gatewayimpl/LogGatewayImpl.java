@@ -35,18 +35,19 @@ public class LogGatewayImpl implements LogGateway {
 
 	private final LoginLogMapper loginLogMapper;
 
-	//@Override
-//	public void create(LoginEvent event, DefaultDomainEvent evt) {
-//		try {
-//			DynamicDataSourceContextHolder.push(evt.getSourceName());
-//			DynamicTableSuffixContextHolder.set(UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
-//			loginLogMapper.insert(convert(event, evt));
-//		}
-//		finally {
-//			DynamicTableSuffixContextHolder.clear();
-//			DynamicDataSourceContextHolder.clear();
-//		}
-//	}
+	// @Override
+	// public void create(LoginEvent event, DefaultDomainEvent evt) {
+	// try {
+	// DynamicDataSourceContextHolder.push(evt.getSourceName());
+	// DynamicTableSuffixContextHolder.set(UNDER.concat(DateUtil.format(DateUtil.now(),
+	// DateUtil.YYYYMM)));
+	// loginLogMapper.insert(convert(event, evt));
+	// }
+	// finally {
+	// DynamicTableSuffixContextHolder.clear();
+	// DynamicDataSourceContextHolder.clear();
+	// }
+	// }
 
 	private LoginLogDO convert(LoginEvent loginEvent, DefaultDomainEvent evt) {
 		LoginLogDO logDO = new LoginLogDO();

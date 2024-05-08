@@ -51,10 +51,11 @@ public class DictOptionListQryExe {
 	public Result<List<Option>> execute(DictOptionListQry qry) {
 		List<DictTypeDO> list = dictMapper.selectList(Wrappers.lambdaQuery(DictTypeDO.class)
 			.eq(DictTypeDO::getType, qry.getType())
-			//.select(DictTypeDO::getLabel, DictTypeDO::getValue)
+			// .select(DictTypeDO::getLabel, DictTypeDO::getValue)
 			.orderByDesc(DictTypeDO::getId));
 		return null;
-		//return Result.ok(list.stream().map(dict -> new Option(dict.getLabel(), dict.getValue())).toList());
+		// return Result.ok(list.stream().map(dict -> new Option(dict.getLabel(),
+		// dict.getValue())).toList());
 	}
 
 }

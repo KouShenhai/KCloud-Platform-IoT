@@ -40,15 +40,15 @@ public class LogGatewayImpl implements LogGateway {
 
 	private final OssLogMapper ossLogMapper;
 
-//	@Override
-//	public void create(OperateEvent event, DefaultDomainEvent evt) {
-//		operateLogMapper.insert(null);
-//	}
-//
-//	@Override
-//	public void create(FileUploadEvent event, DefaultDomainEvent evt) {
-//		ossLogMapper.insert(convert(event, evt));
-//	}
+	// @Override
+	// public void create(OperateEvent event, DefaultDomainEvent evt) {
+	// operateLogMapper.insert(null);
+	// }
+	//
+	// @Override
+	// public void create(FileUploadEvent event, DefaultDomainEvent evt) {
+	// ossLogMapper.insert(convert(event, evt));
+	// }
 
 	private OssLogDO convert(FileUploadEvent fileUploadEvent, DefaultDomainEvent evt) {
 		OssLogDO logDO = new OssLogDO();

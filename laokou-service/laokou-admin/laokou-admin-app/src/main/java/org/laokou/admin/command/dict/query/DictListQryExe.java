@@ -60,7 +60,7 @@ public class DictListQryExe {
 	public Result<Datas<DictTypeCO>> execute(DictListQry qry) {
 		DictTypeDO dictTypeDO = new DictTypeDO(qry.getName(), qry.getType());
 		CompletableFuture<List<DictTypeDO>> c1 = CompletableFuture
-				.supplyAsync(() -> dictMapper.selectPageByCondition(dictTypeDO, qry), executor);
+			.supplyAsync(() -> dictMapper.selectPageByCondition(dictTypeDO, qry), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> dictMapper.selectCountByCondition(dictTypeDO, qry), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
