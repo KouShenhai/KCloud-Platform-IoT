@@ -17,7 +17,7 @@
 
 package org.laokou.auth.domain.gateway;
 
-import org.laokou.auth.domain.model.auth.DeptE;
+import org.laokou.auth.domain.model.auth.DeptV;
 import org.laokou.auth.domain.model.auth.UserE;
 
 /**
@@ -32,6 +32,6 @@ public interface DeptGateway {
 	 * @param user 用户对象
 	 * @return 部门PATHS列表
 	 */
-	DeptE getDeptPaths(UserE user);
+	DeptV getDeptPaths(UserE user);
 
 }

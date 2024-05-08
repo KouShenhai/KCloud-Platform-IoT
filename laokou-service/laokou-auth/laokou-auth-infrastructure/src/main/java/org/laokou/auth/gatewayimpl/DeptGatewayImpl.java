@@ -20,7 +20,7 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.DeptGateway;
-import org.laokou.auth.domain.model.auth.DeptE;
+import org.laokou.auth.domain.model.auth.DeptV;
 import org.laokou.auth.domain.model.auth.UserE;
 import org.laokou.auth.gatewayimpl.database.DeptMapper;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -52,12 +52,12 @@ public class DeptGatewayImpl implements DeptGateway {
 	 * @return 部门PATHS
 	 */
 	@Override
-	public DeptE getDeptPaths(UserE user) {
+	public DeptV getDeptPaths(UserE user) {
 		try {
 			if (user.isSuperAdministrator()) {
-				return new DeptE(new HashSet<>(deptMapper.selectDeptPaths()));
+				return new DeptV(new HashSet<>(deptMapper.selectDeptPaths()));
 			}
-			return new DeptE(new HashSet<>(deptMapper.selectDeptPathsByUserId(user.getId())));
+			return new DeptV(new HashSet<>(deptMapper.selectDeptPathsByUserId(user.getId())));
 		}
 		catch (BadSqlGrammarException e) {
 			log.error("表 {} 不存在，错误信息：{}，详情见日志", BOOT_SYS_DEPT, LogUtil.record(e.getMessage()), e);

@@ -18,20 +18,22 @@
 package org.laokou.auth.dto.tenant;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
+ * 查看租户ID命令请求.
+ *
  * @author laokou
  */
 @Data
-@Schema(name = "TenantGetIDQry", description = "查看租户ID命令请求")
 public class TenantGetIDQry extends CommonCommand {
 
+	/**
+	 * 请求.
+	 */
 	@JsonIgnore
-	@Schema(name = "request", description = "响应")
 	private HttpServletRequest request;
 
 	public TenantGetIDQry(HttpServletRequest request) {

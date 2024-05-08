@@ -15,24 +15,16 @@
  *
  */
 
-package org.laokou.admin.domain.event;
+package org.laokou.auth.domain.model.auth;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import org.laokou.admin.domain.oss.OssLog;
-import org.laokou.common.core.context.UserContextHolder;
-
-import static org.laokou.common.i18n.common.constants.EventType.FILE_UPLOAD_FAILED;
+import java.util.Set;
 
 /**
+ * 部门值对象.
+ *
+ * @param deptPaths 部门PATH集合.
  * @author laokou
  */
-@Data
-@Schema(name = "FileLogFailedEvent", description = "文件上传失败事件")
-public class FileUploadFailedEvent extends FileUploadEvent {
-
-	public FileUploadFailedEvent(OssLog ossLog, UserContextHolder.User user, String appName) {
-		super(ossLog, user, appName, 1, FILE_UPLOAD_FAILED);
-	}
+public record DeptV(Set<String> deptPaths) {
 
 }

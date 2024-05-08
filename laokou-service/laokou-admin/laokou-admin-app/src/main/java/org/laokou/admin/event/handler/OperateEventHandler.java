@@ -22,7 +22,7 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.admin.domain.gateway.LogGateway;
-import org.laokou.common.core.common.event.OperateEvent;
+import org.laokou.common.log.domainevent.OperateEvent;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.listener.AbstractDomainEventRocketMQListener;
 import org.laokou.common.domain.service.DomainEventService;
@@ -58,7 +58,7 @@ public class OperateEventHandler extends AbstractDomainEventRocketMQListener {
 		try {
 			OperateEvent event = JacksonUtil.toBean(attribute, OperateEvent.class);
 			DynamicDataSourceContextHolder.push(evt.getSourceName());
-			logGateway.create(event, evt);
+			//logGateway.create(event, evt);
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

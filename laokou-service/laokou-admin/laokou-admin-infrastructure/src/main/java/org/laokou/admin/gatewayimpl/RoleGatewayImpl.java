@@ -82,7 +82,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	 */
 	@Override
 	public void modify(Role role) {
-		role.checkNullId();
+		// role.checkNullId();
 		long count = roleMapper.selectCount(
 				Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()).ne(RoleDO::getId, role.getId()));
 		role.checkName(count);

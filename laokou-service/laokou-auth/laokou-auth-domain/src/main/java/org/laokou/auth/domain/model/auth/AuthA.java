@@ -20,21 +20,20 @@ package org.laokou.auth.domain.model.auth;
 import eu.bitwalker.useragentutils.UserAgent;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
-import org.laokou.auth.domain.event.LoginEvent;
 import org.laokou.common.core.utils.*;
-import org.laokou.common.i18n.common.constants.EventType;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.*;
+import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.constants.EventType.LOGIN_FAILED;
+import static org.laokou.auth.domain.model.auth.UserStatus.DISABLE;
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.exception.AuthException.*;
 import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
-import static org.laokou.auth.domain.model.auth.UserStatus.DISABLE;
 
 /**
  * 认证聚合.
@@ -72,17 +71,22 @@ public class AuthA extends AggregateRoot<Long> {
 	/**
 	 * 菜单实体.
 	 */
-	private MenuE menu;
+	private MenuV menu;
 
 	/**
 	 * 部门实体.
 	 */
-	private DeptE dept;
+	private DeptV dept;
 
 	/**
 	 * 日志值对象.
 	 */
 	private LogV log;
+
+	/**
+	 * 请求对象.
+	 */
+	private HttpServletRequest request;
 
 	/**
 	 * 登录成功.
@@ -152,7 +156,12 @@ public class AuthA extends AggregateRoot<Long> {
 	/**
 	 * 业务标识.
 	 */
-	public static final String BIZ_ID = "Auth";
+	public static final String BIZ_ID = "IoT-Platform";
+
+	/**
+	 * 业务用例.
+	 */
+	public static final String USE_CASE = "auth";
 
 	public AuthA() {
 	}
@@ -165,7 +174,7 @@ public class AuthA extends AggregateRoot<Long> {
 		this.grantType = grantType;
 		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : 0L;
 		this.captcha = new CaptchaV(uuid, captcha);
-		this.log = createLog(request);
+		this.request = request;
 	}
 
 	public void updateAppName(String appName) {
@@ -200,18 +209,18 @@ public class AuthA extends AggregateRoot<Long> {
 		this.tenantId = user.getTenantId();
 	}
 
-	public void updateSource(SourceE source) {
+	public void updateSource(SourceV source) {
 		if (ObjectUtil.isNull(source)) {
 			fail(OAUTH2_SOURCE_NOT_EXIST);
 		}
-		this.sourceName = source.getName();
+		this.sourceName = source.name();
 	}
 
-	public void updateMenu(MenuE menu) {
+	public void updateMenu(MenuV menu) {
 		this.menu = menu;
 	}
 
-	public void updateDept(DeptE dept) {
+	public void updateDept(DeptV dept) {
 		this.dept = dept;
 	}
 
@@ -241,28 +250,28 @@ public class AuthA extends AggregateRoot<Long> {
 	}
 
 	public void checkMenuPermissions() {
-		if (CollectionUtil.isEmpty(this.menu.getPermissions())) {
+		if (CollectionUtil.isEmpty(this.menu.permissions())) {
 			fail(FORBIDDEN);
 		}
 	}
 
 	public void ok() {
-		addEvent(new LoginEvent(this, EventType.LOGIN_SUCCEEDED, MessageUtil.getMessage(LOGIN_SUCCEEDED), OK));
+		createLog(OK, MessageUtil.getMessage(LOGIN_SUCCEEDED));
 	}
 
 	private void fail(String code) {
 		String message = MessageUtil.getMessage(code);
-		addEvent(new LoginEvent(this, LOGIN_FAILED, message, FAIL));
+		createLog(FAIL, message);
 		throw new AuthException(code, message);
 	}
 
-	private LogV createLog(HttpServletRequest request) {
+	private void createLog(Integer status, String message) {
 		String ip = IpUtil.getIpAddr(request);
 		String address = AddressUtil.getRealAddress(ip);
 		UserAgent userAgent = RequestUtil.getUserAgent(request);
 		String os = userAgent.getOperatingSystem().getName();
 		String browser = userAgent.getBrowser().getName();
-		return new LogV(ip, address, browser, os, DateUtil.now());
+		this.log = new LogV(ip, address, browser, os, status, message);
 	}
 
 }

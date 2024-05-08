@@ -17,7 +17,7 @@
 
 package org.laokou.auth.domain.gateway;
 
-import org.laokou.auth.domain.model.auth.MenuE;
+import org.laokou.auth.domain.model.auth.MenuV;
 import org.laokou.auth.domain.model.auth.UserE;
 
 /**
@@ -32,6 +32,6 @@ public interface MenuGateway {
 	 * @param user 用户对象
 	 * @return 菜单权限标识集合
 	 */
-	MenuE getPermissions(UserE user);
+	MenuV getPermissions(UserE user);
 
 }

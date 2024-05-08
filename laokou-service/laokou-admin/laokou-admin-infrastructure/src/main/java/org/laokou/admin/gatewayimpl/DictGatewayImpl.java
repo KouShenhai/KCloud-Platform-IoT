@@ -68,7 +68,7 @@ public class DictGatewayImpl implements DictGateway {
 	 */
 	@Override
 	public void modify(Dict dict) {
-		dict.checkNullId();
+		// dict.checkNullId();
 		// 验证类型和值
 		long count = dictMapper.selectCount(Wrappers.lambdaQuery(DictDO.class)
 			.eq(DictDO::getValue, dict.getValue())

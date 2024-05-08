@@ -17,23 +17,16 @@
 
 package org.laokou.auth.domain.model.auth;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
-import java.time.LocalDateTime;
-
-@Schema(name = "LogV", description = "日志值对象")
-public record LogV(@Schema(name = "loginIp", description = "登录IP") String loginIp,
-		@Schema(name = "address", description = "登录的归属地") String address,
-		@Schema(name = "browser", description = "登录的浏览器") String browser,
-		@Schema(name = "os", description = "登录的操作系统") String os,
-		@Schema(name = "loginDate", description = "登录时间") LocalDateTime loginDate) {
-
-	public LogV(String loginIp, String address, String browser, String os, LocalDateTime loginDate) {
-		this.os = os;
-		this.loginIp = loginIp;
-		this.address = address;
-		this.browser = browser;
-		this.loginDate = loginDate;
-	}
+/**
+ * 日志值对象.
+ *
+ * @param ip 登录的IP地址
+ * @param address 登录的归属地
+ * @param browser 登录的浏览器
+ * @param os 登录的操作系统
+ * @param status 登录状态 0登录成功 1登录失败
+ * @param message 登录信息
+ */
+public record LogV(String os, String ip, String address, String browser, Integer status, String message) {
 
 }

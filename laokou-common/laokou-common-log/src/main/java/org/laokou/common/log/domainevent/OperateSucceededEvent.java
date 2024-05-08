@@ -15,15 +15,10 @@
  *
  */
 
-package org.laokou.common.core.common.event;
+package org.laokou.common.log.domainevent;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
-import org.laokou.common.core.common.domain.OperateLog;
-import org.laokou.common.core.context.UserContextHolder;
-
-import static org.laokou.common.i18n.common.constants.EventType.OPERATE_SUCCEEDED;
 
 /**
  * @author laokou
@@ -32,9 +27,10 @@ import static org.laokou.common.i18n.common.constants.EventType.OPERATE_SUCCEEDE
 @Schema(name = "OperateSucceededEvent", description = "操作成功事件")
 public class OperateSucceededEvent extends OperateEvent {
 
-	public OperateSucceededEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user,
-			String appName) {
-		super(operateLog, request, user, appName, 0, OPERATE_SUCCEEDED);
-	}
+	// public OperateSucceededEvent(OperateLog operateLog, HttpServletRequest request,
+	// UserContextHolder.User user,
+	// String appName) {
+	// super(operateLog, request, user, appName, 0, null);
+	// }
 
 }

@@ -15,15 +15,10 @@
  *
  */
 
-package org.laokou.common.core.common.event;
+package org.laokou.common.log.domainevent;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
-import org.laokou.common.core.common.domain.OperateLog;
-import org.laokou.common.core.context.UserContextHolder;
-
-import static org.laokou.common.i18n.common.constants.EventType.OPERATE_FAILED;
 
 /**
  * @author laokou
@@ -32,9 +27,10 @@ import static org.laokou.common.i18n.common.constants.EventType.OPERATE_FAILED;
 @Schema(name = "OperateFailedEvent", description = "操作失败事件")
 public class OperateFailedEvent extends OperateEvent {
 
-	public OperateFailedEvent(OperateLog operateLog, HttpServletRequest request, UserContextHolder.User user,
-			String appName) {
-		super(operateLog, request, user, appName, 1, OPERATE_FAILED);
-	}
+	// public OperateFailedEvent(OperateLog operateLog, HttpServletRequest request,
+	// UserContextHolder.User user,
+	// String appName) {
+	// super(operateLog, request, user, appName, 1, null);
+	// }
 
 }

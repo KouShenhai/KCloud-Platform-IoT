@@ -15,25 +15,16 @@
  *
  */
 
-package org.laokou.auth.domain.model.auth;
+package org.laokou.admin.dto.domainevent;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-
-import java.util.Set;
+import lombok.Data;
 
 /**
  * @author laokou
  */
-@Getter
-@Schema(name = "DeptE", description = "部门实体")
-public class DeptE {
-
-	@Schema(name = "deptPaths", description = "部门PATH集合")
-	private Set<String> deptPaths;
-
-	public DeptE(Set<String> deptPaths) {
-		this.deptPaths = deptPaths;
-	}
+@Data
+@Schema(name = "FileLogSucceededEvent", description = "文件上传成功事件")
+public class FileUploadSucceededEvent extends FileUploadEvent {
 
 }

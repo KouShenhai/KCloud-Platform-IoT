@@ -27,6 +27,7 @@ import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_MENU;
 
 /**
  * 菜单.
+ *
  * @author laokou
  */
 @Data

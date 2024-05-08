@@ -15,28 +15,24 @@
  *
  */
 
-package org.laokou.auth.domain.event;
+package org.laokou.auth.dto.domainevent;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.auth.domain.model.auth.AuthA;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.common.constants.EventType;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.DateUtil;
 
 import java.io.Serial;
 
-import static org.laokou.common.i18n.common.constants.EventStatus.CREATED;
-import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_LOGIN_EVENT_TOPIC;
-
 /**
+ * 登录事件.
+ *
  * @author laokou
  */
 @Data
 @NoArgsConstructor
-@Schema(name = "LoginEvent", description = "登录事件")
+@AllArgsConstructor
 public class LoginEvent extends DomainEvent<Long> {
 
 	@Serial
@@ -65,19 +61,5 @@ public class LoginEvent extends DomainEvent<Long> {
 
 	@Schema(name = "type", description = "登录类型")
 	protected String type;
-
-	public LoginEvent(AuthA authA, EventType eventType, String message, Integer status) {
-		super(IdGenerator.defaultSnowflakeId(), authA.getId(), eventType, CREATED, LAOKOU_LOGIN_EVENT_TOPIC,
-				authA.getSourceName(), authA.getAppName(), authA.getCreator(), authA.getEditor(), authA.getDeptId(),
-				authA.getDeptPath(), authA.getTenantId(), DateUtil.now(), DateUtil.now());
-		this.username = authA.getUsername();
-		this.ip = authA.getLog().loginIp();
-		this.address = authA.getLog().address();
-		this.os = authA.getLog().os();
-		this.browser = authA.getLog().browser();
-		this.message = message;
-		this.type = authA.getGrantType();
-		this.status = status;
-	}
 
 }

@@ -77,7 +77,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	 */
 	@Override
 	public void modify(Dept dept) {
-		dept.checkNullId();
+		// dept.checkNullId();
 		long count = deptMapper.selectCount(
 				Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, dept.getName()).ne(DeptDO::getId, dept.getId()));
 		dept.checkName(count);

@@ -24,6 +24,6 @@ package org.laokou.common.i18n.common.constants;
  */
 public enum EventType {
 
-	LOGIN_FAILED, LOGIN_SUCCEEDED, OPERATE_FAILED, OPERATE_SUCCEEDED, FILE_UPLOAD_FAILED, FILE_UPLOAD_SUCCEEDED
+	LOGIN
 
 }

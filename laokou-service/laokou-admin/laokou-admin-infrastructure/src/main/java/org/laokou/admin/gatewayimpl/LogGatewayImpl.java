@@ -18,12 +18,11 @@
 package org.laokou.admin.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.event.FileUploadEvent;
 import org.laokou.admin.domain.gateway.LogGateway;
+import org.laokou.admin.dto.domainevent.FileUploadEvent;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.OssLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssLogDO;
-import org.laokou.common.core.common.event.OperateEvent;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
@@ -41,15 +40,15 @@ public class LogGatewayImpl implements LogGateway {
 
 	private final OssLogMapper ossLogMapper;
 
-	@Override
-	public void create(OperateEvent event, DefaultDomainEvent evt) {
-		operateLogMapper.insert(null);
-	}
-
-	@Override
-	public void create(FileUploadEvent event, DefaultDomainEvent evt) {
-		ossLogMapper.insert(convert(event, evt));
-	}
+//	@Override
+//	public void create(OperateEvent event, DefaultDomainEvent evt) {
+//		operateLogMapper.insert(null);
+//	}
+//
+//	@Override
+//	public void create(FileUploadEvent event, DefaultDomainEvent evt) {
+//		ossLogMapper.insert(convert(event, evt));
+//	}
 
 	private OssLogDO convert(FileUploadEvent fileUploadEvent, DefaultDomainEvent evt) {
 		OssLogDO logDO = new OssLogDO();

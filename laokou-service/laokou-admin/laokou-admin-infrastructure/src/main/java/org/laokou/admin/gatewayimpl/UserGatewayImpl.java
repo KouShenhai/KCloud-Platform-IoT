@@ -68,7 +68,7 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	public void modify(User user) {
 		// 检查ID
-		user.checkNullId();
+		// user.checkNullId();
 		// 密码加密
 		user.encryptPassword(passwordEncoder, user.getPassword());
 		// 检查手机号
