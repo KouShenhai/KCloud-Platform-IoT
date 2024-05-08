@@ -59,7 +59,7 @@ public class MenusController {
 	@Operation(summary = "菜单管理", description = "查询菜单列表")
 	@PreAuthorize("hasAuthority('menu:list')")
 	public Result<List<MenuCO>> list(@RequestBody MenuListQry qry) {
-		return menusServiceI.findList(qry);
+		return menusServiceI.list(qry);
 	}
 
 	@TraceLog

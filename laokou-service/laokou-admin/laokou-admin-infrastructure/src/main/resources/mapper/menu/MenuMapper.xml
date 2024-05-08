@@ -20,80 +20,90 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.MenuMapper">
 
-    <select id="selectListByUserId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
-        SELECT a.component
-             ,a.type
-             ,a.sort
-             ,a.id
-             ,a.pid
-             ,a.name
-             ,a.icon
-             ,a.permission
-             ,a.hidden
-             ,a.keep_alive
-             ,a.target
-             ,a.redirect
-        FROM boot_sys_menu a
-            ,boot_sys_role b
-            ,boot_sys_role_menu c
-            ,boot_sys_user_role e
-        WHERE a.id = c.menu_id AND c.role_id = b.id
-            AND b.id = e.role_id
-            AND e.user_id = #{userId}
-            AND a.del_flag = 0
-            AND a.type = 0
-            AND a.hidden = 0
-        ORDER BY a.sort desc
-    </select>
-    <select id="selectIdsByRoleId" resultType="java.lang.Long">
-        SELECT a.id
-        FROM boot_sys_menu a
-           ,boot_sys_role b
-           ,boot_sys_role_menu c
-        WHERE a.id = c.menu_id
-            AND c.role_id = b.id
-            AND b.id = #{roleId}
-            and a.del_flag = 0
-        group by a.id
-    </select>
-    <select id="selectTenantMenuList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
-        select id
-             ,pid
-             ,`name`
-        from boot_sys_menu
-        where del_flag = 0
-            AND `name` <![CDATA[ <> ]]> '修改菜单'
-            AND `name` <![CDATA[ <> ]]> '新增菜单'
-            AND `name` <![CDATA[ <> ]]> '删除菜单'
-            AND `name` not LIKE '%租户%'
-            and `name` not like '%索引%'
-            AND `name` not LIKE '%套餐%'
-            AND `name` not LIKE '%数据源%'
-            AND `name` not like '%事务%'
-            AND `name` not like '%配置%'
-            and `name` not like '%文档%'
-            and `name` not like '%监控%'
-            and `name` not like '%IP%'
-            and `name` not like '%调度%'
-            and `name` not like '%集群%'
-        order by sort desc
-    </select>
-    <select id="selectTenantMenuListByPackageId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
-        select a.id
-             ,a.pid
-             ,a.`name`
+  <sql id="columns">
+    a.component
+   ,a.id
+   ,a.pid
+   ,a.name
+   ,a.icon
+   ,a.permission
+   ,a.hidden
+   ,a.keep_alive
+   ,a.target
+   ,a.link
+   ,a.redirect
+  </sql>
+
+  <select id="selectListByUserId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
+    SELECT
+    <include refid="columns"/>
+    FROM boot_sys_menu a
+    ,boot_sys_role b
+    ,boot_sys_role_menu c
+    ,boot_sys_user_role e
+    WHERE a.id = c.menu_id AND c.role_id = b.id
+    AND b.id = e.role_id
+    AND e.user_id = #{userId}
+    AND a.del_flag = 0
+    AND a.type = 0
+    AND a.hidden = 0
+    AND a.status = 0
+    GROUP BY
+    <include refid="columns"/>
+    ORDER BY a.sort desc
+  </select>
+  <select id="selectIdsByRoleId" resultType="java.lang.Long">
+    SELECT a.id
+    FROM boot_sys_menu a
+       , boot_sys_role b
+       , boot_sys_role_menu c
+    WHERE a.id = c.menu_id
+      AND c.role_id = b.id
+      AND b.id = #{roleId}
+      and a.del_flag = 0
+    group by a.id
+  </select>
+  <select id="selectTenantMenuList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
+    select id
+         , pid
+         , ` name `
+    from boot_sys_menu
+    where del_flag = 0
+      AND ` name ` <![CDATA[ <> ]]> '修改菜单'
+      AND ` name ` <![CDATA[ <> ]]> '新增菜单'
+      AND ` name ` <![CDATA[ <> ]]> '删除菜单'
+      AND ` name ` not LIKE '%租户%'
+      and ` name ` not like '%索引%'
+      AND ` name ` not LIKE '%套餐%'
+      AND ` name ` not LIKE '%数据源%'
+      AND ` name ` not like '%事务%'
+      AND ` name ` not like '%配置%'
+      and ` name ` not like '%文档%'
+      and ` name ` not like '%监控%'
+      and ` name ` not like '%IP%'
+      and ` name ` not like '%调度%'
+      and ` name ` not like '%集群%'
+    order by sort desc
+  </select>
+  <select id="selectTenantMenuListByPackageId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
+    select a.id
+         , a.pid
+         , a.name
              ,a.icon
              ,a.url
-             ,a.`type`
+             ,a.type
              ,a.permission
              ,a.visible
              ,a.sort
-        from boot_sys_menu a
-        join boot_sys_package_menu b on b.menu_id = a.id
-        where a.del_flag = 0
-            and b.package_id = #{packageId}
-    </select>
-    <select id="selectVersion" resultType="integer">
-        select version from boot_sys_menu where id = #{id}
-    </select>
+    from boot_sys_menu a
+      join boot_sys_package_menu b
+    on b.menu_id = a.id
+    where a.del_flag = 0
+      and b.package_id = #{packageId}
+  </select>
+  <select id="selectVersion" resultType="integer">
+    select version
+    from boot_sys_menu
+    where id = #{id}
+  </select>
 </mapper>

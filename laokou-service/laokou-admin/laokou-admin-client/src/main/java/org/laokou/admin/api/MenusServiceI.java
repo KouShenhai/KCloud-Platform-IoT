@@ -38,7 +38,7 @@ public interface MenusServiceI {
 	 * @param qry 查询菜单列表参数
 	 * @return 菜单列表
 	 */
-	Result<List<MenuCO>> findList(MenuListQry qry);
+	Result<List<MenuCO>> list(MenuListQry qry);
 
 	/**
 	 * 根据ID查看菜单.

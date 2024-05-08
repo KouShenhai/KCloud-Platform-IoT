@@ -26,10 +26,9 @@ import org.laokou.admin.dto.menu.MenuListQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.support.i18n.utils.TranslateUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -47,9 +46,9 @@ public class MenuListQryExe {
 
 	private final MenuMapper menuMapper;
 
-	private final RedisUtil redisUtil;
-
 	private final MenuConvertor menuConvertor;
+
+	private final TranslateUtil translateUtil;
 
 	/**
 	 * 执行查询菜单列表.
@@ -58,19 +57,13 @@ public class MenuListQryExe {
 	 */
 	@DS(TENANT)
 	public Result<List<MenuCO>> execute(MenuListQry qry) {
-		return null;
-		// return switch (FindTypeEnum.valueOf(qry.getType())) {
-		// case LIST ->
-		// Result.ok(getMenuList(qry).stream().map(menuConvertor::convertClientObj).toList());
-		// case TREE_LIST ->
-		// Result.ok(buildTreeNode(getMenuList(qry).stream().map(menuConvertor::convertClientObj).toList())
-		// .getChildren());
-		// case USER_TREE_LIST -> Result.ok(getUserMenuList());
-		// };
+		return Result.ok(getMenuList(qry).stream().map(this::convert).toList());
 	}
 
-	private MenuCO buildTreeNode(List<MenuCO> list) {
-		return TreeUtil.buildTreeNode(list, MenuCO.class);
+	private MenuCO convert(MenuDO menuDO) {
+		MenuCO co = menuConvertor.convertClientObj(menuDO);
+		co.setName(translateUtil.getMessage(menuDO.getName()));
+		return co;
 	}
 
 	private List<MenuDO> getMenuList(MenuListQry qry) {
