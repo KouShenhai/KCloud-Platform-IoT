@@ -2,10 +2,8 @@
 import { getRouters } from '@/api/menu'
 import { indexRouterMap } from '@/config/router.config'
 import allIcon from '@/core/icons'
-import { validURL } from '@/utils/validate'
 import { UserLayout, BlankLayout, PageView } from '@/layouts'
 import auth from '@/plugins/auth'
-import { i18nRender } from '@/locales'
 
 // 前端路由表
 const constantRouterComponents = {
@@ -108,7 +106,7 @@ export const generator = (routerMap, parent, routers) => {
       item.children = undefined
     }
 
-    const { title, show, hideChildren, hiddenHeaderContent, hidden, icon, noCache } = item.meta || {}
+    const { title, show, hideChildren, hiddenHeaderContent, hidden, icon, keepAlive, target } = item.meta || {}
     if (item.isFrame === 0) {
       item.target = '_blank'
     }
@@ -124,13 +122,13 @@ export const generator = (routerMap, parent, routers) => {
       hidden: item.hidden,
       // meta: 页面标题, 菜单图标, 页面权限(供指令权限用，可去掉)
       meta: {
-        title: i18nRender(title),
+        title: title,
         icon: allIcon[icon + 'Icon'] || icon,
         hiddenHeaderContent: hiddenHeaderContent,
         // 目前只能通过判断path的http链接来判断是否外链，适配若依
-        target: validURL(item.path) ? '_blank' : '',
+        target: target,
         permission: item.name,
-        keepAlive: noCache === undefined ? false : !noCache,
+        keepAlive: keepAlive,
         hidden: hidden,
         // 因菜单路由分离，通过此names确定菜单树的展开
         names: names.concat([name])

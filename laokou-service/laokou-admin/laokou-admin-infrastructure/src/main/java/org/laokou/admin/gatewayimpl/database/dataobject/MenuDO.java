@@ -18,7 +18,6 @@
 package org.laokou.admin.gatewayimpl.database.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
@@ -27,47 +26,79 @@ import java.io.Serial;
 import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_MENU;
 
 /**
+ * 菜单.
  * @author laokou
  */
 @Data
 @TableName(BOOT_SYS_MENU)
-@Schema(name = "MenuDO", description = "菜单")
 public class MenuDO extends BaseDO {
 
 	@Serial
 	private static final long serialVersionUID = 6351930810565072011L;
 
-	@Schema(name = "pid", description = "菜单父节点ID", example = "0")
+	/**
+	 * 菜单父节点ID.
+	 */
 	private Long pid;
 
-	@Schema(name = "name", description = "菜单名称", example = "用户管理")
+	/**
+	 * 菜单名称.
+	 */
 	private String name;
 
-	@Schema(name = "component", description = "菜单路由", example = "/v1/users/profile")
+	/**
+	 * 菜单路由.
+	 */
 	private String component;
 
-	@Schema(name = "permission", description = "菜单权限标识", example = "users:list")
+	/**
+	 * 菜单权限标识.
+	 */
 	private String permission;
 
-	@Schema(name = "icon", description = "菜单图标", example = "user")
+	/**
+	 * 菜单图标。
+	 */
 	private String icon;
 
-	@Schema(name = "sort", description = "菜单排序", example = "1")
+	/**
+	 * 菜单排序。
+	 */
 	private Integer sort;
 
-	@Schema(name = "type", description = "菜单类型 0菜单 1按钮", example = "0")
+	/**
+	 * 菜单类型 0菜单 1按钮.
+	 */
 	private Integer type;
 
-	@Schema(name = "hidden", description = "菜单隐藏 0否 1是", example = "0")
+	/**
+	 * 菜单隐藏 0否 1是.
+	 */
 	private Boolean hidden;
 
-	@Schema(name = "keepAlive", description = "路由缓存 0否 1是", example = "0")
+	/**
+	 * 路由缓存 0否 1是.
+	 */
 	private Boolean keepAlive;
 
-	@Schema(name = "target", description = "菜单链接跳转目标", example = "https://baidu.com")
+	/**
+	 * 菜单链接跳转目标 _blank|_self|_top|_parent.
+	 */
 	private String target;
 
-	@Schema(name = "redirect", description = "重定向地址", example = "https://baidu.com")
+	/**
+	 * 重定向地址.
+	 */
 	private String redirect;
+
+	/**
+	 * 菜单状态 0正常 1停用.
+	 */
+	private Integer status;
+
+	/**
+	 * 菜单链接地址.
+	 */
+	private String link;
 
 }
