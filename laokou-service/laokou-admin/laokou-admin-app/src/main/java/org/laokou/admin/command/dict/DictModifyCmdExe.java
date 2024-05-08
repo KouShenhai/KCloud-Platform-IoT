@@ -45,7 +45,7 @@ public class DictModifyCmdExe {
 	 */
 	@DS(TENANT)
 	public void executeVoid(DictModifyCmd cmd) {
-		dictGateway.modify(dictConvertor.toEntity(cmd.getDictCO()));
+		dictGateway.modify(dictConvertor.toEntity(cmd.getDictTypeCO()));
 	}
 
 }

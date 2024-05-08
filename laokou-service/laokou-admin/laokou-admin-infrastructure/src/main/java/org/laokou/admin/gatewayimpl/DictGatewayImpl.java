@@ -24,7 +24,7 @@ import org.laokou.admin.convertor.DictConvertor;
 import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.DictTypeDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -55,9 +55,9 @@ public class DictGatewayImpl implements DictGateway {
 	@Override
 	public void create(Dict dict) {
 		// 验证类型和值
-		long count = dictMapper.selectCount(Wrappers.lambdaQuery(DictDO.class)
-			.eq(DictDO::getValue, dict.getValue())
-			.eq(DictDO::getType, dict.getType()));
+		long count = dictMapper.selectCount(Wrappers.lambdaQuery(DictTypeDO.class)
+			//.eq(DictTypeDO::getValue, dict.getValue())
+			.eq(DictTypeDO::getType, dict.getType()));
 		dict.checkTypeAndValue(count);
 		create(dictConvertor.toDataObject(dict));
 	}
@@ -70,15 +70,15 @@ public class DictGatewayImpl implements DictGateway {
 	public void modify(Dict dict) {
 		// dict.checkNullId();
 		// 验证类型和值
-		long count = dictMapper.selectCount(Wrappers.lambdaQuery(DictDO.class)
-			.eq(DictDO::getValue, dict.getValue())
-			.eq(DictDO::getType, dict.getType())
-			.ne(DictDO::getId, dict.getId()));
+		long count = dictMapper.selectCount(Wrappers.lambdaQuery(DictTypeDO.class)
+			//.eq(DictTypeDO::getValue, dict.getValue())
+			.eq(DictTypeDO::getType, dict.getType())
+			.ne(DictTypeDO::getId, dict.getId()));
 		dict.checkTypeAndValue(count);
-		DictDO dictDO = dictConvertor.toDataObject(dict);
+		DictTypeDO dictTypeDO = dictConvertor.toDataObject(dict);
 		// 版本号
-		dictDO.setVersion(dictMapper.selectVersion(dictDO.getId()));
-		modify(dictDO);
+		dictTypeDO.setVersion(dictMapper.selectVersion(dictTypeDO.getId()));
+		modify(dictTypeDO);
 	}
 
 	/**
@@ -101,12 +101,12 @@ public class DictGatewayImpl implements DictGateway {
 
 	/**
 	 * 新增字典.
-	 * @param dictDO 字典数据模型
+	 * @param dictTypeDO 字典数据模型
 	 */
-	private void create(DictDO dictDO) {
+	private void create(DictTypeDO dictTypeDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				dictMapper.insert(dictDO);
+				dictMapper.insert(dictTypeDO);
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
@@ -118,12 +118,12 @@ public class DictGatewayImpl implements DictGateway {
 
 	/**
 	 * 修改字典.
-	 * @param dictDO 字典数据模型
+	 * @param dictTypeDO 字典数据模型
 	 */
-	private void modify(DictDO dictDO) {
+	private void modify(DictTypeDO dictTypeDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				dictMapper.updateById(dictDO);
+				dictMapper.updateById(dictTypeDO);
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);

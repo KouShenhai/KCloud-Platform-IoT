@@ -38,7 +38,7 @@ public final class DSConstant {
 	public static final String AND = "and";
 
 	@Schema(name = "BOOT_SYS_DICT", description = "字典表")
-	public static final String BOOT_SYS_DICT = "boot_sys_dict";
+	public static final String BOOT_SYS_DICT_TYPE = "boot_sys_dict_type";
 
 	@Schema(name = "BOOT_SYS_MESSAGE", description = "消息表")
 	public static final String BOOT_SYS_MESSAGE = "boot_sys_message";

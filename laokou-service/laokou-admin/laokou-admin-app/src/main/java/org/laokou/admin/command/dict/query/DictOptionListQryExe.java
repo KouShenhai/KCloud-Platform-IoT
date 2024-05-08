@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.dict.DictOptionListQry;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.DictTypeDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -49,11 +49,12 @@ public class DictOptionListQryExe {
 	 */
 	@DS(TENANT)
 	public Result<List<Option>> execute(DictOptionListQry qry) {
-		List<DictDO> list = dictMapper.selectList(Wrappers.lambdaQuery(DictDO.class)
-			.eq(DictDO::getType, qry.getType())
-			.select(DictDO::getLabel, DictDO::getValue)
-			.orderByDesc(DictDO::getId));
-		return Result.ok(list.stream().map(dict -> new Option(dict.getLabel(), dict.getValue())).toList());
+		List<DictTypeDO> list = dictMapper.selectList(Wrappers.lambdaQuery(DictTypeDO.class)
+			.eq(DictTypeDO::getType, qry.getType())
+			//.select(DictTypeDO::getLabel, DictTypeDO::getValue)
+			.orderByDesc(DictTypeDO::getId));
+		return null;
+		//return Result.ok(list.stream().map(dict -> new Option(dict.getLabel(), dict.getValue())).toList());
 	}
 
 }

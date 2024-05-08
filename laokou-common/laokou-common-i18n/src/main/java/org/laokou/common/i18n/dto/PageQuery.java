@@ -66,8 +66,4 @@ public class PageQuery extends Query {
 
 	private String endTime;
 
-	public void setPageIndex(Integer pageIndex) {
-		this.pageIndex = (pageNum - 1) * pageSize;
-	}
-
 }

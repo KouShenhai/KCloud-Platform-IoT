@@ -45,7 +45,7 @@ public class DictCreateCmdExe {
 	 */
 	@DS(TENANT)
 	public void executeVoid(DictCreateCmd cmd) {
-		dictGateway.create(dictConvertor.toEntity(cmd.getDictCO()));
+		dictGateway.create(dictConvertor.toEntity(cmd.getDictTypeCO()));
 	}
 
 }
