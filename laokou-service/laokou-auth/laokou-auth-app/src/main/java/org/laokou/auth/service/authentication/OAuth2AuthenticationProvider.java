@@ -36,6 +36,7 @@ import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.auth.domain.model.auth.AuthA.BIZ_ID;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 
@@ -59,7 +60,7 @@ public class OAuth2AuthenticationProvider {
 	public UsernamePasswordAuthenticationToken authentication(AuthA auth) {
 		try {
 			// 校验
-			extensionExecutor.executeVoid(AuthValidatorExtPt.class, BizScenario.valueOf(auth.getGrantType()),
+			extensionExecutor.executeVoid(AuthValidatorExtPt.class, BizScenario.valueOf(BIZ_ID,auth.getGrantType()),
 					extension -> extension.validate(auth));
 			// 认证
 			authDomainService.auth(auth);

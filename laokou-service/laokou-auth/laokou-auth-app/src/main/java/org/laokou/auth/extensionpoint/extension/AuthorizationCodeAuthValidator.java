@@ -25,13 +25,14 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 
 import static org.laokou.auth.domain.model.auth.AuthA.AUTHORIZATION_CODE;
+import static org.laokou.auth.domain.model.auth.AuthA.BIZ_ID;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_PASSWORD_REQUIRE;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_USERNAME_REQUIRE;
 
 /**
  * @author laokou
  */
-@Extension(bizId = AUTHORIZATION_CODE)
+@Extension(bizId = BIZ_ID, useCase = AUTHORIZATION_CODE)
 public class AuthorizationCodeAuthValidator implements AuthValidatorExtPt {
 
 	@Override
