@@ -1,11 +1,11 @@
 import request from '@/utils/request'
 
 // 查询字典类型列表
-export function listType (query) {
+export function page (data) {
   return request({
-    url: '/system/dict/type/list',
-    method: 'get',
-    params: query
+    url: '/admin/v1/dict-types/page',
+    method: 'post',
+    data: data
   })
 }
 

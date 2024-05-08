@@ -19,34 +19,33 @@
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.DictMapper">
-    <select id="selectListByCondition" resultType="org.laokou.admin.gatewayimpl.database.dataobject.DictDO">
+    <select id="selectPageByCondition" resultType="org.laokou.admin.gatewayimpl.database.dataobject.DictTypeDO">
         SELECT id
             ,create_date
-            ,`value`
-            ,label
-            ,`type`
-            ,sort
+            ,status
+            ,name
+            ,type
             ,remark
-        from boot_sys_dict
+        from boot_sys_dict_type
         where del_flag = 0
         <if test="dict.type != null and dict.type != ''">
-            and `type` like #{dict.type}
+            and type like #{dict.type}
         </if>
-        <if test="dict.label != null and dict.label != ''">
-            and `label` like #{dict.label}
+        <if test="dict.name != null and dict.name != ''">
+            and name like #{dict.name}
         </if>
-        order by sort desc
-        limit ${pageQuery.pageIndex},${pageQuery.pageSize}
+        order by id desc
+        limit ${pageQuery.pageSize} OFFSET ${pageQuery.pageIndex}
     </select>
     <select id="selectCountByCondition" resultType="java.lang.Long">
         SELECT count(1)
-        from boot_sys_dict
+        from boot_sys_dict_type
         where del_flag = 0
         <if test="dict.type != null and dict.type != ''">
-            and `type` like #{dict.type}
+            and type like #{dict.type}
         </if>
-        <if test="dict.label != null and dict.label != ''">
-            and `label` like #{dict.label}
+        <if test="dict.name != null and dict.name != ''">
+            and name like #{dict.name}
         </if>
     </select>
     <select id="selectVersion" resultType="integer">

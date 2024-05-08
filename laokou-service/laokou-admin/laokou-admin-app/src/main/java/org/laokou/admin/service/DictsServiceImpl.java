@@ -19,9 +19,9 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.DictsServiceI;
+import org.laokou.admin.dto.dict.clientobject.DictTypeCO;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.dict.*;
-import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.command.dict.DictRemoveCmdExe;
 import org.laokou.admin.command.dict.DictCreateCmdExe;
 import org.laokou.admin.command.dict.DictModifyCmdExe;
@@ -88,7 +88,7 @@ public class DictsServiceImpl implements DictsServiceI {
 	 * @return 字典
 	 */
 	@Override
-	public Result<DictCO> findById(DictGetQry qry) {
+	public Result<DictTypeCO> findById(DictGetQry qry) {
 		return dictGetQryExe.execute(qry);
 	}
 
@@ -108,7 +108,7 @@ public class DictsServiceImpl implements DictsServiceI {
 	 * @return 字典列表
 	 */
 	@Override
-	public Result<Datas<DictCO>> findList(DictListQry qry) {
+	public Result<Datas<DictTypeCO>> page(DictListQry qry) {
 		return dictListQryExe.execute(qry);
 	}
 

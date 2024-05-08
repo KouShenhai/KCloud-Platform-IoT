@@ -32,15 +32,15 @@ public class DictListQry extends PageQuery {
 	@Schema(name = "type", description = "字典类型")
 	private String type;
 
-	@Schema(name = "label", description = "字典标签")
-	private String label;
+	@Schema(name = "name", description = "字典名称")
+	private String name;
 
 	public void setType(String type) {
-		this.type = StringUtil.like(type);
+		this.type = StringUtil.like(type.trim());
 	}
 
-	public void setLabel(String label) {
-		this.label = StringUtil.like(label);
+	public void setName(String name) {
+		this.name = StringUtil.like(name.trim());
 	}
 
 }

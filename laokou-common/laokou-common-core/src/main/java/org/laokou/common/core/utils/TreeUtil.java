@@ -47,7 +47,19 @@ public class TreeUtil {
 	 * @return 树节点
 	 */
 	public static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, Class<T> clazz) {
-		return buildTreeNode(treeNodes, ConvertUtil.sourceToTarget(rootRootNode(), clazz));
+		return buildTreeNode(treeNodes, clazz, false);
+	}
+
+	/**
+	 * 构建树节点.
+	 * @param treeNodes 菜单列表
+	 * @param clazz 类
+	 * @param <T> 泛型
+	 * @param isPath 是否开启节点
+	 * @return 树节点
+	 */
+	public static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, Class<T> clazz, boolean isPath) {
+		return buildTreeNode(treeNodes, ConvertUtil.sourceToTarget(rootRootNode(), clazz), isPath);
 	}
 
 	/**
@@ -64,9 +76,10 @@ public class TreeUtil {
 	 * @param treeNodes 菜单列表
 	 * @param rootNode 顶级节点
 	 * @param <T> 泛型
+	 * @param isPath 是否开启节点
 	 * @return 树节点
 	 */
-	private static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, T rootNode) {
+	private static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, T rootNode, boolean isPath) {
 		if (ObjectUtil.isNull(rootNode)) {
 			throw new SystemException("请构造根节点");
 		}
@@ -80,7 +93,7 @@ public class TreeUtil {
 		for (T treeNo : nodes) {
 			T parent = nodeMap.get(treeNo.getPid());
 			if (ObjectUtil.isNotNull(parent) && treeNo.getPid().equals(parent.getId())) {
-				treeNo.setPath(parent.getPath() + COMMA + treeNo.getId());
+				treeNo.setPath(isPath ? parent.getPath() + COMMA + treeNo.getId() : treeNo.getPath());
 				parent.getChildren().add(treeNo);
 			}
 		}
@@ -112,6 +125,12 @@ public class TreeUtil {
 			this.name = name;
 			this.pid = pid;
 			this.path = path;
+		}
+
+		public TreeNode(Long id, String name, Long pid) {
+			this.id = id;
+			this.name = name;
+			this.pid = pid;
 		}
 
 	}

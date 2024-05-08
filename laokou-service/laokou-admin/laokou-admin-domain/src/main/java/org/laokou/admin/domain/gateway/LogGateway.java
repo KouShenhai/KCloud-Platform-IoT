@@ -25,8 +25,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "LogGateway", description = "日志网关")
 public interface LogGateway {
 
-//	void create(OperateEvent event, DefaultDomainEvent evt);
-//
-//	void create(FileUploadEvent event, DefaultDomainEvent evt);
+	// void create(OperateEvent event, DefaultDomainEvent evt);
+	//
+	// void create(FileUploadEvent event, DefaultDomainEvent evt);
 
 }

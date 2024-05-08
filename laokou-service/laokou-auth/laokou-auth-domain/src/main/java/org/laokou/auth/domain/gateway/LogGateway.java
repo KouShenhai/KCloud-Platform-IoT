@@ -22,6 +22,6 @@ package org.laokou.auth.domain.gateway;
  */
 public interface LogGateway {
 
-//	void create(LoginEvent event, DefaultDomainEvent evt);
+	// void create(LoginEvent event, DefaultDomainEvent evt);
 
 }

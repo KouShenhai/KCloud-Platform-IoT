@@ -19,7 +19,7 @@ package org.laokou.admin.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.DictTypeDO;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
@@ -35,10 +35,10 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 @Repository
 @Mapper
-public interface DictMapper extends CrudMapper<Long, Integer, DictDO> {
+public interface DictMapper extends CrudMapper<Long, Integer, DictTypeDO> {
 
-	List<DictDO> selectListByCondition(@Param("dict") DictDO dict, @Param(PAGE_QUERY) PageQuery pageQuery);
+	List<DictTypeDO> selectPageByCondition(@Param("dict") DictTypeDO dict, @Param(PAGE_QUERY) PageQuery pageQuery);
 
-	long selectCountByCondition(@Param("dict") DictDO dict, @Param(PAGE_QUERY) PageQuery pageQuery);
+	long selectCountByCondition(@Param("dict") DictTypeDO dict, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

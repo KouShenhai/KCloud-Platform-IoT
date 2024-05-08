@@ -54,7 +54,7 @@ public class LoginEventHandler extends AbstractDomainEventRocketMQListener {
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent evt, String attribute) {
 		LoginEvent event = JacksonUtil.toBean(attribute, LoginEvent.class);
-		//logGateway.create(event, evt);
+		// logGateway.create(event, evt);
 	}
 
 }

@@ -59,11 +59,11 @@ public class AuthApp {
 
 	@SneakyThrows
 	public static void main(String[] args) {
-		// SpringSecurity 子线程读取父线程的上下文
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
+		// SpringSecurity 子线程读取父线程的上下文
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 		// https://github.com/alibaba/nacos/pull/3654
 		// 请查看 HttpLoginProcessor

@@ -17,8 +17,8 @@
 
 package org.laokou.admin.api;
 
+import org.laokou.admin.dto.dict.clientobject.DictTypeCO;
 import org.laokou.common.i18n.dto.Option;
-import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.dto.dict.*;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -55,7 +55,7 @@ public interface DictsServiceI {
 	 * @param qry 根据ID查看字典参数
 	 * @return 字典
 	 */
-	Result<DictCO> findById(DictGetQry qry);
+	Result<DictTypeCO> findById(DictGetQry qry);
 
 	/**
 	 * 查询字典下拉框选择项列表.
@@ -65,10 +65,10 @@ public interface DictsServiceI {
 	Result<List<Option>> optionList(DictOptionListQry qry);
 
 	/**
-	 * 查询字典列表.
+	 * 分页查询字典列表.
 	 * @param qry 查询字典列表参数
 	 * @return 字典列表
 	 */
-	Result<Datas<DictCO>> findList(DictListQry qry);
+	Result<Datas<DictTypeCO>> page(DictListQry qry);
 
 }

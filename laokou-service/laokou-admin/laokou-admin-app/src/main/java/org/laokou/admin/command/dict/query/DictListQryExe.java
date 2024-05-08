@@ -22,16 +22,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.admin.convertor.DictConvertor;
 import org.laokou.admin.dto.dict.DictListQry;
-import org.laokou.admin.dto.dict.clientobject.DictCO;
+import org.laokou.admin.dto.dict.clientobject.DictTypeCO;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.DictTypeDO;
 import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
+
 import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
@@ -56,14 +57,12 @@ public class DictListQryExe {
 	 */
 	@SneakyThrows
 	@DS(TENANT)
-	// @DataFilter(tableAlias = BOOT_SYS_DICT)
-	public Result<Datas<DictCO>> execute(DictListQry qry) {
-		DictDO dictDO = new DictDO(qry.getLabel(), qry.getType());
-		PageQuery page = qry;
-		CompletableFuture<List<DictDO>> c1 = CompletableFuture
-			.supplyAsync(() -> dictMapper.selectListByCondition(dictDO, page), executor);
+	public Result<Datas<DictTypeCO>> execute(DictListQry qry) {
+		DictTypeDO dictTypeDO = new DictTypeDO(qry.getName(), qry.getType());
+		CompletableFuture<List<DictTypeDO>> c1 = CompletableFuture
+			.supplyAsync(() -> dictMapper.selectPageByCondition(dictTypeDO, qry), executor);
 		CompletableFuture<Long> c2 = CompletableFuture
-			.supplyAsync(() -> dictMapper.selectCountByCondition(dictDO, page), executor);
+			.supplyAsync(() -> dictMapper.selectCountByCondition(dictTypeDO, qry), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.ok(Datas.create(c1.get().stream().map(dictConvertor::convertClientObj).toList(), c2.get()));
 	}

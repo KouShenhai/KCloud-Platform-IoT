@@ -7,12 +7,12 @@
           <a-row :gutter="48">
             <a-col :md="8" :sm="24">
               <a-form-item label="字典名称">
-                <a-input v-model="queryParam.dictName" placeholder="请输入字典名称" allow-clear/>
+                <a-input v-model="queryParam.name" placeholder="请输入字典名称" allow-clear/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="24">
               <a-form-item label="字典类型">
-                <a-input v-model="queryParam.dictType" placeholder="请输入字典类型" allow-clear/>
+                <a-input v-model="queryParam.type" placeholder="请输入字典类型" allow-clear/>
               </a-form-item>
             </a-col>
             <template v-if="advanced">
@@ -44,19 +44,19 @@
       </div>
       <!-- 操作 -->
       <div class="table-operations">
-        <a-button type="primary" @click="$refs.createForm.handleAdd()" v-hasPermi="['sys:dict:add']">
+        <a-button type="primary" @click="$refs.createForm.handleAdd()">
           <a-icon type="plus" />新增
         </a-button>
-        <a-button type="primary" :disabled="single" @click="$refs.createForm.handleUpdate(undefined, ids)" v-hasPermi="['sys:dict:edit']">
+        <a-button type="primary" :disabled="single" @click="$refs.createForm.handleUpdate(undefined, ids)">
           <a-icon type="edit" />修改
         </a-button>
-        <a-button type="danger" :disabled="multiple" @click="handleDelete" v-hasPermi="['sys:dict:remove']">
+        <a-button type="danger" :disabled="multiple" @click="handleDelete">
           <a-icon type="delete" />删除
         </a-button>
-        <a-button type="primary" @click="handleExport" v-hasPermi="['sys:dict:export']">
+        <a-button type="primary" @click="handleExport">
           <a-icon type="download" />导出
         </a-button>
-        <a-button type="dashed" :loading="refreshing" @click="handleRefreshCache" v-hasPermi="['sys:dict:remove']">
+        <a-button type="dashed" :loading="refreshing" @click="handleRefreshCache">
           <a-icon type="redo" />刷新缓存
         </a-button>
         <table-setting
@@ -76,7 +76,7 @@
       <a-table
         :loading="loading"
         :size="tableSize"
-        rowKey="dictId"
+        rowKey="id"
         :columns="columns"
         :expandedRowKeys="expandedKeys"
         @expand="onExpandCurrent"
@@ -97,15 +97,12 @@
         <span slot="status" slot-scope="text, record">
           <dict-tag :options="dict.type['sys_normal_disable']" :value="record.status" />
         </span>
-        <span slot="createTime" slot-scope="text, record">
-          {{ parseTime(record.createTime) }}
-        </span>
         <span slot="operation" slot-scope="text, record">
-          <a @click="$refs.createForm.handleUpdate(record, undefined)" v-hasPermi="['sys:dict:edit']">
+          <a @click="$refs.createForm.handleUpdate(record, undefined)">
             <a-icon type="edit" />修改
           </a>
           <a-divider type="vertical" />
-          <a @click="handleDelete(record)" v-hasPermi="['sys:dict:remove']">
+          <a @click="handleDelete(record)">
             <a-icon type="delete" />删除
           </a>
         </span>
@@ -128,7 +125,7 @@
 
 <script>
 
-import { listType, delType, refreshCache } from '@/api/sys/dict/type'
+import { delType, refreshCache, page } from '@/api/sys/dict/type'
 import CreateForm from './modules/CreateForm'
 import DictData from './modules/DictData'
 import CreateDataForm from './modules/CreateDataForm'
@@ -163,26 +160,22 @@ export default {
       queryParam: {
         pageNum: 1,
         pageSize: 10,
-        dictName: undefined,
-        dictType: undefined,
+        pageIndex: 0,
+        name: undefined,
+        type: undefined,
         status: undefined
       },
       expandedKeys: [],
       columns: [
         {
-          title: '字典编号',
-          dataIndex: 'dictId',
-          align: 'center'
-        },
-        {
           title: '字典名称',
-          dataIndex: 'dictName',
+          dataIndex: 'name',
           ellipsis: true,
           align: 'center'
         },
         {
           title: '字典类型',
-          dataIndex: 'dictType',
+          dataIndex: 'type',
           ellipsis: true,
           align: 'center'
         },
@@ -200,9 +193,8 @@ export default {
         },
         {
           title: '创建时间',
-          dataIndex: 'createTime',
+          dataIndex: 'createDate',
           ellipsis: true,
-          scopedSlots: { customRender: 'createTime' },
           align: 'center'
         },
         {
@@ -228,9 +220,12 @@ export default {
     /** 查询字典列表 */
     getList () {
       this.loading = true
-      listType(this.addDateRange(this.queryParam, this.dateRange)).then(response => {
-          this.list = response.rows
-          this.total = response.total
+      const pageNum = this.queryParam.pageNum
+      const pageSize = this.queryParam.pageSize
+      this.queryParam.pageIndex = (pageNum - 1) * pageSize
+      page(this.addDateRange(this.queryParam, this.dateRange)).then(response => {
+          this.list = response.data.records
+          this.total = response.data.total - 0
           this.loading = false
         }
       )
@@ -246,8 +241,9 @@ export default {
       this.queryParam = {
         pageNum: 1,
         pageSize: 10,
-        dictName: undefined,
-        dictType: undefined,
+        pageIndex: 0,
+        name: undefined,
+        type: undefined,
         status: undefined
       }
       this.handleQuery()
