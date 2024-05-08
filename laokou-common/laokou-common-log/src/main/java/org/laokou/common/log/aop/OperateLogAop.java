@@ -32,7 +32,7 @@ import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.core.common.domain.OperateLog;
+import org.laokou.common.log.domain.OperateLog;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.env.Environment;
@@ -109,13 +109,13 @@ public class OperateLogAop {
 			// 修改状态
 			operate.modifyStatus(e, request, appName);
 			// 保存领域事件（事件溯源）
-			domainEventService.create(operate.getEvents());
+			// domainEventService.create(operate.getEvents());
 			// 发布当前线程的领域事件(同步发布)
 			domainEventPublisher.publish(SYNC);
 			// 清除领域事件上下文
 			DomainEventContextHolder.clear();
 			// 清空领域事件
-			operate.clearEvents();
+			// operate.clearEvents();
 		}
 		finally {
 			TASK_TIME_LOCAL.remove();

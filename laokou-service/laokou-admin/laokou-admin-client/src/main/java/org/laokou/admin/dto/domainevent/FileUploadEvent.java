@@ -15,20 +15,12 @@
  *
  */
 
-package org.laokou.admin.domain.event;
+package org.laokou.admin.dto.domainevent;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.admin.domain.oss.OssLog;
-import org.laokou.common.core.context.UserContextHolder;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.common.constants.EventType;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.DateUtil;
-
-import static org.laokou.common.i18n.common.constants.EventStatus.CREATED;
-import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_FILE_UPLOAD_EVENT_TOPIC;
 
 /**
  * @author laokou
@@ -55,18 +47,5 @@ public class FileUploadEvent extends DomainEvent<Long> {
 
 	@Schema(name = "errorMessage", description = "错误信息")
 	private String errorMessage;
-
-	public FileUploadEvent(OssLog ossLog, UserContextHolder.User user, String appName, Integer status,
-			EventType eventType) {
-		super(IdGenerator.defaultSnowflakeId(), user.getId(), eventType, CREATED, LAOKOU_FILE_UPLOAD_EVENT_TOPIC,
-				user.getSourceName(), appName, user.getId(), user.getId(), user.getDeptId(), user.getDeptPath(),
-				user.getTenantId(), DateUtil.now(), DateUtil.now());
-		this.errorMessage = ossLog.getErrorMessage();
-		this.name = ossLog.getName();
-		this.md5 = ossLog.getMd5();
-		this.url = ossLog.getUrl();
-		this.size = ossLog.getSize();
-		this.status = status;
-	}
 
 }

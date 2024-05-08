@@ -78,7 +78,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	 */
 	@Override
 	public void modify(Package pack) {
-		pack.checkNullId();
+		// pack.checkNullId();
 		long count = packageMapper.selectCount(Wrappers.lambdaQuery(PackageDO.class)
 			.eq(PackageDO::getName, pack.getName())
 			.ne(PackageDO::getId, pack.getId()));

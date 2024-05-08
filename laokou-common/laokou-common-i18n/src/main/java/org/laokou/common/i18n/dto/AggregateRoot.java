@@ -18,15 +18,8 @@
 package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.ValidatorUtil;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.laokou.common.i18n.common.exception.ParamException.SYSTEM_ID_REQUIRE;
 
 /**
  * 聚合根.
@@ -80,35 +73,5 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	 * 应用名称.
 	 */
 	protected String appName;
-
-	/**
-	 * 事件集合.
-	 */
-	private List<DomainEvent<ID>> events;
-
-	public void checkNullId() {
-		if (ObjectUtil.isNull(this.id)) {
-			throw new SystemException(SYSTEM_ID_REQUIRE, ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
-		}
-	}
-
-	protected void checkNullTenantId() {
-
-	}
-
-	protected void addEvent(DomainEvent<ID> event) {
-		events().add(event);
-	}
-
-	public void clearEvents() {
-		events = null;
-	}
-
-	private List<DomainEvent<ID>> events() {
-		if (ObjectUtil.isNull(events)) {
-			events = new ArrayList<>(16);
-		}
-		return events;
-	}
 
 }

@@ -23,8 +23,8 @@ import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.domain.ability.AuthDomainService;
 import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
 import org.laokou.auth.domain.model.auth.AuthA;
-import org.laokou.auth.domain.model.auth.DeptE;
-import org.laokou.auth.domain.model.auth.MenuE;
+import org.laokou.auth.domain.model.auth.DeptV;
+import org.laokou.auth.domain.model.auth.MenuV;
 import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
@@ -37,6 +37,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Component;
 
 import static org.laokou.auth.domain.model.auth.AuthA.BIZ_ID;
+import static org.laokou.auth.domain.model.auth.AuthA.USE_CASE;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 
@@ -60,7 +61,7 @@ public class OAuth2AuthenticationProvider {
 	public UsernamePasswordAuthenticationToken authentication(AuthA auth) {
 		try {
 			// 校验
-			extensionExecutor.executeVoid(AuthValidatorExtPt.class, BizScenario.valueOf(BIZ_ID,auth.getGrantType()),
+			extensionExecutor.executeVoid(AuthValidatorExtPt.class, BizScenario.valueOf(BIZ_ID, USE_CASE, auth.getGrantType()),
 					extension -> extension.validate(auth));
 			// 认证
 			authDomainService.auth(auth);
@@ -81,15 +82,15 @@ public class OAuth2AuthenticationProvider {
 			// 清除领域事件上下文
 			DomainEventContextHolder.clear();
 			// 清空领域事件
-			auth.clearEvents();
+			//auth.clearEvents();
 		}
 	}
 
 	private UserDetail convert(AuthA auth) {
-		MenuE menu = auth.getMenu();
-		DeptE dept = auth.getDept();
+		MenuV menu = auth.getMenu();
+		DeptV dept = auth.getDept();
 		UserDetail userDetail = userConvertor.convertClientObject(auth.getUser());
-		userDetail.modify(menu.getPermissions(), dept.getDeptPaths(), auth.getSourceName());
+		userDetail.modify(menu.permissions(), dept.deptPaths(), auth.getSourceName());
 		return userDetail;
 	}
 

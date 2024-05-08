@@ -15,24 +15,16 @@
  *
  */
 
-package org.laokou.admin.domain.event;
+package org.laokou.admin.dto.domainevent;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.admin.domain.oss.OssLog;
-import org.laokou.common.core.context.UserContextHolder;
-
-import static org.laokou.common.i18n.common.constants.EventType.FILE_UPLOAD_SUCCEEDED;
 
 /**
  * @author laokou
  */
 @Data
-@Schema(name = "FileLogSucceededEvent", description = "文件上传成功事件")
-public class FileUploadSucceededEvent extends FileUploadEvent {
-
-	public FileUploadSucceededEvent(OssLog ossLog, UserContextHolder.User user, String appName) {
-		super(ossLog, user, appName, 0, FILE_UPLOAD_SUCCEEDED);
-	}
+@Schema(name = "FileLogFailedEvent", description = "文件上传失败事件")
+public class FileUploadFailedEvent extends FileUploadEvent {
 
 }

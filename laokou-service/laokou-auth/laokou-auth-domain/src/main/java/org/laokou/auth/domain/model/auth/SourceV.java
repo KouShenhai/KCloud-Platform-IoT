@@ -17,21 +17,12 @@
 
 package org.laokou.auth.domain.model.auth;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-
 /**
+ * 数据源值对象.
+ *
+ * @param name 数据源名称.
  * @author laokou
  */
-@Getter
-@Schema(name = "SourceE", description = "数据源实体")
-public class SourceE {
-
-	@Schema(name = "name", description = "数据源名称")
-	private String name;
-
-	public SourceE(String name) {
-		this.name = name;
-	}
+public record SourceV(String name) {
 
 }

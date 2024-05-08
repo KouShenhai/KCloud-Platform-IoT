@@ -56,7 +56,7 @@ public class DictListQryExe {
 	 */
 	@SneakyThrows
 	@DS(TENANT)
-//	@DataFilter(tableAlias = BOOT_SYS_DICT)
+	// @DataFilter(tableAlias = BOOT_SYS_DICT)
 	public Result<Datas<DictCO>> execute(DictListQry qry) {
 		DictDO dictDO = new DictDO(qry.getLabel(), qry.getType());
 		PageQuery page = qry;

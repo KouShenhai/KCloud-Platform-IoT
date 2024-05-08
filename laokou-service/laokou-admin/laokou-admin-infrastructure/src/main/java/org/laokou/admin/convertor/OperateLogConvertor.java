@@ -19,7 +19,7 @@ package org.laokou.admin.convertor;
 
 import org.laokou.admin.dto.log.clientobject.OperateLogCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
-import org.laokou.common.core.common.domain.OperateLog;
+import org.laokou.common.log.domain.OperateLog;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
 

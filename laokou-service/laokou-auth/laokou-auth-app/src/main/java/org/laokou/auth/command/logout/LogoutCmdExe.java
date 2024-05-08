@@ -38,6 +38,7 @@ import static org.springframework.security.oauth2.server.authorization.OAuth2Tok
 public class LogoutCmdExe {
 
 	private static final String ZH = "zh";
+
 	private static final String EN = "en";
 
 	private final RedisUtil redisUtil;
@@ -54,7 +55,8 @@ public class LogoutCmdExe {
 			return;
 		}
 		// 删除用户key + 删除菜单key
-		redisUtil.delete(RedisKeyUtil.getUserInfoKey(token), RedisKeyUtil.getMenuTreeKey(token, ZH), RedisKeyUtil.getMenuTreeKey(token, EN));
+		redisUtil.delete(RedisKeyUtil.getUserInfoKey(token), RedisKeyUtil.getMenuTreeKey(token, ZH),
+				RedisKeyUtil.getMenuTreeKey(token, EN));
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, ACCESS_TOKEN);
 		if (ObjectUtil.isNotNull(authorization)) {
 			// 删除token

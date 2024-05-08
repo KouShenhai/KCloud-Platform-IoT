@@ -55,7 +55,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	@Override
 	public void modify(Menu menu) {
 		// 检查ID
-		menu.checkNullId();
+		// menu.checkNullId();
 		// 检查菜单名称
 		long count = menuMapper.selectCount(
 				Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()).ne(MenuDO::getId, menu.getId()));

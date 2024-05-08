@@ -17,18 +17,13 @@
 
 package org.laokou.auth.domain.model.auth;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
+ * 验证码值对象.
+ *
+ * @param uuid UUID
+ * @param captcha 验证码
  * @author laokou
  */
-@Schema(name = "CaptchaV", description = "验证码值对象")
-public record CaptchaV(@Schema(name = "uuid", description = "UUID") String uuid,
-		@Schema(name = "captcha", description = "验证码") String captcha) {
-
-	public CaptchaV(String uuid, String captcha) {
-		this.uuid = uuid;
-		this.captcha = captcha;
-	}
+public record CaptchaV(String uuid, String captcha) {
 
 }

@@ -18,9 +18,6 @@
 package org.laokou.admin.domain.gateway;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.laokou.admin.domain.event.FileUploadEvent;
-import org.laokou.common.core.common.event.OperateEvent;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 /**
  * @author laokou
@@ -28,8 +25,8 @@ import org.laokou.common.i18n.dto.DefaultDomainEvent;
 @Schema(name = "LogGateway", description = "日志网关")
 public interface LogGateway {
 
-	void create(OperateEvent event, DefaultDomainEvent evt);
-
-	void create(FileUploadEvent event, DefaultDomainEvent evt);
+//	void create(OperateEvent event, DefaultDomainEvent evt);
+//
+//	void create(FileUploadEvent event, DefaultDomainEvent evt);
 
 }

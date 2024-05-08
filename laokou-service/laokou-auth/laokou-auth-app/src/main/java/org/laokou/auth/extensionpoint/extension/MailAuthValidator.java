@@ -26,15 +26,14 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 
-import static org.laokou.auth.domain.model.auth.AuthA.BIZ_ID;
-import static org.laokou.auth.domain.model.auth.AuthA.MAIL;
+import static org.laokou.auth.domain.model.auth.AuthA.*;
 import static org.laokou.common.i18n.common.exception.ParamException.*;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_CAPTCHA_REQUIRE;
 
 /**
  * @author laokou
  */
-@Extension(bizId = BIZ_ID, useCase = MAIL)
+@Extension(bizId = BIZ_ID, useCase = USE_CASE, scenario = MAIL)
 public class MailAuthValidator implements AuthValidatorExtPt {
 
 	@Override

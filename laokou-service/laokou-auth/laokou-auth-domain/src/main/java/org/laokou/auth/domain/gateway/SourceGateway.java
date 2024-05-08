@@ -17,7 +17,7 @@
 
 package org.laokou.auth.domain.gateway;
 
-import org.laokou.auth.domain.model.auth.SourceE;
+import org.laokou.auth.domain.model.auth.SourceV;
 import org.laokou.auth.domain.model.auth.UserE;
 
 /**
@@ -32,6 +32,6 @@ public interface SourceGateway {
 	 * @param user 用户信息
 	 * @return 数据源名称
 	 */
-	SourceE getSourceName(UserE user);
+	SourceV getSourceName(UserE user);
 
 }

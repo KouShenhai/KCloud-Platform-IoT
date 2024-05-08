@@ -20,7 +20,7 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.SourceGateway;
-import org.laokou.auth.domain.model.auth.SourceE;
+import org.laokou.auth.domain.model.auth.SourceV;
 import org.laokou.auth.domain.model.auth.UserE;
 import org.laokou.auth.gatewayimpl.database.SourceMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
@@ -47,13 +47,13 @@ public class SourceGatewayImpl implements SourceGateway {
 	 * @return 数据源
 	 */
 	@Override
-	public SourceE getSourceName(UserE user) {
+	public SourceV getSourceName(UserE user) {
 		// 默认主表
 		if (user.isDefaultTenant()) {
-			return new SourceE(MASTER);
+			return new SourceV(MASTER);
 		}
 		SourceDO sourceDO = sourceMapper.selectByTenantId(user.getTenantId());
-		return ObjectUtil.isNotNull(sourceDO) ? new SourceE(sourceDO.getName()) : null;
+		return ObjectUtil.isNotNull(sourceDO) ? new SourceV(sourceDO.getName()) : null;
 	}
 
 	// private void checkNullSource(SourceDO sourceDO) {

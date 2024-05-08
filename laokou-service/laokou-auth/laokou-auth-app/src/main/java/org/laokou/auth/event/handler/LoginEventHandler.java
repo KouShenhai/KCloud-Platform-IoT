@@ -20,7 +20,7 @@ package org.laokou.auth.event.handler;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.laokou.auth.domain.event.LoginEvent;
+import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.domain.gateway.LogGateway;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.listener.AbstractDomainEventRocketMQListener;
@@ -54,7 +54,7 @@ public class LoginEventHandler extends AbstractDomainEventRocketMQListener {
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent evt, String attribute) {
 		LoginEvent event = JacksonUtil.toBean(attribute, LoginEvent.class);
-		logGateway.create(event, evt);
+		//logGateway.create(event, evt);
 	}
 
 }

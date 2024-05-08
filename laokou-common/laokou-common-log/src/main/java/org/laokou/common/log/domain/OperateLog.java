@@ -15,15 +15,12 @@
  *
  */
 
-package org.laokou.common.core.common.domain;
+package org.laokou.common.log.domain;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
-import org.laokou.common.core.common.event.OperateFailedEvent;
-import org.laokou.common.core.common.event.OperateSucceededEvent;
-import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
@@ -125,12 +122,14 @@ public class OperateLog extends AggregateRoot<Long> {
 	}
 
 	private void operateSuccess(HttpServletRequest request, String appName) {
-		addEvent(new OperateSucceededEvent(this, request, UserContextHolder.get(), appName));
+		// addEvent(new OperateSucceededEvent(this, request, UserContextHolder.get(),
+		// appName));
 	}
 
 	private void operateFail(Exception e, HttpServletRequest request, String appName) {
 		this.errorMessage = e.getMessage();
-		addEvent(new OperateFailedEvent(this, request, UserContextHolder.get(), appName));
+		// addEvent(new OperateFailedEvent(this, request, UserContextHolder.get(),
+		// appName));
 	}
 
 	private void removeAny(Map<String, String> map, String... keys) {

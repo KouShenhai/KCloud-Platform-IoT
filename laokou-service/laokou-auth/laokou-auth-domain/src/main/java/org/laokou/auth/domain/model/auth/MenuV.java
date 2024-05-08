@@ -17,23 +17,14 @@
 
 package org.laokou.auth.domain.model.auth;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-
 import java.util.Set;
 
 /**
+ * 菜单值对象.
+ *
+ * @param permissions 菜单权限标识集合.
  * @author laokou
  */
-@Getter
-@Schema(name = "MenuE", description = "菜单实体")
-public class MenuE {
-
-	@Schema(name = "permissions", description = "菜单权限标识集合")
-	private Set<String> permissions;
-
-	public MenuE(Set<String> permissions) {
-		this.permissions = permissions;
-	}
+public record MenuV(Set<String> permissions) {
 
 }
