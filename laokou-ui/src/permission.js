@@ -31,7 +31,9 @@ router.beforeEach((to, from, next) => {
           .then(() => {
             // generate dynamic router
             store.dispatch('GenerateRoutes', {}).then(() => {
-              router.addRoutes(store.getters.routers)
+              store.getters.routers.forEach(item => {
+                router.addRoute(item)
+              })
               // 请求带有 redirect 重定向时，登录自动重定向到该地址
               next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
             })

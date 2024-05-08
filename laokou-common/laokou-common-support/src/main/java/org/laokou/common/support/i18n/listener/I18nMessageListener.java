@@ -42,7 +42,7 @@ public class I18nMessageListener implements ApplicationListener<ApplicationReady
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
-		i18nMessageMapper.selectObjects(StringConstant.EMPTY)
+		i18nMessageMapper.selectListByCode(StringConstant.EMPTY)
 			.forEach(item -> redisUtil.hSetIfAbsentNative(getI18nMessageKey(item.getLang()), item.getCode(),
 					item.getMessage()));
 	}

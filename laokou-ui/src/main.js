@@ -25,7 +25,7 @@ import './core/lazy_use' // use lazy load components
 import './permission' // permission control
 import './utils/filter' // global filter
 import './global.less' // global style
-import { getDicts } from '@/api/system/dict/data'
+import { getDicts } from '@/api/sys/dict/item'
 import { getConfigKey } from '@/api/system/config'
 import { parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, handleTree, tableSorter } from '@/utils/ruoyi'
 import { download } from '@/utils/request'

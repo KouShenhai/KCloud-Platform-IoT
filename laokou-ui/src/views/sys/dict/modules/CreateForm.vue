@@ -34,7 +34,7 @@
 
 <script>
 
-import { getType, addType, updateType } from '@/api/system/dict/type'
+import { getType, addType, updateType } from '@/api/sys/dict/type'
 
 export default {
   name: 'CreateForm',

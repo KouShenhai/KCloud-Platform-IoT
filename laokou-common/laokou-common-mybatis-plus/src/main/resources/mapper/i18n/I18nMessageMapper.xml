@@ -19,7 +19,7 @@
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.common.mybatisplus.mapper.I18nMessageMapper">
-  <select id="selectObjects" resultType="org.laokou.common.mybatisplus.mapper.I18nMessagePO">
+  <select id="selectListByCode" resultType="org.laokou.common.mybatisplus.mapper.I18nMessagePO">
     select "code" as code, 'zh' as lang, "zh_message" as message
     from boot_sys_i18n_message
     <where>

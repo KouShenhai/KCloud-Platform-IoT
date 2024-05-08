@@ -70,10 +70,6 @@
           <a @click="$refs.createForm.handleUpdate(record)" v-hasPermi="['sys:menu:edit']">
             <a-icon type="edit" />修改
           </a>
-          <a-divider type="vertical" v-hasPermi="['sys:menu:add']" />
-          <a @click="$refs.createForm.handleAdd(record)" v-hasPermi="['sys:menu:add']">
-            <a-icon type="plus" />新增
-          </a>
           <a-divider type="vertical" v-if="record.menuId != 0" v-hasPermi="['sys:menu:remove']" />
           <a @click="handleDelete(record)" v-if="record.menuId != 0" v-hasPermi="['sys:menu:remove']">
             <a-icon type="delete" />删除
@@ -107,8 +103,8 @@ export default {
       menuOptions: [],
       loading: false,
       queryParam: {
-        menuName: undefined,
-        visible: undefined
+        name: undefined,
+        status: undefined
       },
       columns: [
         {
@@ -192,7 +188,7 @@ export default {
     /** 重置按钮操作 */
     resetQuery () {
       this.queryParam = {
-        memuName: undefined,
+        name: undefined,
         status: undefined
       }
       this.handleQuery()

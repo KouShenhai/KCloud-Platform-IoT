@@ -128,7 +128,7 @@
 
 <script>
 
-import { listType, delType, refreshCache } from '@/api/system/dict/type'
+import { listType, delType, refreshCache } from '@/api/sys/dict/type'
 import CreateForm from './modules/CreateForm'
 import DictData from './modules/DictData'
 import CreateDataForm from './modules/CreateDataForm'

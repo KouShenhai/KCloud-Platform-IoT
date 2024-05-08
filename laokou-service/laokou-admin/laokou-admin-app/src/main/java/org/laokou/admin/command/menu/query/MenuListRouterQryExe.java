@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.menu.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,7 @@ import java.util.List;
 
 import static org.laokou.admin.domain.menu.HiddenEnum.NO;
 import static org.laokou.admin.domain.menu.TypeEnum.MENU;
+import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * @author laokou
@@ -53,6 +55,7 @@ public class MenuListRouterQryExe {
 
 	private final TranslateUtil translateUtil;
 
+	@DS(TENANT)
 	public Result<List<RouterCO>> execute() {
 		return Result.ok(getRouter());
 	}
@@ -72,7 +75,7 @@ public class MenuListRouterQryExe {
 	private RouterCO convert(MenuDO menuDO, String language) {
 		return new RouterCO(menuDO.getId(), menuDO.getPid(), translateUtil.getMessage(menuDO.getName(), language),
 				menuDO.getRedirect(), menuDO.getHidden(), menuDO.getIcon(), menuDO.getKeepAlive(), menuDO.getTarget(),
-				menuDO.getPermission());
+				menuDO.getPermission(), menuDO.getLink(), menuDO.getComponent());
 	}
 
 	private List<MenuDO> getMenuList() {

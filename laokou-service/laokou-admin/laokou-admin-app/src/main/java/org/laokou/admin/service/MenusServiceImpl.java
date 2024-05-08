@@ -67,7 +67,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	 * @return 菜单列表
 	 */
 	@Override
-	public Result<List<MenuCO>> findList(MenuListQry qry) {
+	public Result<List<MenuCO>> list(MenuListQry qry) {
 		return menuListQryExe.execute(qry);
 	}
 

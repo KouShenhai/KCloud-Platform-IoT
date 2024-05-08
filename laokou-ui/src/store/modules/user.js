@@ -1,5 +1,5 @@
 import storage from 'store'
-import { login, getInfo, logout, getSecret, getCaptcha, listTenantOption, getTenantIdByDomainName } from '@/api/login'
+import { login, getInfo, logout, getSecret, getCaptcha, listTenantOption, getTenantIdByDomainName } from '@/api/sys/login'
 import { ACCESS_TOKEN, TENANT_ID, USER_ID, USER_NAME } from '@/store/mutation-types'
 
 const user = {

@@ -26,8 +26,6 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.constants.StringConstant.STAR;
 import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
 
 /**
@@ -38,6 +36,9 @@ import static org.springframework.security.oauth2.server.authorization.OAuth2Tok
 @Component
 @RequiredArgsConstructor
 public class LogoutCmdExe {
+
+	private static final String ZH = "zh";
+	private static final String EN = "en";
 
 	private final RedisUtil redisUtil;
 
@@ -52,10 +53,8 @@ public class LogoutCmdExe {
 		if (StringUtil.isEmpty(token)) {
 			return;
 		}
-		// 删除菜单key
-		removeMenuTreeKey(token);
-		// 删除用户key
-		removeUserInfoKey(token);
+		// 删除用户key + 删除菜单key
+		redisUtil.delete(RedisKeyUtil.getUserInfoKey(token), RedisKeyUtil.getMenuTreeKey(token, ZH), RedisKeyUtil.getMenuTreeKey(token, EN));
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, ACCESS_TOKEN);
 		if (ObjectUtil.isNotNull(authorization)) {
 			// 删除token
@@ -69,22 +68,6 @@ public class LogoutCmdExe {
 	 */
 	private void removeAuthorization(OAuth2Authorization authorization) {
 		oAuth2AuthorizationService.remove(authorization);
-	}
-
-	/**
-	 * 删除用户信息Key.
-	 * @param token 令牌
-	 */
-	private void removeUserInfoKey(String token) {
-		redisUtil.delete(RedisKeyUtil.getUserInfoKey(token));
-	}
-
-	/**
-	 * 删除树菜单Key.
-	 * @param token 令牌
-	 */
-	private void removeMenuTreeKey(String token) {
-		redisUtil.delete(RedisKeyUtil.getMenuTreeKey(token, STAR));
 	}
 
 }

@@ -38,12 +38,15 @@ public class RouterCO extends TreeUtil.TreeNode<RouterCO> {
 
 	private Boolean hidden;
 
+	private String component;
+
 	public RouterCO(Long id, Long pid, String name, String redirect, Boolean hidden, String icon, Boolean keepAlive,
-			String target, String permission) {
+			String target, String permission, String link, String component) {
 		super(id, name, pid, "0");
 		this.redirect = redirect;
 		this.hidden = hidden;
-		this.meta = new Meta(name, icon, keepAlive, target, List.of(permission));
+		this.component = component;
+		this.meta = new Meta(name, icon, keepAlive, target, List.of(permission), link);
 	}
 
 	@Data
@@ -60,6 +63,8 @@ public class RouterCO extends TreeUtil.TreeNode<RouterCO> {
 		private String target;
 
 		private List<String> permission;
+
+		private String link;
 
 	}
 
