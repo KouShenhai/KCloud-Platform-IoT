@@ -25,6 +25,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 
+import static org.laokou.auth.model.AuthA.*;
 import static org.laokou.common.i18n.common.exception.ParamException.*;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_CAPTCHA_REQUIRE;
 
