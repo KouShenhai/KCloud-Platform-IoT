@@ -17,7 +17,7 @@
 
 package org.laokou.auth.api;
 
-import org.laokou.auth.dto.secret.clientobject.SecretCO;
+import org.laokou.auth.dto.clientobject.SecretCO;
 import org.laokou.common.i18n.dto.Result;
 
 /**

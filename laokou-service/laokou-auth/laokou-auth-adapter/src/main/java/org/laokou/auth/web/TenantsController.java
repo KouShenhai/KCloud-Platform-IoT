@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.dto.tenant.TenantGetIDQry;
+import org.laokou.auth.dto.TenantGetIDQry;
 import org.laokou.auth.api.TenantsServiceI;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;

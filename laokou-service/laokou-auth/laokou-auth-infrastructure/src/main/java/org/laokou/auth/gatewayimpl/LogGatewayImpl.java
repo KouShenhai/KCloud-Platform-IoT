@@ -18,7 +18,7 @@
 package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.domain.gateway.LogGateway;
+import org.laokou.auth.gateway.LogGateway;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;

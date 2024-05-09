@@ -19,7 +19,7 @@ package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.gateway.CaptchaGateway;
+import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;

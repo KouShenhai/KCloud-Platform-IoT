@@ -17,7 +17,7 @@
 
 package org.laokou.auth.extensionpoint;
 
-import org.laokou.auth.domain.model.auth.AuthA;
+import org.laokou.auth.model.AuthA;
 import org.laokou.common.extension.ExtensionPointI;
 
 /**

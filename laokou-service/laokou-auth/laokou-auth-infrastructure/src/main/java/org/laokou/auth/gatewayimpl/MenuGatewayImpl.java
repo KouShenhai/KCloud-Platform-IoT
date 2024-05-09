@@ -19,9 +19,9 @@ package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.gateway.MenuGateway;
-import org.laokou.auth.domain.model.auth.MenuV;
-import org.laokou.auth.domain.model.auth.UserE;
+import org.laokou.auth.gateway.MenuGateway;
+import org.laokou.auth.model.MenuV;
+import org.laokou.auth.model.UserE;
 import org.laokou.auth.gatewayimpl.database.MenuMapper;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;

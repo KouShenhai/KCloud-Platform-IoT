@@ -20,11 +20,11 @@ package org.laokou.auth.service.authentication;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.convertor.UserConvertor;
-import org.laokou.auth.domain.ability.AuthDomainService;
+import org.laokou.auth.ability.AuthDomainService;
 import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
-import org.laokou.auth.domain.model.auth.AuthA;
-import org.laokou.auth.domain.model.auth.DeptV;
-import org.laokou.auth.domain.model.auth.MenuV;
+import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.DeptV;
+import org.laokou.auth.model.MenuV;
 import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
@@ -36,8 +36,8 @@ import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.domain.model.auth.AuthA.BIZ_ID;
-import static org.laokou.auth.domain.model.auth.AuthA.USE_CASE;
+import static org.laokou.auth.model.AuthA.BIZ_ID;
+import static org.laokou.auth.model.AuthA.USE_CASE;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 

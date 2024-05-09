@@ -17,7 +17,7 @@
 
 package org.laokou.auth.api;
 
-import org.laokou.auth.dto.logout.LogoutCmd;
+import org.laokou.auth.dto.LogoutCmd;
 
 /**
  * 退出登录.
