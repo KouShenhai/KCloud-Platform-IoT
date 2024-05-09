@@ -19,8 +19,8 @@ package org.laokou.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.LogoutsServiceI;
-import org.laokou.auth.command.logout.LogoutCmdExe;
-import org.laokou.auth.dto.logout.LogoutCmd;
+import org.laokou.auth.command.LogoutCmdExe;
+import org.laokou.auth.dto.LogoutCmd;
 import org.springframework.stereotype.Service;
 
 /**

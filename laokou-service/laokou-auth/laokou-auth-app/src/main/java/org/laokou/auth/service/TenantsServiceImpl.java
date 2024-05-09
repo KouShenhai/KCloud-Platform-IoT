@@ -19,9 +19,9 @@ package org.laokou.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.TenantsServiceI;
-import org.laokou.auth.command.tenant.query.TenantGetIDQryExe;
-import org.laokou.auth.command.tenant.query.TenantListOptionQryExe;
-import org.laokou.auth.dto.tenant.TenantGetIDQry;
+import org.laokou.auth.command.query.TenantGetIDQryExe;
+import org.laokou.auth.command.query.TenantListOptionQryExe;
+import org.laokou.auth.dto.TenantGetIDQry;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;

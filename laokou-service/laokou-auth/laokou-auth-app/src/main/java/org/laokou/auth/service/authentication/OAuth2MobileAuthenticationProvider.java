@@ -19,8 +19,8 @@ package org.laokou.auth.service.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.factory.AuthFactory;
-import org.laokou.auth.domain.model.auth.AuthA;
+import org.laokou.auth.factory.AuthFactory;
+import org.laokou.auth.model.AuthA;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -28,7 +28,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.domain.model.auth.AuthA.MOBILE;
+import static org.laokou.auth.model.AuthA.MOBILE;
 
 /**
  * 手机号处理器.

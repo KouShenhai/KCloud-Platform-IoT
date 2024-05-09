@@ -17,7 +17,7 @@
 
 package org.laokou.auth.api;
 
-import org.laokou.auth.dto.tenant.TenantGetIDQry;
+import org.laokou.auth.dto.TenantGetIDQry;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 

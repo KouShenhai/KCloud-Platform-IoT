@@ -18,7 +18,7 @@
 package org.laokou.auth.extensionpoint.extension;
 
 import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
-import org.laokou.auth.domain.model.auth.AuthA;
+import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.extension.Extension;
 import org.laokou.common.i18n.common.exception.AuthException;
@@ -26,7 +26,6 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 
-import static org.laokou.auth.domain.model.auth.AuthA.*;
 import static org.laokou.common.i18n.common.exception.ParamException.*;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_CAPTCHA_REQUIRE;
 
