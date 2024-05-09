@@ -147,12 +147,12 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	/**
-	 * 查询用户列表.
+	 * 分页查询用户列表.
 	 * @param qry 查询用户列表参数
 	 * @return 用户列表
 	 */
 	@Override
-	public Result<Datas<UserCO>> findList(UserListQry qry) {
+	public Result<Datas<UserCO>> page(UserListQry qry) {
 		return userListQryExe.execute(qry);
 	}
 

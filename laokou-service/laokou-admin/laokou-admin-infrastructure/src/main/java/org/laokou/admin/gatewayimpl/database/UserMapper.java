@@ -54,24 +54,20 @@ public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 	List<UserDO> selectOptionList(@Param(PAGE_QUERY) PageQuery pageQuery, @Param("secretKey") String secretKey);
 
 	/**
-	 * 查询用户列表.
+	 * 分页查询用户列表.
 	 * @param user 用户对象
 	 * @param pageQuery 分页参数
-	 * @param secretKey 密钥
 	 * @return 用户列表
 	 */
-	List<UserDO> selectListByCondition(@Param("user") UserDO user, @Param(PAGE_QUERY) PageQuery pageQuery,
-			@Param("secretKey") String secretKey);
+	List<UserDO> selectListByCondition(@Param("user") UserDO user, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 	/**
 	 * 查看用户总数.
 	 * @param user 用户对象
 	 * @param pageQuery 分页参数
-	 * @param secretKey 密钥
 	 * @return 用户总数
 	 */
-	long selectCountByCondition(@Param("user") UserDO user, @Param(PAGE_QUERY) PageQuery pageQuery,
-			@Param("secretKey") String secretKey);
+	long selectCountByCondition(@Param("user") UserDO user, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 	long selectUsernameCount(@Param("username") String username, @Param("secretKey") String secretKey);
 

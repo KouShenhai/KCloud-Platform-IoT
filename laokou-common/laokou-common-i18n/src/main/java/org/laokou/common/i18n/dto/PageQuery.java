@@ -24,6 +24,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serial;
+import java.util.Map;
 
 /**
  * 分页查询参数.
@@ -58,12 +59,14 @@ public class PageQuery extends Query {
 	/**
 	 * 索引.
 	 */
-	private Integer pageIndex;
+	@Min(0)
+	private Integer pageIndex = 0;
 
 	private String sqlFilter;
 
-	private String startTime;
-
-	private String endTime;
+	/**
+	 * 参数.
+	 */
+	private Map<String, Object> params;
 
 }

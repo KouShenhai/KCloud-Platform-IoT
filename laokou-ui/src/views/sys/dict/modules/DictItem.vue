@@ -62,7 +62,7 @@ import { listData, delData } from '@/api/sys/dict/item'
 import CreateDataForm from './CreateDataForm'
 
 export default {
-  name: 'DictData',
+  name: 'DictItem',
   props: {
     dictType: {
       type: String,

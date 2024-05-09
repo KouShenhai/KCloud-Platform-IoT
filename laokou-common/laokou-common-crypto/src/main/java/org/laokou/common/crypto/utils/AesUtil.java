@@ -23,6 +23,7 @@ import org.apache.hc.client5.http.utils.Base64;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.crypto.annotation.Aes;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.Assert;
 
 import javax.crypto.Cipher;
@@ -32,6 +33,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
+
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
 
 /**
  * AES加密工具类.
@@ -48,25 +51,14 @@ public class AesUtil {
 
 	private final static byte[] SECRET_KEY;
 
-	private final static String SECRET_KEY_STRING;
-
 	static {
 		try (InputStream inputStream = ResourceUtil.getResource("conf/secretKey.b16").getInputStream()) {
 			SECRET_KEY = inputStream.readAllBytes();
 			Assert.isTrue(SECRET_KEY.length == 16, "密钥长度必须16位");
-			SECRET_KEY_STRING = new String(SECRET_KEY, StandardCharsets.UTF_8);
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	/**
-	 * 获取加密密钥.
-	 * @return 加密密钥
-	 */
-	public static String getSecretKeyStr() {
-		return SECRET_KEY_STRING;
 	}
 
 	/**
@@ -84,6 +76,9 @@ public class AesUtil {
 	 */
 	@SneakyThrows
 	public static String encrypt(String str) {
+		if (StringUtil.isEmpty(str)) {
+			return EMPTY;
+		}
 		SecretKeySpec secretKeySpec = new SecretKeySpec(getSecretKey(), ALGORITHM_AES);
 		Cipher cipher = Cipher.getInstance(AES_INSTANCE);
 		cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, new IvParameterSpec(new byte[16]));
@@ -98,6 +93,9 @@ public class AesUtil {
 	 */
 	@SneakyThrows
 	public static String decrypt(String str) {
+		if (StringUtil.isEmpty(str)) {
+			return EMPTY;
+		}
 		SecretKeySpec secretKeySpec = new SecretKeySpec(getSecretKey(), ALGORITHM_AES);
 		Cipher cipher = Cipher.getInstance(AES_INSTANCE);
 		cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, new IvParameterSpec(new byte[16]));

@@ -21,23 +21,17 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.UsersServiceI;
-import org.laokou.common.i18n.dto.Option;
-import org.laokou.admin.dto.user.*;
+import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
-import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.constant.TypeEnum;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.idempotent.annotation.Idempotent;
-import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-import static org.laokou.common.data.cache.constant.NameConstant.USERS;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author laokou
@@ -49,6 +43,22 @@ public class UsersController {
 
 	private final UsersServiceI usersServiceI;
 
+	@TraceLog
+	@GetMapping("v1/users/profile")
+	@Operation(summary = "个人中心", description = "查看个人信息")
+	public Result<UserProfileCO> getProfileV1() {
+		return usersServiceI.getProfile();
+	}
+
+	@TraceLog
+	@PostMapping("v1/users/page")
+	@Operation(summary = "用户管理", description = "分页查询用户列表")
+	@PreAuthorize("hasAuthority('user:page')")
+	public Result<Datas<UserCO>> pageV1(@RequestBody UserListQry qry) {
+		return usersServiceI.page(qry);
+	}
+
+/*
 	@PutMapping("v1/users")
 	@Operation(summary = "用户管理", description = "修改用户")
 	@OperateLog(module = "用户管理", operation = "修改用户")
@@ -56,13 +66,6 @@ public class UsersController {
 	@DataCache(name = USERS, key = "#cmd.userCO.id", type = TypeEnum.DEL)
 	public void modifyV1(@RequestBody UserModifyCmd cmd) {
 		usersServiceI.modify(cmd);
-	}
-
-	@TraceLog
-	@GetMapping("v1/users/profile")
-	@Operation(summary = "个人中心", description = "查看个人信息")
-	public Result<UserProfileCO> getProfileV1() {
-		return usersServiceI.getProfile();
 	}
 
 	@TraceLog
@@ -124,13 +127,6 @@ public class UsersController {
 	public void removeV1(@RequestBody Long[] ids) {
 		usersServiceI.remove(new UserRemoveCmd(ids));
 	}
-
-	@TraceLog
-	@PostMapping("v1/users/list")
-	@Operation(summary = "用户管理", description = "查询用户列表")
-	@PreAuthorize("hasAuthority('users:list')")
-	public Result<Datas<UserCO>> findListV1(@RequestBody UserListQry qry) {
-		return usersServiceI.findList(qry);
-	}
+*/
 
 }
