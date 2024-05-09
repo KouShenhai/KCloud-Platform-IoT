@@ -61,8 +61,8 @@ public class UserListQryExe {
 		UserDO userDO = new UserDO(qry.getUsername());
 		CompletableFuture<List<UserDO>> c1 = CompletableFuture
 			.supplyAsync(() -> userMapper.selectListByCondition(userDO, qry), executor);
-		CompletableFuture<Long> c2 = CompletableFuture
-			.supplyAsync(() -> userMapper.selectCountByCondition(userDO, qry), executor);
+		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> userMapper.selectCountByCondition(userDO, qry),
+				executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.ok(Datas.create(c1.get().stream().map(userConvertor::convertClientObj).toList(), c2.get()));
 	}
