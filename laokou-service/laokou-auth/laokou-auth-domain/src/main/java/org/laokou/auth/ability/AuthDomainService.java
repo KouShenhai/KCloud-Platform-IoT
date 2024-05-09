@@ -18,8 +18,6 @@
 package org.laokou.auth.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.domain.auth.gateway.*;
-import org.laokou.auth.domain.gateway.*;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.AuthA;
 import org.springframework.core.env.Environment;
