@@ -49,9 +49,4 @@ public class DictTypeDO extends BaseDO {
 	@Schema(name = "remark", description = "字典备注")
 	private String remark;
 
-	public DictTypeDO(String name, String type) {
-		this.name = name;
-		this.type = type;
-	}
-
 }

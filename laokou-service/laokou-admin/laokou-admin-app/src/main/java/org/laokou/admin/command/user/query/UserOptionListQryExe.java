@@ -20,11 +20,10 @@ package org.laokou.admin.command.user.query;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.annotation.DataFilter;
-import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.user.UserOptionListQry;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -52,7 +51,7 @@ public class UserOptionListQryExe {
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_USER)
 	public Result<List<Option>> execute(UserOptionListQry qry) {
-		List<UserDO> list = userMapper.selectOptionList(qry, AesUtil.getSecretKeyStr());
+		List<UserDO> list = userMapper.selectOptionList(qry, null);
 		return Result
 			.ok(list.stream().map(item -> new Option(item.getUsername(), String.valueOf(item.getId()))).toList());
 	}

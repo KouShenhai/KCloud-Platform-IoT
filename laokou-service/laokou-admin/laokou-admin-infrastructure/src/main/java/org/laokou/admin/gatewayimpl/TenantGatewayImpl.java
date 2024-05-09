@@ -35,7 +35,6 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.*;
-import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -359,8 +358,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	 * @return 修改用户SQL
 	 */
 	private String getUpdateUsernameSql(long userId) {
-		return String.format(UPDATE_USERNAME_BY_ID_SQL_TEMPLATE, BOOT_SYS_USER, TENANT_USERNAME,
-				AesUtil.getSecretKeyStr(), userId);
+		return String.format(UPDATE_USERNAME_BY_ID_SQL_TEMPLATE, BOOT_SYS_USER, TENANT_USERNAME, null, userId);
 	}
 
 }

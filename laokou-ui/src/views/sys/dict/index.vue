@@ -115,7 +115,7 @@
         :current="queryParam.pageNum"
         :total="total"
         :page-size="queryParam.pageSize"
-        :showTotal="total => `共 ${total} 条`"
+        :showTotal="() => `共 ${total} 条`"
         @showSizeChange="onShowSizeChange"
         @change="changeSize"
       />
@@ -127,7 +127,7 @@
 
 import { delType, refreshCache, page } from '@/api/sys/dict/type'
 import CreateForm from './modules/CreateForm'
-import DictData from './modules/DictData'
+import DictData from './modules/DictItem.vue'
 import CreateDataForm from './modules/CreateDataForm'
 import { tableMixin } from '@/store/table-mixin'
 

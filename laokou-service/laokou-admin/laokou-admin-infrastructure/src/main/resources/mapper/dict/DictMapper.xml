@@ -28,11 +28,17 @@
             ,remark
         from boot_sys_dict_type
         where del_flag = 0
-        <if test="dict.type != null and dict.type != ''">
-            and type like #{dict.type}
+        <if test="pageQuery.type != null and pageQuery.type != ''">
+            and type like #{pageQuery.type}
         </if>
-        <if test="dict.name != null and dict.name != ''">
-            and name like #{dict.name}
+        <if test="pageQuery.name != null and pageQuery.name != ''">
+            and name like #{pageQuery.name}
+        </if>
+        <if test="pageQuery.params.beginTime != null and pageQuery.params.beginTime != ''">
+            and to_char(create_date, 'YYYY-MM-DD') <![CDATA[ >= ]]> #{pageQuery.params.beginTime}
+        </if>
+        <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
+            and to_char(create_date, 'YYYY-MM-DD') <![CDATA[ <= ]]> #{pageQuery.params.endTime}
         </if>
         order by id desc
         limit ${pageQuery.pageSize} OFFSET ${pageQuery.pageIndex}
@@ -41,11 +47,17 @@
         SELECT count(1)
         from boot_sys_dict_type
         where del_flag = 0
-        <if test="dict.type != null and dict.type != ''">
-            and type like #{dict.type}
+        <if test="pageQuery.type != null and pageQuery.type != ''">
+            and type like #{pageQuery.type}
         </if>
-        <if test="dict.name != null and dict.name != ''">
-            and name like #{dict.name}
+        <if test="pageQuery.name != null and pageQuery.name != ''">
+            and name like #{pageQuery.name}
+        </if>
+        <if test="pageQuery.params.beginTime != null and pageQuery.params.beginTime != ''">
+            and to_char(create_date, 'YYYY-MM-DD') <![CDATA[ >= ]]> #{pageQuery.params.beginTime}
+        </if>
+        <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
+            and to_char(create_date, 'YYYY-MM-DD') <![CDATA[ <= ]]> #{pageQuery.params.endTime}
         </if>
     </select>
     <select id="selectVersion" resultType="integer">

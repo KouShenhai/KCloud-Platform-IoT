@@ -42,7 +42,7 @@ import static org.laokou.common.i18n.common.DSConstant.TENANT;
  */
 @Component
 @RequiredArgsConstructor
-public class DictListQryExe {
+public class DictTypeListQryExe {
 
 	private final DictMapper dictMapper;
 
@@ -58,11 +58,10 @@ public class DictListQryExe {
 	@SneakyThrows
 	@DS(TENANT)
 	public Result<Datas<DictTypeCO>> execute(DictListQry qry) {
-		DictTypeDO dictTypeDO = new DictTypeDO(qry.getName(), qry.getType());
 		CompletableFuture<List<DictTypeDO>> c1 = CompletableFuture
-			.supplyAsync(() -> dictMapper.selectPageByCondition(dictTypeDO, qry), executor);
-		CompletableFuture<Long> c2 = CompletableFuture
-			.supplyAsync(() -> dictMapper.selectCountByCondition(dictTypeDO, qry), executor);
+			.supplyAsync(() -> dictMapper.selectPageByCondition(qry), executor);
+		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> dictMapper.selectCountByCondition(qry),
+				executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.ok(Datas.create(c1.get().stream().map(dictConvertor::convertClientObj).toList(), c2.get()));
 	}
