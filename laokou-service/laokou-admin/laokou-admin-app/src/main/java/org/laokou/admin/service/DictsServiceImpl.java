@@ -26,7 +26,7 @@ import org.laokou.admin.command.dict.DictRemoveCmdExe;
 import org.laokou.admin.command.dict.DictCreateCmdExe;
 import org.laokou.admin.command.dict.DictModifyCmdExe;
 import org.laokou.admin.command.dict.query.DictGetQryExe;
-import org.laokou.admin.command.dict.query.DictListQryExe;
+import org.laokou.admin.command.dict.query.DictTypeListQryExe;
 import org.laokou.admin.command.dict.query.DictOptionListQryExe;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -53,7 +53,7 @@ public class DictsServiceImpl implements DictsServiceI {
 
 	private final DictGetQryExe dictGetQryExe;
 
-	private final DictListQryExe dictListQryExe;
+	private final DictTypeListQryExe dictTypeListQryExe;
 
 	/**
 	 * 新增字典.
@@ -109,7 +109,7 @@ public class DictsServiceImpl implements DictsServiceI {
 	 */
 	@Override
 	public Result<Datas<DictTypeCO>> page(DictListQry qry) {
-		return dictListQryExe.execute(qry);
+		return dictTypeListQryExe.execute(qry);
 	}
 
 }

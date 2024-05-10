@@ -87,7 +87,7 @@ public class UserGatewayImpl implements UserGateway {
 		// 密码加密
 		user.encryptPassword(passwordEncoder, user.getPassword());
 		// 检查用户名重复
-		long count = userMapper.selectUsernameCount(user.getUsername(), AesUtil.getSecretKeyStr());
+		long count = userMapper.selectUsernameCount(user.getUsername(), null);
 		user.checkUserName(count);
 		UserDO userDO = userConvertor.toDataObject(user);
 		// 新增
@@ -132,7 +132,7 @@ public class UserGatewayImpl implements UserGateway {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				// 新增用户
-				userMapper.insertObj(userDO, AesUtil.getSecretKeyStr());
+				userMapper.insertObj(userDO, null);
 				// 新增用户角色
 				createUserRole(userDO, roleIds);
 			}

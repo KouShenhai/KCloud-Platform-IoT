@@ -18,6 +18,7 @@
 package org.laokou.admin.dto.dict;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -26,6 +27,7 @@ import org.laokou.common.i18n.utils.StringUtil;
  * @author laokou
  */
 @Data
+@Valid
 @Schema(name = "DictListQry", description = "字典列表查询参数")
 public class DictListQry extends PageQuery {
 

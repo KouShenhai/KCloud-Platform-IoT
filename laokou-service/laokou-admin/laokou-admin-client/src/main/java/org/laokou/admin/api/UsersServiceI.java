@@ -91,10 +91,10 @@ public interface UsersServiceI {
 	void remove(UserRemoveCmd cmd);
 
 	/**
-	 * 查询用户列表.
+	 * 分页查询用户列表.
 	 * @param qry 查询用户列表参数
 	 * @return 用户列表
 	 */
-	Result<Datas<UserCO>> findList(UserListQry qry);
+	Result<Datas<UserCO>> page(UserListQry qry);
 
 }

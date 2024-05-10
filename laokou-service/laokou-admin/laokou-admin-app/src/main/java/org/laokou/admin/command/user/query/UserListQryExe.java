@@ -25,9 +25,7 @@ import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -61,12 +59,10 @@ public class UserListQryExe {
 	@DataFilter(tableAlias = BOOT_SYS_USER)
 	public Result<Datas<UserCO>> execute(UserListQry qry) {
 		UserDO userDO = new UserDO(qry.getUsername());
-		String secretKey = AesUtil.getSecretKeyStr();
-		PageQuery page = qry;
 		CompletableFuture<List<UserDO>> c1 = CompletableFuture
-			.supplyAsync(() -> userMapper.selectListByCondition(userDO, page, secretKey), executor);
-		CompletableFuture<Long> c2 = CompletableFuture
-			.supplyAsync(() -> userMapper.selectCountByCondition(userDO, page, secretKey), executor);
+			.supplyAsync(() -> userMapper.selectListByCondition(userDO, qry), executor);
+		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> userMapper.selectCountByCondition(userDO, qry),
+				executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.ok(Datas.create(c1.get().stream().map(userConvertor::convertClientObj).toList(), c2.get()));
 	}
