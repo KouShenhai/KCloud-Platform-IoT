@@ -27,6 +27,6 @@ import java.util.List;
 @Repository
 public interface I18nMessageMapper extends CrudMapper<Long, Integer, I18nMessageDO> {
 
-	List<I18nMessagePO> selectListByCode(@Param("code") String code);
+	List<I18nMessagePO> selectListByCode(@Param("code") String code, @Param("lang")String lang);
 
 }
