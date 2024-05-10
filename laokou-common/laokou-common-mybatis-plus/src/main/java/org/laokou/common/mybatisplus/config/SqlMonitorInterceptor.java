@@ -60,7 +60,9 @@ public class SqlMonitorInterceptor implements Interceptor {
 		if (target instanceof StatementHandler statementHandler) {
 			String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
 			SpringContextUtil.publishEvent(new SqlLogEvent("SQL日志", getAppName(), sql, time, DateUtil.now()));
-			sql = StringUtil.isNotEmpty(sql) ? String.format("Consume Time：%s ms \nExecute SQL：%s\n", time, sql.replaceAll("\\s+", SPACE)) : EMPTY;
+			sql = StringUtil.isNotEmpty(sql)
+					? String.format("Consume Time：%s ms \nExecute SQL：%s\n", time, sql.replaceAll("\\s+", SPACE))
+					: EMPTY;
 			log.info("\n{}", sql);
 		}
 		return obj;

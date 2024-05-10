@@ -37,7 +37,7 @@ class MqttTest {
 
 	@Test
 	void testMqttSender() {
-		mqttTemplate.send("test","123");
+		mqttTemplate.send("test", "123");
 	}
 
 }
