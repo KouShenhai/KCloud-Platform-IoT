@@ -469,20 +469,6 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
   name-server: rocketmq.laokou.org:9876
   consumer:
     pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2023-01-21 10:43:04.000000', '2023-11-06 18:10:30.000000', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'rocketmq公共配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1273, 'application-gateway.yaml', 'LAOKOU_GROUP', e'# springdoc
-spring:
-  cloud:
-    gateway:
-      ip:
-        enabled: true
-        label: black
-springdoc:
-  swagger-ui:
-    urls:
-      - name: admin
-        url: /v3/api-docs/admin
-      - name: auth
-        url: /v3/api-docs/auth', 'fe482cd291193a1bd85295c5dd363221', '2023-01-22 13:16:13.000000', '2024-05-01 00:44:08.000000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway配置', '', '', 'yaml', '', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1475, 'application-sms.yaml', 'LAOKOU_GROUP', e'sms:
   # 0：国阳云
   type: 0
@@ -780,6 +766,20 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
     "timeWindow": 30
   }
 ]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2023-02-26 15:55:49.000000', '2024-05-03 09:24:56.976000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel degrade rule', '', '', 'json', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1273, 'application-gateway.yaml', 'LAOKOU_GROUP', e'# springdoc
+spring:
+  cloud:
+    gateway:
+      ip:
+        enabled: true
+        label: black
+springdoc:
+  swagger-ui:
+    urls:
+      - name: admin
+        url: /v3/api-docs/admin
+      - name: auth
+        url: /v3/api-docs/auth', 'fe482cd291193a1bd85295c5dd363221', '2023-01-22 13:16:13.000000', '2024-05-05 22:11:33.663000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway配置', '', '', 'yaml', '', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2022, 'application-admin.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
@@ -792,7 +792,7 @@ spring:
       # 默认false,建议线上关闭
       p6spy: false
       #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: false
+      strict: true
       datasource:
         master:
           type: com.zaxxer.hikari.HikariDataSource
@@ -810,16 +810,6 @@ spring:
             maximum-pool-size: 60
             minimum-idle: 10
             is-read-only: false
-  xxl-job:
-    admin:
-      address: http://xxl.job.laokou.org:9095/xxl-job-admin
-    executor:
-      app-name: laokou-admin
-      port: -1
-      log-path: ./logs/xxl-job/laokou-admin
-      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
-      intentionalities: 7
-
 # mybatis-plus
 mybatis-plus:
   # 全局处理
@@ -832,13 +822,10 @@ mybatis-plus:
       - boot_sys_source
       - boot_sys_package_menu
       - boot_sys_package
-      - boot_sys_login_log
-    enabled: true
-  slow-sql:
     enabled: true
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'a5e7423e4eba360cefa9c30669aa3463', '2023-09-28 11:37:33.000000', '2024-05-03 09:37:05.130000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'b4d6b53b97b48c6a71c066a879985fcf', '2023-09-28 11:37:33.000000', '2024-05-10 22:18:58.386000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2025, 'application-auth.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
@@ -851,7 +838,7 @@ spring:
       # 默认false,建议线上关闭
       p6spy: false
       #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: false
+      strict: true
       datasource:
         master:
           type: com.zaxxer.hikari.HikariDataSource
@@ -868,15 +855,6 @@ spring:
             maximum-pool-size: 30
             minimum-idle: 10
             is-read-only: false
-  xxl-job:
-    admin:
-      address: http://xxl.job.laokou.org:9095/xxl-job-admin
-    executor:
-      app-name: laokou-auth
-      port: -1
-      log-path: ./logs/xxl-job/laokou-auth
-      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
-      intentionalities: 7
 # mybatis-plus
 mybatis-plus:
   # 全局处理
@@ -888,158 +866,9 @@ mybatis-plus:
     ignore-tables:
       - boot_sys_source
       - boot_sys_tenant
-  slow-sql:
-    enabled: true
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'f7854751f96f663b7afac6e1cf2ec627', '2023-09-28 11:51:44.000000', '2024-05-03 14:36:02.072000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-
-UPDATE public.config_info SET content = e'[
-  {
-    "id": "laokou-auth",
-    "uri": "lb://laokou-auth",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/auth/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "auth",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/auth/(?<path>.*)",
-          "_genkey_1": "/$\\\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "2.0"
-    },
-    "order": 1
-  },
-  {
-    "id": "laokou-admin",
-    "uri": "lb://laokou-admin",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/admin/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "admin",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/admin/(?<path>.*)",
-          "_genkey_1": "/$\\\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "2.0"
-    },
-    "order": 1
-  },
-  {
-    "id": "open-api",
-    "uri": "http://127.0.0.1:5555",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/v3/api-docs/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "open-api",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/v3/api-docs/(?<path>.*)",
-          "_genkey_1": "/$\\\\{path}/v3/api-docs"
-        }
-      }
-    ],
-    "metadata": {},
-    "order": 1
-  },
-  {
-    "id": "laokou-im",
-    "uri": "lb:wss://laokou-im",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/im/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "im",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/im/(?<path>.*)",
-          "_genkey_1": "/$\\\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "2.0"
-    },
-    "order": 1
-  }
-]' WHERE id = 26;
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '432bd1f726a6f2d6e84629261c3a2730', '2023-09-28 11:51:44.000000', '2024-05-10 22:19:09.347000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 
 create table if not exists public.config_info_aggr
 (

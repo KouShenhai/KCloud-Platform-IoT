@@ -33,13 +33,16 @@ import org.laokou.common.mybatisplus.utils.SqlUtil;
 import java.sql.Connection;
 import java.util.Properties;
 
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constants.StringConstant.SPACE;
+
 /**
  * @author laokou
  */
 @Slf4j
 @Intercepts({
 		@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
-public class SlowSqlInterceptor implements Interceptor {
+public class SqlMonitorInterceptor implements Interceptor {
 
 	private Properties properties;
 
@@ -56,9 +59,8 @@ public class SlowSqlInterceptor implements Interceptor {
 		Object target = invocation.getTarget();
 		if (target instanceof StatementHandler statementHandler) {
 			String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
-			SpringContextUtil.publishEvent(new SqlLogEvent("慢SQL事件", getAppName(), sql, time, DateUtil.now()));
-			sql = StringUtil.isNotEmpty(sql)
-					? " Consume Time：" + time + " ms " + "\n Execute SQL：" + sql.replaceAll("\\s+", " ") + "\n" : "";
+			SpringContextUtil.publishEvent(new SqlLogEvent("SQL日志", getAppName(), sql, time, DateUtil.now()));
+			sql = StringUtil.isNotEmpty(sql) ? String.format("Consume Time：%s ms \nExecute SQL：%s\n", time, sql.replaceAll("\\s+", SPACE)) : EMPTY;
 			log.info("\n{}", sql);
 		}
 		return obj;
