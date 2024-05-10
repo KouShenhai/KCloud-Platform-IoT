@@ -30,7 +30,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -62,12 +61,10 @@ public class MybatisPlusAutoConfig {
 	}
 
 	@Bean
-	@ConditionalOnProperty(havingValue = "true", prefix = "mybatis-plus.slow-sql", name = "enabled")
-	public ConfigurationCustomizer slowSqlConfigurationCustomizer(ConfigurableEnvironment environment,
-			MybatisPlusExtProperties mybatisPlusExtProperties) {
-		SlowSqlInterceptor slowSqlInterceptor = new SlowSqlInterceptor();
-		slowSqlInterceptor.setProperties(properties(environment, mybatisPlusExtProperties));
-		return configuration -> configuration.addInterceptor(slowSqlInterceptor);
+	public ConfigurationCustomizer slowSqlConfigurationCustomizer(ConfigurableEnvironment environment) {
+		SqlMonitorInterceptor sqlMonitorInterceptor = new SqlMonitorInterceptor();
+		sqlMonitorInterceptor.setProperties(properties(environment));
+		return configuration -> configuration.addInterceptor(sqlMonitorInterceptor);
 	}
 
 	/**
@@ -148,10 +145,9 @@ public class MybatisPlusAutoConfig {
 		return paginationInnerInterceptor;
 	}
 
-	private Properties properties(ConfigurableEnvironment environment,
-			MybatisPlusExtProperties mybatisPlusExtProperties) {
+	private Properties properties(ConfigurableEnvironment environment) {
 		String appName = getApplicationId(environment);
-		long millis = mybatisPlusExtProperties.getSlowSql().getMillis().toMillis();
+		long millis = 0;
 		Properties properties = new Properties();
 		properties.setProperty("appName", appName);
 		properties.setProperty("millis", String.valueOf(millis));

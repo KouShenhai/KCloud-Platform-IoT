@@ -86,12 +86,12 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 	@Override
 	public void handlerAdded(ChannelHandlerContext ctx) {
-		// log.info("建立连接：{}", ctx.channel().id().asLongText());
+		log.info("建立连接：{}", ctx.channel().id().asLongText());
 	}
 
 	@Override
 	public void handlerRemoved(ChannelHandlerContext ctx) {
-		// log.info("断开连接：{}", ctx.channel().id().asLongText());
+		log.info("断开连接：{}", ctx.channel().id().asLongText());
 	}
 
 }

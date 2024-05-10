@@ -21,7 +21,6 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,8 +32,6 @@ import java.util.Set;
 @ConfigurationProperties(prefix = "mybatis-plus")
 public class MybatisPlusExtProperties {
 
-	private SlowSql slowSql = new SlowSql();
-
 	private Tenant tenant = new Tenant();
 
 	@Data
@@ -43,15 +40,6 @@ public class MybatisPlusExtProperties {
 		private boolean enabled = false;
 
 		private Set<String> ignoreTables = new HashSet<>(0);
-
-	}
-
-	@Data
-	public static class SlowSql {
-
-		private boolean enabled = false;
-
-		private Duration millis = Duration.ofMillis(500);
 
 	}
 
