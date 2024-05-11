@@ -73,8 +73,8 @@ public class UsersV3Controller {
 
 	@TraceLog
 	@GetMapping("options")
-	@Operation(summary = "用户管理", description = "用户下拉选择项")
-	public Result<List<Option>> getOptionsV3() {
+	@Operation(summary = "用户管理", description = "查询用户下拉选择项列表")
+	public Result<List<Option>> listOptionV3() {
 		return null;
 	}
 
