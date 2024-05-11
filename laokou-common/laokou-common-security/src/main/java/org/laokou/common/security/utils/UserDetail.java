@@ -67,7 +67,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	private Integer superAdmin;
 
 	/**
-	 * 用户状态 0正常 1禁用.
+	 * 用户状态 0启用 1禁用.
 	 */
 	private Integer status;
 
