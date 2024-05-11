@@ -15,44 +15,31 @@
  *
  */
 
-package org.laokou.auth.web;
+package org.laokou.admin.web.v3;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.dto.TenantGetIDQry;
-import org.laokou.auth.api.TenantsServiceI;
-import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @author laokou
  */
 @RestController
+@Tag(name = "IdempotentV3Controller", description = "幂等管理")
 @RequiredArgsConstructor
-@Tag(name = "TenantsController", description = "租户管理")
-public class TenantsController {
-
-	private final TenantsServiceI tenantsServiceI;
+@RequestMapping("v3/idempotent")
+public class IdempotentV3Controller {
 
 	@TraceLog
-	@GetMapping("v1/tenants/option-list")
-	@Operation(summary = "租户管理", description = "租户下拉列表")
-	public Result<List<Option>> listOptionV1() {
-		return tenantsServiceI.listOption();
-	}
-
-	@TraceLog
-	@GetMapping("v1/tenants/id")
-	@Operation(summary = "租户管理", description = "根据域名查看ID")
-	public Result<Long> getIdByDomainNameV1(HttpServletRequest request) {
-		return tenantsServiceI.getIdByDomainName(new TenantGetIDQry(request));
+	@GetMapping("token")
+	@Operation(summary = "令牌管理", description = "获取令牌")
+	public Result<String> getTokenV3() {
+		return null;
 	}
 
 }

@@ -27,6 +27,7 @@ import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.redisson.api.RateIntervalUnit;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
@@ -36,16 +37,17 @@ import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
  */
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "SecretsController", description = "安全配置控制器")
-public class SecretsController {
+@Tag(name = "SecretsV3Controller", description = "安全配置")
+@RequestMapping("v3/secrets")
+public class SecretsV3Controller {
 
 	private final SecretsServiceI secretsServiceI;
 
 	@TraceLog
-	@GetMapping("v1/secrets")
+	@GetMapping
 	@Operation(summary = "安全配置", description = "获取密钥")
 	@RateLimiter(id = "AUTH_SECRET", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
-	public Result<SecretCO> getInfoV1() {
+	public Result<SecretCO> getInfoV3() {
 		return secretsServiceI.getInfo();
 	}
 

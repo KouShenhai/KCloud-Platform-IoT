@@ -24,6 +24,7 @@ import org.laokou.auth.api.LogoutsServiceI;
 import org.laokou.auth.dto.LogoutCmd;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -31,14 +32,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "LogoutsController", description = "退出登录控制器")
-public class LogoutsController {
+@Tag(name = "LogoutsV3Controller", description = "退出登录")
+@RequestMapping("v3/logouts")
+public class LogoutsV3Controller {
 
 	private final LogoutsServiceI logoutsServiceI;
 
-	@DeleteMapping("v1/logouts")
+	@DeleteMapping
 	@Operation(summary = "退出登录", description = "清除令牌")
-	public void removeTokenV1(@RequestBody LogoutCmd cmd) {
+	public void removeTokenV3(@RequestBody LogoutCmd cmd) {
 		logoutsServiceI.removeToken(cmd);
 	}
 

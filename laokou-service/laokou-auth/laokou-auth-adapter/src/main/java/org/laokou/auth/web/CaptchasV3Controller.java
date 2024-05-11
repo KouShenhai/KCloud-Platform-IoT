@@ -28,6 +28,7 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.redisson.api.RateIntervalUnit;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
@@ -37,16 +38,17 @@ import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
  */
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "CaptchasController", description = "验证码控制器")
-public class CaptchasController {
+@Tag(name = "CaptchasV3Controller", description = "验证码")
+@RequestMapping("v3/captchas")
+public class CaptchasV3Controller {
 
 	private final CaptchasServiceI captchasServiceI;
 
 	@TraceLog
-	@GetMapping("v1/captchas/{uuid}")
+	@GetMapping("{uuid}")
 	@RateLimiter(id = "AUTH_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
-	@Operation(summary = "验证码", description = "获取验证码")
-	public Result<String> getByUuidV1(@PathVariable("uuid") String uuid) {
+	@Operation(summary = "验证码", description = "根据UUID获取验证码")
+	public Result<String> getByUuidV3(@PathVariable("uuid") String uuid) {
 		return captchasServiceI.getByUuid(new CaptchaGetQry(uuid));
 	}
 
