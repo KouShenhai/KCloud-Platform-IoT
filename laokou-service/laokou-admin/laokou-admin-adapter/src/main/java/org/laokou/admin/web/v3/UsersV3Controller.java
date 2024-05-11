@@ -20,6 +20,7 @@ package org.laokou.admin.web.v3;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.api.UsersServiceI;
 import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
@@ -47,11 +48,13 @@ import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
 @Tag(name = "UsersV3Controller", description = "用户管理")
 public class UsersV3Controller {
 
+	private final UsersServiceI usersServiceI;
+
 	@TraceLog
 	@GetMapping("profile")
 	@Operation(summary = "个人中心", description = "查看个人信息")
 	public Result<UserProfileCO> getProfileV3() {
-		return null;
+		return usersServiceI.getProfile();
 	}
 
 	@TraceLog

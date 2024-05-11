@@ -25,8 +25,6 @@ import org.laokou.common.core.utils.TreeUtil;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.SLASH;
-
 /**
  * @author laokou
  */
@@ -47,11 +45,9 @@ public class RouterCO extends TreeUtil.TreeNode<RouterCO> {
 	public RouterCO(Long id, Long pid, String name, String title, String redirect, Boolean hidden, String icon,
 			Boolean keepAlive, String target, String permission, String link, String component) {
 		super(id, name, pid);
-		String[] arr = component.split(SLASH);
 		this.redirect = redirect;
 		this.hidden = hidden;
-		this.component = component;
-		this.path = arr[arr.length - 1];
+		this.path = "/" + component;
 		this.meta = new Meta(title, icon, keepAlive, target, List.of(permission), link);
 	}
 
