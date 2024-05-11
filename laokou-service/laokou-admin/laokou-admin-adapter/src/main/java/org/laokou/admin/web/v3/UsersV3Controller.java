@@ -42,9 +42,9 @@ import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
  * @author laokou
  */
 @RestController
-@Tag(name = "UsersV3Controller", description = "用户管理")
 @RequiredArgsConstructor
 @RequestMapping("v3/users")
+@Tag(name = "UsersV3Controller", description = "用户管理")
 public class UsersV3Controller {
 
 	@TraceLog
@@ -56,16 +56,16 @@ public class UsersV3Controller {
 
 	@TraceLog
 	@PostMapping("page")
-	@Operation(summary = "用户管理", description = "分页查询用户列表")
 	@PreAuthorize("hasAuthority('user:page')")
+	@Operation(summary = "用户管理", description = "分页查询用户列表")
 	public Result<Datas<UserCO>> pageV3(@RequestBody UserListQry qry) {
 		return null;
 	}
 
 	@PutMapping
-	@Operation(summary = "用户管理", description = "修改用户")
-	@OperateLog(module = "用户管理", operation = "修改用户")
 	@PreAuthorize("hasAuthority('user:modify')")
+	@OperateLog(module = "用户管理", operation = "修改用户")
+	@Operation(summary = "用户管理", description = "修改用户")
 	@DataCache(name = USERS, key = "#cmd.co.id", type = DEL)
 	public void modifyV3() {
 
@@ -79,41 +79,41 @@ public class UsersV3Controller {
 	}
 
 	@PutMapping("status")
-	@Operation(summary = "用户管理", description = "修改用户状态")
-	@OperateLog(module = "用户管理", operation = "修改用户状态")
 	@PreAuthorize("hasAuthority('user:modify-status')")
+	@OperateLog(module = "用户管理", operation = "修改用户状态")
+	@Operation(summary = "用户管理", description = "修改用户状态")
 	public void modifyStatusV3() {
 
 	}
 
 	@PutMapping("reset-password")
-	@Operation(summary = "用户管理", description = "重置密码")
-	@OperateLog(module = "用户管理", operation = "重置密码")
 	@PreAuthorize("hasAuthority('user:reset-password')")
+	@OperateLog(module = "用户管理", operation = "重置密码")
+	@Operation(summary = "用户管理", description = "重置密码")
 	public void resetPasswordV3() {
 
 	}
 
 	@Idempotent
 	@PostMapping
-	@Operation(summary = "用户管理", description = "新增用户")
-	@OperateLog(module = "用户管理", operation = "新增用户")
 	@PreAuthorize("hasAuthority('user:save')")
+	@OperateLog(module = "用户管理", operation = "新增用户")
+	@Operation(summary = "用户管理", description = "新增用户")
 	public void saveV3() {
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
-	@Operation(summary = "用户管理", description = "查看用户详情")
 	@DataCache(name = USERS, key = "#id")
+	@Operation(summary = "用户管理", description = "查看用户详情")
 	public Result<UserCO> getByIdV3(@PathVariable("id") Long id) {
 		return null;
 	}
 
 	@DeleteMapping
-	@Operation(summary = "用户管理", description = "删除用户")
-	@OperateLog(module = "用户管理", operation = "删除用户")
 	@PreAuthorize("hasAuthority('user:remove')")
+	@OperateLog(module = "用户管理", operation = "删除用户")
+	@Operation(summary = "用户管理", description = "删除用户")
 	public void removeV3(@RequestBody Long[] ids) {
 
 	}

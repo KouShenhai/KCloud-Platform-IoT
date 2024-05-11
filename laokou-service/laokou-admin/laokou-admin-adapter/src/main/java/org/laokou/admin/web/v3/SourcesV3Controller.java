@@ -40,48 +40,48 @@ import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
  * @author laokou
  */
 @RestController
-@Tag(name = "SourcesV3Controller", description = "数据源管理")
 @RequiredArgsConstructor
 @RequestMapping("v3/sources")
+@Tag(name = "SourcesV3Controller", description = "数据源管理")
 public class SourcesV3Controller {
 
 	@TraceLog
 	@PostMapping("page")
-	@Operation(summary = "数据源管理", description = "查询数据源列表")
 	@PreAuthorize("hasAuthority('source:page')")
+	@Operation(summary = "数据源管理", description = "查询数据源列表")
 	public Result<Datas<SourceCO>> pageV3() {
 		return null;
 	}
 
 	@Idempotent
 	@PostMapping
-	@Operation(summary = "数据源管理", description = "新增数据源")
-	@OperateLog(module = "数据源管理", operation = "数据源新增")
 	@PreAuthorize("hasAuthority('source:save')")
+	@OperateLog(module = "数据源管理", operation = "数据源新增")
+	@Operation(summary = "数据源管理", description = "新增数据源")
 	public void saveV3() {
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
-	@Operation(summary = "数据源管理", description = "查看数据源详情")
 	@DataCache(name = SOURCES, key = "#id")
+	@Operation(summary = "数据源管理", description = "查看数据源详情")
 	public Result<?> getByIdV3(@PathVariable("id") Long id) {
 		return null;
 	}
 
 	@PutMapping
-	@Operation(summary = "数据源管理", description = "修改数据源")
-	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@PreAuthorize("hasAuthority('source:modify')")
+	@OperateLog(module = "数据源管理", operation = "修改数据源")
+	@Operation(summary = "数据源管理", description = "修改数据源")
 	@DataCache(name = SOURCES, key = "#cmd.sourceCO.id", type = DEL)
 	public void modifyV3() {
 
 	}
 
 	@DeleteMapping
-	@Operation(summary = "数据源管理", description = "删除数据源")
-	@OperateLog(module = "数据源管理", operation = "删除数据源")
 	@PreAuthorize("hasAuthority('source:remove')")
+	@OperateLog(module = "数据源管理", operation = "删除数据源")
+	@Operation(summary = "数据源管理", description = "删除数据源")
 	public void removeV3(@RequestBody Long[] ids) {
 	}
 

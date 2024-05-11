@@ -41,47 +41,47 @@ import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
  * @author laokou
  */
 @RestController
-@Tag(name = "PackagesV3Controller", description = "套餐管理")
 @RequiredArgsConstructor
 @RequestMapping("v3/packages")
+@Tag(name = "PackagesV3Controller", description = "套餐管理")
 public class PackagesV3Controller {
 
 	@TraceLog
 	@PostMapping("page")
-	@Operation(summary = "套餐管理", description = "分页查询套餐列表")
 	@PreAuthorize("hasAuthority('package:page')")
+	@Operation(summary = "套餐管理", description = "分页查询套餐列表")
 	public Result<Datas<PackageCO>> pageV3(@RequestBody PackageListQry qry) {
 		return null;
 	}
 
 	@Idempotent
 	@PostMapping
-	@Operation(summary = "套餐管理", description = "新增套餐")
-	@OperateLog(module = "套餐管理", operation = "新增套餐")
 	@PreAuthorize("hasAuthority('package:save')")
+	@OperateLog(module = "套餐管理", operation = "新增套餐")
+	@Operation(summary = "套餐管理", description = "新增套餐")
 	public void saveV3(@RequestBody PackageCreateCmd cmd) {
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
-	@Operation(summary = "套餐管理", description = "查看套餐")
 	@DataCache(name = PACKAGES, key = "#id")
+	@Operation(summary = "套餐管理", description = "查看套餐")
 	public Result<PackageCO> getByIdV3(@PathVariable("id") Long id) {
 		return null;
 	}
 
 	@PutMapping
-	@Operation(summary = "套餐管理", description = "修改套餐")
-	@OperateLog(module = "套餐管理", operation = "修改套餐")
 	@PreAuthorize("hasAuthority('package:modify')")
+	@OperateLog(module = "套餐管理", operation = "修改套餐")
+	@Operation(summary = "套餐管理", description = "修改套餐")
 	@DataCache(name = PACKAGES, key = "#cmd.co.id", type = DEL)
 	public void modifyV3(@RequestBody PackageModifyCmd cmd) {
 	}
 
 	@DeleteMapping
-	@Operation(summary = "套餐管理", description = "删除套餐")
-	@OperateLog(module = "套餐管理", operation = "删除套餐")
 	@PreAuthorize("hasAuthority('package:remove')")
+	@OperateLog(module = "套餐管理", operation = "删除套餐")
+	@Operation(summary = "套餐管理", description = "删除套餐")
 	public void removeV3(@RequestBody Long[] ids) {
 	}
 

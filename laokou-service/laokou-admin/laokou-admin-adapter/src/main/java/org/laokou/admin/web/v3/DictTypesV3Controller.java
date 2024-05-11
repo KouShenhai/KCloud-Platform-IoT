@@ -20,9 +20,16 @@ package org.laokou.admin.web.v3;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.api.DictsServiceI;
+import org.laokou.admin.dto.dict.DictListQry;
+import org.laokou.admin.dto.dict.clientobject.DictTypeCO;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,15 +38,18 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/idempotent")
-@Tag(name = "IdempotentV3Controller", description = "幂等管理")
-public class IdempotentV3Controller {
+@RequestMapping("v3/dict-type")
+@Tag(name = "DictTypesV3Controller", description = "字典类型管理")
+public class DictTypesV3Controller {
+
+	private final DictsServiceI dictsServiceI;
 
 	@TraceLog
-	@GetMapping("token")
-	@Operation(summary = "令牌管理", description = "获取令牌")
-	public Result<String> getTokenV3() {
-		return null;
+	@PostMapping("page")
+	@PreAuthorize("hasAuthority('dict-type:page')")
+	@Operation(summary = "字典类型管理", description = "分页查询字典类型列表")
+	public Result<Datas<DictTypeCO>> pageV3(@Validated @RequestBody DictListQry qry) {
+		return dictsServiceI.page(qry);
 	}
 
 }

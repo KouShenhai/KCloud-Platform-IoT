@@ -38,9 +38,9 @@ import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
  * @author laokou
  */
 @RestController
-@Tag(name = "MenusV3Controller", description = "菜单管理")
 @RequiredArgsConstructor
 @RequestMapping("v3/menus")
+@Tag(name = "MenusV3Controller", description = "菜单管理")
 public class MenusV3Controller {
 
 	@TraceLog
@@ -52,24 +52,24 @@ public class MenusV3Controller {
 
 	@TraceLog
 	@PostMapping("list")
-	@Operation(summary = "菜单管理", description = "查询菜单列表")
 	@PreAuthorize("hasAuthority('menu:list')")
+	@Operation(summary = "菜单管理", description = "查询菜单列表")
 	public Result<?> listV3() {
 		return null;
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
-	@Operation(summary = "菜单管理", description = "查看菜单详情")
 	@DataCache(name = MENUS, key = "#id")
+	@Operation(summary = "菜单管理", description = "查看菜单详情")
 	public Result<?> getByIdV3(@PathVariable("id") Long id) {
 		return null;
 	}
 
 	@PutMapping
-	@Operation(summary = "菜单管理", description = "修改菜单")
-	@OperateLog(module = "菜单管理", operation = "修改菜单")
 	@PreAuthorize("hasAuthority('menu:modify')")
+	@OperateLog(module = "菜单管理", operation = "修改菜单")
+	@Operation(summary = "菜单管理", description = "修改菜单")
 	@DataCache(name = MENUS, key = "#cmd.co.id", type = DEL)
 	public void modifyV3() {
 
@@ -77,17 +77,17 @@ public class MenusV3Controller {
 
 	@Idempotent
 	@PostMapping
-	@Operation(summary = "菜单管理", description = "新增菜单")
-	@OperateLog(module = "菜单管理", operation = "新增菜单")
 	@PreAuthorize("hasAuthority('menu:save')")
+	@OperateLog(module = "菜单管理", operation = "新增菜单")
+	@Operation(summary = "菜单管理", description = "新增菜单")
 	public void saveV3() {
 
 	}
 
 	@DeleteMapping
-	@Operation(summary = "菜单管理", description = "删除菜单")
-	@OperateLog(module = "菜单管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('menu:remove')")
+	@OperateLog(module = "菜单管理", operation = "删除菜单")
+	@Operation(summary = "菜单管理", description = "删除菜单")
 	public void removeV3(@RequestBody Long[] ids) {
 
 	}

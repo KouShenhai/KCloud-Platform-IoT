@@ -38,15 +38,15 @@ import java.util.List;
  * @author laokou
  */
 @RestController
-@Tag(name = "RolesV3Controller", description = "角色管理")
 @RequiredArgsConstructor
 @RequestMapping("v3/roles")
+@Tag(name = "RolesV3Controller", description = "角色管理")
 public class RolesV3Controller {
 
 	@TraceLog
 	@PostMapping("page")
-	@Operation(summary = "角色管理", description = "分页查询角色列表")
 	@PreAuthorize("hasAuthority('role:page')")
+	@Operation(summary = "角色管理", description = "分页查询角色列表")
 	public Result<Datas<RoleCO>> pageV3() {
 		return null;
 	}
@@ -67,25 +67,25 @@ public class RolesV3Controller {
 
 	@Idempotent
 	@PostMapping
-	@Operation(summary = "角色管理", description = "新增角色")
-	@OperateLog(module = "角色管理", operation = "新增角色")
 	@PreAuthorize("hasAuthority('role:save')")
+	@OperateLog(module = "角色管理", operation = "新增角色")
+	@Operation(summary = "角色管理", description = "新增角色")
 	public void saveV3() {
 
 	}
 
 	@PutMapping
-	@Operation(summary = "角色管理", description = "修改角色")
-	@OperateLog(module = "角色管理", operation = "修改角色")
 	@PreAuthorize("hasAuthority('role:modify')")
+	@OperateLog(module = "角色管理", operation = "修改角色")
+	@Operation(summary = "角色管理", description = "修改角色")
 	public void modifyV3(@RequestBody RoleModifyCmd cmd) {
 
 	}
 
 	@DeleteMapping
-	@Operation(summary = "角色管理", description = "删除角色")
-	@OperateLog(module = "角色管理", operation = "删除角色")
 	@PreAuthorize("hasAuthority('role:remove')")
+	@OperateLog(module = "角色管理", operation = "删除角色")
+	@Operation(summary = "角色管理", description = "删除角色")
 	public void removeV3(@RequestBody Long[] ids) {
 
 	}

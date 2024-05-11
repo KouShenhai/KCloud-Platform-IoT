@@ -38,28 +38,29 @@ import org.springframework.web.multipart.MultipartFile;
 
 import static org.laokou.common.data.cache.constant.NameConstant.OSS;
 import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 /**
  * @author laokou
  */
 @RestController
-@Tag(name = "OssV3Controller", description = "OSS管理")
 @RequiredArgsConstructor
 @RequestMapping("v3/oss")
+@Tag(name = "OssV3Controller", description = "OSS管理")
 public class OssV3Controller {
 
 	@TraceLog
 	@PostMapping("page")
-	@Operation(summary = "OSS管理", description = "分页查询OSS列表")
 	@PreAuthorize("hasAuthority('oss:page')")
+	@Operation(summary = "OSS管理", description = "分页查询OSS列表")
 	public Result<Datas<OssCO>> pageV3(@RequestBody OssListQry qry) {
 		return null;
 	}
 
 	@TraceLog
-	@PostMapping(value = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@Operation(summary = "OSS管理", description = "上传文件")
 	@OperateLog(module = "OSS管理", operation = "上传文件")
+	@Operation(summary = "OSS管理", description = "上传文件")
+	@PostMapping(value = "upload", consumes = MULTIPART_FORM_DATA_VALUE)
 	public Result<?> uploadV3(@RequestPart("file") MultipartFile file) {
 		return null;
 	}
@@ -74,24 +75,24 @@ public class OssV3Controller {
 
 	@TraceLog
 	@GetMapping("{id}")
-	@Operation(summary = "OSS管理", description = "查看OSS")
 	@DataCache(name = OSS, key = "#id")
+	@Operation(summary = "OSS管理", description = "查看OSS")
 	public Result<OssCO> getByIdV3(@PathVariable("id") Long id) {
 		return null;
 	}
 
 	@PutMapping
-	@Operation(summary = "OSS管理", description = "修改OSS")
-	@OperateLog(module = "OSS管理", operation = "修改OSS")
 	@PreAuthorize("hasAuthority('oss:modify')")
+	@OperateLog(module = "OSS管理", operation = "修改OSS")
 	@DataCache(name = OSS, key = "#cmd.co.id", type = DEL)
+	@Operation(summary = "OSS管理", description = "修改OSS")
 	public void modifyV3(@RequestBody OssModifyCmd cmd) {
 	}
 
 	@DeleteMapping
-	@Operation(summary = "OSS管理", description = "删除OSS")
-	@OperateLog(module = "OSS管理", operation = "删除OSS")
 	@PreAuthorize("hasAuthority('oss:remove')")
+	@OperateLog(module = "OSS管理", operation = "删除OSS")
+	@Operation(summary = "OSS管理", description = "删除OSS")
 	public void removeV3(@RequestBody Long[] ids) {
 
 	}
