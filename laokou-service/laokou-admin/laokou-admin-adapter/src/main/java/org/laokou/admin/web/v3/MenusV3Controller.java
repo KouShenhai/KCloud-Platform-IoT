@@ -20,6 +20,7 @@ package org.laokou.admin.web.v3;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.api.MenusServiceI;
 import org.laokou.admin.dto.menu.clientobject.RouterCO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.dto.Result;
@@ -43,11 +44,13 @@ import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
 @Tag(name = "MenusV3Controller", description = "菜单管理")
 public class MenusV3Controller {
 
+	private final MenusServiceI menusServiceI;
+
 	@TraceLog
 	@GetMapping("routers")
 	@Operation(summary = "菜单管理", description = "查询用户菜单路由列表")
 	public Result<List<RouterCO>> getRoutersV3() {
-		return null;
+		return menusServiceI.getRouters();
 	}
 
 	@TraceLog

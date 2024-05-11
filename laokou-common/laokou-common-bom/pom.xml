@@ -166,11 +166,6 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-support</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
         <artifactId>laokou-common-domain</artifactId>
         <version>${laokou.version}</version>
       </dependency>

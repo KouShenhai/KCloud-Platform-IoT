@@ -1,10 +1,9 @@
 // eslint-disable-next-line
-import { getRouters } from '@/api/menu'
+import { getRouters } from '@/api/sys/menu'
 import { indexRouterMap } from '@/config/router.config'
 import allIcon from '@/core/icons'
 import { UserLayout, BlankLayout, PageView } from '@/layouts'
-import auth from '@/plugins/auth'
-
+import { validURL } from '@/utils/validate'
 // 前端路由表
 const constantRouterComponents = {
   // 基础页面 layout 必须引入
@@ -60,9 +59,7 @@ export const generatorDynamicRouter = () => {
       // 路由菜单分离，路由全部为二级，解决多级菜单缓存问题
       const routers = []
       const menuNav = []
-      const routerData = res.data
-      const asyncRoutes = filterDynamicRoutes(indexRouterMap)
-      rootMenu.children = asyncRoutes.concat(routerData)
+      rootMenu.children = indexRouterMap.concat(res.data)
       menuNav.push(rootMenu)
       const menus = generator(menuNav, null, routers)
       menus.push(notFoundRouter)
@@ -72,21 +69,6 @@ export const generatorDynamicRouter = () => {
       reject(err)
     })
   })
-}
-
-// 动态路由遍历，验证是否具备权限
-export function filterDynamicRoutes (routes) {
-  const res = []
-  routes.forEach(route => {
-    if (route.permissions) {
-      if (auth.hasPermiOr(route.permissions)) {
-        res.push(route)
-      }
-    } else {
-      res.push(route)
-    }
-  })
-  return res
 }
 
 /**
@@ -100,16 +82,12 @@ export function filterDynamicRoutes (routes) {
 export const generator = (routerMap, parent, routers) => {
   const names = parent ? parent.meta.names : []
   return routerMap.map(item => {
-    // 适配ruoyi一级菜单
+    // 适配若依一级菜单
     if (item.path === '/' && item.children && item.children.length === 1) {
       item = item.children[0]
       item.children = undefined
     }
-
-    const { title, show, hideChildren, hiddenHeaderContent, hidden, icon, keepAlive, target } = item.meta || {}
-    if (item.isFrame === 0) {
-      item.target = '_blank'
-    }
+    const { title, hideChildren, hiddenHeaderContent, hidden, icon, keepAlive } = item.meta || {}
     const name = item.name || item.key || ''
     const isRouter = item.component && item.component !== 'Layout' && item.component !== 'ParentView'
     const currentRouter = {
@@ -118,7 +96,7 @@ export const generator = (routerMap, parent, routers) => {
       // 路由名称，建议唯一
       name: name,
       // 该路由对应页面的 组件(动态加载)
-      component: (constantRouterComponents[item.component || item.key]) || (() => import(`@/views/${item.component}`)),
+      component: constantRouterComponents[item.component || item.key] || (() => import(`@/views/${item.component}`)),
       hidden: item.hidden,
       // meta: 页面标题, 菜单图标, 页面权限(供指令权限用，可去掉)
       meta: {
@@ -126,18 +104,13 @@ export const generator = (routerMap, parent, routers) => {
         icon: allIcon[icon + 'Icon'] || icon,
         hiddenHeaderContent: hiddenHeaderContent,
         // 目前只能通过判断path的http链接来判断是否外链，适配若依
-        target: target,
-        permission: item.name,
+        target: validURL(item.path) ? '_blank' : '',
         keepAlive: keepAlive,
         hidden: hidden,
         // 因菜单路由分离，通过此names确定菜单树的展开
         names: names.concat([name])
       },
       redirect: item.redirect
-    }
-    // 是否设置了隐藏菜单
-    if (show === false) {
-      currentRouter.hidden = true
     }
     // 适配若依，若依为缩写路径，而antdv-pro的pro-layout要求每个路径需为全路径
     if (!constantRouterComponents[item.component || item.key]) {

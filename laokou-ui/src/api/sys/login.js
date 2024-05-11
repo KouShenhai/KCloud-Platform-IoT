@@ -16,7 +16,7 @@ export function login (params) {
 
 export function getTenantIdByDomainName () {
   return request({
-    url: '/auth/v1/tenants/id',
+    url: '/auth/v3/tenants/id',
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -26,7 +26,7 @@ export function getTenantIdByDomainName () {
 
 export function listTenantOption () {
   return request({
-    url: '/auth/v1/tenants/option-list',
+    url: '/auth/v3/tenants/options',
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -36,7 +36,7 @@ export function listTenantOption () {
 
 export function getCaptcha (uuid) {
   return request({
-    url: '/auth/v1/captchas/' + uuid,
+    url: '/auth/v3/captchas/' + uuid,
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -46,7 +46,7 @@ export function getCaptcha (uuid) {
 
 export function getInfo () {
   return request({
-    url: '/admin/v1/users/profile',
+    url: '/admin/v3/users/profile',
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -56,7 +56,7 @@ export function getInfo () {
 
 export function logout (token) {
   return request({
-    url: '/auth/v1/logouts',
+    url: '/auth/v3/logouts',
     data: { token: token },
     method: 'delete',
     headers: {
@@ -67,7 +67,7 @@ export function logout (token) {
 
 export function getSecret () {
   return request({
-    url: '/auth/v1/secrets',
+    url: '/auth/v3/secrets',
     method: 'get',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'

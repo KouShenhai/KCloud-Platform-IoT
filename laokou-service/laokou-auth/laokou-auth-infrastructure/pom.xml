@@ -41,10 +41,6 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-auth-client</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-support</artifactId>
-    </dependency>
   </dependencies>
 
 </project>

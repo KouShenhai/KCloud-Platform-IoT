@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询菜单列表
 export function getRouters () {
   return request({
-    url: '/admin/v1/menus/routers',
+    url: '/admin/v3/menus/routers',
     method: 'get'
   })
 }
@@ -11,7 +11,7 @@ export function getRouters () {
 // 查看菜单
 export function findById (id) {
   return request({
-    url: '/admin/v1/menus' + '/' + id,
+    url: '/admin/v3/menus' + '/' + id,
     method: 'get'
   })
 }
@@ -19,7 +19,7 @@ export function findById (id) {
 // 新增菜单
 export function create (data, token) {
   return request({
-    url: '/admin/v1/menus',
+    url: '/admin/v3/menus',
     method: 'post',
     data: data,
     headers: {

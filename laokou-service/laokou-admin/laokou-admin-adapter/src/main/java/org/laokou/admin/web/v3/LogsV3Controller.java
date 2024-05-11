@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-IOT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,10 @@
  *
  */
 
-package org.laokou.common.support.annotation;
+package org.laokou.admin.web.v3;
 
-import org.laokou.common.support.i18n.listener.I18nMessageListener;
-import org.springframework.context.annotation.Import;
-
-import java.lang.annotation.*;
-
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({ I18nMessageListener.class })
-public @interface EnableI18nMessage {
-
+/**
+ * @author laokou
+ */
+public class LogsV3Controller {
 }
