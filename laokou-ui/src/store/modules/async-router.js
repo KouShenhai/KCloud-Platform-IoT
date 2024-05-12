@@ -10,16 +10,16 @@ const permission = {
     menus: []
   },
   mutations: {
-    SET_ROUTERS: (state, res) => {
-      state.menus = res.menus
-      state.routers = constantRouterMap.concat(res.routers)
+    SET_ROUTERS: (state, routers) => {
+      state.menus = routers
+      state.routers = constantRouterMap.concat(routers)
     }
   },
   actions: {
     GenerateRoutes ({ commit }) {
       return new Promise(resolve => {
-        generatorDynamicRouter().then((res) => {
-          commit('SET_ROUTERS', res)
+        generatorDynamicRouter().then((routers) => {
+          commit('SET_ROUTERS', routers)
           resolve()
         })
       })

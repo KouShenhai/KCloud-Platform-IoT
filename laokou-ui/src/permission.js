@@ -1,4 +1,4 @@
-import router from './router'
+import router, { resetRouter } from './router'
 import store from './store'
 import storage from 'store'
 import NProgress from 'nprogress' // progress bar
@@ -31,11 +31,19 @@ router.beforeEach((to, from, next) => {
           .then(() => {
             // generate dynamic router
             store.dispatch('GenerateRoutes', {}).then(() => {
+              resetRouter()
               store.getters.routers.forEach(item => {
                 router.addRoute(item)
               })
               // 请求带有 redirect 重定向时，登录自动重定向到该地址
-              next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
+              const redirect = decodeURIComponent(from.query.redirect || to.path)
+              if (to.path === redirect) {
+                // set the replace: true so the navigation will not leave a history record
+                next({ ...to, replace: true })
+              } else {
+                // 跳转到目的路由
+                next({ path: redirect })
+              }
             })
           })
           .catch(() => {
@@ -45,7 +53,7 @@ router.beforeEach((to, from, next) => {
             }, 5000)
             // 失败时，获取用户信息失败时，调用登出，来清空历史保留信息
             store.dispatch('Logout').then(() => {
-              location.href = '/index'
+              next({ path: loginRoutePath, query: { redirect: to.fullPath } })
             })
           })
       } else {

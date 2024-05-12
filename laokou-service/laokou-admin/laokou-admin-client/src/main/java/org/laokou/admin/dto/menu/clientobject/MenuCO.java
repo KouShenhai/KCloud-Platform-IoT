@@ -57,7 +57,7 @@ public class MenuCO extends TreeUtil.TreeNode<MenuCO> {
 	@Schema(name = "status", description = "菜单状态 0正常 1停用")
 	private Integer status;
 
-	@Schema(name = "link", description = "菜单链接地址")
-	private String link;
+	@Schema(name = "path", description = "菜单路径")
+	private String path;
 
 }

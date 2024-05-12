@@ -24,15 +24,11 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.menu.clientobject.RouterCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.security.utils.UserUtil;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -58,21 +54,21 @@ public class MenuListRouterQryExe {
 	}
 
 	private List<RouterCO> getRouter() {
-		String language = LocaleContextHolder.getLocale().getLanguage();
-		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserContextHolder.get().getToken(), language);
-		Object obj = redisUtil.get(menuTreeKey);
-		if (ObjectUtil.isNotNull(obj)) {
-			return ((RouterCO) obj).getChildren();
-		}
+//		String language = LocaleContextHolder.getLocale().getLanguage();
+//		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserContextHolder.get().getToken(), language);
+//		Object obj = redisUtil.get(menuTreeKey);
+//		if (ObjectUtil.isNotNull(obj)) {
+//			return ((RouterCO) obj).getChildren();
+//		}
 		RouterCO co = buildTreeNode(getMenuList().stream().map(this::convert).toList());
-		redisUtil.set(menuTreeKey, co, RedisUtil.HOUR_ONE_EXPIRE);
+		//redisUtil.set(menuTreeKey, co, RedisUtil.HOUR_ONE_EXPIRE);
 		return co.getChildren();
 	}
 
 	private RouterCO convert(MenuDO menuDO) {
 		return new RouterCO(menuDO.getId(), menuDO.getPid(), menuDO.getName(),
 				menuDO.getName(), menuDO.getRedirect(), menuDO.getHidden(),
-				menuDO.getIcon(), menuDO.getKeepAlive(), menuDO.getTarget(), menuDO.getPermission(), menuDO.getLink(),
+				menuDO.getIcon(), menuDO.getKeepAlive(), menuDO.getPath(),
 				menuDO.getComponent());
 	}
 
