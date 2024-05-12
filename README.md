@@ -8,7 +8,7 @@
 <p align="center"><img src="doc/image/logo.png" width="625" height="205" alt="图标"/></p>
 KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的IoT云平台。基于Spring Boot 3.2.5、Spring Cloud 2023.0.1、Spring Cloud Alibaba 2023.0.1.0 最新版本开发的云服务多租户IoT平台。
 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、灰度路由、服务限流、熔断降级、监控报警、多数据源、高亮搜索、定时任务、分布式链路、分布式缓存、分布式事务、分布式存储、分布式锁等功能，用于快速构建微服务项目。目前支持Shell、Docker等多种部署方式，并且支持GraalVM和虚拟线程。实现RBAC权限、其中包含系统管理、系统监控、数据分析等几大模块。
-遵循阿里代码规范，采用RESTful设计风格及DDD(领域驱动设计)思想，代码简洁、架构清晰，非常适合作为基础框架使用。
+遵循阿里代码规范，采用RESTFul设计风格及DDD(领域驱动设计)思想，代码简洁、架构清晰，非常适合作为基础框架使用。
 <p align="center">
     <a target="_blank" href="https://github.com/KouShenhai/KCloud-Platform-IoT"><img alt="GitHub stars" src="https://img.shields.io/github/stars/KouShenhai/KCloud-Platform-IoT?logo=github"></a>
     <a target="_blank" href="https://github.com/KouShenhai/KCloud-Platform-IoT"><img alt="GitHub forks" src="https://img.shields.io/github/forks/KouShenhai/KCloud-Platform-IoT?logo=github"></a>
@@ -31,7 +31,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - 复制粘贴代码提高生产效率
 - 学习DDD思想并落地实践
 
-### 🔗 在线体验
+### 🔗 在线体验（作者剔除前端UI，要么找专业前端对接，要么等作者从零构建，估计要很久啦~）
 [老寇IoT云平台在线体验（请点击我，境外服务器网络延迟请稍候）](https://www.laokou.org.cn)
 
 ### 🔖 在线文档
@@ -43,34 +43,8 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 ### 💪 版本号
 特此说明，与Spring Boot版本保持一致
 
-### ⌛ 浏览器
-推荐 Microsoft Edge 浏览器  
-推荐 Microsoft Edge 浏览器  
-推荐 Microsoft Edge 浏览器  
-
 ### 🔎 功能介绍
-🚀 IP管理：黑名单、白名单增删查（默认数据库）  
-🚀 用户管理：用户信息增删改查（数据库隔离）（可重置密码）     
-🚀 角色管理：角色信息增删改查，基于部门的数据权限、角色权限（数据库隔离）       
-🚀 菜单管理：菜单信息增删改查（数据库隔离）（自定义菜单图标）       
-🚀 部门管理：部门信息增删改查（数据库隔离）      
-🚀 日志管理：操作日志、登录日志查询、导出（数据库隔离）         
-🚀 字典管理：字典信息管理（数据库隔离）    
-🚀 消息管理：消息提醒和消息通知（数据库隔离）（分布式消息）      
-🚀 流程定义：流程定义、挂起、激活、查看、删除（默认数据库）    
-🚀 接口文档：Open Api Doc 3    
-🚀 服务监控：服务监控及报警     
-🚀 缓存监控：Redis内存监控    
-🚀 主机监控：服务器监控    
-🚀 索引管理：索引属性及分布式链路索引查看（默认ES）   
-🚀 OSS管理：对象存储信息增删改查，兼容Amazon S3（数据库隔离）    
-🚀 租户管理：租户信息增删改查增删改查（默认数据库）       
-🚀 套餐管理：自定义租户菜单增删改查（默认数据库）    
-🚀 集群管理：服务实例查看与优雅停机（服务自动下线）  
-🚀 数据源管理：数据源信息增删改查（默认数据库）      
-🚀 代码生成器：自定义模板生成代码  
-🚀 资源管理：资源信息管理增删改查，审批（Seata Saga模式）、处理、转办、委派，审批日志（数据库隔离），通过关键字搜索并高亮显示（默认ES）          
-🚀 用户登录：用户名密码登录（多租户）、授权码登录（默认数据库）、手机号或邮件登录、设备授权码登录（请运行认证模式测试脚本.http）
+🚀 无页面展示，作者采用DDD思想重构后端API中（已剔除前端UI，要么自己找专业前端对接，要么等作者从重构，估计要很久啦~）
 
 ### 💡 系统架构
 ![](doc/image/老寇IoT云平台架构图-阿里巴巴.png)
@@ -178,89 +152,13 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
                 └── laokou-logstash                --- 日志收集模块  
 ~~~
 
-### 🎵 项目截图(持续更新，仅供参考)
-<table>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/1.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/2.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/3.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/4.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/5.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/6.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/7.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/8.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/9.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/10.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/11.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/12.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/13.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/14.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/15.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/16.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/17.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/18.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/35.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/36.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/19.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/20.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/21.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/22.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/23.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/24.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/25.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/26.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/29.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/30.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/31.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/32.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/33.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/34.png"/></td>
-    </tr>
-    <tr>
-        <td><img alt="暂无图片" src="doc/image/27.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/28.png"/></td>
-    </tr>
-</table>
-
 ### 👊 性能评测
 [请点击我，查看详情](性能测试.md)
 
 ### 😛 用户权益（点个Star，拜托啦~🙏）
-- 采用Apache2.0开源协议，请保留作者、Copyright信息（商用需谨慎）  
-- 采用Apache2.0开源协议，请保留作者、Copyright信息（商用需谨慎）  
-- 采用Apache2.0开源协议，请保留作者、Copyright信息（商用需谨慎）  
+- 采用Apache2.0开源协议，请保留作者、Copyright信息  
+- 采用Apache2.0开源协议，请保留作者、Copyright信息  
+- 采用Apache2.0开源协议，请保留作者、Copyright信息  
 
 ### 😻 开源协议
 KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息  
