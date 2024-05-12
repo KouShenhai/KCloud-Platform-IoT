@@ -28,7 +28,6 @@ import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.support.i18n.utils.TranslateUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -48,8 +47,6 @@ public class MenuListQryExe {
 
 	private final MenuConvertor menuConvertor;
 
-	private final TranslateUtil translateUtil;
-
 	/**
 	 * 执行查询菜单列表.
 	 * @param qry 查询菜单列表参数
@@ -57,13 +54,7 @@ public class MenuListQryExe {
 	 */
 	@DS(TENANT)
 	public Result<List<MenuCO>> execute(MenuListQry qry) {
-		return Result.ok(getMenuList(qry).stream().map(this::convert).toList());
-	}
-
-	private MenuCO convert(MenuDO menuDO) {
-		MenuCO co = menuConvertor.convertClientObj(menuDO);
-		co.setName(translateUtil.getMessage(menuDO.getName()));
-		return co;
+		return Result.ok(getMenuList(qry).stream().map(menuConvertor::convertClientObj).toList());
 	}
 
 	private List<MenuDO> getMenuList(MenuListQry qry) {

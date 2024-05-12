@@ -23,10 +23,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.core.utils.TreeUtil;
 
-import java.util.List;
-
-import static org.laokou.common.i18n.common.constants.StringConstant.SLASH;
-
 /**
  * @author laokou
  */
@@ -45,14 +41,13 @@ public class RouterCO extends TreeUtil.TreeNode<RouterCO> {
 	private String component;
 
 	public RouterCO(Long id, Long pid, String name, String title, String redirect, Boolean hidden, String icon,
-			Boolean keepAlive, String target, String permission, String link, String component) {
+					Boolean keepAlive, String component, String path) {
 		super(id, name, pid);
-		String[] arr = component.split(SLASH);
 		this.redirect = redirect;
 		this.hidden = hidden;
 		this.component = component;
-		this.path = arr[arr.length - 1];
-		this.meta = new Meta(title, icon, keepAlive, target, List.of(permission), link);
+		this.path = path;
+		this.meta = new Meta(title, icon, keepAlive);
 	}
 
 	@Data
@@ -65,13 +60,6 @@ public class RouterCO extends TreeUtil.TreeNode<RouterCO> {
 		private String icon;
 
 		private Boolean keepAlive;
-
-		private String target;
-
-		private List<String> permission;
-
-		private String link;
-
 	}
 
 }

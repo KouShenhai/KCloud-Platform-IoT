@@ -36,7 +36,7 @@ public class UserListQry extends PageQuery {
 	@Schema(name = "mobile", description = "手机号")
 	private String mobile;
 
-	@Schema(name = "status", description = "用户状态 0正常 1禁用")
+	@Schema(name = "status", description = "用户状态 0启用 1禁用")
 	private Integer status;
 
 	@Schema(name = "deptId", description = "部门ID")

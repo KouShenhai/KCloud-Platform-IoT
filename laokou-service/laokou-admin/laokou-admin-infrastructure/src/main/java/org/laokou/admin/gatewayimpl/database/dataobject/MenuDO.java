@@ -83,11 +83,6 @@ public class MenuDO extends BaseDO {
 	private Boolean keepAlive;
 
 	/**
-	 * 菜单链接跳转目标 _blank|_self|_top|_parent.
-	 */
-	private String target;
-
-	/**
 	 * 重定向地址.
 	 */
 	private String redirect;
@@ -98,8 +93,8 @@ public class MenuDO extends BaseDO {
 	private Integer status;
 
 	/**
-	 * 菜单链接地址.
+	 * 菜单路径.
 	 */
-	private String link;
+	private String path;
 
 }

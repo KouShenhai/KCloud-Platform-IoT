@@ -25,7 +25,6 @@ import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.security.annotation.EnableSecurity;
-import org.laokou.common.support.annotation.EnableI18nMessage;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
@@ -58,7 +57,6 @@ import static org.laokou.common.i18n.common.constants.StringConstant.TRUE;
 @EnableSecurity
 @EnableTaskExecutor
 @EnableRouter
-@EnableI18nMessage
 public class AdminApp {
 
 	@SneakyThrows

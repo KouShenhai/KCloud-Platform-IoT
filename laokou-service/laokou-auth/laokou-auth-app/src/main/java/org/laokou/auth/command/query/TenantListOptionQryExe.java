@@ -23,7 +23,6 @@ import org.laokou.auth.gatewayimpl.database.TenantMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.support.i18n.utils.TranslateUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -39,8 +38,6 @@ public class TenantListOptionQryExe {
 
 	private final TenantMapper tenantMapper;
 
-	private final TranslateUtil translateUtil;
-
 	/**
 	 * 执行查询租户下拉框选择项列表.
 	 * @return 租户下拉框选择项列表
@@ -50,7 +47,7 @@ public class TenantListOptionQryExe {
 			.select(TenantDO::getId, TenantDO::getName)
 			.orderByDesc(TenantDO::getId));
 		return Result.ok(list.stream()
-			.map(item -> new Option(translateUtil.getMessage(item.getName()), String.valueOf(item.getId())))
+			.map(item -> new Option(item.getName(), String.valueOf(item.getId())))
 			.toList());
 	}
 

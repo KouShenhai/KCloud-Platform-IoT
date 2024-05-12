@@ -50,10 +50,6 @@
       <artifactId>laokou-admin-domain</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context-support</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-seata</artifactId>
       <exclusions>
@@ -78,10 +74,6 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-admin-client</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-support</artifactId>
     </dependency>
   </dependencies>
 

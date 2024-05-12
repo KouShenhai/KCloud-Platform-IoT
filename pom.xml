@@ -181,7 +181,7 @@
         <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-        <NACOS-VERSION>v1</NACOS-VERSION>
+        <NACOS-VERSION>v3</NACOS-VERSION>
         <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
         <SEATA-USERNAME>seata</SEATA-USERNAME>
         <SEATA-PASSWORD>seata</SEATA-PASSWORD>
@@ -221,7 +221,7 @@
         <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-        <NACOS-VERSION>v1</NACOS-VERSION>
+        <NACOS-VERSION>v3</NACOS-VERSION>
         <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
         <SEATA-USERNAME>seata</SEATA-USERNAME>
         <SEATA-PASSWORD>seata</SEATA-PASSWORD>
@@ -277,7 +277,7 @@
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-PASSWORD>${NACOS_PASSWORD:nacos}</NACOS-PASSWORD>
         <!--suppress UnresolvedMavenProperty -->
-        <NACOS-VERSION>${NACOS_VERSION:v1}</NACOS-VERSION>
+        <NACOS-VERSION>${NACOS_VERSION:v3}</NACOS-VERSION>
         <!--suppress UnresolvedMavenProperty -->
         <SEATA-GROUP>${SEATA_GROUP:SEATA_GROUP}</SEATA-GROUP>
         <!--suppress UnresolvedMavenProperty -->
