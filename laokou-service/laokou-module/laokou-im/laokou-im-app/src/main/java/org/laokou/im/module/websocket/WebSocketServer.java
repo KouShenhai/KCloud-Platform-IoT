@@ -39,8 +39,8 @@ import static org.laokou.im.module.websocket.WebsocketHandler.getChannel;
 @Slf4j
 public class WebSocketServer extends AbstractServer {
 
-	public WebSocketServer(int port, String poolName, ChannelInitializer<?> channelInitializer) {
-		super(port, poolName, channelInitializer);
+	public WebSocketServer(int port, ChannelInitializer<?> channelInitializer) {
+		super(port, channelInitializer);
 	}
 
 	/**

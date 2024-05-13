@@ -48,13 +48,10 @@ public abstract class AbstractServer implements Server {
 
 	protected final int port;
 
-	protected final String poolName;
-
 	protected final ChannelInitializer<?> channelInitializer;
 
-	public AbstractServer(int port, String poolName, ChannelInitializer<?> channelInitializer) {
+	public AbstractServer(int port, ChannelInitializer<?> channelInitializer) {
 		this.port = port;
-		this.poolName = poolName;
 		this.channelInitializer = channelInitializer;
 	}
 

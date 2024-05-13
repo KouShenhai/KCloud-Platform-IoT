@@ -35,7 +35,7 @@ public class WebSocketConfig {
 	@Bean(name = "websocketServer", initMethod = "start", destroyMethod = "stop")
 	public Server websocketServer(WebsocketProperties websocketProperties,
 			WebsocketChannelInitializer websocketChannelInitializer) {
-		return new WebSocketServer(websocketProperties.getPort(), websocketProperties.getPoolName(),
+		return new WebSocketServer(websocketProperties.getPort(),
 				websocketChannelInitializer);
 	}
 

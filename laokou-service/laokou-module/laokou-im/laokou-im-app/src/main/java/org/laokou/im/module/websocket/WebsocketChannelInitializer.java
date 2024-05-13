@@ -27,7 +27,6 @@ import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketSe
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ResourceUtil;
@@ -53,7 +52,9 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 @RequiredArgsConstructor
 public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketChannel> {
 
-	@Schema(name = "WEBSOCKET_PATH", description = "WebSocket路径")
+	/**
+	 * 路径
+	 */
 	private static final String WEBSOCKET_PATH = "/ws";
 
 	private final WebsocketHandler websocketHandler;
@@ -64,6 +65,7 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 	@SneakyThrows
 	protected void initChannel(NioSocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
+		// 开启SSL认证
 		if (serverProperties.getSsl().isEnabled()) {
 			SSLEngine sslEngine = sslContext().createSSLEngine();
 			sslEngine.setNeedClientAuth(false);
