@@ -53,11 +53,6 @@ public class MqttClient implements Client {
 
 	private volatile org.eclipse.paho.mqttv5.client.MqttClient client;
 
-	/**
-	 * 客户标识.
-	 */
-	public static final Long CLIENT_ID = IdGenerator.defaultSnowflakeId();
-
 	private final SpringMqttProperties springMqttProperties;
 
 	private final MqttStrategy mqttStrategy;
@@ -74,7 +69,7 @@ public class MqttClient implements Client {
 			log.error("MQTT已连接");
 			return;
 		}
-		client = new org.eclipse.paho.mqttv5.client.MqttClient(springMqttProperties.getHost(), CLIENT_ID.toString(), new MemoryPersistence());
+		client = new org.eclipse.paho.mqttv5.client.MqttClient(springMqttProperties.getHost(), springMqttProperties.getClientId(), new MemoryPersistence());
 		// 手动ack接收确认
 		client.setManualAcks(springMqttProperties.isManualAcks());
 		client.setCallback(new MqttMessageCallback(client, mqttStrategy));
