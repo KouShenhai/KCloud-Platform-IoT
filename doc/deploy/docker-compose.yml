@@ -15,6 +15,25 @@
 #  */
 version: '3.8'
 services:
+  emqx:
+    image: emqx/emqx:5.6.1
+    container_name: emqx
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "1883:1883"
+      - "8083:8083"
+      - "8883:8883"
+      - "18083:18083"
+    volumes:
+      - ./emqx5/etc/emqx.conf:/opt/emqx/etc/emqx.conf
+      - ./emqx5/data:/opt/emqx/data
+      - ./emqx5/log:/opt/emqx/log
+    environment:
+      - TZ=Asia/Shanghai
+    network_mode: bridge
   postgresql:
     image: postgis/postgis:16-3.4
     container_name: postgresql
@@ -48,35 +67,41 @@ services:
     environment:
       - TZ=Asia/Shanghai
     network_mode: bridge
-  zookeeper:
-    image: bitnami/zookeeper:3.9.2
-    container_name: zookeeper
-    tty: true
-    ports:
-      - '2181:2181'
-    environment:
-      # 允许匿名登录
-      - ALLOW_ANONYMOUS_LOGIN=yes
-    restart: always
-    privileged: true
-    network_mode: bridge
   kafka:
     image: bitnami/kafka:3.7.0
     container_name: kafka
     tty: true
     ports:
       - '9092:9092'
+      - '9093:9093'
     environment:
+      # 节点ID
       - KAFKA_BROKER_ID=1
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://192.168.30.130:9092
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=192.168.30.130:2181
+      # 允许使用kraft，即Kafka替代Zookeeper
+      - KAFKA_ENABLE_KRAFT=yes
+      # kafka角色，做broker，也要做controller
+      - KAFKA_CFG_PROCESS_ROLES=broker,controller
+      # 指定供外部使用的控制类请求信息
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      # 定义安全协议
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      # 定义kafka服务端socket监听端口
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      # 外网访问地址
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka.laokou.org:9092
+      # 允许使用PLAINTEXT监听器，默认false，不建议在生产环境使用
       - ALLOW_PLAINTEXT_LISTENER=yes
+        # 设置broker最大内存，和初始内存
+      - KAFKA_HEAP_OPTS=-Xmx512M -Xms512M
+      # 集群地址
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
+      # 节点ID
+      - KAFKA_CFG_NODE_ID=1
     restart: always
     privileged: true
     network_mode: bridge
-    depends_on:
-      - zookeeper
+    extra_hosts:
+      - "kafka.laokou.org:192.168.30.130"
   rocketmq-namesrv:
     image: apache/rocketmq:5.2.0
     container_name: rocketmq-namesrv
