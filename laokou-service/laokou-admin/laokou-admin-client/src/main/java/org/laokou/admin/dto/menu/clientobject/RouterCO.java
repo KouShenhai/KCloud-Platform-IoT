@@ -41,7 +41,7 @@ public class RouterCO extends TreeUtil.TreeNode<RouterCO> {
 	private String component;
 
 	public RouterCO(Long id, Long pid, String name, String title, String redirect, Boolean hidden, String icon,
-					Boolean keepAlive, String component, String path) {
+			Boolean keepAlive, String component, String path) {
 		super(id, name, pid);
 		this.redirect = redirect;
 		this.hidden = hidden;
@@ -60,6 +60,7 @@ public class RouterCO extends TreeUtil.TreeNode<RouterCO> {
 		private String icon;
 
 		private Boolean keepAlive;
+
 	}
 
 }

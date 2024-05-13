@@ -18,6 +18,7 @@
 package org.laokou.mqtt.config;
 
 import lombok.Data;
+import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -36,6 +37,11 @@ public class SpringMqttProperties {
 	private String password;
 
 	private String host;
+
+	/**
+	 * 客户ID.
+	 */
+	private String clientId = String.valueOf(IdGenerator.defaultSnowflakeId());
 
 	private boolean clearStart = true;
 

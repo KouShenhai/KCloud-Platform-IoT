@@ -18,7 +18,7 @@
 package org.laokou.mqtt.template;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.mqtt.config.Server;
+import org.laokou.common.netty.config.Client;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,10 +28,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MqttTemplate {
 
-	private final Server mqttServer;
+	private final Client mqttClient;
 
 	public void send(String topic, String payload) {
-		mqttServer.send(topic, payload);
+		mqttClient.send(topic, payload);
 	}
 
 }

@@ -37,7 +37,4 @@ public class WebsocketProperties {
 	@Schema(name = "appName", description = "应用名称")
 	private String appName;
 
-	@Schema(name = "poolName", description = "线程池名称")
-	private String poolName;
-
 }

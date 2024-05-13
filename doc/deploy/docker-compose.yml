@@ -114,7 +114,7 @@ services:
       - rocketmq-namesrv
   # curl -s -X POST https://elasticsearch.laokou.org:9200/_security/user/kibana_system/_password -d "{\"password\":\"laokou123\"}"
   elasticsearch:
-    image: elasticsearch:8.12.2
+    image: elasticsearch:8.13.4
     container_name: elasticsearch
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -158,8 +158,7 @@ services:
       - "postgresql.laokou.org:192.168.30.130"
     network_mode: bridge
     depends_on:
-      mysql:
-        condition: service_healthy
+      - postgresql
   laokou-sentinel:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sentinel:3.2.1
     container_name: laokou-sentinel

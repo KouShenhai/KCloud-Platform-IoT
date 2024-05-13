@@ -54,22 +54,21 @@ public class MenuListRouterQryExe {
 	}
 
 	private List<RouterCO> getRouter() {
-//		String language = LocaleContextHolder.getLocale().getLanguage();
-//		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserContextHolder.get().getToken(), language);
-//		Object obj = redisUtil.get(menuTreeKey);
-//		if (ObjectUtil.isNotNull(obj)) {
-//			return ((RouterCO) obj).getChildren();
-//		}
+		// String language = LocaleContextHolder.getLocale().getLanguage();
+		// String menuTreeKey =
+		// RedisKeyUtil.getMenuTreeKey(UserContextHolder.get().getToken(), language);
+		// Object obj = redisUtil.get(menuTreeKey);
+		// if (ObjectUtil.isNotNull(obj)) {
+		// return ((RouterCO) obj).getChildren();
+		// }
 		RouterCO co = buildTreeNode(getMenuList().stream().map(this::convert).toList());
-		//redisUtil.set(menuTreeKey, co, RedisUtil.HOUR_ONE_EXPIRE);
+		// redisUtil.set(menuTreeKey, co, RedisUtil.HOUR_ONE_EXPIRE);
 		return co.getChildren();
 	}
 
 	private RouterCO convert(MenuDO menuDO) {
-		return new RouterCO(menuDO.getId(), menuDO.getPid(), menuDO.getName(),
-				menuDO.getName(), menuDO.getRedirect(), menuDO.getHidden(),
-				menuDO.getIcon(), menuDO.getKeepAlive(), menuDO.getPath(),
-				menuDO.getComponent());
+		return new RouterCO(menuDO.getId(), menuDO.getPid(), menuDO.getName(), menuDO.getName(), menuDO.getRedirect(),
+				menuDO.getHidden(), menuDO.getIcon(), menuDO.getKeepAlive(), menuDO.getPath(), menuDO.getComponent());
 	}
 
 	private List<MenuDO> getMenuList() {
