@@ -53,7 +53,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketChannel> {
 
 	/**
-	 * 路径
+	 * 路径.
 	 */
 	private static final String WEBSOCKET_PATH = "/ws";
 

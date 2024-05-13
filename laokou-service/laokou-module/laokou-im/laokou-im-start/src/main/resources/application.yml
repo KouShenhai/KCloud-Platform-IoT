@@ -22,7 +22,6 @@ spring:
   websocket:
     port: 1000
     app-name: @pom.parent.artifactId@
-    pool-name: "laokou-websocket-pool"
   application:
     name: ${spring.websocket.app-name}-server
   profiles:

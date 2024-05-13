@@ -21,4 +21,5 @@ package org.laokou.admin.web.v3;
  * @author laokou
  */
 public class LogsV3Controller {
+
 }
