@@ -40,7 +40,7 @@
     <!--mybatis-spring版本-->
     <mybatis-spring.version>3.0.3</mybatis-spring.version>
     <!--redisson版本-->
-    <redisson.version>3.29.0</redisson.version>
+    <redisson.version>3.30.0</redisson.version>
     <!--UserAgentUtils版本-->
     <UserAgentUtils.version>1.21</UserAgentUtils.version>
     <!--jsoup版本-->
@@ -54,7 +54,7 @@
     <!--oshi版本-->
     <oshi.version>6.6.0</oshi.version>
     <!--elasticsearch版本-->
-    <elasticsearch.version>8.13.3</elasticsearch.version>
+    <elasticsearch.version>8.13.4</elasticsearch.version>
     <!--rocketmq-spring版本-->
     <rocketmq-spring.version>2.3.0</rocketmq-spring.version>
     <!--rocketmq版本-->
@@ -92,7 +92,7 @@
     <!--lombok-mapstruct-binding版本-->
     <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     <!--mapstruct版本-->
-    <mapstruct.version>1.6.0.Beta1</mapstruct.version>
+    <mapstruct.version>1.6.0.Beta2</mapstruct.version>
     <!--spring-integration-mqtt版本-->
     <spring-integration-mqtt.version>6.2.4</spring-integration-mqtt.version>
     <!--log4j2-ttl-thread-context-map版本-->
