@@ -15,6 +15,25 @@
 #  */
 version: '3.8'
 services:
+  emqx:
+    image: emqx/emqx:5.6.1
+    container_name: emqx
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "1883:1883"
+      - "8083:8083"
+      - "8883:8883"
+      - "18083:18083"
+    volumes:
+      - ./emqx5/etc/emqx.conf:/opt/emqx/etc/emqx.conf
+      - ./emqx5/data:/opt/emqx/data
+      - ./emqx5/log:/opt/emqx/log
+    environment:
+      - TZ=Asia/Shanghai
+    network_mode: bridge
   postgresql:
     image: postgis/postgis:16-3.4
     container_name: postgresql
