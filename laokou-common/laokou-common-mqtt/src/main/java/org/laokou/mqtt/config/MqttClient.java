@@ -20,33 +20,38 @@ package org.laokou.mqtt.config;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.paho.mqttv5.client.MqttClient;
 import org.eclipse.paho.mqttv5.client.MqttConnectionOptions;
 import org.eclipse.paho.mqttv5.client.persist.MemoryPersistence;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.netty.config.Client;
 
 import java.nio.charset.StandardCharsets;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
+ * MQTT客户端.
  * @author laokou
  */
 @Slf4j
-public class MqttServer implements Server {
+public class MqttClient implements Client {
 
-	@Schema(name = "WILL_TOPIC", description = "服务停止前的消息主题")
+	/**
+	 * 服务停止前的消息主题。
+	 */
 	private static final String WILL_TOPIC = "will_topic";
 
-	@Schema(name = "WILL_DATA", description = "服务下线")
+	/**
+	 * 服务下线。
+	 */
 	private static final byte[] WILL_DATA = "offline".getBytes(UTF_8);
 
 	private volatile boolean running;
 
-	private volatile MqttClient client;
+	private volatile org.eclipse.paho.mqttv5.client.MqttClient client;
 
 	/**
 	 * 客户标识.
@@ -57,36 +62,36 @@ public class MqttServer implements Server {
 
 	private final MqttStrategy mqttStrategy;
 
-	public MqttServer(SpringMqttProperties springMqttProperties, MqttStrategy mqttStrategy) {
+	public MqttClient(SpringMqttProperties springMqttProperties, MqttStrategy mqttStrategy) {
 		this.springMqttProperties = springMqttProperties;
 		this.mqttStrategy = mqttStrategy;
 	}
 
 	@Override
 	@SneakyThrows
-	public synchronized void start() {
+	public synchronized void open() {
 		if (running) {
-			log.error("MQTT已启动");
+			log.error("MQTT已连接");
 			return;
 		}
-		client = new MqttClient(springMqttProperties.getHost(), CLIENT_ID.toString(), new MemoryPersistence());
+		client = new org.eclipse.paho.mqttv5.client.MqttClient(springMqttProperties.getHost(), CLIENT_ID.toString(), new MemoryPersistence());
 		// 手动ack接收确认
 		client.setManualAcks(springMqttProperties.isManualAcks());
 		client.setCallback(new MqttMessageCallback(client, mqttStrategy));
 		client.connect(options());
 		client.subscribe(springMqttProperties.getTopics().toArray(String[]::new), new int[] { 2 });
 		running = true;
-		log.info("MQTT启动成功");
+		log.info("MQTT连接成功");
 	}
 
 	@Override
 	@SneakyThrows
-	public synchronized void stop() {
+	public synchronized void close() {
 		running = false;
 		if (ObjectUtil.isNotNull(client)) {
 			client.disconnectForcibly();
 		}
-		log.info("关闭MQTT");
+		log.info("关闭MQTT连接");
 	}
 
 	@Override

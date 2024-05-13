@@ -15,16 +15,16 @@
  *
  */
 
-package org.laokou.mqtt.config;
+package org.laokou.common.netty.config;
 
 /**
  * @author laokou
  */
-public interface Server {
+public interface Client {
 
-	void start();
+	void open();
 
-	void stop();
+	void close();
 
 	void send(String topic, String payload);
 

@@ -17,6 +17,7 @@
 
 package org.laokou.mqtt.config;
 
+import org.laokou.common.netty.config.Client;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
@@ -26,9 +27,9 @@ import org.springframework.context.annotation.Bean;
 @AutoConfiguration
 public class MqttAutoConfig {
 
-	@Bean(name = "mqttServer", initMethod = "start", destroyMethod = "stop")
-	public Server mqttServer(SpringMqttProperties springMqttProperties, MqttStrategy mqttStrategy) {
-		return new MqttServer(springMqttProperties, mqttStrategy);
+	@Bean(name = "mqttClient", initMethod = "open", destroyMethod = "close")
+	public Client mqttClient(SpringMqttProperties springMqttProperties, MqttStrategy mqttStrategy) {
+		return new MqttClient(springMqttProperties, mqttStrategy);
 	}
 
 }

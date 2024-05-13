@@ -20,6 +20,10 @@
       <artifactId>laokou-common-core</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-netty</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.eclipse.paho</groupId>
       <artifactId>org.eclipse.paho.mqttv5.client</artifactId>
     </dependency>
