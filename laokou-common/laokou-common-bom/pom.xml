@@ -92,7 +92,7 @@
     <!--lombok-mapstruct-binding版本-->
     <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     <!--mapstruct版本-->
-    <mapstruct.version>1.6.0.Beta1</mapstruct.version>
+    <mapstruct.version>1.6.0.Beta2</mapstruct.version>
     <!--spring-integration-mqtt版本-->
     <spring-integration-mqtt.version>6.2.4</spring-integration-mqtt.version>
     <!--log4j2-ttl-thread-context-map版本-->
