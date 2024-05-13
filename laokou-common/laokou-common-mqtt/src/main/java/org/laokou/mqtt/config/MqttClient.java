@@ -17,14 +17,12 @@
 
 package org.laokou.mqtt.config;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.client.MqttConnectionOptions;
 import org.eclipse.paho.mqttv5.client.persist.MemoryPersistence;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.netty.config.Client;
 
@@ -34,6 +32,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * MQTT客户端.
+ *
  * @author laokou
  */
 @Slf4j
@@ -69,7 +68,8 @@ public class MqttClient implements Client {
 			log.error("MQTT已连接");
 			return;
 		}
-		client = new org.eclipse.paho.mqttv5.client.MqttClient(springMqttProperties.getHost(), springMqttProperties.getClientId(), new MemoryPersistence());
+		client = new org.eclipse.paho.mqttv5.client.MqttClient(springMqttProperties.getHost(),
+				springMqttProperties.getClientId(), new MemoryPersistence());
 		// 手动ack接收确认
 		client.setManualAcks(springMqttProperties.isManualAcks());
 		client.setCallback(new MqttMessageCallback(client, mqttStrategy));

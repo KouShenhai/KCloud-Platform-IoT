@@ -63,13 +63,13 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 | Seata                       | 2.0.0         |
 | Sentinel                    | 1.8.7         |
 | Redis                       | 7.2.4         |
-| Elasticsearch               | 8.12.2        |
+| Elasticsearch               | 8.13.4        |
 | RocketMQ                    | 5.2.0         |
 | OpenResty                   | 1.21.4.1      |
 | Netty                       | 4.1.109.Final |
 | Kafka                       | 3.6.1         |
 | EMQX                        | 5.3.0         |
-| Postgresql                  | 16.2          |
+| Postgresql                  | 16.3          |
 | Flyway                      | 10.12.0       |
 | Canal                       | 1.1.7         |
 #### 🍺 相关技术
