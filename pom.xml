@@ -199,7 +199,7 @@
         <ROUTER-AUTH-PASSWORD>laokou123</ROUTER-AUTH-PASSWORD>
       </properties>
       <activation>
-        <activeByDefault>true</activeByDefault>
+        <activeByDefault>false</activeByDefault>
       </activation>
     </profile>
     <!-- 测试环境 -->
@@ -238,6 +238,9 @@
         <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
         <ROUTER-AUTH-PASSWORD>laokou123</ROUTER-AUTH-PASSWORD>
       </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
     </profile>
     <!-- 正式环境 -->
     <profile>
@@ -307,6 +310,9 @@
         <!--suppress UnresolvedMavenProperty -->
         <ROUTER-AUTH-PASSWORD>${ROUTER_AUTH_PASSWORD:laokou123}</ROUTER-AUTH-PASSWORD>
       </properties>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
     </profile>
   </profiles>
 
