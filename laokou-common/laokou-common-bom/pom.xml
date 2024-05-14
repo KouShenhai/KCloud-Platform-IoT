@@ -104,7 +104,7 @@
     <!--mockito版本-->
     <mockito.version>5.12.0</mockito.version>
     <!--flyway版本-->
-    <flyway.version>10.12.0</flyway.version>
+    <flyway.version>10.13.0</flyway.version>
     <!--retry版本-->
     <retry.version>2.0.5</retry.version>
     <!--nacos版本-->
