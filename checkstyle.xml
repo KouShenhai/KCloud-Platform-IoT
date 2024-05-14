@@ -295,14 +295,6 @@
 		<!-- 常量名的检查（只允许大写），默认^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$ -->
 		<module name="ConstantName"/>
 
-		<!-- Regexp -->
-		<module name="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck">
-			<property name="format" value="^\t* +\t*\S"/>
-			<property name="message"
-					  value="Line has leading space characters; indentation should be performed with tabs only."/>
-			<property name="ignoreComments" value="true"/>
-		</module>
-
 		<module name="com.puppycrawl.tools.checkstyle.checks.regexp.RegexpSinglelineJavaCheck">
 			<!-- \s匹配空白字符，$s匹配行尾。-->
 			<property name="format" value="\s+$"/>

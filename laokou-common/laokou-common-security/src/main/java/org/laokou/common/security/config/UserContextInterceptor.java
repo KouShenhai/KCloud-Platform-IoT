@@ -21,6 +21,7 @@ import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.context.UserContextHolder;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -50,8 +51,15 @@ public class UserContextInterceptor implements HandlerInterceptor {
 
 	private UserContextHolder.User convert(UserDetail userDetail, HttpServletRequest request) {
 		return new UserContextHolder.User(userDetail.getId(), userDetail.getUsername(), userDetail.getTenantId(),
-				userDetail.getDeptPath(), userDetail.getDeptId(), userDetail.getSourceName(),
-				request.getHeader(AUTHORIZATION).substring(7));
+				userDetail.getDeptPath(), userDetail.getDeptId(), userDetail.getSourceName(), getToken(request));
+	}
+
+	private String getToken(HttpServletRequest request) {
+		String token = request.getHeader(AUTHORIZATION);
+		if (StringUtil.isNotEmpty(token)) {
+			return token.substring(7);
+		}
+		return token;
 	}
 
 }

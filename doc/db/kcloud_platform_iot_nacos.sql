@@ -1273,3 +1273,321 @@ alter table public.users
 INSERT INTO public.users (username, password, enabled) VALUES ('laokou', '$2a$10$75WIn2J5FoX9F5wEBdFsL.0cKdv5h8QqBMKMWBABhWAxKB4TO8WZq', 1);
 INSERT INTO public.users (username, password, enabled) VALUES ('nacos', '$2a$10$oVX1zRtaql9Jbsyzaaovx.TU2M6Bw0ZpCbPYWOIED58d1ougzaFRm', 1);
 
+UPDATE public.config_info SET content = '# spring
+spring:
+  # security
+  security:
+    oauth2:
+      resource-server:
+        enabled: true
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /**/v3/api-docs/**=laokou-gateway
+              - /v3/api-docs/**=laokou-auth,laokou-admin
+              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
+              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
+              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
+              - /error=laokou-admin,laokou-auth
+              - /v3/tenants/options=laokou-auth,laokou-gateway
+              - /v3/tenants/id=laokou-auth,laokou-gateway
+              - /favicon.ico=laokou-gateway
+              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
+              - /v3/secrets=laokou-gateway,laokou-auth
+              - /graceful-shutdown=laokou-auth
+              - /ws=laokou-gateway
+            DELETE:
+              - /v1/logouts=laokou-auth,laokou-gateway
+  # task
+  task-execution:
+    thread-name-prefix: laokou-ttl-task-
+    pool:
+      core-size: 17
+      keep-alive: 180s
+  cloud:
+    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
+    openfeign:
+      compression:
+        response:
+          enabled: true
+        request:
+          enabled: true
+      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
+      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
+      okhttp:
+        enabled: true
+      circuitbreaker:
+        enabled: true
+      httpclient:
+        enabled: false
+        hc5:
+          enabled: false
+        disable-ssl-validation: true
+      client:
+        config:
+          default:
+            connectTimeout: 120000 #连接超时
+            readTimeout: 120000 #读取超时
+            logger-level: full
+      lazy-attributes-resolution: true
+    # sentinel
+    sentinel:
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        port: 8769
+        dashboard: sentinel.laokou.org:8972
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+# springdoc
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+# server
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 256
+    # 每块buffer的空间大小
+    buffer-size: 1024
+    # 分配堆外内存
+    direct-buffers: true
+
+# feign
+feign:
+  sentinel:
+    enabled: true
+    default-rule: default
+    rules:
+      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
+      default:
+        - grade: 2 # 异常数策略
+          count: 1 # 异常数模式下为对应的阈值
+          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
+          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
+          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
+tenant:
+  domain-names:
+    - laokou.org
+    - laokouyun.org
+    - laokou.org.cn'  WHERE id = 17;
+
+UPDATE public.config_info SET content = '[
+  {
+    "id": "laokou-auth",
+    "uri": "lb://laokou-auth",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/auth/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "auth",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/auth/(?<path>.*)",
+          "_genkey_1": "/$\\\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "2.0"
+    },
+    "order": 1
+  },
+  {
+    "id": "laokou-admin",
+    "uri": "lb://laokou-admin",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/admin/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "admin",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/admin/(?<path>.*)",
+          "_genkey_1": "/$\\\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "2.0"
+    },
+    "order": 1
+  },
+  {
+    "id": "open-api",
+    "uri": "https://127.0.0.1:5555",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/v3/api-docs/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "open-api",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/v3/api-docs/(?<path>.*)",
+          "_genkey_1": "/$\\\\{path}/v3/api-docs"
+        }
+      }
+    ],
+    "metadata": {},
+    "order": 1
+  },
+  {
+    "id": "laokou-im",
+    "uri": "lb:wss://laokou-im",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/im/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "im",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/im/(?<path>.*)",
+          "_genkey_1": "/$\\\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "2.0"
+    },
+    "order": 1
+  }
+]'  WHERE id = 26;
+
+UPDATE public.config_info SET content = '# seata
+seata:
+  saga:
+    enabled: true
+    state-machine:
+      enable-async: true
+      table-prefix: seata_
+      async-thread-pool:
+        core-pool-size: 1
+        max-pool-size: 20
+        keep-alive-time: 60
+      trans-operation-timeout: 1800000
+      service-invoke-timeout: 300000
+      auto-register-resources: true
+      resources:
+        - classpath*:seata/saga/statelang/**/*.json
+      default-tenant-id: 0
+      charset: UTF-8
+  client:
+    tm:
+      default-global-transaction-timeout: 30000
+  config:
+    type: nacos
+    nacos:
+      server-addr: https://nacos.laokou.org:8848
+      namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+      username: nacos
+      password: nacos
+      group: SEATA_GROUP
+      data-id: seataServer.properties
+  registry:
+    type: nacos
+    nacos:
+      namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+      server-addr: https://nacos.laokou.org:8848
+  enabled: true
+  tx-service-group: default_tx_group
+  data-source-proxy-mode: AT' WHERE id = 1254;
+
+UPDATE public.config_info SET content = '# springdoc
+spring:
+  cloud:
+    gateway:
+      ip:
+        enabled: true
+        label: black
+springdoc:
+  cache:
+    disabled: false
+  version: 3.1.0
+  swagger-ui:
+    use-root-path: true
+  api-docs:
+    version: openapi_3_1' WHERE id = 1273;

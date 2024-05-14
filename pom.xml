@@ -216,8 +216,8 @@
         <DATASOURCE-DB-NACOS>kcloud_platform_iot_nacos</DATASOURCE-DB-NACOS>
         <DATASOURCE-DB-POWER-JOB>kcloud_platform_iot_power_job</DATASOURCE-DB-POWER-JOB>
         <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
-        <NACOS-DISCOVERY-ADDRESS>https://nacos.laokou.org</NACOS-DISCOVERY-ADDRESS>
-        <NACOS-CONFIG-ADDRESS>https://nacos.laokou.org</NACOS-CONFIG-ADDRESS>
+        <NACOS-DISCOVERY-ADDRESS>https://nacos.laokou.org:8848</NACOS-DISCOVERY-ADDRESS>
+        <NACOS-CONFIG-ADDRESS>https://nacos.laokou.org:8848</NACOS-CONFIG-ADDRESS>
         <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>

@@ -32,34 +32,35 @@
 
 package io.seata.server;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import io.micrometer.core.lang.NonNullApi;
 import io.seata.core.rpc.Disposable;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.web.context.WebServerInitializedEvent;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
+
+import java.net.InetAddress;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author spilledyear@outlook.com
  */
 @Component
 @NonNullApi
-public class ServerRunner implements CommandLineRunner, DisposableBean, ApplicationListener<ApplicationEvent>, Ordered {
+@RequiredArgsConstructor
+public class ServerRunner implements CommandLineRunner, DisposableBean, Ordered {
+
+	private final ServerProperties serverProperties;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServerRunner.class);
 
 	private boolean started = Boolean.FALSE;
-
-	private int port;
 
 	@Value("${logging.file.path}")
 	private String logPath;
@@ -76,10 +77,10 @@ public class ServerRunner implements CommandLineRunner, DisposableBean, Applicat
 			long start = System.currentTimeMillis();
 			Server.start(args);
 			started = true;
-
 			long cost = System.currentTimeMillis() - start;
-			LOGGER.info("\r\n you can visit seata console UI on http://127.0.0.1:{}. \r\n log path: {}.", this.port,
-					this.logPath);
+			String url = (serverProperties.getSsl().isEnabled() ? "https://" : "http://")
+					+ InetAddress.getLocalHost().getHostAddress() + ":" + serverProperties.getPort();
+			LOGGER.info("\n\nseata访问地址：{}，日志路径: {}\n", url, this.logPath);
 			LOGGER.info("seata server started in {} millSeconds", cost);
 		}
 		catch (Throwable e) {
@@ -106,13 +107,6 @@ public class ServerRunner implements CommandLineRunner, DisposableBean, Applicat
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("destoryAll finish");
-		}
-	}
-
-	@Override
-	public void onApplicationEvent(ApplicationEvent event) {
-		if (event instanceof WebServerInitializedEvent) {
-			this.port = ((WebServerInitializedEvent) event).getWebServer().getPort();
 		}
 	}
 
