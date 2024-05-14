@@ -25,9 +25,9 @@ public interface Server {
 	/**
 	 * 发送消息.
 	 * @param obj 对象
-	 * @param clientId 标识
+	 * @param key 标识
 	 */
-	void send(String clientId, Object obj);
+	void send(String key, Object obj);
 
 	/**
 	 * 启动.
