@@ -26,6 +26,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 可参考 RocketMQ 实现.
@@ -36,7 +37,7 @@ import java.util.Map;
 @NonNullApi
 public final class MqttListenerContainer implements ApplicationListener<ApplicationReadyEvent>, MqttStrategy {
 
-	private final Map<String, MqttListener> MQTT_TOPIC_MAP = new HashMap<>();
+	private final Map<String, MqttListener> MQTT_TOPIC_MAP = new ConcurrentHashMap<>();
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
