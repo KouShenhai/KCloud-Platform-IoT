@@ -72,11 +72,11 @@ public class MqttClient implements Client {
 				springMqttProperties.getClientId(), new MemoryPersistence());
 		// 手动ack接收确认
 		client.setManualAcks(springMqttProperties.isManualAcks());
-		client.setCallback(new MqttMessageCallback(client, mqttStrategy));
+		client.setCallback(new MqttMessageCallback(mqttStrategy));
 		client.connect(options());
-		client.subscribe(springMqttProperties.getTopics().toArray(String[]::new), new int[] { 2 });
-		running = true;
+		client.subscribe(springMqttProperties.getTopics().toArray(String[]::new), springMqttProperties.getTopics().stream().mapToInt(item -> 2).toArray());
 		log.info("MQTT连接成功");
+		running = true;
 	}
 
 	@Override
@@ -84,7 +84,9 @@ public class MqttClient implements Client {
 	public synchronized void close() {
 		running = false;
 		if (ObjectUtil.isNotNull(client)) {
-			client.disconnectForcibly();
+			// 等待10秒
+			client.disconnectForcibly(10);
+			client.close();
 		}
 		log.info("关闭MQTT连接");
 	}

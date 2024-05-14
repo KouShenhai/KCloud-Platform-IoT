@@ -26,6 +26,7 @@ import org.eclipse.paho.mqttv5.client.MqttDisconnectResponse;
 import org.eclipse.paho.mqttv5.common.MqttException;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
+import org.laokou.common.i18n.utils.LogUtil;
 
 /**
  * @author laokou
@@ -33,8 +34,6 @@ import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 @Slf4j
 @RequiredArgsConstructor
 public class MqttMessageCallback implements MqttCallback {
-
-	private final MqttClient client;
 
 	private final MqttStrategy mqttStrategy;
 
@@ -45,7 +44,7 @@ public class MqttMessageCallback implements MqttCallback {
 
 	@Override
 	public void mqttErrorOccurred(MqttException ex) {
-		log.error("MQTT报错", ex);
+		log.error("MQTT报错，错误信息：{}，详情见日志", LogUtil.record(ex.getMessage()), ex);
 	}
 
 	@Override
