@@ -24,6 +24,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -50,10 +51,14 @@ public class ServerRunner implements ApplicationListener<ApplicationReadyEvent>,
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
 		try {
-			String URL = (serverProperties.getSsl().isEnabled() ? "https://" : "http://") + InetAddress.getLocalHost().getHostAddress() + ":" + serverProperties.getPort() + serverProperties.getServlet().getContextPath();
-			System.out.println("nacos访问地址：" + URL);
-		} catch (UnknownHostException e) {
+			String url = (serverProperties.getSsl().isEnabled() ? "https://" : "http://")
+					+ InetAddress.getLocalHost().getHostAddress() + ":" + serverProperties.getPort()
+					+ serverProperties.getServlet().getContextPath();
+			System.out.printf("\nnacos访问地址：%s\n\n", url);
+		}
+		catch (UnknownHostException e) {
 			throw new RuntimeException(e);
 		}
 	}
+
 }
