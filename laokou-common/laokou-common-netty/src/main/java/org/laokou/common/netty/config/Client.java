@@ -26,6 +26,6 @@ public interface Client {
 
 	void close();
 
-	void send(String topic, String payload);
+	void send(String key, String payload);
 
 }

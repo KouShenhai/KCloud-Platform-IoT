@@ -15,28 +15,22 @@
  *
  */
 
-package org.laokou.common.netty.config;
+package org.laokou.iot.consumer;
 
-/**
- * @author laokou
- */
-public interface Server {
+import lombok.extern.slf4j.Slf4j;
+import org.eclipse.paho.mqttv5.common.MqttMessage;
+import org.laokou.mqtt.annotation.MqttMessageListener;
+import org.laokou.mqtt.config.MqttListener;
 
-	/**
-	 * 发送消息.
-	 * @param obj 对象
-	 * @param key 标识
-	 */
-	void send(String key, Object obj);
+import java.nio.charset.StandardCharsets;
 
-	/**
-	 * 启动.
-	 */
-	void start();
+@Slf4j
+@MqttMessageListener(topic = "/55/D1PGLPG58KZ2/ntp/get")
+public class GetNtpSubscribeTest implements MqttListener {
 
-	/**
-	 * 停止.
-	 */
-	void stop();
+	@Override
+	public void onMessage(MqttMessage message) {
+		log.info("消息：{}，已被接收，正在处理中", new String(message.getPayload(), StandardCharsets.UTF_8));
+	}
 
 }

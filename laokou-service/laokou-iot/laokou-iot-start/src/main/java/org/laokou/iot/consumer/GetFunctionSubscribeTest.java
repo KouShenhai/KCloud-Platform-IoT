@@ -28,8 +28,8 @@ import java.nio.charset.StandardCharsets;
  * @author laokou
  */
 @Slf4j
-@MqttMessageListener(topic = "test")
-public class TestConsumer implements MqttListener {
+@MqttMessageListener(topic = "/55/D1PGLPG58KZ2/function/get")
+public class GetFunctionSubscribeTest implements MqttListener {
 
 	@Override
 	public void onMessage(MqttMessage message) {

@@ -17,19 +17,23 @@
 
 package org.laokou.gateway.config;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
-import org.springdoc.core.models.GroupedOpenApi;
+import org.springdoc.core.properties.AbstractSwaggerUiConfigProperties;
+import org.springdoc.core.properties.SwaggerUiConfigParameters;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import reactor.core.scheduler.Schedulers;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static org.laokou.common.i18n.common.constants.StringConstant.NULL;
 import static org.laokou.common.i18n.common.constants.StringConstant.SLASH;
+import static org.springdoc.core.utils.Constants.DEFAULT_API_DOCS_URL;
 
 /**
  * API文档配置.
@@ -39,25 +43,33 @@ import static org.laokou.common.i18n.common.constants.StringConstant.SLASH;
 @Configuration
 public class OpenApiDocConfig {
 
-	@Schema(name = "HTTPS_PROTOCOL", description = "https协议")
+	/**
+	 * https协议。
+	 */
 	private static final String HTTPS_PROTOCOL = "https";
 
 	@Bean
 	@Lazy(false)
 	@SneakyThrows
-	public List<GroupedOpenApi> openApis(RouteDefinitionLocator locator, ServerProperties serverProperties) {
-		List<GroupedOpenApi> groups = new ArrayList<>();
-		locator.getRouteDefinitions().filter(routeDefinition -> {
+	public Set<AbstractSwaggerUiConfigProperties.SwaggerUrl> openApis(RouteDefinitionLocator locator,
+			ServerProperties serverProperties, SwaggerUiConfigParameters swaggerUiConfigParameters) {
+		Set<AbstractSwaggerUiConfigProperties.SwaggerUrl> urls = new HashSet<>();
+		List<RouteDefinition> definitions = locator.getRouteDefinitions().collectList().block();
+		assert definitions != null;
+		definitions.stream().filter(routeDefinition -> {
 			if (!serverProperties.getSsl().isEnabled() && HTTPS_PROTOCOL.equals(routeDefinition.getUri().getScheme())) {
 				throw new RuntimeException(
 						String.format("HTTP不允许开启SSL，请检查URL为%s的路由", routeDefinition.getUri().toString()));
 			}
 			return routeDefinition.getId().matches("laokou-.*");
-		}).subscribeOn(Schedulers.boundedElastic()).subscribe(routeDefinition -> {
+		}).forEach(routeDefinition -> {
 			String name = routeDefinition.getId().substring(7);
-			GroupedOpenApi.builder().pathsToMatch(SLASH.concat(name).concat("/**")).group(name).build();
+			AbstractSwaggerUiConfigProperties.SwaggerUrl swaggerUrl = new AbstractSwaggerUiConfigProperties.SwaggerUrl(
+					name, DEFAULT_API_DOCS_URL + SLASH + name, NULL);
+			urls.add(swaggerUrl);
 		});
-		return groups;
+		swaggerUiConfigParameters.setUrls(urls);
+		return urls;
 	}
 
 }

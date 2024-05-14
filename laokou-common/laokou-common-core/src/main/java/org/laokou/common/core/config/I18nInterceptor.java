@@ -22,14 +22,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.utils.I18nUtil;
 import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
  * @author laokou
  */
 @NonNullApi
-@Component
 public class I18nInterceptor implements HandlerInterceptor {
 
 	@Override

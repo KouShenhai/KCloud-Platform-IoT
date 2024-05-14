@@ -15,9 +15,11 @@
  */
 package io.seata.server;
 
+import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
 
@@ -30,6 +32,10 @@ public class SeataApp {
 
 	public static void main(String[] args) throws IOException {
 		// run the spring-boot application
+		System.setProperty(TlsSystemConfig.TLS_ENABLE, "true");
+		System.setProperty(TlsSystemConfig.CLIENT_AUTH, "true");
+		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT,
+				ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath());
 		SpringApplication.run(SeataApp.class, args);
 	}
 

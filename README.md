@@ -67,10 +67,10 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 | RocketMQ                    | 5.2.0         |
 | OpenResty                   | 1.21.4.1      |
 | Netty                       | 4.1.109.Final |
-| Kafka                       | 3.6.1         |
+| Kafka                       | 3.7.0         |
 | EMQX                        | 5.6.1         |
 | Postgresql                  | 16.3          |
-| Flyway                      | 10.12.0       |
+| Flyway                      | 10.13.0       |
 | Canal                       | 1.1.7         |
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
