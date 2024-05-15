@@ -1,0 +1,58 @@
+#   /*
+#    * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+#    *
+#    * Licensed under the Apache License, Version 2.0 (the "License");
+#    * you may not use this file except in compliance with the License.
+#    * You may obtain a copy of the License at
+#    *
+#    *   http://www.apache.org/licenses/LICENSE-2.0
+#    *
+#    * Unless required by applicable law or agreed to in writing, software
+#    * distributed under the License is distributed on an "AS IS" BASIS,
+#    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    * See the License for the specific language governing permissions and
+#    * limitations under the License.
+#    *
+#    */
+# spring
+spring:
+  cloud:
+    # nacos
+    nacos:
+      discovery:
+        server-addr: ${NACOS-DISCOVERY-ADDRESS}
+        namespace: ${NACOS-NAMESPACE}
+        username: ${NACOS-USERNAME}
+        password: ${NACOS-PASSWORD}
+        group: ${NACOS-GROUP}
+        # https
+        secure: @SSL-ENABLED@
+        # true 临时 false 持久
+        ephemeral: true
+        metadata:
+          version: @NACOS-VERSION@
+      config:
+        server-addr: ${NACOS-CONFIG-ADDRESS}
+        namespace: ${NACOS-NAMESPACE}
+        username: ${NACOS-USERNAME}
+        password: ${NACOS-PASSWORD}
+        # https://github.com/alibaba/spring-cloud-alibaba/blob/2021.x/spring-cloud-alibaba-docs/src/main/asciidoc-zh/nacos-config.adoc
+        # 指定读取的文件格式
+        file-extension: yaml
+        group: ${NACOS-GROUP}
+        refresh-enabled: true
+        # 读取公共配置
+        # Data Id 在默认的组 DEFAULT_GROUP,不支持配置的动态刷新
+        extension-configs:
+          - data-id: application-common-redis.yaml
+            group: ${NACOS-GROUP}
+            refresh: true
+          - data-id: application-common.yaml
+            group: ${NACOS-GROUP}
+            refresh: true
+          - data-id: application-common-rocketmq.yaml
+            group: ${NACOS-GROUP}
+            refresh: true
+          - data-id: application-auth.yaml
+            group: ${NACOS-GROUP}
+            refresh: true

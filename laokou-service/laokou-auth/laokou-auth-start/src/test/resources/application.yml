@@ -1,0 +1,120 @@
+#   /*
+#    * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+#    *
+#    * Licensed under the Apache License, Version 2.0 (the "License");
+#    * you may not use this file except in compliance with the License.
+#    * You may obtain a copy of the License at
+#    *
+#    *   http://www.apache.org/licenses/LICENSE-2.0
+#    *
+#    * Unless required by applicable law or agreed to in writing, software
+#    * distributed under the License is distributed on an "AS IS" BASIS,
+#    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    * See the License for the specific language governing permissions and
+#    * limitations under the License.
+#    *
+#    */
+# server
+server:
+  port: 1111
+  ssl:
+    # 开启证书
+    enabled: @SSL-ENABLED@
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: @SSL-ENABLED@
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  application:
+    name: @pom.parent.artifactId@
+  profiles:
+    # dev|test|prod
+    active: @PROFILE-ACTIVE@
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: @NACOS-CONFIG-ADDRESS@
+            namespace: @NACOS-NAMESPACE@
+            data-id: auth-flow.json
+            data-type: json
+            group-id: @NACOS-GROUP@
+            rule-type: flow
+            username: @NACOS-USERNAME@
+            password: @NACOS-PASSWORD@
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # OAuth2
+  security:
+    oauth2:
+      authorization-server:
+        enabled: true
+        client:
+          default:
+            token:
+              authorization-code-time-to-live: 1h
+              access-token-time-to-live: 1h
+              refresh-token-time-to-live: 6h
+              device-code-time-to-live: 1h
+            registration:
+              id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-name: OAuth2.1认证
+              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
+              client-authentication-methods:
+                - client_secret_basic
+              authorization-grant-types:
+                - password
+                - mail
+                - mobile
+                - client_credentials
+                - refresh_token
+                - authorization_code
+                - urn:ietf:params:oauth:grant-type:device_code
+                - urn:ietf:params:oauth:grant-type:jwt-bearer
+              scopes:
+                - password
+                - mail
+                - mobile
+                - openid
+              redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+              post-logout-redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+            # 客户端请求访问时需要授权同意
+            require-authorization-consent: true
+            # PKCE
+            require-proof-key: false
+  threads:
+    virtual:
+      enabled: true
+
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml
