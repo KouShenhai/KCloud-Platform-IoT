@@ -30,7 +30,7 @@ public class GetOTASubscribeTest implements MqttListener {
 
 	@Override
 	public void onMessage(MqttMessage message) {
-		log.info("消息：{}，已被接收，正在处理中", new String(message.getPayload(), StandardCharsets.UTF_8));
+		log.info("订阅设备升级(旧)消息：{}，已被接收，正在处理中", new String(message.getPayload(), StandardCharsets.UTF_8));
 	}
 
 }

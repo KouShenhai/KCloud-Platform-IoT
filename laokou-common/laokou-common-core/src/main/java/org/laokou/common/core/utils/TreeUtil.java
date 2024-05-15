@@ -20,7 +20,6 @@ package org.laokou.common.core.utils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.ClientObject;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
@@ -42,15 +41,15 @@ public class TreeUtil {
 	 * @return 树节点
 	 */
 	public static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, Class<T> clazz) {
-		return buildTreeNode(treeNodes, ConvertUtil.sourceToTarget(rootRootNode(), clazz));
+		return buildTreeNode(treeNodes, ConvertUtil.sourceToTarget(rootNode(), clazz));
 	}
 
 	/**
-	 * 顶级菜单节点.
+	 * 顶级树节点.
 	 * @param <T> 泛型
 	 * @return 顶级菜单节点
 	 */
-	private static <T> TreeNode<T> rootRootNode() {
+	private static <T> TreeNode<T> rootNode() {
 		return new TreeNode<>(0L, "根节点", null);
 	}
 
@@ -63,19 +62,20 @@ public class TreeUtil {
 	 */
 	private static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, T rootNode) {
 		if (ObjectUtil.isNull(rootNode)) {
-			throw new SystemException("请构造根节点");
+			throw new RuntimeException("请构造根节点");
 		}
 		List<T> nodes = new ArrayList<>(treeNodes);
+		// 添加根节点
 		nodes.add(rootNode);
 		// list转map
 		Map<Long, T> nodeMap = new LinkedHashMap<>(nodes.size());
 		for (T node : nodes) {
 			nodeMap.put(node.getId(), node);
 		}
-		for (T treeNo : nodes) {
-			T parent = nodeMap.get(treeNo.getPid());
-			if (ObjectUtil.isNotNull(parent) && treeNo.getPid().equals(parent.getId())) {
-				parent.getChildren().add(treeNo);
+		for (T node : nodes) {
+			T parentNode = nodeMap.get(node.getPid());
+			if (ObjectUtil.isNotNull(parentNode) && node.getPid().equals(parentNode.getId())) {
+				parentNode.getChildren().add(node);
 			}
 		}
 		return rootNode;
