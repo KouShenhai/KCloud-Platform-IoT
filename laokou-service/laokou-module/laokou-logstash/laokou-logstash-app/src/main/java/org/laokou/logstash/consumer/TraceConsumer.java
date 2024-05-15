@@ -50,7 +50,7 @@ public class TraceConsumer {
 
 	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_logstash_consumer_group")
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
-		messages.parallelStream().forEach(this::saveIndex);
+		// messages.parallelStream().forEach(this::saveIndex);
 		ack.acknowledge();
 	}
 
