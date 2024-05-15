@@ -1261,17 +1261,17 @@ INSERT INTO public.tenant_info (id, kp, tenant_id, tenant_name, tenant_desc, cre
 
 create table if not exists public.users
 (
-	username varchar(50)  not null
-	primary key,
-	password varchar(500) not null,
-	enabled  smallint     not null
-	);
+	username varchar(50)          not null
+		primary key,
+	password varchar(500)         not null,
+	enabled  boolean default true not null
+);
 
 alter table public.users
 	owner to root;
 
-INSERT INTO public.users (username, password, enabled) VALUES ('laokou', '$2a$10$75WIn2J5FoX9F5wEBdFsL.0cKdv5h8QqBMKMWBABhWAxKB4TO8WZq', 1);
-INSERT INTO public.users (username, password, enabled) VALUES ('nacos', '$2a$10$oVX1zRtaql9Jbsyzaaovx.TU2M6Bw0ZpCbPYWOIED58d1ougzaFRm', 1);
+INSERT INTO public.users (username, password, enabled) VALUES ('laokou', '$2a$10$75WIn2J5FoX9F5wEBdFsL.0cKdv5h8QqBMKMWBABhWAxKB4TO8WZq', true);
+INSERT INTO public.users (username, password, enabled) VALUES ('nacos', '$2a$10$oVX1zRtaql9Jbsyzaaovx.TU2M6Bw0ZpCbPYWOIED58d1ougzaFRm', true);
 
 UPDATE public.config_info SET content = '# spring
 spring:
