@@ -35,7 +35,7 @@ public class GetMonitorSubscribeTest implements MqttListener {
 
 	@Override
 	public void onMessage(MqttMessage message) {
-		log.info("消息：{}，已被接收，正在处理中", new String(message.getPayload(), StandardCharsets.UTF_8));
+		log.info("订阅实时监测消息：{}，已被接收，正在处理中", new String(message.getPayload(), StandardCharsets.UTF_8));
 		String str = """
 				{
 				   "field":"test_value"

@@ -45,8 +45,8 @@ public class GetInfoSubscribeTest implements MqttListener {
 	"longitude": 0,
 	"latitude": 0,
 	"summary": {
-	  "name": "FastBee",
-	  "chip": "ESP8266",
+	  "name": "TEST",
+	  "chip": "TEST",
 	  "author": "laokou",
 	  "deliveryTime": "2024-06-06",
 	  "activeTime": "2024-10-01"
