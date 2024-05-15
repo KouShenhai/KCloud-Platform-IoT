@@ -22,6 +22,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.IdGenerator;
@@ -33,6 +34,7 @@ import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestConstructor;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -41,6 +43,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Collections;
 import java.util.Map;
+
 import static org.laokou.common.i18n.common.constants.StringConstant.RISK;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -52,6 +55,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Slf4j
 @SpringBootTest
 @RequiredArgsConstructor
+@RunWith(SpringRunner.class)
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class OAuth2ApiTest {
 
@@ -71,7 +75,7 @@ class OAuth2ApiTest {
 
 	private static final String CODE = "iQWEh8YSpdwZ8_5QsA8C_1tVpR-6_fcLMYDKGnhozJW9MmTzf30aYvq6F_O3sSL0PP0bEVVdoXeau8QOuTln3ABn2c-00x7irutqFKAHRJVFZGln_6Wmuab4ostt-3-y";
 
-	private static final Long SNOWFLAKE_ID = IdGenerator.defaultSnowflakeId();
+	private static final String UUID = String.valueOf(IdGenerator.defaultSnowflakeId());
 
 	private final CaptchaGateway captchaGateway;
 
@@ -91,7 +95,7 @@ class OAuth2ApiTest {
 	@Test
 	void testUsernamePasswordAuthApi() {
 		log.info("---------- 用户名密码认证模式开始 ----------");
-		String captcha = getCaptcha(SNOWFLAKE_ID.toString());
+		String captcha = getCaptcha(UUID);
 		String publicKey = getPublicKey();
 		String privateKey = RsaUtil.getPrivateKey();
 		String encryptUsername = RsaUtil.encryptByPublicKey(USERNAME, publicKey);
@@ -104,7 +108,7 @@ class OAuth2ApiTest {
 		log.info("加密密码：{}", encryptPassword);
 		log.info("解密用户名：{}", decryptUsername);
 		log.info("解密密码：{}", decryptPassword);
-		log.info("uuid：{}", SNOWFLAKE_ID);
+		log.info("uuid：{}", UUID);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
 		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
 		log.info("---------- 用户名密码认证模式结束 ----------");
@@ -264,7 +268,7 @@ class OAuth2ApiTest {
 	private Map<String, String> usernamePasswordAuth(String captcha, String username, String password) {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("uuid", String.valueOf((long) OAuth2ApiTest.SNOWFLAKE_ID), "username",
+			Map<String, String> params = Map.of("uuid", UUID, "username",
 					username, "password", password, "tenant_id", "0", "grant_type", "password", "captcha", captcha);
 			Map<String, String> headers = Map.of("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "trace-id",
@@ -298,7 +302,7 @@ class OAuth2ApiTest {
 
 	@SneakyThrows
 	private String getCaptcha(String uuid) {
-		mockMvc.perform(get(getCaptchaApiUrl(uuid)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+		mockMvc.perform(get(getCaptchaApiUrlV3(uuid)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 		String key = captchaGateway.getKey(uuid);
 		String captcha = redisUtil.get(key).toString();
 		Assert.isTrue(StringUtil.isNotEmpty(captcha), "captcha is empty");
@@ -307,7 +311,7 @@ class OAuth2ApiTest {
 
 	@SneakyThrows
 	private String getPublicKey() {
-		MvcResult mvcResult = mockMvc.perform(get(getSecretApiUrl()).contentType(MediaType.APPLICATION_JSON))
+		MvcResult mvcResult = mockMvc.perform(get(getSecretApiUrlV3()).contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
 			// 打印到控制台
 			.andDo(print())
@@ -343,12 +347,12 @@ class OAuth2ApiTest {
 				+ "/oauth2/device_authorization";
 	}
 
-	private String getCaptchaApiUrl(String uuid) {
-		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v1/captchas/" + uuid;
+	private String getCaptchaApiUrlV3(String uuid) {
+		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/captchas/" + uuid;
 	}
 
-	private String getSecretApiUrl() {
-		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v1/secrets";
+	private String getSecretApiUrlV3() {
+		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/secrets";
 	}
 
 	private String getSchema(boolean disabled) {
