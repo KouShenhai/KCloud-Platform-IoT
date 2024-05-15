@@ -86,7 +86,7 @@
     <!--gson版本-->
     <gson.version>2.10.1</gson.version>
     <!--swagger-annotations-jakarta版本-->
-    <swagger-annotations-jakarta.version>2.2.21</swagger-annotations-jakarta.version>
+    <swagger-annotations-jakarta.version>2.2.22</swagger-annotations-jakarta.version>
     <!--disruptor版本-->
     <disruptor.version>3.4.4</disruptor.version>
     <!--lombok-mapstruct-binding版本-->
