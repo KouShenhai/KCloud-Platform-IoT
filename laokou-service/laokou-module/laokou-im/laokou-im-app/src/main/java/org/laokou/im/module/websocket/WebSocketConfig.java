@@ -18,7 +18,7 @@
 package org.laokou.im.module.websocket;
 
 import org.laokou.common.netty.config.Server;
-import org.laokou.im.config.WebsocketProperties;
+import org.laokou.common.netty.config.WebSocketServer;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +34,7 @@ public class WebSocketConfig {
 
 	@Bean(name = "websocketServer", initMethod = "start", destroyMethod = "stop")
 	public Server websocketServer(WebsocketProperties websocketProperties,
-			WebsocketChannelInitializer websocketChannelInitializer) {
+								  WebsocketChannelInitializer websocketChannelInitializer) {
 		return new WebSocketServer(websocketProperties.getPort(), websocketChannelInitializer);
 	}
 

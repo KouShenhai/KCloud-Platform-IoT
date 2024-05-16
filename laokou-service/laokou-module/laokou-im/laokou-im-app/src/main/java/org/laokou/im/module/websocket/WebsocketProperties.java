@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.im.config;
+package org.laokou.im.module.websocket;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

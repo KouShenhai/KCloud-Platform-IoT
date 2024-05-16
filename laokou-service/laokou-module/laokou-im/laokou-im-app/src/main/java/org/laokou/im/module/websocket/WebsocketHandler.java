@@ -16,9 +16,6 @@
  */
 
 package org.laokou.im.module.websocket;
-
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -32,10 +29,8 @@ import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.utils.UserDetail;
 import org.springframework.stereotype.Component;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
-import static org.laokou.common.redis.utils.RedisUtil.HOUR_ONE_EXPIRE;
+import static org.laokou.common.netty.config.WebSocketServer.put;
 
 /**
  * websocket自定义处理器.
@@ -50,23 +45,6 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 	private final RedisUtil redisUtil;
 
-	/**
-	 * 建立连接的用户集合.
-	 */
-	private static final Cache<String, Channel> CLIENT_CACHE = Caffeine.newBuilder()
-		.expireAfterAccess(HOUR_ONE_EXPIRE, SECONDS)
-		.initialCapacity(500)
-		.build();
-
-	/**
-	 * 根据客户ID获取通道.
-	 * @param clientId 客户ID
-	 * @return 通道
-	 */
-	public static Channel getChannel(String clientId) {
-		return CLIENT_CACHE.getIfPresent(clientId);
-	}
-
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
 		Channel channel = ctx.channel();
@@ -76,7 +54,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 		if (obj != null) {
 			UserDetail userDetail = (UserDetail) obj;
 			Long id = userDetail.getId();
-			CLIENT_CACHE.put(id.toString(), channel);
+			put(id.toString(), channel);
 		}
 		else {
 			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail("" + UNAUTHORIZED))));
