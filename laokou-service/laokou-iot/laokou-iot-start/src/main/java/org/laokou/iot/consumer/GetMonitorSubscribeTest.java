@@ -52,14 +52,16 @@ public class GetMonitorSubscribeTest implements MqttListener {
 	public void onMessage(MqttMessage message) {
 		log.info("订阅实时监测消息：{}，已被接收，正在处理中", new String(message.getPayload(), StandardCharsets.UTF_8));
 		List<Sensor> list = new ArrayList<>();
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(ResourceUtil.getResource("1.csv").getInputStream()))) {
+		try (BufferedReader br = new BufferedReader(
+				new InputStreamReader(ResourceUtil.getResource("1.csv").getInputStream()))) {
 			String len;
 			log.info("读取表头：{}", br.readLine());
 			while ((len = br.readLine()) != null) {
 				String[] arr = len.split(COMMA);
-				list.add(new Sensor(arr[2],arr[3],arr[4]));
+				list.add(new Sensor(arr[2], arr[3], arr[4]));
 			}
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 		Algorithm algorithm = new RandomSelectAlgorithm();
@@ -70,9 +72,13 @@ public class GetMonitorSubscribeTest implements MqttListener {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	static class Sensor implements Serializable {
+
 		private String x;
+
 		private String y;
+
 		private String z;
+
 	}
 
 }

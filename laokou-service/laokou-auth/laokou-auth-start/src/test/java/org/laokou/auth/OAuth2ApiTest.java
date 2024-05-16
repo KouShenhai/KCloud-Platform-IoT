@@ -22,7 +22,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.IdGenerator;
@@ -31,12 +30,9 @@ import org.laokou.common.crypto.utils.RsaUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -55,11 +51,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author laokou
  */
 @Slf4j
-@AutoConfigureMockMvc
+@SpringBootTest
 @RequiredArgsConstructor
-@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = AuthApp.class)
-@SpringBootTest(classes = AuthApp.class, properties = { "spring.cloud.nacos.config.server-addr=https://127.0.0.1:8848" }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class OAuth2ApiTest {
 
@@ -172,20 +165,35 @@ class OAuth2ApiTest {
 		log.info("---------- 设备授权码认证模式结束 ----------");
 	}
 
+	@Test
+	void testTenantOptionsApi() {
+		String apiUrl = getTenantOptionsApiUrlV3();
+		String json = HttpUtil.doGet(apiUrl, Collections.emptyMap(), Collections.emptyMap(), disabledSsl());
+		log.info("查询租户下拉选择项列表，返回信息：{}", json);
+	}
+
+	@Test
+	void testTenantIdByDomainNameApi() {
+		String apiUrl = getTenantIdByDomainNameApiUrlV3();
+		String json = HttpUtil.doGet(apiUrl, Collections.emptyMap(), Collections.emptyMap(), disabledSsl());
+		log.info("根据域名查看租户ID，返回信息：{}", json);
+	}
+
 	private Map<String, String> deviceAuthorizationCodeAuth(String deviceCode) {
 		try {
 			String apiUrl = getOAuthApiUrl();
 			Map<String, String> params = Map.of("device_code", deviceCode, "grant_type",
-				"urn:ietf:params:oauth:grant-type:device_code");
+					"urn:ietf:params:oauth:grant-type:device_code");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
-				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			log.info("设备授权码认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return Collections.emptyMap();
 		}
 	}
@@ -195,13 +203,14 @@ class OAuth2ApiTest {
 			String apiUrl = getOAuthApiUrl();
 			Map<String, String> params = Map.of("grant_type", "client_credentials");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
-				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			log.info("客户端认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return Collections.emptyMap();
 		}
 	}
@@ -210,16 +219,17 @@ class OAuth2ApiTest {
 		try {
 			String apiUrl = getOAuthApiUrl();
 			Map<String, String> params = Map.of("code", CODE, "redirect_uri", "http://127.0.0.1:8001", "grant_type",
-				"authorization_code");
+					"authorization_code");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
-				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			log.info("授权码认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return Collections.emptyMap();
 		}
 	}
@@ -232,16 +242,17 @@ class OAuth2ApiTest {
 		try {
 			String apiUrl = getOAuthApiUrl();
 			Map<String, String> params = Map.of("code", code, "mobile", MOBILE, "tenant_id", "0", "grant_type",
-				"mobile");
+					"mobile");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
-				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			log.info("手机号认证，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return Collections.emptyMap();
 		}
 	}
@@ -251,14 +262,15 @@ class OAuth2ApiTest {
 			String apiUrl = getOAuthApiUrl();
 			Map<String, String> params = Map.of("code", code, "mail", MAIL, "tenant_id", "0", "grant_type", "mail");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
-				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			log.info("邮箱认证，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return Collections.emptyMap();
 		}
 	}
@@ -267,18 +279,19 @@ class OAuth2ApiTest {
 	private Map<String, String> usernamePasswordAuth(String captcha, String username, String password) {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("uuid", UUID, "username",
-				username, "password", password, "tenant_id", "0", "grant_type", "password", "captcha", captcha);
+			Map<String, String> params = Map.of("uuid", UUID, "username", username, "password", password, "tenant_id",
+					"0", "grant_type", "password", "captcha", captcha);
 			Map<String, String> headers = Map.of("Authorization",
-				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "trace-id",
-				String.valueOf(System.currentTimeMillis()));
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "trace-id",
+					String.valueOf(System.currentTimeMillis()));
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			log.info("用户名密码认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return Collections.emptyMap();
 		}
 	}
@@ -288,18 +301,20 @@ class OAuth2ApiTest {
 			String apiUrl = getOAuthApiUrl();
 			Map<String, String> params = Map.of("refresh_token", refreshToken, "grant_type", "refresh_token");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
-				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			log.info("刷新令牌模式，返回信息；{}", json);
 			return JacksonUtil.readTree(json).get("access_token").asText();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return null;
 		}
 	}
 
 	@SneakyThrows
 	private String getCaptcha(String uuid) {
-		mockMvc.perform(get(getCaptchaApiUrlV3(uuid)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+		mockMvc.perform(get(getCaptchaApiUrlV3(uuid)).contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk());
 		String key = captchaGateway.getKey(uuid);
 		String captcha = redisUtil.get(key).toString();
 		Assert.isTrue(StringUtil.isNotEmpty(captcha), "captcha is empty");
@@ -326,10 +341,11 @@ class OAuth2ApiTest {
 			String apiUrl = getDeviceCodeApiUrl();
 			Map<String, String> params = Collections.emptyMap();
 			Map<String, String> headers = Collections.singletonMap("Authorization",
-				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			return JacksonUtil.readTree(json).get(DEVICE_CODE).asText();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return null;
 		}
 	}
@@ -340,7 +356,7 @@ class OAuth2ApiTest {
 
 	private String getDeviceCodeApiUrl() {
 		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort()
-			+ "/oauth2/device_authorization";
+				+ "/oauth2/device_authorization";
 	}
 
 	private String getCaptchaApiUrlV3(String uuid) {
@@ -349,6 +365,14 @@ class OAuth2ApiTest {
 
 	private String getSecretApiUrlV3() {
 		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/secrets";
+	}
+
+	private String getTenantOptionsApiUrlV3() {
+		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/tenants/options";
+	}
+
+	private String getTenantIdByDomainNameApiUrlV3() {
+		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/tenants/id";
 	}
 
 	private String getSchema(boolean disabled) {

@@ -384,7 +384,7 @@
         <configuration>
           <source>${maven.compiler.source}</source>
           <target>${maven.compiler.target}</target>
-          <encoding>UTF-8</encoding>
+          <encoding>${project.build.sourceEncoding}</encoding>
           <compilerArgs>
             <arg>-Xlint:-options</arg>
             <arg>-Xlint:varargs</arg>
@@ -455,8 +455,6 @@
           <exclude>log4j2*.xml</exclude>
           <exclude>*.json</exclude>
           <exclude>*.properties</exclude>
-          <exclude>*.p12</exclude>
-          <exclude>*.crt</exclude>
         </excludes>
       </resource>
       <!-- 添加需要包含的文件 -->
@@ -474,37 +472,8 @@
           <include>log4j2-${PROFILE-ACTIVE}.xml</include>
           <include>init_router.json</include>
           <include>log4j2.component.properties</include>
-          <include>scg-keystore.p12</include>
-          <include>nacos.crt</include>
         </includes>
       </resource>
     </resources>
-    <!--单元测试时引用src/main/resources下的资源文件-->
-    <testResources>
-      <testResource>
-        <!-- 是否替换yml或者properties里@xx@表示的maven properties属性值 -->
-        <filtering>true</filtering>
-        <directory>src/test/resources</directory>
-        <includes>
-          <include>**/*.xml</include>
-          <include>**/*.properties</include>
-          <include>**/*.yml</include>
-          <include>*.p12</include>
-          <include>*.crt</include>
-        </includes>
-      </testResource>
-      <testResource>
-        <!-- 是否替换yml或者properties里@xx@表示的maven properties属性值 -->
-        <filtering>true</filtering>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>**/*.xml</include>
-          <include>**/*.properties</include>
-          <include>**/*.yml</include>
-          <include>*.p12</include>
-          <include>*.crt</include>
-        </includes>
-      </testResource>
-    </testResources>
   </build>
 </project>
