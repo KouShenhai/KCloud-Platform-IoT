@@ -24,6 +24,9 @@
       <artifactId>laokou-common-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-algorithm</artifactId>
+    </dependency>
   </dependencies>
-
 </project>
