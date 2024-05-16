@@ -20,10 +20,14 @@ package org.laokou.iot.consumer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
+import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.mqtt.annotation.MqttMessageListener;
 import org.laokou.mqtt.config.MqttListener;
 import org.laokou.mqtt.template.MqttTemplate;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
@@ -36,12 +40,15 @@ public class GetMonitorSubscribeTest implements MqttListener {
 	@Override
 	public void onMessage(MqttMessage message) {
 		log.info("订阅实时监测消息：{}，已被接收，正在处理中", new String(message.getPayload(), StandardCharsets.UTF_8));
-		String str = """
-				{
-				   "field":"test_value"
-				 }
-				""";
-		mqttTemplate.send("/55/D1PGLPG58KZ2/monitor/post", str);
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(ResourceUtil.getResource("1.csv").getInputStream()))) {
+			String len;
+			while ((len = br.readLine()) != null) {
+				System.out.println(len);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		mqttTemplate.send("/55/D1PGLPG58KZ2/monitor/post", "");
 	}
 
 }

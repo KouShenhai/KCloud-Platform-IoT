@@ -31,8 +31,10 @@ import org.laokou.common.crypto.utils.RsaUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -58,6 +60,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @RequiredArgsConstructor
 @RunWith(SpringRunner.class)
+@ContextConfiguration
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class OAuth2ApiTest {
 
