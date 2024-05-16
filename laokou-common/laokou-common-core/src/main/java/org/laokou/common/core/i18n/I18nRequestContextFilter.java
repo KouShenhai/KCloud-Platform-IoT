@@ -39,7 +39,7 @@ import java.io.IOException;
 @NonNullApi
 public final class I18nRequestContextFilter extends OrderedRequestContextFilter {
 
-	public static final String LANG = "Lang";
+	public static final String LANG = "lang";
 
 	public I18nRequestContextFilter() {
 	}

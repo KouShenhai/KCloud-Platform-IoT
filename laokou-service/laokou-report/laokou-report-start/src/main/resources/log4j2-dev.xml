@@ -22,51 +22,59 @@
     monitorInterval: 间隔秒数，自动检测配置文件的变更和重新配置本身
  -->
 <Configuration status="INFO" monitorInterval="5">
-    <!-- 变量配置 -->
-    <Properties>
-        <!-- 存放目录 -->
-        <property name="LOG_PATH" value="./logs"/>
-        <!-- 日志文件大小 -->
-        <property name="LOG_ROLL_SIZE" value="500 MB"/>
-        <!-- 服务名称 -->
-        <property name="APP_NAME" value="laokou-report"/>
-        <!-- -Dlog4j.skipJansi=false -->
-        <!-- 日志格式 -->
-        <!--
-            %d 日期
-            %t 线程
-        -->
-        <property name="LOG_CONSOLE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${APP_NAME} - ${sys:ip}] - [${ctx:trace-id}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
-        <property name="LOG_FILE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${APP_NAME} - ${sys:ip}] - [${ctx:trace-id}] - [ %-5level] - [%t] - %logger : %msg%n"/>
-        <!-- 日志保留30天 -->
-        <property name="LOG_DAYS" value="30"/>
-        <!-- 1天滚动一次 -->
-        <property name="LOG_INTERVAL" value="1"/>
-    </Properties>
-    <Appenders>
-        <!-- 控制台输出 -->
-        <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
-        </Console>
-        <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${APP_NAME}.log" filePattern="${LOG_PATH}/%d{yyyyMMdd}/${APP_NAME}_%d{yyyy-MM-dd}.%i.log.gz" immediateFlush="false">
-            <Filters>
-                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
-            </Filters>
-            <PatternLayout pattern="${LOG_FILE_PATTERN}"/>
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
-                <SizeBasedTriggeringPolicy size="${LOG_ROLL_SIZE}"/>
-            </Policies>
-            <DefaultRolloverStrategy max="${LOG_DAYS}"/>
-        </RollingRandomAccessFile>
-        <Async name="async_file" bufferSize="2000" blocking="false">
-            <AppenderRef ref="file"/>
-        </Async>
-    </Appenders>
-    <Loggers>
-        <AsyncRoot level="INFO" additivity="FALSE" includeLocation="FALSE">
-            <AppenderRef ref="console"/>
-            <AppenderRef ref="async_file"/>
-        </AsyncRoot>
-    </Loggers>
+  <!-- 变量配置 -->
+  <Properties>
+    <!-- 存放目录 -->
+    <property name="LOG_PATH" value="./logs"/>
+    <!-- 日志文件大小 -->
+    <property name="LOG_ROLL_SIZE" value="500 MB"/>
+    <!-- 服务名称 -->
+    <property name="APP_NAME" value="laokou-report"/>
+    <!-- -Dlog4j.skipJansi=false -->
+    <!-- 日志格式 -->
+    <!--
+        %d 日期
+        %t 线程
+    -->
+    <property name="LOG_CONSOLE_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${APP_NAME} - ${sys:ip}] - [${ctx:trace-id}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
+    <property name="LOG_FILE_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${APP_NAME} - ${sys:ip}] - [${ctx:trace-id}] - [ %-5level] - [%t] - %logger : %msg%n"/>
+    <!-- 日志保留30天 -->
+    <property name="LOG_DAYS" value="30"/>
+    <!-- 1天滚动一次 -->
+    <property name="LOG_INTERVAL" value="1"/>
+  </Properties>
+  <Appenders>
+    <!-- 控制台输出 -->
+    <Console name="console" target="SYSTEM_OUT">
+      <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
+    </Console>
+    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${APP_NAME}.log"
+                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${APP_NAME}_%d{yyyy-MM-dd}.%i.log.gz"
+                             immediateFlush="false">
+      <Filters>
+        <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+      </Filters>
+      <PatternLayout pattern="${LOG_FILE_PATTERN}"/>
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
+        <SizeBasedTriggeringPolicy size="${LOG_ROLL_SIZE}"/>
+      </Policies>
+      <DefaultRolloverStrategy max="${LOG_DAYS}"/>
+    </RollingRandomAccessFile>
+    <Async name="async_file" bufferSize="2000" blocking="false">
+      <AppenderRef ref="file"/>
+    </Async>
+  </Appenders>
+  <Loggers>
+    <AsyncLogger name="org.laokou" additivity="FALSE" includeLocation="FALSE" level="INFO">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="async_file"/>
+    </AsyncLogger>
+    <AsyncRoot level="INFO" additivity="FALSE" includeLocation="FALSE">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="async_file"/>
+    </AsyncRoot>
+  </Loggers>
 </Configuration>

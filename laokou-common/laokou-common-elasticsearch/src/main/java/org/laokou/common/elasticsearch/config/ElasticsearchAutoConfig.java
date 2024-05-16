@@ -22,7 +22,6 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -73,10 +72,14 @@ class ElasticsearchAutoConfig {
 
 	private final ElasticsearchProperties properties;
 
-	@Schema(name = "HTTP_SCHEME", description = "http协议头")
+	/**
+	 * HTTP协议头.
+	 */
 	private static final String HTTP_SCHEME = "http://";
 
-	@Schema(name = "HTTPS_SCHEME", description = "HTTPS协议头")
+	/**
+	 * HTTPS协议头.
+	 */
 	private static final String HTTPS_SCHEME = "https://";
 
 	@Bean

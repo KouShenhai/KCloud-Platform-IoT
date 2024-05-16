@@ -28,6 +28,7 @@ import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
@@ -63,7 +64,7 @@ public class TenantGetIDQryExe {
 	 */
 	public Result<Long> execute(TenantGetIDQry qry) {
 		String domainName = RequestUtil.getDomainName(qry.getRequest());
-		if (RegexUtil.ipRegex(domainName)) {
+		if (StringUtil.isEmpty(domainName) || RegexUtil.ipRegex(domainName)) {
 			return Result.ok(DEFAULT_TENANT_ID);
 		}
 		String[] split = domainName.split(BACKSLASH + DOT);

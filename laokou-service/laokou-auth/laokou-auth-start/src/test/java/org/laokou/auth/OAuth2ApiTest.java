@@ -22,7 +22,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.IdGenerator;
@@ -34,7 +33,6 @@ import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestConstructor;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -55,7 +53,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Slf4j
 @SpringBootTest
 @RequiredArgsConstructor
-@RunWith(SpringRunner.class)
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class OAuth2ApiTest {
 
@@ -88,7 +85,7 @@ class OAuth2ApiTest {
 	private MockMvc mockMvc;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 
@@ -166,6 +163,20 @@ class OAuth2ApiTest {
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
 		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
 		log.info("---------- 设备授权码认证模式结束 ----------");
+	}
+
+	@Test
+	void testTenantOptionsApi() {
+		String apiUrl = getTenantOptionsApiUrlV3();
+		String json = HttpUtil.doGet(apiUrl, Collections.emptyMap(), Collections.emptyMap(), disabledSsl());
+		log.info("查询租户下拉选择项列表，返回信息：{}", json);
+	}
+
+	@Test
+	void testTenantIdByDomainNameApi() {
+		String apiUrl = getTenantIdByDomainNameApiUrlV3();
+		String json = HttpUtil.doGet(apiUrl, Collections.emptyMap(), Collections.emptyMap(), disabledSsl());
+		log.info("根据域名查看租户ID，返回信息：{}", json);
 	}
 
 	private Map<String, String> deviceAuthorizationCodeAuth(String deviceCode) {
@@ -268,8 +279,8 @@ class OAuth2ApiTest {
 	private Map<String, String> usernamePasswordAuth(String captcha, String username, String password) {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("uuid", UUID, "username",
-					username, "password", password, "tenant_id", "0", "grant_type", "password", "captcha", captcha);
+			Map<String, String> params = Map.of("uuid", UUID, "username", username, "password", password, "tenant_id",
+					"0", "grant_type", "password", "captcha", captcha);
 			Map<String, String> headers = Map.of("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "trace-id",
 					String.valueOf(System.currentTimeMillis()));
@@ -302,7 +313,8 @@ class OAuth2ApiTest {
 
 	@SneakyThrows
 	private String getCaptcha(String uuid) {
-		mockMvc.perform(get(getCaptchaApiUrlV3(uuid)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+		mockMvc.perform(get(getCaptchaApiUrlV3(uuid)).contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk());
 		String key = captchaGateway.getKey(uuid);
 		String captcha = redisUtil.get(key).toString();
 		Assert.isTrue(StringUtil.isNotEmpty(captcha), "captcha is empty");
@@ -353,6 +365,14 @@ class OAuth2ApiTest {
 
 	private String getSecretApiUrlV3() {
 		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/secrets";
+	}
+
+	private String getTenantOptionsApiUrlV3() {
+		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/tenants/options";
+	}
+
+	private String getTenantIdByDomainNameApiUrlV3() {
+		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/tenants/id";
 	}
 
 	private String getSchema(boolean disabled) {
