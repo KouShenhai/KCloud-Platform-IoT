@@ -15,33 +15,50 @@
  *
  */
 
-package org.laokou.im.common.utils;
+package org.laokou.im.module.websocket.handler;
 
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.ThreadContext;
+import org.apache.rocketmq.common.message.MessageExt;
+import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Message;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.netty.config.Server;
-import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-/**
- * @author laokou
- */
-@Component
+import static org.laokou.common.i18n.common.constants.TraceConstant.TRACE_ID;
+
 @RequiredArgsConstructor
-public class MessageUtil {
+public abstract class AbstractMessageHandler implements RocketMQListener<MessageExt> {
 
 	private final Server websocketServer;
 
 	private final Executor executor;
 
-	public void send(String message) {
+	@Override
+	public void onMessage(MessageExt messageExt) {
+		try {
+			String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
+			String traceId = messageExt.getProperty(TRACE_ID);
+			ThreadContext.put(TRACE_ID, traceId);
+			log(msg);
+			send(msg);
+		}
+		finally {
+			ThreadContext.clearMap();
+		}
+	}
+
+	abstract protected void log(String msg);
+
+	private void send(String message) {
 		if (StringUtil.isEmpty(message)) {
 			return;
 		}

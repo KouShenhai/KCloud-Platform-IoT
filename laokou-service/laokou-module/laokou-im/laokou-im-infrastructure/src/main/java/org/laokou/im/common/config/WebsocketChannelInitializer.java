@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.im.module.websocket;
+package org.laokou.im.common.config;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -84,7 +84,7 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		// 最大内容长度
 		pipeline.addLast(new HttpObjectAggregator(65536));
 		// websocket协议
-		pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH));
+		pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
 		// 自定义处理器
 		pipeline.addLast(websocketHandler);
 	}

@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 服务监听.
+ * 路由处理.
  *
  * @author laokou
  */
@@ -44,7 +44,7 @@ import java.util.Map;
 @NonNullApi
 @AutoConfiguration
 @RequiredArgsConstructor
-public class RouterListener implements ApplicationListener<ApplicationReadyEvent> {
+public class RouterHandler implements ApplicationListener<ApplicationReadyEvent> {
 
 	private final Environment env;
 

@@ -15,48 +15,34 @@
  *
  */
 
-package org.laokou.im.common.listener;
+package org.laokou.im.module.websocket.handler;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.ThreadContext;
-import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.apache.rocketmq.spring.core.RocketMQListener;
-import org.laokou.im.common.utils.MessageUtil;
+import org.laokou.common.netty.config.Server;
 import org.springframework.stereotype.Component;
-
-import java.nio.charset.StandardCharsets;
+import java.util.concurrent.Executor;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
 import static org.laokou.common.i18n.common.RocketMqConstant.*;
-import static org.laokou.common.i18n.common.constants.TraceConstant.TRACE_ID;
 
 /**
  * @author laokou
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor
 @RocketMQMessageListener(consumerGroup = LAOKOU_REMIND_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC,
 		selectorExpression = LAOKOU_REMIND_MESSAGE_TAG, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
-public class RemindMessageListener implements RocketMQListener<MessageExt> {
+public class RemindMessageHandler extends AbstractMessageHandler {
 
-	private final MessageUtil messageUtil;
+	public RemindMessageHandler(Server websocketServer, Executor executor) {
+		super(websocketServer, executor);
+	}
 
 	@Override
-	public void onMessage(MessageExt messageExt) {
-		try {
-			String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
-			String traceId = messageExt.getProperty(TRACE_ID);
-			ThreadContext.put(TRACE_ID, traceId);
-			log.info("接收到提醒消息：{}", msg);
-			messageUtil.send(msg);
-		}
-		finally {
-			ThreadContext.clearMap();
-		}
+	protected void log(String msg) {
+		log.info("接收到提醒消息：{}", msg);
 	}
 
 }

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.im.module.websocket;
+package org.laokou.im.module.websocket.handler;
 
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.annotation.PreDestroy;
@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.nacos.utils.ServiceUtil;
+import org.laokou.im.common.config.WebsocketProperties;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -37,7 +38,7 @@ import java.net.InetAddress;
 @Component
 @NonNullApi
 @RequiredArgsConstructor
-public class DiscoveryListener implements ApplicationListener<ApplicationReadyEvent> {
+public class DiscoveryHandler implements ApplicationListener<ApplicationReadyEvent> {
 
 	private final ServiceUtil serviceUtil;
 

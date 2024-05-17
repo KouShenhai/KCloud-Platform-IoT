@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.im.module.websocket;
+package org.laokou.im.common.config;
 
 import org.laokou.common.netty.config.Server;
 import org.laokou.common.netty.config.WebSocketServer;

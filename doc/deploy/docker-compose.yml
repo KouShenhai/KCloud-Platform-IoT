@@ -27,10 +27,6 @@ services:
       - "8083:8083"
       - "8883:8883"
       - "18083:18083"
-    volumes:
-      - ./emqx5/etc/emqx.conf:/opt/emqx/etc/emqx.conf
-      - ./emqx5/data:/opt/emqx/data
-      - ./emqx5/log:/opt/emqx/log
     environment:
       - TZ=Asia/Shanghai
     network_mode: bridge

@@ -18,4 +18,4 @@
 /**
  * @author laokou
  */
-package org.laokou.im.common.listener;
+package org.laokou.im.common.config;

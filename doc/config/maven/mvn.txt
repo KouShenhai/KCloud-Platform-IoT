@@ -15,3 +15,5 @@
  *
  */
 mvn clean install -Dcheckstyle -DskipTests
+
+mvn clean install -P test
