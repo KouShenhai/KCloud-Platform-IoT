@@ -1297,7 +1297,7 @@ spring:
               - /graceful-shutdown=laokou-auth
               - /ws=laokou-gateway
             DELETE:
-              - /v1/logouts=laokou-auth,laokou-gateway
+              - /v3/logouts=laokou-auth,laokou-gateway
   # task
   task-execution:
     thread-name-prefix: laokou-ttl-task-

@@ -78,12 +78,7 @@ public class HttpUtil {
 	@SneakyThrows
 	public static String doGet(String url, Map<String, String> params, Map<String, String> headers,
 			boolean disableSsl) {
-		// 创建HttpClient对象
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-		if (disableSsl) {
-			disableSsl(httpClientBuilder);
-		}
-		try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
+		try (CloseableHttpClient httpClient = getHttpClient(disableSsl)) {
 			// 创建uri
 			URIBuilder builder = new URIBuilder(url);
 			if (MapUtil.isNotEmpty(params)) {
@@ -121,12 +116,7 @@ public class HttpUtil {
 	@SneakyThrows
 	public static String doFormDataPost(String url, Map<String, String> params, Map<String, String> headers,
 			boolean disableSsl) {
-		// 创建HttpClient对象
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-		if (disableSsl) {
-			disableSsl(httpClientBuilder);
-		}
-		try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
+		try (CloseableHttpClient httpClient = getHttpClient(disableSsl)) {
 			HttpPost httpPost = new HttpPost(url);
 			if (MapUtil.isNotEmpty(headers)) {
 				headers.forEach(httpPost::addHeader);
@@ -172,12 +162,7 @@ public class HttpUtil {
 	@SneakyThrows
 	public static String doFormUrlencodedPost(String url, Map<String, String> params, Map<String, String> headers,
 			boolean disableSsl) {
-		// 创建HttpClient对象
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-		if (disableSsl) {
-			disableSsl(httpClientBuilder);
-		}
-		try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
+		try (CloseableHttpClient httpClient = getHttpClient(disableSsl)) {
 			// 创建Post请求
 			HttpPost httpPost = new HttpPost(url);
 			if (MapUtil.isNotEmpty(headers)) {
@@ -229,12 +214,7 @@ public class HttpUtil {
 	 */
 	@SneakyThrows
 	public static String doJsonPost(String url, Object param, Map<String, String> headers, boolean disableSsl) {
-		// 创建HttpClient对象
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-		if (disableSsl) {
-			disableSsl(httpClientBuilder);
-		}
-		try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
+		try (CloseableHttpClient httpClient = getHttpClient(disableSsl)) {
 			HttpPost httpPost = new HttpPost(url);
 			headers.forEach(httpPost::setHeader);
 			httpPost.setConfig(RequestConfig.custom().build());
@@ -253,6 +233,15 @@ public class HttpUtil {
 			}
 			return resultString;
 		}
+	}
+
+	public static CloseableHttpClient getHttpClient(boolean disableSsl) {
+		// 创建HttpClient对象
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+		if (disableSsl) {
+			disableSsl(httpClientBuilder);
+		}
+		return httpClientBuilder.build();
 	}
 
 	/**
