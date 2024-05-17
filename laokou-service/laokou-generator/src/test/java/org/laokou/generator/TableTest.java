@@ -22,7 +22,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.core.utils.ResourceUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.generator.domain.Table;
 import org.laokou.generator.dto.GenerateCmd;

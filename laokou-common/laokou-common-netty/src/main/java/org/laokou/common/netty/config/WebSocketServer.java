@@ -28,7 +28,6 @@ import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioChannelOption;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -38,7 +37,6 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  *
  * @author laokou
  */
-@Slf4j
 public class WebSocketServer extends AbstractServer {
 
 	/**
@@ -49,12 +47,12 @@ public class WebSocketServer extends AbstractServer {
 		.initialCapacity(500)
 		.build();
 
-	public static void put(String clientId, Channel channel) {
-		CLIENT_CACHE.put(clientId, channel);
-	}
-
 	public WebSocketServer(int port, ChannelInitializer<?> channelInitializer) {
 		super(port, channelInitializer);
+	}
+
+	public static void put(String clientId, Channel channel) {
+		CLIENT_CACHE.put(clientId, channel);
 	}
 
 	/**

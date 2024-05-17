@@ -17,7 +17,7 @@
 
 package org.laokou.common.nacos.annotation;
 
-import org.laokou.common.nacos.handler.RouterListener;
+import org.laokou.common.nacos.handler.RouterHandler;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -25,7 +25,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ RouterListener.class })
+@Import({ RouterHandler.class })
 public @interface EnableRouter {
 
 }

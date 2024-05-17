@@ -24,7 +24,7 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.core.utils.ResourceUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;

@@ -21,4 +21,5 @@ nginx证书：openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /opt/k
 
 导出证书：keytool -export -alias laokou-gateway-crt -file gateway.crt -keystore scg-keystore.p12 -storepass laokou
 
+# changeit
 导入JDK：keytool -import -alias <别名> -keystore <Java Home路径>\lib\security\cacerts -file <证书名称>

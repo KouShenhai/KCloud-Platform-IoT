@@ -45,7 +45,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.core.utils.SslUtil.sslContext;
+import static org.laokou.common.i18n.utils.SslUtil.sslContext;
 import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
 
 /**

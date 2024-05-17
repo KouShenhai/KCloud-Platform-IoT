@@ -20,7 +20,7 @@ package org.laokou.common.crypto.utils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
 import org.apache.hc.client5.http.utils.Base64;
-import org.laokou.common.core.utils.ResourceUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.crypto.annotation.Aes;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
