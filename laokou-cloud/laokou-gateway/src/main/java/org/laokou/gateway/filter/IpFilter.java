@@ -19,9 +19,9 @@ package org.laokou.gateway.filter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.gateway.ip.Ip;
-import org.laokou.gateway.ip.IpProperties;
-import org.laokou.gateway.ip.Label;
+import org.laokou.gateway.filter.ip.Ip;
+import org.laokou.gateway.filter.ip.IpProperties;
+import org.laokou.gateway.filter.ip.Label;
 import org.laokou.gateway.utils.I18nReactiveUtil;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

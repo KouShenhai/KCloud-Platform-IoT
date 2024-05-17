@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.domain.listener;
+package org.laokou.common.domain.handler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +41,7 @@ import static org.laokou.common.i18n.common.constants.EventStatus.CONSUME_SUCCEE
  */
 @Slf4j
 @RequiredArgsConstructor
-public abstract class AbstractDomainEventRocketMQListener implements RocketMQListener<MessageExt> {
+public abstract class AbstractDomainEventHandler implements RocketMQListener<MessageExt> {
 
 	private final DomainEventService domainEventService;
 

@@ -15,45 +15,30 @@
  *
  */
 
-package org.laokou.gateway.ip;
+package org.laokou.gateway.filter.ip;
 
-import lombok.Getter;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
- * 标签枚举.
+ * IP配置.
  *
  * @author laokou
  */
-@Getter
-public enum Label {
+@Data
+@Component
+@ConfigurationProperties(prefix = "spring.cloud.gateway.ip")
+public class IpProperties {
 
 	/**
-	 * 白名单.
+	 * 标签，默认黑名单.
 	 */
-	WHITE("white", "白名单"),
+	private String label = Label.BLACK.getValue();
 
 	/**
-	 * 黑名单.
+	 * 黑/白名单开关，默认不开启.
 	 */
-	BLACK("black", "黑名单");
-
-	/**
-	 * 值.
-	 */
-	private final String value;
-
-	/**
-	 * 备注.
-	 */
-	private final String desc;
-
-	Label(String value, String desc) {
-		this.value = value;
-		this.desc = desc;
-	}
-
-	public static Label getInstance(String code) {
-		return Label.valueOf(code);
-	}
+	private boolean enabled = false;
 
 }

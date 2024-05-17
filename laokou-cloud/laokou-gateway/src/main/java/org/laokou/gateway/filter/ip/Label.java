@@ -15,25 +15,45 @@
  *
  */
 
-package org.laokou.gateway.ip;
+package org.laokou.gateway.filter.ip;
 
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
+import lombok.Getter;
 
 /**
- * IP抽象类.
+ * 标签枚举.
  *
  * @author laokou
  */
-public interface Ip {
+@Getter
+public enum Label {
 
 	/**
-	 * 校验IP并响应.
-	 * @param exchange 服务网络交换机
-	 * @param chain 链式过滤器
-	 * @return 响应结果
+	 * 白名单.
 	 */
-	Mono<Void> validate(ServerWebExchange exchange, GatewayFilterChain chain);
+	WHITE("white", "白名单"),
+
+	/**
+	 * 黑名单.
+	 */
+	BLACK("black", "黑名单");
+
+	/**
+	 * 值.
+	 */
+	private final String value;
+
+	/**
+	 * 备注.
+	 */
+	private final String desc;
+
+	Label(String value, String desc) {
+		this.value = value;
+		this.desc = desc;
+	}
+
+	public static Label getInstance(String code) {
+		return Label.valueOf(code);
+	}
 
 }

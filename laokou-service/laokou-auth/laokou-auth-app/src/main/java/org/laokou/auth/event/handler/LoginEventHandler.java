@@ -23,7 +23,7 @@ import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.gateway.LogGateway;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.listener.AbstractDomainEventRocketMQListener;
+import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
@@ -42,7 +42,7 @@ import static org.laokou.common.i18n.common.RocketMqConstant.*;
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_EVENT_CONSUMER_GROUP, topic = LAOKOU_LOGIN_EVENT_TOPIC,
 		messageModel = CLUSTERING, consumeMode = ORDERLY)
-public class LoginEventHandler extends AbstractDomainEventRocketMQListener {
+public class LoginEventHandler extends AbstractDomainEventHandler {
 
 	private final LogGateway logGateway;
 

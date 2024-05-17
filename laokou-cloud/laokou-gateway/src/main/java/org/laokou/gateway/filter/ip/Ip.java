@@ -15,30 +15,25 @@
  *
  */
 
-package org.laokou.gateway.ip;
+package org.laokou.gateway.filter.ip;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
 
 /**
- * IP配置.
+ * IP抽象类.
  *
  * @author laokou
  */
-@Data
-@Component
-@ConfigurationProperties(prefix = "spring.cloud.gateway.ip")
-public class IpProperties {
+public interface Ip {
 
 	/**
-	 * 标签，默认黑名单.
+	 * 校验IP并响应.
+	 * @param exchange 服务网络交换机
+	 * @param chain 链式过滤器
+	 * @return 响应结果
 	 */
-	private String label = Label.BLACK.getValue();
-
-	/**
-	 * 黑/白名单开关，默认不开启.
-	 */
-	private boolean enabled = false;
+	Mono<Void> validate(ServerWebExchange exchange, GatewayFilterChain chain);
 
 }

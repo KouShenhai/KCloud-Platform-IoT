@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.gateway.ip;
+package org.laokou.gateway.filter.ip;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,24 +32,24 @@ import reactor.core.publisher.Mono;
 
 import java.net.InetSocketAddress;
 
-import static org.laokou.common.i18n.common.exception.SystemException.IP_BLACKED;
+import static org.laokou.common.i18n.common.exception.SystemException.IP_RESTRICTED;
 
 /**
- * 黑名单IP.
+ * 白名单IP.
  *
  * @author laokou
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class BlackIp implements Ip {
+public class WhiteIp implements Ip {
 
 	private final ReactiveRedisUtil reactiveRedisUtil;
 
 	private final RemoteAddressResolver remoteAddressResolver;
 
 	/**
-	 * 校验IP并响应（黑名单）.
+	 * 校验IP并响应（白名单）.
 	 * @param exchange 服务网络交换机
 	 * @param chain 链式过滤器
 	 * @return 响应结果
@@ -61,11 +61,11 @@ public class BlackIp implements Ip {
 		if (IpUtil.internalIp(hostAddress)) {
 			return chain.filter(exchange);
 		}
-		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(Label.BLACK.getValue());
+		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(Label.WHITE.getValue());
 		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
-			if (Boolean.TRUE.equals(r)) {
-				log.error("IP为{}已列入黑名单", hostAddress);
-				return ReactiveResponseUtil.response(exchange, Result.fail(IP_BLACKED));
+			if (Boolean.FALSE.equals(r)) {
+				log.error("IP为{}被限制", hostAddress);
+				return ReactiveResponseUtil.response(exchange, Result.fail(IP_RESTRICTED));
 			}
 			return chain.filter(exchange);
 		});
