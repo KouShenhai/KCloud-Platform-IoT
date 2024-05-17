@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-    name: @pom.parent.artifactId@
+    name: ${spring.tcp.app-name}-server
   tcp:
     ip: 0.0.0.0
     port: 1001
