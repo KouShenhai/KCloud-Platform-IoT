@@ -22,6 +22,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.laokou.auth.dto.LogoutCmd;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.IdGenerator;
@@ -31,12 +32,14 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Assert;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Collections;
@@ -74,6 +77,8 @@ class OAuth2ApiTest {
 
 	private static final String UUID = String.valueOf(IdGenerator.defaultSnowflakeId());
 
+	private static final String TOKEN = "eyJraWQiOiI2MTIyYjcyOC0xOTMxLTQ3NWMtYjMyMS0yYjdmYmVjMGQ0OTEiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZCI6Ijk1VHhTc1RQRkEzdEYxMlRCU01tVVZLMGRhIiwibmJmIjoxNzEwMzEzMTEyLCJzY29wZSI6WyJwYXNzd29yZCIsIm1haWwiLCJvcGVuaWQiLCJtb2JpbGUiXSwiaXNzIjoiaHR0cDovLzEyNy4wLjAuMTo1NTU1L2F1dGgiLCJleHAiOjE3MTAzMTY3MTIsImlhdCI6MTcxMDMxMzExMiwianRpIjoiZjRlYWU1YjctOWQzNy00NTM1LWEyODgtNWFjNWEwNzc2MjU1In0.Sg4LYn6hoYKB3vDM4NnFfDd3MBxpu-Bja-iYTNDDVBTkDMPjWXdbSTpupplud5aQ-mwRMhSuMF_ctzMFT5So1VckhNV8dg35DhKsRzEYfLaya_vk4eiFUaSU8ibfSPSEACa524L01SHb8wgb04LnvVAuJnPEzDZNRZxwHKbxA0irqwCafuTax8EFKGxHskHsxeuaaCvQdGLKSbYCdC3tHA85SIUKdsnm8fSS4_5El9gztbFUxDHZWRgagN_fHRqyDSd32PCulPeG3uOut-uUwC2Dv4xodLuaCYEouyn0aMY_juz2uHkpf1MnLh74caeE30lmbqBF5tv2ErOsqdMIaw";
+
 	private final CaptchaGateway captchaGateway;
 
 	private final RedisUtil redisUtil;
@@ -81,6 +86,8 @@ class OAuth2ApiTest {
 	private final WebApplicationContext webApplicationContext;
 
 	private final ServerProperties serverProperties;
+
+	private final RestClient restClient;
 
 	private MockMvc mockMvc;
 
@@ -177,6 +184,14 @@ class OAuth2ApiTest {
 		String apiUrl = getTenantIdByDomainNameApiUrlV3();
 		String json = HttpUtil.doGet(apiUrl, Collections.emptyMap(), Collections.emptyMap(), disabledSsl());
 		log.info("根据域名查看租户ID，返回信息：{}", json);
+	}
+
+	@Test
+	void testLogoutApi() {
+		log.info("---------- 登录已注销，开始清除令牌 ----------");
+		String apiUrl = getLogoutApiUrlV3();
+		restClient.method(HttpMethod.DELETE).uri(apiUrl).body(new LogoutCmd(TOKEN)).contentType(MediaType.APPLICATION_JSON).retrieve();
+		log.info("---------- 登录已注销，结束令牌清除 ----------");
 	}
 
 	private Map<String, String> deviceAuthorizationCodeAuth(String deviceCode) {
@@ -373,6 +388,10 @@ class OAuth2ApiTest {
 
 	private String getTenantIdByDomainNameApiUrlV3() {
 		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/tenants/id";
+	}
+
+	private String getLogoutApiUrlV3() {
+		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/logouts";
 	}
 
 	private String getSchema(boolean disabled) {

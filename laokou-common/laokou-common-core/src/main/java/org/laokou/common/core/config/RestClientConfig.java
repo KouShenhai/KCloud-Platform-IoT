@@ -15,27 +15,29 @@
  *
  */
 
-package org.laokou.im.common.config;
+package org.laokou.common.core.config;
 
-import org.laokou.common.netty.config.Server;
-import org.laokou.common.netty.config.WebSocketServer;
-import org.laokou.common.netty.config.WebsocketProperties;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestTemplate;
+
+import static org.laokou.common.core.utils.HttpUtil.getHttpClient;
 
 /**
- * WebSocket配置.
- *
  * @author laokou
  */
 @Configuration
-public class WebSocketConfig {
+public class RestClientConfig {
 
-	@Bean(name = "websocketServer", initMethod = "start", destroyMethod = "stop")
-	public Server websocketServer(WebsocketProperties websocketProperties,
-			WebsocketChannelInitializer websocketChannelInitializer) {
-		return new WebSocketServer(websocketProperties.getIp(), websocketProperties.getPort(),
-				websocketChannelInitializer);
+	@Bean
+	public RestClient restClient(ServerProperties serverProperties) {
+		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+		factory.setHttpClient(getHttpClient(serverProperties.getSsl().isEnabled()));
+		RestTemplate restTemplate = new RestTemplate(factory);
+		return RestClient.create(restTemplate);
 	}
 
 }

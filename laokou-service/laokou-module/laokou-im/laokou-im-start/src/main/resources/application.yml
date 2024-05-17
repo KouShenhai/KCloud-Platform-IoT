@@ -20,6 +20,7 @@ spring:
       virtual:
           enabled: true
   websocket:
+    ip: 0.0.0.0
     port: 1000
     app-name: @pom.parent.artifactId@
   application:

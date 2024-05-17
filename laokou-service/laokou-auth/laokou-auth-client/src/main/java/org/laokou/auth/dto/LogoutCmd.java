@@ -18,13 +18,17 @@
 package org.laokou.auth.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(name = "LogoutCmd", description = "退出登录命令请求")
 public class LogoutCmd extends CommonCommand {
 

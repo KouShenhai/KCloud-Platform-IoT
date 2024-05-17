@@ -31,10 +31,19 @@ import org.springframework.stereotype.Component;
 @Schema(name = "TcpProperties", description = "Tcp属性配置")
 public class TcpProperties {
 
-	@Schema(name = "port", description = "端口")
+	/**
+	 * IP.
+	 */
+	private String ip;
+
+	/**
+	 * 端口.
+	 */
 	private int port;
 
-	@Schema(name = "appName", description = "应用名称")
+	/**
+	 * 应用名称.
+	 */
 	private String appName;
 
 }

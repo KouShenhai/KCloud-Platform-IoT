@@ -32,6 +32,8 @@ import java.util.Set;
 @ConfigurationProperties(prefix = "spring.mqtt")
 public class SpringMqttProperties {
 
+	private Boolean enabled = false;
+
 	private String username;
 
 	private String password;

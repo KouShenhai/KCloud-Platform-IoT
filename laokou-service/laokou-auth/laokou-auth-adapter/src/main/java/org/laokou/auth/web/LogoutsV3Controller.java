@@ -32,8 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "LogoutsV3Controller", description = "退出登录")
 @RequestMapping("v3/logouts")
+@Tag(name = "LogoutsV3Controller", description = "退出登录")
 public class LogoutsV3Controller {
 
 	private final LogoutsServiceI logoutsServiceI;

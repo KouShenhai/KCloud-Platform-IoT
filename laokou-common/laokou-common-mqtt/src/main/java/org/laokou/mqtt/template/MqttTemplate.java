@@ -19,12 +19,10 @@ package org.laokou.mqtt.template;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.netty.config.Client;
-import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Component
 @RequiredArgsConstructor
 public class MqttTemplate {
 

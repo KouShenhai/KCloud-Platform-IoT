@@ -18,20 +18,32 @@
 package org.laokou.iot.config;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import io.netty.util.ReferenceCountUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
+@Slf4j
 public class TcpDecoder extends ByteToMessageDecoder {
 
 	@Override
-	protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list)
-			throws Exception {
-
+	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
+		ByteBuf tempBuf = Unpooled.copiedBuffer(in);
+		try {
+			out.add(ByteBufUtil.hexDump(tempBuf));
+		}
+		finally {
+			// 释放
+			in.clear();
+			ReferenceCountUtil.release(tempBuf);
+		}
 	}
 
 }

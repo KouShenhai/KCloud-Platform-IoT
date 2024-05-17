@@ -15,11 +15,13 @@
  *
  */
 
-package org.laokou.common.netty.config;
+package org.laokou.iot.up;
 
 /**
+ * 时间.
+ *
  * @author laokou
  */
-public class TcpPackage {
+public class Up0x50 {
 
 }

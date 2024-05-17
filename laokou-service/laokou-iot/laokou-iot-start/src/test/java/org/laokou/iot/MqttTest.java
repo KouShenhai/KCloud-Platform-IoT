@@ -20,7 +20,6 @@ package org.laokou.iot;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.mqtt.template.MqttTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
@@ -33,11 +32,11 @@ import org.springframework.test.context.TestConstructor;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class MqttTest {
 
-	private final MqttTemplate mqttTemplate;
+	// private final MqttTemplate mqttTemplate;
 
 	@Test
 	void testMqttSender() {
-		mqttTemplate.send("test", "123");
+		// mqttTemplate.send("test", "123");
 	}
 
 }

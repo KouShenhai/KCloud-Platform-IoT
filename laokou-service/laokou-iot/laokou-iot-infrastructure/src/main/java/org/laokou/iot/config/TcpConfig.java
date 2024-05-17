@@ -31,7 +31,7 @@ public class TcpConfig {
 
 	@Bean(name = "tcpServer", initMethod = "start", destroyMethod = "stop")
 	public Server tcpServer(TcpProperties tcpProperties, TcpChannelInitializer tcpChannelInitializer) {
-		return new TcpServer(tcpProperties.getPort(), tcpChannelInitializer);
+		return new TcpServer(tcpProperties.getIp(), tcpProperties.getPort(), tcpChannelInitializer);
 	}
 
 }
