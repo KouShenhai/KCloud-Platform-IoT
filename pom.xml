@@ -62,7 +62,7 @@
     <docker.version>1.2.2</docker.version>
     <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
     <spring-javaformat-maven-plugin.version>0.0.41</spring-javaformat-maven-plugin.version>
-    <native-maven-plugin.version>0.10.1</native-maven-plugin.version>
+    <native-maven-plugin.version>0.10.2</native-maven-plugin.version>
     <versions-maven-plugin.version>2.16.2</versions-maven-plugin.version>
   </properties>
   <dependencyManagement>
