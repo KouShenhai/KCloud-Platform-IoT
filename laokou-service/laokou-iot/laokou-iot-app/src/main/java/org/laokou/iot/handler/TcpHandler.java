@@ -17,11 +17,12 @@
 
 package org.laokou.iot.handler;
 
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.netty.config.TcpPackage;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,12 +30,13 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@ChannelHandler.Sharable
 @RequiredArgsConstructor
-public class TcpHandler extends SimpleChannelInboundHandler<TcpPackage> {
+public class TcpHandler extends SimpleChannelInboundHandler<Object> {
 
 	@Override
-	protected void channelRead0(ChannelHandlerContext channelHandlerContext, TcpPackage tcpPackage) {
-
+	protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object obj) {
+		log.info("{}", JacksonUtil.toJsonStr(obj));
 	}
 
 }

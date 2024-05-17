@@ -46,11 +46,14 @@ public abstract class AbstractServer implements Server {
 	 */
 	protected volatile EventLoopGroup work;
 
+	protected final String ip;
+
 	protected final int port;
 
 	protected final ChannelInitializer<?> channelInitializer;
 
-	public AbstractServer(int port, ChannelInitializer<?> channelInitializer) {
+	public AbstractServer(String ip,int port, ChannelInitializer<?> channelInitializer) {
+		this.ip = ip;
 		this.port = port;
 		this.channelInitializer = channelInitializer;
 	}

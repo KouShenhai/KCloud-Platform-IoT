@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.consumer;
+package org.laokou.iot.consumer.test;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,11 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.laokou.common.algorithm.template.Algorithm;
 import org.laokou.common.algorithm.template.select.RandomSelectAlgorithm;
-import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.mqtt.annotation.MqttMessageListener;
 import org.laokou.mqtt.config.MqttListener;
-import org.laokou.mqtt.template.MqttTemplate;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,7 +44,7 @@ import static org.laokou.common.i18n.common.constants.StringConstant.COMMA;
 @MqttMessageListener(topic = "/55/D1PGLPG58KZ2/monitor/get")
 public class GetMonitorSubscribeTest implements MqttListener {
 
-	private final MqttTemplate mqttTemplate;
+	// private final MqttTemplate mqttTemplate;
 
 	@Override
 	public void onMessage(MqttMessage message) {
@@ -65,7 +63,7 @@ public class GetMonitorSubscribeTest implements MqttListener {
 			throw new RuntimeException(e);
 		}
 		Algorithm algorithm = new RandomSelectAlgorithm();
-		mqttTemplate.send("/55/D1PGLPG58KZ2/monitor/post", JacksonUtil.toJsonStr(algorithm.select(list, null)));
+		// mqttTemplate.send("/55/D1PGLPG58KZ2/monitor/post", JacksonUtil.toJsonStr(algorithm.select(list, null)));
 	}
 
 	@Data

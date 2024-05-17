@@ -31,10 +31,19 @@ import org.springframework.stereotype.Component;
 @Schema(name = "WebsocketProperties", description = "WebSocket属性配置")
 public class WebsocketProperties {
 
-	@Schema(name = "port", description = "端口")
+	/**
+	 * ip.
+	 */
+	private String ip;
+
+	/**
+	 * 端口.
+	 */
 	private int port;
 
-	@Schema(name = "appName", description = "应用名称")
+	/**
+	 * 应用名称.
+	 */
 	private String appName;
 
 }

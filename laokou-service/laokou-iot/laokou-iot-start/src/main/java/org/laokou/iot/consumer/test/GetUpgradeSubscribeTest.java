@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.consumer;
+package org.laokou.iot.consumer.test;
 
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.common.MqttMessage;

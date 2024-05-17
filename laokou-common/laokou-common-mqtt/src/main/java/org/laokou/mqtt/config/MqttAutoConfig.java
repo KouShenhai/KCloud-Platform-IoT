@@ -18,18 +18,26 @@
 package org.laokou.mqtt.config;
 
 import org.laokou.common.netty.config.Client;
+import org.laokou.mqtt.template.MqttTemplate;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
 /**
  * @author laokou
  */
 @AutoConfiguration
+@ConditionalOnProperty(prefix = "spring.mqtt", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class MqttAutoConfig {
 
 	@Bean(name = "mqttClient", initMethod = "open", destroyMethod = "close")
 	public Client mqttClient(SpringMqttProperties springMqttProperties, MqttStrategy mqttStrategy) {
 		return new MqttClient(springMqttProperties, mqttStrategy);
+	}
+
+	@Bean
+	public MqttTemplate mqttTemplate(Client mqttClient) {
+		return new MqttTemplate(mqttClient);
 	}
 
 }

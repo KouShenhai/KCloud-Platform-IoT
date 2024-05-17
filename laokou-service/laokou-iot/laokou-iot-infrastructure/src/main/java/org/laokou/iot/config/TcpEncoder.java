@@ -20,7 +20,6 @@ package org.laokou.iot.config;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import org.laokou.common.netty.config.TcpPackage;
 
 /**
  * @author laokou

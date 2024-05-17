@@ -17,10 +17,14 @@
 
 package org.laokou.iot.config;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -39,6 +43,11 @@ public class TcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 	@Override
 	protected void initChannel(SocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
+		// 粘包
+		ByteBuf delimiter = Unpooled.buffer(1);
+		delimiter.writeByte(TcpPackage.START_BIT);
+		// 定长截取
+		pipeline.addLast(new FixedLengthFrameDecoder(55));
 		// 解码
 		pipeline.addLast(new TcpDecoder());
 		// 编码

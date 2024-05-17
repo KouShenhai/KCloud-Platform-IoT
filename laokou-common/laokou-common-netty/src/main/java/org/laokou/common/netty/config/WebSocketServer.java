@@ -47,8 +47,8 @@ public class WebSocketServer extends AbstractServer {
 		.initialCapacity(500)
 		.build();
 
-	public WebSocketServer(int port, ChannelInitializer<?> channelInitializer) {
-		super(port, channelInitializer);
+	public WebSocketServer(String ip,int port, ChannelInitializer<?> channelInitializer) {
+		super(ip, port, channelInitializer);
 	}
 
 	public static void put(String clientId, Channel channel) {

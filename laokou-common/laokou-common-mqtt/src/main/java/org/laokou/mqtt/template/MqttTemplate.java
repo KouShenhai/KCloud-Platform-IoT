@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
 /**
  * @author laokou
  */
-@Component
 @RequiredArgsConstructor
 public class MqttTemplate {
 
