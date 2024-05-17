@@ -68,7 +68,7 @@
     <!--spring-boot-starter-oauth2-resource-server版本-->
     <spring-boot-starter-oauth2-resource-server.version>3.2.5</spring-boot-starter-oauth2-resource-server.version>
     <!--aws-java-sdk-s3版本-->
-    <aws-java-sdk-s3.version>1.12.722</aws-java-sdk-s3.version>
+    <aws-java-sdk-s3.version>1.12.724</aws-java-sdk-s3.version>
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.3.0</dynamic-datasource.version>
     <!--httpclient5版本-->
