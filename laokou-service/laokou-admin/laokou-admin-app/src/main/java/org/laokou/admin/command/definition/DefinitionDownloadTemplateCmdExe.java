@@ -25,7 +25,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpHeaders;
 import org.laokou.admin.dto.definition.DefinitionTemplateCmd;
-import org.laokou.common.core.utils.ResourceUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;

@@ -19,6 +19,7 @@ package org.laokou.im.common.config;
 
 import org.laokou.common.netty.config.Server;
 import org.laokou.common.netty.config.WebSocketServer;
+import org.laokou.common.netty.config.WebsocketProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

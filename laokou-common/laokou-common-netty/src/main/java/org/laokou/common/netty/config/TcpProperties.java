@@ -15,12 +15,26 @@
  *
  */
 
-package org.laokou.iot.config;
+package org.laokou.common.netty.config;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
- *
  * @author laokou
  */
-public class TcpPackage {
+@Data
+@Component
+@ConfigurationProperties(prefix = "spring.tcp")
+@Schema(name = "TcpProperties", description = "Tcp属性配置")
+public class TcpProperties {
+
+	@Schema(name = "port", description = "端口")
+	private int port;
+
+	@Schema(name = "appName", description = "应用名称")
+	private String appName;
 
 }

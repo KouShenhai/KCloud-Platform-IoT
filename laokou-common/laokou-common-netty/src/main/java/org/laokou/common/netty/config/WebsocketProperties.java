@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.config;
+package org.laokou.common.netty.config;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -27,9 +27,9 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "spring.tcp")
-@Schema(name = "TcpProperties", description = "Tcp属性配置")
-public class TcpProperties {
+@ConfigurationProperties(prefix = "spring.websocket")
+@Schema(name = "WebsocketProperties", description = "WebSocket属性配置")
+public class WebsocketProperties {
 
 	@Schema(name = "port", description = "端口")
 	private int port;

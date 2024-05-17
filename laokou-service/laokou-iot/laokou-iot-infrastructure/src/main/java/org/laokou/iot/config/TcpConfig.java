@@ -19,6 +19,7 @@ package org.laokou.iot.config;
 
 import org.laokou.common.netty.config.Server;
 import org.laokou.common.netty.config.TcpServer;
+import org.laokou.common.netty.config.TcpProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,8 +30,7 @@ import org.springframework.context.annotation.Configuration;
 public class TcpConfig {
 
 	@Bean(name = "tcpServer", initMethod = "start", destroyMethod = "stop")
-	public Server tcpServer(TcpProperties tcpProperties,
-								  TcpChannelInitializer tcpChannelInitializer) {
+	public Server tcpServer(TcpProperties tcpProperties, TcpChannelInitializer tcpChannelInitializer) {
 		return new TcpServer(tcpProperties.getPort(), tcpChannelInitializer);
 	}
 

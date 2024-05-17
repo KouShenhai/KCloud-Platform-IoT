@@ -15,26 +15,11 @@
  *
  */
 
-package org.laokou.im.common.config;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+package org.laokou.common.netty.config;
 
 /**
  * @author laokou
  */
-@Data
-@Component
-@ConfigurationProperties(prefix = "spring.websocket")
-@Schema(name = "WebsocketProperties", description = "WebSocket属性配置")
-public class WebsocketProperties {
-
-	@Schema(name = "port", description = "端口")
-	private int port;
-
-	@Schema(name = "appName", description = "应用名称")
-	private String appName;
+public class TcpPackage {
 
 }

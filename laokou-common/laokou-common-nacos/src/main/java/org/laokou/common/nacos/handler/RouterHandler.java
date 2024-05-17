@@ -21,7 +21,7 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.ResourceUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

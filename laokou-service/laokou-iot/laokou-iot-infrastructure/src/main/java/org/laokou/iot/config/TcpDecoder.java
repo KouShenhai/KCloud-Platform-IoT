@@ -24,7 +24,6 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 import java.util.List;
 
 /**
- *
  * @author laokou
  */
 public class TcpDecoder extends ByteToMessageDecoder {

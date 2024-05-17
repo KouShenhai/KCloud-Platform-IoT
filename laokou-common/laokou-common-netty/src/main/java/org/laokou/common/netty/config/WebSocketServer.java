@@ -47,12 +47,12 @@ public class WebSocketServer extends AbstractServer {
 		.initialCapacity(500)
 		.build();
 
-	public static void put(String clientId, Channel channel) {
-		CLIENT_CACHE.put(clientId, channel);
-	}
-
 	public WebSocketServer(int port, ChannelInitializer<?> channelInitializer) {
 		super(port, channelInitializer);
+	}
+
+	public static void put(String clientId, Channel channel) {
+		CLIENT_CACHE.put(clientId, channel);
 	}
 
 	/**

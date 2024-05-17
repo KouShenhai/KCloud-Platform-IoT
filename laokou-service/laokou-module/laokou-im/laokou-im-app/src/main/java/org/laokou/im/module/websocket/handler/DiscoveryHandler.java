@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.nacos.utils.ServiceUtil;
-import org.laokou.im.common.config.WebsocketProperties;
+import org.laokou.common.netty.config.WebsocketProperties;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;

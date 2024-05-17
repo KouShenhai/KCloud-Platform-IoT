@@ -21,11 +21,10 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.iot.config.TcpPackage;
+import org.laokou.common.netty.config.TcpPackage;
 import org.springframework.stereotype.Component;
 
 /**
- *
  * @author laokou
  */
 @Slf4j

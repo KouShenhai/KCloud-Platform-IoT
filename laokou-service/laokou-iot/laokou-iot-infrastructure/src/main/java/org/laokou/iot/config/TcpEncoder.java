@@ -20,16 +20,15 @@ package org.laokou.iot.config;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
+import org.laokou.common.netty.config.TcpPackage;
 
 /**
- *
  * @author laokou
  */
 public class TcpEncoder extends MessageToByteEncoder<TcpPackage> {
 
 	@Override
-	protected void encode(ChannelHandlerContext channelHandlerContext, TcpPackage tcpPackage, ByteBuf byteBuf)
-			throws Exception {
+	protected void encode(ChannelHandlerContext channelHandlerContext, TcpPackage tcpPackage, ByteBuf byteBuf) {
 
 	}
 
