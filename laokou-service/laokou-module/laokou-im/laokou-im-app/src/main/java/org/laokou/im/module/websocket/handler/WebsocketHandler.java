@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.im.common.config;
+package org.laokou.im.module.websocket.handler;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
@@ -38,8 +38,8 @@ import static org.laokou.common.netty.config.WebSocketServer.put;
  *
  * @author laokou
  */
-@Component
 @Slf4j
+@Component
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
 public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {

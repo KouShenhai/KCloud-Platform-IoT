@@ -17,50 +17,27 @@
 
 package org.laokou.common.netty.config;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
-import io.netty.channel.ServerChannel;
+import io.netty.channel.WriteBufferWaterMark;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioChannelOption;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import org.laokou.common.i18n.utils.ObjectUtil;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
- * WebSocket服务器配置.
  *
  * @author laokou
  */
-public class WebSocketServer extends AbstractServer {
+public class TcpServer extends AbstractServer {
 
-	/**
-	 * 建立连接的用户集合.
-	 */
-	private static final Cache<String, Channel> CLIENT_CACHE = Caffeine.newBuilder()
-		.expireAfterAccess(3600, SECONDS)
-		.initialCapacity(500)
-		.build();
-
-	public static void put(String clientId, Channel channel) {
-		CLIENT_CACHE.put(clientId, channel);
-	}
-
-	public WebSocketServer(int port, ChannelInitializer<?> channelInitializer) {
+	public TcpServer(int port, ChannelInitializer<?> channelInitializer) {
 		super(port, channelInitializer);
 	}
 
-	/**
-	 * 主从Reactor多线程模式.
-	 * @return AbstractBootstrap
-	 */
 	@Override
-	protected AbstractBootstrap<ServerBootstrap, ServerChannel> init() {
+	protected AbstractBootstrap<?, ?> init() {
 		// boss负责监听端口
 		boss = new NioEventLoopGroup();
 		// work负责线程读写
@@ -78,18 +55,19 @@ public class WebSocketServer extends AbstractServer {
 			.option(ChannelOption.SO_BACKLOG, 2048)
 			// 重复使用端口
 			.option(NioChannelOption.SO_REUSEADDR, true)
-			// 延迟发送
-			.option(ChannelOption.TCP_NODELAY, true)
-			// websocket处理类
+			// 接收缓冲区大小
+			.option(ChannelOption.SO_RCVBUF, 10 * 1024)
+			// 发送缓冲区大小
+			.option(ChannelOption.SO_SNDBUF, 10 * 1024)
+			// 设置高低水位，防止占用大量内存
+			.childOption(ChannelOption.WRITE_BUFFER_WATER_MARK, new WriteBufferWaterMark(1024, 10 * 1024))
+			// tcp处理类
 			.childHandler(channelInitializer);
 	}
 
 	@Override
 	public void send(String clientId, Object obj) {
-		Channel channel = CLIENT_CACHE.getIfPresent(clientId);
-		if (ObjectUtil.isNotNull(channel)) {
-			channel.writeAndFlush(obj);
-		}
+
 	}
 
 }

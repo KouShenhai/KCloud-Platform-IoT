@@ -15,25 +15,26 @@
  *
  */
 
-package org.laokou.im.common.config;
+package org.laokou.iot.config;
 
-import org.laokou.common.netty.config.Server;
-import org.laokou.common.netty.config.WebSocketServer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
- * WebSocket配置.
- *
  * @author laokou
  */
-@Configuration
-public class WebSocketConfig {
+@Data
+@Component
+@ConfigurationProperties(prefix = "spring.tcp")
+@Schema(name = "TcpProperties", description = "Tcp属性配置")
+public class TcpProperties {
 
-	@Bean(name = "websocketServer", initMethod = "start", destroyMethod = "stop")
-	public Server websocketServer(WebsocketProperties websocketProperties,
-			WebsocketChannelInitializer websocketChannelInitializer) {
-		return new WebSocketServer(websocketProperties.getPort(), websocketChannelInitializer);
-	}
+	@Schema(name = "port", description = "端口")
+	private int port;
+
+	@Schema(name = "appName", description = "应用名称")
+	private String appName;
 
 }

@@ -15,25 +15,27 @@
  *
  */
 
-package org.laokou.im.common.config;
+package org.laokou.iot.handler;
 
-import org.laokou.common.netty.config.Server;
-import org.laokou.common.netty.config.WebSocketServer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.iot.config.TcpPackage;
+import org.springframework.stereotype.Component;
 
 /**
- * WebSocket配置.
  *
  * @author laokou
  */
-@Configuration
-public class WebSocketConfig {
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class TcpHandler extends SimpleChannelInboundHandler<TcpPackage> {
 
-	@Bean(name = "websocketServer", initMethod = "start", destroyMethod = "stop")
-	public Server websocketServer(WebsocketProperties websocketProperties,
-			WebsocketChannelInitializer websocketChannelInitializer) {
-		return new WebSocketServer(websocketProperties.getPort(), websocketChannelInitializer);
+	@Override
+	protected void channelRead0(ChannelHandlerContext channelHandlerContext, TcpPackage tcpPackage) {
+
 	}
 
 }

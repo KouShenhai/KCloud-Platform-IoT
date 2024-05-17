@@ -15,5 +15,6 @@
     <module>laokou-iot-start</module>
     <module>laokou-iot-app</module>
     <module>laokou-iot-adapter</module>
+    <module>laokou-iot-infrastructure</module>
   </modules>
 </project>

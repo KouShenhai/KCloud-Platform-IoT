@@ -15,25 +15,22 @@
  *
  */
 
-package org.laokou.im.common.config;
+package org.laokou.iot.config;
 
-import org.laokou.common.netty.config.Server;
-import org.laokou.common.netty.config.WebSocketServer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.MessageToByteEncoder;
 
 /**
- * WebSocket配置.
  *
  * @author laokou
  */
-@Configuration
-public class WebSocketConfig {
+public class TcpEncoder extends MessageToByteEncoder<TcpPackage> {
 
-	@Bean(name = "websocketServer", initMethod = "start", destroyMethod = "stop")
-	public Server websocketServer(WebsocketProperties websocketProperties,
-			WebsocketChannelInitializer websocketChannelInitializer) {
-		return new WebSocketServer(websocketProperties.getPort(), websocketChannelInitializer);
+	@Override
+	protected void encode(ChannelHandlerContext channelHandlerContext, TcpPackage tcpPackage, ByteBuf byteBuf)
+			throws Exception {
+
 	}
 
 }

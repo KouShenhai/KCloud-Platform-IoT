@@ -19,6 +19,7 @@ package org.laokou.im.common.config;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
@@ -52,12 +53,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 @RequiredArgsConstructor
 public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketChannel> {
 
-	/**
-	 * 路径.
-	 */
-	private static final String WEBSOCKET_PATH = "/ws";
-
-	private final WebsocketHandler websocketHandler;
+	private final SimpleChannelInboundHandler<?> simpleChannelInboundHandler;
 
 	private final ServerProperties serverProperties;
 
@@ -65,14 +61,8 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 	@SneakyThrows
 	protected void initChannel(NioSocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
-		// 开启SSL认证
-		if (serverProperties.getSsl().isEnabled()) {
-			SSLEngine sslEngine = sslContext().createSSLEngine();
-			sslEngine.setNeedClientAuth(false);
-			sslEngine.setUseClientMode(false);
-			// TLS
-			pipeline.addLast(new SslHandler(sslEngine));
-		}
+		// SSL认证
+		initSSL(pipeline);
 		// 心跳检测
 		pipeline.addLast(new IdleStateHandler(60, 0, 0, SECONDS));
 		// HTTP解码器
@@ -85,8 +75,18 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		pipeline.addLast(new HttpObjectAggregator(65536));
 		// websocket协议
 		pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
-		// 自定义处理器
-		pipeline.addLast(websocketHandler);
+		// 业务处理handler
+		pipeline.addLast(simpleChannelInboundHandler);
+	}
+
+	private void initSSL(ChannelPipeline pipeline) {
+		if (serverProperties.getSsl().isEnabled()) {
+			SSLEngine sslEngine = sslContext().createSSLEngine();
+			sslEngine.setNeedClientAuth(false);
+			sslEngine.setUseClientMode(false);
+			// TLS
+			pipeline.addLast(new SslHandler(sslEngine));
+		}
 	}
 
 	@SneakyThrows

@@ -15,25 +15,12 @@
  *
  */
 
-package org.laokou.im.common.config;
-
-import org.laokou.common.netty.config.Server;
-import org.laokou.common.netty.config.WebSocketServer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+package org.laokou.iot.config;
 
 /**
- * WebSocket配置.
  *
  * @author laokou
  */
-@Configuration
-public class WebSocketConfig {
-
-	@Bean(name = "websocketServer", initMethod = "start", destroyMethod = "stop")
-	public Server websocketServer(WebsocketProperties websocketProperties,
-			WebsocketChannelInitializer websocketChannelInitializer) {
-		return new WebSocketServer(websocketProperties.getPort(), websocketChannelInitializer);
-	}
+public class TcpPackage {
 
 }
