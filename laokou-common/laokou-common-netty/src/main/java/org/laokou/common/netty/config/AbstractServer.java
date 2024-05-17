@@ -52,7 +52,7 @@ public abstract class AbstractServer implements Server {
 
 	protected final ChannelInitializer<?> channelInitializer;
 
-	public AbstractServer(String ip,int port, ChannelInitializer<?> channelInitializer) {
+	public AbstractServer(String ip, int port, ChannelInitializer<?> channelInitializer) {
 		this.ip = ip;
 		this.port = port;
 		this.channelInitializer = channelInitializer;

@@ -23,8 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 55 50 18 05 11 0E 34 11 79 00 9F
- * 55 51 EE FF DA FF FF 07 6A 0C E8
+ * 55 50 18 05 11 0E 34 11 79 00 9F 55 51 EE FF DA FF FF 07 6A 0C E8.
+ *
  * @author laokou
  */
 public class TcpPackage {

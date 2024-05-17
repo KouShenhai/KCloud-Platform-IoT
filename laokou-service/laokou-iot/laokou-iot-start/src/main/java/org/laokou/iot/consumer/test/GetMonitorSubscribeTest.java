@@ -63,7 +63,8 @@ public class GetMonitorSubscribeTest implements MqttListener {
 			throw new RuntimeException(e);
 		}
 		Algorithm algorithm = new RandomSelectAlgorithm();
-		// mqttTemplate.send("/55/D1PGLPG58KZ2/monitor/post", JacksonUtil.toJsonStr(algorithm.select(list, null)));
+		// mqttTemplate.send("/55/D1PGLPG58KZ2/monitor/post",
+		// JacksonUtil.toJsonStr(algorithm.select(list, null)));
 	}
 
 	@Data

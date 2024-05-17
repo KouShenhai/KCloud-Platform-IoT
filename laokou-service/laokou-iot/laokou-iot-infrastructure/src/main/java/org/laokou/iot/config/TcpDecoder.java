@@ -38,7 +38,8 @@ public class TcpDecoder extends ByteToMessageDecoder {
 		ByteBuf tempBuf = Unpooled.copiedBuffer(in);
 		try {
 			out.add(ByteBufUtil.hexDump(tempBuf));
-		} finally {
+		}
+		finally {
 			// 释放
 			in.clear();
 			ReferenceCountUtil.release(tempBuf);

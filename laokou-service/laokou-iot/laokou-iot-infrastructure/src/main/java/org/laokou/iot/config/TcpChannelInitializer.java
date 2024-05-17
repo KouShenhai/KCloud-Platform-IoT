@@ -23,7 +23,6 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.RequiredArgsConstructor;

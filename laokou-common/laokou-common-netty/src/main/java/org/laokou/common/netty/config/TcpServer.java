@@ -31,8 +31,8 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  */
 public class TcpServer extends AbstractServer {
 
-	public TcpServer(String ip,int port, ChannelInitializer<?> channelInitializer) {
-		super(ip,port, channelInitializer);
+	public TcpServer(String ip, int port, ChannelInitializer<?> channelInitializer) {
+		super(ip, port, channelInitializer);
 	}
 
 	@Override

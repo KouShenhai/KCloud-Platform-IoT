@@ -32,6 +32,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.web.servlet.MockMvc;
@@ -40,8 +41,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.context.WebApplicationContext;
+
 import java.util.Collections;
 import java.util.Map;
+
 import static org.laokou.common.i18n.common.constants.StringConstant.RISK;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -187,7 +190,7 @@ class OAuth2ApiTest {
 	void testLogoutApi() {
 		log.info("---------- 登录已注销，开始清除令牌 ----------");
 		String apiUrl = getLogoutApiUrlV3();
-		restClient.delete().uri(apiUrl, new LogoutCmd(TOKEN)).accept(MediaType.APPLICATION_JSON).retrieve();
+		restClient.method(HttpMethod.DELETE).uri(apiUrl).body(new LogoutCmd(TOKEN)).contentType(MediaType.APPLICATION_JSON).retrieve();
 		log.info("---------- 登录已注销，结束令牌清除 ----------");
 	}
 
