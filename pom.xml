@@ -57,9 +57,11 @@
     <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     <!--lombok版本-->
     <lombok.version>1.18.32</lombok.version>
-    <docker.host>http://192.168.209.1:2375</docker.host>
+    <docker.host>http://127.0.0.1:2375</docker.host>
     <docker.registry>registry.cn-shenzhen.aliyuncs.com</docker.registry>
     <docker.namespace>koushenhai</docker.namespace>
+    <docker.username>koushenhai</docker.username>
+    <docker.password>5201314qsh</docker.password>
     <docker-maven-plugin.version>0.44.0</docker-maven-plugin.version>
     <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
     <spring-javaformat-maven-plugin.version>0.0.41</spring-javaformat-maven-plugin.version>
@@ -422,18 +424,44 @@
           <dockerHost>${docker.host}</dockerHost>
           <!--Docker私库-->
           <registry>${docker.registry}</registry>
+          <!-- 认证信息-->
+          <authConfig>
+            <push>
+              <username>${docker.username}</username>
+              <password>${docker.password}</password>
+            </push>
+          </authConfig>
           <images>
             <image>
-              <!-- 命名空间/仓库名称:镜像版本号-->
-              <name>${docker.registry}/${docker.namespace}/${project.artifactId}:${project.version}</name>
               <alias>${project.artifactId}</alias>
+              <!-- 推送仓库/命名空间/仓库名称:镜像版本号-->
+              <name>${docker.registry}/${docker.namespace}/${project.artifactId}:${project.version}</name>
               <build>
+                <tags>
+                  <tag>${project.version}</tag>
+                </tags>
                 <!-- 指定dockerfile文件的位置-->
                 <dockerFile>${project.basedir}/docker/Dockerfile</dockerFile>
               </build>
             </image>
           </images>
         </configuration>
+        <executions>
+          <execution>
+            <id>build-image</id>
+            <phase>install</phase>
+            <goals>
+              <goal>build</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>push</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>push</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
