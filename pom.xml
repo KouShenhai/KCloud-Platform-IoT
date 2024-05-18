@@ -59,7 +59,7 @@
     <lombok.version>1.18.32</lombok.version>
     <docker.repostory>registry.cn-shenzhen.aliyuncs.com</docker.repostory>
     <docker.registry.name>koushenhai</docker.registry.name>
-    <docker.version>1.2.2</docker.version>
+    <docker.version>0.44.0</docker.version>
     <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
     <spring-javaformat-maven-plugin.version>0.0.41</spring-javaformat-maven-plugin.version>
     <native-maven-plugin.version>0.10.2</native-maven-plugin.version>
@@ -413,7 +413,7 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>com.spotify</groupId>
+        <groupId>io.fabric8</groupId>
         <artifactId>docker-maven-plugin</artifactId>
         <version>${docker.version}</version>
         <configuration>
