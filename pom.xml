@@ -57,9 +57,10 @@
     <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     <!--lombok版本-->
     <lombok.version>1.18.32</lombok.version>
-    <docker.repostory>registry.cn-shenzhen.aliyuncs.com</docker.repostory>
-    <docker.registry.name>koushenhai</docker.registry.name>
-    <docker.version>0.44.0</docker.version>
+    <docker.host>http://192.168.209.1:2375</docker.host>
+    <docker.registry>registry.cn-shenzhen.aliyuncs.com</docker.registry>
+    <docker.namespace>koushenhai</docker.namespace>
+    <docker-maven-plugin.version>0.44.0</docker-maven-plugin.version>
     <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
     <spring-javaformat-maven-plugin.version>0.0.41</spring-javaformat-maven-plugin.version>
     <native-maven-plugin.version>0.10.2</native-maven-plugin.version>
@@ -415,24 +416,23 @@
       <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>docker-maven-plugin</artifactId>
-        <version>${docker.version}</version>
+        <version>${docker-maven-plugin.version}</version>
         <configuration>
-          <!-- 推送至阿里云Docker仓库 -->
-          <serverId>docker-aliyun</serverId>
-          <registryUrl>${docker.repostory}</registryUrl>
-          <pushImage>true</pushImage>
-          <!-- 指定生成的镜像名 推送阿里云镜像仓库用 -->
-          <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
-          <!-- 指定 Dockerfile 路径 , 根据实际情况改动! ${project.basedir}：项目根路径-->
-          <dockerDirectory>${project.basedir}/docker</dockerDirectory>
-          <dockerHost>http://192.168.30.130:2375</dockerHost>
-          <resources>
-            <resource>
-              <targetPath>/</targetPath>
-              <directory>${project.build.directory}</directory>
-              <include>${project.artifactId}.jar</include>
-            </resource>
-          </resources>
+          <!--Docker主机-->
+          <dockerHost>${docker.host}</dockerHost>
+          <!--Docker私库-->
+          <registry>${docker.registry}</registry>
+          <images>
+            <image>
+              <!-- 命名空间/仓库名称:镜像版本号-->
+              <name>${docker.registry}/${docker.namespace}/${project.artifactId}:${project.version}</name>
+              <alias>${project.artifactId}</alias>
+              <build>
+                <!-- 指定dockerfile文件的位置-->
+                <dockerFile>${project.basedir}/docker/Dockerfile</dockerFile>
+              </build>
+            </image>
+          </images>
         </configuration>
       </plugin>
       <plugin>
