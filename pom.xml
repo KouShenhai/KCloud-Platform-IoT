@@ -57,7 +57,7 @@
     <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     <!--lombok版本-->
     <lombok.version>1.18.32</lombok.version>
-    <docker.host>http://127.0.0.1:2375</docker.host>
+    <docker.host>tcp://127.0.0.1:2375</docker.host>
     <docker.registry>registry.cn-shenzhen.aliyuncs.com</docker.registry>
     <docker.namespace>koushenhai</docker.namespace>
     <docker.username>username</docker.username>
@@ -440,27 +440,11 @@
                   <tag>${project.version}</tag>
                 </tags>
                 <!-- 指定dockerfile文件的位置-->
-                <dockerFile>${project.basedir}/docker/Dockerfile</dockerFile>
+                <dockerFile>${project.basedir}/Dockerfile</dockerFile>
               </build>
             </image>
           </images>
         </configuration>
-        <executions>
-          <execution>
-            <id>build-image</id>
-            <phase>install</phase>
-            <goals>
-              <goal>build</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>push</id>
-            <phase>deploy</phase>
-            <goals>
-              <goal>push</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

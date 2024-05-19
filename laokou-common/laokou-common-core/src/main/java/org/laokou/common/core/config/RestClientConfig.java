@@ -38,7 +38,8 @@ public class RestClientConfig {
 	@Bean
 	public RestClient restClient(ServerProperties serverProperties) {
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-		factory.setHttpClient(getHttpClient(Optional.ofNullable(serverProperties.getSsl()).orElse(new Ssl()).isEnabled()));
+		factory
+			.setHttpClient(getHttpClient(Optional.ofNullable(serverProperties.getSsl()).orElse(new Ssl()).isEnabled()));
 		RestTemplate restTemplate = new RestTemplate(factory);
 		return RestClient.create(restTemplate);
 	}

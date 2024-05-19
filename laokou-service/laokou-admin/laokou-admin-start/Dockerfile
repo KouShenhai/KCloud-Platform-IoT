@@ -13,13 +13,9 @@
 #  * See the License for the specific language governing permissions and
 #  * limitations under the License.
 #  */
-# 基础镜像
 FROM docker.io/tabatad/jdk21
-# 信息
 LABEL maintainer="laokou"
-LABEL description="laokou-gateway"
-# 复制文件
-COPY laokou-gateway.jar app.jar
-# 暴露端口
-EXPOSE 5555
+LABEL description="laokou-admin"
+COPY target/laokou-admin-start.jar app.jar
+EXPOSE 9990
 CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1

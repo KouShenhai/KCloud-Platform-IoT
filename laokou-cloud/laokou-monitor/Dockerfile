@@ -13,9 +13,9 @@
 #  * See the License for the specific language governing permissions and
 #  * limitations under the License.
 #  */
-FROM docker.io/sunrdocker/jdk17-jre-font-openssl-alpine:latest
+FROM docker.io/tabatad/jdk21
 LABEL maintainer="laokou"
-LABEL description="laokou-sentinel"
-COPY laokou-sentinel.jar app.jar
-EXPOSE 8972
+LABEL description="laokou-monitor"
+COPY target/laokou-monitor.jar app.jar
+EXPOSE 5000
 CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1
