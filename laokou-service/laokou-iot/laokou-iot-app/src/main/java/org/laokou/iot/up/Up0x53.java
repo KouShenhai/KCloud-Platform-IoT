@@ -15,35 +15,17 @@
  *
  */
 
-package org.laokou.iot.config;
+package org.laokou.iot.up;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ByteToMessageDecoder;
-import io.netty.util.ReferenceCountUtil;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
+import org.laokou.iot.entity.Sensor;
 
 /**
  * @author laokou
  */
-@Slf4j
-public class TcpDecoder extends ByteToMessageDecoder {
-
+public class Up0x53 extends TcpPackage {
 	@Override
-	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-		ByteBuf tempBuf = Unpooled.copiedBuffer(in);
-		try {
-			out.add(ByteBufUtil.hexDump(tempBuf));
-		}
-		finally {
-			// 释放
-			in.clear();
-			ReferenceCountUtil.release(tempBuf);
-		}
-	}
+	public void convert(ByteBuf buf, Sensor sensor) {
 
+	}
 }

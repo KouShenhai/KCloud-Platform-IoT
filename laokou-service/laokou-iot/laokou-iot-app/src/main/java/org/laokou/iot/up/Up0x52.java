@@ -21,21 +21,11 @@ import io.netty.buffer.ByteBuf;
 import org.laokou.iot.entity.Sensor;
 
 /**
- * 时间.
- *
  * @author laokou
  */
-public class Up0x50 extends TcpPackage {
-
+public class Up0x52 extends TcpPackage {
 	@Override
 	public void convert(ByteBuf buf, Sensor sensor) {
-		byte b = buf.readByte();
-		buf.readByte();
-		buf.readByte();
-		buf.readByte();
-		buf.readByte();
-		buf.readByte();
-		buf.readByte();
-	}
 
+	}
 }

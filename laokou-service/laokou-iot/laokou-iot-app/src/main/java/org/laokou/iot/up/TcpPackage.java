@@ -15,9 +15,10 @@
  *
  */
 
-package org.laokou.iot.config;
+package org.laokou.iot.up;
 
 import io.netty.buffer.ByteBuf;
+import org.laokou.iot.entity.Sensor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,7 @@ import java.util.Map;
  *
  * @author laokou
  */
-public class TcpPackage {
+public abstract class TcpPackage {
 
 	private static final Map<String, Object> MAP = new HashMap<>(16);
 
@@ -45,9 +46,11 @@ public class TcpPackage {
 
 	public static final byte START_BIT = 0x55;
 
-	public static boolean crc(ByteBuf buf) {
+	abstract public void convert(ByteBuf buf, Sensor sensor);
+
+	protected static boolean crc(ByteBuf buf) {
 		// 55 52 00 00 00 00 00 00 6A 0C 1D
-		// 50 18 05 11 0f 21 39 79 00 b5
+		short start = buf.readUnsignedByte();
 		short type = buf.readByte();
 		short data1l = buf.readByte();
 		short data1h = buf.readByte();
@@ -59,7 +62,7 @@ public class TcpPackage {
 		short data4h = buf.readByte();
 		short crc = buf.readUnsignedByte();
 		// crc = 0x55+TYPE+DATA1L+DATA1H+DATA2L+DATA2H+DATA3L+DATA3H+DATA4L+DATA4H
-		int sum = START_BIT + type + data1l + data1h + data2l + data2h + data3l + data3h + data4l + data4h;
+		int sum = start + type + data1l + data1h + data2l + data2h + data3l + data3h + data4l + data4h;
 		String hexSum = Integer.toHexString(sum);
 		String hexCrc = Integer.toHexString(crc);
 		return hexSum.contains(hexCrc);

@@ -15,27 +15,15 @@
  *
  */
 
-package org.laokou.iot.up;
+package org.laokou.iot.entity;
 
-import io.netty.buffer.ByteBuf;
-import org.laokou.iot.entity.Sensor;
+import lombok.Data;
+
+import java.io.Serializable;
 
 /**
- * 时间.
- *
  * @author laokou
  */
-public class Up0x50 extends TcpPackage {
-
-	@Override
-	public void convert(ByteBuf buf, Sensor sensor) {
-		byte b = buf.readByte();
-		buf.readByte();
-		buf.readByte();
-		buf.readByte();
-		buf.readByte();
-		buf.readByte();
-		buf.readByte();
-	}
-
+@Data
+public class Sensor implements Serializable {
 }

@@ -15,27 +15,25 @@
  *
  */
 
-package org.laokou.iot.up;
+package org.laokou.iot.factory;
 
-import io.netty.buffer.ByteBuf;
-import org.laokou.iot.entity.Sensor;
+import org.laokou.iot.up.TcpPackage;
+import org.laokou.iot.up.*;
 
 /**
- * 时间.
- *
  * @author laokou
  */
-public class Up0x50 extends TcpPackage {
+public class PackageFactory {
 
-	@Override
-	public void convert(ByteBuf buf, Sensor sensor) {
-		byte b = buf.readByte();
-		buf.readByte();
-		buf.readByte();
-		buf.readByte();
-		buf.readByte();
-		buf.readByte();
-		buf.readByte();
+	public static TcpPackage getType(byte type) {
+		switch (type) {
+			case 0x50 -> new Up0x50();
+			case 0x51 -> new Up0x51();
+			case 0x52 -> new Up0x52();
+			case 0x53 -> new Up0x53();
+			case 0x54 -> new Up0x54();
+		}
+		throw new RuntimeException("未知类型");
 	}
 
 }

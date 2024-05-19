@@ -15,20 +15,17 @@
  *
  */
 
-package org.laokou.iot.config;
+package org.laokou.iot.up;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToByteEncoder;
+import org.laokou.iot.entity.Sensor;
 
 /**
  * @author laokou
  */
-public class TcpEncoder extends MessageToByteEncoder<TcpPackage> {
-
+public class Up0x54 extends TcpPackage {
 	@Override
-	protected void encode(ChannelHandlerContext channelHandlerContext, TcpPackage tcpPackage, ByteBuf byteBuf) {
+	public void convert(ByteBuf buf, Sensor sensor) {
 
 	}
-
 }
