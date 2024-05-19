@@ -190,7 +190,11 @@ class OAuth2ApiTest {
 	void testLogoutApi() {
 		log.info("---------- 登录已注销，开始清除令牌 ----------");
 		String apiUrl = getLogoutApiUrlV3();
-		restClient.method(HttpMethod.DELETE).uri(apiUrl).body(new LogoutCmd(TOKEN)).contentType(MediaType.APPLICATION_JSON).retrieve();
+		restClient.method(HttpMethod.DELETE)
+			.uri(apiUrl)
+			.body(new LogoutCmd(TOKEN))
+			.contentType(MediaType.APPLICATION_JSON)
+			.retrieve();
 		log.info("---------- 登录已注销，结束令牌清除 ----------");
 	}
 

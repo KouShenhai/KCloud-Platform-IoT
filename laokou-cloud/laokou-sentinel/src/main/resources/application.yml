@@ -39,6 +39,8 @@ server:
     direct-buffers: true
     accesslog:
       enabled: true
+  ssl:
+    enabled: false
 spring:
   application:
     name: @pom.artifactId@

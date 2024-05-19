@@ -13,10 +13,13 @@
 #  * See the License for the specific language governing permissions and
 #  * limitations under the License.
 #  */
-FROM docker.io/sunrdocker/jdk21-jre-font-openssl-alpine:latest
+# 基础镜像
+FROM docker.io/tabatad/jdk21
+# 信息
 LABEL maintainer="laokou"
-LABEL description="laokou-register"
-COPY laokou-register.jar app.jar
-EXPOSE 8848
-# >/dev/null 2>&1 标准输出和错误输出重定向nacos.log
-CMD java $JVM_OPTS $NACOS_OPTS -jar app.jar >/opt/nacos.log 2>&1
+LABEL description="laokou-im"
+# 复制文件
+COPY target/laokou-im-start.jar app.jar
+# 暴露端口
+EXPOSE 10001
+CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1

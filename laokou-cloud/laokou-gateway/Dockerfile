@@ -17,9 +17,9 @@
 FROM docker.io/tabatad/jdk21
 # 信息
 LABEL maintainer="laokou"
-LABEL description="laokou-im"
+LABEL description="laokou-gateway"
 # 复制文件
-COPY laokou-im-start.jar app.jar
+COPY target/laokou-gateway.jar app.jar
 # 暴露端口
-EXPOSE 10001
+EXPOSE 5555
 CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1
