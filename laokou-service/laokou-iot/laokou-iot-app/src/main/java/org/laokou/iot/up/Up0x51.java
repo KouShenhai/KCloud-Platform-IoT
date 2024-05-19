@@ -17,11 +17,19 @@
 
 package org.laokou.iot.up;
 
+import io.netty.buffer.ByteBuf;
+import org.laokou.iot.entity.Sensor;
+
 /**
  * 加速度.
  *
  * @author laokou
  */
-public class Up0x51 {
+public class Up0x51 extends TcpPackage {
+
+	@Override
+	public void convert(ByteBuf buf, Sensor sensor) {
+
+	}
 
 }

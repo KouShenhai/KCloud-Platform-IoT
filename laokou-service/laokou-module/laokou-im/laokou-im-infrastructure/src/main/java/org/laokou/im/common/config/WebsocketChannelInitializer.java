@@ -53,7 +53,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 @RequiredArgsConstructor
 public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketChannel> {
 
-	private final SimpleChannelInboundHandler<?> simpleChannelInboundHandler;
+	private final SimpleChannelInboundHandler<?> websocketHandler;
 
 	private final ServerProperties serverProperties;
 
@@ -76,7 +76,7 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		// websocket协议
 		pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
 		// 业务处理handler
-		pipeline.addLast(simpleChannelInboundHandler);
+		pipeline.addLast(websocketHandler);
 	}
 
 	private void initSSL(ChannelPipeline pipeline) {
