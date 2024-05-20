@@ -24,8 +24,10 @@ import org.laokou.iot.entity.Sensor;
  * @author laokou
  */
 public class Up0x54 extends TcpPackage {
+
 	@Override
 	public void convert(ByteBuf buf, Sensor sensor) {
 
 	}
+
 }

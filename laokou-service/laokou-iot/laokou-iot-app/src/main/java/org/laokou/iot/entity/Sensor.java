@@ -26,4 +26,5 @@ import java.io.Serializable;
  */
 @Data
 public class Sensor implements Serializable {
+
 }

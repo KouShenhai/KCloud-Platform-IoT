@@ -38,11 +38,11 @@ public class TcpDecoder extends ByteToMessageDecoder {
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
 		for (int i = 0; i < 5; i++) {
 			ByteBuf tempBuf = Unpooled.copiedBuffer(in);
-//			if (!TcpPackage.crc(tempBuf)) {
-//				break;
-//			}
+			// if (!TcpPackage.crc(tempBuf)) {
+			// break;
+			// }
 			byte type = in.skipBytes(1).readByte();
-			//PackageFactory.getType(type).convert(in, null);
+			// PackageFactory.getType(type).convert(in, null);
 			// 释放
 			ReferenceCountUtil.release(tempBuf);
 		}
