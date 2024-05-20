@@ -15,22 +15,21 @@
  *
  */
 
-package org.laokou.iot.codec;
+package org.laokou.iot.config;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import org.laokou.iot.entity.Sensor;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
 @Component
-public class TcpEncoder extends MessageToByteEncoder<Sensor> {
+public class TcpEncoder extends MessageToByteEncoder {
 
 	@Override
-	protected void encode(ChannelHandlerContext channelHandlerContext, Sensor sensor, ByteBuf byteBuf) {
+	protected void encode(ChannelHandlerContext channelHandlerContext, Object sensor, ByteBuf byteBuf) {
 
 	}
 

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.codec;
+package org.laokou.iot.config;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -23,7 +23,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.iot.factory.PackageFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -43,7 +42,7 @@ public class TcpDecoder extends ByteToMessageDecoder {
 //				break;
 //			}
 			byte type = in.skipBytes(1).readByte();
-			PackageFactory.getType(type).convert(in, null);
+			//PackageFactory.getType(type).convert(in, null);
 			// 释放
 			ReferenceCountUtil.release(tempBuf);
 		}
