@@ -24,6 +24,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+
 /**
  * @author laokou
  */
@@ -34,9 +36,9 @@ public class SpringMqttProperties {
 
 	private Boolean enabled = false;
 
-	private String username;
+	private String username = EMPTY;
 
-	private String password;
+	private String password = EMPTY;
 
 	private String host;
 

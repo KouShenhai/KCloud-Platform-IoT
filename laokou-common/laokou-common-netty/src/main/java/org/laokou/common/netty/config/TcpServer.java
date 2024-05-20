@@ -57,7 +57,7 @@ public class TcpServer extends AbstractServer {
 			// 接收缓冲区大小
 			.option(ChannelOption.SO_RCVBUF, 10 * 1024)
 			// 发送缓冲区大小
-			.option(ChannelOption.SO_SNDBUF, 10 * 1024)
+			.childOption(ChannelOption.SO_SNDBUF, 10 * 1024)
 			// 设置高低水位，防止占用大量内存
 			.childOption(ChannelOption.WRITE_BUFFER_WATER_MARK, new WriteBufferWaterMark(1024, 10 * 1024))
 			// tcp处理类

@@ -21,9 +21,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.codec.FixedLengthFrameDecoder;
-import io.netty.handler.codec.MessageToByteEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -37,9 +35,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class TcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 
-	private final SimpleChannelInboundHandler<?> simpleChannelInboundHandler;
-	private final ByteToMessageDecoder tcpDecoder;
-	private final MessageToByteEncoder<?> tcpEncoder;
+	private final SimpleChannelInboundHandler<?> tcpHandler;
 
 	@Override
 	protected void initChannel(SocketChannel channel) {
@@ -47,13 +43,13 @@ public class TcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 		// 定长截取
 		pipeline.addLast(new FixedLengthFrameDecoder(55));
 		// 解码
-		pipeline.addLast(tcpDecoder);
+		pipeline.addLast(new TcpDecoder());
 		// 编码
-		pipeline.addLast(tcpEncoder);
+		pipeline.addLast(new TcpEncoder());
 		// 心跳检测
 		pipeline.addLast(new IdleStateHandler(60, 0, 0, TimeUnit.SECONDS));
 		// 业务处理handler
-		pipeline.addLast(simpleChannelInboundHandler);
+		pipeline.addLast(tcpHandler);
 	}
 
 }
