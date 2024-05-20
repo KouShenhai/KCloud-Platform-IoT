@@ -19,6 +19,7 @@ package org.laokou.auth.config;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
@@ -47,6 +48,8 @@ import java.util.List;
 public final class OAuth2AuthorizationServerPropertiesMapper {
 
 	private final OAuth2AuthorizationServerProperties properties;
+
+	private final ServerProperties serverProperties;
 
 	AuthorizationServerSettings asAuthorizationServerSettings() {
 		PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
@@ -128,7 +131,8 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 		map.from(token::getIdTokenSignatureAlgorithm)
 			.as(this::signatureAlgorithm)
 			.to(builder::idTokenSignatureAlgorithm);
-		return builder.build();
+		return serverProperties.getSsl().isEnabled() ? builder.x509CertificateBoundAccessTokens(true).build()
+				: builder.build();
 	}
 
 	private JwsAlgorithm jwsAlgorithm(String signingAlgorithm) {
