@@ -93,6 +93,7 @@ spring:
                 - authorization_code
                 - urn:ietf:params:oauth:grant-type:device_code
                 - urn:ietf:params:oauth:grant-type:jwt-bearer
+                - urn:ietf:params:oauth:grant-type:token-exchange
               scopes:
                 - password
                 - mail
