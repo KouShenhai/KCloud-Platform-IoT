@@ -24,11 +24,14 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
  */
+@Component
 @RequiredArgsConstructor
 public class TcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 
