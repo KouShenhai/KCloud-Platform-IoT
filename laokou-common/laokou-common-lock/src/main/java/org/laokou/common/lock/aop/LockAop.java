@@ -39,6 +39,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.laokou.common.i18n.common.exception.StatusCode.TOO_MANY_REQUESTS;
 import static org.laokou.common.i18n.common.constants.StringConstant.UNDER;
@@ -60,6 +61,7 @@ public class LockAop {
 
 	@Around("@annotation(org.laokou.common.lock.annotation.Lock4j)")
 	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+		Object obj;
 		// 获取注解
 		Signature signature = joinPoint.getSignature();
 		MethodSignature methodSignature = (MethodSignature) signature;
@@ -76,15 +78,13 @@ public class LockAop {
 		long timeout = lock4j.timeout();
 		final TypeEnum lockType = lock4j.type();
 		Lock lock = new RedissonLock(redisUtil);
-		Object obj;
+		AtomicBoolean isLocked = new AtomicBoolean(false);
 		// 设置锁的自动过期时间，则执行业务的时间一定要小于锁的自动过期时间，否则就会报错
 		try {
-			if (lock.tryLock(lockType, key, expire, timeout)) {
-				obj = joinPoint.proceed();
+			if (!isLocked.compareAndSet(false, lock.tryLock(lockType, key, expire, timeout))) {
+				throw new SystemException(TOO_MANY_REQUESTS);
 			}
-			else {
-				throw new SystemException("" + TOO_MANY_REQUESTS);
-			}
+			obj = joinPoint.proceed();
 		}
 		catch (Throwable throwable) {
 			log.error("错误信息：{}，详情见日志", LogUtil.record(throwable.getMessage()), throwable);
@@ -92,7 +92,9 @@ public class LockAop {
 		}
 		finally {
 			// 释放锁
-			lock.unlock(lockType, key);
+			if (isLocked.compareAndSet(true, false)) {
+				lock.unlock(lockType, key);
+			}
 		}
 		return obj;
 	}

@@ -23,7 +23,7 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum DatasourceDataTypeEnum {
+public enum DSTypeEnum {
 
 	TINYINT("Integer"), SMALLINT("Integer"), MEDIUMINT("Integer"), INT("Integer"), INTEGER("Integer"), BIGINT("Long"),
 	FLOAT("Float"), DOUBLE("Double"), DECIMAL("BigDecimal"), BIT("Boolean"), CHAR("String"), VARCHAR("String"),
@@ -34,7 +34,7 @@ public enum DatasourceDataTypeEnum {
 
 	private final String value;
 
-	DatasourceDataTypeEnum(String value) {
+	DSTypeEnum(String value) {
 		this.value = value;
 	}
 

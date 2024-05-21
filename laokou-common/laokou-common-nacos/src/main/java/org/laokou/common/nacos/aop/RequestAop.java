@@ -61,7 +61,7 @@ public class RequestAop {
 	@Before("postMapping() || getMapping() || putMapping() || deleteMapping() || requestMapping()")
 	public void doBefore() {
 		if (ShutdownHolder.status()) {
-			throw new SystemException("" + SERVICE_UNAVAILABLE);
+			throw new SystemException(SERVICE_UNAVAILABLE);
 		}
 		ShutdownHolder.add();
 	}
