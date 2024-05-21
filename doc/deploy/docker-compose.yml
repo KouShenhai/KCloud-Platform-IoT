@@ -47,7 +47,7 @@ services:
       - TZ=Asia/Shanghai
     network_mode: bridge
   redis:
-    image: redis:7.2.4
+    image: redis:7.2.5
     container_name: redis
     # 保持容器在没有守护程序的情况下运行
     tty: true
