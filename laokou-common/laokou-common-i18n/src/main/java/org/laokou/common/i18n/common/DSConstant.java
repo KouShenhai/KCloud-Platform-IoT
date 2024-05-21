@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * @author laokou
  */
-@Schema(name = "DatasourceConstants", description = "数据源常量")
+@Schema(name = "DSConstant", description = "数据源常量")
 public final class DSConstant {
 
 	private DSConstant() {
