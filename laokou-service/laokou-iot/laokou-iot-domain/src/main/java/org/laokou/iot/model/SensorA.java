@@ -15,16 +15,15 @@
  *
  */
 
-package org.laokou.iot.entity;
+package org.laokou.iot.model;
 
 import lombok.Data;
-
-import java.io.Serializable;
+import org.laokou.common.i18n.dto.AggregateRoot;
 
 /**
  * @author laokou
  */
 @Data
-public class Sensor implements Serializable {
+public class SensorA extends AggregateRoot<Long> {
 
 }

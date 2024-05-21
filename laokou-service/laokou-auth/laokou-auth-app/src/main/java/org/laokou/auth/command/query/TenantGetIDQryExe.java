@@ -18,12 +18,11 @@
 package org.laokou.auth.command.query;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.TenantGetIDQry;
 import org.laokou.auth.gatewayimpl.database.TenantMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.TenantDO;
-import org.laokou.common.core.config.TenantProperties;
+import org.laokou.auth.config.TenantProperties;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.dto.Result;
@@ -48,7 +47,9 @@ import static org.laokou.common.mybatisplus.mapper.BaseDO.DEFAULT_TENANT_ID;
 @RequiredArgsConstructor
 public class TenantGetIDQryExe {
 
-	@Schema(name = "WWW", description = "www三级域名")
+	/**
+	 * www.
+	 */
 	private static final String WWW = "www";
 
 	private final TenantProperties tenantProperties;

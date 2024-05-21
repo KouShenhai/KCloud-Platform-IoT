@@ -6,16 +6,12 @@
     <version>3.3.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>laokou-iot-infrastructure</artifactId>
+  <artifactId>laokou-iot-domain</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-iot-domain</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-mqtt</artifactId>
+      <artifactId>laokou-common-core</artifactId>
     </dependency>
   </dependencies>
 

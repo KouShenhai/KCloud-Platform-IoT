@@ -18,7 +18,7 @@
 package org.laokou.iot.up;
 
 import io.netty.buffer.ByteBuf;
-import org.laokou.iot.entity.Sensor;
+import org.laokou.iot.model.SensorA;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +46,7 @@ public abstract class TcpPackage {
 
 	public static final byte START_BIT = 0x55;
 
-	abstract public void convert(ByteBuf buf, Sensor sensor);
+	abstract public void convert(ByteBuf buf, SensorA sensorA);
 
 	protected static boolean crc(ByteBuf buf) {
 		// 55 52 00 00 00 00 00 00 6A 0C 1D

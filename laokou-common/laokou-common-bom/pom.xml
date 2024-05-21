@@ -116,6 +116,11 @@
     <dependencies>
       <dependency>
         <groupId>org.laokou</groupId>
+        <artifactId>laokou-iot-domain</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-iot-infrastructure</artifactId>
         <version>${laokou.version}</version>
       </dependency>
