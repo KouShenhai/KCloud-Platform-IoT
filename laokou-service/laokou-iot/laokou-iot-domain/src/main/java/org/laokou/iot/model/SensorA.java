@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.entity;
+package org.laokou.iot.model;
 
 import lombok.Data;
 
@@ -25,6 +25,6 @@ import java.io.Serializable;
  * @author laokou
  */
 @Data
-public class Sensor implements Serializable {
+public class SensorA implements Serializable {
 
 }
