@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.im.module.websocket.handler;
+package org.laokou.im.handler;
 
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;

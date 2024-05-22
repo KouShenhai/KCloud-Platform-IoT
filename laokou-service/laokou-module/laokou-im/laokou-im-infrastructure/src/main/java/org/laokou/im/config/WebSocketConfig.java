@@ -15,8 +15,9 @@
  *
  */
 
-package org.laokou.im.common.config;
+package org.laokou.im.config;
 
+import io.netty.channel.ChannelInitializer;
 import org.laokou.common.netty.config.Server;
 import org.laokou.common.netty.config.WebSocketServer;
 import org.laokou.common.netty.config.WebsocketProperties;
@@ -33,7 +34,7 @@ public class WebSocketConfig {
 
 	@Bean(name = "websocketServer", initMethod = "start", destroyMethod = "stop")
 	public Server websocketServer(WebsocketProperties websocketProperties,
-			WebsocketChannelInitializer websocketChannelInitializer) {
+			ChannelInitializer<?> websocketChannelInitializer) {
 		return new WebSocketServer(websocketProperties.getIp(), websocketProperties.getPort(),
 				websocketChannelInitializer);
 	}

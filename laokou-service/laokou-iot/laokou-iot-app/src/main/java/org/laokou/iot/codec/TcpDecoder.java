@@ -15,31 +15,40 @@
  *
  */
 
-package org.laokou.iot.up;
+package org.laokou.iot.codec;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.ByteToMessageDecoder;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.iot.factory.PackageFactory;
 import org.laokou.iot.model.SensorA;
+import org.laokou.iot.up.TcpPackage;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
 @Slf4j
-public class Up0x54 extends TcpPackage {
+@Component
+public class TcpDecoder extends ByteToMessageDecoder {
 
 	@Override
-	public void convert(ByteBuf buf, SensorA sensorA) {
-		short data1l = buf.readByte();
-		short data1h = buf.readByte();
-		short data2l = buf.readByte();
-		short data2h = buf.readByte();
-		short data3l = buf.readByte();
-		short data3h = buf.readByte();
-		short data4l = buf.readByte();
-		short data4h = buf.readByte();
-		log.info("{} {} {} {} {} {} {} {}", data1l, data1h, data2l, data2h, data3l, data3h, data4l, data4h);
-		// 跳过
-		buf.skipBytes(1);
+	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
+		SensorA sensorA = new SensorA();
+		for (int i = 0; i < 5; i++) {
+			ByteBuf tempBuf = Unpooled.copiedBuffer(in);
+			if (!TcpPackage.crc(tempBuf)) {
+				break;
+			}
+			byte type = in.skipBytes(1).readByte();
+			PackageFactory.getType(type).convert(in, sensorA);
+		}
+		in.clear();
+		out.add(sensorA);
 	}
 
 }

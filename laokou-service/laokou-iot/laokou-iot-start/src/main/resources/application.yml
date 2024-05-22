@@ -12,7 +12,7 @@ spring:
     port: 1001
     app-name: @pom.parent.artifactId@
   mqtt:
-    enabled: true
+    enabled: false
     username: emqx
     password: laokou123
     client-id: S&D1PGLPG58KZ2&89&1

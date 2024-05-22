@@ -18,10 +18,8 @@
 package org.laokou.iot.up;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.util.ReferenceCountUtil;
 import org.laokou.iot.model.SensorA;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 55 50 18 05 11 0E 34 11 79 00 9F 55 51 EE FF DA FF FF 07 6A 0C E8.
@@ -30,28 +28,13 @@ import java.util.Map;
  */
 public abstract class TcpPackage {
 
-	private static final Map<String, Object> MAP = new HashMap<>(16);
-
-	public static void put(String key, Object value) {
-		MAP.put(key, value);
-	}
-
-	public static Map<String, Object> getMap() {
-		return MAP;
-	}
-
-	public static void clear() {
-		MAP.clear();
-	}
-
 	public static final byte START_BIT = 0x55;
 
 	abstract public void convert(ByteBuf buf, SensorA sensorA);
 
-	protected static boolean crc(ByteBuf buf) {
+	public static boolean crc(ByteBuf buf) {
 		// 55 52 00 00 00 00 00 00 6A 0C 1D
-		short start = buf.readUnsignedByte();
-		short type = buf.readByte();
+		short type = buf.skipBytes(1).readByte();
 		short data1l = buf.readByte();
 		short data1h = buf.readByte();
 		short data2l = buf.readByte();
@@ -62,9 +45,11 @@ public abstract class TcpPackage {
 		short data4h = buf.readByte();
 		short crc = buf.readUnsignedByte();
 		// crc = 0x55+TYPE+DATA1L+DATA1H+DATA2L+DATA2H+DATA3L+DATA3H+DATA4L+DATA4H
-		int sum = start + type + data1l + data1h + data2l + data2h + data3l + data3h + data4l + data4h;
+		int sum = START_BIT + type + data1l + data1h + data2l + data2h + data3l + data3h + data4l + data4h;
 		String hexSum = Integer.toHexString(sum);
 		String hexCrc = Integer.toHexString(crc);
+		// 释放
+		ReferenceCountUtil.release(buf);
 		return hexSum.contains(hexCrc);
 	}
 
