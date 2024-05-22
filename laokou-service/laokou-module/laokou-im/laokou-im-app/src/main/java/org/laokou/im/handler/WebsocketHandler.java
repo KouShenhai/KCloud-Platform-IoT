@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.im.module.websocket.handler;
+package org.laokou.im.handler;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;

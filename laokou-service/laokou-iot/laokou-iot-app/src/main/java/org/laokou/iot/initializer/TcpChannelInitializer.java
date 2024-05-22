@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.config;
+package org.laokou.iot.initializer;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -24,6 +24,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.RequiredArgsConstructor;
+import org.laokou.iot.codec.TcpDecoder;
+import org.laokou.iot.codec.TcpEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;

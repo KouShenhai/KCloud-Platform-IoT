@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.im.common.config;
+package org.laokou.im.initializer;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
