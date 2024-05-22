@@ -94,7 +94,7 @@
     <!--mapstruct版本-->
     <mapstruct.version>1.6.0.Beta2</mapstruct.version>
     <!--spring-integration-mqtt版本-->
-    <spring-integration-mqtt.version>6.2.4</spring-integration-mqtt.version>
+    <spring-integration-mqtt.version>6.3.0</spring-integration-mqtt.version>
     <!--log4j2-ttl-thread-context-map版本-->
     <log4j2-ttl-thread-context-map.version>1.4.0</log4j2-ttl-thread-context-map.version>
     <!--transmittable-thread-local版本-->
