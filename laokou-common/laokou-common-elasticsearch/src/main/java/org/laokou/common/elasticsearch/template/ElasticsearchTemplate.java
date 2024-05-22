@@ -30,6 +30,7 @@ import co.elastic.clients.elasticsearch.core.IndexResponse;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.bulk.BulkOperation;
+import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
 import co.elastic.clients.elasticsearch.indices.*;
 import co.elastic.clients.transport.endpoints.BooleanResponse;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.annotation.*;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -193,11 +195,13 @@ public class ElasticsearchTemplate {
 	}
 
 	@SneakyThrows
-	public <S, R> List<R> search(List<String> names, int pageNum, int pageSize, S obj, Class<R> clazz) {
+	public <S, R> Datas<R> search(List<String> names, int pageNum, int pageSize, S obj, Class<R> clazz) {
 		Search search = convert(obj);
 		SearchRequest searchRequest = getSearchRequest(names, pageNum, pageSize, search);
 		SearchResponse<R> response = elasticsearchClient.search(searchRequest, clazz);
-		return response.hits().hits().stream().map(item -> {
+		HitsMetadata<R> hits = response.hits();
+		assert hits.total() != null;
+		return Datas.create(hits.hits().stream().map(item -> {
 			R source = item.source();
 			if (source != null) {
 				// ID赋值
@@ -206,7 +210,7 @@ public class ElasticsearchTemplate {
 				setHighlightFields(source, item.highlight());
 			}
 			return source;
-		}).toList();
+		}).toList(), hits.total().value());
 	}
 
 	private <R> void setHighlightFields(R source, Map<String, List<String>> map) {

@@ -31,11 +31,11 @@ public class SendReport {
 	public void test() {
 		String s = """
 				{
-					"deviceId":"1792517553561415680",
+					"deviceId":"1792463076010893312",
 					"properties":{"temperature":36.8}
 				}
 				""";
-		// mqttTemplate.send("/1792515615314817024/1792517553561415680/properties/report",
+		// mqttTemplate.send("/1789124747328585728/1792463076010893312/properties/report",
 		// s);
 	}
 
