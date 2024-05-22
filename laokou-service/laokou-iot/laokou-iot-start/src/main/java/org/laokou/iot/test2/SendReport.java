@@ -19,7 +19,6 @@ package org.laokou.iot.test2;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.laokou.mqtt.template.MqttTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -36,7 +35,8 @@ public class SendReport {
 					"properties":{"temperature":36.8}
 				}
 				""";
-		// mqttTemplate.send("/1789124747328585728/1792463076010893312/properties/report", s);
+		// mqttTemplate.send("/1789124747328585728/1792463076010893312/properties/report",
+		// s);
 	}
 
 }
