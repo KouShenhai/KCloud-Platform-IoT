@@ -15,12 +15,13 @@
  *
  */
 
-package org.laokou.im.module.websocket.handler;
+package org.laokou.im.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.common.netty.config.Server;
 import org.springframework.stereotype.Component;
+
 import java.util.concurrent.Executor;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
@@ -32,17 +33,17 @@ import static org.laokou.common.i18n.common.RocketMqConstant.*;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(consumerGroup = LAOKOU_REMIND_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC,
-		selectorExpression = LAOKOU_REMIND_MESSAGE_TAG, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
-public class RemindMessageHandler extends AbstractMessageHandler {
+@RocketMQMessageListener(consumerGroup = LAOKOU_NOTICE_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC,
+		selectorExpression = LAOKOU_NOTICE_MESSAGE_TAG, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
+public class NoticeMessageHandler extends AbstractMessageHandler {
 
-	public RemindMessageHandler(Server websocketServer, Executor executor) {
+	public NoticeMessageHandler(Server websocketServer, Executor executor) {
 		super(websocketServer, executor);
 	}
 
 	@Override
 	protected void log(String msg) {
-		log.info("接收到提醒消息：{}", msg);
+		log.info("接收到通知消息：{}", msg);
 	}
 
 }
