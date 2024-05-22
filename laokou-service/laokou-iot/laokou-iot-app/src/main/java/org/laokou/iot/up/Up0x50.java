@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.iot.model.SensorA;
 
 /**
- *
  * @author laokou
  */
 @Slf4j
@@ -44,13 +43,15 @@ public class Up0x50 extends TcpPackage {
 		String hour = data2h > 9 ? "" + data2h : "0" + data2h;
 		String minute = data3l > 9 ? "" + data3l : "0" + data3l;
 		String second = data3h > 9 ? "" + data3h : "0" + data3h;
-		int msc = ((data4h << 8)|data4l);
+		int msc = ((data4h << 8) | data4l);
 		String millisecond;
 		if (msc < 10) {
 			millisecond = "00" + msc;
-		} else if (msc < 100) {
+		}
+		else if (msc < 100) {
 			millisecond = "0" + msc;
-		} else {
+		}
+		else {
 			millisecond = "" + msc;
 		}
 		String dateTime = String.format("%s-%s-%s %s:%s:%s.%s", year, month, day, hour, minute, second, millisecond);

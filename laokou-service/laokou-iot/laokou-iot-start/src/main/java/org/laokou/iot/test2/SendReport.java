@@ -35,7 +35,8 @@ public class SendReport {
 					"properties":{"temperature":36.8}
 				}
 				""";
-		// mqttTemplate.send("/1792515615314817024/1792517553561415680/properties/report", s);
+		// mqttTemplate.send("/1792515615314817024/1792517553561415680/properties/report",
+		// s);
 	}
 
 }

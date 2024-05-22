@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.iot.model.SensorA;
 
 /**
- *
  * @author laokou
  */
 @Slf4j

@@ -28,13 +28,17 @@ public class PackageFactory {
 	public static TcpPackage getType(int type) {
 		if (type == 0x50) {
 			return new Up0x50();
-		} else if (type == 0x51) {
+		}
+		else if (type == 0x51) {
 			return new Up0x51();
-		} else if (type == 0x52) {
+		}
+		else if (type == 0x52) {
 			return new Up0x52();
-		} else if (type == 0x53) {
+		}
+		else if (type == 0x53) {
 			return new Up0x53();
-		} else if (type == 0x54) {
+		}
+		else if (type == 0x54) {
 			return new Up0x54();
 		}
 		throw new RuntimeException("未知类型");

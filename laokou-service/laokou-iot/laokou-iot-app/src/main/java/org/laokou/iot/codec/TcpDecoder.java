@@ -18,11 +18,9 @@
 package org.laokou.iot.codec;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.iot.factory.PackageFactory;
 import org.laokou.iot.model.SensorA;
@@ -30,7 +28,6 @@ import org.laokou.iot.up.TcpPackage;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author laokou
@@ -44,9 +41,9 @@ public class TcpDecoder extends ByteToMessageDecoder {
 		SensorA sensorA = new SensorA();
 		for (int i = 0; i < 5; i++) {
 			ByteBuf tempBuf = Unpooled.copiedBuffer(in);
-			 if (!TcpPackage.crc(tempBuf)) {
-			 	break;
-			 }
+			if (!TcpPackage.crc(tempBuf)) {
+				break;
+			}
 			byte type = in.skipBytes(1).readByte();
 			PackageFactory.getType(type).convert(in, sensorA);
 		}
