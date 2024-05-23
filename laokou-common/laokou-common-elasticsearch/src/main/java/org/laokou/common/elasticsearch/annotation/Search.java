@@ -65,6 +65,8 @@ public class Search {
 
 		private Query query;
 
+		private Condition condition;
+
 	}
 
 	@Data
