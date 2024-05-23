@@ -483,7 +483,8 @@ public class ElasticsearchTemplate {
 		// 允许访问私有属性
 		field.setAccessible(true);
 		String value = String.valueOf(field.get(obj));
-		return new Search.Field(Arrays.asList(names), value, searchField.type(), searchField.query(), searchField.condition(), Collections.emptyList());
+		return new Search.Field(Arrays.asList(names), value, searchField.type(), searchField.query(),
+				searchField.condition(), Collections.emptyList());
 	}
 
 	private Search.Highlight getHighlight(Highlight highlight) {
