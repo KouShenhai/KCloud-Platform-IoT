@@ -49,13 +49,13 @@ import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.constants.StringConstant.COMMA;
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
 
 /**
  * @author laokou
@@ -290,22 +290,23 @@ public class ElasticsearchTemplate {
 
 	private co.elastic.clients.elasticsearch._types.query_dsl.Query getQuery(List<Search.Field> fields) {
 		co.elastic.clients.elasticsearch._types.query_dsl.Query.Builder builder = new co.elastic.clients.elasticsearch._types.query_dsl.Query.Builder();
-		builder.bool(getBoolQuery(fields));
+		BoolQuery.Builder boolBuilder = new BoolQuery.Builder();
+		builder.bool(getBoolQuery(fields, boolBuilder));
 		return builder.build();
 	}
 
-	private BoolQuery getBoolQuery(List<Search.Field> fields) {
+	private BoolQuery getBoolQuery(List<Search.Field> fields, BoolQuery.Builder boolBuilder) {
 		// bool查询 => 布尔查询，允许组合多个查询条件
 		// must查询类似and查询
 		// must_not查询类似not查询
 		// should查询类似or查询
-		BoolQuery.Builder boolBuilder = new BoolQuery.Builder();
 		// query_string查询text类型字段，不需要连续，顺序还可以调换（分词）
 		// match_phrase查询text类型字段，顺序必须相同，而且必须都是连续的（分词）
 		// term精准匹配
 		// match模糊匹配（分词）
 		fields.forEach(item -> {
 			switch (item.getQuery()) {
+				case BOOL -> getBoolQuery(item.getChildren(), boolBuilder);
 				case MUST -> boolBuilder.must(getQuery(item));
 				case SHOULD -> boolBuilder.should(getQuery(item));
 				case MUST_NOT -> boolBuilder.mustNot(getQuery(item));
@@ -482,7 +483,7 @@ public class ElasticsearchTemplate {
 		// 允许访问私有属性
 		field.setAccessible(true);
 		String value = String.valueOf(field.get(obj));
-		return new Search.Field(Arrays.asList(names), value, searchField.type(), searchField.query(), searchField.condition());
+		return new Search.Field(Arrays.asList(names), value, searchField.type(), searchField.query(), searchField.condition(), Collections.emptyList());
 	}
 
 	private Search.Highlight getHighlight(Highlight highlight) {

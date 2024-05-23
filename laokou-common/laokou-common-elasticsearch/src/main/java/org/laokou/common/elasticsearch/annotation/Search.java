@@ -67,6 +67,8 @@ public class Search {
 
 		private Condition condition;
 
+		private List<Field> children;
+
 	}
 
 	@Data
