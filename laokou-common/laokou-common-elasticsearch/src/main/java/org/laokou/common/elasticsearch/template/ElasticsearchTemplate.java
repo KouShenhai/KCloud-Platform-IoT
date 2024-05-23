@@ -527,9 +527,9 @@ public class ElasticsearchTemplate {
 		Type type = field.type();
 		String searchAnalyzer = field.searchAnalyzer();
 		String analyzer = field.analyzer();
-		boolean fielddata = field.fielddata();
+		boolean fieldData = field.fielddata();
 		boolean eagerGlobalOrdinals = field.eagerGlobalOrdinals();
-		return new Document.Mapping(value, type, searchAnalyzer, analyzer, fielddata, eagerGlobalOrdinals);
+		return new Document.Mapping(value, type, searchAnalyzer, analyzer, fieldData, eagerGlobalOrdinals);
 	}
 
 }
