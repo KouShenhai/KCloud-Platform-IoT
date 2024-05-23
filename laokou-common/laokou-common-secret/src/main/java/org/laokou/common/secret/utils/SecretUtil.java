@@ -72,7 +72,7 @@ public class SecretUtil {
 		if (StringUtil.isEmpty(sign)) {
 			throw new RuntimeException("sign不能为空");
 		}
-		String params = MapUtil.parseParams(map);
+		String params = MapUtil.parseParams(map, false);
 		String newSing = sign(appKey, appSecret, nonce, ts, params);
 		if (!sign.equals(newSing)) {
 			throw new RuntimeException("Api验签失败，请检查配置");

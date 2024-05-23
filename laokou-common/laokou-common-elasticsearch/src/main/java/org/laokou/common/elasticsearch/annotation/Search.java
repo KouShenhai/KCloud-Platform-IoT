@@ -65,6 +65,10 @@ public class Search {
 
 		private Query query;
 
+		private Condition condition;
+
+		private List<Field> children;
+
 	}
 
 	@Data

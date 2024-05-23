@@ -26,12 +26,14 @@ import co.elastic.clients.elasticsearch._types.mapping.DynamicMapping;
 import co.elastic.clients.elasticsearch._types.mapping.TypeMapping;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.bulk.BulkOperation;
 import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
 import co.elastic.clients.elasticsearch.indices.*;
+import co.elastic.clients.json.JsonData;
 import co.elastic.clients.transport.endpoints.BooleanResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -47,6 +49,7 @@ import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -287,22 +290,23 @@ public class ElasticsearchTemplate {
 
 	private co.elastic.clients.elasticsearch._types.query_dsl.Query getQuery(List<Search.Field> fields) {
 		co.elastic.clients.elasticsearch._types.query_dsl.Query.Builder builder = new co.elastic.clients.elasticsearch._types.query_dsl.Query.Builder();
-		builder.bool(getBoolQuery(fields));
+		BoolQuery.Builder boolBuilder = new BoolQuery.Builder();
+		builder.bool(getBoolQuery(fields, boolBuilder));
 		return builder.build();
 	}
 
-	private BoolQuery getBoolQuery(List<Search.Field> fields) {
+	private BoolQuery getBoolQuery(List<Search.Field> fields, BoolQuery.Builder boolBuilder) {
 		// bool查询 => 布尔查询，允许组合多个查询条件
 		// must查询类似and查询
 		// must_not查询类似not查询
 		// should查询类似or查询
-		BoolQuery.Builder boolBuilder = new BoolQuery.Builder();
 		// query_string查询text类型字段，不需要连续，顺序还可以调换（分词）
 		// match_phrase查询text类型字段，顺序必须相同，而且必须都是连续的（分词）
 		// term精准匹配
 		// match模糊匹配（分词）
 		fields.forEach(item -> {
 			switch (item.getQuery()) {
+				case BOOL -> getBoolQuery(item.getChildren(), boolBuilder);
 				case MUST -> boolBuilder.must(getQuery(item));
 				case SHOULD -> boolBuilder.should(getQuery(item));
 				case MUST_NOT -> boolBuilder.mustNot(getQuery(item));
@@ -315,15 +319,26 @@ public class ElasticsearchTemplate {
 		co.elastic.clients.elasticsearch._types.query_dsl.Query.Builder builder = new Query.Builder();
 		List<String> names = field.getNames();
 		String value = field.getValue();
+		Condition condition = field.getCondition();
 		switch (field.getType()) {
 			case TERM -> builder.term(fn -> fn.field(names.getFirst()).value(value));
 			case MATCH -> builder.match(fn -> fn.field(names.getFirst()).query(value));
 			case MATCH_PHRASE -> builder.matchPhrase(fn -> fn.field(names.getFirst()).query(value));
 			case QUERY_STRING -> builder.queryString(fn -> fn.fields(names).query(value));
-			default -> {
-			}
+			case RANGE -> builder.range(getRangeQuery(names, value, condition));
 		}
 		return builder.build();
+	}
+
+	private RangeQuery getRangeQuery(List<String> names, String value, Condition condition) {
+		RangeQuery.Builder rangeQueryBuilder = new RangeQuery.Builder();
+		switch (condition) {
+			case GT -> rangeQueryBuilder.queryName(names.getFirst()).gt(JsonData.fromJson(value));
+			case LT -> rangeQueryBuilder.queryName(names.getFirst()).lt(JsonData.fromJson(value));
+			case GTE -> rangeQueryBuilder.queryName(names.getFirst()).gte(JsonData.fromJson(value));
+			case LTE -> rangeQueryBuilder.queryName(names.getFirst()).lte(JsonData.fromJson(value));
+		}
+		return rangeQueryBuilder.build();
 	}
 
 	private List<BulkOperation> getBulkOperations(Map<String, Object> map) {
@@ -421,8 +436,6 @@ public class ElasticsearchTemplate {
 			case KEYWORD ->
 				mappingBuilder.properties(field, fn -> fn.keyword(t -> t.eagerGlobalOrdinals(eagerGlobalOrdinals)));
 			case LONG -> mappingBuilder.properties(field, fn -> fn.long_(t -> t));
-			default -> {
-			}
 		}
 	}
 
@@ -470,7 +483,7 @@ public class ElasticsearchTemplate {
 		// 允许访问私有属性
 		field.setAccessible(true);
 		String value = String.valueOf(field.get(obj));
-		return new Search.Field(Arrays.asList(names), value, searchField.type(), searchField.query());
+		return new Search.Field(Arrays.asList(names), value, searchField.type(), searchField.query(), searchField.condition(), Collections.emptyList());
 	}
 
 	private Search.Highlight getHighlight(Highlight highlight) {
