@@ -22,6 +22,6 @@ package org.laokou.common.elasticsearch.annotation;
  */
 public enum Query {
 
-	BOOL, SHOULD, MUST, MUST_NOT
+	SHOULD, MUST, MUST_NOT
 
 }

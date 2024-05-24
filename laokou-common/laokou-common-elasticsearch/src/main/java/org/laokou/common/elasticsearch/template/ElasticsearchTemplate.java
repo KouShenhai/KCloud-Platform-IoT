@@ -38,9 +38,11 @@ import co.elastic.clients.transport.endpoints.BooleanResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.annotation.*;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -197,9 +199,15 @@ public class ElasticsearchTemplate {
 		return elasticsearchClient.indices().exists(getExists(names)).value();
 	}
 
-	@SneakyThrows
 	public <S, R> Datas<R> search(List<String> names, int pageNum, int pageSize, S obj, Class<R> clazz) {
-		Search search = convert(obj);
+		return search(names, pageNum, pageSize, obj, null, clazz);
+	}
+
+	@SneakyThrows
+	public <S, R> Datas<R> search(List<String> names, int pageNum, int pageSize, S obj, Search search, Class<R> clazz) {
+		if (ObjectUtil.isNull(search)){
+			search = convert(obj);
+		}
 		SearchRequest searchRequest = getSearchRequest(names, pageNum, pageSize, search);
 		SearchResponse<R> response = elasticsearchClient.search(searchRequest, clazz);
 		HitsMetadata<R> hits = response.hits();
@@ -306,7 +314,6 @@ public class ElasticsearchTemplate {
 		// match模糊匹配（分词）
 		fields.forEach(item -> {
 			switch (item.getQuery()) {
-				case BOOL -> getBoolQuery(item.getChildren(), boolBuilder);
 				case MUST -> boolBuilder.must(getQuery(item));
 				case SHOULD -> boolBuilder.should(getQuery(item));
 				case MUST_NOT -> boolBuilder.mustNot(getQuery(item));
@@ -320,6 +327,10 @@ public class ElasticsearchTemplate {
 		List<String> names = field.getNames();
 		String value = field.getValue();
 		Condition condition = field.getCondition();
+		List<Search.Field> children = field.getChildren();
+		if (CollectionUtil.isNotEmpty(children)) {
+			builder.bool(getBoolQuery(children, new BoolQuery.Builder()));
+		}
 		switch (field.getType()) {
 			case TERM -> builder.term(fn -> fn.field(names.getFirst()).value(value));
 			case MATCH -> builder.match(fn -> fn.field(names.getFirst()).query(value));
