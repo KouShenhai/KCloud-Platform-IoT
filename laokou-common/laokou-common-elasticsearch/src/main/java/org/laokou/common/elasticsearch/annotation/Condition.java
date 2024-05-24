@@ -17,22 +17,8 @@
 
 package org.laokou.common.elasticsearch.annotation;
 
-import java.lang.annotation.*;
+public enum Condition {
 
-import static org.laokou.common.elasticsearch.annotation.HighlightConstant.POST_TAGS;
-import static org.laokou.common.elasticsearch.annotation.HighlightConstant.PRE_TAGS;
-
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
-public @interface Highlight {
-
-	String[] preTags() default PRE_TAGS;
-
-	String[] postTags() default POST_TAGS;
-
-	boolean requireFieldMatch() default true;
-
-	HighlightField[] fields() default {};
+	EQ, GTE, LTE, GT, LT
 
 }

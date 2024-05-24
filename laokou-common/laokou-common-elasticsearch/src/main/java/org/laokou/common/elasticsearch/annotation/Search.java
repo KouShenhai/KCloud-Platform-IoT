@@ -24,6 +24,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+import static org.laokou.common.elasticsearch.annotation.HighlightConstant.POST_TAGS;
+import static org.laokou.common.elasticsearch.annotation.HighlightConstant.PRE_TAGS;
+
 /**
  * @author laokou
  */
@@ -42,9 +45,9 @@ public class Search {
 	@AllArgsConstructor
 	public static class Highlight {
 
-		private List<String> preTags;
+		private List<String> preTags = List.of(PRE_TAGS);
 
-		private List<String> postTags;
+		private List<String> postTags = List.of(POST_TAGS);
 
 		private boolean requireFieldMatch;
 
@@ -64,6 +67,10 @@ public class Search {
 		private QueryType type;
 
 		private Query query;
+
+		private Condition condition;
+
+		private List<Field> children;
 
 	}
 

@@ -19,6 +19,8 @@ package org.laokou.common.elasticsearch.annotation;
 
 import java.lang.annotation.*;
 
+import static org.laokou.common.elasticsearch.annotation.Condition.EQ;
+
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
@@ -29,5 +31,7 @@ public @interface SearchField {
 	QueryType type();
 
 	Query query();
+
+	Condition condition() default EQ;
 
 }

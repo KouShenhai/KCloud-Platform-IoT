@@ -19,6 +19,6 @@ package org.laokou.common.elasticsearch.annotation;
 
 public enum QueryType {
 
-	MATCH, MATCH_PHRASE, QUERY_STRING, TERM
+	MATCH, MATCH_PHRASE, QUERY_STRING, TERM, RANGE
 
 }

@@ -17,22 +17,10 @@
 
 package org.laokou.common.elasticsearch.annotation;
 
-import java.lang.annotation.*;
+public interface HighlightConstant {
 
-import static org.laokou.common.elasticsearch.annotation.HighlightConstant.POST_TAGS;
-import static org.laokou.common.elasticsearch.annotation.HighlightConstant.PRE_TAGS;
+	String PRE_TAGS = "<font color='red'>";
 
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
-public @interface Highlight {
-
-	String[] preTags() default PRE_TAGS;
-
-	String[] postTags() default POST_TAGS;
-
-	boolean requireFieldMatch() default true;
-
-	HighlightField[] fields() default {};
+	String POST_TAGS = "</font>";
 
 }
