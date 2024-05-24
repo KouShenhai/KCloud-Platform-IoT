@@ -205,7 +205,7 @@ public class ElasticsearchTemplate {
 
 	@SneakyThrows
 	public <S, R> Datas<R> search(List<String> names, int pageNum, int pageSize, S obj, Search search, Class<R> clazz) {
-		if (ObjectUtil.isNull(search)){
+		if (ObjectUtil.isNull(search)) {
 			search = convert(obj);
 		}
 		SearchRequest searchRequest = getSearchRequest(names, pageNum, pageSize, search);
