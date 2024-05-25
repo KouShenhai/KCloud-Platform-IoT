@@ -16,7 +16,7 @@
     {
       "name": "spring.security.oauth2.authorization-server.ignore-patterns",
       "type": "java.util.Set<java.lang.String>",
-      "description": "忽略匹配URL.",
+      "description": "忽略URL.",
       "sourceType": "org.laokou.auth.config.OAuth2AuthorizationServerProperties"
     }
   ]
