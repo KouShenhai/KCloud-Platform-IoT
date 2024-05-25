@@ -28,6 +28,10 @@ import reactor.core.publisher.Mono;
  */
 public interface Ip {
 
+	String BLACK = "black";
+
+	String WHITE = "white";
+
 	/**
 	 * 校验IP并响应.
 	 * @param exchange 服务网络交换机

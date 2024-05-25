@@ -61,7 +61,7 @@ public class WhiteIp implements Ip {
 		if (IpUtil.internalIp(hostAddress)) {
 			return chain.filter(exchange);
 		}
-		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(Label.WHITE.getValue());
+		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(WHITE);
 		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
 			if (Boolean.FALSE.equals(r)) {
 				log.error("IP为{}被限制", hostAddress);

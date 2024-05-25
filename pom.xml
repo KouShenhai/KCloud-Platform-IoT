@@ -178,7 +178,7 @@
         <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
         <DATASOURCE-DB-NACOS>kcloud_platform_iot_nacos</DATASOURCE-DB-NACOS>
         <DATASOURCE-DB-POWER-JOB>kcloud_platform_iot_power_job</DATASOURCE-DB-POWER-JOB>
-        <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
+        <NACOS-NAMESPACE>0dac1a68-2f01-40df-bd26-bf0cb199057a</NACOS-NAMESPACE>
         <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
         <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
         <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
@@ -197,6 +197,7 @@
         <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
         <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
         <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
+        <KNIFE4J-ENABLED>true</KNIFE4J-ENABLED>
         <ROUTER-AUTH-ENABLED>false</ROUTER-AUTH-ENABLED>
         <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
         <ROUTER-AUTH-PASSWORD>laokou123</ROUTER-AUTH-PASSWORD>
@@ -237,6 +238,7 @@
         <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
         <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
         <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
+        <KNIFE4J-ENABLED>true</KNIFE4J-ENABLED>
         <ROUTER-AUTH-ENABLED>false</ROUTER-AUTH-ENABLED>
         <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
         <ROUTER-AUTH-PASSWORD>laokou123</ROUTER-AUTH-PASSWORD>
@@ -256,14 +258,11 @@
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-HOST>${DATASOURCE_HOST:postgresql.laokou.org}</DATASOURCE-HOST>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-PARAM>
-          ${DATASOURCE_PARAM:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true}
-        </DATASOURCE-PARAM>
+        <DATASOURCE-PARAM>${DATASOURCE_PARAM:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true}</DATASOURCE-PARAM>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PORT>${DATASOURCE_PORT:5432}</DATASOURCE-PORT>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-DRIVER-CLASS-NAME>${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
-        </DATASOURCE-DRIVER-CLASS-NAME>
+        <DATASOURCE-DRIVER-CLASS-NAME>${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}</DATASOURCE-DRIVER-CLASS-NAME>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PLATFORM>${DATASOURCE_PLATFORM:postgresql}</DATASOURCE-PLATFORM>
         <!--suppress UnresolvedMavenProperty -->
@@ -271,7 +270,7 @@
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-DB-POWER-JOB>${DATASOURCE_DB_POWER_JOB:kcloud_platform_iot_power_job}</DATASOURCE-DB-POWER-JOB>
         <!--suppress UnresolvedMavenProperty -->
-        <NACOS-NAMESPACE>${NACOS_NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
+        <NACOS-NAMESPACE>${NACOS_NAMESPACE:8140e92b-fb43-48f5-b63b-7506185206a5}</NACOS-NAMESPACE>
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-DISCOVERY-ADDRESS>${NACOS_DISCOVERY_ADDRESS:nacos.laokou.org}</NACOS-DISCOVERY-ADDRESS>
         <!--suppress UnresolvedMavenProperty -->
@@ -306,6 +305,7 @@
         <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
         <!--suppress UnresolvedMavenProperty -->
         <FILE-TEMP-PATH>${FILE_TEMP_PATH:/opt/temp}</FILE-TEMP-PATH>
+        <KNIFE4J-ENABLED>true</KNIFE4J-ENABLED>
         <!--suppress UnresolvedMavenProperty -->
         <ROUTER-AUTH-ENABLED>${ROUTER_AUTH_ENABLED:false}</ROUTER-AUTH-ENABLED>
         <!--suppress UnresolvedMavenProperty -->

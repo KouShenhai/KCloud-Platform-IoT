@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.gateway.filter.ip.Ip;
 import org.laokou.gateway.filter.ip.IpProperties;
-import org.laokou.gateway.filter.ip.Label;
 import org.laokou.gateway.utils.I18nReactiveUtil;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -54,12 +53,7 @@ public class IpFilter implements GlobalFilter, Ordered {
 		try {
 			// 国际化
 			I18nReactiveUtil.set(exchange);
-			if (ipProperties.isEnabled()) {
-				return validate(exchange, ipProperties.getLabel(), chain);
-			}
-			else {
-				return chain.filter(exchange);
-			}
+			return validate(exchange, chain);
 		}
 		finally {
 			I18nReactiveUtil.reset();
@@ -74,16 +68,17 @@ public class IpFilter implements GlobalFilter, Ordered {
 	/**
 	 * 校验IP并响应.
 	 * @param exchange 服务网络交换机
-	 * @param label 标签
 	 * @param chain 链式过滤器
 	 * @return 响应结果
 	 */
-	private Mono<Void> validate(ServerWebExchange exchange, String label, GatewayFilterChain chain) {
-		Label instance = Label.getInstance(label.toUpperCase());
-		return switch (instance) {
-			case WHITE -> whiteIp.validate(exchange, chain);
-			case BLACK -> blackIp.validate(exchange, chain);
-		};
+	private Mono<Void> validate(ServerWebExchange exchange, GatewayFilterChain chain) {
+		if (ipProperties.getWhite().isEnabled()) {
+			return whiteIp.validate(exchange, chain);
+		}
+		if (ipProperties.getBlack().isEnabled()) {
+			return blackIp.validate(exchange, chain);
+		}
+		return chain.filter(exchange);
 	}
 
 }

@@ -18,6 +18,8 @@
 package org.laokou.gateway.filter.ip;
 
 import lombok.Data;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -29,16 +31,37 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties(prefix = "spring.cloud.gateway.ip")
-public class IpProperties {
+public class IpProperties implements InitializingBean {
 
-	/**
-	 * 标签，默认黑名单.
-	 */
-	private String label = Label.BLACK.getValue();
+	private White white;
 
-	/**
-	 * 黑/白名单开关，默认不开启.
-	 */
-	private boolean enabled = false;
+	private Black black;
+
+	@Override
+	public void afterPropertiesSet() {
+		if (white.enabled && black.enabled) {
+			throw new SystemException("S_Gateway_IpConfigError", "IP配置错误");
+		}
+	}
+
+	@Data
+	public static class White {
+
+		/**
+		 * 白名单开关，默认不开启.
+		 */
+		private boolean enabled = false;
+
+	}
+
+	@Data
+	public static class Black {
+
+		/**
+		 * 黑名单开关，默认不开启.
+		 */
+		private boolean enabled = false;
+
+	}
 
 }

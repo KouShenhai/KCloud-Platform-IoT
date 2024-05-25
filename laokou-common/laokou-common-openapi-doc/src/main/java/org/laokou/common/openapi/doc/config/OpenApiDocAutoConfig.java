@@ -36,7 +36,7 @@ import static org.laokou.common.i18n.common.constants.Constant.AUTHORIZATION;
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnProperty(prefix = "openapi-doc", name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "springdoc.api-docs", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class OpenApiDocAutoConfig {
 
 	@Bean
