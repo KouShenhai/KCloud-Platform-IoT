@@ -34,6 +34,7 @@ import org.springframework.stereotype.Component;
 public class IpProperties implements InitializingBean {
 
 	private White white;
+
 	private Black black;
 
 	@Override
@@ -42,7 +43,6 @@ public class IpProperties implements InitializingBean {
 			throw new SystemException("S_Gateway_IpConfigError", "IP配置错误");
 		}
 	}
-
 
 	@Data
 	public static class White {

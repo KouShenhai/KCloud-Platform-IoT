@@ -29,6 +29,7 @@ import reactor.core.publisher.Mono;
 public interface Ip {
 
 	String BLACK = "black";
+
 	String WHITE = "white";
 
 	/**
