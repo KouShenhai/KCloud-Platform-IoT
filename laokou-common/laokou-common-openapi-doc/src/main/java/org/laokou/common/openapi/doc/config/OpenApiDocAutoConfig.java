@@ -27,6 +27,7 @@ import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
 import static org.laokou.common.i18n.common.constants.Constant.AUTHORIZATION;
@@ -35,6 +36,7 @@ import static org.laokou.common.i18n.common.constants.Constant.AUTHORIZATION;
  * @author laokou
  */
 @AutoConfiguration
+@ConditionalOnProperty(prefix = "springdoc.api-docs", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class OpenApiDocAutoConfig {
 
 	@Bean

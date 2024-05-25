@@ -123,10 +123,3 @@ logging:
 springdoc:
   api-docs:
     enabled: @KNIFE4J-ENABLED@
-  group-configs:
-    - group: 'default'
-      paths-to-match:
-        - '/**'
-      packages-to-scan:
-        - org.laokou.auth.web
-  default-flat-param-object: true

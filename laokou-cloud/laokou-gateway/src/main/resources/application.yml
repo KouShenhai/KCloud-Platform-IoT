@@ -143,4 +143,9 @@ knife4j:
         url: /auth/v3/api-docs?group=default
         service-name: laokou-auth
         context-path: /auth
-        order: 99
+        order: 1
+      - name: 管理服务
+        url: /admin/v3/api-docs?group=default
+        service-name: laokou-admin
+        context-path: /admin
+        order: 2

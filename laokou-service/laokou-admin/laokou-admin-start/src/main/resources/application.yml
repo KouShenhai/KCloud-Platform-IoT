@@ -89,3 +89,7 @@ logging:
 
 file:
   temp-path: @FILE-TEMP-PATH@
+
+springdoc:
+  api-docs:
+    enabled: @KNIFE4J-ENABLED@
