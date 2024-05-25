@@ -130,3 +130,17 @@ spring:
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
+
+knife4j:
+  gateway:
+    enabled: @KNIFE4J-ENABLED@
+    tags-sorter: order
+    operations-sorter: order
+    # 手动
+    strategy: manual
+    routes:
+      - name: 认证服务
+        url: /auth/v3/api-docs?group=default
+        service-name: laokou-auth
+        context-path: /auth
+        order: 99
