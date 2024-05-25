@@ -38,8 +38,8 @@ import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
  */
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "CaptchasV3Controller", description = "验证码")
 @RequestMapping("v3/captchas")
+@Tag(name = "CaptchasV3Controller", description = "验证码")
 public class CaptchasV3Controller {
 
 	private final CaptchasServiceI captchasServiceI;
