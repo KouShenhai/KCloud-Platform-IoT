@@ -35,9 +35,16 @@ public class Up0x53 extends TcpPackage {
 		short data2h = buf.readByte();
 		short data3l = buf.readByte();
 		short data3h = buf.readByte();
-		short data4l = buf.readByte();
-		short data4h = buf.readByte();
-		log.info("{} {} {} {} {} {} {} {}", data1l, data1h, data2l, data2h, data3l, data3h, data4l, data4h);
+		short data4l = buf.readUnsignedByte();
+		short data4h = buf.readUnsignedByte();
+		double roll = (double) ((data1h << 8) | data1l) / 32768 * 180;
+		double pitch = (double) ((data2h << 8) | data2l) / 32768 * 180;
+		double yaw = (double) ((data3h << 8) | data3l) / 32768 * 180;
+		double v = (data4h << 8) | data4l;
+		sensorA.setRoll(roll);
+		sensorA.setPitch(pitch);
+		sensorA.setYaw(yaw);
+		sensorA.setV(v);
 		// 跳过
 		buf.skipBytes(1);
 	}

@@ -21,12 +21,10 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import org.laokou.iot.model.SensorA;
-import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Component
 public class TcpEncoder extends MessageToByteEncoder<SensorA> {
 
 	@Override

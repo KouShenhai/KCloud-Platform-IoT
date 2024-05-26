@@ -23,6 +23,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.iot.model.SensorA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,11 +33,11 @@ import org.springframework.stereotype.Component;
 @Component
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
-public class TcpHandler extends SimpleChannelInboundHandler<Object> {
+public class TcpHandler extends SimpleChannelInboundHandler<SensorA> {
 
 	@Override
-	protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object obj) {
-		log.info("{}", JacksonUtil.toJsonStr(obj));
+	protected void channelRead0(ChannelHandlerContext channelHandlerContext, SensorA sensorA) {
+		log.info("{}", JacksonUtil.toJsonStr(sensorA));
 	}
 
 }
