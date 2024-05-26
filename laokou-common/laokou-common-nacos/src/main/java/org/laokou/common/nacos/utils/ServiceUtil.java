@@ -97,8 +97,7 @@ public class ServiceUtil {
 	 */
 	@SneakyThrows
 	public void registerInstance(String serviceName, String ip, int port) {
-		NamingService namingService = getNamingService();
-		namingService.registerInstance(serviceName, ip, port);
+		getNamingService().registerInstance(serviceName, ip, port);
 	}
 
 	/**
@@ -110,8 +109,7 @@ public class ServiceUtil {
 	 */
 	@SneakyThrows
 	public void registerInstance(String serviceName, String group, String ip, int port) {
-		NamingService namingService = getNamingService();
-		namingService.registerInstance(serviceName, group, ip, port);
+		getNamingService().registerInstance(serviceName, group, ip, port);
 	}
 
 	/**
@@ -122,8 +120,7 @@ public class ServiceUtil {
 	 */
 	@SneakyThrows
 	public void deregisterInstance(String serviceName, String ip, int port) {
-		NamingService namingService = getNamingService();
-		namingService.deregisterInstance(serviceName, ip, port);
+		getNamingService().deregisterInstance(serviceName, ip, port);
 	}
 
 	/**
@@ -135,8 +132,7 @@ public class ServiceUtil {
 	 */
 	@SneakyThrows
 	public void deregisterInstance(String serviceName, String group, String ip, int port) {
-		NamingService namingService = getNamingService();
-		namingService.deregisterInstance(serviceName, group, ip, port);
+		getNamingService().deregisterInstance(serviceName, group, ip, port);
 	}
 
 }

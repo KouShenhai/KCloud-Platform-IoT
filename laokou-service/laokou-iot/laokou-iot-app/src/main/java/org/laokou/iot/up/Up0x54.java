@@ -37,7 +37,14 @@ public class Up0x54 extends TcpPackage {
 		short data3h = buf.readByte();
 		short data4l = buf.readByte();
 		short data4h = buf.readByte();
-		log.info("{} {} {} {} {} {} {} {}", data1l, data1h, data2l, data2h, data3l, data3h, data4l, data4h);
+		double hX = (data1h << 8) | data1l;
+		double hY = (data2h << 8) | data2l;
+		double hZ = (data3h << 8) | data3l;
+		double t2 = (double) ((data4h << 8) | data4l) / 100;
+		sensorA.setHX(hX);
+		sensorA.setHY(hY);
+		sensorA.setHZ(hZ);
+		sensorA.setT2(t2);
 		// 跳过
 		buf.skipBytes(1);
 	}

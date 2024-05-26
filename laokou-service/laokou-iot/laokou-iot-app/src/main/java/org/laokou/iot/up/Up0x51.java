@@ -37,7 +37,14 @@ public class Up0x51 extends TcpPackage {
 		short data3h = buf.readByte();
 		short data4l = buf.readByte();
 		short data4h = buf.readByte();
-		log.info("{} {} {} {} {} {} {} {}", data1l, data1h, data2l, data2h, data3l, data3h, data4l, data4h);
+		double aX = (double) ((data1h << 8) | data1l) / 32768 * 16 * 9.8;
+		double aY = (double) ((data2h << 8) | data2l) / 32768 * 16 * 9.8;
+		double aZ = (double) ((data3h << 8) | data3l) / 32768 * 16 * 9.8;
+		double t1 = (double) ((data4h << 8) | data4l) / 100;
+		sensorA.setAX(aX);
+		sensorA.setAY(aY);
+		sensorA.setAZ(aZ);
+		sensorA.setT1(t1);
 		// 跳过
 		buf.skipBytes(1);
 	}

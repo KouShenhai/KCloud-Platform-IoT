@@ -18,12 +18,30 @@
 package org.laokou.iot.model;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.AggregateRoot;
 
 /**
  * @author laokou
  */
 @Data
-public class SensorA extends AggregateRoot<Long> {
+public class SensorA {
+
+	private String dateTime;
+	private Double aX;
+	private Double aY;
+	private Double aZ;
+	private Double t1;
+	private Double wX;
+	private Double wY;
+	private Double wZ;
+	private Double vol;
+	private Double roll;
+	private Double pitch;
+	private Double yaw;
+	private Double v;
+	private Double hX;
+	private Double hY;
+	private Double hZ;
+	private Double t2;;
+
 
 }

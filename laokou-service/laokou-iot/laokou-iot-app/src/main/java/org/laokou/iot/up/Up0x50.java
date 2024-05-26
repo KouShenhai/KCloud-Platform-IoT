@@ -29,14 +29,14 @@ public class Up0x50 extends TcpPackage {
 
 	@Override
 	public void convert(ByteBuf buf, SensorA sensorA) {
-		short data1l = buf.readByte();
-		short data1h = buf.readByte();
-		short data2l = buf.readByte();
-		short data2h = buf.readByte();
-		short data3l = buf.readByte();
-		short data3h = buf.readByte();
-		short data4l = buf.readByte();
-		short data4h = buf.readByte();
+		short data1l = buf.readUnsignedByte();
+		short data1h = buf.readUnsignedByte();
+		short data2l = buf.readUnsignedByte();
+		short data2h = buf.readUnsignedByte();
+		short data3l = buf.readUnsignedByte();
+		short data3h = buf.readUnsignedByte();
+		short data4l = buf.readUnsignedByte();
+		short data4h = buf.readUnsignedByte();
 		String year = "20" + data1l;
 		String month = data1h > 9 ? "" + data1h : "0" + data1h;
 		String day = data2l > 9 ? "" + data2l : "0" + data2l;
@@ -55,7 +55,7 @@ public class Up0x50 extends TcpPackage {
 			millisecond = "" + msc;
 		}
 		String dateTime = String.format("%s-%s-%s %s:%s:%s.%s", year, month, day, hour, minute, second, millisecond);
-		log.info(dateTime);
+		sensorA.setDateTime(dateTime);
 		// 跳过
 		buf.skipBytes(1);
 	}

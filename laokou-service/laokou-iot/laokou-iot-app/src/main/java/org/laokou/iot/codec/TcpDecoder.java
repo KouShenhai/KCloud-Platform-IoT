@@ -25,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.iot.factory.PackageFactory;
 import org.laokou.iot.model.SensorA;
 import org.laokou.iot.up.TcpPackage;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -33,7 +32,6 @@ import java.util.List;
  * @author laokou
  */
 @Slf4j
-@Component
 public class TcpDecoder extends ByteToMessageDecoder {
 
 	@Override
