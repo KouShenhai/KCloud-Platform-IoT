@@ -17,7 +17,6 @@
 
 package org.laokou.common.secret.aop;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
@@ -26,29 +25,40 @@ import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.secret.utils.SecretUtil;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MultiValueMap;
+
+import java.util.Map;
 
 /**
  * @author laokou
  */
-@Component
-@Aspect
 @Slf4j
+@Aspect
+@Component
 public class ApiSecretAop {
 
-	@Schema(name = "NONCE", description = "随机字符")
+	/**
+	 * 随机字符.
+	 */
 	public static final String NONCE = "nonce";
 
-	@Schema(name = "SIGN", description = "签名（MD5）")
+	/**
+	 * 签名（MD5）.
+	 */
 	public static final String SIGN = "sign";
 
-	@Schema(name = "TIMESTAMP", description = "时间戳")
+	/**
+	 * 时间戳.
+	 */
 	public static final String TIMESTAMP = "timestamp";
 
-	@Schema(name = "APP_KEY", description = "应用标识")
+	/**
+	 * 应用标识.
+	 */
 	public static final String APP_KEY = "app-key";
 
-	@Schema(name = "APP_SECRET", description = "应用密钥")
+	/**
+	 * 应用密钥.
+	 */
 	public static final String APP_SECRET = "app-secret";
 
 	@Before("@annotation(org.laokou.common.secret.annotation.ApiSecret)")
@@ -59,8 +69,8 @@ public class ApiSecretAop {
 		String sign = request.getHeader(SIGN);
 		String appKey = request.getHeader(APP_KEY);
 		String appSecret = request.getHeader(APP_SECRET);
-		MultiValueMap<String, String> multiValueMap = MapUtil.getParameters(request);
-		SecretUtil.verification(appKey, appSecret, sign, nonce, timestamp, multiValueMap.toSingleValueMap());
+		Map<String, String> parameterMap = MapUtil.getParameters(request);
+		SecretUtil.verification(appKey, appSecret, sign, nonce, timestamp, parameterMap);
 	}
 
 }

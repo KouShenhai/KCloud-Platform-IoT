@@ -17,9 +17,9 @@
 
 package org.laokou.common.secret.utils;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
@@ -33,10 +33,14 @@ import java.util.Map;
 @Component
 public class SecretUtil {
 
-	@Schema(name = "APP_KEY", description = "应用Key")
-	public static final String APP_KEY = "laokou2023";
+	/**
+	 * 应用Key.
+	 */
+	public static final String APP_KEY = "laokou2024";
 
-	@Schema(name = "APP_SECRET", description = "应用密钥")
+	/**
+	 * 应用密钥.
+	 */
 	public static final String APP_SECRET = "vb05f6c45d67340zaz95v7fa6d49v99zx";
 
 	private static final long TIMEOUT_MILLIS = 60 * 1000L;
@@ -44,22 +48,25 @@ public class SecretUtil {
 	public static void verification(String appKey, String appSecret, String sign, String nonce, String timestamp,
 			Map<String, String> map) {
 		if (StringUtil.isEmpty(appKey)) {
-			throw new RuntimeException("appKey不为空");
+			throw new SystemException("S_Api_AppKeyIsNull", "appKey不为空");
 		}
 		if (StringUtil.isEmpty(appSecret)) {
-			throw new RuntimeException("appSecret不为空");
+			throw new SystemException("S_Api_AppKeyIsNull", "appSecret不为空");
 		}
 		if (StringUtil.isEmpty(nonce)) {
-			throw new RuntimeException("nonce不为空");
+			throw new SystemException("S_Api_NonceIsNull", "nonce不为空");
 		}
 		if (StringUtil.isEmpty(timestamp)) {
-			throw new RuntimeException("timestamp不为空");
+			throw new SystemException("S_Api_TimestampIsNull", "timestamp不为空");
+		}
+		if (StringUtil.isEmpty(sign)) {
+			throw new SystemException("S_Api_SignIsNull", "sign不能为空");
 		}
 		if (!APP_KEY.equals(appKey)) {
-			throw new RuntimeException("appKey不存在");
+			throw new SystemException("S_Api_AppKeyNotExist", "appKey不存在");
 		}
 		if (!APP_SECRET.equals(appSecret)) {
-			throw new RuntimeException("appSecret不存在");
+			throw new SystemException("S_Api_AppSecretNotExist", "appSecret不存在");
 		}
 		long ts = Long.parseLong(timestamp);
 		// 判断时间戳
@@ -67,15 +74,12 @@ public class SecretUtil {
 		long maxTimestamp = ts + TIMEOUT_MILLIS;
 		long minTimestamp = ts - TIMEOUT_MILLIS;
 		if (nowTimestamp > maxTimestamp || nowTimestamp < minTimestamp) {
-			throw new RuntimeException("timestamp已过期");
-		}
-		if (StringUtil.isEmpty(sign)) {
-			throw new RuntimeException("sign不能为空");
+			throw new SystemException("S_Api_TimestampIsExpired", "timestamp已过期");
 		}
 		String params = MapUtil.parseParams(map, false);
 		String newSing = sign(appKey, appSecret, nonce, ts, params);
 		if (!sign.equals(newSing)) {
-			throw new RuntimeException("Api验签失败，请检查配置");
+			throw new SystemException("S_Api_CheckSignFail", "Api验签失败");
 		}
 	}
 
@@ -87,7 +91,7 @@ public class SecretUtil {
 	 * @param params 参数
 	 * @param timestamp 时间戳
 	 */
-	private static String sign(String appKey, String appSecret, String nonce, long timestamp, String params) {
+	public static String sign(String appKey, String appSecret, String nonce, long timestamp, String params) {
 		String str = appKey.concat(appSecret).concat(nonce).concat(String.valueOf(timestamp)).concat(params);
 		return DigestUtils.md5DigestAsHex(str.getBytes(StandardCharsets.UTF_8));
 	}
