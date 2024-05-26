@@ -18,17 +18,38 @@
 package org.laokou.api.web;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.secret.annotation.ApiSecret;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
+@Slf4j
 @RestController
-@Tag(name = "ApisController", description = "API管理")
 @RequiredArgsConstructor
-@RequestMapping("v1/apis")
+@Tag(name = "ApisController", description = "API管理")
 public class ApisController {
+
+	@ApiSecret
+	@PostMapping("v3/apis")
+	public void test(@RequestBody Test test) {
+		log.info("{}", test);
+	}
+
+	@Data
+	public static class Test implements Serializable {
+
+		private String id;
+
+		private String name;
+
+	}
 
 }

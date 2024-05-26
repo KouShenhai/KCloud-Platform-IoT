@@ -19,10 +19,14 @@ package org.laokou.common.core.utils;
 
 import eu.bitwalker.useragentutils.UserAgent;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.SneakyThrows;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 import static org.laokou.common.i18n.common.constants.TraceConstant.DOMAIN_NAME;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
@@ -60,6 +64,18 @@ public class RequestUtil {
 	 */
 	public static UserAgent getUserAgent(HttpServletRequest request) {
 		return UserAgent.parseUserAgentString(request.getHeader(USER_AGENT));
+	}
+
+	@SneakyThrows
+	public static String getRequestBody(HttpServletRequest request) {
+		StringBuilder sb = new StringBuilder();
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+			}
+		}
+		return sb.toString();
 	}
 
 }
