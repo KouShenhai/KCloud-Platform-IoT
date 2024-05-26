@@ -25,7 +25,7 @@
     <!--logstash-logback-encoder版本-->
     <logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
     <!--druid版本-->
-    <druid.version>1.2.22</druid.version>
+    <druid.version>1.2.23</druid.version>
     <!--jcommander版本-->
     <jcommander.version>1.82</jcommander.version>
     <!--jraft-core版本-->
