@@ -26,22 +26,37 @@ import lombok.Data;
 public class SensorA {
 
 	private String dateTime;
-	private Double aX;
-	private Double aY;
-	private Double aZ;
-	private Double t1;
-	private Double wX;
-	private Double wY;
-	private Double wZ;
-	private Double vol;
-	private Double roll;
-	private Double pitch;
-	private Double yaw;
-	private Double v;
-	private Double hX;
-	private Double hY;
-	private Double hZ;
-	private Double t2;;
 
+	private Double aX;
+
+	private Double aY;
+
+	private Double aZ;
+
+	private Double t1;
+
+	private Double wX;
+
+	private Double wY;
+
+	private Double wZ;
+
+	private Double vol;
+
+	private Double roll;
+
+	private Double pitch;
+
+	private Double yaw;
+
+	private Double v;
+
+	private Double hX;
+
+	private Double hY;
+
+	private Double hZ;
+
+	private Double t2;
 
 }
