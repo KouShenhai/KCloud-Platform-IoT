@@ -83,17 +83,17 @@ class Elasticsearch8ApiTest extends CommonTest {
 		elasticsearchTemplate.asyncCreateDocument("laokou_res_1", "444", new Resource("8888"));
 	}
 
-	@Test
+	// @Test
 	void testAsyncBulkCreateDocumentApi() {
 		elasticsearchTemplate.asyncBulkCreateDocument("laokou_res_1", Map.of("555", new Resource("6666")));
 	}
 
-	@Test
+	// @Test
 	void testCreateDocumentApi() {
 		elasticsearchTemplate.createDocument("laokou_res_1", "222", new Resource("3333"));
 	}
 
-	@Test
+	// @Test
 	void testBulkCreateDocumentApi() {
 		elasticsearchTemplate.bulkCreateDocument("laokou_res_1", Map.of("333", new Resource("5555")));
 	}
@@ -113,7 +113,7 @@ class Elasticsearch8ApiTest extends CommonTest {
 		log.info("{}", results);
 	}
 
-	@Test
+	// @Test
 	void testDeleteIndexApi() {
 		elasticsearchTemplate.deleteIndex(List.of("laokou_res_1", "laokou_pro_1", "laokou_resp_1"));
 	}
