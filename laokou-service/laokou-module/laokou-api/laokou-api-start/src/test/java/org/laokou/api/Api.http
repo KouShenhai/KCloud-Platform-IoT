@@ -1,0 +1,29 @@
+#/**
+# * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+# * <p>
+# * Licensed under the Apache License, Version 2.0 (the "License");
+# * you may not use this file except in compliance with the License.
+# * You may obtain a copy of the License at
+# * <p>
+# *   http://www.apache.org/licenses/LICENSE-2.0
+# * <p>
+# * Unless required by applicable law or agreed to in writing, software
+# * distributed under the License is distributed on an "AS IS" BASIS,
+# * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# * See the License for the specific language governing permissions and
+# * limitations under the License.
+# */
+POST http://127.0.0.1:10004/v3/apis
+Content-Type: application/json
+app-key: laokou2024
+app-secret: vb05f6c45d67340zaz95v7fa6d49v99zx
+timestamp: 1716691134115
+nonce: laokou
+sign: 0da2e731777621d5ccbe7940ba68c1dd
+
+{
+    "id": "1",
+    "name": "laokou"
+}
+
+#######

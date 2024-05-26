@@ -15,21 +15,17 @@
  *
  */
 
-package org.laokou.api;
+package org.laokou.common.secret.annotation;
 
-import org.laokou.common.secret.annotation.EnableApiSecret;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.laokou.common.secret.filter.RequestFilter;
+import org.springframework.context.annotation.Import;
 
-/**
- * @author laokou
- */
-@EnableApiSecret
-@SpringBootApplication(scanBasePackages = "org.laokou")
-public class ApiApp {
+import java.lang.annotation.*;
 
-	public static void main(String[] args) {
-		SpringApplication.run(ApiApp.class, args);
-	}
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import({ RequestFilter.class })
+public @interface EnableApiSecret {
 
 }
