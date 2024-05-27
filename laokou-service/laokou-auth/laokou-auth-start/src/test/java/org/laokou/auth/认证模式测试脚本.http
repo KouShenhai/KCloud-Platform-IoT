@@ -13,6 +13,7 @@
 # * See the License for the specific language governing permissions and
 # * limitations under the License.
 # */
+
 # 用户名密码登录
 # https://datatracker.ietf.org/doc/html/rfc6749#section-1.3
 POST {{schema}}{{host}}/oauth2/token
