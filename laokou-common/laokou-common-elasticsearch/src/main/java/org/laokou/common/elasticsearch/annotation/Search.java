@@ -40,6 +40,8 @@ public class Search {
 
 	private List<Field> fields;
 
+	private co.elastic.clients.elasticsearch._types.query_dsl.Query query;
+
 	@Data
 	@NoArgsConstructor
 	@AllArgsConstructor
@@ -68,9 +70,7 @@ public class Search {
 
 		private Query query;
 
-		private Condition condition;
-
-		private List<Field> children;
+		private Condition condition = Condition.EQ;
 
 	}
 
@@ -81,9 +81,9 @@ public class Search {
 
 		private String name;
 
-		private Integer numberOfFragments;
+		private Integer numberOfFragments = 0;
 
-		private Integer fragmentSize;
+		private Integer fragmentSize = 0;
 
 	}
 

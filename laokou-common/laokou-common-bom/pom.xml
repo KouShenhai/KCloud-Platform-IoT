@@ -116,12 +116,6 @@
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
-
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-reactive</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
       <dependency>
         <groupId>com.github.xiaoymin</groupId>
         <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
