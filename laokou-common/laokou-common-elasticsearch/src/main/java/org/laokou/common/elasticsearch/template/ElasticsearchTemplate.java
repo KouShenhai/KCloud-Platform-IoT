@@ -38,7 +38,6 @@ import co.elastic.clients.transport.endpoints.BooleanResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.annotation.*;
 import org.laokou.common.i18n.dto.Datas;
@@ -51,7 +50,6 @@ import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -200,14 +198,11 @@ public class ElasticsearchTemplate {
 	}
 
 	public <S, R> Datas<R> search(List<String> names, int pageNum, int pageSize, S obj, Class<R> clazz) {
-		return search(names, pageNum, pageSize, obj, null, clazz);
+		return search(names, pageNum, pageSize, convert(obj), clazz);
 	}
 
 	@SneakyThrows
-	public <S, R> Datas<R> search(List<String> names, int pageNum, int pageSize, S obj, Search search, Class<R> clazz) {
-		if (ObjectUtil.isNull(search)) {
-			search = convert(obj);
-		}
+	public <R> Datas<R> search(List<String> names, int pageNum, int pageSize, Search search, Class<R> clazz) {
 		SearchRequest searchRequest = getSearchRequest(names, pageNum, pageSize, search);
 		SearchResponse<R> response = elasticsearchClient.search(searchRequest, clazz);
 		HitsMetadata<R> hits = response.hits();
@@ -254,6 +249,8 @@ public class ElasticsearchTemplate {
 	}
 
 	private SearchRequest getSearchRequest(List<String> names, int pageNum, int pageSize, Search search) {
+		// 查询条件
+		Query query = search.getQuery();
 		SearchRequest.Builder builder = new SearchRequest.Builder();
 		builder.index(names);
 		builder.from((pageNum - 1) * pageSize);
@@ -267,7 +264,7 @@ public class ElasticsearchTemplate {
 		// 匹配度倒排，数值越大匹配度越高
 		builder.sort(fn -> fn.score(s -> s.order(SortOrder.Desc)));
 		builder.highlight(getHighlight(search.getHighlight()));
-		builder.query(getQuery(search.getFields()));
+		builder.query(ObjectUtil.isNull(query) ? getQuery(search.getFields()) : query);
 		return builder.build();
 	}
 
@@ -327,10 +324,6 @@ public class ElasticsearchTemplate {
 		List<String> names = field.getNames();
 		String value = field.getValue();
 		Condition condition = field.getCondition();
-		List<Search.Field> children = field.getChildren();
-		if (CollectionUtil.isNotEmpty(children)) {
-			builder.bool(getBoolQuery(children, new BoolQuery.Builder()));
-		}
 		switch (field.getType()) {
 			case TERM -> builder.term(fn -> fn.field(names.getFirst()).value(value));
 			case MATCH -> builder.match(fn -> fn.field(names.getFirst()).query(value));
@@ -473,7 +466,7 @@ public class ElasticsearchTemplate {
 			Highlight highlight = clazz.getAnnotation(Highlight.class);
 			h = getHighlight(highlight);
 		}
-		return new Search(h, getSearchFields(obj, clazz));
+		return new Search(h, getSearchFields(obj, clazz), null);
 	}
 
 	private <S> List<Search.Field> getSearchFields(S obj, Class<?> clazz) {
@@ -495,7 +488,7 @@ public class ElasticsearchTemplate {
 		field.setAccessible(true);
 		String value = String.valueOf(field.get(obj));
 		return new Search.Field(Arrays.asList(names), value, searchField.type(), searchField.query(),
-				searchField.condition(), Collections.emptyList());
+				searchField.condition());
 	}
 
 	private Search.Highlight getHighlight(Highlight highlight) {
