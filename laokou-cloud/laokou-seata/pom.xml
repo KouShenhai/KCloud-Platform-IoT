@@ -17,7 +17,7 @@
     <!--kafka-appender版本-->
     <kafka-appender.version>0.2.0-RC2</kafka-appender.version>
     <!--jedis版本-->
-    <jedis.version>5.1.3</jedis.version>
+    <jedis.version>3.10.0</jedis.version>
     <!--mock-jedis版本-->
     <mock-jedis.version>0.3.1</mock-jedis.version>
     <!--fastjson版本-->
