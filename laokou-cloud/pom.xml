@@ -35,5 +35,6 @@
     <module>laokou-register</module>
     <module>laokou-seata</module>
     <module>laokou-sentinel</module>
+    <module>laokou-power-job</module>
   </modules>
 </project>
