@@ -34,3 +34,6 @@ spring:
       - /55/D1PGLPG58KZ2/upgrade/get
       - /55/D1PGLPG58KZ2/monitor/get
       - /55/D1PGLPG58KZ2/ntp/get
+  datasource:
+    dynamic:
+      strict: false
