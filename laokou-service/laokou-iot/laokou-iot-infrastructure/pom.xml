@@ -17,6 +17,20 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-mqtt</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-mybatis-plus</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.postgresql</groupId>
+          <artifactId>postgresql</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.taosdata.jdbc</groupId>
+      <artifactId>taos-jdbcdriver</artifactId>
+    </dependency>
   </dependencies>
 
 </project>
