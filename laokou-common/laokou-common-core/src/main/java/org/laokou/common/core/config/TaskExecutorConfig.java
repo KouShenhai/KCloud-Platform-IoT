@@ -18,7 +18,6 @@
 package org.laokou.common.core.config;
 
 import com.alibaba.ttl.threadpool.TtlExecutors;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -42,10 +41,14 @@ import static org.laokou.common.i18n.common.constants.StringConstant.TRUE;
 @RequiredArgsConstructor
 public class TaskExecutorConfig {
 
-	@Schema(name = "THREAD_POOL_TASK_EXECUTOR_NAME", description = "线程池名称")
+	/**
+	 * 线程池名称.
+	 */
 	public static final String THREAD_POOL_TASK_EXECUTOR_NAME = "executor";
 
-	@Schema(name = "THREADS_VIRTUAL_ENABLED", description = "虚拟线程开关")
+	/**
+	 * 虚拟线程开关.
+	 */
 	public static final String THREADS_VIRTUAL_ENABLED = "threads.virtual.enabled";
 
 	@Bean(THREAD_POOL_TASK_EXECUTOR_NAME)

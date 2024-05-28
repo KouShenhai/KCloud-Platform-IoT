@@ -33,7 +33,7 @@ public class SpringTaskExecutionProperties {
 
 	private String threadNamePrefix = "ttl-task-";
 
-	private Pool pool;
+	private Pool pool = new Pool();
 
 	@Data
 	public static class Pool {
