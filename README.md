@@ -51,27 +51,27 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 
 ### ✂ 技术体系
 #### 🎯 Spring全家桶及核心技术版本
-| 组件                          | 版本            |
-|:----------------------------|:--------------|
-| Spring Boot                 | 3.3.0         |
-| Spring Cloud                | 2023.0.1      |
-| Spring Cloud Alibaba        | 2023.0.1.0    |
-| Spring Boot Admin           | 3.2.3         |
-| Spring Authorization Server | 1.3.0         |
-| Mybatis Plus                | 3.5.6         |
-| Nacos                       | 2.3.2         |
-| Seata                       | 2.0.0         |
-| Sentinel                    | 1.8.7         |
-| Redis                       | 7.2.5         |
-| Elasticsearch               | 8.13.4        |
-| RocketMQ                    | 5.2.0         |
-| OpenResty                   | 1.21.4.1      |
-| Netty                       | 4.1.110.Final |
-| Kafka                       | 3.7.0         |
-| EMQX                        | 5.7.0         |
-| Postgresql                  | 16.3          |
-| Flyway                      | 10.13.0       |
-| Canal                       | 1.1.7         |
+| 组件                          | 版本             |
+|:----------------------------|:---------------|
+| Spring Boot                 | 3.3.0          |
+| Spring Cloud                | 2023.0.1       |
+| Spring Cloud Alibaba        | 2023.0.1.0     |
+| Spring Boot Admin           | 3.2.3          |
+| Spring Authorization Server | 1.3.0          |
+| Mybatis Plus                | 3.5.6          |
+| Nacos                       | 2.3.2          |
+| Seata                       | 2.0.0          |
+| Sentinel                    | 1.8.7          |
+| Redis                       | 7.2.5          |
+| Elasticsearch               | 8.13.4         |
+| RocketMQ                    | 5.2.0          |
+| OpenResty                   | 1.21.4.1       |
+| Netty                       | 4.1.110.Final  |
+| Kafka                       | 3.7.0          |
+| EMQX                        | 5.7.0          |
+| Postgresql                  | 16.3           |
+| Flyway                      | 10.13.0        |
+| TDengine                    | 3.3.0.3        |
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
@@ -97,8 +97,8 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - JSON序列化：Jackson
 - 对象转换：MapStruct
 - 数据库：Postgresql
+- 时序数据库：TDengine
 - 数据库迁移：Flyway
-- 数据同步：Canal
 
 #### 🌴 项目结构
 ~~~
@@ -133,6 +133,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
         └── laokou-common-data-cache               --- 数据缓存组件  
         └── laokou-common-mybatis-plus             --- 对象映射组件  
         └── laokou-common-seata                    --- 分布式事务组件  
+        └── laokou-common-tdengine                 --- 时序数据库组件  
         └── laokou-common-sentinel                 --- 服务限流&熔断降级组件  
 ├── laokou-cloud  
         └── laokou-gateway                         --- API网关  
