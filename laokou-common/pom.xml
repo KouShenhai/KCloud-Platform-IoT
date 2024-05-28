@@ -64,6 +64,7 @@
     <module>laokou-common-log</module>
     <module>laokou-common-test</module>
     <module>laokou-common-extension</module>
+      <module>laokou-common-tdengine</module>
   </modules>
 
 </project>

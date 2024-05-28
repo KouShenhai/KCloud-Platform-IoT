@@ -15,6 +15,24 @@
 #  */
 version: '3'
 services:
+  # web控制台地址：http://127.0.0.1:6060
+  # root/taosdata
+  tdengine:
+    image: tdengine/tdengine:3.3.0.3
+    container_name: tdengine
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "6030-6060:6030-6060/udp"
+      - "6030-6060:6030-6060"
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./tdengine/data:/var/lib/taos
+      - ./tdengine/logs:/var/log/taos
+    network_mode: bridge
   emqx:
     image: emqx/emqx:5.7.0
     container_name: emqx

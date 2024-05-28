@@ -34,3 +34,12 @@ spring:
       - /55/D1PGLPG58KZ2/upgrade/get
       - /55/D1PGLPG58KZ2/monitor/get
       - /55/D1PGLPG58KZ2/ntp/get
+  datasource:
+    dynamic:
+      strict: false
+      datasource:
+        td:
+          driver-class-name: com.taosdata.jdbc.rs.RestfulDriver
+          url: jdbc:TAOS-RS://tdengine.laokou.org:6041/kcloud_platform_iot?useSSL=false
+          username: root
+          password: taosdata

@@ -104,7 +104,8 @@ class Elasticsearch8ApiTest extends CommonTest {
 			Map<String, IndexState> result = elasticsearchTemplate
 				.getIndex(List.of("laokou_res_1", "laokou_pro_1", "laokou_resp_1"));
 			log.info("索引信息：{}", JacksonUtil.toJsonStr(result));
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("{}", e.getMessage(), e);
 		}
 	}
@@ -114,9 +115,10 @@ class Elasticsearch8ApiTest extends CommonTest {
 		try {
 			ResourceSearch resource = new ResourceSearch("任贤齐");
 			Datas<Result> results = elasticsearchTemplate.search(List.of("laokou_res", "laokou_res_1"), 1, 1, resource,
-				Result.class);
+					Result.class);
 			log.info("{}", results);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("{}", e.getMessage(), e);
 		}
 	}
