@@ -146,11 +146,9 @@ public class MybatisPlusAutoConfig {
 	}
 
 	private Properties properties(ConfigurableEnvironment environment) {
-		String appName = getApplicationId(environment);
-		long millis = 0;
 		Properties properties = new Properties();
-		properties.setProperty("appName", appName);
-		properties.setProperty("millis", String.valueOf(millis));
+		properties.setProperty("appName", getApplicationId(environment));
+		properties.setProperty("millis", "0");
 		return properties;
 	}
 
