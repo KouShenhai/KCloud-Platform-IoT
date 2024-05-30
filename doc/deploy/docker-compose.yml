@@ -58,7 +58,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./postgresql/data:/var/lib/postgresql/data
+      - ./postgresql16/data:/var/lib/postgresql/data
+      - ./postgresql16/kcloud_platform_iot.sql:/docker-entrypoint-initdb.d/kcloud_platform_iot.sql
+      - ./postgresql16/kcloud_platform_iot_nacos.sql:/docker-entrypoint-initdb.d/kcloud_platform_iot_nacos.sql
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=laokou123
