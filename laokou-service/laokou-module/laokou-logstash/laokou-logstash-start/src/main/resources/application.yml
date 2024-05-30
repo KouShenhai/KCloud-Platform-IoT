@@ -36,9 +36,11 @@ server:
 spring:
   application:
     name: @pom.parent.artifactId@
-  profiles:
-    # 环境 dev|test|prod
-    active: @PROFILE-ACTIVE@
+  config:
+    activate:
+      on-profile:
+        # dev|test|prod
+        - @PROFILE-ACTIVE@
   cloud:
     # loadbalancer
     loadbalancer:
