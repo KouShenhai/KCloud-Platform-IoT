@@ -59,8 +59,6 @@ services:
       - "5432:5432"
     volumes:
       - ./postgresql16/data:/var/lib/postgresql/data
-      - ./postgresql16/kcloud_platform_iot.sql:/docker-entrypoint-initdb.d/kcloud_platform_iot.sql
-      - ./postgresql16/kcloud_platform_iot_nacos.sql:/docker-entrypoint-initdb.d/kcloud_platform_iot_nacos.sql
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=laokou123
@@ -144,12 +142,12 @@ services:
       - "10911:10911"
       - "10909:10909"
       - "10912:10912"
-    command: sh mqbroker -n 192.168.30.1:9876 -c /home/rocketmq/config/broker.config autoCreateTopicEnable=true
+    command: sh mqbroker -n 192.168.30.1:9876 -c /home/rocketmq/conf/broker.conf autoCreateTopicEnable=true
     environment:
       - JAVA_OPT_EXT=-server -Xmx256m -Xms256m -Xmn128m
       - TZ=Asia/Shanghai
     volumes:
-      - ./rocketmq5/broker/config/broker.config:/home/rocketmq/config/broker.config
+      - ./rocketmq5/broker/conf/broker.conf:/home/rocketmq/conf/broker.conf
     network_mode: bridge
     depends_on:
       - rocketmq-namesrv
