@@ -25,11 +25,9 @@ spring:
     app-name: ${spring.application.name}-server
   application:
     name: @pom.parent.artifactId@
-  config:
-    activate:
-      on-profile:
-        # dev|test|prod
-        - @PROFILE-ACTIVE@
+  profiles:
+    # 环境 dev|test|prod
+    active: @PROFILE-ACTIVE@
   webflux:
     multipart:
       max-in-memory-size: -1
