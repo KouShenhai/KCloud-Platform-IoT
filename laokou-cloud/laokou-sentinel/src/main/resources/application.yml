@@ -44,8 +44,5 @@ server:
 spring:
   application:
     name: @pom.artifactId@
-  config:
-    activate:
-      on-profile:
-        # dev|test|prod
-        - @PROFILE-ACTIVE@
+  profiles:
+    active: @PROFILE-ACTIVE@

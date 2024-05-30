@@ -38,11 +38,9 @@ spring:
       enabled: true
   application:
     name: @artifactId@
-  config:
-    activate:
-      on-profile:
-        # dev|test|prod
-        - @PROFILE-ACTIVE@
+  # dev|test|prod
+  profiles:
+    active: @PROFILE-ACTIVE@
   cloud:
     config:
       initialize-on-context-refresh: true
