@@ -19,7 +19,6 @@ package org.laokou.iot.test2;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.laokou.mqtt.template.MqttTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
