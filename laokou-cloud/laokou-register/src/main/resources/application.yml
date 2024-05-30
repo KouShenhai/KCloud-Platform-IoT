@@ -121,8 +121,11 @@ server:
 spring:
   application:
     name: @pom.artifactId@
-  profiles:
-    active: @PROFILE-ACTIVE@
+  config:
+    activate:
+      on-profile:
+        # dev|test|prod
+        - @PROFILE-ACTIVE@
   sql:
     init:
       platform: @DATASOURCE-PLATFORM@
