@@ -1,12 +1,12 @@
 ### 🎉 项目备注
-项目：KCloud-Platform-IoT  
+项目：KCloud-Platform-IoT（阻塞式）  
 作者：老寇  
 语言：Java  
 时间：2022.06.15 ~ 至今  
 
 ### 📣 项目介绍
 <p align="center"><img src="doc/image/logo.png" width="625" height="205" alt="图标"/></p>
-KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的IoT云平台。基于Spring Boot 3.3.0、Spring Cloud 2023.0.1、Spring Cloud Alibaba 2023.0.1.0 最新版本开发的云服务多租户IoT平台。
+KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微服务架构的IoT云平台。基于Spring Boot 3.3.0、Spring Cloud 2023.0.2、Spring Cloud Alibaba 2023.0.1.0 最新版本开发的云服务多租户IoT平台。
 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、灰度路由、服务限流、熔断降级、监控报警、多数据源、高亮搜索、定时任务、分布式链路、分布式缓存、分布式事务、分布式存储、分布式锁等功能，用于快速构建微服务项目。目前支持Shell、Docker等多种部署方式，并且支持GraalVM和虚拟线程。实现RBAC权限、其中包含系统管理、系统监控、数据分析等几大模块。
 遵循阿里代码规范，采用RESTFul设计风格及DDD(领域驱动设计)思想，代码简洁、架构清晰，非常适合作为基础框架使用。
 <p align="center">
@@ -17,7 +17,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 	<a target="_blank" href="https://gitee.com/laokouyun/KCloud-Platform-IoT/stargazers"><img src="https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/star.svg?theme=dark" alt="Gitee Star"></a>
     <a target="_blank" href="https://gitee.com/laokouyun/KCloud-Platform-IoT"><img src="https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark"  alt="Gitee Fork"></a>
     <a target="_blank" href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/static/v1?label=Spring Boot&message=3.3.0&color=green" alt="SpringBoot"></a>
-    <a target="_blank" href="https://spring.io/projects/spring-cloud"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2023.0.1&color=green"></a>
+    <a target="_blank" href="https://spring.io/projects/spring-cloud"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2023.0.2&color=green"></a>
     <a target="_blank" href="https://github.com/alibaba/spring-cloud-alibaba"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud Alibaba&message=2023.0.1.0&color=orange"></a>
     <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.3.0&color=blue"></a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java17"><img alt="JDK" src="https://img.shields.io/badge/GraalVM-21.0.1-blue.svg"/></a>
@@ -40,6 +40,9 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 ### 😎 开发计划
 [开发计划（需要登录）](https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2)
 
+### 🎁 项目推荐
+[作者的另一个开源IoT项目（响应式）](https://github.com/KouShenhai/KCloud-Platform-Reactive-IoT)
+
 ### 💪 版本号
 特此说明，与Spring Boot版本保持一致
 
@@ -51,27 +54,27 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 
 ### ✂ 技术体系
 #### 🎯 Spring全家桶及核心技术版本
-| 组件                          | 版本             |
-|:----------------------------|:---------------|
-| Spring Boot                 | 3.3.0          |
-| Spring Cloud                | 2023.0.1       |
-| Spring Cloud Alibaba        | 2023.0.1.0     |
-| Spring Boot Admin           | 3.2.3          |
-| Spring Authorization Server | 1.3.0          |
-| Mybatis Plus                | 3.5.6          |
-| Nacos                       | 2.3.2          |
-| Seata                       | 2.0.0          |
-| Sentinel                    | 1.8.7          |
-| Redis                       | 7.2.5          |
-| Elasticsearch               | 8.13.4         |
-| RocketMQ                    | 5.2.0          |
-| OpenResty                   | 1.21.4.1       |
-| Netty                       | 4.1.110.Final  |
-| Kafka                       | 3.7.0          |
-| EMQX                        | 5.7.0          |
-| Postgresql                  | 16.3           |
-| Flyway                      | 10.13.0        |
-| TDengine                    | 3.3.0.3        |
+| 组件                          | 版本            |
+|:----------------------------|:--------------|
+| Spring Boot                 | 3.3.0         |
+| Spring Cloud                | 2023.0.2      |
+| Spring Cloud Alibaba        | 2023.0.1.0    |
+| Spring Boot Admin           | 3.3.0         |
+| Spring Authorization Server | 1.3.0         |
+| Mybatis Plus                | 3.5.6         |
+| Nacos                       | 2.3.2         |
+| Seata                       | 2.0.0         |
+| Sentinel                    | 1.8.7         |
+| Redis                       | 7.2.5         |
+| Elasticsearch               | 8.13.4        |
+| RocketMQ                    | 5.2.0         |
+| OpenResty                   | 1.21.4.1      |
+| Netty                       | 4.1.110.Final |
+| Kafka                       | 3.7.0         |
+| EMQX                        | 5.7.0         |
+| Postgresql                  | 16.3          |
+| Flyway                      | 10.13.0       |
+| TDengine                    | 3.3.0.3       |
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
@@ -85,7 +88,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - 服务监控：Spring Boot Admin & Prometheus
 - 高亮搜索：Elasticsearch
 - 链路跟踪：SkyWalking
-- 任务调度：Power Job（待调研）
+- 任务调度：Power Job
 - 日志分析：EFK
 - 缓存&分布式锁：Redis & Redisson
 - 统计报表：MongoDB

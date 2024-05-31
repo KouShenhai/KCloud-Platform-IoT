@@ -34,13 +34,13 @@
     <!--postgresql版本-->
     <postgresql.version>42.7.3</postgresql.version>
     <!--admin版本-->
-    <spring-boot-admin.version>3.2.3</spring-boot-admin.version>
+    <spring-boot-admin.version>3.3.0</spring-boot-admin.version>
     <!--mybatis-plus版本 -->
     <mybatis-plus.version>3.5.6</mybatis-plus.version>
     <!--mybatis-spring版本-->
     <mybatis-spring.version>3.0.3</mybatis-spring.version>
     <!--redisson版本-->
-    <redisson.version>3.30.0</redisson.version>
+    <redisson.version>3.31.0</redisson.version>
     <!--UserAgentUtils版本-->
     <UserAgentUtils.version>1.21</UserAgentUtils.version>
     <!--jsoup版本-->
@@ -68,7 +68,7 @@
     <!--spring-boot-starter-oauth2-resource-server版本-->
     <spring-boot-starter-oauth2-resource-server.version>3.3.0</spring-boot-starter-oauth2-resource-server.version>
     <!--aws-java-sdk-s3版本-->
-    <aws-java-sdk-s3.version>1.12.730</aws-java-sdk-s3.version>
+    <aws-java-sdk-s3.version>1.12.733</aws-java-sdk-s3.version>
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.3.0</dynamic-datasource.version>
     <!--httpclient5版本-->
