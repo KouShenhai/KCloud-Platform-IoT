@@ -44,7 +44,7 @@
     <!--spring-boot版本-->
     <spring-boot.version>3.3.0</spring-boot.version>
     <!--spring-cloud版本-->
-    <spring-cloud.version>2023.0.1</spring-cloud.version>
+    <spring-cloud.version>2023.0.2</spring-cloud.version>
     <!--spring-framework版本-->
     <spring-framework.version>6.1.8</spring-framework.version>
     <!--cloud-alibaba版本-->
