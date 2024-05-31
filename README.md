@@ -17,7 +17,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 	<a target="_blank" href="https://gitee.com/laokouyun/KCloud-Platform-IoT/stargazers"><img src="https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/star.svg?theme=dark" alt="Gitee Star"></a>
     <a target="_blank" href="https://gitee.com/laokouyun/KCloud-Platform-IoT"><img src="https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark"  alt="Gitee Fork"></a>
     <a target="_blank" href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/static/v1?label=Spring Boot&message=3.3.0&color=green" alt="SpringBoot"></a>
-    <a target="_blank" href="https://spring.io/projects/spring-cloud"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2023.0.1&color=green"></a>
+    <a target="_blank" href="https://spring.io/projects/spring-cloud"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2023.0.2&color=green"></a>
     <a target="_blank" href="https://github.com/alibaba/spring-cloud-alibaba"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud Alibaba&message=2023.0.1.0&color=orange"></a>
     <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.3.0&color=blue"></a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java17"><img alt="JDK" src="https://img.shields.io/badge/GraalVM-21.0.1-blue.svg"/></a>
@@ -54,7 +54,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 | 组件                          | 版本             |
 |:----------------------------|:---------------|
 | Spring Boot                 | 3.3.0          |
-| Spring Cloud                | 2023.0.1       |
+| Spring Cloud                | 2023.0.2       |
 | Spring Cloud Alibaba        | 2023.0.1.0     |
 | Spring Boot Admin           | 3.2.3          |
 | Spring Authorization Server | 1.3.0          |
