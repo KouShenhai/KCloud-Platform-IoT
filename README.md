@@ -1,5 +1,5 @@
 ### 🎉 项目备注
-项目：KCloud-Platform-IoT  
+项目：KCloud-Platform-IoT(阻塞式)  
 作者：老寇  
 语言：Java  
 时间：2022.06.15 ~ 至今  
@@ -39,6 +39,9 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 
 ### 😎 开发计划
 [开发计划（需要登录）](https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2)
+
+### 🎁 项目推荐
+[作者的另一个开源IoT项目(响应式)](https://github.com/KouShenhai/KCloud-Platform-Reactive-IoT)
 
 ### 💪 版本号
 特此说明，与Spring Boot版本保持一致
