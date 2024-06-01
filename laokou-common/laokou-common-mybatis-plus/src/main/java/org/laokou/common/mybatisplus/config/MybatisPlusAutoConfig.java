@@ -126,14 +126,6 @@ public class MybatisPlusAutoConfig {
 	}
 
 	/**
-	 * 自定义sql注入器.
-	 */
-	@Bean
-	public MybatisPlusSqlInjector mybatisPlusSqlInjector() {
-		return new MybatisPlusSqlInjector();
-	}
-
-	/**
 	 * 解除每页500条限制.
 	 */
 	private PaginationInnerInterceptor paginationInnerInterceptor() {
