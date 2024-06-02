@@ -39,7 +39,7 @@ public class IotApp implements CommandLineRunner {
 
 	public static void main(String[] args) throws UnknownHostException {
 		System.setProperty("netty.server.parentgroup.size", "2");
-		System.setProperty("netty.server.childgroup.size", "32");
+		System.setProperty("netty.server.childgroup.size", String.valueOf(2 * Runtime.getRuntime().availableProcessors()));
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		new SpringApplicationBuilder(IotApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
