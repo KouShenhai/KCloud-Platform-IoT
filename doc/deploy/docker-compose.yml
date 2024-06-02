@@ -179,7 +179,7 @@ services:
         soft: -1
         hard: -1
   laokou-register:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.2.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.2.5
     container_name: laokou-register
     # 保持容器在没有守护程序的情况下运行
     tty: true
