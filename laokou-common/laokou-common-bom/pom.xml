@@ -88,7 +88,7 @@
     <!--swagger-annotations-jakarta版本-->
     <swagger-annotations-jakarta.version>2.2.22</swagger-annotations-jakarta.version>
     <!--disruptor版本-->
-    <disruptor.version>3.4.4</disruptor.version>
+    <disruptor.version>4.0.0</disruptor.version>
     <!--lombok-mapstruct-binding版本-->
     <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     <!--mapstruct版本-->
