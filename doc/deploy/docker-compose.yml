@@ -255,7 +255,7 @@ services:
       - laokou-register
     network_mode: bridge
   laokou-gateway:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.2.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.2.5
     container_name: laokou-gateway
     tty: true
     env_file:
