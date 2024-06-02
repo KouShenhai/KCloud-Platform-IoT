@@ -26,12 +26,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.netty.config.WebsocketSession;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.utils.UserDetail;
 import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
-import static org.laokou.common.netty.config.WebSocketServer.put;
 
 /**
  * websocket自定义处理器.
@@ -55,10 +55,10 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 		if (obj != null) {
 			UserDetail userDetail = (UserDetail) obj;
 			Long id = userDetail.getId();
-			put(id.toString(), channel);
+			WebsocketSession.put(id.toString(), channel);
 		}
 		else {
-			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail("" + UNAUTHORIZED))));
+			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
 			ctx.close();
 		}
 	}
@@ -70,7 +70,9 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 	@Override
 	public void handlerRemoved(ChannelHandlerContext ctx) {
-		log.info("断开连接：{}", ctx.channel().id().asLongText());
+		String channelId = ctx.channel().id().asLongText();
+		log.info("断开连接：{}", channelId);
+		WebsocketSession.remove(channelId);
 	}
 
 }

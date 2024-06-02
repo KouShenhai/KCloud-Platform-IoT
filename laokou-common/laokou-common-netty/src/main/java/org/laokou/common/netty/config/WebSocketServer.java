@@ -17,8 +17,6 @@
 
 package org.laokou.common.netty.config;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -30,8 +28,6 @@ import io.netty.channel.socket.nio.NioChannelOption;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-
 /**
  * WebSocket服务器配置.
  *
@@ -39,20 +35,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  */
 public class WebSocketServer extends AbstractServer {
 
-	/**
-	 * 建立连接的用户集合.
-	 */
-	private static final Cache<String, Channel> CLIENT_CACHE = Caffeine.newBuilder()
-		.expireAfterAccess(3600, SECONDS)
-		.initialCapacity(500)
-		.build();
-
 	public WebSocketServer(String ip, int port, ChannelInitializer<?> channelInitializer) {
 		super(ip, port, channelInitializer);
-	}
-
-	public static void put(String clientId, Channel channel) {
-		CLIENT_CACHE.put(clientId, channel);
 	}
 
 	/**
@@ -86,7 +70,7 @@ public class WebSocketServer extends AbstractServer {
 
 	@Override
 	public void send(String clientId, Object obj) {
-		Channel channel = CLIENT_CACHE.getIfPresent(clientId);
+		Channel channel = WebsocketSession.get(clientId);
 		if (ObjectUtil.isNotNull(channel)) {
 			channel.writeAndFlush(obj);
 		}
