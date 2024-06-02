@@ -25,15 +25,22 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
+import io.netty.handler.flush.FlushConsolidationHandler;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.util.concurrent.EventExecutorGroup;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.im.handler.MetricHandler;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.server.Ssl;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.net.ssl.KeyManagerFactory;
@@ -57,26 +64,46 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 
 	private final ServerProperties serverProperties;
 
+	private final MetricHandler metricHandler;
+
+	private final EventExecutorGroup eventExecutorGroup;
+
+	private final Environment environment;
+
 	@Override
 	@SneakyThrows
 	protected void initChannel(NioSocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
 		// SSL认证
 		addSSL(pipeline);
-		// 心跳检测
-		pipeline.addLast(new IdleStateHandler(60, 0, 0, SECONDS));
+		// 日志
+		pipeline.addLast("loggingHandler", new LoggingHandler(getLogLevel()));
 		// HTTP解码器
-		pipeline.addLast(new HttpServerCodec());
+		pipeline.addLast("httpServerCodec", new HttpServerCodec());
 		// 数据压缩
-		pipeline.addLast(new WebSocketServerCompressionHandler());
+		pipeline.addLast("websocketServerCompressionHandler", new WebSocketServerCompressionHandler());
 		// 块状方式写入
-		pipeline.addLast(new ChunkedWriteHandler());
+		pipeline.addLast("chunkedWriteHandler", new ChunkedWriteHandler());
 		// 最大内容长度
-		pipeline.addLast(new HttpObjectAggregator(65536));
+		pipeline.addLast("httpObjectAggregator", new HttpObjectAggregator(65536));
+		// 心跳检测
+		pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, SECONDS));
 		// websocket协议
-		pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
+		pipeline.addLast("websocketServerProtocolHandler", new WebSocketServerProtocolHandler("/ws"));
+		// 度量
+		pipeline.addLast("metricHandler", metricHandler);
+		// flush合并
+		pipeline.addLast("flushConsolidationHandler", new FlushConsolidationHandler(10, true));
 		// 业务处理handler
-		pipeline.addLast(websocketHandler);
+		pipeline.addLast(eventExecutorGroup, websocketHandler);
+	}
+
+	private LogLevel getLogLevel() {
+		String env = environment.getProperty("spring.profiles.active", "test");
+		if (ObjectUtil.equals("prod", env)) {
+			return LogLevel.ERROR;
+		}
+		return LogLevel.INFO;
 	}
 
 	private void addSSL(ChannelPipeline pipeline) {

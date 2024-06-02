@@ -22,6 +22,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
+import java.util.Objects;
+
 /**
  * Nacos starter.
  * <p>
@@ -37,7 +39,15 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 public class NacosApp {
 
 	public static void main(String[] args) {
+		initMode();
 		new SpringApplicationBuilder(NacosApp.class).web(WebApplicationType.SERVLET).run(args);
+	}
+
+	private static void initMode() {
+		String standalone = System.getProperty("nacos.standalone", "false");
+		if (!Objects.equals("true", standalone)) {
+			System.setProperty("nacos.standalone", "true");
+		}
 	}
 
 }

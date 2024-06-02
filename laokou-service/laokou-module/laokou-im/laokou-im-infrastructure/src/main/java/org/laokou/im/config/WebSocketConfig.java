@@ -18,6 +18,9 @@
 package org.laokou.im.config;
 
 import io.netty.channel.ChannelInitializer;
+import io.netty.util.concurrent.DefaultThreadFactory;
+import io.netty.util.concurrent.EventExecutorGroup;
+import io.netty.util.concurrent.UnorderedThreadPoolEventExecutor;
 import org.laokou.common.netty.config.Server;
 import org.laokou.common.netty.config.WebSocketServer;
 import org.laokou.common.netty.config.WebsocketProperties;
@@ -37,6 +40,11 @@ public class WebSocketConfig {
 			ChannelInitializer<?> websocketChannelInitializer) {
 		return new WebSocketServer(websocketProperties.getIp(), websocketProperties.getPort(),
 				websocketChannelInitializer);
+	}
+
+	@Bean
+	public EventExecutorGroup eventExecutorGroup() {
+		return new UnorderedThreadPoolEventExecutor(16, new DefaultThreadFactory("websocketHandler"));
 	}
 
 }

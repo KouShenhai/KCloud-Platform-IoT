@@ -20,11 +20,10 @@ package org.laokou.common.netty.config;
 import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.WriteBufferWaterMark;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioChannelOption;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.concurrent.DefaultThreadFactory;
 
 /**
  * @author laokou
@@ -36,30 +35,21 @@ public class TcpServer extends AbstractServer {
 	}
 
 	@Override
-	protected AbstractBootstrap<?, ?> init() {
+	protected AbstractBootstrap<?, ?> init(int bossThreadGroupSize, int workerThreadGroupSize) {
 		// boss负责监听端口
-		boss = new NioEventLoopGroup();
+		boss = new NioEventLoopGroup(bossThreadGroupSize, new DefaultThreadFactory("boss", true));
 		// work负责线程读写
-		work = new NioEventLoopGroup();
+		worker = new NioEventLoopGroup(workerThreadGroupSize, new DefaultThreadFactory("worker", true));
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组
-		return serverBootstrap.group(boss, work)
+		return serverBootstrap.group(boss, worker)
 			// 指定通道
 			.channel(NioServerSocketChannel.class)
-			// 开启TCP底层心跳，维持长连接
-			.childOption(ChannelOption.SO_KEEPALIVE, true)
-			.childOption(NioChannelOption.SO_KEEPALIVE, true)
+			// 延迟发送
+			.childOption(NioChannelOption.TCP_NODELAY, true)
 			// 请求队列最大长度（如果连接建立频繁，服务器处理创建新连接较慢，可以适当调整参数）
-			.option(ChannelOption.SO_BACKLOG, 2048)
-			// 重复使用端口
-			.option(NioChannelOption.SO_REUSEADDR, true)
-			// 接收缓冲区大小
-			.option(ChannelOption.SO_RCVBUF, 10 * 1024)
-			// 发送缓冲区大小
-			.childOption(ChannelOption.SO_SNDBUF, 10 * 1024)
-			// 设置高低水位，防止占用大量内存
-			.childOption(ChannelOption.WRITE_BUFFER_WATER_MARK, new WriteBufferWaterMark(1024, 10 * 1024))
+			.option(NioChannelOption.SO_BACKLOG, 1024)
 			// tcp处理类
 			.childHandler(channelInitializer);
 	}

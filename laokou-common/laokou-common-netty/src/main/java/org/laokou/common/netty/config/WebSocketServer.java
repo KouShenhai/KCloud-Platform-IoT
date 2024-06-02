@@ -21,11 +21,11 @@ import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
 import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioChannelOption;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.concurrent.DefaultThreadFactory;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
@@ -44,26 +44,22 @@ public class WebSocketServer extends AbstractServer {
 	 * @return AbstractBootstrap
 	 */
 	@Override
-	protected AbstractBootstrap<ServerBootstrap, ServerChannel> init() {
+	protected AbstractBootstrap<ServerBootstrap, ServerChannel> init(int bossThreadGroupSize,
+			int workerThreadGroupSize) {
 		// boss负责监听端口
-		boss = new NioEventLoopGroup();
+		boss = new NioEventLoopGroup(bossThreadGroupSize, new DefaultThreadFactory("boss", true));
 		// work负责线程读写
-		work = new NioEventLoopGroup();
+		worker = new NioEventLoopGroup(workerThreadGroupSize, new DefaultThreadFactory("worker", true));
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组
-		return serverBootstrap.group(boss, work)
+		return serverBootstrap.group(boss, worker)
 			// 指定通道
 			.channel(NioServerSocketChannel.class)
-			// 开启TCP底层心跳，维持长连接
-			.childOption(ChannelOption.SO_KEEPALIVE, true)
-			.childOption(NioChannelOption.SO_KEEPALIVE, true)
 			// 请求队列最大长度（如果连接建立频繁，服务器处理创建新连接较慢，可以适当调整参数）
-			.option(ChannelOption.SO_BACKLOG, 2048)
-			// 重复使用端口
-			.option(NioChannelOption.SO_REUSEADDR, true)
+			.option(NioChannelOption.SO_BACKLOG, 1024)
 			// 延迟发送
-			.option(ChannelOption.TCP_NODELAY, true)
+			.childOption(NioChannelOption.TCP_NODELAY, true)
 			// websocket处理类
 			.childHandler(channelInitializer);
 	}
