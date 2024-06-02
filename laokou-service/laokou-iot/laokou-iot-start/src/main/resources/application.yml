@@ -14,6 +14,8 @@ server:
     key-store-password: laokou
 
 spring:
+  freemarker:
+    check-template-location: false
   application:
     name: @pom.parent.artifactId@
   tcp:

@@ -22,6 +22,8 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.FixedLengthFrameDecoder;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.RequiredArgsConstructor;
 import org.laokou.iot.codec.TcpDecoder;
@@ -42,14 +44,16 @@ public class TcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 	@Override
 	protected void initChannel(SocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
+		// 日志
+		pipeline.addLast("loggingHandler", new LoggingHandler(LogLevel.INFO));
 		// 定长截取
-		pipeline.addLast(new FixedLengthFrameDecoder(55));
+		pipeline.addLast("fixedLengthFrameDecoder", new FixedLengthFrameDecoder(55));
 		// 解码
-		pipeline.addLast(new TcpDecoder());
+		pipeline.addLast("tcpDecoder", new TcpDecoder());
 		// 编码
-		pipeline.addLast(new TcpEncoder());
+		pipeline.addLast("tcpEncoder", new TcpEncoder());
 		// 心跳检测
-		pipeline.addLast(new IdleStateHandler(60, 0, 0, TimeUnit.SECONDS));
+		pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, TimeUnit.SECONDS));
 		// 业务处理handler
 		pipeline.addLast(tcpHandler);
 	}

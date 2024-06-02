@@ -25,6 +25,8 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
@@ -63,20 +65,22 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		ChannelPipeline pipeline = channel.pipeline();
 		// SSL认证
 		addSSL(pipeline);
-		// 心跳检测
-		pipeline.addLast(new IdleStateHandler(60, 0, 0, SECONDS));
+		// 日志
+		pipeline.addLast("loggingHandler", new LoggingHandler(LogLevel.INFO));
 		// HTTP解码器
-		pipeline.addLast(new HttpServerCodec());
+		pipeline.addLast("httpServerCodec", new HttpServerCodec());
 		// 数据压缩
-		pipeline.addLast(new WebSocketServerCompressionHandler());
+		pipeline.addLast("websocketServerCompressionHandler", new WebSocketServerCompressionHandler());
 		// 块状方式写入
-		pipeline.addLast(new ChunkedWriteHandler());
+		pipeline.addLast("chunkedWriteHandler", new ChunkedWriteHandler());
 		// 最大内容长度
-		pipeline.addLast(new HttpObjectAggregator(65536));
+		pipeline.addLast("httpObjectAggregator", new HttpObjectAggregator(65536));
+		// 心跳检测
+		pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, SECONDS));
 		// websocket协议
-		pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
+		pipeline.addLast("websocketServerProtocolHandler", new WebSocketServerProtocolHandler("/ws"));
 		// 业务处理handler
-		pipeline.addLast(websocketHandler);
+		pipeline.addLast("websocketHandler", websocketHandler);
 	}
 
 	private void addSSL(ChannelPipeline pipeline) {
