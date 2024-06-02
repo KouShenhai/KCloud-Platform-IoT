@@ -42,7 +42,9 @@ import java.util.concurrent.TimeUnit;
 public class TcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 
 	private final SimpleChannelInboundHandler<?> tcpHandler;
+
 	private final MetricHandler metricHandler;
+
 	private final EventExecutorGroup eventExecutorGroup;
 
 	@Override

@@ -60,9 +60,11 @@ public abstract class AbstractServer implements Server {
 
 	/**
 	 * 初始化配置.
+	 * @param bossThreadGroupSize boss线程数
+	 * @param workerThreadGroupSize worker线程数
 	 * @return AbstractBootstrap
 	 */
-	protected abstract AbstractBootstrap<?, ?> init(int parentThreadGroupSize, int childThreadGroupSize);
+	protected abstract AbstractBootstrap<?, ?> init(int bossThreadGroupSize, int workerThreadGroupSize);
 
 	/**
 	 * 启动(Bean单例存在资源竞争).
@@ -74,9 +76,10 @@ public abstract class AbstractServer implements Server {
 			return;
 		}
 		// -Dnetty.server.parentgroup.size=2 -Dnetty.server.childgroup.size=32
-		int parentThreadGroupSize = Integer.getInteger("netty.server.parentgroup.size", 2);
-		int childThreadGroupSize = Integer.getInteger("netty.server.childgroup.size", 2 * Runtime.getRuntime().availableProcessors());
-		AbstractBootstrap<?, ?> bootstrap = init(parentThreadGroupSize, childThreadGroupSize);
+		int bossThreadGroupSize = Integer.getInteger("netty.server.parentgroup.size", 2);
+		int workerThreadGroupSize = Integer.getInteger("netty.server.childgroup.size",
+				2 * Runtime.getRuntime().availableProcessors());
+		AbstractBootstrap<?, ?> bootstrap = init(bossThreadGroupSize, workerThreadGroupSize);
 		try {
 			// 服务器异步操作绑定
 			// sync -> 等待任务结束，如果任务产生异常或被中断则抛出异常，否则返回Future自身

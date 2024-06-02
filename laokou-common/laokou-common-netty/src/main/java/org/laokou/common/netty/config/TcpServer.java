@@ -35,11 +35,11 @@ public class TcpServer extends AbstractServer {
 	}
 
 	@Override
-	protected AbstractBootstrap<?, ?> init(int parentThreadGroupSize, int childThreadGroupSize) {
+	protected AbstractBootstrap<?, ?> init(int bossThreadGroupSize, int workerThreadGroupSize) {
 		// boss负责监听端口
-		boss = new NioEventLoopGroup(parentThreadGroupSize, new DefaultThreadFactory("boss", true));
+		boss = new NioEventLoopGroup(bossThreadGroupSize, new DefaultThreadFactory("boss", true));
 		// work负责线程读写
-		worker = new NioEventLoopGroup(childThreadGroupSize, new DefaultThreadFactory("worker", true));
+		worker = new NioEventLoopGroup(workerThreadGroupSize, new DefaultThreadFactory("worker", true));
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组

@@ -39,11 +39,15 @@ import java.util.Objects;
 public class NacosApp {
 
 	public static void main(String[] args) {
+		initMode();
+		new SpringApplicationBuilder(NacosApp.class).web(WebApplicationType.SERVLET).run(args);
+	}
+
+	private static void initMode() {
 		String standalone = System.getProperty("nacos.standalone", "false");
 		if (!Objects.equals("true", standalone)) {
 			System.setProperty("nacos.standalone", "true");
 		}
-		new SpringApplicationBuilder(NacosApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }
