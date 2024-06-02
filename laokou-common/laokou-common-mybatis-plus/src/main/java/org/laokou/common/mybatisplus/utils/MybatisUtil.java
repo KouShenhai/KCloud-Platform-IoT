@@ -77,8 +77,7 @@ public class MybatisUtil {
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);
 		List<CompletableFuture<Void>> futures = partition.parallelStream()
-			.map(item -> CompletableFuture
-				.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds), executor))
+			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds), executor))
 			.toList();
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {
@@ -93,7 +92,7 @@ public class MybatisUtil {
 			DynamicDataSourceContextHolder.push(ds);
 			SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false);
 			M mapper = sqlSession.getMapper(clazz);
-			// commit 	执行 flushStatements()
+			// commit 执行 flushStatements()
 			// rollback 执行 flushStatements(true);
 			try {
 				item.forEach(i -> consumer.accept(mapper, i));

@@ -32,19 +32,19 @@ public class SendReport {
 		String s = """
 				{
 					 "timestamp":1601196762389,
-			   "messageId":"1",
-			   "deviceId":"1795662141836713984",
-			   "headers":{
-			     "productId":"1795661364212752384",
-			     "deviceName":"设备测试",
-			   	"keepOnlineTimeoutSeconds":30,
-			     "keepOnline":true
-			   },
+				  "messageId":"1",
+				  "deviceId":"1795662141836713984",
+				  "headers":{
+				    "productId":"1795661364212752384",
+				    "deviceName":"设备测试",
+				  	"keepOnlineTimeoutSeconds":30,
+				    "keepOnline":true
+				  },
 					"properties":{"temperature":36.8}
 				}
 				""";
-		 //mqttTemplate.send("/1795661364212752384/1795662141836713984/properties/report",
-		 // s);
+		// mqttTemplate.send("/1795661364212752384/1795662141836713984/properties/report",
+		// s);
 	}
 
 }
