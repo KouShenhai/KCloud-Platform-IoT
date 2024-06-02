@@ -62,7 +62,7 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 	protected void initChannel(NioSocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
 		// SSL认证
-		initSSL(pipeline);
+		addSSL(pipeline);
 		// 心跳检测
 		pipeline.addLast(new IdleStateHandler(60, 0, 0, SECONDS));
 		// HTTP解码器
@@ -79,12 +79,12 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		pipeline.addLast(websocketHandler);
 	}
 
-	private void initSSL(ChannelPipeline pipeline) {
+	private void addSSL(ChannelPipeline pipeline) {
 		if (serverProperties.getSsl().isEnabled()) {
 			SSLEngine sslEngine = sslContext().createSSLEngine();
 			sslEngine.setNeedClientAuth(false);
 			sslEngine.setUseClientMode(false);
-			// TLS
+			// SSL
 			pipeline.addLast(new SslHandler(sslEngine));
 		}
 	}
