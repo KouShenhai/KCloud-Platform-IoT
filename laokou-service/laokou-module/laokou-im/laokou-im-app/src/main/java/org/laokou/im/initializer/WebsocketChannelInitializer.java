@@ -30,7 +30,6 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
-import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.EventExecutorGroup;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -38,6 +37,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.im.handler.MetricHandler;
+import org.laokou.im.handler.WebsocketIdleStateHandler;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.server.Ssl;
 import org.springframework.core.env.Environment;
@@ -48,8 +48,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 import java.io.InputStream;
 import java.security.KeyStore;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * WebSocket处理类.
@@ -78,6 +76,8 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		addSSL(pipeline);
 		// 日志
 		pipeline.addLast("loggingHandler", new LoggingHandler(getLogLevel()));
+		// 心跳检测
+		pipeline.addLast("websocketIdleStateHandler", new WebsocketIdleStateHandler());
 		// HTTP解码器
 		pipeline.addLast("httpServerCodec", new HttpServerCodec());
 		// 数据压缩
@@ -86,8 +86,6 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		pipeline.addLast("chunkedWriteHandler", new ChunkedWriteHandler());
 		// 最大内容长度
 		pipeline.addLast("httpObjectAggregator", new HttpObjectAggregator(65536));
-		// 心跳检测
-		pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, SECONDS));
 		// websocket协议
 		pipeline.addLast("websocketServerProtocolHandler", new WebSocketServerProtocolHandler("/ws"));
 		// 度量
