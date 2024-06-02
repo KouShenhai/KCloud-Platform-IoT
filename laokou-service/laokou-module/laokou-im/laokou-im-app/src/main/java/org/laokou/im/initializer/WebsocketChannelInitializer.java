@@ -34,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.im.handler.MetricHandler;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.server.Ssl;
 import org.springframework.stereotype.Component;
@@ -59,6 +60,8 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 
 	private final ServerProperties serverProperties;
 
+	private final MetricHandler metricHandler;
+
 	@Override
 	@SneakyThrows
 	protected void initChannel(NioSocketChannel channel) {
@@ -79,6 +82,8 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, SECONDS));
 		// websocket协议
 		pipeline.addLast("websocketServerProtocolHandler", new WebSocketServerProtocolHandler("/ws"));
+		// 度量
+		pipeline.addLast("metricHandler", metricHandler);
 		// 业务处理handler
 		pipeline.addLast("websocketHandler", websocketHandler);
 	}

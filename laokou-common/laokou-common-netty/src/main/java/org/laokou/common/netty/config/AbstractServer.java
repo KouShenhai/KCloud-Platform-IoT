@@ -73,8 +73,9 @@ public abstract class AbstractServer implements Server {
 			log.error("已启动监听，端口：{}", port);
 			return;
 		}
-		int parentThreadGroupSize = Integer.getInteger("netty.server.parentgroup.size");
-		int childThreadGroupSize = Integer.getInteger("netty.server.childgroup.size");
+		// -Dnetty.server.parentgroup.size=2 -Dnetty.server.childgroup.size=32
+		int parentThreadGroupSize = Integer.getInteger("netty.server.parentgroup.size", 2);
+		int childThreadGroupSize = Integer.getInteger("netty.server.childgroup.size", 2 * Runtime.getRuntime().availableProcessors());
 		AbstractBootstrap<?, ?> bootstrap = init(parentThreadGroupSize, childThreadGroupSize);
 		try {
 			// 服务器异步操作绑定

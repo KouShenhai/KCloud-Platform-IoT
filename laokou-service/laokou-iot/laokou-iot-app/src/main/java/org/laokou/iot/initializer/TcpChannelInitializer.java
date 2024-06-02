@@ -28,6 +28,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 import lombok.RequiredArgsConstructor;
 import org.laokou.iot.codec.TcpDecoder;
 import org.laokou.iot.codec.TcpEncoder;
+import org.laokou.iot.handler.MetricHandler;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
@@ -40,6 +41,7 @@ import java.util.concurrent.TimeUnit;
 public class TcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 
 	private final SimpleChannelInboundHandler<?> tcpHandler;
+	private final MetricHandler metricHandler;
 
 	@Override
 	protected void initChannel(SocketChannel channel) {
@@ -54,6 +56,8 @@ public class TcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 		pipeline.addLast("tcpEncoder", new TcpEncoder());
 		// 心跳检测
 		pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, TimeUnit.SECONDS));
+		// 度量
+		pipeline.addLast("metricHandler", metricHandler);
 		// 业务处理handler
 		pipeline.addLast(tcpHandler);
 	}
