@@ -58,6 +58,8 @@ public class ImApp {
 		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
 		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT,
 				ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath());
+		// -Dnetty.server.parentgroup.size=2
+		// -Dnetty.server.childgroup.size=32
 		System.setProperty("netty.server.parentgroup.size", "2");
 		System.setProperty("netty.server.childgroup.size", String.valueOf(2 * Runtime.getRuntime().availableProcessors()));
 		new SpringApplicationBuilder(ImApp.class).web(WebApplicationType.REACTIVE).run(args);
