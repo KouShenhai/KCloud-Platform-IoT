@@ -58,6 +58,8 @@ public class ImApp {
 		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
 		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT,
 				ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath());
+		System.setProperty("netty.server.parentgroup.size", "2");
+		System.setProperty("netty.server.childgroup.size", "32");
 		new SpringApplicationBuilder(ImApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 

@@ -44,7 +44,7 @@ public abstract class AbstractServer implements Server {
 	/**
 	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源（对其他线程可见）.
 	 */
-	protected volatile EventLoopGroup work;
+	protected volatile EventLoopGroup worker;
 
 	protected final String ip;
 
@@ -62,7 +62,7 @@ public abstract class AbstractServer implements Server {
 	 * 初始化配置.
 	 * @return AbstractBootstrap
 	 */
-	protected abstract AbstractBootstrap<?, ?> init();
+	protected abstract AbstractBootstrap<?, ?> init(int parentThreadGroupSize, int childThreadGroupSize);
 
 	/**
 	 * 启动(Bean单例存在资源竞争).
@@ -73,7 +73,9 @@ public abstract class AbstractServer implements Server {
 			log.error("已启动监听，端口：{}", port);
 			return;
 		}
-		AbstractBootstrap<?, ?> bootstrap = init();
+		int parentThreadGroupSize = Integer.getInteger("netty.server.parentgroup.size");
+		int childThreadGroupSize = Integer.getInteger("netty.server.childgroup.size");
+		AbstractBootstrap<?, ?> bootstrap = init(parentThreadGroupSize, childThreadGroupSize);
 		try {
 			// 服务器异步操作绑定
 			// sync -> 等待任务结束，如果任务产生异常或被中断则抛出异常，否则返回Future自身
@@ -102,8 +104,8 @@ public abstract class AbstractServer implements Server {
 		if (ObjectUtil.isNotNull(boss)) {
 			boss.shutdownGracefully();
 		}
-		if (ObjectUtil.isNotNull(work)) {
-			work.shutdownGracefully();
+		if (ObjectUtil.isNotNull(worker)) {
+			worker.shutdownGracefully();
 		}
 		log.info("优雅关闭，释放资源");
 	}

@@ -23,6 +23,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioChannelOption;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.concurrent.DefaultThreadFactory;
 
 /**
  * @author laokou
@@ -34,15 +35,15 @@ public class TcpServer extends AbstractServer {
 	}
 
 	@Override
-	protected AbstractBootstrap<?, ?> init() {
+	protected AbstractBootstrap<?, ?> init(int parentThreadGroupSize, int childThreadGroupSize) {
 		// boss负责监听端口
-		boss = new NioEventLoopGroup();
+		boss = new NioEventLoopGroup(parentThreadGroupSize, new DefaultThreadFactory("boss", true));
 		// work负责线程读写
-		work = new NioEventLoopGroup();
+		worker = new NioEventLoopGroup(childThreadGroupSize, new DefaultThreadFactory("worker", true));
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组
-		return serverBootstrap.group(boss, work)
+		return serverBootstrap.group(boss, worker)
 			// 指定通道
 			.channel(NioServerSocketChannel.class)
 			// 延迟发送
