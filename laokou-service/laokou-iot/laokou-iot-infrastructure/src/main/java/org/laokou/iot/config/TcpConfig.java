@@ -18,6 +18,9 @@
 package org.laokou.iot.config;
 
 import io.netty.channel.ChannelInitializer;
+import io.netty.util.concurrent.DefaultThreadFactory;
+import io.netty.util.concurrent.EventExecutorGroup;
+import io.netty.util.concurrent.UnorderedThreadPoolEventExecutor;
 import org.laokou.common.netty.config.Server;
 import org.laokou.common.netty.config.TcpServer;
 import org.laokou.common.netty.config.TcpProperties;
@@ -33,6 +36,11 @@ public class TcpConfig {
 	@Bean(name = "tcpServer", initMethod = "start", destroyMethod = "stop")
 	public Server tcpServer(TcpProperties tcpProperties, ChannelInitializer<?> tcpChannelInitializer) {
 		return new TcpServer(tcpProperties.getIp(), tcpProperties.getPort(), tcpChannelInitializer);
+	}
+
+	@Bean
+	public EventExecutorGroup eventExecutorGroup() {
+		return new UnorderedThreadPoolEventExecutor(16, new DefaultThreadFactory("tcpHandler"));
 	}
 
 }

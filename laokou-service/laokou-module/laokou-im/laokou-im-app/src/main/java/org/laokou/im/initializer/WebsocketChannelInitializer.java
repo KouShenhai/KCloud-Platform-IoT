@@ -30,6 +30,7 @@ import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.util.concurrent.EventExecutorGroup;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.ResourceUtil;
@@ -62,6 +63,8 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 
 	private final MetricHandler metricHandler;
 
+	private final EventExecutorGroup eventExecutorGroup;
+
 	@Override
 	@SneakyThrows
 	protected void initChannel(NioSocketChannel channel) {
@@ -85,7 +88,7 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		// 度量
 		pipeline.addLast("metricHandler", metricHandler);
 		// 业务处理handler
-		pipeline.addLast("websocketHandler", websocketHandler);
+		pipeline.addLast(eventExecutorGroup, websocketHandler);
 	}
 
 	private void addSSL(ChannelPipeline pipeline) {

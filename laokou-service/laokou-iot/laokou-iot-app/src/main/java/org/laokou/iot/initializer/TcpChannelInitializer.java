@@ -25,6 +25,7 @@ import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.util.concurrent.EventExecutorGroup;
 import lombok.RequiredArgsConstructor;
 import org.laokou.iot.codec.TcpDecoder;
 import org.laokou.iot.codec.TcpEncoder;
@@ -42,6 +43,7 @@ public class TcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 
 	private final SimpleChannelInboundHandler<?> tcpHandler;
 	private final MetricHandler metricHandler;
+	private final EventExecutorGroup eventExecutorGroup;
 
 	@Override
 	protected void initChannel(SocketChannel channel) {
@@ -59,7 +61,7 @@ public class TcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 		// 度量
 		pipeline.addLast("metricHandler", metricHandler);
 		// 业务处理handler
-		pipeline.addLast(tcpHandler);
+		pipeline.addLast(eventExecutorGroup, tcpHandler);
 	}
 
 }
