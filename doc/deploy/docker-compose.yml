@@ -199,7 +199,7 @@ services:
     depends_on:
       - postgresql
   laokou-sentinel:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sentinel:3.2.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sentinel:3.2.5
     container_name: laokou-sentinel
     # 保持容器在没有守护程序的情况下运行
     tty: true
