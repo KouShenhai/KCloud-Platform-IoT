@@ -26,9 +26,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ClientHttpConnector;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+import org.springframework.security.authentication.password.CompromisedPasswordChecker;
+import org.springframework.security.authentication.password.ReactiveCompromisedPasswordChecker;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.password.HaveIBeenPwnedRestApiPasswordChecker;
+import org.springframework.security.web.authentication.password.HaveIBeenPwnedRestApiReactivePasswordChecker;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.RedirectServerAuthenticationSuccessHandler;
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
@@ -50,6 +54,11 @@ import java.net.URI;
 
 @Configuration(proxyBeanMethods = false)
 public class ReactiveSecurityConfig {
+
+	@Bean
+	public ReactiveCompromisedPasswordChecker reactiveCompromisedPasswordChecker() {
+		return new HaveIBeenPwnedRestApiReactivePasswordChecker();
+	}
 
 	/**
 	 * 自定义请求客户端（关闭ssl校验）.
