@@ -37,8 +37,8 @@ import static org.laokou.common.i18n.common.RocketMqConstant.*;
 		selectorExpression = LAOKOU_NOTICE_MESSAGE_TAG, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
 public class NoticeMessageHandler extends AbstractMessageHandler {
 
-	public NoticeMessageHandler(Server websocketServer, Executor executor) {
-		super(websocketServer, executor);
+	public NoticeMessageHandler(Server webSocketServer, Executor executor) {
+		super(webSocketServer, executor);
 	}
 
 	@Override

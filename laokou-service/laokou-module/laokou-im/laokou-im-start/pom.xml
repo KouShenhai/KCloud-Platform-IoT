@@ -70,6 +70,11 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>

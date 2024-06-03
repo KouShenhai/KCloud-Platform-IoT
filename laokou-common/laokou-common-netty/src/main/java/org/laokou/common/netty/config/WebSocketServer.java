@@ -62,17 +62,18 @@ public class WebSocketServer extends AbstractServer {
 			.option(NioChannelOption.SO_BACKLOG, 1024)
 			// 延迟发送
 			.childOption(NioChannelOption.TCP_NODELAY, true)
-			// websocket处理类
+			// WebSocket处理类
 			.childHandler(channelInitializer);
 	}
 
 	@Override
 	public void send(String clientId, Object obj) {
-		Channel channel = WebsocketSession.get(clientId);
+		Channel channel = WebSocketSession.get(clientId);
 		if (ObjectUtil.isNotNull(channel)) {
 			if (channel.isActive() && channel.isWritable()) {
 				channel.writeAndFlush(obj);
-			} else {
+			}
+			else {
 				log.error("丢弃消息");
 			}
 		}

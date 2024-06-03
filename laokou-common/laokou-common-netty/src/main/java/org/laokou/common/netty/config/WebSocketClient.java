@@ -17,33 +17,28 @@
 
 package org.laokou.common.netty.config;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.concurrent.DefaultThreadFactory;
 
 /**
  * @author laokou
  */
-@Data
-@Component
-@ConfigurationProperties(prefix = "spring.websocket")
-@Schema(name = "WebsocketProperties", description = "WebSocket属性配置")
-public class WebsocketProperties {
+public class WebSocketClient extends AbstractClient {
 
-	/**
-	 * ip.
-	 */
-	private String ip;
+	public WebSocketClient(WebSocketProperties webSocketProperties, ChannelInitializer<?> channelInitializer) {
+		super(webSocketProperties, channelInitializer);
+	}
 
-	/**
-	 * 端口.
-	 */
-	private int port;
-
-	/**
-	 * 应用名称.
-	 */
-	private String appName;
+	@Override
+	protected Bootstrap init() {
+		Bootstrap bootstrap = new Bootstrap();
+		client = new NioEventLoopGroup(1, new DefaultThreadFactory("client"));
+		return bootstrap.group(client)
+			.channel(NioSocketChannel.class)
+			.handler(channelInitializer);
+	}
 
 }

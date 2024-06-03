@@ -20,9 +20,12 @@ spring:
       virtual:
           enabled: true
   websocket:
-    ip: 0.0.0.0
-    port: 1000
-    app-name: ${spring.application.name}-server
+    client:
+      uri: wss://vue.laokou.org/im/ws
+    server:
+      ip: 0.0.0.0
+      port: 1000
+      app-name: ${spring.application.name}-server
   application:
     name: @pom.parent.artifactId@
   profiles:
