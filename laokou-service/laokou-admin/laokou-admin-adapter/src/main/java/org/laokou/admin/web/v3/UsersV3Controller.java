@@ -45,14 +45,14 @@ import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("v3/users")
-@Tag(name = "UsersV3Controller", description = "用户管理")
+@Tag(name = "用户管理", description = "用户管理")
 public class UsersV3Controller {
 
 	private final UsersServiceI usersServiceI;
 
 	@TraceLog
 	@GetMapping("profile")
-	@Operation(summary = "个人中心", description = "查看个人信息")
+	@Operation(summary = "个人中心-查看个人信息", description = "个人中心-查看个人信息")
 	public Result<UserProfileCO> getProfileV3() {
 		return usersServiceI.getProfile();
 	}
