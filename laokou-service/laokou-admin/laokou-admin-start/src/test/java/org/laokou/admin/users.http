@@ -1,0 +1,3 @@
+# 个人中心-查看个人信息
+GET {{schema}}/{{host}}/v3/users/profile
+Authorization: Bearer {{Authorization}}
