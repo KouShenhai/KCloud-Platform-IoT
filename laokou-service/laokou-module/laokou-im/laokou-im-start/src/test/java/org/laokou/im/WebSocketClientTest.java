@@ -16,6 +16,7 @@
  */
 
 package org.laokou.im;
+
 import io.netty.handler.codec.http.DefaultHttpHeaders;
 import io.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
 import io.netty.handler.codec.http.websocketx.WebSocketVersion;
@@ -44,7 +45,7 @@ public class WebSocketClientTest {
 
 	@Test
 	void testMessage() {
-		rocketMqTemplate.sendAsyncMessage("", new Message(Collections.emptySet(),null));
+		rocketMqTemplate.sendAsyncMessage("", new Message(Collections.emptySet(), null));
 	}
 
 	public static void main(String[] args) {
@@ -53,8 +54,10 @@ public class WebSocketClientTest {
 		String uri = "wss://vue.laokou.org/im/ws";
 		client.setUri(uri);
 		webSocketProperties.setClient(client);
-		WebSocketClientHandler webSocketClientHandler = new WebSocketClientHandler(WebSocketClientHandshakerFactory.newHandshaker(URI.create(uri), WebSocketVersion.V13, null, true, new DefaultHttpHeaders()));
-		WebSocketClient webSocketClient = new WebSocketClient(webSocketProperties, new WebSocketClientChannelInitializer(webSocketProperties, webSocketClientHandler));
+		WebSocketClientHandler webSocketClientHandler = new WebSocketClientHandler(WebSocketClientHandshakerFactory
+			.newHandshaker(URI.create(uri), WebSocketVersion.V13, null, true, new DefaultHttpHeaders()));
+		WebSocketClient webSocketClient = new WebSocketClient(webSocketProperties,
+				new WebSocketClientChannelInitializer(webSocketProperties, webSocketClientHandler));
 		webSocketClient.open();
 	}
 

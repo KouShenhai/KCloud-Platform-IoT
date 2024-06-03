@@ -36,9 +36,7 @@ public class WebSocketClient extends AbstractClient {
 	protected Bootstrap init() {
 		Bootstrap bootstrap = new Bootstrap();
 		client = new NioEventLoopGroup(1, new DefaultThreadFactory("client"));
-		return bootstrap.group(client)
-			.channel(NioSocketChannel.class)
-			.handler(channelInitializer);
+		return bootstrap.group(client).channel(NioSocketChannel.class).handler(channelInitializer);
 	}
 
 }

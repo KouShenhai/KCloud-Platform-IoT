@@ -35,17 +35,17 @@ import org.laokou.im.handler.WebSocketClientHandler;
 
 import java.net.URI;
 
-
 public class WebSocketClientChannelInitializer extends ChannelInitializer<SocketChannel> {
 
 	private final WebSocketProperties webSocketProperties;
+
 	private final WebSocketClientHandler webSocketClientHandler;
 
-	public WebSocketClientChannelInitializer(WebSocketProperties webSocketProperties, WebSocketClientHandler webSocketClientHandler) {
+	public WebSocketClientChannelInitializer(WebSocketProperties webSocketProperties,
+			WebSocketClientHandler webSocketClientHandler) {
 		this.webSocketProperties = webSocketProperties;
 		this.webSocketClientHandler = webSocketClientHandler;
 	}
-
 
 	@Override
 	protected void initChannel(SocketChannel channel) {
@@ -67,7 +67,9 @@ public class WebSocketClientChannelInitializer extends ChannelInitializer<Socket
 
 	@SneakyThrows
 	private void addSSL(SocketChannel ch) {
-		SslContext sslContext = SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build();
+		SslContext sslContext = SslContextBuilder.forClient()
+			.trustManager(InsecureTrustManagerFactory.INSTANCE)
+			.build();
 		// SSL
 		URI uri = URI.create(webSocketProperties.getClient().getUri());
 		ch.pipeline().addLast(sslContext.newHandler(ch.alloc(), uri.getHost(), webSocketProperties.getPort(uri)));
