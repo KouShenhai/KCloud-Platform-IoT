@@ -33,6 +33,23 @@ import java.net.URI;
 @Schema(name = "WebSocketProperties", description = "WebSocket属性配置")
 public class WebSocketProperties {
 
+	public int getPort(URI uri) {
+		if (uri.getPort() == -1) {
+			if (uri.getScheme().startsWith("wss")) {
+				return 443;
+			}
+			else if (uri.getScheme().startsWith("ws")) {
+				return 80;
+			}
+			else {
+				return -1;
+			}
+		}
+		else {
+			return uri.getPort();
+		}
+	}
+
 	private Client client;
 
 	private Server server;
@@ -62,20 +79,6 @@ public class WebSocketProperties {
 		 */
 		private String appName;
 
-	}
-
-	public int getPort(URI uri) {
-		if (uri.getPort() == -1) {
-			if (uri.getScheme().startsWith("wss")) {
-				return 443;
-			} else if (uri.getScheme().startsWith("ws")) {
-				return 80;
-			} else {
-				return -1;
-			}
-		} else {
-			return uri.getPort();
-		}
 	}
 
 }
