@@ -26,21 +26,19 @@ import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.flush.FlushConsolidationHandler;
-import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.util.concurrent.EventExecutorGroup;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.common.netty.utils.LogUtil;
 import org.laokou.im.handler.MetricHandler;
-import org.laokou.im.handler.WebSocketIdleStateHandler;
+import org.laokou.im.handler.WebSocketServerIdleStateHandler;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.server.Ssl;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.net.ssl.KeyManagerFactory;
@@ -56,9 +54,9 @@ import java.security.KeyStore;
  */
 @Component
 @RequiredArgsConstructor
-public class WebSocketChannelInitializer extends ChannelInitializer<NioSocketChannel> {
+public class WebSocketServerChannelInitializer extends ChannelInitializer<NioSocketChannel> {
 
-	private final SimpleChannelInboundHandler<?> webSocketHandler;
+	private final SimpleChannelInboundHandler<?> webSocketServerHandler;
 
 	private final ServerProperties serverProperties;
 
@@ -66,7 +64,7 @@ public class WebSocketChannelInitializer extends ChannelInitializer<NioSocketCha
 
 	private final EventExecutorGroup eventExecutorGroup;
 
-	private final Environment environment;
+	private final LogUtil logUtil;
 
 	@Override
 	@SneakyThrows
@@ -75,9 +73,9 @@ public class WebSocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		// SSL认证
 		addSSL(pipeline);
 		// 日志
-		pipeline.addLast("loggingHandler", new LoggingHandler(getLogLevel()));
+		pipeline.addLast("loggingHandler", new LoggingHandler(logUtil.getLogLevel()));
 		// 心跳检测
-		pipeline.addLast("webSocketIdleStateHandler", new WebSocketIdleStateHandler());
+		pipeline.addLast("webSocketServerIdleStateHandler", new WebSocketServerIdleStateHandler());
 		// HTTP解码器
 		pipeline.addLast("httpServerCodec", new HttpServerCodec());
 		// 数据压缩
@@ -93,15 +91,7 @@ public class WebSocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		// flush合并
 		pipeline.addLast("flushConsolidationHandler", new FlushConsolidationHandler(10, true));
 		// 业务处理handler
-		pipeline.addLast(eventExecutorGroup, webSocketHandler);
-	}
-
-	private LogLevel getLogLevel() {
-		String env = environment.getProperty("spring.profiles.active", "test");
-		if (ObjectUtil.equals("prod", env)) {
-			return LogLevel.ERROR;
-		}
-		return LogLevel.INFO;
+		pipeline.addLast(eventExecutorGroup, webSocketServerHandler);
 	}
 
 	private void addSSL(ChannelPipeline pipeline) {

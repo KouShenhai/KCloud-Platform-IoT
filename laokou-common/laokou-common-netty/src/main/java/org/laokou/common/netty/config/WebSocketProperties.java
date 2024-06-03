@@ -22,6 +22,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.net.URI;
+
 /**
  * @author laokou
  */
@@ -31,19 +33,49 @@ import org.springframework.stereotype.Component;
 @Schema(name = "WebSocketProperties", description = "WebSocket属性配置")
 public class WebSocketProperties {
 
-	/**
-	 * ip.
-	 */
-	private String ip;
+	private Client client;
 
-	/**
-	 * 端口.
-	 */
-	private int port;
+	private Server server;
 
-	/**
-	 * 应用名称.
-	 */
-	private String appName;
+	@Data
+	public static class Client {
+
+		private String uri;
+
+	}
+
+	@Data
+	public static class Server {
+
+		/**
+		 * IP.
+		 */
+		private String ip;
+
+		/**
+		 * 端口.
+		 */
+		private int port;
+
+		/**
+		 * 应用名称.
+		 */
+		private String appName;
+
+	}
+
+	public int getPort(URI uri) {
+		if (uri.getPort() == -1) {
+			if (uri.getScheme().startsWith("wss")) {
+				return 443;
+			} else if (uri.getScheme().startsWith("ws")) {
+				return 80;
+			} else {
+				return -1;
+			}
+		} else {
+			return uri.getPort();
+		}
+	}
 
 }

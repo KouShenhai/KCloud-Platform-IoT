@@ -72,7 +72,8 @@ public class WebSocketServer extends AbstractServer {
 		if (ObjectUtil.isNotNull(channel)) {
 			if (channel.isActive() && channel.isWritable()) {
 				channel.writeAndFlush(obj);
-			} else {
+			}
+			else {
 				log.error("丢弃消息");
 			}
 		}

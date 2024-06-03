@@ -15,28 +15,26 @@
  *
  */
 
-package org.laokou.im;
+package org.laokou.common.netty.utils;
 
-import org.laokou.common.netty.config.Client;
+import io.netty.handler.logging.LogLevel;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
-/**
- * @author laokou
- */
-public class WebSocketClient implements Client {
+@Component
+@RequiredArgsConstructor
+public class LogUtil {
 
-	@Override
-	public synchronized void open() {
+	private final Environment environment;
 
-	}
-
-	@Override
-	public synchronized void close() {
-
-	}
-
-	@Override
-	public void send(String clientId, String payload) {
-
+	public LogLevel getLogLevel() {
+		String env = environment.getProperty("spring.profiles.active", "test");
+		if (ObjectUtil.equals("prod", env)) {
+			return LogLevel.ERROR;
+		}
+		return LogLevel.INFO;
 	}
 
 }

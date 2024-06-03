@@ -79,12 +79,12 @@ public abstract class AbstractServer implements Server {
 		int bossThreadGroupSize = Integer.getInteger("netty.server.parentgroup.size", 2);
 		int workerThreadGroupSize = Integer.getInteger("netty.server.childgroup.size",
 				2 * Runtime.getRuntime().availableProcessors());
-		AbstractBootstrap<?, ?> bootstrap = init(bossThreadGroupSize, workerThreadGroupSize);
+		AbstractBootstrap<?, ?> serverBootstrap = init(bossThreadGroupSize, workerThreadGroupSize);
 		try {
 			// 服务器异步操作绑定
 			// sync -> 等待任务结束，如果任务产生异常或被中断则抛出异常，否则返回Future自身
 			// awaitUninterruptibly -> 等待任务结束，任务不可中断
-			ChannelFuture channelFuture = bind(bootstrap, port);
+			ChannelFuture channelFuture = bind(serverBootstrap, port);
 			// 监听端口关闭
 			channelFuture.channel().closeFuture().addListener(future -> {
 				if (running) {

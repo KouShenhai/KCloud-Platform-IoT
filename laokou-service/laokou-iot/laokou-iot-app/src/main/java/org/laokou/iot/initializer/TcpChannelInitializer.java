@@ -22,16 +22,14 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.FixedLengthFrameDecoder;
-import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.EventExecutorGroup;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.netty.utils.LogUtil;
 import org.laokou.iot.codec.TcpDecoder;
 import org.laokou.iot.codec.TcpEncoder;
 import org.laokou.iot.handler.MetricHandler;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
@@ -49,13 +47,13 @@ public class TcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 
 	private final EventExecutorGroup eventExecutorGroup;
 
-	private final Environment environment;
+	private final LogUtil logUtil;
 
 	@Override
 	protected void initChannel(SocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
 		// 日志
-		pipeline.addLast("loggingHandler", new LoggingHandler(getLogLevel()));
+		pipeline.addLast("loggingHandler", new LoggingHandler(logUtil.getLogLevel()));
 		// 定长截取
 		pipeline.addLast("fixedLengthFrameDecoder", new FixedLengthFrameDecoder(55));
 		// 解码
@@ -68,14 +66,6 @@ public class TcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 		pipeline.addLast("metricHandler", metricHandler);
 		// 业务处理handler
 		pipeline.addLast(eventExecutorGroup, tcpHandler);
-	}
-
-	private LogLevel getLogLevel() {
-		String env = environment.getProperty("spring.profiles.active", "test");
-		if (ObjectUtil.equals("prod", env)) {
-			return LogLevel.ERROR;
-		}
-		return LogLevel.INFO;
 	}
 
 }

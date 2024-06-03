@@ -63,53 +63,9 @@
       </Policies>
       <DefaultRolloverStrategy max="${LOG_DAYS}"/>
     </RollingRandomAccessFile>
-    <RollingRandomAccessFile name="failover_kafka" fileName="${LOG_PATH}/${APP_NAME}_kafka.log"
-                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${APP_NAME}_kafka_%d{yyyy-MM-dd}.%i.log.gz"
-                             immediateFlush="false">
-      <Filters>
-        <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
-      </Filters>
-      <PatternLayout pattern="${LOG_FILE_PATTERN}"/>
-      <Policies>
-        <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
-        <SizeBasedTriggeringPolicy size="${LOG_ROLL_SIZE}"/>
-      </Policies>
-      <DefaultRolloverStrategy max="${LOG_DAYS}"/>
-    </RollingRandomAccessFile>
-    <Failover name="failover" primary="kafka" retryIntervalSeconds="600">
-      <Failovers>
-        <AppenderRef ref="failover_kafka"/>
-      </Failovers>
-    </Failover>
     <Async name="async_file" bufferSize="2000" blocking="false">
       <AppenderRef ref="file"/>
     </Async>
-    <Async name="async_kafka" bufferSize="2000" blocking="false">
-      <AppenderRef ref="failover"/>
-    </Async>
-    <Kafka name="kafka" topic="laokou_trace_topic" ignoreExceptions="false">
-      <PatternLayout>
-        <pattern>
-          {
-          "appName":"${APP_NAME}",
-          "profile":"test",
-          "timestamp":"%d{yyyy-MM-dd HH:mm:ss}",
-          "userId":"${ctx:user-id}",
-          "username":"${ctx:user-name}",
-          "tenantId":"${ctx:tenant-id}",
-          "traceId":"${ctx:trace-id}",
-          "ip":"${sys:ip}",
-          "level":"%-5level",
-          "thread":"%thread",
-          "logger":"%logger",
-          "msg":"%m"
-          }
-        </pattern>
-      </PatternLayout>
-      <Property name="max.block.ms">2000</Property>
-      <Property name="request.timeout.ms">2000</Property>
-      <Property name="bootstrap.servers">kafka.laokou.org:9092</Property>
-    </Kafka>
   </Appenders>
   <Loggers>
     <AsyncLogger name="org.laokou" additivity="FALSE" includeLocation="FALSE" level="INFO">

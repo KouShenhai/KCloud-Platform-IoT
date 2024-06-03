@@ -33,13 +33,13 @@ import org.springframework.context.annotation.Configuration;
  * @author laokou
  */
 @Configuration
-public class WebSocketConfig {
+public class WebSocketServerConfig {
 
 	@Bean(name = "webSocketServer", initMethod = "start", destroyMethod = "stop")
 	public Server webSocketServer(WebSocketProperties webSocketProperties,
-                                  ChannelInitializer<?> webSocketChannelInitializer) {
-		return new WebSocketServer(webSocketProperties.getIp(), webSocketProperties.getPort(),
-			webSocketChannelInitializer);
+			ChannelInitializer<?> webSocketServerChannelInitializer) {
+		return new WebSocketServer(webSocketProperties.getServer().getIp(), webSocketProperties.getServer().getPort(),
+				webSocketServerChannelInitializer);
 	}
 
 	@Bean

@@ -42,7 +42,7 @@ import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 @Component
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
-public class WebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class WebSocketServerHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
 	private final RedisUtil redisUtil;
 
@@ -61,7 +61,8 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 			if (channel.isActive() && channel.isWritable()) {
 				channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
 				ctx.close();
-			} else {
+			}
+			else {
 				log.error("丢弃消息");
 			}
 		}
