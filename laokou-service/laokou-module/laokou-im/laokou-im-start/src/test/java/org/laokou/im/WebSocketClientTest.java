@@ -19,15 +19,21 @@ package org.laokou.im;
 import io.netty.handler.codec.http.DefaultHttpHeaders;
 import io.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
 import io.netty.handler.codec.http.websocketx.WebSocketVersion;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.netty.config.WebSocketClient;
 import org.laokou.common.netty.config.WebSocketProperties;
 import org.laokou.im.handler.WebSocketClientHandler;
 import org.laokou.im.initializer.WebSocketClientChannelInitializer;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestConstructor;
 
 import java.net.URI;
 
 @Slf4j
+@SpringBootTest
+@RequiredArgsConstructor
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class WebSocketClientTest {
 
 	public static void main(String[] args) {
