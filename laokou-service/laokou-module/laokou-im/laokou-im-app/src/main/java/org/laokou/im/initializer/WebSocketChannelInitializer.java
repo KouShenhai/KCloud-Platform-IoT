@@ -37,7 +37,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.im.handler.MetricHandler;
-import org.laokou.im.handler.WebsocketIdleStateHandler;
+import org.laokou.im.handler.WebSocketIdleStateHandler;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.server.Ssl;
 import org.springframework.core.env.Environment;
@@ -56,9 +56,9 @@ import java.security.KeyStore;
  */
 @Component
 @RequiredArgsConstructor
-public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketChannel> {
+public class WebSocketChannelInitializer extends ChannelInitializer<NioSocketChannel> {
 
-	private final SimpleChannelInboundHandler<?> websocketHandler;
+	private final SimpleChannelInboundHandler<?> webSocketHandler;
 
 	private final ServerProperties serverProperties;
 
@@ -77,23 +77,23 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		// 日志
 		pipeline.addLast("loggingHandler", new LoggingHandler(getLogLevel()));
 		// 心跳检测
-		pipeline.addLast("websocketIdleStateHandler", new WebsocketIdleStateHandler());
+		pipeline.addLast("webSocketIdleStateHandler", new WebSocketIdleStateHandler());
 		// HTTP解码器
 		pipeline.addLast("httpServerCodec", new HttpServerCodec());
 		// 数据压缩
-		pipeline.addLast("websocketServerCompressionHandler", new WebSocketServerCompressionHandler());
+		pipeline.addLast("webSocketServerCompressionHandler", new WebSocketServerCompressionHandler());
 		// 块状方式写入
 		pipeline.addLast("chunkedWriteHandler", new ChunkedWriteHandler());
 		// 最大内容长度
 		pipeline.addLast("httpObjectAggregator", new HttpObjectAggregator(65536));
-		// websocket协议
-		pipeline.addLast("websocketServerProtocolHandler", new WebSocketServerProtocolHandler("/ws"));
+		// WebSocket协议
+		pipeline.addLast("webSocketServerProtocolHandler", new WebSocketServerProtocolHandler("/ws"));
 		// 度量
 		pipeline.addLast("metricHandler", metricHandler);
 		// flush合并
 		pipeline.addLast("flushConsolidationHandler", new FlushConsolidationHandler(10, true));
 		// 业务处理handler
-		pipeline.addLast(eventExecutorGroup, websocketHandler);
+		pipeline.addLast(eventExecutorGroup, webSocketHandler);
 	}
 
 	private LogLevel getLogLevel() {

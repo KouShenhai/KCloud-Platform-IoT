@@ -36,8 +36,8 @@ import static org.laokou.common.i18n.common.RocketMqConstant.*;
 		selectorExpression = LAOKOU_REMIND_MESSAGE_TAG, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
 public class RemindMessageHandler extends AbstractMessageHandler {
 
-	public RemindMessageHandler(Server websocketServer, Executor executor) {
-		super(websocketServer, executor);
+	public RemindMessageHandler(Server webSocketServer, Executor executor) {
+		super(webSocketServer, executor);
 	}
 
 	@Override

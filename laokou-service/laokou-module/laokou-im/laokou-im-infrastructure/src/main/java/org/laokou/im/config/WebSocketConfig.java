@@ -23,7 +23,7 @@ import io.netty.util.concurrent.EventExecutorGroup;
 import io.netty.util.concurrent.UnorderedThreadPoolEventExecutor;
 import org.laokou.common.netty.config.Server;
 import org.laokou.common.netty.config.WebSocketServer;
-import org.laokou.common.netty.config.WebsocketProperties;
+import org.laokou.common.netty.config.WebSocketProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -35,16 +35,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class WebSocketConfig {
 
-	@Bean(name = "websocketServer", initMethod = "start", destroyMethod = "stop")
-	public Server websocketServer(WebsocketProperties websocketProperties,
-			ChannelInitializer<?> websocketChannelInitializer) {
-		return new WebSocketServer(websocketProperties.getIp(), websocketProperties.getPort(),
-				websocketChannelInitializer);
+	@Bean(name = "webSocketServer", initMethod = "start", destroyMethod = "stop")
+	public Server webSocketServer(WebSocketProperties webSocketProperties,
+                                  ChannelInitializer<?> webSocketChannelInitializer) {
+		return new WebSocketServer(webSocketProperties.getIp(), webSocketProperties.getPort(),
+			webSocketChannelInitializer);
 	}
 
 	@Bean
 	public EventExecutorGroup eventExecutorGroup() {
-		return new UnorderedThreadPoolEventExecutor(16, new DefaultThreadFactory("websocketHandler"));
+		return new UnorderedThreadPoolEventExecutor(16, new DefaultThreadFactory("webSocketHandler"));
 	}
 
 }

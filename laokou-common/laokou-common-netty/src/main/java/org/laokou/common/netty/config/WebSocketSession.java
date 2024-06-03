@@ -27,7 +27,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 /**
  * @author laokou
  */
-public final class WebsocketSession {
+public final class WebSocketSession {
 
 	private static final Cache<String, Channel> CLIENT_CACHE = Caffeine.newBuilder()
 		.expireAfterAccess(3600, SECONDS)

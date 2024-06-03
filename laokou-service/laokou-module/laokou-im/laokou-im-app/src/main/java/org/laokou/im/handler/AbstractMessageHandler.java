@@ -38,7 +38,7 @@ import static org.laokou.common.i18n.common.constants.TraceConstant.TRACE_ID;
 @RequiredArgsConstructor
 public abstract class AbstractMessageHandler implements RocketMQListener<MessageExt> {
 
-	private final Server websocketServer;
+	private final Server webSocketServer;
 
 	private final Executor executor;
 
@@ -67,7 +67,7 @@ public abstract class AbstractMessageHandler implements RocketMQListener<Message
 		Set<String> receiver = msg.getReceiver();
 		TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.ok(payload)));
 		receiver.parallelStream()
-			.forEach(clientId -> CompletableFuture.runAsync(() -> websocketServer.send(clientId, webSocketFrame),
+			.forEach(clientId -> CompletableFuture.runAsync(() -> webSocketServer.send(clientId, webSocketFrame),
 					executor));
 	}
 

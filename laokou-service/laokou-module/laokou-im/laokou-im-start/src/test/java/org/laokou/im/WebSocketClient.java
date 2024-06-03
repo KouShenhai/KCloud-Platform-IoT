@@ -22,7 +22,7 @@ import org.laokou.common.netty.config.Client;
 /**
  * @author laokou
  */
-public class WebsocketClient implements Client {
+public class WebSocketClient implements Client {
 
 	@Override
 	public synchronized void open() {

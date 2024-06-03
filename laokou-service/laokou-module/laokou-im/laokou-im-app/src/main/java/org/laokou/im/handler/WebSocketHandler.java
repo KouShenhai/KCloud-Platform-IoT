@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.netty.config.WebsocketSession;
+import org.laokou.common.netty.config.WebSocketSession;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.utils.UserDetail;
@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 
 /**
- * websocket自定义处理器.
+ * WebSocket自定义处理器.
  *
  * @author laokou
  */
@@ -42,7 +42,7 @@ import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 @Component
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
-public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class WebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
 	private final RedisUtil redisUtil;
 
@@ -55,7 +55,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 		if (obj != null) {
 			UserDetail userDetail = (UserDetail) obj;
 			Long id = userDetail.getId();
-			WebsocketSession.put(id.toString(), channel);
+			WebSocketSession.put(id.toString(), channel);
 		}
 		else {
 			if (channel.isActive() && channel.isWritable()) {
@@ -76,7 +76,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	public void handlerRemoved(ChannelHandlerContext ctx) {
 		String channelId = ctx.channel().id().asLongText();
 		log.info("断开连接：{}", channelId);
-		WebsocketSession.remove(channelId);
+		WebSocketSession.remove(channelId);
 	}
 
 }

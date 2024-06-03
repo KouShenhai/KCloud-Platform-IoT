@@ -28,8 +28,8 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties(prefix = "spring.websocket")
-@Schema(name = "WebsocketProperties", description = "WebSocket属性配置")
-public class WebsocketProperties {
+@Schema(name = "WebSocketProperties", description = "WebSocket属性配置")
+public class WebSocketProperties {
 
 	/**
 	 * ip.

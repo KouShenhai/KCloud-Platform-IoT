@@ -28,9 +28,9 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  * @author laokou
  */
 @Slf4j
-public class WebsocketIdleStateHandler extends IdleStateHandler {
+public class WebSocketIdleStateHandler extends IdleStateHandler {
 
-	public WebsocketIdleStateHandler() {
+	public WebSocketIdleStateHandler() {
 		super(60, 0, 0, SECONDS);
 	}
 
