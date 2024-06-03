@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试WebSocket</title>
+</head>
+<body>
+
+</body>
+<script>
+connectWebsocket();
+function connectWebsocket() {
+		let websocket
+		if (typeof WebSocket === 'undefined') {
+			console.log('您的浏览器不支持WebSocket')
+		} else {
+			// 打开一个websocket
+			websocket = new WebSocket("wss://vue.laokou.org/laokou/im/ws")
+			// 建立连接
+			websocket.onopen = () => {
+				// 发送数据
+				console.log('websocket建立连接')
+				websocket.send("eyJraWQiOiJjYzI3ZjBkNC0zY2UwLTQ1YTktOGFjOS1mZTRjMmJjN2NmNzkiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxZnRrQkpFSXZtT0Z1eEp5Z3Myam5RPT0iLCJhdWQiOiI5NVR4U3NUUEZBM3RGMTJUQlNNbVVWSzBkYSIsIm5iZiI6MTcxNzQwOTg3MSwic2NvcGUiOlsicGFzc3dvcmQiLCJtYWlsIiwib3BlbmlkIiwibW9iaWxlIl0sImlzcyI6Imh0dHBzOi8vMTI3LjAuMC4xOjExMTEiLCJleHAiOjE3MTc0MTM0NzEsImlhdCI6MTcxNzQwOTg3MSwianRpIjoiNzYxMjFlZDUtNjBlZC00OTA4LWIzYjctYTkwN2MwMmMyZWM2In0.VwFcngOyctnmVPf7gDjQQCNWoha3-mJV3NxXPIMxpNMDhW-4RPeu7BamgD0B-9-u_vRBzEhGl6DCnmmcl7iG_6vE49W9QVPNdtL15srMDPHoUFP6bno6Ia46O7wcPe_z4KjTDEjaxx1MclKDQw9j2K3Puv-Yvzbwwn42jW-HL2cPgsQozYDpFZRnfOZs0HQ3LwNKmx7Yrx6N0ZpqFDdlATQyh8fkAE4mbak2aLGps-vnAfqtvOUCpvA5AkOXTox5SeDrFccMQe35Jy-NNLypjBXA0yaKMA-nIpKxZIlf0BTZQ1BkSVgb-qdTfC7YRIbcY3aZJNzLDBCrd90qW81t-A")
+				this.isConnect = true
+			}
+			// 客户端接收服务端返回的数据
+			websocket.onmessage = evt => {
+				const res = JSON.parse(evt.data)
+				console.log(res)
+			}
+			// 发生错误时
+			websocket.onerror = evt => {
+				console.log('websocket错误：', evt)
+				this.isConnect = false
+			}
+			// 关闭连接
+			websocket.onclose = evt => {
+				console.log('websocket关闭：', evt)
+				this.isConnect = false
+				restConnectWebsocket()
+			}
+		}
+	}
+function restConnectWebsocket() {
+	console.log('尝试重新连接')
+	const time = setInterval(() => {
+		if (this.isConnect) {
+			return
+		}
+		clearInterval(time)
+		connectWebsocket()
+	}, 5000)
+}
+</script>
+</html>
