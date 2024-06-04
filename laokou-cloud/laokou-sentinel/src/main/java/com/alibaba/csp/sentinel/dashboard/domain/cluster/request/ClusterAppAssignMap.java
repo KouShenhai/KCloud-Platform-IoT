@@ -23,88 +23,90 @@ import java.util.Set;
  */
 public class ClusterAppAssignMap {
 
-	private String machineId;
+    private String machineId;
+    private String ip;
+    private Integer port;
 
-	private String ip;
+    private Boolean belongToApp;
 
-	private Integer port;
+    private Set<String> clientSet;
 
-	private Boolean belongToApp;
+    private Set<String> namespaceSet;
+    private Double maxAllowedQps;
 
-	private Set<String> clientSet;
+    public String getMachineId() {
+        return machineId;
+    }
 
-	private Set<String> namespaceSet;
+    public ClusterAppAssignMap setMachineId(String machineId) {
+        this.machineId = machineId;
+        return this;
+    }
 
-	private Double maxAllowedQps;
+    public String getIp() {
+        return ip;
+    }
 
-	public String getMachineId() {
-		return machineId;
-	}
+    public ClusterAppAssignMap setIp(String ip) {
+        this.ip = ip;
+        return this;
+    }
 
-	public ClusterAppAssignMap setMachineId(String machineId) {
-		this.machineId = machineId;
-		return this;
-	}
+    public Integer getPort() {
+        return port;
+    }
 
-	public String getIp() {
-		return ip;
-	}
+    public ClusterAppAssignMap setPort(Integer port) {
+        this.port = port;
+        return this;
+    }
 
-	public ClusterAppAssignMap setIp(String ip) {
-		this.ip = ip;
-		return this;
-	}
+    public Set<String> getClientSet() {
+        return clientSet;
+    }
 
-	public Integer getPort() {
-		return port;
-	}
+    public ClusterAppAssignMap setClientSet(Set<String> clientSet) {
+        this.clientSet = clientSet;
+        return this;
+    }
 
-	public ClusterAppAssignMap setPort(Integer port) {
-		this.port = port;
-		return this;
-	}
+    public Set<String> getNamespaceSet() {
+        return namespaceSet;
+    }
 
-	public Set<String> getClientSet() {
-		return clientSet;
-	}
+    public ClusterAppAssignMap setNamespaceSet(Set<String> namespaceSet) {
+        this.namespaceSet = namespaceSet;
+        return this;
+    }
 
-	public ClusterAppAssignMap setClientSet(Set<String> clientSet) {
-		this.clientSet = clientSet;
-		return this;
-	}
+    public Boolean getBelongToApp() {
+        return belongToApp;
+    }
 
-	public Set<String> getNamespaceSet() {
-		return namespaceSet;
-	}
+    public ClusterAppAssignMap setBelongToApp(Boolean belongToApp) {
+        this.belongToApp = belongToApp;
+        return this;
+    }
 
-	public ClusterAppAssignMap setNamespaceSet(Set<String> namespaceSet) {
-		this.namespaceSet = namespaceSet;
-		return this;
-	}
+    public Double getMaxAllowedQps() {
+        return maxAllowedQps;
+    }
 
-	public Boolean getBelongToApp() {
-		return belongToApp;
-	}
+    public ClusterAppAssignMap setMaxAllowedQps(Double maxAllowedQps) {
+        this.maxAllowedQps = maxAllowedQps;
+        return this;
+    }
 
-	public ClusterAppAssignMap setBelongToApp(Boolean belongToApp) {
-		this.belongToApp = belongToApp;
-		return this;
-	}
-
-	public Double getMaxAllowedQps() {
-		return maxAllowedQps;
-	}
-
-	public ClusterAppAssignMap setMaxAllowedQps(Double maxAllowedQps) {
-		this.maxAllowedQps = maxAllowedQps;
-		return this;
-	}
-
-	@Override
-	public String toString() {
-		return "ClusterAppAssignMap{" + "machineId='" + machineId + '\'' + ", ip='" + ip + '\'' + ", port=" + port
-				+ ", belongToApp=" + belongToApp + ", clientSet=" + clientSet + ", namespaceSet=" + namespaceSet
-				+ ", maxAllowedQps=" + maxAllowedQps + '}';
-	}
-
+    @Override
+    public String toString() {
+        return "ClusterAppAssignMap{" +
+            "machineId='" + machineId + '\'' +
+            ", ip='" + ip + '\'' +
+            ", port=" + port +
+            ", belongToApp=" + belongToApp +
+            ", clientSet=" + clientSet +
+            ", namespaceSet=" + namespaceSet +
+            ", maxAllowedQps=" + maxAllowedQps +
+            '}';
+    }
 }

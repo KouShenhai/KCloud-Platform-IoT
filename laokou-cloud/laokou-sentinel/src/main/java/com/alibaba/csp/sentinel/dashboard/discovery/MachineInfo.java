@@ -22,185 +22,164 @@ import com.alibaba.csp.sentinel.util.StringUtil;
 
 public class MachineInfo implements Comparable<MachineInfo> {
 
-	private String app = "";
+    private String app = "";
+    private Integer appType = 0;
+    private String hostname = "";
+    private String ip = "";
+    private Integer port = -1;
+    private long lastHeartbeat;
+    private long heartbeatVersion;
 
-	private Integer appType = 0;
+    /**
+     * Indicates the version of Sentinel client (since 0.2.0).
+     */
+    private String version;
 
-	private String hostname = "";
+    public static MachineInfo of(String app, String ip, Integer port) {
+        MachineInfo machineInfo = new MachineInfo();
+        machineInfo.setApp(app);
+        machineInfo.setIp(ip);
+        machineInfo.setPort(port);
+        return machineInfo;
+    }
 
-	private String ip = "";
+    public String toHostPort() {
+        return ip + ":" + port;
+    }
 
-	private Integer port = -1;
+    public Integer getPort() {
+        return port;
+    }
 
-	private long lastHeartbeat;
+    public void setPort(Integer port) {
+        this.port = port;
+    }
 
-	private long heartbeatVersion;
+    public String getApp() {
+        return app;
+    }
 
-	/**
-	 * Indicates the version of Sentinel client (since 0.2.0).
-	 */
-	private String version;
+    public void setApp(String app) {
+        this.app = app;
+    }
 
-	public static MachineInfo of(String app, String ip, Integer port) {
-		MachineInfo machineInfo = new MachineInfo();
-		machineInfo.setApp(app);
-		machineInfo.setIp(ip);
-		machineInfo.setPort(port);
-		return machineInfo;
-	}
+    public Integer getAppType() {
+        return appType;
+    }
 
-	public String toHostPort() {
-		return ip + ":" + port;
-	}
+    public void setAppType(Integer appType) {
+        this.appType = appType;
+    }
 
-	public Integer getPort() {
-		return port;
-	}
+    public String getHostname() {
+        return hostname;
+    }
 
-	public void setPort(Integer port) {
-		this.port = port;
-	}
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
 
-	public String getApp() {
-		return app;
-	}
+    public String getIp() {
+        return ip;
+    }
 
-	public void setApp(String app) {
-		this.app = app;
-	}
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
-	public Integer getAppType() {
-		return appType;
-	}
+    public long getHeartbeatVersion() {
+        return heartbeatVersion;
+    }
+    
+    public void setHeartbeatVersion(long heartbeatVersion) {
+        this.heartbeatVersion = heartbeatVersion;
+    }
 
-	public void setAppType(Integer appType) {
-		this.appType = appType;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public String getHostname() {
-		return hostname;
-	}
+    public MachineInfo setVersion(String version) {
+        this.version = version;
+        return this;
+    }
+    
+    public boolean isHealthy() {
+        long delta = System.currentTimeMillis() - lastHeartbeat;
+        return delta < DashboardConfig.getUnhealthyMachineMillis();
+    }
+    
+    /**
+     * whether dead should be removed
+     * 
+     * @return
+     */
+    public boolean isDead() {
+        if (DashboardConfig.getAutoRemoveMachineMillis() > 0) {
+            long delta = System.currentTimeMillis() - lastHeartbeat;
+            return delta > DashboardConfig.getAutoRemoveMachineMillis();
+        }
+        return false;
+    }
+    
+    public long getLastHeartbeat() {
+        return lastHeartbeat;
+    }
+    
+    public void setLastHeartbeat(long lastHeartbeat) {
+        this.lastHeartbeat = lastHeartbeat;
+    }
 
-	public void setHostname(String hostname) {
-		this.hostname = hostname;
-	}
+    @Override
+    public int compareTo(MachineInfo o) {
+        if (this == o) {
+            return 0;
+        }
+        if (!port.equals(o.getPort())) {
+            return port.compareTo(o.getPort());
+        }
+        if (!StringUtil.equals(app, o.getApp())) {
+            return app.compareToIgnoreCase(o.getApp());
+        }
+        return ip.compareToIgnoreCase(o.getIp());
+    }
 
-	public String getIp() {
-		return ip;
-	}
+    @Override
+    public String toString() {
+        return new StringBuilder("MachineInfo {")
+            .append("app='").append(app).append('\'')
+            .append(",appType='").append(appType).append('\'')
+            .append(", hostname='").append(hostname).append('\'')
+            .append(", ip='").append(ip).append('\'')
+            .append(", port=").append(port)
+            .append(", heartbeatVersion=").append(heartbeatVersion)
+            .append(", lastHeartbeat=").append(lastHeartbeat)
+            .append(", version='").append(version).append('\'')
+            .append(", healthy=").append(isHealthy())
+            .append('}').toString();
+    }
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (!(o instanceof MachineInfo)) { return false; }
+        MachineInfo that = (MachineInfo)o;
+        return Objects.equals(app, that.app) &&
+            Objects.equals(ip, that.ip) &&
+            Objects.equals(port, that.port);
+    }
 
-	public long getHeartbeatVersion() {
-		return heartbeatVersion;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(app, ip, port);
+    }
 
-	public void setHeartbeatVersion(long heartbeatVersion) {
-		this.heartbeatVersion = heartbeatVersion;
-	}
-
-	public String getVersion() {
-		return version;
-	}
-
-	public MachineInfo setVersion(String version) {
-		this.version = version;
-		return this;
-	}
-
-	public boolean isHealthy() {
-		long delta = System.currentTimeMillis() - lastHeartbeat;
-		return delta < DashboardConfig.getUnhealthyMachineMillis();
-	}
-
-	/**
-	 * whether dead should be removed
-	 * @return
-	 */
-	public boolean isDead() {
-		if (DashboardConfig.getAutoRemoveMachineMillis() > 0) {
-			long delta = System.currentTimeMillis() - lastHeartbeat;
-			return delta > DashboardConfig.getAutoRemoveMachineMillis();
-		}
-		return false;
-	}
-
-	public long getLastHeartbeat() {
-		return lastHeartbeat;
-	}
-
-	public void setLastHeartbeat(long lastHeartbeat) {
-		this.lastHeartbeat = lastHeartbeat;
-	}
-
-	@Override
-	public int compareTo(MachineInfo o) {
-		if (this == o) {
-			return 0;
-		}
-		if (!port.equals(o.getPort())) {
-			return port.compareTo(o.getPort());
-		}
-		if (!StringUtil.equals(app, o.getApp())) {
-			return app.compareToIgnoreCase(o.getApp());
-		}
-		return ip.compareToIgnoreCase(o.getIp());
-	}
-
-	@Override
-	public String toString() {
-		return new StringBuilder("MachineInfo {").append("app='")
-			.append(app)
-			.append('\'')
-			.append(",appType='")
-			.append(appType)
-			.append('\'')
-			.append(", hostname='")
-			.append(hostname)
-			.append('\'')
-			.append(", ip='")
-			.append(ip)
-			.append('\'')
-			.append(", port=")
-			.append(port)
-			.append(", heartbeatVersion=")
-			.append(heartbeatVersion)
-			.append(", lastHeartbeat=")
-			.append(lastHeartbeat)
-			.append(", version='")
-			.append(version)
-			.append('\'')
-			.append(", healthy=")
-			.append(isHealthy())
-			.append('}')
-			.toString();
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof MachineInfo)) {
-			return false;
-		}
-		MachineInfo that = (MachineInfo) o;
-		return Objects.equals(app, that.app) && Objects.equals(ip, that.ip) && Objects.equals(port, that.port);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(app, ip, port);
-	}
-
-	/**
-	 * Information for log
-	 * @return
-	 */
-	public String toLogString() {
-		return app + "|" + ip + "|" + port + "|" + version;
-	}
-
+    /**
+     * Information for log
+     *
+     * @return
+     */
+    public String toLogString() {
+        return app + "|" + ip + "|" + port + "|" + version;
+    }
 }

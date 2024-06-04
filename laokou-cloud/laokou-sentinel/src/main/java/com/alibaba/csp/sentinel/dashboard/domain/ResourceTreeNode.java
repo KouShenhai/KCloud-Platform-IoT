@@ -26,232 +26,217 @@ import com.alibaba.csp.sentinel.command.vo.NodeVo;
  * @author leyou
  */
 public class ResourceTreeNode {
+    private String id;
+    private String parentId;
+    private String resource;
 
-	private String id;
+    private Integer threadNum;
+    private Long passQps;
+    private Long blockQps;
+    private Long totalQps;
+    private Long averageRt;
+    private Long successQps;
+    private Long exceptionQps;
+    private Long oneMinutePass;
+    private Long oneMinuteBlock;
+    private Long oneMinuteException;
+    private Long oneMinuteTotal;
 
-	private String parentId;
+    private boolean visible = true;
 
-	private String resource;
+    private List<ResourceTreeNode> children = new ArrayList<>();
 
-	private Integer threadNum;
+    public static ResourceTreeNode fromNodeVoList(List<NodeVo> nodeVos) {
+        if (nodeVos == null || nodeVos.isEmpty()) {
+            return null;
+        }
+        ResourceTreeNode root = null;
+        Map<String, ResourceTreeNode> map = new HashMap<>();
+        for (NodeVo vo : nodeVos) {
+            ResourceTreeNode node = fromNodeVo(vo);
+            map.put(node.id, node);
+            // real root
+            if (node.parentId == null || node.parentId.isEmpty()) {
+                root = node;
+            } else if (map.containsKey(node.parentId)) {
+                map.get(node.parentId).children.add(node);
+            } else {
+                // impossible
+            }
+        }
+        return root;
+    }
 
-	private Long passQps;
+    public static ResourceTreeNode fromNodeVo(NodeVo vo) {
+        ResourceTreeNode node = new ResourceTreeNode();
+        node.id = vo.getId();
+        node.parentId = vo.getParentId();
+        node.resource = vo.getResource();
+        node.threadNum = vo.getThreadNum();
+        node.passQps = vo.getPassQps();
+        node.blockQps = vo.getBlockQps();
+        node.totalQps = vo.getTotalQps();
+        node.averageRt = vo.getAverageRt();
+        node.successQps = vo.getSuccessQps();
+        node.exceptionQps = vo.getExceptionQps();
+        node.oneMinutePass = vo.getOneMinutePass();
+        node.oneMinuteBlock = vo.getOneMinuteBlock();
+        node.oneMinuteException = vo.getOneMinuteException();
+        node.oneMinuteTotal = vo.getOneMinuteTotal();
+        return node;
+    }
 
-	private Long blockQps;
+    public void searchIgnoreCase(String searchKey) {
+        search(this, searchKey);
+    }
 
-	private Long totalQps;
+    /**
+     * This node is visible only when searchKey matches this.resource or at least
+     * one of this's children is visible
+     */
+    private boolean search(ResourceTreeNode node, String searchKey) {
+        // empty matches all
+        if (searchKey == null || searchKey.isEmpty() ||
+            node.resource.toLowerCase().contains(searchKey.toLowerCase())) {
+            node.visible = true;
+        } else {
+            node.visible = false;
+        }
 
-	private Long averageRt;
+        boolean found = false;
+        for (ResourceTreeNode c : node.children) {
+            found |= search(c, searchKey);
+        }
+        node.visible |= found;
+        return node.visible;
+    }
 
-	private Long successQps;
+    public String getId() {
+        return id;
+    }
 
-	private Long exceptionQps;
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	private Long oneMinutePass;
+    public String getParentId() {
+        return parentId;
+    }
 
-	private Long oneMinuteBlock;
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
-	private Long oneMinuteException;
+    public String getResource() {
+        return resource;
+    }
 
-	private Long oneMinuteTotal;
+    public void setResource(String resource) {
+        this.resource = resource;
+    }
 
-	private boolean visible = true;
+    public Integer getThreadNum() {
+        return threadNum;
+    }
 
-	private List<ResourceTreeNode> children = new ArrayList<>();
+    public void setThreadNum(Integer threadNum) {
+        this.threadNum = threadNum;
+    }
 
-	public static ResourceTreeNode fromNodeVoList(List<NodeVo> nodeVos) {
-		if (nodeVos == null || nodeVos.isEmpty()) {
-			return null;
-		}
-		ResourceTreeNode root = null;
-		Map<String, ResourceTreeNode> map = new HashMap<>();
-		for (NodeVo vo : nodeVos) {
-			ResourceTreeNode node = fromNodeVo(vo);
-			map.put(node.id, node);
-			// real root
-			if (node.parentId == null || node.parentId.isEmpty()) {
-				root = node;
-			}
-			else if (map.containsKey(node.parentId)) {
-				map.get(node.parentId).children.add(node);
-			}
-			else {
-				// impossible
-			}
-		}
-		return root;
-	}
+    public Long getPassQps() {
+        return passQps;
+    }
 
-	public static ResourceTreeNode fromNodeVo(NodeVo vo) {
-		ResourceTreeNode node = new ResourceTreeNode();
-		node.id = vo.getId();
-		node.parentId = vo.getParentId();
-		node.resource = vo.getResource();
-		node.threadNum = vo.getThreadNum();
-		node.passQps = vo.getPassQps();
-		node.blockQps = vo.getBlockQps();
-		node.totalQps = vo.getTotalQps();
-		node.averageRt = vo.getAverageRt();
-		node.successQps = vo.getSuccessQps();
-		node.exceptionQps = vo.getExceptionQps();
-		node.oneMinutePass = vo.getOneMinutePass();
-		node.oneMinuteBlock = vo.getOneMinuteBlock();
-		node.oneMinuteException = vo.getOneMinuteException();
-		node.oneMinuteTotal = vo.getOneMinuteTotal();
-		return node;
-	}
+    public void setPassQps(Long passQps) {
+        this.passQps = passQps;
+    }
 
-	public void searchIgnoreCase(String searchKey) {
-		search(this, searchKey);
-	}
+    public Long getBlockQps() {
+        return blockQps;
+    }
 
-	/**
-	 * This node is visible only when searchKey matches this.resource or at least one of
-	 * this's children is visible
-	 */
-	private boolean search(ResourceTreeNode node, String searchKey) {
-		// empty matches all
-		if (searchKey == null || searchKey.isEmpty() || node.resource.toLowerCase().contains(searchKey.toLowerCase())) {
-			node.visible = true;
-		}
-		else {
-			node.visible = false;
-		}
+    public void setBlockQps(Long blockQps) {
+        this.blockQps = blockQps;
+    }
 
-		boolean found = false;
-		for (ResourceTreeNode c : node.children) {
-			found |= search(c, searchKey);
-		}
-		node.visible |= found;
-		return node.visible;
-	}
+    public Long getTotalQps() {
+        return totalQps;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public void setTotalQps(Long totalQps) {
+        this.totalQps = totalQps;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public Long getAverageRt() {
+        return averageRt;
+    }
 
-	public String getParentId() {
-		return parentId;
-	}
+    public void setAverageRt(Long averageRt) {
+        this.averageRt = averageRt;
+    }
 
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
+    public Long getSuccessQps() {
+        return successQps;
+    }
 
-	public String getResource() {
-		return resource;
-	}
+    public void setSuccessQps(Long successQps) {
+        this.successQps = successQps;
+    }
 
-	public void setResource(String resource) {
-		this.resource = resource;
-	}
+    public Long getExceptionQps() {
+        return exceptionQps;
+    }
 
-	public Integer getThreadNum() {
-		return threadNum;
-	}
+    public void setExceptionQps(Long exceptionQps) {
+        this.exceptionQps = exceptionQps;
+    }
 
-	public void setThreadNum(Integer threadNum) {
-		this.threadNum = threadNum;
-	}
+    public Long getOneMinutePass() {
+        return oneMinutePass;
+    }
 
-	public Long getPassQps() {
-		return passQps;
-	}
+    public void setOneMinutePass(Long oneMinutePass) {
+        this.oneMinutePass = oneMinutePass;
+    }
 
-	public void setPassQps(Long passQps) {
-		this.passQps = passQps;
-	}
+    public Long getOneMinuteBlock() {
+        return oneMinuteBlock;
+    }
 
-	public Long getBlockQps() {
-		return blockQps;
-	}
+    public void setOneMinuteBlock(Long oneMinuteBlock) {
+        this.oneMinuteBlock = oneMinuteBlock;
+    }
 
-	public void setBlockQps(Long blockQps) {
-		this.blockQps = blockQps;
-	}
+    public Long getOneMinuteException() {
+        return oneMinuteException;
+    }
 
-	public Long getTotalQps() {
-		return totalQps;
-	}
+    public void setOneMinuteException(Long oneMinuteException) {
+        this.oneMinuteException = oneMinuteException;
+    }
 
-	public void setTotalQps(Long totalQps) {
-		this.totalQps = totalQps;
-	}
+    public Long getOneMinuteTotal() {
+        return oneMinuteTotal;
+    }
 
-	public Long getAverageRt() {
-		return averageRt;
-	}
+    public void setOneMinuteTotal(Long oneMinuteTotal) {
+        this.oneMinuteTotal = oneMinuteTotal;
+    }
 
-	public void setAverageRt(Long averageRt) {
-		this.averageRt = averageRt;
-	}
+    public boolean isVisible() {
+        return visible;
+    }
 
-	public Long getSuccessQps() {
-		return successQps;
-	}
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 
-	public void setSuccessQps(Long successQps) {
-		this.successQps = successQps;
-	}
+    public List<ResourceTreeNode> getChildren() {
+        return children;
+    }
 
-	public Long getExceptionQps() {
-		return exceptionQps;
-	}
-
-	public void setExceptionQps(Long exceptionQps) {
-		this.exceptionQps = exceptionQps;
-	}
-
-	public Long getOneMinutePass() {
-		return oneMinutePass;
-	}
-
-	public void setOneMinutePass(Long oneMinutePass) {
-		this.oneMinutePass = oneMinutePass;
-	}
-
-	public Long getOneMinuteBlock() {
-		return oneMinuteBlock;
-	}
-
-	public void setOneMinuteBlock(Long oneMinuteBlock) {
-		this.oneMinuteBlock = oneMinuteBlock;
-	}
-
-	public Long getOneMinuteException() {
-		return oneMinuteException;
-	}
-
-	public void setOneMinuteException(Long oneMinuteException) {
-		this.oneMinuteException = oneMinuteException;
-	}
-
-	public Long getOneMinuteTotal() {
-		return oneMinuteTotal;
-	}
-
-	public void setOneMinuteTotal(Long oneMinuteTotal) {
-		this.oneMinuteTotal = oneMinuteTotal;
-	}
-
-	public boolean isVisible() {
-		return visible;
-	}
-
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-	}
-
-	public List<ResourceTreeNode> getChildren() {
-		return children;
-	}
-
-	public void setChildren(List<ResourceTreeNode> children) {
-		this.children = children;
-	}
-
+    public void setChildren(List<ResourceTreeNode> children) {
+        this.children = children;
+    }
 }
+

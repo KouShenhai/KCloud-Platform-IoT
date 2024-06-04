@@ -21,54 +21,55 @@ package com.alibaba.csp.sentinel.dashboard.domain.cluster.config;
  */
 public class ClusterClientConfig {
 
-	private String serverHost;
+    private String serverHost;
+    private Integer serverPort;
 
-	private Integer serverPort;
+    private Integer requestTimeout;
+    private Integer connectTimeout;
 
-	private Integer requestTimeout;
+    public String getServerHost() {
+        return serverHost;
+    }
 
-	private Integer connectTimeout;
+    public ClusterClientConfig setServerHost(String serverHost) {
+        this.serverHost = serverHost;
+        return this;
+    }
 
-	public String getServerHost() {
-		return serverHost;
-	}
+    public Integer getServerPort() {
+        return serverPort;
+    }
 
-	public ClusterClientConfig setServerHost(String serverHost) {
-		this.serverHost = serverHost;
-		return this;
-	}
+    public ClusterClientConfig setServerPort(Integer serverPort) {
+        this.serverPort = serverPort;
+        return this;
+    }
 
-	public Integer getServerPort() {
-		return serverPort;
-	}
+    public Integer getRequestTimeout() {
+        return requestTimeout;
+    }
 
-	public ClusterClientConfig setServerPort(Integer serverPort) {
-		this.serverPort = serverPort;
-		return this;
-	}
+    public ClusterClientConfig setRequestTimeout(Integer requestTimeout) {
+        this.requestTimeout = requestTimeout;
+        return this;
+    }
 
-	public Integer getRequestTimeout() {
-		return requestTimeout;
-	}
+    public Integer getConnectTimeout() {
+        return connectTimeout;
+    }
 
-	public ClusterClientConfig setRequestTimeout(Integer requestTimeout) {
-		this.requestTimeout = requestTimeout;
-		return this;
-	}
+    public ClusterClientConfig setConnectTimeout(Integer connectTimeout) {
+        this.connectTimeout = connectTimeout;
+        return this;
+    }
 
-	public Integer getConnectTimeout() {
-		return connectTimeout;
-	}
-
-	public ClusterClientConfig setConnectTimeout(Integer connectTimeout) {
-		this.connectTimeout = connectTimeout;
-		return this;
-	}
-
-	@Override
-	public String toString() {
-		return "ClusterClientConfig{" + "serverHost='" + serverHost + '\'' + ", serverPort=" + serverPort
-				+ ", requestTimeout=" + requestTimeout + ", connectTimeout=" + connectTimeout + '}';
-	}
-
+    @Override
+    public String toString() {
+        return "ClusterClientConfig{" +
+            "serverHost='" + serverHost + '\'' +
+            ", serverPort=" + serverPort +
+            ", requestTimeout=" + requestTimeout +
+            ", connectTimeout=" + connectTimeout +
+            '}';
+    }
 }

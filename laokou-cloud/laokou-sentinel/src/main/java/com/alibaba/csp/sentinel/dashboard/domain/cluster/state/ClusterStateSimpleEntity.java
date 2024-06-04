@@ -21,54 +21,54 @@ package com.alibaba.csp.sentinel.dashboard.domain.cluster.state;
  */
 public class ClusterStateSimpleEntity {
 
-	private Integer mode;
+    private Integer mode;
+    private Long lastModified;
+    private Boolean clientAvailable;
+    private Boolean serverAvailable;
 
-	private Long lastModified;
+    public Integer getMode() {
+        return mode;
+    }
 
-	private Boolean clientAvailable;
+    public ClusterStateSimpleEntity setMode(Integer mode) {
+        this.mode = mode;
+        return this;
+    }
 
-	private Boolean serverAvailable;
+    public Long getLastModified() {
+        return lastModified;
+    }
 
-	public Integer getMode() {
-		return mode;
-	}
+    public ClusterStateSimpleEntity setLastModified(Long lastModified) {
+        this.lastModified = lastModified;
+        return this;
+    }
 
-	public ClusterStateSimpleEntity setMode(Integer mode) {
-		this.mode = mode;
-		return this;
-	}
+    public Boolean getClientAvailable() {
+        return clientAvailable;
+    }
 
-	public Long getLastModified() {
-		return lastModified;
-	}
+    public ClusterStateSimpleEntity setClientAvailable(Boolean clientAvailable) {
+        this.clientAvailable = clientAvailable;
+        return this;
+    }
 
-	public ClusterStateSimpleEntity setLastModified(Long lastModified) {
-		this.lastModified = lastModified;
-		return this;
-	}
+    public Boolean getServerAvailable() {
+        return serverAvailable;
+    }
 
-	public Boolean getClientAvailable() {
-		return clientAvailable;
-	}
+    public ClusterStateSimpleEntity setServerAvailable(Boolean serverAvailable) {
+        this.serverAvailable = serverAvailable;
+        return this;
+    }
 
-	public ClusterStateSimpleEntity setClientAvailable(Boolean clientAvailable) {
-		this.clientAvailable = clientAvailable;
-		return this;
-	}
-
-	public Boolean getServerAvailable() {
-		return serverAvailable;
-	}
-
-	public ClusterStateSimpleEntity setServerAvailable(Boolean serverAvailable) {
-		this.serverAvailable = serverAvailable;
-		return this;
-	}
-
-	@Override
-	public String toString() {
-		return "ClusterStateSimpleEntity{" + "mode=" + mode + ", lastModified=" + lastModified + ", clientAvailable="
-				+ clientAvailable + ", serverAvailable=" + serverAvailable + '}';
-	}
-
+    @Override
+    public String toString() {
+        return "ClusterStateSimpleEntity{" +
+            "mode=" + mode +
+            ", lastModified=" + lastModified +
+            ", clientAvailable=" + clientAvailable +
+            ", serverAvailable=" + serverAvailable +
+            '}';
+    }
 }

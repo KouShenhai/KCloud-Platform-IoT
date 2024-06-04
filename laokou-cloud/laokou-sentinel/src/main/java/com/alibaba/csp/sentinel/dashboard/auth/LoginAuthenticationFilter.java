@@ -18,13 +18,9 @@ package com.alibaba.csp.sentinel.dashboard.auth;
 import javax.servlet.Filter;
 
 /**
- * <p>
- * The Servlet filter for authentication.
- * </p>
+ * <p>The Servlet filter for authentication.</p>
  *
- * <p>
- * Note: some urls are excluded as they needn't auth, such as:
- * </p>
+ * <p>Note: some urls are excluded as they needn't auth, such as:</p>
  * <ul>
  * <li>index url: {@code /}</li>
  * <li>authentication request url: {@code /login}, {@code /logout}</li>
@@ -32,8 +28,7 @@ import javax.servlet.Filter;
  * <li>static resources</li>
  * </ul>
  * <p>
- * The excluded urls and urlSuffixes could be configured in {@code application.properties}
- * file.
+ * The excluded urls and urlSuffixes could be configured in {@code application.properties} file.
  *
  * @author cdfive
  * @author wxq

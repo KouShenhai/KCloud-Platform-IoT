@@ -23,63 +23,60 @@ import com.alibaba.csp.sentinel.dashboard.domain.cluster.config.ClusterClientCon
  */
 public class ClusterClientModifyRequest implements ClusterModifyRequest {
 
-	private String app;
+    private String app;
+    private String ip;
+    private Integer port;
 
-	private String ip;
+    private Integer mode;
+    private ClusterClientConfig clientConfig;
 
-	private Integer port;
+    @Override
+    public String getApp() {
+        return app;
+    }
 
-	private Integer mode;
+    public ClusterClientModifyRequest setApp(String app) {
+        this.app = app;
+        return this;
+    }
 
-	private ClusterClientConfig clientConfig;
+    @Override
+    public String getIp() {
+        return ip;
+    }
 
-	@Override
-	public String getApp() {
-		return app;
-	}
+    public ClusterClientModifyRequest setIp(String ip) {
+        this.ip = ip;
+        return this;
+    }
 
-	public ClusterClientModifyRequest setApp(String app) {
-		this.app = app;
-		return this;
-	}
+    @Override
+    public Integer getPort() {
+        return port;
+    }
 
-	@Override
-	public String getIp() {
-		return ip;
-	}
+    public ClusterClientModifyRequest setPort(Integer port) {
+        this.port = port;
+        return this;
+    }
 
-	public ClusterClientModifyRequest setIp(String ip) {
-		this.ip = ip;
-		return this;
-	}
+    @Override
+    public Integer getMode() {
+        return mode;
+    }
 
-	@Override
-	public Integer getPort() {
-		return port;
-	}
+    public ClusterClientModifyRequest setMode(Integer mode) {
+        this.mode = mode;
+        return this;
+    }
 
-	public ClusterClientModifyRequest setPort(Integer port) {
-		this.port = port;
-		return this;
-	}
+    public ClusterClientConfig getClientConfig() {
+        return clientConfig;
+    }
 
-	@Override
-	public Integer getMode() {
-		return mode;
-	}
-
-	public ClusterClientModifyRequest setMode(Integer mode) {
-		this.mode = mode;
-		return this;
-	}
-
-	public ClusterClientConfig getClientConfig() {
-		return clientConfig;
-	}
-
-	public ClusterClientModifyRequest setClientConfig(ClusterClientConfig clientConfig) {
-		this.clientConfig = clientConfig;
-		return this;
-	}
-
+    public ClusterClientModifyRequest setClientConfig(
+        ClusterClientConfig clientConfig) {
+        this.clientConfig = clientConfig;
+        return this;
+    }
 }

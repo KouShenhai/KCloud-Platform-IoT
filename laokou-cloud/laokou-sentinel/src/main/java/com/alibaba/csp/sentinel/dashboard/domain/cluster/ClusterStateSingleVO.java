@@ -21,43 +21,43 @@ package com.alibaba.csp.sentinel.dashboard.domain.cluster;
  */
 public class ClusterStateSingleVO {
 
-	private String address;
+    private String address;
+    private Integer mode;
+    private String target;
 
-	private Integer mode;
+    public String getAddress() {
+        return address;
+    }
 
-	private String target;
+    public ClusterStateSingleVO setAddress(String address) {
+        this.address = address;
+        return this;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public Integer getMode() {
+        return mode;
+    }
 
-	public ClusterStateSingleVO setAddress(String address) {
-		this.address = address;
-		return this;
-	}
+    public ClusterStateSingleVO setMode(Integer mode) {
+        this.mode = mode;
+        return this;
+    }
 
-	public Integer getMode() {
-		return mode;
-	}
+    public String getTarget() {
+        return target;
+    }
 
-	public ClusterStateSingleVO setMode(Integer mode) {
-		this.mode = mode;
-		return this;
-	}
+    public ClusterStateSingleVO setTarget(String target) {
+        this.target = target;
+        return this;
+    }
 
-	public String getTarget() {
-		return target;
-	}
-
-	public ClusterStateSingleVO setTarget(String target) {
-		this.target = target;
-		return this;
-	}
-
-	@Override
-	public String toString() {
-		return "ClusterStateSingleVO{" + "address='" + address + '\'' + ", mode=" + mode + ", target='" + target + '\''
-				+ '}';
-	}
-
+    @Override
+    public String toString() {
+        return "ClusterStateSingleVO{" +
+            "address='" + address + '\'' +
+            ", mode=" + mode +
+            ", target='" + target + '\'' +
+            '}';
+    }
 }

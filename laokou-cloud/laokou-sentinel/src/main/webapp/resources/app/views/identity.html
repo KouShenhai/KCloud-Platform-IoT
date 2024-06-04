@@ -52,7 +52,7 @@
                 <tr></tr>
               </thead>
               <tbody>
-                <tr dir-paginate="resource in identities | itemsPerPage: pageSize" current-pageQuery="currentPage" pagination-id="entriesPagination"
+                <tr dir-paginate="resource in identities | itemsPerPage: pageSize" current-page="currentPage" pagination-id="entriesPagination"
                   data-tt-id="{{resource.ttId}}" data-tt-parent-id="{{resource.parentTtId}}" data-tt-visible="{{resource.visible}}">
                   <td style="white-space: normal; text-align: left;">
                     <!--<a ng-click="copyIdentity(resource.resource)"-->
@@ -87,7 +87,7 @@
         <!-- .card-body -->
         <div class="pagination-footer">
           <dir-pagination-controls boundary-links="true" template-url="app/views/pagination.tpl.html" pagination-id="entriesPagination"
-            on-pageQuery-change="">
+            on-page-change="">
           </dir-pagination-controls>
           <div class="tools">
             <span>共 {{totalCount}} 条记录, </span>

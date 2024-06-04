@@ -12,9 +12,9 @@
   <properties>
     <resource.delimiter>@</resource.delimiter>
     <!--sentinel版本-->
-    <sentinel.version>1.8.7</sentinel.version>
+    <sentinel.version>1.8.8</sentinel.version>
     <!--spring-boot版本-->
-    <spring-boot.version>2.7.18</spring-boot.version>
+    <spring-boot.version>2.5.12</spring-boot.version>
     <!--curator版本-->
     <curator.version>5.6.0</curator.version>
     <!--log4j版本-->

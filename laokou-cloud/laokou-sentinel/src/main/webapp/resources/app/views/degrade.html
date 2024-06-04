@@ -48,7 +48,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr dir-paginate="rule in rules | filter : searchKey | itemsPerPage: rulesPageConfig.pageSize " current-pageQuery="rulesPageConfig.currentPageIndex"
+              <tr dir-paginate="rule in rules | filter : searchKey | itemsPerPage: rulesPageConfig.pageSize " current-page="rulesPageConfig.currentPageIndex"
                 pagination-id="entriesPagination">
                 <td style="word-wrap:break-word;word-break:break-all;">{{rule.resource}}</td>
                 <!--<td style="word-wrap:break-word;word-break:break-all;">{{rule.limitApp }}</td>-->
@@ -75,7 +75,7 @@
         <!-- .card-body -->
         <div class="pagination-footer">
           <dir-pagination-controls boundary-links="true" template-url="app/views/pagination.tpl.html" pagination-id="entriesPagination"
-            on-pageQuery-change="">
+            on-page-change="">
           </dir-pagination-controls>
           <div class="tools" style="">
             <span>共 {{rulesPageConfig.totalCount}} 条记录, </span>

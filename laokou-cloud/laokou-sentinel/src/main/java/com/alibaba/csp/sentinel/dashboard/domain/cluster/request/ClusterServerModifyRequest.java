@@ -26,92 +26,94 @@ import com.alibaba.csp.sentinel.dashboard.domain.cluster.config.ServerTransportC
  */
 public class ClusterServerModifyRequest implements ClusterModifyRequest {
 
-	private String app;
+    private String app;
+    private String ip;
+    private Integer port;
 
-	private String ip;
+    private Integer mode;
+    private ServerFlowConfig flowConfig;
+    private ServerTransportConfig transportConfig;
+    private Set<String> namespaceSet;
 
-	private Integer port;
+    @Override
+    public String getApp() {
+        return app;
+    }
 
-	private Integer mode;
+    public ClusterServerModifyRequest setApp(String app) {
+        this.app = app;
+        return this;
+    }
 
-	private ServerFlowConfig flowConfig;
+    @Override
+    public String getIp() {
+        return ip;
+    }
 
-	private ServerTransportConfig transportConfig;
+    public ClusterServerModifyRequest setIp(String ip) {
+        this.ip = ip;
+        return this;
+    }
 
-	private Set<String> namespaceSet;
+    @Override
+    public Integer getPort() {
+        return port;
+    }
 
-	@Override
-	public String getApp() {
-		return app;
-	}
+    public ClusterServerModifyRequest setPort(Integer port) {
+        this.port = port;
+        return this;
+    }
 
-	public ClusterServerModifyRequest setApp(String app) {
-		this.app = app;
-		return this;
-	}
+    @Override
+    public Integer getMode() {
+        return mode;
+    }
 
-	@Override
-	public String getIp() {
-		return ip;
-	}
+    public ClusterServerModifyRequest setMode(Integer mode) {
+        this.mode = mode;
+        return this;
+    }
 
-	public ClusterServerModifyRequest setIp(String ip) {
-		this.ip = ip;
-		return this;
-	}
+    public ServerFlowConfig getFlowConfig() {
+        return flowConfig;
+    }
 
-	@Override
-	public Integer getPort() {
-		return port;
-	}
+    public ClusterServerModifyRequest setFlowConfig(
+        ServerFlowConfig flowConfig) {
+        this.flowConfig = flowConfig;
+        return this;
+    }
 
-	public ClusterServerModifyRequest setPort(Integer port) {
-		this.port = port;
-		return this;
-	}
+    public ServerTransportConfig getTransportConfig() {
+        return transportConfig;
+    }
 
-	@Override
-	public Integer getMode() {
-		return mode;
-	}
+    public ClusterServerModifyRequest setTransportConfig(
+        ServerTransportConfig transportConfig) {
+        this.transportConfig = transportConfig;
+        return this;
+    }
 
-	public ClusterServerModifyRequest setMode(Integer mode) {
-		this.mode = mode;
-		return this;
-	}
+    public Set<String> getNamespaceSet() {
+        return namespaceSet;
+    }
 
-	public ServerFlowConfig getFlowConfig() {
-		return flowConfig;
-	}
+    public ClusterServerModifyRequest setNamespaceSet(Set<String> namespaceSet) {
+        this.namespaceSet = namespaceSet;
+        return this;
+    }
 
-	public ClusterServerModifyRequest setFlowConfig(ServerFlowConfig flowConfig) {
-		this.flowConfig = flowConfig;
-		return this;
-	}
-
-	public ServerTransportConfig getTransportConfig() {
-		return transportConfig;
-	}
-
-	public ClusterServerModifyRequest setTransportConfig(ServerTransportConfig transportConfig) {
-		this.transportConfig = transportConfig;
-		return this;
-	}
-
-	public Set<String> getNamespaceSet() {
-		return namespaceSet;
-	}
-
-	public ClusterServerModifyRequest setNamespaceSet(Set<String> namespaceSet) {
-		this.namespaceSet = namespaceSet;
-		return this;
-	}
-
-	@Override
-	public String toString() {
-		return "ClusterServerModifyRequest{" + "app='" + app + '\'' + ", ip='" + ip + '\'' + ", port=" + port
-				+ ", mode=" + mode + ", flowConfig=" + flowConfig + ", transportConfig=" + transportConfig
-				+ ", namespaceSet=" + namespaceSet + '}';
-	}
-
+    @Override
+    public String toString() {
+        return "ClusterServerModifyRequest{" +
+            "app='" + app + '\'' +
+            ", ip='" + ip + '\'' +
+            ", port=" + port +
+            ", mode=" + mode +
+            ", flowConfig=" + flowConfig +
+            ", transportConfig=" + transportConfig +
+            ", namespaceSet=" + namespaceSet +
+            '}';
+    }
 }

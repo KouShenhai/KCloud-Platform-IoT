@@ -34,29 +34,27 @@ import org.springframework.stereotype.Component;
 @Component("flowRuleDefaultPublisher")
 public class FlowRuleApiPublisher implements DynamicRulePublisher<List<FlowRuleEntity>> {
 
-	@Autowired
-	private SentinelApiClient sentinelApiClient;
+    @Autowired
+    private SentinelApiClient sentinelApiClient;
+    @Autowired
+    private AppManagement appManagement;
 
-	@Autowired
-	private AppManagement appManagement;
+    @Override
+    public void publish(String app, List<FlowRuleEntity> rules) throws Exception {
+        if (StringUtil.isBlank(app)) {
+            return;
+        }
+        if (rules == null) {
+            return;
+        }
+        Set<MachineInfo> set = appManagement.getDetailApp(app).getMachines();
 
-	@Override
-	public void publish(String app, List<FlowRuleEntity> rules) throws Exception {
-		if (StringUtil.isBlank(app)) {
-			return;
-		}
-		if (rules == null) {
-			return;
-		}
-		Set<MachineInfo> set = appManagement.getDetailApp(app).getMachines();
-
-		for (MachineInfo machine : set) {
-			if (!machine.isHealthy()) {
-				continue;
-			}
-			// TODO: parse the results
-			sentinelApiClient.setFlowRuleOfMachine(app, machine.getIp(), machine.getPort(), rules);
-		}
-	}
-
+        for (MachineInfo machine : set) {
+            if (!machine.isHealthy()) {
+                continue;
+            }
+            // TODO: parse the results
+            sentinelApiClient.setFlowRuleOfMachine(app, machine.getIp(), machine.getPort(), rules);
+        }
+    }
 }

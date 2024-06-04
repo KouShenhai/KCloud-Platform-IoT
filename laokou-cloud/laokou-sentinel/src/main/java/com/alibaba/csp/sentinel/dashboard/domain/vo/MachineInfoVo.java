@@ -25,106 +25,99 @@ import com.alibaba.csp.sentinel.dashboard.discovery.MachineInfo;
  */
 public class MachineInfoVo {
 
-	private String app;
+    private String app;
+    private String hostname;
+    private String ip;
+    private int port;
+    private long heartbeatVersion;
+    private long lastHeartbeat;
+    private boolean healthy;
 
-	private String hostname;
+    private String version;
 
-	private String ip;
+    public static List<MachineInfoVo> fromMachineInfoList(List<MachineInfo> machines) {
+        List<MachineInfoVo> list = new ArrayList<>();
+        for (MachineInfo machine : machines) {
+            list.add(fromMachineInfo(machine));
+        }
+        return list;
+    }
 
-	private int port;
+    public static MachineInfoVo fromMachineInfo(MachineInfo machine) {
+        MachineInfoVo vo = new MachineInfoVo();
+        vo.setApp(machine.getApp());
+        vo.setHostname(machine.getHostname());
+        vo.setIp(machine.getIp());
+        vo.setPort(machine.getPort());
+        vo.setLastHeartbeat(machine.getLastHeartbeat());
+        vo.setHeartbeatVersion(machine.getHeartbeatVersion());
+        vo.setVersion(machine.getVersion());
+        vo.setHealthy(machine.isHealthy());
+        return vo;
+    }
 
-	private long heartbeatVersion;
+    public String getApp() {
+        return app;
+    }
 
-	private long lastHeartbeat;
+    public void setApp(String app) {
+        this.app = app;
+    }
 
-	private boolean healthy;
+    public String getHostname() {
+        return hostname;
+    }
 
-	private String version;
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
 
-	public static List<MachineInfoVo> fromMachineInfoList(List<MachineInfo> machines) {
-		List<MachineInfoVo> list = new ArrayList<>();
-		for (MachineInfo machine : machines) {
-			list.add(fromMachineInfo(machine));
-		}
-		return list;
-	}
+    public String getIp() {
+        return ip;
+    }
 
-	public static MachineInfoVo fromMachineInfo(MachineInfo machine) {
-		MachineInfoVo vo = new MachineInfoVo();
-		vo.setApp(machine.getApp());
-		vo.setHostname(machine.getHostname());
-		vo.setIp(machine.getIp());
-		vo.setPort(machine.getPort());
-		vo.setLastHeartbeat(machine.getLastHeartbeat());
-		vo.setHeartbeatVersion(machine.getHeartbeatVersion());
-		vo.setVersion(machine.getVersion());
-		vo.setHealthy(machine.isHealthy());
-		return vo;
-	}
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
-	public String getApp() {
-		return app;
-	}
+    public int getPort() {
+        return port;
+    }
 
-	public void setApp(String app) {
-		this.app = app;
-	}
+    public void setPort(int port) {
+        this.port = port;
+    }
 
-	public String getHostname() {
-		return hostname;
-	}
+    public long getLastHeartbeat() {
+        return lastHeartbeat;
+    }
+    
+    public void setLastHeartbeat(long lastHeartbeat) {
+        this.lastHeartbeat = lastHeartbeat;
+    }
+    
+    public void setHeartbeatVersion(long heartbeatVersion) {
+        this.heartbeatVersion = heartbeatVersion;
+    }
+    
+    public long getHeartbeatVersion() {
+        return heartbeatVersion;
+    }
 
-	public void setHostname(String hostname) {
-		this.hostname = hostname;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public String getIp() {
-		return ip;
-	}
+    public MachineInfoVo setVersion(String version) {
+        this.version = version;
+        return this;
+    }
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
+    public boolean isHealthy() {
+        return healthy;
+    }
 
-	public int getPort() {
-		return port;
-	}
-
-	public void setPort(int port) {
-		this.port = port;
-	}
-
-	public long getLastHeartbeat() {
-		return lastHeartbeat;
-	}
-
-	public void setLastHeartbeat(long lastHeartbeat) {
-		this.lastHeartbeat = lastHeartbeat;
-	}
-
-	public void setHeartbeatVersion(long heartbeatVersion) {
-		this.heartbeatVersion = heartbeatVersion;
-	}
-
-	public long getHeartbeatVersion() {
-		return heartbeatVersion;
-	}
-
-	public String getVersion() {
-		return version;
-	}
-
-	public MachineInfoVo setVersion(String version) {
-		this.version = version;
-		return this;
-	}
-
-	public boolean isHealthy() {
-		return healthy;
-	}
-
-	public void setHealthy(boolean healthy) {
-		this.healthy = healthy;
-	}
-
+    public void setHealthy(boolean healthy) {
+        this.healthy = healthy;
+    }
 }

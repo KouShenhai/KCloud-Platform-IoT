@@ -86,13 +86,13 @@
         </div>
 
         <div style="display:none;">
-          <li dir-paginate="empty in emptyObjs| itemsPerPage : servicePageConfig.pageSize" current-pageQuery="servicePageConfig.currentPageIndex"
+          <li dir-paginate="empty in emptyObjs| itemsPerPage : servicePageConfig.pageSize" current-page="servicePageConfig.currentPageIndex"
             pagination-id="servicesPagination"></li>
         </div>
 
         <div class="pagination-footer" style="margin-top:5px;">
           <dir-pagination-controls boundary-links="true" template-url="app/views/pagination.tpl.html" pagination-id="servicesPagination"
-            on-pageQuery-change="pageChanged(newPageNumber)">
+            on-page-change="pageChanged(newPageNumber)">
           </dir-pagination-controls>
           <div class="tools" style="">
             <span>共 {{emptyObjs.length}} 条记录, </span>

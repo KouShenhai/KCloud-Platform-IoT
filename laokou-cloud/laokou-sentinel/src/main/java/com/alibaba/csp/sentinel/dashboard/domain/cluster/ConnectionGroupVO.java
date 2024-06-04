@@ -23,43 +23,44 @@ import java.util.List;
  */
 public class ConnectionGroupVO {
 
-	private String namespace;
+    private String namespace;
+    private List<ConnectionDescriptorVO> connectionSet;
+    private Integer connectedCount;
 
-	private List<ConnectionDescriptorVO> connectionSet;
+    public String getNamespace() {
+        return namespace;
+    }
 
-	private Integer connectedCount;
+    public ConnectionGroupVO setNamespace(String namespace) {
+        this.namespace = namespace;
+        return this;
+    }
 
-	public String getNamespace() {
-		return namespace;
-	}
+    public List<ConnectionDescriptorVO> getConnectionSet() {
+        return connectionSet;
+    }
 
-	public ConnectionGroupVO setNamespace(String namespace) {
-		this.namespace = namespace;
-		return this;
-	}
+    public ConnectionGroupVO setConnectionSet(
+        List<ConnectionDescriptorVO> connectionSet) {
+        this.connectionSet = connectionSet;
+        return this;
+    }
 
-	public List<ConnectionDescriptorVO> getConnectionSet() {
-		return connectionSet;
-	}
+    public Integer getConnectedCount() {
+        return connectedCount;
+    }
 
-	public ConnectionGroupVO setConnectionSet(List<ConnectionDescriptorVO> connectionSet) {
-		this.connectionSet = connectionSet;
-		return this;
-	}
+    public ConnectionGroupVO setConnectedCount(Integer connectedCount) {
+        this.connectedCount = connectedCount;
+        return this;
+    }
 
-	public Integer getConnectedCount() {
-		return connectedCount;
-	}
-
-	public ConnectionGroupVO setConnectedCount(Integer connectedCount) {
-		this.connectedCount = connectedCount;
-		return this;
-	}
-
-	@Override
-	public String toString() {
-		return "ConnectionGroupVO{" + "namespace='" + namespace + '\'' + ", connectionSet=" + connectionSet
-				+ ", connectedCount=" + connectedCount + '}';
-	}
-
+    @Override
+    public String toString() {
+        return "ConnectionGroupVO{" +
+            "namespace='" + namespace + '\'' +
+            ", connectionSet=" + connectionSet +
+            ", connectedCount=" + connectedCount +
+            '}';
+    }
 }

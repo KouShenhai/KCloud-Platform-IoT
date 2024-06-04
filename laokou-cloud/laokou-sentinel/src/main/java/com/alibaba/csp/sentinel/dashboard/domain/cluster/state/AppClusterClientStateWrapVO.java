@@ -21,57 +21,59 @@ package com.alibaba.csp.sentinel.dashboard.domain.cluster.state;
  */
 public class AppClusterClientStateWrapVO {
 
-	/**
-	 * {ip}@{transport_command_port}.
-	 */
-	private String id;
+    /**
+     * {ip}@{transport_command_port}.
+     */
+    private String id;
 
-	private Integer commandPort;
+    private Integer commandPort;
+    private String ip;
 
-	private String ip;
+    private ClusterClientStateVO state;
 
-	private ClusterClientStateVO state;
+    public String getId() {
+        return id;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public AppClusterClientStateWrapVO setId(String id) {
+        this.id = id;
+        return this;
+    }
 
-	public AppClusterClientStateWrapVO setId(String id) {
-		this.id = id;
-		return this;
-	}
+    public String getIp() {
+        return ip;
+    }
 
-	public String getIp() {
-		return ip;
-	}
+    public AppClusterClientStateWrapVO setIp(String ip) {
+        this.ip = ip;
+        return this;
+    }
 
-	public AppClusterClientStateWrapVO setIp(String ip) {
-		this.ip = ip;
-		return this;
-	}
+    public ClusterClientStateVO getState() {
+        return state;
+    }
 
-	public ClusterClientStateVO getState() {
-		return state;
-	}
+    public AppClusterClientStateWrapVO setState(ClusterClientStateVO state) {
+        this.state = state;
+        return this;
+    }
 
-	public AppClusterClientStateWrapVO setState(ClusterClientStateVO state) {
-		this.state = state;
-		return this;
-	}
+    public Integer getCommandPort() {
+        return commandPort;
+    }
 
-	public Integer getCommandPort() {
-		return commandPort;
-	}
+    public AppClusterClientStateWrapVO setCommandPort(Integer commandPort) {
+        this.commandPort = commandPort;
+        return this;
+    }
 
-	public AppClusterClientStateWrapVO setCommandPort(Integer commandPort) {
-		this.commandPort = commandPort;
-		return this;
-	}
-
-	@Override
-	public String toString() {
-		return "AppClusterClientStateWrapVO{" + "id='" + id + '\'' + ", commandPort=" + commandPort + ", ip='" + ip
-				+ '\'' + ", state=" + state + '}';
-	}
-
+    @Override
+    public String toString() {
+        return "AppClusterClientStateWrapVO{" +
+            "id='" + id + '\'' +
+            ", commandPort=" + commandPort +
+            ", ip='" + ip + '\'' +
+            ", state=" + state +
+            '}';
+    }
 }

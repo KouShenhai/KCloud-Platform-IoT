@@ -35,41 +35,41 @@ import java.lang.reflect.Method;
  */
 public class DefaultAuthorizationInterceptor implements AuthorizationInterceptor {
 
-	private final AuthService<HttpServletRequest> authService;
+    private final AuthService<HttpServletRequest> authService;
 
-	public DefaultAuthorizationInterceptor(AuthService<HttpServletRequest> authService) {
-		this.authService = authService;
-	}
+    public DefaultAuthorizationInterceptor(AuthService<HttpServletRequest> authService) {
+        this.authService = authService;
+    }
 
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
-		if (handler.getClass().isAssignableFrom(HandlerMethod.class)) {
-			Method method = ((HandlerMethod) handler).getMethod();
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+        if (handler.getClass().isAssignableFrom(HandlerMethod.class)) {
+            Method method = ((HandlerMethod) handler).getMethod();
 
-			AuthAction authAction = method.getAnnotation(AuthAction.class);
-			if (authAction != null) {
-				AuthService.AuthUser authUser = authService.getAuthUser(request);
-				if (authUser == null) {
-					responseNoPrivilegeMsg(response, authAction.message());
-					return false;
-				}
-				String target = request.getParameter(authAction.targetName());
+            AuthAction authAction = method.getAnnotation(AuthAction.class);
+            if (authAction != null) {
+                AuthService.AuthUser authUser = authService.getAuthUser(request);
+                if (authUser == null) {
+                    responseNoPrivilegeMsg(response, authAction.message());
+                    return false;
+                }
+                String target = request.getParameter(authAction.targetName());
 
-				if (!authUser.authTarget(target, authAction.value())) {
-					responseNoPrivilegeMsg(response, authAction.message());
-					return false;
-				}
-			}
-		}
+                if (!authUser.authTarget(target, authAction.value())) {
+                    responseNoPrivilegeMsg(response, authAction.message());
+                    return false;
+                }
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	private void responseNoPrivilegeMsg(HttpServletResponse response, String message) throws IOException {
-		Result result = Result.ofFail(-1, message);
-		response.addHeader("Content-Type", "application/json;charset=UTF-8");
-		response.getOutputStream().write(JSON.toJSONBytes(result));
-	}
+    private void responseNoPrivilegeMsg(HttpServletResponse response, String message) throws IOException {
+        Result result = Result.ofFail(-1, message);
+        response.addHeader("Content-Type", "application/json;charset=UTF-8");
+        response.getOutputStream().write(JSON.toJSONBytes(result));
+    }
 
 }

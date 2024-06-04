@@ -2,8 +2,8 @@ auth:
   filter:
     exclude-url-suffixes: htm,html,js,css,map,ico,ttf,woff,png
     exclude-urls: /,/auth/login,/auth/logout,/registry/machine,/version
-  username: @SENTINEL-USERNAME@
-  password: @SENTINEL-PASSWORD@
+  username: '@SENTINEL-USERNAME@'
+  password: '@SENTINEL-PASSWORD@'
 logging:
   file:
     name: logs/csp/sentinel-dashboard.log
@@ -15,7 +15,7 @@ logging:
     file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
 sentinel:
   dashboard:
-    version: '@sentinel.version@'
+    version: '@project.version@'
 server:
   port: 8972
   servlet:

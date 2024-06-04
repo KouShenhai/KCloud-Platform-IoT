@@ -44,7 +44,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr dir-paginate="api in apis | filter: searchKey | itemsPerPage: apisPageConfig.pageSize" current-pageQuery="apisPageConfig.currentPageIndex"
+              <tr dir-paginate="api in apis | filter: searchKey | itemsPerPage: apisPageConfig.pageSize" current-page="apisPageConfig.currentPageIndex"
                   pagination-id="entriesPagination">
                 <td ng-if="api.firstFlag==0" rowspan="{{api.itemSize}}" style="vertical-align: middle;">{{api.apiName}}</td>
                 <td>
@@ -64,7 +64,7 @@
         <!-- .card-body -->
         <div class="pagination-footer">
           <dir-pagination-controls boundary-links="true" template-url="app/views/pagination.tpl.html" pagination-id="entriesPagination"
-            on-pageQuery-change="">
+            on-page-change="">
           </dir-pagination-controls>
           <div class="tools" style="">
             <span>共 {{apisPageConfig.totalCount}} 条记录, </span>
