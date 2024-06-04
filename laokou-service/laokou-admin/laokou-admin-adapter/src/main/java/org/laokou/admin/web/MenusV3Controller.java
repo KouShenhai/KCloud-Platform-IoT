@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.web.v3;
+package org.laokou.admin.web;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,14 +41,14 @@ import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("v3/menus")
-@Tag(name = "MenusV3Controller", description = "菜单管理")
+@Tag(name = "菜单管理", description = "菜单管理")
 public class MenusV3Controller {
 
 	private final MenusServiceI menusServiceI;
 
 	@TraceLog
 	@GetMapping("routers")
-	@Operation(summary = "菜单管理", description = "查询用户菜单路由列表")
+	@Operation(summary = "菜单管理-查询用户菜单路由列表", description = "菜单管理-查询用户菜单路由列表")
 	public Result<List<RouterCO>> getRoutersV3() {
 		return menusServiceI.getRouters();
 	}

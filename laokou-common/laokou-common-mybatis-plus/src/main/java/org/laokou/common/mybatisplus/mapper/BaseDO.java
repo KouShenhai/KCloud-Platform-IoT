@@ -117,23 +117,23 @@ public abstract class BaseDO implements Serializable {
 	 * 创建时间.
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	@JsonFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
 	@DateTimeFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS)
+	@JsonFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
 	protected LocalDateTime createDate;
 
 	/**
 	 * 修改时间.
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	@JsonFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
 	@DateTimeFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS)
+	@JsonFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
 	protected LocalDateTime updateDate;
 
 	/**
 	 * 删除标识 0未删除 1已删除.
 	 */
-	@TableField(fill = FieldFill.INSERT)
 	@TableLogic
+	@TableField(fill = FieldFill.INSERT)
 	protected Integer delFlag;
 
 	/**

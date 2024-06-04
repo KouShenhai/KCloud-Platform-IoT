@@ -15,35 +15,66 @@
  *
  */
 
-package org.laokou.admin.domain.resource;
+package org.laokou.admin.menu.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.AggregateRoot;
 
 /**
+ * 菜单.
  * @author laokou
  */
 @Data
-@Schema(name = "Resource", description = "资源")
-public class Resource extends AggregateRoot<Long> {
+public class MenuA extends AggregateRoot<Long> {
 
-	@Schema(name = "title", description = "资源名称")
-	private String title;
+	/**
+	 * 菜单名称.
+	 */
+	private String name;
 
-	@Schema(name = "url", description = "资源的URL")
-	private String url;
+	/**
+	 * 菜单父节点ID.
+	 */
+	private Long pid;
 
-	@Schema(name = "status", description = "资源审批状态 0待审批 1审批中 -1驳回审批 2通过审批")
+	/**
+	 * 菜单图标.
+	 */
+	private String icon;
+
+	/**
+	 * 菜单类型 0菜单 1按钮.
+	 */
+	private Integer type;
+
+	/**
+	 * 菜单排序.
+	 */
+	private Integer sort;
+
+	/**
+	 * 菜单状态 0启用 1停用.
+	 */
 	private Integer status;
 
-	@Schema(name = "code", description = "资源类型 audio音频 video视频  image图片")
-	private String code;
+	/**
+	 * 菜单链接.
+	 */
+	private String url;
 
-	@Schema(name = "remark", description = "资源备注")
-	private String remark;
+	/**
+	 * 菜单权限标识.
+	 */
+	private String permission;
 
-	@Schema(name = "instanceId", description = "实例ID")
-	private String instanceId;
+	/**
+	 * 菜单路径.
+	 */
+	private String path;
+
+	/**
+	 * 菜单隐藏 0否 1是.
+	 */
+	private Boolean hidden;
 
 }

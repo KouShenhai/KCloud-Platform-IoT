@@ -15,7 +15,32 @@
  *
  */
 
+package org.laokou.admin.domain.pack;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.AggregateRoot;
+
+import java.util.List;
+
 /**
  * @author laokou
  */
-package org.laokou.admin.command.resource;
+@Data
+@Schema(name = "Package", description = "套餐")
+public class Package extends AggregateRoot<Long> {
+
+	@Schema(name = "name", description = "套餐名称")
+	private String name;
+
+	@Schema(name = "menuIds", description = "菜单IDS")
+	private List<Long> menuIds;
+
+	public void checkName(long count) {
+		if (count > 0) {
+			throw new SystemException("套餐名称已存在，请重新填写");
+		}
+	}
+
+}

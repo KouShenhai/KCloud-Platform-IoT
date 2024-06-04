@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.web.v3;
+package org.laokou.admin.web;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

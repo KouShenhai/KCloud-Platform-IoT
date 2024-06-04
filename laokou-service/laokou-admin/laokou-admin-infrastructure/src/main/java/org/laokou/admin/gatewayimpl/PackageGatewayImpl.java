@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.PackageConvertor;
 import org.laokou.admin.domain.gateway.PackageGateway;
-import org.laokou.admin.domain.packages.Package;
+import org.laokou.admin.domain.pack.Package;
 import org.laokou.admin.gatewayimpl.database.PackageMapper;
 import org.laokou.admin.gatewayimpl.database.PackageMenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;

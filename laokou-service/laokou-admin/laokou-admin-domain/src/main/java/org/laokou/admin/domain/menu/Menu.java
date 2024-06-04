@@ -29,34 +29,6 @@ import org.laokou.common.i18n.dto.AggregateRoot;
 @Schema(name = "Menu", description = "菜单")
 public class Menu extends AggregateRoot<Long> {
 
-	@Schema(name = "name", description = "菜单名称")
-	private String name;
 
-	@Schema(name = "pid", description = "菜单父节点ID")
-	private Long pid;
-
-	@Schema(name = "icon", description = "菜单图标")
-	private String icon;
-
-	@Schema(name = "type", description = "菜单类型 0菜单 1按钮")
-	private Integer type;
-
-	@Schema(name = "sort", description = "菜单排序")
-	private Integer sort;
-
-	@Schema(name = "url", description = "菜单URL")
-	private String url;
-
-	@Schema(name = "permission", description = "菜单权限标识")
-	private String permission;
-
-	@Schema(name = "visible", description = "菜单状态 0显示 1隐藏")
-	private Integer visible;
-
-	public void checkName(long count) {
-		if (count > 0) {
-			throw new SystemException("菜单名称已存在，请重新填写");
-		}
-	}
 
 }

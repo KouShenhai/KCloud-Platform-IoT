@@ -43,7 +43,7 @@ public class DictTypeDO extends BaseDO {
 	@Schema(name = "type", description = "字典类型")
 	private String type;
 
-	@Schema(name = "status", description = "状态 0正常 1停用")
+	@Schema(name = "status", description = "字典状态 0启用 1停用")
 	private Integer status;
 
 	@Schema(name = "remark", description = "字典备注")

@@ -15,32 +15,17 @@
  *
  */
 
-package org.laokou.admin.command.resource;
+package org.laokou.admin.web;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.gateway.ResourceGateway;
-import org.laokou.admin.dto.resource.ResourceRemoveCmd;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-/**
- * 删除资源执行器.
- *
- * @author laokou
- */
-@Component
+@RestController
 @RequiredArgsConstructor
-public class ResourceRemoveCmdExe {
-
-	private final ResourceGateway resourceGateway;
-
-	/**
-	 * 执行删除资源.
-	 * @param cmd 删除资源参数
-	 * @return 执行删除结果
-	 */
-	public Result<Boolean> execute(ResourceRemoveCmd cmd) {
-		return Result.ok(resourceGateway.deleteById(cmd.getId()));
-	}
+@RequestMapping("v3/dict-items")
+@Tag(name = "DictItemsV3Controller", description = "字典类型管理")
+public class DictItemsV3Controller {
 
 }

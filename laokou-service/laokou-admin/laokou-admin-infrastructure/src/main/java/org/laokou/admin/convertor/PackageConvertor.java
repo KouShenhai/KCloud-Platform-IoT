@@ -17,7 +17,7 @@
 
 package org.laokou.admin.convertor;
 
-import org.laokou.admin.domain.packages.Package;
+import org.laokou.admin.domain.pack.Package;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
 import org.laokou.common.i18n.dto.Convertor;

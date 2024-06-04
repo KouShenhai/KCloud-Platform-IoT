@@ -39,7 +39,7 @@ public class DictTypeCO extends ClientObject {
 	@Schema(name = "type", description = "字典类型")
 	private String type;
 
-	@Schema(name = "状态", description = "状态 0正常 1停用")
+        @Schema(name = "状态", description = "字典状态 0启用 1停用")
 	private Integer status;
 
 	@Schema(name = "remark", description = "字典备注")

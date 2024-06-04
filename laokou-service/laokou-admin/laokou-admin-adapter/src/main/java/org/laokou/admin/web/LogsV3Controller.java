@@ -15,7 +15,11 @@
  *
  */
 
+package org.laokou.admin.web;
+
 /**
  * @author laokou
  */
-package org.laokou.admin.command.resource.query;
+public class LogsV3Controller {
+
+}
