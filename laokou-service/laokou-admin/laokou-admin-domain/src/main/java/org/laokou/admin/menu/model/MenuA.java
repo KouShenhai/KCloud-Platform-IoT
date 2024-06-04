@@ -22,6 +22,7 @@ import org.laokou.common.i18n.dto.AggregateRoot;
 
 /**
  * 菜单.
+ *
  * @author laokou
  */
 @Data

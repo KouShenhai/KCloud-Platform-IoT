@@ -53,178 +53,186 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/degrade")
 public class DegradeController {
 
-    private final Logger logger = LoggerFactory.getLogger(DegradeController.class);
+	private final Logger logger = LoggerFactory.getLogger(DegradeController.class);
 
-    @Autowired
-    private RuleRepository<DegradeRuleEntity, Long> repository;
-    @Autowired
-    private SentinelApiClient sentinelApiClient;
-    @Autowired
-    private AppManagement appManagement;
+	@Autowired
+	private RuleRepository<DegradeRuleEntity, Long> repository;
 
-    @GetMapping("/rules.json")
-    @AuthAction(PrivilegeType.READ_RULE)
-    public Result<List<DegradeRuleEntity>> apiQueryMachineRules(String app, String ip, Integer port) {
-        if (StringUtil.isEmpty(app)) {
-            return Result.ofFail(-1, "app can't be null or empty");
-        }
-        if (StringUtil.isEmpty(ip)) {
-            return Result.ofFail(-1, "ip can't be null or empty");
-        }
-        if (port == null) {
-            return Result.ofFail(-1, "port can't be null");
-        }
-        if (!appManagement.isValidMachineOfApp(app, ip)) {
-            return Result.ofFail(-1, "given ip does not belong to given app");
-        }
-        try {
-            List<DegradeRuleEntity> rules = sentinelApiClient.fetchDegradeRuleOfMachine(app, ip, port);
-            rules = repository.saveAll(rules);
-            return Result.ofSuccess(rules);
-        } catch (Throwable throwable) {
-            logger.error("queryApps error:", throwable);
-            return Result.ofThrowable(-1, throwable);
-        }
-    }
+	@Autowired
+	private SentinelApiClient sentinelApiClient;
 
-    @PostMapping("/rule")
-    @AuthAction(PrivilegeType.WRITE_RULE)
-    public Result<DegradeRuleEntity> apiAddRule(@RequestBody DegradeRuleEntity entity) {
-        Result<DegradeRuleEntity> checkResult = checkEntityInternal(entity);
-        if (checkResult != null) {
-            return checkResult;
-        }
-        Date date = new Date();
-        entity.setGmtCreate(date);
-        entity.setGmtModified(date);
-        try {
-            entity = repository.save(entity);
-        } catch (Throwable t) {
-            logger.error("Failed to add new degrade rule, app={}, ip={}", entity.getApp(), entity.getIp(), t);
-            return Result.ofThrowable(-1, t);
-        }
-        if (!publishRules(entity.getApp(), entity.getIp(), entity.getPort())) {
-            logger.warn("Publish degrade rules failed, app={}", entity.getApp());
-        }
-        return Result.ofSuccess(entity);
-    }
+	@Autowired
+	private AppManagement appManagement;
 
-    @PutMapping("/rule/{id}")
-    @AuthAction(PrivilegeType.WRITE_RULE)
-    public Result<DegradeRuleEntity> apiUpdateRule(@PathVariable("id") Long id,
-                                                     @RequestBody DegradeRuleEntity entity) {
-        if (id == null || id <= 0) {
-            return Result.ofFail(-1, "id can't be null or negative");
-        }
-        DegradeRuleEntity oldEntity = repository.findById(id);
-        if (oldEntity == null) {
-            return Result.ofFail(-1, "Degrade rule does not exist, id=" + id);
-        }
-        entity.setApp(oldEntity.getApp());
-        entity.setIp(oldEntity.getIp());
-        entity.setPort(oldEntity.getPort());
-        entity.setId(oldEntity.getId());
-        Result<DegradeRuleEntity> checkResult = checkEntityInternal(entity);
-        if (checkResult != null) {
-            return checkResult;
-        }
+	@GetMapping("/rules.json")
+	@AuthAction(PrivilegeType.READ_RULE)
+	public Result<List<DegradeRuleEntity>> apiQueryMachineRules(String app, String ip, Integer port) {
+		if (StringUtil.isEmpty(app)) {
+			return Result.ofFail(-1, "app can't be null or empty");
+		}
+		if (StringUtil.isEmpty(ip)) {
+			return Result.ofFail(-1, "ip can't be null or empty");
+		}
+		if (port == null) {
+			return Result.ofFail(-1, "port can't be null");
+		}
+		if (!appManagement.isValidMachineOfApp(app, ip)) {
+			return Result.ofFail(-1, "given ip does not belong to given app");
+		}
+		try {
+			List<DegradeRuleEntity> rules = sentinelApiClient.fetchDegradeRuleOfMachine(app, ip, port);
+			rules = repository.saveAll(rules);
+			return Result.ofSuccess(rules);
+		}
+		catch (Throwable throwable) {
+			logger.error("queryApps error:", throwable);
+			return Result.ofThrowable(-1, throwable);
+		}
+	}
 
-        entity.setGmtCreate(oldEntity.getGmtCreate());
-        entity.setGmtModified(new Date());
-        try {
-            entity = repository.save(entity);
-        } catch (Throwable t) {
-            logger.error("Failed to save degrade rule, id={}, rule={}", id, entity, t);
-            return Result.ofThrowable(-1, t);
-        }
-        if (!publishRules(entity.getApp(), entity.getIp(), entity.getPort())) {
-            logger.warn("Publish degrade rules failed, app={}", entity.getApp());
-        }
-        return Result.ofSuccess(entity);
-    }
+	@PostMapping("/rule")
+	@AuthAction(PrivilegeType.WRITE_RULE)
+	public Result<DegradeRuleEntity> apiAddRule(@RequestBody DegradeRuleEntity entity) {
+		Result<DegradeRuleEntity> checkResult = checkEntityInternal(entity);
+		if (checkResult != null) {
+			return checkResult;
+		}
+		Date date = new Date();
+		entity.setGmtCreate(date);
+		entity.setGmtModified(date);
+		try {
+			entity = repository.save(entity);
+		}
+		catch (Throwable t) {
+			logger.error("Failed to add new degrade rule, app={}, ip={}", entity.getApp(), entity.getIp(), t);
+			return Result.ofThrowable(-1, t);
+		}
+		if (!publishRules(entity.getApp(), entity.getIp(), entity.getPort())) {
+			logger.warn("Publish degrade rules failed, app={}", entity.getApp());
+		}
+		return Result.ofSuccess(entity);
+	}
 
-    @DeleteMapping("/rule/{id}")
-    @AuthAction(PrivilegeType.DELETE_RULE)
-    public Result<Long> delete(@PathVariable("id") Long id) {
-        if (id == null) {
-            return Result.ofFail(-1, "id can't be null");
-        }
+	@PutMapping("/rule/{id}")
+	@AuthAction(PrivilegeType.WRITE_RULE)
+	public Result<DegradeRuleEntity> apiUpdateRule(@PathVariable("id") Long id, @RequestBody DegradeRuleEntity entity) {
+		if (id == null || id <= 0) {
+			return Result.ofFail(-1, "id can't be null or negative");
+		}
+		DegradeRuleEntity oldEntity = repository.findById(id);
+		if (oldEntity == null) {
+			return Result.ofFail(-1, "Degrade rule does not exist, id=" + id);
+		}
+		entity.setApp(oldEntity.getApp());
+		entity.setIp(oldEntity.getIp());
+		entity.setPort(oldEntity.getPort());
+		entity.setId(oldEntity.getId());
+		Result<DegradeRuleEntity> checkResult = checkEntityInternal(entity);
+		if (checkResult != null) {
+			return checkResult;
+		}
 
-        DegradeRuleEntity oldEntity = repository.findById(id);
-        if (oldEntity == null) {
-            return Result.ofSuccess(null);
-        }
+		entity.setGmtCreate(oldEntity.getGmtCreate());
+		entity.setGmtModified(new Date());
+		try {
+			entity = repository.save(entity);
+		}
+		catch (Throwable t) {
+			logger.error("Failed to save degrade rule, id={}, rule={}", id, entity, t);
+			return Result.ofThrowable(-1, t);
+		}
+		if (!publishRules(entity.getApp(), entity.getIp(), entity.getPort())) {
+			logger.warn("Publish degrade rules failed, app={}", entity.getApp());
+		}
+		return Result.ofSuccess(entity);
+	}
 
-        try {
-            repository.delete(id);
-        } catch (Throwable throwable) {
-            logger.error("Failed to delete degrade rule, id={}", id, throwable);
-            return Result.ofThrowable(-1, throwable);
-        }
-        if (!publishRules(oldEntity.getApp(), oldEntity.getIp(), oldEntity.getPort())) {
-            logger.warn("Publish degrade rules failed, app={}", oldEntity.getApp());
-        }
-        return Result.ofSuccess(id);
-    }
+	@DeleteMapping("/rule/{id}")
+	@AuthAction(PrivilegeType.DELETE_RULE)
+	public Result<Long> delete(@PathVariable("id") Long id) {
+		if (id == null) {
+			return Result.ofFail(-1, "id can't be null");
+		}
 
-    private boolean publishRules(String app, String ip, Integer port) {
-        List<DegradeRuleEntity> rules = repository.findAllByMachine(MachineInfo.of(app, ip, port));
-        return sentinelApiClient.setDegradeRuleOfMachine(app, ip, port, rules);
-    }
+		DegradeRuleEntity oldEntity = repository.findById(id);
+		if (oldEntity == null) {
+			return Result.ofSuccess(null);
+		}
 
-    private <R> Result<R> checkEntityInternal(DegradeRuleEntity entity) {
-        if (StringUtil.isBlank(entity.getApp())) {
-            return Result.ofFail(-1, "app can't be blank");
-        }
-        if (StringUtil.isBlank(entity.getIp())) {
-            return Result.ofFail(-1, "ip can't be null or empty");
-        }
-        if (!appManagement.isValidMachineOfApp(entity.getApp(), entity.getIp())) {
-            return Result.ofFail(-1, "given ip does not belong to given app");
-        }
-        if (entity.getPort() == null || entity.getPort() <= 0) {
-            return Result.ofFail(-1, "invalid port: " + entity.getPort());
-        }
-        if (StringUtil.isBlank(entity.getLimitApp())) {
-            return Result.ofFail(-1, "limitApp can't be null or empty");
-        }
-        if (StringUtil.isBlank(entity.getResource())) {
-            return Result.ofFail(-1, "resource can't be null or empty");
-        }
-        Double threshold = entity.getCount();
-        if (threshold == null || threshold < 0) {
-            return Result.ofFail(-1, "invalid threshold: " + threshold);
-        }
-        Integer recoveryTimeoutSec = entity.getTimeWindow();
-        if (recoveryTimeoutSec == null || recoveryTimeoutSec <= 0) {
-            return Result.ofFail(-1, "recoveryTimeout should be positive");
-        }
-        Integer strategy = entity.getGrade();
-        if (strategy == null) {
-            return Result.ofFail(-1, "circuit breaker strategy cannot be null");
-        }
-        if (strategy < CircuitBreakerStrategy.SLOW_REQUEST_RATIO.getType()
-            || strategy > RuleConstant.DEGRADE_GRADE_EXCEPTION_COUNT) {
-            return Result.ofFail(-1, "Invalid circuit breaker strategy: " + strategy);
-        }
-        if (entity.getMinRequestAmount()  == null || entity.getMinRequestAmount() <= 0) {
-            return Result.ofFail(-1, "Invalid minRequestAmount");
-        }
-        if (entity.getStatIntervalMs() == null || entity.getStatIntervalMs() <= 0) {
-            return Result.ofFail(-1, "Invalid statInterval");
-        }
-        if (strategy == RuleConstant.DEGRADE_GRADE_RT) {
-            Double slowRatio = entity.getSlowRatioThreshold();
-            if (slowRatio == null) {
-                return Result.ofFail(-1, "SlowRatioThreshold is required for slow request ratio strategy");
-            } else if (slowRatio < 0 || slowRatio > 1) {
-                return Result.ofFail(-1, "SlowRatioThreshold should be in range: [0.0, 1.0]");
-            }
-        } else if (strategy == RuleConstant.DEGRADE_GRADE_EXCEPTION_RATIO) {
-            if (threshold > 1) {
-                return Result.ofFail(-1, "Ratio threshold should be in range: [0.0, 1.0]");
-            }
-        }
-        return null;
-    }
+		try {
+			repository.delete(id);
+		}
+		catch (Throwable throwable) {
+			logger.error("Failed to delete degrade rule, id={}", id, throwable);
+			return Result.ofThrowable(-1, throwable);
+		}
+		if (!publishRules(oldEntity.getApp(), oldEntity.getIp(), oldEntity.getPort())) {
+			logger.warn("Publish degrade rules failed, app={}", oldEntity.getApp());
+		}
+		return Result.ofSuccess(id);
+	}
+
+	private boolean publishRules(String app, String ip, Integer port) {
+		List<DegradeRuleEntity> rules = repository.findAllByMachine(MachineInfo.of(app, ip, port));
+		return sentinelApiClient.setDegradeRuleOfMachine(app, ip, port, rules);
+	}
+
+	private <R> Result<R> checkEntityInternal(DegradeRuleEntity entity) {
+		if (StringUtil.isBlank(entity.getApp())) {
+			return Result.ofFail(-1, "app can't be blank");
+		}
+		if (StringUtil.isBlank(entity.getIp())) {
+			return Result.ofFail(-1, "ip can't be null or empty");
+		}
+		if (!appManagement.isValidMachineOfApp(entity.getApp(), entity.getIp())) {
+			return Result.ofFail(-1, "given ip does not belong to given app");
+		}
+		if (entity.getPort() == null || entity.getPort() <= 0) {
+			return Result.ofFail(-1, "invalid port: " + entity.getPort());
+		}
+		if (StringUtil.isBlank(entity.getLimitApp())) {
+			return Result.ofFail(-1, "limitApp can't be null or empty");
+		}
+		if (StringUtil.isBlank(entity.getResource())) {
+			return Result.ofFail(-1, "resource can't be null or empty");
+		}
+		Double threshold = entity.getCount();
+		if (threshold == null || threshold < 0) {
+			return Result.ofFail(-1, "invalid threshold: " + threshold);
+		}
+		Integer recoveryTimeoutSec = entity.getTimeWindow();
+		if (recoveryTimeoutSec == null || recoveryTimeoutSec <= 0) {
+			return Result.ofFail(-1, "recoveryTimeout should be positive");
+		}
+		Integer strategy = entity.getGrade();
+		if (strategy == null) {
+			return Result.ofFail(-1, "circuit breaker strategy cannot be null");
+		}
+		if (strategy < CircuitBreakerStrategy.SLOW_REQUEST_RATIO.getType()
+				|| strategy > RuleConstant.DEGRADE_GRADE_EXCEPTION_COUNT) {
+			return Result.ofFail(-1, "Invalid circuit breaker strategy: " + strategy);
+		}
+		if (entity.getMinRequestAmount() == null || entity.getMinRequestAmount() <= 0) {
+			return Result.ofFail(-1, "Invalid minRequestAmount");
+		}
+		if (entity.getStatIntervalMs() == null || entity.getStatIntervalMs() <= 0) {
+			return Result.ofFail(-1, "Invalid statInterval");
+		}
+		if (strategy == RuleConstant.DEGRADE_GRADE_RT) {
+			Double slowRatio = entity.getSlowRatioThreshold();
+			if (slowRatio == null) {
+				return Result.ofFail(-1, "SlowRatioThreshold is required for slow request ratio strategy");
+			}
+			else if (slowRatio < 0 || slowRatio > 1) {
+				return Result.ofFail(-1, "SlowRatioThreshold should be in range: [0.0, 1.0]");
+			}
+		}
+		else if (strategy == RuleConstant.DEGRADE_GRADE_EXCEPTION_RATIO) {
+			if (threshold > 1) {
+				return Result.ofFail(-1, "Ratio threshold should be in range: [0.0, 1.0]");
+			}
+		}
+		return null;
+	}
+
 }

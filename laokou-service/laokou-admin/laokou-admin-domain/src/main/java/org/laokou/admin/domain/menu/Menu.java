@@ -19,7 +19,6 @@ package org.laokou.admin.domain.menu;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 
 /**
@@ -28,7 +27,5 @@ import org.laokou.common.i18n.dto.AggregateRoot;
 @Data
 @Schema(name = "Menu", description = "菜单")
 public class Menu extends AggregateRoot<Long> {
-
-
 
 }

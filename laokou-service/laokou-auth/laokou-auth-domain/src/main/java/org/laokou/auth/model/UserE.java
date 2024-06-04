@@ -27,6 +27,7 @@ import static org.laokou.common.i18n.common.constants.SuperAdmin.YES;
 
 /**
  * 用户实体.
+ *
  * @author laokou
  */
 @Data

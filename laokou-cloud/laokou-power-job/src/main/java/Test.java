@@ -18,5 +18,6 @@
 /**
  * @author laokou
  */
-public class test {
+public class Test {
+
 }
