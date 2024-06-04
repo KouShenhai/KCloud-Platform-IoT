@@ -20,7 +20,7 @@ spring:
     name: @pom.parent.artifactId@
   tcp:
     ip: 0.0.0.0
-    port: ${TCP_PORT:2000}
+    port: ${TCP_SERVER_PORT:2000}
     app-name: ${spring.application.name}-server
   mqtt:
     enabled: false

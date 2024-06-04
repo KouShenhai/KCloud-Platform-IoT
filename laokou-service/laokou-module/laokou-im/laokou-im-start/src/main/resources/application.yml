@@ -24,7 +24,7 @@ spring:
       uri: wss://vue.laokou.org/im/ws
     server:
       ip: 0.0.0.0
-      port: ${WEBSOCKET_PORT:1000}
+      port: ${WEBSOCKET_SERVER_PORT:1000}
       app-name: ${spring.application.name}-server
   application:
     name: @pom.parent.artifactId@
