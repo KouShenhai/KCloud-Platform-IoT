@@ -17,8 +17,8 @@ server:
 #spring
 spring:
   threads:
-      virtual:
-          enabled: true
+    virtual:
+     enabled: true
   websocket:
     client:
       uri: wss://vue.laokou.org/im/ws

@@ -82,7 +82,7 @@ spring:
   # 不开启虚拟线程
   threads:
     virtual:
-      enabled: false
+      enabled: true
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
