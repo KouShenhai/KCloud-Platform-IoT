@@ -41,6 +41,8 @@ public interface MenuMapper extends CrudMapper<Long, Integer, MenuDO> {
 	 */
 	List<MenuDO> selectListByUserId(@Param("userId") Long userId);
 
+	List<MenuDO> selectObjects();
+
 	/**
 	 * 根据角色ID查看菜单IDS.
 	 * @param roleId 角色ID

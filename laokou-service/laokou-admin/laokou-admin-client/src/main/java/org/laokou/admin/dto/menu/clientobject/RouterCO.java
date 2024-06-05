@@ -30,6 +30,8 @@ public class RouterCO extends TreeUtil.TreeNode<RouterCO> {
 
 	private String path;
 
+	private String icon;
+
 	private Boolean hidden;
 
 	private String url;

@@ -18,8 +18,6 @@
 package org.laokou.admin.command.menu.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.menu.clientobject.RouterCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
@@ -33,8 +31,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.admin.domain.menu.HiddenEnum.NO;
-import static org.laokou.admin.domain.menu.TypeEnum.MENU;
 import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
@@ -73,11 +69,7 @@ public class MenuListRouterQryExe {
 	private List<MenuDO> getMenuList() {
 		UserDetail user = UserUtil.user();
 		if (user.isSuperAdministrator()) {
-			LambdaQueryWrapper<MenuDO> wrapper = Wrappers.lambdaQuery(MenuDO.class)
-				.eq(MenuDO::getType, MENU.ordinal())
-				.eq(MenuDO::getHidden, NO.ordinal())
-				.orderByDesc(MenuDO::getSort);
-			return menuMapper.selectList(wrapper);
+			return menuMapper.selectObjects();
 		}
 		return menuMapper.selectListByUserId(user.getId());
 	}

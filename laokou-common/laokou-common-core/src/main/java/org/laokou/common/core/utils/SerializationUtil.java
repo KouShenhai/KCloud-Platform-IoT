@@ -26,12 +26,12 @@ import org.apache.fury.config.Language;
  */
 public class SerializationUtil {
 
-	private static final ThreadSafeFury THREAD_SAFE_FURY = Fury.builder().withLanguage(Language.JAVA)
-		.requireClassRegistration(true).buildThreadSafeFury();
-
-	private static final Fury FURY = Fury.builder().withLanguage(Language.JAVA)
+	private static final ThreadSafeFury THREAD_SAFE_FURY = Fury.builder()
+		.withLanguage(Language.JAVA)
 		.requireClassRegistration(true)
-		.build();
+		.buildThreadSafeFury();
+
+	private static final Fury FURY = Fury.builder().withLanguage(Language.JAVA).requireClassRegistration(true).build();
 
 	public static byte[] serialize(Object object) {
 		if (object == null) {
