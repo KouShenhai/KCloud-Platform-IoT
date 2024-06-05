@@ -17,8 +17,6 @@
 
 package org.laokou.admin.dto.menu.clientobject;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.core.utils.TreeUtil;
@@ -30,37 +28,10 @@ import org.laokou.common.core.utils.TreeUtil;
 @NoArgsConstructor
 public class RouterCO extends TreeUtil.TreeNode<RouterCO> {
 
-	private Meta meta;
-
-	private String redirect;
-
 	private String path;
 
 	private Boolean hidden;
 
-	private String component;
-
-	public RouterCO(Long id, Long pid, String name, String title, String redirect, Boolean hidden, String icon,
-			Boolean keepAlive, String component, String path) {
-		super(id, name, pid);
-		this.redirect = redirect;
-		this.hidden = hidden;
-		this.component = component;
-		this.path = path;
-		this.meta = new Meta(title, icon, keepAlive);
-	}
-
-	@Data
-	@NoArgsConstructor(access = AccessLevel.PRIVATE)
-	@AllArgsConstructor(access = AccessLevel.PRIVATE)
-	static class Meta {
-
-		private String title;
-
-		private String icon;
-
-		private Boolean keepAlive;
-
-	}
+	private String url;
 
 }

@@ -18,7 +18,7 @@
 package org.laokou.admin.domain.gateway;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.laokou.admin.domain.packages.Package;
+import org.laokou.admin.domain.pack.Package;
 
 /**
  * @author laokou

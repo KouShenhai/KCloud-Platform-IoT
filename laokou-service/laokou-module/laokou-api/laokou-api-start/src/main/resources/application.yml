@@ -1,5 +1,5 @@
 server:
-  port: 10004
+  port: ${SERVER_PORT:10004}
   shutdown: graceful
 
 spring:

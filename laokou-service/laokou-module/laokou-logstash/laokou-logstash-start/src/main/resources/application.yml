@@ -16,7 +16,7 @@
 #    */
 # server
 server:
-  port: 10003
+  port: ${SERVER_PORT:10003}
   ssl:
     # 开启证书
     enabled: @SSL-ENABLED@

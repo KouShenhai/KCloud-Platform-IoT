@@ -67,7 +67,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr dir-paginate="ruleEntity in rules | filter: searchKey | itemsPerPage: rulesPageConfig.pageSize " current-pageQuery="rulesPageConfig.currentPageIndex"
+                        <tr dir-paginate="ruleEntity in rules | filter: searchKey | itemsPerPage: rulesPageConfig.pageSize " current-page="rulesPageConfig.currentPageIndex"
                             pagination-id="entriesPagination">
                             <td style="word-wrap:break-word;word-break:break-all;">{{ruleEntity.rule.resource}}</td>
                             <td style="word-wrap:break-word;word-break:break-all;">{{ruleEntity.rule.paramIdx}}</td>
@@ -95,7 +95,7 @@
                 <!-- .card-body -->
                 <div class="pagination-footer" ng-if="!loadError">
                     <dir-pagination-controls boundary-links="true" template-url="app/views/pagination.tpl.html" pagination-id="entriesPagination"
-                                             on-pageQuery-change="">
+                                             on-page-change="">
                     </dir-pagination-controls>
                     <div class="tools" style="">
                         <span>共 {{rulesPageConfig.totalCount}} 条记录, </span>

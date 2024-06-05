@@ -17,55 +17,77 @@
 
 package org.laokou.auth.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.crypto.utils.AesUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import static org.laokou.common.i18n.common.constants.SuperAdmin.YES;
 
 /**
+ * 用户实体.
+ *
  * @author laokou
  */
 @Data
-@Schema(name = "UserE", description = "用户实体")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserE {
 
-	@Schema(name = "id", description = "ID")
+	/**
+	 * ID.
+	 */
 	private Long id;
 
-	@Schema(name = "username", description = "用户名")
+	/**
+	 * 用户名.
+	 */
 	private String username;
 
-	@Schema(name = "password", description = "密码", example = "123456")
+	/**
+	 * 密码.
+	 */
 	private String password;
 
-	@Schema(name = "superAdmin", description = "超级管理员标识 0否 1是", example = "1")
+	/**
+	 * 超级管理员标识 0否 1是.
+	 */
 	private Integer superAdmin;
 
-	@Schema(name = "avatar", description = "头像", example = "https://pic.cnblogs.com/avatar/simple_avatar.gif")
+	/**
+	 * 头像.
+	 */
 	private String avatar;
 
-	@Schema(name = "mail", description = "邮箱", example = "2413176044@qq.com")
+	/**
+	 * 邮箱.
+	 */
 	private String mail;
 
-	@Schema(name = "status", description = "用户状态 0启用 1禁用", example = "0")
+	/**
+	 * 用户状态 0启用 1禁用.
+	 */
 	private Integer status;
 
-	@Schema(name = "mobile", description = "手机号", example = "18974432500")
+	/**
+	 * 手机号.
+	 */
 	private String mobile;
 
-	@Schema(name = "deptId", description = "部门ID")
+	/**
+	 * 部门ID.
+	 */
 	private Long deptId;
 
-	@Schema(name = "tenantId", description = "租户ID")
+	/**
+	 * 租户ID.
+	 */
 	private Long tenantId;
 
-	@Schema(name = "deptPath", description = "部门PATH")
+	/**
+	 * 部门PATH.
+	 */
 	private String deptPath;
-
-	public UserE() {
-	}
 
 	public UserE(String username, String mail, String mobile, Long tenantId) {
 		this.username = AesUtil.encrypt(username);

@@ -48,9 +48,9 @@ public class MenuDO extends BaseDO {
 	private String name;
 
 	/**
-	 * 菜单路由.
+	 * 菜单路径.
 	 */
-	private String component;
+	private String path;
 
 	/**
 	 * 菜单权限标识.
@@ -78,23 +78,13 @@ public class MenuDO extends BaseDO {
 	private Boolean hidden;
 
 	/**
-	 * 路由缓存 0否 1是.
-	 */
-	private Boolean keepAlive;
-
-	/**
-	 * 重定向地址.
-	 */
-	private String redirect;
-
-	/**
-	 * 菜单状态 0正常 1停用.
+	 * 菜单状态 0启用 1停用.
 	 */
 	private Integer status;
 
 	/**
-	 * 菜单路径.
+	 * 菜单链接.
 	 */
-	private String path;
+	private String url;
 
 }

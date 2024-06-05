@@ -142,7 +142,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	@Override
 	@SneakyThrows
 	public void downloadDatasource(Long id, HttpServletResponse response) {
-		String fileName = "kcloud_platform_iot_tenant.sql";
+		String fileName = "kcloud_platform_tenant.sql";
 		String fileExt = FileUtil.getFileExt(fileName);
 		String name = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + fileExt;
 		response.setContentType("application/octet-stream");

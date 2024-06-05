@@ -25,7 +25,7 @@ package org.laokou.auth.model;
 public enum UserStatus {
 
 	/**
-	 * 正常.
+	 * 启用.
 	 */
 	ENABLED,
 

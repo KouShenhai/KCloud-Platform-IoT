@@ -176,8 +176,8 @@
         <DATASOURCE-PORT>5432</DATASOURCE-PORT>
         <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
         <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
-        <DATASOURCE-DB-NACOS>kcloud_platform_iot_nacos</DATASOURCE-DB-NACOS>
-        <DATASOURCE-DB-POWER-JOB>kcloud_platform_iot_power_job</DATASOURCE-DB-POWER-JOB>
+        <DATASOURCE-DB-NACOS>kcloud_platform_nacos</DATASOURCE-DB-NACOS>
+        <DATASOURCE-DB-POWER-JOB>kcloud_platform_power_job</DATASOURCE-DB-POWER-JOB>
         <NACOS-NAMESPACE>0dac1a68-2f01-40df-bd26-bf0cb199057a</NACOS-NAMESPACE>
         <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
         <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
@@ -217,8 +217,8 @@
         <DATASOURCE-PORT>5432</DATASOURCE-PORT>
         <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
         <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
-        <DATASOURCE-DB-NACOS>kcloud_platform_iot_nacos</DATASOURCE-DB-NACOS>
-        <DATASOURCE-DB-POWER-JOB>kcloud_platform_iot_power_job</DATASOURCE-DB-POWER-JOB>
+        <DATASOURCE-DB-NACOS>kcloud_platform_nacos</DATASOURCE-DB-NACOS>
+        <DATASOURCE-DB-POWER-JOB>kcloud_platform_power_job</DATASOURCE-DB-POWER-JOB>
         <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
         <NACOS-DISCOVERY-ADDRESS>https://nacos.laokou.org:8848</NACOS-DISCOVERY-ADDRESS>
         <NACOS-CONFIG-ADDRESS>https://nacos.laokou.org:8848</NACOS-CONFIG-ADDRESS>
@@ -239,7 +239,7 @@
         <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
         <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
         <KNIFE4J-ENABLED>true</KNIFE4J-ENABLED>
-        <ROUTER-AUTH-ENABLED>false</ROUTER-AUTH-ENABLED>
+        <ROUTER-AUTH-ENABLED>true</ROUTER-AUTH-ENABLED>
         <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
         <ROUTER-AUTH-PASSWORD>laokou123</ROUTER-AUTH-PASSWORD>
       </properties>
@@ -266,9 +266,9 @@
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PLATFORM>${DATASOURCE_PLATFORM:postgresql}</DATASOURCE-PLATFORM>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-DB-NACOS>${DATASOURCE_DB_NACOS:kcloud_platform_iot_nacos}</DATASOURCE-DB-NACOS>
+        <DATASOURCE-DB-NACOS>${DATASOURCE_DB_NACOS:kcloud_platform_nacos}</DATASOURCE-DB-NACOS>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-DB-POWER-JOB>${DATASOURCE_DB_POWER_JOB:kcloud_platform_iot_power_job}</DATASOURCE-DB-POWER-JOB>
+        <DATASOURCE-DB-POWER-JOB>${DATASOURCE_DB_POWER_JOB:kcloud_platform_power_job}</DATASOURCE-DB-POWER-JOB>
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-NAMESPACE>${NACOS_NAMESPACE:8140e92b-fb43-48f5-b63b-7506185206a5}</NACOS-NAMESPACE>
         <!--suppress UnresolvedMavenProperty -->

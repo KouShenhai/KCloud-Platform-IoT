@@ -89,7 +89,7 @@ nacos:
 server:
   error:
     include-message: always
-  port: 8848
+  port: ${SERVER_PORT:8848}
   servlet:
     contextPath: /nacos
   undertow:

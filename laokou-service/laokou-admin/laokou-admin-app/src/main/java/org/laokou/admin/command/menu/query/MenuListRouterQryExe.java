@@ -67,8 +67,7 @@ public class MenuListRouterQryExe {
 	}
 
 	private RouterCO convert(MenuDO menuDO) {
-		return new RouterCO(menuDO.getId(), menuDO.getPid(), menuDO.getName(), menuDO.getName(), menuDO.getRedirect(),
-				menuDO.getHidden(), menuDO.getIcon(), menuDO.getKeepAlive(), menuDO.getPath(), menuDO.getComponent());
+		return null;
 	}
 
 	private List<MenuDO> getMenuList() {

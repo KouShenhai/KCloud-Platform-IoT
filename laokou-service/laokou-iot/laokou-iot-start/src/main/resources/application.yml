@@ -1,5 +1,5 @@
 server:
-  port: 10005
+  port: ${SERVER_PORT:10005}
   shutdown: graceful
   ssl:
     # 开启证书
@@ -20,7 +20,7 @@ spring:
     name: @pom.parent.artifactId@
   tcp:
     ip: 0.0.0.0
-    port: 1001
+    port: ${TCP_SERVER_PORT:2000}
     app-name: ${spring.application.name}-server
   mqtt:
     enabled: false

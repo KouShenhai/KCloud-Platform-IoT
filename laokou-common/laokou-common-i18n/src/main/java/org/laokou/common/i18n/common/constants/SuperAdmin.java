@@ -17,20 +17,21 @@
 
 package org.laokou.common.i18n.common.constants;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
  * 超级管理员枚举.
  *
  * @author laokou
  */
-@Schema(name = "SuperAdminEnums", description = "")
 public enum SuperAdmin {
 
-	@Schema(name = "NO", description = "否")
+	/**
+	 * 否.
+	 */
 	NO,
 
-	@Schema(name = "YES", description = "是")
+	/**
+	 * 是.
+	 */
 	YES
 
 }

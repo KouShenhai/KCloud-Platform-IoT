@@ -17,11 +17,12 @@
 
 package org.laokou.admin.convertor;
 
-import org.laokou.admin.domain.packages.Package;
+import org.laokou.admin.domain.pack.Package;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
@@ -30,7 +31,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  *
  * @author laokou
  */
-@Mapper(componentModel = SPRING)
+@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PackageConvertor extends Convertor<PackageCO, Package, PackageDO> {
 
 }

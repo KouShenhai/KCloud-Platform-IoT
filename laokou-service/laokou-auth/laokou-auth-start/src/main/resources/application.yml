@@ -16,7 +16,7 @@
 #    */
 # server
 server:
-  port: 1111
+  port: ${SERVER_PORT:1111}
   ssl:
     # 开启证书
     enabled: @SSL-ENABLED@
