@@ -22,7 +22,6 @@ import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.parser.JsqlParserGlobal;
-import com.baomidou.mybatisplus.extension.parser.cache.JdkSerialCaffeineJsqlParseCache;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.*;
 import lombok.SneakyThrows;
@@ -55,8 +54,7 @@ public class MybatisPlusAutoConfig {
 
 	// 静态注入缓存处理类
 	static {
-		// 默认支持序列化 FstSerialCaffeineJsqlParseCache、JdkSerialCaffeineJsqlParseCache
-		JsqlParserGlobal.setJsqlParseCache(new JdkSerialCaffeineJsqlParseCache(
+		JsqlParserGlobal.setJsqlParseCache(new FurySerialCaffeineJsqlParseCache(
 				cache -> cache.maximumSize(1024).expireAfterWrite(5, TimeUnit.SECONDS)));
 	}
 

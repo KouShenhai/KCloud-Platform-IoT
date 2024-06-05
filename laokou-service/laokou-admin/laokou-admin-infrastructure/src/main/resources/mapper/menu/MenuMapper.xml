@@ -21,17 +21,13 @@
 <mapper namespace="org.laokou.admin.gatewayimpl.database.MenuMapper">
 
   <sql id="columns">
-    a.component
-   ,a.id
+    a.id
    ,a.pid
    ,a.name
    ,a.icon
    ,a.permission
    ,a.hidden
-   ,a.keep_alive
-   ,a.target
-   ,a.link
-   ,a.redirect
+   ,a.url
   </sql>
 
   <select id="selectListByUserId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
@@ -89,12 +85,11 @@
     select a.id
          , a.pid
          , a.name
-             ,a.icon
-             ,a.url
-             ,a.type
-             ,a.permission
-             ,a.visible
-             ,a.sort
+         , a.icon
+         , a.url
+         , a.type
+         , a.permission
+         , a.sort
     from boot_sys_menu a
       join boot_sys_package_menu b
     on b.menu_id = a.id

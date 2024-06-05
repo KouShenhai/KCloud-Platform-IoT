@@ -113,11 +113,18 @@
     <knife4j.version>4.5.0</knife4j.version>
     <!--taos-jdbcdriver版本-->
     <taos-jdbcdriver.version>3.2.11</taos-jdbcdriver.version>
+    <!--fury-core版本-->
+    <fury-core.version>0.5.1</fury-core.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.apache.fury</groupId>
+        <artifactId>fury-core</artifactId>
+        <version>${fury-core.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-common-tdengine</artifactId>
