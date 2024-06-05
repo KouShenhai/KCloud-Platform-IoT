@@ -45,7 +45,7 @@
     "gulp-csscomb": "^3.0.8",
     "gulp-cssmin": "^0.2.0",
     "gulp-jshint": "^2.1.0",
-    "gulp-load-plugins": "^1.6.0",
+    "gulp-load-plugins": "^2.0.0",
     "gulp-serv": "0.0.1",
     "gulp-uglify": "^3.0.0",
     "jshint": "^2.10.2",
