@@ -22,6 +22,8 @@ import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
+
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**
@@ -29,7 +31,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  *
  * @author laokou
  */
-@Mapper(componentModel = SPRING)
+@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SourceConvertor extends Convertor<SourceCO, Source, SourceDO> {
 
 }

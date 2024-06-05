@@ -22,6 +22,7 @@ import org.laokou.admin.dto.ip.clientobject.IpCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.IpDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
@@ -30,7 +31,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  *
  * @author laokou
  */
-@Mapper(componentModel = SPRING)
+@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface IpConvertor extends Convertor<IpCO, Ip, IpDO> {
 
 }
