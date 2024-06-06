@@ -95,7 +95,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	 * @param cmd 新增菜单参数
 	 */
 	@Override
-	public void create(MenuCreateCmd cmd) {
+	public void create(MenuSaveCmd cmd) {
 		menuCreateCmdExe.executeVoid(cmd);
 	}
 
