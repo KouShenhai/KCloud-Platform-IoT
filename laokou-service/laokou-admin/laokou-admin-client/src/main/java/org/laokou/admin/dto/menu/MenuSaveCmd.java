@@ -27,7 +27,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  */
 @Data
 @Schema(name = "MenuInsertCmd", description = "新增菜单命令请求")
-public class MenuCreateCmd extends CommonCommand {
+public class MenuSaveCmd extends CommonCommand {
 
 	@Schema(name = "menuCO", description = "菜单")
 	private MenuCO menuCO;

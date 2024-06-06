@@ -21,7 +21,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
-import org.laokou.admin.dto.menu.MenuCreateCmd;
+import org.laokou.admin.dto.menu.MenuSaveCmd;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DSConstant.TENANT;
@@ -44,7 +44,7 @@ public class MenuCreateCmdExe {
 	 * @param cmd 新增菜单参数
 	 */
 	@DS(TENANT)
-	public void executeVoid(MenuCreateCmd cmd) {
+	public void executeVoid(MenuSaveCmd cmd) {
 		menuGateway.create(menuConvertor.toEntity(cmd.getMenuCO()));
 	}
 
