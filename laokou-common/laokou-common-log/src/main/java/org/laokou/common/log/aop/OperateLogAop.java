@@ -17,6 +17,7 @@
 
 package org.laokou.common.log.aop;
 
+import com.alibaba.ttl.TransmittableThreadLocal;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,6 @@ import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.log.domain.OperateLog;
-import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -60,7 +60,7 @@ public class OperateLogAop {
 
 	private final DomainEventPublisher domainEventPublisher;
 
-	private static final ThreadLocal<Long> TASK_TIME_LOCAL = new NamedThreadLocal<>("耗时");
+	private static final ThreadLocal<Long> TASK_TIME_LOCAL = new TransmittableThreadLocal<>();
 
 	@Before("@annotation(org.laokou.common.log.annotation.OperateLog)")
 	public void doBefore() {
