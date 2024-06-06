@@ -101,4 +101,14 @@
     from boot_sys_menu
     where id = #{id}
   </select>
+  <select id="selectObjects" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
+    select <include refid="columns"/>
+    FROM boot_sys_menu a
+    where del_flag = 0
+    AND a.hidden = 0
+    AND a.status = 0
+    GROUP BY
+    <include refid="columns"/>
+    ORDER BY a.sort desc
+  </select>
 </mapper>
