@@ -32,7 +32,7 @@
     "bootstrap-tagsinput": "~0.7.1",
     "lodash": "^4.17.15",
     "moment": "^2.12.0",
-    "ng-dialog": "^0.6.6",
+    "ng-dialog": "^1.0.0",
     "ng-tags-input": "~3.0.0",
     "oclazyload": "^1.1.0",
     "selectize": "^0.12.1"
