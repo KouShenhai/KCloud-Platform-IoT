@@ -20,7 +20,6 @@ package org.laokou.common.security.config;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -57,7 +56,9 @@ import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParamet
 @RequiredArgsConstructor
 public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationService {
 
-	@Schema(name = "FULL", description = "所有")
+	/**
+	 * 所有.
+	 */
 	public static final String FULL = "full";
 
 	private final RedisOAuth2AuthorizationRepository redisOAuth2AuthorizationRepository;
