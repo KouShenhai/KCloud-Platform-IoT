@@ -43,7 +43,8 @@ public class IdempotentUtil {
 
 	private static final ThreadLocal<Boolean> IS_IDEMPOTENT_LOCAL = new TransmittableThreadLocal<>();
 
-	private static final ThreadLocal<Map<String, String>> REQUEST_ID_LOCAL = TransmittableThreadLocal.withInitial(HashMap::new);
+	private static final ThreadLocal<Map<String, String>> REQUEST_ID_LOCAL = TransmittableThreadLocal
+		.withInitial(HashMap::new);
 
 	/**
 	 * 得到幂等键.
