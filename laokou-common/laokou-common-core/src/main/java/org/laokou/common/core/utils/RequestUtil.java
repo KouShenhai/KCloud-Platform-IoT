@@ -17,7 +17,7 @@
 
 package org.laokou.common.core.utils;
 
-import eu.bitwalker.useragentutils.UserAgent;
+import com.blueconic.browscap.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
 import org.springframework.util.Assert;
@@ -26,7 +26,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 import static org.laokou.common.i18n.common.constants.TraceConstant.DOMAIN_NAME;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
@@ -37,6 +39,21 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
  * @author laokou
  */
 public class RequestUtil {
+
+	private static final UserAgentParser PARSER;
+
+	static {
+		try {
+			PARSER = new UserAgentService().loadParser(Arrays.asList(BrowsCapField.BROWSER, BrowsCapField.BROWSER_TYPE,
+					BrowsCapField.BROWSER_MAJOR_VERSION, BrowsCapField.DEVICE_TYPE, BrowsCapField.PLATFORM,
+					BrowsCapField.PLATFORM_VERSION, BrowsCapField.RENDERING_ENGINE_VERSION,
+					BrowsCapField.RENDERING_ENGINE_NAME, BrowsCapField.PLATFORM_MAKER,
+					BrowsCapField.RENDERING_ENGINE_MAKER));
+		}
+		catch (IOException | ParseException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	/**
 	 * 获取请求对象.
@@ -62,8 +79,8 @@ public class RequestUtil {
 	 * @param request 请求对象
 	 * @return 浏览器信息
 	 */
-	public static UserAgent getUserAgent(HttpServletRequest request) {
-		return UserAgent.parseUserAgentString(request.getHeader(USER_AGENT));
+	public static Capabilities getCapabilities(HttpServletRequest request) {
+		return PARSER.parse(request.getHeader(USER_AGENT));
 	}
 
 	@SneakyThrows

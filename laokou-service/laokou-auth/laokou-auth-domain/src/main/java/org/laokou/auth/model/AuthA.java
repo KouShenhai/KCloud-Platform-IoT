@@ -17,7 +17,7 @@
 
 package org.laokou.auth.model;
 
-import eu.bitwalker.useragentutils.UserAgent;
+import com.blueconic.browscap.Capabilities;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import org.laokou.common.core.utils.*;
@@ -267,9 +267,9 @@ public class AuthA extends AggregateRoot<Long> {
 	private void createLog(Integer status, String message) {
 		String ip = IpUtil.getIpAddr(request);
 		String address = AddressUtil.getRealAddress(ip);
-		UserAgent userAgent = RequestUtil.getUserAgent(request);
-		String os = userAgent.getOperatingSystem().getName();
-		String browser = userAgent.getBrowser().getName();
+		Capabilities capabilities = RequestUtil.getCapabilities(request);
+		String os = capabilities.getPlatform();
+		String browser = capabilities.getBrowser();
 		this.log = new LogV(ip, address, browser, os, status, message);
 	}
 

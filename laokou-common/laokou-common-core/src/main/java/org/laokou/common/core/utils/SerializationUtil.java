@@ -28,10 +28,30 @@ public class SerializationUtil {
 
 	private static final ThreadSafeFury THREAD_SAFE_FURY = Fury.builder()
 		.withLanguage(Language.JAVA)
-		.requireClassRegistration(true)
+		.requireClassRegistration(false)
 		.buildThreadSafeFury();
 
-	private static final Fury FURY = Fury.builder().withLanguage(Language.JAVA).requireClassRegistration(true).build();
+	private static final Fury FURY = Fury.builder().withLanguage(Language.JAVA).requireClassRegistration(false).build();
+
+	public static byte[] serializeThreadSafe(Object object, Class<?> clazz) {
+		THREAD_SAFE_FURY.register(clazz);
+		return serializeThreadSafe(object);
+	}
+
+	public static Object deserializeThreadSafe(byte[] bytes, Class<?> clazz) {
+		THREAD_SAFE_FURY.register(clazz);
+		return deserializeThreadSafe(bytes);
+	}
+
+	public static byte[] serialize(Object object, Class<?> clazz) {
+		FURY.register(clazz);
+		return serialize(object);
+	}
+
+	public static Object deserialize(byte[] bytes, Class<?> clazz) {
+		FURY.register(clazz);
+		return deserialize(bytes);
+	}
 
 	public static byte[] serialize(Object object) {
 		if (object == null) {
