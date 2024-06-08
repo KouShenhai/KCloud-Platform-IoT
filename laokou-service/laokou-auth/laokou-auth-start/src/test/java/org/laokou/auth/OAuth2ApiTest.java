@@ -262,8 +262,9 @@ class OAuth2ApiTest {
 			String apiUrl = getOAuthApiUrl();
 			Map<String, String> params = Map.of("code", code, "mobile", MOBILE, "tenant_id", "0", "grant_type",
 					"mobile");
-			Map<String, String> headers = Collections.singletonMap("Authorization",
-					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			Map<String, String> headers = Map.of("Authorization",
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "User-Agent",
+					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			log.info("手机号认证，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
@@ -280,8 +281,9 @@ class OAuth2ApiTest {
 		try {
 			String apiUrl = getOAuthApiUrl();
 			Map<String, String> params = Map.of("code", code, "mail", MAIL, "tenant_id", "0", "grant_type", "mail");
-			Map<String, String> headers = Collections.singletonMap("Authorization",
-					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			Map<String, String> headers = Map.of("Authorization",
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "User-Agent",
+					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			log.info("邮箱认证，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
@@ -302,7 +304,8 @@ class OAuth2ApiTest {
 					"0", "grant_type", "password", "captcha", captcha);
 			Map<String, String> headers = Map.of("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "trace-id",
-					String.valueOf(System.currentTimeMillis()));
+					String.valueOf(System.currentTimeMillis()), "User-Agent",
+					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 			log.info("用户名密码认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
