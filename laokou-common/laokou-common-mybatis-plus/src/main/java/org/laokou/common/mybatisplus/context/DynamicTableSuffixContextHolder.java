@@ -17,12 +17,14 @@
 
 package org.laokou.common.mybatisplus.context;
 
+import com.alibaba.ttl.TransmittableThreadLocal;
+
 /**
  * @author laokou
  */
 public class DynamicTableSuffixContextHolder {
 
-	private static final ThreadLocal<String> TABLE_SUFFIX_LOCAL = new InheritableThreadLocal<>();
+	private static final ThreadLocal<String> TABLE_SUFFIX_LOCAL = new TransmittableThreadLocal<>();
 
 	public static void set(String suffix) {
 		TABLE_SUFFIX_LOCAL.set(suffix);

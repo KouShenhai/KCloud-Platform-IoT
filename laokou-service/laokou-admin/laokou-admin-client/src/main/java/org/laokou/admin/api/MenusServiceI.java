@@ -57,7 +57,7 @@ public interface MenusServiceI {
 	 * 新增菜单.
 	 * @param cmd 新增菜单参数
 	 */
-	void create(MenuCreateCmd cmd);
+	void create(MenuSaveCmd cmd);
 
 	/**
 	 * 根据IDS删除菜单.

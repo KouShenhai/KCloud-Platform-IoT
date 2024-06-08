@@ -25,27 +25,28 @@ import org.laokou.common.core.utils.SerializationUtil;
 import java.util.function.Consumer;
 
 /**
- * jsqlparser 缓存 fury 序列化 Caffeine 缓存实现
+ * jsqlparser 缓存 fury 序列化 Caffeine 缓存实现.
  *
  * @author laokou
  */
 public class FurySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseCache {
 
-    public FurySerialCaffeineJsqlParseCache(Cache<String, byte[]> cache) {
-        super(cache);
-    }
+	public FurySerialCaffeineJsqlParseCache(Cache<String, byte[]> cache) {
+		super(cache);
+	}
 
-    public FurySerialCaffeineJsqlParseCache(Consumer<Caffeine<Object, Object>> consumer) {
-        super(consumer);
-    }
+	public FurySerialCaffeineJsqlParseCache(Consumer<Caffeine<Object, Object>> consumer) {
+		super(consumer);
+	}
 
-    @Override
-    public byte[] serialize(Object obj) {
-        return SerializationUtil.serializeThreadSafe(obj);
-    }
+	@Override
+	public byte[] serialize(Object obj) {
+		return SerializationUtil.serializeThreadSafe(obj);
+	}
 
-    @Override
-    public Object deserialize(String sql, byte[] bytes) {
-        return SerializationUtil.deserializeThreadSafe(bytes);
-    }
+	@Override
+	public Object deserialize(String sql, byte[] bytes) {
+		return SerializationUtil.deserializeThreadSafe(bytes);
+	}
+
 }
