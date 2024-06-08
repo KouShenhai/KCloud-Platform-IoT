@@ -17,6 +17,7 @@
 
 package org.laokou.common.idempotent.utils;
 
+import com.alibaba.ttl.TransmittableThreadLocal;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
 
 /**
@@ -39,9 +41,10 @@ public class IdempotentUtil {
 
 	private final RedisUtil redisUtil;
 
-	private static final ThreadLocal<Boolean> IS_IDEMPOTENT_LOCAL = new ThreadLocal<>();
+	private static final ThreadLocal<Boolean> IS_IDEMPOTENT_LOCAL = new TransmittableThreadLocal<>();
 
-	private static final ThreadLocal<Map<String, String>> REQUEST_ID_LOCAL = ThreadLocal.withInitial(HashMap::new);
+	private static final ThreadLocal<Map<String, String>> REQUEST_ID_LOCAL = TransmittableThreadLocal
+		.withInitial(HashMap::new);
 
 	/**
 	 * 得到幂等键.
