@@ -64,7 +64,8 @@ public class AuthApp {
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 		// https://github.com/alibaba/nacos/pull/3654
 		// 请查看 HttpLoginProcessor
-		// -Dtls.enable=true -Dtls.client.authServer=true -Dtls.client.trustCertPath=d:\\nacos.crt
+		// -Dtls.enable=true -Dtls.client.authServer=true
+		// -Dtls.client.trustCertPath=d:\\nacos.crt
 		new SpringApplicationBuilder(AuthApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

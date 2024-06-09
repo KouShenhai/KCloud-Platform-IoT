@@ -16,6 +16,7 @@
  */
 
 package org.laokou.logstash;
+
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.springframework.boot.WebApplicationType;
@@ -24,6 +25,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import java.net.InetAddress;
+
 /**
  * @author laokou
  */
@@ -39,7 +41,8 @@ public class LogtashApp {
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");
-		// -Dtls.enable=true -Dtls.client.authServer=true -Dtls.client.trustCertPath=d:\\nacos.crt
+		// -Dtls.enable=true -Dtls.client.authServer=true
+		// -Dtls.client.trustCertPath=d:\\nacos.crt
 		new SpringApplicationBuilder(LogtashApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

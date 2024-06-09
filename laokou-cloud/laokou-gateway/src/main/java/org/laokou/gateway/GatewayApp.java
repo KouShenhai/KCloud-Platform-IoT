@@ -30,6 +30,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import java.net.InetAddress;
+
 /**
  * 网关启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
  *
@@ -51,7 +52,8 @@ public class GatewayApp {
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");
-		// -Dtls.enable=true -Dtls.client.authServer=true -Dtls.client.trustCertPath=d:\\nacos.crt
+		// -Dtls.enable=true -Dtls.client.authServer=true
+		// -Dtls.client.trustCertPath=d:\\nacos.crt
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 
