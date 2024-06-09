@@ -20,6 +20,7 @@ package org.laokou.gateway;
 import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
 import org.laokou.gateway.annotation.EnableAuth;
 import org.springframework.boot.WebApplicationType;
@@ -58,8 +59,17 @@ public class GatewayApp {
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
 		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, System.getProperty(TlsSystemConfig.CLIENT_TRUST_CERT, ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath()));
+		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, getClientTrustCertPath());
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
+	}
+
+	@SneakyThrows
+	private static String getClientTrustCertPath() {
+		String env = System.getenv("TLS_CLIENT_TRUST_CERT_PATH");
+		if (StringUtil.isNotEmpty(env)) {
+			return env;
+		}
+		return System.setProperty("TLS_CLIENT_TRUST_CERT_PATH", ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath());
 	}
 
 }
