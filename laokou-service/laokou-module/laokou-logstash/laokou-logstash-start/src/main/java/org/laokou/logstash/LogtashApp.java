@@ -58,7 +58,7 @@ public class LogtashApp {
 		if (StringUtil.isNotEmpty(env)) {
 			return env;
 		}
-		return System.setProperty("TLS_CLIENT_TRUST_CERT_PATH", ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath());
+		return System.getProperty("TLS_CLIENT_TRUST_CERT_PATH", ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath());
 	}
 
 }
