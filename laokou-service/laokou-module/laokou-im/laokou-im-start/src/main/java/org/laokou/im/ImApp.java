@@ -17,11 +17,9 @@
 
 package org.laokou.im;
 
-import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.springframework.boot.WebApplicationType;
@@ -31,10 +29,8 @@ import org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurity
 import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.util.ResourceUtils;
 
 import java.net.InetAddress;
-import static org.laokou.common.i18n.common.constants.StringConstant.TRUE;
 
 /**
  * @author laokou
@@ -55,19 +51,8 @@ public class ImApp {
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");
-		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, getClientTrustCertPath());
+		// -Dtls.enable=true -Dtls.client.authServer=true -Dtls.client.trustCertPath=d:\\nacos.crt
 		new SpringApplicationBuilder(ImApp.class).web(WebApplicationType.REACTIVE).run(args);
-	}
-
-	@SneakyThrows
-	private static String getClientTrustCertPath() {
-		String env = System.getenv("TLS_CLIENT_TRUST_CERT_PATH");
-		if (StringUtil.isNotEmpty(env)) {
-			return env;
-		}
-		return System.getProperty("TLS_CLIENT_TRUST_CERT_PATH", ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath());
 	}
 
 }

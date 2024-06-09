@@ -17,11 +17,9 @@
 
 package org.laokou.admin;
 
-import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
@@ -36,11 +34,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.ResourceUtils;
 
 import java.net.InetAddress;
-
-import static org.laokou.common.i18n.common.constants.StringConstant.TRUE;
 
 /**
  * 启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
@@ -68,19 +63,8 @@ public class AdminApp {
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");
-		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, getClientTrustCertPath());
+		// -Dtls.enable=true -Dtls.client.authServer=true -Dtls.client.trustCertPath=d:\\nacos.crt
 		new SpringApplicationBuilder(AdminApp.class).web(WebApplicationType.SERVLET).run(args);
-	}
-
-	@SneakyThrows
-	private static String getClientTrustCertPath() {
-		String env = System.getenv("TLS_CLIENT_TRUST_CERT_PATH");
-		if (StringUtil.isNotEmpty(env)) {
-			return env;
-		}
-		return System.getProperty("TLS_CLIENT_TRUST_CERT_PATH", ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath());
 	}
 
 }

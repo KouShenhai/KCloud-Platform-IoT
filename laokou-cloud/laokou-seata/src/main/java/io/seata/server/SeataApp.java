@@ -15,15 +15,9 @@
  */
 package io.seata.server;
 
-import com.alibaba.nacos.common.tls.TlsSystemConfig;
-import com.alibaba.nacos.common.utils.StringUtils;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import lombok.SneakyThrows;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.util.ResourceUtils;
-
-import java.io.IOException;
 
 /**
  * @author spilledyear@outlook.com
@@ -32,21 +26,9 @@ import java.io.IOException;
 @EnableEncryptableProperties
 public class SeataApp {
 
-	public static void main(String[] args) throws IOException {
-		// run the spring-boot application
-		System.setProperty(TlsSystemConfig.TLS_ENABLE, "true");
-		System.setProperty(TlsSystemConfig.CLIENT_AUTH, "true");
-		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, getClientTrustCertPath());
+	public static void main(String[] args) {
+		// -Dtls.enable=true -Dtls.client.authServer=true -Dtls.client.trustCertPath=d:\\nacos.crt
 		SpringApplication.run(SeataApp.class, args);
-	}
-
-	@SneakyThrows
-	private static String getClientTrustCertPath() {
-		String env = System.getenv("TLS_CLIENT_TRUST_CERT_PATH");
-		if (StringUtils.isNotBlank(env)) {
-			return env;
-		}
-		return System.getProperty("TLS_CLIENT_TRUST_CERT_PATH", ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath());
 	}
 
 }

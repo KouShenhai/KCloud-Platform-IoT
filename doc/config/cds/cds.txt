@@ -15,6 +15,6 @@
  *
  */
 
-java -DTLS_CLIENT_TRUST_CERT_PATH=D:\\nacos.crt -Djarmode=tools -jar laokou-auth-start.jar extract
+java -Dtls.enable=true -Dtls.client.authServer=true -Dtls.client.trustCertPath=d:\\nacos.crt -Djarmode=tools -jar laokou-auth-start.jar extract
 
-java -DTLS_CLIENT_TRUST_CERT_PATH=D:\\nacos.crt -jar laokou-auth-start.jar
+java -Dtls.enable=true -Dtls.client.authServer=true -Dtls.client.trustCertPath=d:\\nacos.crt -jar laokou-auth-start.jar
