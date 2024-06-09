@@ -335,7 +335,7 @@
       <plugin>
         <groupId>io.spring.javaformat</groupId>
         <artifactId>spring-javaformat-maven-plugin</artifactId>
-        <version>0.0.41</version>
+        <version>0.0.42</version>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
