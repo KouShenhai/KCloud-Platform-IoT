@@ -15,6 +15,33 @@
  *
  */
 
-mvn clean install -Dcheckstyle -DskipTests
+package org.laokou.admin.menu.gateway;
 
-mvn clean install -P test
+import io.swagger.v3.oas.annotations.media.Schema;
+import org.laokou.admin.domain.menu.Menu;
+
+/**
+ * @author laokou
+ */
+@Schema(name = "MenuGateway", description = "菜单网关")
+public interface MenuGateway {
+
+	/**
+	 * 修改菜单.
+	 * @param menu 菜单对象
+	 */
+	void modify(Menu menu);
+
+	/**
+	 * 新增菜单.
+	 * @param menu 菜单对象
+	 */
+	void create(Menu menu);
+
+	/**
+	 * 根据ID删除菜单.
+	 * @param ids IDS
+	 */
+	void remove(Long[] ids);
+
+}

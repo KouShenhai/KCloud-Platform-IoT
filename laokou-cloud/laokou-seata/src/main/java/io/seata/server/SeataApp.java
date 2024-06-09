@@ -34,8 +34,7 @@ public class SeataApp {
 		// run the spring-boot application
 		System.setProperty(TlsSystemConfig.TLS_ENABLE, "true");
 		System.setProperty(TlsSystemConfig.CLIENT_AUTH, "true");
-		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT,
-				ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath());
+		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, System.getProperty(TlsSystemConfig.CLIENT_TRUST_CERT, ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath()));
 		SpringApplication.run(SeataApp.class, args);
 	}
 

@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.MenuConvertor;
-import org.laokou.admin.domain.gateway.MenuGateway;
+import org.laokou.admin.menu.gateway.MenuGateway;
 import org.laokou.admin.domain.menu.Menu;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;

@@ -15,6 +15,7 @@
  *
  */
 
-mvn clean install -Dcheckstyle -DskipTests
-
-mvn clean install -P test
+/**
+ * @author laokou
+ */
+package org.laokou.admin.menu.dto.clientobject;

@@ -15,6 +15,8 @@
  *
  */
 
-mvn clean install -Dcheckstyle -DskipTests
+package org.laokou.admin.menu.dto;
 
-mvn clean install -P test
+public class MenuRouterListQry {
+
+}

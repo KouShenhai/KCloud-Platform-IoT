@@ -56,8 +56,7 @@ public class ImApp {
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
 		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT,
-				ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath());
+		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, System.getProperty(TlsSystemConfig.CLIENT_TRUST_CERT, ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath()));
 		new SpringApplicationBuilder(ImApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 

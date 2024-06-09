@@ -37,6 +37,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ResourceUtils;
 
 import java.net.InetAddress;
+
 import static org.laokou.common.i18n.common.constants.StringConstant.TRUE;
 
 /**
@@ -69,8 +70,7 @@ public class AuthApp {
 		// 请查看 HttpLoginProcessor
 		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
 		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT,
-				ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath());
+		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, System.getProperty(TlsSystemConfig.CLIENT_TRUST_CERT, ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath()));
 		new SpringApplicationBuilder(AuthApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

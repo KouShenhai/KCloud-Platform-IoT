@@ -15,6 +15,25 @@
  *
  */
 
-mvn clean install -Dcheckstyle -DskipTests
+package org.laokou.admin.menu.dto.clientobject;
 
-mvn clean install -P test
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.core.utils.TreeUtil;
+
+/**
+ * @author laokou
+ */
+@Data
+@NoArgsConstructor
+public class RouterCO extends TreeUtil.TreeNode<RouterCO> {
+
+	private String path;
+
+	private String icon;
+
+	private Boolean hidden;
+
+	private String url;
+
+}
