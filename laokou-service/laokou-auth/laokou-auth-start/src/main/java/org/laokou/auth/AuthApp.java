@@ -17,7 +17,6 @@
 
 package org.laokou.auth;
 
-import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
@@ -34,10 +33,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.ResourceUtils;
 
 import java.net.InetAddress;
-import static org.laokou.common.i18n.common.constants.StringConstant.TRUE;
 
 /**
  * 启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
@@ -67,10 +64,8 @@ public class AuthApp {
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 		// https://github.com/alibaba/nacos/pull/3654
 		// 请查看 HttpLoginProcessor
-		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT,
-				ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath());
+		// -Dtls.enable=true -Dtls.client.authServer=true
+		// -Dtls.client.trustCertPath=d:\\nacos.crt
 		new SpringApplicationBuilder(AuthApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

@@ -17,7 +17,6 @@
 
 package org.laokou.gateway;
 
-import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
@@ -30,10 +29,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.util.ResourceUtils;
-
 import java.net.InetAddress;
-import static org.laokou.common.i18n.common.constants.StringConstant.TRUE;
 
 /**
  * 网关启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
@@ -56,10 +52,8 @@ public class GatewayApp {
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");
-		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT,
-				ResourceUtils.getFile("classpath:nacos.crt").getCanonicalPath());
+		// -Dtls.enable=true -Dtls.client.authServer=true
+		// -Dtls.client.trustCertPath=d:\\nacos.crt
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 

@@ -15,6 +15,21 @@
  *
  */
 
-mvn clean install -Dcheckstyle -DskipTests
+package org.laokou.admin.menu.dto;
 
-mvn clean install -P test
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import org.laokou.admin.menu.dto.clientobject.MenuCO;
+import org.laokou.common.i18n.dto.CommonCommand;
+
+/**
+ * @author laokou
+ */
+@Data
+@Schema(name = "MenuInsertCmd", description = "新增菜单命令请求")
+public class MenuSaveCmd extends CommonCommand {
+
+	@Schema(name = "menuCO", description = "菜单")
+	private MenuCO menuCO;
+
+}

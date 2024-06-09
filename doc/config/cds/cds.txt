@@ -15,6 +15,6 @@
  *
  */
 
-mvn clean install -Dcheckstyle -DskipTests
+java -Dtls.enable=true -Dtls.client.authServer=true -Dtls.client.trustCertPath=d:\\nacos.crt -Djarmode=tools -jar laokou-auth-start.jar extract
 
-mvn clean install -P test
+java -Dtls.enable=true -Dtls.client.authServer=true -Dtls.client.trustCertPath=d:\\nacos.crt -jar laokou-auth-start.jar

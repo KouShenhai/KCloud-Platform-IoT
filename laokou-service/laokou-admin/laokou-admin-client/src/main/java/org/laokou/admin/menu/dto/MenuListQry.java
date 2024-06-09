@@ -15,6 +15,20 @@
  *
  */
 
-mvn clean install -Dcheckstyle -DskipTests
+package org.laokou.admin.menu.dto;
 
-mvn clean install -P test
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import org.laokou.common.i18n.dto.CommonCommand;
+
+/**
+ * @author laokou
+ */
+@Data
+@Schema(name = "MenuListQry", description = "查询菜单列表命令请求")
+public class MenuListQry extends CommonCommand {
+
+	@Schema(name = "name", description = "菜单名称")
+	private String name;
+
+}
