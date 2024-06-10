@@ -63,7 +63,8 @@ public class AdminApp {
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");
-		// -Dtls.enable=true -Dtls.client.authServer=true
+		// -Dtls.enable=true
+		// -Dtls.client.authServer=true
 		// -Dtls.client.trustCertPath=d:\\nacos.crt
 		new SpringApplicationBuilder(AdminApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
