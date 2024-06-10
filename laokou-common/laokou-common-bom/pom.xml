@@ -36,7 +36,7 @@
     <!--admin版本-->
     <spring-boot-admin.version>3.3.2</spring-boot-admin.version>
     <!--mybatis-plus版本 -->
-    <mybatis-plus.version>3.5.6</mybatis-plus.version>
+    <mybatis-plus.version>3.5.7</mybatis-plus.version>
     <!--mybatis-spring版本-->
     <mybatis-spring.version>3.0.3</mybatis-spring.version>
     <!--redisson版本-->
