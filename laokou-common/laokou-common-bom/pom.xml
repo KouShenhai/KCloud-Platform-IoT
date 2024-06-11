@@ -58,7 +58,7 @@
     <!--rocketmq版本-->
     <rocketmq.version>5.2.0</rocketmq.version>
     <!--jakarta.servlet-api版本-->
-    <jakarta-servlet-api.version>6.1.0-M2</jakarta-servlet-api.version>
+    <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
     <!--easyexcel版本-->
     <easyexcel.version>3.3.4</easyexcel.version>
     <!--spring-security-oauth2-authorization-server版本-->
