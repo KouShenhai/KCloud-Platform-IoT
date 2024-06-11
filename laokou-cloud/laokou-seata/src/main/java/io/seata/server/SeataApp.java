@@ -27,7 +27,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SeataApp {
 
 	public static void main(String[] args) {
-		// -Dtls.enable=true -Dtls.client.authServer=true
+		// -Dtls.enable=true
+		// -Dtls.client.authServer=true
 		// -Dtls.client.trustCertPath=d:\\nacos.crt
 		SpringApplication.run(SeataApp.class, args);
 	}
