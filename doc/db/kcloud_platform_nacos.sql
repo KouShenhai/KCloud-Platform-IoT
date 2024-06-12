@@ -1006,14 +1006,7 @@ metrics.enabled=false
 metrics.registryType=compact
 metrics.exporterList=prometheus
 metrics.exporterPrometheusPort=9898', '26217408b5ee26c2fec37325ea785e2f', '2023-11-27 16:36:34.000000', '2024-03-04 11:55:27.000000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-seata', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'seata配置', '', '', 'properties', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2307, 'application-common-flyway.yaml', 'LAOKOU_GROUP', e'spring:
-  flyway:
-    # 起始版本
-    baseline-version: 0
-    # 历史记录
-    baseline-on-migrate: true
-    # 避免数据被意外清空
-    clean-disabled: false', 'd3ec18f7c8327f45c48a7783f6d48b64', '2024-01-03 07:54:41.000000', '2024-01-03 07:54:41.000000', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'flyway公共配置', null, null, 'yaml', null, '');
+
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
@@ -1394,14 +1387,7 @@ metrics.enabled=false
 metrics.registryType=compact
 metrics.exporterList=prometheus
 metrics.exporterPrometheusPort=9898', '26217408b5ee26c2fec37325ea785e2f', '2024-05-25 18:13:10.662000', '2024-05-25 18:13:10.662000', null, '127.0.0.1', 'laokou-seata', '8140e92b-fb43-48f5-b63b-7506185206a5', 'seata配置', null, null, 'properties', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (43, 'application-common-flyway.yaml', 'LAOKOU_GROUP', e'spring:
-  flyway:
-    # 起始版本
-    baseline-version: 0
-    # 历史记录
-    baseline-on-migrate: true
-    # 避免数据被意外清空
-    clean-disabled: false', '025b72b3f4b1100baccda055f870a554', '2024-05-25 18:13:10.670000', '2024-05-25 18:13:10.670000', null, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'flyway公共配置', null, null, 'yaml', null, '');
+
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (44, 'admin-degrade.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
@@ -1578,7 +1564,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -1739,7 +1725,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2318,14 +2304,7 @@ metrics.enabled=false
 metrics.registryType=compact
 metrics.exporterList=prometheus
 metrics.exporterPrometheusPort=9898', '26217408b5ee26c2fec37325ea785e2f', '2024-05-25 18:13:33.425000', '2024-05-25 18:13:33.425000', null, '127.0.0.1', 'laokou-seata', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'seata配置', null, null, 'properties', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (65, 'application-common-flyway.yaml', 'LAOKOU_GROUP', e'spring:
-  flyway:
-    # 起始版本
-    baseline-version: 0
-    # 历史记录
-    baseline-on-migrate: true
-    # 避免数据被意外清空
-    clean-disabled: false', '025b72b3f4b1100baccda055f870a554', '2024-05-25 18:13:33.432000', '2024-05-25 18:13:33.432000', null, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'flyway公共配置', null, null, 'yaml', null, '');
+
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (66, 'admin-degrade.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
@@ -2532,7 +2511,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2579,7 +2558,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2626,7 +2605,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2676,7 +2655,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=flyway-postgresql&useSSL=false&reWriteBatchedInserts=true
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515

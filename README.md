@@ -68,19 +68,18 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 | Redis                       | 7.2.5         |
 | Elasticsearch               | 8.14.0        |
 | RocketMQ                    | 5.2.0         |
-| OpenResty                   | 1.21.4.1      |
 | Netty                       | 4.1.111.Final |
 | Kafka                       | 3.7.0         |
 | EMQX                        | 5.7.0         |
 | Postgresql                  | 16.3          |
-| Flyway                      | 10.13.0       |
 | TDengine                    | 3.3.1.0       |
+
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
 - 认证授权：Spring Security OAuth2 Authorization Server
 - 远程调用：Spring Cloud OpenFeign & OkHttp & HttpClient & WebClient
-- 负载均衡：Spring Cloud Loadbalancer & OpenResty
+- 负载均衡：Spring Cloud Loadbalancer
 - 服务熔断&降级&限流：Sentinel
 - 分库分表：Mybatis Plus
 - 分布式事务：Seata & RocketMQ
@@ -101,7 +100,6 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 - 对象转换：MapStruct
 - 数据库：Postgresql
 - 时序数据库：TDengine
-- 数据库迁移：Flyway
 
 #### 🌴 项目结构
 ~~~
