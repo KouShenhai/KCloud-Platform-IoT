@@ -69,12 +69,12 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 | Elasticsearch               | 8.14.0        |
 | RocketMQ                    | 5.2.0         |
 | OpenResty                   | 1.21.4.1      |
-| Netty                       | 4.1.110.Final |
+| Netty                       | 4.1.111.Final |
 | Kafka                       | 3.7.0         |
 | EMQX                        | 5.7.0         |
 | Postgresql                  | 16.3          |
 | Flyway                      | 10.13.0       |
-| TDengine                    | 3.3.0.3       |
+| TDengine                    | 3.3.1.0       |
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
