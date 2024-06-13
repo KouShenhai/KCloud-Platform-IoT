@@ -171,7 +171,7 @@ link:性能测试.adoc[请点击我，查看详情]
 KCloud-Platform-IoT 开源软件遵循 https://www.apache.org/licenses/LICENSE-2.0.html[Apache 2.0 协议] 请务必保留作者、Copyright信息
 
 === 🔧 参与贡献
-link:CONTRIBUTING.adoc[提交规范（请点击我）]
+link:CONTRIBUTING.adoc[请点击我，查看规范]
 
 === 👀 项目地址
 https://github.com/KouShenhai/KCloud-Platform-IoT[Github 地址]
