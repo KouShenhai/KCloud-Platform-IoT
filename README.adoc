@@ -11,21 +11,18 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、灰度路由、服务限流、熔断降级、监控报警、多数据源、高亮搜索、定时任务、分布式链路、分布式缓存、分布式事务、分布式存储、分布式锁等功能，用于快速构建微服务项目。目前支持Shell、Docker等多种部署方式，并且支持GraalVM和虚拟线程。实现RBAC权限、其中包含系统管理、系统监控、数据分析等几大模块。
 遵循阿里代码规范，采用RESTFul设计风格及DDD(领域驱动设计)思想，代码简洁、架构清晰，非常适合作为基础框架使用。
 
-image:https://img.shields.io/github/stars/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub stars,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
-image:https://img.shields.io/github/forks/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub forks,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
+image:https://img.shields.io/github/stars/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub stars,link=https://github.com/KouShenhai/KCloud-Platform-IoT/stargazers]
+image:https://img.shields.io/github/forks/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub forks,link=https://github.com/KouShenhai/KCloud-Platform-IoT/forks]
 image:https://img.shields.io/github/watchers/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub watchers,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
 image:https://img.shields.io/github/last-commit/KouShenhai/KCloud-Platform-IoT[GitHub last commit,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
-
-<p align="center">
-	<a target="_blank" href="https://gitee.com/laokouyun/KCloud-Platform-IoT/stargazers"><img src="https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/star.svg?theme=dark" alt="Gitee Star"></a>
-    <a target="_blank" href="https://gitee.com/laokouyun/KCloud-Platform-IoT"><img src="https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark"  alt="Gitee Fork"></a>
-    <a target="_blank" href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/static/v1?label=Spring Boot&message=3.3.0&color=green" alt="SpringBoot"></a>
-    <a target="_blank" href="https://spring.io/projects/spring-cloud"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2023.0.2&color=green"></a>
-    <a target="_blank" href="https://github.com/alibaba/spring-cloud-alibaba"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud Alibaba&message=2023.0.1.0&color=orange"></a>
-    <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.3.0&color=blue"></a>
-    <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java17"><img alt="JDK" src="https://img.shields.io/badge/GraalVM-21.0.1-blue.svg"/></a>
-    <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流"></a>
-</p>
+image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/star.svg?theme=dark[Gitee star,link=https://gitee.com/laokouyun/KCloud-Platform-IoT/stargazers]
+image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark[Gitee fork,link=https://gitee.com/laokouyun/KCloud-Platform-IoT/members]
+image:https://img.shields.io/static/v1?label=Spring Boot&message=3.3.0&color=green[SpringBoot,link=https://spring.io/projects/spring-boot]
+image:https://img.shields.io/static/v1?label=Spring Cloud&message=2023.0.2&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
+image:https://img.shields.io/static/v1?label=Spring Cloud Alibaba&message=2023.0.1.0&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
+image:https://img.shields.io/static/v1?label=OAuth 2.1&message=1.3.0&color=blue[OAuth 2.1,link=https://spring.io/projects/spring-authorization-server]
+image:https://img.shields.io/badge/GraalVM-21.0.1-blue.svg[GraalVM,link=https://www.graalvm.org/downloads]
+image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源交流群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
 
 === 😋 项目背景
 - 学习微服务架构设计并实践于生产
@@ -34,17 +31,17 @@ image:https://img.shields.io/github/last-commit/KouShenhai/KCloud-Platform-IoT[G
 - 复制粘贴代码提高生产效率
 - 学习DDD思想并落地实践
 
-=== 🔗 在线体验（作者剔除前端Vue UI，要么找专业前端对接，要么等作者从零采用React重构，估计要很久）
-[老寇IoT云平台在线体验（请点击我，境外服务器网络延迟请稍候）](https://www.laokou.org.cn)
+=== 🔗 在线体验（正在重构，敬请期待）
+https://www.laokou.org.cn[老寇IoT云平台在线体验（请点击我，境外服务器网络延迟请稍候）]
 
 === 🔖 在线文档
-[老寇IoT云平台在线文档（请点击我）](https://koushenhai.github.io)
+https://koushenhai.github.io[老寇IoT云平台在线文档（请点击我）]
 
 === 😎 开发计划
-[开发计划（需要登录）](https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2)
+https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2[开发计划（需要登录）]
 
 === 🎁 项目推荐
-[作者的另一个开源IoT项目（响应式）](https://github.com/KouShenhai/KCloud-Platform-Reactive-IoT)
+https://github.com/KouShenhai/KCloud-Platform-Reactive-IoT[作者的另一个开源IoT项目（响应式）]
 
 === 💪 版本号
 特此说明，与Spring Boot版本保持一致
@@ -53,29 +50,33 @@ image:https://img.shields.io/github/last-commit/KouShenhai/KCloud-Platform-IoT[G
 🚀 无页面展示，作者采用DDD思想重构后端API中（已剔除前端Vue UI，要么自己找专业前端对接，要么等作者从零采用React重构，估计要很久）
 
 === 💡 系统架构
-![](doc/image/老寇IoT云平台架构图-阿里巴巴.png)
+image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=center]
 
 === ✂ 技术体系
 ==== 🎯 Spring全家桶及核心技术版本
-| 组件                          | 版本            |
-|:----------------------------|:--------------|
-| Spring Boot                 | 3.3.0         |
-| Spring Cloud                | 2023.0.2      |
-| Spring Cloud Alibaba        | 2023.0.1.0    |
-| Spring Boot Admin           | 3.3.2         |
-| Spring Authorization Server | 1.3.0         |
-| Mybatis Plus                | 3.5.7         |
-| Nacos                       | 2.3.2         |
-| Seata                       | 2.0.0         |
-| Sentinel                    | 1.8.8         |
-| Redis                       | 7.2.5         |
-| Elasticsearch               | 8.14.1        |
-| RocketMQ                    | 5.2.0         |
-| Netty                       | 4.1.111.Final |
-| Kafka                       | 3.7.0         |
-| EMQX                        | 5.7.0         |
-| Postgresql                  | 16.3          |
-| TDengine                    | 3.3.1.0       |
+[width=50%, cols="5,5"]
+|===
+|组件                         |版本
+
+|Spring Boot                 |3.3.0
+|Spring Cloud                |2023.0.2
+|Spring Cloud Alibaba        |2023.0.1.0
+|Spring Boot Admin           |3.3.2
+|Spring Authorization Server |1.3.0
+|Mybatis Plus                |3.5.7
+|Nacos                       |2.3.2
+|Seata                       |2.0.0
+|Sentinel                    |1.8.8
+|Redis                       |7.2.5
+|Elasticsearch               |8.14.1
+|RocketMQ                    |5.2.0
+|Netty                       |4.1.111.Final
+|Kafka                       |3.7.0
+|EMQX                        |5.7.0
+|Postgresql                  |16.3
+|TDengine                    |3.3.1.0
+|===
+
 
 ==== 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
@@ -105,7 +106,7 @@ image:https://img.shields.io/github/last-commit/KouShenhai/KCloud-Platform-IoT[G
 - 时序数据库：TDengine
 
 ==== 🌴 项目结构
-~~~
+```
 ├── laokou-common
         └── laokou-common-log                      --- 日志组件
         └── laokou-common-core                     --- 核心组件
@@ -155,7 +156,7 @@ image:https://img.shields.io/github/last-commit/KouShenhai/KCloud-Platform-IoT[G
                 └── laokou-api                     --- API模块
                 └── laokou-im                      --- 即时通讯模块
                 └── laokou-logstash                --- 日志收集模块
-~~~
+```
 
 === 👊 性能评测
 [请点击我，查看详情](性能测试.md)
