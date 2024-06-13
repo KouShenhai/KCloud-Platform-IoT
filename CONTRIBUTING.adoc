@@ -1,7 +1,7 @@
-## 代码贡献
-欢迎各路英雄好汉参与KCloud-Platform-IoT代码贡献，期待您的加入！Fork本仓库 新建 feat_xxx_环境_时间（如 feat_laokou_dev_20230116） 分支提交代码，新建Pull Request！我觉得没问题就会合并到主干分支，你也就成为正式贡献者啦！    
+== 代码贡献
+欢迎各路英雄好汉参与KCloud-Platform-IoT代码贡献，期待您的加入！Fork本仓库 新建 feat_xxx_环境_时间（如 feat_laokou_dev_20230116） 分支提交代码，新建Pull Request！我觉得没问题就会合并到主干分支，你也就成为正式贡献者啦！
 
-## RESTFul代码风格
+== RESTFul代码风格
 - url路径名词均为复数
 - 响应结果必须使用JSON
 - url结尾不应该包含斜杠'/'
@@ -12,7 +12,7 @@
 - 使用动词表示增删改查， GET查询，POST新增，PUT更新，DELETE删除
 - HTTP状态码，在REST中都有特定的意义：200，201，202，204，400，401，403，500。比如401表示用户身份认证失败，403表示没有操作资源的权限
 
-## 提交规范
+== 提交规范
 - fix：修改bug
 - test：添加或修改测试用例
 - feat：新功能(feature)
@@ -24,5 +24,5 @@
 - revert：回滚代码
 - ci：脚本文件配置
 
-## 代码规范
-[COLA代码规范](https://koushenhai.github.io/pages/59afe2)
+== 代码规范
+https://koushenhai.github.io/pages/59afe2[COLA代码规范]
