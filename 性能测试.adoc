@@ -1,0 +1,14 @@
+== 性能测试
+- -Xmx256m -Xms256m
+
+=== 2k并发请求
+image::doc/image/c1.png[2k并发请求图片]
+
+=== 3k并发请求
+image::doc/image/c2.png[3k并发请求图片]
+
+=== 4k并发请求
+image::doc/image/c3.png[4k并发请求图片]
+
+=== 5k并发请求
+image::doc/image/c4.png[5k并发请求图片]

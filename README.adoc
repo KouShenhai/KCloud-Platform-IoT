@@ -160,7 +160,7 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 ----
 
 === 👊 性能评测
-[请点击我，查看详情](性能测试.md)
+link:性能测试.adoc[请点击我，查看详情]
 
 === 😛 用户权益（点个Star，拜托啦~🙏）
 - 采用Apache2.0开源协议，请保留作者、Copyright信息
@@ -171,24 +171,23 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 KCloud-Platform-IoT 开源软件遵循 https://www.apache.org/licenses/LICENSE-2.0.html[Apache 2.0 协议] 请务必保留作者、Copyright信息
 
 === 🔧 参与贡献
-请查看 [提交规范（请点击我）](CONTRIBUTING.md)
+link:CONTRIBUTING.adoc[提交规范（请点击我）]
 
 === 👀 项目地址
-Github 地址：https://github.com/KouShenhai/KCloud-Platform-IoT[KCloud-Platform-IoT]
-Gtiee 地址：https://gitee.com/laokouyun/KCloud-Platform-IoT[KCloud-Platform-IoT]
+https://github.com/KouShenhai/KCloud-Platform-IoT[Github 地址]
+
+https://gitee.com/laokouyun/KCloud-Platform-IoT[Gitee 地址]
 
 === 🍚 赞助打赏（用于服务器日常维护）
-<div>
-    <img src="doc/image/wxzp.jpg" width="201" height="300" alt="暂无图片">
-    <img src="doc/image/zfb.jpg" width="201" height="300" alt="暂无图片">
-    <img src="doc/image/gzh.jpg" width="201" height="300" alt="暂无图片">
-    <img src="doc/image/zsxq.jpg" width="201" height="300" alt="暂无图片">
-</div>
+image:doc/image/wxzp.jpg[微信支付,201,300]
+image:doc/image/zfb.jpg[支付宝支付,201,300]
+image:doc/image/gzh.jpg[微信公众号,201,300]
+image:doc/image/zsxq.jpg[知识星球,201,300]
 
 === 🙋 技术交流
-image:doc/image/wx.png[微信,250,250]
-image:doc/image/wxq.png[微信交流群,250,250]
-image:doc/image/qqq.png[QQ交流群,250,250]
+image:doc/image/wx.png[微信,250,300]
+image:doc/image/wxq.png[微信交流群,250,300]
+image:doc/image/qqq.png[QQ交流群,250,300]
 
 === 🐭 鸣谢组织
 https://spring.io[Spring社区]
