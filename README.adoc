@@ -47,7 +47,7 @@ https://github.com/KouShenhai/KCloud-Platform-Reactive-IoT[作者的另一个开
 特此说明，与Spring Boot版本保持一致
 
 === 🔎 功能介绍
-🚀 无页面展示，作者采用DDD思想重构后端API中（已剔除前端Vue UI，要么自己找专业前端对接，要么等作者从零采用React重构，估计要很久）
+🚀 正在重构，敬请期待
 
 === 💡 系统架构
 image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=center]
@@ -77,7 +77,6 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 |TDengine                    |3.3.1.0
 |===
 
-
 ==== 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
@@ -106,7 +105,9 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 - 时序数据库：TDengine
 
 ==== 🌴 项目结构
-```
+
+[source]
+----
 ├── laokou-common
         └── laokou-common-log                      --- 日志组件
         └── laokou-common-core                     --- 核心组件
@@ -156,7 +157,7 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
                 └── laokou-api                     --- API模块
                 └── laokou-im                      --- 即时通讯模块
                 └── laokou-logstash                --- 日志收集模块
-```
+----
 
 === 👊 性能评测
 [请点击我，查看详情](性能测试.md)
@@ -167,14 +168,14 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 - 采用Apache2.0开源协议，请保留作者、Copyright信息
 
 === 😻 开源协议
-KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息
+KCloud-Platform-IoT 开源软件遵循 https://www.apache.org/licenses/LICENSE-2.0.html[Apache 2.0 协议] 请务必保留作者、Copyright信息
 
 === 🔧 参与贡献
 请查看 [提交规范（请点击我）](CONTRIBUTING.md)
 
 === 👀 项目地址
-Github 地址：[KCloud-Platform-IoT](https://github.com/KouShenhai/KCloud-Platform-IoT)
-Gtiee 地址：[KCloud-Platform-IoT](https://gitee.com/laokouyun/KCloud-Platform-IoT)
+Github 地址：https://github.com/KouShenhai/KCloud-Platform-IoT[KCloud-Platform-IoT]
+Gtiee 地址：https://gitee.com/laokouyun/KCloud-Platform-IoT[KCloud-Platform-IoT]
 
 === 🍚 赞助打赏（用于服务器日常维护）
 <div>
@@ -185,119 +186,76 @@ Gtiee 地址：[KCloud-Platform-IoT](https://gitee.com/laokouyun/KCloud-Platform
 </div>
 
 === 🙋 技术交流
-<div>
-    <img src="doc/image/wx.png" width="250" height="300" alt="暂无图片">
-    <img src="doc/image/wxq.png" width="250" height="300" alt="暂无图片">
-    <img src="doc/image/qqq.png" width="250" height="300" alt="暂无图片">
-</div>
+image:doc/image/wx.png[微信,250,250]
+image:doc/image/wxq.png[微信交流群,250,250]
+image:doc/image/qqq.png[QQ交流群,250,250]
 
 === 🐭 鸣谢组织
-[Spring社区](https://spring.io)
-[Jetbrains社区](https://www.jetbrains.com/community)
-[阿里巴巴社区](https://github.com/alibaba)
-[人人社区](https://www.renren.io)
-[若依社区](https://www.ruoyi.vip)
-[苞米豆社区](https://baomidou.com)
-[livk-cloud社区](https://gitter.im/livk-cloud/community)
-[laokouyun社区](https://github.com/laokouyun)
+https://spring.io[Spring社区]
+
+https://www.jetbrains.com/community[Jetbrains社区]
+
+https://github.com/alibaba[阿里巴巴社区]
+
+https://www.renren.io[人人社区]
+
+https://www.ruoyi.vip[若依社区]
+
+https://baomidou.com[苞米豆社区]
+
+https://gitter.im/livk-cloud/community[livk-cloud社区]
+
+https://github.com/laokouyun[laokouyun社区]
 
 非常感谢 Jetbrains 提供的开源 License
-<a href="https://www.jetbrains.com/community/opensource/?utm_campaign=opensource&utm_content=approved&utm_medium=email&utm_source=newsletter&utm_term=jblogo#support"><img alt="暂无图片" width="100" height="100" src="doc/image/jb_beam.png"/></a>
+
+image::doc/image/jb_beam.png[jb_beam,100,100,link=https://www.jetbrains.com/community/opensource/?utm_campaign=opensource&utm_content=approved&utm_medium=email&utm_source=newsletter&utm_term=jblogo#support]
 
 === 🐼 鸣谢个人
-|                                                👤                                                |                                                👤                                                |                                                👤                                                |                                                👤                                                |                                                👤                                                 |                                                👤                                                |
-|:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|
-| <img height='50' width='50' src='https://avatars.githubusercontent.com/u/48756217?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/26246537?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/50291874?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/21030225?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/127269482?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/69209385?s=64&amp;v=4'> |
-|                           [KouShenhai](https://github.com/KouShenhai)                            |                              [liang99](https://github.com/liang99)                               |                           [livk-cloud](https://github.com/livk-cloud)                            |                          [liukefu2050](https://github.com/liukefu2050)                           |                            [HalfPomelo](https://github.com/HalfPomelo)                            |                                [lixin](https://github.com/lixin)                                 |
-| <img height='50' width='50' src='https://avatars.githubusercontent.com/u/2041471?s=64&amp;v=4'>  | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/43296325?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/89563182?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/32741993?s=64&v=4'> |
-|                               [simman](https://github.com/simman)                                |                             [suhengli](https://github.com/suhengli)                              |                            [gitkakafu](https://github.com/gitkakafu)                             |                                                [LeiZhiMin1](https://github.com/LeiZhiMin1)                                                 |
+[width=75%, cols="1,1,2"]
+|===
+|序号 |头像 |名字
+
+|1   |image:https://avatars.githubusercontent.com/u/48756217?s=64&v=4[KouShenhai的头像,50,50]       |https://github.com/KouShenhai[KouShenhai]
+|2   |image:https://avatars.githubusercontent.com/u/26246537?s=64&v=4[liang99的头像,50,50]          |https://github.com/liang99[liang99]
+|3   |image:https://avatars.githubusercontent.com/u/50291874?s=64&v=4[livk-cloud的头像,50,50]       |https://github.com/livk-cloud[livk-cloud]
+|4   |image:https://avatars.githubusercontent.com/u/21030225?s=64&v=4[liukefu2050的头像,50,50]      |https://github.com/liukefu2050[liukefu2050]
+|5   |image:https://avatars.githubusercontent.com/u/127269482?s=64&v=4[HalfPomelo的头像,50,50]      |https://github.com/HalfPomelo[HalfPomelo]
+|6   |image:https://avatars.githubusercontent.com/u/69209385?s=64&v=4[lixin的头像,50,50]            |https://github.com/lixin[lixin]
+|7   |image:https://avatars.githubusercontent.com/u/2041471?s=64&v=4[simman的头像,50,50]            |https://github.com/simman[simman]
+|8   |image:https://avatars.githubusercontent.com/u/43296325?s=64&v=4[suhengli的头像,50,50]         |https://github.com/suhengli[suhengli]
+|9   |image:https://avatars.githubusercontent.com/u/89563182?s=64&v=4[gitkakafu的头像,50,50]        |https://github.com/gitkakafu[gitkakafu]
+|10  |image:https://avatars.githubusercontent.com/u/32741993?s=64&v=4[LeiZhiMin1的头像,50,50]       |https://github.com/LeiZhiMin1[LeiZhiMin1]
+|===
 
 === ⛳️ 赞助列表（感谢各位大佬的赞助）
-<table>
-    <tr>
-        <th>时间</th>
-        <th>网名</th>
-        <th>金额/物品</th>
-        <th>备注</th>
-    </tr>
-    <tr>
-        <td>2024/04/19</td>
-        <td>*保熟</td>
-        <td>￥188.00</td>
-        <td>越做越好</td>
-    </tr>
-    <tr>
-        <td>2024/03/20</td>
-        <td>A细节*</td>
-        <td>￥66.00</td>
-        <td>无</td>
-    </tr>
-    <tr>
-        <td>2024/03/03</td>
-        <td>y*i</td>
-        <td>￥58.88</td>
-        <td>无</td>
-    </tr>
-    <tr>
-        <td>2024/01/30</td>
-        <td>*阳</td>
-        <td>￥10</td>
-        <td>无</td>
-    </tr>
-    <tr>
-        <td>2023/12/22</td>
-        <td>*民</td>
-        <td>服务器</td>
-        <td>无</td>
-    </tr>
-    <tr>
-        <td>2023/12/08</td>
-        <td>*来</td>
-        <td>￥10</td>
-        <td>希望越来越好，一直坚持下去</td>
-    </tr>
-    <tr>
-        <td>2023/12/08</td>
-        <td>*迪</td>
-        <td>￥20</td>
-        <td>越来越好，继续干下去</td>
-    </tr>
-    <tr>
-        <td>2023/10/07</td>
-        <td>何*</td>
-        <td>￥399</td>
-        <td>作者说：感谢支持</td>
-    </tr>
-    <tr>
-        <td>2023/08/27</td>
-        <td>*界</td>
-        <td>￥10</td>
-        <td>希望越来越好</td>
-    </tr>
-    <tr>
-        <td>2023/06/29</td>
-        <td>顺</td>
-        <td>￥20</td>
-        <td>希望项目一直做下去就好</td>
-    </tr>
-    <tr>
-        <td>2023/03/27</td>
-        <td>s*e</td>
-        <td>￥10</td>
-        <td>无</td>
-    </tr>
-</table>
+[width=75%, cols="1,1,1,2"]
+|===
+|时间         |网名        |赞助      |备注
+
+|2024/04/19  |*保熟       |￥188.00      |越做越好
+|2024/03/20  |A细节*      |￥66.00       |无
+|2024/03/03  |y*i        |￥58.88       |无
+|2024/01/30  |*阳        |￥10          |无
+|2023/12/22  |*民        |服务器         |无
+|2023/12/08  |*来        |￥10          |希望越来越好，一直坚持下去
+|2023/12/08  |*迪        |￥20          |越来越好，继续干下去
+|2023/10/07  |何*        |￥399         |作者说：感谢支持
+|2023/08/27  |*界        |￥10          |希望越来越好
+|2023/06/29  |顺         |￥20          |希望项目一直做下去就好
+|2023/03/27  |s*e        |￥10          |无
+|===
 
 === 🚫 免责声明
 禁止使用本项目从事一切违法犯罪活动。作者不承担任何法律责任，特此声明
 
 === 🐸 联系作者
-博客：[https://kcloud.blog.csdn.net](https://kcloud.blog.csdn.net)
+https://kcloud.blog.csdn.net[博客：https://kcloud.blog.csdn.net]
 
-邮箱：[2413176044@qq.com](https://mail.qq.com)
+https://mail.qq.com[邮箱：2413176044@qq.com]
 
-QQ：[2413176044]( http://wpa.qq.com/msgrd?v=3&uin=2413176044&Site=gitee&Menu=yes)
+http://wpa.qq.com/msgrd?v=3&uin=2413176044&Site=gitee&Menu=yes[QQ：243176044]
 
-[![加入QQ群](https://img.shields.io/badge/Q群-465450496-blue.svg)](https://jq.qq.com/?_wv=1027&k=Ec8T76dR)
+image::https://img.shields.io/badge/Q群-465450496-blue.svg[QQ群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
 
-![GitHub Star 趋势](https://starchart.cc/KouShenhai/KCloud-Platform-IoT.svg)
+image::https://starchart.cc/KouShenhai/KCloud-Platform-IoT.svg[GitHub Star 趋势]
