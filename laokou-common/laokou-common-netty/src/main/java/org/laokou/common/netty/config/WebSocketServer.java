@@ -37,8 +37,9 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 @Slf4j
 public class WebSocketServer extends AbstractServer {
 
-	public WebSocketServer(String ip, int port, ChannelInitializer<?> channelInitializer) {
-		super(ip, port, channelInitializer);
+	public WebSocketServer(String ip, int port, ChannelInitializer<?> channelInitializer, int bossCoreSize,
+			int workerCoreSize) {
+		super(ip, port, channelInitializer, bossCoreSize, workerCoreSize);
 	}
 
 	/**
@@ -46,12 +47,11 @@ public class WebSocketServer extends AbstractServer {
 	 * @return AbstractBootstrap
 	 */
 	@Override
-	protected AbstractBootstrap<ServerBootstrap, ServerChannel> init(int bossThreadGroupSize,
-			int workerThreadGroupSize) {
+	protected AbstractBootstrap<ServerBootstrap, ServerChannel> init() {
 		// boss负责监听端口
-		boss = new NioEventLoopGroup(bossThreadGroupSize, new DefaultThreadFactory("boss", true));
+		boss = new NioEventLoopGroup(bossCoreSize, new DefaultThreadFactory("boss", true));
 		// work负责线程读写
-		worker = new NioEventLoopGroup(workerThreadGroupSize, new DefaultThreadFactory("worker", true));
+		worker = new NioEventLoopGroup(workerCoreSize, new DefaultThreadFactory("worker", true));
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组

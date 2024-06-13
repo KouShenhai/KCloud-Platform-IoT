@@ -46,4 +46,8 @@ public class TcpProperties {
 	 */
 	private String appName;
 
+	private Integer bossCoreSize = 1;
+
+	private Integer workerCoreSize = 8;
+
 }

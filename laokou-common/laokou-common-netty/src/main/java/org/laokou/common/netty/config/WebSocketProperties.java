@@ -54,6 +54,10 @@ public class WebSocketProperties {
 
 	private Server server;
 
+	private Integer bossCoreSize = 1;
+
+	private Integer workerCoreSize = 8;
+
 	@Data
 	public static class Client {
 
