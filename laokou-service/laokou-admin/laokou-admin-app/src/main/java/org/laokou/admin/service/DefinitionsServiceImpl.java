@@ -18,7 +18,6 @@
 package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.api.DefinitionsServiceI;
 import org.laokou.admin.command.definition.DefinitionDownloadTemplateCmdExe;
 import org.laokou.admin.dto.definition.DefinitionTemplateCmd;
 import org.springframework.stereotype.Service;

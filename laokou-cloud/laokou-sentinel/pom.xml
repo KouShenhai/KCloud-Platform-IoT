@@ -154,6 +154,7 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-undertow</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
