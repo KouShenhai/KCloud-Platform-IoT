@@ -39,7 +39,8 @@ public class WebSocketServerConfig {
 	public Server webSocketServer(WebSocketProperties webSocketProperties,
 			ChannelInitializer<?> webSocketServerChannelInitializer) {
 		return new WebSocketServer(webSocketProperties.getServer().getIp(), webSocketProperties.getServer().getPort(),
-				webSocketServerChannelInitializer);
+				webSocketServerChannelInitializer, webSocketProperties.getBossCoreSize(),
+				webSocketProperties.getWorkerCoreSize());
 	}
 
 	@Bean

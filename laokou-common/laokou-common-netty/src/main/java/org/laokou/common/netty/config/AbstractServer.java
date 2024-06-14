@@ -52,19 +52,24 @@ public abstract class AbstractServer implements Server {
 
 	protected final ChannelInitializer<?> channelInitializer;
 
-	public AbstractServer(String ip, int port, ChannelInitializer<?> channelInitializer) {
+	protected final int bossCoreSize;
+
+	protected final int workerCoreSize;
+
+	public AbstractServer(String ip, int port, ChannelInitializer<?> channelInitializer, int bossCoreSize,
+			int workerCoreSize) {
 		this.ip = ip;
 		this.port = port;
 		this.channelInitializer = channelInitializer;
+		this.bossCoreSize = bossCoreSize;
+		this.workerCoreSize = workerCoreSize;
 	}
 
 	/**
 	 * 初始化配置.
-	 * @param bossThreadGroupSize boss线程数
-	 * @param workerThreadGroupSize worker线程数
 	 * @return AbstractBootstrap
 	 */
-	protected abstract AbstractBootstrap<?, ?> init(int bossThreadGroupSize, int workerThreadGroupSize);
+	protected abstract AbstractBootstrap<?, ?> init();
 
 	/**
 	 * 启动(Bean单例存在资源竞争).
@@ -76,10 +81,7 @@ public abstract class AbstractServer implements Server {
 			return;
 		}
 		// -Dnetty.server.parentgroup.size=2 -Dnetty.server.childgroup.size=32
-		int bossThreadGroupSize = Integer.getInteger("netty.server.parentgroup.size", 2);
-		int workerThreadGroupSize = Integer.getInteger("netty.server.childgroup.size",
-				2 * Runtime.getRuntime().availableProcessors());
-		AbstractBootstrap<?, ?> serverBootstrap = init(bossThreadGroupSize, workerThreadGroupSize);
+		AbstractBootstrap<?, ?> serverBootstrap = init();
 		try {
 			// 服务器异步操作绑定
 			// sync -> 等待任务结束，如果任务产生异常或被中断则抛出异常，否则返回Future自身

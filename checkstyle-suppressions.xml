@@ -24,7 +24,6 @@
     <suppress files="[\\/]laokou-cloud[\\/]" checks="HideUtilityClassConstructorCheck" />
     <suppress files="[\\/]laokou-common[\\/]" checks="HideUtilityClassConstructorCheck" />
     <suppress files="[\\/]laokou-service[\\/]" checks="HideUtilityClassConstructorCheck" />
-    <suppress files="[\\/]laokou-test[\\/]" checks="HideUtilityClassConstructorCheck" />
     <suppress files="[\\/]org[\\/]laokou[\\/]admin[\\/]convertor[\\/]" checks="[a-zA-Z0-9]*" />
     <suppress files="[\\/]org[\\/]laokou[\\/]auth[\\/]convertor[\\/]" checks="[a-zA-Z0-9]*" />
 </suppressions>
