@@ -48,6 +48,11 @@
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-circuitbreaker-sentinel</artifactId>
     </dependency>
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
 </project>
