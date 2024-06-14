@@ -19,13 +19,9 @@ package org.laokou.admin.command.log;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.common.utils.ExcelUtil;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.log.OperateLogExportCmd;
-import org.laokou.admin.dto.log.clientobject.OperateLogExcel;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_OPERATE_LOG;
@@ -49,9 +45,9 @@ public class OperateLogExportCmdExe {
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_OPERATE_LOG)
 	public void executeVoid(OperateLogExportCmd cmd) {
-		ExcelUtil.doExport(cmd.getResponse(),
-				new OperateLogDO(cmd.getModuleName(), cmd.getStatus(), UserUtil.getTenantId()), cmd, operateLogMapper,
-				OperateLogExcel.class);
+//		ExcelUtil.doExport(cmd.getResponse(),
+//				new OperateLogDO(cmd.getModuleName(), cmd.getStatus(), UserUtil.getTenantId()), cmd, operateLogMapper,
+//				OperateLogExcel.class);
 	}
 
 }
