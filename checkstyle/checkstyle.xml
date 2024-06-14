@@ -24,7 +24,7 @@
 
   <!-- https://checkstyle.sourceforge.io/property_types.html -->
 
-  <!-- 字符集校验 -->
+  <!-- 字符集 -->
 	<property name="charset" value="UTF-8"/>
 
 	<!-- 检查级别 -->
