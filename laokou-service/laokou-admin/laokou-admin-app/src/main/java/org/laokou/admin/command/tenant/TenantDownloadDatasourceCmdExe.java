@@ -38,7 +38,7 @@ public class TenantDownloadDatasourceCmdExe {
 	 * @param cmd 下载租户数据库压缩包参数
 	 */
 	public void executeVoid(TenantDownloadDatasourceCmd cmd) {
-		//tenantGateway.downloadDatasource(cmd.getId(), cmd.getResponse());
+		// tenantGateway.downloadDatasource(cmd.getId(), cmd.getResponse());
 	}
 
 }

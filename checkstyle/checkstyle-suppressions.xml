@@ -21,9 +21,7 @@
         "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
         "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 <suppressions>
-    <suppress files="[\\/]laokou-cloud[\\/]" checks="HideUtilityClassConstructorCheck" />
-    <suppress files="[\\/]laokou-common[\\/]" checks="HideUtilityClassConstructorCheck" />
-    <suppress files="[\\/]laokou-service[\\/]" checks="HideUtilityClassConstructorCheck" />
-    <suppress files="[\\/]org[\\/]laokou[\\/]admin[\\/]convertor[\\/]" checks="[a-zA-Z0-9]*" />
-    <suppress files="[\\/]org[\\/]laokou[\\/]auth[\\/]convertor[\\/]" checks="[a-zA-Z0-9]*" />
+    <!-- https://checkstyle.sourceforge.io/filters/suppressionfilter.html -->
+    <suppress files="[\\/]org[\\/]laokou[\\/]admin[\\/]convertor[\\/].*ConvertorImpl.java" checks=".*" />
+    <suppress files="[\\/]org[\\/]laokou[\\/]auth[\\/]convertor[\\/].*ConvertorImpl.java" checks=".*" />
 </suppressions>

@@ -47,9 +47,10 @@ public class LoginLogExportCmdExe {
 	@DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
 	public void executeVoid(LoginLogExportCmd cmd) {
 		PageQuery pageQuery = cmd;
-//		ExcelUtil.doExport(cmd.getResponse(),
-//				new LoginLogDO(cmd.getUsername(), cmd.getStatus(), UserUtil.getTenantId()), pageQuery, loginLogMapper,
-//				LoginLogExcel.class);
+		// ExcelUtil.doExport(cmd.getResponse(),
+		// new LoginLogDO(cmd.getUsername(), cmd.getStatus(), UserUtil.getTenantId()),
+		// pageQuery, loginLogMapper,
+		// LoginLogExcel.class);
 	}
 
 }

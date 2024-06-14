@@ -45,9 +45,10 @@ public class OperateLogExportCmdExe {
 	@DS(TENANT)
 	@DataFilter(tableAlias = BOOT_SYS_OPERATE_LOG)
 	public void executeVoid(OperateLogExportCmd cmd) {
-//		ExcelUtil.doExport(cmd.getResponse(),
-//				new OperateLogDO(cmd.getModuleName(), cmd.getStatus(), UserUtil.getTenantId()), cmd, operateLogMapper,
-//				OperateLogExcel.class);
+		// ExcelUtil.doExport(cmd.getResponse(),
+		// new OperateLogDO(cmd.getModuleName(), cmd.getStatus(), UserUtil.getTenantId()),
+		// cmd, operateLogMapper,
+		// OperateLogExcel.class);
 	}
 
 }
