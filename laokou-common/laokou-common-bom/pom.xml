@@ -113,11 +113,18 @@
     <fury-core.version>0.5.1</fury-core.version>
     <!--browscap-java版本-->
     <browscap-java.version>1.4.3</browscap-java.version>
+    <!--liquibase-core版本-->
+    <liquibase-core.version>4.28.0</liquibase-core.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.liquibase</groupId>
+        <artifactId>liquibase-core</artifactId>
+        <version>${liquibase-core.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.blueconic</groupId>
         <artifactId>browscap-java</artifactId>

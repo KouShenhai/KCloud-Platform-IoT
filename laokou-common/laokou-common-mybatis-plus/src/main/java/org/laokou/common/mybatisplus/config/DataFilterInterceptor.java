@@ -55,9 +55,6 @@ public class DataFilterInterceptor implements InnerInterceptor {
 				if (ObjectUtil.isNotNull(obj)) {
 					// 获取aop拼接的sql
 					PageQuery pageQuery = (PageQuery) obj;
-					// if (pageQuery.isIgnore()) {
-					// return;
-					// }
 					String sqlFilter = pageQuery.getSqlFilter();
 					if (StringUtil.isEmpty(sqlFilter)) {
 						return;
