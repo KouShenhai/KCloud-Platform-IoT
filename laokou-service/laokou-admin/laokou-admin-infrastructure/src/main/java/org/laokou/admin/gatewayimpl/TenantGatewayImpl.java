@@ -203,6 +203,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	 */
 	@SneakyThrows
 	private File writeTempFile(String fileName, String name, long tenantId, long packageId) {
+		// storage => upload-path + temp-path
 		String tempPath = env.getProperty("file.temp-path");
 		File file = FileUtil.createFile(tempPath, name);
 		Assert.isTrue(StringUtil.isNotEmpty(tempPath), "tempPath is empty");
