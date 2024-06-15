@@ -307,7 +307,7 @@
         <FILE-TEMP-PATH>${FILE_TEMP_PATH:/opt/temp}</FILE-TEMP-PATH>
         <KNIFE4J-ENABLED>false</KNIFE4J-ENABLED>
         <!--suppress UnresolvedMavenProperty -->
-        <ROUTER-AUTH-ENABLED>${ROUTER_AUTH_ENABLED:false}</ROUTER-AUTH-ENABLED>
+        <ROUTER-AUTH-ENABLED>${ROUTER_AUTH_ENABLED:true}</ROUTER-AUTH-ENABLED>
         <!--suppress UnresolvedMavenProperty -->
         <ROUTER-AUTH-USERNAME>${ROUTER_AUTH_USERNAME:laokou}</ROUTER-AUTH-USERNAME>
         <!--suppress UnresolvedMavenProperty -->

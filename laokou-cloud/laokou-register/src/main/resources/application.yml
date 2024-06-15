@@ -126,3 +126,6 @@ spring:
   sql:
     init:
       platform: @DATASOURCE-PLATFORM@
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml

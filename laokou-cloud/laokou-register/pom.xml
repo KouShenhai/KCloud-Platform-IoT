@@ -34,6 +34,8 @@
     <spring-boot.version>2.7.18</spring-boot.version>
     <!--postgresql版本-->
     <postgresql.version>42.7.3</postgresql.version>
+    <!--liquibase-core版本-->
+    <liquibase-core.version>4.28.0</liquibase-core.version>
   </properties>
 
   <dependencies>
@@ -128,6 +130,11 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-undertow</artifactId>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>${liquibase-core.version}</version>
     </dependency>
   </dependencies>
 
