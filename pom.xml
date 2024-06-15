@@ -199,7 +199,8 @@
         <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
         <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
         <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
-        <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
+        <TEMP-PATH>d:/laokou/temp</TEMP-PATH>
+        <UPLOAD-PATH>/</UPLOAD-PATH>
         <KNIFE4J-ENABLED>true</KNIFE4J-ENABLED>
         <ROUTER-AUTH-ENABLED>false</ROUTER-AUTH-ENABLED>
         <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
@@ -243,7 +244,8 @@
         <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
         <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
         <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
-        <FILE-TEMP-PATH>d:/laokou/temp</FILE-TEMP-PATH>
+        <TEMP-PATH>d:/laokou/temp</TEMP-PATH>
+        <UPLOAD-PATH>/</UPLOAD-PATH>
         <KNIFE4J-ENABLED>true</KNIFE4J-ENABLED>
         <ROUTER-AUTH-ENABLED>true</ROUTER-AUTH-ENABLED>
         <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
@@ -316,7 +318,9 @@
         <!--suppress UnresolvedMavenProperty -->
         <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
         <!--suppress UnresolvedMavenProperty -->
-        <FILE-TEMP-PATH>${FILE_TEMP_PATH:/opt/temp}</FILE-TEMP-PATH>
+        <TEMP-PATH>${TEMP_PATH:/opt/temp}</TEMP-PATH>
+        <!--suppress UnresolvedMavenProperty -->
+        <UPLOAD-PATH>${UPLOAD_PATH:/}</UPLOAD-PATH>
         <KNIFE4J-ENABLED>false</KNIFE4J-ENABLED>
         <!--suppress UnresolvedMavenProperty -->
         <ROUTER-AUTH-ENABLED>${ROUTER_AUTH_ENABLED:true}</ROUTER-AUTH-ENABLED>
