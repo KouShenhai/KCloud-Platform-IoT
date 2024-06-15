@@ -129,3 +129,6 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.xml
+    user: @DATASOURCE-USERNAME@
+    password: @DATASOURCE-PASSWORD@
+    url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/@DATASOURCE-DB-NACOS@?@DATASOURCE-PARAM@
