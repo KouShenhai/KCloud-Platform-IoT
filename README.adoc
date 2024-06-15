@@ -76,6 +76,7 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 |Postgresql                  |16.3
 |TDengine                    |3.3.1.0
 |Liquibase                   |4.28.0
+|Snail Job                   |1.0.0
 |===
 
 ==== 🍺 相关技术
@@ -91,7 +92,7 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 - 服务监控：Spring Boot Admin & Prometheus
 - 高亮搜索：Elasticsearch
 - 链路跟踪：SkyWalking
-- 任务调度：Power Job
+- 任务调度：Snail Job
 - 日志分析：EFK
 - 缓存&分布式锁：Redis & Redisson
 - 统计报表：MongoDB

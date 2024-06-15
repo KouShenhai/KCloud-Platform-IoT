@@ -18,8 +18,6 @@
     <kafka-appender.version>0.2.0-RC2</kafka-appender.version>
     <!--jedis版本-->
     <jedis.version>3.10.0</jedis.version>
-    <!--mock-jedis版本-->
-    <mock-jedis.version>0.3.1</mock-jedis.version>
     <!--fastjson版本-->
     <fastjson.version>2.0.51</fastjson.version>
     <!--logstash-logback-encoder版本-->
@@ -48,17 +46,6 @@
         <exclusion>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-tomcat</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.junit.vintage</groupId>
-          <artifactId>junit-vintage-engine</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -153,12 +140,6 @@
       <groupId>redis.clients</groupId>
       <artifactId>jedis</artifactId>
       <version>${jedis.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.github.microwww</groupId>
-      <artifactId>redis-server</artifactId>
-      <scope>test</scope>
-      <version>${mock-jedis.version}</version>
     </dependency>
     <dependency>
       <groupId>com.alibaba</groupId>

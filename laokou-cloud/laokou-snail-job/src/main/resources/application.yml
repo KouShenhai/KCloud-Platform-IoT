@@ -1,0 +1,73 @@
+jasypt:
+  encryptor:
+    password: @JASYPT-ENCRYPTOR-PASSWORD@
+
+server:
+  port: ${SERVER_PORT:8088}
+  servlet:
+    context-path: /snail-job
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 256
+    # 每块buffer的空间大小
+    buffer-size: 1024
+    # 分配堆外内存
+    direct-buffers: true
+
+spring:
+  application:
+    name: @pom.artifactId@
+  main:
+    banner-mode: off
+  profiles:
+    active: @PROFILE-ACTIVE@
+  datasource:
+    driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
+    url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/@DATASOURCE-DB-SNAIL-JOB@?@DATASOURCE-PARAM-SNAIL-JOB@
+    username: @DATASOURCE-USERNAME-SNAIL-JOB@
+    password: @DATASOURCE-PASSWORD-SNAIL-JOB@
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 30000
+      minimum-idle: 5
+      maximum-pool-size: 20
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: snail_job
+      max-lifetime: 1800000
+  web:
+    resources:
+      static-locations: classpath:admin/
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+
+mybatis-plus:
+  typeAliasesPackage: com.aizuda.snailjob.template.datasource.persistence.po
+  global-config:
+    db-config:
+      where-strategy: NOT_EMPTY
+      capital-mode: false
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+
+logging:
+  config: classpath:logback-boot.xml
+
+snail-job:
+  retry-pull-page-size: 1000 # 拉取重试数据的每批次的大小
+  job-pull-page-size: 1000 # 拉取重试数据的每批次的大小
+  netty-port: 1788  # 服务端netty端口
+  limiter: 1000 # 一个客户端每秒最多接收的重试数量指令
+  step: 100 # 号段模式下步长配置
+  log-storage: 90 # 日志保存时间(单位: day)
+  callback: # 回调配置
+    max-count: 288 #回调最大执行次数
+    trigger-interval: 900 #间隔时间
+  retry-max-pull-count: 10

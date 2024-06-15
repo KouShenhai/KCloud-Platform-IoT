@@ -22,9 +22,9 @@ jasypt:
 
 db:
   num: 1
-  url.'0': jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/@DATASOURCE-DB-NACOS@?@DATASOURCE-PARAM@
-  user.'0': @DATASOURCE-USERNAME@
-  password.'0': @DATASOURCE-PASSWORD@
+  url.'0': jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/@DATASOURCE-DB-NACOS@?@DATASOURCE-PARAM-NACOS@
+  user.'0': @DATASOURCE-USERNAME-NACOS@
+  password.'0': @DATASOURCE-PASSWORD-NACOS@
   # see DataSourcePoolProperties 与 ExternalDataSourceProperties
   pool:
     config:
@@ -129,6 +129,6 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.xml
-    user: @DATASOURCE-USERNAME@
-    password: @DATASOURCE-PASSWORD@
-    url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/@DATASOURCE-DB-NACOS@?@DATASOURCE-PARAM@
+    user: @DATASOURCE-USERNAME-NACOS@
+    password: @DATASOURCE-PASSWORD-NACOS@
+    url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/@DATASOURCE-DB-NACOS@?@DATASOURCE-PARAM-NACOS@
