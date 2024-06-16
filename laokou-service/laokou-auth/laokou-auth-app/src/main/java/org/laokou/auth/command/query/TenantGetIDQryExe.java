@@ -74,7 +74,6 @@ public class TenantGetIDQryExe {
 		}
 		Set<String> domainNames = tenantProperties.getDomainNames();
 		// 租户域名
-		// TODO 正则表达式
 		if (domainNames.parallelStream().anyMatch(domainName::contains)) {
 			return Result.ok(getTenantCache(split[0]));
 		}
