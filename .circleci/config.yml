@@ -27,7 +27,7 @@ jobs:
           destination: node-build
   test-java:
     docker:
-      - image: cimg/openjdk:17.0
+      - image: cimg/openjdk:17.0.11
     steps:
       - checkout
       - run:
