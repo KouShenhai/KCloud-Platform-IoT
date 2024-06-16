@@ -47,7 +47,7 @@ import java.util.Set;
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class TableTest {
+class TableTest {
 
 	private final TableMapper tableMapper;
 
