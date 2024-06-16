@@ -219,7 +219,7 @@ class ElasticsearchAutoConfig {
 		}
 
 		private Credentials createUserInfoCredentials(String userInfo) {
-			int delimiter = userInfo.indexOf(":");
+			int delimiter = userInfo.indexOf(':');
 			if (delimiter == -1) {
 				return new UsernamePasswordCredentials(userInfo, null);
 			}
