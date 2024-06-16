@@ -1,0 +1,8 @@
+<!-- https://docs.gradle.com/enterprise/maven-build-cache/#getting_started -->
+<extensions>
+  <extension>
+    <groupId>com.gradle</groupId>
+    <artifactId>develocity-maven-extension</artifactId>
+    <version>1.21.4</version>
+  </extension>
+</extensions>

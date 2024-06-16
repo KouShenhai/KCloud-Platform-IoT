@@ -1,0 +1,15 @@
+<!-- https://docs.gradle.com/enterprise/maven-build-cache/#getting_started -->
+<develocity>
+  <server>
+    <url>https://gradle.company.com</url>
+  </server>
+  <buildCache>
+    <local>
+      <enabled>true</enabled>
+    </local>
+    <remote>
+      <enabled>true</enabled>
+      <storeEnabled>true</storeEnabled>
+    </remote>
+  </buildCache>
+</develocity>
