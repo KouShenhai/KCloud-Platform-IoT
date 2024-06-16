@@ -2,7 +2,7 @@
 # Stacks detected: cicd:github-actions:.github/workflows,deps:java:.,deps:node:laokou-cloud/laokou-seata-saga-statemachine-designer
 version: 2.1
 orbs:
-  node: circleci/node@5
+  node: circleci/node@5.2.0
 jobs:
   build-node:
     # Build node project
