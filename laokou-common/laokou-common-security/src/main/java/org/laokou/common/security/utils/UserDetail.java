@@ -20,7 +20,7 @@ package org.laokou.common.security.utils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
-import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -251,7 +251,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	private void decryptUsername() {
 		if (StringUtil.isNotEmpty(this.username)) {
 			try {
-				this.username = AesUtil.decrypt(this.username);
+				this.username = AESUtil.decrypt(this.username);
 			}
 			catch (Exception e) {
 				throw new SystemException("S_Error", "用户名解密失败");
@@ -263,7 +263,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	private void decryptMail() {
 		if (StringUtil.isNotEmpty(this.mail)) {
 			try {
-				this.mail = AesUtil.decrypt(this.mail);
+				this.mail = AESUtil.decrypt(this.mail);
 			}
 			catch (Exception e) {
 				throw new SystemException("S_Error", "邮箱解密失败");
@@ -275,7 +275,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	private void decryptMobile() {
 		if (StringUtil.isNotEmpty(this.mobile)) {
 			try {
-				this.mobile = AesUtil.decrypt(this.mobile);
+				this.mobile = AESUtil.decrypt(this.mobile);
 			}
 			catch (Exception e) {
 				throw new SystemException("S_Error", "手机号解密失败");

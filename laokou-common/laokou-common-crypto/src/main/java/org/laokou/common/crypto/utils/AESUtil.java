@@ -41,7 +41,7 @@ import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
  *
  * @author laokou
  */
-public class AesUtil {
+public class AESUtil {
 
 	@Schema(name = "ALGORITHM_AES", description = "AES加密加密算法")
 	public static final String ALGORITHM_AES = "aes";

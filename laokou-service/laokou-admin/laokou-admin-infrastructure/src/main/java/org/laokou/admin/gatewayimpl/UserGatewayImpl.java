@@ -30,7 +30,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -112,7 +112,7 @@ public class UserGatewayImpl implements UserGateway {
 		String mail = user.getMail();
 		if (StringUtil.isNotEmpty(mail)) {
 			long count = userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class)
-				.eq(UserDO::getMail, AesUtil.encrypt(mail))
+				.eq(UserDO::getMail, AESUtil.encrypt(mail))
 				.ne(UserDO::getId, user.getId()));
 			user.checkMail(count);
 		}
@@ -122,7 +122,7 @@ public class UserGatewayImpl implements UserGateway {
 		String mobile = user.getMobile();
 		if (StringUtil.isNotEmpty(mobile)) {
 			long count = userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class)
-				.eq(UserDO::getMobile, AesUtil.encrypt(mobile))
+				.eq(UserDO::getMobile, AESUtil.encrypt(mobile))
 				.ne(UserDO::getId, user.getId()));
 			user.checkMobile(count);
 		}

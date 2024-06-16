@@ -20,7 +20,7 @@ package org.laokou.auth.model;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import static org.laokou.common.i18n.common.constants.SuperAdmin.YES;
@@ -90,9 +90,9 @@ public class UserE {
 	private String deptPath;
 
 	public UserE(String username, String mail, String mobile, Long tenantId) {
-		this.username = AesUtil.encrypt(username);
-		this.mail = AesUtil.encrypt(mail);
-		this.mobile = AesUtil.encrypt(mobile);
+		this.username = AESUtil.encrypt(username);
+		this.mail = AESUtil.encrypt(mail);
+		this.mobile = AESUtil.encrypt(mobile);
 		this.tenantId = tenantId;
 	}
 

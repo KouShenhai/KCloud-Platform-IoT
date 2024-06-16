@@ -25,7 +25,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.crypto.utils.RsaUtil;
+import org.laokou.common.crypto.utils.RSAUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -204,15 +204,15 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			if (paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
 				// log.info("密码模式认证");
 				try {
-					String privateKey = RsaUtil.getPrivateKey();
+					String privateKey = RSAUtil.getPrivateKey();
 					String password = paramMap.get(PASSWORD);
 					String username = paramMap.get(USERNAME);
 					// 返回修改后报文字符
 					if (StringUtil.isNotEmpty(password)) {
-						paramMap.put(PASSWORD, RsaUtil.decryptByPrivateKey(password, privateKey));
+						paramMap.put(PASSWORD, RSAUtil.decryptByPrivateKey(password, privateKey));
 					}
 					if (StringUtil.isNotEmpty(username)) {
-						paramMap.put(USERNAME, RsaUtil.decryptByPrivateKey(username, privateKey));
+						paramMap.put(USERNAME, RSAUtil.decryptByPrivateKey(username, privateKey));
 					}
 				}
 				catch (Exception e) {

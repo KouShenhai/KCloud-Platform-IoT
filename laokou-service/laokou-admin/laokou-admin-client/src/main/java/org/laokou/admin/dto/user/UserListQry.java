@@ -19,7 +19,7 @@ package org.laokou.admin.dto.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.StringUtil;
 
@@ -43,11 +43,11 @@ public class UserListQry extends PageQuery {
 	private Long deptId;
 
 	public void setUsername(String username) {
-		this.username = StringUtil.like(AesUtil.encrypt(username.trim()));
+		this.username = StringUtil.like(AESUtil.encrypt(username.trim()));
 	}
 
 	public void setMobile(String mobile) {
-		this.mobile = StringUtil.like(AesUtil.encrypt(mobile.trim()));
+		this.mobile = StringUtil.like(AESUtil.encrypt(mobile.trim()));
 	}
 
 }

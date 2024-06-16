@@ -19,7 +19,7 @@ package org.laokou.common.mybatisplus.handler;
 
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
-import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +40,7 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 	public void setParameter(PreparedStatement preparedStatement, int parameterIndex, String content, JdbcType jdbcType)
 			throws SQLException {
 		if (StringUtil.isNotEmpty(content)) {
-			content = AesUtil.encrypt(content);
+			content = AESUtil.encrypt(content);
 		}
 		preparedStatement.setString(parameterIndex, content);
 	}
@@ -51,7 +51,7 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 		if (StringUtil.isEmpty(data)) {
 			return EMPTY;
 		}
-		return AesUtil.decrypt(data.trim());
+		return AESUtil.decrypt(data.trim());
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 		if (StringUtil.isEmpty(data)) {
 			return EMPTY;
 		}
-		return AesUtil.decrypt(data.trim());
+		return AESUtil.decrypt(data.trim());
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 		if (StringUtil.isEmpty(data)) {
 			return EMPTY;
 		}
-		return AesUtil.decrypt(data.trim());
+		return AESUtil.decrypt(data.trim());
 	}
 
 }

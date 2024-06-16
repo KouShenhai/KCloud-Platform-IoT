@@ -18,7 +18,7 @@
 package org.laokou.common.crypto;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.crypto.utils.RsaUtil;
+import org.laokou.common.crypto.utils.RSAUtil;
 
 /**
  * @author laokou
@@ -27,14 +27,14 @@ import org.laokou.common.crypto.utils.RsaUtil;
 public class RsaTest {
 
 	public static void main(String[] args) {
-		String publicKey = RsaUtil.getPublicKey();
-		String privateKey = RsaUtil.getPrivateKey();
-		String username = RsaUtil.encryptByPublicKey("laokou", publicKey);
-		String pwd = RsaUtil.encryptByPublicKey("laokou123", publicKey);
+		String publicKey = RSAUtil.getPublicKey();
+		String privateKey = RSAUtil.getPrivateKey();
+		String username = RSAUtil.encryptByPublicKey("laokou", publicKey);
+		String pwd = RSAUtil.encryptByPublicKey("laokou123", publicKey);
 		log.info(username);
 		log.info(pwd);
-		log.info(RsaUtil.decryptByPrivateKey(username, privateKey));
-		log.info(RsaUtil.decryptByPrivateKey(pwd, privateKey));
+		log.info(RSAUtil.decryptByPrivateKey(username, privateKey));
+		log.info(RSAUtil.decryptByPrivateKey(pwd, privateKey));
 	}
 
 }

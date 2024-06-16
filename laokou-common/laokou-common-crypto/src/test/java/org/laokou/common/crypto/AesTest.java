@@ -18,7 +18,7 @@
 package org.laokou.common.crypto;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.crypto.utils.AESUtil;
 
 /**
  * @author laokou
@@ -28,8 +28,8 @@ public class AesTest {
 
 	public static void main(String[] args) {
 		String str = "123";
-		String encrypt = AesUtil.encrypt(str);
-		String encrypt1 = AesUtil.encrypt(str);
+		String encrypt = AESUtil.encrypt(str);
+		String encrypt1 = AESUtil.encrypt(str);
 		log.info("{}", encrypt1);
 		log.info("{}", encrypt);
 	}

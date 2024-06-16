@@ -19,7 +19,7 @@ package org.laokou.gateway.filter;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.crypto.utils.RsaUtil;
+import org.laokou.common.crypto.utils.RSAUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -91,9 +91,9 @@ public class ApiFilter implements WebFilter {
 					Result.fail(ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE)));
 		}
 		try {
-			String privateKey = RsaUtil.getPrivateKey();
-			username = RsaUtil.decryptByPrivateKey(username, privateKey);
-			password = RsaUtil.decryptByPrivateKey(password, privateKey);
+			String privateKey = RSAUtil.getPrivateKey();
+			username = RSAUtil.decryptByPrivateKey(username, privateKey);
+			password = RSAUtil.decryptByPrivateKey(password, privateKey);
 		}
 		catch (Exception e) {
 			// 用户名或密码错误

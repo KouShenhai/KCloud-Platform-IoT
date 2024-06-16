@@ -64,7 +64,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.List;
 import java.util.UUID;
 
-import static org.laokou.common.crypto.utils.RsaUtil.ALGORITHM_RSA;
+import static org.laokou.common.crypto.utils.RSAUtil.RSA;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
@@ -248,7 +248,7 @@ class OAuth2AuthorizationServerConfig {
 	 */
 	private KeyPair generateRsaKey() {
 		try {
-			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM_RSA);
+			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(RSA);
 			keyPairGenerator.initialize(2048);
 			return keyPairGenerator.generateKeyPair();
 		}

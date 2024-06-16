@@ -40,10 +40,9 @@ import java.util.Base64;
  * @author laokou
  */
 @Slf4j
-public class RsaUtil {
+public class RSAUtil {
 
-	@Schema(name = "ALGORITHM_RSA", description = "RSA加密算法")
-	public static final String ALGORITHM_RSA = "RSA";
+	public static final String RSA = "RSA";
 
 	@Schema(name = "SUN_RSA_SIGN_PROVIDER", description = "RSA签名提供者")
 	public static final String SUN_RSA_SIGN_PROVIDER = "SunRsaSign";
@@ -122,7 +121,7 @@ public class RsaUtil {
 	 */
 	private static byte[] encryptByPublicKey(byte[] bodyBytes, byte[] keyBytes) throws Exception {
 		X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
-		KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM_RSA, SUN_RSA_SIGN_PROVIDER);
+		KeyFactory keyFactory = KeyFactory.getInstance(RSA, SUN_RSA_SIGN_PROVIDER);
 		PublicKey publicKey = keyFactory.generatePublic(x509KeySpec);
 		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
 		cipher.init(Cipher.ENCRYPT_MODE, publicKey);
@@ -137,7 +136,7 @@ public class RsaUtil {
 	 */
 	private static byte[] decryptByPrivateKey(byte[] bodyBytes, byte[] keyBytes) throws Exception {
 		PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
-		KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM_RSA, SUN_RSA_SIGN_PROVIDER);
+		KeyFactory keyFactory = KeyFactory.getInstance(RSA, SUN_RSA_SIGN_PROVIDER);
 		Key privateKey = keyFactory.generatePrivate(pkcs8KeySpec);
 		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
 		cipher.init(Cipher.DECRYPT_MODE, privateKey);

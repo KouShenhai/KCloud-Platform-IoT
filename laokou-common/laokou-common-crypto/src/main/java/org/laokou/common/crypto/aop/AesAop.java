@@ -23,7 +23,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.crypto.annotation.Crypto;
-import org.laokou.common.crypto.utils.AesUtil;
+import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.crypto.constant.Algorithm;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -51,7 +51,7 @@ public class AesAop {
 		if (ObjectUtil.requireNotNull(crypto).type() == Algorithm.AES) {
 			if (proceed instanceof Result<?> result) {
 				Object data = result.getData();
-				AesUtil.transform(data);
+				AESUtil.transform(data);
 			}
 		}
 		return proceed;
