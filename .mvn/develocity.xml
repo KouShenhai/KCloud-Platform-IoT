@@ -14,5 +14,5 @@
     </remote>
   </buildCache>
   <!-- 更换develocity存储位置请修改 -->
-  <storageDirectory>d://maven//develocity</storageDirectory>
+  <storageDirectory>./develocity</storageDirectory>
 </develocity>

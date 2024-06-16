@@ -44,10 +44,5 @@ info.log.*.gz
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-nacos
-work
-file_store
-sessionStore
-LOG_FILE_PATH_IS_UNDEFINED
-
 node_modules
+develocity
