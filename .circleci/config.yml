@@ -25,26 +25,6 @@ jobs:
       - store_artifacts:
           path: ~/artifacts
           destination: node-build
-  test-java:
-    docker:
-      - image: cimg/openjdk:17.0
-    steps:
-      - checkout
-      - run:
-          name: Calculate cache key
-          command: |-
-            find . -name 'pom.xml' -o -name 'gradlew*' -o -name '*.gradle*' | \
-                    sort | xargs cat > /tmp/CIRCLECI_CACHE_KEY
-      - restore_cache:
-          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
-      - run:
-          command: mvn verify
-      - store_test_results:
-          path: target/surefire-reports
-      - save_cache:
-          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
-          paths:
-            - ~/.m2/repository
   deploy:
     # This is an example deploy job, not actually used by the workflow
     docker:
@@ -57,13 +37,3 @@ jobs:
       - run:
           name: found github actions config
           command: ':'
-workflows:
-  build-and-test:
-    jobs:
-      - build-node:
-          requires:
-            - test-java
-      - test-java
-    # - deploy:
-    #     requires:
-    #       - build-node
