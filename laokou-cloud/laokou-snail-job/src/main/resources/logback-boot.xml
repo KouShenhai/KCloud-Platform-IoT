@@ -11,9 +11,9 @@
 
     <appender name="fileInfo"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>./data/log/${log.base}/info/info.log</file>
+        <file>./logs/snail/info/info.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>./data/log/${log.base}/info/info.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>./logs/snail/info/info.%d{yyyy-MM-dd}.log</FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -27,9 +27,9 @@
     </appender>
 
     <appender name="fileWarn" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>./data/log/${log.base}/warn/warn.log</file>
+        <file>./logs/snail/warn/warn.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>./data/log/${log.base}/warn/warn.%d{yyyy-MM-dd}.log
+            <FileNamePattern>./logs/snail/warn/warn.%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -44,9 +44,9 @@
     </appender>
 
     <appender name="fileError" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>./data/log/${log.base}/error/error.log</file>
+        <file>./logs/snail/error/error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>./data/log/${log.base}/error/error.%d{yyyy-MM-dd}.log
+            <FileNamePattern>./logs/snail/error/error.%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
