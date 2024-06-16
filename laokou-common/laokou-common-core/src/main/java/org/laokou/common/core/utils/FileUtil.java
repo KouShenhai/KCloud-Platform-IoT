@@ -72,7 +72,10 @@ public class FileUtil {
 	 * @throws IOException 异常
 	 */
 	public static void zip(File file, OutputStream os) throws IOException {
-		try (ZipOutputStream zos = new ZipOutputStream(os); FileInputStream fis = new FileInputStream(file)) {
+		// @formatter:off
+		try (ZipOutputStream zos = new ZipOutputStream(os);
+			 FileInputStream fis = new FileInputStream(file)) {
+		// @formatter:on
 			zos.putNextEntry(new ZipEntry(file.getName()));
 			zos.write(fis.readAllBytes());
 		}
