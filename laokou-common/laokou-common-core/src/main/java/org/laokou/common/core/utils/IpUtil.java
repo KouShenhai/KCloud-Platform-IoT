@@ -86,7 +86,7 @@ public class IpUtil {
 			return true;
 		}
 		byte[] bytes = textToNumericFormatV4(ip);
-		return ObjectUtil.isNotNull(bytes) && (internalIp(bytes) || LOCAL_IPV4.equals(ip));
+		return bytes.length > 0 && (internalIp(bytes) || LOCAL_IPV4.equals(ip));
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class IpUtil {
 	 */
 	public static byte[] textToNumericFormatV4(String text) {
 		if (text.isEmpty()) {
-			return null;
+			return new byte[0];
 		}
 
 		byte[] bytes = new byte[4];
@@ -143,7 +143,7 @@ public class IpUtil {
 					l = Long.parseLong(elements[0]);
 					j = 4294967295L;
 					if ((l < 0L) || (l > j)) {
-						return null;
+						return new byte[0];
 					}
 					bytes[0] = (byte) (int) (l >> 24 & 0xFF);
 					bytes[1] = (byte) (int) ((l & 0xFFFFFF) >> 16 & 0xFF);
@@ -154,13 +154,13 @@ public class IpUtil {
 					l = Integer.parseInt(elements[0]);
 					j = 255;
 					if (l < 0L || l > j) {
-						return null;
+						return new byte[0];
 					}
 					bytes[0] = (byte) (int) (l & 0xFF);
 					l = Integer.parseInt(elements[1]);
 					j = 16777215;
 					if (l < 0L || l > j) {
-						return null;
+						return new byte[0];
 					}
 					bytes[1] = (byte) (int) (l >> 16 & 0xFF);
 					bytes[2] = (byte) (int) ((l & 0xFFFF) >> 8 & 0xFF);
@@ -171,14 +171,14 @@ public class IpUtil {
 					for (int i = 0; i < j; i++) {
 						l = Integer.parseInt(elements[i]);
 						if ((l < 0L) || (l > 255L)) {
-							return null;
+							return new byte[0];
 						}
 						bytes[i] = (byte) (int) (l & 0xFF);
 					}
 					l = Integer.parseInt(elements[2]);
 					j = 65535L;
 					if ((l < 0L) || (l > j)) {
-						return null;
+						return new byte[0];
 					}
 					bytes[2] = (byte) (int) (l >> 8 & 0xFF);
 					bytes[3] = (byte) (int) (l & 0xFF);
@@ -188,18 +188,18 @@ public class IpUtil {
 					for (int i = 0; i < j; i++) {
 						l = Integer.parseInt(elements[i]);
 						if ((l < 0L) || (l > 255L)) {
-							return null;
+							return new byte[0];
 						}
 						bytes[i] = (byte) (int) (l & 0xFF);
 					}
 					break;
 				default:
-					return null;
+					return new byte[0];
 			}
 		}
 		catch (NumberFormatException e) {
 			log.error("格式化失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-			return null;
+			return new byte[0];
 		}
 		return bytes;
 	}
