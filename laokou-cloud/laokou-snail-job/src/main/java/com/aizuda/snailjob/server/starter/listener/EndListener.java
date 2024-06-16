@@ -20,12 +20,13 @@ import java.util.List;
 @Slf4j
 public class EndListener implements ApplicationListener<ContextClosedEvent> {
 
-    @Autowired
-    private List<Lifecycle> lifecycleList;
+	@Autowired
+	private List<Lifecycle> lifecycleList;
 
-    @Override
-    public void onApplicationEvent(ContextClosedEvent event) {
-        SnailJobLog.LOCAL.info("snail-job-SERVER 停止");
-        lifecycleList.forEach(Lifecycle::close);
-    }
+	@Override
+	public void onApplicationEvent(ContextClosedEvent event) {
+		SnailJobLog.LOCAL.info("snail-job-SERVER 停止");
+		lifecycleList.forEach(Lifecycle::close);
+	}
+
 }

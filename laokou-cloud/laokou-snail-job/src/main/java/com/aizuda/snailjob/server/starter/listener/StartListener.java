@@ -23,20 +23,23 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class StartListener implements ApplicationListener<ContextRefreshedEvent> {
-    private final List<Lifecycle> lifecycleList;
-    private volatile boolean isStarted = false;
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
-        if (isStarted) {
-            SnailJobLog.LOCAL.info("snail-job server already started v{}", SnailJobVersion.getVersion());
-            return;
-        }
+	private final List<Lifecycle> lifecycleList;
 
-        System.out.println(MessageFormatter.format(SystemConstants.LOGO, SnailJobVersion.getVersion()).getMessage());
-        SnailJobLog.LOCAL.info("snail-job server is preparing to start... v{}", SnailJobVersion.getVersion());
-        lifecycleList.forEach(Lifecycle::start);
-        SnailJobLog.LOCAL.info("snail-job server started successfully v{}", SnailJobVersion.getVersion());
-        isStarted = true;
-    }
+	private volatile boolean isStarted = false;
+
+	@Override
+	public void onApplicationEvent(ContextRefreshedEvent event) {
+		if (isStarted) {
+			SnailJobLog.LOCAL.info("snail-job server already started v{}", SnailJobVersion.getVersion());
+			return;
+		}
+
+		System.out.println(MessageFormatter.format(SystemConstants.LOGO, SnailJobVersion.getVersion()).getMessage());
+		SnailJobLog.LOCAL.info("snail-job server is preparing to start... v{}", SnailJobVersion.getVersion());
+		lifecycleList.forEach(Lifecycle::start);
+		SnailJobLog.LOCAL.info("snail-job server started successfully v{}", SnailJobVersion.getVersion());
+		isStarted = true;
+	}
+
 }

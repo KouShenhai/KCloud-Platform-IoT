@@ -29,33 +29,35 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @EnableEncryptableProperties
-@SpringBootApplication(scanBasePackages = {"com.aizuda.snailjob.server.starter.*"})
+@SpringBootApplication(scanBasePackages = { "com.aizuda.snailjob.server.starter.*" })
 @EnableTransactionManagement(proxyTargetClass = true)
 public class SnailJobApp {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 		// admin/laokou123
-        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
-        SpringApplication.run(SnailJobApp.class, args);
-    }
+		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
+		SpringApplication.run(SnailJobApp.class, args);
+	}
 
-    @Bean
-    public ApplicationRunner nettyStartupChecker(NettyHttpServer nettyHttpServer, ServletWebServerFactory serverFactory) {
-        return args -> {
-            // 最长自旋10秒，保证nettyHttpServer启动完成
-            int waitCount = 0;
-            while (!nettyHttpServer.isStarted() && waitCount < 100) {
-                log.info("--------> snail-job netty server is staring....");
-                TimeUnit.MILLISECONDS.sleep(100);
-                waitCount++;
-            }
+	@Bean
+	public ApplicationRunner nettyStartupChecker(NettyHttpServer nettyHttpServer,
+			ServletWebServerFactory serverFactory) {
+		return args -> {
+			// 最长自旋10秒，保证nettyHttpServer启动完成
+			int waitCount = 0;
+			while (!nettyHttpServer.isStarted() && waitCount < 100) {
+				log.info("--------> snail-job netty server is staring....");
+				TimeUnit.MILLISECONDS.sleep(100);
+				waitCount++;
+			}
 
-            if (!nettyHttpServer.isStarted()) {
-                log.error("--------> snail-job netty server startup failure.");
-                // Netty启动失败，停止Web服务和Spring Boot应用程序
-                serverFactory.getWebServer().stop();
-                SpringApplication.exit(SpringApplication.run(SnailJobApp.class));
-            }
-        };
-    }
+			if (!nettyHttpServer.isStarted()) {
+				log.error("--------> snail-job netty server startup failure.");
+				// Netty启动失败，停止Web服务和Spring Boot应用程序
+				serverFactory.getWebServer().stop();
+				SpringApplication.exit(SpringApplication.run(SnailJobApp.class));
+			}
+		};
+	}
+
 }

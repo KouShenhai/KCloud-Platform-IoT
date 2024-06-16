@@ -55,7 +55,7 @@ import java.net.InetAddress;
 public class AuthApp {
 
 	/**
-	 * 启动项目
+	 * 启动项目.
 	 */
 	@SneakyThrows
 	public static void main(String[] args) {

@@ -46,7 +46,7 @@ import java.net.InetAddress;
 public class ImApp {
 
 	/**
-	 * 启动项目
+	 * 启动项目.
 	 */
 	@SneakyThrows
 	public static void main(final String[] args) {
