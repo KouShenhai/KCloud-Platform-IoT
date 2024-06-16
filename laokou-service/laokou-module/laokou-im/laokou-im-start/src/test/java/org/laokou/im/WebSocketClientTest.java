@@ -39,7 +39,7 @@ import java.util.Collections;
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class WebSocketClientTest {
+class WebSocketClientTest {
 
 	private final RocketMqTemplate rocketMqTemplate;
 
