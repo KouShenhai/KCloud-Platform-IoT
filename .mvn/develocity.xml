@@ -13,6 +13,4 @@
       <storeEnabled>true</storeEnabled>
     </remote>
   </buildCache>
-  <!-- 更换develocity存储位置请修改 -->
-  <storageDirectory>./develocity</storageDirectory>
 </develocity>
