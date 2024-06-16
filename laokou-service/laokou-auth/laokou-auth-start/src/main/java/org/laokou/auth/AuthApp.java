@@ -56,17 +56,15 @@ public class AuthApp {
 
 	@SneakyThrows
 	public static void main(String[] args) {
-		// 因为nacos的log4j2导致本项目的日志不输出的问题
-		// 配置关闭nacos日志
+		// @formatter:off
+		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		// SpringSecurity 子线程读取父线程的上下文
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
-		// https://github.com/alibaba/nacos/pull/3654
-		// 请查看 HttpLoginProcessor
-		// -Dtls.enable=true
-		// -Dtls.client.authServer=true
-		// -Dtls.client.trustCertPath=d:\\nacos.crt
+		// 请查看 HttpLoginProcessor，https://github.com/alibaba/nacos/pull/3654
+		// -Dtls.enable=true -Dtls.client.authServer=true -Dtls.client.trustCertPath=d:\\nacos.crt
+		// @formatter:on
 		new SpringApplicationBuilder(AuthApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

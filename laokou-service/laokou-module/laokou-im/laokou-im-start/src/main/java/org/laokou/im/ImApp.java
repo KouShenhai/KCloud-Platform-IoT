@@ -47,13 +47,12 @@ public class ImApp {
 
 	@SneakyThrows
 	public static void main(final String[] args) {
+		// @formatter:off
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
-		// 因为nacos的log4j2导致本项目的日志不输出的问题
-		// 配置关闭nacos日志
+		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
-		// -Dtls.enable=true
-		// -Dtls.client.authServer=true
-		// -Dtls.client.trustCertPath=d:\\nacos.crt
+		// -Dtls.enable=true -Dtls.client.authServer=true -Dtls.client.trustCertPath=d:\\nacos.crt
+		// @formatter:on
 		new SpringApplicationBuilder(ImApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 
