@@ -1,3 +1,4 @@
+<!-- 请执行mvn clean verify -->
 <!-- https://docs.gradle.com/enterprise/maven-build-cache/#getting_started -->
 <develocity>
   <server>
@@ -12,4 +13,6 @@
       <storeEnabled>true</storeEnabled>
     </remote>
   </buildCache>
+  <!-- 更换develocity存储位置请修改 -->
+  <storageDirectory>d://maven//develocity</storageDirectory>
 </develocity>
