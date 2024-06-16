@@ -1,4 +1,6 @@
 === 🎉 项目备注
+
+image:https://api.codacy.com/project/badge/Grade/1dbb1e146e784a3f8a96a6cb4e185951[link="https://app.codacy.com/gh/KouShenhai/KCloud-Platform-IoT?utm_source=github.com&utm_medium=referral&utm_content=KouShenhai/KCloud-Platform-IoT&utm_campaign=Badge_Grade"]
 - 项目：KCloud-Platform-IoT（阻塞式）
 - 作者：老寇
 - 语言：Java
