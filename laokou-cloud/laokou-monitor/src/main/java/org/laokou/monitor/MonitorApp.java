@@ -37,6 +37,9 @@ import java.net.InetAddress;
 @EnableDiscoveryClient
 public class MonitorApp {
 
+	/**
+	 * 启动项目
+	 */
 	@SneakyThrows
 	public static void main(String[] args) {
 		// @formatter:off

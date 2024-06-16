@@ -45,6 +45,9 @@ import java.net.InetAddress;
 @EnableDiscoveryClient
 public class ImApp {
 
+	/**
+	 * 启动项目
+	 */
 	@SneakyThrows
 	public static void main(final String[] args) {
 		// @formatter:off

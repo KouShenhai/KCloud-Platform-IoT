@@ -54,6 +54,9 @@ import java.net.InetAddress;
 @EnableAspectJAutoProxy(exposeProxy = true)
 public class AuthApp {
 
+	/**
+	 * 启动项目
+	 */
 	@SneakyThrows
 	public static void main(String[] args) {
 		// @formatter:off

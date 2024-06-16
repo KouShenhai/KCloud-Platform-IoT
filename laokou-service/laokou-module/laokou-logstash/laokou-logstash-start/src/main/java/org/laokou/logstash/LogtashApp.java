@@ -35,6 +35,9 @@ import java.net.InetAddress;
 @EnableEncryptableProperties
 public class LogtashApp {
 
+	/**
+	 * 启动项目
+	 */
 	@SneakyThrows
 	public static void main(String[] args) {
 		// @formatter:off

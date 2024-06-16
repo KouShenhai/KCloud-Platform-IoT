@@ -55,6 +55,9 @@ import java.net.InetAddress;
 @EnableRouter
 public class AdminApp {
 
+	/**
+	 * 启动项目
+	 */
 	@SneakyThrows
 	public static void main(String[] args) {
 		// @formatter:off
