@@ -11,16 +11,18 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、灰度路由、服务限流、熔断降级、监控报警、多数据源、高亮搜索、定时任务、分布式链路、分布式缓存、分布式事务、分布式存储、分布式锁等功能，用于快速构建微服务项目。目前支持Shell、Docker等多种部署方式，并且支持GraalVM和虚拟线程。实现RBAC权限、其中包含系统管理、系统监控、数据分析等几大模块。
 遵循阿里代码规范，采用RESTFul设计风格及DDD(领域驱动设计)思想，代码简洁、架构清晰，非常适合作为基础框架使用。
 
+image:https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml/badge.svg?branch=master[Maven Ci Build Stauts,link=https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml]
 image:https://img.shields.io/github/stars/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub stars,link=https://github.com/KouShenhai/KCloud-Platform-IoT/stargazers]
 image:https://img.shields.io/github/forks/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub forks,link=https://github.com/KouShenhai/KCloud-Platform-IoT/forks]
 image:https://img.shields.io/github/watchers/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub watchers,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
 image:https://img.shields.io/github/last-commit/KouShenhai/KCloud-Platform-IoT[GitHub last commit,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
 image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/star.svg?theme=dark[Gitee star,link=https://gitee.com/laokouyun/KCloud-Platform-IoT/stargazers]
 image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark[Gitee fork,link=https://gitee.com/laokouyun/KCloud-Platform-IoT/members]
-image:https://img.shields.io/static/v1?label=Spring Boot&message=3.3.0&color=green[SpringBoot,link=https://spring.io/projects/spring-boot]
-image:https://img.shields.io/static/v1?label=Spring Cloud&message=2023.0.2&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
-image:https://img.shields.io/static/v1?label=Spring Cloud Alibaba&message=2023.0.1.0&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
-image:https://img.shields.io/static/v1?label=OAuth 2.1&message=1.3.0&color=blue[OAuth 2.1,link=https://spring.io/projects/spring-authorization-server]
+image:https://img.shields.io/static/v1?label=Spring%20Framework&message=6.1.9&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
+image:https://img.shields.io/static/v1?label=Spring%20Boot&message=3.3.0&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
+image:https://img.shields.io/static/v1?label=Spring%20Cloud&message=2023.0.2&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
+image:https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.1.0&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
+image:https://img.shields.io/static/v1?label=OAuth%202.1&message=1.3.0&color=blue[OAuth 2.1,link=https://spring.io/projects/spring-authorization-server]
 image:https://img.shields.io/badge/GraalVM-21.0.1-blue.svg[GraalVM,link=https://www.graalvm.org/downloads]
 image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源交流群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
 
