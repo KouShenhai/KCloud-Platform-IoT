@@ -55,7 +55,7 @@ public class SerializationUtil {
 
 	public static byte[] serialize(Object object) {
 		if (object == null) {
-			return null;
+			return new byte[0];
 		}
 		return FURY.serialize(object);
 	}
@@ -69,7 +69,7 @@ public class SerializationUtil {
 
 	public static byte[] serializeThreadSafe(Object object) {
 		if (object == null) {
-			return null;
+			return new byte[0];
 		}
 		return THREAD_SAFE_FURY.serialize(object);
 	}
