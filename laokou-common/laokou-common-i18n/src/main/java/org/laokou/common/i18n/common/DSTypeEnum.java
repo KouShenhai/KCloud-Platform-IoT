@@ -25,12 +25,41 @@ import lombok.Getter;
 @Getter
 public enum DSTypeEnum {
 
-	TINYINT("Integer"), SMALLINT("Integer"), MEDIUMINT("Integer"), INT("Integer"), INTEGER("Integer"), BIGINT("Long"),
-	FLOAT("Float"), DOUBLE("Double"), DECIMAL("BigDecimal"), BIT("Boolean"), CHAR("String"), VARCHAR("String"),
-	TINYTEXT("String"), TEXT("String"), MEDIUMTEXT("String"), LONGTEXT("String"), DATE("Date"),
-	DATETIME("LocalDateTime"), NUMBER("Integer"), BINARY_INTEGER("Integer"), LONG("String"), BINARY_FLOAT("Float"),
-	BINARY_DOUBLE("Double"), VARCHAR2("String"), NVARCHAR("String"), NVARCHAR2("String"), CLOB("String"),
-	BLOB("String"), TIMESTAMP("Date"), INT8("Long"), INT4("Integer"), INT2("Integer"), NUMERIC("BigDecimal");
+	// @formatter:off
+	TINYINT("Integer"),
+	SMALLINT("Integer"),
+	MEDIUMINT("Integer"),
+	INT("Integer"),
+	INTEGER("Integer"),
+	BIGINT("Long"),
+	FLOAT("Float"),
+	DOUBLE("Double"),
+	DECIMAL("BigDecimal"),
+	BIT("Boolean"),
+	CHAR("String"),
+	VARCHAR("String"),
+	TINYTEXT("String"),
+	TEXT("String"),
+	MEDIUMTEXT("String"),
+	LONGTEXT("String"),
+	DATE("Date"),
+	DATETIME("LocalDateTime"),
+	NUMBER("Integer"),
+	BINARY_INTEGER("Integer"),
+	LONG("String"),
+	BINARY_FLOAT("Float"),
+	BINARY_DOUBLE("Double"),
+	VARCHAR2("String"),
+	NVARCHAR("String"),
+	NVARCHAR2("String"),
+	CLOB("String"),
+	BLOB("String"),
+	TIMESTAMP("Date"),
+	INT8("Long"),
+	INT4("Integer"),
+	INT2("Integer"),
+	NUMERIC("BigDecimal");
+	// @formatter:on
 
 	private final String value;
 
