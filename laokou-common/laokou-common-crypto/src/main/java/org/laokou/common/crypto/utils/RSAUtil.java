@@ -17,7 +17,6 @@
 
 package org.laokou.common.crypto.utils;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ResourceUtil;
