@@ -18,22 +18,55 @@
 package org.laokou.common.netty.config;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.concurrent.DefaultThreadFactory;
+import lombok.SneakyThrows;
+
+import java.net.URI;
 
 /**
  * @author laokou
  */
-public class WebSocketClient extends AbstractClient {
+public class WebSocketClient implements Client {
+
+	protected volatile EventLoopGroup client;
+
+	protected Channel channel;
+
+	protected final WebSocketProperties webSocketProperties;
+
+	protected final ChannelInitializer<?> channelInitializer;
 
 	public WebSocketClient(WebSocketProperties webSocketProperties, ChannelInitializer<?> channelInitializer) {
-		super(webSocketProperties, channelInitializer);
+		this.webSocketProperties = webSocketProperties;
+		this.channelInitializer = channelInitializer;
 	}
 
 	@Override
-	protected Bootstrap init() {
+	@SneakyThrows
+	public synchronized void open() {
+		URI uri = URI.create(webSocketProperties.getClient().getUri());
+		ChannelFuture future = init().connect(uri.getHost(), webSocketProperties.getPort(uri)).sync();
+		this.channel = future.channel();
+	}
+
+	@Override
+	public synchronized void close() {
+		channel.close();
+		client.shutdownGracefully();
+	}
+
+	@Override
+	public void send(String key, String payload) {
+
+	}
+
+	private Bootstrap init() {
 		Bootstrap bootstrap = new Bootstrap();
 		client = new NioEventLoopGroup(1, new DefaultThreadFactory("client"));
 		return bootstrap.group(client).channel(NioSocketChannel.class).handler(channelInitializer);
