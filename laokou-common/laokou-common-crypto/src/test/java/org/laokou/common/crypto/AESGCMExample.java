@@ -43,7 +43,10 @@ public class AESGCMExample {
 		String originalText = "Hello, World!";
 
 		// Generate key
-		SecretKey secretKey = new SecretKeySpec("TH+FVFW0h4a3MWdczOh9tTViGJTPDbc6".getBytes(StandardCharsets.UTF_8), AES);
+		SecretKey secretKey = new SecretKeySpec("ME0taqrY4jyJ4nCMMnrOydriLbWKJOVl".getBytes(StandardCharsets.UTF_8), AES);
+
+		log.info("{}", secretKey.getEncoded().length);
+		log.info("{}", generateKey(256).getEncoded().length);
 
 		// Encrypt
 		byte[] iv = generateIV();
