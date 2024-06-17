@@ -23,6 +23,7 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Base64;
@@ -42,10 +43,11 @@ public class AESGCMExample {
 		String originalText = "Hello, World!";
 
 		// Generate key
-		SecretKey secretKey = generateKey(256);
+		SecretKey secretKey = new SecretKeySpec("TH+FVFW0h4a3MWdczOh9tTViGJTPDbc6".getBytes(StandardCharsets.UTF_8), AES);
 
 		// Encrypt
 		byte[] iv = generateIV();
+
 		String encryptedText = encrypt(originalText, secretKey, iv);
 		log.info("Encrypted Text: {}", encryptedText);
 

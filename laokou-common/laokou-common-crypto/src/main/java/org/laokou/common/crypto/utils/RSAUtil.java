@@ -42,9 +42,14 @@ import java.util.Base64;
 @Slf4j
 public class RSAUtil {
 
+	/**
+	 * RSA算法.
+	 */
 	public static final String RSA = "RSA";
 
-	@Schema(name = "SUN_RSA_SIGN_PROVIDER", description = "RSA签名提供者")
+	/**
+	 * RSA签名提供者.
+	 */
 	public static final String SUN_RSA_SIGN_PROVIDER = "SunRsaSign";
 
 	/**
