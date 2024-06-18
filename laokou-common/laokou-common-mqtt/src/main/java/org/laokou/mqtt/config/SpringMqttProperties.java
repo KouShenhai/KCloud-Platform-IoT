@@ -22,6 +22,7 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
@@ -61,6 +62,6 @@ public class SpringMqttProperties {
 
 	private boolean manualAcks = true;
 
-	private Set<String> topics;
+	private Set<String> topics = new HashSet<>(0);
 
 }
