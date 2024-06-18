@@ -62,7 +62,7 @@
     <!--easyexcel版本-->
     <easyexcel.version>4.0.1</easyexcel.version>
     <!--spring-security-oauth2-authorization-server版本-->
-    <spring-security-oauth2-authorization-server.version>1.3.0</spring-security-oauth2-authorization-server.version>
+    <spring-security-oauth2-authorization-server.version>1.3.1</spring-security-oauth2-authorization-server.version>
     <!--spring-boot-starter-oauth2-resource-server版本-->
     <spring-boot-starter-oauth2-resource-server.version>3.3.0</spring-boot-starter-oauth2-resource-server.version>
     <!--aws-java-sdk-s3版本-->
