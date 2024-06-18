@@ -23,6 +23,7 @@ import org.eclipse.paho.mqttv5.client.MqttConnectionOptions;
 import org.eclipse.paho.mqttv5.client.persist.MemoryPersistence;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.netty.config.Client;
 
@@ -74,8 +75,10 @@ public class MqttClient implements Client {
 		client.setManualAcks(springMqttProperties.isManualAcks());
 		client.setCallback(new MqttMessageCallback(mqttStrategy));
 		client.connect(options());
-		client.subscribe(springMqttProperties.getTopics().toArray(String[]::new),
+		if (CollectionUtil.isNotEmpty(springMqttProperties.getTopics())) {
+			client.subscribe(springMqttProperties.getTopics().toArray(String[]::new),
 				springMqttProperties.getTopics().stream().mapToInt(item -> 2).toArray());
+		}
 		log.info("MQTT连接成功");
 		running = true;
 	}
