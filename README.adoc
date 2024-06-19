@@ -67,7 +67,7 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 
 === ✂ 技术体系
 ==== 🎯 Spring全家桶及核心技术版本
-[width=100%, cols="1,1"]
+[width=100%]
 |===
 |组件                         |版本
 
@@ -227,7 +227,7 @@ https://github.com/laokouyun[laokouyun社区]
 image::doc/image/jb_beam.png[jb_beam,100,100,link=https://www.jetbrains.com/community/opensource/?utm_campaign=opensource&utm_content=approved&utm_medium=email&utm_source=newsletter&utm_term=jblogo#support]
 
 === 🐼 鸣谢个人
-[width=100%, cols="1,1,2"]
+[width=100%]
 |===
 |序号 |头像 |名字
 
@@ -244,7 +244,7 @@ image::doc/image/jb_beam.png[jb_beam,100,100,link=https://www.jetbrains.com/comm
 |===
 
 === ⛳️ 赞助列表（感谢各位大佬的赞助）
-[width=100%, cols="1,1,1,2"]
+[width=100%]
 |===
 |时间         |网名        |赞助      |备注
 
