@@ -53,7 +53,7 @@ public class IdempotentUtil {
 	public String getIdempotentKey() {
 		String idempotentKey = String.valueOf(IdGenerator.defaultSnowflakeId());
 		String apiIdempotentKey = RedisKeyUtil.getApiIdempotentKey(idempotentKey);
-		redisUtil.set(apiIdempotentKey, 0, MINUTE_FIVE_EXPIRE);
+		redisUtil.setIfAbsent(apiIdempotentKey, 0, MINUTE_FIVE_EXPIRE);
 		return idempotentKey;
 	}
 
