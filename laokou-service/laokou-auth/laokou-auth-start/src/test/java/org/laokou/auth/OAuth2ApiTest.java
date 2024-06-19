@@ -100,12 +100,10 @@ class OAuth2ApiTest {
 	void testUsernamePasswordAuthApi() {
 		log.info("---------- 用户名密码认证模式开始 ----------");
 		String captcha = getCaptcha(UUID);
-		String publicKey = getPublicKey();
-		String privateKey = RSAUtil.getPrivateKey();
-		String encryptUsername = RSAUtil.encryptByPublicKey(USERNAME, publicKey);
-		String encryptPassword = RSAUtil.encryptByPublicKey(PASSWORD, publicKey);
-		String decryptUsername = RSAUtil.decryptByPrivateKey(encryptUsername, privateKey);
-		String decryptPassword = RSAUtil.decryptByPrivateKey(encryptPassword, privateKey);
+		String encryptUsername = RSAUtil.encryptByPublicKey(USERNAME);
+		String encryptPassword = RSAUtil.encryptByPublicKey(PASSWORD);
+		String decryptUsername = RSAUtil.decryptByPrivateKey(encryptUsername);
+		String decryptPassword = RSAUtil.decryptByPrivateKey(encryptPassword);
 		Map<String, String> tokenMap = usernamePasswordAuth(captcha, decryptUsername, decryptPassword);
 		log.info("验证码：{}", captcha);
 		log.info("加密用户名：{}", encryptUsername);

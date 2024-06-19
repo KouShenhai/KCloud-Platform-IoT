@@ -24,6 +24,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
 import javax.crypto.Cipher;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -51,6 +52,19 @@ public class RSAUtil {
 	 */
 	public static final String SUN_RSA_SIGN_PROVIDER = "SunRsaSign";
 
+	private static final String PUBLIC_KEY;
+	private static final String PRIVATE_KEY;
+
+	static {
+		try (InputStream inputStream1 = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream();
+			 InputStream inputStream2 = ResourceUtil.getResource("/conf/privateKey.scr").getInputStream()) {
+			PUBLIC_KEY = new String(inputStream1.readAllBytes(), StandardCharsets.UTF_8);
+			PRIVATE_KEY = new String(inputStream2.readAllBytes(), StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	/**
 	 * 根据私钥解密.
 	 * @param body 数据
@@ -59,7 +73,19 @@ public class RSAUtil {
 	 */
 	@SneakyThrows
 	public static String decryptByPrivateKey(String body, String key) {
-		byte[] privateKey = StringUtil.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(getPrivateKey());
+		byte[] privateKey = StringUtil.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PRIVATE_KEY);
+		byte[] bytes = decryptByPrivateKey(decryptBase64(body), privateKey);
+		return new String(ObjectUtil.requireNotNull(bytes), StandardCharsets.UTF_8);
+	}
+
+	/**
+	 * 根据私钥解密.
+	 * @param body 数据
+	 * @return 解密后的字符串
+	 */
+	@SneakyThrows
+	public static String decryptByPrivateKey(String body) {
+		byte[] privateKey = decryptBase64(PRIVATE_KEY);
 		byte[] bytes = decryptByPrivateKey(decryptBase64(body), privateKey);
 		return new String(ObjectUtil.requireNotNull(bytes), StandardCharsets.UTF_8);
 	}
@@ -72,7 +98,19 @@ public class RSAUtil {
 	 */
 	@SneakyThrows
 	public static String encryptByPublicKey(String body, String key) {
-		byte[] publicKey = StringUtil.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(getPublicKey());
+		byte[] publicKey = StringUtil.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PUBLIC_KEY);
+		byte[] bytes = encryptByPublicKey(body.getBytes(StandardCharsets.UTF_8), publicKey);
+		return encryptBase64(bytes);
+	}
+
+	/**
+	 * 根据公钥加密.
+	 * @param body 数据
+	 * @return 加密后的字符串
+	 */
+	@SneakyThrows
+	public static String encryptByPublicKey(String body) {
+		byte[] publicKey = decryptBase64(PUBLIC_KEY);
 		byte[] bytes = encryptByPublicKey(body.getBytes(StandardCharsets.UTF_8), publicKey);
 		return encryptBase64(bytes);
 	}
@@ -83,9 +121,7 @@ public class RSAUtil {
 	 */
 	@SneakyThrows
 	public static String getPrivateKey() {
-		try (InputStream inputStream = ResourceUtil.getResource("/conf/privateKey.scr").getInputStream()) {
-			return new String(ObjectUtil.requireNotNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
-		}
+		return PRIVATE_KEY;
 	}
 
 	/**
@@ -94,9 +130,7 @@ public class RSAUtil {
 	 */
 	@SneakyThrows
 	public static String getPublicKey() {
-		try (InputStream inputStream = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream()) {
-			return new String(ObjectUtil.requireNotNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
-		}
+		return PUBLIC_KEY;
 	}
 
 	/**

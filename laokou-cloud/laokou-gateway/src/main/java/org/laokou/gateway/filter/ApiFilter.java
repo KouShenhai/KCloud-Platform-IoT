@@ -91,9 +91,8 @@ public class ApiFilter implements WebFilter {
 					Result.fail(ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE)));
 		}
 		try {
-			String privateKey = RSAUtil.getPrivateKey();
-			username = RSAUtil.decryptByPrivateKey(username, privateKey);
-			password = RSAUtil.decryptByPrivateKey(password, privateKey);
+			username = RSAUtil.decryptByPrivateKey(username);
+			password = RSAUtil.decryptByPrivateKey(password);
 		}
 		catch (Exception e) {
 			// 用户名或密码错误

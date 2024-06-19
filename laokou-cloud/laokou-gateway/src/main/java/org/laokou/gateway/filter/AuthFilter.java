@@ -204,15 +204,14 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			if (paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
 				// log.info("密码模式认证");
 				try {
-					String privateKey = RSAUtil.getPrivateKey();
 					String password = paramMap.get(PASSWORD);
 					String username = paramMap.get(USERNAME);
 					// 返回修改后报文字符
 					if (StringUtil.isNotEmpty(password)) {
-						paramMap.put(PASSWORD, RSAUtil.decryptByPrivateKey(password, privateKey));
+						paramMap.put(PASSWORD, RSAUtil.decryptByPrivateKey(password));
 					}
 					if (StringUtil.isNotEmpty(username)) {
-						paramMap.put(USERNAME, RSAUtil.decryptByPrivateKey(username, privateKey));
+						paramMap.put(USERNAME, RSAUtil.decryptByPrivateKey(username));
 					}
 				}
 				catch (Exception e) {

@@ -17,24 +17,21 @@
 
 package org.laokou.common.crypto.utils;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.SneakyThrows;
-import org.apache.hc.client5.http.utils.Base64;
-import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.crypto.annotation.Aes;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.springframework.util.Assert;
 
 import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
-
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import java.util.Base64;
 
 /**
  * AES加密工具类.
@@ -43,64 +40,70 @@ import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
  */
 public class AESUtil {
 
-	@Schema(name = "ALGORITHM_AES", description = "AES加密加密算法")
-	public static final String ALGORITHM_AES = "aes";
+	private static final String AES = "AES";
 
-	@Schema(name = "AES_INSTANCE", description = "AES128对称加密算法")
-	public static final String AES_INSTANCE = "AES/CBC/PKCS5Padding";
+	private static final String AES_GCM_NO_PADDING = "AES/GCM/NoPadding";
 
-	private final static byte[] SECRET_KEY;
+	private static final int GCM_TAG_LENGTH = 16;
+
+	private static final int GCM_IV_LENGTH = 12;
+
+	private final static SecretKey SECRET_KEY;
+
+	private final static byte[] SECRET_IV;
 
 	static {
-		try (InputStream inputStream = ResourceUtil.getResource("conf/secretKey.b16").getInputStream()) {
-			SECRET_KEY = inputStream.readAllBytes();
-			Assert.isTrue(SECRET_KEY.length == 16, "密钥长度必须16位");
+		try (InputStream inputStream1 = ResourceUtil.getResource("conf/secretKey.b256").getInputStream();
+			 InputStream inputStream2 = ResourceUtil.getResource("conf/secretIV.b12").getInputStream()) {
+			byte[] key = inputStream1.readAllBytes();
+			Assert.isTrue(key.length == 32, "密钥长度必须32位");
+			SECRET_KEY = new SecretKeySpec(key, AES);
+			SECRET_IV = inputStream2.readAllBytes();
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	/**
-	 * 获取加密密钥.
-	 * @return 加密密钥
-	 */
-	private static byte[] getSecretKey() {
+	public static SecretKey getSecretKey() {
 		return SECRET_KEY;
 	}
 
-	/**
-	 * 加密.
-	 * @param str 字符串
-	 * @return 加密后的字符串
-	 */
-	@SneakyThrows
-	public static String encrypt(String str) {
-		if (StringUtil.isEmpty(str)) {
-			return EMPTY;
-		}
-		SecretKeySpec secretKeySpec = new SecretKeySpec(getSecretKey(), ALGORITHM_AES);
-		Cipher cipher = Cipher.getInstance(AES_INSTANCE);
-		cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, new IvParameterSpec(new byte[16]));
-		byte[] bytes = cipher.doFinal(str.getBytes(StandardCharsets.UTF_8));
-		return Base64.encodeBase64String(bytes);
+	public static byte[] getSecretIV() {
+		return SECRET_IV;
 	}
 
-	/**
-	 * 解密.
-	 * @param str 字符串
-	 * @return 解密后的字符串
-	 */
 	@SneakyThrows
-	public static String decrypt(String str) {
-		if (StringUtil.isEmpty(str)) {
-			return EMPTY;
-		}
-		SecretKeySpec secretKeySpec = new SecretKeySpec(getSecretKey(), ALGORITHM_AES);
-		Cipher cipher = Cipher.getInstance(AES_INSTANCE);
-		cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, new IvParameterSpec(new byte[16]));
-		byte[] bytes = Base64.decodeBase64(str);
-		return new String(cipher.doFinal(bytes), StandardCharsets.UTF_8);
+	public static String encrypt(String plainText) {
+		return encrypt(plainText, SECRET_KEY, SECRET_IV);
+	}
+
+	public static String encrypt(String plainText, SecretKey key, byte[] iv) throws Exception {
+		Cipher cipher = Cipher.getInstance(AES_GCM_NO_PADDING);
+		GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+		cipher.init(Cipher.ENCRYPT_MODE, key, gcmSpec);
+
+		byte[] encryptedBytes = cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
+		byte[] encryptedIVAndText = new byte[GCM_IV_LENGTH + encryptedBytes.length];
+		System.arraycopy(iv, 0, encryptedIVAndText, 0, GCM_IV_LENGTH);
+		System.arraycopy(encryptedBytes, 0, encryptedIVAndText, GCM_IV_LENGTH, encryptedBytes.length);
+		return java.util.Base64.getEncoder().encodeToString(encryptedIVAndText);
+	}
+
+	@SneakyThrows
+	public static String decrypt(String encryptedText) {
+		return decrypt(encryptedText, SECRET_KEY, SECRET_IV);
+	}
+
+	public static String decrypt(String encryptedText, SecretKey key, byte[] iv) throws Exception {
+		byte[] decoded = Base64.getDecoder().decode(encryptedText);
+
+		Cipher cipher = Cipher.getInstance(AES_GCM_NO_PADDING);
+		GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+		cipher.init(Cipher.DECRYPT_MODE, key, gcmSpec);
+
+		byte[] decryptedBytes = cipher.doFinal(decoded, GCM_IV_LENGTH, decoded.length - GCM_IV_LENGTH);
+		return new String(decryptedBytes, StandardCharsets.UTF_8);
 	}
 
 	/**
