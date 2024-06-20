@@ -17,11 +17,13 @@
 
 package org.laokou.auth.convertor;
 
-import org.laokou.auth.model.UserE;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.auth.model.UserE;
 import org.laokou.common.i18n.dto.Convertor;
 import org.laokou.common.security.utils.UserDetail;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingInheritanceStrategy;
+import org.mapstruct.ReportingPolicy;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
@@ -30,7 +32,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  *
  * @author laokou
  */
-@Mapper(componentModel = SPRING)
+@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE, mappingInheritanceStrategy = MappingInheritanceStrategy.AUTO_INHERIT_ALL_FROM_CONFIG)
 public interface UserConvertor extends Convertor<UserDetail, UserE, UserDO> {
 
 }

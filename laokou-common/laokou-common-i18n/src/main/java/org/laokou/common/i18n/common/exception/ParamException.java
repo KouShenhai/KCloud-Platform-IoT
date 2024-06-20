@@ -17,42 +17,60 @@
 
 package org.laokou.common.i18n.common.exception;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
+ * 参数异常.
  * @author laokou
  */
-@Schema(name = "ParamException", description = "参数异常")
 public final class ParamException extends GlobalException {
 
-	@Schema(name = "OAUTH2_UUID_REQUIRE", description = "UUID不能为空")
+	/**
+	 * UUID不能为空.
+	 */
 	public static final String OAUTH2_UUID_REQUIRE = "P_OAuth2_UuidIsNull";
 
-	@Schema(name = "OAUTH2_CAPTCHA_REQUIRE", description = "验证码不能为空")
+	/**
+	 * 验证码不能为空.
+	 */
 	public static final String OAUTH2_CAPTCHA_REQUIRE = "P_OAuth2_CaptchaIsNull";
 
-	@Schema(name = "OAUTH2_USERNAME_REQUIRE", description = "用户名不能为空")
+	/**
+	 * 用户名不能为空.
+	 */
 	public static final String OAUTH2_USERNAME_REQUIRE = "P_OAuth2_UsernameIsNull";
 
-	@Schema(name = "OAUTH2_PASSWORD_REQUIRE", description = "密码不能为空")
+	/**
+	 * 密码不能为空.
+	 */
 	public static final String OAUTH2_PASSWORD_REQUIRE = "P_OAuth2_PasswordIsNull";
 
-	@Schema(name = "OAUTH2_MOBILE_REQUIRE", description = "手机号不能为空")
+	/**
+	 * 手机号不能为空.
+	 */
 	public static final String OAUTH2_MOBILE_REQUIRE = "P_OAuth2_MobileIsNUll";
 
-	@Schema(name = "OAUTH2_MAIL_REQUIRE", description = "邮箱不能为空")
+	/**
+	 * 邮箱不能为空.
+	 */
 	public static final String OAUTH2_MAIL_REQUIRE = "P_OAuth2_MailIsNull";
 
-	@Schema(name = "OAUTH2_TENANT_ID_REQUIRE", description = "租户ID不能为空")
+	/**
+	 * 租户ID不能为空.
+	 */
 	public static final String OAUTH2_TENANT_ID_REQUIRE = "P_OAuth2_TenantIdIsNull";
 
-	@Schema(name = "SYSTEM_ID_REQUIRE", description = "ID不能为空")
+	/**
+	 * ID不能为空.
+	 */
 	public static final String SYSTEM_ID_REQUIRE = "P_System_IdIsNull";
 
-	@Schema(name = "OAUTH2_MAIL_ERROR", description = "邮箱错误")
+	/**
+	 * 邮箱错误.
+	 */
 	public static final String OAUTH2_MAIL_ERROR = "A_OAuth2_MailError";
 
-	@Schema(name = "OAUTH2_MOBILE_ERROR", description = "手机号错误")
+	/**
+	 * 手机号错误.
+	 */
 	public static final String OAUTH2_MOBILE_ERROR = "A_OAuth2_MobileError";
 
 	public ParamException(String code) {

@@ -22,6 +22,7 @@ import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingInheritanceStrategy;
 import org.mapstruct.ReportingPolicy;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
@@ -31,7 +32,7 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  *
  * @author laokou
  */
-@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE, mappingInheritanceStrategy = MappingInheritanceStrategy.AUTO_INHERIT_ALL_FROM_CONFIG)
 public interface UserConvertor extends Convertor<UserCO, User, UserDO> {
 
 }

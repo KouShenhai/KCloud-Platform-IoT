@@ -17,7 +17,6 @@
 
 package org.laokou.common.security.handler;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ResponseUtil;
@@ -34,7 +33,9 @@ import org.springframework.security.oauth2.core.OAuth2Error;
  */
 public class OAuth2ExceptionHandler {
 
-	@Schema(name = "ERROR_URL", description = "错误地址")
+	/**
+	 * 错误地址.
+	 */
 	public static final String ERROR_URL = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
 	public static OAuth2AuthenticationException getException(String code, String message, String uri) {

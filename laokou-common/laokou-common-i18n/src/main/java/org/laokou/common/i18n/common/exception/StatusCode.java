@@ -17,42 +17,58 @@
 
 package org.laokou.common.i18n.common.exception;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
+ * 状态码.
  * @author laokou
  */
-@Schema(name = "StatusCode", description = "状态码")
 public final class StatusCode {
 
 	private StatusCode() {
 	}
 
-	@Schema(name = "OK", description = "请求成功")
+	/**
+	 * 请求成功.
+	 */
 	public static final String OK = "OK";
 
-	@Schema(name = "BAD_REQUEST", description = "错误请求")
+	/**
+	 * 错误请求.
+	 */
 	public static final String BAD_REQUEST = "Bad_Request";
 
-	@Schema(name = "UNAUTHORIZED", description = "登录状态已过期")
+	/**
+	 * 登录状态已过期.
+	 */
 	public static final String UNAUTHORIZED = "Unauthorized";
 
-	@Schema(name = "FORBIDDEN", description = "拒绝访问，没有权限")
+	/**
+	 * 拒绝访问，没有权限.
+	 */
 	public static final String FORBIDDEN = "Forbidden";
 
-	@Schema(name = "NOT_FOUND", description = "无法找到请求的资源")
+	/**
+	 * 无法找到请求的资源.
+	 */
 	public static final String NOT_FOUND = "Not_Found";
 
-	@Schema(name = "TOO_MANY_REQUESTS", description = "请求太频繁")
+	/**
+	 * 请求太频繁.
+	 */
 	public static final String TOO_MANY_REQUESTS = "Too_Many_Requests";
 
-	@Schema(name = "INTERNAL_SERVER_ERROR", description = "服务器内部错误，无法完成请求")
+	/**
+	 * 服务器内部错误，无法完成请求.
+	 */
 	public static final String INTERNAL_SERVER_ERROR = "Internal_Server_Error";
 
-	@Schema(name = "BAD_GATEWAY", description = "错误网关")
+	/**
+	 * 错误网关.
+	 */
 	public static final String BAD_GATEWAY = "Bad_Gateway";
 
-	@Schema(name = "SERVICE_UNAVAILABLE", description = "服务正在维护")
+	/**
+	 * 服务正在维护.
+	 */
 	public static final String SERVICE_UNAVAILABLE = "Service_Unavailable";
 
 }

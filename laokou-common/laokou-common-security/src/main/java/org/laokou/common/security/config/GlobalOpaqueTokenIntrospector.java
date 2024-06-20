@@ -21,6 +21,7 @@ import com.baomidou.dynamic.datasource.annotation.Master;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -43,6 +44,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
+import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ACCESS_TOKEN;
 
 /**
@@ -99,9 +101,13 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 	 * @return UserDetail
 	 */
 	private UserDetail decryptInfo(UserDetail userDetail) {
-		// 解密
-		userDetail.decrypt();
-		return userDetail;
+		try {
+			// 解密
+			userDetail.decrypt();
+			return userDetail;
+		} catch (GlobalException e) {
+			throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg(), ERROR_URL);
+		}
 	}
 
 	@Override

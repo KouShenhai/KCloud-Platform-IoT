@@ -25,6 +25,7 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Identifier;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,6 +41,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.constants.SuperAdmin.YES;
+import static org.laokou.common.i18n.common.exception.SystemException.*;
 
 /**
  * 用户详细信息. &#064;JsonTypeInfo(use = JsonTypeInfo.Id.NAME) => 多态子类与抽象类绑定.
@@ -258,7 +260,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 				this.username = AESUtil.decrypt(this.username);
 			}
 			catch (Exception e) {
-				throw new SystemException("S_Error", "用户名解密失败");
+				throw new SystemException(MessageUtil.getMessage(AES_DECRYPT_USERNAME_FAIL));
 			}
 		}
 	}
@@ -270,7 +272,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 				this.mail = AESUtil.decrypt(this.mail);
 			}
 			catch (Exception e) {
-				throw new SystemException("S_Error", "邮箱解密失败");
+				throw new SystemException(MessageUtil.getMessage(AES_DECRYPT_MAIL_FAIL));
 			}
 		}
 	}
@@ -282,7 +284,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 				this.mobile = AESUtil.decrypt(this.mobile);
 			}
 			catch (Exception e) {
-				throw new SystemException("S_Error", "手机号解密失败");
+				throw new SystemException(MessageUtil.getMessage(AES_DECRYPT_MOBILE_FAIL));
 			}
 		}
 	}

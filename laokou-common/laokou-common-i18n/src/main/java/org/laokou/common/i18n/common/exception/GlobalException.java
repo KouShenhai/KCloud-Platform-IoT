@@ -17,17 +17,16 @@
 
 package org.laokou.common.i18n.common.exception;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.utils.MessageUtil;
 
 import java.io.Serial;
 
 /**
+ * 全局异常.
  * @author laokou
  */
 @Data
-@Schema(name = "GlobalException", description = "全局异常")
 public abstract class GlobalException extends RuntimeException {
 
 	@Serial

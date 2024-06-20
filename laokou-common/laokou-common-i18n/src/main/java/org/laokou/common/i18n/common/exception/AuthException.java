@@ -17,48 +17,70 @@
 
 package org.laokou.common.i18n.common.exception;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
+ * 认证异常.
  * @author laokou
  */
-@Schema(name = "AuthException", description = "认证异常")
 public final class AuthException extends GlobalException {
 
-	@Schema(name = "OAUTH2_INVALID_REQUEST", description = "无效请求")
+	/**
+	 * 无效请求.
+	 */
 	public static final String OAUTH2_INVALID_REQUEST = "A_OAuth2_InvalidRequest";
 
-	@Schema(name = "OAUTH2_GENERATE_ID_TOKEN_FAIL", description = "令牌生成器无法生成标识令牌")
+	/**
+	 * 令牌生成器无法生成标识令牌.
+	 */
 	public static final String OAUTH2_GENERATE_ID_TOKEN_FAIL = "A_OAuth2_GenerateIdTokenFail";
 
-	@Schema(name = "OAUTH2_GENERATE_REFRESH_TOKEN_FAIL", description = "令牌生成器无法生成刷新令牌")
+	/**
+	 * 令牌生成器无法生成刷新令牌.
+	 */
 	public static final String OAUTH2_GENERATE_REFRESH_TOKEN_FAIL = "A_OAuth2_GenerateRefreshTokenFail";
 
-	@Schema(name = "OAUTH2_GENERATE_ACCESS_TOKEN_FAIL", description = "令牌生成器无法生成访问令牌")
+	/**
+	 * 令牌生成器无法生成访问令牌.
+	 */
 	public static final String OAUTH2_GENERATE_ACCESS_TOKEN_FAIL = "A_OAuth2_GenerateAccessTokenFail";
 
-	@Schema(name = "OAUTH2_REGISTERED_CLIENT_NOT_EXIST", description = "注册客户端不存在")
+	/**
+	 * 注册客户端不存在.
+	 */
 	public static final String OAUTH2_REGISTERED_CLIENT_NOT_EXIST = "A_OAuth2_RegisteredClientNotExist";
 
-	@Schema(name = "OAUTH2_INVALID_CLIENT", description = "无效客户端")
+	/**
+	 * 无效客户端.
+	 */
 	public static final String OAUTH2_INVALID_CLIENT = "A_OAuth2_InvalidClient";
 
-	@Schema(name = "OAUTH2_INVALID_SCOPE", description = "无效作用域")
+	/**
+	 * 无效作用域.
+	 */
 	public static final String OAUTH2_INVALID_SCOPE = "A_OAuth2_InvalidScope";
 
-	@Schema(name = "OAUTH2_USER_DISABLED", description = "用户已禁用")
+	/**
+	 * 用户已禁用.
+	 */
 	public static final String OAUTH2_USER_DISABLED = "A_OAuth2_UserDisabled";
 
-	@Schema(name = "OAUTH2_CAPTCHA_EXPIRED", description = "验证码已过期")
+	/**
+	 * 验证码已过期.
+	 */
 	public static final String OAUTH2_CAPTCHA_EXPIRED = "A_OAuth2_CaptchaExpired";
 
-	@Schema(name = "OAUTH2_CAPTCHA_ERROR", description = "验证码错误")
+	/**
+	 * 验证码错误.
+	 */
 	public static final String OAUTH2_CAPTCHA_ERROR = "A_OAuth2_CaptchaError";
 
-	@Schema(name = "OAUTH2_USERNAME_PASSWORD_ERROR", description = "用户名或密码错误")
+	/**
+	 * 用户名或密码错误.
+	 */
 	public static final String OAUTH2_USERNAME_PASSWORD_ERROR = "A_OAuth2_UsernamePasswordError";
 
-	@Schema(name = "OAUTH2_SOURCE_NOT_EXIST", description = "数据源不存在")
+	/**
+	 * 数据源不存在.
+	 */
 	public static final String OAUTH2_SOURCE_NOT_EXIST = "A_OAuth2_SourceNotExist";
 
 	public AuthException(String code) {

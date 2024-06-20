@@ -17,12 +17,10 @@
 
 package org.laokou.common.i18n.common.exception;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
+ * 业务异常.
  * @author laokou
  */
-@Schema(name = "BizException", description = "业务异常")
 public final class BizException extends GlobalException {
 
 	public BizException(String code) {
