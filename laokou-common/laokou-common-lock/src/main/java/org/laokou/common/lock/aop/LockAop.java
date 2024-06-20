@@ -65,12 +65,10 @@ public class LockAop {
 		String[] parameterNames = methodSignature.getParameterNames();
 		Lock4j lock4j = AnnotationUtils.findAnnotation(method, Lock4j.class);
 		Assert.isTrue(ObjectUtil.isNotNull(lock4j), "@Lock4j is null");
-		String expression = lock4j.expression();
+		String expression = lock4j.key();
 		if (StringUtil.isNotEmpty(expression)) {
 			expression = SpringExpressionUtil.parse(expression, parameterNames, joinPoint.getArgs(), String.class);
 		}
-		// key + 表达式
-		String key = lock4j.key() + expression;
 		long expire = lock4j.expire();
 		long timeout = lock4j.timeout();
 		int retry = lock4j.retry();
@@ -83,7 +81,7 @@ public class LockAop {
 
 			do {
 				// 设置锁的自动过期时间，则执行业务的时间一定要小于锁的自动过期时间，否则就会报错
-				isLocked = lock.tryLock(lockType, key, expire, timeout);
+				isLocked = lock.tryLock(lockType, expression, expire, timeout);
 			}
 			while (!isLocked && --retry > 0);
 
@@ -100,7 +98,7 @@ public class LockAop {
 		finally {
 			// 释放锁
 			if (isLocked) {
-				lock.unlock(lockType, key);
+				lock.unlock(lockType, expression);
 			}
 		}
 		return obj;

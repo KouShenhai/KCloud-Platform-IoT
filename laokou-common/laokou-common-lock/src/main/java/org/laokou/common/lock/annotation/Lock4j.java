@@ -34,7 +34,7 @@ import static org.laokou.common.lock.TypeEnum.LOCK;
 public @interface Lock4j {
 
 	/**
-	 * 键.
+	 * key支持表达式.
 	 */
 	String key();
 
@@ -52,11 +52,6 @@ public @interface Lock4j {
 	 * 分布式锁类型.
 	 */
 	TypeEnum type() default LOCK;
-
-	/**
-	 * 表达式.
-	 */
-	String expression() default "";
 
 	/**
 	 * 重试次数，默认3次.
