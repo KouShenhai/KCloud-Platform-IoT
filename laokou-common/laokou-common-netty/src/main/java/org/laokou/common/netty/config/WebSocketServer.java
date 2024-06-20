@@ -21,9 +21,9 @@ import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioChannelOption;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -59,9 +59,9 @@ public class WebSocketServer extends AbstractServer {
 			// 指定通道
 			.channel(NioServerSocketChannel.class)
 			// 请求队列最大长度（如果连接建立频繁，服务器处理创建新连接较慢，可以适当调整参数）
-			.option(NioChannelOption.SO_BACKLOG, 1024)
+			.option(ChannelOption.SO_BACKLOG, 1024)
 			// 延迟发送
-			.childOption(NioChannelOption.TCP_NODELAY, true)
+			.childOption(ChannelOption.TCP_NODELAY, true)
 			// WebSocket处理类
 			.childHandler(channelInitializer);
 	}

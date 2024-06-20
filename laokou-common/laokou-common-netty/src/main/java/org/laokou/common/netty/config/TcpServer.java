@@ -20,6 +20,7 @@ package org.laokou.common.netty.config;
 import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioChannelOption;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -48,9 +49,9 @@ public class TcpServer extends AbstractServer {
 			// 指定通道
 			.channel(NioServerSocketChannel.class)
 			// 延迟发送
-			.childOption(NioChannelOption.TCP_NODELAY, true)
+			.childOption(ChannelOption.TCP_NODELAY, true)
 			// 请求队列最大长度（如果连接建立频繁，服务器处理创建新连接较慢，可以适当调整参数）
-			.option(NioChannelOption.SO_BACKLOG, 1024)
+			.option(ChannelOption.SO_BACKLOG, 1024)
 			// tcp处理类
 			.childHandler(channelInitializer);
 	}
