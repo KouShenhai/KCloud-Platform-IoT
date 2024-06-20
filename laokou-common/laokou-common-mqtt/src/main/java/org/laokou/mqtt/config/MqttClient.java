@@ -74,19 +74,20 @@ public class MqttClient implements Client {
 		}
 		try {
 			client = new org.eclipse.paho.mqttv5.client.MqttClient(springMqttProperties.getHost(),
-				springMqttProperties.getClientId(), new MemoryPersistence());
+					springMqttProperties.getClientId(), new MemoryPersistence());
 			// 手动ack接收确认
 			client.setManualAcks(springMqttProperties.isManualAcks());
 			client.setCallback(new MqttMessageCallback(mqttStrategy));
 			client.connect(options());
 			if (CollectionUtil.isNotEmpty(springMqttProperties.getTopics())) {
 				client.subscribe(springMqttProperties.getTopics().toArray(String[]::new),
-					springMqttProperties.getTopics().stream().mapToInt(item -> 2).toArray());
+						springMqttProperties.getTopics().stream().mapToInt(item -> 2).toArray());
 			}
 			log.info("MQTT连接成功");
 			running = true;
 			ATOMIC.set(0);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			// 最大重试10次
 			if (ATOMIC.incrementAndGet() <= 10) {
 				// 5秒后重连
