@@ -28,6 +28,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.netty.config.Client;
 
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -57,6 +58,8 @@ public class MqttClient implements Client {
 
 	private final MqttStrategy mqttStrategy;
 
+	private final AtomicInteger ATOMIC = new AtomicInteger(0);
+
 	public MqttClient(SpringMqttProperties springMqttProperties, MqttStrategy mqttStrategy) {
 		this.springMqttProperties = springMqttProperties;
 		this.mqttStrategy = mqttStrategy;
@@ -69,18 +72,28 @@ public class MqttClient implements Client {
 			log.error("MQTT已连接");
 			return;
 		}
-		client = new org.eclipse.paho.mqttv5.client.MqttClient(springMqttProperties.getHost(),
+		try {
+			client = new org.eclipse.paho.mqttv5.client.MqttClient(springMqttProperties.getHost(),
 				springMqttProperties.getClientId(), new MemoryPersistence());
-		// 手动ack接收确认
-		client.setManualAcks(springMqttProperties.isManualAcks());
-		client.setCallback(new MqttMessageCallback(mqttStrategy));
-		client.connect(options());
-		if (CollectionUtil.isNotEmpty(springMqttProperties.getTopics())) {
-			client.subscribe(springMqttProperties.getTopics().toArray(String[]::new),
+			// 手动ack接收确认
+			client.setManualAcks(springMqttProperties.isManualAcks());
+			client.setCallback(new MqttMessageCallback(mqttStrategy));
+			client.connect(options());
+			if (CollectionUtil.isNotEmpty(springMqttProperties.getTopics())) {
+				client.subscribe(springMqttProperties.getTopics().toArray(String[]::new),
 					springMqttProperties.getTopics().stream().mapToInt(item -> 2).toArray());
+			}
+			log.info("MQTT连接成功");
+			running = true;
+			ATOMIC.set(0);
+		} catch (Exception e) {
+			// 最大重试10次
+			if (ATOMIC.incrementAndGet() <= 10) {
+				// 5秒后重连
+				Thread.sleep(5000);
+				open();
+			}
 		}
-		log.info("MQTT连接成功");
-		running = true;
 	}
 
 	@Override
