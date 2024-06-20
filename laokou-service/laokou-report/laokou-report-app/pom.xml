@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-report</artifactId>
-    <version>3.3.0</version>
+    <version>3.3.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-report-app</artifactId>

@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-iot</artifactId>
-    <version>3.3.0</version>
+    <version>3.3.1</version>
   </parent>
 
   <artifactId>laokou-iot-adapter</artifactId>

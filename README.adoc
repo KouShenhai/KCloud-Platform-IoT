@@ -7,7 +7,7 @@
 === 📣 项目介绍
 image::doc/image/logo.png[LOGO,500,align=center]
 
-KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微服务架构的IoT云平台。基于Spring Boot 3.3.0、Spring Cloud 2023.0.2、Spring Cloud Alibaba 2023.0.1.0 最新版本开发的云服务多租户IoT平台。
+KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微服务架构的IoT云平台。基于Spring Boot 3.3.1、Spring Cloud 2023.0.2、Spring Cloud Alibaba 2023.0.1.0 最新版本开发的云服务多租户IoT平台。
 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、灰度路由、服务限流、熔断降级、监控报警、多数据源、高亮搜索、定时任务、分布式链路、分布式缓存、分布式事务、分布式存储、分布式锁等功能，用于快速构建微服务项目。目前支持Shell、Docker等多种部署方式，并且支持GraalVM和虚拟线程。实现RBAC权限、其中包含系统管理、系统监控、数据分析等几大模块。
 遵循阿里代码规范，采用RESTFul设计风格及DDD(领域驱动设计)思想，代码简洁、架构清晰，非常适合作为基础框架使用。
 
@@ -27,7 +27,7 @@ image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/star.svg?theme=dark[
 image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark[Gitee fork,link=https://gitee.com/laokouyun/KCloud-Platform-IoT/members]
 
 image:https://img.shields.io/static/v1?label=Spring%20Framework&message=6.1.10&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
-image:https://img.shields.io/static/v1?label=Spring%20Boot&message=3.3.0&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
+image:https://img.shields.io/static/v1?label=Spring%20Boot&message=3.3.1&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud&message=2023.0.2&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.1.0&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
 image:https://img.shields.io/static/v1?label=OAuth%202.1&message=1.3.1&color=blue[OAuth 2.1,link=https://spring.io/projects/spring-authorization-server]
@@ -71,7 +71,7 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 |===
 |组件                         |版本
 
-|Spring Boot                 |3.3.0
+|Spring Boot                 |3.3.1
 |Spring Cloud                |2023.0.2
 |Spring Cloud Alibaba        |2023.0.1.0
 |Spring Boot Admin           |3.3.2

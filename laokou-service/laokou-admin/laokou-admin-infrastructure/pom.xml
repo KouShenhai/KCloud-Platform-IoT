@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-admin</artifactId>
-    <version>3.3.0</version>
+    <version>3.3.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-admin-infrastructure</artifactId>
@@ -70,10 +70,6 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-rate-limiter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-admin-client</artifactId>
     </dependency>
     <dependency>
       <groupId>jakarta.servlet</groupId>
