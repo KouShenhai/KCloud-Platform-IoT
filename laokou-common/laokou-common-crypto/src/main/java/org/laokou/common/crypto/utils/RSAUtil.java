@@ -58,8 +58,8 @@ public class RSAUtil {
 	static {
 		try (InputStream inputStream1 = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream();
 			 InputStream inputStream2 = ResourceUtil.getResource("/conf/privateKey.scr").getInputStream()) {
-			PUBLIC_KEY = new String(inputStream1.readAllBytes(), StandardCharsets.UTF_8);
-			PRIVATE_KEY = new String(inputStream2.readAllBytes(), StandardCharsets.UTF_8);
+			PUBLIC_KEY = new String(inputStream1.readAllBytes(), StandardCharsets.UTF_8).trim();
+			PRIVATE_KEY = new String(inputStream2.readAllBytes(), StandardCharsets.UTF_8).trim();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
