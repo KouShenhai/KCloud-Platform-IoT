@@ -19,6 +19,7 @@ package org.laokou.common.i18n.common.exception;
 
 /**
  * 认证异常.
+ *
  * @author laokou
  */
 public final class AuthException extends GlobalException {

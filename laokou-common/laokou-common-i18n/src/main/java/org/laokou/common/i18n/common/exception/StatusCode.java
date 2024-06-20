@@ -19,6 +19,7 @@ package org.laokou.common.i18n.common.exception;
 
 /**
  * 状态码.
+ *
  * @author laokou
  */
 public final class StatusCode {

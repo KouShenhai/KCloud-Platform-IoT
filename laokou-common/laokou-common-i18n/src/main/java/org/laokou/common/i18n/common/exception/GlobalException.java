@@ -24,6 +24,7 @@ import java.io.Serial;
 
 /**
  * 全局异常.
+ *
  * @author laokou
  */
 @Data

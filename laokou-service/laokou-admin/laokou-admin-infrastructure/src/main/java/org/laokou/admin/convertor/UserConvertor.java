@@ -32,7 +32,8 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  *
  * @author laokou
  */
-@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE, mappingInheritanceStrategy = MappingInheritanceStrategy.AUTO_INHERIT_ALL_FROM_CONFIG)
+@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE,
+		mappingInheritanceStrategy = MappingInheritanceStrategy.AUTO_INHERIT_ALL_FROM_CONFIG)
 public interface UserConvertor extends Convertor<UserCO, User, UserDO> {
 
 }

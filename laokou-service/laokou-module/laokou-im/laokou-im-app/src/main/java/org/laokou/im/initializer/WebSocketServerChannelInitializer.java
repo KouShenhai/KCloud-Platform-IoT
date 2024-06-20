@@ -89,7 +89,7 @@ public class WebSocketServerChannelInitializer extends ChannelInitializer<NioSoc
 		// 度量
 		pipeline.addLast("metricHandler", metricHandler);
 		// 心跳检测
-		pipeline.addLast("idleStateHandler", new IdleStateHandler(60,0,0, SECONDS));
+		pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, SECONDS));
 		// flush合并
 		pipeline.addLast("flushConsolidationHandler", new FlushConsolidationHandler(10, true));
 		// 业务处理handler

@@ -57,7 +57,7 @@ public class AESUtil {
 
 	static {
 		try (InputStream inputStream1 = ResourceUtil.getResource("conf/secretKey.b256").getInputStream();
-			 InputStream inputStream2 = ResourceUtil.getResource("conf/secretIV.b12").getInputStream()) {
+				InputStream inputStream2 = ResourceUtil.getResource("conf/secretIV.b12").getInputStream()) {
 			String key = new String(inputStream1.readAllBytes(), StandardCharsets.UTF_8).trim();
 			Assert.isTrue(key.length() == 32, "密钥长度必须32位");
 			String iv = new String(inputStream2.readAllBytes(), StandardCharsets.UTF_8).trim();

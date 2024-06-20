@@ -77,7 +77,7 @@ public class MqttClient implements Client {
 		client.connect(options());
 		if (CollectionUtil.isNotEmpty(springMqttProperties.getTopics())) {
 			client.subscribe(springMqttProperties.getTopics().toArray(String[]::new),
-				springMqttProperties.getTopics().stream().mapToInt(item -> 2).toArray());
+					springMqttProperties.getTopics().stream().mapToInt(item -> 2).toArray());
 		}
 		log.info("MQTT连接成功");
 		running = true;

@@ -53,14 +53,16 @@ public class RSAUtil {
 	public static final String SUN_RSA_SIGN_PROVIDER = "SunRsaSign";
 
 	private static final String PUBLIC_KEY;
+
 	private static final String PRIVATE_KEY;
 
 	static {
 		try (InputStream inputStream1 = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream();
-			 InputStream inputStream2 = ResourceUtil.getResource("/conf/privateKey.scr").getInputStream()) {
+				InputStream inputStream2 = ResourceUtil.getResource("/conf/privateKey.scr").getInputStream()) {
 			PUBLIC_KEY = new String(inputStream1.readAllBytes(), StandardCharsets.UTF_8).trim();
 			PRIVATE_KEY = new String(inputStream2.readAllBytes(), StandardCharsets.UTF_8).trim();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}

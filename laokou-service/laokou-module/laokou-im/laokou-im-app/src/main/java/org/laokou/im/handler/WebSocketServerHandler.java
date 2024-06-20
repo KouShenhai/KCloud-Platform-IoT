@@ -55,7 +55,8 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 			if (event.state() == IdleState.READER_IDLE) {
 				log.error("读取空闲，关闭连接");
 				ctx.close();
-			} else {
+			}
+			else {
 				super.userEventTriggered(ctx, evt);
 			}
 		}
@@ -67,12 +68,15 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		if (msg instanceof WebSocketFrame frame) {
 			if (frame instanceof PingWebSocketFrame pingWebSocketFrame) {
 				ctx.writeAndFlush(new PongWebSocketFrame(pingWebSocketFrame.content().retain()));
-			} else if (frame instanceof TextWebSocketFrame textWebSocketFrame) {
+			}
+			else if (frame instanceof TextWebSocketFrame textWebSocketFrame) {
 				read(ctx, textWebSocketFrame);
-			} else {
+			}
+			else {
 				super.channelRead(ctx, msg);
 			}
-		} else {
+		}
+		else {
 			super.channelRead(ctx, msg);
 		}
 	}

@@ -19,6 +19,7 @@ package org.laokou.common.i18n.common.exception;
 
 /**
  * 系统异常.
+ *
  * @author laokou
  */
 public final class SystemException extends GlobalException {
@@ -92,7 +93,6 @@ public final class SystemException extends GlobalException {
 	 * 邮箱解密失败.
 	 */
 	public static final String AES_DECRYPT_MAIL_FAIL = "S_User_AESDecryptMailFail";
-
 
 	public SystemException(String code) {
 		super(code);
