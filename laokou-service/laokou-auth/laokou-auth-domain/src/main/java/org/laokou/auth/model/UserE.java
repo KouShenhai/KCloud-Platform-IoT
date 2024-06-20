@@ -17,7 +17,7 @@
 
 package org.laokou.auth.model;
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.crypto.utils.AESUtil;
@@ -31,7 +31,8 @@ import static org.laokou.common.i18n.common.constants.SuperAdmin.YES;
  * @author laokou
  */
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserE {
 
 	/**

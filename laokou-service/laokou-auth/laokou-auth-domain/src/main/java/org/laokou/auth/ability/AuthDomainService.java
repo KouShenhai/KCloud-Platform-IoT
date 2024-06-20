@@ -49,7 +49,7 @@ public class AuthDomainService {
 		auth.updateAppName(environment.getProperty("spring.application.name"));
 		auth.updateSource(sourceGateway.getSourceName(auth.getUser()));
 		// 校验验证码
-		// checkCaptcha(auth);
+		checkCaptcha(auth);
 		auth.updateUser(userGateway.getProfile(auth.getUser()));
 		// 校验密码
 		auth.checkUserPassword(passwordEncoder);
