@@ -24,38 +24,34 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.utils.SpringExpressionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.lock.Lock;
-import org.laokou.common.lock.TypeEnum;
 import org.laokou.common.lock.RedissonLock;
+import org.laokou.common.lock.TypeEnum;
 import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.laokou.common.i18n.common.exception.StatusCode.TOO_MANY_REQUESTS;
-import static org.laokou.common.i18n.common.constants.StringConstant.UNDER;
 
 /**
  * 分布式锁切面.
  *
  * @author laokou
  */
-@Component
-@Aspect
 @Slf4j
+@Aspect
+@Component
 @RequiredArgsConstructor
 public class LockAop {
-
-	private final Environment environment;
 
 	private final RedisUtil redisUtil;
 
@@ -66,24 +62,35 @@ public class LockAop {
 		Signature signature = joinPoint.getSignature();
 		MethodSignature methodSignature = (MethodSignature) signature;
 		Method method = methodSignature.getMethod();
+		String[] parameterNames = methodSignature.getParameterNames();
 		Lock4j lock4j = AnnotationUtils.findAnnotation(method, Lock4j.class);
 		Assert.isTrue(ObjectUtil.isNotNull(lock4j), "@Lock4j is null");
-		String appName = UNDER;
-		if (lock4j.enable()) {
-			appName += environment.getProperty("spring.application.name");
+		String expression = lock4j.expression();
+		if (StringUtil.isNotEmpty(expression)) {
+			expression = SpringExpressionUtil.parse(expression, parameterNames, joinPoint.getArgs(), String.class);
 		}
-		// key + 时间戳 + 应用名称
-		String key = lock4j.key() + IdGenerator.SystemClock.now() + appName;
+		// key + 表达式
+		String key = lock4j.key() + expression;
 		long expire = lock4j.expire();
 		long timeout = lock4j.timeout();
+		int retry = lock4j.retry();
 		final TypeEnum lockType = lock4j.type();
 		Lock lock = new RedissonLock(redisUtil);
-		AtomicBoolean isLocked = new AtomicBoolean(false);
-		// 设置锁的自动过期时间，则执行业务的时间一定要小于锁的自动过期时间，否则就会报错
+
+		boolean isLocked = false;
+
 		try {
-			if (!isLocked.compareAndSet(false, lock.tryLock(lockType, key, expire, timeout))) {
+
+			do {
+				// 设置锁的自动过期时间，则执行业务的时间一定要小于锁的自动过期时间，否则就会报错
+				isLocked = lock.tryLock(lockType, key, expire, timeout);
+			}
+			while (!isLocked && --retry > 0);
+
+			if (!isLocked) {
 				throw new SystemException(TOO_MANY_REQUESTS);
 			}
+
 			obj = joinPoint.proceed();
 		}
 		catch (Throwable throwable) {
@@ -92,7 +99,7 @@ public class LockAop {
 		}
 		finally {
 			// 释放锁
-			if (isLocked.compareAndSet(true, false)) {
+			if (isLocked) {
 				lock.unlock(lockType, key);
 			}
 		}

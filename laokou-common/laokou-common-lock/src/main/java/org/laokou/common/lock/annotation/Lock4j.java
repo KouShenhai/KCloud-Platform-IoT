@@ -54,8 +54,13 @@ public @interface Lock4j {
 	TypeEnum type() default LOCK;
 
 	/**
-	 * 开启标识(解决公共模块用同一把锁).
+	 * 表达式.
 	 */
-	boolean enable() default false;
+	String expression() default "";
+
+	/**
+	 * 重试次数，默认3次.
+	 */
+	int retry() default 3;
 
 }

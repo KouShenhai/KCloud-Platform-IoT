@@ -36,14 +36,14 @@ public class DomainEventJob {
 
 	private final DomainEventService domainEventService;
 
-	@Lock4j(key = "public_domain_event_job_lock", expire = 280000, enable = true)
+	@Lock4j(key = "public_domain_event_job_lock", expire = 280000)
 	// @XxlJob("publishDomainEventJobHandler")
 	public void publishDomainEventJob() {
 		// 定时任务 => 每5分钟运行一次
 		domainEventPublisher.publish(ASYNC);
 	}
 
-	@Lock4j(key = "remove_domain_event_job_lock", expire = 600000, enable = true)
+	@Lock4j(key = "remove_domain_event_job_lock", expire = 600000)
 	// @XxlJob("removeDomainEventJobHandler")
 	public void removeDomainEventJob() {
 		// 定时任务 => 每天00:20执行一次（保留一个月的领域事件）
