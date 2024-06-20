@@ -17,12 +17,15 @@
 
 package org.laokou.im.handler;
 
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
+import io.netty.handler.codec.http.websocketx.PingWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketFrame;
+import io.netty.handler.timeout.IdleState;
+import io.netty.handler.timeout.IdleStateEvent;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
@@ -42,12 +45,51 @@ import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 @Component
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
-public class WebSocketServerHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 
 	private final RedisUtil redisUtil;
 
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
+	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+		if (evt instanceof IdleStateEvent event) {
+			if (event.state() == IdleState.READER_IDLE) {
+				log.error("读取空闲，关闭连接");
+				ctx.close();
+			} else {
+				super.userEventTriggered(ctx, evt);
+			}
+		}
+	}
+
+	@Override
+	@SneakyThrows
+	public void channelRead(ChannelHandlerContext ctx, Object msg) {
+		if (msg instanceof WebSocketFrame frame) {
+			if (frame instanceof PingWebSocketFrame pingWebSocketFrame) {
+				ctx.writeAndFlush(new PongWebSocketFrame(pingWebSocketFrame.content().retain()));
+			} else if (frame instanceof TextWebSocketFrame textWebSocketFrame) {
+				read(ctx, textWebSocketFrame);
+			} else {
+				super.channelRead(ctx, msg);
+			}
+		} else {
+			super.channelRead(ctx, msg);
+		}
+	}
+
+	@Override
+	public void handlerAdded(ChannelHandlerContext ctx) {
+		log.info("建立连接：{}", ctx.channel().id().asLongText());
+	}
+
+	@Override
+	public void handlerRemoved(ChannelHandlerContext ctx) {
+		String channelId = ctx.channel().id().asLongText();
+		log.info("断开连接：{}", channelId);
+		WebSocketSession.remove(channelId);
+	}
+
+	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
 		Channel channel = ctx.channel();
 		String authorization = frame.text();
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(authorization);
@@ -66,18 +108,6 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<TextWebS
 				log.error("丢弃消息");
 			}
 		}
-	}
-
-	@Override
-	public void handlerAdded(ChannelHandlerContext ctx) {
-		log.info("建立连接：{}", ctx.channel().id().asLongText());
-	}
-
-	@Override
-	public void handlerRemoved(ChannelHandlerContext ctx) {
-		String channelId = ctx.channel().id().asLongText();
-		log.info("断开连接：{}", channelId);
-		WebSocketSession.remove(channelId);
 	}
 
 }

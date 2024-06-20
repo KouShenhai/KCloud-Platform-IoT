@@ -27,22 +27,23 @@ GitHub：https://github.com/KouShenhai
 Gitee：https://gitee.com/laokouyun
 CSDN：https://kcloud.blog.csdn.net
 
-${AnsiColor.CYAN}端口: ${server.port} PID: ${PID}, 启动环境: ${spring.profiles.active}
-${AnsiColor.BRIGHT_RED}操作系统: ${os.name}-${os.version}-${os.arch}
+${AnsiColor.CYAN}端口：${server.port}，PID：${PID}，启动环境：${spring.profiles.active}
 
-${AnsiColor.BRIGHT_YELLOW}Java 版本信息: "${java.version}" ${java.version.date}
+${AnsiColor.BRIGHT_RED}操作系统：${os.name}-${os.version}-${os.arch}
+
+${AnsiColor.BRIGHT_YELLOW}Java 版本信息："${java.version}" ${java.version.date}
 ${java.runtime.name} ${java.vendor.version:} (build ${java.vm.version})
 ${java.vm.name} ${java.vendor.version:} (build ${java.runtime.version}, ${java.vm.info})
-${AnsiColor.BRIGHT_YELLOW}Java 类版本号:${java.class.version}${AnsiColor.DEFAULT}
+${AnsiColor.BRIGHT_YELLOW}Java 类版本号：${java.class.version}
 
-${AnsiColor.GREEN}SpringBoot版本: ${spring-boot.version}${AnsiColor.DEFAULT}
-${AnsiColor.BRIGHT_MAGENTA}时区:${user.timezone}, 语言:${user.language}, 国家:${user.country}, 文件编码: ${file.encoding}
-${AnsiColor.BRIGHT_BLUE}JDK所在目录: ${java.home}
-${AnsiColor.BRIGHT_CYAN}项目所在目录: ${user.dir}
+${AnsiColor.GREEN}SpringBoot版本：${spring-boot.version}
 
-${AnsiColor.BRIGHT_WHITE}applicationName: ${spring.application.name}
+${AnsiColor.BRIGHT_MAGENTA}时区：${user.timezone}，语言：${user.language}，国家：${user.country}，文件编码：${file.encoding}
+${AnsiColor.BLUE}JDK所在目录：${java.home}
+${AnsiColor.BRIGHT_CYAN}项目所在目录：${user.dir}
+
+${AnsiColor.BRIGHT_WHITE}应用名称：${spring.application.name}
 ${AnsiColor.DEFAULT}
-
 老寇IoT云平台正在启动中......
 
 相遇便是缘分，感谢各位盆友

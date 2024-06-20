@@ -17,9 +17,9 @@
 
 package org.laokou.im.initializer;
 
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
-import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
@@ -29,6 +29,7 @@ import io.netty.handler.flush.FlushConsolidationHandler;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
+import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.EventExecutorGroup;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -36,7 +37,6 @@ import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.common.netty.utils.LogUtil;
 import org.laokou.im.handler.MetricHandler;
-import org.laokou.im.handler.WebSocketServerIdleStateHandler;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.server.Ssl;
 import org.springframework.stereotype.Component;
@@ -47,6 +47,8 @@ import javax.net.ssl.SSLEngine;
 import java.io.InputStream;
 import java.security.KeyStore;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 /**
  * WebSocket处理类.
  *
@@ -56,7 +58,7 @@ import java.security.KeyStore;
 @RequiredArgsConstructor
 public class WebSocketServerChannelInitializer extends ChannelInitializer<NioSocketChannel> {
 
-	private final SimpleChannelInboundHandler<?> webSocketServerHandler;
+	private final ChannelInboundHandlerAdapter webSocketServerHandler;
 
 	private final ServerProperties serverProperties;
 
@@ -74,8 +76,6 @@ public class WebSocketServerChannelInitializer extends ChannelInitializer<NioSoc
 		addSSL(pipeline);
 		// 日志
 		pipeline.addLast("loggingHandler", new LoggingHandler(logUtil.getLogLevel()));
-		// 心跳检测
-		pipeline.addLast("webSocketServerIdleStateHandler", new WebSocketServerIdleStateHandler());
 		// HTTP解码器
 		pipeline.addLast("httpServerCodec", new HttpServerCodec());
 		// 数据压缩
@@ -88,6 +88,8 @@ public class WebSocketServerChannelInitializer extends ChannelInitializer<NioSoc
 		pipeline.addLast("webSocketServerProtocolHandler", new WebSocketServerProtocolHandler("/ws"));
 		// 度量
 		pipeline.addLast("metricHandler", metricHandler);
+		// 心跳检测
+		pipeline.addLast("idleStateHandler", new IdleStateHandler(60,0,0, SECONDS));
 		// flush合并
 		pipeline.addLast("flushConsolidationHandler", new FlushConsolidationHandler(10, true));
 		// 业务处理handler
@@ -100,7 +102,7 @@ public class WebSocketServerChannelInitializer extends ChannelInitializer<NioSoc
 			sslEngine.setNeedClientAuth(false);
 			sslEngine.setUseClientMode(false);
 			// SSL
-			pipeline.addLast(new SslHandler(sslEngine));
+			pipeline.addLast("sslHandler", new SslHandler(sslEngine));
 		}
 	}
 

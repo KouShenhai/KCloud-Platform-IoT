@@ -22,31 +22,20 @@ import io.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
 import io.netty.handler.codec.http.websocketx.WebSocketVersion;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import org.laokou.common.i18n.dto.Message;
 import org.laokou.common.netty.config.WebSocketClient;
 import org.laokou.common.netty.config.WebSocketProperties;
-import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.im.handler.WebSocketClientHandler;
 import org.laokou.im.initializer.WebSocketClientChannelInitializer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
 import java.net.URI;
-import java.util.Collections;
 
 @Slf4j
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class WebSocketClientTest {
-
-	private final RocketMqTemplate rocketMqTemplate;
-
-	@Test
-	void testMessage() {
-		rocketMqTemplate.sendAsyncMessage("", new Message(Collections.emptySet(), null));
-	}
 
 	public static void main(String[] args) {
 		WebSocketProperties webSocketProperties = new WebSocketProperties();
