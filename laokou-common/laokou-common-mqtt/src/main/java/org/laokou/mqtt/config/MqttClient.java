@@ -89,9 +89,12 @@ public class MqttClient implements Client {
 		}
 		catch (Exception e) {
 			// 最大重试10次
-			if (ATOMIC.incrementAndGet() <= 10) {
+			int count = ATOMIC.incrementAndGet();
+			if (count <= 10) {
+				log.error("连接失败，5秒后重连");
 				// 5秒后重连
 				Thread.sleep(5000);
+				log.error("进行第 {} 次重连", count);
 				open();
 			}
 		}
