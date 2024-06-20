@@ -75,6 +75,11 @@
       <artifactId>laokou-common-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
