@@ -1,7 +1,53 @@
-= 老寇IoT云平台文档
+=== 老寇IoT云平台文档
 
-== 作者的话
+==== 作者的话
 
 --
- 33443
+  小伙伴们，你们好，我是老寇，很高兴我们又见面啦~
+  首先，感谢各位小伙伴们对这个项目的关注。
+  其次，感谢各位大佬的赞助，以及提交代码的小伙伴们，因为有你们，这个项目变得越来越好~
+  最后，希望大家通过这个项目的学习，能有所收获！
 --
+
+==== 项目背景
+
+--
+  时光
+--
+
+==== 赞助名单
+[width=100%]
+|===
+|时间         |网名        |赞助      |备注
+
+|2024/04/19  |*保熟       |￥188.00      |越做越好
+|2024/03/20  |A细节*      |￥66.00       |无
+|2024/03/03  |y*i        |￥58.88       |无
+|2024/01/30  |*阳        |￥10          |无
+|2023/12/22  |*民        |服务器         |无
+|2023/12/08  |*来        |￥10          |希望越来越好，一直坚持下去
+|2023/12/08  |*迪        |￥20          |越来越好，继续干下去
+|2023/10/07  |何*        |￥399         |作者说：感谢支持
+|2023/08/27  |*界        |￥10          |希望越来越好
+|2023/06/29  |顺         |￥20          |希望项目一直做下去就好
+|2023/03/27  |s*e        |￥10          |无
+
+|===
+
+==== 贡献者名单
+
+|===
+|序号 |头像 |名字
+
+|1   |image:https://avatars.githubusercontent.com/u/48756217?s=64&v=4[KouShenhai的头像,50,50]       |https://github.com/KouShenhai[KouShenhai]
+|2   |image:https://avatars.githubusercontent.com/u/26246537?s=64&v=4[liang99的头像,50,50]          |https://github.com/liang99[liang99]
+|3   |image:https://avatars.githubusercontent.com/u/50291874?s=64&v=4[livk-cloud的头像,50,50]       |https://github.com/livk-cloud[livk-cloud]
+|4   |image:https://avatars.githubusercontent.com/u/21030225?s=64&v=4[liukefu2050的头像,50,50]      |https://github.com/liukefu2050[liukefu2050]
+|5   |image:https://avatars.githubusercontent.com/u/127269482?s=64&v=4[HalfPomelo的头像,50,50]      |https://github.com/HalfPomelo[HalfPomelo]
+|6   |image:https://avatars.githubusercontent.com/u/69209385?s=64&v=4[lixin的头像,50,50]            |https://github.com/lixin[lixin]
+|7   |image:https://avatars.githubusercontent.com/u/2041471?s=64&v=4[simman的头像,50,50]            |https://github.com/simman[simman]
+|8   |image:https://avatars.githubusercontent.com/u/43296325?s=64&v=4[suhengli的头像,50,50]         |https://github.com/suhengli[suhengli]
+|9   |image:https://avatars.githubusercontent.com/u/89563182?s=64&v=4[gitkakafu的头像,50,50]        |https://github.com/gitkakafu[gitkakafu]
+|10  |image:https://avatars.githubusercontent.com/u/32741993?s=64&v=4[LeiZhiMin1的头像,50,50]       |https://github.com/LeiZhiMin1[LeiZhiMin1]
+|===
+
