@@ -107,12 +107,4 @@ public final class RedisKeyUtil {
 		return "ip:cache:" + type;
 	}
 
-	/**
-	 * I18n消息Key.
-	 * @param lang 语言
-	 */
-	public static String getI18nMessageKey(String lang) {
-		return "i18n:message:" + lang;
-	}
-
 }
