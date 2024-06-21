@@ -32,6 +32,8 @@ doc/db/db_data
 .mtj.tmp/
 *.gz
 
+LOG_FILE_PATH_IS_UNDEFINED
+
 # Package Files #
 *.jar
 *.war
