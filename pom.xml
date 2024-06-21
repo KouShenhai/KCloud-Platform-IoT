@@ -64,9 +64,11 @@
     <docker.password>password</docker.password>
     <docker-maven-plugin.version>0.44.0</docker-maven-plugin.version>
     <maven-checkstyle-plugin.version>3.4.0</maven-checkstyle-plugin.version>
-    <spring-javaformat-maven-plugin.version>0.0.41</spring-javaformat-maven-plugin.version>
     <native-maven-plugin.version>0.10.2</native-maven-plugin.version>
     <versions-maven-plugin.version>2.16.2</versions-maven-plugin.version>
+    <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
+    <asciidoctor-maven-plugin.version>3.0.0</asciidoctor-maven-plugin.version>
+    <spring-javaformat-maven-plugin.version>0.0.42</spring-javaformat-maven-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -351,26 +353,7 @@
       <plugin>
         <groupId>io.spring.javaformat</groupId>
         <artifactId>spring-javaformat-maven-plugin</artifactId>
-        <version>0.0.42</version>
-      </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.12</version>
-        <executions>
-          <execution>
-            <id>prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
+        <version>${spring-javaformat-maven-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -472,6 +455,30 @@
             --add-opens java.base/java.lang=ALL-UNNAMED
           </argLine>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.asciidoctor</groupId>
+        <artifactId>asciidoctor-maven-plugin</artifactId>
+        <version>${asciidoctor-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>generate-html-documentation</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>process-asciidoc</goal>
+            </goals>
+            <configuration>
+              <backend>spring-html</backend>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>io.spring.asciidoctor.backends</groupId>
+            <artifactId>spring-asciidoctor-backends</artifactId>
+            <version>${spring-asciidoctor-backends.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
     <!-- profile对资源的操作 -->

@@ -19,6 +19,7 @@ package org.laokou.common.mybatisplus.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.statement.StatementHandler;
+import org.apache.ibatis.logging.jdbc.PreparedStatementLogger;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
@@ -37,6 +38,7 @@ import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.constants.StringConstant.SPACE;
 
 /**
+ * @see PreparedStatementLogger
  * @author laokou
  */
 @Slf4j
