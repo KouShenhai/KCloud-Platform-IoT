@@ -24,20 +24,13 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-
 import static org.laokou.common.i18n.common.constants.TraceConstant.REQUEST_ID;
+import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
 
 /**
  * 幂等性Aop.
@@ -52,18 +45,6 @@ public class IdempotentAop {
 
 	private final RedisUtil redisUtil;
 
-	private static final DefaultRedisScript<Boolean> REDIS_SCRIPT;
-
-	static {
-		try (InputStream inputStream = ResourceUtil.getResource("META-INF/scripts/idempotent.lua").getInputStream()) {
-			REDIS_SCRIPT = new DefaultRedisScript<>(new String(inputStream.readAllBytes(), StandardCharsets.UTF_8),
-					Boolean.class);
-		}
-		catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	@Before("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
 	public void doBefore() {
 		String requestId = getRequestId();
@@ -71,8 +52,7 @@ public class IdempotentAop {
 			throw new RuntimeException("提交失败，令牌不能为空");
 		}
 		String apiIdempotentKey = RedisKeyUtil.getApiIdempotentKey(requestId);
-		Boolean result = redisUtil.execute(REDIS_SCRIPT, Collections.singletonList(apiIdempotentKey));
-		if (!result) {
+		if (!redisUtil.setIfAbsent(apiIdempotentKey, 0, MINUTE_FIVE_EXPIRE)) {
 			throw new RuntimeException("不可重复提交请求");
 		}
 		IdempotentUtil.openIdempotent();

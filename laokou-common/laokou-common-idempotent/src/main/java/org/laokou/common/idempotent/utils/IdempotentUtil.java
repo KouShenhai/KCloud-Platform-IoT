@@ -21,14 +21,9 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
-import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
-
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
 
 /**
  * 幂等性工具.
@@ -38,8 +33,6 @@ import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
 @Component
 @RequiredArgsConstructor
 public class IdempotentUtil {
-
-	private final RedisUtil redisUtil;
 
 	private static final ThreadLocal<Boolean> IS_IDEMPOTENT_LOCAL = new TransmittableThreadLocal<>();
 
@@ -51,10 +44,7 @@ public class IdempotentUtil {
 	 * @return {@link String }
 	 */
 	public String getIdempotentKey() {
-		String idempotentKey = String.valueOf(IdGenerator.defaultSnowflakeId());
-		String apiIdempotentKey = RedisKeyUtil.getApiIdempotentKey(idempotentKey);
-		redisUtil.setIfAbsent(apiIdempotentKey, 0, MINUTE_FIVE_EXPIRE);
-		return idempotentKey;
+		return String.valueOf(IdGenerator.defaultSnowflakeId());
 	}
 
 	public static Map<String, String> getRequestId() {

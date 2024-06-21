@@ -183,12 +183,12 @@ public class RedisUtil {
 		return redisTemplate.getExpire(key);
 	}
 
-	public void setIfAbsent(String key, Object value) {
-		setIfAbsent(key, value, DEFAULT_EXPIRE);
+	public boolean setIfAbsent(String key, Object value) {
+		return setIfAbsent(key, value, DEFAULT_EXPIRE);
 	}
 
-	public void setIfAbsent(String key, Object value, long expire) {
-		redissonClient.getBucket(key).setIfAbsent(value, Duration.ofSeconds(expire));
+	public boolean setIfAbsent(String key, Object value, long expire) {
+		return redissonClient.getBucket(key).setIfAbsent(value, Duration.ofSeconds(expire));
 	}
 
 	public Object get(String key) {
