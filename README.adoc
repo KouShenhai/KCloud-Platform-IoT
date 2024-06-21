@@ -44,6 +44,12 @@ image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源
 - 复制粘贴代码提高生产效率
 - 学习DDD思想并落地实践
 
+=== 🔈 生成文档
+[source,shell]
+----
+mvn prepare-package
+----
+
 === 🔗 在线体验（正在重构，敬请期待）
 https://www.laokou.org.cn[老寇IoT云平台在线体验（请点击我，境外服务器网络延迟请稍候）]
 
