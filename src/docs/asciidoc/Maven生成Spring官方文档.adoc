@@ -45,10 +45,10 @@
 image:image/tools/img.png[目录,150,150,align=left]
 
 === 编写AsciiDoc
-在该目录下新建一个 `test.adoc` 随便写几句话
+在 `src/docs/asciidoc` 新建文档 `test.adoc` 文档里面随便写一段话
 
-=== 生成文档
-在 `根目录` 执行命令 `mvn prepare-package` 
+=== 执行命令
+在 `根目录` 执行命令 `mvn prepare-package` 转换成 `HTML` 页面
 
 默认生成位置为 `根目录/target`
 
@@ -57,9 +57,30 @@ image:image/tools/img.png[目录,150,150,align=left]
 image:image/tools/img_1.png[test.html,600,100,align=left]
 
 == 带目录的HTML页面生成
-=== 
 
-== 2dffds
+=== 创建首页
+在 `src/docs/asciidoc` 新建 `index.adoc` 文档里面填写如下内容
+
+image:image/tools/img_2.png[index.html,500,100,align=left]
+
+link:Asciidoctor使用指南.adoc[请查看Asciidoctor语法]
+
+=== 执行命令
+
+略，同上文
+
+=== 查看页面
+找到 `index.html` 打开
+
+image:image/tools/img_3.gif[查看首页,300,100,align=left]
+
+== 替换logo
+-- 
+  替换logo，我提供两种思路：
+  1.修改maven plugin源码，修改完之后打包并替换掉之前的插件
+  2.直接修改生成的HTML页面样式[本文采用这种方式]
+--
+image:image/tools/img_4.gif[替换logo,400,100,align=left]
 
 == 源码地址
 https://github.com/KouShenhai/KCloud-Platform-IoT/blob/master/pom.xml[本项目已集成，直接使用即可]
