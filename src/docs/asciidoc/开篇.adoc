@@ -108,3 +108,7 @@
 |9   |image:https://avatars.githubusercontent.com/u/89563182?s=64&v=4[gitkakafu的头像,50,50]        |https://github.com/gitkakafu[gitkakafu]
 |10  |image:https://avatars.githubusercontent.com/u/32741993?s=64&v=4[LeiZhiMin1的头像,50,50]       |https://github.com/LeiZhiMin1[LeiZhiMin1]
 |===
+
+== 赞助打赏
+image:image/open/wxzp.jpg[微信支付,201,300]
+image:image/open/zfb.jpg[支付宝支付,201,300]

@@ -28,7 +28,6 @@ import org.laokou.common.core.utils.SpringExpressionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.lock.Lock;
 import org.laokou.common.lock.RedissonLock;
 import org.laokou.common.lock.TypeEnum;
@@ -66,7 +65,7 @@ public class LockAop {
 		Lock4j lock4j = AnnotationUtils.findAnnotation(method, Lock4j.class);
 		Assert.isTrue(ObjectUtil.isNotNull(lock4j), "@Lock4j is null");
 		String expression = lock4j.key();
-		if (StringUtil.isNotEmpty(expression)) {
+		if (expression.contains("#{") && expression.contains("}")) {
 			expression = SpringExpressionUtil.parse(expression, parameterNames, joinPoint.getArgs(), String.class);
 		}
 		long expire = lock4j.expire();
