@@ -63,7 +63,7 @@ image:image/tools/img_1.png[test.html,600,100,align=left]
 
 image:image/tools/img_2.png[index.html,500,100,align=left]
 
-link:Asciidoctor使用指南.adoc[请查看Asciidoctor语法]
+link:Asciidoctor使用指南.html[请查看Asciidoctor语法]
 
 === 执行命令
 
