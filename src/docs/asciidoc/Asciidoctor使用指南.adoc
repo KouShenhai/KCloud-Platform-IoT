@@ -1,0 +1,74 @@
+:toc:
+= Asciidoctor使用指南
+
+== 介绍
+-- 
+  Asciidoctor是一个快速、开源、基于Ruby的文本处理器，用于将AsciiDoc®解析为文档模型并将其转换为输出格式，例如HTML5、DocBook5、手册页、PDF、EPUB3和其他格式。
+--
+
+== 官方地址
+https://asciidoctor.org[Asciidoctor官方地址]
+
+== 应用场景
+
+--
+  1.需要撰写复杂结构文档，如技术规范、手册、书籍等。
+  2.需要生成多种输出格式，并保持格式的一致性。
+  3.需要文档中包含复杂元素，如表格、脚注、图表等。
+--
+
+== 快速入门
+
+=== 图片
+-- 
+  区块图片,语法 => image::图片地址[图片描述,长度,高度,对齐=左对齐/居中/右对齐]（在HTML页面上面查看有问题）
+--
+
+--
+  image::image/tools/img.png[目录,100,100,align=left]
+  image::image/tools/img.png[目录,100,100,align=center]
+  image::image/tools/img.png[目录,100,100,align=right]
+--
+image::image/tools/img.png[目录,100,100,align=left]
+image::image/tools/img.png[目录,100,100,align=center]
+image::image/tools/img.png[目录,100,100,align=right]
+
+--
+  行内图片,语法 => image:图片地址[图片描述,长度,位置,标题（鼠标移至图片上方看到的描述）]
+--
+
+--
+  image:image/tools/img.png[目录,100,role=left,title="role=left"]
+  image:image/tools/img.png[目录,100,role=right,title="role=right"]
+  image:image/tools/img.png[目录,100,role=thumb,title="role=thumb"]
+  image:image/tools/img.png[目录,100,role=related,title="role=related"]
+--
+
+image:image/tools/img.png[目录,100,role=left,title="role=left"]
+image:image/tools/img.png[目录,100,role=right,title="role=right"]
+image:image/tools/img.png[目录,100,role=thumb,title="role=thumb"]
+image:image/tools/img.png[目录,100,role=related,title="role=related"]
+
+--
+  图片浮动,语法
+             => [.左浮动/右浮动]
+             => image:[图片描述,长度]
+--
+
+--
+  [.float-group]
+-
+  [.left]
+  image:image/tools/img.png[目录,100]
+-
+  [.right]
+  image::image/tools/img.png[目录,100]
+--
+
+[.float-group]
+
+[.left]
+image:image/tools/img.png[目录,100]
+
+[.right]
+image::image/tools/img.png[目录,100]
