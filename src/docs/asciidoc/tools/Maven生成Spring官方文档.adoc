@@ -1,0 +1,44 @@
+:toc:
+= Maven生成Spring官方文档
+
+== 介绍
+通过该插件可以将 `Asciidoctor` 转换成 `Spring` 风格的HTML页面
+
+== 操作步骤
+
+=== 1.导入依赖
+[source%nowrap,xml]
+----
+<plugin>
+	<groupId>org.asciidoctor</groupId>
+	<artifactId>asciidoctor-maven-plugin</artifactId>
+	<version>3.0.0</version>
+	<executions>
+		<execution>
+			<id>generate-html-documentation</id>
+			<phase>prepare-package</phase>
+			<goals>
+				<goal>process-asciidoc</goal>
+			</goals>
+			<configuration>
+				<backend>spring-html</backend>
+			</configuration>
+		</execution>
+	</executions>
+	<dependencies>
+		<dependency>
+			<groupId>io.spring.asciidoctor.backends</groupId>
+			<artifactId>spring-asciidoctor-backends</artifactId>
+			<version>0.0.7</version>
+		</dependency>
+	</dependencies>
+</plugin>
+----
+
+=== 2.创建目录
+使用 https://github.com/asciidoctor/asciidoctor-maven-plugin[Asciidoctor Maven] 插件来生成文档
+
+
+== 资源
+https://github.com/KouShenhai/KCloud-Platform-IoT[本项目已集成，直接使用即可]
+
