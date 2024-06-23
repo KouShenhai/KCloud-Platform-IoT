@@ -98,12 +98,11 @@ public class ApiFilter implements WebFilter {
 			// 用户名或密码错误
 			return ReactiveResponseUtil.response(exchange, Result.fail(OAUTH2_USERNAME_PASSWORD_ERROR));
 		}
-		if (gatewayExtProperties.isEnabled()) {
-			if (!ObjectUtil.equals(gatewayExtProperties.getPassword(), password)
-					|| !ObjectUtil.equals(gatewayExtProperties.getUsername(), username)) {
-				// 用户名或密码错误
-				return ReactiveResponseUtil.response(exchange, Result.fail(OAUTH2_USERNAME_PASSWORD_ERROR));
-			}
+		if (gatewayExtProperties.isEnabled()
+			&& (!ObjectUtil.equals(gatewayExtProperties.getPassword(), password)
+			|| !ObjectUtil.equals(gatewayExtProperties.getUsername(), username))) {
+			// 用户名或密码错误
+			return ReactiveResponseUtil.response(exchange, Result.fail(OAUTH2_USERNAME_PASSWORD_ERROR));
 		}
 		return chain.filter(exchange);
 	}

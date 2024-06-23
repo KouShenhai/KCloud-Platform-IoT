@@ -23,7 +23,6 @@ import de.codecentric.boot.admin.server.domain.events.InstanceEvent;
 import de.codecentric.boot.admin.server.domain.events.InstanceStatusChangedEvent;
 import de.codecentric.boot.admin.server.notify.AbstractStatusChangeNotifier;
 import io.micrometer.common.lang.NonNullApi;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -37,18 +36,6 @@ import reactor.core.publisher.Mono;
 @Component
 @NonNullApi
 public class StatusChangeNotifier extends AbstractStatusChangeNotifier {
-
-	@Schema(name = "DOWN_STATUS", description = "未通过健康检查")
-	private static final String DOWN_STATUS = "DOWN";
-
-	@Schema(name = "OFFLINE_STATUS", description = "离线")
-	private static final String OFFLINE_STATUS = "OFFLINE";
-
-	@Schema(name = "UP_STATUS", description = "上线")
-	private static final String UP_STATUS = "UP";
-
-	@Schema(name = "UNKNOWN_STATUS", description = "未知异常")
-	private static final String UNKNOWN_STATUS = "UNKNOWN";
 
 	public StatusChangeNotifier(InstanceRepository instanceRepository) {
 		super(instanceRepository);
@@ -66,10 +53,10 @@ public class StatusChangeNotifier extends AbstractStatusChangeNotifier {
 			if (event instanceof InstanceStatusChangedEvent eventStatus) {
 				String status = eventStatus.getStatusInfo().getStatus();
 				switch (status) {
-					case DOWN_STATUS -> log.info("未通过健康检查");
-					case OFFLINE_STATUS -> log.info("离线");
-					case UP_STATUS -> log.info("上线");
-					case UNKNOWN_STATUS -> log.error("未知异常");
+					case "DOWN" -> log.info("未通过健康检查");
+					case "OFFLINE" -> log.info("离线");
+					case "UP" -> log.info("上线");
+					case "UNKNOWN" -> log.error("未知异常");
 				}
 			}
 		});

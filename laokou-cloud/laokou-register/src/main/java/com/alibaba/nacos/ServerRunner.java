@@ -17,26 +17,18 @@
 package com.alibaba.nacos;
 
 import io.micrometer.core.lang.NonNullApi;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 /**
  * @author spilledyear@outlook.com
  */
 @Component
 @NonNullApi
-@RequiredArgsConstructor
 public class ServerRunner implements ApplicationListener<ApplicationReadyEvent>, DisposableBean, Ordered {
-
-	private final ServerProperties serverProperties;
 
 	@Override
 	public int getOrder() {
@@ -45,20 +37,11 @@ public class ServerRunner implements ApplicationListener<ApplicationReadyEvent>,
 
 	@Override
 	public void destroy() {
-		System.out.println("nacos关闭");
 	}
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
-		try {
-			String url = (serverProperties.getSsl().isEnabled() ? "https://" : "http://")
-					+ InetAddress.getLocalHost().getHostAddress() + ":" + serverProperties.getPort()
-					+ serverProperties.getServlet().getContextPath();
-			System.out.printf("\nnacos访问地址：%s\n\n", url);
-		}
-		catch (UnknownHostException e) {
-			throw new RuntimeException(e);
-		}
+
 	}
 
 }

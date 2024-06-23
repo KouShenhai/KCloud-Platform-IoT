@@ -37,6 +37,10 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 public class NacosApp {
 
 	public static void main(String[] args) {
+		// @formatter:off
+		// -Dnacos.home => Nacos的根目录
+		// Nacos控制台 => 【http/https】://【ip:8848】/nacos
+		// @formatter:on
 		new SpringApplicationBuilder(NacosApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

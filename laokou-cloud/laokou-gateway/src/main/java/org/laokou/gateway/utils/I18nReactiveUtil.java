@@ -34,6 +34,10 @@ import static org.laokou.common.core.i18n.I18nRequestContextFilter.LANG;
  */
 public class I18nReactiveUtil {
 
+	private I18nReactiveUtil() {
+
+	}
+
 	/**
 	 * 请求头数据写入本地线程.
 	 * @param exchange 服务网络交换机
