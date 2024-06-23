@@ -171,7 +171,7 @@ public class AuthA extends AggregateRoot<Long> {
 		this.username = username;
 		this.password = password;
 		this.grantType = grantType;
-		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : 0L;
+		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : null;
 		this.captcha = new CaptchaV(uuid, captcha);
 		this.request = request;
 	}

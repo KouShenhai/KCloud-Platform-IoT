@@ -1,0 +1,282 @@
+# 用户名密码登录/手机号登录/邮箱登录 => 校验认证类型是否为空
+POST {{schema}}{{host}}/oauth2/token
+Authorization: {{Authorization}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="username"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="password"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="uuid"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="captcha"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_id"
+
+
+--WebAppBoundary
+
+###
+
+# 用户名密码登录/手机号登录/邮箱登录 => 校验租户ID是否为空
+POST {{schema}}{{host}}/oauth2/token
+Authorization: {{Authorization}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+password
+--WebAppBoundary
+Content-Disposition: form-data; name="username"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="password"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="uuid"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="captcha"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_id"
+
+
+--WebAppBoundary
+
+
+###
+
+# 用户名密码登录 => 校验UUID是否为空
+POST {{schema}}{{host}}/oauth2/token
+Authorization: {{Authorization}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+password
+--WebAppBoundary
+Content-Disposition: form-data; name="username"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="password"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="uuid"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="captcha"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_id"
+
+0
+--WebAppBoundary
+
+###
+
+# 用户名密码登录 => 校验验证码是否为空
+POST {{schema}}{{host}}/oauth2/token
+Authorization: {{Authorization}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+password
+--WebAppBoundary
+Content-Disposition: form-data; name="username"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="password"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="uuid"
+
+1
+--WebAppBoundary
+Content-Disposition: form-data; name="captcha"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_id"
+
+0
+--WebAppBoundary
+
+###
+
+# 用户名密码登录 => 校验用户名是否为空
+POST {{schema}}{{host}}/oauth2/token
+Authorization: {{Authorization}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+password
+--WebAppBoundary
+Content-Disposition: form-data; name="username"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="password"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="uuid"
+
+1
+--WebAppBoundary
+Content-Disposition: form-data; name="captcha"
+
+1
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_id"
+
+0
+--WebAppBoundary
+
+###
+
+# 用户名密码登录 => 校验密码是否为空
+POST {{schema}}{{host}}/oauth2/token
+Authorization: {{Authorization}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+password
+--WebAppBoundary
+Content-Disposition: form-data; name="username"
+
+1
+--WebAppBoundary
+Content-Disposition: form-data; name="password"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="uuid"
+
+1
+--WebAppBoundary
+Content-Disposition: form-data; name="captcha"
+
+1
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_id"
+
+0
+--WebAppBoundary
+
+###
+
+# 手机号登录 => 校验手机号是否为空
+POST {{schema}}{{host}}/oauth2/token
+Authorization: {{Authorization}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+mobile
+--WebAppBoundary
+Content-Disposition: form-data; name="mobile"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="code"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_id"
+
+0
+--WebAppBoundary
+
+###
+
+# 手机号登录 => 校验验证码是否为空
+POST {{schema}}{{host}}/oauth2/token
+Authorization: {{Authorization}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+mobile
+--WebAppBoundary
+Content-Disposition: form-data; name="mobile"
+
+181
+--WebAppBoundary
+Content-Disposition: form-data; name="code"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_id"
+
+0
+--WebAppBoundary
+
+###
+
+# 手机号登录 => 校验手机号是否正确
+POST {{schema}}{{host}}/oauth2/token
+Authorization: {{Authorization}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+mobile
+--WebAppBoundary
+Content-Disposition: form-data; name="mobile"
+
+181
+--WebAppBoundary
+Content-Disposition: form-data; name="code"
+
+1
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_id"
+
+0
+--WebAppBoundary
+
+# 邮箱登录
