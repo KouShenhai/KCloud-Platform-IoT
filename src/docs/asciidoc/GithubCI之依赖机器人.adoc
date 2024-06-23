@@ -1,0 +1,11 @@
+:toc:
+
+= Github CI之依赖机器人
+
+== Dependabot
+
+== Renovate
+
+== 赞助打赏
+image:image/open/wxzp.jpg[微信支付,201,300]
+image:image/open/zfb.jpg[支付宝支付,201,300]

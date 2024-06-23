@@ -5,7 +5,7 @@
 - 时间：2022.06.15 ~ 至今
 
 === 📣 项目介绍
-image::doc/image/logo.png[LOGO,500,align=center]
+image::doc/image/logo/logo.png[LOGO,500,align=center]
 
 KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微服务架构的IoT云平台。基于Spring Boot 3.3.1、Spring Cloud 2023.0.2、Spring Cloud Alibaba 2023.0.1.0 最新版本开发的云服务多租户IoT平台。
 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、灰度路由、服务限流、熔断降级、监控报警、多数据源、高亮搜索、定时任务、分布式链路、分布式缓存、分布式事务、分布式存储、分布式锁等功能，用于快速构建微服务项目。目前支持Shell、Docker等多种部署方式，并且支持GraalVM和虚拟线程。实现RBAC权限、其中包含系统管理、系统监控、数据分析等几大模块。
