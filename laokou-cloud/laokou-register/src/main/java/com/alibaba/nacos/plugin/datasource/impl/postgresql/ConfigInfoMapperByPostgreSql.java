@@ -69,7 +69,6 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 		String tenantId = (String) context.getWhereParameter("tenantId");
 		String sql = "SELECT id,data_id,group_id,tenant_id,app_name,content FROM config_info"
 				+ " WHERE tenant_id LIKE ? AND app_name= ?" + " LIMIT " + pageSize + " OFFSET " + startRow;
-		;
 		return new MapperResult(sql, CollectionUtils.list(new Object[] { tenantId, appName }));
 	}
 
