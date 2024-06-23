@@ -193,7 +193,7 @@ public class AuthA extends AggregateRoot<Long> {
 	}
 
 	public void createUserByAuthorizationCode() {
-		this.user = new UserE(this.username, EMPTY, EMPTY, this.tenantId);
+		this.user = new UserE(this.username, EMPTY, EMPTY, 0L);
 	}
 
 	public void updateUser(UserE user) {

@@ -32,7 +32,7 @@ Content-Disposition: form-data; name="tenant_id"
 
 ###
 
-# 用户名密码登录/手机号登录/邮箱登录 => 校验租户ID是否为空
+# 用户名密码登录 => 校验租户ID是否为空
 POST {{schema}}{{host}}/oauth2/token
 Authorization: {{Authorization}}
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
@@ -203,6 +203,43 @@ Content-Disposition: form-data; name="tenant_id"
 
 ###
 
+# 手机号登录 => 校验租户ID是否为空
+POST {{schema}}{{host}}/oauth2/token
+Authorization: {{Authorization}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+mobile
+--WebAppBoundary
+Content-Disposition: form-data; name="username"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="password"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="uuid"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="captcha"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_id"
+
+
+--WebAppBoundary
+
+
+###
+
+###
+
 # 手机号登录 => 校验手机号是否为空
 POST {{schema}}{{host}}/oauth2/token
 Authorization: {{Authorization}}
@@ -279,4 +316,116 @@ Content-Disposition: form-data; name="tenant_id"
 0
 --WebAppBoundary
 
-# 邮箱登录
+###
+
+# 邮箱登录 => 校验租户ID是否为空
+POST {{schema}}{{host}}/oauth2/token
+Authorization: {{Authorization}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+mail
+--WebAppBoundary
+Content-Disposition: form-data; name="username"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="password"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="uuid"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="captcha"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_id"
+
+
+--WebAppBoundary
+
+###
+
+###
+
+# 邮箱登录 => 校验邮箱是否为空
+POST {{schema}}{{host}}/oauth2/token
+Authorization: {{Authorization}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+mail
+--WebAppBoundary
+Content-Disposition: form-data; name="mail"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="code"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_id"
+
+0
+--WebAppBoundary
+
+###
+
+# 邮箱登录 => 校验验证码是否为空
+POST {{schema}}{{host}}/oauth2/token
+Authorization: {{Authorization}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+mail
+--WebAppBoundary
+Content-Disposition: form-data; name="mail"
+
+1
+--WebAppBoundary
+Content-Disposition: form-data; name="code"
+
+
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_id"
+
+0
+--WebAppBoundary
+
+###
+
+# 邮箱登录 => 校验邮箱是否正确
+POST {{schema}}{{host}}/oauth2/token
+Authorization: {{Authorization}}
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+mail
+--WebAppBoundary
+Content-Disposition: form-data; name="mail"
+
+1
+--WebAppBoundary
+Content-Disposition: form-data; name="code"
+
+1
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_id"
+
+0
+--WebAppBoundary
