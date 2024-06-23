@@ -57,7 +57,7 @@ public class StatusChangeNotifier extends AbstractStatusChangeNotifier {
 					case "OFFLINE" -> log.info("离线");
 					case "UP" -> log.info("上线");
 					case "UNKNOWN" -> log.error("未知异常");
-					default -> {}
+					default -> log.error("缺省信息");
 				}
 			}
 		});
