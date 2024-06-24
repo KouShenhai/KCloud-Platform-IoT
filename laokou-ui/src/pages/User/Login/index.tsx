@@ -63,8 +63,8 @@ const Lang = () => {
   });
 
   return (
-    <div className={langClassName} data-lang>
-      {SelectLang && <SelectLang />}
+    <div className={ langClassName } data-lang="国际化">
+      { SelectLang && <SelectLang /> }
     </div>
   );
 };
@@ -223,6 +223,13 @@ const Login: React.FC = () => {
                 label: intl.formatMessage({
                   id: 'pages.login.phoneLogin.tab',
                   defaultMessage: '手机号登录',
+                }),
+              },
+              {
+                key: 'mail',
+                label: intl.formatMessage({
+                  id: 'pages.login.mailLogin.tab',
+                  defaultMessage: '邮箱登录',
                 }),
               },
             ]}
