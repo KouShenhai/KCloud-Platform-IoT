@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: "1 * * * *"
+    - cron: "5 * * * *"
 name: Daily Jobs
 jobs:
   renovate:
