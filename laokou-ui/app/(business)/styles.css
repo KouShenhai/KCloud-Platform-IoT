@@ -1,8 +1,0 @@
-.search-input {
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.search-input.visible {
-    opacity: 1;
-}

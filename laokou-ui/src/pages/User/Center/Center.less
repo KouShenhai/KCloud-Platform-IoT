@@ -1,0 +1,61 @@
+
+.avatarHolder {
+  margin-bottom: 16px;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  height: 120px;
+  
+  & > img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+  }
+  &:hover:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    color: #eee;
+    font-size: 24px;
+    font-style: normal;
+    line-height: 110px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    content: '+';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+.teamTitle {
+  margin-bottom: 12px;
+  color: @heading-color;
+  font-weight: 500;
+}
+
+.team {
+  :global {
+    .ant-avatar {
+      margin-right: 12px;
+    }
+  }
+
+  a {
+    display: block;
+    margin-bottom: 24px;
+    overflow: hidden;
+    color: @text-color;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    transition: color 0.3s;
+
+    &:hover {
+      color: @primary-color;
+    }
+  }
+}

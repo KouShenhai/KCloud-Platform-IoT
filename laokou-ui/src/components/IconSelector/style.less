@@ -1,0 +1,137 @@
+.iconPicSearcher {
+  display: inline-block;
+  margin: 0 8px;
+
+  .icon-pic-btn {
+    color: @text-color-secondary;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      color: @input-icon-hover-color;
+    }
+  }
+}
+
+.icon-pic-preview {
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
+  padding: 8px;
+  text-align: center;
+  border: 1px solid @border-color-base;
+  border-radius: 4px;
+
+  > img {
+    max-width: 50px;
+    max-height: 50px;
+  }
+}
+
+.icon-pic-search-result {
+  min-height: 50px;
+  padding: 0 10px;
+
+  > .result-tip {
+    padding: 10px 0;
+    color: @text-color-secondary;
+  }
+
+  > table {
+    width: 100%;
+
+    .col-icon {
+      width: 80px;
+      padding: 10px 0;
+
+      > .anticon {
+        font-size: 30px;
+
+        :hover {
+          color: @link-hover-color;
+        }
+      }
+    }
+  }
+}
+
+ul.anticonsList {
+  margin: 2px 0;
+  overflow: hidden;
+  direction: ltr;
+  list-style: none;
+
+  li {
+    position: relative;
+    float: left;
+    width: 48px;
+    height: 48px;
+    margin: 3px 0;
+    padding: 2px 0 0;
+    overflow: hidden;
+    color: #555;
+    text-align: center;
+    list-style: none;
+    background-color: inherit;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+    .rtl & {
+      margin: 3px 0;
+      padding: 2px 0 0;
+    }
+
+    .anticon {
+      margin: 4px 0 2px;
+      font-size: 24px;
+      transition: transform 0.3s ease-in-out;
+      will-change: transform;
+    }
+
+    .anticonClass {
+      display: block;
+      font-family: 'Lucida Console', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+      white-space: nowrap;
+      text-align: center;
+      transform: scale(0.83);
+
+      .ant-badge {
+        transition: color 0.3s ease-in-out;
+      }
+    }
+
+    &:hover {
+      color: #fff;
+      background-color: @primary-color;
+
+      .anticon {
+        transform: scale(1.4);
+      }
+
+      .ant-badge {
+        color: #fff;
+      }
+    }
+
+    &.TwoTone:hover {
+      background-color: #8ecafe;
+    }
+
+    &.copied:hover {
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    &.copied::after {
+      top: -2px;
+      opacity: 1;
+    }
+  }
+}
+
+.copied-code {
+  padding: 2px 4px;
+  font-size: 12px;
+  background: #f5f5f5;
+  border-radius: 2px;
+}
