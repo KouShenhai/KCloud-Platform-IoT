@@ -5,20 +5,13 @@ import { CronLocalization } from "@sbzen/re-cron";
 import {
   ApiOutlined,
   BookOutlined,
-  ChromeFilled,
   CodeOutlined,
   EditOutlined,
-  GithubOutlined,
   HomeOutlined,
-  LogoutOutlined,
-  MenuOutlined,
   MessageOutlined,
   MonitorOutlined,
-  QuestionCircleFilled,
-  SearchOutlined,
   ToolOutlined,
   UserOutlined,
-  ExclamationCircleFilled,
   AreaChartOutlined,
   PieChartOutlined,
   BarChartOutlined,
@@ -66,11 +59,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 //登录请求
-export type LoginReq = {
+export type LoginParam = {
+  uuid: string;
+  captcha: string;
   username: string;
   password: string;
-  code: string;
-  uuid: string;
+  tenant_id: number;
+  grant_type: string;
 };
 
 //用户简单信息定义

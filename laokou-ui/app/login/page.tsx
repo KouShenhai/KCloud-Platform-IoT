@@ -1,12 +1,12 @@
 "use client";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import {
-  LoginFormPage,
-  ProConfigProvider,
-  ProFormText,
+	LoginForm,
+	ProConfigProvider,
+	ProFormText,
 } from "@ant-design/pro-components";
-import { Divider, message, Spin, theme, ConfigProvider } from "antd";
-import { setCookie, getCookie, deleteCookie } from "cookies-next";
+import { message, Spin, theme } from "antd";
+import { setCookie, getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
 import type { ProFormInstance } from "@ant-design/pro-components";
@@ -14,9 +14,8 @@ import type { ProFormInstance } from "@ant-design/pro-components";
 import Image from "next/image";
 
 import { useEffect, useState, useRef } from "react";
-import { LoginReq } from "../_modules/definies";
+import { LoginParam } from "../_modules/definies";
 import {
-  encrypt,
   decrypt,
   displayModeIsDark,
   watchDarkModeChange,
@@ -26,6 +25,8 @@ type Captcha = {
   img: string;
   uuid: string;
 };
+
+
 
 //cookies 记住的用户名 key
 const cookie_username_key = "mortnon_username";
@@ -38,6 +39,12 @@ const backgroudLight = "/bg3.jpg";
 const backgroundDark = "/bg-dark.jpg";
 
 export default function Login() {
+  // 登录背景样式
+  // const containerClassName = useEmotionCss(() => {
+  //
+  // })
+
+
   //验证码数据
   const [captcha, setCaptcha] = useState({} as Captcha);
   //是否展示验证码框
@@ -95,11 +102,13 @@ export default function Login() {
 
   //提交登录
   const userLogin = async (values: any) => {
-    const loginData: LoginReq = {
+    const params: LoginParam = {
       username: values.username,
       password: values.password,
-      code: values.code,
+      captcha: values.code,
       uuid: captcha.uuid,
+	  tenant_id: 0,
+	  grant_type: 'password'
     };
 
     try {
@@ -108,7 +117,7 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(loginData),
+        body: JSON.stringify(params),
         credentials: "include",
       });
 
@@ -172,20 +181,14 @@ export default function Login() {
           height: "100vh",
         }}
       >
-        <LoginFormPage
+        <LoginForm
           formRef={loginFormRef}
-          backgroundImageUrl={background}
-          logo="https://static.dongfangzan.cn/img/mortnon.svg"
-          title={(<span>MorTnon 若依后台管理</span>) as any}
+		  logo={<img alt="logo" src="/logo.png" />}
+          title="老寇IoT云平台"
           containerStyle={{
             backgroundColor: "rgba(0,0,0,0)",
             backdropFilter: "blur(4px)",
           }}
-          subTitle={
-            <span style={{ color: "rgba(255,255,255,1)" }}>
-              MorTnon，高质量的快速开发框架
-            </span>
-          }
           actions={
             <div
               style={{
@@ -199,9 +202,7 @@ export default function Login() {
               </p>
             </div>
           }
-          onFinish={userLogin}
-        >
-          <Divider>账号密码登录</Divider>
+          onFinish={userLogin}>
           <>
             <ProFormText
               name="username"
@@ -298,7 +299,7 @@ export default function Login() {
               marginBlockEnd: 24,
             }}>
           </div>
-        </LoginFormPage>
+        </LoginForm>
       </div>
     </ProConfigProvider>
   );
