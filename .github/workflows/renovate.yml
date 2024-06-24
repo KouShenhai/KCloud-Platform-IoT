@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
       - name: Run Renovate
-        uses: docker://renovate/renovate:19.133-slim
+        uses: docker://renovate/renovate:37.414-full
         env:
           RENOVATE_REPOSITORIES: KCloud-Platform-IoT
           RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
