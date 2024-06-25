@@ -12,13 +12,6 @@ import { useIntl, FormattedMessage } from '@umijs/max';
 import { DataNode } from 'antd/es/tree';
 import { DictValueEnumObj } from '@/components/DictTag';
 
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2023/02/06
- * 
- * */
-
 
 export type UserFormData = Record<string, unknown> & Partial<API.System.User>;
 

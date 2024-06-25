@@ -5,14 +5,6 @@ import { useIntl, FormattedMessage, useAccess } from '@umijs/max';
 import { getOnlineUserList, forceLogout } from '@/services/monitor/online';
 import { ActionType, ProColumns, ProTable } from '@ant-design/pro-components';
 import { DeleteOutlined } from '@ant-design/icons';
- 
-
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2023/02/07
- * 
- * */
 
 
 const handleForceLogout = async (selectedRow: API.Monitor.OnlineUserType) => {

@@ -1,10 +1,4 @@
 
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2022/06/27
- * 
- * */
 
 declare namespace API.Monitor {
 

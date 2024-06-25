@@ -1,10 +1,4 @@
 
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2023/02/07
- * 
- * */
 declare namespace API.Monitor {
 
   export type OnlineUserType = {
@@ -43,9 +37,9 @@ declare namespace API.Monitor {
     pageNum?: string;
     filter?: string;
     sorter?: string;
-  };  
+  };
 
-  export interface OnlineUserPageResult { 
+  export interface OnlineUserPageResult {
     code: number;
     msg: string;
     total: number;

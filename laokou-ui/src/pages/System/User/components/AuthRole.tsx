@@ -3,13 +3,6 @@ import { Form, Modal } from 'antd';
 import { useIntl } from '@umijs/max';
 import { ProForm, ProFormSelect } from '@ant-design/pro-components';
 
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2023/02/06
- * 
- * */
-
 export type FormValueType = any & Partial<API.System.Dept>;
 
 export type AuthRoleFormProps = {

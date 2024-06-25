@@ -4,13 +4,6 @@ import { Descriptions, Modal } from 'antd';
 import React, { useEffect } from 'react';
 import { DictValueEnumObj } from '@/components/DictTag';
 
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2021/09/16
- * 
- * */
-
 export type JobLogFormValueType = Record<string, unknown> & Partial<API.Monitor.JobLog>;
 
 export type JobLogFormProps = {
@@ -34,7 +27,7 @@ const JobLogDetailForm: React.FC<JobLogFormProps> = (props) => {
   const handleCancel = () => {
     props.onCancel();
   };
-  
+
   return (
     <Modal
       width={640}

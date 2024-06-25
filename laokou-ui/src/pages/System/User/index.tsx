@@ -18,13 +18,6 @@ import AuthRoleForm from './components/AuthRole';
 
 const { confirm } = Modal;
 
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2023/02/06
- * 
- * */
-
 /**
  * 添加节点
  *
@@ -102,7 +95,7 @@ const handleRemoveOne = async (selectedRow: API.System.User) => {
 /**
  * 导出数据
  *
- * 
+ *
  */
 const handleExport = async () => {
   const hide = message.loading('正在导出');
@@ -178,7 +171,7 @@ const UserTableList: React.FC = () => {
       },
     });
   };
-  
+
   const fetchUserInfo = async (userId: number) => {
     const res = await getUser(userId);
     setPostIds(res.postIds);

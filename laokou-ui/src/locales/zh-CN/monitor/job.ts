@@ -1,10 +1,3 @@
-/**
- * 定时任务调度
- * 
- * @author whiteshader@163.com
- * @date 2023-02-07
- */
-
 export default {
 	'monitor.job.title': '定时任务调度',
 	'monitor.job.job_id': '任务编号',

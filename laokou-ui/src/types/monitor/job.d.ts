@@ -1,9 +1,4 @@
-/**
- * 定时任务调度 Model Declare
- * 
- * @author whiteshader@163.com
- * @date 2023-02-07
- */
+
 
 declare namespace API.Monitor {
 
@@ -42,13 +37,13 @@ declare namespace API.Monitor {
     current?: string;
   }
 
-  export interface JobInfoResult { 
+  export interface JobInfoResult {
     code: number;
     msg: string;
     data: Job;
-  } 
+  }
 
-   export interface JobPageResult { 
+   export interface JobPageResult {
     code: number;
     msg: string;
     total: number;

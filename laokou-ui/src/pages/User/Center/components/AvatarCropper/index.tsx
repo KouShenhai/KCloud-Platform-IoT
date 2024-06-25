@@ -13,13 +13,6 @@ import {
   UploadOutlined,
 } from '@ant-design/icons';
 
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2022/02/24
- *
- * */
-
 export type AvatarCropperProps = {
   onFinished: (isSuccess: boolean) => void;
   open: boolean;
@@ -44,7 +37,7 @@ const AvatarCropperForm: React.FC<AvatarCropperProps> = (props) => {
       formData.append('avatarfile', blob);
       uploadAvatar(formData).then((res) => {
         if (res.code === 200) {
-          message.success(res.msg);          
+          message.success(res.msg);
           props.onFinished(true);
         } else {
           message.warning(res.msg);

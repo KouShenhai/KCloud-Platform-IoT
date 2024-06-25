@@ -5,13 +5,6 @@ import { Key, ProForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-des
 import { DataNode } from 'antd/es/tree';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2023/02/06
- * 
- * */
-
 export type FormValueType = any & Partial<API.System.Dept>;
 
 export type DataScopeFormProps = {
@@ -81,7 +74,7 @@ const DataScopeForm: React.FC<DataScopeFormProps> = (props) => {
         } else {
             setDeptIds([]);
         }
-        
+
         if(checkedValues.includes('deptCheckStrictly')) {
             setCheckStrictly(false);
         } else {

@@ -1,11 +1,4 @@
-import { request } from '@umijs/max'; 
-
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2023/02/07
- * 
- * */
+import { request } from '@umijs/max';
 
 
 // 获取服务器信息

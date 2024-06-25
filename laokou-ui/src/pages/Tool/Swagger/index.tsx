@@ -1,11 +1,5 @@
 import React, { useEffect } from 'react';
 
-/**
- *
- * @author whiteshader@163.com
- *
- * */
-
 const CacheInfo: React.FC = () => {
   useEffect(() => {
     const frame = document.getElementById('bdIframe');

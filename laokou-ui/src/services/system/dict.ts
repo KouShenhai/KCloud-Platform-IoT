@@ -2,12 +2,6 @@ import { request } from '@umijs/max';
 import { DictValueEnumObj } from '@/components/DictTag';
 import { HttpResult } from '@/enums/httpEnum';
 
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2021/09/16
- *
- * */
 
 // 查询字典类型列表
 export async function getDictTypeList(params?: API.DictTypeListParams) {

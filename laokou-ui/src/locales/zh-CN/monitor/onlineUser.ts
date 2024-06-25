@@ -1,11 +1,3 @@
-
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2021/09/16
- * 
- * */
-
 export default {
   'monitor.online.user.id': '编号',
   'monitor.online.user.token_id': '会话编号',

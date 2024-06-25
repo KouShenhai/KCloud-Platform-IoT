@@ -1,10 +1,3 @@
-
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2021/09/16
- * 
- * */
 declare namespace API.Monitor {
 
   export type CommandInfo = {

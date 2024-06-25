@@ -4,13 +4,6 @@ import { FormattedMessage, useIntl } from '@umijs/max';
 import { getValueEnumLabel } from '@/utils/options';
 import { DictValueEnumObj } from '@/components/DictTag';
 
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2023/02/07
- * 
- * */
-
 export type OperlogFormValueType = Record<string, unknown> & Partial<API.Monitor.Job>;
 
 export type OperlogFormProps = {

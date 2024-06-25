@@ -1,12 +1,5 @@
-import { request } from '@umijs/max'; 
+import { request } from '@umijs/max';
 
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2022/06/27
- * 
- * */
- 
 
 // 查询缓存名称列表
 export function listCacheName() {

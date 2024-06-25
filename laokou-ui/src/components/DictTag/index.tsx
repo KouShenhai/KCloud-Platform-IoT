@@ -3,13 +3,6 @@ import { Tag } from 'antd';
 import { ProSchemaValueEnumType } from '@ant-design/pro-components';
 import { DefaultOptionType } from 'antd/es/select';
 
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2023/02/10
- *
- * */
-
 export interface DictValueEnumType extends ProSchemaValueEnumType {
     id?: string | number;
     key?: string | number;

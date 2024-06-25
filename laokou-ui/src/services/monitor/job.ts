@@ -1,11 +1,4 @@
-import { request } from '@umijs/max'; 
-
-/**
- * 定时任务调度 API
- * 
- * @author whiteshader@163.com
- * @date 2023-02-07
- */
+import { request } from '@umijs/max';
 
 // 查询定时任务调度列表
 export async function getJobList(params?: API.Monitor.JobListParams) {
@@ -55,7 +48,7 @@ export async function removeJob(ids: string) {
 }
 
 // 导出定时任务调度
-export function exportJob(params?: API.Monitor.JobListParams) { 
+export function exportJob(params?: API.Monitor.JobListParams) {
   return request<API.Result>(`/api/schedule/job/export`, {
     method: 'GET',
     params

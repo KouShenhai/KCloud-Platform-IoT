@@ -5,14 +5,6 @@ import { ActionType, ParamsType, ProColumns, ProTable, RequestData } from '@ant-
 import { getDictValueEnum } from '@/services/system/dict';
 import DictTag from '@/components/DictTag';
 
-
-/* *
- *
- * @author whiteshader@163.com
- * @datetime  2023/02/10
- * 
- * */
-
 export type DataScopeFormProps = {
   onCancel: () => void;
   onSubmit: (values: React.Key[]) => void;
@@ -22,7 +14,7 @@ export type DataScopeFormProps = {
 };
 
 const UserSelectorModal: React.FC<DataScopeFormProps> = (props) => {
-  
+
   const actionRef = useRef<ActionType>();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [statusOptions, setStatusOptions] = useState<any>([]);
