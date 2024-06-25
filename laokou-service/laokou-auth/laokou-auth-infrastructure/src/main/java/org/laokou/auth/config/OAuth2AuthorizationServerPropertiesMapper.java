@@ -35,6 +35,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Maps to Authorization Server types.
@@ -43,8 +44,8 @@ import java.util.List;
  * @author Steve Riesenberg
  * @author laokou
  */
-@Component("propertiesMapper")
 @RequiredArgsConstructor
+@Component("propertiesMapper")
 public final class OAuth2AuthorizationServerPropertiesMapper {
 
 	private final OAuth2AuthorizationServerProperties properties;
@@ -71,8 +72,9 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 	}
 
 	List<RegisteredClient> asRegisteredClients() {
-		List<RegisteredClient> registeredClients = new ArrayList<>();
-		this.properties.getClient()
+		Map<String, OAuth2AuthorizationServerProperties.Client> clientMap = this.properties.getClient();
+		List<RegisteredClient> registeredClients = new ArrayList<>(clientMap.size());
+		clientMap
 			.forEach((registrationId, client) -> registeredClients.add(getRegisteredClient(registrationId, client)));
 		return registeredClients;
 	}
