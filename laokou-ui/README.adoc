@@ -1,0 +1,17 @@
+=== 下载依赖
+[source,shell]
+----
+pnpm i
+----
+
+=== 运行项目
+[source,shell]
+----
+pnpm run dev
+----
+
+=== 打包项目
+[source,shell]
+----
+pnpm run build
+----
