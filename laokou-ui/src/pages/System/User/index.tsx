@@ -1,19 +1,27 @@
-
-import React, { useState, useRef, useEffect } from 'react';
-import { useIntl, FormattedMessage, useAccess } from '@umijs/max';
-import { Card, Col, Dropdown, FormInstance, Row, Space, Switch } from 'antd';
-import { Button, message, Modal } from 'antd';
-import { ActionType, FooterToolbar, PageContainer, ProColumns, ProTable } from '@ant-design/pro-components';
-import { PlusOutlined, DeleteOutlined, ExclamationCircleOutlined, DownOutlined, EditOutlined } from '@ant-design/icons';
-import { getUserList, removeUser, addUser, updateUser, exportUser, getUser, changeUserStatus, updateAuthRole, resetUserPwd } from '@/services/system/user';
+import React, {useEffect, useRef, useState} from 'react';
+import {FormattedMessage, useAccess, useIntl} from '@umijs/max';
+import {Button, Card, Col, Dropdown, FormInstance, message, Modal, Row, Space, Switch} from 'antd';
+import {ActionType, FooterToolbar, PageContainer, ProColumns, ProTable} from '@ant-design/pro-components';
+import {DeleteOutlined, DownOutlined, EditOutlined, ExclamationCircleOutlined, PlusOutlined} from '@ant-design/icons';
+import {
+  addUser,
+  changeUserStatus,
+  exportUser,
+  getDeptTree,
+  getUser,
+  getUserList,
+  removeUser,
+  resetUserPwd,
+  updateAuthRole,
+  updateUser
+} from '@/services/system/user';
 import UpdateForm from './edit';
-import { getDictValueEnum } from '@/services/system/dict';
-import { DataNode } from 'antd/es/tree';
-import { getDeptTree } from '@/services/system/user';
+import {getDictValueEnum} from '@/services/system/dict';
+import {DataNode} from 'antd/es/tree';
 import DeptTree from './components/DeptTree';
 import ResetPwd from './components/ResetPwd';
-import { getPostList } from '@/services/system/post';
-import { getRoleList } from '@/services/system/role';
+import {getPostList} from '@/services/system/post';
+import {getRoleList} from '@/services/system/role';
 import AuthRoleForm from './components/AuthRole';
 
 const { confirm } = Modal;
@@ -428,12 +436,11 @@ const UserTableList: React.FC = () => {
             ]}
             request={(params) =>
               getUserList({ ...params, deptId: selectDept.id } as API.System.UserListParams).then((res) => {
-                const result = {
+                return {
                   data: res.rows,
                   total: res.total,
                   success: true,
                 };
-                return result;
               })
             }
             columns={columns}
