@@ -30,28 +30,8 @@ public enum EventStatus {
 	CREATED,
 
 	/**
-	 * 已发布.
+	 * 已消费.
 	 */
-	PUBLISHED,
-
-	/**
-	 * 发布成功.
-	 */
-	PUBLISH_SUCCEED,
-
-	/**
-	 * 发布失败.
-	 */
-	PUBLISH_FAILED,
-
-	/**
-	 * 消费成功.
-	 */
-	CONSUME_SUCCEED,
-
-	/**
-	 * 消费失败.
-	 */
-	CONSUME_FAILED
+	CONSUMED
 
 }

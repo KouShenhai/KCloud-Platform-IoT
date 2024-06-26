@@ -29,10 +29,14 @@ public final class StringConstant {
 	private StringConstant() {
 	}
 
-	@Schema(name = "EMPTY", description = "空字符串")
+	/**
+	 * 空字符串.
+	 */
 	public static final String EMPTY = "";
 
-	@Schema(name = "AT", description = "@")
+	/**
+	 * AT.
+	 */
 	public static final String AT = "@";
 
 	@Schema(name = "TRUE", description = "TRUE")
@@ -89,9 +93,6 @@ public final class StringConstant {
 	@Schema(name = "UNDER", description = "分割参数")
 	public static final String UNDER = "_";
 
-	@Schema(name = "UNDER", description = "分割参数")
-	public static final Character CHAR_UNDER = '_';
-
 	@Schema(name = "DOUBLE_QUOT", description = "双引号")
 	public static final String DOUBLE_QUOT = "\"";
 
@@ -101,13 +102,19 @@ public final class StringConstant {
 	@Schema(name = "AND", description = "并")
 	public static final String AND = "&";
 
-	@Schema(name = "ROD", description = "分割参数")
+	/**
+	 * 分割参数.
+	 */
 	public static final String ROD = "-";
 
-	@Schema(name = "DOLLAR", description = "分割参数")
+	/**
+	 * 分割参数.
+	 */
 	public static final String DOLLAR = "$";
 
-	@Schema(name = "START_START", description = "分割参数")
+	/**
+	 * 分割参数.
+	 */
 	public static final String START_START = "**";
 
 }

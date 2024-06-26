@@ -40,8 +40,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 import static org.laokou.common.core.config.TaskExecutorConfig.THREAD_POOL_TASK_EXECUTOR_NAME;
-import static org.laokou.common.i18n.common.constants.EventStatus.PUBLISH_FAILED;
-import static org.laokou.common.i18n.common.constants.EventStatus.PUBLISH_SUCCEED;
 
 /**
  * @author laokou
@@ -131,11 +129,11 @@ public class DomainEventPublishTask {
 	private void addEvent(boolean result, List<DomainEvent<Long>> modifyList, Long id, String sourceName) {
 		if (result) {
 			// 发布成功
-			addEvent(modifyList, id, sourceName, PUBLISH_SUCCEED);
+			//addEvent(modifyList, id, sourceName, PUBLISH_SUCCEED);
 		}
 		else {
 			// 发布失败
-			addEvent(modifyList, id, sourceName, PUBLISH_FAILED);
+			//addEvent(modifyList, id, sourceName, PUBLISH_FAILED);
 		}
 	}
 

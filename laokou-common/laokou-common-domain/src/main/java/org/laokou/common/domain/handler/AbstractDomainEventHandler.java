@@ -33,9 +33,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.constants.EventStatus.CONSUME_FAILED;
-import static org.laokou.common.i18n.common.constants.EventStatus.CONSUME_SUCCEED;
-
 /**
  * @author laokou
  */
@@ -54,16 +51,16 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 			// 处理领域事件
 			handleDomainEvent(convert(eventDO), eventDO.getAttribute());
 			// 消费成功
-			events.add(new DefaultDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
+			//events.add(new DefaultDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
 		}
 		catch (Exception e) {
 			if (e instanceof DataIntegrityViolationException) {
 				// 消费成功（数据重复直接改为消费成功）
-				events.add(new DefaultDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
+				//events.add(new DefaultDomainEvent(eventDO.getId(), CONSUME_SUCCEED, eventDO.getSourceName()));
 			}
 			else {
 				// 消费失败
-				events.add(new DefaultDomainEvent(eventDO.getId(), CONSUME_FAILED, eventDO.getSourceName()));
+				//events.add(new DefaultDomainEvent(eventDO.getId(), CONSUME_FAILED, eventDO.getSourceName()));
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			}
 		}
