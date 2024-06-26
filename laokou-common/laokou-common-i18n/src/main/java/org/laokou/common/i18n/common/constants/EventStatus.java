@@ -25,9 +25,14 @@ package org.laokou.common.i18n.common.constants;
 public enum EventStatus {
 
 	/**
-	 * 创建.
+	 * 已创建.
 	 */
 	CREATED,
+
+	/**
+	 * 已发布.
+	 */
+	PUBLISHED,
 
 	/**
 	 * 发布成功.
