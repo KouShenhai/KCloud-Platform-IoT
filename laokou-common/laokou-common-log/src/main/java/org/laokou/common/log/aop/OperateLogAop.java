@@ -29,8 +29,6 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.domain.context.DomainEventContextHolder;
-import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.log.domain.OperateLog;
@@ -40,8 +38,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
-
-import static org.laokou.common.domain.publish.JobMode.SYNC;
 
 /**
  * 操作日志切面.
@@ -57,8 +53,6 @@ public class OperateLogAop {
 	private final Environment environment;
 
 	private final DomainEventService domainEventService;
-
-	private final DomainEventPublisher domainEventPublisher;
 
 	private static final ThreadLocal<Long> TASK_TIME_LOCAL = new TransmittableThreadLocal<>();
 
@@ -111,9 +105,9 @@ public class OperateLogAop {
 			// 保存领域事件（事件溯源）
 			// domainEventService.create(operate.getEvents());
 			// 发布当前线程的领域事件(同步发布)
-			//domainEventPublisher.publish(SYNC);
+			// domainEventPublisher.publish(SYNC);
 			// 清除领域事件上下文
-			DomainEventContextHolder.clear();
+			// DomainEventContextHolder.clear();
 			// 清空领域事件
 			// operate.clearEvents();
 		}

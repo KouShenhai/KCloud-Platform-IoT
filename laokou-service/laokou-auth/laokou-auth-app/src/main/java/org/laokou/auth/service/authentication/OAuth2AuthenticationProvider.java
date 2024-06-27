@@ -25,7 +25,6 @@ import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.DeptV;
 import org.laokou.auth.model.MenuV;
-import org.laokou.common.domain.context.DomainEventContextHolder;
 import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.extension.BizScenario;
@@ -80,7 +79,7 @@ public class OAuth2AuthenticationProvider {
 			// 发布当前线程的领域事件(同步发布)
 			// domainEventPublisher.publish(SYNC);
 			// 清除领域事件上下文
-			DomainEventContextHolder.clear();
+			// DomainEventContextHolder.clear();
 			// 清空领域事件
 			// auth.clearEvents();
 		}

@@ -20,8 +20,6 @@ package org.laokou.common.domain.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.domain.context.DomainEventContextHolder;
-import org.laokou.common.domain.convertor.DomainEventConvertor;
 import org.laokou.common.domain.database.dataobject.DomainEventDO;
 import org.laokou.common.domain.database.DomainEventMapper;
 import org.laokou.common.domain.service.DomainEventService;
@@ -46,31 +44,35 @@ public class DomainEventServiceImpl implements DomainEventService {
 	@Override
 	public void create(List<DomainEvent<Long>> events) {
 		if (CollectionUtil.isNotEmpty(events)) {
-			List<DomainEventDO> list = events.stream().map(DomainEventConvertor::toDataObject).toList();
-			mybatisUtil.batch(list, DomainEventMapper.class, events.getFirst().getSourceName(),
-					DomainEventMapper::insertOne);
-			DomainEventContextHolder.set(events);
+			// List<DomainEventDO> list =
+			// events.stream().map(DomainEventConvertor::toDataObject).toList();
+			// mybatisUtil.batch(list, DomainEventMapper.class,
+			// events.getFirst().getSourceName(),
+			// DomainEventMapper::insertOne);
+			// DomainEventContextHolder.set(events);
 		}
 	}
 
 	@Override
 	public void modify(List<DomainEvent<Long>> events) {
-		List<DomainEventDO> list = events.stream().map(DomainEventConvertor::toDataObject).toList();
-		mybatisUtil.batch(list, DomainEventMapper.class, events.getFirst().getSourceName(),
-				DomainEventMapper::updateStatus);
+		// List<DomainEventDO> list =
+		// events.stream().map(DomainEventConvertor::toDataObject).toList();
+		// mybatisUtil.batch(list, DomainEventMapper.class,
+		// events.getFirst().getSourceName(),
+		// DomainEventMapper::updateStatus);
 	}
 
 	@Override
 	public void removeLastMonth(String ymd) {
-		domainEventMapper.deleteByYmd(ymd);
+		// domainEventMapper.deleteByYmd(ymd);
 	}
 
 	@Override
 	public void findList(Set<String> sourceNames, String appName, ResultHandler<DomainEventDO> resultHandler) {
 		// 查询 创建/发布成功/发布失败/消费失败
-		if (domainEventMapper.selectTotal(sourceNames, appName) > 0) {
-			domainEventMapper.selectObjects(sourceNames, appName, resultHandler);
-		}
+		// if (domainEventMapper.selectTotal(sourceNames, appName) > 0) {
+		// domainEventMapper.selectObjects(sourceNames, appName, resultHandler);
+		// }
 	}
 
 }
