@@ -35,12 +35,12 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.utils.UserUtil;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -71,7 +71,7 @@ public class OssGatewayImpl implements OssGateway {
 
 	private final RedisUtil redisUtil;
 
-	private final Environment environment;
+	private final SpringContextUtil springContextUtil;
 
 	/**
 	 * 新增OSS.
@@ -140,11 +140,11 @@ public class OssGatewayImpl implements OssGateway {
 			OssDO ossDO = algorithm.select(getOssListCache(), EMPTY);
 			// 修改URL
 			file.modifyUrl(null, new AmazonS3StorageDriver(ossConvertor.convertEntity(ossDO)).upload(file),
-					environment.getProperty("spring.application.name"));
+					springContextUtil.getAppName());
 			return file;
 		}
 		catch (Exception e) {
-			file.modifyUrl(e, EMPTY, environment.getProperty("spring.application.name"));
+			file.modifyUrl(e, EMPTY, springContextUtil.getAppName());
 			throw e;
 		}
 	}

@@ -26,9 +26,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * 领域事件Service.
+ *
  * @author laokou
  */
-@Schema(name = "DomainEventService", description = "领域事件")
+@Schema(name = "DomainEventService", description = "")
 public interface DomainEventService {
 
 	void create(List<DomainEvent<Long>> events);

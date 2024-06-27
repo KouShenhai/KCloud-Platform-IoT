@@ -21,13 +21,13 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.core.env.Environment;
 import org.springframework.util.Assert;
 
 import java.io.InputStream;
@@ -46,21 +46,19 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class RouterHandler implements ApplicationListener<ApplicationReadyEvent> {
 
-	private final Environment env;
+	private final SpringContextUtil springContextUtil;
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
-		String appName = env.getProperty("spring.application.name");
+		String appName = springContextUtil.getAppName();
 		Assert.isTrue(StringUtil.isNotEmpty(appName), " app name is empty");
 		Map<String, Object> map = new HashMap<>(2);
 		String abbr = appName.substring(7);
 		map.put("appName", appName);
 		map.put("abbr", abbr);
 		String router = getRouter(map);
-		log.info("""
-				\n----------Nacos路由配置开始(请复制到router.json)----------
-				{}
-				----------Nacos路由配置结束(请复制到router.json)----------""", router);
+		log.info("\\n----------Nacos路由配置开始(请复制到router.json)----------" + "{}"
+				+ "----------Nacos路由配置结束(请复制到router.json)----------", router);
 	}
 
 	/**

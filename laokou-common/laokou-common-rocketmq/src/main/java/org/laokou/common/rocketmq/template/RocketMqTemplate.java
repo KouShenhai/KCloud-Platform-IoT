@@ -133,6 +133,18 @@ public class RocketMqTemplate {
 	 * 异步发送消息.
 	 * @param topic 主题
 	 * @param payload 消息
+	 * @param traceId 链路ID
+	 * @param <T> 泛型
+	 */
+	public <T> void sendAsyncMessage(String topic, T payload, String traceId) {
+		Message<T> message = MessageBuilder.withPayload(payload).setHeader(TRACE_ID, traceId).build();
+		sendAsyncMessage(topic, message);
+	}
+
+	/**
+	 * 异步发送消息.
+	 * @param topic 主题
+	 * @param payload 消息
 	 * @param <T> 泛型
 	 * @param timeout 超时时间
 	 */
