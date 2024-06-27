@@ -17,6 +17,8 @@
 
 package org.laokou.auth.model;
 
+import java.time.LocalDateTime;
+
 /**
  * 日志值对象.
  *
@@ -28,8 +30,9 @@ package org.laokou.auth.model;
  * @param status 登录状态 0登录成功 1登录失败
  * @param message 登录信息
  * @param type 类型
+ * @param timestamp 时间
  */
 public record LogV(String username, String os, String ip, String address, String browser, Integer status,
-		String message, String type) {
+				   String message, String type, LocalDateTime timestamp) {
 
 }

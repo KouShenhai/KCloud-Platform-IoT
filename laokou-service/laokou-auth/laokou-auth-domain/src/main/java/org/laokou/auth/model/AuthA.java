@@ -23,6 +23,7 @@ import lombok.Getter;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -270,7 +271,7 @@ public class AuthA extends AggregateRoot<Long> {
 		Capabilities capabilities = RequestUtil.getCapabilities(request);
 		String os = capabilities.getPlatform();
 		String browser = capabilities.getBrowser();
-		this.log = new LogV(username, ip, address, browser, os, status, message, grantType);
+		this.log = new LogV(username, ip, address, browser, os, status, message, grantType, DateUtil.now());
 	}
 
 }
