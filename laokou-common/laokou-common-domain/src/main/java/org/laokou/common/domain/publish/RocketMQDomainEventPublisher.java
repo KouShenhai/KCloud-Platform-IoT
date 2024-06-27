@@ -15,23 +15,21 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.common.domain.publish;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.common.constants.EventStatus;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.rocketmq.template.RocketMqTemplate;
+import org.springframework.stereotype.Component;
 
-/**
- * 默认领域事件.
- *
- * @author laokou
- */
-@Data
-@NoArgsConstructor
-public class DefaultDomainEvent extends DomainEvent<Long> {
+@Component
+@RequiredArgsConstructor
+public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 
-	public DefaultDomainEvent(Long id, EventStatus eventStatus, String sourceName) {
-		super(id, eventStatus, sourceName);
+	private final RocketMqTemplate rocketMqTemplate;
+
+	@Override
+	public void publish(String topic) {
+
 	}
 
 }

@@ -29,7 +29,6 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.log.domain.OperateLog;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -51,8 +50,6 @@ import java.lang.reflect.Method;
 public class OperateLogAop {
 
 	private final Environment environment;
-
-	private final DomainEventService domainEventService;
 
 	private static final ThreadLocal<Long> TASK_TIME_LOCAL = new TransmittableThreadLocal<>();
 

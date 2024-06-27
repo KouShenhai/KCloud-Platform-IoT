@@ -18,7 +18,6 @@
 package org.laokou.common.i18n.dto;
 
 import jakarta.validation.constraints.Min;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,8 +31,8 @@ import java.util.Map;
  * @author laokou
  */
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
 public class PageQuery extends Query {
 
 	@Serial

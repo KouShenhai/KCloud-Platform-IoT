@@ -49,9 +49,9 @@ public class TaskExecutorConfig {
 	/**
 	 * 虚拟线程开关.
 	 */
-	public static final String THREADS_VIRTUAL_ENABLED = "threads.virtual.enabled";
+	private static final String THREADS_VIRTUAL_ENABLED = "spring.threads.virtual.enabled";
 
-	@Bean(THREAD_POOL_TASK_EXECUTOR_NAME)
+	@Bean(value = THREAD_POOL_TASK_EXECUTOR_NAME)
 	public Executor executor(SpringTaskExecutionProperties springTaskExecutionProperties, Environment environment) {
 		String threadNamePrefix = springTaskExecutionProperties.getThreadNamePrefix();
 		String enabled = environment.getProperty(THREADS_VIRTUAL_ENABLED);

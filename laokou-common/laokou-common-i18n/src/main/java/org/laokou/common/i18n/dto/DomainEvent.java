@@ -27,16 +27,14 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import static lombok.AccessLevel.PROTECTED;
-
 /**
  * 领域事件.
  *
  * @author laokou
  */
 @Data
-@NoArgsConstructor(access = PROTECTED)
-@AllArgsConstructor(access = PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class DomainEvent<ID> implements Serializable {
 
 	@Serial

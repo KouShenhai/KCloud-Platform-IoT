@@ -33,8 +33,6 @@ import org.laokou.common.algorithm.template.Algorithm;
 import org.laokou.common.algorithm.template.select.PollSelectAlgorithm;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.domain.publish.DomainEventPublisher;
-import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -74,10 +72,6 @@ public class OssGatewayImpl implements OssGateway {
 	private final RedisUtil redisUtil;
 
 	private final Environment environment;
-
-	private final DomainEventService domainEventService;
-
-	private final DomainEventPublisher domainEventPublisher;
 
 	/**
 	 * 新增OSS.

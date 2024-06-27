@@ -25,7 +25,6 @@ import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.DeptV;
 import org.laokou.auth.model.MenuV;
-import org.laokou.common.domain.publish.DomainEventPublisher;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
@@ -50,8 +49,6 @@ public class OAuth2AuthenticationProvider {
 	private final AuthDomainService authDomainService;
 
 	private final DomainEventService domainEventService;
-
-	private final DomainEventPublisher domainEventPublisher;
 
 	private final UserConvertor userConvertor;
 
