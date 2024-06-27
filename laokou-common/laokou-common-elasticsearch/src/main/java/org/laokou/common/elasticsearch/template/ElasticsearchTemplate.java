@@ -45,6 +45,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ReflectionUtils;
 
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
@@ -225,9 +226,9 @@ public class ElasticsearchTemplate {
 			try {
 				Field field = clazz.getDeclaredField(k);
 				field.setAccessible(true);
-				field.set(source, v.getFirst());
+				ReflectionUtils.setField(field, source, v.getFirst());
 			}
-			catch (NoSuchFieldException | IllegalAccessException e) {
+			catch (NoSuchFieldException e) {
 				throw new RuntimeException(e);
 			}
 		});
@@ -237,7 +238,7 @@ public class ElasticsearchTemplate {
 		try {
 			Field field = source.getClass().getDeclaredField(PRIMARY_KEY);
 			field.setAccessible(true);
-			field.set(source, id);
+			ReflectionUtils.setField(field, source, id);
 		}
 		catch (Exception e) {
 			log.error("ID赋值失败，错误信息：{}", e.getMessage(), e);
@@ -486,7 +487,7 @@ public class ElasticsearchTemplate {
 		String[] names = searchField.names();
 		// 允许访问私有属性
 		field.setAccessible(true);
-		String value = String.valueOf(field.get(obj));
+		String value = String.valueOf(ReflectionUtils.getField(field, obj));
 		return new Search.Field(Arrays.asList(names), value, searchField.type(), searchField.query(),
 				searchField.condition());
 	}

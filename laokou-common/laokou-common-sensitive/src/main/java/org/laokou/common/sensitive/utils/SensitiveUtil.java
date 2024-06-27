@@ -20,6 +20,7 @@ package org.laokou.common.sensitive.utils;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.sensitive.annotation.SensitiveField;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 
@@ -30,14 +31,14 @@ import static org.laokou.common.i18n.common.constants.StringConstant.*;
  */
 public class SensitiveUtil {
 
-	public static void transform(Object obj) throws IllegalAccessException {
+	public static void transform(Object obj) {
 		Field[] fields = obj.getClass().getDeclaredFields();
 		for (Field field : fields) {
 			boolean annotationPresent = field.isAnnotationPresent(SensitiveField.class);
 			if (annotationPresent) {
 				// 私有属性
 				field.setAccessible(true);
-				Object o = field.get(obj);
+				Object o = ReflectionUtils.getField(field, obj);
 				if (ObjectUtil.isNull(o)) {
 					continue;
 				}
@@ -45,7 +46,7 @@ public class SensitiveUtil {
 				SensitiveField sensitiveField = field.getAnnotation(SensitiveField.class);
 				data = format(sensitiveField.type(), data);
 				// 属性赋值
-				field.set(obj, data);
+				ReflectionUtils.setField(field, obj, data);
 			}
 		}
 	}

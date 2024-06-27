@@ -23,6 +23,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.Assert;
+import org.springframework.util.ReflectionUtils;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -129,7 +130,7 @@ public class AESUtil {
 			if (annotationPresent) {
 				// 私有属性
 				field.setAccessible(true);
-				Object o = field.get(obj);
+				Object o = ReflectionUtils.getField(field, obj);
 				if (ObjectUtil.isNull(o)) {
 					continue;
 				}
@@ -140,7 +141,7 @@ public class AESUtil {
 					case ENCRYPT -> encrypt(data);
 				};
 				// 属性赋值
-				field.set(obj, data);
+				ReflectionUtils.setField(field, obj, data);
 			}
 		}
 	}
