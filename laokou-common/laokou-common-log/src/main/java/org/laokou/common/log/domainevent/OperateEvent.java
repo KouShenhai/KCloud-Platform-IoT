@@ -20,6 +20,9 @@ package org.laokou.common.log.domainevent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.common.constants.EventStatus;
+import org.laokou.common.i18n.common.constants.EventType;
+import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 import java.io.Serial;
@@ -73,6 +76,12 @@ public class OperateEvent extends DomainEvent<Long> {
 
 	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
 	protected Long takeTime;
+
+	@Override
+	protected void create(AggregateRoot<Long> aggregateRoot, String topic, EventType eventType,
+			EventStatus eventStatus) {
+
+	}
 
 	// public OperateEvent(OperateLog operateLog, HttpServletRequest request,
 	// UserContextHolder.User user, String appName,

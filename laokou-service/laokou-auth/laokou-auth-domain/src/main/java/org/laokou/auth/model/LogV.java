@@ -20,13 +20,16 @@ package org.laokou.auth.model;
 /**
  * 日志值对象.
  *
+ * @param username 用户名
  * @param ip 登录的IP地址
  * @param address 登录的归属地
  * @param browser 登录的浏览器
  * @param os 登录的操作系统
  * @param status 登录状态 0登录成功 1登录失败
  * @param message 登录信息
+ * @param type 类型
  */
-public record LogV(String os, String ip, String address, String browser, Integer status, String message) {
+public record LogV(String username, String os, String ip, String address, String browser, Integer status,
+		String message, String type) {
 
 }

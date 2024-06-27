@@ -68,12 +68,12 @@ public abstract class DomainEvent<ID> implements Serializable {
 	/**
 	 * 数据源名称.
 	 */
-	private String sourceName;
+	protected String sourceName;
 
 	/**
 	 * 应用名称.
 	 */
-	private String appName;
+	protected String appName;
 
 	/**
 	 * 创建人.
@@ -109,6 +109,9 @@ public abstract class DomainEvent<ID> implements Serializable {
 	 * 修改时间.
 	 */
 	protected LocalDateTime updateDate;
+
+	protected abstract void create(AggregateRoot<ID> aggregateRoot, String topic, EventType eventType,
+			EventStatus eventStatus);
 
 	public DomainEvent(ID id, EventStatus eventStatus, String sourceName) {
 		this.id = id;

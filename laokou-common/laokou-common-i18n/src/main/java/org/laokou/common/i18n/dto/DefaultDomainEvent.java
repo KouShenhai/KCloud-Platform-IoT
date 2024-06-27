@@ -20,6 +20,7 @@ package org.laokou.common.i18n.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.common.constants.EventStatus;
+import org.laokou.common.i18n.common.constants.EventType;
 
 /**
  * 默认领域事件.
@@ -29,6 +30,22 @@ import org.laokou.common.i18n.common.constants.EventStatus;
 @Data
 @NoArgsConstructor
 public class DefaultDomainEvent extends DomainEvent<Long> {
+
+	@Override
+	protected void create(AggregateRoot<Long> aggregateRoot, String topic, EventType eventType,
+			EventStatus eventStatus) {
+		super.tenantId = aggregateRoot.getTenantId();
+		super.deptId = aggregateRoot.getDeptId();
+		super.deptPath = aggregateRoot.getDeptPath();
+		super.creator = aggregateRoot.getCreator();
+		super.editor = aggregateRoot.getEditor();
+		super.eventType = eventType;
+		super.eventStatus = eventStatus;
+		super.sourceName = aggregateRoot.getSourceName();
+		super.appName = aggregateRoot.getAppName();
+		super.aggregateId = aggregateRoot.getId();
+		super.topic = topic;
+	}
 
 	public DefaultDomainEvent(Long id, EventStatus eventStatus, String sourceName) {
 		super(id, eventStatus, sourceName);

@@ -20,6 +20,9 @@ package org.laokou.admin.dto.domainevent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.common.constants.EventStatus;
+import org.laokou.common.i18n.common.constants.EventType;
+import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 /**
@@ -47,5 +50,11 @@ public class FileUploadEvent extends DomainEvent<Long> {
 
 	@Schema(name = "errorMessage", description = "错误信息")
 	private String errorMessage;
+
+	@Override
+	protected void create(AggregateRoot<Long> aggregateRoot, String topic, EventType eventType,
+			EventStatus eventStatus) {
+
+	}
 
 }

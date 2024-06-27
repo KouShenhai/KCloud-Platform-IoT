@@ -270,7 +270,7 @@ public class AuthA extends AggregateRoot<Long> {
 		Capabilities capabilities = RequestUtil.getCapabilities(request);
 		String os = capabilities.getPlatform();
 		String browser = capabilities.getBrowser();
-		this.log = new LogV(ip, address, browser, os, status, message);
+		this.log = new LogV(username, ip, address, browser, os, status, message, grantType);
 	}
 
 }

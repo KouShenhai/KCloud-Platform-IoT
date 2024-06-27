@@ -17,13 +17,17 @@
 
 package org.laokou.auth.dto.domainevent;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.common.constants.EventStatus;
+import org.laokou.common.i18n.common.constants.EventType;
+import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 import java.io.Serial;
+import java.time.LocalDateTime;
 
 /**
  * 登录事件.
@@ -33,33 +37,63 @@ import java.io.Serial;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginEvent extends DomainEvent<Long> {
+public class LoginEvent extends DefaultDomainEvent {
 
 	@Serial
 	private static final long serialVersionUID = -325094951800650353L;
 
-	@Schema(name = "username", description = "登录的用户名")
-	protected String username;
+	/**
+	 * 登录的用户名.
+	 */
+	private String username;
 
-	@Schema(name = "ip", description = "登录的IP地址")
-	protected String ip;
+	/**
+	 * 登录的IP地址.
+	 */
+	private String ip;
 
-	@Schema(name = "address", description = "登录的归属地")
-	protected String address;
+	/**
+	 * 登录的归属地.
+	 */
+	private String address;
 
-	@Schema(name = "browser", description = "登录的浏览器")
-	protected String browser;
+	/**
+	 * 登录的浏览器.
+	 */
+	private String browser;
 
-	@Schema(name = "os", description = "登录的操作系统")
-	protected String os;
+	/**
+	 * 登录的操作系统.
+	 */
+	private String os;
 
-	@Schema(name = "status", description = "登录状态 0登录成功 1登录失败")
-	protected Integer status;
+	/**
+	 * 登录状态 0登录成功 1登录失败.
+	 */
+	private Integer status;
 
-	@Schema(name = "message", description = "登录信息")
-	protected String message;
+	/**
+	 * 登录信息.
+	 */
+	private String message;
 
-	@Schema(name = "type", description = "登录类型")
-	protected String type;
+	/**
+	 * 登录类型.
+	 */
+	private String type;
+
+	public void create(AggregateRoot<Long> aggregateRoot, String topic, EventType eventType, EventStatus eventStatus,
+			LocalDateTime timestamp) {
+		create(aggregateRoot, topic, eventType, eventStatus);
+		super.createDate = timestamp;
+		super.updateDate = timestamp;
+	}
+
+	@Override
+	protected void create(AggregateRoot<Long> aggregateRoot, String topic, EventType eventType,
+			EventStatus eventStatus) {
+		super.create(aggregateRoot, topic, eventType, eventStatus);
+		super.id = IdGenerator.defaultSnowflakeId();
+	}
 
 }
