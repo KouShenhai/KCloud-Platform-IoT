@@ -34,7 +34,7 @@ services:
       - ./tdengine/logs:/var/log/taos
     network_mode: bridge
   emqx:
-    image: emqx/emqx:5.7.0
+    image: emqx/emqx:5.7.1
     container_name: emqx
     # 保持容器在没有守护程序的情况下运行
     tty: true
