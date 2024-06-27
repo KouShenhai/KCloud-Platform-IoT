@@ -91,7 +91,7 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 |RocketMQ                    |5.2.0
 |Netty                       |4.1.111.Final
 |Kafka                       |3.7.0
-|EMQX                        |5.7.0
+|EMQX                        |5.7.1
 |Postgresql                  |16.3
 |TDengine                    |3.3.1.0
 |Liquibase                   |4.28.0
