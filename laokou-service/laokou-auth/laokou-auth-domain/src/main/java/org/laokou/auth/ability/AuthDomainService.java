@@ -20,7 +20,7 @@ package org.laokou.auth.ability;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.AuthA;
-import org.springframework.core.env.Environment;
+import org.laokou.common.core.utils.SpringContextUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -39,14 +39,14 @@ public class AuthDomainService {
 
 	private final SourceGateway sourceGateway;
 
-	private final Environment environment;
+	private final SpringContextUtil springContextUtil;
 
 	private final CaptchaGateway captchaGateway;
 
 	private final PasswordEncoder passwordEncoder;
 
 	public void auth(AuthA auth) {
-		auth.updateAppName(environment.getProperty("spring.application.name"));
+		auth.updateAppName(springContextUtil.getAppName());
 		auth.updateSource(sourceGateway.getSourceName(auth.getUser()));
 		// 校验验证码
 		checkCaptcha(auth);

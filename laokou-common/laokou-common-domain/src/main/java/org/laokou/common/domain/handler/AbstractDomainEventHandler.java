@@ -69,9 +69,6 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			}
 		}
-		finally {
-			domainEventService.modify(events);
-		}
 	}
 
 	private DefaultDomainEvent convert(DomainEventDO eventDO) {

@@ -29,10 +29,10 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.log.domain.OperateLog;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -49,7 +49,7 @@ import java.lang.reflect.Method;
 @RequiredArgsConstructor
 public class OperateLogAop {
 
-	private final Environment environment;
+	private final SpringContextUtil springContextUtil;
 
 	private static final ThreadLocal<Long> TASK_TIME_LOCAL = new TransmittableThreadLocal<>();
 
@@ -80,7 +80,7 @@ public class OperateLogAop {
 	private void handleLog(final JoinPoint joinPoint, final Exception e) {
 		try {
 			// 应用名称
-			String appName = environment.getProperty("spring.application.name");
+			String appName = springContextUtil.getAppName();
 			HttpServletRequest request = RequestUtil.getHttpServletRequest();
 			MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 			Method method = methodSignature.getMethod();

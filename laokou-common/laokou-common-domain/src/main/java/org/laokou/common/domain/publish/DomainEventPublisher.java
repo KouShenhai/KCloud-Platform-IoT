@@ -24,6 +24,6 @@ package org.laokou.common.domain.publish;
  */
 public interface DomainEventPublisher {
 
-	void publish(String topic);
+	<T> void publish(String topic, T payload);
 
 }

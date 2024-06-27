@@ -18,6 +18,7 @@
 package org.laokou.common.domain.publish;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.springframework.stereotype.Component;
 
@@ -28,8 +29,8 @@ public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 	private final RocketMqTemplate rocketMqTemplate;
 
 	@Override
-	public void publish(String topic) {
-
+	public <T> void publish(String topic, T payload) {
+		rocketMqTemplate.sendAsyncMessage(topic, payload, String.valueOf(IdGenerator.defaultSnowflakeId()));
 	}
 
 }
