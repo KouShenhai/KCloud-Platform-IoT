@@ -21,6 +21,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -28,7 +29,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -66,8 +66,8 @@ public class OAuth2ResourceServerAutoConfig {
 	@Order(HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
 	SecurityFilterChain resourceFilterChain(GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector,
-			Environment env, OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http)
-			throws Exception {
+			SpringContextUtil springContextUtil, OAuth2ResourceServerProperties oAuth2ResourceServerProperties,
+			HttpSecurity http) throws Exception {
 		return http
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.httpStrictTransportSecurity(
 					hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)))
@@ -79,7 +79,7 @@ public class OAuth2ResourceServerAutoConfig {
 			.httpBasic(AbstractHttpConfigurer::disable)
 			// 基于token，关闭session
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.authorizeHttpRequests(customizer(env, oAuth2ResourceServerProperties))
+			.authorizeHttpRequests(customizer(springContextUtil, oAuth2ResourceServerProperties))
 			// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
 			// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
 			.oauth2ResourceServer(resource -> resource
@@ -92,10 +92,10 @@ public class OAuth2ResourceServerAutoConfig {
 
 	@NotNull
 	public static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> customizer(
-			Environment env, OAuth2ResourceServerProperties oAuth2ResourceServerProperties) {
+			SpringContextUtil springContextUtil, OAuth2ResourceServerProperties oAuth2ResourceServerProperties) {
 		Map<String, Set<String>> uriMap = Optional
 			.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
-					env.getProperty("spring.application.name")))
+					springContextUtil.getAppName()))
 			.orElseGet(ConcurrentHashMap::new);
 		return request -> request.requestMatchers(HttpMethod.GET,
 				Optional.ofNullable(uriMap.get(HttpMethod.GET.name())).orElseGet(HashSet::new).toArray(String[]::new))

@@ -34,7 +34,7 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-i18n</artifactId>
+      <artifactId>laokou-common-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>

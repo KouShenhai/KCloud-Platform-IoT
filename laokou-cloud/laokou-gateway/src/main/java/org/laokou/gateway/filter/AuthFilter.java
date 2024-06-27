@@ -25,6 +25,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.crypto.utils.RSAUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -41,7 +42,6 @@ import org.springframework.cloud.gateway.filter.factory.rewrite.CachedBodyOutput
 import org.springframework.cloud.gateway.filter.factory.rewrite.ModifyRequestBodyGatewayFilterFactory;
 import org.springframework.cloud.gateway.support.BodyInserterContext;
 import org.springframework.core.Ordered;
-import org.springframework.core.env.Environment;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.HttpHeaders;
@@ -113,7 +113,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 */
 	private static final String COMMON_DATA_ID = "application-common.yaml";
 
-	private final Environment env;
+	private final SpringContextUtil springContextUtil;
 
 	private final OAuth2ResourceServerProperties oAuth2ResourceServerProperties;
 
@@ -284,7 +284,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	private void initURLMap() {
 		urlMap = Optional.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
-				env.getProperty("spring.application.name")))
+				springContextUtil.getAppName()))
 			.orElseGet(ConcurrentHashMap::new);
 	}
 

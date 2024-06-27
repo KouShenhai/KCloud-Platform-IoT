@@ -19,10 +19,10 @@ package org.laokou.common.prometheus.config;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.core.utils.SpringContextUtil;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.env.Environment;
 
 /**
  * @author laokou
@@ -31,12 +31,11 @@ import org.springframework.core.env.Environment;
 @RequiredArgsConstructor
 public class PrometheusAutoConfig {
 
-	private final Environment environment;
+	private final SpringContextUtil springContextUtil;
 
 	@Bean
 	MeterRegistryCustomizer<MeterRegistry> configurer() {
-		return (registry) -> registry.config()
-			.commonTags("application", environment.getProperty("spring.application.name"));
+		return (registry) -> registry.config().commonTags("application", springContextUtil.getAppName());
 	}
 
 }

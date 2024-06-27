@@ -25,17 +25,16 @@ import com.baomidou.mybatisplus.extension.parser.JsqlParserGlobal;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.*;
 import lombok.SneakyThrows;
+import org.laokou.common.core.utils.SpringContextUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.TransactionOperations;
 import org.springframework.transaction.support.TransactionTemplate;
-import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.net.InetAddress;
@@ -59,9 +58,9 @@ public class MybatisPlusAutoConfig {
 	}
 
 	@Bean
-	public ConfigurationCustomizer slowSqlConfigurationCustomizer(ConfigurableEnvironment environment) {
+	public ConfigurationCustomizer slowSqlConfigurationCustomizer(SpringContextUtil springContextUtil) {
 		SqlMonitorInterceptor sqlMonitorInterceptor = new SqlMonitorInterceptor();
-		sqlMonitorInterceptor.setProperties(properties(environment));
+		sqlMonitorInterceptor.setProperties(properties(springContextUtil));
 		return configuration -> configuration.addInterceptor(sqlMonitorInterceptor);
 	}
 
@@ -135,16 +134,11 @@ public class MybatisPlusAutoConfig {
 		return paginationInnerInterceptor;
 	}
 
-	private Properties properties(ConfigurableEnvironment environment) {
+	private Properties properties(SpringContextUtil springContextUtil) {
 		Properties properties = new Properties();
-		properties.setProperty("appName", getApplicationId(environment));
+		properties.setProperty("appName", springContextUtil.getAppName());
 		properties.setProperty("millis", "0");
 		return properties;
-	}
-
-	private String getApplicationId(ConfigurableEnvironment environment) {
-		String name = environment.getProperty("spring.application.name");
-		return StringUtils.hasText(name) ? name : "application";
 	}
 
 }
