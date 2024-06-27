@@ -30,9 +30,12 @@ public class AsyncDomainEventPublisher implements DomainEventPublisher {
 
 	private final DomainEventPublishTask domainEventPublishTask;
 
-	@Override
 	public void publish(JobMode jobMode) {
 		domainEventPublishTask.publishEvent(DomainEventContextHolder.get(), jobMode);
 	}
 
+	@Override
+	public void publish() {
+
+	}
 }

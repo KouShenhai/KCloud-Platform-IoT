@@ -40,7 +40,7 @@ public class DomainEventJob {
 	// @XxlJob("publishDomainEventJobHandler")
 	public void publishDomainEventJob() {
 		// 定时任务 => 每5分钟运行一次
-		domainEventPublisher.publish(ASYNC);
+		//domainEventPublisher.publish(ASYNC);
 	}
 
 	@Lock4j(key = "remove_domain_event_job_lock", expire = 600000)

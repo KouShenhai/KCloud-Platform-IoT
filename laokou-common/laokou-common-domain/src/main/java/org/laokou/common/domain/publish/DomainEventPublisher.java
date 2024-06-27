@@ -24,10 +24,6 @@ package org.laokou.common.domain.publish;
  */
 public interface DomainEventPublisher {
 
-	/**
-	 * 推送事件.
-	 * @param jobMode 工作模式 同步/异步
-	 */
-	void publish(JobMode jobMode);
+	void publish();
 
 }

@@ -111,7 +111,7 @@ public class OperateLogAop {
 			// 保存领域事件（事件溯源）
 			// domainEventService.create(operate.getEvents());
 			// 发布当前线程的领域事件(同步发布)
-			domainEventPublisher.publish(SYNC);
+			//domainEventPublisher.publish(SYNC);
 			// 清除领域事件上下文
 			DomainEventContextHolder.clear();
 			// 清空领域事件
