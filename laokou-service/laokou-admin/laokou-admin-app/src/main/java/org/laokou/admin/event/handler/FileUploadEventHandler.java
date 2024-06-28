@@ -25,7 +25,6 @@ import org.laokou.admin.dto.domainevent.FileUploadEvent;
 import org.laokou.admin.domain.gateway.LogGateway;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
-import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
 
@@ -47,8 +46,7 @@ public class FileUploadEventHandler extends AbstractDomainEventHandler {
 
 	private final LogGateway logGateway;
 
-	public FileUploadEventHandler(DomainEventService domainEventService, LogGateway logGateway) {
-		super(domainEventService);
+	public FileUploadEventHandler(LogGateway logGateway) {
 		this.logGateway = logGateway;
 	}
 
