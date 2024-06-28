@@ -7,6 +7,4 @@
     <version>3.3.1</version>
   </parent>
   <artifactId>laokou-common-tenant</artifactId>
-  <name>Archetype - laokou-common-tenant</name>
-  <url>http://maven.apache.org</url>
 </project>
