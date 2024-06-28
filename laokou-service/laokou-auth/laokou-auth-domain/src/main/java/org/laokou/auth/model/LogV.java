@@ -33,6 +33,6 @@ import java.time.LocalDateTime;
  * @param timestamp 时间
  */
 public record LogV(String username, String os, String ip, String address, String browser, Integer status,
-				   String message, String type, LocalDateTime timestamp) {
+		String message, String type, LocalDateTime timestamp) {
 
 }

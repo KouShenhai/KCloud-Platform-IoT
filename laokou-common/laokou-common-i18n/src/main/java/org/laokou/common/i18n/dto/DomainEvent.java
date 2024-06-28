@@ -113,9 +113,8 @@ public abstract class DomainEvent<ID> implements Serializable {
 	protected abstract void create(AggregateRoot<ID> aggregateRoot, String topic, EventType eventType,
 			EventStatus eventStatus);
 
-	public DomainEvent(ID id, EventStatus eventStatus, String sourceName) {
+	public DomainEvent(ID id, String sourceName) {
 		this.id = id;
-		this.eventStatus = eventStatus;
 		this.sourceName = sourceName;
 	}
 

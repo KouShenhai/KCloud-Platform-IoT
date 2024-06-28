@@ -47,8 +47,8 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.topic = topic;
 	}
 
-	public DefaultDomainEvent(Long id, EventStatus eventStatus, String sourceName) {
-		super(id, eventStatus, sourceName);
+	public DefaultDomainEvent(Long id, String sourceName) {
+		super(id, sourceName);
 	}
 
 }
