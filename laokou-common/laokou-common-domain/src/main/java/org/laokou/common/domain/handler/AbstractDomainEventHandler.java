@@ -23,15 +23,11 @@ import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.database.dataobject.DomainEventDO;
-import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
-import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author laokou
@@ -40,11 +36,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public abstract class AbstractDomainEventHandler implements RocketMQListener<MessageExt> {
 
-	private final DomainEventService domainEventService;
-
 	@Override
 	public void onMessage(MessageExt message) {
-		List<DomainEvent<Long>> events = new ArrayList<>(1);
 		String msg = new String(message.getBody(), StandardCharsets.UTF_8);
 		DomainEventDO eventDO = JacksonUtil.toBean(msg, DomainEventDO.class);
 		try {
@@ -67,6 +60,7 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 				// events.add(new DefaultDomainEvent(eventDO.getId(), CONSUME_FAILED,
 				// eventDO.getSourceName()));
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+				throw e;
 			}
 		}
 	}

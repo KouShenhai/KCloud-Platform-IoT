@@ -194,7 +194,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	}
 
 	@JsonIgnore
-	public void modify(Set<String> permissions, Set<String> deptPaths, String sourceName) {
+	public void update(Set<String> permissions, Set<String> deptPaths, String sourceName) {
 		this.permissions = permissions;
 		this.deptPaths = deptPaths;
 		this.sourceName = sourceName;

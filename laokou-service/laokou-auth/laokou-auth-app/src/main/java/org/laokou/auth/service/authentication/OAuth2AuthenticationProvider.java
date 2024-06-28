@@ -21,11 +21,12 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.ability.AuthDomainService;
+import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.DeptV;
 import org.laokou.auth.model.MenuV;
-import org.laokou.common.domain.service.DomainEventService;
+import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.i18n.common.exception.AuthException;
@@ -34,6 +35,7 @@ import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOGIN_LOG_TOPIC;
 import static org.laokou.auth.model.AuthA.BIZ_ID;
 import static org.laokou.auth.model.AuthA.USE_CASE;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
@@ -48,7 +50,7 @@ public class OAuth2AuthenticationProvider {
 
 	private final AuthDomainService authDomainService;
 
-	private final DomainEventService domainEventService;
+	private final DomainEventPublisher domainEventPublisher;
 
 	private final UserConvertor userConvertor;
 
@@ -69,16 +71,10 @@ public class OAuth2AuthenticationProvider {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 		finally {
-			// 保存领域事件（事件溯源）
-			// domainEventService.create(auth.getEvents());
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();
-			// 发布当前线程的领域事件(同步发布)
-			// domainEventPublisher.publish(SYNC);
-			// 清除领域事件上下文
-			// DomainEventContextHolder.clear();
-			// 清空领域事件
-			// auth.clearEvents();
+			// 发布领域事件
+			domainEventPublisher.publish(LAOKOU_LOGIN_LOG_TOPIC, new LoginEvent());
 		}
 	}
 
@@ -86,7 +82,7 @@ public class OAuth2AuthenticationProvider {
 		MenuV menu = auth.getMenu();
 		DeptV dept = auth.getDept();
 		UserDetail userDetail = userConvertor.convertClientObject(auth.getUser());
-		userDetail.modify(menu.permissions(), dept.deptPaths(), auth.getSourceName());
+		userDetail.update(menu.permissions(), dept.deptPaths(), auth.getSourceName());
 		return userDetail;
 	}
 

@@ -47,9 +47,6 @@ import static org.laokou.common.mybatisplus.mapper.BaseDO.DEFAULT_TENANT_ID;
 @RequiredArgsConstructor
 public class TenantGetIDQryExe {
 
-	/**
-	 * www.
-	 */
 	private static final String WWW = "www";
 
 	private final TenantProperties tenantProperties;

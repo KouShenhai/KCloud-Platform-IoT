@@ -59,7 +59,7 @@ public class AuthDomainService {
 		// 校验权限
 		auth.checkMenuPermissions();
 		auth.updateDept(deptGateway.getDeptPaths(auth.getUser()));
-		// 成功
+		// 认证成功
 		auth.ok();
 	}
 
