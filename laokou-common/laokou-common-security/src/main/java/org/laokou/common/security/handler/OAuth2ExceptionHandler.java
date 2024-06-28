@@ -33,9 +33,6 @@ import org.springframework.security.oauth2.core.OAuth2Error;
  */
 public class OAuth2ExceptionHandler {
 
-	/**
-	 * 错误地址.
-	 */
 	public static final String ERROR_URL = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
 	public static OAuth2AuthenticationException getException(String code, String message, String uri) {
