@@ -56,7 +56,7 @@ import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParamet
 @RequiredArgsConstructor
 public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationService {
 
-	public static final String FULL = "full";
+	private static final String FULL = "full";
 
 	private final RedisOAuth2AuthorizationRepository redisOAuth2AuthorizationRepository;
 
