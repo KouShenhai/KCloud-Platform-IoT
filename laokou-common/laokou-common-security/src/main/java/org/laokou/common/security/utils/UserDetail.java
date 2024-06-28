@@ -188,12 +188,10 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		return result;
 	}
 
-	@JsonIgnore
 	public boolean isSuperAdministrator() {
 		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
 	}
 
-	@JsonIgnore
 	public void update(Set<String> permissions, Set<String> deptPaths, String sourceName) {
 		this.permissions = permissions;
 		this.deptPaths = deptPaths;
@@ -246,14 +244,12 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		return this.username;
 	}
 
-	@JsonIgnore
 	public void decrypt() {
 		decryptMail();
 		decryptMobile();
 		decryptUsername();
 	}
 
-	@JsonIgnore
 	private void decryptUsername() {
 		if (StringUtil.isNotEmpty(this.username)) {
 			try {
@@ -265,7 +261,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		}
 	}
 
-	@JsonIgnore
 	private void decryptMail() {
 		if (StringUtil.isNotEmpty(this.mail)) {
 			try {
@@ -277,7 +272,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		}
 	}
 
-	@JsonIgnore
 	private void decryptMobile() {
 		if (StringUtil.isNotEmpty(this.mobile)) {
 			try {
