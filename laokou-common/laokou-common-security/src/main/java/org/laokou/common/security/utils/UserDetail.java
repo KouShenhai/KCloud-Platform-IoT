@@ -188,6 +188,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		return result;
 	}
 
+	@JsonIgnore
 	public boolean isSuperAdministrator() {
 		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
 	}

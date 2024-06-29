@@ -52,9 +52,6 @@ public final class RocketMqConstant {
 	@Schema(name = "LAOKOU_NOTICE_MESSAGE_CONSUMER_GROUP", description = "通知消息消费者组")
 	public static final String LAOKOU_NOTICE_MESSAGE_CONSUMER_GROUP = "laokou_notice_message_consumer_group";
 
-	@Schema(name = "LAOKOU_LOGIN_EVENT_CONSUMER_GROUP", description = "登录事件消费者组")
-	public static final String LAOKOU_LOGIN_EVENT_CONSUMER_GROUP = "laokou_login_event_consumer_group";
-
 	@Schema(name = "LAOKOU_OPERATE_EVENT_CONSUMER_GROUP", description = "操作事件消费者组")
 	public static final String LAOKOU_OPERATE_EVENT_CONSUMER_GROUP = "laokou_operate_event_consumer_group";
 

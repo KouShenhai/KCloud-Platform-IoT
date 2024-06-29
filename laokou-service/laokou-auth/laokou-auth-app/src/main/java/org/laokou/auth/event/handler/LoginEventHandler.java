@@ -21,15 +21,14 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.dto.domainevent.LoginEvent;
-import org.laokou.auth.gateway.LogGateway;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.laokou.common.domain.support.DomainEventPublisher;
 import org.springframework.stereotype.Component;
 
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
+import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.common.i18n.common.RocketMqConstant.*;
+import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOGIN_LOG_TOPIC;
 
 /**
  * 登录日志处理器.
@@ -39,20 +38,18 @@ import static org.laokou.common.i18n.common.RocketMqConstant.*;
 @Slf4j
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_EVENT_CONSUMER_GROUP, topic = LAOKOU_LOGIN_EVENT_TOPIC,
-		messageModel = CLUSTERING, consumeMode = ORDERLY)
+@RocketMQMessageListener(consumerGroup = "laokou_login_log_consumer_group", topic = LAOKOU_LOGIN_LOG_TOPIC,
+		messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class LoginEventHandler extends AbstractDomainEventHandler {
 
-	private final LogGateway logGateway;
-
-	public LoginEventHandler(LogGateway logGateway) {
-		this.logGateway = logGateway;
+	public LoginEventHandler(DomainEventPublisher domainEventPublisher) {
+		super(domainEventPublisher);
 	}
 
 	@Override
-	protected void handleDomainEvent(DefaultDomainEvent evt, String attribute) {
-		LoginEvent event = JacksonUtil.toBean(attribute, LoginEvent.class);
-		// logGateway.create(event, evt);
+	protected void handleDomainEvent(String msg) {
+		LoginEvent loginEvent = JacksonUtil.toBean(msg, LoginEvent.class);
+		log.info("{}", loginEvent);
 	}
 
 }

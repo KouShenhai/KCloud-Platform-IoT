@@ -26,8 +26,6 @@ import org.laokou.common.i18n.dto.DomainEvent;
  */
 public interface DomainEventPublisher {
 
-	<ID> void publish(String topic, DomainEvent<ID> payload);
-
 	<ID> void publish(DomainEvent<ID> payload);
 
 }

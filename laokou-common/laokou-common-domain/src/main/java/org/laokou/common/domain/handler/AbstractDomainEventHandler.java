@@ -17,14 +17,13 @@
 
 package org.laokou.common.domain.handler;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.database.dataobject.DomainEventDO;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
-import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.domain.support.DomainEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.nio.charset.StandardCharsets;
@@ -36,39 +35,33 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 public abstract class AbstractDomainEventHandler implements RocketMQListener<MessageExt> {
 
+	private static final String ID = "id";
+
+	private static final String SOURCE_NAME = "sourceName";
+
+	private final DomainEventPublisher domainEventPublisher;
+
 	@Override
 	public void onMessage(MessageExt message) {
 		String msg = new String(message.getBody(), StandardCharsets.UTF_8);
-		DomainEventDO eventDO = JacksonUtil.toBean(msg, DomainEventDO.class);
+		JsonNode jsonNode = JacksonUtil.readTree(msg);
+		Long id = jsonNode.get(ID).asLong();
+		String sourceName = jsonNode.get(SOURCE_NAME).asText();
 		try {
-			// 发送消息
-			// 处理领域事件
-			handleDomainEvent(convert(eventDO), eventDO.getAttribute());
-			// 消费成功
-			// events.add(new DefaultDomainEvent(eventDO.getId(), CONSUME_SUCCEED,
-			// eventDO.getSourceName()));
+			handleDomainEvent(msg);
+			log.info("已消费");
 		}
 		catch (Exception e) {
 			if (e instanceof DataIntegrityViolationException) {
-				// 发送消息
-				// 消费成功（数据重复直接改为消费成功）
-				// events.add(new DefaultDomainEvent(eventDO.getId(), CONSUME_SUCCEED,
-				// eventDO.getSourceName()));
+				// 数据重复直接改为已消费
+				log.info("已消费");
 			}
 			else {
-				// 消费失败
-				// events.add(new DefaultDomainEvent(eventDO.getId(), CONSUME_FAILED,
-				// eventDO.getSourceName()));
-				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				throw e;
 			}
 		}
 	}
 
-	private DefaultDomainEvent convert(DomainEventDO eventDO) {
-		return null;
-	}
-
-	protected abstract void handleDomainEvent(DefaultDomainEvent evt, String attribute);
+	protected abstract void handleDomainEvent(String msg);
 
 }

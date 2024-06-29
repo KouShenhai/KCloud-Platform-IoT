@@ -19,12 +19,14 @@ package org.laokou.auth.service.authentication;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.ability.AuthDomainService;
+import org.laokou.auth.convertor.LogConvertor;
+import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.DeptV;
+import org.laokou.auth.model.LogV;
 import org.laokou.auth.model.MenuV;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
@@ -38,6 +40,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOGIN_LOG_TOPIC;
 import static org.laokou.auth.model.AuthA.BIZ_ID;
 import static org.laokou.auth.model.AuthA.USE_CASE;
+import static org.laokou.common.i18n.common.constants.EventStatus.CREATED;
+import static org.laokou.common.i18n.common.constants.EventType.LOGIN;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 
@@ -55,6 +59,8 @@ public class OAuth2AuthenticationProvider {
 	private final UserConvertor userConvertor;
 
 	private final ExtensionExecutor extensionExecutor;
+
+	private final LogConvertor logConvertor;
 
 	public UsernamePasswordAuthenticationToken authentication(AuthA auth) {
 		try {
@@ -74,8 +80,15 @@ public class OAuth2AuthenticationProvider {
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();
 			// 发布领域事件
-			domainEventPublisher.publish(LAOKOU_LOGIN_LOG_TOPIC, new LoginEvent());
+			domainEventPublisher.publish(to(auth));
 		}
+	}
+
+	private LoginEvent to(AuthA auth) {
+		LogV log = auth.getLog();
+		LoginEvent loginEvent = logConvertor.convertClientObject(log);
+		loginEvent.create(auth, LAOKOU_LOGIN_LOG_TOPIC, LOGIN, CREATED, log.timestamp());
+		return loginEvent;
 	}
 
 	private UserDetail convert(AuthA auth) {

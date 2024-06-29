@@ -89,6 +89,11 @@ public class AuthA extends AggregateRoot<Long> {
 	private HttpServletRequest request;
 
 	/**
+	 * 当前用户.
+	 */
+	private String currentUser;
+
+	/**
 	 * 登录成功.
 	 */
 	private final String LOGIN_SUCCEEDED = "OAuth2_LoginSucceeded";
@@ -182,19 +187,23 @@ public class AuthA extends AggregateRoot<Long> {
 	}
 
 	public void createUserByPassword() {
-		this.user = new UserE(this.username, EMPTY, EMPTY, this.tenantId);
+		currentUser = this.username;
+		this.user = new UserE(currentUser, EMPTY, EMPTY, this.tenantId);
 	}
 
 	public void createUserByMobile() {
-		this.user = new UserE(EMPTY, EMPTY, this.captcha.uuid(), this.tenantId);
+		currentUser = this.captcha.uuid();
+		this.user = new UserE(EMPTY, EMPTY, currentUser, this.tenantId);
 	}
 
 	public void createUserByMail() {
-		this.user = new UserE(EMPTY, this.captcha.uuid(), EMPTY, this.tenantId);
+		currentUser = this.captcha.uuid();
+		this.user = new UserE(EMPTY, currentUser, EMPTY, this.tenantId);
 	}
 
 	public void createUserByAuthorizationCode() {
-		this.user = new UserE(this.username, EMPTY, EMPTY, 0L);
+		currentUser = this.username;
+		this.user = new UserE(currentUser, EMPTY, EMPTY, 0L);
 	}
 
 	public void updateUser(UserE user) {
@@ -271,7 +280,7 @@ public class AuthA extends AggregateRoot<Long> {
 		Capabilities capabilities = RequestUtil.getCapabilities(request);
 		String os = capabilities.getPlatform();
 		String browser = capabilities.getBrowser();
-		this.log = new LogV(username, ip, address, browser, os, status, message, grantType, DateUtil.now());
+		this.log = new LogV(currentUser, ip, address, browser, os, status, message, grantType, DateUtil.now());
 	}
 
 }
