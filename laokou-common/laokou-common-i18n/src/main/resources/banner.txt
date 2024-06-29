@@ -39,8 +39,8 @@ ${java.vm.name} ${java.vendor.version:} (build ${java.runtime.version}，${java.
 ${AnsiColor.BRIGHT_YELLOW}Java 类版本号：${java.class.version}
 
 ${AnsiColor.GREEN}Spring Boot版本：${spring-boot.version}
-${AnsiColor.GREEN}Spring Cloud版本：${version.spring-cloud}
-${AnsiColor.BRIGHT_YELLOW}Spring Cloud Alibaba版本：${version.spring-cloud-alibaba}
+${AnsiColor.BRIGHT_GREEN}Spring Cloud版本：${version.spring-cloud}
+${AnsiColor.YELLOW}Spring Cloud Alibaba版本：${version.spring-cloud-alibaba}
 
 ${AnsiColor.BRIGHT_MAGENTA}时区：${user.timezone}，语言：${user.language}，国家：${user.country}，文件编码：${file.encoding}
 ${AnsiColor.BLUE}JDK所在目录：${java.home}

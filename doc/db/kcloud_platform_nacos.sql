@@ -423,6 +423,8 @@ alter table public.users
 	owner to root;
 
 --------------------------------------------------------------- UPDATE ---------------------------------------------------------------
+
+--------------------------------------------------------------- CONFIG ---------------------------------------------------------------
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (16, 'application-common-redis.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
@@ -814,6 +816,136 @@ spring:
         password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)', '7d934a9e4b0ebe9803a17ccd520dca3e', '2023-07-18 16:59:45.000000', '2023-11-06 18:09:16.000000', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'monitor公共配置', '', '', 'yaml', '', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2118, 'application-report.yaml', 'LAOKOU_GROUP', e'server:
   port: 8088', '89f7b26715cf760d099a258200381fe0', '2023-10-01 04:56:06.000000', '2024-05-01 00:45:57.000000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-report', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (48, 'application-gateway.yaml', 'LAOKOU_GROUP', e'# ip
+spring:
+  cloud:
+    gateway:
+      ip:
+        white:
+          enabled: false
+        black:
+          enabled: false
+
+knife4j:
+  # 聚合swagger文档
+  gateway:
+    enabled: false', '20b272cb01dae1613a01b3b46d61e487', '2024-05-25 18:13:10.704000', '2024-05-25 18:46:33.133000', 'nacos', '127.0.0.1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway配置', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (36, 'router.json', 'LAOKOU_GROUP', e'[
+  {
+    "id": "laokou-auth",
+    "uri": "lb://laokou-auth",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/auth/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "auth",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/auth/(?<path>.*)",
+          "_genkey_1": "/$\\\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "2.0"
+    },
+    "order": 1
+  },
+  {
+    "id": "laokou-admin",
+    "uri": "lb://laokou-admin",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/admin/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "admin",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/admin/(?<path>.*)",
+          "_genkey_1": "/$\\\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "2.0"
+    },
+    "order": 1
+  },
+  {
+    "id": "laokou-im",
+    "uri": "lb:wss://laokou-im",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/im/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "im",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/im/(?<path>.*)",
+          "_genkey_1": "/$\\\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "2.0"
+    },
+    "order": 1
+  }
+]', '0ed5d74d692a46b070c46572b94ca61d', '2024-05-25 18:13:10.616000', '2024-05-25 18:16:32.596000', 'nacos', '127.0.0.1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', '动态路由配置', '', '', 'json', '', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2159, 'application-common-kafka.yaml', 'LAOKOU_GROUP', e'spring:
   kafka:
     bootstrap-servers: kafka.laokou.org:9092
@@ -1006,7 +1138,6 @@ metrics.enabled=false
 metrics.registryType=compact
 metrics.exporterList=prometheus
 metrics.exporterPrometheusPort=9898', '26217408b5ee26c2fec37325ea785e2f', '2023-11-27 16:36:34.000000', '2024-03-04 11:55:27.000000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-seata', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'seata配置', '', '', 'properties', '', '');
-
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
@@ -1134,6 +1265,20 @@ spring:
         username: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
         # laokou123
         password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)', '7d934a9e4b0ebe9803a17ccd520dca3e', '2024-05-25 18:13:10.637000', '2024-05-25 18:13:10.637000', null, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'monitor公共配置', null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (70, 'application-gateway.yaml', 'LAOKOU_GROUP', e'# ip
+spring:
+  cloud:
+    gateway:
+      ip:
+        white:
+          enabled: false
+        black:
+          enabled: false
+
+knife4j:
+  # 聚合swagger文档
+  gateway:
+    enabled: true', 'b4ccbf4df335be2d07acf78a456ad733', '2024-05-25 18:13:33.458000', '2024-05-25 18:46:18.892000', 'nacos', '127.0.0.1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway配置', '', '', 'yaml', '', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1254, 'application-common-seata.yaml', 'LAOKOU_GROUP', e'# seata
 seata:
   saga:
@@ -1387,7 +1532,6 @@ metrics.enabled=false
 metrics.registryType=compact
 metrics.exporterList=prometheus
 metrics.exporterPrometheusPort=9898', '26217408b5ee26c2fec37325ea785e2f', '2024-05-25 18:13:10.662000', '2024-05-25 18:13:10.662000', null, '127.0.0.1', 'laokou-seata', '8140e92b-fb43-48f5-b63b-7506185206a5', 'seata配置', null, null, 'properties', null, '');
-
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (44, 'admin-degrade.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
@@ -1547,56 +1691,47 @@ tenant:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html', 'e83a99587ac917866dee016df29fd662', '2024-05-25 18:13:10.622000', '2024-05-26 00:02:32.884000', 'nacos', '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2022, 'application-admin.yaml', 'LAOKOU_GROUP', e'# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\\"%s\\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (45, 'application-common-seata.yaml', 'LAOKOU_GROUP', e'# seata
+seata:
+  saga:
     enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: true', '957a2572f30b7ccacd65d03b98d9a1aa', '2023-09-28 11:37:33.000000', '2024-05-25 19:30:04.576000', 'nacos', '127.0.0.1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+    state-machine:
+      enable-async: true
+      table-prefix: seata_
+      async-thread-pool:
+        core-pool-size: 1
+        max-pool-size: 20
+        keep-alive-time: 60
+      trans-operation-timeout: 1800000
+      service-invoke-timeout: 300000
+      auto-register-resources: true
+      resources:
+        - classpath*:seata/saga/statelang/**/*.json
+      default-tenant-id: 0
+      charset: UTF-8
+  client:
+    tm:
+      default-global-transaction-timeout: 30000
+  config:
+    type: nacos
+    nacos:
+      server-addr: https://nacos.laokou.org:8848
+      namespace: 8140e92b-fb43-48f5-b63b-7506185206a5
+      username: nacos
+      password: nacos
+      group: SEATA_GROUP
+      data-id: seataServer.properties
+  registry:
+    type: nacos
+    nacos:
+      namespace: 8140e92b-fb43-48f5-b63b-7506185206a5
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+      server-addr: https://nacos.laokou.org:8848
+  enabled: true
+  tx-service-group: default_tx_group
+  data-source-proxy-mode: AT', 'eeeffb74bfa083c4186b2690f4d16288', '2024-05-25 18:13:10.683000', '2024-05-25 18:50:17.125000', 'nacos', '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'seata公共配置', '', '', 'yaml', '', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (27, 'application-common-redis.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
@@ -1738,6 +1873,22 @@ spring:
             maximum-pool-size: 60
             minimum-idle: 10
             is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            pool-name: HikariCP
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
 # mybatis-plus
 mybatis-plus:
   # 全局处理
@@ -1757,62 +1908,7 @@ mybatis-plus:
 
 springdoc:
   api-docs:
-    enabled: false', '7f6a2ee4b32b6e4756d5e6aa3e757c0e', '2024-05-25 18:13:10.690000', '2024-05-25 19:31:38.431000', 'nacos', '127.0.0.1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (48, 'application-gateway.yaml', 'LAOKOU_GROUP', e'# ip
-spring:
-  cloud:
-    gateway:
-      ip:
-        white:
-          enabled: false
-        black:
-          enabled: false
-
-knife4j:
-  # 聚合swagger文档
-  gateway:
-    enabled: false', '20b272cb01dae1613a01b3b46d61e487', '2024-05-25 18:13:10.704000', '2024-05-25 18:46:33.133000', 'nacos', '127.0.0.1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (45, 'application-common-seata.yaml', 'LAOKOU_GROUP', e'# seata
-seata:
-  saga:
-    enabled: true
-    state-machine:
-      enable-async: true
-      table-prefix: seata_
-      async-thread-pool:
-        core-pool-size: 1
-        max-pool-size: 20
-        keep-alive-time: 60
-      trans-operation-timeout: 1800000
-      service-invoke-timeout: 300000
-      auto-register-resources: true
-      resources:
-        - classpath*:seata/saga/statelang/**/*.json
-      default-tenant-id: 0
-      charset: UTF-8
-  client:
-    tm:
-      default-global-transaction-timeout: 30000
-  config:
-    type: nacos
-    nacos:
-      server-addr: https://nacos.laokou.org:8848
-      namespace: 8140e92b-fb43-48f5-b63b-7506185206a5
-      username: nacos
-      password: nacos
-      group: SEATA_GROUP
-      data-id: seataServer.properties
-  registry:
-    type: nacos
-    nacos:
-      namespace: 8140e92b-fb43-48f5-b63b-7506185206a5
-      group: SEATA_GROUP
-      username: nacos
-      password: nacos
-      server-addr: https://nacos.laokou.org:8848
-  enabled: true
-  tx-service-group: default_tx_group
-  data-source-proxy-mode: AT', 'eeeffb74bfa083c4186b2690f4d16288', '2024-05-25 18:13:10.683000', '2024-05-25 18:50:17.125000', 'nacos', '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'seata公共配置', '', '', 'yaml', '', '');
+    enabled: false', '7270e14a875205fafe93949b552af527', '2024-05-25 18:13:10.690000', '2024-06-29 14:13:14.802000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (19, 'application-monitor.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
@@ -2304,7 +2400,6 @@ metrics.enabled=false
 metrics.registryType=compact
 metrics.exporterList=prometheus
 metrics.exporterPrometheusPort=9898', '26217408b5ee26c2fec37325ea785e2f', '2024-05-25 18:13:33.425000', '2024-05-25 18:13:33.425000', null, '127.0.0.1', 'laokou-seata', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'seata配置', null, null, 'properties', null, '');
-
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (66, 'admin-degrade.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
@@ -2364,137 +2459,7 @@ seata:
   enabled: true
   tx-service-group: default_tx_group
   data-source-proxy-mode: AT', 'd121fc4a27f2da0223bc33374be43f73', '2024-05-25 18:13:33.441000', '2024-05-25 18:49:36.942000', 'nacos', '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'seata公共配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (36, 'router.json', 'LAOKOU_GROUP', e'[
-  {
-    "id": "laokou-auth",
-    "uri": "lb://laokou-auth",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/auth/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "auth",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/auth/(?<path>.*)",
-          "_genkey_1": "/$\\\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "2.0"
-    },
-    "order": 1
-  },
-  {
-    "id": "laokou-admin",
-    "uri": "lb://laokou-admin",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/admin/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "admin",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/admin/(?<path>.*)",
-          "_genkey_1": "/$\\\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "2.0"
-    },
-    "order": 1
-  },
-  {
-    "id": "laokou-im",
-    "uri": "lb:wss://laokou-im",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/im/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "im",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/im/(?<path>.*)",
-          "_genkey_1": "/$\\\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "2.0"
-    },
-    "order": 1
-  }
-]', '0ed5d74d692a46b070c46572b94ca61d', '2024-05-25 18:13:10.616000', '2024-05-25 18:16:32.596000', 'nacos', '127.0.0.1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', '动态路由配置', '', '', 'json', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (70, 'application-gateway.yaml', 'LAOKOU_GROUP', e'# ip
-spring:
-  cloud:
-    gateway:
-      ip:
-        white:
-          enabled: false
-        black:
-          enabled: false
-
-knife4j:
-  # 聚合swagger文档
-  gateway:
-    enabled: true', 'b4ccbf4df335be2d07acf78a456ad733', '2024-05-25 18:13:33.458000', '2024-05-25 18:46:18.892000', 'nacos', '127.0.0.1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2025, 'application-auth.yaml', 'LAOKOU_GROUP', e'# jasypt
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (47, 'application-auth.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -2523,51 +2488,20 @@ spring:
             maximum-pool-size: 30
             minimum-idle: 10
             is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\\"%s\\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: true', 'e9f3419380c9a69d480f65b5c3b40743', '2023-09-28 11:51:44.000000', '2024-05-25 19:29:23.161000', 'nacos', '127.0.0.1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (69, 'application-auth.yaml', 'LAOKOU_GROUP', e'# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
+        domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
           hikari:
-            connection-timeout: 60000
+            pool-name: HikariCP
+            connection-timeout: 180000
             validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
             minimum-idle: 10
             is-read-only: false
 # mybatis-plus
@@ -2587,7 +2521,7 @@ mybatis-plus:
 
 springdoc:
   api-docs:
-    enabled: true', 'e9f3419380c9a69d480f65b5c3b40743', '2024-05-25 18:13:33.452000', '2024-05-25 19:30:48.449000', 'nacos', '127.0.0.1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+    enabled: false', '81c8ac9d7a2c4e650322d6e6073a4f1d', '2024-05-25 18:13:10.697000', '2024-06-29 14:13:48.123000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (68, 'application-admin.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
@@ -2606,6 +2540,22 @@ spring:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
           url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            pool-name: HikariCP
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2637,8 +2587,8 @@ mybatis-plus:
 
 springdoc:
   api-docs:
-    enabled: true', '957a2572f30b7ccacd65d03b98d9a1aa', '2024-05-25 18:13:33.447000', '2024-05-25 19:31:03.895000', 'nacos', '127.0.0.1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (47, 'application-auth.yaml', 'LAOKOU_GROUP', e'# jasypt
+    enabled: true', 'ef43225dfe22aafd066a2f8a86fcbde5', '2024-05-25 18:13:33.447000', '2024-06-29 14:14:10.129000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (69, 'application-auth.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -2667,6 +2617,22 @@ spring:
             maximum-pool-size: 30
             minimum-idle: 10
             is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            pool-name: HikariCP
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
 # mybatis-plus
 mybatis-plus:
   # 全局处理
@@ -2684,7 +2650,137 @@ mybatis-plus:
 
 springdoc:
   api-docs:
-    enabled: false', 'e9fb9cb20e466d64c4f1c58701b9cef6', '2024-05-25 18:13:10.697000', '2024-05-25 19:31:19.439000', 'nacos', '127.0.0.1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+    enabled: true', 'ef120e2acbe50193e647855ad02bf066', '2024-05-25 18:13:33.452000', '2024-06-29 14:14:30.172000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2022, 'application-admin.yaml', 'LAOKOU_GROUP', e'# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            pool-name: HikariCP
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            pool-name: HikariCP
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\\"%s\\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+springdoc:
+  api-docs:
+    enabled: true', 'ef43225dfe22aafd066a2f8a86fcbde5', '2023-09-28 11:37:33.000000', '2024-06-29 14:12:17.779000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2025, 'application-auth.yaml', 'LAOKOU_GROUP', e'# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 60000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            pool-name: HikariCP
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\\"%s\\""
+  tenant:
+    enabled: true
+    ignore-tables:
+      - boot_sys_source
+      - boot_sys_tenant
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+springdoc:
+  api-docs:
+    enabled: true', 'ef120e2acbe50193e647855ad02bf066', '2023-09-28 11:51:44.000000', '2024-06-29 14:12:53.946000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+--------------------------------------------------------------- CONFIG ---------------------------------------------------------------
 
 INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (1477, 'mail', '', 'application-mail.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 172);
 INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (1475, 'sms', '', 'application-sms.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 346);
