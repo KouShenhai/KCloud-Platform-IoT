@@ -17,23 +17,25 @@
 
 package org.laokou.common.log.annotation;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.lang.annotation.*;
 
 /**
+ * 操作日志注解.
  * @author laokou
  */
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Schema(name = "OperateLog", description = "操作日志注解")
 public @interface OperateLog {
 
-	@Schema(name = "module", description = "模块")
+	/**
+	 * 模块.
+	 */
 	String module();
 
-	@Schema(name = "operation", description = "操作")
+	/**
+	 * 操作.
+	 */
 	String operation();
 
 }

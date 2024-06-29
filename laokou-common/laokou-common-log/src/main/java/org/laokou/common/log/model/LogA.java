@@ -15,16 +15,17 @@
  *
  */
 
-package org.laokou.common.log.domain;
+package org.laokou.common.log.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.JacksonUtil;
+import lombok.NoArgsConstructor;
+import org.laokou.common.core.context.UserContextHolder;
+import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,66 +33,116 @@ import java.util.*;
 
 import static org.laokou.common.core.utils.JacksonUtil.EMPTY_JSON;
 import static org.laokou.common.i18n.common.constants.StringConstant.*;
+import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 /**
+ * 操作日志.
  * @author laokou
  */
 @Data
-@Schema(name = "OperateLog", description = "操作日志")
-public class OperateLog extends AggregateRoot<Long> {
+@NoArgsConstructor
+@AllArgsConstructor
+public class LogA extends AggregateRoot<Long> {
 
 	private static final Set<String> REMOVE_PARAMS = Set.of("username", "password", "mail", "mobile");
 
-	@Schema(name = "name", description = "操作名称")
+	/**
+	 * 操作名称.
+	 */
 	private String name;
 
-	@Schema(name = "moduleName", description = "操作的模块名称")
+	/**
+	 * 操作的模块名称.
+	 */
 	private String moduleName;
 
-	@Schema(name = "uri", description = "操作的URI")
+	/**
+	 * 操作的URI.
+	 */
 	private String uri;
 
-	@Schema(name = "methodName", description = "操作的方法名")
+	/**
+	 * 操作的方法名.
+	 */
 	private String methodName;
 
-	@Schema(name = "requestType", description = "操作的请求类型")
+	/**
+	 * 操作的请求类型.
+	 */
 	private String requestType;
 
-	@Schema(name = "requestParams", description = "操作的请求参数")
+	/**
+	 * 操作的请求参数.
+	 */
 	private String requestParams;
 
-	@Schema(name = "userAgent", description = "操作的浏览器")
+	/**
+	 * 操作的浏览器.
+	 */
 	private String userAgent;
 
-	@Schema(name = "ip", description = "操作的IP地址")
+	/**
+	 * 操作的IP地址.
+	 */
 	private String ip;
 
-	@Schema(name = "address", description = "操作的归属地")
+	/**
+	 * 操作的归属地.
+	 */
 	private String address;
 
-	@Schema(name = "operator", description = "操作人")
+	/**
+	 * 操作人.
+	 */
 	private String operator;
 
-	@Schema(name = "errorMessage", description = "错误信息")
+	/**
+	 * 错误信息.
+	 */
 	private String errorMessage;
 
-	@Schema(name = "status", description = "操作状态 0成功 1失败")
+	/**
+	 * 操作状态 0成功 1失败.
+	 */
 	private Integer status;
 
-	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
+	/**
+	 * 操作的消耗时间(毫秒).
+	 */
 	private Long takeTime;
 
-	public OperateLog(String moduleName, String name) {
+	private static final int OK = 0;
+
+	private static final int FAIL = 1;
+
+	public LogA(String moduleName, String name, HttpServletRequest request, String appName) {
+		UserContextHolder.User user = UserContextHolder.get();
 		this.moduleName = moduleName;
 		this.name = name;
+		this.uri = request.getRequestURI();
+		this.requestType = request.getMethod();
+		this.userAgent = request.getHeader(USER_AGENT);
+		this.ip = IpUtil.getIpAddr(request);
+		this.address = AddressUtil.getRealAddress(ip);
+		this.deptId = user.getDeptId();
+		this.deptPath = user.getDeptPath();
+		this.tenantId = user.getTenantId();
+		this.id = IdGenerator.defaultSnowflakeId();
+		this.createDate = DateUtil.now();
+		this.updateDate = this.createDate;
+		this.creator = user.getId();
+		this.editor = this.creator;
+		this.appName = appName;
+		this.sourceName = user.getSourceName();
+		this.operator = user.getUsername();
 	}
 
-	public void modifyStatus(Exception e, HttpServletRequest request, String appName) {
+	public void updateStatus(Exception e) {
 		if (ObjectUtil.isNotNull(e)) {
-			operateFail(e, request, appName);
+			fail(e);
 		}
 		else {
-			operateSuccess(request, appName);
+			ok();
 		}
 	}
 
@@ -100,7 +151,7 @@ public class OperateLog extends AggregateRoot<Long> {
 	}
 
 	public void calculateTaskTime(long startTime) {
-		this.takeTime = IdGenerator.SystemClock.now() - startTime;
+		this.takeTime = System.currentTimeMillis() - startTime;
 	}
 
 	public void decorateRequestParams(Object[] args) {
@@ -112,7 +163,7 @@ public class OperateLog extends AggregateRoot<Long> {
 			Object obj = params.getFirst();
 			try {
 				Map<String, String> map = JacksonUtil.toMap(obj, String.class, String.class);
-				removeAny(map, REMOVE_PARAMS.toArray(String[]::new));
+				deleteAny(map, REMOVE_PARAMS.toArray(String[]::new));
 				this.requestParams = JacksonUtil.toJsonStr(map, true);
 			}
 			catch (Exception e) {
@@ -121,18 +172,16 @@ public class OperateLog extends AggregateRoot<Long> {
 		}
 	}
 
-	private void operateSuccess(HttpServletRequest request, String appName) {
-		// addEvent(new OperateSucceededEvent(this, request, UserContextHolder.get(),
-		// appName));
+	private void ok() {
+		this.status = OK;
 	}
 
-	private void operateFail(Exception e, HttpServletRequest request, String appName) {
+	private void fail(Exception e) {
 		this.errorMessage = e.getMessage();
-		// addEvent(new OperateFailedEvent(this, request, UserContextHolder.get(),
-		// appName));
+		this.status = FAIL;
 	}
 
-	private void removeAny(Map<String, String> map, String... keys) {
+	private void deleteAny(Map<String, String> map, String... keys) {
 		for (String key : keys) {
 			map.remove(key);
 		}

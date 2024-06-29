@@ -19,7 +19,7 @@ package org.laokou.admin.convertor;
 
 import org.laokou.admin.dto.log.clientobject.OperateLogCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
-import org.laokou.common.log.domain.OperateLog;
+import org.laokou.common.log.model.LogA;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -32,6 +32,6 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * @author laokou
  */
 @Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface OperateLogConvertor extends Convertor<OperateLogCO, OperateLog, OperateLogDO> {
+public interface OperateLogConvertor extends Convertor<OperateLogCO, LogA, OperateLogDO> {
 
 }

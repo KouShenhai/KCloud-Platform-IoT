@@ -17,21 +17,19 @@
 
 package org.laokou.common.log.aop;
 
-import com.alibaba.ttl.TransmittableThreadLocal;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.log.domain.OperateLog;
+import org.laokou.common.log.annotation.OperateLog;
+import org.laokou.common.log.model.LogA;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -43,19 +41,18 @@ import java.lang.reflect.Method;
  *
  * @author laokou
  */
-@Component
 @Aspect
-@Slf4j
+@Component
 @RequiredArgsConstructor
 public class OperateLogAop {
 
 	private final SpringContextUtil springContextUtil;
 
-	private static final ThreadLocal<Long> TASK_TIME_LOCAL = new TransmittableThreadLocal<>();
+	private static final ThreadLocal<Long> TASK_TIME_LOCAL = new ThreadLocal<>();
 
 	@Before("@annotation(org.laokou.common.log.annotation.OperateLog)")
 	public void doBefore() {
-		TASK_TIME_LOCAL.set(IdGenerator.SystemClock.now());
+		TASK_TIME_LOCAL.set(System.currentTimeMillis());
 	}
 
 	/**
@@ -77,20 +74,19 @@ public class OperateLogAop {
 		handleLog(joinPoint, e);
 	}
 
-	private void handleLog(final JoinPoint joinPoint, final Exception e) {
+	private void handleLog(JoinPoint joinPoint, Exception e) {
 		try {
 			// 应用名称
 			String appName = springContextUtil.getAppName();
 			HttpServletRequest request = RequestUtil.getHttpServletRequest();
 			MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 			Method method = methodSignature.getMethod();
-			org.laokou.common.log.annotation.OperateLog operateLog = AnnotationUtils.findAnnotation(method,
-					org.laokou.common.log.annotation.OperateLog.class);
-			Assert.isTrue(ObjectUtil.isNotNull(operateLog), "@OperateLog is null");
+			OperateLog log = AnnotationUtils.findAnnotation(method, OperateLog.class);
+			Assert.isTrue(ObjectUtil.isNotNull(log), "@OperateLog is null");
 			String className = joinPoint.getTarget().getClass().getName();
 			String methodName = joinPoint.getSignature().getName();
 			Object[] args = joinPoint.getArgs();
-			OperateLog operate = new OperateLog(operateLog.module(), operateLog.operation());
+			LogA operate = new LogA(log.module(), log.operation(), request, appName);
 			// 组装类名
 			operate.decorateMethodName(className, methodName);
 			// 组装请求参数
@@ -98,15 +94,7 @@ public class OperateLogAop {
 			// 计算消耗时间
 			operate.calculateTaskTime(TASK_TIME_LOCAL.get());
 			// 修改状态
-			operate.modifyStatus(e, request, appName);
-			// 保存领域事件（事件溯源）
-			// domainEventService.create(operate.getEvents());
-			// 发布当前线程的领域事件(同步发布)
-			// domainEventPublisher.publish(SYNC);
-			// 清除领域事件上下文
-			// DomainEventContextHolder.clear();
-			// 清空领域事件
-			// operate.clearEvents();
+			operate.updateStatus(e);
 		}
 		finally {
 			TASK_TIME_LOCAL.remove();
