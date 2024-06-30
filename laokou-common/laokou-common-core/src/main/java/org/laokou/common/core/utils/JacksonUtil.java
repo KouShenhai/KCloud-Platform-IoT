@@ -17,6 +17,7 @@
 
 package org.laokou.common.core.utils;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,7 +49,11 @@ public class JacksonUtil {
 	/**
 	 * 映射器配置.
 	 */
-	private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new JavaTimeModule());
+	private static final ObjectMapper MAPPER = new ObjectMapper()
+		.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true)
+		.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
+		.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+		.registerModule(new JavaTimeModule());
 
 	/**
 	 * json字符转Bean.
