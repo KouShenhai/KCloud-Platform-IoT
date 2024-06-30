@@ -20,10 +20,9 @@ package org.laokou.common.core.utils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -54,6 +53,10 @@ public class FileUtil {
 			log.info("文件创建：{}", newFile.createNewFile());
 		}
 		return newFile;
+	}
+
+	public static byte[] getBytes(Path path) throws IOException {
+		return Files.readAllBytes(path);
 	}
 
 	/**
