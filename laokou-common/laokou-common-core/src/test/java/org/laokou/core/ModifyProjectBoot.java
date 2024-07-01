@@ -16,16 +16,11 @@
  */
 
 package org.laokou.core;
-
-import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
-
-import java.io.FileReader;
 import java.io.IOException;
-
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.constants.StringConstant.SLASH;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.List;
 
 /**
  * 一键修改项目.
@@ -33,15 +28,65 @@ import static org.laokou.common.i18n.common.constants.StringConstant.SLASH;
  */
 public class ModifyProjectBoot {
 
-	private static final String FILE_NAME = "pom.xml";
+	// -------------------------------------------------------------------------不可修改-------------------------------------------------------------------------
+	private static int count = 0;
+	private static final List<String> MODULES = List.of("laokou-cloud", "laokou-common", "laokou-service");
+	private static final List<String> MODIFY_FILE_SUFFIX = List.of(".java", "pom.xml");
+	private static final MavenXpp3Reader XML_READER = new MavenXpp3Reader();
+	// -------------------------------------------------------------------------不可修改-------------------------------------------------------------------------
 
-	public static void main(String[] args) throws IOException, XmlPullParserException {
+	// -------------------------------------------------------------------------需要修改-------------------------------------------------------------------------
+	// 新项目名称
+	private static final String NEW_PROJECT_NAME = "new_laokou";
+	// 新模块名称
+	private static final String NEW_MODULE_NAME = "newlaokou";
+	// 新分组ID
+	private static final String NEW_GROUP_ID = "new.laokou";
+	// -------------------------------------------------------------------------需要修改-------------------------------------------------------------------------
+
+
+	public static void main(String[] args) throws IOException {
 		// 修改projectName、packageName、groupId、artifactId
-		MavenXpp3Reader reader = new MavenXpp3Reader();
-		recursionModule(System.getProperty("user.dir") + SLASH + FILE_NAME, reader);
+		String projectPath = System.getProperty("user.dir");
+		Files.walkFileTree(Paths.get(projectPath), new SimpleFileVisitor<>() {
+
+			@Override
+			public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
+				String filePath = path.toAbsolutePath().toString();
+				System.out.println(getNewPath(filePath));
+				return FileVisitResult.CONTINUE;
+			}
+
+			@Override
+			public FileVisitResult preVisitDirectory(Path path, BasicFileAttributes attrs) {
+				boolean isSkip = false;
+				String dir = path.toString();
+				for (String module : MODULES) {
+					if (dir.contains(module)) {
+						isSkip = true;
+						break;
+					}
+				}
+				if (isSkip || count++ < 1) {
+					return FileVisitResult.CONTINUE;
+				}
+				return FileVisitResult.SKIP_SUBTREE;
+			}
+
+			@Override
+			public FileVisitResult visitFileFailed(Path file, IOException exc) {
+				return FileVisitResult.CONTINUE;
+			}
+
+		});
 	}
 
-	private static void recursionModule(String path, MavenXpp3Reader reader) throws IOException, XmlPullParserException {
+	private static String getNewPath(String path) {
+		return path.replace("KCloud-Platform-IoT", NEW_PROJECT_NAME)
+			.replace("laokou", NEW_MODULE_NAME);
+	}
+
+	/*private static void recursionModule(String path, MavenXpp3Reader reader) throws IOException, XmlPullParserException {
 		Model model = reader.read(new FileReader(path));
 		model.getModules().forEach(moduleName -> {
 			try {
@@ -50,6 +95,6 @@ public class ModifyProjectBoot {
 				throw new RuntimeException(e);
 			}
 		});
-	}
+	}*/
 
 }
