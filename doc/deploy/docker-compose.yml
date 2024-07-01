@@ -82,7 +82,7 @@ services:
       - TZ=Asia/Shanghai
     network_mode: bridge
   kafka:
-    image: bitnami/kafka:3.7.0
+    image: bitnami/kafka:3.7.1
     container_name: kafka
     tty: true
     ports:
