@@ -31,7 +31,8 @@ public class ModifyProjectBoot {
 	// -------------------------------------------------------------------------不可修改-------------------------------------------------------------------------
 	private static int count = 0;
 	private static final List<String> MODULES = List.of("laokou-cloud", "laokou-common", "laokou-service");
-	private static final List<String> MODIFY_FILE_SUFFIX = List.of(".java", "pom.xml");
+	private static final String MODIFY_POM_FILE_SUFFIX = "pom.xml";
+	private static final String MODIFY_JAVA_FILE_SUFFIX = ".java";
 	private static final MavenXpp3Reader XML_READER = new MavenXpp3Reader();
 	// -------------------------------------------------------------------------不可修改-------------------------------------------------------------------------
 
@@ -44,7 +45,6 @@ public class ModifyProjectBoot {
 	private static final String NEW_GROUP_ID = "new.laokou";
 	// -------------------------------------------------------------------------需要修改-------------------------------------------------------------------------
 
-
 	public static void main(String[] args) throws IOException {
 		// 修改projectName、packageName、groupId、artifactId
 		String projectPath = System.getProperty("user.dir");
@@ -53,7 +53,10 @@ public class ModifyProjectBoot {
 			@Override
 			public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
 				String filePath = path.toAbsolutePath().toString();
-				System.out.println(getNewPath(filePath));
+				// 只修改Java和Maven文件
+				// 写入新文件夹
+				String newPath = getNewPath(filePath);
+				System.out.println(newPath);
 				return FileVisitResult.CONTINUE;
 			}
 
