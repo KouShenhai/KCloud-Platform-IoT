@@ -151,7 +151,7 @@ public class LogA extends AggregateRoot<Long> {
 	}
 
 	public void calculateTaskTime(long startTime) {
-		this.takeTime = System.currentTimeMillis() - startTime;
+		this.takeTime = IdGenerator.SystemClock.now() - startTime;
 	}
 
 	public void decorateRequestParams(Object[] args) {

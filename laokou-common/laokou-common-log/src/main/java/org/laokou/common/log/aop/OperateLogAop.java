@@ -25,6 +25,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -52,7 +53,7 @@ public class OperateLogAop {
 
 	@Before("@annotation(org.laokou.common.log.annotation.OperateLog)")
 	public void doBefore() {
-		TASK_TIME_LOCAL.set(System.currentTimeMillis());
+		TASK_TIME_LOCAL.set(IdGenerator.SystemClock.now());
 	}
 
 	/**

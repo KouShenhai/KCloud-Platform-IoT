@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.secret.utils.SecretUtil;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,7 +42,7 @@ class SearchTest {
 	@Test
 	@SneakyThrows
 	void testApiSecret() {
-		long timestamp = System.currentTimeMillis();
+		long timestamp = IdGenerator.SystemClock.now();
 		String appKey = SecretUtil.APP_KEY;
 		String appSecret = SecretUtil.APP_SECRET;
 		String nonce = "laokou";
