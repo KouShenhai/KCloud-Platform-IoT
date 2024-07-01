@@ -16,33 +16,48 @@
  */
 
 package org.laokou.core;
-import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
-import java.io.IOException;
+
+import org.laokou.common.core.utils.FileUtil;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
 /**
  * 一键修改项目.
+ *
  * @author laokou
  */
 public class ModifyProjectBoot {
 
 	// -------------------------------------------------------------------------不可修改-------------------------------------------------------------------------
 	private static int count = 0;
+
 	private static final List<String> MODULES = List.of("laokou-cloud", "laokou-common", "laokou-service");
+
 	private static final String MODIFY_POM_FILE_SUFFIX = "pom.xml";
+
 	private static final String MODIFY_JAVA_FILE_SUFFIX = ".java";
-	private static final MavenXpp3Reader XML_READER = new MavenXpp3Reader();
+
 	// -------------------------------------------------------------------------不可修改-------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------需要修改-------------------------------------------------------------------------
 	// 新项目名称
 	private static final String NEW_PROJECT_NAME = "new_laokou";
+
 	// 新模块名称
 	private static final String NEW_MODULE_NAME = "newlaokou";
+
 	// 新分组ID
 	private static final String NEW_GROUP_ID = "new.laokou";
+
+	// 新包名路径
+	private static final String NEW_PACKAGE_PATH = "\\\\cn\\\\org\\\\laokou\\\\";
+
+	// 新包名名称
+	private static final String NEW_PACKAGE_NAME = "cn.org.laokou";
+
 	// -------------------------------------------------------------------------需要修改-------------------------------------------------------------------------
 
 	public static void main(String[] args) throws IOException {
@@ -51,12 +66,22 @@ public class ModifyProjectBoot {
 		Files.walkFileTree(Paths.get(projectPath), new SimpleFileVisitor<>() {
 
 			@Override
-			public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
+			public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
 				String filePath = path.toAbsolutePath().toString();
-				// 只修改Java和Maven文件
-				// 写入新文件夹
 				String newPath = getNewPath(filePath);
-				System.out.println(newPath);
+				// 创建目录或文件
+				createDirOrFile(newPath);
+				byte[] buff;
+				if (filePath.endsWith(MODIFY_JAVA_FILE_SUFFIX)) {
+					buff = getJavaFileAsByte(filePath);
+				}
+				else if (filePath.endsWith(MODIFY_POM_FILE_SUFFIX)) {
+					buff = getPomFileAsByte(filePath);
+				}
+				else {
+					buff = Files.readAllBytes(Paths.get(newPath));
+				}
+				Files.write(Paths.get(newPath), buff);
 				return FileVisitResult.CONTINUE;
 			}
 
@@ -84,20 +109,30 @@ public class ModifyProjectBoot {
 		});
 	}
 
-	private static String getNewPath(String path) {
-		return path.replace("KCloud-Platform-IoT", NEW_PROJECT_NAME)
-			.replace("laokou", NEW_MODULE_NAME);
+	private static void createDirOrFile(String path) {
+		int index = path.lastIndexOf(File.separator);
+		String dir = path.substring(0, index);
+		String fileName = path.substring(index + 1);
+		FileUtil.createFile(dir, fileName);
 	}
 
-	/*private static void recursionModule(String path, MavenXpp3Reader reader) throws IOException, XmlPullParserException {
-		Model model = reader.read(new FileReader(path));
-		model.getModules().forEach(moduleName -> {
-			try {
-				recursionModule(path.replace(FILE_NAME, EMPTY) + moduleName + SLASH + FILE_NAME, reader);
-			} catch (IOException | XmlPullParserException e) {
-				throw new RuntimeException(e);
-			}
-		});
-	}*/
+	private static String getNewPath(String path) {
+		return path.replaceAll("laokou-", NEW_MODULE_NAME + "-")
+			.replaceAll("\\\\org\\\\laokou\\\\", NEW_PACKAGE_PATH)
+			.replace("KCloud-Platform-IoT", NEW_PROJECT_NAME);
+	}
+
+	private static byte[] getJavaFileAsByte(String path) throws IOException {
+		String str = Files.readString(Paths.get(path));
+		return str.replaceAll("org.laokou", NEW_PACKAGE_NAME).getBytes(StandardCharsets.UTF_8);
+	}
+
+	private static byte[] getPomFileAsByte(String path) throws IOException {
+		String str = Files.readString(Paths.get(path));
+		return str.replaceAll("org.laokou", NEW_GROUP_ID)
+			.replaceAll("laokou-", NEW_MODULE_NAME + "-")
+			.replace("KCloud-Platform-IoT", NEW_PROJECT_NAME)
+			.getBytes(StandardCharsets.UTF_8);
+	}
 
 }

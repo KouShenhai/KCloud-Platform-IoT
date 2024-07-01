@@ -37,6 +37,7 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 /**
  * 操作日志.
+ *
  * @author laokou
  */
 @Data
