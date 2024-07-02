@@ -63,8 +63,7 @@ public class MybatisPlusAutoConfig {
 		SqlMonitorInterceptor sqlMonitorInterceptor = new SqlMonitorInterceptor();
 		sqlMonitorInterceptor.setProperties(properties(springContextUtil));
 
-		return configuration -> configuration
-			.addInterceptor(sqlMonitorInterceptor);
+		return configuration -> configuration.addInterceptor(sqlMonitorInterceptor);
 	}
 
 	/**

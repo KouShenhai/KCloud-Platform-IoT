@@ -50,7 +50,7 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 		String sourceName = jsonNode.get(SOURCE_NAME).asText();
 		DefaultDomainEvent domainEvent = JacksonUtil.toBean(msg, DefaultDomainEvent.class);
 		try {
-			//handleDomainEvent(msg);
+			// handleDomainEvent(msg);
 			log.info("已消费");
 		}
 		catch (Exception e) {
