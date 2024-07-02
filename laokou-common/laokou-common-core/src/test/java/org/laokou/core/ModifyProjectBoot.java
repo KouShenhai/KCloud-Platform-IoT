@@ -40,6 +40,8 @@ public class ModifyProjectBoot {
 
 	private static final String MODIFY_JAVA_FILE_SUFFIX = ".java";
 
+	private static final String MODIFY_XML_FILE_SUFFIX = ".xml";
+
 	// -------------------------------------------------------------------------不可修改-------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------需要修改-------------------------------------------------------------------------
@@ -61,6 +63,11 @@ public class ModifyProjectBoot {
 	// -------------------------------------------------------------------------需要修改-------------------------------------------------------------------------
 
 	public static void main(String[] args) throws IOException {
+
+		// 请在根目录移除maven-checkstyle-plugin
+		// 请在根目录移除maven-checkstyle-plugin
+		// 请在根目录移除maven-checkstyle-plugin
+
 		// 修改projectName、packageName、groupId、artifactId
 		String projectPath = System.getProperty("user.dir");
 		Files.walkFileTree(Paths.get(projectPath), new SimpleFileVisitor<>() {
@@ -78,8 +85,11 @@ public class ModifyProjectBoot {
 				else if (filePath.endsWith(MODIFY_POM_FILE_SUFFIX)) {
 					buff = getPomFileAsByte(filePath);
 				}
+				else if (filePath.endsWith(MODIFY_XML_FILE_SUFFIX)) {
+					buff = getXmlFileAsByte(filePath);
+				}
 				else {
-					buff = Files.readAllBytes(Paths.get(newPath));
+					buff = Files.readAllBytes(Paths.get(filePath));
 				}
 				Files.write(Paths.get(newPath), buff);
 				return FileVisitResult.CONTINUE;
@@ -87,15 +97,15 @@ public class ModifyProjectBoot {
 
 			@Override
 			public FileVisitResult preVisitDirectory(Path path, BasicFileAttributes attrs) {
-				boolean isSkip = false;
+				boolean isExecute = false;
 				String dir = path.toString();
 				for (String module : MODULES) {
 					if (dir.contains(module)) {
-						isSkip = true;
+						isExecute = true;
 						break;
 					}
 				}
-				if (isSkip || count++ < 1) {
+				if (isExecute || count++ < 1) {
 					return FileVisitResult.CONTINUE;
 				}
 				return FileVisitResult.SKIP_SUBTREE;
@@ -133,6 +143,11 @@ public class ModifyProjectBoot {
 			.replaceAll("laokou-", NEW_MODULE_NAME + "-")
 			.replace("KCloud-Platform-IoT", NEW_PROJECT_NAME)
 			.getBytes(StandardCharsets.UTF_8);
+	}
+
+	private static byte[] getXmlFileAsByte(String path) throws IOException {
+		String str = Files.readString(Paths.get(path));
+		return str.replaceAll("org.laokou", NEW_PACKAGE_NAME).getBytes(StandardCharsets.UTF_8);
 	}
 
 }
