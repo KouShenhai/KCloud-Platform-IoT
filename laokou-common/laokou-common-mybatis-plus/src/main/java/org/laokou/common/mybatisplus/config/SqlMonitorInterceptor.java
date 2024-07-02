@@ -29,8 +29,6 @@ import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.handler.event.SqlLogEvent;
-import org.laokou.common.mybatisplus.utils.SqlUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
