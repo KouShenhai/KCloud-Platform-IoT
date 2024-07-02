@@ -32,6 +32,8 @@ import org.laokou.common.mybatisplus.handler.event.SqlLogEvent;
 import org.laokou.common.mybatisplus.utils.SqlUtil;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
@@ -60,7 +62,7 @@ public class SqlMonitorInterceptor implements Interceptor {
 		long time = (IdGenerator.SystemClock.now() - start);
 		Object target = invocation.getTarget();
 		if (target instanceof StatementHandler statementHandler) {
-			String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
+			String sql = getSql(invocation, statementHandler);
 			SpringContextUtil.publishEvent(new SqlLogEvent("SQL日志", getAppName(), sql, time, DateUtil.now()));
 			sql = StringUtil.isNotEmpty(sql)
 					? String.format("Consume Time：%s ms \nExecute SQL：%s\n", time, sql.replaceAll("\\s+", SPACE))
@@ -68,6 +70,16 @@ public class SqlMonitorInterceptor implements Interceptor {
 			log.info("\n{}", sql);
 		}
 		return obj;
+	}
+
+	private String getSql(Invocation invocation, StatementHandler statementHandler) throws SQLException {
+		Connection connection = (Connection) invocation.getArgs()[0];
+		PreparedStatement preparedStatement = connection.prepareStatement(statementHandler.getBoundSql().getSql());
+		statementHandler.getParameterHandler().setParameters(preparedStatement);
+		String str = preparedStatement.toString();
+		int index = str.indexOf("wrapping");
+		System.out.println(str.substring(index + 11));
+		return "";
 	}
 
 	private String getAppName() {

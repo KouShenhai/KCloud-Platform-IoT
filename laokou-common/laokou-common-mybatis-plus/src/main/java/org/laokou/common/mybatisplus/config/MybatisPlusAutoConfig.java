@@ -59,9 +59,12 @@ public class MybatisPlusAutoConfig {
 
 	@Bean
 	public ConfigurationCustomizer slowSqlConfigurationCustomizer(SpringContextUtil springContextUtil) {
+		// 慢SQL
 		SqlMonitorInterceptor sqlMonitorInterceptor = new SqlMonitorInterceptor();
 		sqlMonitorInterceptor.setProperties(properties(springContextUtil));
-		return configuration -> configuration.addInterceptor(sqlMonitorInterceptor);
+
+		return configuration -> configuration
+			.addInterceptor(sqlMonitorInterceptor);
 	}
 
 	/**
