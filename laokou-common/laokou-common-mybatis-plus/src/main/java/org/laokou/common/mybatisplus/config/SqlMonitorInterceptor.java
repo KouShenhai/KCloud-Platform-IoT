@@ -27,14 +27,13 @@ import org.apache.ibatis.plugin.Signature;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.handler.event.SqlLogEvent;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.constants.StringConstant.SPACE;
 
 /**
@@ -47,6 +46,8 @@ import static org.laokou.common.i18n.common.constants.StringConstant.SPACE;
 public class SqlMonitorInterceptor implements Interceptor {
 
 	private Properties properties;
+
+	private static final String TEMPLATE = "";
 
 	@Override
 	public void setProperties(Properties properties) {
@@ -62,10 +63,7 @@ public class SqlMonitorInterceptor implements Interceptor {
 		if (target instanceof StatementHandler statementHandler) {
 			String sql = getSql(invocation, statementHandler);
 			SpringContextUtil.publishEvent(new SqlLogEvent("SQL日志", getAppName(), sql, time, DateUtil.now()));
-			sql = StringUtil.isNotEmpty(sql)
-					? String.format("Consume Time：%s ms \nExecute SQL：%s\n", time, sql.replaceAll("\\s+", SPACE))
-					: EMPTY;
-			log.info("\n{}", sql);
+			log.info("\nConsume Time：{} ms \nExecute SQL：{}\n", time, sql.replaceAll("\\s+", SPACE));
 		}
 		return obj;
 	}
@@ -76,8 +74,7 @@ public class SqlMonitorInterceptor implements Interceptor {
 		statementHandler.getParameterHandler().setParameters(preparedStatement);
 		String str = preparedStatement.toString();
 		int index = str.indexOf("wrapping");
-		System.out.println(str.substring(index + 11));
-		return "";
+		return str.substring(index + 9);
 	}
 
 	private String getAppName() {
