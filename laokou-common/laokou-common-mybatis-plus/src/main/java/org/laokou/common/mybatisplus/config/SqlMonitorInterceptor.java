@@ -47,8 +47,6 @@ public class SqlMonitorInterceptor implements Interceptor {
 
 	private Properties properties;
 
-	private static final String TEMPLATE = "";
-
 	@Override
 	public void setProperties(Properties properties) {
 		this.properties = properties;
