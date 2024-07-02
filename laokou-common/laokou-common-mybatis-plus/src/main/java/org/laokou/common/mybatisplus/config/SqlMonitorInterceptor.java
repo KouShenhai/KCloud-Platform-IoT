@@ -59,9 +59,9 @@ public class SqlMonitorInterceptor implements Interceptor {
 		long time = (IdGenerator.SystemClock.now() - start);
 		Object target = invocation.getTarget();
 		if (target instanceof StatementHandler statementHandler) {
-			String sql = getSql(invocation, statementHandler);
+			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", SPACE);
 			SpringContextUtil.publishEvent(new SqlLogEvent("SQL日志", getAppName(), sql, time, DateUtil.now()));
-			log.info("\nConsume Time：{} ms \nExecute SQL：{}\n", time, sql.replaceAll("\\s+", SPACE));
+			log.info("\nConsume Time：{} ms \nExecute SQL：{}\n", time, sql);
 		}
 		return obj;
 	}
