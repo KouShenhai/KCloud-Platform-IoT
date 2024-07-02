@@ -50,9 +50,8 @@ public class JacksonUtil {
 	 * 映射器配置.
 	 */
 	private static final ObjectMapper MAPPER = new ObjectMapper()
-		.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true)
-		.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
-		.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+		// 没有的属性不报错
+		.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 		.registerModule(new JavaTimeModule());
 
 	/**
