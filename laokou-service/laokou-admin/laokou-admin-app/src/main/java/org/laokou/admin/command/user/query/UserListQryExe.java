@@ -63,7 +63,9 @@ public class UserListQryExe {
 			.supplyAsync(() -> userMapper.selectListByCondition(userDO, qry), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> userMapper.selectCountByCondition(userDO, qry),
 				executor);
-		return Result.ok(Datas.create(c1.get(30, TimeUnit.SECONDS).stream().map(userConvertor::convertClientObj).toList(), c2.get(30, TimeUnit.SECONDS)));
+		return Result
+			.ok(Datas.create(c1.get(30, TimeUnit.SECONDS).stream().map(userConvertor::convertClientObj).toList(),
+					c2.get(30, TimeUnit.SECONDS)));
 	}
 
 }

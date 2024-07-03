@@ -43,7 +43,7 @@ import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 @Component
 public class MybatisUtil {
 
-	private final Executor executor;
+	private final Executor workStealingPoolExecutor;
 
 	private final SqlSessionFactory sqlSessionFactory;
 
@@ -76,10 +76,12 @@ public class MybatisUtil {
 		// 数据分组
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);
-		List<CompletableFuture<Void>> futures = partition.parallelStream()
-			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds), executor))
-			.toList();
-		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+		// 使用窃取任务线程池，执行大批量的独立任务
+		partition.parallelStream()
+			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds),
+					workStealingPoolExecutor))
+			.toList()
+			.forEach(CompletableFuture::join);
 		if (rollback.get()) {
 			throw new RuntimeException("事务已回滚");
 		}

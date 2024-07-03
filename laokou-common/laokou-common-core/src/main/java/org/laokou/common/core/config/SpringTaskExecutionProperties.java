@@ -35,12 +35,21 @@ public class SpringTaskExecutionProperties {
 
 	private Pool pool = new Pool();
 
+	private ForkJoinPool forkJoinPool;
+
+	@Data
+	public static class ForkJoinPool {
+
+		private int coreSize = 17;
+
+	}
+
 	@Data
 	public static class Pool {
 
 		private int queueCapacity = Integer.MAX_VALUE;
 
-		private int coreSize = 8;
+		private int coreSize = 17;
 
 		private int maxSize = Integer.MAX_VALUE;
 

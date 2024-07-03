@@ -74,11 +74,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
- * @see PaginationInnerInterceptor
- * 分页拦截器
+ * @see PaginationInnerInterceptor 分页拦截器
  * <p>
  * 默认对 left join 进行优化,虽然能优化count,但是加上分页的话如果1对多本身结果条数就是不正确的
- *
  * @author hubin
  * @author gitkakafu
  * @since 3.4.0
@@ -86,39 +84,43 @@ import java.util.stream.Collectors;
 @Data
 @Slf4j
 @NoArgsConstructor
-@SuppressWarnings({"rawtypes"})
+@SuppressWarnings({ "rawtypes" })
 public class AysncPaginationInnerInterceptor implements InnerInterceptor {
+
 	/**
-	 * 获取jsqlparser中count的SelectItem
+	 * 获取jsqlparser中count的SelectItem.
 	 */
-	protected static final List<SelectItem<?>> COUNT_SELECT_ITEM = Collections.singletonList(
-		new SelectItem<>(new Column().withColumnName("COUNT(*)")).withAlias(new Alias("total"))
-	);
+	protected static final List<SelectItem<?>> COUNT_SELECT_ITEM = Collections
+		.singletonList(new SelectItem<>(new Column().withColumnName("COUNT(*)")).withAlias(new Alias("total")));
+
 	protected static final Map<String, MappedStatement> countMsCache = new ConcurrentHashMap<>();
 
 	/**
-	 * 溢出总页数后是否进行处理
+	 * 溢出总页数后是否进行处理.
 	 */
 	protected boolean overflow;
+
 	/**
-	 * 单页分页条数限制
+	 * 单页分页条数限制.
 	 */
 	protected Long maxLimit;
+
 	/**
-	 * 数据库类型
+	 * 数据库类型.
 	 * <p>
-	 * 查看 {@link #findIDialect(Executor)} 逻辑
+	 * 查看 {@link #findIDialect(Executor)} 逻辑.
 	 */
 	private DbType dbType;
+
 	/**
-	 * 方言实现类
+	 * 方言实现类.
 	 * <p>
-	 * 查看 {@link #findIDialect(Executor)} 逻辑
+	 * 查看 {@link #findIDialect(Executor)} 逻辑.
 	 */
 	private IDialect dialect;
+
 	/**
-	 * 生成 countSql 优化掉 join
-	 * 现在只支持 left join
+	 * 生成 countSql 优化掉 join 现在只支持 left join.
 	 *
 	 * @since 3.4.2
 	 */
@@ -137,10 +139,11 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 	}
 
 	/**
-	 * 这里进行count,如果count为0这返回false(就是不再执行sql了)
+	 * 这里进行count,如果count为0这返回false(就是不再执行sql了).
 	 */
 	@Override
-	public boolean willDoQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
+	public boolean willDoQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds,
+			ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
 		IPage<?> page = ParameterUtils.findPage(parameter).orElse(null);
 		if (page == null || page.getSize() < 0 || !page.searchCount() || resultHandler != Executor.NO_RESULT_HANDLER) {
 			return true;
@@ -150,7 +153,8 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 		MappedStatement countMs = buildCountMappedStatement(ms, page.countId());
 		if (countMs != null) {
 			countSql = countMs.getBoundSql(parameter);
-		} else {
+		}
+		else {
 			countMs = buildAutoCountMappedStatement(ms);
 			String countSqlStr = autoCountSql(page, boundSql.getSql());
 			PluginUtils.MPBoundSql mpBoundSql = PluginUtils.mpBoundSql(boundSql);
@@ -176,7 +180,8 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 	}
 
 	@Override
-	public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
+	public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds,
+			ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
 		IPage<?> page = ParameterUtils.findPage(parameter).orElse(null);
 		if (null == page) {
 			return;
@@ -215,8 +220,7 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 	}
 
 	/**
-	 * 获取分页方言类的逻辑
-	 *
+	 * 获取分页方言类的逻辑.
 	 * @param executor Executor
 	 * @return 分页方言类
 	 */
@@ -232,9 +236,8 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 	}
 
 	/**
-	 * 获取指定的 id 的 MappedStatement
-	 *
-	 * @param ms      MappedStatement
+	 * 获取指定的 id 的 MappedStatement.
+	 * @param ms MappedStatement
 	 * @param countId id
 	 * @return MappedStatement
 	 */
@@ -246,8 +249,10 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 			}
 			final Configuration configuration = ms.getConfiguration();
 			try {
-				return CollectionUtils.computeIfAbsent(countMsCache, countId, key -> configuration.getMappedStatement(key, false));
-			} catch (Exception e) {
+				return CollectionUtils.computeIfAbsent(countMsCache, countId,
+						key -> configuration.getMappedStatement(key, false));
+			}
+			catch (Exception e) {
 				log.warn(String.format("can not find this countId: [\"%s\"]", countId));
 			}
 		}
@@ -255,8 +260,7 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 	}
 
 	/**
-	 * 构建 mp 自用自动的 MappedStatement
-	 *
+	 * 构建 mp 自用自动的 MappedStatement.
 	 * @param ms MappedStatement
 	 * @return MappedStatement
 	 */
@@ -264,13 +268,16 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 		final String countId = ms.getId() + "_mpCount";
 		final Configuration configuration = ms.getConfiguration();
 		return CollectionUtils.computeIfAbsent(countMsCache, countId, key -> {
-			MappedStatement.Builder builder = new MappedStatement.Builder(configuration, key, ms.getSqlSource(), ms.getSqlCommandType());
+			MappedStatement.Builder builder = new MappedStatement.Builder(configuration, key, ms.getSqlSource(),
+					ms.getSqlCommandType());
 			builder.resource(ms.getResource());
 			builder.fetchSize(ms.getFetchSize());
 			builder.statementType(ms.getStatementType());
 			builder.timeout(ms.getTimeout());
 			builder.parameterMap(ms.getParameterMap());
-			builder.resultMaps(Collections.singletonList(new ResultMap.Builder(configuration, Constants.MYBATIS_PLUS, Long.class, Collections.emptyList()).build()));
+			builder.resultMaps(Collections.singletonList(
+					new ResultMap.Builder(configuration, Constants.MYBATIS_PLUS, Long.class, Collections.emptyList())
+						.build()));
 			builder.resultSetType(ms.getResultSetType());
 			builder.cache(ms.getCache());
 			builder.flushCacheRequired(ms.isFlushCacheRequired());
@@ -280,10 +287,9 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 	}
 
 	/**
-	 * 获取自动优化的 countSql
-	 *
+	 * 获取自动优化的 countSql.
 	 * @param page 参数
-	 * @param sql  sql
+	 * @param sql sql
 	 * @return countSql
 	 */
 	public String autoCountSql(IPage<?> page, String sql) {
@@ -292,7 +298,7 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 		}
 		try {
 			Select select = (Select) JsqlParserGlobal.parse(sql);
-			// https://github.com/baomidou/mybatis-plus/issues/3920  分页增加union语法支持
+			// https://github.com/baomidou/mybatis-plus/issues/3920 分页增加union语法支持
 			if (select instanceof SetOperationList) {
 				return lowLevelCountSql(sql);
 			}
@@ -320,7 +326,8 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 			if (null != distinct || null != groupBy) {
 				return lowLevelCountSql(select.toString());
 			}
-			//#95 Github, selectItems contains #{} ${}, which will be translated to ?, and it may be in a function: power(#{myInt},2)
+			// #95 Github, selectItems contains #{} ${}, which will be translated to ?,
+			// and it may be in a function: power(#{myInt},2)
 			for (SelectItem item : plainSelect.getSelectItems()) {
 				if (item.toString().contains(StringPool.QUESTION_MARK)) {
 					return lowLevelCountSql(select.toString());
@@ -332,7 +339,9 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 				List<Join> joins = plainSelect.getJoins();
 				if (CollectionUtils.isNotEmpty(joins)) {
 					boolean canRemoveJoin = true;
-					String whereS = Optional.ofNullable(plainSelect.getWhere()).map(Expression::toString).orElse(StringPool.EMPTY);
+					String whereS = Optional.ofNullable(plainSelect.getWhere())
+						.map(Expression::toString)
+						.orElse(StringPool.EMPTY);
 					// 不区分大小写
 					whereS = whereS.toLowerCase();
 					for (Join join : joins) {
@@ -343,9 +352,14 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 						FromItem rightItem = join.getRightItem();
 						String str = "";
 						if (rightItem instanceof Table table) {
-							str = Optional.ofNullable(table.getAlias()).map(Alias::getName).orElse(table.getName()) + StringPool.DOT;
-						} else if (rightItem instanceof ParenthesedSelect subSelect) {
-							/* 如果 left join 是子查询，并且子查询里包含 ?(代表有入参) 或者 where 条件里包含使用 join 的表的字段作条件,就不移除 join */
+							str = Optional.ofNullable(table.getAlias()).map(Alias::getName).orElse(table.getName())
+									+ StringPool.DOT;
+						}
+						else if (rightItem instanceof ParenthesedSelect subSelect) {
+							/*
+							 * 如果 left join 是子查询，并且子查询里包含 ?(代表有入参) 或者 where 条件里包含使用 join
+							 * 的表的字段作条件,就不移除 join
+							 */
 							if (subSelect.toString().contains(StringPool.QUESTION_MARK)) {
 								canRemoveJoin = false;
 								break;
@@ -379,18 +393,19 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 			// 优化 SQL
 			plainSelect.setSelectItems(COUNT_SELECT_ITEM);
 			return select.toString();
-		} catch (JSQLParserException e) {
+		}
+		catch (JSQLParserException e) {
 			// 无法优化使用原 SQL
 			log.warn("optimize this sql to a count sql has exception, sql:\"{}\", exception:\n{}", sql, e.getCause());
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.warn("optimize this sql to a count sql has error, sql:\"{}\", exception:\n{}", sql, e);
 		}
 		return lowLevelCountSql(sql);
 	}
 
 	/**
-	 * 无法进行count优化时,降级使用此方法
-	 *
+	 * 无法进行count优化时,降级使用此方法.
 	 * @param originalSql 原始sql
 	 * @return countSql
 	 */
@@ -399,8 +414,7 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 	}
 
 	/**
-	 * 查询SQL拼接Order By
-	 *
+	 * 查询SQL拼接Order By.
 	 * @param originalSql 需要拼接的SQL
 	 * @return ignore
 	 */
@@ -424,9 +438,11 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 					return originalSql;
 				}
 			}
-		} catch (JSQLParserException e) {
+		}
+		catch (JSQLParserException e) {
 			log.error("failed to concat orderBy from IPage, exception:\n", e.getCause());
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("failed to concat orderBy from IPage, exception:\n", e);
 		}
 		return originalSql;
@@ -441,7 +457,8 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 				element.setAsc(item.isAsc());
 				element.setAscDescPresent(true);
 				return element;
-			}).collect(Collectors.toList());
+			})
+			.collect(Collectors.toList());
 		if (CollectionUtils.isEmpty(orderByElements)) {
 			return additionalOrderBy;
 		}
@@ -451,8 +468,7 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 	}
 
 	/**
-	 * count 查询之后,是否继续执行分页
-	 *
+	 * count 查询之后,是否继续执行分页.
 	 * @param page 分页对象
 	 * @return 是否
 	 */
@@ -462,9 +478,10 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 		}
 		if (page.getCurrent() > page.getPages()) {
 			if (overflow) {
-				//溢出总页数处理
+				// 溢出总页数处理
 				handlerOverflow(page);
-			} else {
+			}
+			else {
 				// 超过最大范围，未设置溢出逻辑中断 list 执行
 				return false;
 			}
@@ -473,8 +490,7 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 	}
 
 	/**
-	 * 处理超出分页条数限制,默认归为限制数
-	 *
+	 * 处理超出分页条数限制,默认归为限制数.
 	 * @param page IPage
 	 */
 	protected void handlerLimit(IPage<?> page, Long limit) {
@@ -485,8 +501,7 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 	}
 
 	/**
-	 * 处理页数溢出,默认设置为第一页
-	 *
+	 * 处理页数溢出,默认设置为第一页.
 	 * @param page IPage
 	 */
 	protected void handlerOverflow(IPage<?> page) {
@@ -502,4 +517,5 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 			.whenNotBlank("maxLimit", Long::parseLong, this::setMaxLimit)
 			.whenNotBlank("optimizeJoin", Boolean::parseBoolean, this::setOptimizeJoin);
 	}
+
 }

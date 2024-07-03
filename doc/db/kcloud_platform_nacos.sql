@@ -588,8 +588,10 @@ spring:
   task-execution:
     thread-name-prefix: laokou-ttl-task-
     pool:
-      core-size: 17
+      core-size: 33
       keep-alive: 180s
+    fork-join-pool:
+      core-size: 33
   cloud:
     # 解决集成sentinel，openfeign启动报错，官方下个版本修复
     openfeign:
@@ -1608,8 +1610,10 @@ spring:
   task-execution:
     thread-name-prefix: laokou-ttl-task-
     pool:
-      core-size: 17
+      core-size: 33
       keep-alive: 180s
+    fork-join-pool:
+      core-size: 33
   cloud:
     # 解决集成sentinel，openfeign启动报错，官方下个版本修复
     openfeign:
@@ -2125,8 +2129,10 @@ spring:
   task-execution:
     thread-name-prefix: laokou-ttl-task-
     pool:
-      core-size: 17
+      core-size: 33
       keep-alive: 180s
+    fork-join-pool:
+      core-size: 33
   cloud:
     # 解决集成sentinel，openfeign启动报错，官方下个版本修复
     openfeign:
