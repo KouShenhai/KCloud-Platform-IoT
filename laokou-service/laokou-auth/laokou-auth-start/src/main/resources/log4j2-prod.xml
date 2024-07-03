@@ -25,7 +25,7 @@
   <!-- 变量配置 -->
   <Properties>
     <!-- 存放目录 -->
-    <property name="LOG_PATH" value="/opt"/>
+    <property name="LOG_PATH" value="/opt/auth"/>
     <!-- 日志文件大小 -->
     <property name="LOG_ROLL_SIZE" value="1 GB"/>
     <!-- 服务名称 -->

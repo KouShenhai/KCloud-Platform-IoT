@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
-
+import java.util.concurrent.TimeUnit;
 import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_USER;
 
 /**
@@ -63,8 +63,7 @@ public class UserListQryExe {
 			.supplyAsync(() -> userMapper.selectListByCondition(userDO, qry), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> userMapper.selectCountByCondition(userDO, qry),
 				executor);
-		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.create(c1.get().stream().map(userConvertor::convertClientObj).toList(), c2.get()));
+		return Result.ok(Datas.create(c1.get(30, TimeUnit.SECONDS).stream().map(userConvertor::convertClientObj).toList(), c2.get(30, TimeUnit.SECONDS)));
 	}
 
 }
