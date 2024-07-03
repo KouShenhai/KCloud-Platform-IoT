@@ -43,7 +43,7 @@ import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 @Component
 public class MybatisUtil {
 
-	private final Executor workStealingPoolExecutor;
+	private final Executor executor;
 
 	private final SqlSessionFactory sqlSessionFactory;
 
@@ -76,10 +76,9 @@ public class MybatisUtil {
 		// 数据分组
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);
-		// 使用窃取任务线程池，执行大批量的独立任务
+		// 虚拟线程池 => 使用forkJoin，执行大批量的独立任务
 		partition.parallelStream()
-			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds),
-					workStealingPoolExecutor))
+			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds), executor))
 			.toList()
 			.forEach(CompletableFuture::join);
 		if (rollback.get()) {
