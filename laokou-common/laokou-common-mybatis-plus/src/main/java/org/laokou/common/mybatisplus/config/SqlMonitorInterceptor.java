@@ -37,6 +37,15 @@ import java.util.Properties;
 import static org.laokou.common.i18n.common.constants.StringConstant.SPACE;
 
 /**
+ * 4种@Signature type.
+ * Executor => 拦截内部SQL执行.
+ * ParameterHandler => 拦截参数的处理.
+ * StatementHandler => 拦截SQL的构建.
+ * ResultSetHandler => 拦截结果的处理.
+ * <p>
+ * method => 真实的方法，请自行查看并复制
+ * args => method入参
+ *
  * @see PreparedStatementLogger
  * @author laokou
  */
