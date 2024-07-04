@@ -94,7 +94,8 @@ spring:
     gateway:
       discovery:
         locator:
-          # 关闭动态生成路由
+          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
+          # 查看DiscoveryLocatorProperties
           enabled: false
           # 开启服务ID强制小写
           lower-case-service-id: true
