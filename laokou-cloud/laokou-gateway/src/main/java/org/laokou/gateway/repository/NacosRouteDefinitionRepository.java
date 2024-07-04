@@ -26,7 +26,6 @@ import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
-import org.springframework.cloud.gateway.route.CachingRouteLocator;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.context.ApplicationEventPublisher;
@@ -39,7 +38,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import static org.laokou.common.i18n.common.exception.SystemException.ROUTER_NOT_EXIST;
@@ -75,11 +73,17 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
 	}
 
+	// @formatter:off
 	/**
-	 * 获取动态路由（避免集群中网关频繁调用Redis，还是得走本地缓存）.
-	 * {@link org.springframework.cloud.gateway.config.GatewayAutoConfiguration#cachedCompositeRouteLocator(List)}
-	 * {@link CachingRouteLocator}
-	 * @return 动态路由
+	 * 路由基本原理总结：
+	 * 1.从NacosRouteDefinitionRepository、DiscoveryClientRouteDefinitionLocator和PropertiesRouteDefinitionLocator加载定义的路由规则.
+	 * 2.通过CompositeRouteDefinitionLocator合并定义的路由规则.
+	 * 3.加载所有的定义的路由规则，使用配置的断言工厂和过滤器工厂来创建路由.
+	 * 4.将路由缓存，提高路由查找性能.
+	 * <p>
+	 * 获取动态路由（避免集群中网关频繁调用Redis，需要本地缓存）.
+	 * {@link org.springframework.cloud.gateway.config.GatewayAutoConfiguration
+	 * @return 定义的路由规则
 	 */
 	@Override
 	public Flux<RouteDefinition> getRouteDefinitions() {
@@ -91,6 +95,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 				}
 			});
 	}
+	// @formatter:on
 
 	// @formatter:off
 	@Override

@@ -81,7 +81,8 @@ public class MybatisUtil {
 		AtomicBoolean rollback = new AtomicBoolean(false);
 		// 虚拟线程池 => 使用forkJoin，执行大批量的独立任务
 		partition.parallelStream()
-			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds), getExecutor()))
+			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds),
+					getExecutor()))
 			.toList()
 			.forEach(CompletableFuture::join);
 		if (rollback.get()) {
