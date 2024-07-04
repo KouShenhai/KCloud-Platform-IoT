@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.core.task.VirtualThreadTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -44,6 +45,8 @@ import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 public class MybatisUtil {
 
 	private final Executor executor;
+
+	private final Executor workStealingPoolExecutor;
 
 	private final SqlSessionFactory sqlSessionFactory;
 
@@ -78,7 +81,7 @@ public class MybatisUtil {
 		AtomicBoolean rollback = new AtomicBoolean(false);
 		// 虚拟线程池 => 使用forkJoin，执行大批量的独立任务
 		partition.parallelStream()
-			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds), executor))
+			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds), getExecutor()))
 			.toList()
 			.forEach(CompletableFuture::join);
 		if (rollback.get()) {
@@ -120,6 +123,13 @@ public class MybatisUtil {
 		// 回滚标识
 		rollback.compareAndSet(false, true);
 		log.error("批量插入数据异常，已设置回滚标识，错误信息", e);
+	}
+
+	private Executor getExecutor() {
+		if (executor instanceof VirtualThreadTaskExecutor) {
+			return executor;
+		}
+		return workStealingPoolExecutor;
 	}
 
 }
