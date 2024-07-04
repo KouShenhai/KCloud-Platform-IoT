@@ -76,7 +76,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	// @formatter:off
 	/**
 	 * 路由基本原理总结：
-	 * 1.从NacosRouteDefinitionRepository和PropertiesRouteDefinitionLocator加载定义的路由规则.
+	 * 1.从NacosRouteDefinitionRepository、DiscoveryClientRouteDefinitionLocator和PropertiesRouteDefinitionLocator加载定义的路由规则.
 	 * 2.通过CompositeRouteDefinitionLocator合并定义的路由规则.
 	 * 3.加载所有的定义的路由规则，使用配置的断言工厂和过滤器工厂来创建路由.
 	 * 4.将路由缓存，提高路由查找性能.
