@@ -33,6 +33,7 @@
 
 package org.laokou.common.mybatisplus.config;
 
+import com.alibaba.ttl.TransmittableThreadLocal;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
@@ -70,6 +71,7 @@ import org.mybatis.spring.transaction.SpringManagedTransaction;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -79,13 +81,14 @@ import java.util.stream.Collectors;
  * 默认对 left join 进行优化,虽然能优化count,但是加上分页的话如果1对多本身结果条数就是不正确的
  * @author hubin
  * @author gitkakafu
+ * @author laokou
  * @since 3.4.0
  */
 @Data
 @Slf4j
 @NoArgsConstructor
 @SuppressWarnings({ "rawtypes" })
-public class AysncPaginationInnerInterceptor implements InnerInterceptor {
+public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 
 	/**
 	 * 获取jsqlparser中count的SelectItem.
@@ -94,6 +97,16 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 		.singletonList(new SelectItem<>(new Column().withColumnName("COUNT(*)")).withAlias(new Alias("total")));
 
 	protected static final Map<String, MappedStatement> countMsCache = new ConcurrentHashMap<>();
+
+	private static final ThreadLocal<CompletableFuture<Void>> COUNT_LOCAL = new TransmittableThreadLocal<>();
+
+	public static CompletableFuture<Void> get() {
+		return COUNT_LOCAL.get();
+	}
+
+	public static void remove() {
+		COUNT_LOCAL.remove();
+	}
 
 	/**
 	 * 溢出总页数后是否进行处理.
@@ -128,14 +141,20 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 
 	private DataSource dataSource;
 
-	public AysncPaginationInnerInterceptor(DbType dbType, DataSource dataSource) {
+	private java.util.concurrent.Executor workStealingPoolExecutor;
+
+	public AsyncPaginationInnerInterceptor(DbType dbType, DataSource dataSource,
+			java.util.concurrent.Executor workStealingPoolExecutor) {
 		this.dbType = dbType;
 		this.dataSource = dataSource;
+		this.workStealingPoolExecutor = workStealingPoolExecutor;
 	}
 
-	public AysncPaginationInnerInterceptor(IDialect dialect, DataSource dataSource) {
+	public AsyncPaginationInnerInterceptor(IDialect dialect, DataSource dataSource,
+			java.util.concurrent.Executor workStealingPoolExecutor) {
 		this.dialect = dialect;
 		this.dataSource = dataSource;
+		this.workStealingPoolExecutor = workStealingPoolExecutor;
 	}
 
 	/**
@@ -143,7 +162,7 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 	 */
 	@Override
 	public boolean willDoQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds,
-			ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
+			ResultHandler resultHandler, BoundSql boundSql) {
 		IPage<?> page = ParameterUtils.findPage(parameter).orElse(null);
 		if (page == null || page.getSize() < 0 || !page.searchCount() || resultHandler != Executor.NO_RESULT_HANDLER) {
 			return true;
@@ -166,17 +185,27 @@ public class AysncPaginationInnerInterceptor implements InnerInterceptor {
 		SimpleExecutor simpleExecutor = new SimpleExecutor(ms.getConfiguration(), springManagedTransaction);
 		CacheKey cacheKey = simpleExecutor.createCacheKey(countMs, parameter, rowBounds, countSql);
 
-		List<Object> result = executor.query(countMs, parameter, rowBounds, resultHandler, cacheKey, countSql);
-		long total = 0;
-		if (CollectionUtils.isNotEmpty(result)) {
-			// 个别数据库 count 没数据不会返回 0
-			Object o = result.getFirst();
-			if (o != null) {
-				total = Long.parseLong(o.toString());
+		final MappedStatement mappedStatement = countMs;
+		CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+			try {
+				List<Object> result = executor.query(mappedStatement, parameter, rowBounds, resultHandler, cacheKey,
+						countSql);
+				long total = 0;
+				if (CollectionUtils.isNotEmpty(result)) {
+					// 个别数据库 count 没数据不会返回 0
+					Object o = result.getFirst();
+					if (o != null) {
+						total = Long.parseLong(o.toString());
+					}
+				}
+				page.setTotal(total);
 			}
-		}
-		page.setTotal(total);
-		return continuePage(page);
+			catch (Exception e) {
+				log.error("查询失败，错误信息：{}", e.getMessage(), e);
+			}
+		}, workStealingPoolExecutor);
+		COUNT_LOCAL.set(future);
+		return true;
 	}
 
 	@Override

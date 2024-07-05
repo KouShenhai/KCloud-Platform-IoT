@@ -87,7 +87,7 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 |Seata                       |2.0.0
 |Sentinel                    |1.8.8
 |Redis                       |7.2.5
-|Elasticsearch               |8.14.1
+|Elasticsearch               |8.14.2
 |RocketMQ                    |5.2.0
 |Netty                       |4.1.111.Final
 |Kafka                       |3.7.1

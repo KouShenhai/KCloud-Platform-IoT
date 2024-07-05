@@ -17,6 +17,7 @@
 
 package org.laokou.common.mybatisplus.config;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
@@ -39,6 +40,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import javax.sql.DataSource;
 import java.net.InetAddress;
 import java.util.Properties;
+import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -59,21 +61,30 @@ public class MybatisPlusAutoConfig {
 
 	@Bean
 	public ConfigurationCustomizer slowSqlConfigurationCustomizer(SpringContextUtil springContextUtil) {
-		// 慢SQL
-		SqlMonitorInterceptor sqlMonitorInterceptor = new SqlMonitorInterceptor();
-		sqlMonitorInterceptor.setProperties(properties(springContextUtil));
-
-		return configuration -> configuration.addInterceptor(sqlMonitorInterceptor);
+		return configuration -> {
+			// 异步查询count
+			configuration.addInterceptor(new AsyncCountInterceptor());
+			// 慢SQL
+			SqlMonitorInterceptor sqlMonitorInterceptor = new SqlMonitorInterceptor();
+			sqlMonitorInterceptor.setProperties(properties(springContextUtil));
+			configuration.addInterceptor(sqlMonitorInterceptor);
+		};
 	}
 
+	// @formatter:off
 	/**
-	 * 注意: 使用多个功能需要注意顺序关系,建议使用如下顺序 - 多租户,动态表名 - 分页,乐观锁 - sql 性能规范,防止全表更新与删除 总结: 对 sql
-	 * 进行单次改造的优先放入,不对 sql 进行改造的最后放入.
+	 * 注意: 使用多个功能需要注意顺序关系,建议使用如下顺序
+	 * 											- 多租户，动态表名
+	 * 											- 分页，乐观锁
+	 * 											- sql性能规范，防止全表更新与删除
+	 * 总结：对 sql进行单次改造的优先放入,不对 sql 进行改造的最后放入.
 	 * @param mybatisPlusExtProperties mybatis配置
 	 */
+	// @formatter:on
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
-	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties) {
+	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties,
+			DataSource dataSource, Executor workStealingPoolExecutor) {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 		// 数据权限插件
 		interceptor.addInnerInterceptor(new DataFilterInterceptor());
@@ -87,7 +98,7 @@ public class MybatisPlusAutoConfig {
 		dynamicTableNameInnerInterceptor.setTableNameHandler(new DynamicTableNameHandler());
 		interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
 		// 分页插件
-		interceptor.addInnerInterceptor(paginationInnerInterceptor());
+		interceptor.addInnerInterceptor(asyncPaginationInnerInterceptor(dataSource, workStealingPoolExecutor));
 		// 乐观锁插件
 		interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
 		// 防止全表更新与删除插件
@@ -125,15 +136,20 @@ public class MybatisPlusAutoConfig {
 	}
 
 	/**
-	 * 解除每页500条限制.
+	 * 异步分页. 解除每页500条限制.
 	 */
-	private PaginationInnerInterceptor paginationInnerInterceptor() {
-		PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();
+	private AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor(DataSource dataSource,
+			Executor workStealingPoolExecutor) {
+		// 使用postgresql，如果使用其他数据库，需要修改DbType
+		// 使用postgresql，如果使用其他数据库，需要修改DbType
+		// 使用postgresql，如果使用其他数据库，需要修改DbType
+		AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor = new AsyncPaginationInnerInterceptor(
+				DbType.POSTGRE_SQL, dataSource, workStealingPoolExecutor);
 		// -1表示不受限制
-		paginationInnerInterceptor.setMaxLimit(-1L);
+		asyncPaginationInnerInterceptor.setMaxLimit(-1L);
 		// 溢出总页数后是进行处理，查看源码就知道是干啥的
-		paginationInnerInterceptor.setOverflow(true);
-		return paginationInnerInterceptor;
+		asyncPaginationInnerInterceptor.setOverflow(true);
+		return asyncPaginationInnerInterceptor;
 	}
 
 	private Properties properties(SpringContextUtil springContextUtil) {
