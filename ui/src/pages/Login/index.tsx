@@ -14,7 +14,7 @@ import {useState} from 'react';
 // @ts-ignore
 import {history} from 'umi';
 
-type LoginType = 'usernamePassword' | 'mobile';
+type LoginType = 'usernamePassword' | 'mobile' | 'mail';
 
 const iconStyles: CSSProperties = {
 	color: 'rgba(0, 0, 0, 0.2)',
@@ -27,6 +27,7 @@ export default () => {
 	const items = [
 		{label: '用户名密码登录', key: 'usernamePassword'},
 		{label: '手机号登录', key: 'mobile'},
+		{label: '邮箱登录', key: 'mail'}
 	];
 	const [loginType, setLoginType] = useState<LoginType>('usernamePassword');
 
@@ -34,6 +35,7 @@ export default () => {
 		console.log(formData);
 		history.push('/');
 	};
+	// @ts-ignore
 	return (
 		<div
 			style={{
@@ -179,11 +181,11 @@ export default () => {
 							rules={[
 								{
 									required: true,
-									message: '请输入手机号！',
+									message: '请输入手机号',
 								},
 								{
 									pattern: /^1\d{10}$/,
-									message: '手机号格式错误！',
+									message: '手机号格式错误',
 								},
 							]}
 						/>
@@ -207,7 +209,57 @@ export default () => {
 							rules={[
 								{
 									required: true,
-									message: '请输入验证码！',
+									message: '请输入验证码',
+								}
+							]}
+							onGetCaptcha={async () => {
+								message.success('获取验证码成功！验证码为：1234');
+							}}
+						/>
+					</>
+				)}
+				{loginType === 'mail' && (
+					<>
+						<ProFormText
+							fieldProps={{
+								size: 'large',
+								prefix: <MobileOutlined className={'prefixIcon'}/>,
+								autoComplete: 'new-password'
+							}}
+							name="mail"
+							placeholder={'邮箱'}
+							rules={[
+								{
+									required: true,
+									message: '请输入邮箱',
+								},
+								{
+									pattern: /^\w+(-+.\w+)*@\w+(-.\w+)*.\w+(-.\w+)*$/,
+									message: '邮箱格式错误'
+								}
+							]}
+						/>
+						<ProFormCaptcha
+							fieldProps={{
+								size: 'large',
+								prefix: <LockOutlined className={'prefixIcon'}/>,
+								autoComplete: 'new-password'
+							}}
+							captchaProps={{
+								size: 'large',
+							}}
+							placeholder={'请输入验证码'}
+							captchaTextRender={(timing, count) => {
+								if (timing) {
+									return `${count} 获取验证码`;
+								}
+								return '获取验证码';
+							}}
+							name="captcha"
+							rules={[
+								{
+									required: true,
+									message: '请输入验证码',
 								},
 							]}
 							onGetCaptcha={async () => {
