@@ -7,12 +7,11 @@ export default async () => {
     }),
   });
 
-  console.log();
   return {
     ...config,
     testEnvironmentOptions: {
       ...(config?.testEnvironmentOptions || {}),
-      url: 'http://localhost:8000',
+      url: 'https://127.0.0.1:5555'
     },
     setupFiles: [...(config.setupFiles || []), './tests/setupTests.jsx'],
     globals: {

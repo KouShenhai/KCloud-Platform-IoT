@@ -40,6 +40,8 @@ server:
   netty:
     # 请求的最大初始行长度
     max-initial-line-length: 4096
+  servlet:
+    context-path: /api
 # spring
 spring:
   threads:

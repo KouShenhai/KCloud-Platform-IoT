@@ -35,7 +35,7 @@ public class SpringTaskExecutionProperties {
 
 	private Pool pool = new Pool();
 
-	private ForkJoinPool forkJoinPool;
+	private ForkJoinPool forkJoinPool = new ForkJoinPool();
 
 	@Data
 	public static class ForkJoinPool {

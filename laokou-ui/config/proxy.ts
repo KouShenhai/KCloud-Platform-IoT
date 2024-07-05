@@ -15,34 +15,36 @@ export default {
     // localhost:8000/api/** -> https://preview.pro.ant.design/api/**
     '/api/': {
       // 要代理的地址
-      target: 'http://localhost:8080',
+      target: 'https://127.0.0.1:5555',
       // 配置了这个可以从 http 代理到 https
       // 依赖 origin 的功能可能需要这个，比如 cookie
       changeOrigin: true,
+      secure: false,
       pathRewrite: { '^/api': '' },
     },
     '/profile/avatar/': {
-      target: 'http://localhost:8080',
+      target: 'https://127.0.0.1:5555',
       changeOrigin: true,
     }
   },
 
   /**
-   * @name 详细的代理配置
    * @doc https://github.com/chimurai/http-proxy-middleware
    */
   test: {
     // localhost:8000/api/** -> https://preview.pro.ant.design/api/**
     '/api/': {
-      target: 'https://proapi.azurewebsites.net',
+      target: 'https://127.0.0.1:5555',
       changeOrigin: true,
+      secure: false,
       pathRewrite: { '^': '' },
     },
   },
   pre: {
     '/api/': {
-      target: 'your pre url',
+      target: 'https://127.0.0.1:5555',
       changeOrigin: true,
+      secure: false,
       pathRewrite: { '^': '' },
     },
   },
