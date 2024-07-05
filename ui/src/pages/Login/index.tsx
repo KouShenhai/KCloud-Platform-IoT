@@ -5,6 +5,7 @@ import {
 	MailOutlined,
 	MobileOutlined,
 	QqOutlined,
+	SafetyCertificateOutlined,
 	UserOutlined,
 	WechatOutlined,
 } from '@ant-design/icons';
@@ -193,7 +194,7 @@ export default () => {
 						<ProFormCaptcha
 							fieldProps={{
 								size: 'large',
-								prefix: <LockOutlined className={'prefixIcon'}/>,
+								prefix: <SafetyCertificateOutlined className={'prefixIcon'}/>,
 								autoComplete: 'new-password'
 							}}
 							captchaProps={{
@@ -243,7 +244,7 @@ export default () => {
 						<ProFormCaptcha
 							fieldProps={{
 								size: 'large',
-								prefix: <LockOutlined className={'prefixIcon'}/>,
+								prefix: <SafetyCertificateOutlined className={'prefixIcon'}/>,
 								autoComplete: 'new-password'
 							}}
 							captchaProps={{
