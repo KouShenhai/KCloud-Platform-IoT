@@ -76,7 +76,7 @@
     <!--ip2region版本-->
     <ip2region.version>2.7.0</ip2region.version>
     <!--jackson版本-->
-    <jackson.version>2.17.1</jackson.version>
+    <jackson.version>2.17.2</jackson.version>
     <!--spring-kafka版本-->
     <spring-kafka.version>3.2.1</spring-kafka.version>
     <!--netty版本-->
