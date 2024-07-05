@@ -2,6 +2,7 @@ import {
 	AlipayOutlined,
 	GithubOutlined,
 	LockOutlined,
+	MailOutlined,
 	MobileOutlined,
 	QqOutlined,
 	UserOutlined,
@@ -223,7 +224,7 @@ export default () => {
 						<ProFormText
 							fieldProps={{
 								size: 'large',
-								prefix: <MobileOutlined className={'prefixIcon'}/>,
+								prefix: <MailOutlined className={'prefixIcon'}/>,
 								autoComplete: 'new-password'
 							}}
 							name="mail"
