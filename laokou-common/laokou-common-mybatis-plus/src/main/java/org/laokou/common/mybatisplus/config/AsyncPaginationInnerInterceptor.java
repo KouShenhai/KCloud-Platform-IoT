@@ -497,28 +497,6 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 	}
 
 	/**
-	 * count 查询之后,是否继续执行分页.
-	 * @param page 分页对象
-	 * @return 是否
-	 */
-	protected boolean continuePage(IPage<?> page) {
-		if (page.getTotal() <= 0) {
-			return false;
-		}
-		if (page.getCurrent() > page.getPages()) {
-			if (overflow) {
-				// 溢出总页数处理
-				handlerOverflow(page);
-			}
-			else {
-				// 超过最大范围，未设置溢出逻辑中断 list 执行
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
 	 * 处理超出分页条数限制,默认归为限制数.
 	 * @param page IPage
 	 */
@@ -527,14 +505,6 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 		if (limit != null && limit > 0 && (size > limit || size < 0)) {
 			page.setSize(limit);
 		}
-	}
-
-	/**
-	 * 处理页数溢出,默认设置为第一页.
-	 * @param page IPage
-	 */
-	protected void handlerOverflow(IPage<?> page) {
-		page.setCurrent(1);
 	}
 
 	@Override
