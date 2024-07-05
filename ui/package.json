@@ -2,12 +2,12 @@
   "private": true,
   "author": "koushenhai <2413176044@qq.com>",
   "scripts": {
-    "build": "../laokou-ui/node_modules/.bin/max build",
-    "dev": "../laokou-ui/node_modules/.bin/max dev",
-    "format": "../laokou-ui/node_modules/.bin/prettier --cache --write .",
-    "postinstall": "../laokou-ui/node_modules/.bin/max setup",
-    "prepare": "../laokou-ui/node_modules/.bin/husky",
-    "setup": "../laokou-ui/node_modules/.bin/max setup",
+    "dev": "max dev",
+    "build": "max build",
+    "format": "prettier --cache --write .",
+    "prepare": "husky",
+    "postinstall": "max setup",
+    "setup": "max setup",
     "start": "npm run dev"
   },
   "dependencies": {
