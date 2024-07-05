@@ -35,8 +35,8 @@ devDependencies:
     specifier: ^2.8.7
     version: 2.8.8
   prettier-plugin-organize-imports:
-    specifier: ^3.2.2
-    version: 3.2.4(prettier@2.8.8)(typescript@5.5.2)
+    specifier: ^4.0.0
+    version: 4.0.0(prettier@2.8.8)(typescript@5.5.2)
   prettier-plugin-packagejson:
     specifier: ^2.4.3
     version: 2.5.0(prettier@2.8.8)
@@ -2491,7 +2491,7 @@ packages:
     resolution: {integrity: sha512-hy8b7Y1J8OGe6LbAjj3xniQrj3v6lsivCcrmf4TzSgPzLkhIeKgc5IZnT7ReIqmEuodjfO8EYAuoFvIrHi/+jQ==}
     deprecated: This is a stub types definition. history provides its own type definitions, so you do not need this installed.
     dependencies:
-      history: 4.10.1
+      history: 5.3.0
     dev: false
 
   /@types/hoist-non-react-statics@3.3.5:
@@ -2586,7 +2586,7 @@ packages:
       '@types/history': 4.7.11
       '@types/react': 18.3.3
       '@types/react-router': 5.1.20
-      redux: 3.7.2
+      redux: 4.2.1
     dev: false
 
   /@types/react-router@5.1.20:
@@ -8714,6 +8714,24 @@ packages:
     dependencies:
       prettier: 2.8.8
       typescript: 5.5.2
+    dev: false
+
+  /prettier-plugin-organize-imports@4.0.0(prettier@2.8.8)(typescript@5.5.2):
+    resolution: {integrity: sha512-vnKSdgv9aOlqKeEFGhf9SCBsTyzDSyScy1k7E0R1Uo4L0cTcOV7c1XQaT7jfXIOc/p08WLBfN2QUQA9zDSZMxA==}
+    peerDependencies:
+      '@vue/language-plugin-pug': ^2.0.24
+      prettier: '>=2.0'
+      typescript: '>=2.9'
+      vue-tsc: ^2.0.24
+    peerDependenciesMeta:
+      '@vue/language-plugin-pug':
+        optional: true
+      vue-tsc:
+        optional: true
+    dependencies:
+      prettier: 2.8.8
+      typescript: 5.5.2
+    dev: true
 
   /prettier-plugin-packagejson@2.4.3(prettier@2.8.8):
     resolution: {integrity: sha512-kPeeviJiwy0BgOSk7No8NmzzXfW4R9FYWni6ziA5zc1kGVVrKnBzMZdu2TUhI+I7h8/5Htt3vARYOk7KKJTTNQ==}
