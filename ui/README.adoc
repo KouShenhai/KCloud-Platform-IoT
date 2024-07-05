@@ -1,0 +1,13 @@
+=== 下载依赖
+
+[source,shell]
+----
+npm install
+----
+
+=== 运行项目
+
+[source,shell]
+----
+npm run dev
+----
