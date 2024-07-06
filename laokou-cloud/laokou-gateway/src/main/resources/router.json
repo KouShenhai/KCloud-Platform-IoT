@@ -33,7 +33,7 @@
       }
     ],
     "metadata": {
-      "version": "2.0"
+      "version": "v3"
     },
     "order": 1
   },
@@ -71,7 +71,7 @@
       }
     ],
     "metadata": {
-      "version": "2.0"
+      "version": "v3"
     },
     "order": 1
   },
@@ -109,7 +109,7 @@
       }
     ],
     "metadata": {
-      "version": "2.0"
+      "version": "v3"
     },
     "order": 1
   }

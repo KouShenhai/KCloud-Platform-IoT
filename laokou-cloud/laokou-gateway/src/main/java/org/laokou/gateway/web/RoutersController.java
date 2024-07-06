@@ -34,7 +34,7 @@ import reactor.core.publisher.Mono;
  * @author laokou
  */
 @RestController
-@Tag(name = "RoutersController", description = "路由管理")
+@Tag(name = "路由管理", description = "路由管理")
 @RequiredArgsConstructor
 @RequestMapping("v3/routers")
 public class RoutersController {
@@ -42,15 +42,15 @@ public class RoutersController {
 	private final NacosRouteDefinitionRepository nacosRouteDefinitionRepository;
 
 	@PostMapping
-	@Operation(summary = "路由管理", description = "同步路由")
-	public Flux<Boolean> sync() {
-		return nacosRouteDefinitionRepository.syncRouters();
+	@Operation(summary = "路由管理-保存路由", description = "路由管理-保存路由")
+	public Flux<Boolean> saveRouter() {
+		return nacosRouteDefinitionRepository.saveRouters();
 	}
 
 	@DeleteMapping
-	@Operation(summary = "路由管理", description = "删除路由")
-	public Mono<Boolean> delete() {
-		return nacosRouteDefinitionRepository.deleteRouters();
+	@Operation(summary = "路由管理-删除路由", description = "路由管理-删除路由")
+	public Mono<Boolean> removeRouter() {
+		return nacosRouteDefinitionRepository.removeRouters();
 	}
 
 }

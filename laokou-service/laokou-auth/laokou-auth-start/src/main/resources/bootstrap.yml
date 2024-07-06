@@ -29,8 +29,6 @@ spring:
         secure: @SSL-ENABLED@
         # true 临时 false 持久
         ephemeral: true
-        metadata:
-          version: @NACOS-VERSION@
       config:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}

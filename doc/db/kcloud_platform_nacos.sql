@@ -413,9 +413,9 @@ create index if not exists tenant_info_tenant_id_idx
 
 create table if not exists public.users
 (
-	username varchar(50)  not null
+	username varchar(50)          not null
 		primary key,
-	password varchar(500) not null,
+	password varchar(500)         not null,
 	enabled  boolean default true not null
 );
 
@@ -425,7 +425,9 @@ alter table public.users
 --------------------------------------------------------------- UPDATE ---------------------------------------------------------------
 
 --------------------------------------------------------------- CONFIG ---------------------------------------------------------------
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (16, 'application-common-redis.yaml', 'LAOKOU_GROUP', e'# jasypt
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (16, 'application-common-redis.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -446,8 +448,12 @@ spring:
           max-active: 20 #连接池最大连接数（使用负值表示无极限）
           max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
           max-idle: 10 #连接池最大空闲连接
-          min-idle: 5 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2023-01-13 12:15:59.000000', '2023-11-06 18:02:43.000000', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'redis公共配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (82, 'application-monitor.yaml', 'LAOKOU_GROUP', e'# jasypt
+          min-idle: 5 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2023-01-13 12:15:59.000000',
+		'2023-11-06 18:02:43.000000', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3',
+		'redis公共配置', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (82, 'application-monitor.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -487,8 +493,12 @@ management:
         include: "*"
   endpoint:
     health:
-      show-details: always', 'de1c37757329b0ad75488bf39024489c', '2023-01-16 12:01:23.000000', '2023-07-21 12:37:26.000000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'spring boot admin monitor', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (103, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', e'# jasypt
+      show-details: always', 'de1c37757329b0ad75488bf39024489c', '2023-01-16 12:01:23.000000',
+		'2023-07-21 12:37:26.000000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor',
+		'a61abd4c-ef96-42a5-99a1-616adee531f3', 'spring boot admin monitor', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (103, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -501,28 +511,44 @@ spring:
     username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
     password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
     connection-timeout: 30s
-    socket-timeout: 30s', '54cf98fa1e36856f525336acf7a5d20d', '2023-01-17 10:22:15.000000', '2024-04-07 20:52:38.000000', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'elasticsearch公共配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1270, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', e'rocketmq:
+    socket-timeout: 30s', '54cf98fa1e36856f525336acf7a5d20d', '2023-01-17 10:22:15.000000',
+		'2024-04-07 20:52:38.000000', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3',
+		'elasticsearch公共配置', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (1270, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', e'rocketmq:
   producer:
     group: laokou_producer_group
   name-server: rocketmq.laokou.org:9876
   consumer:
-    pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2023-01-21 10:43:04.000000', '2023-11-06 18:10:30.000000', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'rocketmq公共配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1475, 'application-sms.yaml', 'LAOKOU_GROUP', e'sms:
+    pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2023-01-21 10:43:04.000000',
+		'2023-11-06 18:10:30.000000', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3',
+		'rocketmq公共配置', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (1475, 'application-sms.yaml', 'LAOKOU_GROUP', e'sms:
   # 0：国阳云
   type: 0
   gyy:
     templateId: 908e94ccf08b4476ba6c876d13f084ad
     signId: 3f45af8aa12f4d59be8b1f18b650ad81
-    appcode: 6b3e98d5f39848cba9615d576ce78d9e', 'c5d95dadb7e5b2fe9db27ce8cae73118', '2023-02-13 19:59:35.000000', '2023-03-12 17:14:13.000000', 'nacos', '8.8.8.8', 'laokou-sms', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'sms配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1477, 'application-mail.yaml', 'LAOKOU_GROUP', e'spring:
+    appcode: 6b3e98d5f39848cba9615d576ce78d9e', 'c5d95dadb7e5b2fe9db27ce8cae73118', '2023-02-13 19:59:35.000000',
+		'2023-03-12 17:14:13.000000', 'nacos', '8.8.8.8', 'laokou-sms', 'a61abd4c-ef96-42a5-99a1-616adee531f3',
+		'sms配置', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (1477, 'application-mail.yaml', 'LAOKOU_GROUP', e'spring:
   # mail
   mail:
     host: smtp.qq.com
     username: 2413176044@qq.com
     password: hhqkeodvfywfebaf
-    default-encoding: UTF-8', '665c8cf5a8522b5f64ae86f9e816e89e', '2023-02-13 20:00:32.000000', '2023-02-13 20:00:47.000000', 'nacos', '192.168.62.1', 'laokou-mail', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'mail配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1567, 'gateway-flow.json', 'LAOKOU_GROUP', e'[
+    default-encoding: UTF-8', '665c8cf5a8522b5f64ae86f9e816e89e', '2023-02-13 20:00:32.000000',
+		'2023-02-13 20:00:47.000000', 'nacos', '192.168.62.1', 'laokou-mail', 'a61abd4c-ef96-42a5-99a1-616adee531f3',
+		'mail配置', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (1567, 'gateway-flow.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "laokou-auth",
     "grade": 1,
@@ -539,8 +565,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
     "burst": 1000,
     "controlBehavior": 0
   }
-]', 'c5fbcf8031ce039bb97bd44cbfbca16b', '2023-02-26 14:59:20.000000', '2023-04-01 14:42:04.000000', 'nacos', '127.0.0.1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1568, 'auth-flow.json', 'LAOKOU_GROUP', e'[
+]', 'c5fbcf8031ce039bb97bd44cbfbca16b', '2023-02-26 14:59:20.000000', '2023-04-01 14:42:04.000000', 'nacos',
+		'127.0.0.1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway sentinel flow rule', '', '',
+		'json', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (1568, 'auth-flow.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "/v3/captchas/{uuid}",
     "limitApp": "default",
@@ -557,8 +587,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
     "strategy": 0,
     "controlBehavior": 0
   }
-]', '6ae7639ff49789dd99787e908efa836d', '2023-02-26 15:01:51.000000', '2024-05-25 18:20:09.951000', 'nacos', '127.0.0.1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'auth sentinel  flow rule', '', '', 'json', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', e'# spring
+]', '6ae7639ff49789dd99787e908efa836d', '2023-02-26 15:01:51.000000', '2024-05-25 18:20:09.951000', 'nacos',
+		'127.0.0.1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'auth sentinel  flow rule', '', '', 'json',
+		'', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', e'# spring
 spring:
   # security
   security:
@@ -672,8 +706,12 @@ tenant:
 
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html', 'e83a99587ac917866dee016df29fd662', '2023-01-13 12:16:46.000000', '2024-05-26 00:03:05.977000', 'nacos', '127.0.0.1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (26, 'router.json', 'LAOKOU_GROUP', e'[
+    path: /swagger-ui.html', 'e83a99587ac917866dee016df29fd662', '2023-01-13 12:16:46.000000',
+		'2024-05-26 00:03:05.977000', 'nacos', '127.0.0.1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '',
+		'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (26, 'router.json', 'LAOKOU_GROUP', e'[
   {
     "id": "laokou-auth",
     "uri": "lb://laokou-auth",
@@ -708,7 +746,7 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       }
     ],
     "metadata": {
-      "version": "2.0"
+      "version": "v3"
     },
     "order": 1
   },
@@ -746,7 +784,7 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       }
     ],
     "metadata": {
-      "version": "2.0"
+      "version": "v3"
     },
     "order": 1
   },
@@ -784,12 +822,15 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       }
     ],
     "metadata": {
-      "version": "2.0"
+      "version": "v3"
     },
     "order": 1
   }
-]', '0ed5d74d692a46b070c46572b94ca61d', '2023-01-13 15:44:25.000000', '2024-05-25 18:14:53.409000', 'nacos', '127.0.0.1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '动态路由配置', '', '', 'json', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1569, 'admin-flow.json', 'LAOKOU_GROUP', e'[
+]', '0ed5d74d692a46b070c46572b94ca61d', '2023-01-13 15:44:25.000000', '2024-05-25 18:14:53.409000', 'nacos',
+		'127.0.0.1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '动态路由配置', '', '', 'json', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (1569, 'admin-flow.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "/v3/users/profile",
     "limitApp": "default",
@@ -798,8 +839,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
     "strategy": 0,
     "controlBehavior": 0
   }
-]', '31d82f93a5909b2529f159848116e162', '2023-02-26 15:03:07.000000', '2024-05-25 18:19:15.142000', 'nacos', '127.0.0.1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1799, 'application-common-monitor.yaml', 'LAOKOU_GROUP', e'# jasypt
+]', '31d82f93a5909b2529f159848116e162', '2023-02-26 15:03:07.000000', '2024-05-25 18:19:15.142000', 'nacos',
+		'127.0.0.1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel flow rule', '', '', 'json',
+		'', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (1799, 'application-common-monitor.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -815,10 +860,17 @@ spring:
         # root
         username: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
         # laokou123
-        password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)', '7d934a9e4b0ebe9803a17ccd520dca3e', '2023-07-18 16:59:45.000000', '2023-11-06 18:09:16.000000', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'monitor公共配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2118, 'application-report.yaml', 'LAOKOU_GROUP', e'server:
-  port: 8088', '89f7b26715cf760d099a258200381fe0', '2023-10-01 04:56:06.000000', '2024-05-01 00:45:57.000000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-report', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (48, 'application-gateway.yaml', 'LAOKOU_GROUP', e'# ip
+        password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)',
+		'7d934a9e4b0ebe9803a17ccd520dca3e', '2023-07-18 16:59:45.000000', '2023-11-06 18:09:16.000000', 'nacos',
+		'0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'monitor公共配置', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (2118, 'application-report.yaml', 'LAOKOU_GROUP', e'server:
+  port: 8088', '89f7b26715cf760d099a258200381fe0', '2023-10-01 04:56:06.000000', '2024-05-01 00:45:57.000000', 'nacos',
+		'0:0:0:0:0:0:0:1', 'laokou-report', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (48, 'application-gateway.yaml', 'LAOKOU_GROUP', e'# ip
 spring:
   cloud:
     gateway:
@@ -831,8 +883,12 @@ spring:
 knife4j:
   # 聚合swagger文档
   gateway:
-    enabled: false', '20b272cb01dae1613a01b3b46d61e487', '2024-05-25 18:13:10.704000', '2024-05-25 18:46:33.133000', 'nacos', '127.0.0.1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (36, 'router.json', 'LAOKOU_GROUP', e'[
+    enabled: false', '20b272cb01dae1613a01b3b46d61e487', '2024-05-25 18:13:10.704000', '2024-05-25 18:46:33.133000',
+		'nacos', '127.0.0.1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway配置', '', '', 'yaml',
+		'', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (36, 'router.json', 'LAOKOU_GROUP', e'[
   {
     "id": "laokou-auth",
     "uri": "lb://laokou-auth",
@@ -867,7 +923,7 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       }
     ],
     "metadata": {
-      "version": "2.0"
+      "version": "v3"
     },
     "order": 1
   },
@@ -905,7 +961,7 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       }
     ],
     "metadata": {
-      "version": "2.0"
+      "version": "v3"
     },
     "order": 1
   },
@@ -943,12 +999,15 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       }
     ],
     "metadata": {
-      "version": "2.0"
+      "version": "v3"
     },
     "order": 1
   }
-]', '0ed5d74d692a46b070c46572b94ca61d', '2024-05-25 18:13:10.616000', '2024-05-25 18:16:32.596000', 'nacos', '127.0.0.1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', '动态路由配置', '', '', 'json', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2159, 'application-common-kafka.yaml', 'LAOKOU_GROUP', e'spring:
+]', '0ed5d74d692a46b070c46572b94ca61d', '2024-05-25 18:13:10.616000', '2024-05-25 18:16:32.596000', 'nacos',
+		'127.0.0.1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', '动态路由配置', '', '', 'json', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (2159, 'application-common-kafka.yaml', 'LAOKOU_GROUP', e'spring:
   kafka:
     bootstrap-servers: kafka.laokou.org:9092
     consumer:
@@ -981,8 +1040,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       # 批量batch类型
       type: batch
       # topic不存在报错
-      missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2023-10-26 08:54:23.000000', '2023-11-06 18:14:00.000000', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'kafka公共配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2178, 'application-logstash.yaml', 'LAOKOU_GROUP', e'spring:
+      missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2023-10-26 08:54:23.000000',
+		'2023-11-06 18:14:00.000000', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3',
+		'kafka公共配置', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (2178, 'application-logstash.yaml', 'LAOKOU_GROUP', e'spring:
   xxl-job:
     admin:
       address: http://xxl.job.laokou.org:9095/xxl-job-admin
@@ -991,8 +1054,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       port: -1
       log-path: ./logs/xxl-job/laokou-logstash
       access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
-      intentionalities: 7', '81c3de6319db8560c68935977f2d141f', '2023-11-03 07:37:45.000000', '2024-01-30 14:46:47.000000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-logstash', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2260, 'seataServer.properties', 'SEATA_GROUP', e'#For details about configuration items, see https://seata.io/zh-cn/docs/user/configurations.html
+      intentionalities: 7', '81c3de6319db8560c68935977f2d141f', '2023-11-03 07:37:45.000000',
+		'2024-01-30 14:46:47.000000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-logstash',
+		'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (2260, 'seataServer.properties', 'SEATA_GROUP', e'#For details about configuration items, see https://seata.io/zh-cn/docs/user/configurations.html
 #Transport configuration, for client and server
 transport.type=TCP
 transport.server=NIO
@@ -1139,8 +1206,12 @@ server.raft.sync=true
 metrics.enabled=false
 metrics.registryType=compact
 metrics.exporterList=prometheus
-metrics.exporterPrometheusPort=9898', '26217408b5ee26c2fec37325ea785e2f', '2023-11-27 16:36:34.000000', '2024-03-04 11:55:27.000000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-seata', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'seata配置', '', '', 'properties', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', e'[
+metrics.exporterPrometheusPort=9898', '26217408b5ee26c2fec37325ea785e2f', '2023-11-27 16:36:34.000000',
+		'2024-03-04 11:55:27.000000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-seata',
+		'a61abd4c-ef96-42a5-99a1-616adee531f3', 'seata配置', '', '', 'properties', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
     "count": 200,
@@ -1157,8 +1228,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
     "minRequestAmount": 5,
     "timeWindow": 30
   }
-]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2023-02-26 15:55:49.000000', '2024-05-03 09:24:56.976000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel degrade rule', '', '', 'json', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (18, 'application-common-redis.yaml', 'LAOKOU_GROUP', e'# jasypt
+]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2023-02-26 15:55:49.000000', '2024-05-03 09:24:56.976000', 'nacos',
+		'0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel degrade rule', '',
+		'', 'json', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (18, 'application-common-redis.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -1179,8 +1254,12 @@ spring:
           max-active: 20 #连接池最大连接数（使用负值表示无极限）
           max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
           max-idle: 10 #连接池最大空闲连接
-          min-idle: 5 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2024-05-25 18:12:47.330000', '2024-05-25 18:13:33.296000', null, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'redis公共配置', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (20, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', e'# jasypt
+          min-idle: 5 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2024-05-25 18:12:47.330000',
+		'2024-05-25 18:13:33.296000', null, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'redis公共配置',
+		null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (20, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -1193,28 +1272,44 @@ spring:
     username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
     password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
     connection-timeout: 30s
-    socket-timeout: 30s', '54cf98fa1e36856f525336acf7a5d20d', '2024-05-25 18:12:47.339000', '2024-05-25 18:13:33.322000', null, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'elasticsearch公共配置', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (21, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', e'rocketmq:
+    socket-timeout: 30s', '54cf98fa1e36856f525336acf7a5d20d', '2024-05-25 18:12:47.339000',
+		'2024-05-25 18:13:33.322000', null, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a',
+		'elasticsearch公共配置', null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (21, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', e'rocketmq:
   producer:
     group: laokou_producer_group
   name-server: rocketmq.laokou.org:9876
   consumer:
-    pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2024-05-25 18:12:47.344000', '2024-05-25 18:13:33.332000', null, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'rocketmq公共配置', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (22, 'application-sms.yaml', 'LAOKOU_GROUP', e'sms:
+    pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2024-05-25 18:12:47.344000',
+		'2024-05-25 18:13:33.332000', null, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'rocketmq公共配置',
+		null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (22, 'application-sms.yaml', 'LAOKOU_GROUP', e'sms:
   # 0：国阳云
   type: 0
   gyy:
     templateId: 908e94ccf08b4476ba6c876d13f084ad
     signId: 3f45af8aa12f4d59be8b1f18b650ad81
-    appcode: 6b3e98d5f39848cba9615d576ce78d9e', 'c5d95dadb7e5b2fe9db27ce8cae73118', '2024-05-25 18:12:47.349000', '2024-05-25 18:13:33.342000', null, '127.0.0.1', 'laokou-sms', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'sms配置', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (23, 'application-mail.yaml', 'LAOKOU_GROUP', e'spring:
+    appcode: 6b3e98d5f39848cba9615d576ce78d9e', 'c5d95dadb7e5b2fe9db27ce8cae73118', '2024-05-25 18:12:47.349000',
+		'2024-05-25 18:13:33.342000', null, '127.0.0.1', 'laokou-sms', '0dac1a68-2f01-40df-bd26-bf0cb199057a',
+		'sms配置', null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (23, 'application-mail.yaml', 'LAOKOU_GROUP', e'spring:
   # mail
   mail:
     host: smtp.qq.com
     username: 2413176044@qq.com
     password: hhqkeodvfywfebaf
-    default-encoding: UTF-8', '665c8cf5a8522b5f64ae86f9e816e89e', '2024-05-25 18:12:47.354000', '2024-05-25 18:13:33.354000', null, '127.0.0.1', 'laokou-mail', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'mail配置', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (24, 'gateway-flow.json', 'LAOKOU_GROUP', e'[
+    default-encoding: UTF-8', '665c8cf5a8522b5f64ae86f9e816e89e', '2024-05-25 18:12:47.354000',
+		'2024-05-25 18:13:33.354000', null, '127.0.0.1', 'laokou-mail', '0dac1a68-2f01-40df-bd26-bf0cb199057a',
+		'mail配置', null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (24, 'gateway-flow.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "laokou-auth",
     "grade": 1,
@@ -1231,8 +1326,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
     "burst": 1000,
     "controlBehavior": 0
   }
-]', 'c5fbcf8031ce039bb97bd44cbfbca16b', '2024-05-25 18:12:47.358000', '2024-05-25 18:13:33.364000', null, '127.0.0.1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway sentinel flow rule', null, null, 'json', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (25, 'auth-flow.json', 'LAOKOU_GROUP', e'[
+]', 'c5fbcf8031ce039bb97bd44cbfbca16b', '2024-05-25 18:12:47.358000', '2024-05-25 18:13:33.364000', null, '127.0.0.1',
+		'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway sentinel flow rule', null, null, 'json',
+		null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (25, 'auth-flow.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "/v3/captchas/{uuid}",
     "limitApp": "default",
@@ -1249,8 +1348,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
     "strategy": 0,
     "controlBehavior": 0
   }
-]', '6ae7639ff49789dd99787e908efa836d', '2024-05-25 18:12:47.362000', '2024-05-25 18:20:22.239000', 'nacos', '127.0.0.1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'auth sentinel  flow rule', '', '', 'json', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (38, 'application-common-monitor.yaml', 'LAOKOU_GROUP', e'# jasypt
+]', '6ae7639ff49789dd99787e908efa836d', '2024-05-25 18:12:47.362000', '2024-05-25 18:20:22.239000', 'nacos',
+		'127.0.0.1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'auth sentinel  flow rule', '', '', 'json',
+		'', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (38, 'application-common-monitor.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -1266,8 +1369,12 @@ spring:
         # root
         username: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
         # laokou123
-        password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)', '7d934a9e4b0ebe9803a17ccd520dca3e', '2024-05-25 18:13:10.637000', '2024-05-25 18:13:10.637000', null, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'monitor公共配置', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (70, 'application-gateway.yaml', 'LAOKOU_GROUP', e'# ip
+        password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)',
+		'7d934a9e4b0ebe9803a17ccd520dca3e', '2024-05-25 18:13:10.637000', '2024-05-25 18:13:10.637000', null,
+		'127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'monitor公共配置', null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (70, 'application-gateway.yaml', 'LAOKOU_GROUP', e'# ip
 spring:
   cloud:
     gateway:
@@ -1280,8 +1387,12 @@ spring:
 knife4j:
   # 聚合swagger文档
   gateway:
-    enabled: true', 'b4ccbf4df335be2d07acf78a456ad733', '2024-05-25 18:13:33.458000', '2024-05-25 18:46:18.892000', 'nacos', '127.0.0.1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1254, 'application-common-seata.yaml', 'LAOKOU_GROUP', e'# seata
+    enabled: true', 'b4ccbf4df335be2d07acf78a456ad733', '2024-05-25 18:13:33.458000', '2024-05-25 18:46:18.892000',
+		'nacos', '127.0.0.1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway配置', '', '', 'yaml',
+		'', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (1254, 'application-common-seata.yaml', 'LAOKOU_GROUP', e'# seata
 seata:
   saga:
     enabled: true
@@ -1321,8 +1432,12 @@ seata:
       server-addr: https://nacos.laokou.org:8848
   enabled: true
   tx-service-group: default_tx_group
-  data-source-proxy-mode: AT', '20aac9490838d442049d7ddfd8d0a7d2', '2023-01-18 13:53:56.000000', '2024-05-15 00:13:12.626000', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'seata公共配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (33, 'gateway-flow.json', 'LAOKOU_GROUP', e'[
+  data-source-proxy-mode: AT', '20aac9490838d442049d7ddfd8d0a7d2', '2023-01-18 13:53:56.000000',
+		'2024-05-15 00:13:12.626000', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3',
+		'seata公共配置', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (33, 'gateway-flow.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "laokou-auth",
     "grade": 1,
@@ -1339,10 +1454,17 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
     "burst": 1000,
     "controlBehavior": 0
   }
-]', 'c5fbcf8031ce039bb97bd44cbfbca16b', '2024-05-25 18:13:10.600000', '2024-05-25 18:13:10.600000', null, '127.0.0.1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway sentinel flow rule', null, null, 'json', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (39, 'application-report.yaml', 'LAOKOU_GROUP', e'server:
-  port: 8088', '89f7b26715cf760d099a258200381fe0', '2024-05-25 18:13:10.644000', '2024-05-25 18:13:10.644000', null, '127.0.0.1', 'laokou-report', '8140e92b-fb43-48f5-b63b-7506185206a5', '', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (40, 'application-common-kafka.yaml', 'LAOKOU_GROUP', e'spring:
+]', 'c5fbcf8031ce039bb97bd44cbfbca16b', '2024-05-25 18:13:10.600000', '2024-05-25 18:13:10.600000', null, '127.0.0.1',
+		'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway sentinel flow rule', null, null, 'json',
+		null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (39, 'application-report.yaml', 'LAOKOU_GROUP', e'server:
+  port: 8088', '89f7b26715cf760d099a258200381fe0', '2024-05-25 18:13:10.644000', '2024-05-25 18:13:10.644000', null,
+		'127.0.0.1', 'laokou-report', '8140e92b-fb43-48f5-b63b-7506185206a5', '', null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (40, 'application-common-kafka.yaml', 'LAOKOU_GROUP', e'spring:
   kafka:
     bootstrap-servers: kafka.laokou.org:9092
     consumer:
@@ -1375,8 +1497,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       # 批量batch类型
       type: batch
       # topic不存在报错
-      missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2024-05-25 18:13:10.650000', '2024-05-25 18:13:10.650000', null, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'kafka公共配置', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (41, 'application-logstash.yaml', 'LAOKOU_GROUP', e'spring:
+      missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2024-05-25 18:13:10.650000',
+		'2024-05-25 18:13:10.650000', null, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'kafka公共配置',
+		null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (41, 'application-logstash.yaml', 'LAOKOU_GROUP', e'spring:
   xxl-job:
     admin:
       address: http://xxl.job.laokou.org:9095/xxl-job-admin
@@ -1385,8 +1511,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       port: -1
       log-path: ./logs/xxl-job/laokou-logstash
       access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
-      intentionalities: 7', '81c3de6319db8560c68935977f2d141f', '2024-05-25 18:13:10.655000', '2024-05-25 18:13:10.655000', null, '127.0.0.1', 'laokou-logstash', '8140e92b-fb43-48f5-b63b-7506185206a5', '', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (42, 'seataServer.properties', 'SEATA_GROUP', e'#For details about configuration items, see https://seata.io/zh-cn/docs/user/configurations.html
+      intentionalities: 7', '81c3de6319db8560c68935977f2d141f', '2024-05-25 18:13:10.655000',
+		'2024-05-25 18:13:10.655000', null, '127.0.0.1', 'laokou-logstash', '8140e92b-fb43-48f5-b63b-7506185206a5', '',
+		null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (42, 'seataServer.properties', 'SEATA_GROUP', e'#For details about configuration items, see https://seata.io/zh-cn/docs/user/configurations.html
 #Transport configuration, for client and server
 transport.type=TCP
 transport.server=NIO
@@ -1533,8 +1663,12 @@ server.raft.sync=true
 metrics.enabled=false
 metrics.registryType=compact
 metrics.exporterList=prometheus
-metrics.exporterPrometheusPort=9898', '26217408b5ee26c2fec37325ea785e2f', '2024-05-25 18:13:10.662000', '2024-05-25 18:13:10.662000', null, '127.0.0.1', 'laokou-seata', '8140e92b-fb43-48f5-b63b-7506185206a5', 'seata配置', null, null, 'properties', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (44, 'admin-degrade.json', 'LAOKOU_GROUP', e'[
+metrics.exporterPrometheusPort=9898', '26217408b5ee26c2fec37325ea785e2f', '2024-05-25 18:13:10.662000',
+		'2024-05-25 18:13:10.662000', null, '127.0.0.1', 'laokou-seata', '8140e92b-fb43-48f5-b63b-7506185206a5',
+		'seata配置', null, null, 'properties', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (44, 'admin-degrade.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
     "count": 200,
@@ -1551,8 +1685,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
     "minRequestAmount": 5,
     "timeWindow": 30
   }
-]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2024-05-25 18:13:10.676000', '2024-05-25 18:13:10.676000', null, '127.0.0.1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel degrade rule', null, null, 'json', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (35, 'admin-flow.json', 'LAOKOU_GROUP', e'[
+]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2024-05-25 18:13:10.676000', '2024-05-25 18:13:10.676000', null, '127.0.0.1',
+		'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel degrade rule', null, null, 'json', null,
+		'');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (35, 'admin-flow.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "/v3/users/profile",
     "limitApp": "default",
@@ -1561,8 +1699,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
     "strategy": 0,
     "controlBehavior": 0
   }
-]', '31d82f93a5909b2529f159848116e162', '2024-05-25 18:13:10.610000', '2024-05-25 18:19:37.997000', 'nacos', '127.0.0.1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (34, 'auth-flow.json', 'LAOKOU_GROUP', e'[
+]', '31d82f93a5909b2529f159848116e162', '2024-05-25 18:13:10.610000', '2024-05-25 18:19:37.997000', 'nacos',
+		'127.0.0.1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel flow rule', '', '', 'json',
+		'', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (34, 'auth-flow.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "/v3/captchas/{uuid}",
     "limitApp": "default",
@@ -1579,8 +1721,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
     "strategy": 0,
     "controlBehavior": 0
   }
-]', '6ae7639ff49789dd99787e908efa836d', '2024-05-25 18:13:10.604000', '2024-05-25 18:19:55.655000', 'nacos', '127.0.0.1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', 'auth sentinel  flow rule', '', '', 'json', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', e'# spring
+]', '6ae7639ff49789dd99787e908efa836d', '2024-05-25 18:13:10.604000', '2024-05-25 18:19:55.655000', 'nacos',
+		'127.0.0.1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', 'auth sentinel  flow rule', '', '', 'json',
+		'', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', e'# spring
 spring:
   # security
   security:
@@ -1694,8 +1840,12 @@ tenant:
 
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html', 'e83a99587ac917866dee016df29fd662', '2024-05-25 18:13:10.622000', '2024-05-26 00:02:32.884000', 'nacos', '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (45, 'application-common-seata.yaml', 'LAOKOU_GROUP', e'# seata
+    path: /swagger-ui.html', 'e83a99587ac917866dee016df29fd662', '2024-05-25 18:13:10.622000',
+		'2024-05-26 00:02:32.884000', 'nacos', '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '',
+		'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (45, 'application-common-seata.yaml', 'LAOKOU_GROUP', e'# seata
 seata:
   saga:
     enabled: true
@@ -1735,8 +1885,12 @@ seata:
       server-addr: https://nacos.laokou.org:8848
   enabled: true
   tx-service-group: default_tx_group
-  data-source-proxy-mode: AT', 'eeeffb74bfa083c4186b2690f4d16288', '2024-05-25 18:13:10.683000', '2024-05-25 18:50:17.125000', 'nacos', '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'seata公共配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (27, 'application-common-redis.yaml', 'LAOKOU_GROUP', e'# jasypt
+  data-source-proxy-mode: AT', 'eeeffb74bfa083c4186b2690f4d16288', '2024-05-25 18:13:10.683000',
+		'2024-05-25 18:50:17.125000', 'nacos', '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'seata公共配置',
+		'', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (27, 'application-common-redis.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -1757,8 +1911,12 @@ spring:
           max-active: 20 #连接池最大连接数（使用负值表示无极限）
           max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
           max-idle: 10 #连接池最大空闲连接
-          min-idle: 5 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2024-05-25 18:13:10.544000', '2024-05-25 18:13:10.544000', null, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'redis公共配置', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (28, 'application-monitor.yaml', 'LAOKOU_GROUP', e'# jasypt
+          min-idle: 5 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2024-05-25 18:13:10.544000',
+		'2024-05-25 18:13:10.544000', null, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'redis公共配置',
+		null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (28, 'application-monitor.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -1798,8 +1956,12 @@ management:
         include: "*"
   endpoint:
     health:
-      show-details: always', 'de1c37757329b0ad75488bf39024489c', '2024-05-25 18:13:10.570000', '2024-05-25 18:13:10.570000', null, '127.0.0.1', 'laokou-monitor', '8140e92b-fb43-48f5-b63b-7506185206a5', 'spring boot admin monitor', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (29, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', e'# jasypt
+      show-details: always', 'de1c37757329b0ad75488bf39024489c', '2024-05-25 18:13:10.570000',
+		'2024-05-25 18:13:10.570000', null, '127.0.0.1', 'laokou-monitor', '8140e92b-fb43-48f5-b63b-7506185206a5',
+		'spring boot admin monitor', null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (29, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -1812,28 +1974,44 @@ spring:
     username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
     password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
     connection-timeout: 30s
-    socket-timeout: 30s', '54cf98fa1e36856f525336acf7a5d20d', '2024-05-25 18:13:10.576000', '2024-05-25 18:13:10.576000', null, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'elasticsearch公共配置', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (30, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', e'rocketmq:
+    socket-timeout: 30s', '54cf98fa1e36856f525336acf7a5d20d', '2024-05-25 18:13:10.576000',
+		'2024-05-25 18:13:10.576000', null, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5',
+		'elasticsearch公共配置', null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (30, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', e'rocketmq:
   producer:
     group: laokou_producer_group
   name-server: rocketmq.laokou.org:9876
   consumer:
-    pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2024-05-25 18:13:10.582000', '2024-05-25 18:13:10.582000', null, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'rocketmq公共配置', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (31, 'application-sms.yaml', 'LAOKOU_GROUP', e'sms:
+    pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2024-05-25 18:13:10.582000',
+		'2024-05-25 18:13:10.582000', null, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'rocketmq公共配置',
+		null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (31, 'application-sms.yaml', 'LAOKOU_GROUP', e'sms:
   # 0：国阳云
   type: 0
   gyy:
     templateId: 908e94ccf08b4476ba6c876d13f084ad
     signId: 3f45af8aa12f4d59be8b1f18b650ad81
-    appcode: 6b3e98d5f39848cba9615d576ce78d9e', 'c5d95dadb7e5b2fe9db27ce8cae73118', '2024-05-25 18:13:10.588000', '2024-05-25 18:13:10.588000', null, '127.0.0.1', 'laokou-sms', '8140e92b-fb43-48f5-b63b-7506185206a5', 'sms配置', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (32, 'application-mail.yaml', 'LAOKOU_GROUP', e'spring:
+    appcode: 6b3e98d5f39848cba9615d576ce78d9e', 'c5d95dadb7e5b2fe9db27ce8cae73118', '2024-05-25 18:13:10.588000',
+		'2024-05-25 18:13:10.588000', null, '127.0.0.1', 'laokou-sms', '8140e92b-fb43-48f5-b63b-7506185206a5',
+		'sms配置', null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (32, 'application-mail.yaml', 'LAOKOU_GROUP', e'spring:
   # mail
   mail:
     host: smtp.qq.com
     username: 2413176044@qq.com
     password: hhqkeodvfywfebaf
-    default-encoding: UTF-8', '665c8cf5a8522b5f64ae86f9e816e89e', '2024-05-25 18:13:10.594000', '2024-05-25 18:13:10.594000', null, '127.0.0.1', 'laokou-mail', '8140e92b-fb43-48f5-b63b-7506185206a5', 'mail配置', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (1273, 'application-gateway.yaml', 'LAOKOU_GROUP', e'# ip
+    default-encoding: UTF-8', '665c8cf5a8522b5f64ae86f9e816e89e', '2024-05-25 18:13:10.594000',
+		'2024-05-25 18:13:10.594000', null, '127.0.0.1', 'laokou-mail', '8140e92b-fb43-48f5-b63b-7506185206a5',
+		'mail配置', null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (1273, 'application-gateway.yaml', 'LAOKOU_GROUP', e'# ip
 spring:
   cloud:
     gateway:
@@ -1846,8 +2024,12 @@ spring:
 knife4j:
   # 聚合swagger文档
   gateway:
-    enabled: true', 'b4ccbf4df335be2d07acf78a456ad733', '2023-01-22 13:16:13.000000', '2024-05-25 18:46:00.582000', 'nacos', '127.0.0.1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (46, 'application-admin.yaml', 'LAOKOU_GROUP', e'# jasypt
+    enabled: true', 'b4ccbf4df335be2d07acf78a456ad733', '2023-01-22 13:16:13.000000', '2024-05-25 18:46:00.582000',
+		'nacos', '127.0.0.1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway配置', '', '', 'yaml',
+		'', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (46, 'application-admin.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -1912,8 +2094,11 @@ mybatis-plus:
 
 springdoc:
   api-docs:
-    enabled: false', '7270e14a875205fafe93949b552af527', '2024-05-25 18:13:10.690000', '2024-06-29 14:13:14.802000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (19, 'application-monitor.yaml', 'LAOKOU_GROUP', e'# jasypt
+    enabled: false', '7270e14a875205fafe93949b552af527', '2024-05-25 18:13:10.690000', '2024-06-29 14:13:14.802000',
+		'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (19, 'application-monitor.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -1953,10 +2138,17 @@ management:
         include: "*"
   endpoint:
     health:
-      show-details: always', 'de1c37757329b0ad75488bf39024489c', '2024-05-25 18:12:47.335000', '2024-05-25 18:13:33.308000', null, '127.0.0.1', 'laokou-monitor', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'spring boot admin monitor', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (61, 'application-report.yaml', 'LAOKOU_GROUP', e'server:
-  port: 8088', '89f7b26715cf760d099a258200381fe0', '2024-05-25 18:13:33.406000', '2024-05-25 18:13:33.406000', null, '127.0.0.1', 'laokou-report', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (58, 'router.json', 'LAOKOU_GROUP', e'[
+      show-details: always', 'de1c37757329b0ad75488bf39024489c', '2024-05-25 18:12:47.335000',
+		'2024-05-25 18:13:33.308000', null, '127.0.0.1', 'laokou-monitor', '0dac1a68-2f01-40df-bd26-bf0cb199057a',
+		'spring boot admin monitor', null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (61, 'application-report.yaml', 'LAOKOU_GROUP', e'server:
+  port: 8088', '89f7b26715cf760d099a258200381fe0', '2024-05-25 18:13:33.406000', '2024-05-25 18:13:33.406000', null,
+		'127.0.0.1', 'laokou-report', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (58, 'router.json', 'LAOKOU_GROUP', e'[
   {
     "id": "laokou-auth",
     "uri": "lb://laokou-auth",
@@ -1991,7 +2183,7 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       }
     ],
     "metadata": {
-      "version": "2.0"
+      "version": "v3"
     },
     "order": 1
   },
@@ -2029,7 +2221,7 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       }
     ],
     "metadata": {
-      "version": "2.0"
+      "version": "v3"
     },
     "order": 1
   },
@@ -2067,12 +2259,15 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       }
     ],
     "metadata": {
-      "version": "2.0"
+      "version": "v3"
     },
     "order": 1
   }
-]', '0ed5d74d692a46b070c46572b94ca61d', '2024-05-25 18:13:33.387000', '2024-05-25 18:15:59.610000', 'nacos', '127.0.0.1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '动态路由配置', '', '', 'json', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (57, 'admin-flow.json', 'LAOKOU_GROUP', e'[
+]', '0ed5d74d692a46b070c46572b94ca61d', '2024-05-25 18:13:33.387000', '2024-05-25 18:15:59.610000', 'nacos',
+		'127.0.0.1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '动态路由配置', '', '', 'json', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (57, 'admin-flow.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "/v3/users/profile",
     "limitApp": "default",
@@ -2081,8 +2276,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
     "strategy": 0,
     "controlBehavior": 0
   }
-]', '31d82f93a5909b2529f159848116e162', '2024-05-25 18:13:33.382000', '2024-05-25 18:19:26.212000', 'nacos', '127.0.0.1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (60, 'application-common-monitor.yaml', 'LAOKOU_GROUP', e'# jasypt
+]', '31d82f93a5909b2529f159848116e162', '2024-05-25 18:13:33.382000', '2024-05-25 18:19:26.212000', 'nacos',
+		'127.0.0.1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel flow rule', '', '', 'json',
+		'', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (60, 'application-common-monitor.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -2098,8 +2297,12 @@ spring:
         # root
         username: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
         # laokou123
-        password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)', 'cd09a01f0564c89b652fe9db269795e9', '2024-05-25 18:13:33.400000', '2024-05-25 18:47:54.592000', 'nacos', '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'monitor公共配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (59, 'application-common.yaml', 'LAOKOU_GROUP', e'# spring
+        password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)',
+		'cd09a01f0564c89b652fe9db269795e9', '2024-05-25 18:13:33.400000', '2024-05-25 18:47:54.592000', 'nacos',
+		'127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'monitor公共配置', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (59, 'application-common.yaml', 'LAOKOU_GROUP', e'# spring
 spring:
   # security
   security:
@@ -2213,8 +2416,12 @@ tenant:
 
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html', 'e83a99587ac917866dee016df29fd662', '2024-05-25 18:13:33.393000', '2024-05-26 00:02:51.420000', 'nacos', '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (62, 'application-common-kafka.yaml', 'LAOKOU_GROUP', e'spring:
+    path: /swagger-ui.html', 'e83a99587ac917866dee016df29fd662', '2024-05-25 18:13:33.393000',
+		'2024-05-26 00:02:51.420000', 'nacos', '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '',
+		'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (62, 'application-common-kafka.yaml', 'LAOKOU_GROUP', e'spring:
   kafka:
     bootstrap-servers: kafka.laokou.org:9092
     consumer:
@@ -2247,8 +2454,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       # 批量batch类型
       type: batch
       # topic不存在报错
-      missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2024-05-25 18:13:33.413000', '2024-05-25 18:13:33.413000', null, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'kafka公共配置', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (63, 'application-logstash.yaml', 'LAOKOU_GROUP', e'spring:
+      missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2024-05-25 18:13:33.413000',
+		'2024-05-25 18:13:33.413000', null, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'kafka公共配置',
+		null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (63, 'application-logstash.yaml', 'LAOKOU_GROUP', e'spring:
   xxl-job:
     admin:
       address: http://xxl.job.laokou.org:9095/xxl-job-admin
@@ -2257,8 +2468,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
       port: -1
       log-path: ./logs/xxl-job/laokou-logstash
       access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
-      intentionalities: 7', '81c3de6319db8560c68935977f2d141f', '2024-05-25 18:13:33.419000', '2024-05-25 18:13:33.419000', null, '127.0.0.1', 'laokou-logstash', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', null, null, 'yaml', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (64, 'seataServer.properties', 'SEATA_GROUP', e'#For details about configuration items, see https://seata.io/zh-cn/docs/user/configurations.html
+      intentionalities: 7', '81c3de6319db8560c68935977f2d141f', '2024-05-25 18:13:33.419000',
+		'2024-05-25 18:13:33.419000', null, '127.0.0.1', 'laokou-logstash', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '',
+		null, null, 'yaml', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (64, 'seataServer.properties', 'SEATA_GROUP', e'#For details about configuration items, see https://seata.io/zh-cn/docs/user/configurations.html
 #Transport configuration, for client and server
 transport.type=TCP
 transport.server=NIO
@@ -2405,8 +2620,12 @@ server.raft.sync=true
 metrics.enabled=false
 metrics.registryType=compact
 metrics.exporterList=prometheus
-metrics.exporterPrometheusPort=9898', '26217408b5ee26c2fec37325ea785e2f', '2024-05-25 18:13:33.425000', '2024-05-25 18:13:33.425000', null, '127.0.0.1', 'laokou-seata', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'seata配置', null, null, 'properties', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (66, 'admin-degrade.json', 'LAOKOU_GROUP', e'[
+metrics.exporterPrometheusPort=9898', '26217408b5ee26c2fec37325ea785e2f', '2024-05-25 18:13:33.425000',
+		'2024-05-25 18:13:33.425000', null, '127.0.0.1', 'laokou-seata', '0dac1a68-2f01-40df-bd26-bf0cb199057a',
+		'seata配置', null, null, 'properties', null, '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (66, 'admin-degrade.json', 'LAOKOU_GROUP', e'[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
     "count": 200,
@@ -2423,8 +2642,12 @@ INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create,
     "minRequestAmount": 5,
     "timeWindow": 30
   }
-]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2024-05-25 18:13:33.436000', '2024-05-25 18:13:33.436000', null, '127.0.0.1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel degrade rule', null, null, 'json', null, '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (67, 'application-common-seata.yaml', 'LAOKOU_GROUP', e'# seata
+]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2024-05-25 18:13:33.436000', '2024-05-25 18:13:33.436000', null, '127.0.0.1',
+		'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel degrade rule', null, null, 'json', null,
+		'');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (67, 'application-common-seata.yaml', 'LAOKOU_GROUP', e'# seata
 seata:
   saga:
     enabled: true
@@ -2464,8 +2687,12 @@ seata:
       server-addr: nacos.laokou.org
   enabled: true
   tx-service-group: default_tx_group
-  data-source-proxy-mode: AT', 'd121fc4a27f2da0223bc33374be43f73', '2024-05-25 18:13:33.441000', '2024-05-25 18:49:36.942000', 'nacos', '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'seata公共配置', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (47, 'application-auth.yaml', 'LAOKOU_GROUP', e'# jasypt
+  data-source-proxy-mode: AT', 'd121fc4a27f2da0223bc33374be43f73', '2024-05-25 18:13:33.441000',
+		'2024-05-25 18:49:36.942000', 'nacos', '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'seata公共配置',
+		'', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (47, 'application-auth.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -2527,8 +2754,11 @@ mybatis-plus:
 
 springdoc:
   api-docs:
-    enabled: false', '81c8ac9d7a2c4e650322d6e6073a4f1d', '2024-05-25 18:13:10.697000', '2024-06-29 14:13:48.123000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (68, 'application-admin.yaml', 'LAOKOU_GROUP', e'# jasypt
+    enabled: false', '81c8ac9d7a2c4e650322d6e6073a4f1d', '2024-05-25 18:13:10.697000', '2024-06-29 14:13:48.123000',
+		'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (68, 'application-admin.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -2593,8 +2823,11 @@ mybatis-plus:
 
 springdoc:
   api-docs:
-    enabled: true', 'ef43225dfe22aafd066a2f8a86fcbde5', '2024-05-25 18:13:33.447000', '2024-06-29 14:14:10.129000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (69, 'application-auth.yaml', 'LAOKOU_GROUP', e'# jasypt
+    enabled: true', 'ef43225dfe22aafd066a2f8a86fcbde5', '2024-05-25 18:13:33.447000', '2024-06-29 14:14:10.129000',
+		'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (69, 'application-auth.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -2656,8 +2889,11 @@ mybatis-plus:
 
 springdoc:
   api-docs:
-    enabled: true', 'ef120e2acbe50193e647855ad02bf066', '2024-05-25 18:13:33.452000', '2024-06-29 14:14:30.172000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2022, 'application-admin.yaml', 'LAOKOU_GROUP', e'# jasypt
+    enabled: true', 'ef120e2acbe50193e647855ad02bf066', '2024-05-25 18:13:33.452000', '2024-06-29 14:14:30.172000',
+		'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (2022, 'application-admin.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -2722,8 +2958,11 @@ mybatis-plus:
 
 springdoc:
   api-docs:
-    enabled: true', 'ef43225dfe22aafd066a2f8a86fcbde5', '2023-09-28 11:37:33.000000', '2024-06-29 14:12:17.779000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip, app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key) VALUES (2025, 'application-auth.yaml', 'LAOKOU_GROUP', e'# jasypt
+    enabled: true', 'ef43225dfe22aafd066a2f8a86fcbde5', '2023-09-28 11:37:33.000000', '2024-06-29 14:12:17.779000',
+		'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
+								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
+VALUES (2025, 'application-auth.yaml', 'LAOKOU_GROUP', e'# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -2785,40 +3024,72 @@ mybatis-plus:
 
 springdoc:
   api-docs:
-    enabled: true', 'ef120e2acbe50193e647855ad02bf066', '2023-09-28 11:51:44.000000', '2024-06-29 14:12:53.946000', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+    enabled: true', 'ef120e2acbe50193e647855ad02bf066', '2023-09-28 11:51:44.000000', '2024-06-29 14:12:53.946000',
+		'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 --------------------------------------------------------------- CONFIG ---------------------------------------------------------------
 
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (1477, 'mail', '', 'application-mail.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 172);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (1475, 'sms', '', 'application-sms.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 346);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (1567, 'gateway', '', 'gateway-flow.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 358);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (82, 'monitor', '', 'application-monitor.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 469);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (16, 'redis', '', 'application-common-redis.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 672);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (1270, 'rocketmq', '', 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 678);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (2159, 'kafka', '', 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 684);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (2178, 'logstash', '', 'application-logstash.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 685);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (103, 'elasticsearch', '', 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 689);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (2118, 'report', '', 'application-report.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 720);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (1570, 'admin', '', 'admin-degrade.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 4);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (1254, 'seata', '', 'application-common-seata.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 31);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (26, 'gateway', '', 'router.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 54);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 55);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 56);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 57);
-INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid) VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 60);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (1477, 'mail', '', 'application-mail.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 172);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (1475, 'sms', '', 'application-sms.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 346);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (1567, 'gateway', '', 'gateway-flow.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 358);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (82, 'monitor', '', 'application-monitor.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 469);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (16, 'redis', '', 'application-common-redis.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 672);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (1270, 'rocketmq', '', 'application-common-rocketmq.yaml', 'LAOKOU_GROUP',
+		'a61abd4c-ef96-42a5-99a1-616adee531f3', 678);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (2159, 'kafka', '', 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3',
+		684);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (2178, 'logstash', '', 'application-logstash.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 685);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (103, 'elasticsearch', '', 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP',
+		'a61abd4c-ef96-42a5-99a1-616adee531f3', 689);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (2118, 'report', '', 'application-report.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 720);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (1570, 'admin', '', 'admin-degrade.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 4);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (1254, 'seata', '', 'application-common-seata.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 31);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (26, 'gateway', '', 'router.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 54);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 55);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 56);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 57);
+INSERT INTO public.config_tags_relation (id, tag_name, tag_type, data_id, group_id, tenant_id, nid)
+VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 60);
 
-INSERT INTO public.permissions (role, resource, action) VALUES ('ADMIN', ':*:*', 'rw');
-INSERT INTO public.permissions (role, resource, action) VALUES ('ADMIN', 'a61abd4c-ef96-42a5-99a1-616adee531f3:*:*', 'rw');
-INSERT INTO public.permissions (role, resource, action) VALUES ('ROLE_ADMIN', ':*:*', 'rw');
-INSERT INTO public.permissions (role, resource, action) VALUES ('ROLE_ADMIN', 'a61abd4c-ef96-42a5-99a1-616adee531f3:*:*', 'rw');
+INSERT INTO public.permissions (role, resource, action)
+VALUES ('ADMIN', ':*:*', 'rw');
+INSERT INTO public.permissions (role, resource, action)
+VALUES ('ADMIN', 'a61abd4c-ef96-42a5-99a1-616adee531f3:*:*', 'rw');
+INSERT INTO public.permissions (role, resource, action)
+VALUES ('ROLE_ADMIN', ':*:*', 'rw');
+INSERT INTO public.permissions (role, resource, action)
+VALUES ('ROLE_ADMIN', 'a61abd4c-ef96-42a5-99a1-616adee531f3:*:*', 'rw');
 
-INSERT INTO public.roles (username, role) VALUES ('laokou', 'ADMIN');
-INSERT INTO public.roles (username, role) VALUES ('nacos', 'ROLE_ADMIN');
+INSERT INTO public.roles (username, role)
+VALUES ('laokou', 'ADMIN');
+INSERT INTO public.roles (username, role)
+VALUES ('nacos', 'ROLE_ADMIN');
 
-INSERT INTO public.tenant_info (id, kp, tenant_id, tenant_name, tenant_desc, create_source, gmt_create, gmt_modified) VALUES (2, '1', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'test', 'test', 'nacos', 1673556960289, 1716628319164);
-INSERT INTO public.tenant_info (id, kp, tenant_id, tenant_name, tenant_desc, create_source, gmt_create, gmt_modified) VALUES (1, '1', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'dev', 'dev', 'nacos', 1716631648356, 1716631648356);
-INSERT INTO public.tenant_info (id, kp, tenant_id, tenant_name, tenant_desc, create_source, gmt_create, gmt_modified) VALUES (3, '1', '8140e92b-fb43-48f5-b63b-7506185206a5', 'prod', 'prod', 'nacos', 1716631657328, 1716631657328);
+INSERT INTO public.tenant_info (id, kp, tenant_id, tenant_name, tenant_desc, create_source, gmt_create, gmt_modified)
+VALUES (2, '1', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'test', 'test', 'nacos', 1673556960289, 1716628319164);
+INSERT INTO public.tenant_info (id, kp, tenant_id, tenant_name, tenant_desc, create_source, gmt_create, gmt_modified)
+VALUES (1, '1', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'dev', 'dev', 'nacos', 1716631648356, 1716631648356);
+INSERT INTO public.tenant_info (id, kp, tenant_id, tenant_name, tenant_desc, create_source, gmt_create, gmt_modified)
+VALUES (3, '1', '8140e92b-fb43-48f5-b63b-7506185206a5', 'prod', 'prod', 'nacos', 1716631657328, 1716631657328);
 
 
 
-INSERT INTO public.users (username, password, enabled) VALUES ('laokou', '$2a$10$75WIn2J5FoX9F5wEBdFsL.0cKdv5h8QqBMKMWBABhWAxKB4TO8WZq', true);
-INSERT INTO public.users (username, password, enabled) VALUES ('nacos', '$2a$10$oVX1zRtaql9Jbsyzaaovx.TU2M6Bw0ZpCbPYWOIED58d1ougzaFRm', true);
+INSERT INTO public.users (username, password, enabled)
+VALUES ('laokou', '$2a$10$75WIn2J5FoX9F5wEBdFsL.0cKdv5h8QqBMKMWBABhWAxKB4TO8WZq', true);
+INSERT INTO public.users (username, password, enabled)
+VALUES ('nacos', '$2a$10$oVX1zRtaql9Jbsyzaaovx.TU2M6Bw0ZpCbPYWOIED58d1ougzaFRm', true);

@@ -2,6 +2,7 @@
 
 [source,shell]
 ----
+npm cache clean --force
 npm install
 ----
 

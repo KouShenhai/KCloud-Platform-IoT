@@ -17,7 +17,7 @@
  *
  */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.laokou</groupId>
@@ -189,7 +189,6 @@
         <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-        <NACOS-VERSION>v3</NACOS-VERSION>
         <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
         <SEATA-USERNAME>seata</SEATA-USERNAME>
         <SEATA-PASSWORD>seata</SEATA-PASSWORD>
@@ -218,8 +217,10 @@
       <properties>
         <DATASOURCE-USERNAME-NACOS>ENC(aEwhK+oj5wQ/pJfRcfwXAw==)</DATASOURCE-USERNAME-NACOS>
         <DATASOURCE-PASSWORD-NACOS>ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)</DATASOURCE-PASSWORD-NACOS>
-        <DATASOURCE-USERNAME-SNAIL-JOB>ENC(4pcvkMAYo/eI8yyOWMkKrZ5ULU2ITC7V9wivUEe9F99Phsh/FJeP+WxZB+wxBgjm)</DATASOURCE-USERNAME-SNAIL-JOB>
-        <DATASOURCE-PASSWORD-SNAIL-JOB>ENC(L22TUOP+1sSFU+2G/O6+/GCGTudE8Gb2Haf+0rlMxohzTd2l5nmdszMg4Me/Ogae)</DATASOURCE-PASSWORD-SNAIL-JOB>
+        <DATASOURCE-USERNAME-SNAIL-JOB>ENC(4pcvkMAYo/eI8yyOWMkKrZ5ULU2ITC7V9wivUEe9F99Phsh/FJeP+WxZB+wxBgjm)
+        </DATASOURCE-USERNAME-SNAIL-JOB>
+        <DATASOURCE-PASSWORD-SNAIL-JOB>ENC(L22TUOP+1sSFU+2G/O6+/GCGTudE8Gb2Haf+0rlMxohzTd2l5nmdszMg4Me/Ogae)
+        </DATASOURCE-PASSWORD-SNAIL-JOB>
         <DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>
         <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true</DATASOURCE-PARAM-NACOS>
         <DATASOURCE-PARAM-SNAIL-JOB>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true</DATASOURCE-PARAM-SNAIL-JOB>
@@ -234,7 +235,6 @@
         <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-        <NACOS-VERSION>v3</NACOS-VERSION>
         <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
         <SEATA-USERNAME>seata</SEATA-USERNAME>
         <SEATA-PASSWORD>seata</SEATA-PASSWORD>
@@ -262,23 +262,34 @@
       <id>prod</id>
       <properties>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-USERNAME-NACOS>${DATASOURCE_USERNAME_NACOS:ENC(aEwhK+oj5wQ/pJfRcfwXAw==)}</DATASOURCE-USERNAME-NACOS>
+        <DATASOURCE-USERNAME-NACOS>${DATASOURCE_USERNAME_NACOS:ENC(aEwhK+oj5wQ/pJfRcfwXAw==)}
+        </DATASOURCE-USERNAME-NACOS>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-PASSWORD-NACOS>${DATASOURCE_PASSWORD_NACOS:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}</DATASOURCE-PASSWORD-NACOS>
+        <DATASOURCE-PASSWORD-NACOS>${DATASOURCE_PASSWORD_NACOS:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}
+        </DATASOURCE-PASSWORD-NACOS>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-USERNAME-SNAIL-JOB>${DATASOURCE_USERNAME_SNAIL_JOB:ENC(4pcvkMAYo/eI8yyOWMkKrZ5ULU2ITC7V9wivUEe9F99Phsh/FJeP+WxZB+wxBgjm)}</DATASOURCE-USERNAME-SNAIL-JOB>
+        <DATASOURCE-USERNAME-SNAIL-JOB>
+          ${DATASOURCE_USERNAME_SNAIL_JOB:ENC(4pcvkMAYo/eI8yyOWMkKrZ5ULU2ITC7V9wivUEe9F99Phsh/FJeP+WxZB+wxBgjm)}
+        </DATASOURCE-USERNAME-SNAIL-JOB>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-PASSWORD-SNAIL-JOB>${DATASOURCE_PASSWORD_SNAIL_JOB:ENC(L22TUOP+1sSFU+2G/O6+/GCGTudE8Gb2Haf+0rlMxohzTd2l5nmdszMg4Me/Ogae)}</DATASOURCE-PASSWORD-SNAIL-JOB>
+        <DATASOURCE-PASSWORD-SNAIL-JOB>
+          ${DATASOURCE_PASSWORD_SNAIL_JOB:ENC(L22TUOP+1sSFU+2G/O6+/GCGTudE8Gb2Haf+0rlMxohzTd2l5nmdszMg4Me/Ogae)}
+        </DATASOURCE-PASSWORD-SNAIL-JOB>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-HOST>${DATASOURCE_HOST:postgresql.laokou.org}</DATASOURCE-HOST>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-PARAM-NACOS>${DATASOURCE_PARAM_NACOS:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true}</DATASOURCE-PARAM-NACOS>
+        <DATASOURCE-PARAM-NACOS>
+          ${DATASOURCE_PARAM_NACOS:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true}
+        </DATASOURCE-PARAM-NACOS>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-PARAM-SNAIL-JOB>${DATASOURCE_PARAM_SNAIL_JOB:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true}</DATASOURCE-PARAM-SNAIL-JOB>
+        <DATASOURCE-PARAM-SNAIL-JOB>
+          ${DATASOURCE_PARAM_SNAIL_JOB:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true}
+        </DATASOURCE-PARAM-SNAIL-JOB>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PORT>${DATASOURCE_PORT:5432}</DATASOURCE-PORT>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-DRIVER-CLASS-NAME>${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}</DATASOURCE-DRIVER-CLASS-NAME>
+        <DATASOURCE-DRIVER-CLASS-NAME>${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
+        </DATASOURCE-DRIVER-CLASS-NAME>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PLATFORM>${DATASOURCE_PLATFORM:postgresql}</DATASOURCE-PLATFORM>
         <!--suppress UnresolvedMavenProperty -->
@@ -297,8 +308,6 @@
         <NACOS-USERNAME>${NACOS_USERNAME:nacos}</NACOS-USERNAME>
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-PASSWORD>${NACOS_PASSWORD:nacos}</NACOS-PASSWORD>
-        <!--suppress UnresolvedMavenProperty -->
-        <NACOS-VERSION>${NACOS_VERSION:v3}</NACOS-VERSION>
         <!--suppress UnresolvedMavenProperty -->
         <SEATA-GROUP>${SEATA_GROUP:SEATA_GROUP}</SEATA-GROUP>
         <!--suppress UnresolvedMavenProperty -->

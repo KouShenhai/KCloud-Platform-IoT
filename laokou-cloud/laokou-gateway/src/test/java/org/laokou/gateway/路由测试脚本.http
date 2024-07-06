@@ -15,7 +15,7 @@
 # */
 
 # 删除路由
-DELETE {{schema}}{{host}}/api/v3/routers
+DELETE {{schema}}{{host}}/v3/routers
 username: {{username}}
 password: {{password}}
 Content-Type: application/json; boundary=WebAppBoundary
@@ -23,7 +23,7 @@ Content-Type: application/json; boundary=WebAppBoundary
 #######
 
 # 同步路由
-POST {{schema}}{{host}}/api/v3/routers
+POST {{schema}}{{host}}/v3/routers
 username: {{username}}
 password: {{password}}
 Content-Type: application/json; boundary=WebAppBoundary

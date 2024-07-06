@@ -68,7 +68,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	private ApplicationEventPublisher applicationEventPublisher;
 
 	public NacosRouteDefinitionRepository(ConfigUtil configUtil,
-			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
+										  ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
 		this.configUtil = configUtil;
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
 	}
@@ -109,19 +109,19 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	}
 
 	/**
-	 * 同步Nacos动态路由配置到Redis.
-	 * @return 同步结果
+	 * 保存路由【同步Nacos路由配置到Redis】.
+	 * @return 保存结果
 	 */
-	public Flux<Boolean> syncRouters() {
+	public Flux<Boolean> saveRouters() {
 		return Flux.fromIterable(pullRouters())
 			.flatMap(router -> reactiveHashOperations.putIfAbsent(RedisKeyUtil.getRouteDefinitionHashKey(), router.getId(), router)).doFinally(c -> refreshEvent());
 	}
 
 	/**
-	 * 删除所有动态路由.
+	 * 删除路由.
 	 * @return 删除结果
 	 */
-	public Mono<Boolean> deleteRouters() {
+	public Mono<Boolean> removeRouters() {
 		return reactiveHashOperations.delete(RedisKeyUtil.getRouteDefinitionHashKey()).doFinally(c -> refreshEvent());
 	}
 
