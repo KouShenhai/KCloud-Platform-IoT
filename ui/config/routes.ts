@@ -12,19 +12,20 @@
  */
 
 export default [
-  {
-    path: '/',
-    redirect: '/home',
-  },
-  {
-    name: '首页',
-    path: '/home',
-    component: './Home',
-  },
-  {
-    name: 'Login',
-    path: '/login',
-    component: './Login',
-    layout: false,
-  },
+	{
+		path: '/',
+		redirect: '/home',
+	},
+	{
+		name: '首页',
+		path: '/home',
+		component: './Home',
+		icon: 'HomeOutlined'
+	},
+	{
+		name: 'Login',
+		path: '/login',
+		component: './Login',
+		layout: false,
+	},
 ];
