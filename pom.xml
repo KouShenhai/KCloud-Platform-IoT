@@ -197,8 +197,6 @@
         <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
         <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
         <SSL-ENABLED>false</SSL-ENABLED>
-        <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
-        <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
         <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
         <TEMP-PATH>d:/laokou/temp</TEMP-PATH>
         <UPLOAD-PATH>/</UPLOAD-PATH>
@@ -243,8 +241,6 @@
         <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
         <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
         <SSL-ENABLED>true</SSL-ENABLED>
-        <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
-        <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
         <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
         <TEMP-PATH>d:/laokou/temp</TEMP-PATH>
         <UPLOAD-PATH>/</UPLOAD-PATH>
@@ -322,10 +318,6 @@
         <SENTINEL-PASSWORD>${SENTINEL_PASSWORD:sentinel}</SENTINEL-PASSWORD>
         <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
         <SSL-ENABLED>true</SSL-ENABLED>
-        <!--suppress UnresolvedMavenProperty -->
-        <MAIL-PASSWORD>${MAIL_PASSWORD:ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)}</MAIL-PASSWORD>
-        <!--suppress UnresolvedMavenProperty -->
-        <MAIL-USERNAME>${MAIL_USERNAME:2413176044@qq.com}</MAIL-USERNAME>
         <!--suppress UnresolvedMavenProperty -->
         <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
         <!--suppress UnresolvedMavenProperty -->
