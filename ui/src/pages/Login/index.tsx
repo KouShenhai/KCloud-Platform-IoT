@@ -105,6 +105,7 @@ export default () => {
 		const params = getParams(form);
 		login({...params})
 			.then((res) => {
+				// 登录成功
 				console.log("登录成功", res)
 				// 跳转路由
 				const urlParams = new URL(window.location.href).searchParams;
@@ -114,8 +115,8 @@ export default () => {
 					message.success(`${timeFix()}，欢迎回来`);
 				}, 1000);
 			})
-			.catch((err) => {
-				message.error(err.response.data.error_description);
+			.catch(() => {
+				// 登录失败，刷新验证码
 				getCaptchaImage();
 			});
 	};

@@ -26,15 +26,23 @@ export const layout = () => {
 };
 
 export const request: RequestConfig = {
-	timeout: 1000,
+	timeout: 10000,
 	// other axios options you want
 	errorConfig: {
 		errorHandler(error: any) {
-			const {response} = error;
-			if (response && response.status === 500) {
-				message.error('服务器内部错误，无法完成请求').then(() => {
-				});
+			const {response, code} = error;
+			let errorMessage;
+			if (response && response.data && response.data.error_description !== undefined) {
+				errorMessage = response.data.error_description
 			}
+			if (response && response.status === 500) {
+				errorMessage = '服务器内部错误，无法完成请求'
+			}
+			if (code === 'ERR_BAD_RESPONSE') {
+				errorMessage = '网络请求错误，请稍后再试'
+			}
+			message.error(errorMessage).then(() => {
+			});
 		},
 		errorThrower() {
 		},
