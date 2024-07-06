@@ -55,50 +55,62 @@ public class LogA extends AggregateRoot<Long> {
 	 * 操作名称.
 	 */
 	private String name;
+
 	/**
 	 * 操作的模块名称.
 	 */
 	private String moduleName;
+
 	/**
 	 * 操作的URI.
 	 */
 	private String uri;
+
 	/**
 	 * 操作的方法名.
 	 */
 	private String methodName;
+
 	/**
 	 * 操作的请求类型.
 	 */
 	private String requestType;
+
 	/**
 	 * 操作的请求参数.
 	 */
 	private String requestParams;
+
 	/**
 	 * 操作的浏览器.
 	 */
 	private String userAgent;
+
 	/**
 	 * 操作的IP地址.
 	 */
 	private String ip;
+
 	/**
 	 * 操作的归属地.
 	 */
 	private String address;
+
 	/**
 	 * 操作人.
 	 */
 	private String operator;
+
 	/**
 	 * 错误信息.
 	 */
 	private String errorMessage;
+
 	/**
 	 * 操作状态 0成功 1失败.
 	 */
 	private Integer status;
+
 	/**
 	 * 操作的消耗时间(毫秒).
 	 */
@@ -129,7 +141,8 @@ public class LogA extends AggregateRoot<Long> {
 	public void updateStatus(Exception e) {
 		if (ObjectUtil.isNotNull(e)) {
 			fail(e);
-		} else {
+		}
+		else {
 			ok();
 		}
 	}
@@ -146,13 +159,15 @@ public class LogA extends AggregateRoot<Long> {
 		List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs).toList();
 		if (CollectionUtil.isEmpty(params)) {
 			this.requestParams = EMPTY_JSON;
-		} else {
+		}
+		else {
 			Object obj = params.getFirst();
 			try {
 				Map<String, String> map = JacksonUtil.toMap(obj, String.class, String.class);
 				deleteAny(map, REMOVE_PARAMS.toArray(String[]::new));
 				this.requestParams = JacksonUtil.toJsonStr(map, true);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				this.requestParams = JacksonUtil.toJsonStr(obj, true);
 			}
 		}
@@ -175,7 +190,7 @@ public class LogA extends AggregateRoot<Long> {
 
 	private boolean filterArgs(Object arg) {
 		return !(arg instanceof HttpServletRequest) && !(arg instanceof MultipartFile)
-			&& !(arg instanceof HttpServletResponse);
+				&& !(arg instanceof HttpServletResponse);
 	}
 
 }

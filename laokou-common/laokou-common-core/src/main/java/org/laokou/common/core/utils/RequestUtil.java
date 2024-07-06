@@ -45,11 +45,12 @@ public class RequestUtil {
 	static {
 		try {
 			PARSER = new UserAgentService().loadParser(Arrays.asList(BrowsCapField.BROWSER, BrowsCapField.BROWSER_TYPE,
-				BrowsCapField.BROWSER_MAJOR_VERSION, BrowsCapField.DEVICE_TYPE, BrowsCapField.PLATFORM,
-				BrowsCapField.PLATFORM_VERSION, BrowsCapField.RENDERING_ENGINE_VERSION,
-				BrowsCapField.RENDERING_ENGINE_NAME, BrowsCapField.PLATFORM_MAKER,
-				BrowsCapField.RENDERING_ENGINE_MAKER));
-		} catch (IOException | ParseException e) {
+					BrowsCapField.BROWSER_MAJOR_VERSION, BrowsCapField.DEVICE_TYPE, BrowsCapField.PLATFORM,
+					BrowsCapField.PLATFORM_VERSION, BrowsCapField.RENDERING_ENGINE_VERSION,
+					BrowsCapField.RENDERING_ENGINE_NAME, BrowsCapField.PLATFORM_MAKER,
+					BrowsCapField.RENDERING_ENGINE_MAKER));
+		}
+		catch (IOException | ParseException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -60,7 +61,6 @@ public class RequestUtil {
 
 	/**
 	 * 获取请求对象.
-	 *
 	 * @return 请求对象
 	 */
 	public static HttpServletRequest getHttpServletRequest() {
@@ -71,7 +71,6 @@ public class RequestUtil {
 
 	/**
 	 * 根据请求获取域名.
-	 *
 	 * @param request 请求对象
 	 * @return 域名
 	 */
@@ -81,7 +80,6 @@ public class RequestUtil {
 
 	/**
 	 * 获取浏览器信息.
-	 *
 	 * @param request 请求对象
 	 * @return 浏览器信息
 	 */

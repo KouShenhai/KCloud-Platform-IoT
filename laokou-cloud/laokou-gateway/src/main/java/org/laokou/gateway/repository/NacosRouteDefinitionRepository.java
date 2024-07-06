@@ -68,7 +68,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	private ApplicationEventPublisher applicationEventPublisher;
 
 	public NacosRouteDefinitionRepository(ConfigUtil configUtil,
-										  ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
+			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
 		this.configUtil = configUtil;
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
 	}

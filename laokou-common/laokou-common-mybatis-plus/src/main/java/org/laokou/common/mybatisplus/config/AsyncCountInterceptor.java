@@ -36,11 +36,11 @@ import java.util.concurrent.CompletableFuture;
  * @author laokou
  */
 @Intercepts(value = {
-	@Signature(type = Executor.class, method = "query",
-		args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class,
-			BoundSql.class}),
-	@Signature(type = Executor.class, method = "query",
-		args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
+		@Signature(type = Executor.class, method = "query",
+				args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class,
+						BoundSql.class }),
+		@Signature(type = Executor.class, method = "query",
+				args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class }) })
 public class AsyncCountInterceptor implements Interceptor {
 
 	@Override
@@ -51,7 +51,8 @@ public class AsyncCountInterceptor implements Interceptor {
 			if (ObjectUtil.isNotNull(future)) {
 				future.join();
 			}
-		} finally {
+		}
+		finally {
 			AsyncPaginationInnerInterceptor.remove();
 		}
 		return obj;
