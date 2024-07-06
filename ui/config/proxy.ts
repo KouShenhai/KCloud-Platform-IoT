@@ -10,13 +10,13 @@
  * @doc https://github.com/chimurai/http-proxy-middleware
  */
 export default {
-	dev: {
-		'/api/': {
-			// 要代理的地址
-			target: 'https://127.0.0.1:5555',
-			changeOrigin: true,
-			secure: false,
-			pathRewrite: {'^/api': ''}
-		}
-	}
+  dev: {
+    '/api/': {
+      // 要代理的地址
+      target: 'https://127.0.0.1:5555',
+      changeOrigin: true,
+      secure: false,
+      pathRewrite: { '^/api': '' },
+    },
+  },
 };

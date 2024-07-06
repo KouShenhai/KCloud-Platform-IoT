@@ -2,11 +2,11 @@
   "private": true,
   "author": "koushenhai <2413176044@qq.com>",
   "scripts": {
-    "dev": "max dev",
     "build": "max build",
+    "dev": "max dev",
     "format": "prettier --cache --write .",
-    "prepare": "husky",
     "postinstall": "max setup",
+    "prepare": "husky",
     "setup": "max setup",
     "start": "npm run dev"
   },
