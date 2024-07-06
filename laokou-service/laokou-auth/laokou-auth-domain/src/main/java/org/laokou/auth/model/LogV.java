@@ -22,17 +22,17 @@ import java.time.LocalDateTime;
 /**
  * 日志值对象.
  *
- * @param username     用户名
- * @param ip           登录的IP地址
- * @param address      登录的归属地
- * @param browser      登录的浏览器
- * @param os           登录的操作系统
- * @param status       登录状态 0登录成功 1登录失败
+ * @param username 用户名
+ * @param ip 登录的IP地址
+ * @param address 登录的归属地
+ * @param browser 登录的浏览器
+ * @param os 登录的操作系统
+ * @param status 登录状态 0登录成功 1登录失败
  * @param errorMessage 错误信息
- * @param type         类型
- * @param timestamp    时间
+ * @param type 类型
+ * @param timestamp 时间
  */
 public record LogV(String username, String os, String ip, String address, String browser, Integer status,
-				   String errorMessage, String type, LocalDateTime timestamp) {
+		String errorMessage, String type, LocalDateTime timestamp) {
 
 }
