@@ -1,15 +1,15 @@
 === 🎉 项目备注
+
 - 项目：KCloud-Platform-IoT（阻塞式）
 - 作者：老寇
 - 语言：Java
 - 时间：2022.06.15 ~ 至今
 
 === 📣 项目介绍
+
 image::doc/image/logo/logo.png[LOGO,500,align=center]
 
-KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微服务架构的IoT云平台。基于Spring Boot 3.3.1、Spring Cloud 2023.0.2、Spring Cloud Alibaba 2023.0.1.0 最新版本开发的云服务多租户IoT平台。
-遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、灰度路由、服务限流、熔断降级、监控报警、多数据源、高亮搜索、定时任务、分布式链路、分布式缓存、分布式事务、分布式存储、分布式锁等功能，用于快速构建微服务项目。目前支持Shell、Docker等多种部署方式，并且支持GraalVM和虚拟线程。实现RBAC权限、其中包含系统管理、系统监控、数据分析等几大模块。
-遵循阿里代码规范，采用RESTFul设计风格及DDD(领域驱动设计)思想，代码简洁、架构清晰，非常适合作为基础框架使用。
+KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微服务架构的IoT云平台。基于Spring Boot 3.3.1、Spring Cloud 2023.0.2、Spring Cloud Alibaba 2023.0.1.0 最新版本开发的云服务多租户IoT平台。 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、灰度路由、服务限流、熔断降级、监控报警、多数据源、高亮搜索、定时任务、分布式链路、分布式缓存、分布式事务、分布式存储、分布式锁等功能，用于快速构建微服务项目。目前支持Shell、Docker等多种部署方式，并且支持GraalVM和虚拟线程。实现RBAC权限、其中包含系统管理、系统监控、数据分析等几大模块。 遵循阿里代码规范，采用RESTFul设计风格及DDD(领域驱动设计)思想，代码简洁、架构清晰，非常适合作为基础框架使用。
 
 image:https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml/badge.svg?branch=master[Maven Ci Build Stauts,link=https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml]
 image:https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT.svg/?label=active+issues&show_trend=true&token=dsp_7fcdb2050e509b27f5d2ab8f5f1109bcd468[DeepSource Active Issues,link=https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT]
@@ -38,41 +38,45 @@ image:https://img.shields.io/badge/Maven-3.9.4-blue[Maven,link=https://maven.apa
 image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源交流群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
 
 === 😋 项目背景
+
 - 学习微服务架构设计并实践于生产
 - 整合所学技术方便快速搭建项目
 - 持续优化代码来提高代码质量
 - 复制粘贴代码提高生产效率
 - 学习DDD思想并落地实践
 
-=== 🔈 生成文档
-[source,shell]
-----
-mvn prepare-package
-----
-
 === 🔗 在线体验（正在重构，敬请期待）
+
 https://www.laokou.org.cn[老寇IoT云平台在线体验（请点击我，境外服务器网络延迟请稍候）]
 
 === 🔖 在线文档
+
 https://koushenhai.github.io[老寇IoT云平台在线文档（请点击我）]
 
 === 😎 开发计划
+
 https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2[开发计划（需要登录）]
 
 === 🎁 项目推荐
+
 https://github.com/KouShenhai/KCloud-Platform-Reactive-IoT[作者的另一个开源IoT项目（响应式）]
 
 === 💪 版本号
+
 特此说明，与Spring Boot版本保持一致
 
 === 🔎 功能介绍
+
 🚀 正在重构，敬请期待
 
 === 💡 系统架构
+
 image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=center]
 
 === ✂ 技术体系
+
 ==== 🎯 Spring全家桶及核心技术版本
+
 [width=100%]
 |===
 |组件                         |版本
@@ -99,6 +103,7 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 |===
 
 ==== 🍺 相关技术
+
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
 - 认证授权：Spring Security OAuth2 Authorization Server
@@ -182,36 +187,44 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 ----
 
 === 👊 性能评测
+
 link:性能测试.adoc[请点击我，查看详情]
 
 === 😛 用户权益（点个Star，拜托啦~🙏）
+
 - 采用Apache2.0开源协议，请保留作者、Copyright信息
 - 采用Apache2.0开源协议，请保留作者、Copyright信息
 - 采用Apache2.0开源协议，请保留作者、Copyright信息
 
 === 😻 开源协议
+
 KCloud-Platform-IoT 开源软件遵循 https://www.apache.org/licenses/LICENSE-2.0.html[Apache 2.0 协议] 请务必保留作者、Copyright信息
 
 === 🔧 参与贡献
+
 link:CONTRIBUTING.adoc[请点击我，查看规范]
 
 === 👀 项目地址
+
 https://github.com/KouShenhai/KCloud-Platform-IoT[Github 地址]
 
 https://gitee.com/laokouyun/KCloud-Platform-IoT[Gitee 地址]
 
 === 🍚 赞助打赏（用于服务器日常维护）
+
 image:doc/image/wxzp.jpg[微信支付,201,300]
 image:doc/image/zfb.jpg[支付宝支付,201,300]
 image:doc/image/gzh.jpg[微信公众号,201,300]
 image:doc/image/zsxq.jpg[知识星球,201,300]
 
 === 🙋 技术交流
+
 image:doc/image/wx.png[微信,250,300]
 image:doc/image/wxq.png[微信交流群,250,300]
 image:doc/image/qqq.png[QQ交流群,250,300]
 
 === 🐭 鸣谢组织
+
 https://spring.io[Spring社区]
 
 https://www.jetbrains.com/community[Jetbrains社区]
@@ -233,6 +246,7 @@ https://github.com/laokouyun[laokouyun社区]
 image::doc/image/jb_beam.png[jb_beam,100,100,link=https://www.jetbrains.com/community/opensource/?utm_campaign=opensource&utm_content=approved&utm_medium=email&utm_source=newsletter&utm_term=jblogo#support]
 
 === 🐼 鸣谢个人
+
 [width=100%]
 |===
 |序号 |头像 |名字
@@ -250,6 +264,7 @@ image::doc/image/jb_beam.png[jb_beam,100,100,link=https://www.jetbrains.com/comm
 |===
 
 === ⛳️ 赞助列表（感谢各位大佬的赞助）
+
 [width=100%]
 |===
 |时间         |网名        |赞助           |备注
@@ -268,9 +283,11 @@ image::doc/image/jb_beam.png[jb_beam,100,100,link=https://www.jetbrains.com/comm
 |===
 
 === 🚫 免责声明
+
 禁止使用本项目从事一切违法犯罪活动。作者不承担任何法律责任，特此声明
 
 === 🐸 联系作者
+
 https://kcloud.blog.csdn.net[博客：https://kcloud.blog.csdn.net]
 
 https://mail.qq.com[邮箱：2413176044@qq.com]
