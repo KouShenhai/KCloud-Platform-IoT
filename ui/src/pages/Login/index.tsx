@@ -10,11 +10,16 @@ import {
 	WechatOutlined,
 } from '@ant-design/icons';
 import {LoginFormPage, ProFormCaptcha, ProFormText,} from '@ant-design/pro-components';
-import {Divider, message, Space, Tabs} from 'antd';
-import type {CSSProperties} from 'react';
-import {useState} from 'react';
+import {Col, Divider, Image, message, Row, Space, Tabs} from 'antd';
+import {CSSProperties, useEffect, useState} from 'react';
 // @ts-ignore
 import {history} from 'umi';
+import {login} from "@/services/auth/authsController";
+import {getCaptchaByUuidV3} from "@/services/auth/captchasV3Controller";
+// @ts-ignore
+import {v7 as uuidV7} from 'uuid';
+import {JSEncrypt} from "jsencrypt";
+import {getSecretInfoV3} from "@/services/auth/secretsV3Controller";
 
 type LoginType = 'usernamePassword' | 'mobile' | 'mail';
 
@@ -32,12 +37,75 @@ export default () => {
 		{label: '邮箱登录', key: 'mail'}
 	];
 	const [loginType, setLoginType] = useState<LoginType>('usernamePassword');
+	const [captchaImage, setCaptchaImage] = useState<string>('');
+	const [uuid, setUuid] = useState<string>('');
+	const [publicKey, setPublicKey] = useState<string>('')
 
-	const onSubmit = async (formData: any) => {
-		console.log(formData);
-		history.push('/');
+	const timeFix = () => {
+		const time = new Date()
+		const hour = time.getHours()
+		return hour < 9 ? '早上好' : hour <= 11 ? '上午好' : hour <= 13 ? '中午好' : hour < 20 ? '下午好' : '晚上好'
+	}
+
+	const encrypt = new JSEncrypt()
+	const getParams = (form: API.LoginParam) => {
+		switch (loginType) {
+			case "usernamePassword": {
+				encrypt.setPublicKey(publicKey)
+				return {
+					uuid: uuid,
+					captcha: form.captcha,
+					username: encodeURIComponent(encrypt.encrypt(form.username as string)),
+					password: encodeURIComponent(encrypt.encrypt(form.password as string)),
+					tenant_id: 0,
+					grant_type: 'password'
+				};
+			}
+			case "mail":
+				return {};
+			case "mobile":
+				return {};
+		}
+	}
+
+	const getCaptchaImage = () => {
+		const uuid = uuidV7();
+		getCaptchaByUuidV3({uuid: uuid}).then(res => {
+			setCaptchaImage(res.data)
+		})
+		setUuid(uuid)
+	}
+
+	const getPublicKey = () => {
+		getSecretInfoV3().then(res => {
+			setPublicKey(res.data.publicKey)
+		})
+	}
+
+	useEffect(() => {
+		getPublicKey()
+		getCaptchaImage()
+	}, []);
+
+	const onSubmit = async (form: API.LoginParam) => {
+		const params = getParams(form)
+		login({...params}).then(res => {
+			if (res.code !== undefined) {
+				message.error(res.msg);
+				getCaptchaImage()
+			} else {
+				// 跳转路由
+				const urlParams = new URL(window.location.href).searchParams;
+				history.push(urlParams.get('redirect') || '/');
+				// 延迟 1 秒显示欢迎信息
+				setTimeout(() => {
+					message.success(`${timeFix()}，欢迎回来`);
+				}, 1000)
+			}
+		}).catch(err => {
+			console.log(err)
+		})
 	};
-	// @ts-ignore
 	return (
 		<div
 			style={{
@@ -168,6 +236,42 @@ export default () => {
 								},
 							]}
 						/>
+						<Row>
+							<Col flex={3}>
+								<ProFormText
+									style={{
+										float: 'right',
+									}}
+									fieldProps={{
+										prefix: <SafetyCertificateOutlined className={'prefixIcon'}/>,
+										autoComplete: 'new-password'
+									}}
+									name="captcha"
+									placeholder={'请输入验证码'}
+									rules={[
+										{
+											required: true,
+											message: '请输入验证码',
+										}
+									]}
+								/>
+							</Col>
+							<Col flex={2}>
+								<Image
+									src={captchaImage}
+									alt="验证码"
+									style={{
+										display: 'inline-block',
+										verticalAlign: 'top',
+										cursor: 'pointer',
+										paddingLeft: '10px',
+										width: '100px'
+									}}
+									preview={false}
+									onClick={() => getCaptchaImage()}
+								/>
+							</Col>
+						</Row>
 					</>
 				)}
 				{loginType === 'mobile' && (
@@ -179,7 +283,7 @@ export default () => {
 								autoComplete: 'new-password'
 							}}
 							name="mobile"
-							placeholder={'手机号'}
+							placeholder={'请输入手机号'}
 							rules={[
 								{
 									required: true,
@@ -229,7 +333,7 @@ export default () => {
 								autoComplete: 'new-password'
 							}}
 							name="mail"
-							placeholder={'邮箱'}
+							placeholder={'请输入邮箱'}
 							rules={[
 								{
 									required: true,

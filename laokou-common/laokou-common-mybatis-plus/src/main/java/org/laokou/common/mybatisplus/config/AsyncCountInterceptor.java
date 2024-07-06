@@ -21,29 +21,37 @@ import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.plugin.*;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.plugin.Intercepts;
+import org.apache.ibatis.plugin.Invocation;
+import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
+import org.laokou.common.i18n.utils.ObjectUtil;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author gitkakafu
  * @author laokou
  */
 @Intercepts(value = {
-		@Signature(type = Executor.class, method = "query",
-				args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class,
-						BoundSql.class }),
-		@Signature(type = Executor.class, method = "query",
-				args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class }) })
+	@Signature(type = Executor.class, method = "query",
+		args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class,
+			BoundSql.class}),
+	@Signature(type = Executor.class, method = "query",
+		args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
 public class AsyncCountInterceptor implements Interceptor {
 
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
 		Object obj = invocation.proceed();
 		try {
-			AsyncPaginationInnerInterceptor.get().join();
-		}
-		finally {
+			CompletableFuture<Void> future = AsyncPaginationInnerInterceptor.get();
+			if (ObjectUtil.isNotNull(future)) {
+				future.join();
+			}
+		} finally {
 			AsyncPaginationInnerInterceptor.remove();
 		}
 		return obj;

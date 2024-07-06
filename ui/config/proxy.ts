@@ -16,7 +16,7 @@ export default {
 			target: 'https://127.0.0.1:5555',
 			changeOrigin: true,
 			secure: false,
-			pathRewrite: {'^/api': '/api'}
+			pathRewrite: {'^/api': ''}
 		}
 	}
 };
