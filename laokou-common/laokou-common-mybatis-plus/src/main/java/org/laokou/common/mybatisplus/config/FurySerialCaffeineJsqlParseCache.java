@@ -41,12 +41,12 @@ public class FurySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 
 	@Override
 	public byte[] serialize(Object obj) {
-		return SerializationUtil.serializeThreadSafe(obj);
+		return SerializationUtil.serializeThreadSafe(obj, String.class);
 	}
 
 	@Override
 	public Object deserialize(String sql, byte[] bytes) {
-		return SerializationUtil.deserializeThreadSafe(bytes);
+		return SerializationUtil.deserializeThreadSafe(bytes, String.class);
 	}
 
 }
