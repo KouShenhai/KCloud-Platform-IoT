@@ -3,9 +3,11 @@
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 import {RequestConfig} from "@@/plugin-request/request";
-import {message, theme} from "antd";
+import {Dropdown, message, theme} from "antd";
 // @ts-ignore
 import {RuntimeAntdConfig} from 'umi';
+import {LogoutOutlined} from "@ant-design/icons";
+import {ReactElement, ReactNode, ReactPortal} from "react";
 
 export async function getInitialState(): Promise<{
 	name: string;
@@ -23,13 +25,43 @@ export const layout = () => {
 		menu: {
 			locale: false,
 		},
+
 		layout: 'mix',
-		splitMenus: true,
+		splitMenus: false,
+		fixSiderbar: true,
+		navTheme: "light",
+		contentWidth: "Fluid",
+		colorPrimary: "#1677FF",
+		fixedHeader: true,
+		siderMenuType: "sub",
+
+		avatarProps: {
+			src: './1.jpg',
+			size: 'small',
+			title: 'admin',
+			render: (_props: any, dom: string | number | boolean | ReactElement | Iterable<ReactNode> | ReactPortal | null | undefined) => {
+				return (
+					<Dropdown
+						menu={{
+							items: [
+								{
+									key: 'logout',
+									icon: <LogoutOutlined/>,
+									label: '注销',
+									onClick: () => {
+										console.log('注销')
+									},
+								},
+							],
+						}}
+					>
+						{dom}
+					</Dropdown>
+				);
+			}
+		},
 		token: {
 			//菜单的样式配置
-			colorBgAppListIconHover: 'rgba(0,0,0,0.06)',
-			colorTextAppListIconHover: 'rgba(255,255,255,0.95)',
-			colorTextAppListIcon: 'rgba(255,255,255,0.85)',
 			sider: {
 				//侧边菜单的配置 ，这里具体看文档
 			},
