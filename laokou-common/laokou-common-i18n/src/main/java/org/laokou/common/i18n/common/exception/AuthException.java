@@ -25,11 +25,6 @@ package org.laokou.common.i18n.common.exception;
 public final class AuthException extends GlobalException {
 
 	/**
-	 * 无效请求.
-	 */
-	public static final String OAUTH2_INVALID_REQUEST = "A_OAuth2_InvalidRequest";
-
-	/**
 	 * 令牌生成器无法生成标识令牌.
 	 */
 	public static final String OAUTH2_GENERATE_ID_TOKEN_FAIL = "A_OAuth2_GenerateIdTokenFail";

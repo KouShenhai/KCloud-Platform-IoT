@@ -44,135 +44,107 @@ import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
 public class AuthA extends AggregateRoot<Long> {
 
 	/**
+	 * 邮箱.
+	 */
+	public static final String MAIL = "mail";
+	/**
+	 * 手机号.
+	 */
+	public static final String MOBILE = "mobile";
+	/**
+	 * 密码.
+	 */
+	public static final String PASSWORD = "password";
+	/**
+	 * 授权码.
+	 */
+	public static final String AUTHORIZATION_CODE = "authorization_code";
+	/**
+	 * 用户名.
+	 */
+	public static final String USERNAME = "username";
+	/**
+	 * 验证码.
+	 */
+	public static final String CAPTCHA = "captcha";
+	/**
+	 * UUID.
+	 */
+	public static final String UUID = "uuid";
+	/**
+	 * 认证类型.
+	 */
+	public static final String GRANT_TYPE = "grant_type";
+	/**
+	 * 验证码.
+	 */
+	public static final String CODE = "code";
+	/**
+	 * 租户ID.
+	 */
+	public static final String TENANT_ID = "tenant_id";
+	/**
+	 * 业务标识.
+	 */
+	public static final String BIZ_ID = "IoT-Platform";
+	/**
+	 * 业务用例.
+	 */
+	public static final String USE_CASE = "auth";
+	/**
+	 * 成功.
+	 */
+	private static final int OK = 0;
+	/**
+	 * 失败.
+	 */
+	private static final int FAIL = 1;
+	/**
 	 * 用户名.
 	 */
 	private String username;
-
 	/**
 	 * 密码.
 	 */
 	private String password;
-
 	/**
 	 * 认证类型 mail邮箱 mobile手机号 password密码 authorization_code授权码.
 	 */
 	private String grantType;
-
 	/**
 	 * 验证码值对象.
 	 */
 	private CaptchaV captcha;
-
 	/**
 	 * 用户实体.
 	 */
 	private UserE user;
-
 	/**
 	 * 菜单实体.
 	 */
 	private MenuV menu;
-
 	/**
 	 * 部门实体.
 	 */
 	private DeptV dept;
-
 	/**
 	 * 日志值对象.
 	 */
 	private LogV log;
-
 	/**
 	 * 请求对象.
 	 */
 	private HttpServletRequest request;
-
 	/**
 	 * 当前用户.
 	 */
 	private String currentUser;
 
-	/**
-	 * 登录成功.
-	 */
-	private final String LOGIN_SUCCEEDED = "OAuth2_LoginSucceeded";
-
-	/**
-	 * 邮箱.
-	 */
-	public static final String MAIL = "mail";
-
-	/**
-	 * 手机号.
-	 */
-	public static final String MOBILE = "mobile";
-
-	/**
-	 * 密码.
-	 */
-	public static final String PASSWORD = "password";
-
-	/**
-	 * 授权码.
-	 */
-	public static final String AUTHORIZATION_CODE = "authorization_code";
-
-	/**
-	 * 用户名.
-	 */
-	public static final String USERNAME = "username";
-
-	/**
-	 * 验证码.
-	 */
-	public static final String CAPTCHA = "captcha";
-
-	/**
-	 * UUID.
-	 */
-	public static final String UUID = "uuid";
-
-	/**
-	 * 认证类型.
-	 */
-	public static final String GRANT_TYPE = "grant_type";
-
-	/**
-	 * 验证码.
-	 */
-	public static final String CODE = "code";
-
-	/**
-	 * 租户ID.
-	 */
-	public static final String TENANT_ID = "tenant_id";
-
-	/**
-	 * 成功.
-	 */
-	private static final int OK = 0;
-
-	/**
-	 * 失败.
-	 */
-	private static final int FAIL = 1;
-
-	/**
-	 * 业务标识.
-	 */
-	public static final String BIZ_ID = "IoT-Platform";
-
-	/**
-	 * 业务用例.
-	 */
-	public static final String USE_CASE = "auth";
-
 	public AuthA() {
 	}
 
 	public AuthA(String username, String password, String tenantId, String grantType, String uuid, String captcha,
-			HttpServletRequest request) {
+				 HttpServletRequest request) {
 		this.id = IdGenerator.defaultSnowflakeId();
 		this.username = username;
 		this.password = password;
@@ -265,13 +237,13 @@ public class AuthA extends AggregateRoot<Long> {
 	}
 
 	public void ok() {
-		createLog(OK, MessageUtil.getMessage(LOGIN_SUCCEEDED));
+		createLog(OK, EMPTY);
 	}
 
 	private void fail(String code) {
-		String message = MessageUtil.getMessage(code);
-		createLog(FAIL, message);
-		throw new AuthException(code, message);
+		String errorMessage = MessageUtil.getMessage(code);
+		createLog(FAIL, errorMessage);
+		throw new AuthException(code, errorMessage);
 	}
 
 	private void createLog(Integer status, String message) {

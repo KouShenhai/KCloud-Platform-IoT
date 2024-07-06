@@ -105,21 +105,18 @@ export default () => {
 		const params = getParams(form);
 		login({...params})
 			.then((res) => {
-				if (res.code !== undefined) {
-					message.error(res.msg);
-					getCaptchaImage();
-				} else {
-					// 跳转路由
-					const urlParams = new URL(window.location.href).searchParams;
-					history.push(urlParams.get('redirect') || '/');
-					// 延迟 1 秒显示欢迎信息
-					setTimeout(() => {
-						message.success(`${timeFix()}，欢迎回来`);
-					}, 1000);
-				}
+				console.log("登录成功", res)
+				// 跳转路由
+				const urlParams = new URL(window.location.href).searchParams;
+				history.push(urlParams.get('redirect') || '/');
+				// 延迟 1 秒显示欢迎信息
+				setTimeout(() => {
+					message.success(`${timeFix()}，欢迎回来`);
+				}, 1000);
 			})
 			.catch((err) => {
-				console.log(err);
+				message.error(err.response.data.error_description);
+				getCaptchaImage();
 			});
 	};
 	return (

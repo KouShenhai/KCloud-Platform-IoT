@@ -42,11 +42,9 @@ P_User_MailError
 P_System_IdIsNull
 
 A_OAuth2_AccountPasswordError
-A_OAuth2_InvalidRequest
 A_OAuth2_GenerateIdTokenFail
 A_OAuth2_GenerateRefreshTokenFail
 A_OAuth2_GenerateAccessTokenFail
-A_OAuth2_InvalidClient
 A_OAuth2_InvalidScope
 A_OAuth2_RegisteredClientNotExist
 A_OAuth2_MailError
