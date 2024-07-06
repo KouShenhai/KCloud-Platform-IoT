@@ -105,7 +105,7 @@ services:
       - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka.laokou.org:9092
       # 允许使用PLAINTEXT监听器，默认false，不建议在生产环境使用
       - ALLOW_PLAINTEXT_LISTENER=yes
-        # 设置broker最大内存，和初始内存
+      # 设置broker最大内存，和初始内存
       - KAFKA_HEAP_OPTS=-Xmx512M -Xms512M
       # 集群地址
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
@@ -115,7 +115,7 @@ services:
     privileged: true
     network_mode: bridge
     extra_hosts:
-      - "kafka.laokou.org:192.168.30.130"
+      - "kafka.laokou.org:192.168.30.1"
   rocketmq-namesrv:
     image: apache/rocketmq:5.2.0
     container_name: rocketmq-namesrv
@@ -127,7 +127,7 @@ services:
       - "9876:9876"
     command: sh mqnamesrv
     environment:
-      - JAVA_OPT_EXT=-server -Xmx256m -Xms256m -Xmn128m
+      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
       - TZ=Asia/Shanghai
     network_mode: bridge
   rocketmq-broker:
@@ -144,7 +144,7 @@ services:
       - "10912:10912"
     command: sh mqbroker -n 192.168.30.1:9876 -c /home/rocketmq/conf/broker.conf autoCreateTopicEnable=true
     environment:
-      - JAVA_OPT_EXT=-server -Xmx256m -Xms256m -Xmn128m
+      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
       - TZ=Asia/Shanghai
     volumes:
       - ./rocketmq5/broker/conf/broker.conf:/home/rocketmq/conf/broker.conf
@@ -171,7 +171,7 @@ services:
       - ./elasticsearch8/config/certs/elastic-certificates.p12:/usr/share/elasticsearch/config/certs/elastic-certificates.p12
     environment:
       - TZ=Asia/Shanghai
-      - ES_JAVA_OPTS=-Xmx512m -Xms512m
+      - ES_JAVA_OPTS=-Xmx1g -Xms1g
       - ELASTIC_PASSWORD=laokou123
     network_mode: bridge
     ulimits:
@@ -194,7 +194,7 @@ services:
     env_file:
       - env/nacos.env
     extra_hosts:
-      - "postgresql.laokou.org:192.168.30.130"
+      - "postgresql.laokou.org:192.168.30.1"
     network_mode: bridge
     depends_on:
       - postgresql
@@ -212,7 +212,7 @@ services:
     env_file:
       - env/sentinel.env
     extra_hosts:
-      - "sentinel.laokou.org:192.168.30.130"
+      - "sentinel.laokou.org:192.168.30.1"
     network_mode: bridge
   laokou-monitor:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.2.1
@@ -228,8 +228,8 @@ services:
     env_file:
       - env/monitor.env
     extra_hosts:
-      - "monitor.laokou.org:192.168.30.130"
-      - "nacos.laokou.org:192.168.30.130"
+      - "monitor.laokou.org:192.168.30.1"
+      - "nacos.laokou.org:192.168.30.1"
     depends_on:
       - laokou-register
     network_mode: bridge
@@ -246,9 +246,9 @@ services:
     volumes:
       - ./seata/logs:/opt
     extra_hosts:
-      - "postgresql.laokou.org:192.168.30.130"
-      - "nacos.laokou.org:192.168.30.130"
-      - "redis.laokou.org:192.168.30.130"
+      - "postgresql.laokou.org:192.168.30.1"
+      - "nacos.laokou.org:192.168.30.1"
+      - "redis.laokou.org:192.168.30.1"
     restart: always
     privileged: true
     depends_on:
@@ -266,9 +266,9 @@ services:
     volumes:
       - ./gateway/logs:/opt
     extra_hosts:
-      - "nacos.laokou.org:192.168.30.130"
-      - "kafka.laokou.org:192.168.30.130"
-      - "redis.laokou.org:192.168.30.130"
+      - "nacos.laokou.org:192.168.30.1"
+      - "kafka.laokou.org:192.168.30.1"
+      - "redis.laokou.org:192.168.30.1"
     restart: always
     privileged: true
     network_mode: bridge
@@ -286,10 +286,10 @@ services:
     volumes:
       - ./im/logs:/opt
     extra_hosts:
-      - "nacos.laokou.org:192.168.30.130"
-      - "kafka.laokou.org:192.168.30.130"
-      - "redis.laokou.org:192.168.30.130"
-      - "rocketmq.laokou.org:192.168.30.130"
+      - "nacos.laokou.org:192.168.30.1"
+      - "kafka.laokou.org:192.168.30.1"
+      - "redis.laokou.org:192.168.30.1"
+      - "rocketmq.laokou.org:192.168.30.1"
     restart: always
     privileged: true
     network_mode: bridge
@@ -307,11 +307,11 @@ services:
     volumes:
       - ./auth/logs:/opt
     extra_hosts:
-      - "nacos.laokou.org:192.168.30.130"
-      - "kafka.laokou.org:192.168.30.130"
-      - "redis.laokou.org:192.168.30.130"
-      - "postgresql.laokou.org:192.168.30.130"
-      - "vue.laokou.org:192.168.30.130"
+      - "nacos.laokou.org:192.168.30.1"
+      - "kafka.laokou.org:192.168.30.1"
+      - "redis.laokou.org:192.168.30.1"
+      - "postgresql.laokou.org:192.168.30.1"
+      - "vue.laokou.org:192.168.30.1"
     restart: always
     privileged: true
     network_mode: bridge
@@ -330,13 +330,13 @@ services:
     volumes:
       - ./admin/logs:/opt
     extra_hosts:
-      - "nacos.laokou.org:192.168.30.130"
-      - "kafka.laokou.org:192.168.30.130"
-      - "redis.laokou.org:192.168.30.130"
-      - "postgresql.laokou.org:192.168.30.130"
-      - "rocketmq.laokou.org:192.168.30.130"
-      - "elasticsearch.laokou.org:192.168.30.130"
-      - "seata.laokou.org:192.168.30.130"
+      - "nacos.laokou.org:192.168.30.1"
+      - "kafka.laokou.org:192.168.30.1"
+      - "redis.laokou.org:192.168.30.1"
+      - "postgresql.laokou.org:192.168.30.1"
+      - "rocketmq.laokou.org:192.168.30.1"
+      - "elasticsearch.laokou.org:192.168.30.1"
+      - "seata.laokou.org:192.168.30.1"
     restart: always
     privileged: true
     network_mode: bridge
@@ -356,9 +356,9 @@ services:
     volumes:
       - ./logstash/logs:/opt
     extra_hosts:
-      - "nacos.laokou.org:192.168.30.130"
-      - "kafka.laokou.org:192.168.30.130"
-      - "elasticsearch.laokou.org:192.168.30.130"
+      - "nacos.laokou.org:192.168.30.1"
+      - "kafka.laokou.org:192.168.30.1"
+      - "elasticsearch.laokou.org:192.168.30.1"
     restart: always
     privileged: true
     network_mode: bridge
@@ -381,9 +381,9 @@ services:
       - ./nginx/config/nginx.config:/etc/nginx/nginx.config
       - ./nginx/logs:/var/log/nginx
     extra_hosts:
-      - "vue.laokou.org:192.168.30.130"
-      - "api.laokou.org:192.168.30.130"
-      - "nginx.laokou.org:192.168.30.130"
+      - "vue.laokou.org:192.168.30.1"
+      - "api.laokou.org:192.168.30.1"
+      - "nginx.laokou.org:192.168.30.1"
     network_mode: bridge
     depends_on:
       - laokou-admin
