@@ -17,6 +17,7 @@
 
 package org.laokou.admin.convertor;
 
+import org.laokou.admin.domain.message.Message;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.common.i18n.dto.Convertor;
@@ -31,6 +32,6 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * @author laokou
  */
 @Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface MessageConvertor extends Convertor<MessageCO, error_message, MessageDO> {
+public interface MessageConvertor extends Convertor<MessageCO, Message, MessageDO> {
 
 }

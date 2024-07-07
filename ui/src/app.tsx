@@ -3,7 +3,7 @@
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 import {RequestConfig} from "@@/plugin-request/request";
-import {Dropdown, theme} from "antd";
+import {Dropdown, message, theme} from "antd";
 // @ts-ignore
 import {RuntimeAntdConfig} from 'umi';
 import {LogoutOutlined} from "@ant-design/icons";

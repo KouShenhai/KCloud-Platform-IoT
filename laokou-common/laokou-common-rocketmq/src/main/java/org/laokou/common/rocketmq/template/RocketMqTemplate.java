@@ -53,7 +53,7 @@ public class RocketMqTemplate {
 	 */
 	public <T> boolean sendSyncMessage(String topic, T payload, long timeout) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
-		return rocketMQTemplate.syncSend(topic, error_message, timeout).getSendStatus().equals(SEND_OK);
+		return rocketMQTemplate.syncSend(topic, message, timeout).getSendStatus().equals(SEND_OK);
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class RocketMqTemplate {
 	 */
 	public <T> boolean sendSyncMessage(String topic, T payload, long timeout, int delayLevel) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
-		return rocketMQTemplate.syncSend(topic, error_message, timeout, delayLevel).getSendStatus().equals(SEND_OK);
+		return rocketMQTemplate.syncSend(topic, message, timeout, delayLevel).getSendStatus().equals(SEND_OK);
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class RocketMqTemplate {
 	 */
 	public <T> void sendAsyncMessage(String topic, String tag, T payload, String traceId, long timeout) {
 		Message<T> message = MessageBuilder.withPayload(payload).setHeader(TRACE_ID, traceId).build();
-		sendAsyncMessage(topic, tag, error_message, timeout);
+		sendAsyncMessage(topic, tag, message, timeout);
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class RocketMqTemplate {
 	 */
 	public <T> void sendAsyncMessage(String topic, T payload, long timeout) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
-		sendAsyncMessage(topic, error_message, timeout);
+		sendAsyncMessage(topic, message, timeout);
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class RocketMqTemplate {
 	 */
 	public <T> boolean sendSyncOrderlyMessage(String topic, T payload, String id) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
-		return rocketMQTemplate.syncSendOrderly(topic, error_message, id).getSendStatus().equals(SEND_OK);
+		return rocketMQTemplate.syncSendOrderly(topic, message, id).getSendStatus().equals(SEND_OK);
 	}
 
 	/**
@@ -213,7 +213,7 @@ public class RocketMqTemplate {
 	 */
 	public <T> void sendAsyncOrderlyMessage(String topic, T payload, String id) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
-		rocketMQTemplate.asyncSendOrderly(topic, error_message, id, new SendCallback() {
+		rocketMQTemplate.asyncSendOrderly(topic, message, id, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("RocketMQ异步顺序消息发送成功【无Tag标签】");
@@ -238,7 +238,7 @@ public class RocketMqTemplate {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
 		// 单向发送，只负责发送消息，不会触发回调函数，即发送消息请求不等待
 		// 适用于耗时短，但对可靠性不高的场景，如日志收集
-		rocketMQTemplate.sendOneWayOrderly(topic, error_message, id);
+		rocketMQTemplate.sendOneWayOrderly(topic, message, id);
 	}
 
 	/**
@@ -254,7 +254,7 @@ public class RocketMqTemplate {
 		Message<T> message = MessageBuilder.withPayload(payload)
 			.setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId)
 			.build();
-		return rocketMQTemplate.sendMessageInTransaction(topic, error_message, NULL).getSendStatus().equals(SEND_OK);
+		return rocketMQTemplate.sendMessageInTransaction(topic, message, NULL).getSendStatus().equals(SEND_OK);
 	}
 
 	/**
@@ -279,11 +279,11 @@ public class RocketMqTemplate {
 	 */
 	public <T> Object sendAndReceiveMessage(String topic, T payload, Class<?> clazz) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
-		return rocketMQTemplate.sendAndReceive(topic, error_message, clazz);
+		return rocketMQTemplate.sendAndReceive(topic, message, clazz);
 	}
 
 	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message) {
-		rocketMQTemplate.asyncSend(String.format(RocketMqConstant.TOPIC_TAG, topic, tag), error_message, new SendCallback() {
+		rocketMQTemplate.asyncSend(String.format(RocketMqConstant.TOPIC_TAG, topic, tag), message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("RocketMQ异步消息发送成功【Tag标签，默认超时时间】");
@@ -297,7 +297,7 @@ public class RocketMqTemplate {
 	}
 
 	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message, long timeout) {
-		rocketMQTemplate.asyncSend(String.format(RocketMqConstant.TOPIC_TAG, topic, tag), error_message, new SendCallback() {
+		rocketMQTemplate.asyncSend(String.format(RocketMqConstant.TOPIC_TAG, topic, tag), message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("RocketMQ异步消息发送成功【Tag标签，指定超时时间】");
@@ -311,7 +311,7 @@ public class RocketMqTemplate {
 	}
 
 	private <T> void sendAsyncMessage(String topic, Message<T> message, long timeout) {
-		rocketMQTemplate.asyncSend(topic, error_message, new SendCallback() {
+		rocketMQTemplate.asyncSend(topic, message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("RocketMQ异步消息发送成功【无Tag标签，指定超时时间】");
@@ -325,7 +325,7 @@ public class RocketMqTemplate {
 	}
 
 	private <T> void sendAsyncMessage(String topic, Message<T> message) {
-		rocketMQTemplate.asyncSend(topic, error_message, new SendCallback() {
+		rocketMQTemplate.asyncSend(topic, message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("RocketMQ异步消息发送成功【无Tag标签，默认超时时间】");
