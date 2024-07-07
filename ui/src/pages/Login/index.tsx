@@ -10,7 +10,7 @@ import {
 	WechatOutlined,
 } from '@ant-design/icons';
 import {LoginFormPage, ProFormCaptcha, ProFormText,} from '@ant-design/pro-components';
-import {Col, Divider, Image, message, Row, Space, Tabs} from 'antd';
+import {Col, Divider, Image, Row, Space, Tabs} from 'antd';
 import {CSSProperties, useEffect, useRef, useState} from 'react';
 import {login} from '@/services/auth/authsController';
 import {getCaptchaImageByUuidV3} from '@/services/auth/captchasV3Controller';

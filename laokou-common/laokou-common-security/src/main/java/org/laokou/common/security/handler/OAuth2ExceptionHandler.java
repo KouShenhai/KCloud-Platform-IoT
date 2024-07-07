@@ -36,7 +36,7 @@ public class OAuth2ExceptionHandler {
 	public static final String ERROR_URL = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
 	public static OAuth2AuthenticationException getException(String code, String message, String uri) {
-		return new OAuth2AuthenticationException(new OAuth2Error(code, message, uri));
+		return new OAuth2AuthenticationException(new OAuth2Error(code, error_message, uri));
 	}
 
 	public static OAuth2AuthenticationException getException(String code, String uri) {
