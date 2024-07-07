@@ -111,6 +111,10 @@ export const request: RequestConfig = {
 			if (status === 200 && data.code === undefined) {
 				response.data = {code: 'OK', msg: '请求成功', data: data}
 			}
+			if (status === 200 && data.code !== 'OK') {
+				message.error(data.msg).then(() => {
+				});
+			}
 			return response;
 		},
 	],

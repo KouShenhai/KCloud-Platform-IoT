@@ -94,53 +94,63 @@ export default () => {
 		// 调用验证码API
 		const uuid = uuidV7();
 		getCaptchaImageByUuidV3({uuid: uuid}).then((res) => {
-			setCaptchaImage(res.data);
+			if (res.code === 'OK') {
+				setCaptchaImage(res.data);
+			}
 		});
 		setUuid(uuid);
 	};
 
 	const getPublicKey = async () => {
 		getSecretInfoV3().then((res) => {
-			setPublicKey(res.data.publicKey);
+			if (res.code === 'OK') {
+				setPublicKey(res.data.publicKey);
+			}
 		});
 	};
 
 	const listTenantOption = async () => {
 		listTenantOptionV3().then(res => {
-			const options = []
-			const defaultOption = {label: '老寇云集团', value: '0'}
-			options.push(defaultOption)
-			res.data.forEach((item: API.TenantOption) => options.push(item))
-			setTenantOptions(options)
+			if (res.code === 'OK') {
+				const options = []
+				const defaultOption = {label: '老寇云集团', value: '0'}
+				options.push(defaultOption)
+				res.data.forEach((item: API.TenantOption) => options.push(item))
+				setTenantOptions(options)
+			}
 		})
 	}
 
 	const getTenantIdByDomain = async () => {
 		getTenantIdByDomainNameV3().then(res => {
-			setFormField({tenant_id: res.data})
+			if (res.code === 'OK') {
+				setFormField({tenant_id: res.data})
+			}
 		})
 	}
 
 	useEffect(() => {
-		getTenantIdByDomain().catch(console.error)
 		listTenantOption().catch(console.error)
 		getPublicKey().catch(console.error);
 		getCaptchaImage().catch(console.error);
+		getTenantIdByDomain().catch(console.error)
 	}, []);
 
 	const onSubmit = async (form: API.LoginParam) => {
 		const params = getParams(form);
 		login({...params})
 			.then((res) => {
-				// 登录成功
-				console.log("登录成功", res)
-				// 跳转路由
-				const urlParams = new URL(window.location.href).searchParams;
-				history.push(urlParams.get('redirect') || '/');
-				// 延迟 1 秒显示欢迎信息
-				setTimeout(() => {
-					message.success(`${timeFix()}，欢迎回来`);
-				}, 1000);
+				if (res.code === 'OK') {
+					// 登录成功
+					console.log("登录成功", res)
+					// 跳转路由
+					const urlParams = new URL(window.location.href).searchParams;
+					history.push(urlParams.get('redirect') || '/');
+					// 延迟 1 秒显示欢迎信息
+					setTimeout(() => {
+						message.success(`${timeFix()}，欢迎回来`);
+					}, 1000);
+				}
 			})
 			.catch(() => {
 				// 登录失败，刷新验证码
