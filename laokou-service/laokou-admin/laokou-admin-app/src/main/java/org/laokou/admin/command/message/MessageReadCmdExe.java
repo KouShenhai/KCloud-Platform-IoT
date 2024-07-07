@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.gateway.MessageGateway;
-import org.laokou.admin.domain.message.MessageDetail;
 import org.laokou.admin.dto.message.MessageReadCmd;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
@@ -30,7 +29,6 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.DSConstant.TENANT;
-import static org.laokou.common.i18n.common.Read.YES;
 
 /**
  * 读取消息执行器.
@@ -56,7 +54,7 @@ public class MessageReadCmdExe {
 	@DS(TENANT)
 	public Result<MessageCO> execute(MessageReadCmd cmd) {
 		Long detailId = cmd.getDetailId();
-		messageGateway.read(new MessageDetail(detailId, YES.ordinal()));
+		// messageGateway.read(new MessageDetail(detailId, YES.ordinal()));
 		return Result.ok(messageConvertor.convertClientObj(messageMapper.selectByDetailId(detailId)));
 	}
 

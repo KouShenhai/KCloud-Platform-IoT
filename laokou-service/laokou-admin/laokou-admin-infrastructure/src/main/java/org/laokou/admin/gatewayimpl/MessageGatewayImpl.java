@@ -29,21 +29,16 @@ import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.common.TypeEnum;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
-
-import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_NOTICE_MESSAGE_TAG;
-import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_REMIND_MESSAGE_TAG;
 
 /**
  * 消息管理.
@@ -56,8 +51,6 @@ import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_REMIND_MESSA
 public class MessageGatewayImpl implements MessageGateway {
 
 	private final MessageMapper messageMapper;
-
-	private final RocketMqTemplate rocketMqTemplate;
 
 	private final TransactionalUtil transactionalUtil;
 
@@ -132,15 +125,6 @@ public class MessageGatewayImpl implements MessageGateway {
 		List<MessageDetailDO> list = receiver.parallelStream().map(userId -> convert(messageId, userId)).toList();
 		mybatisUtil.batch(list, MessageDetailMapper.class, DynamicDataSourceContextHolder.peek(),
 				MessageDetailMapper::insertOne);
-	}
-
-	/**
-	 * 查看消息标签.
-	 * @param type 消息类型
-	 * @return 消息标签
-	 */
-	private String getMessageTag(Integer type) {
-		return type == TypeEnum.NOTICE.ordinal() ? LAOKOU_NOTICE_MESSAGE_TAG : LAOKOU_REMIND_MESSAGE_TAG;
 	}
 
 	private MessageDetailDO convert(MessageDetail messageDetail) {
