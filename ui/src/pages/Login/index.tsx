@@ -73,7 +73,7 @@ export default () => {
 					password: encodeURIComponent(
 						encrypt.encrypt(form.password as string),
 					),
-					tenant_id: '0',
+					tenant_id: form.tenant_id,
 					grant_type: 'password',
 				};
 			}
@@ -85,6 +85,11 @@ export default () => {
 	};
 
 	const getCaptchaImage = async () => {
+		// 清空验证码输入框
+		formRef?.current?.setFieldsValue({
+			captcha: '',
+		});
+		// 调用验证码API
 		const uuid = uuidV7();
 		getCaptchaImageByUuidV3({uuid: uuid}).then((res) => {
 			setCaptchaImage(res.data);
@@ -364,7 +369,7 @@ export default () => {
 								}
 								return '获取验证码';
 							}}
-							name="captcha"
+							name="mobile_captcha"
 							rules={[
 								{
 									required: true,
@@ -414,7 +419,7 @@ export default () => {
 								}
 								return '获取验证码';
 							}}
-							name="captcha"
+							name="mail_captcha"
 							rules={[
 								{
 									required: true,

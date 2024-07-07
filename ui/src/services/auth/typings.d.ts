@@ -29,6 +29,8 @@ declare namespace API {
 		captcha?: string;
 		mail?: string;
 		mobile?: string;
+		mail_captcha?: string;
+		mobile_captcha?: string;
 		tenant_id?: string
 	};
 
