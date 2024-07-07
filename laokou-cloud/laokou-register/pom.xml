@@ -17,7 +17,7 @@
  *
  */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <artifactId>laokou-cloud</artifactId>
@@ -36,6 +36,8 @@
     <postgresql.version>42.7.3</postgresql.version>
     <!--liquibase-core版本-->
     <liquibase-core.version>4.28.0</liquibase-core.version>
+    <!--protobuf-java版本-->
+    <protobuf-java.version>3.25.3</protobuf-java.version>
   </properties>
 
   <dependencies>
@@ -52,7 +54,16 @@
           <groupId>org.apache.tomcat</groupId>
           <artifactId>tomcat-annotations-api</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>com.google.protobuf</groupId>
+          <artifactId>protobuf-java</artifactId>
+        </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+      <version>${protobuf-java.version}</version>
     </dependency>
     <dependency>
       <groupId>io.xuxiaowei.nacos</groupId>
@@ -86,6 +97,10 @@
         <exclusion>
           <groupId>org.apache.tomcat</groupId>
           <artifactId>tomcat-annotations-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.google.protobuf</groupId>
+          <artifactId>protobuf-java</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
