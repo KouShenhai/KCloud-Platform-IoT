@@ -31,12 +31,14 @@ import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(consumerGroup = "test_group", topic = "test",
-	messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+@RocketMQMessageListener(consumerGroup = "test_group", topic = "test", messageModel = CLUSTERING,
+		consumeMode = CONCURRENTLY)
 public class TestMq implements RocketMQListener<MessageExt> {
+
 	@Override
 	public void onMessage(MessageExt message) {
 		log.error("{}", message.getCommitLogOffset());
 		throw new RuntimeException();
 	}
+
 }
