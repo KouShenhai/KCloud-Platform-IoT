@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
@@ -46,8 +47,13 @@ public class FileUploadEventHandler extends AbstractDomainEventHandler {
 	}
 
 	@Override
-	protected void handleDomainEvent(String msg) {
+	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 
+	}
+
+	@Override
+	protected DefaultDomainEvent convert(String msg) {
+		return null;
 	}
 
 	// @Override

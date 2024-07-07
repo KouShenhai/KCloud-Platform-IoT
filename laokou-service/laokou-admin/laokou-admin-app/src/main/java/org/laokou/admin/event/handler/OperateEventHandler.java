@@ -20,8 +20,11 @@ package org.laokou.admin.event.handler;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.laokou.common.log.domainevent.OperateEvent;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
@@ -58,8 +61,13 @@ public class OperateEventHandler extends AbstractDomainEventHandler {
 	// }
 
 	@Override
-	protected void handleDomainEvent(String msg) {
+	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 
+	}
+
+	@Override
+	protected DefaultDomainEvent convert(String msg) {
+		return JacksonUtil.toBean(msg, OperateEvent.class);
 	}
 
 }

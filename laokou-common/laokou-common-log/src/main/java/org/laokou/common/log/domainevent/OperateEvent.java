@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.common.constants.EventStatus;
 import org.laokou.common.i18n.common.constants.EventType;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 import java.io.Serial;
 
@@ -33,7 +33,7 @@ import java.io.Serial;
 @Data
 @NoArgsConstructor
 @Schema(name = "OperateEvent", description = "操作事件")
-public class OperateEvent extends DomainEvent<Long> {
+public class OperateEvent extends DefaultDomainEvent {
 
 	@Serial
 	private static final long serialVersionUID = -6523521638764501311L;

@@ -17,12 +17,10 @@
 
 package org.laokou.common.domain.handler;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
-import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -45,10 +43,7 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 	@Override
 	public void onMessage(MessageExt message) {
 		String msg = new String(message.getBody(), StandardCharsets.UTF_8);
-		JsonNode jsonNode = JacksonUtil.readTree(msg);
-		Long id = jsonNode.get(ID).asLong();
-		String sourceName = jsonNode.get(SOURCE_NAME).asText();
-		DefaultDomainEvent domainEvent = JacksonUtil.toBean(msg, DefaultDomainEvent.class);
+		DefaultDomainEvent domainEvent = convert(msg);
 		try {
 			// handleDomainEvent(msg);
 			log.info("已消费");
@@ -64,6 +59,8 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 		}
 	}
 
-	protected abstract void handleDomainEvent(String msg);
+	protected abstract void handleDomainEvent(DefaultDomainEvent domainEvent);
+
+	protected abstract DefaultDomainEvent convert(String msg);
 
 }

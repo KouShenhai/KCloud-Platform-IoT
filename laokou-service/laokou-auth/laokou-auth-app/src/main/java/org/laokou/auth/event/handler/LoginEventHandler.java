@@ -24,6 +24,7 @@ import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
@@ -47,9 +48,13 @@ public class LoginEventHandler extends AbstractDomainEventHandler {
 	}
 
 	@Override
-	protected void handleDomainEvent(String msg) {
-		LoginEvent loginEvent = JacksonUtil.toBean(msg, LoginEvent.class);
-		log.info("{}", loginEvent);
+	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
+
+	}
+
+	@Override
+	protected DefaultDomainEvent convert(String msg) {
+		return JacksonUtil.toBean(msg, LoginEvent.class);
 	}
 
 }
