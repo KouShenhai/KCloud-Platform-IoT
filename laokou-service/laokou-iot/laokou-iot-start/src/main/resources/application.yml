@@ -47,3 +47,10 @@ spring:
           url: jdbc:TAOS-RS://tdengine.laokou.org:6041/kcloud_platform_iot?useSSL=false
           username: root
           password: taosdata
+
+rocketmq:
+  producer:
+    group: laokou_producer_group
+  name-server: 127.0.0.1:9876
+  consumer:
+    pull-batch-size: 16
