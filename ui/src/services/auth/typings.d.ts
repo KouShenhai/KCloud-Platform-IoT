@@ -4,12 +4,12 @@ declare namespace API {
 		uuid: string;
 	};
 
-	type LogoutCmd = {
+	type LogoutParam = {
 		/** 令牌 */
 		token?: string;
 	};
 
-	type TenantOption = {
+	type TenantOptionParam = {
 		label?: string;
 		value?: string;
 	}

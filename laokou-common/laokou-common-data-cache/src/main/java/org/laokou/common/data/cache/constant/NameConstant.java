@@ -85,7 +85,7 @@ public final class NameConstant {
 	public static final String TENANT_ID = "tenant_id" + DEFAULT;
 
 	/**
-	 * 菜单树.
+	 * 树形菜单.
 	 */
 	public static final String MENU_TREE = "menu_tree" + DEFAULT;
 

@@ -8,6 +8,7 @@ import {Dropdown, message, theme} from "antd";
 import {history, RuntimeAntdConfig} from 'umi';
 import {LogoutOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
+import {logoutV3} from "@/services/auth/logoutsV3Controller";
 
 export async function getInitialState(): Promise<{
 	name: string;
@@ -48,8 +49,13 @@ export const layout = () => {
 									key: 'logout',
 									icon: <LogoutOutlined/>,
 									label: '注销',
-									onClick: () => {
-										history.push('/login')
+									onClick: async () => {
+										const token = localStorage.getItem('access_token')
+										// @ts-ignore
+										logoutV3({token: token}).then(() => {
+											localStorage.removeItem('access_token')
+											history.push('/login')
+										})
 									},
 								},
 							],

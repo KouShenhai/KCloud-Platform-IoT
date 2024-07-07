@@ -42,7 +42,7 @@ export default () => {
 	const [captchaImage, setCaptchaImage] = useState<string>('');
 	const [uuid, setUuid] = useState<string>('');
 	const [publicKey, setPublicKey] = useState<string>('');
-	const [tenantOptions, setTenantOptions] = useState<API.TenantOption[]>([])
+	const [tenantOptions, setTenantOptions] = useState<API.TenantOptionParam[]>([])
 	const formRef = useRef<ProFormInstance>();
 
 	const setFormField = (form: API.LoginParam) => {
@@ -115,7 +115,7 @@ export default () => {
 				const options = []
 				const defaultOption = {label: '老寇云集团', value: '0'}
 				options.push(defaultOption)
-				res.data.forEach((item: API.TenantOption) => options.push(item))
+				res.data.forEach((item: API.TenantOptionParam) => options.push(item))
 				setTenantOptions(options)
 			}
 		})
@@ -142,7 +142,7 @@ export default () => {
 			.then((res) => {
 				if (res.code === 'OK') {
 					// 登录成功
-					console.log("登录成功", res)
+					localStorage.setItem('access_token', res.data.access_token)
 					// 跳转路由
 					const urlParams = new URL(window.location.href).searchParams;
 					history.push(urlParams.get('redirect') || '/');
