@@ -45,6 +45,10 @@ export default () => {
 	const [tenantOptions, setTenantOptions] = useState<API.TenantOption[]>([])
 	const formRef = useRef<ProFormInstance>();
 
+	const setFormField = (form: API.LoginParam) => {
+		formRef?.current?.setFieldsValue(form);
+	}
+
 	const timeFix = () => {
 		const time = new Date();
 		const hour = time.getHours();
@@ -86,9 +90,7 @@ export default () => {
 
 	const getCaptchaImage = async () => {
 		// 清空验证码输入框
-		formRef?.current?.setFieldsValue({
-			captcha: '',
-		});
+		setFormField({captcha: ''})
 		// 调用验证码API
 		const uuid = uuidV7();
 		getCaptchaImageByUuidV3({uuid: uuid}).then((res) => {
@@ -115,9 +117,7 @@ export default () => {
 
 	const getTenantIdByDomain = async () => {
 		getTenantIdByDomainNameV3().then(res => {
-			formRef?.current?.setFieldsValue({
-				tenant_id: res.data,
-			});
+			setFormField({tenant_id: res.data})
 		})
 	}
 

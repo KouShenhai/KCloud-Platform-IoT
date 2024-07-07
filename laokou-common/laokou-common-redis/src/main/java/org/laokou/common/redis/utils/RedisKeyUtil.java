@@ -24,7 +24,6 @@ public final class RedisKeyUtil {
 
 	/**
 	 * 验证码Key.
-	 *
 	 * @param uuid UUID
 	 */
 	public static String getUserCaptchaKey(String uuid) {
@@ -33,7 +32,6 @@ public final class RedisKeyUtil {
 
 	/**
 	 * 菜单树Key.
-	 *
 	 * @param token 令牌
 	 */
 	public static String getMenuTreeKey(String token) {
@@ -42,7 +40,6 @@ public final class RedisKeyUtil {
 
 	/**
 	 * 用户信息Key.
-	 *
 	 * @param token 令牌
 	 */
 	public static String getUserInfoKey(String token) {
@@ -58,7 +55,6 @@ public final class RedisKeyUtil {
 
 	/**
 	 * OSS配置Key.
-	 *
 	 * @param tenantId 租户ID
 	 */
 	public static String getOssConfigKey(Long tenantId) {
@@ -67,7 +63,6 @@ public final class RedisKeyUtil {
 
 	/**
 	 * 手机验证码Key.
-	 *
 	 * @param mobile 手机号
 	 */
 	public static String getMobileCodeKey(String mobile) {
@@ -76,7 +71,6 @@ public final class RedisKeyUtil {
 
 	/**
 	 * 邮箱验证码Key.
-	 *
 	 * @param mail 邮箱
 	 */
 	public static String getMailCodeKey(String mail) {
@@ -85,7 +79,6 @@ public final class RedisKeyUtil {
 
 	/**
 	 * 接口幂等性Key.
-	 *
 	 * @param token 令牌
 	 */
 	public static String getApiIdempotentKey(String token) {
@@ -101,7 +94,6 @@ public final class RedisKeyUtil {
 
 	/**
 	 * IP缓存Key.
-	 *
 	 * @param type 类型
 	 */
 	public static String getIpCacheHashKey(String type) {

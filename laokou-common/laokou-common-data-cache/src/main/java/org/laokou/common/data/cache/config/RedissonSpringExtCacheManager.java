@@ -102,9 +102,8 @@ public class RedissonSpringExtCacheManager implements CacheManager, ResourceLoad
 	 * mapped by Cache name.
 	 * <p>
 	 * Each Cache instance share one Codec instance.
-	 *
 	 * @param redisson object
-	 * @param codec    object
+	 * @param codec object
 	 */
 	public RedissonSpringExtCacheManager(RedissonClient redisson, Codec codec) {
 		this.redisson = redisson;
@@ -183,7 +182,8 @@ public class RedissonSpringExtCacheManager implements CacheManager, ResourceLoad
 		Cache oldCache = instanceMap.putIfAbsent(name, cache);
 		if (oldCache != null) {
 			cache = oldCache;
-		} else {
+		}
+		else {
 			map.setMaxSize(config.getMaxSize());
 		}
 		return cache;
@@ -215,14 +215,16 @@ public class RedissonSpringExtCacheManager implements CacheManager, ResourceLoad
 		Resource resource = resourceLoader.getResource(configLocation);
 		try {
 			this.configMap = (Map<String, CacheConfig>) CacheConfig.fromYAML(resource.getInputStream());
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			// try to read yaml
 			try {
 				this.configMap = (Map<String, CacheConfig>) CacheConfig.fromJSON(resource.getInputStream());
-			} catch (IOException e1) {
+			}
+			catch (IOException e1) {
 				e1.addSuppressed(e);
 				throw new BeanDefinitionStoreException(
-					"Could not parse cache configuration at [" + configLocation + "]", e1);
+						"Could not parse cache configuration at [" + configLocation + "]", e1);
 			}
 		}
 	}
