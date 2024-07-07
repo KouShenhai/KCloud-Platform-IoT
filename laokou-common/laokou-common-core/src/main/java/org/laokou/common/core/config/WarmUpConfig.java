@@ -20,7 +20,6 @@ package org.laokou.common.core.config;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RequestUtil;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Component;
 
 /**
  * 预热.
@@ -28,7 +27,6 @@ import org.springframework.stereotype.Component;
  * @author laokou
  */
 @Slf4j
-@Component
 public class WarmUpConfig implements InitializingBean {
 
 	private static final String DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3";

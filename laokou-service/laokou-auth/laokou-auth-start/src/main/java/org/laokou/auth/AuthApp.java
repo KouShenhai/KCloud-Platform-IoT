@@ -20,6 +20,7 @@ package org.laokou.auth;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
+import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
@@ -50,6 +51,7 @@ import java.net.InetAddress;
 @EnableRedisRepository
 @EnableTaskExecutor
 @EnableRouter
+@EnableWarmUp
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 @EnableAspectJAutoProxy(exposeProxy = true)
 public class AuthApp {

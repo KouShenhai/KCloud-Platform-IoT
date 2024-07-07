@@ -269,13 +269,13 @@ public class AuthA extends AggregateRoot<Long> {
 		throw new AuthException(code, errorMessage);
 	}
 
-	private void createLog(Integer status, String message) {
+	private void createLog(Integer status, String errorMessage) {
 		String ip = IpUtil.getIpAddr(request);
 		String address = AddressUtil.getRealAddress(ip);
 		Capabilities capabilities = RequestUtil.getCapabilities(request);
 		String os = capabilities.getPlatform();
 		String browser = capabilities.getBrowser();
-		this.log = new LogV(currentUser, ip, address, browser, os, status, message, grantType, DateUtil.now());
+		this.log = new LogV(currentUser, ip, address, browser, os, status, errorMessage, grantType, DateUtil.now());
 	}
 
 }

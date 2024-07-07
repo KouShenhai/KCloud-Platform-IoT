@@ -17,9 +17,9 @@
 
 package org.laokou.auth.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
@@ -28,16 +28,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TenantGetIDQry extends CommonCommand {
 
-	/**
-	 * 请求.
-	 */
-	@JsonIgnore
-	private HttpServletRequest request;
-
-	public TenantGetIDQry(HttpServletRequest request) {
-		this.request = request;
-	}
+	private String domainName;
 
 }

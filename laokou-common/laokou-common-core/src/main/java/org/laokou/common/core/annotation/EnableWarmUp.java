@@ -17,7 +17,7 @@
 
 package org.laokou.common.core.annotation;
 
-import org.laokou.common.core.config.TaskExecutorConfig;
+import org.laokou.common.core.config.WarmUpConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -28,7 +28,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import(TaskExecutorConfig.class)
-public @interface EnableTaskExecutor {
+@Import(WarmUpConfig.class)
+public @interface EnableWarmUp {
 
 }

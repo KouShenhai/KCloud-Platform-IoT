@@ -19,21 +19,20 @@ package org.laokou.auth.command.query;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.laokou.auth.config.TenantProperties;
 import org.laokou.auth.dto.TenantGetIDQry;
 import org.laokou.auth.gatewayimpl.database.TenantMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.TenantDO;
-import org.laokou.auth.config.TenantProperties;
 import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
-import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+import static org.laokou.common.data.cache.constant.NameConstant.TENANT_ID;
 import static org.laokou.common.i18n.common.constants.StringConstant.BACKSLASH;
 import static org.laokou.common.i18n.common.constants.StringConstant.DOT;
 import static org.laokou.common.mybatisplus.mapper.BaseDO.DEFAULT_TENANT_ID;
@@ -53,15 +52,14 @@ public class TenantGetIDQryExe {
 
 	private final TenantMapper tenantMapper;
 
-	private final RedisUtil redisUtil;
-
 	/**
 	 * 执行根据域名查看租户ID.
 	 * @param qry 查看租户ID参数
 	 * @return 租户ID
 	 */
+	@DataCache(name = TENANT_ID, key = "#qry.domainName")
 	public Result<Long> execute(TenantGetIDQry qry) {
-		String domainName = RequestUtil.getDomainName(qry.getRequest());
+		String domainName = qry.getDomainName();
 		if (StringUtil.isEmpty(domainName) || RegexUtil.ipRegex(domainName)) {
 			return Result.ok(DEFAULT_TENANT_ID);
 		}
@@ -72,30 +70,15 @@ public class TenantGetIDQryExe {
 		Set<String> domainNames = tenantProperties.getDomainNames();
 		// 租户域名
 		if (domainNames.parallelStream().anyMatch(domainName::contains)) {
-			return Result.ok(getTenantCache(split[0]));
+			// 查询
+			TenantDO tenantDO = tenantMapper.selectOne(
+					Wrappers.lambdaQuery(TenantDO.class).eq(TenantDO::getLabel, split[0]).select(TenantDO::getId));
+			if (ObjectUtil.isNotNull(tenantDO)) {
+				return Result.ok(tenantDO.getId());
+			}
+			return Result.ok(DEFAULT_TENANT_ID);
 		}
 		return Result.ok(DEFAULT_TENANT_ID);
-	}
-
-	/**
-	 * 根据域名从Redis获取租户ID.
-	 * @param str 域名
-	 * @return 租户ID
-	 */
-	private Long getTenantCache(String str) {
-		String tenantDomainNameHashKey = RedisKeyUtil.getTenantDomainNameHashKey();
-		Object o = redisUtil.hGet(tenantDomainNameHashKey, str);
-		if (ObjectUtil.isNotNull(o)) {
-			return Long.valueOf(o.toString());
-		}
-		TenantDO tenantDO = tenantMapper
-			.selectOne(Wrappers.lambdaQuery(TenantDO.class).eq(TenantDO::getLabel, str).select(TenantDO::getId));
-		if (ObjectUtil.isNotNull(tenantDO)) {
-			Long id = tenantDO.getId();
-			redisUtil.hSet(tenantDomainNameHashKey, str, id, RedisUtil.HOUR_ONE_EXPIRE);
-			return id;
-		}
-		return DEFAULT_TENANT_ID;
 	}
 
 }

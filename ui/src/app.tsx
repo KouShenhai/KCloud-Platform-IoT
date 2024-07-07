@@ -70,7 +70,7 @@ export const layout = () => {
 };
 
 export const request: RequestConfig = {
-	timeout: 10000,
+	timeout: 60000,
 	// other axios options you want
 	errorConfig: {
 		errorHandler(error: any) {

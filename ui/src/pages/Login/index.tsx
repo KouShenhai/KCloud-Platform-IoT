@@ -12,16 +12,16 @@ import {
 import {LoginFormPage, ProFormCaptcha, ProFormText,} from '@ant-design/pro-components';
 import {Col, Divider, Image, message, Row, Space, Tabs} from 'antd';
 import {CSSProperties, useEffect, useState} from 'react';
-// @ts-ignore
 import {login} from '@/services/auth/authsController';
-import {getCaptchaByUuidV3} from '@/services/auth/captchasV3Controller';
+import {getCaptchaImageByUuidV3} from '@/services/auth/captchasV3Controller';
 // @ts-ignore
 import {history} from 'umi';
-// @ts-ignore
 import {getSecretInfoV3} from '@/services/auth/secretsV3Controller';
 import {JSEncrypt} from 'jsencrypt';
 // @ts-ignore
 import {v7 as uuidV7} from 'uuid';
+import {listTenantOptionV3} from "@/services/auth/tenantsV3Controller";
+import {ProFormSelect} from "@ant-design/pro-form/lib";
 
 type LoginType = 'usernamePassword' | 'mobile' | 'mail';
 
@@ -42,6 +42,7 @@ export default () => {
 	const [captchaImage, setCaptchaImage] = useState<string>('');
 	const [uuid, setUuid] = useState<string>('');
 	const [publicKey, setPublicKey] = useState<string>('');
+	const [tenantId, setTenantId] = useState<number>(0)
 
 	const timeFix = () => {
 		const time = new Date();
@@ -82,23 +83,30 @@ export default () => {
 		}
 	};
 
-	const getCaptchaImage = () => {
+	const getCaptchaImage = async () => {
 		const uuid = uuidV7();
-		getCaptchaByUuidV3({uuid: uuid}).then((res) => {
+		getCaptchaImageByUuidV3({uuid: uuid}).then((res) => {
 			setCaptchaImage(res.data);
 		});
 		setUuid(uuid);
 	};
 
-	const getPublicKey = () => {
+	const getPublicKey = async () => {
 		getSecretInfoV3().then((res) => {
 			setPublicKey(res.data.publicKey);
 		});
 	};
 
+	const listTenantOption = async () => {
+		listTenantOptionV3().then(res => {
+			console.log(res)
+		})
+	}
+
 	useEffect(() => {
-		getPublicKey();
-		getCaptchaImage();
+		listTenantOption().catch(console.error)
+		getPublicKey().catch(console.error);
+		getCaptchaImage().catch(console.error);
 	}, []);
 
 	const onSubmit = async (form: API.LoginParam) => {
@@ -217,9 +225,21 @@ export default () => {
 					activeKey={loginType}
 					onChange={(activeKey) => setLoginType(activeKey as LoginType)}
 				></Tabs>
-
+				
 				{loginType === 'usernamePassword' && (
 					<>
+						<ProFormSelect
+							name="tenant_id"
+							showSearch
+							debounceTime={300}
+							placeholder="请选择租户"
+							rules={[
+								{
+									required: true,
+									message: '请选择租户',
+								},
+							]}
+						/>
 						<ProFormText
 							name="username"
 							fieldProps={{

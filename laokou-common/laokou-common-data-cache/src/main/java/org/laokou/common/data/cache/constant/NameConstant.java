@@ -17,8 +17,6 @@
 
 package org.laokou.common.data.cache.constant;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 // @formatter:off
 /**
  * 命名格式如下：
@@ -31,37 +29,62 @@ import io.swagger.v3.oas.annotations.media.Schema;
 // @formatter:on
 public final class NameConstant {
 
-	private NameConstant() {
-	}
-
-	@Schema(name = "DEFAULT", description = "默认缓存配置")
+	/**
+	 * 默认缓存配置.
+	 */
 	private static final String DEFAULT = "_10m_30m_1024";
 
-	@Schema(name = "OSS", description = "OSS缓存配置")
+	/**
+	 * OSS缓存配置.
+	 */
 	public static final String OSS = "oss" + DEFAULT;
 
-	@Schema(name = "DEPTS", description = "部门缓存配置")
+	/**
+	 * 部门缓存配置.
+	 */
 	public static final String DEPTS = "depts" + DEFAULT;
 
-	@Schema(name = "DICTS", description = "字典缓存配置")
+	/**
+	 * 字典缓存配置.
+	 */
 	public static final String DICTS = "dicts" + DEFAULT;
 
-	@Schema(name = "MENUS", description = "菜单缓存配置")
+	/**
+	 * 菜单缓存配置.
+	 */
 	public static final String MENUS = "menus" + DEFAULT;
 
-	@Schema(name = "MESSAGES", description = "消息缓存配置")
+	/**
+	 * 消息缓存配置.
+	 */
 	public static final String MESSAGES = "messages" + DEFAULT;
 
-	@Schema(name = "PACKAGES", description = "套餐缓存配置")
+	/**
+	 * 套餐缓存配置.
+	 */
 	public static final String PACKAGES = "packages" + DEFAULT;
 
-	@Schema(name = "TENANTS", description = "租户缓存配置")
+	/**
+	 * 租户缓存配置.
+	 */
 	public static final String TENANTS = "tenants" + DEFAULT;
 
-	@Schema(name = "SOURCES", description = "数据源缓存配置")
+	/**
+	 * 数据源缓存配置.
+	 */
 	public static final String SOURCES = "sources" + DEFAULT;
 
-	@Schema(name = "USERS", description = "用户缓存配置")
+	/**
+	 * 用户缓存配置.
+	 */
 	public static final String USERS = "users" + DEFAULT;
+
+	/**
+	 * 租户ID.
+	 */
+	public static final String TENANT_ID = "tenant_id" + DEFAULT;
+
+	private NameConstant() {
+	}
 
 }
