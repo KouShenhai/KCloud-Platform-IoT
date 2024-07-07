@@ -241,21 +241,22 @@ export default () => {
 					onChange={(activeKey) => setLoginType(activeKey as LoginType)}
 				></Tabs>
 
+				<ProFormSelect
+					name="tenant_id"
+					showSearch
+					options={tenantOptions}
+					debounceTime={300}
+					placeholder="请选择租户"
+					rules={[
+						{
+							required: true,
+							message: '请选择租户',
+						},
+					]}
+				/>
+
 				{loginType === 'usernamePassword' && (
 					<>
-						<ProFormSelect
-							name="tenant_id"
-							showSearch
-							options={tenantOptions}
-							debounceTime={300}
-							placeholder="请选择租户"
-							rules={[
-								{
-									required: true,
-									message: '请选择租户',
-								},
-							]}
-						/>
 						<ProFormText
 							name="username"
 							fieldProps={{
@@ -328,19 +329,6 @@ export default () => {
 				)}
 				{loginType === 'mobile' && (
 					<>
-						<ProFormSelect
-							name="tenant_id"
-							showSearch
-							options={tenantOptions}
-							debounceTime={300}
-							placeholder="请选择租户"
-							rules={[
-								{
-									required: true,
-									message: '请选择租户',
-								},
-							]}
-						/>
 						<ProFormText
 							fieldProps={{
 								size: 'large',
@@ -391,19 +379,6 @@ export default () => {
 				)}
 				{loginType === 'mail' && (
 					<>
-						<ProFormSelect
-							name="tenant_id"
-							showSearch
-							options={tenantOptions}
-							debounceTime={300}
-							placeholder="请选择租户"
-							rules={[
-								{
-									required: true,
-									message: '请选择租户',
-								},
-							]}
-						/>
 						<ProFormText
 							fieldProps={{
 								size: 'large',
