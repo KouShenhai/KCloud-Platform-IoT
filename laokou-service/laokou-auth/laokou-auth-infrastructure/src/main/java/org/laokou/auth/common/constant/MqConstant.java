@@ -17,7 +17,7 @@
 
 package org.laokou.auth.common.constant;
 
-import static org.laokou.common.i18n.common.constants.Constant.DLQ;
+import static org.laokou.common.i18n.common.constant.Constant.DLQ;
 
 /**
  * @author laokou

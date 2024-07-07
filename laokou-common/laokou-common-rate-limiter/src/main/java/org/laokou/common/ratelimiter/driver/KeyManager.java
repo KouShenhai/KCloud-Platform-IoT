@@ -23,7 +23,7 @@ import org.laokou.common.ratelimiter.driver.spi.TypeEnum;
 
 import java.util.ServiceLoader;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * @author laokou

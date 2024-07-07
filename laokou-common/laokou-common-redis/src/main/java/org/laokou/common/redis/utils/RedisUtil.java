@@ -42,10 +42,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RedisUtil {
 
-	private final RedisTemplate<String, Object> redisTemplate;
-
-	private final RedissonClient redissonClient;
-
 	/**
 	 * 24小时过期，单位：秒.
 	 */
@@ -70,6 +66,10 @@ public class RedisUtil {
 	 * 永不过期.
 	 */
 	public final static long NOT_EXPIRE = -1L;
+
+	private final RedisTemplate<String, Object> redisTemplate;
+
+	private final RedissonClient redissonClient;
 
 	public RLock getLock(String key) {
 		return redissonClient.getLock(key);
@@ -199,7 +199,7 @@ public class RedisUtil {
 		redissonClient.getMap(key).delete();
 	}
 
-	public boolean delete(String... key) {
+	public boolean del(String... key) {
 		return redissonClient.getKeys().delete(key) > 0;
 	}
 
@@ -207,7 +207,7 @@ public class RedisUtil {
 		redissonClient.getMap(key).remove(field);
 	}
 
-	public void hDel(String key, String... field) {
+	public void hDelFast(String key, String... field) {
 		redissonClient.getMap(key).fastRemove(field);
 	}
 

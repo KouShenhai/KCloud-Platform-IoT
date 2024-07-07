@@ -33,8 +33,9 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import static org.laokou.common.i18n.common.constants.StringConstant.DOLLAR;
-import static org.laokou.common.i18n.common.constants.StringConstant.UNDER;
+
+import static org.laokou.common.i18n.common.constant.StringConstant.DOLLAR;
+import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
 
 /**
  * @author laokou

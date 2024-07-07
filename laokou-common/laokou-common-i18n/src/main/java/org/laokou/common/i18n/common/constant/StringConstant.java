@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.i18n.common.constants;
+package org.laokou.common.i18n.common.constant;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -25,9 +25,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author laokou
  */
 public final class StringConstant {
-
-	private StringConstant() {
-	}
 
 	/**
 	 * 空字符串.
@@ -116,5 +113,8 @@ public final class StringConstant {
 	 * 分割参数.
 	 */
 	public static final String START_START = "**";
+
+	private StringConstant() {
+	}
 
 }

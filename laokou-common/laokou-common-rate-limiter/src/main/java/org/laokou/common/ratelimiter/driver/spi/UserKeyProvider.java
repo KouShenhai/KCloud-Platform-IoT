@@ -19,7 +19,7 @@ package org.laokou.common.ratelimiter.driver.spi;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import static org.laokou.common.i18n.common.constants.TraceConstant.USER_ID;
+import static org.laokou.common.i18n.common.constant.TraceConstant.USER_ID;
 import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.USER;
 
 /**

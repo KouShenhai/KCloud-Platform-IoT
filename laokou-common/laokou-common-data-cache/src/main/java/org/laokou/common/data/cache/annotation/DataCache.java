@@ -17,13 +17,9 @@
 
 package org.laokou.common.data.cache.annotation;
 
-import org.laokou.common.data.cache.constant.TypeEnum;
+import org.laokou.common.data.cache.constant.Type;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.lang.annotation.Documented;
+import java.lang.annotation.*;
 
 /**
  * 数据缓存.
@@ -48,6 +44,6 @@ public @interface DataCache {
 	/**
 	 * 操作类型.
 	 */
-	TypeEnum type() default TypeEnum.GET;
+	Type type() default Type.GET;
 
 }

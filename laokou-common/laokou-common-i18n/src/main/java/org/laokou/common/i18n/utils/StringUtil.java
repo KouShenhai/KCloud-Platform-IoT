@@ -25,8 +25,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.constants.StringConstant.PERCENT;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstant.PERCENT;
 
 /**
  * 字符串工具类.

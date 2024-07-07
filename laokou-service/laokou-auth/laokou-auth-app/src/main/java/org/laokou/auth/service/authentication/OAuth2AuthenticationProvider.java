@@ -40,8 +40,8 @@ import org.springframework.stereotype.Component;
 import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOGIN_LOG_TOPIC;
 import static org.laokou.auth.model.AuthA.BIZ_ID;
 import static org.laokou.auth.model.AuthA.USE_CASE;
-import static org.laokou.common.i18n.common.constants.EventStatus.CREATED;
-import static org.laokou.common.i18n.common.constants.EventType.LOGIN;
+import static org.laokou.common.i18n.common.constant.EventStatus.CREATED;
+import static org.laokou.common.i18n.common.constant.EventType.LOGIN;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 

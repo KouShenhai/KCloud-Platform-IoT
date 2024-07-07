@@ -34,7 +34,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.SPACE;
+import static org.laokou.common.i18n.common.constant.StringConstant.SPACE;
 
 /**
  * 4种@Signature type. Executor => 拦截内部SQL执行. ParameterHandler => 拦截参数的处理. StatementHandler
@@ -42,8 +42,8 @@ import static org.laokou.common.i18n.common.constants.StringConstant.SPACE;
  * <p>
  * method => 真实的方法，请自行查看并复制 args => method入参
  *
- * @see PreparedStatementLogger
  * @author laokou
+ * @see PreparedStatementLogger
  */
 @Slf4j
 @Intercepts({

@@ -34,10 +34,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.AT;
+import static org.laokou.common.i18n.common.constant.StringConstant.AT;
 
 /**
- *
  * 分布式高效有序 ID 生产黑科技(sequence)
  *
  * <p>
@@ -161,18 +160,6 @@ public class IdGenerator {
 		 */
 		private long lastTimeStamp = -1L;
 
-		private long getNextMill() {
-			long mill = getNewTimeStamp();
-			while (mill <= lastTimeStamp) {
-				mill = getNewTimeStamp();
-			}
-			return mill;
-		}
-
-		private long getNewTimeStamp() {
-			return SystemClock.now();
-		}
-
 		/**
 		 * 根据指定的数据中心ID和机器标志ID生成指定的序列号.
 		 * @param dataCenterId 数据中心ID
@@ -191,6 +178,18 @@ public class IdGenerator {
 			this.inetAddress = inetAddress;
 			DATACENTER_ID = getDatacenterId();
 			MACHINE_ID = getMaxMachineId(DATACENTER_ID);
+		}
+
+		private long getNextMill() {
+			long mill = getNewTimeStamp();
+			while (mill <= lastTimeStamp) {
+				mill = getNewTimeStamp();
+			}
+			return mill;
+		}
+
+		private long getNewTimeStamp() {
+			return SystemClock.now();
 		}
 
 		/**

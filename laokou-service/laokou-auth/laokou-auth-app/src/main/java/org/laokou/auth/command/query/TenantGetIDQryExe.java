@@ -33,8 +33,8 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 import static org.laokou.common.data.cache.constant.NameConstant.TENANT_ID;
-import static org.laokou.common.i18n.common.constants.StringConstant.BACKSLASH;
-import static org.laokou.common.i18n.common.constants.StringConstant.DOT;
+import static org.laokou.common.i18n.common.constant.StringConstant.BACKSLASH;
+import static org.laokou.common.i18n.common.constant.StringConstant.DOT;
 import static org.laokou.common.mybatisplus.mapper.BaseDO.DEFAULT_TENANT_ID;
 
 /**

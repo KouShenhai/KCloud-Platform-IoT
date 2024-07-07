@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.COMMA;
+import static org.laokou.common.i18n.common.constant.StringConstant.COMMA;
 import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.*;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 
@@ -58,16 +58,14 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 
 	private static final String FULL = "full";
 
-	private final RedisOAuth2AuthorizationRepository redisOAuth2AuthorizationRepository;
-
-	private final RegisteredClientRepository registeredClientRepository;
-
 	// @formatter:off
 	private static final ObjectMapper MAPPER = new ObjectMapper()
 		// https://docs.spring.io/spring-security/reference/servlet/integrations/jackson.html#page-title
 		.registerModules(SecurityJackson2Modules.getModules(RedisOAuth2AuthorizationService.class.getClassLoader()))
 		// https://docs.spring.io/spring-authorization-server/docs/current-SNAPSHOT/api/org/springframework/security/oauth2/server/authorization/jackson2/OAuth2AuthorizationServerJackson2Module.html
 		.registerModule(new OAuth2AuthorizationServerJackson2Module());
+	private final RedisOAuth2AuthorizationRepository redisOAuth2AuthorizationRepository;
+	private final RegisteredClientRepository registeredClientRepository;
 	// @formatter:on
 
 	@Override

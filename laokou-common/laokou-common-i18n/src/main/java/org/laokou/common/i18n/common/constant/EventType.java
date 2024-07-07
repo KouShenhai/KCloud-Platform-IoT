@@ -15,23 +15,15 @@
  *
  */
 
-package org.laokou.common.data.cache.constant;
+package org.laokou.common.i18n.common.constant;
 
 /**
- * 操作类型枚举.
+ * 事件类型枚举.
  *
  * @author laokou
  */
-public enum TypeEnum {
+public enum EventType {
 
-	/**
-	 * 查看.
-	 */
-	GET,
-
-	/**
-	 * 删除.
-	 */
-	DEL
+	LOGIN
 
 }

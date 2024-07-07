@@ -37,7 +37,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.COMMA;
+import static org.laokou.common.i18n.common.constant.StringConstant.COMMA;
 
 /**
  * 部门管理.

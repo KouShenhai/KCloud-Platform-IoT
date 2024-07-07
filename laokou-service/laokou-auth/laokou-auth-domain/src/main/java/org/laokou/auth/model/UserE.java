@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
-import static org.laokou.common.i18n.common.constants.SuperAdmin.YES;
+import static org.laokou.common.i18n.common.constant.SuperAdmin.YES;
 
 /**
  * 用户实体.

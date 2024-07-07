@@ -67,9 +67,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
 
-import static org.laokou.common.i18n.common.constants.Constant.AUTHORIZATION;
+import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.*;
 import static org.springframework.http.HttpHeaders.CONTENT_LENGTH;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
@@ -99,14 +99,14 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	public static final String PASSWORD = "password";
 
 	/**
-	 * Chunked.
-	 */
-	private static final String CHUNKED = "chunked";
-
-	/**
 	 * 令牌URL.
 	 */
 	public static final String TOKEN_URL = "/oauth2/token";
+
+	/**
+	 * Chunked.
+	 */
+	private static final String CHUNKED = "chunked";
 
 	/**
 	 * Nacos公共配置标识.
@@ -117,9 +117,9 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	private final OAuth2ResourceServerProperties oAuth2ResourceServerProperties;
 
-	private volatile Map<String, Set<String>> urlMap;
-
 	private final ConfigUtil configUtil;
+
+	private volatile Map<String, Set<String>> urlMap;
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

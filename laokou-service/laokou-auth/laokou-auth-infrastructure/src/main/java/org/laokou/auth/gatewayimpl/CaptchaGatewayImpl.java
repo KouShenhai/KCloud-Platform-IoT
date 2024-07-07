@@ -29,7 +29,7 @@ import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
 
 /**
@@ -53,7 +53,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	public void setValue(String uuid, String code) {
 		String key = getKey(uuid);
 		// 保存五分钟
-		redisUtil.delete(key);
+		redisUtil.del(key);
 		redisUtil.set(key, code, MINUTE_FIVE_EXPIRE);
 	}
 
@@ -93,7 +93,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 		String key = getKey(uuid);
 		Object captcha = redisUtil.get(key);
 		if (ObjectUtil.isNotNull(captcha)) {
-			redisUtil.delete(key);
+			redisUtil.del(key);
 		}
 		return ObjectUtil.isNotNull(captcha) ? captcha.toString() : EMPTY;
 	}

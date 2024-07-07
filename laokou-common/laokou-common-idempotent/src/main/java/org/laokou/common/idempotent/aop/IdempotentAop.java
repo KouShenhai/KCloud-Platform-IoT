@@ -29,7 +29,8 @@ import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
-import static org.laokou.common.i18n.common.constants.TraceConstant.REQUEST_ID;
+
+import static org.laokou.common.i18n.common.constant.TraceConstant.REQUEST_ID;
 import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
 
 /**

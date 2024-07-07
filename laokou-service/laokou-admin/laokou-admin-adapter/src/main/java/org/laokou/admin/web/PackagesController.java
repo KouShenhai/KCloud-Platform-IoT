@@ -21,12 +21,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.PackagesServiceI;
-import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.packages.*;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.constant.TypeEnum;
+import org.laokou.common.data.cache.constant.Type;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
@@ -78,7 +78,7 @@ public class PackagesController {
 	@Operation(summary = "套餐管理", description = "修改套餐")
 	@OperateLog(module = "套餐管理", operation = "修改套餐")
 	@PreAuthorize("hasAuthority('packages:modify')")
-	@DataCache(name = PACKAGES, key = "#cmd.packageCO.id", type = TypeEnum.DEL)
+	@DataCache(name = PACKAGES, key = "#cmd.packageCO.id", type = Type.DEL)
 	public void modify(@RequestBody PackageModifyCmd cmd) {
 		packagesServiceI.modify(cmd);
 	}

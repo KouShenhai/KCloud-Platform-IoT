@@ -20,7 +20,9 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.oss.*;
+import org.laokou.admin.dto.oss.OssCreateCmd;
+import org.laokou.admin.dto.oss.OssListQry;
+import org.laokou.admin.dto.oss.OssModifyCmd;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.dto.Datas;
@@ -31,8 +33,9 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import static org.laokou.common.data.cache.constant.NameConstant.OSS;
-import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
+import static org.laokou.common.data.cache.constant.Type.DEL;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 /**

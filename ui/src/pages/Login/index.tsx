@@ -157,6 +157,7 @@ export default () => {
 				getCaptchaImage();
 			});
 	};
+
 	return (
 		<div
 			style={{

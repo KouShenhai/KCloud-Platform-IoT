@@ -56,7 +56,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.COMMA;
+import static org.laokou.common.i18n.common.constant.StringConstant.COMMA;
 
 /**
  * @author laokou

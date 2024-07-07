@@ -24,7 +24,7 @@ import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.*;
+import static org.laokou.common.i18n.common.constant.StringConstant.*;
 
 /**
  * @author laokou

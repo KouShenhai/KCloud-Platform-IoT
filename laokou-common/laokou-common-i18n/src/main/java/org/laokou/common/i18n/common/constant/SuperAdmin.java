@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.i18n.common.constants;
+package org.laokou.common.i18n.common.constant;
 
 /**
  * 超级管理员枚举.

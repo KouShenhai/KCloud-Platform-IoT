@@ -30,9 +30,11 @@ import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+
 import static org.laokou.common.data.cache.constant.NameConstant.SOURCES;
-import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
+import static org.laokou.common.data.cache.constant.Type.DEL;
 
 /**
  * @author laokou

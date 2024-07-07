@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-import static org.laokou.common.i18n.common.constants.TraceConstant.DOMAIN_NAME;
+import static org.laokou.common.i18n.common.constant.TraceConstant.DOMAIN_NAME;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 /**

@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.laokou.common.i18n.utils.SslUtil.sslContext;
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * http客户端工具类.

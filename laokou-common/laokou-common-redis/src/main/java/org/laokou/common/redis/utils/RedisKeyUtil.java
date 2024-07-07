@@ -31,14 +31,6 @@ public final class RedisKeyUtil {
 	}
 
 	/**
-	 * 菜单树Key.
-	 * @param token 令牌
-	 */
-	public static String getMenuTreeKey(String token) {
-		return "menu:tree:" + token;
-	}
-
-	/**
 	 * 用户信息Key.
 	 * @param token 令牌
 	 */

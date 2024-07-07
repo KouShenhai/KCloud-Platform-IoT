@@ -25,7 +25,7 @@ import org.laokou.admin.dto.oss.*;
 import org.laokou.admin.dto.oss.clientobject.FileCO;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.constant.TypeEnum;
+import org.laokou.common.data.cache.constant.Type;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -86,7 +86,7 @@ public class OssController {
 	@Operation(summary = "OSS管理", description = "修改OSS")
 	@OperateLog(module = "OSS管理", operation = "修改OSS")
 	@PreAuthorize("hasAuthority('oss:modify')")
-	@DataCache(name = OSS, key = "#cmd.ossCO.id", type = TypeEnum.DEL)
+	@DataCache(name = OSS, key = "#cmd.ossCO.id", type = Type.DEL)
 	public void modify(@RequestBody OssModifyCmd cmd) {
 		ossServiceI.modify(cmd);
 	}

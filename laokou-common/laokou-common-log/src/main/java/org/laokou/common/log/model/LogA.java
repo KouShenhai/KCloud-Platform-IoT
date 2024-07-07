@@ -32,7 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
 
 import static org.laokou.common.core.utils.JacksonUtil.EMPTY_JSON;
-import static org.laokou.common.i18n.common.constants.StringConstant.*;
+import static org.laokou.common.i18n.common.constant.StringConstant.*;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 /**

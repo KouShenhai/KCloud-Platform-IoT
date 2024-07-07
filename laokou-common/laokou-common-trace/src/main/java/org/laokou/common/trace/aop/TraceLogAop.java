@@ -25,7 +25,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.constants.TraceConstant.TRACE_ID;
+import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
 /**
  * @author laokou

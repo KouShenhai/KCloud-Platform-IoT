@@ -24,7 +24,7 @@ import org.laokou.admin.api.DeptsServiceI;
 import org.laokou.admin.dto.dept.*;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.constant.TypeEnum;
+import org.laokou.common.data.cache.constant.Type;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
@@ -68,7 +68,7 @@ public class DeptsController {
 	@Operation(summary = "部门管理", description = "修改菜单")
 	@OperateLog(module = "部门管理", operation = "修改菜单")
 	@PreAuthorize("hasAuthority('depts:modify')")
-	@DataCache(name = DEPTS, key = "#cmd.deptCO.id", type = TypeEnum.DEL)
+	@DataCache(name = DEPTS, key = "#cmd.deptCO.id", type = Type.DEL)
 	public void modify(@RequestBody DeptModifyCmd cmd) {
 		deptsServiceI.modify(cmd);
 	}

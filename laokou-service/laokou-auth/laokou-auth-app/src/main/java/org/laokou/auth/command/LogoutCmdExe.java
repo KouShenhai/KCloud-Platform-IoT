@@ -26,6 +26,7 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.stereotype.Component;
+
 import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
 
 /**
@@ -36,6 +37,8 @@ import static org.springframework.security.oauth2.server.authorization.OAuth2Tok
 @Component
 @RequiredArgsConstructor
 public class LogoutCmdExe {
+
+	private static final String MENU_TREE = "menu_tree";
 
 	private final RedisUtil redisUtil;
 
@@ -50,8 +53,10 @@ public class LogoutCmdExe {
 		if (StringUtil.isEmpty(token)) {
 			return;
 		}
-		// 删除用户key + 删除菜单key
-		redisUtil.delete(RedisKeyUtil.getUserInfoKey(token), RedisKeyUtil.getMenuTreeKey(token));
+		// 删除用户信息key
+		redisUtil.del(RedisKeyUtil.getUserInfoKey(token));
+		// 删除树形菜单key
+		redisUtil.hDelFast(MENU_TREE, token);
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, ACCESS_TOKEN);
 		if (ObjectUtil.isNotNull(authorization)) {
 			// 删除token

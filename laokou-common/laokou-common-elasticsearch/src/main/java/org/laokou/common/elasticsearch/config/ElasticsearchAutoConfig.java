@@ -59,8 +59,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.laokou.common.i18n.utils.SslUtil.sslContext;
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.constants.StringConstant.RISK;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
 
 /**
  * @author laokou
@@ -69,8 +69,6 @@ import static org.laokou.common.i18n.common.constants.StringConstant.RISK;
 @RequiredArgsConstructor
 @EnableConfigurationProperties(ElasticsearchProperties.class)
 class ElasticsearchAutoConfig {
-
-	private final ElasticsearchProperties properties;
 
 	/**
 	 * HTTP协议头.
@@ -81,6 +79,8 @@ class ElasticsearchAutoConfig {
 	 * HTTPS协议头.
 	 */
 	private static final String HTTPS_SCHEME = "https://";
+
+	private final ElasticsearchProperties properties;
 
 	@Bean
 	@ConditionalOnMissingBean(ElasticsearchConnectionDetails.class)
@@ -150,6 +150,105 @@ class ElasticsearchAutoConfig {
 
 	private void ignoreConfigureSsl(HttpAsyncClientBuilder httpClientBuilder) {
 		httpClientBuilder.setSSLContext(sslContext()).setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE);
+	}
+
+	interface ElasticsearchConnectionDetails extends ConnectionDetails {
+
+		/**
+		 * List of the Elasticsearch nodes to use.
+		 * @return list of the Elasticsearch nodes to use
+		 */
+		List<Node> getNodes();
+
+		/**
+		 * Username for authentication with Elasticsearch.
+		 * @return username for authentication with Elasticsearch or {@code null}
+		 */
+		default String getUsername() {
+			return null;
+		}
+
+		/**
+		 * Password for authentication with Elasticsearch.
+		 * @return password for authentication with Elasticsearch or {@code null}
+		 */
+		default String getPassword() {
+			return null;
+		}
+
+		/**
+		 * Prefix added to the path of every request sent to Elasticsearch.
+		 * @return prefix added to the path of every request sent to Elasticsearch or
+		 * {@code null}
+		 */
+		default String getPathPrefix() {
+			return null;
+		}
+
+		/**
+		 * An Elasticsearch node.
+		 *
+		 * @param hostname the hostname
+		 * @param port the port
+		 * @param protocol the protocol
+		 * @param username the username or {@code null}
+		 * @param password the password or {@code null}
+		 */
+		record Node(String hostname, int port, Protocol protocol, String username, String password) {
+
+			URI toUri() {
+				try {
+					return new URI(this.protocol.getScheme(), userInfo(), this.hostname, this.port, null, null, null);
+				}
+				catch (URISyntaxException ex) {
+					throw new IllegalStateException("Can't construct URI", ex);
+				}
+			}
+
+			private String userInfo() {
+				if (this.username == null) {
+					return null;
+				}
+				return (this.password != null) ? (this.username + RISK + this.password) : this.username;
+			}
+
+			/**
+			 * Connection protocol.
+			 */
+			public enum Protocol {
+
+				/**
+				 * HTTP.
+				 */
+				HTTP("http"),
+
+				/**
+				 * HTTPS.
+				 */
+				HTTPS("https");
+
+				private final String scheme;
+
+				Protocol(String scheme) {
+					this.scheme = scheme;
+				}
+
+				static Protocol forScheme(String scheme) {
+					for (Protocol protocol : values()) {
+						if (protocol.scheme.equals(scheme)) {
+							return protocol;
+						}
+					}
+					throw new IllegalArgumentException("Unknown scheme '" + scheme + "'");
+				}
+
+				String getScheme() {
+					return this.scheme;
+				}
+
+			}
+		}
+
 	}
 
 	static class DefaultRestClientBuilderCustomizer implements RestClientBuilderCustomizer {
@@ -281,105 +380,6 @@ class ElasticsearchAutoConfig {
 			String[] components = userInfo.split(RISK);
 			return new Node(uri.getHost(), uri.getPort(), protocol, components[0],
 					(components.length > 1) ? components[1] : EMPTY);
-		}
-
-	}
-
-	interface ElasticsearchConnectionDetails extends ConnectionDetails {
-
-		/**
-		 * List of the Elasticsearch nodes to use.
-		 * @return list of the Elasticsearch nodes to use
-		 */
-		List<Node> getNodes();
-
-		/**
-		 * Username for authentication with Elasticsearch.
-		 * @return username for authentication with Elasticsearch or {@code null}
-		 */
-		default String getUsername() {
-			return null;
-		}
-
-		/**
-		 * Password for authentication with Elasticsearch.
-		 * @return password for authentication with Elasticsearch or {@code null}
-		 */
-		default String getPassword() {
-			return null;
-		}
-
-		/**
-		 * Prefix added to the path of every request sent to Elasticsearch.
-		 * @return prefix added to the path of every request sent to Elasticsearch or
-		 * {@code null}
-		 */
-		default String getPathPrefix() {
-			return null;
-		}
-
-		/**
-		 * An Elasticsearch node.
-		 *
-		 * @param hostname the hostname
-		 * @param port the port
-		 * @param protocol the protocol
-		 * @param username the username or {@code null}
-		 * @param password the password or {@code null}
-		 */
-		record Node(String hostname, int port, Protocol protocol, String username, String password) {
-
-			URI toUri() {
-				try {
-					return new URI(this.protocol.getScheme(), userInfo(), this.hostname, this.port, null, null, null);
-				}
-				catch (URISyntaxException ex) {
-					throw new IllegalStateException("Can't construct URI", ex);
-				}
-			}
-
-			private String userInfo() {
-				if (this.username == null) {
-					return null;
-				}
-				return (this.password != null) ? (this.username + RISK + this.password) : this.username;
-			}
-
-			/**
-			 * Connection protocol.
-			 */
-			public enum Protocol {
-
-				/**
-				 * HTTP.
-				 */
-				HTTP("http"),
-
-				/**
-				 * HTTPS.
-				 */
-				HTTPS("https");
-
-				private final String scheme;
-
-				Protocol(String scheme) {
-					this.scheme = scheme;
-				}
-
-				String getScheme() {
-					return this.scheme;
-				}
-
-				static Protocol forScheme(String scheme) {
-					for (Protocol protocol : values()) {
-						if (protocol.scheme.equals(scheme)) {
-							return protocol;
-						}
-					}
-					throw new IllegalArgumentException("Unknown scheme '" + scheme + "'");
-				}
-
-			}
 		}
 
 	}

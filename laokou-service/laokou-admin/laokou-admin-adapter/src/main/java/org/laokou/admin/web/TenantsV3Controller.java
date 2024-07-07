@@ -31,8 +31,9 @@ import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import static org.laokou.common.data.cache.constant.NameConstant.TENANTS;
-import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
+import static org.laokou.common.data.cache.constant.Type.DEL;
 import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
 import static org.redisson.api.RateIntervalUnit.MINUTES;
 

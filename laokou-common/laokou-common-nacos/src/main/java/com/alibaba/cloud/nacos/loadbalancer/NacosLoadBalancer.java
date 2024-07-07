@@ -65,7 +65,7 @@ import java.util.stream.Collectors;
 
 import static org.laokou.common.core.utils.RegexUtil.IPV4_REGEX;
 import static org.laokou.common.core.utils.RegexUtil.URL_VERSION_REGEX;
-import static org.laokou.common.i18n.common.constants.StringConstant.TRUE;
+import static org.laokou.common.i18n.common.constant.StringConstant.TRUE;
 
 /**
  * nacos路由负载均衡.

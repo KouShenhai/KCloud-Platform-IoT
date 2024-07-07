@@ -53,8 +53,8 @@ import java.util.*;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.laokou.common.i18n.common.DSConstant.*;
-import static org.laokou.common.i18n.common.constants.StringConstant.COMMA;
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstant.COMMA;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * 租户管理.

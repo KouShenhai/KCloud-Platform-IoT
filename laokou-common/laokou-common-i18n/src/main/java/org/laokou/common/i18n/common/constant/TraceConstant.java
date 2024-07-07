@@ -15,15 +15,46 @@
  *
  */
 
-package org.laokou.common.i18n.common.constants;
+package org.laokou.common.i18n.common.constant;
 
 /**
- * 事件类型枚举.
+ * 链路常量.
  *
  * @author laokou
  */
-public enum EventType {
+public final class TraceConstant {
 
-	LOGIN
+	/**
+	 * 用户名.
+	 */
+	public static final String USER_NAME = "user-name";
+
+	/**
+	 * 链路ID.
+	 */
+	public static final String TRACE_ID = "trace-id";
+
+	/**
+	 * 用户ID.
+	 */
+	public static final String USER_ID = "user-id";
+
+	/**
+	 * 租户ID.
+	 */
+	public static final String TENANT_ID = "tenant-id";
+
+	/**
+	 * 域名.
+	 */
+	public static final String DOMAIN_NAME = "domain-name";
+
+	/**
+	 * 请求ID.
+	 */
+	public static final String REQUEST_ID = "request-id";
+
+	private TraceConstant() {
+	}
 
 }

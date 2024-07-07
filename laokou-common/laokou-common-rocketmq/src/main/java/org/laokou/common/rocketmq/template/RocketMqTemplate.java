@@ -28,8 +28,8 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 
 import static org.apache.rocketmq.client.producer.SendStatus.SEND_OK;
-import static org.laokou.common.i18n.common.constants.StringConstant.NULL;
-import static org.laokou.common.i18n.common.constants.TraceConstant.TRACE_ID;
+import static org.laokou.common.i18n.common.constant.StringConstant.NULL;
+import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
 /**
  * @author laokou

@@ -20,7 +20,7 @@ package org.laokou.common.core.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * 正则表达式工具类.
@@ -28,6 +28,16 @@ import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
  * @author laokou
  */
 public class RegexUtil {
+
+	/**
+	 * URL版本正则表达式.
+	 */
+	public static final String URL_VERSION_REGEX = "/(v\\d+)/";
+
+	/**
+	 * IPV4正则表达式.
+	 */
+	public static final String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
 
 	/**
 	 * 邮箱正则表达式.
@@ -48,16 +58,6 @@ public class RegexUtil {
 	 * 数字正则表达式.
 	 */
 	private static final String NUMBER_REGEX = "^[0-9]*$";
-
-	/**
-	 * URL版本正则表达式.
-	 */
-	public static final String URL_VERSION_REGEX = "/(v\\d+)/";
-
-	/**
-	 * IPV4正则表达式.
-	 */
-	public static final String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
 
 	/**
 	 * 邮箱验证.

@@ -5,7 +5,7 @@
 import {RequestConfig} from "@@/plugin-request/request";
 import {Dropdown, message, theme} from "antd";
 // @ts-ignore
-import {RuntimeAntdConfig} from 'umi';
+import {history, RuntimeAntdConfig} from 'umi';
 import {LogoutOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
 
@@ -49,7 +49,7 @@ export const layout = () => {
 									icon: <LogoutOutlined/>,
 									label: '注销',
 									onClick: () => {
-										console.log('注销')
+										history.push('/login')
 									},
 								},
 							],
@@ -109,9 +109,8 @@ export const request: RequestConfig = {
 		(response: any) => {
 			const {status, data} = response;
 			if (status === 200 && data.code === undefined) {
-				response.data = {code: 'OK', msg: '请求成功', data: data}
-			}
-			if (status === 200 && data.code !== 'OK') {
+				response.data = {code: 'OK', msg: '请求成功', data: data};
+			} else if (status === 200 && data.code !== 'OK') {
 				message.error(data.msg).then(() => {
 				});
 			}

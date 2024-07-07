@@ -49,7 +49,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * OSS管理.
@@ -163,7 +163,7 @@ public class OssGatewayImpl implements OssGateway {
 				throw new SystemException("请配置OSS");
 			}
 			List<Object> objs = new ArrayList<>(result);
-			redisUtil.delete(ossConfigKey);
+			redisUtil.del(ossConfigKey);
 			redisUtil.lSet(ossConfigKey, objs, RedisUtil.HOUR_ONE_EXPIRE);
 			return result;
 		}

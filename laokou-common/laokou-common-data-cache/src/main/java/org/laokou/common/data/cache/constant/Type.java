@@ -15,23 +15,23 @@
  *
  */
 
-package org.laokou.common.i18n.common.constants;
+package org.laokou.common.data.cache.constant;
 
 /**
- * 请求头常量.
+ * 操作类型枚举.
  *
  * @author laokou
  */
-public final class Constant {
+public enum Type {
 
 	/**
-	 * 认证标识.
+	 * 查看.
 	 */
-	public static final String AUTHORIZATION = "Authorization";
+	GET,
 
-	public static final String DLQ = "%DLQ%";
-
-	private Constant() {
-	}
+	/**
+	 * 删除.
+	 */
+	DEL
 
 }

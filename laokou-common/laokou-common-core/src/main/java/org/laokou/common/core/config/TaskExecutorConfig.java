@@ -30,7 +30,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.TRUE;
+import static org.laokou.common.i18n.common.constant.StringConstant.TRUE;
 
 /**
  * 异步配置.

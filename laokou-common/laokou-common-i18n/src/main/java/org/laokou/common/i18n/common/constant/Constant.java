@@ -15,23 +15,23 @@
  *
  */
 
-package org.laokou.common.i18n.common.constants;
+package org.laokou.common.i18n.common.constant;
 
 /**
- * 事件状态枚举.
+ * 请求头常量.
  *
  * @author laokou
  */
-public enum EventStatus {
+public final class Constant {
 
 	/**
-	 * 已创建.
+	 * 认证标识.
 	 */
-	CREATED,
+	public static final String AUTHORIZATION = "Authorization";
 
-	/**
-	 * 已消费.
-	 */
-	CONSUMED
+	public static final String DLQ = "%DLQ%";
+
+	private Constant() {
+	}
 
 }

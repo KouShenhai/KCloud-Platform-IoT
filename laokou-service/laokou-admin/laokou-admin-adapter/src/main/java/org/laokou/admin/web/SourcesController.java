@@ -21,12 +21,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.SourcesServiceI;
-import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.source.*;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.constant.TypeEnum;
+import org.laokou.common.data.cache.constant.Type;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
@@ -78,7 +78,7 @@ public class SourcesController {
 	@Operation(summary = "数据源管理", description = "修改数据源")
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@PreAuthorize("hasAuthority('sources:modify')")
-	@DataCache(name = SOURCES, key = "#cmd.sourceCO.id", type = TypeEnum.DEL)
+	@DataCache(name = SOURCES, key = "#cmd.sourceCO.id", type = Type.DEL)
 	public void modify(@RequestBody SourceModifyCmd cmd) {
 		sourcesServiceI.modify(cmd);
 	}

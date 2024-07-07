@@ -20,8 +20,8 @@ package org.laokou.common.log.domainevent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.common.constants.EventStatus;
-import org.laokou.common.i18n.common.constants.EventType;
+import org.laokou.common.i18n.common.constant.EventStatus;
+import org.laokou.common.i18n.common.constant.EventType;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 

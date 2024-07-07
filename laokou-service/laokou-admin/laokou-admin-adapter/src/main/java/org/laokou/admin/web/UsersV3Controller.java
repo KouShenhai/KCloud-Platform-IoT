@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static org.laokou.common.data.cache.constant.NameConstant.USERS;
-import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
+import static org.laokou.common.data.cache.constant.Type.DEL;
 
 /**
  * @author laokou

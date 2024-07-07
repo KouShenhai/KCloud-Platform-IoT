@@ -57,8 +57,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-import static org.laokou.common.i18n.common.constants.StringConstant.DROP;
-import static org.laokou.common.i18n.common.constants.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstant.DROP;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * Excel工具类.
