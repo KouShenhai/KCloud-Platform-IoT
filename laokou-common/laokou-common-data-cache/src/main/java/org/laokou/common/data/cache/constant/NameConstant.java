@@ -32,7 +32,7 @@ public final class NameConstant {
 	/**
 	 * 默认缓存配置.
 	 */
-	private static final String DEFAULT = "_10m_30m_1024";
+	private static final String DEFAULT = "#10m#30m#1024";
 
 	/**
 	 * OSS缓存配置.

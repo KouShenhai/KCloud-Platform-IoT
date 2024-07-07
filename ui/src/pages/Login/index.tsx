@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons';
 import {LoginFormPage, ProFormCaptcha, ProFormText,} from '@ant-design/pro-components';
 import {Col, Divider, Image, message, Row, Space, Tabs} from 'antd';
-import {CSSProperties, useEffect, useState} from 'react';
+import {CSSProperties, useEffect, useRef, useState} from 'react';
 import {login} from '@/services/auth/authsController';
 import {getCaptchaImageByUuidV3} from '@/services/auth/captchasV3Controller';
 // @ts-ignore
@@ -20,8 +20,8 @@ import {getSecretInfoV3} from '@/services/auth/secretsV3Controller';
 import {JSEncrypt} from 'jsencrypt';
 // @ts-ignore
 import {v7 as uuidV7} from 'uuid';
-import {listTenantOptionV3} from "@/services/auth/tenantsV3Controller";
-import {ProFormSelect} from "@ant-design/pro-form/lib";
+import {getTenantIdByDomainNameV3, listTenantOptionV3} from "@/services/auth/tenantsV3Controller";
+import {ProFormInstance, ProFormSelect} from "@ant-design/pro-form/lib";
 
 type LoginType = 'usernamePassword' | 'mobile' | 'mail';
 
@@ -42,7 +42,8 @@ export default () => {
 	const [captchaImage, setCaptchaImage] = useState<string>('');
 	const [uuid, setUuid] = useState<string>('');
 	const [publicKey, setPublicKey] = useState<string>('');
-	const [tenantId, setTenantId] = useState<number>(0)
+	const [tenantOptions, setTenantOptions] = useState<API.TenantOption[]>([])
+	const formRef = useRef<ProFormInstance>();
 
 	const timeFix = () => {
 		const time = new Date();
@@ -72,7 +73,7 @@ export default () => {
 					password: encodeURIComponent(
 						encrypt.encrypt(form.password as string),
 					),
-					tenant_id: 0,
+					tenant_id: '0',
 					grant_type: 'password',
 				};
 			}
@@ -99,11 +100,24 @@ export default () => {
 
 	const listTenantOption = async () => {
 		listTenantOptionV3().then(res => {
-			console.log(res)
+			const options = []
+			const defaultOption = {label: '老寇云集团', value: '0'}
+			options.push(defaultOption)
+			res.data.forEach((item: API.TenantOption) => options.push(item))
+			setTenantOptions(options)
+		})
+	}
+
+	const getTenantIdByDomain = async () => {
+		getTenantIdByDomainNameV3().then(res => {
+			formRef?.current?.setFieldsValue({
+				tenant_id: res.data,
+			});
 		})
 	}
 
 	useEffect(() => {
+		getTenantIdByDomain().catch(console.error)
 		listTenantOption().catch(console.error)
 		getPublicKey().catch(console.error);
 		getCaptchaImage().catch(console.error);
@@ -137,6 +151,7 @@ export default () => {
 			}}
 		>
 			<LoginFormPage
+				formRef={formRef}
 				onFinish={onSubmit}
 				backgroundImageUrl="https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png"
 				logo={<img alt="logo" src="/logo.png"/>}
@@ -225,12 +240,13 @@ export default () => {
 					activeKey={loginType}
 					onChange={(activeKey) => setLoginType(activeKey as LoginType)}
 				></Tabs>
-				
+
 				{loginType === 'usernamePassword' && (
 					<>
 						<ProFormSelect
 							name="tenant_id"
 							showSearch
+							options={tenantOptions}
 							debounceTime={300}
 							placeholder="请选择租户"
 							rules={[
@@ -312,6 +328,19 @@ export default () => {
 				)}
 				{loginType === 'mobile' && (
 					<>
+						<ProFormSelect
+							name="tenant_id"
+							showSearch
+							options={tenantOptions}
+							debounceTime={300}
+							placeholder="请选择租户"
+							rules={[
+								{
+									required: true,
+									message: '请选择租户',
+								},
+							]}
+						/>
 						<ProFormText
 							fieldProps={{
 								size: 'large',
@@ -362,6 +391,19 @@ export default () => {
 				)}
 				{loginType === 'mail' && (
 					<>
+						<ProFormSelect
+							name="tenant_id"
+							showSearch
+							options={tenantOptions}
+							debounceTime={300}
+							placeholder="请选择租户"
+							rules={[
+								{
+									required: true,
+									message: '请选择租户',
+								},
+							]}
+						/>
 						<ProFormText
 							fieldProps={{
 								size: 'large',

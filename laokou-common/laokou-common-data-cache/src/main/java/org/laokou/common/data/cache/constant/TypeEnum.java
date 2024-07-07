@@ -17,8 +17,6 @@
 
 package org.laokou.common.data.cache.constant;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
  * 操作类型枚举.
  *
@@ -26,10 +24,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 public enum TypeEnum {
 
-	@Schema(name = "GET", description = "查看")
+	/**
+	 * 查看.
+	 */
 	GET,
 
-	@Schema(name = "DEL", description = "删除")
+	/**
+	 * 删除.
+	 */
 	DEL
 
 }

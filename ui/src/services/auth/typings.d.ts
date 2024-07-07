@@ -1,5 +1,6 @@
 declare namespace API {
-	type getCaptchaByUuidV3Params = {
+
+	type CaptchaParams = {
 		uuid: string;
 	};
 
@@ -9,8 +10,8 @@ declare namespace API {
 	};
 
 	type TenantOption = {
-		label?: string,
-		value?: string
+		label?: string;
+		value?: string;
 	}
 
 	type OAuth2Param = {
@@ -19,7 +20,7 @@ declare namespace API {
 		uuid?: string;
 		captcha?: string;
 		grant_type?: string;
-		tenant_id?: number;
+		tenant_id?: string;
 	};
 
 	type LoginParam = {
@@ -28,6 +29,7 @@ declare namespace API {
 		captcha?: string;
 		mail?: string;
 		mobile?: string;
+		tenant_id?: string
 	};
 
 	type Result = {

@@ -3,8 +3,8 @@
 import {request} from '@umijs/max';
 
 /** 租户管理 根据域名查看ID GET /v3/tenants/id */
-export async function getIdByDomainNameV3(options?: { [key: string]: any }) {
-	return request<API.Result>('/api/v3/tenants/id', {
+export async function getTenantIdByDomainNameV3(options?: { [key: string]: any }) {
+	return request<API.Result>('/api/auth/v3/tenants/id', {
 		method: 'GET',
 		...(options || {}),
 	});
