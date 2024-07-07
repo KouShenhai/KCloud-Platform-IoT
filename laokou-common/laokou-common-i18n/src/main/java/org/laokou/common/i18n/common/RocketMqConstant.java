@@ -25,14 +25,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "RocketMqConstants", description = "RocketMQ消息常量")
 public final class RocketMqConstant {
 
-	private RocketMqConstant() {
-	}
-
 	@Schema(name = "LAOKOU_MESSAGE_TOPIC", description = "分布式链路主题")
 	public static final String LAOKOU_MESSAGE_TOPIC = "laokou_message_topic";
-
-	@Schema(name = "LAOKOU_LOGIN_EVENT_TOPIC", description = "登录事件主题")
-	public static final String LAOKOU_LOGIN_EVENT_TOPIC = "laokou_login_event_topic";
 
 	@Schema(name = "LAOKOU_OPERATE_EVENT_TOPIC", description = "操作事件主题")
 	public static final String LAOKOU_OPERATE_EVENT_TOPIC = "laokou_operate_event_topic";
@@ -58,7 +52,7 @@ public final class RocketMqConstant {
 	@Schema(name = "LAOKOU_FILE_UPLOAD_EVENT_CONSUMER_GROUP", description = "文件上传事件消费者组")
 	public static final String LAOKOU_FILE_UPLOAD_EVENT_CONSUMER_GROUP = "laokou_file_upload_event_consumer_group";
 
-	@Schema(name = "TOPIC_TAG", description = "主题与标签的分隔符")
-	public static final String TOPIC_TAG = "%s:%s";
+	private RocketMqConstant() {
+	}
 
 }

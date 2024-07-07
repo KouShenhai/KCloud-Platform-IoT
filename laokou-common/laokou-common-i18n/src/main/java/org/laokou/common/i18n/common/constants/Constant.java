@@ -24,12 +24,14 @@ package org.laokou.common.i18n.common.constants;
  */
 public final class Constant {
 
-	private Constant() {
-	}
-
 	/**
 	 * 认证标识.
 	 */
 	public static final String AUTHORIZATION = "Authorization";
+
+	public static final String DLQ = "%DLQ%";
+
+	private Constant() {
+	}
 
 }

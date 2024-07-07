@@ -23,7 +23,6 @@ import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
-import org.laokou.common.i18n.common.RocketMqConstant;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
@@ -39,6 +38,8 @@ import static org.laokou.common.i18n.common.constants.TraceConstant.TRACE_ID;
 @AutoConfiguration
 @RequiredArgsConstructor
 public class RocketMqTemplate {
+
+	private static final String TOPIC_TAG = "%s:%s";
 
 	private final RocketMQTemplate rocketMQTemplate;
 
@@ -266,7 +267,7 @@ public class RocketMqTemplate {
 	}
 
 	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message) {
-		rocketMQTemplate.asyncSend(String.format(RocketMqConstant.TOPIC_TAG, topic, tag), message, new SendCallback() {
+		rocketMQTemplate.asyncSend(String.format(TOPIC_TAG, topic, tag), message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("RocketMQ异步消息发送成功【Tag标签，默认超时时间】");
@@ -280,7 +281,7 @@ public class RocketMqTemplate {
 	}
 
 	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message, long timeout) {
-		rocketMQTemplate.asyncSend(String.format(RocketMqConstant.TOPIC_TAG, topic, tag), message, new SendCallback() {
+		rocketMQTemplate.asyncSend(String.format(TOPIC_TAG, topic, tag), message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("RocketMQ异步消息发送成功【Tag标签，指定超时时间】");

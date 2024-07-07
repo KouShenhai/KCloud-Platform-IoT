@@ -17,14 +17,44 @@
 
 package org.laokou.auth.common.constant;
 
+import static org.laokou.common.i18n.common.constants.Constant.DLQ;
+
 /**
  * @author laokou
  */
 public final class MqConstant {
 
+	public static final String LAOKOU_LOGIN_LOG_TOPIC = "laokou_login_log_topic";
+
+	public static final String API_TAG = "apiLog";
+
+	public static final String LOGIN_TAG = "loginLog";
+
+	public static final String MAIL_TAG = "mailCaptcha";
+
+	public static final String MOBILE_TAG = "mobileCaptcha";
+
+	public static final String LAOKOU_LOG_TOPIC = "laokou_log_topic";
+
+	public static final String LAOKOU_CAPTCHA_TOPIC = "laokou_captcha_topic";
+
+	public static final String LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP = "laokou_mail_captcha_consumer_group";
+
+	public static final String LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP = "laokou_mobile_captcha_consumer_group";
+
+	public static final String LAOKOU_API_LOG_CONSUMER_GROUP = "laokou_api_log_consumer_group";
+
+	public static final String LAOKOU_LOGIN_LOG_CONSUMER_GROUP = "laokou_login_log_consumer_group";
+
+	public static final String LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP_DLQ = DLQ + "laokou_mail_captcha_consumer_group";
+
+	public static final String LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP_DLQ = DLQ + "laokou_mobile_captcha_consumer_group";
+
+	public static final String LAOKOU_API_LOG_CONSUMER_GROUP_DLQ = DLQ + "laokou_api_log_consumer_group";
+
+	public static final String LAOKOU_LOGIN_LOG_CONSUMER_GROUP_DLQ = DLQ + "laokou_login_log_consumer_group";
+
 	private MqConstant() {
 	}
-
-	public static final String LAOKOU_LOGIN_LOG_TOPIC = "laokou_login_log_topic";
 
 }
