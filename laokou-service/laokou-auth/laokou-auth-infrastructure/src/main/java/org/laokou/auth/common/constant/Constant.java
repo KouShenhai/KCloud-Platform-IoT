@@ -15,51 +15,35 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.database.dataobject;
-
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
-
-import java.io.Serial;
-
-import static org.laokou.auth.common.constant.Constant.BOOT_SYS_SOURCE;
+package org.laokou.auth.common.constant;
 
 /**
- * 数据源.
- *
  * @author laokou
  */
-@Data
-@TableName(BOOT_SYS_SOURCE)
-public class SourceDO extends BaseDO {
+public final class Constant {
 
-	@Serial
-	private static final long serialVersionUID = 7616743906900137371L;
+	private Constant() {
 
-	/**
-	 * 数据源名称.
-	 */
-	private String name;
+	}
 
 	/**
-	 * 数据源的驱动名称.
+	 * 用户表.
 	 */
-	private String driverClassName;
+	public static final String BOOT_SYS_USER = "boot_sys_user";
 
 	/**
-	 * 数据源的连接信息.
+	 * 租户表.
 	 */
-	private String url;
+	public static final String BOOT_SYS_TENANT = "boot_sys_tenant";
 
 	/**
-	 * 数据源的用户名.
+	 * 数据源表.
 	 */
-	private String username;
+	public static final String BOOT_SYS_SOURCE = "boot_sys_source";
 
 	/**
-	 * 数据源的密码.
+	 * 登录日志.
 	 */
-	private String password;
+	public static final String BOOT_SYS_LOGIN_LOG = "boot_sys_login_log";
 
 }

@@ -18,37 +18,43 @@
 package org.laokou.auth.gatewayimpl.database.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 import java.io.Serial;
 
+import static org.laokou.auth.common.constant.Constant.BOOT_SYS_TENANT;
+
 /**
+ * 租户.
+ *
  * @author laokou
  */
 @Data
-@TableName("boot_sys_tenant")
-@Schema(name = "TenantDO", description = "租户")
+@TableName(BOOT_SYS_TENANT)
 public class TenantDO extends BaseDO {
 
 	@Serial
 	private static final long serialVersionUID = -6290324458980136421L;
 
-	@Schema(name = "name", description = "租户名称")
+	/**
+	 * 租户名称.
+	 */
 	private String name;
 
-	@Schema(name = "label", description = "租户标签")
+	/**
+	 * 租户标签.
+	 */
 	private String label;
 
-	@Schema(name = "sourceId", description = "数据源ID")
+	/**
+	 * 数据源ID.
+	 */
 	private Long sourceId;
 
-	@Schema(name = "packageId", description = "套餐ID")
+	/**
+	 * 套餐ID.
+	 */
 	private Long packageId;
-
-	public TenantDO(String name) {
-		this.name = name;
-	}
 
 }

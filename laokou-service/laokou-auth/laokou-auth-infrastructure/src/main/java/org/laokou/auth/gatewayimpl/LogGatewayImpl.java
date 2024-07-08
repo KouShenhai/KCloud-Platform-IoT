@@ -18,8 +18,8 @@
 package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.gateway.LogGateway;
 import org.laokou.auth.dto.domainevent.LoginEvent;
+import org.laokou.auth.gateway.LogGateway;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.core.utils.IdGenerator;
@@ -57,7 +57,7 @@ public class LogGatewayImpl implements LogGateway {
 		logDO.setBrowser(loginEvent.getBrowser());
 		logDO.setOs(loginEvent.getOs());
 		logDO.setStatus(loginEvent.getStatus());
-		logDO.setMessage(loginEvent.getMessage());
+		logDO.setErrorMessage(loginEvent.getErrorMessage());
 		logDO.setType(loginEvent.getType());
 		logDO.setId(IdGenerator.defaultSnowflakeId());
 		logDO.setEditor(evt.getEditor());

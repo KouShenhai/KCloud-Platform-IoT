@@ -73,9 +73,9 @@ public class LoginEvent extends DefaultDomainEvent {
 	private Integer status;
 
 	/**
-	 * 登录信息.
+	 * 错误信息.
 	 */
-	private String message;
+	private String errorMessage;
 
 	/**
 	 * 登录类型.

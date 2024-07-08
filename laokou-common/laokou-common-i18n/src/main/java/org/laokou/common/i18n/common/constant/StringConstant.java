@@ -39,9 +39,6 @@ public final class StringConstant {
 	@Schema(name = "TRUE", description = "TRUE")
 	public static final String TRUE = "true";
 
-	@Schema(name = "FALSE", description = "FALSE")
-	public static final String FALSE = "false";
-
 	@Schema(name = "NULL", description = "NULL")
 	public static final String NULL = null;
 
