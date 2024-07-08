@@ -25,7 +25,6 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 import java.io.Serial;
 
 import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_LOGIN_LOG;
-import static org.laokou.common.mybatisplus.config.DynamicTableNameHandler.PLACE_HOLDER;
 
 /**
  * 登录日志.
@@ -33,7 +32,7 @@ import static org.laokou.common.mybatisplus.config.DynamicTableNameHandler.PLACE
  * @author laokou
  */
 @Data
-@TableName(BOOT_SYS_LOGIN_LOG + PLACE_HOLDER)
+@TableName(BOOT_SYS_LOGIN_LOG)
 public class LoginLogDO extends BaseDO {
 
 	@Serial
