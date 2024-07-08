@@ -15,21 +15,24 @@
  *
  */
 
-package org.laokou.auth.dto.clientobject;
+package org.laokou.auth.command;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.ClientObject;
+import lombok.RequiredArgsConstructor;
+import org.laokou.auth.ability.AuthDomainService;
+import org.laokou.auth.dto.LoginLogCmd;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class SecretCO extends ClientObject {
+@Component
+@RequiredArgsConstructor
+public class LoginLogCmdExe {
 
-	private String publicKey;
+	private final AuthDomainService authDomainService;
+
+	public void executeVoid(LoginLogCmd cmd) {
+		authDomainService.recordLog(cmd.getDomainEvent());
+	}
 
 }

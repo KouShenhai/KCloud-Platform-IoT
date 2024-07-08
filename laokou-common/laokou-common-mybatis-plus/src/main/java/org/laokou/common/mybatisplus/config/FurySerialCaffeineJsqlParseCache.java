@@ -20,7 +20,6 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.extension.parser.cache.AbstractCaffeineJsqlParseCache;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import org.laokou.common.core.utils.SerializationUtil;
 
 import java.util.function.Consumer;
 
@@ -41,12 +40,12 @@ public class FurySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 
 	@Override
 	public byte[] serialize(Object obj) {
-		return SerializationUtil.serializeThreadSafe(obj, String.class);
+		return FuryFactory.serialize(obj);
 	}
 
 	@Override
 	public Object deserialize(String sql, byte[] bytes) {
-		return SerializationUtil.deserializeThreadSafe(bytes, String.class);
+		return FuryFactory.deserialize(bytes);
 	}
 
 }

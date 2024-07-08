@@ -21,8 +21,12 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.utils.SpringContextUtil;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.core.config.TaskExecutorConfig.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * @author laokou
@@ -44,6 +48,13 @@ public class AuthDomainService {
 	private final CaptchaGateway captchaGateway;
 
 	private final PasswordEncoder passwordEncoder;
+
+	private final LoginLogGateway loginLogGateway;
+
+	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
+	public void recordLog(DefaultDomainEvent domainEvent) {
+		loginLogGateway.createLog(domainEvent);
+	}
 
 	public void auth(AuthA auth) {
 		auth.updateAppName(springContextUtil.getAppName());

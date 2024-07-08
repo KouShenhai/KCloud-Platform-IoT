@@ -139,12 +139,12 @@ public class AuthA extends AggregateRoot<Long> {
 	private UserE user;
 
 	/**
-	 * 菜单实体.
+	 * 菜单值对象.
 	 */
 	private MenuV menu;
 
 	/**
-	 * 部门实体.
+	 * 部门值对象.
 	 */
 	private DeptV dept;
 
@@ -275,7 +275,7 @@ public class AuthA extends AggregateRoot<Long> {
 		Capabilities capabilities = RequestUtil.getCapabilities(request);
 		String os = capabilities.getPlatform();
 		String browser = capabilities.getBrowser();
-		this.log = new LogV(currentUser, ip, address, browser, os, status, errorMessage, grantType, DateUtil.now());
+		this.log = new LogV(currentUser, os, ip, address, browser, status, errorMessage, grantType, DateUtil.now());
 	}
 
 }

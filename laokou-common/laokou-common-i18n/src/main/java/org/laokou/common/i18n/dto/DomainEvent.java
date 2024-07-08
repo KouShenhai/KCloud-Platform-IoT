@@ -66,6 +66,11 @@ public abstract class DomainEvent<ID> implements Serializable {
 	protected String topic;
 
 	/**
+	 * 标签.
+	 */
+	protected String tag;
+
+	/**
 	 * 数据源名称.
 	 */
 	protected String sourceName;
@@ -115,7 +120,7 @@ public abstract class DomainEvent<ID> implements Serializable {
 		this.sourceName = sourceName;
 	}
 
-	protected abstract void create(AggregateRoot<ID> aggregateRoot, String topic, EventType eventType,
+	protected abstract void create(AggregateRoot<ID> aggregateRoot, String topic, String tag, EventType eventType,
 			EventStatus eventStatus);
 
 }

@@ -37,7 +37,8 @@ import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOGIN_LOG_TOPIC;
+import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOG_TOPIC;
+import static org.laokou.auth.common.constant.MqConstant.LOGIN_TAG;
 import static org.laokou.auth.model.AuthA.BIZ_ID;
 import static org.laokou.auth.model.AuthA.USE_CASE;
 import static org.laokou.common.i18n.common.constant.EventStatus.CREATED;
@@ -93,7 +94,7 @@ public class OAuth2AuthenticationProvider {
 	private LoginEvent to(AuthA auth) {
 		LogV log = auth.getLog();
 		LoginEvent loginEvent = logConvertor.convertClientObject(log);
-		loginEvent.create(auth, LAOKOU_LOGIN_LOG_TOPIC, LOGIN, CREATED, log.timestamp());
+		loginEvent.create(auth, LAOKOU_LOG_TOPIC, LOGIN_TAG, LOGIN, CREATED, log.timestamp());
 		return loginEvent;
 	}
 

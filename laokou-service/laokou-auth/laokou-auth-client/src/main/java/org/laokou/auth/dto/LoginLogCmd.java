@@ -15,21 +15,21 @@
  *
  */
 
-package org.laokou.auth.dto.clientobject;
+package org.laokou.auth.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.ClientObject;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 /**
  * @author laokou
  */
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SecretCO extends ClientObject {
+public class LoginLogCmd {
 
-	private String publicKey;
+	private DefaultDomainEvent domainEvent;
 
 }

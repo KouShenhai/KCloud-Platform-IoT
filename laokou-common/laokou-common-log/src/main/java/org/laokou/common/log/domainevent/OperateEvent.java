@@ -78,7 +78,7 @@ public class OperateEvent extends DefaultDomainEvent {
 	protected Long takeTime;
 
 	@Override
-	protected void create(AggregateRoot<Long> aggregateRoot, String topic, EventType eventType,
+	protected void create(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
 			EventStatus eventStatus) {
 
 	}

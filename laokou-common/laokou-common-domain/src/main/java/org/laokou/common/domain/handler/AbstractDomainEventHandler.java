@@ -34,10 +34,6 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 public abstract class AbstractDomainEventHandler implements RocketMQListener<MessageExt> {
 
-	private static final String ID = "id";
-
-	private static final String SOURCE_NAME = "sourceName";
-
 	private final DomainEventPublisher domainEventPublisher;
 
 	@Override
@@ -45,7 +41,7 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 		String msg = new String(message.getBody(), StandardCharsets.UTF_8);
 		DefaultDomainEvent domainEvent = convert(msg);
 		try {
-			// handleDomainEvent(msg);
+			handleDomainEvent(domainEvent);
 			log.info("已消费");
 		}
 		catch (Exception e) {

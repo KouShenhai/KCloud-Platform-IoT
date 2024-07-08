@@ -36,7 +36,7 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 	}
 
 	@Override
-	protected void create(AggregateRoot<Long> aggregateRoot, String topic, EventType eventType,
+	protected void create(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
 			EventStatus eventStatus) {
 		super.tenantId = aggregateRoot.getTenantId();
 		super.deptId = aggregateRoot.getDeptId();
@@ -48,6 +48,7 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.sourceName = aggregateRoot.getSourceName();
 		super.appName = aggregateRoot.getAppName();
 		super.aggregateId = aggregateRoot.getId();
+		super.tag = tag;
 		super.topic = topic;
 	}
 

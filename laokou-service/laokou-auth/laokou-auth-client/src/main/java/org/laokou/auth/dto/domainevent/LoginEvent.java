@@ -82,17 +82,17 @@ public class LoginEvent extends DefaultDomainEvent {
 	 */
 	private String type;
 
-	public void create(AggregateRoot<Long> aggregateRoot, String topic, EventType eventType, EventStatus eventStatus,
-			LocalDateTime timestamp) {
-		create(aggregateRoot, topic, eventType, eventStatus);
+	public void create(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
+			EventStatus eventStatus, LocalDateTime timestamp) {
+		create(aggregateRoot, topic, tag, eventType, eventStatus);
 		super.createDate = timestamp;
 		super.updateDate = timestamp;
 	}
 
 	@Override
-	protected void create(AggregateRoot<Long> aggregateRoot, String topic, EventType eventType,
+	protected void create(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
 			EventStatus eventStatus) {
-		super.create(aggregateRoot, topic, eventType, eventStatus);
+		super.create(aggregateRoot, topic, tag, eventType, eventStatus);
 		super.id = IdGenerator.defaultSnowflakeId();
 	}
 

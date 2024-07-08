@@ -24,8 +24,6 @@ import static org.laokou.common.i18n.common.constant.Constant.DLQ;
  */
 public final class MqConstant {
 
-	public static final String LAOKOU_LOGIN_LOG_TOPIC = "laokou_login_log_topic";
-
 	public static final String API_TAG = "apiLog";
 
 	public static final String LOGIN_TAG = "loginLog";
