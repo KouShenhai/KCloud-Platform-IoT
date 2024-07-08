@@ -36,7 +36,7 @@ import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("v3/captchas")
-@Tag(name = "CaptchasV3Controller", description = "验证码")
+@Tag(name = "验证码", description = "验证码")
 public class CaptchasV3Controller {
 
 	private final CaptchasServiceI captchasServiceI;
@@ -48,7 +48,7 @@ public class CaptchasV3Controller {
 	public Result<String> getByUuidV3(@PathVariable("uuid") String uuid) {
 		return captchasServiceI.getByUuid(new CaptchaGetQry(uuid));
 	}
-	
+
 	@PostMapping("{type}/{uuid}")
 	@RateLimiter(id = "SEND_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES)
 	@Operation(summary = "验证码-根据UUID发送验证码", description = "验证码-根据UUID发送验证码")
