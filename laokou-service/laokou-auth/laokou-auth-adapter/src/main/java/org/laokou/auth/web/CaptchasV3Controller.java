@@ -26,10 +26,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.redisson.api.RateIntervalUnit;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
 
@@ -46,10 +43,17 @@ public class CaptchasV3Controller {
 
 	@TraceLog
 	@GetMapping("{uuid}")
-	@RateLimiter(id = "AUTH_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
-	@Operation(summary = "验证码", description = "根据UUID获取验证码")
+	@RateLimiter(id = "GET_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
+	@Operation(summary = "验证码-根据UUID获取验证码", description = "验证码-根据UUID获取验证码")
 	public Result<String> getByUuidV3(@PathVariable("uuid") String uuid) {
 		return captchasServiceI.getByUuid(new CaptchaGetQry(uuid));
+	}
+	
+	@PostMapping("{type}/{uuid}")
+	@RateLimiter(id = "SEND_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES)
+	@Operation(summary = "验证码-根据UUID发送验证码", description = "验证码-根据UUID发送验证码")
+	public void sendByUuidV3(@PathVariable String type, @PathVariable String uuid) {
+
 	}
 
 }
