@@ -23,7 +23,6 @@ import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.parser.JsqlParserGlobal;
-import com.baomidou.mybatisplus.extension.parser.cache.JdkSerialCaffeineJsqlParseCache;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
@@ -57,9 +56,9 @@ import java.util.concurrent.TimeUnit;
 @MapperScan("org.laokou.common.mybatisplus.mapper")
 public class MybatisPlusAutoConfig {
 
-	// 静态注入缓存处理类
+	// 静态注入缓存处理类，Caffeine是线程安全【无需指定线程安全序列化/反序列化】
 	static {
-		JsqlParserGlobal.setJsqlParseCache(new JdkSerialCaffeineJsqlParseCache(
+		JsqlParserGlobal.setJsqlParseCache(new FurySerialCaffeineJsqlParseCache(
 			cache -> cache.maximumSize(1024).expireAfterWrite(5, TimeUnit.SECONDS)));
 	}
 

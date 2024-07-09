@@ -19,15 +19,13 @@ package org.laokou.common.mybatisplus.config;
 
 import net.sf.jsqlparser.statement.select.OrderByElement;
 import org.apache.fury.Fury;
-import org.apache.fury.ThreadSafeFury;
-import org.apache.fury.config.Language;
 
 /**
  * @author laokou
  */
 public final class FuryFactory {
 
-	private static final ThreadSafeFury FURY = Fury.builder().withLanguage(Language.JAVA).buildThreadSafeFury();
+	private static final Fury FURY = Fury.builder().build();
 
 	static {
 		FURY.register(net.sf.jsqlparser.expression.Alias.class);
