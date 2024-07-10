@@ -44,11 +44,13 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 			handleDomainEvent(domainEvent);
 			// 修改为已消费
 			domainEventPublisher.publish(domainEvent);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			if (e instanceof DataIntegrityViolationException) {
 				// 数据重复直接改为已消费
 				domainEventPublisher.publish(domainEvent);
-			} else {
+			}
+			else {
 				throw e;
 			}
 		}

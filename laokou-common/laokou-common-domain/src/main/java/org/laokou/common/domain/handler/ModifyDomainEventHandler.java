@@ -36,4 +36,5 @@ public class ModifyDomainEventHandler implements RocketMQListener<MessageExt> {
 	public void onMessage(MessageExt message) {
 		// domainEventService.update();
 	}
+
 }

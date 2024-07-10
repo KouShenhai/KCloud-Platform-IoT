@@ -51,6 +51,11 @@ public class DomainEventDO extends BaseDO {
 	private String topic;
 
 	/**
+	 * 标签.
+	 */
+	private String tag;
+
+	/**
 	 * 应用名称.
 	 */
 	private String appName;

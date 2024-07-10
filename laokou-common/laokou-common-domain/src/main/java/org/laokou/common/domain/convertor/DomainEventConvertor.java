@@ -15,15 +15,21 @@
  *
  */
 
-package org.laokou.common.domain.model;
+package org.laokou.common.domain.convertor;
 
-import lombok.Data;
+import org.laokou.common.domain.database.dataobject.DomainEventDO;
+import org.laokou.common.domain.model.DomainEventA;
+import org.laokou.common.i18n.dto.Convertor;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
+
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**
  * @author laokou
  */
-@Data
-public class DomainEventE extends DefaultDomainEvent {
-	
+@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface DomainEventConvertor extends Convertor<DefaultDomainEvent, DomainEventA, DomainEventDO> {
+
 }

@@ -23,7 +23,6 @@ import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.gateway.LoginLogGateway;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
 
@@ -41,8 +40,8 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 	@Override
 	public void createLog(DefaultDomainEvent domainEvent) {
 		LoginLogDO loginLogDO = logConvertor.toDataObj((LoginEvent) domainEvent);
+		loginLogDO.generatorId();
 		loginLogDO.setEventId(domainEvent.getId());
-		loginLogDO.setId(IdGenerator.defaultSnowflakeId());
 		loginLogMapper.insert(loginLogDO);
 	}
 

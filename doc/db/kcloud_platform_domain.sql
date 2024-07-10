@@ -18,7 +18,7 @@ create table if not exists public.boot_sys_domain_event
 	source_name  varchar(20)                             not null,
 	attribute    json,
 	app_name     varchar(20)                             not null,
-	tag          varchar(50)                             not null
+	tag          varchar(50)
 );
 
 comment on table public.boot_sys_domain_event is '领域事件';

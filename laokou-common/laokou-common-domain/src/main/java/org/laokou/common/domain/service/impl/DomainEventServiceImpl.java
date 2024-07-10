@@ -44,4 +44,5 @@ public class DomainEventServiceImpl implements DomainEventService {
 	public void update(DefaultDomainEvent domainEvent) {
 		domainEventMapper.updateStatus(domainEvent.getId());
 	}
+
 }

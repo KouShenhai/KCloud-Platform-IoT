@@ -42,7 +42,7 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @Component
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
-	selectorExpression = LOGIN_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+		selectorExpression = LOGIN_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class LoginEventHandler extends AbstractDomainEventHandler {
 
 	private final LoginLogCmdExe loginLogCmdExe;
@@ -56,8 +56,9 @@ public class LoginEventHandler extends AbstractDomainEventHandler {
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 		try {
 			loginLogCmdExe.executeVoid(new LoginLogCmd(domainEvent));
-		} catch (Exception ignored) {
-			
+		}
+		catch (Exception ignored) {
+
 		}
 	}
 

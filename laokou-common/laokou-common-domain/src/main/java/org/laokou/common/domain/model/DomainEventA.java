@@ -15,26 +15,45 @@
  *
  */
 
-package org.laokou.common.domain.handler;
+package org.laokou.common.domain.model;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.common.message.MessageExt;
-import org.apache.rocketmq.spring.core.RocketMQListener;
-import org.laokou.common.domain.service.DomainEventService;
+import lombok.Data;
+import org.laokou.common.i18n.dto.AggregateRoot;
 
 /**
  * @author laokou
  */
-@Slf4j
-@RequiredArgsConstructor
-public class CreateDomainEventHandler implements RocketMQListener<MessageExt> {
+@Data
+public class DomainEventA extends AggregateRoot<Long> {
 
-	private final DomainEventService domainEventService;
+	/**
+	 * 事件类型.
+	 */
+	private String eventType;
 
-	@Override
-	public void onMessage(MessageExt message) {
-		// domainEventService.update();
-	}
+	/**
+	 * 事件状态.
+	 */
+	private String eventStatus;
+
+	/**
+	 * MQ主题.
+	 */
+	private String topic;
+
+	/**
+	 * 标签.
+	 */
+	private String tag;
+
+	/**
+	 * 聚合根ID.
+	 */
+	private Long aggregateId;
+
+	/**
+	 * 扩展属性.
+	 */
+	private String attribute;
 
 }

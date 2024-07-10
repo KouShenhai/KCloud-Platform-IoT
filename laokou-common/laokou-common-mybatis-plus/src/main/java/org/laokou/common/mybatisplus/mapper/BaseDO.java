@@ -20,6 +20,7 @@ package org.laokou.common.mybatisplus.mapper;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serial;
@@ -36,9 +37,6 @@ import static org.laokou.common.i18n.utils.DateUtil.Constant.YYYY_ROD_MM_ROD_DD_
  */
 @Data
 public abstract class BaseDO implements Serializable {
-
-	@Serial
-	private static final long serialVersionUID = -5855413730985647400L;
 
 	/**
 	 * ID.
@@ -94,6 +92,9 @@ public abstract class BaseDO implements Serializable {
 	 * 默认租户ID.
 	 */
 	public static final long DEFAULT_TENANT_ID = 0;
+
+	@Serial
+	private static final long serialVersionUID = -5855413730985647400L;
 
 	/**
 	 * ID.
@@ -160,5 +161,9 @@ public abstract class BaseDO implements Serializable {
 	 */
 	@TableField(fill = FieldFill.INSERT)
 	protected Long tenantId;
+
+	public void generatorId() {
+		this.id = IdGenerator.defaultSnowflakeId();
+	}
 
 }
