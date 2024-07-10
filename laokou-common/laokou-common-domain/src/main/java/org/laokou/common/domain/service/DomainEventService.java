@@ -17,28 +17,17 @@
 
 package org.laokou.common.domain.service;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import org.apache.ibatis.session.ResultHandler;
-import org.laokou.common.domain.database.dataobject.DomainEventDO;
-import org.laokou.common.i18n.dto.DomainEvent;
-
-import java.util.List;
-import java.util.Set;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 /**
  * 领域事件Service.
  *
  * @author laokou
  */
-@Schema(name = "DomainEventService", description = "")
 public interface DomainEventService {
 
-	void create(List<DomainEvent<Long>> events);
+	void create(DefaultDomainEvent domainEvent);
 
-	void modify(List<DomainEvent<Long>> events);
-
-	void removeLastMonth(String ymd);
-
-	void findList(Set<String> sourceNames, String appName, ResultHandler<DomainEventDO> resultHandler);
+	void update(DefaultDomainEvent domainEvent);
 
 }

@@ -17,7 +17,8 @@ create table if not exists public.boot_sys_domain_event
 	topic        varchar(100)                            not null,
 	source_name  varchar(20)                             not null,
 	attribute    json,
-	app_name     varchar(20)                             not null
+	app_name     varchar(20)                             not null,
+	tag          varchar(50)                             not null
 );
 
 comment on table public.boot_sys_domain_event is '领域事件';
@@ -55,6 +56,8 @@ comment on column public.boot_sys_domain_event.source_name is '数据源名称';
 comment on column public.boot_sys_domain_event.attribute is '扩展属性';
 
 comment on column public.boot_sys_domain_event.app_name is '应用名称';
+
+comment on column public.boot_sys_domain_event.tag is '标签';
 
 alter table public.boot_sys_domain_event
 	owner to root;

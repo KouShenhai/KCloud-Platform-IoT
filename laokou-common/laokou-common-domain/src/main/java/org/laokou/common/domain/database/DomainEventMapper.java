@@ -19,12 +19,9 @@ package org.laokou.common.domain.database;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.domain.database.dataobject.DomainEventDO;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.Set;
 
 /**
  * @author laokou
@@ -33,13 +30,6 @@ import java.util.Set;
 @Repository
 public interface DomainEventMapper extends CrudMapper<Long, Integer, DomainEventDO> {
 
-	long selectTotal(@Param("sourceNames") Set<String> sourceNames, @Param("appName") String appName);
-
-	int deleteByYmd(@Param("ymd") String ymd);
-
-	void selectObjects(@Param("sourceNames") Set<String> sourceNames, @Param("appName") String appName,
-			ResultHandler<DomainEventDO> resultHandler);
-
-	void updateStatus(@Param("evt") DomainEventDO evt);
+	void updateStatus(@Param("id") Long id);
 
 }

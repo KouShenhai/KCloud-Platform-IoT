@@ -18,61 +18,30 @@
 package org.laokou.common.domain.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.session.ResultHandler;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.domain.database.dataobject.DomainEventDO;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.database.DomainEventMapper;
 import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.mybatisplus.utils.MybatisUtil;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class DomainEventServiceImpl implements DomainEventService {
 
 	private final DomainEventMapper domainEventMapper;
 
-	private final MybatisUtil mybatisUtil;
-
 	@Override
-	public void create(List<DomainEvent<Long>> events) {
-		if (CollectionUtil.isNotEmpty(events)) {
-			// List<DomainEventDO> list =
-			// events.stream().map(DomainEventConvertor::toDataObject).toList();
-			// mybatisUtil.batch(list, DomainEventMapper.class,
-			// events.getFirst().getSourceName(),
-			// DomainEventMapper::insertOne);
-			// DomainEventContextHolder.set(events);
-		}
+	public void create(DefaultDomainEvent domainEvent) {
+		log.info("{}", JacksonUtil.toJsonStr(domainEvent));
 	}
 
 	@Override
-	public void modify(List<DomainEvent<Long>> events) {
-		// List<DomainEventDO> list =
-		// events.stream().map(DomainEventConvertor::toDataObject).toList();
-		// mybatisUtil.batch(list, DomainEventMapper.class,
-		// events.getFirst().getSourceName(),
-		// DomainEventMapper::updateStatus);
+	public void update(DefaultDomainEvent domainEvent) {
+		domainEventMapper.updateStatus(domainEvent.getId());
 	}
-
-	@Override
-	public void removeLastMonth(String ymd) {
-		// domainEventMapper.deleteByYmd(ymd);
-	}
-
-	@Override
-	public void findList(Set<String> sourceNames, String appName, ResultHandler<DomainEventDO> resultHandler) {
-		// 查询 创建/发布成功/发布失败/消费失败
-		// if (domainEventMapper.selectTotal(sourceNames, appName) > 0) {
-		// domainEventMapper.selectObjects(sourceNames, appName, resultHandler);
-		// }
-	}
-
 }
