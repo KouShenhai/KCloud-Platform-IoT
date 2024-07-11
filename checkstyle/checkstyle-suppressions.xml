@@ -18,10 +18,11 @@
  */
 -->
 <!DOCTYPE suppressions PUBLIC
-        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
-        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+  "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+  "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 <suppressions>
-    <!-- https://checkstyle.sourceforge.io/filters/suppressionfilter.html -->
-    <suppress files="[\\/]org[\\/]laokou[\\/]admin[\\/]convertor[\\/].*ConvertorImpl.java" checks=".*" />
-    <suppress files="[\\/]org[\\/]laokou[\\/]auth[\\/]convertor[\\/].*ConvertorImpl.java" checks=".*" />
+  <!-- https://checkstyle.sourceforge.io/filters/suppressionfilter.html -->
+  <suppress files="[\\/]org[\\/]laokou[\\/]admin[\\/]convertor[\\/].*ConvertorImpl.java" checks=".*"/>
+  <suppress files="[\\/]org[\\/]laokou[\\/]auth[\\/]convertor[\\/].*ConvertorImpl.java" checks=".*"/>
+  <suppress files="[\\/]org[\\/]laokou[\\/]common[\\/]domain[\\/]convertor[\\/].*ConvertorImpl.java" checks=".*"/>
 </suppressions>
