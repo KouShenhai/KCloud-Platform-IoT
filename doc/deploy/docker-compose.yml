@@ -153,7 +153,7 @@ services:
       - rocketmq-namesrv
   # curl -s -X POST https://elasticsearch.laokou.org:9200/_security/user/kibana_system/_password -d "{\"password\":\"laokou123\"}"
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.3
     container_name: elasticsearch
     # 保持容器在没有守护程序的情况下运行
     tty: true
