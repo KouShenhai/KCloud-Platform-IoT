@@ -38,7 +38,6 @@ public class ArrayUtil {
 
 	/**
 	 * 判断数组不为空.
-	 *
 	 * @param array 数组
 	 * @return 判断结果
 	 */
@@ -48,7 +47,6 @@ public class ArrayUtil {
 
 	/**
 	 * 判断数组为空.
-	 *
 	 * @param array 数组
 	 * @return 判断结果
 	 */

@@ -54,12 +54,7 @@ public class LoginEventHandler extends AbstractDomainEventHandler {
 
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-		try {
-			loginLogCmdExe.executeVoid(new LoginLogCmd(domainEvent));
-		}
-		catch (Exception ignored) {
-
-		}
+		loginLogCmdExe.executeVoid(new LoginLogCmd(domainEvent));
 	}
 
 	@Override

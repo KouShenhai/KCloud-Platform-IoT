@@ -30,10 +30,9 @@ public abstract class AbstractComponentExecutor {
 
 	/**
 	 * Execute extension with Response.
-	 *
-	 * @param <R>         Response Type
-	 * @param <T>         Parameter Type
-	 * @param targetClz   类.
+	 * @param <R> Response Type
+	 * @param <T> Parameter Type
+	 * @param targetClz 类.
 	 * @param bizScenario 业务码
 	 * @param exeFunction 函数.
 	 */
@@ -44,16 +43,15 @@ public abstract class AbstractComponentExecutor {
 
 	public <R, T> R execute(ExtensionCoordinate extensionCoordinate, Function<T, R> exeFunction) {
 		return execute((Class<T>) extensionCoordinate.getExtensionPointClass(), extensionCoordinate.getBizScenario(),
-			exeFunction);
+				exeFunction);
 	}
 
 	/**
 	 * Execute extension without Response.
-	 *
-	 * @param <T>         Parameter Type
-	 * @param targetClz   类
+	 * @param <T> Parameter Type
+	 * @param targetClz 类
 	 * @param exeFunction 函数
-	 * @param context     上下文
+	 * @param context 上下文
 	 */
 	public <T> void executeVoid(Class<T> targetClz, BizScenario context, Consumer<T> exeFunction) {
 		T component = locateComponent(targetClz, context);

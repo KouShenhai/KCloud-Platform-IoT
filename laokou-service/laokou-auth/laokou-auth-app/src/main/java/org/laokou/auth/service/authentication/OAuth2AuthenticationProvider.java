@@ -82,13 +82,8 @@ public class OAuth2AuthenticationProvider {
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();
 			// 发布事件
-			publishEvent(auth);
+			domainEventPublisher.publishToCreate(to(auth));
 		}
-	}
-
-	private void publishEvent(AuthA auth) {
-		// 发布领域事件
-		domainEventPublisher.publish(to(auth));
 	}
 
 	private LoginEvent to(AuthA auth) {

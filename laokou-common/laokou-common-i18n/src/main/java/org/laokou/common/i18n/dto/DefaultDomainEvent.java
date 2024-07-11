@@ -31,10 +31,6 @@ import org.laokou.common.i18n.common.constant.EventType;
 @NoArgsConstructor
 public class DefaultDomainEvent extends DomainEvent<Long> {
 
-	public DefaultDomainEvent(Long id, String sourceName) {
-		super(id, sourceName);
-	}
-
 	@Override
 	protected void create(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
 			EventStatus eventStatus) {

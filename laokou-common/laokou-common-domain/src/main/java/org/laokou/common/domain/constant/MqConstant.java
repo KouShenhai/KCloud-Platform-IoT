@@ -15,21 +15,23 @@
  *
  */
 
-package org.laokou.common.domain.support;
-
-import org.laokou.common.i18n.dto.DomainEvent;
+package org.laokou.common.domain.constant;
 
 /**
- * 领域事件推送器.
- *
  * @author laokou
  */
-public interface DomainEventPublisher {
+public final class MqConstant {
 
-	<ID> void publishToCreate(DomainEvent<ID> payload);
+	public static final String LAOKOU_CREATE_EVENT_TOPIC = "laokou_create_event_topic";
 
-	<ID> void publishToModify(DomainEvent<ID> payload);
+	public static final String LAOKOU_CREATE_EVENT_CONSUMER_GROUP = "laokou_create_event_consumer_group";
 
-	void publish(String topic, String tag, Object payload);
+	public static final String LAOKOU_MODIFY_EVENT_CONSUMER_GROUP = "laokou_modify_event_consumer_group";
+
+	public static final String LAOKOU_MODIFY_EVENT_TOPIC = "laokou_modify_event_topic";
+
+	private MqConstant() {
+
+	}
 
 }

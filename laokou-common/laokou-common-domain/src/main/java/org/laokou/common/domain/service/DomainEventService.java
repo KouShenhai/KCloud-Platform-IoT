@@ -17,7 +17,7 @@
 
 package org.laokou.common.domain.service;
 
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.laokou.common.domain.model.DomainEventA;
 
 /**
  * 领域事件Service.
@@ -26,8 +26,8 @@ import org.laokou.common.i18n.dto.DefaultDomainEvent;
  */
 public interface DomainEventService {
 
-	void create(DefaultDomainEvent domainEvent);
+	void create(DomainEventA domainEventA);
 
-	void update(DefaultDomainEvent domainEvent);
+	void update(DomainEventA domainEventA);
 
 }

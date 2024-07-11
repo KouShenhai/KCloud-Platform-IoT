@@ -176,8 +176,8 @@
         <DATASOURCE-USERNAME-SNAIL-JOB>root</DATASOURCE-USERNAME-SNAIL-JOB>
         <DATASOURCE-PASSWORD-SNAIL-JOB>laokou123</DATASOURCE-PASSWORD-SNAIL-JOB>
         <DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>
-        <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true</DATASOURCE-PARAM-NACOS>
-        <DATASOURCE-PARAM-SNAIL-JOB>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true</DATASOURCE-PARAM-SNAIL-JOB>
+        <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-NACOS>
+        <DATASOURCE-PARAM-SNAIL-JOB>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-SNAIL-JOB>
         <DATASOURCE-PORT>5432</DATASOURCE-PORT>
         <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
         <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
@@ -220,8 +220,8 @@
         <DATASOURCE-PASSWORD-SNAIL-JOB>ENC(L22TUOP+1sSFU+2G/O6+/GCGTudE8Gb2Haf+0rlMxohzTd2l5nmdszMg4Me/Ogae)
         </DATASOURCE-PASSWORD-SNAIL-JOB>
         <DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>
-        <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true</DATASOURCE-PARAM-NACOS>
-        <DATASOURCE-PARAM-SNAIL-JOB>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true</DATASOURCE-PARAM-SNAIL-JOB>
+        <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-NACOS>
+        <DATASOURCE-PARAM-SNAIL-JOB>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-SNAIL-JOB>
         <DATASOURCE-PORT>5432</DATASOURCE-PORT>
         <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
         <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
@@ -275,11 +275,11 @@
         <DATASOURCE-HOST>${DATASOURCE_HOST:postgresql.laokou.org}</DATASOURCE-HOST>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PARAM-NACOS>
-          ${DATASOURCE_PARAM_NACOS:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true}
+          ${DATASOURCE_PARAM_NACOS:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified}
         </DATASOURCE-PARAM-NACOS>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PARAM-SNAIL-JOB>
-          ${DATASOURCE_PARAM_SNAIL_JOB:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true}
+          ${DATASOURCE_PARAM_SNAIL_JOB:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified}
         </DATASOURCE-PARAM-SNAIL-JOB>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PORT>${DATASOURCE_PORT:5432}</DATASOURCE-PORT>

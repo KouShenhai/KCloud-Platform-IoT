@@ -17,13 +17,21 @@
 
 package org.laokou.common.domain.service.impl;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.domain.convertor.DomainEventConvertor;
 import org.laokou.common.domain.database.DomainEventMapper;
+import org.laokou.common.domain.database.dataobject.DomainEventDO;
+import org.laokou.common.domain.model.DomainEventA;
 import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import static org.laokou.common.core.config.TaskExecutorConfig.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * @author laokou
@@ -33,16 +41,55 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DomainEventServiceImpl implements DomainEventService {
 
+	private static final String DOMAIN = "domain";
+
+	private final DomainEventConvertor domainEventConvertor;
+
 	private final DomainEventMapper domainEventMapper;
 
+	private final TransactionalUtil transactionalUtil;
+
 	@Override
-	public void create(DefaultDomainEvent domainEvent) {
-		log.info("{}", JacksonUtil.toJsonStr(domainEvent));
+	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
+	public void create(DomainEventA domainEventA) {
+		try {
+			DynamicDataSourceContextHolder.push(DOMAIN);
+			transactionalUtil.defaultExecuteWithoutResult(r -> {
+				try {
+					DomainEventDO eventDO = domainEventConvertor.toDataObject(domainEventA);
+					domainEventMapper.insert(eventDO);
+				}
+				catch (Exception e) {
+					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+					r.setRollbackOnly();
+					throw new SystemException(LogUtil.record(e.getMessage()));
+				}
+			});
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 	@Override
-	public void update(DefaultDomainEvent domainEvent) {
-		domainEventMapper.updateStatus(domainEvent.getId());
+	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
+	public void update(DomainEventA domainEventA) {
+		try {
+			DynamicDataSourceContextHolder.push(DOMAIN);
+			transactionalUtil.defaultExecuteWithoutResult(r -> {
+				try {
+					domainEventMapper.updateStatusById(domainEventA.getId());
+				}
+				catch (Exception e) {
+					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+					r.setRollbackOnly();
+					throw new SystemException(LogUtil.record(e.getMessage()));
+				}
+			});
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

@@ -49,7 +49,8 @@ public class RequestFilter implements Filter {
 		}
 		if (ObjectUtil.isNull(requestWrapper)) {
 			chain.doFilter(servletRequest, servletResponse);
-		} else {
+		}
+		else {
 			chain.doFilter(requestWrapper, servletResponse);
 		}
 	}
@@ -60,7 +61,6 @@ public class RequestFilter implements Filter {
 
 		/**
 		 * Constructs a request object wrapping the given request.
-		 *
 		 * @param request the {@link HttpServletRequest} to be wrapped.
 		 * @throws IllegalArgumentException if the request is null
 		 */
@@ -79,6 +79,7 @@ public class RequestFilter implements Filter {
 			public ByteArrayInputStreamReader(byte[] body) {
 				super(new ByteArrayInputStream(body));
 			}
+
 		}
 
 		@Override

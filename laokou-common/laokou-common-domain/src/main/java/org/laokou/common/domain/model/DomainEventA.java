@@ -17,13 +17,18 @@
 
 package org.laokou.common.domain.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 /**
  * @author laokou
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class DomainEventA extends AggregateRoot<Long> {
 
 	/**
@@ -55,5 +60,22 @@ public class DomainEventA extends AggregateRoot<Long> {
 	 * 扩展属性.
 	 */
 	private String attribute;
+
+	public DomainEventA(String json, DefaultDomainEvent domainEvent) {
+		this.id = domainEvent.getId();
+		this.attribute = json;
+		this.tenantId = domainEvent.getTenantId();
+		this.deptId = domainEvent.getDeptId();
+		this.deptPath = domainEvent.getDeptPath();
+		this.creator = domainEvent.getCreator();
+		this.editor = domainEvent.getEditor();
+		this.eventType = domainEvent.getEventType().name();
+		this.eventStatus = domainEvent.getEventStatus().name();
+		this.sourceName = domainEvent.getSourceName();
+		this.appName = domainEvent.getAppName();
+		this.aggregateId = domainEvent.getId();
+		this.tag = domainEvent.getTag();
+		this.topic = domainEvent.getTopic();
+	}
 
 }

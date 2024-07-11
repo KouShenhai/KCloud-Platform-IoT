@@ -30,6 +30,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DomainEventMapper extends CrudMapper<Long, Integer, DomainEventDO> {
 
-	void updateStatus(@Param("id") Long id);
+	void updateStatusById(@Param("id") Long id);
 
 }

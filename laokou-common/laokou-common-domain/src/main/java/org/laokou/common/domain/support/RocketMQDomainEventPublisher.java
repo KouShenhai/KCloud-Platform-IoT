@@ -24,32 +24,36 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CREATE_EVENT_TOPIC;
+import static org.laokou.common.domain.constant.MqConstant.LAOKOU_MODIFY_EVENT_TOPIC;
+
 @RequiredArgsConstructor
 @Component("domainEventPublisher")
 public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 
-	private static final String LAOKOU_CREATE_EVENT_TOPIC = "laokou_create_event_topic";
-
-	private static final String LAOKOU_MODIFY_EVENT_TOPIC = "laokou_modify_event_topic";
-
 	private final RocketMqTemplate rocketMqTemplate;
 
 	@Override
-	public <ID> void publish(DomainEvent<ID> payload) {
-		String tag = payload.getTag();
-		String topic = payload.getTopic();
+	public <ID> void publishToCreate(DomainEvent<ID> payload) {
 		String traceId = String.valueOf(IdGenerator.defaultSnowflakeId());
-		if (StringUtil.isNotEmpty(topic)) {
-			rocketMqTemplate.sendAsyncMessage(LAOKOU_CREATE_EVENT_TOPIC, payload, traceId);
-			if (StringUtil.isNotEmpty(tag)) {
-				rocketMqTemplate.sendAsyncMessage(topic, tag, payload, traceId);
-			}
-			else {
-				rocketMqTemplate.sendAsyncMessage(topic, payload, traceId);
-			}
+		rocketMqTemplate.sendAsyncMessage(LAOKOU_CREATE_EVENT_TOPIC, payload, traceId);
+
+	}
+
+	@Override
+	public <ID> void publishToModify(DomainEvent<ID> payload) {
+		String traceId = String.valueOf(IdGenerator.defaultSnowflakeId());
+		rocketMqTemplate.sendAsyncMessage(LAOKOU_MODIFY_EVENT_TOPIC, payload, traceId);
+	}
+
+	@Override
+	public void publish(String topic, String tag, Object payload) {
+		String traceId = String.valueOf(IdGenerator.defaultSnowflakeId());
+		if (StringUtil.isNotEmpty(tag)) {
+			rocketMqTemplate.sendAsyncMessage(topic, tag, payload, traceId);
 		}
 		else {
-			rocketMqTemplate.sendAsyncMessage(LAOKOU_MODIFY_EVENT_TOPIC, payload, traceId);
+			rocketMqTemplate.sendAsyncMessage(topic, payload, traceId);
 		}
 	}
 
