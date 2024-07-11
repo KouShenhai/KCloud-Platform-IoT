@@ -19,6 +19,8 @@ package org.laokou.common.core.utils;
 
 import org.springframework.util.ObjectUtils;
 
+import java.util.Arrays;
+
 /**
  * 数据工具类.
  *
@@ -26,8 +28,17 @@ import org.springframework.util.ObjectUtils;
  */
 public class ArrayUtil {
 
+	public static boolean isNotEmpty(byte[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isEmpty(byte[] array) {
+		return array == null || Arrays.equals(array, new byte[0]);
+	}
+
 	/**
 	 * 判断数组不为空.
+	 *
 	 * @param array 数组
 	 * @return 判断结果
 	 */
@@ -37,6 +48,7 @@ public class ArrayUtil {
 
 	/**
 	 * 判断数组为空.
+	 *
 	 * @param array 数组
 	 * @return 判断结果
 	 */

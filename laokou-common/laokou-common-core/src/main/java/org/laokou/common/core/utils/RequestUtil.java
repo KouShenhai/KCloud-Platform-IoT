@@ -21,13 +21,12 @@ import com.blueconic.browscap.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
 import org.springframework.util.Assert;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 
 import static org.laokou.common.i18n.common.constant.TraceConstant.DOMAIN_NAME;
@@ -45,12 +44,11 @@ public class RequestUtil {
 	static {
 		try {
 			PARSER = new UserAgentService().loadParser(Arrays.asList(BrowsCapField.BROWSER, BrowsCapField.BROWSER_TYPE,
-					BrowsCapField.BROWSER_MAJOR_VERSION, BrowsCapField.DEVICE_TYPE, BrowsCapField.PLATFORM,
-					BrowsCapField.PLATFORM_VERSION, BrowsCapField.RENDERING_ENGINE_VERSION,
-					BrowsCapField.RENDERING_ENGINE_NAME, BrowsCapField.PLATFORM_MAKER,
-					BrowsCapField.RENDERING_ENGINE_MAKER));
-		}
-		catch (IOException | ParseException e) {
+				BrowsCapField.BROWSER_MAJOR_VERSION, BrowsCapField.DEVICE_TYPE, BrowsCapField.PLATFORM,
+				BrowsCapField.PLATFORM_VERSION, BrowsCapField.RENDERING_ENGINE_VERSION,
+				BrowsCapField.RENDERING_ENGINE_NAME, BrowsCapField.PLATFORM_MAKER,
+				BrowsCapField.RENDERING_ENGINE_MAKER));
+		} catch (IOException | ParseException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -61,6 +59,7 @@ public class RequestUtil {
 
 	/**
 	 * 获取请求对象.
+	 *
 	 * @return 请求对象
 	 */
 	public static HttpServletRequest getHttpServletRequest() {
@@ -71,6 +70,7 @@ public class RequestUtil {
 
 	/**
 	 * 根据请求获取域名.
+	 *
 	 * @param request 请求对象
 	 * @return 域名
 	 */
@@ -80,6 +80,7 @@ public class RequestUtil {
 
 	/**
 	 * 获取浏览器信息.
+	 *
 	 * @param request 请求对象
 	 * @return 浏览器信息
 	 */
@@ -88,15 +89,8 @@ public class RequestUtil {
 	}
 
 	@SneakyThrows
-	public static String getRequestBody(HttpServletRequest request) {
-		StringBuilder sb = new StringBuilder();
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()))) {
-			String line;
-			while ((line = br.readLine()) != null) {
-				sb.append(line);
-			}
-		}
-		return sb.toString();
+	public static byte[] getRequestBody(HttpServletRequest request) {
+		return StreamUtils.copyToByteArray(request.getInputStream());
 	}
 
 }

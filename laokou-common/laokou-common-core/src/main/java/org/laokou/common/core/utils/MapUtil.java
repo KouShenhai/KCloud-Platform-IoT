@@ -43,6 +43,7 @@ public class MapUtil {
 
 	/**
 	 * 判端不为空.
+	 *
 	 * @param map map对象
 	 * @return 判断结果
 	 */
@@ -52,6 +53,7 @@ public class MapUtil {
 
 	/**
 	 * 判断为空.
+	 *
 	 * @param map map对象
 	 * @return 判断结果
 	 */
@@ -61,8 +63,9 @@ public class MapUtil {
 
 	/**
 	 * map转字符串.
-	 * @param map map对象
-	 * @param on 分隔符
+	 *
+	 * @param map       map对象
+	 * @param on        分隔符
 	 * @param separator 分隔符
 	 * @return 字符串
 	 */
@@ -75,28 +78,30 @@ public class MapUtil {
 
 	/**
 	 * 转URI Map.
-	 * @param uriMap map对象
+	 *
+	 * @param uriMap    map对象
 	 * @param serviceId 服务ID
 	 * @param separator 分隔符
 	 * @return Map对象
 	 */
 	public static Map<String, Set<String>> toUriMap(Map<String, Set<String>> uriMap, String serviceId,
-			String separator) {
+													String separator) {
 		if (uriMap.isEmpty()) {
 			return new ConcurrentHashMap<>(0);
 		}
 		Map<String, Set<String>> maps = new ConcurrentHashMap<>(uriMap.size());
 		uriMap.forEach((k, v) -> maps.put(k,
-				v.stream()
-					.filter(item -> item.contains(serviceId))
-					.map(item -> item.substring(0, item.indexOf(separator)))
-					.collect(Collectors.toSet())));
+			v.stream()
+				.filter(item -> item.contains(serviceId))
+				.map(item -> item.substring(0, item.indexOf(separator)))
+				.collect(Collectors.toSet())));
 		return maps;
 	}
 
 	/**
 	 * 转URI Map.
-	 * @param uriMap map对象
+	 *
+	 * @param uriMap    map对象
 	 * @param serviceId 服务ID
 	 * @return Map对象
 	 */
@@ -106,8 +111,9 @@ public class MapUtil {
 
 	/**
 	 * 字符串转为Map.
-	 * @param str 字符串
-	 * @param on 分隔符
+	 *
+	 * @param str       字符串
+	 * @param on        分隔符
 	 * @param separator 分隔符
 	 * @return Map对象
 	 */
@@ -120,6 +126,7 @@ public class MapUtil {
 
 	/**
 	 * 字符串转为param map.
+	 *
 	 * @param params 参数
 	 * @return paramMap对象
 	 */
@@ -145,6 +152,7 @@ public class MapUtil {
 
 	/**
 	 * map转字符串.
+	 *
 	 * @param paramMap map对象
 	 * @param isEncode 是否编码
 	 * @return 字符串
@@ -170,6 +178,7 @@ public class MapUtil {
 
 	/**
 	 * map转为字符串.
+	 *
 	 * @param paramMap 参数
 	 * @return 字符串
 	 */
@@ -179,6 +188,7 @@ public class MapUtil {
 
 	/**
 	 * 请求对象构建MultiValueMap.
+	 *
 	 * @param parameterMap 请求参数Map
 	 * @return MultiValueMap
 	 */
@@ -193,9 +203,9 @@ public class MapUtil {
 		if (MapUtil.isNotEmpty(parameterMap)) {
 			return getParameters(parameterMap).toSingleValueMap();
 		}
-		String requestBody = RequestUtil.getRequestBody(request);
-		return StringUtil.isEmpty(requestBody) ? Collections.emptyMap()
-				: JacksonUtil.toMap(requestBody, String.class, String.class);
+		byte[] requestBody = RequestUtil.getRequestBody(request);
+		return ArrayUtil.isEmpty(requestBody) ? Collections.emptyMap()
+			: JacksonUtil.toMap(requestBody, String.class, String.class);
 	}
 
 }

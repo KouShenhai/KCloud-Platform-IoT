@@ -29,7 +29,6 @@ import org.springframework.core.annotation.Order;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 
 import static org.laokou.common.core.utils.RequestUtil.getRequestBody;
 
@@ -50,18 +49,18 @@ public class RequestFilter implements Filter {
 		}
 		if (ObjectUtil.isNull(requestWrapper)) {
 			chain.doFilter(servletRequest, servletResponse);
-		}
-		else {
+		} else {
 			chain.doFilter(requestWrapper, servletResponse);
 		}
 	}
 
 	public static class RequestWrapper extends HttpServletRequestWrapper {
 
-		private final String REQUEST_BODY;
+		private final byte[] REQUEST_BODY;
 
 		/**
 		 * Constructs a request object wrapping the given request.
+		 *
 		 * @param request the {@link HttpServletRequest} to be wrapped.
 		 * @throws IllegalArgumentException if the request is null
 		 */
@@ -72,12 +71,19 @@ public class RequestFilter implements Filter {
 
 		@Override
 		public BufferedReader getReader() {
-			return new BufferedReader(new InputStreamReader(getInputStream()));
+			return new BufferedReader(new ByteArrayInputStreamReader(REQUEST_BODY));
+		}
+
+		private static class ByteArrayInputStreamReader extends InputStreamReader {
+
+			public ByteArrayInputStreamReader(byte[] body) {
+				super(new ByteArrayInputStream(body));
+			}
 		}
 
 		@Override
 		public ServletInputStream getInputStream() {
-			ByteArrayInputStream inputStream = new ByteArrayInputStream(REQUEST_BODY.getBytes(StandardCharsets.UTF_8));
+			ByteArrayInputStream inputStream = new ByteArrayInputStream(REQUEST_BODY);
 			return new ServletInputStream() {
 
 				@Override
