@@ -69,6 +69,7 @@
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <asciidoctor-maven-plugin.version>3.0.0</asciidoctor-maven-plugin.version>
     <spring-javaformat-maven-plugin.version>0.0.42</spring-javaformat-maven-plugin.version>
+    <maven-javadoc-plugin.version>3.7.0</maven-javadoc-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -480,6 +481,14 @@
             <version>${spring-asciidoctor-backends.version}</version>
           </dependency>
         </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${maven-javadoc-plugin.version}</version>
+        <configuration>
+          <aggregate>true</aggregate>
+        </configuration>
       </plugin>
     </plugins>
     <!-- profile对资源的操作 -->
