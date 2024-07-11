@@ -19,7 +19,6 @@ package org.laokou.iot;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
-import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,7 +37,7 @@ public class IotApp implements CommandLineRunner {
 
 	// private final TDengineMapper tDengineMapper;
 
-	private final RocketMqTemplate rocketMqTemplate;
+	// private final RocketMqTemplate rocketMqTemplate;
 
 	public static void main(String[] args) throws UnknownHostException {
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
@@ -48,7 +47,7 @@ public class IotApp implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 		// tDengineMapper.insert();
-		rocketMqTemplate.sendAsyncMessage("test", "333");
+		// rocketMqTemplate.sendAsyncMessage("test", "333");
 	}
 
 }

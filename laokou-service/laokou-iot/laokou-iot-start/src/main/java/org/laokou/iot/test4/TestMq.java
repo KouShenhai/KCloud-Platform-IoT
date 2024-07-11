@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */
+ *//*
+
 
 package org.laokou.iot.test4;
 
@@ -26,9 +27,11 @@ import org.springframework.stereotype.Component;
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
 
+*/
 /**
  * @author laokou
- */
+ *//*
+
 @Slf4j
 @Component
 @RocketMQMessageListener(consumerGroup = "test_group", topic = "test", messageModel = CLUSTERING,
@@ -42,3 +45,4 @@ public class TestMq implements RocketMQListener<MessageExt> {
 	}
 
 }
+*/
