@@ -103,7 +103,7 @@ public class RequestFilter implements Filter {
 
 				@Override
 				public void setReadListener(ReadListener readListener) {
-
+					throw new UnsupportedOperationException();
 				}
 			};
 		}
