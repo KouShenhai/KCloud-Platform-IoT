@@ -22,7 +22,6 @@ package org.laokou.common.extension;
  * scenario.
  *
  * @author Frank Zhang
- * @date 2019-08-20 12:07
  */
 public class BizScenario {
 
@@ -50,15 +49,6 @@ public class BizScenario {
 	 */
 	private String scenario = DEFAULT_SCENARIO;
 
-	/**
-	 * For above case, the BizScenario will be "tmall.placeOrder.88vip", with this code,
-	 * we can provide extension processing other than "tmall.placeOrder.normal" scenario.
-	 *
-	 */
-	public String getUniqueIdentity() {
-		return bizId + DOT_SEPARATOR + useCase + DOT_SEPARATOR + scenario;
-	}
-
 	public static BizScenario valueOf(String bizId, String useCase, String scenario) {
 		BizScenario bizScenario = new BizScenario();
 		bizScenario.bizId = bizId;
@@ -77,6 +67,14 @@ public class BizScenario {
 
 	public static BizScenario newDefault() {
 		return BizScenario.valueOf(DEFAULT_BIZ_ID, DEFAULT_USE_CASE, DEFAULT_SCENARIO);
+	}
+
+	/**
+	 * For above case, the BizScenario will be "tmall.placeOrder.88vip", with this code,
+	 * we can provide extension processing other than "tmall.placeOrder.normal" scenario.
+	 */
+	public String getUniqueIdentity() {
+		return bizId + DOT_SEPARATOR + useCase + DOT_SEPARATOR + scenario;
 	}
 
 	public String getIdentityWithDefaultScenario() {

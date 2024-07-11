@@ -25,8 +25,7 @@ import java.util.stream.Collectors;
 /**
  * 删除过期下线机器
  *
- * @author: opensnail
- * @date : 2023-07-21 14:59
+ * @author opensnail
  * @since 2.1.0
  */
 @Component
@@ -63,11 +62,10 @@ public class OfflineNodeSchedule extends AbstractSchedule implements Lifecycle {
 
 			for (final RegisterNodeInfo registerNodeInfo : waitOffline) {
 				CacheRegisterTable.remove(registerNodeInfo.getGroupName(), registerNodeInfo.getNamespaceId(),
-						registerNodeInfo.getHostId());
+					registerNodeInfo.getHostId());
 			}
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			SnailJobLog.LOCAL.error("clearOfflineNode 失败", e);
 		}
 	}

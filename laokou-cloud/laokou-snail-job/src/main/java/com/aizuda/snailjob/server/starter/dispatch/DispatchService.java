@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit;
  * 负责SnailJob系统任务分发调度
  *
  * @author opensnail
- * @date 2023-09-21 23:36:47
  * @since 2.4.0
  */
 @Component
@@ -28,20 +27,18 @@ import java.util.concurrent.TimeUnit;
 public class DispatchService implements Lifecycle {
 
 	/**
-	 * 分配器线程
-	 */
-	private final ScheduledExecutorService dispatchService = Executors
-		.newSingleThreadScheduledExecutor(r -> new Thread(r, "dispatch-service"));
-
-	/**
 	 * 调度时长
 	 */
 	public static final Long PERIOD = SystemConstants.SCHEDULE_PERIOD;
-
 	/**
 	 * 延迟30s为了尽可能保障集群节点都启动完成在进行rebalance
 	 */
 	public static final Long INITIAL_DELAY = SystemConstants.SCHEDULE_INITIAL_DELAY;
+	/**
+	 * 分配器线程
+	 */
+	private final ScheduledExecutorService dispatchService = Executors
+		.newSingleThreadScheduledExecutor(r -> new Thread(r, "dispatch-service"));
 
 	@Override
 	public void start() {
@@ -65,8 +62,7 @@ public class DispatchService implements Lifecycle {
 					actorRef.tell(scanTaskDTO, actorRef);
 				}
 
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				SnailJobLog.LOCAL.error("分发异常", e);
 			}
 
@@ -75,6 +71,7 @@ public class DispatchService implements Lifecycle {
 
 	/**
 	 * 分配当前POD负责消费的桶
+	 *
 	 * @return {@link GroupConfig} 组上下文
 	 */
 	private Set<Integer> getConsumerBucket() {

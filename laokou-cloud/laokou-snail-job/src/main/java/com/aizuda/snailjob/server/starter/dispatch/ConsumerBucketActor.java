@@ -32,7 +32,6 @@ import java.util.Objects;
  * <p>
  *
  * @author opensnail
- * @date 2023-09-21 23:47:23
  * @since 2.4.0
  */
 @Component(ActorGenerator.SCAN_BUCKET_ACTOR)
@@ -40,15 +39,11 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ConsumerBucketActor extends AbstractActor {
 
-	private final AccessTemplate accessTemplate;
-
-	private final ServerNodeMapper serverNodeMapper;
-
-	private final SystemProperties systemProperties;
-
 	private static final String DEFAULT_JOB_KEY = "DEFAULT_JOB_KEY";
-
 	private static final String DEFAULT_WORKFLOW_KEY = "DEFAULT_JOB_KEY";
+	private final AccessTemplate accessTemplate;
+	private final ServerNodeMapper serverNodeMapper;
+	private final SystemProperties systemProperties;
 
 	@Override
 	public Receive createReceive() {
@@ -56,8 +51,7 @@ public class ConsumerBucketActor extends AbstractActor {
 
 			try {
 				doDispatch(consumerBucket);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				SnailJobLog.LOCAL.error("Data dispatcher processing exception. [{}]", consumerBucket, e);
 			}
 
@@ -85,8 +79,7 @@ public class ConsumerBucketActor extends AbstractActor {
 					.select(GroupConfig::getGroupName, GroupConfig::getGroupPartition, GroupConfig::getNamespaceId)
 					.eq(GroupConfig::getGroupStatus, StatusEnum.YES.getStatus())
 					.in(GroupConfig::getBucketIndex, consumerBucket.getBuckets()));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			SnailJobLog.LOCAL.error("生成重试任务异常.", e);
 		}
 
@@ -118,6 +111,7 @@ public class ConsumerBucketActor extends AbstractActor {
 
 	/**
 	 * 扫描任务生成器
+	 *
 	 * @param scanTask {@link ScanTask} 组上下文
 	 */
 	private void produceScanActorTask(ScanTask scanTask) {

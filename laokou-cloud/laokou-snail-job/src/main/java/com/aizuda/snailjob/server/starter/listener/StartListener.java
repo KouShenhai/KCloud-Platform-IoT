@@ -16,8 +16,7 @@ import java.util.List;
 /**
  * 系统启动监听器
  *
- * @author: opensnail
- * @date : 2021-11-19 19:00
+ * @author opensnail
  */
 @Component
 @RequiredArgsConstructor

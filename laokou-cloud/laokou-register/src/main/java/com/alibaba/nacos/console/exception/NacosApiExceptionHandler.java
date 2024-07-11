@@ -46,11 +46,10 @@ import java.io.IOException;
  * Exception Handler for Nacos API.
  *
  * @author dongyafei
- * @date 2022/7/22
  */
 
 @Order(-1)
-@ControllerAdvice(annotations = { NacosApi.class })
+@ControllerAdvice(annotations = {NacosApi.class})
 @ResponseBody
 public class NacosApiExceptionHandler {
 
@@ -125,7 +124,7 @@ public class NacosApiExceptionHandler {
 	}
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler(value = { DataAccessException.class, ServletException.class, IOException.class })
+	@ExceptionHandler(value = {DataAccessException.class, ServletException.class, IOException.class})
 	public Result<String> handleDataAccessException(Exception e) {
 		LOGGER.error("got exception. {} {}", e.getMessage(), ExceptionUtil.getAllExceptionMsg(e));
 		return Result.failure(ErrorCode.DATA_ACCESS_ERROR, e.getMessage());
