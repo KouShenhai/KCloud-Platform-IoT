@@ -18,7 +18,7 @@
 package org.laokou.common.domain.handler;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.ThreadContext;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.domain.support.DomainEventPublisher;
@@ -27,32 +27,35 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 import java.nio.charset.StandardCharsets;
 
+import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
+
 /**
  * @author laokou
  */
-@Slf4j
 @RequiredArgsConstructor
 public abstract class AbstractDomainEventHandler implements RocketMQListener<MessageExt> {
 
 	private final DomainEventPublisher domainEventPublisher;
 
 	@Override
-	public void onMessage(MessageExt message) {
-		String msg = new String(message.getBody(), StandardCharsets.UTF_8);
+	public void onMessage(MessageExt messageExt) {
+		String traceId = messageExt.getProperty(TRACE_ID);
+		ThreadContext.put(TRACE_ID, traceId);
+		String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
 		DefaultDomainEvent domainEvent = convert(msg);
 		try {
 			handleDomainEvent(domainEvent);
 			// 修改为已消费
 			domainEventPublisher.publishToModify(domainEvent);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			if (e instanceof DataIntegrityViolationException) {
 				// 数据重复直接改为已消费
 				domainEventPublisher.publishToModify(domainEvent);
-			}
-			else {
+			} else {
 				throw e;
 			}
+		} finally {
+			ThreadContext.clearMap();
 		}
 	}
 
