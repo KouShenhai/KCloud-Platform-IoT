@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_DOMAIN_EVENT;
+import static org.laokou.common.domain.database.dataobject.DomainEventDO.BOOT_SYS_DOMAIN_EVENT;
 
 /**
  * @author laokou
@@ -29,6 +29,8 @@ import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_DOMAIN_EVENT;
 @Data
 @TableName(BOOT_SYS_DOMAIN_EVENT)
 public class DomainEventDO extends BaseDO {
+
+	public static final String BOOT_SYS_DOMAIN_EVENT = "boot_sys_domain_event";
 
 	/**
 	 * 事件类型.

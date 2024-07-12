@@ -23,12 +23,13 @@ import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.parser.JsqlParserGlobal;
-import com.baomidou.mybatisplus.extension.parser.cache.JdkSerialCaffeineJsqlParseCache;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.mybatis.spring.annotation.MapperScan;
@@ -57,10 +58,14 @@ import java.util.concurrent.TimeUnit;
 @MapperScan("org.laokou.common.mybatisplus.mapper")
 public class MybatisPlusAutoConfig {
 
-	// 静态注入缓存处理类，Caffeine是线程安全【无需指定线程安全序列化/反序列化】
+	private static final Cache<String, byte[]> CACHE = Caffeine.newBuilder()
+		.maximumSize(1024)
+		.expireAfterWrite(5, TimeUnit.SECONDS)
+		.build();
+
 	static {
-		JsqlParserGlobal.setJsqlParseCache(new JdkSerialCaffeineJsqlParseCache(
-				cache -> cache.maximumSize(1024).expireAfterWrite(5, TimeUnit.SECONDS)));
+		// 静态注入缓存处理类，Caffeine是线程安全【无需指定线程安全序列化/反序列化】
+		JsqlParserGlobal.setJsqlParseCache(new FurySerialCaffeineJsqlParseCache(CACHE));
 	}
 
 	@Bean
