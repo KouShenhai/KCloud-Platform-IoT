@@ -32,7 +32,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class FurySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseCache {
 
-	private static final ExecutorService EXECUTOR = new ThreadPoolExecutor(8, 16, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<>(256), new ThreadPoolExecutor.CallerRunsPolicy());
+	private static final ExecutorService EXECUTOR = new ThreadPoolExecutor(8, 16, 60, TimeUnit.SECONDS,
+			new LinkedBlockingQueue<>(256), new ThreadPoolExecutor.CallerRunsPolicy());
 
 	public FurySerialCaffeineJsqlParseCache(Cache<String, byte[]> cache) {
 		super(cache);
