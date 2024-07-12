@@ -84,9 +84,6 @@ public final class DSConstant {
 	@Schema(name = "BOOT_SYS_IP", description = "IP表")
 	public static final String BOOT_SYS_IP = "boot_sys_ip";
 
-	@Schema(name = "BOOT_SYS_DOMAIN_EVENT", description = "领域事件表")
-	public static final String BOOT_SYS_DOMAIN_EVENT = "boot_sys_domain_event";
-
 	@Schema(name = "TENANT", description = "租户数据源标识")
 	public static final String TENANT = "#tenant";
 

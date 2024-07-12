@@ -26,6 +26,12 @@
     where id = #{id}
   </update>
 
+  <select id="selectObjects" fetchSize="10000" resultSetType="FORWARD_ONLY"
+          resultType="org.laokou.common.domain.database.dataobject.DomainEventDO">
+
+
+  </select>
+
   <!--    <select id="selectObjects" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.common.domain.database.dataobject.DomainEventDO">
           select <include refid="columns"/>
               from boot_sys_domain_event

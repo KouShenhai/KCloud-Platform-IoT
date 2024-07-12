@@ -23,12 +23,13 @@ import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.parser.JsqlParserGlobal;
-import com.baomidou.mybatisplus.extension.parser.cache.JdkSerialCaffeineJsqlParseCache;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.mybatis.spring.annotation.MapperScan;
@@ -53,14 +54,18 @@ import java.util.concurrent.TimeUnit;
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnClass({ DataSource.class })
+@ConditionalOnClass({DataSource.class})
 @MapperScan("org.laokou.common.mybatisplus.mapper")
 public class MybatisPlusAutoConfig {
 
-	// 静态注入缓存处理类，Caffeine是线程安全【无需指定线程安全序列化/反序列化】
+	private static final Cache<String, byte[]> CACHE = Caffeine.newBuilder()
+		.maximumSize(1024)
+		.expireAfterWrite(5, TimeUnit.SECONDS)
+		.build();
+
 	static {
-		JsqlParserGlobal.setJsqlParseCache(new JdkSerialCaffeineJsqlParseCache(
-				cache -> cache.maximumSize(1024).expireAfterWrite(5, TimeUnit.SECONDS)));
+		// 静态注入缓存处理类，Caffeine是线程安全【无需指定线程安全序列化/反序列化】
+		JsqlParserGlobal.setJsqlParseCache(new FurySerialCaffeineJsqlParseCache(CACHE));
 	}
 
 	@Bean
@@ -88,14 +93,14 @@ public class MybatisPlusAutoConfig {
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
 	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties,
-			DataSource dataSource, Executor workStealingPoolExecutor) {
+														 DataSource dataSource, Executor workStealingPoolExecutor) {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 		// 数据权限插件
 		interceptor.addInnerInterceptor(new DataFilterInterceptor());
 		// 多租户插件
 		if (mybatisPlusExtProperties.getTenant().isEnabled()) {
 			interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(
-					new GlobalTenantLineHandler(mybatisPlusExtProperties.getTenant().getIgnoreTables())));
+				new GlobalTenantLineHandler(mybatisPlusExtProperties.getTenant().getIgnoreTables())));
 		}
 		// 动态表名插件
 		DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
@@ -143,12 +148,12 @@ public class MybatisPlusAutoConfig {
 	 * 异步分页. 解除每页500条限制.
 	 */
 	private AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor(DataSource dataSource,
-			Executor workStealingPoolExecutor) {
+																			Executor workStealingPoolExecutor) {
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
 		AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor = new AsyncPaginationInnerInterceptor(
-				DbType.POSTGRE_SQL, dataSource, workStealingPoolExecutor);
+			DbType.POSTGRE_SQL, dataSource, workStealingPoolExecutor);
 		// -1表示不受限制
 		asyncPaginationInnerInterceptor.setMaxLimit(-1L);
 		// 溢出总页数后是进行处理，查看源码就知道是干啥的

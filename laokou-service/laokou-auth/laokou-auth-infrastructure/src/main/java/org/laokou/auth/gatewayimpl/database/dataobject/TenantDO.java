@@ -23,7 +23,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 import java.io.Serial;
 
-import static org.laokou.auth.common.constant.Constant.BOOT_SYS_TENANT;
+import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_TENANT;
 
 /**
  * 租户.
@@ -33,6 +33,8 @@ import static org.laokou.auth.common.constant.Constant.BOOT_SYS_TENANT;
 @Data
 @TableName(BOOT_SYS_TENANT)
 public class TenantDO extends BaseDO {
+
+	public static final String BOOT_SYS_TENANT = "boot_sys_tenant";
 
 	@Serial
 	private static final long serialVersionUID = -6290324458980136421L;
