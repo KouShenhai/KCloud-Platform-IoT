@@ -18,7 +18,6 @@
 package org.laokou.common.domain.handler;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -41,11 +40,10 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 /**
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 @RocketMQMessageListener(consumerGroup = LAOKOU_CREATE_EVENT_CONSUMER_GROUP, topic = LAOKOU_CREATE_EVENT_TOPIC,
-	messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+		messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class CreateDomainEventHandler implements RocketMQListener<MessageExt> {
 
 	private final DomainEventService domainEventService;
@@ -61,7 +59,8 @@ public class CreateDomainEventHandler implements RocketMQListener<MessageExt> {
 			DefaultDomainEvent defaultDomainEvent = JacksonUtil.toBean(msg, DefaultDomainEvent.class);
 			domainEventService.create(new DomainEventA(msg, defaultDomainEvent));
 			domainEventPublisher.publish(defaultDomainEvent.getTopic(), defaultDomainEvent.getTag(), msg);
-		} finally {
+		}
+		finally {
 			ThreadContext.clearMap();
 		}
 	}

@@ -44,7 +44,8 @@ public abstract class AbstractDLQHandler implements RocketMQListener<MessageExt>
 		String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
 		try {
 			domainEventPublisher.publish(messageExt.getTopic(), messageExt.getTags(), msg);
-		} finally {
+		}
+		finally {
 			ThreadContext.clearMap();
 		}
 	}
