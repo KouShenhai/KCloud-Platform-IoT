@@ -19,6 +19,7 @@ package org.laokou.common.domain.handler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.ThreadContext;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
@@ -35,6 +36,7 @@ import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
 import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CREATE_EVENT_CONSUMER_GROUP;
 import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CREATE_EVENT_TOPIC;
+import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
 /**
  * @author laokou
@@ -43,7 +45,7 @@ import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CREATE_EVENT_T
 @Component
 @RequiredArgsConstructor
 @RocketMQMessageListener(consumerGroup = LAOKOU_CREATE_EVENT_CONSUMER_GROUP, topic = LAOKOU_CREATE_EVENT_TOPIC,
-		messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+	messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class CreateDomainEventHandler implements RocketMQListener<MessageExt> {
 
 	private final DomainEventService domainEventService;
@@ -51,11 +53,17 @@ public class CreateDomainEventHandler implements RocketMQListener<MessageExt> {
 	private final DomainEventPublisher domainEventPublisher;
 
 	@Override
-	public void onMessage(MessageExt message) {
-		String msg = new String(message.getBody(), StandardCharsets.UTF_8);
-		DefaultDomainEvent defaultDomainEvent = JacksonUtil.toBean(msg, DefaultDomainEvent.class);
-		domainEventService.create(new DomainEventA(msg, defaultDomainEvent));
-		domainEventPublisher.publish(defaultDomainEvent.getTopic(), defaultDomainEvent.getTag(), msg);
+	public void onMessage(MessageExt messageExt) {
+		String traceId = messageExt.getProperty(TRACE_ID);
+		ThreadContext.put(TRACE_ID, traceId);
+		String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
+		try {
+			DefaultDomainEvent defaultDomainEvent = JacksonUtil.toBean(msg, DefaultDomainEvent.class);
+			domainEventService.create(new DomainEventA(msg, defaultDomainEvent));
+			domainEventPublisher.publish(defaultDomainEvent.getTopic(), defaultDomainEvent.getTag(), msg);
+		} finally {
+			ThreadContext.clearMap();
+		}
 	}
 
 }
