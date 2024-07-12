@@ -18,7 +18,6 @@
 package org.laokou.auth.event.handler;
 
 import io.micrometer.common.lang.NonNullApi;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.command.LoginLogCmdExe;
 import org.laokou.auth.dto.LoginLogCmd;
@@ -38,11 +37,10 @@ import static org.laokou.auth.common.constant.MqConstant.*;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
-		selectorExpression = LOGIN_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+	selectorExpression = LOGIN_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class LoginEventHandler extends AbstractDomainEventHandler {
 
 	private final LoginLogCmdExe loginLogCmdExe;
