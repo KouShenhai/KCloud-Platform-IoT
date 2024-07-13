@@ -17,7 +17,7 @@
 
 package org.laokou.common.sentinel.exception.handler;
 
-import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
+import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.authority.AuthorityException;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeException;
@@ -26,7 +26,6 @@ import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowException;
 import com.alibaba.csp.sentinel.slots.system.SystemBlockException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.dto.Result;
@@ -38,13 +37,12 @@ import static org.laokou.common.i18n.common.exception.SystemException.*;
 /**
  * @author laokou
  */
-@AutoConfiguration
 @Slf4j
+@AutoConfiguration
 public class SentinelExceptionHandler implements BlockExceptionHandler {
 
 	@Override
-	@SneakyThrows
-	public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, BlockException e) {
+	public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, String s, BlockException e) {
 		// 限流
 		if (e instanceof FlowException flowException) {
 			log.error("FlowException -> 已限流，错误信息：{}，详情见日志", LogUtil.record(flowException.getMessage()), flowException);
@@ -54,30 +52,29 @@ public class SentinelExceptionHandler implements BlockExceptionHandler {
 		// 降级
 		if (e instanceof DegradeException degradeException) {
 			log.error("DegradeException -> 已降级，错误信息：{}，详情见日志", LogUtil.record(degradeException.getMessage()),
-					degradeException);
+				degradeException);
 			ResponseUtil.response(response, Result.fail(DEGRADED));
 			return;
 		}
 		// 热点参数限流
 		if (e instanceof ParamFlowException paramFlowException) {
 			log.error("ParamFlowException -> 热点参数已限流，错误信息：{}，详情见日志", LogUtil.record(paramFlowException.getMessage()),
-					paramFlowException);
+				paramFlowException);
 			ResponseUtil.response(response, Result.fail(PARAM_FLOWED));
 			return;
 		}
 		// 系统规则
 		if (e instanceof SystemBlockException systemBlockException) {
 			log.error("SystemBlockException -> 系统规则错误，错误信息：{}，详情见日志", LogUtil.record(systemBlockException.getMessage()),
-					systemBlockException);
+				systemBlockException);
 			ResponseUtil.response(response, Result.fail(SYSTEM_BLOCKED));
 			return;
 		}
 		// 授权规则
 		if (e instanceof AuthorityException authorityException) {
 			log.error("AuthorityException -> 授权规则错误，错误信息：{}，详情见日志", LogUtil.record(authorityException.getMessage()),
-					authorityException);
+				authorityException);
 			ResponseUtil.response(response, Result.fail(AUTHORITY));
 		}
 	}
-
 }
