@@ -61,7 +61,7 @@ public class DomainEventA extends AggregateRoot<Long> {
 	 */
 	private String attribute;
 
-	protected DomainEventA(String json, DefaultDomainEvent domainEvent) {
+	public DomainEventA(String json, DefaultDomainEvent domainEvent) {
 		this.id = domainEvent.getId();
 		this.attribute = json;
 		this.tenantId = domainEvent.getTenantId();
