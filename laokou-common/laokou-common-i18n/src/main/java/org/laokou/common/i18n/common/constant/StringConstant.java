@@ -32,15 +32,12 @@ public final class StringConstant {
 	public static final String EMPTY = "";
 
 	/**
-	 * AT.
+	 * 分割参数.
 	 */
 	public static final String AT = "@";
 
 	@Schema(name = "TRUE", description = "TRUE")
 	public static final String TRUE = "true";
-
-	@Schema(name = "NULL", description = "NULL")
-	public static final String NULL = null;
 
 	@Schema(name = "SLASH", description = "分割参数")
 	public static final String SLASH = "/";
@@ -93,13 +90,20 @@ public final class StringConstant {
 	@Schema(name = "SINGLE_QUOT", description = "单引号")
 	public static final String SINGLE_QUOT = "'";
 
-	@Schema(name = "AND", description = "并")
+	/**
+	 * 分割参数.
+	 */
 	public static final String AND = "&";
 
 	/**
 	 * 分割参数.
 	 */
 	public static final String ROD = "-";
+
+	/**
+	 * 分割参数.
+	 */
+	public static final String WELL_NO = "#";
 
 	/**
 	 * 分割参数.

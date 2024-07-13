@@ -60,6 +60,8 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import static org.laokou.common.i18n.common.constant.StringConstant.WELL_NO;
+
 /**
  * 数据缓存扩展管理类. A {@link org.springframework.cache.CacheManager} implementation backed by
  * Redisson instance.
@@ -102,8 +104,9 @@ public class RedissonSpringExtCacheManager implements CacheManager, ResourceLoad
 	 * mapped by Cache name.
 	 * <p>
 	 * Each Cache instance share one Codec instance.
+	 *
 	 * @param redisson object
-	 * @param codec object
+	 * @param codec    object
 	 */
 	public RedissonSpringExtCacheManager(RedissonClient redisson, Codec codec) {
 		this.redisson = redisson;
@@ -127,7 +130,7 @@ public class RedissonSpringExtCacheManager implements CacheManager, ResourceLoad
 	@Override
 	public Cache getCache(String name) {
 
-		String[] values = name.split("#");
+		String[] values = name.split(WELL_NO);
 		name = values[0];
 
 		Cache cache = instanceMap.get(name);
@@ -182,8 +185,7 @@ public class RedissonSpringExtCacheManager implements CacheManager, ResourceLoad
 		Cache oldCache = instanceMap.putIfAbsent(name, cache);
 		if (oldCache != null) {
 			cache = oldCache;
-		}
-		else {
+		} else {
 			map.setMaxSize(config.getMaxSize());
 		}
 		return cache;
@@ -215,16 +217,14 @@ public class RedissonSpringExtCacheManager implements CacheManager, ResourceLoad
 		Resource resource = resourceLoader.getResource(configLocation);
 		try {
 			this.configMap = (Map<String, CacheConfig>) CacheConfig.fromYAML(resource.getInputStream());
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			// try to read yaml
 			try {
 				this.configMap = (Map<String, CacheConfig>) CacheConfig.fromJSON(resource.getInputStream());
-			}
-			catch (IOException e1) {
+			} catch (IOException e1) {
 				e1.addSuppressed(e);
 				throw new BeanDefinitionStoreException(
-						"Could not parse cache configuration at [" + configLocation + "]", e1);
+					"Could not parse cache configuration at [" + configLocation + "]", e1);
 			}
 		}
 	}
