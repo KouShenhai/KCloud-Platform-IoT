@@ -52,12 +52,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class Elasticsearch8ApiTest extends CommonTest {
 
 	private final ElasticsearchClient elasticsearchClient;
+
 	private final ElasticsearchTemplate elasticsearchTemplate;
+
 	private final ElasticsearchAsyncClient elasticsearchAsyncClient;
 
 	Elasticsearch8ApiTest(WebApplicationContext webApplicationContext,
-						  OAuth2AuthorizationService oAuth2AuthorizationService, ElasticsearchClient elasticsearchClient,
-						  ElasticsearchTemplate elasticsearchTemplate, ElasticsearchAsyncClient elasticsearchAsyncClient) {
+			OAuth2AuthorizationService oAuth2AuthorizationService, ElasticsearchClient elasticsearchClient,
+			ElasticsearchTemplate elasticsearchTemplate, ElasticsearchAsyncClient elasticsearchAsyncClient) {
 		super(webApplicationContext, oAuth2AuthorizationService);
 		this.elasticsearchClient = elasticsearchClient;
 		this.elasticsearchTemplate = elasticsearchTemplate;
@@ -104,7 +106,8 @@ class Elasticsearch8ApiTest extends CommonTest {
 			Map<String, IndexState> result = elasticsearchTemplate
 				.getIndex(List.of("laokou_res_1", "laokou_pro_1", "laokou_resp_1"));
 			log.info("索引信息：{}", JacksonUtil.toJsonStr(result));
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("{}", e.getMessage(), e);
 		}
 	}
@@ -114,9 +117,10 @@ class Elasticsearch8ApiTest extends CommonTest {
 		try {
 			ResourceSearch resource = new ResourceSearch("任贤齐");
 			Datas<Result> results = elasticsearchTemplate.search(List.of("laokou_res", "laokou_res_1"), 1, 1, resource,
-				Result.class);
+					Result.class);
 			log.info("{}", results);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("{}", e.getMessage(), e);
 		}
 	}
@@ -128,17 +132,17 @@ class Elasticsearch8ApiTest extends CommonTest {
 
 	@Data
 	@Index(setting = @Setting(refreshInterval = "-1"),
-		analysis = @Analysis(
-			filters = {@Filter(name = "pinyin_filter",
-				options = {@Option(key = "type", value = "pinyin"),
-					@Option(key = "keep_full_pinyin", value = "false"),
-					@Option(key = "keep_joined_full_pinyin", value = "true"),
-					@Option(key = "keep_original", value = "true"),
-					@Option(key = "limit_first_letter_length", value = "16"),
-					@Option(key = "remove_duplicated_term", value = "true"),
-					@Option(key = "none_chinese_pinyin_tokenize", value = "false")})},
-			analyzers = {@Analyzer(name = "ik_pinyin",
-				args = @Args(filter = "pinyin_filter", tokenizer = "ik_max_word"))}))
+			analysis = @Analysis(
+					filters = { @Filter(name = "pinyin_filter",
+							options = { @Option(key = "type", value = "pinyin"),
+									@Option(key = "keep_full_pinyin", value = "false"),
+									@Option(key = "keep_joined_full_pinyin", value = "true"),
+									@Option(key = "keep_original", value = "true"),
+									@Option(key = "limit_first_letter_length", value = "16"),
+									@Option(key = "remove_duplicated_term", value = "true"),
+									@Option(key = "none_chinese_pinyin_tokenize", value = "false") }) },
+					analyzers = { @Analyzer(name = "ik_pinyin",
+							args = @Args(filter = "pinyin_filter", tokenizer = "ik_max_word")) }))
 	@NoArgsConstructor
 	@AllArgsConstructor
 	static class Resource implements Serializable {
@@ -168,12 +172,12 @@ class Elasticsearch8ApiTest extends CommonTest {
 	}
 
 	@Data
-	@Highlight(fields = {@HighlightField(name = "name")})
+	@Highlight(fields = { @HighlightField(name = "name") })
 	@AllArgsConstructor
 	@NoArgsConstructor
 	static class ResourceSearch implements Serializable {
 
-		@SearchField(names = {"name"}, type = QueryType.QUERY_STRING, query = Query.SHOULD)
+		@SearchField(names = { "name" }, type = QueryType.QUERY_STRING, query = Query.SHOULD)
 		private String name;
 
 	}
