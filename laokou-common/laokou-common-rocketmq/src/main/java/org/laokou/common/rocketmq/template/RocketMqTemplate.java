@@ -44,11 +44,10 @@ public class RocketMqTemplate {
 
 	/**
 	 * 同步发送.
-	 *
-	 * @param topic   主题
+	 * @param topic 主题
 	 * @param payload 消息
 	 * @param timeout 超时时间
-	 * @param <T>     泛型
+	 * @param <T> 泛型
 	 * @return 发送结果
 	 */
 	public <T> boolean sendSyncMessage(String topic, T payload, long timeout) {
@@ -58,11 +57,10 @@ public class RocketMqTemplate {
 
 	/**
 	 * 同步发送.
-	 *
-	 * @param topic      主题
-	 * @param payload    消息
-	 * @param timeout    超时时间
-	 * @param <T>        泛型
+	 * @param topic 主题
+	 * @param payload 消息
+	 * @param timeout 超时时间
+	 * @param <T> 泛型
 	 * @param delayLevel 延迟等级
 	 * @return 发送结果
 	 */
@@ -73,10 +71,9 @@ public class RocketMqTemplate {
 
 	/**
 	 * 同步发送消息.
-	 *
-	 * @param topic   主题
+	 * @param topic 主题
 	 * @param payload 消息
-	 * @param <T>     泛型
+	 * @param <T> 泛型
 	 */
 	public <T> boolean sendSyncMessage(String topic, T payload) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
@@ -85,10 +82,9 @@ public class RocketMqTemplate {
 
 	/**
 	 * 异步发送消息.
-	 *
-	 * @param topic   主题
+	 * @param topic 主题
 	 * @param payload 消息
-	 * @param <T>     泛型
+	 * @param <T> 泛型
 	 */
 	public <T> void sendAsyncMessage(String topic, T payload) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
@@ -97,11 +93,10 @@ public class RocketMqTemplate {
 
 	/**
 	 * 异步发送消息.
-	 *
-	 * @param topic   主题
-	 * @param tag     标签
+	 * @param topic 主题
+	 * @param tag 标签
 	 * @param payload 消息
-	 * @param <T>     泛型
+	 * @param <T> 泛型
 	 */
 	public <T> void sendAsyncMessage(String topic, String tag, T payload) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
@@ -110,12 +105,11 @@ public class RocketMqTemplate {
 
 	/**
 	 * 异步发送消息.
-	 *
-	 * @param topic   主题
-	 * @param tag     标签
+	 * @param topic 主题
+	 * @param tag 标签
 	 * @param payload 消息
 	 * @param traceId 链路ID
-	 * @param <T>     泛型
+	 * @param <T> 泛型
 	 */
 	public <T> void sendAsyncMessage(String topic, String tag, T payload, String traceId) {
 		Message<T> message = MessageBuilder.withPayload(payload).setHeader(TRACE_ID, traceId).build();
@@ -124,13 +118,12 @@ public class RocketMqTemplate {
 
 	/**
 	 * 异步发送消息.
-	 *
-	 * @param topic   主题
-	 * @param tag     标签
+	 * @param topic 主题
+	 * @param tag 标签
 	 * @param payload 消息
 	 * @param traceId 链路ID
 	 * @param timeout 超时时间
-	 * @param <T>     泛型
+	 * @param <T> 泛型
 	 */
 	public <T> void sendAsyncMessage(String topic, String tag, T payload, String traceId, long timeout) {
 		Message<T> message = MessageBuilder.withPayload(payload).setHeader(TRACE_ID, traceId).build();
@@ -139,11 +132,10 @@ public class RocketMqTemplate {
 
 	/**
 	 * 异步发送消息.
-	 *
-	 * @param topic   主题
+	 * @param topic 主题
 	 * @param payload 消息
 	 * @param traceId 链路ID
-	 * @param <T>     泛型
+	 * @param <T> 泛型
 	 */
 	public <T> void sendAsyncMessage(String topic, T payload, String traceId) {
 		Message<T> message = MessageBuilder.withPayload(payload).setHeader(TRACE_ID, traceId).build();
@@ -152,10 +144,9 @@ public class RocketMqTemplate {
 
 	/**
 	 * 异步发送消息.
-	 *
-	 * @param topic   主题
+	 * @param topic 主题
 	 * @param payload 消息
-	 * @param <T>     泛型
+	 * @param <T> 泛型
 	 * @param timeout 超时时间
 	 */
 	public <T> void sendAsyncMessage(String topic, T payload, long timeout) {
@@ -165,10 +156,9 @@ public class RocketMqTemplate {
 
 	/**
 	 * 单向发送消息.
-	 *
-	 * @param topic   主题
+	 * @param topic 主题
 	 * @param payload 消息
-	 * @param <T>     泛型
+	 * @param <T> 泛型
 	 */
 	public <T> void sendOneWayMessage(String topic, T payload) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
@@ -179,11 +169,10 @@ public class RocketMqTemplate {
 
 	/**
 	 * 延迟消息.
-	 *
-	 * @param topic   主题
-	 * @param delay   延迟时间
+	 * @param topic 主题
+	 * @param delay 延迟时间
 	 * @param payload 消息
-	 * @param <T>     泛型
+	 * @param <T> 泛型
 	 */
 	public <T> boolean sendDelayMessage(String topic, long delay, T payload) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
@@ -192,11 +181,10 @@ public class RocketMqTemplate {
 
 	/**
 	 * 同步发送顺序消息.
-	 *
-	 * @param topic   主题
+	 * @param topic 主题
 	 * @param payload 消息
-	 * @param <T>     泛型
-	 * @param id      标识
+	 * @param <T> 泛型
+	 * @param id 标识
 	 */
 	public <T> boolean sendSyncOrderlyMessage(String topic, T payload, String id) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
@@ -205,11 +193,10 @@ public class RocketMqTemplate {
 
 	/**
 	 * 异步发送顺序消息.
-	 *
-	 * @param topic   主题
+	 * @param topic 主题
 	 * @param payload 消息
-	 * @param <T>     泛型
-	 * @param id      标识
+	 * @param <T> 泛型
+	 * @param id 标识
 	 */
 	public <T> void sendAsyncOrderlyMessage(String topic, T payload, String id) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
@@ -228,11 +215,10 @@ public class RocketMqTemplate {
 
 	/**
 	 * 单向发送顺序消息.
-	 *
-	 * @param topic   主题
+	 * @param topic 主题
 	 * @param payload 消息
-	 * @param <T>     泛型
-	 * @param id      标识
+	 * @param <T> 泛型
+	 * @param id 标识
 	 */
 	public <T> void sendOneWayOrderlyMessage(String topic, T payload, String id) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
@@ -243,11 +229,10 @@ public class RocketMqTemplate {
 
 	/**
 	 * 事务消息.
-	 *
-	 * @param topic         主题
-	 * @param payload       消息
+	 * @param topic 主题
+	 * @param payload 消息
 	 * @param transactionId 事务ID
-	 * @param <T>           泛型
+	 * @param <T> 泛型
 	 * @return 发送结果
 	 */
 	public <T> boolean sendTransactionMessage(String topic, T payload, Long transactionId) {
@@ -259,10 +244,9 @@ public class RocketMqTemplate {
 
 	/**
 	 * 转换并发送.
-	 *
-	 * @param topic   主题
+	 * @param topic 主题
 	 * @param payload 消息内容
-	 * @param <T>     泛型
+	 * @param <T> 泛型
 	 */
 	public <T> void convertAndSendMessage(String topic, T payload) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
@@ -271,11 +255,10 @@ public class RocketMqTemplate {
 
 	/**
 	 * 发送并接收.
-	 *
-	 * @param topic   主题
+	 * @param topic 主题
 	 * @param payload 内容
-	 * @param clazz   类型
-	 * @param <T>     泛型
+	 * @param clazz 类型
+	 * @param <T> 泛型
 	 */
 	public <T> Object sendAndReceiveMessage(String topic, T payload, Class<?> clazz) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
