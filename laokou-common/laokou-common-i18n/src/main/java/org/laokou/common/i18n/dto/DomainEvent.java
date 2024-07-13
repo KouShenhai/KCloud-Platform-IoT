@@ -115,12 +115,7 @@ public abstract class DomainEvent<ID> implements Serializable {
 	 */
 	protected LocalDateTime updateDate;
 
-	public DomainEvent(ID id, String sourceName) {
-		this.id = id;
-		this.sourceName = sourceName;
-	}
-
 	protected abstract void create(AggregateRoot<ID> aggregateRoot, String topic, String tag, EventType eventType,
-			EventStatus eventStatus);
+								   EventStatus eventStatus);
 
 }

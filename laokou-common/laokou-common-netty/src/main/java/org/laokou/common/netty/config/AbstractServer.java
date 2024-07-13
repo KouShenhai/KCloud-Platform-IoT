@@ -31,33 +31,26 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 @Slf4j
 public abstract class AbstractServer implements Server {
 
+	protected final String ip;
+	protected final int port;
+	protected final ChannelInitializer<?> channelInitializer;
+	protected final int bossCoreSize;
+	protected final int workerCoreSize;
+	/**
+	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源（对其他线程可见）.
+	 */
+	protected volatile EventLoopGroup boss;
+	/**
+	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源（对其他线程可见）.
+	 */
+	protected volatile EventLoopGroup worker;
 	/**
 	 * 运行标记.
 	 */
 	private volatile boolean running;
 
-	/**
-	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源（对其他线程可见）.
-	 */
-	protected volatile EventLoopGroup boss;
-
-	/**
-	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源（对其他线程可见）.
-	 */
-	protected volatile EventLoopGroup worker;
-
-	protected final String ip;
-
-	protected final int port;
-
-	protected final ChannelInitializer<?> channelInitializer;
-
-	protected final int bossCoreSize;
-
-	protected final int workerCoreSize;
-
-	public AbstractServer(String ip, int port, ChannelInitializer<?> channelInitializer, int bossCoreSize,
-			int workerCoreSize) {
+	protected AbstractServer(String ip, int port, ChannelInitializer<?> channelInitializer, int bossCoreSize,
+							 int workerCoreSize) {
 		this.ip = ip;
 		this.port = port;
 		this.channelInitializer = channelInitializer;
@@ -67,6 +60,7 @@ public abstract class AbstractServer implements Server {
 
 	/**
 	 * 初始化配置.
+	 *
 	 * @return AbstractBootstrap
 	 */
 	protected abstract AbstractBootstrap<?, ?> init();
@@ -93,8 +87,7 @@ public abstract class AbstractServer implements Server {
 					stop();
 				}
 			});
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("启动失败，端口：{}，错误信息：{}，详情见日志", port, LogUtil.record(e.getMessage()), e);
 		}
 	}
@@ -118,16 +111,16 @@ public abstract class AbstractServer implements Server {
 
 	/**
 	 * 绑定端口.
+	 *
 	 * @param bootstrap 启动类
-	 * @param port 端口
+	 * @param port      端口
 	 */
 	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap, final int port) {
 		return bootstrap.bind(port).awaitUninterruptibly().addListener(future -> {
 			if (!future.isSuccess()) {
 				log.error("启动失败，端口{}被占用", port);
 				bind(bootstrap, port + 1);
-			}
-			else {
+			} else {
 				log.info("启动成功，端口{}已绑定", port);
 				running = true;
 			}
