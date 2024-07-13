@@ -17,8 +17,6 @@
 
 package org.laokou.auth.common.constant;
 
-import static org.laokou.common.i18n.common.constant.Constant.DLQ;
-
 /**
  * @author laokou
  */
@@ -43,14 +41,6 @@ public final class MqConstant {
 	public static final String LAOKOU_API_LOG_CONSUMER_GROUP = "laokou_api_log_consumer_group";
 
 	public static final String LAOKOU_LOGIN_LOG_CONSUMER_GROUP = "laokou_login_log_consumer_group";
-
-	public static final String LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP_DLQ = DLQ + "laokou_mail_captcha_consumer_group";
-
-	public static final String LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP_DLQ = DLQ + "laokou_mobile_captcha_consumer_group";
-
-	public static final String LAOKOU_API_LOG_CONSUMER_GROUP_DLQ = DLQ + "laokou_api_log_consumer_group";
-
-	public static final String LAOKOU_LOGIN_LOG_CONSUMER_GROUP_DLQ = DLQ + "laokou_login_log_consumer_group";
 
 	private MqConstant() {
 	}

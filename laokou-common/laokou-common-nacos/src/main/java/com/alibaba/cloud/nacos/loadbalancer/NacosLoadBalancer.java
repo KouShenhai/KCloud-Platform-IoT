@@ -119,16 +119,16 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 */
 	private static final String IPV6_KEY = "IPv6";
 	/**
+	 * Storage local valid IPv6 address, it's a flag whether local machine support IPv6
+	 * address stack.
+	 */
+	public static String ipv6;
+	/**
 	 * 服务ID.
 	 */
 	private final String serviceId;
 	private final ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;
 	private final NacosDiscoveryProperties nacosDiscoveryProperties;
-	/**
-	 * Storage local valid IPv6 address, it's a flag whether local machine support IPv6
-	 * address stack.
-	 */
-	private String ipv6;
 
 	public NacosLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
 							 String serviceId, NacosDiscoveryProperties nacosDiscoveryProperties) {

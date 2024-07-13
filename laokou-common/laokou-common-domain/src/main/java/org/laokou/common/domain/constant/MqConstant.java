@@ -17,8 +17,6 @@
 
 package org.laokou.common.domain.constant;
 
-import static org.laokou.common.i18n.common.constant.Constant.DLQ;
-
 /**
  * @author laokou
  */
@@ -31,10 +29,6 @@ public final class MqConstant {
 	public static final String LAOKOU_MODIFY_EVENT_CONSUMER_GROUP = "laokou_modify_event_consumer_group";
 
 	public static final String LAOKOU_MODIFY_EVENT_TOPIC = "laokou_modify_event_topic";
-
-	public static final String LAOKOU_MODIFY_EVENT_CONSUMER_GROUP_DLQ = DLQ + "laokou_modify_event_consumer_group";
-
-	public static final String LAOKOU_CREATE_EVENT_CONSUMER_GROUP_DLQ = DLQ + "laokou_create_event_consumer_group";
 
 	private MqConstant() {
 

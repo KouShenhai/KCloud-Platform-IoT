@@ -39,6 +39,10 @@
           <groupId>org.mybatis</groupId>
           <artifactId>mybatis-spring</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>com.github.jsqlparser</groupId>
+          <artifactId>jsqlparser</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -79,6 +83,10 @@
     <dependency>
       <groupId>org.apache.fury</groupId>
       <artifactId>fury-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.jsqlparser</groupId>
+      <artifactId>jsqlparser</artifactId>
     </dependency>
   </dependencies>
 </project>

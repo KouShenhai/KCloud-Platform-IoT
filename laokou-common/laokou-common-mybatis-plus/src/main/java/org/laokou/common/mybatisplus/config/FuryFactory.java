@@ -67,7 +67,6 @@ public final class FuryFactory {
 		FURY.register(net.sf.jsqlparser.expression.OracleNamedFunctionParameter.class);
 		FURY.register(net.sf.jsqlparser.expression.OrderByClause.class);
 		FURY.register(net.sf.jsqlparser.expression.OverlapsCondition.class);
-		FURY.register(net.sf.jsqlparser.expression.Parenthesis.class);
 		FURY.register(net.sf.jsqlparser.expression.PartitionByClause.class);
 		FURY.register(net.sf.jsqlparser.expression.RangeExpression.class);
 		FURY.register(net.sf.jsqlparser.expression.RowConstructor.class);
@@ -254,6 +253,7 @@ public final class FuryFactory {
 		FURY.register(OrderByElement.NullOrdering.class);
 		FURY.register(net.sf.jsqlparser.statement.select.ForMode.class);
 		FURY.register(net.sf.jsqlparser.statement.select.MySqlSqlCacheFlags.class);
+		FURY.register(net.sf.jsqlparser.statement.select.PlainSelect.BigQuerySelectQualifier.class);
 	}
 
 	public static byte[] serialize(Object object) {

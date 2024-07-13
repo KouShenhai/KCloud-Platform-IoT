@@ -25,7 +25,6 @@ import org.laokou.common.domain.database.DomainEventMapper;
 import org.laokou.common.domain.database.dataobject.DomainEventDO;
 import org.laokou.common.domain.model.DomainEventA;
 import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.scheduling.annotation.Async;
@@ -50,7 +49,6 @@ public class DomainEventServiceImpl implements DomainEventService {
 	private final TransactionalUtil transactionalUtil;
 
 	@Override
-	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void create(DomainEventA domainEventA) {
 		try {
 			DynamicDataSourceContextHolder.push(DOMAIN);
@@ -58,15 +56,13 @@ public class DomainEventServiceImpl implements DomainEventService {
 				try {
 					DomainEventDO eventDO = domainEventConvertor.toDataObject(domainEventA);
 					domainEventMapper.insert(eventDO);
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 					r.setRollbackOnly();
-					throw new SystemException(LogUtil.record(e.getMessage()));
+					throw new RuntimeException(LogUtil.record(e.getMessage()));
 				}
 			});
-		}
-		finally {
+		} finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
@@ -79,15 +75,13 @@ public class DomainEventServiceImpl implements DomainEventService {
 			transactionalUtil.defaultExecuteWithoutResult(r -> {
 				try {
 					domainEventMapper.updateStatusById(domainEventA.getId());
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 					r.setRollbackOnly();
-					throw new SystemException(LogUtil.record(e.getMessage()));
+					throw new RuntimeException(LogUtil.record(e.getMessage()));
 				}
 			});
-		}
-		finally {
+		} finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

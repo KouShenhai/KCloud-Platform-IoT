@@ -42,7 +42,7 @@ import static org.laokou.common.i18n.common.exception.SystemException.*;
 public class SentinelExceptionHandler implements BlockExceptionHandler {
 
 	@Override
-	public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, String s, BlockException e) {
+	public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, String s, BlockException e) throws Exception {
 		// 限流
 		if (e instanceof FlowException flowException) {
 			log.error("FlowException -> 已限流，错误信息：{}，详情见日志", LogUtil.record(flowException.getMessage()), flowException);
