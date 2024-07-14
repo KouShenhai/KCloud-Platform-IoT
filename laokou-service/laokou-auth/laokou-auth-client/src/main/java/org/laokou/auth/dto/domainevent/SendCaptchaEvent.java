@@ -40,18 +40,18 @@ public class SendCaptchaEvent extends DefaultDomainEvent {
 	private String uuid;
 
 	public void create(String topic, String tag, EventType eventType, EventStatus eventStatus, String appName,
-			String sourceName, LocalDateTime timestamp) {
+					   String sourceName, LocalDateTime timestamp) {
 		create(topic, tag, eventType, eventStatus);
 		super.createDate = timestamp;
 		super.updateDate = timestamp;
 		super.appName = appName;
+		super.sourceName = sourceName;
 	}
 
 	@Override
 	protected void create(String topic, String tag, EventType eventType, EventStatus eventStatus) {
 		super.create(topic, tag, eventType, eventStatus);
 		super.id = IdGenerator.defaultSnowflakeId();
-		super.sourceName = "master";
 	}
 
 }
