@@ -27,6 +27,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.redisson.api.RateIntervalUnit;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
@@ -53,7 +54,7 @@ public class CaptchasV3Controller {
 	@PostMapping
 	@RateLimiter(id = "SEND_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES, rate = 10)
 	@Operation(summary = "根据UUID发送验证码", description = "根据UUID发送验证码")
-	public void sendByUuidV3(@RequestBody CaptchaSendCmd cmd) {
+	public void sendByUuidV3(@Validated @RequestBody CaptchaSendCmd cmd) {
 		captchasServiceI.sendByUuid(cmd);
 	}
 
