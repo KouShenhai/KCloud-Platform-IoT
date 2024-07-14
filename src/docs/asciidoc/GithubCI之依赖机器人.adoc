@@ -108,7 +108,3 @@ https://github.com/apps/renovate[Renovate安装地址]
 image:image/tools/img_6.png[Renovate启用依赖更新1,600]
 image:image/tools/img_7.png[Renovate启用依赖更新2,500]
 image:image/tools/img_8.png[Renovate启用依赖更新3]
-
-== 赞助打赏
-image:image/open/wxzp.jpg[微信支付,201,300]
-image:image/open/zfb.jpg[支付宝支付,201,300]

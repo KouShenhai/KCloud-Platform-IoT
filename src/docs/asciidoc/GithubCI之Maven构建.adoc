@@ -3,18 +3,18 @@
 = Github CI之Maven构建
 
 == 介绍
+
 使用 Maven 软件项目管理工具为您的 Java 项目创建执行持续集成 (CI) 的工作流
 
 == 官方地址
+
 https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven[使用 Maven 构建和测试 Java]
 
 == 使用 Maven 启动器工作流程
+
 image:image/tools/img_9.png[使用 Maven 启动器工作流程]
 
 == 配置说明
 
 ===  
 
-== 赞助打赏
-image:image/open/wxzp.jpg[微信支付,201,300]
-image:image/open/zfb.jpg[支付宝支付,201,300]

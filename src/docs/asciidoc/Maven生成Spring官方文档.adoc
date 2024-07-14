@@ -2,11 +2,13 @@
 = Maven生成Spring官方文档
 
 == 介绍
+
 通过该插件可以将 `Asciidoctor` 转换成 `Spring` 风格的HTML页面
 
 == HTML文档生成
 
 === 导入依赖
+
 [source%nowrap,xml]
 ----
 <plugin>
@@ -36,6 +38,7 @@
 ----
 
 === 创建目录
+
 使用 https://github.com/asciidoctor/asciidoctor-maven-plugin[Asciidoctor Maven] 插件来生成文档
 
 `AsciiDoc` 源代码默认放在 `src/docs/asciidoc`
@@ -45,9 +48,11 @@
 image:image/tools/img.png[目录,150,150,align=left]
 
 === 编写AsciiDoc
+
 在 `src/docs/asciidoc` 新建文档 `test.adoc` 文档里面随便写一段话
 
 === 执行命令
+
 在 `根目录` 执行命令 `mvn prepare-package` 转换成 `HTML` 页面
 
 默认生成位置为 `根目录/target`
@@ -59,6 +64,7 @@ image:image/tools/img_1.png[test.html,600,100,align=left]
 == 带目录的HTML页面生成
 
 === 创建首页
+
 在 `src/docs/asciidoc` 新建 `index.adoc` 文档里面填写如下内容
 
 image:image/tools/img_2.png[index.html,500,100,align=left]
@@ -70,21 +76,21 @@ link:Asciidoctor使用指南.html[请查看Asciidoctor语法]
 略，同上文
 
 === 查看页面
+
 找到 `index.html` 打开
 
 image:image/tools/img_3.gif[查看首页,300,100,align=left]
 
 == 替换logo
+
 -- 
   替换logo，我提供两种思路：
   1.修改maven plugin源码，修改完之后打包并替换掉之前的插件
   2.直接修改生成的HTML页面样式[本文采用这种方式]
 --
+
 image:image/tools/img_4.gif[替换logo,400,100,align=left]
 
 == 源码地址
-https://github.com/KouShenhai/KCloud-Platform-IoT/blob/master/pom.xml[本项目已集成，直接使用即可]
 
-== 赞助打赏
-image:image/open/wxzp.jpg[微信支付,201,300]
-image:image/open/zfb.jpg[支付宝支付,201,300]
+https://github.com/KouShenhai/KCloud-Platform-IoT/blob/master/pom.xml[本项目已集成，直接使用即可]

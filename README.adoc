@@ -214,10 +214,8 @@ https://github.com/KouShenhai/KCloud-Platform-IoT[Github 地址]
 
 https://gitee.com/laokouyun/KCloud-Platform-IoT[Gitee 地址]
 
-=== 🍚 赞助打赏（用于服务器日常维护）
+=== 🔪 技术分享
 
-image:doc/image/wxzp.jpg[微信支付,201,300]
-image:doc/image/zfb.jpg[支付宝支付,201,300]
 image:doc/image/gzh.jpg[微信公众号,201,300]
 image:doc/image/zsxq.jpg[知识星球,201,300]
 
