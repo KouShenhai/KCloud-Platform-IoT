@@ -43,6 +43,8 @@ import org.springframework.util.ObjectUtils;
 @RequiredArgsConstructor
 public class ExtensionRegister {
 
+	public final static String EXTENSION_EXT_PT_NAMING = "ExtPt";
+
 	/**
 	 * 扩展点接口名称不合法.
 	 */
@@ -59,8 +61,6 @@ public class ExtensionRegister {
 	private static final String EXTENSION_DEFINE_DUPLICATE = "extension_define_duplicate";
 
 	private final ExtensionRepository extensionRepository;
-
-	public final static String EXTENSION_EXTPT_NAMING = "ExtPt";
 
 	public void doRegistration(ExtensionPointI extensionObject) {
 		Class<?> extensionClz = extensionObject.getClass();
@@ -133,12 +133,12 @@ public class ExtensionRegister {
 		}
 		for (Class<?> inter : interfaces) {
 			String extensionPoint = inter.getSimpleName();
-			if (extensionPoint.contains(EXTENSION_EXTPT_NAMING)) {
+			if (extensionPoint.contains(EXTENSION_EXT_PT_NAMING)) {
 				return inter.getName();
 			}
 		}
 		String errMessage = "Your name of ExtensionPoint for " + targetClz + " is not valid, must be end of "
-				+ EXTENSION_EXTPT_NAMING;
+				+ EXTENSION_EXT_PT_NAMING;
 		throw new ExtensionException(EXTENSION_INTERFACE_NAME_ILLEGAL, errMessage);
 	}
 

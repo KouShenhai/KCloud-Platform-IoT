@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,14 +39,6 @@ public class IdempotentUtil {
 
 	private static final ThreadLocal<Map<String, String>> REQUEST_ID_LOCAL = TransmittableThreadLocal
 		.withInitial(HashMap::new);
-
-	/**
-	 * 得到幂等键.
-	 * @return {@link String }
-	 */
-	public String getIdempotentKey() {
-		return String.valueOf(IdGenerator.defaultSnowflakeId());
-	}
 
 	public static Map<String, String> getRequestId() {
 		return REQUEST_ID_LOCAL.get();
@@ -72,6 +65,14 @@ public class IdempotentUtil {
 	public static void cleanIdempotent() {
 		IS_IDEMPOTENT_LOCAL.remove();
 		REQUEST_ID_LOCAL.remove();
+	}
+
+	/**
+	 * 得到幂等键.
+	 * @return {@link String }
+	 */
+	public String getIdempotentKey() {
+		return String.valueOf(IdGenerator.defaultSnowflakeId());
 	}
 
 }

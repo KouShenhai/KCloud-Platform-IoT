@@ -15,22 +15,15 @@
  *
  */
 
-package org.laokou.auth.dto;
+package org.laokou.auth.extensionpoint;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.laokou.common.extension.ExtensionPointI;
 
 /**
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class LoginLogCmd extends CommonCommand {
+public interface CaptchaValidatorExtPt extends ExtensionPointI {
 
-	private DefaultDomainEvent domainEvent;
+	void validate(String uuid);
 
 }

@@ -17,20 +17,25 @@
 
 package org.laokou.auth.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 /**
  * @author laokou
  */
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginLogCmd extends CommonCommand {
+@Schema(name = "发送验证码命令请求", description = "发送验证码命令请求")
+public class CaptchaSendCmd extends CommonCommand {
 
-	private DefaultDomainEvent domainEvent;
+	private String tag;
+
+	private Long tenantId;
+
+	private String uuid;
 
 }

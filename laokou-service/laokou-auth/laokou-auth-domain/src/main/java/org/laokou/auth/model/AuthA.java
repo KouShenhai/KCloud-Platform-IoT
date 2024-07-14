@@ -94,16 +94,6 @@ public class AuthA extends AggregateRoot<Long> {
 	public static final String TENANT_ID = "tenant_id";
 
 	/**
-	 * 业务标识.
-	 */
-	public static final String BIZ_ID = "IoT-Platform";
-
-	/**
-	 * 业务用例.
-	 */
-	public static final String USE_CASE = "auth";
-
-	/**
 	 * 成功.
 	 */
 	private static final int OK = 0;

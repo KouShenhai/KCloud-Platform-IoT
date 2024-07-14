@@ -17,6 +17,7 @@
 
 package org.laokou.common.extension.register;
 
+import io.micrometer.common.lang.NonNullApi;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.extension.Extension;
@@ -35,6 +36,7 @@ import java.util.Map;
  * @author Frank Zhang
  */
 @Component
+@NonNullApi
 @RequiredArgsConstructor
 public class ExtensionBootstrap implements ApplicationContextAware {
 

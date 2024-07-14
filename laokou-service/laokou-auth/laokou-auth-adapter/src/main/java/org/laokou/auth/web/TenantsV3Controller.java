@@ -38,7 +38,7 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "TenantsV3Controller", description = "租户管理")
+@Tag(name = "租户管理", description = "租户管理")
 @RequestMapping("v3/tenants")
 public class TenantsV3Controller {
 
@@ -46,14 +46,14 @@ public class TenantsV3Controller {
 
 	@TraceLog
 	@GetMapping("options")
-	@Operation(summary = "租户管理", description = "查询租户下拉选择项列表")
+	@Operation(summary = "查询租户下拉选择项列表", description = "查询租户下拉选择项列表")
 	public Result<List<Option>> listOptionV3() {
 		return tenantsServiceI.listOption();
 	}
 
 	@TraceLog
 	@GetMapping("id")
-	@Operation(summary = "租户管理", description = "根据域名查看ID")
+	@Operation(summary = "根据域名查看ID", description = "根据域名查看ID")
 	public Result<Long> getIdByDomainNameV3(HttpServletRequest request) {
 		return tenantsServiceI.getIdByDomainName(new TenantGetIDQry(RequestUtil.getDomainName(request)));
 	}

@@ -15,22 +15,29 @@
  *
  */
 
-package org.laokou.auth.dto;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
+package org.laokou.auth.common.constant;
 
 /**
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class LoginLogCmd extends CommonCommand {
+public final class Constant {
 
-	private DefaultDomainEvent domainEvent;
+	/**
+	 * 场景标识.
+	 */
+	public static final String SCENARIO = "IoT-Platform";
+
+	/**
+	 * 业务用例.
+	 */
+	public static final String USE_CASE_AUTH = "auth";
+
+	/**
+	 * 业务用例.
+	 */
+	public static final String USE_CASE_CAPTCHA = "captcha";
+
+	private Constant() {
+	}
 
 }

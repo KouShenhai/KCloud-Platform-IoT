@@ -26,6 +26,7 @@ import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.web.multipart.MultipartFile;
 

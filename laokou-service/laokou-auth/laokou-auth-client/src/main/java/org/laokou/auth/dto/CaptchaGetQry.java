@@ -29,10 +29,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "CaptchaGetQry", description = "查看验证码命令请求")
+@Schema(name = "查看验证码命令请求", description = "查看验证码命令请求")
 public class CaptchaGetQry extends CommonCommand {
 
-	@Schema(name = "uuid", description = "UUID")
+	@Schema(name = "UUID", description = "UUID")
 	private String uuid;
 
 }

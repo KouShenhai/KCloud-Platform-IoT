@@ -616,6 +616,8 @@ spring:
               - /graceful-shutdown=laokou-auth
               - /ws=laokou-gateway
               - /doc.html=laokou-gateway
+            POST:
+              - /v3/captchas=laokou-auth,laokou-gateway
             DELETE:
               - /v3/logouts=laokou-auth,laokou-gateway
   # task
@@ -1750,6 +1752,8 @@ spring:
               - /graceful-shutdown=laokou-auth
               - /ws=laokou-gateway
               - /doc.html=laokou-gateway
+			POST:
+			  - /v3/captchas=laokou-auth,laokou-gateway
             DELETE:
               - /v3/logouts=laokou-auth,laokou-gateway
   # task
@@ -2326,6 +2330,8 @@ spring:
               - /graceful-shutdown=laokou-auth
               - /ws=laokou-gateway
               - /doc.html=laokou-gateway
+            POST:
+              - /v3/captchas=laokou-auth,laokou-gateway
             DELETE:
               - /v3/logouts=laokou-auth,laokou-gateway
   # task

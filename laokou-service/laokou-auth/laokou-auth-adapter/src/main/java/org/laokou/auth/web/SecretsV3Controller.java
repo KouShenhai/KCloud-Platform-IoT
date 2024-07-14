@@ -37,7 +37,7 @@ import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
  */
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "SecretsV3Controller", description = "安全配置")
+@Tag(name = "安全配置", description = "安全配置")
 @RequestMapping("v3/secrets")
 public class SecretsV3Controller {
 
@@ -45,7 +45,7 @@ public class SecretsV3Controller {
 
 	@TraceLog
 	@GetMapping
-	@Operation(summary = "安全配置", description = "获取密钥")
+	@Operation(summary = "获取密钥", description = "获取密钥")
 	@RateLimiter(id = "AUTH_SECRET", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
 	public Result<SecretCO> getInfoV3() {
 		return secretsServiceI.getInfo();

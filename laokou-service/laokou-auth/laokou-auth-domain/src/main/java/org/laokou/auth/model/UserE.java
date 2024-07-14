@@ -97,6 +97,10 @@ public class UserE {
 		this.tenantId = tenantId;
 	}
 
+	public UserE(Long tenantId) {
+		this.tenantId = tenantId;
+	}
+
 	public boolean isSuperAdministrator() {
 		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
 	}

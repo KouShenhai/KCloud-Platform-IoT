@@ -33,13 +33,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("v3/logouts")
-@Tag(name = "LogoutsV3Controller", description = "退出登录")
+@Tag(name = "退出登录", description = "退出登录")
 public class LogoutsV3Controller {
 
 	private final LogoutsServiceI logoutsServiceI;
 
 	@DeleteMapping
-	@Operation(summary = "退出登录", description = "清除令牌")
+	@Operation(summary = "清除令牌", description = "清除令牌")
 	public void removeTokenV3(@RequestBody LogoutCmd cmd) {
 		logoutsServiceI.removeToken(cmd);
 	}

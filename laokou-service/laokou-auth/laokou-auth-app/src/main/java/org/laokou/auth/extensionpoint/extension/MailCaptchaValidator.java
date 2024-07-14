@@ -17,42 +17,27 @@
 
 package org.laokou.auth.extensionpoint.extension;
 
-import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
-import org.laokou.auth.model.AuthA;
+import org.laokou.auth.extensionpoint.CaptchaValidatorExtPt;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.extension.Extension;
 import org.laokou.common.i18n.common.exception.AuthException;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 
 import static org.laokou.auth.common.constant.Constant.SCENARIO;
-import static org.laokou.auth.common.constant.Constant.USE_CASE_AUTH;
-import static org.laokou.auth.model.AuthA.MAIL;
-import static org.laokou.common.i18n.common.exception.ParamException.*;
+import static org.laokou.auth.common.constant.Constant.USE_CASE_CAPTCHA;
+import static org.laokou.auth.common.constant.MqConstant.MAIL_TAG;
+import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_MAIL_ERROR;
 
 /**
  * @author laokou
  */
-@Extension(bizId = MAIL, useCase = USE_CASE_AUTH, scenario = SCENARIO)
-public class MailAuthValidator implements AuthValidatorExtPt {
+@Extension(bizId = MAIL_TAG, useCase = USE_CASE_CAPTCHA, scenario = SCENARIO)
+public class MailCaptchaValidator implements CaptchaValidatorExtPt {
 
 	@Override
-	public void validate(AuthA auth) {
-		// 租户ID判空
-		if (ObjectUtil.isNull(auth.getTenantId())) {
-			throw new AuthException(OAUTH2_TENANT_ID_REQUIRE, ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
-		}
-		// 邮箱判空
-		if (StringUtil.isEmpty(auth.getCaptcha().uuid())) {
-			throw new AuthException(OAUTH2_MAIL_REQUIRE, ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));
-		}
-		// 验证码判空
-		if (StringUtil.isEmpty(auth.getCaptcha().captcha())) {
-			throw new AuthException(OAUTH2_CAPTCHA_REQUIRE, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
-		}
+	public void validate(String uuid) {
 		// 邮箱格式判断
-		if (!RegexUtil.mailRegex(auth.getCaptcha().uuid())) {
+		if (!RegexUtil.mailRegex(uuid)) {
 			throw new AuthException(OAUTH2_MAIL_ERROR, ValidatorUtil.getMessage(OAUTH2_MAIL_ERROR));
 		}
 	}

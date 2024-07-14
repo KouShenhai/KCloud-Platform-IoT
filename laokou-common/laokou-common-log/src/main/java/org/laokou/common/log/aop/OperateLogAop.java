@@ -47,9 +47,9 @@ import java.lang.reflect.Method;
 @RequiredArgsConstructor
 public class OperateLogAop {
 
-	private final SpringContextUtil springContextUtil;
-
 	private static final ThreadLocal<Long> TASK_TIME_LOCAL = new ThreadLocal<>();
+
+	private final SpringContextUtil springContextUtil;
 
 	@Before("@annotation(org.laokou.common.log.annotation.OperateLog)")
 	public void doBefore() {

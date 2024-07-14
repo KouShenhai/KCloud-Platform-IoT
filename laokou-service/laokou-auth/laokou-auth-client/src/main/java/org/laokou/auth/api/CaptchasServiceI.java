@@ -18,6 +18,7 @@
 package org.laokou.auth.api;
 
 import org.laokou.auth.dto.CaptchaGetQry;
+import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.common.i18n.dto.Result;
 
 /**
@@ -33,5 +34,11 @@ public interface CaptchasServiceI {
 	 * @return 验证码
 	 */
 	Result<String> getByUuid(CaptchaGetQry qry);
+
+	/**
+	 * 发送验证码.
+	 * @param cmd 发送验证码命令
+	 */
+	void sendByUuid(CaptchaSendCmd cmd);
 
 }

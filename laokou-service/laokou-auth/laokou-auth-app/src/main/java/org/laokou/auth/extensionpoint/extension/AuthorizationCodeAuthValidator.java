@@ -24,14 +24,16 @@ import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 
-import static org.laokou.auth.model.AuthA.*;
+import static org.laokou.auth.common.constant.Constant.SCENARIO;
+import static org.laokou.auth.common.constant.Constant.USE_CASE_AUTH;
+import static org.laokou.auth.model.AuthA.AUTHORIZATION_CODE;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_PASSWORD_REQUIRE;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_USERNAME_REQUIRE;
 
 /**
  * @author laokou
  */
-@Extension(bizId = BIZ_ID, useCase = USE_CASE, scenario = AUTHORIZATION_CODE)
+@Extension(bizId = AUTHORIZATION_CODE, useCase = USE_CASE_AUTH, scenario = SCENARIO)
 public class AuthorizationCodeAuthValidator implements AuthValidatorExtPt {
 
 	@Override

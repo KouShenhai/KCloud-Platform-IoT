@@ -15,45 +15,43 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.auth.dto.domainevent;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.constant.EventStatus;
 import org.laokou.common.i18n.common.constant.EventType;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
+
+import java.time.LocalDateTime;
 
 /**
- * 默认领域事件.
- *
  * @author laokou
  */
 @Data
 @NoArgsConstructor
-public class DefaultDomainEvent extends DomainEvent<Long> {
+@AllArgsConstructor
+public class SendCaptchaEvent extends DefaultDomainEvent {
 
-	@Override
-	protected void create(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
-			EventStatus eventStatus) {
-		super.tenantId = aggregateRoot.getTenantId();
-		super.deptId = aggregateRoot.getDeptId();
-		super.deptPath = aggregateRoot.getDeptPath();
-		super.creator = aggregateRoot.getCreator();
-		super.editor = aggregateRoot.getEditor();
-		super.eventType = eventType;
-		super.eventStatus = eventStatus;
-		super.sourceName = aggregateRoot.getSourceName();
-		super.appName = aggregateRoot.getAppName();
-		super.aggregateId = aggregateRoot.getId();
-		super.tag = tag;
-		super.topic = topic;
+	private String tag;
+
+	private String uuid;
+
+	public void create(String topic, String tag, EventType eventType, EventStatus eventStatus, String appName,
+			String sourceName, LocalDateTime timestamp) {
+		create(topic, tag, eventType, eventStatus);
+		super.createDate = timestamp;
+		super.updateDate = timestamp;
+		super.appName = appName;
 	}
 
 	@Override
 	protected void create(String topic, String tag, EventType eventType, EventStatus eventStatus) {
-		super.eventType = eventType;
-		super.eventStatus = eventStatus;
-		super.tag = tag;
-		super.topic = topic;
+		super.create(topic, tag, eventType, eventStatus);
+		super.id = IdGenerator.defaultSnowflakeId();
+		super.sourceName = "master";
 	}
 
 }

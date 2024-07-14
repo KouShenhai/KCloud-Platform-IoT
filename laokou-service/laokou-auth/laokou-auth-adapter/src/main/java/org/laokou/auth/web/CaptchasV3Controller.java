@@ -22,6 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.CaptchasServiceI;
 import org.laokou.auth.dto.CaptchaGetQry;
+import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -43,17 +44,17 @@ public class CaptchasV3Controller {
 
 	@TraceLog
 	@GetMapping("{uuid}")
-	@RateLimiter(id = "GET_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
-	@Operation(summary = "验证码-根据UUID获取验证码", description = "验证码-根据UUID获取验证码")
+	@RateLimiter(id = "GET_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES, interval = 5, rate = 100)
+	@Operation(summary = "根据UUID获取验证码", description = "根据UUID获取验证码")
 	public Result<String> getByUuidV3(@PathVariable("uuid") String uuid) {
 		return captchasServiceI.getByUuid(new CaptchaGetQry(uuid));
 	}
 
-	@PostMapping("{type}/{uuid}")
-	@RateLimiter(id = "SEND_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES)
-	@Operation(summary = "验证码-根据UUID发送验证码", description = "验证码-根据UUID发送验证码")
-	public void sendByUuidV3(@PathVariable String type, @PathVariable String uuid) {
-
+	@PostMapping
+	@RateLimiter(id = "SEND_CAPTCHA", type = IP, unit = RateIntervalUnit.MINUTES, rate = 10)
+	@Operation(summary = "根据UUID发送验证码", description = "根据UUID发送验证码")
+	public void sendByUuidV3(@RequestBody CaptchaSendCmd cmd) {
+		captchasServiceI.sendByUuid(cmd);
 	}
 
 }

@@ -17,27 +17,36 @@
 
 package org.laokou.common.ratelimiter.driver.spi;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
+ * 类型枚举.
+ *
  * @author laokou
  */
-@Schema(name = "TypeEnum", description = "类型枚举")
 public enum TypeEnum {
 
-	@Schema(name = "DEFAULT", description = "默认")
+	/**
+	 * 默认.
+	 */
 	DEFAULT,
 
-	@Schema(name = "IP", description = "IP")
+	/**
+	 * IP.
+	 */
 	IP,
 
-	@Schema(name = "USER", description = "用户")
+	/**
+	 * 用户.
+	 */
 	USER,
 
-	@Schema(name = "TENANT", description = "租户")
+	/**
+	 * 租户.
+	 */
 	TENANT,
 
-	@Schema(name = "PATH", description = "路径")
+	/**
+	 * 路径.
+	 */
 	PATH
 
 }
