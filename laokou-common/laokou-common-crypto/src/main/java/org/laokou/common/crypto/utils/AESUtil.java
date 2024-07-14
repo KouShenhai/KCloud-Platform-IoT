@@ -121,9 +121,8 @@ public class AESUtil {
 	/**
 	 * 对象属性加密/解密.
 	 * @param obj 对象
-	 * @throws IllegalAccessException 异常
 	 */
-	public static void transform(Object obj) throws IllegalAccessException {
+	public static void transform(Object obj) {
 		Field[] fields = obj.getClass().getDeclaredFields();
 		for (Field field : fields) {
 			boolean annotationPresent = field.isAnnotationPresent(Aes.class);

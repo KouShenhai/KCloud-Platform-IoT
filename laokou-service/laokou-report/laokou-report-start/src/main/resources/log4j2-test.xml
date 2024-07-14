@@ -93,7 +93,7 @@
           {
           "appName":"${APP_NAME}",
           "profile":"test",
-          "timestamp":"%d{yyyy-MM-dd HH:mm:ss}",
+          "dateTime":"%d{yyyy-MM-dd HH:mm:ss}",
           "userId":"${ctx:user-id}",
           "username":"${ctx:user-name}",
           "tenantId":"${ctx:tenant-id}",

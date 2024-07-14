@@ -98,7 +98,7 @@ public class UserGatewayImpl implements UserGateway {
 	public void remove(Long[] ids) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				userMapper.deleteBatchIds(Arrays.asList(ids));
+				userMapper.deleteByIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
