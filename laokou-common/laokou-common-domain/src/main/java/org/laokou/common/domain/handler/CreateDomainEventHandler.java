@@ -30,6 +30,8 @@ import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
@@ -48,6 +50,8 @@ public class CreateDomainEventHandler implements RocketMQListener<MessageExt> {
 
 	private final DomainEventService domainEventService;
 
+	private final Executor executor;
+
 	private final DomainEventPublisher domainEventPublisher;
 
 	@Override
@@ -56,9 +60,13 @@ public class CreateDomainEventHandler implements RocketMQListener<MessageExt> {
 		ThreadContext.put(TRACE_ID, traceId);
 		String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
 		try {
-			DefaultDomainEvent defaultDomainEvent = JacksonUtil.toBean(msg, DefaultDomainEvent.class);
-			domainEventService.create(new DomainEventA(msg, defaultDomainEvent));
-			domainEventPublisher.publish(defaultDomainEvent.getTopic(), defaultDomainEvent.getTag(), msg);
+			CompletableFuture.supplyAsync(() -> {
+				DefaultDomainEvent defaultDomainEvent = JacksonUtil.toBean(msg, DefaultDomainEvent.class);
+				domainEventService.create(new DomainEventA(msg, defaultDomainEvent));
+				return defaultDomainEvent;
+			}, executor)
+				.thenAcceptAsync(defaultDomainEvent -> domainEventPublisher.publish(defaultDomainEvent.getTopic(),
+						defaultDomainEvent.getTag(), msg), executor);
 		}
 		finally {
 			ThreadContext.clearMap();
