@@ -68,6 +68,8 @@
     <module>laokou-common-tenant</module>
     <module>laokou-common-mail</module>
     <module>laokou-common-sms</module>
+    <module>laokou-common-oss</module>
+    <module>laokou-common-excel</module>
   </modules>
 
 </project>

@@ -155,6 +155,26 @@
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-oss</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-excel</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-mail</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-sms</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
         <groupId>com.taosdata.jdbc</groupId>
         <artifactId>taos-jdbcdriver</artifactId>
         <version>${taos-jdbcdriver.version}</version>
