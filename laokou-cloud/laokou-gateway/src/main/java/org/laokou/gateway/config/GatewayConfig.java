@@ -15,25 +15,22 @@
  *
  */
 
-package org.laokou.gateway.filter.ip;
+package org.laokou.gateway.config;
 
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
+import org.laokou.gateway.filter.ip.DefaultIp;
+import org.laokou.gateway.filter.ip.Ip;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * IP抽象类.
- *
  * @author laokou
  */
-public interface Ip {
+@Configuration
+public class GatewayConfig {
 
-	/**
-	 * 校验IP并响应.
-	 * @param exchange 服务网络交换机
-	 * @param chain 链式过滤器
-	 * @return 响应结果
-	 */
-	Mono<Void> validate(ServerWebExchange exchange, GatewayFilterChain chain);
+	@Bean
+	public Ip defaultIp() {
+		return new DefaultIp();
+	}
 
 }

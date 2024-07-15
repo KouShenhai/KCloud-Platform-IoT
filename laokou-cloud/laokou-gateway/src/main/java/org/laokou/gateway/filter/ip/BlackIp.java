@@ -24,8 +24,10 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolver;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -40,9 +42,12 @@ import static org.laokou.common.i18n.common.exception.SystemException.IP_BLACKED
  * @author laokou
  */
 @Slf4j
+@Primary
 @Component
 @RequiredArgsConstructor
-public class BlackIp implements Ip {
+@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.cloud.gateway.ip.black",
+		name = "enabled")
+public class BlackIp extends AbstractIp {
 
 	private final ReactiveRedisUtil reactiveRedisUtil;
 

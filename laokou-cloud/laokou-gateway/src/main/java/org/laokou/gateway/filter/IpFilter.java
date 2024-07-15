@@ -20,7 +20,6 @@ package org.laokou.gateway.filter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.gateway.filter.ip.Ip;
-import org.laokou.gateway.filter.ip.IpProperties;
 import org.laokou.gateway.utils.I18nReactiveUtil;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -36,17 +35,13 @@ import reactor.core.publisher.Mono;
  *
  * @author laokou
  */
-@Component
 @Slf4j
+@Component
 @RefreshScope
 @RequiredArgsConstructor
 public class IpFilter implements GlobalFilter, Ordered {
 
-	private final Ip whiteIp;
-
-	private final Ip blackIp;
-
-	private final IpProperties ipProperties;
+	private final Ip ip;
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -72,13 +67,7 @@ public class IpFilter implements GlobalFilter, Ordered {
 	 * @return 响应结果
 	 */
 	private Mono<Void> validate(ServerWebExchange exchange, GatewayFilterChain chain) {
-		if (ipProperties.getWhite().isEnabled()) {
-			return whiteIp.validate(exchange, chain);
-		}
-		if (ipProperties.getBlack().isEnabled()) {
-			return blackIp.validate(exchange, chain);
-		}
-		return chain.filter(exchange);
+		return ip.validate(exchange, chain);
 	}
 
 }

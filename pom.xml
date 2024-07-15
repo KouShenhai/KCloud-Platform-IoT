@@ -215,9 +215,11 @@
       <properties>
         <DATASOURCE-USERNAME-NACOS>ENC(aEwhK+oj5wQ/pJfRcfwXAw==)</DATASOURCE-USERNAME-NACOS>
         <DATASOURCE-PASSWORD-NACOS>ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)</DATASOURCE-PASSWORD-NACOS>
-        <DATASOURCE-USERNAME-SNAIL-JOB>ENC(4pcvkMAYo/eI8yyOWMkKrZ5ULU2ITC7V9wivUEe9F99Phsh/FJeP+WxZB+wxBgjm)
+        <DATASOURCE-USERNAME-SNAIL-JOB>
+          ENC(4pcvkMAYo/eI8yyOWMkKrZ5ULU2ITC7V9wivUEe9F99Phsh/FJeP+WxZB+wxBgjm)
         </DATASOURCE-USERNAME-SNAIL-JOB>
-        <DATASOURCE-PASSWORD-SNAIL-JOB>ENC(L22TUOP+1sSFU+2G/O6+/GCGTudE8Gb2Haf+0rlMxohzTd2l5nmdszMg4Me/Ogae)
+        <DATASOURCE-PASSWORD-SNAIL-JOB>
+          ENC(L22TUOP+1sSFU+2G/O6+/GCGTudE8Gb2Haf+0rlMxohzTd2l5nmdszMg4Me/Ogae)
         </DATASOURCE-PASSWORD-SNAIL-JOB>
         <DATASOURCE-HOST>postgresql.laokou.org</DATASOURCE-HOST>
         <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-NACOS>
@@ -258,10 +260,12 @@
       <id>prod</id>
       <properties>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-USERNAME-NACOS>${DATASOURCE_USERNAME_NACOS:ENC(aEwhK+oj5wQ/pJfRcfwXAw==)}
+        <DATASOURCE-USERNAME-NACOS>
+          ${DATASOURCE_USERNAME_NACOS:ENC(aEwhK+oj5wQ/pJfRcfwXAw==)}
         </DATASOURCE-USERNAME-NACOS>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-PASSWORD-NACOS>${DATASOURCE_PASSWORD_NACOS:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}
+        <DATASOURCE-PASSWORD-NACOS>
+          ${DATASOURCE_PASSWORD_NACOS:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}
         </DATASOURCE-PASSWORD-NACOS>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-USERNAME-SNAIL-JOB>
@@ -284,7 +288,8 @@
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PORT>${DATASOURCE_PORT:5432}</DATASOURCE-PORT>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-DRIVER-CLASS-NAME>${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
+        <DATASOURCE-DRIVER-CLASS-NAME>
+          ${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
         </DATASOURCE-DRIVER-CLASS-NAME>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PLATFORM>${DATASOURCE_PLATFORM:postgresql}</DATASOURCE-PLATFORM>

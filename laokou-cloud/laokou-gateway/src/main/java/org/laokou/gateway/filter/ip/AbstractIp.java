@@ -17,23 +17,13 @@
 
 package org.laokou.gateway.filter.ip;
 
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
-
 /**
- * IP抽象类.
- *
  * @author laokou
  */
-public interface Ip {
+public abstract class AbstractIp implements Ip {
 
-	/**
-	 * 校验IP并响应.
-	 * @param exchange 服务网络交换机
-	 * @param chain 链式过滤器
-	 * @return 响应结果
-	 */
-	Mono<Void> validate(ServerWebExchange exchange, GatewayFilterChain chain);
+	protected static final String BLACK = "black";
+
+	protected static final String WHITE = "white";
 
 }
