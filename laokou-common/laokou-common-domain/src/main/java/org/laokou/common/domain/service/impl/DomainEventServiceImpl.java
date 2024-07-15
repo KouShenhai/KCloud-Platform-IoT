@@ -27,6 +27,7 @@ import org.laokou.common.domain.model.DomainEventA;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -58,9 +59,11 @@ public class DomainEventServiceImpl implements DomainEventService {
 					domainEventMapper.insert(eventDO);
 				}
 				catch (Exception e) {
-					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-					r.setRollbackOnly();
-					throw new RuntimeException(LogUtil.record(e.getMessage()));
+					if (!(e instanceof DataIntegrityViolationException)) {
+						log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+						r.setRollbackOnly();
+						throw new RuntimeException(LogUtil.record(e.getMessage()));
+					}
 				}
 			});
 		}
