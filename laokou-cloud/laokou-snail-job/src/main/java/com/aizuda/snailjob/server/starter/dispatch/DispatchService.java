@@ -20,11 +20,18 @@ import java.util.concurrent.TimeUnit;
  * 负责SnailJob系统任务分发调度
  *
  * @author opensnail
+ * @date 2023-09-21 23:36:47
  * @since 2.4.0
  */
 @Component
 @Slf4j
 public class DispatchService implements Lifecycle {
+
+	/**
+	 * 分配器线程
+	 */
+	private final ScheduledExecutorService dispatchService = Executors
+		.newSingleThreadScheduledExecutor(r -> new Thread(r, "dispatch-service"));
 
 	/**
 	 * 调度时长
@@ -35,12 +42,6 @@ public class DispatchService implements Lifecycle {
 	 * 延迟30s为了尽可能保障集群节点都启动完成在进行rebalance
 	 */
 	public static final Long INITIAL_DELAY = SystemConstants.SCHEDULE_INITIAL_DELAY;
-
-	/**
-	 * 分配器线程
-	 */
-	private final ScheduledExecutorService dispatchService = Executors
-		.newSingleThreadScheduledExecutor(r -> new Thread(r, "dispatch-service"));
 
 	@Override
 	public void start() {

@@ -38,7 +38,7 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @Component
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
-	selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+		selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class MailCaptchaHandler extends AbstractDomainEventHandler {
 
 	public MailCaptchaHandler(DomainEventPublisher domainEventPublisher) {
@@ -54,4 +54,5 @@ public class MailCaptchaHandler extends AbstractDomainEventHandler {
 	protected DefaultDomainEvent convert(String msg) {
 		return JacksonUtil.toBean(msg, SendCaptchaEvent.class);
 	}
+
 }

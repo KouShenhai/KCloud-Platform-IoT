@@ -66,7 +66,6 @@ public class LogGatewayImpl implements LogGateway {
 		logDO.setDeptId(evt.getDeptId());
 		logDO.setDeptPath(evt.getDeptPath());
 		logDO.setTenantId(evt.getTenantId());
-		logDO.setEventId(evt.getId());
 		return logDO;
 	}
 
@@ -93,7 +92,6 @@ public class LogGatewayImpl implements LogGateway {
 	// logDO.setDeptId(evt.getDeptId());
 	// logDO.setDeptPath(evt.getDeptPath());
 	// logDO.setTenantId(evt.getTenantId());
-	// logDO.setEventId(evt.getId());
 	// return logDO;
 	// }
 

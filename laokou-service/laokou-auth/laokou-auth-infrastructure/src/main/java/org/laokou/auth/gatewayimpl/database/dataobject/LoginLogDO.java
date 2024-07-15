@@ -79,9 +79,4 @@ public class LoginLogDO extends BaseDO {
 	 */
 	private String type;
 
-	/**
-	 * 事件ID.
-	 */
-	private Long eventId;
-
 }

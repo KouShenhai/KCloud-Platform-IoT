@@ -99,7 +99,7 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 |Postgresql                  |16.3
 |TDengine                    |3.3.2.0
 |Liquibase                   |4.28.0
-|Snail Job                   |1.0.0
+|Snail Job                   |1.1.0
 |===
 
 ==== 🍺 相关技术

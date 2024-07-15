@@ -21,14 +21,17 @@ import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.context.ShutdownHolder;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
+import org.springframework.boot.SpringApplication;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
@@ -37,16 +40,19 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAILABLE;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAILABLE;
 
 /**
  * @author laokou
  */
 @Slf4j
 @NonNullApi
+@RequiredArgsConstructor
 @WebFilter(filterName = "shutdownFilter", urlPatterns = "/graceful-shutdown")
 public class ShutdownFilter implements Filter, org.springframework.web.server.WebFilter {
+
+	private final SpringContextUtil springContextUtil;
 
 	private static final ScheduledExecutorService NEWED_SCHEDULED_THREAD_POOL = Executors.newScheduledThreadPool(1);
 
@@ -93,6 +99,10 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 					// 一分钟内没完成 或 计数器为0 -> 结束
 					if (end - start >= second || ShutdownHolder.get() == 0) {
 						ThreadUtil.shutdown(NEWED_SCHEDULED_THREAD_POOL, 10);
+						// 关闭应用
+						int exitCode = SpringApplication.exit(springContextUtil.getApplicationContext(),
+								new ExitCodeGeneratorImpl());
+						System.exit(exitCode);
 					}
 				}, 0, 1, TimeUnit.SECONDS);
 			}));

@@ -53,7 +53,4 @@ public class OssLogDO extends BaseDO {
 	@Schema(name = "errorMessage", description = "错误信息")
 	private String errorMessage;
 
-	@Schema(name = "eventId", description = "事件ID")
-	private Long eventId;
-
 }

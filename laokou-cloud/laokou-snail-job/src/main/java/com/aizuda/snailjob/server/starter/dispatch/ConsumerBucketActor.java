@@ -32,6 +32,7 @@ import java.util.Objects;
  * <p>
  *
  * @author opensnail
+ * @date 2023-09-21 23:47:23
  * @since 2.4.0
  */
 @Component(ActorGenerator.SCAN_BUCKET_ACTOR)
@@ -39,15 +40,15 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ConsumerBucketActor extends AbstractActor {
 
-	private static final String DEFAULT_JOB_KEY = "DEFAULT_JOB_KEY";
-
-	private static final String DEFAULT_WORKFLOW_KEY = "DEFAULT_JOB_KEY";
-
 	private final AccessTemplate accessTemplate;
 
 	private final ServerNodeMapper serverNodeMapper;
 
 	private final SystemProperties systemProperties;
+
+	private static final String DEFAULT_JOB_KEY = "DEFAULT_JOB_KEY";
+
+	private static final String DEFAULT_WORKFLOW_KEY = "DEFAULT_JOB_KEY";
 
 	@Override
 	public Receive createReceive() {

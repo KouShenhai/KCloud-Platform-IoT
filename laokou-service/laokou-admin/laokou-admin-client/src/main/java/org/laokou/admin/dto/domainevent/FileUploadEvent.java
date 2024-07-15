@@ -53,7 +53,7 @@ public class FileUploadEvent extends DomainEvent<Long> {
 
 	@Override
 	protected void create(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
-						  EventStatus eventStatus) {
+			EventStatus eventStatus) {
 
 	}
 

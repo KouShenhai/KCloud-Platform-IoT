@@ -62,6 +62,10 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 		SpringContextUtil.applicationContext = applicationContext;
 	}
 
+	public ApplicationContext getApplicationContext() {
+		return applicationContext;
+	}
+
 	/**
 	 * 获取工厂.
 	 * @return 工厂

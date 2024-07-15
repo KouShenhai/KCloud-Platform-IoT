@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
  * 删除过期下线机器
  *
  * @author opensnail
+ * @date : 2023-07-21 14:59
  * @since 2.1.0
  */
 @Component
@@ -48,7 +49,7 @@ public class OfflineNodeSchedule extends AbstractSchedule implements Lifecycle {
 					.le(ServerNode::getExpireAt, endTime));
 			if (CollUtil.isNotEmpty(serverNodes)) {
 				// 先删除DB中需要下线的机器
-				serverNodeMapper.deleteBatchIds(StreamUtils.toSet(serverNodes, ServerNode::getId));
+				serverNodeMapper.deleteByIds(StreamUtils.toSet(serverNodes, ServerNode::getId));
 			}
 
 			Set<RegisterNodeInfo> allPods = CacheRegisterTable.getAllPods();

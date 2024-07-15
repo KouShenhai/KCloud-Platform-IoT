@@ -74,9 +74,6 @@ public class OperateLogDO extends BaseDO {
 	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
 	private Long takeTime;
 
-	@Schema(name = "eventId", description = "事件ID")
-	private Long eventId;
-
 	public OperateLogDO(String moduleName, Integer status, Long tenantId) {
 		this.moduleName = moduleName;
 		this.status = status;
