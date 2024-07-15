@@ -50,18 +50,18 @@ public class MqttClient implements Client {
 	 */
 	private static final byte[] WILL_DATA = "offline".getBytes(UTF_8);
 
-	private volatile boolean running;
-
-	private volatile org.eclipse.paho.mqttv5.client.MqttClient client;
-
-	private final SpringMqttProperties springMqttProperties;
+	private final SpringMqttBrokerProperties springMqttBrokerProperties;
 
 	private final MqttStrategy mqttStrategy;
 
 	private final AtomicInteger ATOMIC = new AtomicInteger(0);
 
-	public MqttClient(SpringMqttProperties springMqttProperties, MqttStrategy mqttStrategy) {
-		this.springMqttProperties = springMqttProperties;
+	private volatile boolean running;
+
+	private volatile org.eclipse.paho.mqttv5.client.MqttClient client;
+
+	public MqttClient(SpringMqttBrokerProperties springMqttBrokerProperties, MqttStrategy mqttStrategy) {
+		this.springMqttBrokerProperties = springMqttBrokerProperties;
 		this.mqttStrategy = mqttStrategy;
 	}
 
@@ -73,15 +73,15 @@ public class MqttClient implements Client {
 			return;
 		}
 		try {
-			client = new org.eclipse.paho.mqttv5.client.MqttClient(springMqttProperties.getHost(),
-					springMqttProperties.getClientId(), new MemoryPersistence());
+			client = new org.eclipse.paho.mqttv5.client.MqttClient(springMqttBrokerProperties.getHost(),
+					springMqttBrokerProperties.getClientId(), new MemoryPersistence());
 			// 手动ack接收确认
-			client.setManualAcks(springMqttProperties.isManualAcks());
+			client.setManualAcks(springMqttBrokerProperties.isManualAcks());
 			client.setCallback(new MqttMessageCallback(mqttStrategy));
 			client.connect(options());
-			if (CollectionUtil.isNotEmpty(springMqttProperties.getTopics())) {
-				client.subscribe(springMqttProperties.getTopics().toArray(String[]::new),
-						springMqttProperties.getTopics().stream().mapToInt(item -> 2).toArray());
+			if (CollectionUtil.isNotEmpty(springMqttBrokerProperties.getTopics())) {
+				client.subscribe(springMqttBrokerProperties.getTopics().toArray(String[]::new),
+						springMqttBrokerProperties.getTopics().stream().mapToInt(item -> 2).toArray());
 			}
 			log.info("MQTT连接成功");
 			running = true;
@@ -120,18 +120,18 @@ public class MqttClient implements Client {
 
 	private MqttConnectionOptions options() {
 		MqttConnectionOptions options = new MqttConnectionOptions();
-		options.setCleanStart(springMqttProperties.isClearStart());
-		options.setUserName(springMqttProperties.getUsername());
-		options.setPassword(springMqttProperties.getPassword().getBytes(StandardCharsets.UTF_8));
-		options.setReceiveMaximum(springMqttProperties.getReceiveMaximum());
-		options.setMaximumPacketSize(springMqttProperties.getMaximumPacketSize());
+		options.setCleanStart(springMqttBrokerProperties.isClearStart());
+		options.setUserName(springMqttBrokerProperties.getUsername());
+		options.setPassword(springMqttBrokerProperties.getPassword().getBytes(StandardCharsets.UTF_8));
+		options.setReceiveMaximum(springMqttBrokerProperties.getReceiveMaximum());
+		options.setMaximumPacketSize(springMqttBrokerProperties.getMaximumPacketSize());
 		options.setWill(WILL_TOPIC, new MqttMessage(WILL_DATA, 2, false, new MqttProperties()));
 		// 超时时间
-		options.setConnectionTimeout(springMqttProperties.getConnectionTimeout());
+		options.setConnectionTimeout(springMqttBrokerProperties.getConnectionTimeout());
 		// 会话心跳
-		options.setKeepAliveInterval(springMqttProperties.getKeepAliveInterval());
+		options.setKeepAliveInterval(springMqttBrokerProperties.getKeepAliveInterval());
 		// 开启重连
-		options.setAutomaticReconnect(springMqttProperties.isAutomaticReconnect());
+		options.setAutomaticReconnect(springMqttBrokerProperties.isAutomaticReconnect());
 		return options;
 	}
 

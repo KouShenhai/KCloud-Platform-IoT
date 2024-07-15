@@ -15,53 +15,53 @@
  *
  */
 
-package org.laokou.gateway.filter.ip;
+package org.laokou.mqtt.config;
 
 import lombok.Data;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.springframework.beans.factory.InitializingBean;
+import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+
 /**
- * IP配置.
- *
  * @author laokou
  */
-@Data
 @Component
-@ConfigurationProperties(prefix = "spring.cloud.gateway.ip")
-public class IpProperties implements InitializingBean {
+@Data
+@ConfigurationProperties(prefix = "spring.mqtt-broker")
+public class SpringMqttBrokerProperties {
 
-	private White white = new White();
+	private Boolean enabled = false;
 
-	private Black black = new Black();
+	private String username = EMPTY;
 
-	@Override
-	public void afterPropertiesSet() {
-		if (white.enabled && black.enabled) {
-			throw new SystemException("S_Gateway_IpConfigError", "IP配置错误");
-		}
-	}
+	private String password = EMPTY;
 
-	@Data
-	public static class White {
+	private String host;
 
-		/**
-		 * 白名单开关，默认不开启.
-		 */
-		private boolean enabled = false;
+	/**
+	 * 客户ID.
+	 */
+	private String clientId = String.valueOf(IdGenerator.defaultSnowflakeId());
 
-	}
+	private boolean clearStart = true;
 
-	@Data
-	public static class Black {
+	private int receiveMaximum = 5;
 
-		/**
-		 * 黑名单开关，默认不开启.
-		 */
-		private boolean enabled = false;
+	private long maximumPacketSize = 1024;
 
-	}
+	private int connectionTimeout = 10;
+
+	private int keepAliveInterval = 15;
+
+	private boolean automaticReconnect = true;
+
+	private boolean manualAcks = true;
+
+	private Set<String> topics = new HashSet<>(0);
 
 }

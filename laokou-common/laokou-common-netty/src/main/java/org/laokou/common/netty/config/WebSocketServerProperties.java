@@ -15,53 +15,45 @@
  *
  */
 
-package org.laokou.mqtt.config;
+package org.laokou.common.netty.config;
 
 import lombok.Data;
-import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-
 /**
+ * WebSocketServer属性配置.
+ *
  * @author laokou
  */
-@Component
 @Data
-@ConfigurationProperties(prefix = "spring.mqtt")
-public class SpringMqttProperties {
-
-	private Boolean enabled = false;
-
-	private String username = EMPTY;
-
-	private String password = EMPTY;
-
-	private String host;
+@Component
+@ConfigurationProperties(prefix = "spring.websocket-server")
+public class WebSocketServerProperties {
 
 	/**
-	 * 客户ID.
+	 * 监听核心线程数.
 	 */
-	private String clientId = String.valueOf(IdGenerator.defaultSnowflakeId());
+	private Integer bossCoreSize = 1;
 
-	private boolean clearStart = true;
+	/**
+	 * 读写核心线程数.
+	 */
+	private Integer workerCoreSize = 8;
 
-	private int receiveMaximum = 5;
+	/**
+	 * IP.
+	 */
+	private String ip;
 
-	private long maximumPacketSize = 1024;
+	/**
+	 * 端口.
+	 */
+	private int port;
 
-	private int connectionTimeout = 10;
-
-	private int keepAliveInterval = 15;
-
-	private boolean automaticReconnect = true;
-
-	private boolean manualAcks = true;
-
-	private Set<String> topics = new HashSet<>(0);
+	/**
+	 * 应用名称.
+	 */
+	private String appName;
 
 }

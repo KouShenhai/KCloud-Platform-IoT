@@ -15,52 +15,32 @@
  *
  */
 
-package org.laokou.gateway.filter.ip;
+package org.laokou.common.sms.config;
 
 import lombok.Data;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * IP配置.
- *
  * @author laokou
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "spring.cloud.gateway.ip")
-public class IpProperties implements InitializingBean {
+@ConfigurationProperties(prefix = "sms")
+public class SmsProperties {
 
-	private White white = new White();
-
-	private Black black = new Black();
-
-	@Override
-	public void afterPropertiesSet() {
-		if (white.enabled && black.enabled) {
-			throw new SystemException("S_Gateway_IpConfigError", "IP配置错误");
-		}
-	}
+	private GYY gyy = new GYY();
 
 	@Data
-	public static class White {
+	public static class GYY {
 
-		/**
-		 * 白名单开关，默认不开启.
-		 */
-		private boolean enabled = false;
+		private boolean enabled = true;
 
-	}
+		private String templateId = "02551a4313154fe4805794ca069d70bf";
 
-	@Data
-	public static class Black {
+		private String signId = "3f45af8aa12f4d59be8b1f18b650ad81k";
 
-		/**
-		 * 黑名单开关，默认不开启.
-		 */
-		private boolean enabled = false;
+		private String appcode = "6b3e98d5f39848cba9615d576ce78d9e";
 
 	}
 

@@ -17,72 +17,37 @@
 
 package org.laokou.common.netty.config;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.net.URI;
-
 /**
+ * TcpServer属性配置.
+ *
  * @author laokou
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "spring.websocket")
-@Schema(name = "WebSocketProperties", description = "WebSocket属性配置")
-public class WebSocketProperties {
+@ConfigurationProperties(prefix = "spring.tcp-server")
+public class SpringTcpServerProperties {
 
-	public int getPort(URI uri) {
-		if (uri.getPort() == -1) {
-			if (uri.getScheme().startsWith("wss")) {
-				return 443;
-			}
-			else if (uri.getScheme().startsWith("ws")) {
-				return 80;
-			}
-			else {
-				return -1;
-			}
-		}
-		else {
-			return uri.getPort();
-		}
-	}
+	/**
+	 * IP.
+	 */
+	private String ip;
 
-	private Client client;
+	/**
+	 * 端口.
+	 */
+	private int port;
 
-	private Server server;
+	/**
+	 * 应用名称.
+	 */
+	private String appName;
 
 	private Integer bossCoreSize = 1;
 
 	private Integer workerCoreSize = 8;
-
-	@Data
-	public static class Client {
-
-		private String uri;
-
-	}
-
-	@Data
-	public static class Server {
-
-		/**
-		 * IP.
-		 */
-		private String ip;
-
-		/**
-		 * 端口.
-		 */
-		private int port;
-
-		/**
-		 * 应用名称.
-		 */
-		private String appName;
-
-	}
 
 }

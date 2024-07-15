@@ -20,6 +20,7 @@ package org.laokou.common.core.config;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -38,7 +39,7 @@ public class OAuth2ResourceServerProperties {
 
 	private boolean enabled = true;
 
-	private RequestMatcher requestMatcher;
+	private RequestMatcher requestMatcher = new RequestMatcher();
 
 	@Data
 	public static class RequestMatcher {

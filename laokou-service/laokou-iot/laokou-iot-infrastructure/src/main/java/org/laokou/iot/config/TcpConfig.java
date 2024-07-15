@@ -22,8 +22,8 @@ import io.netty.util.concurrent.DefaultThreadFactory;
 import io.netty.util.concurrent.EventExecutorGroup;
 import io.netty.util.concurrent.UnorderedThreadPoolEventExecutor;
 import org.laokou.common.netty.config.Server;
+import org.laokou.common.netty.config.SpringTcpServerProperties;
 import org.laokou.common.netty.config.TcpServer;
-import org.laokou.common.netty.config.TcpProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -34,9 +34,11 @@ import org.springframework.context.annotation.Configuration;
 public class TcpConfig {
 
 	@Bean(name = "tcpServer", initMethod = "start", destroyMethod = "stop")
-	public Server tcpServer(TcpProperties tcpProperties, ChannelInitializer<?> tcpChannelInitializer) {
-		return new TcpServer(tcpProperties.getIp(), tcpProperties.getPort(), tcpChannelInitializer,
-				tcpProperties.getBossCoreSize(), tcpProperties.getWorkerCoreSize());
+	public Server tcpServer(SpringTcpServerProperties springTcpServerProperties,
+			ChannelInitializer<?> tcpChannelInitializer) {
+		return new TcpServer(springTcpServerProperties.getIp(), springTcpServerProperties.getPort(),
+				tcpChannelInitializer, springTcpServerProperties.getBossCoreSize(),
+				springTcpServerProperties.getWorkerCoreSize());
 	}
 
 	@Bean

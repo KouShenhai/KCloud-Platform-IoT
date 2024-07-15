@@ -25,6 +25,7 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.laokou.common.sms.service.SmsService;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
@@ -41,12 +42,17 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 		selectorExpression = MOBILE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class MobileCaptchaHandler extends AbstractDomainEventHandler {
 
-	public MobileCaptchaHandler(DomainEventPublisher domainEventPublisher) {
+	private final SmsService smsService;
+
+	public MobileCaptchaHandler(DomainEventPublisher domainEventPublisher, SmsService smsService) {
 		super(domainEventPublisher);
+		this.smsService = smsService;
 	}
 
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
+		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
+		smsService.send(event.getUuid());
 		log.info("手机号：{}", domainEvent);
 	}
 

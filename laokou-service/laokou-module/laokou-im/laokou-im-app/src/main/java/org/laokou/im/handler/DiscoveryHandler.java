@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.nacos.utils.ServiceUtil;
-import org.laokou.common.netty.config.WebSocketProperties;
+import org.laokou.common.netty.config.WebSocketServerProperties;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -44,15 +44,15 @@ public class DiscoveryHandler implements ApplicationListener<ApplicationReadyEve
 
 	private final ConfigUtil configUtil;
 
-	private final WebSocketProperties webSocketProperties;
+	private final WebSocketServerProperties webSocketServerProperties;
 
 	@Override
 	@SneakyThrows
 	public void onApplicationEvent(ApplicationReadyEvent event) {
 		String ip = InetAddress.getLocalHost().getHostAddress();
 		String group = configUtil.getGroup();
-		int port = webSocketProperties.getServer().getPort();
-		String appName = webSocketProperties.getServer().getAppName();
+		int port = webSocketServerProperties.getPort();
+		String appName = webSocketServerProperties.getAppName();
 		serviceUtil.registerInstance(appName, group, ip, port);
 	}
 
@@ -61,8 +61,8 @@ public class DiscoveryHandler implements ApplicationListener<ApplicationReadyEve
 	public void close() {
 		String ip = InetAddress.getLocalHost().getHostAddress();
 		String group = configUtil.getGroup();
-		int port = webSocketProperties.getServer().getPort();
-		String appName = webSocketProperties.getServer().getAppName();
+		int port = webSocketServerProperties.getPort();
+		String appName = webSocketServerProperties.getAppName();
 		serviceUtil.deregisterInstance(appName, group, ip, port);
 	}
 

@@ -19,13 +19,10 @@ spring:
   threads:
     virtual:
       enabled: true
-  websocket:
-    client:
-      uri: wss://vue.laokou.org/im/ws
-    server:
-      ip: 0.0.0.0
-      port: ${WEBSOCKET_SERVER_PORT:1000}
-      app-name: ${spring.application.name}-server
+  websocket-server:
+    ip: 0.0.0.0
+    port: ${WEBSOCKET_SERVER_PORT:1000}
+    app-name: ${spring.application.name}-server
     boss-core-size: 2
     worker-core-size: 32
   application:

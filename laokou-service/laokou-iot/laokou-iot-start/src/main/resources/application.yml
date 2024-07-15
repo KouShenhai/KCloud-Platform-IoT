@@ -18,13 +18,13 @@ spring:
     check-template-location: false
   application:
     name: @pom.parent.artifactId@
-  tcp:
+  tcp-server:
     ip: 0.0.0.0
     port: ${TCP_SERVER_PORT:2000}
     app-name: ${spring.application.name}-server
     boss-core-size: 2
     worker-core-size: 32
-  mqtt:
+  mqtt-broker:
     enabled: false
     username: emqx
     password: laokou123

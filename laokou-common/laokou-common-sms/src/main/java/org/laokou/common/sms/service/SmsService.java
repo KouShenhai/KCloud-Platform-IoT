@@ -15,39 +15,13 @@
  *
  */
 
-package org.laokou.common.netty.config;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+package org.laokou.common.sms.service;
 
 /**
  * @author laokou
  */
-@Data
-@Component
-@ConfigurationProperties(prefix = "spring.tcp")
-@Schema(name = "TcpProperties", description = "Tcp属性配置")
-public class TcpProperties {
+public interface SmsService {
 
-	/**
-	 * IP.
-	 */
-	private String ip;
-
-	/**
-	 * 端口.
-	 */
-	private int port;
-
-	/**
-	 * 应用名称.
-	 */
-	private String appName;
-
-	private Integer bossCoreSize = 1;
-
-	private Integer workerCoreSize = 8;
+	Boolean send(String mobile);
 
 }
