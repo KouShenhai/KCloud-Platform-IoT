@@ -69,7 +69,8 @@ public class RequestAop {
 	public Object doAround(ProceedingJoinPoint joinPoint) {
 		try {
 			return joinPoint.proceed();
-		} finally {
+		}
+		finally {
 			ShutdownHolder.sub();
 		}
 	}

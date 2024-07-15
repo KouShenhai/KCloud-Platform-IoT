@@ -24,7 +24,7 @@ import static org.laokou.common.elasticsearch.annotation.Constant.PRE_TAGS;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 public @interface Highlight {
 
 	String[] preTags() default PRE_TAGS;

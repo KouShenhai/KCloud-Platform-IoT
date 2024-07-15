@@ -37,11 +37,12 @@ import static org.laokou.common.i18n.common.exception.SystemException.DISTRIBUTE
 @RestControllerAdvice
 public class SeataExceptionHandler {
 
-	@ExceptionHandler({RmTransactionException.class, FrameworkException.class})
+	@ExceptionHandler({ RmTransactionException.class, FrameworkException.class })
 	public Result<?> handle(Exception ex) {
 		if (ex instanceof RmTransactionException) {
 			return Result.fail(DISTRIBUTED_TRANSACTION_TIMEOUT);
-		} else if (ex instanceof FrameworkException) {
+		}
+		else if (ex instanceof FrameworkException) {
 			return Result.fail(DISTRIBUTED_TRANSACTION_DOWNTIME);
 		}
 		return Result.fail(INTERNAL_SERVER_ERROR);
