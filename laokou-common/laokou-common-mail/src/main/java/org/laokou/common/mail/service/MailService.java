@@ -15,23 +15,13 @@
  *
  */
 
-package org.laokou.common.mail.config;
-
-import org.laokou.common.mail.service.MailService;
-import org.laokou.common.mail.service.impl.MailServiceImpl;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.mail.MailProperties;
-import org.springframework.context.annotation.Bean;
+package org.laokou.common.mail.service;
 
 /**
  * @author laokou
  */
-@AutoConfiguration
-public class MailAutoConfig {
+public interface MailService {
 
-	@Bean
-	public MailService mailService(MailProperties mailProperties) {
-		return new MailServiceImpl(mailProperties);
-	}
+	void send(String mail);
 
 }
