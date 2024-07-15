@@ -57,17 +57,15 @@ public class DomainEventServiceImpl implements DomainEventService {
 				try {
 					DomainEventDO eventDO = domainEventConvertor.toDataObject(domainEventA);
 					domainEventMapper.insert(eventDO);
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
+					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+					r.setRollbackOnly();
 					if (!(e instanceof DataIntegrityViolationException)) {
-						log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-						r.setRollbackOnly();
 						throw new RuntimeException(LogUtil.record(e.getMessage()));
 					}
 				}
 			});
-		}
-		finally {
+		} finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
@@ -80,15 +78,13 @@ public class DomainEventServiceImpl implements DomainEventService {
 			transactionalUtil.defaultExecuteWithoutResult(r -> {
 				try {
 					domainEventMapper.updateStatusById(domainEventA.getId());
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 					r.setRollbackOnly();
 					throw new RuntimeException(LogUtil.record(e.getMessage()));
 				}
 			});
-		}
-		finally {
+		} finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
