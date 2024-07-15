@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 import static org.laokou.common.i18n.common.exception.StatusCode.INTERNAL_SERVER_ERROR;
 import static org.laokou.common.i18n.common.exception.SystemException.DISTRIBUTED_TRANSACTION_DOWNTIME;
 import static org.laokou.common.i18n.common.exception.SystemException.DISTRIBUTED_TRANSACTION_TIMEOUT;
@@ -31,17 +32,16 @@ import static org.laokou.common.i18n.common.exception.SystemException.DISTRIBUTE
 /**
  * @author laokou
  */
-@RestControllerAdvice
-@ResponseBody
 @Component
+@ResponseBody
+@RestControllerAdvice
 public class SeataExceptionHandler {
 
-	@ExceptionHandler({ RmTransactionException.class, FrameworkException.class })
+	@ExceptionHandler({RmTransactionException.class, FrameworkException.class})
 	public Result<?> handle(Exception ex) {
 		if (ex instanceof RmTransactionException) {
 			return Result.fail(DISTRIBUTED_TRANSACTION_TIMEOUT);
-		}
-		else if (ex instanceof FrameworkException) {
+		} else if (ex instanceof FrameworkException) {
 			return Result.fail(DISTRIBUTED_TRANSACTION_DOWNTIME);
 		}
 		return Result.fail(INTERNAL_SERVER_ERROR);

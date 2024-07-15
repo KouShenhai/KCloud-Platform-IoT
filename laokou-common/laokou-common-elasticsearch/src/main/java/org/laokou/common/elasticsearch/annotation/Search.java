@@ -24,8 +24,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-import static org.laokou.common.elasticsearch.annotation.HighlightConstant.POST_TAGS;
-import static org.laokou.common.elasticsearch.annotation.HighlightConstant.PRE_TAGS;
+import static org.laokou.common.elasticsearch.annotation.Constant.POST_TAGS;
+import static org.laokou.common.elasticsearch.annotation.Constant.PRE_TAGS;
 
 /**
  * @author laokou

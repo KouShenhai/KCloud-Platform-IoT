@@ -27,8 +27,8 @@ import org.springframework.cloud.client.serviceregistry.Registration;
 /**
  * @author laokou
  */
-@AutoConfiguration
 @Slf4j
+@AutoConfiguration
 @RequiredArgsConstructor
 public class NacosAutoConfig {
 

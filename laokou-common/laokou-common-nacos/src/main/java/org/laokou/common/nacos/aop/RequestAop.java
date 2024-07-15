@@ -18,7 +18,6 @@
 package org.laokou.common.nacos.aop;
 
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -33,9 +32,8 @@ import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAIL
 /**
  * @author laokou
  */
-@Component
 @Aspect
-@Slf4j
+@Component
 public class RequestAop {
 
 	@Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping)")
@@ -71,8 +69,7 @@ public class RequestAop {
 	public Object doAround(ProceedingJoinPoint joinPoint) {
 		try {
 			return joinPoint.proceed();
-		}
-		finally {
+		} finally {
 			ShutdownHolder.sub();
 		}
 	}

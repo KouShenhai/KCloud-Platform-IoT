@@ -19,12 +19,12 @@ package org.laokou.common.elasticsearch.annotation;
 
 import java.lang.annotation.*;
 
-import static org.laokou.common.elasticsearch.annotation.HighlightConstant.POST_TAGS;
-import static org.laokou.common.elasticsearch.annotation.HighlightConstant.PRE_TAGS;
+import static org.laokou.common.elasticsearch.annotation.Constant.POST_TAGS;
+import static org.laokou.common.elasticsearch.annotation.Constant.PRE_TAGS;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 public @interface Highlight {
 
 	String[] preTags() default PRE_TAGS;
