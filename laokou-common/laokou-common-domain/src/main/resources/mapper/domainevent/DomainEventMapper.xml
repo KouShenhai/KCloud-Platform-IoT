@@ -28,41 +28,4 @@
       and version = 0
   </update>
 
-  <select id="selectObjects" fetchSize="10000" resultSetType="FORWARD_ONLY"
-          resultType="org.laokou.common.domain.database.dataobject.DomainEventDO">
-
-
-  </select>
-
-  <!--    <select id="selectObjects" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.common.domain.database.dataobject.DomainEventDO">
-          select <include refid="columns"/>
-              from boot_sys_domain_event
-          where del_flag = 0
-              and event_status in ('CREATED','PUBLISH_FAILED','CONSUME_FAILED','PUBLISH_SUCCEED')
-          <if test="sourceNames != null and sourceNames.size() > 0">
-              and source_name in
-              <foreach collection="sourceNames" item="item" open="(" close=")">
-                  #{item}
-              </foreach>
-          </if>
-          <if test="appName != null and appName != ''">
-              and app_name = #{appName}
-          </if>
-      </select>
-      <select id="selectTotal" resultType="long">
-          select count(1)
-          from boot_sys_domain_event
-          where del_flag = 0
-          and event_status in ('CREATED','PUBLISH_FAILED','CONSUME_FAILED', 'PUBLISH_SUCCEED')
-          <if test="sourceNames != null and sourceNames.size() > 0">
-              and source_name in
-              <foreach collection="sourceNames" item="item" open="(" close=")">
-                  #{item}
-              </foreach>
-          </if>
-          <if test="appName != null and appName != ''">
-              and app_name = #{appName}
-          </if>
-      </select>-->
-
 </mapper>
