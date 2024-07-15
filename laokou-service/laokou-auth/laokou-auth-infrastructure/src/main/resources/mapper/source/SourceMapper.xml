@@ -21,14 +21,15 @@
 <mapper namespace="org.laokou.auth.gatewayimpl.database.SourceMapper">
 
   <select id="selectByTenantId" resultType="org.laokou.auth.gatewayimpl.database.dataobject.SourceDO">
-    select a.name
-         , a.driver_class_name
-         , a.url
-         , a.username
-         , a.password
-    from boot_sys_source a
-           JOIN boot_sys_tenant b on b.source_id = a.id
-    where b.id = #{tenantId}
+    select name
+         , driver_class_name
+         , url
+         , username
+         , password
+    from boot_sys_source
+    where id in
+          (select source_id from boot_sys_tenant where id = #{tenantId})
+      and del_flag = 0
   </select>
 
 </mapper>

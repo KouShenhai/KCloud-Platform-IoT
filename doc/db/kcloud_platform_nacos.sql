@@ -2754,6 +2754,10 @@ mybatis-plus:
     ignore-tables:
       - boot_sys_source
       - boot_sys_tenant
+      - boot_sys_domain_event
+	  - boot_sys_user
+	  - boot_sys_menu
+	  - boot_sys_dept
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
@@ -2889,6 +2893,10 @@ mybatis-plus:
     ignore-tables:
       - boot_sys_source
       - boot_sys_tenant
+	  - boot_sys_domain_event
+      - boot_sys_user
+	  - boot_sys_menu
+	  - boot_sys_dept
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
@@ -3024,6 +3032,10 @@ mybatis-plus:
     ignore-tables:
       - boot_sys_source
       - boot_sys_tenant
+      - boot_sys_domain_event
+	  - boot_sys_user
+	  - boot_sys_menu
+	  - boot_sys_dept
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl

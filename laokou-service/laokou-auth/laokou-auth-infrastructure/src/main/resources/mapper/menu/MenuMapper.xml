@@ -22,24 +22,19 @@
   <select id="selectPermissions" resultType="string">
     SELECT permission
     FROM boot_sys_menu
-    where del_flag = 0
-      and type = 1
+    where type = 1
+      and del_flag = 0
     GROUP BY permission
   </select>
 
   <select id="selectPermissionsByUserId" resultType="string">
-    SELECT a.permission
-    FROM boot_sys_menu as a
-       , boot_sys_role as b
-       , boot_sys_role_menu as c
-       , boot_sys_user_role as e
-    WHERE a.id = c.menu_id
-      AND c.role_id = b.id
-      AND b.id = e.role_id
-      AND e.user_id = #{userId}
-      and a.del_flag = 0
-      and a.type = 1
-    GROUP BY a.permission
+    select permission
+    from boot_sys_menu
+    where id in (select menu_id
+                 from boot_sys_role_menu
+                 where role_id in (select role_id from boot_sys_user_role where user_id = #{userId}))
+      and del_flag = 0
+    GROUP BY permission
   </select>
 
 </mapper>

@@ -23,8 +23,8 @@
   <select id="selectDeptPaths" resultType="string">
     select path
     from boot_sys_dept
-    where del_flag = 0
-      and pid = 0
+    where pid = 0
+      and del_flag = 0
   </select>
 
   <select id="selectDeptPathsByUserId" resultType="string">

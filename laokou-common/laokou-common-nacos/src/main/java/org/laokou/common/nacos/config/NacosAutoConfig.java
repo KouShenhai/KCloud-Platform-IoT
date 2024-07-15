@@ -17,16 +17,13 @@
 
 package org.laokou.common.nacos.config;
 
-import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.nacos.utils.ServiceUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.client.serviceregistry.Registration;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author laokou
@@ -34,6 +31,7 @@ import org.springframework.context.annotation.Bean;
 @Slf4j
 @AutoConfiguration
 @RequiredArgsConstructor
+@Import(ServiceUtil.class)
 public class NacosAutoConfig {
 
 	private final ServiceUtil serviceUtil;
@@ -47,12 +45,6 @@ public class NacosAutoConfig {
 		serviceUtil.deregisterInstance(registration.getServiceId(), registration.getHost(), registration.getPort());
 		log.info("服务下线执行成功");
 		log.info("关闭服务执行完毕");
-	}
-
-	@Bean
-	public ServiceUtil serviceUtil(LoadBalancerClient loadBalancerClient,
-			NacosDiscoveryProperties nacosDiscoveryProperties, DiscoveryClient nacosDiscoveryClient) {
-		return new ServiceUtil(loadBalancerClient, nacosDiscoveryProperties, nacosDiscoveryClient);
 	}
 
 }
