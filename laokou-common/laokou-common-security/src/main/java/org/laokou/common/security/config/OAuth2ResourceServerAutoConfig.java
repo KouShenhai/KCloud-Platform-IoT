@@ -57,9 +57,9 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 @EnableWebSecurity
 @EnableMethodSecurity
 @AutoConfiguration(after = { OAuth2AuthorizationAutoConfig.class })
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.security.oauth2.resource-server",
 		name = "enabled")
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class OAuth2ResourceServerAutoConfig {
 
 	@Bean

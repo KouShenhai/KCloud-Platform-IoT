@@ -30,7 +30,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 
 import static org.laokou.common.i18n.common.exception.SystemException.*;
 
@@ -38,12 +37,11 @@ import static org.laokou.common.i18n.common.exception.SystemException.*;
  * @author laokou
  */
 @Slf4j
-@AutoConfiguration
 public class SentinelExceptionHandler implements BlockExceptionHandler {
 
 	@Override
-	public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, String s, BlockException e)
-			throws Exception {
+	public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, String s,
+			BlockException e) {
 		// 限流
 		if (e instanceof FlowException flowException) {
 			log.error("FlowException -> 已限流，错误信息：{}，详情见日志", LogUtil.record(flowException.getMessage()), flowException);

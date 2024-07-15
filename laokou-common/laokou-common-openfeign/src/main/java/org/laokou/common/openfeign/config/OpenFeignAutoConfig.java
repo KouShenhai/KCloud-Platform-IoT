@@ -20,7 +20,6 @@ package org.laokou.common.openfeign.config;
 import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
 import feign.*;
 import feign.codec.ErrorDecoder;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,12 +51,14 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.*;
 // @formatter:on
 
 @Slf4j
-@AutoConfiguration(before = SentinelFeignAutoConfiguration.class)
-@Import(FeignClientsConfiguration.class)
 @RequiredArgsConstructor
+@Import(FeignClientsConfiguration.class)
+@AutoConfiguration(before = SentinelFeignAutoConfiguration.class)
 public class OpenFeignAutoConfig extends ErrorDecoder.Default implements RequestInterceptor {
 
-	@Schema(name = "SERVICE-GRAY", description = "服务灰度")
+	/**
+	 * 服务灰度.
+	 */
 	private static final String SERVICE_GRAY = "service-gray";
 
 	private final IdempotentUtil idempotentUtil;

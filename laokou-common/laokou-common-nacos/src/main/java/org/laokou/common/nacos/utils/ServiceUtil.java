@@ -27,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Properties;
@@ -38,9 +37,8 @@ import java.util.Properties;
  *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class ServiceUtil {
 
 	private final LoadBalancerClient loadBalancerClient;

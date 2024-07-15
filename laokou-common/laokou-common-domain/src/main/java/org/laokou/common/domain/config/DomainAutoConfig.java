@@ -15,20 +15,16 @@
  *
  */
 
-package org.laokou.common.core.annotation;
+package org.laokou.common.domain.config;
 
-import org.laokou.common.core.config.TaskExecutorAutoConfig;
-import org.springframework.context.annotation.Import;
-
-import java.lang.annotation.*;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 
 /**
  * @author laokou
  */
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import(TaskExecutorAutoConfig.class)
-public @interface EnableTaskExecutor {
+@AutoConfiguration
+@MapperScan("org.laokou.common.domain.database")
+public class DomainAutoConfig {
 
 }

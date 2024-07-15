@@ -32,8 +32,8 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
  *
  * @author laokou
  */
-@AutoConfiguration(after = { RedisAutoConfig.class })
 @ConditionalOnClass(LettuceConnectionFactory.class)
+@AutoConfiguration(after = { RedisAutoConfig.class })
 public class DataCacheAutoConfig {
 
 	/**

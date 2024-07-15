@@ -15,16 +15,22 @@
  *
  */
 
-package org.laokou.common.domain.config;
+package org.laokou.common.rocketmq.config;
 
-import org.mybatis.spring.annotation.MapperScan;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @author laokou
  */
 @AutoConfiguration
-@MapperScan("org.laokou.common.domain.database")
-public class DomainConfig {
+public class RocketMqAutoConfig {
+
+	@Bean
+	public RocketMqTemplate rocketMqTemplate(RocketMQTemplate rocketMQTemplate) {
+		return new RocketMqTemplate(rocketMQTemplate);
+	}
 
 }

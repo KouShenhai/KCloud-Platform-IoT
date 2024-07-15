@@ -22,10 +22,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.core.utils.TemplateUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.util.Assert;
@@ -42,7 +41,6 @@ import java.util.Map;
  */
 @Slf4j
 @NonNullApi
-@AutoConfiguration
 @RequiredArgsConstructor
 public class RouterHandler implements ApplicationListener<ApplicationReadyEvent> {
 

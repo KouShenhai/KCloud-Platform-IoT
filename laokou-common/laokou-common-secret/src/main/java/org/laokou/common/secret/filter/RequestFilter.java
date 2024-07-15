@@ -23,7 +23,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.core.annotation.Order;
 
 import java.io.BufferedReader;
@@ -36,7 +35,6 @@ import static org.laokou.common.core.utils.RequestUtil.getRequestBody;
  * @author laokou
  */
 @Order(10000)
-@AutoConfiguration
 @WebFilter(filterName = "RequestFilter", urlPatterns = "/**")
 public class RequestFilter implements Filter {
 

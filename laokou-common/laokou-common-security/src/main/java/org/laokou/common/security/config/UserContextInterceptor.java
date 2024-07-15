@@ -24,7 +24,6 @@ import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.security.utils.UserUtil;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -34,7 +33,6 @@ import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
  * @author laokou
  */
 @NonNullApi
-@AutoConfiguration
 public class UserContextInterceptor implements HandlerInterceptor {
 
 	@Override

@@ -23,7 +23,6 @@ import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 
@@ -34,7 +33,6 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
  * @author laokou
  */
 @Slf4j
-@AutoConfiguration
 @RequiredArgsConstructor
 public class RocketMqTemplate {
 

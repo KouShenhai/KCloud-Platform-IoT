@@ -25,6 +25,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
@@ -32,8 +33,8 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
  *
  * @author laokou
  */
-@AutoConfiguration
 @Slf4j
+@AutoConfiguration
 public class CorsAutoConfig {
 
 	@Bean

@@ -45,7 +45,7 @@ import org.apache.rocketmq.spring.annotation.SelectorType;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQMessageConverter;
 import org.apache.rocketmq.spring.support.RocketMQUtil;
-import org.laokou.common.core.config.TaskExecutorConfig;
+import org.laokou.common.core.config.TaskExecutorAutoConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -82,7 +82,7 @@ import java.util.concurrent.Executors;
 @Import({ MessageConverterConfiguration.class, ListenerContainerConfiguration.class,
 		ExtProducerResetConfiguration.class, ExtConsumerResetConfiguration.class,
 		RocketMQTransactionConfiguration.class, RocketMQListenerConfiguration.class })
-@AutoConfigureAfter({ TaskExecutorConfig.class, MessageConverterConfiguration.class })
+@AutoConfigureAfter({ TaskExecutorAutoConfig.class, MessageConverterConfiguration.class })
 @AutoConfigureBefore({ RocketMQTransactionConfiguration.class })
 public class RocketMQAutoConfiguration implements ApplicationContextAware {
 

@@ -40,7 +40,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.TRUE;
 @EnableAsync
 @AutoConfiguration
 @RequiredArgsConstructor
-public class TaskExecutorConfig {
+public class TaskExecutorAutoConfig {
 
 	/**
 	 * 线程池名称.

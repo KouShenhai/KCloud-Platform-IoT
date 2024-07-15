@@ -27,7 +27,6 @@ import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.laokou.common.security.utils.UserDetail;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
@@ -52,7 +51,6 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
  */
 @Slf4j
 @NonNullApi
-@AutoConfiguration
 @RequiredArgsConstructor
 public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, WebMvcConfigurer {
 

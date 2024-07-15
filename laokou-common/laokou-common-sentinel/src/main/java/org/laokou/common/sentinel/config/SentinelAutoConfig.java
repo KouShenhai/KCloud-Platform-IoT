@@ -15,20 +15,21 @@
  *
  */
 
-package org.laokou.common.core.annotation;
+package org.laokou.common.sentinel.config;
 
-import org.laokou.common.core.config.TaskExecutorAutoConfig;
-import org.springframework.context.annotation.Import;
-
-import java.lang.annotation.*;
+import org.laokou.common.sentinel.exception.handler.SentinelExceptionHandler;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @author laokou
  */
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import(TaskExecutorAutoConfig.class)
-public @interface EnableTaskExecutor {
+@AutoConfiguration
+public class SentinelAutoConfig {
+
+	@Bean
+	public SentinelExceptionHandler sentinelExceptionHandler() {
+		return new SentinelExceptionHandler();
+	}
 
 }
