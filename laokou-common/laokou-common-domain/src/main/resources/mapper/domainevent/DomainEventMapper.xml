@@ -22,8 +22,10 @@
 
   <update id="updateStatusById">
     update boot_sys_domain_event
-    set event_status = 'CONSUMED'
+    set event_status = 'CONSUMED',
+        version      = version + 1
     where id = #{id}
+      and version = 0
   </update>
 
   <select id="selectObjects" fetchSize="10000" resultSetType="FORWARD_ONLY"
