@@ -481,9 +481,9 @@ spring:
   # mail
   mail:
     host: smtp.qq.com
-    password: ENC(JDMVbM278SLa9qbk5oMeJUs6St0dpLRSQyI7lPKGUFFzxSMZcfps2+vXBVyAXXB34Hj2GHzgRhEdDR1bX3eweA==)
+	username: 2413176044@qq.com
+    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
     default-encoding: UTF-8
-    username: 2413176044@qq.com
 
 # actuator
 management:
@@ -526,23 +526,31 @@ VALUES (1270, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', e'rocketmq:
 		'rocketmq公共配置', '', '', 'yaml', '', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
 								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
-VALUES (1475, 'application-sms.yaml', 'LAOKOU_GROUP', e'sms:
-  # 0：国阳云
-  type: 0
+VALUES (1475, 'application-sms.yaml', 'LAOKOU_GROUP', e'# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+sms:
   gyy:
-    templateId: 908e94ccf08b4476ba6c876d13f084ad
-    signId: 3f45af8aa12f4d59be8b1f18b650ad81
-    appcode: 6b3e98d5f39848cba9615d576ce78d9e', 'c5d95dadb7e5b2fe9db27ce8cae73118', '2023-02-13 19:59:35.000000',
+	enabled: true
+    template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
+    sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
+    appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)',
+		'c5d95dadb7e5b2fe9db27ce8cae73118', '2023-02-13 19:59:35.000000',
 		'2023-03-12 17:14:13.000000', 'nacos', '8.8.8.8', 'laokou-sms', 'a61abd4c-ef96-42a5-99a1-616adee531f3',
 		'sms配置', '', '', 'yaml', '', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
 								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
-VALUES (1477, 'application-mail.yaml', 'LAOKOU_GROUP', e'spring:
+VALUES (1477, 'application-mail.yaml', 'LAOKOU_GROUP', e'# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+spring:
   # mail
   mail:
     host: smtp.qq.com
     username: 2413176044@qq.com
-    password: hhqkeodvfywfebaf
+    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
     default-encoding: UTF-8', '665c8cf5a8522b5f64ae86f9e816e89e', '2023-02-13 20:00:32.000000',
 		'2023-02-13 20:00:47.000000', 'nacos', '192.168.62.1', 'laokou-mail', 'a61abd4c-ef96-42a5-99a1-616adee531f3',
 		'mail配置', '', '', 'yaml', '', '');
@@ -592,12 +600,7 @@ VALUES (1568, 'auth-flow.json', 'LAOKOU_GROUP', e'[
 		'', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
 								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
-VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', e'# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
+VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', e'# spring
 spring:
   # security
   security:
@@ -665,11 +668,6 @@ spring:
       transport:
         port: 8769
         dashboard: sentinel.laokou.org:8972
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8
 # actuator
 management:
   endpoints:
@@ -1298,23 +1296,31 @@ VALUES (21, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', e'rocketmq:
 		null, null, 'yaml', null, '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
 								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
-VALUES (22, 'application-sms.yaml', 'LAOKOU_GROUP', e'sms:
-  # 0：国阳云
-  type: 0
+VALUES (22, 'application-sms.yaml', 'LAOKOU_GROUP', e'# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+sms:
   gyy:
-    templateId: 908e94ccf08b4476ba6c876d13f084ad
-    signId: 3f45af8aa12f4d59be8b1f18b650ad81
-    appcode: 6b3e98d5f39848cba9615d576ce78d9e', 'c5d95dadb7e5b2fe9db27ce8cae73118', '2024-05-25 18:12:47.349000',
+	enabled: true
+    template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
+    sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
+    appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)',
+		'c5d95dadb7e5b2fe9db27ce8cae73118', '2024-05-25 18:12:47.349000',
 		'2024-05-25 18:13:33.342000', null, '127.0.0.1', 'laokou-sms', '0dac1a68-2f01-40df-bd26-bf0cb199057a',
 		'sms配置', null, null, 'yaml', null, '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
 								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
-VALUES (23, 'application-mail.yaml', 'LAOKOU_GROUP', e'spring:
+VALUES (23, 'application-mail.yaml', 'LAOKOU_GROUP', e'# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+spring:
   # mail
   mail:
     host: smtp.qq.com
     username: 2413176044@qq.com
-    password: hhqkeodvfywfebaf
+    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
     default-encoding: UTF-8', '665c8cf5a8522b5f64ae86f9e816e89e', '2024-05-25 18:12:47.354000',
 		'2024-05-25 18:13:33.354000', null, '127.0.0.1', 'laokou-mail', '0dac1a68-2f01-40df-bd26-bf0cb199057a',
 		'mail配置', null, null, 'yaml', null, '');
@@ -1737,12 +1743,7 @@ VALUES (34, 'auth-flow.json', 'LAOKOU_GROUP', e'[
 		'', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
 								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
-VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', e'# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
+VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', e'# spring
 spring:
   # security
   security:
@@ -1810,11 +1811,7 @@ spring:
       transport:
         port: 8769
         dashboard: sentinel.laokou.org:8972
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8
+
 # actuator
 management:
   endpoints:
@@ -1966,7 +1963,7 @@ spring:
   # mail
   mail:
     host: smtp.qq.com
-    password: ENC(JDMVbM278SLa9qbk5oMeJUs6St0dpLRSQyI7lPKGUFFzxSMZcfps2+vXBVyAXXB34Hj2GHzgRhEdDR1bX3eweA==)
+    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
     default-encoding: UTF-8
     username: 2413176044@qq.com
 
@@ -2011,18 +2008,26 @@ VALUES (30, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', e'rocketmq:
 		null, null, 'yaml', null, '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
 								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
-VALUES (31, 'application-sms.yaml', 'LAOKOU_GROUP', e'sms:
-  # 0：国阳云
-  type: 0
+VALUES (31, 'application-sms.yaml', 'LAOKOU_GROUP', e'# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+sms:
   gyy:
-    templateId: 908e94ccf08b4476ba6c876d13f084ad
-    signId: 3f45af8aa12f4d59be8b1f18b650ad81
-    appcode: 6b3e98d5f39848cba9615d576ce78d9e', 'c5d95dadb7e5b2fe9db27ce8cae73118', '2024-05-25 18:13:10.588000',
+    enabled: true
+    template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
+    sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
+    appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)',
+		'c5d95dadb7e5b2fe9db27ce8cae73118', '2024-05-25 18:13:10.588000',
 		'2024-05-25 18:13:10.588000', null, '127.0.0.1', 'laokou-sms', '8140e92b-fb43-48f5-b63b-7506185206a5',
 		'sms配置', null, null, 'yaml', null, '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
 								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
-VALUES (32, 'application-mail.yaml', 'LAOKOU_GROUP', e'spring:
+VALUES (32, 'application-mail.yaml', 'LAOKOU_GROUP', e'# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+spring:
   # mail
   mail:
     host: smtp.qq.com
@@ -2148,7 +2153,7 @@ spring:
   # mail
   mail:
     host: smtp.qq.com
-    password: ENC(JDMVbM278SLa9qbk5oMeJUs6St0dpLRSQyI7lPKGUFFzxSMZcfps2+vXBVyAXXB34Hj2GHzgRhEdDR1bX3eweA==)
+    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
     default-encoding: UTF-8
     username: 2413176044@qq.com
 
@@ -2324,12 +2329,7 @@ spring:
 		'127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'monitor公共配置', '', '', 'yaml', '', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
 								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
-VALUES (59, 'application-common.yaml', 'LAOKOU_GROUP', e'# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
+VALUES (59, 'application-common.yaml', 'LAOKOU_GROUP', e'# spring
 spring:
   # security
   security:
@@ -2397,11 +2397,6 @@ spring:
       transport:
         port: 8769
         dashboard: sentinel.laokou.org:8972
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8
 # actuator
 management:
   endpoints:

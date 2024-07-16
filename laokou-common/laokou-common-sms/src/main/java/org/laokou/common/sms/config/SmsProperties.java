@@ -36,11 +36,11 @@ public class SmsProperties {
 
 		private boolean enabled = true;
 
-		private String templateId = "ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)";
+		private String templateId;
 
-		private String signId = "ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)";
+		private String signId;
 
-		private String appcode = "ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)";
+		private String appcode;
 
 	}
 
