@@ -17,11 +17,13 @@
 
 package org.laokou.common.mail.service;
 
+import org.laokou.common.i18n.dto.Result;
+
 /**
  * @author laokou
  */
 public interface MailService {
 
-	void send(String mail);
+	Result<String> send(String mail);
 
 }

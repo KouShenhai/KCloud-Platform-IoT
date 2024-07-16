@@ -54,3 +54,9 @@ spring:
           - data-id: application-auth.yaml
             group: ${NACOS-GROUP}
             refresh: true
+          - data-id: application-sms.yaml
+            group: ${NACOS-GROUP}
+            refresh: true
+          - data-id: application-mail.yaml
+            group: ${NACOS-GROUP}
+            refresh: true

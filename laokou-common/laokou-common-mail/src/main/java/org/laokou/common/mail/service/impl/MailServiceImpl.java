@@ -18,20 +18,59 @@
 package org.laokou.common.mail.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.RandomStringUtil;
+import org.laokou.common.core.utils.TemplateUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mail.service.MailService;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+import java.util.Map;
 
 /**
  * @author laokou
  */
+@Slf4j
 @RequiredArgsConstructor
 public class MailServiceImpl implements MailService {
+
+	private static final String CAPTCHA_TEMPLATE = "验证码：${captcha}，${minute}分钟内有效，请勿泄漏于他人！";
 
 	private final MailProperties mailProperties;
 
 	@Override
-	public void send(String mail) {
+	@SneakyThrows
+	public Result<String> send(String mail) {
+		try {
+			int minute = 5;
+			String subject = "验证码";
+			String captcha = RandomStringUtil.randomNumeric(6);
+			Map<String, Object> params = Map.of("captcha", captcha, "minute", minute);
+			String content = TemplateUtil.getContent(CAPTCHA_TEMPLATE, params);
+			// 发送邮件
+			sendMail(subject, content, mail);
+			return Result.ok(captcha);
+		}
+		catch (Exception e) {
+			log.info("错误信息：{}", e.getMessage(), e);
+			return Result.fail("S_Mail_Error", e.getMessage());
+		}
+	}
 
+	private void sendMail(String subject, String content, String toMail) {
+		JavaMailSenderImpl sender = new JavaMailSenderImpl();
+		sender.setHost(mailProperties.getHost());
+		sender.setUsername(mailProperties.getUsername());
+		sender.setPassword(mailProperties.getPassword());
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setTo(toMail);
+		mailMessage.setSubject(subject);
+		mailMessage.setFrom(mailProperties.getUsername());
+		mailMessage.setText(content);
+		sender.send(mailMessage);
 	}
 
 }

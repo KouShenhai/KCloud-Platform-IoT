@@ -17,12 +17,14 @@
 
 package org.laokou.common.sms.service.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.HttpUtil;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.RandomStringUtil;
 import org.laokou.common.core.utils.TemplateUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.sms.config.SmsProperties;
 
 import java.util.HashMap;
@@ -38,9 +40,15 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 
 	private static final Map<String, String> TEMPLATES = new HashMap<>(15);
 
+	private static final Map<String, String> ERRORS = new HashMap<>(7);
+
 	private static final String PARAMS_TEMPLATE = "**code**:${captcha},**minute**:${minute}";
 
 	private static final String URL = "https://gyytz.market.alicloudapi.com/sms/smsSend";
+
+	private static final String CODE = "code";
+
+	private static final int OK = 0;
 
 	static {
 		TEMPLATES.put("908e94ccf08b4476ba6c876d13f084ad", "验证码：**code**，**minute**分钟内有效，请勿泄漏于他人！");
@@ -58,6 +66,15 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		TEMPLATES.put("81e8a442ea904694a37d2cec6ea6f2bc", "验证码：**code**，**minute**分钟内容有效，您正尝试异地登录，若非本人操作，请勿泄露。");
 		TEMPLATES.put("9c16efaf248d41c59334e926634b4dc0", "验证码：**code**，您正在尝试变更重要信息，请妥善保管账户信息。");
 		TEMPLATES.put("ea66d14c664649a69a19a6b47ba028db", "验证码：**code**，**minute**分钟内容有效，您正在尝试变更重要信息，请妥善保管账户信息。");
+
+		ERRORS.put("1204", "签名未报备");
+		ERRORS.put("1205", "签名不可用");
+		ERRORS.put("1302", "短信内容包含敏感词");
+		ERRORS.put("1304", "短信内容过长");
+		ERRORS.put("1320", "模板ID不存在");
+		ERRORS.put("1403", "手机号码不正确");
+		ERRORS.put("1905", "验证未通过");
+
 	}
 
 	public GYYSmsServiceImpl(SmsProperties smsProperties) {
@@ -66,13 +83,13 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 
 	@Override
 	@SneakyThrows
-	public Boolean send(String mobile) {
+	public Result<String> send(String mobile) {
 		String signId = smsProperties.getGyy().getSignId();
 		String appcode = smsProperties.getGyy().getAppcode();
 		String templateId = smsProperties.getGyy().getTemplateId();
 		boolean isExit = TEMPLATES.containsKey(templateId);
 		if (!isExit) {
-			throw new SystemException("S_Sms_TemplateIdNotExist", "模板不存在");
+			return Result.fail("S_Sms_TemplateIdNotExist", "模板不存在");
 		}
 		int minute = 5;
 		String captcha = RandomStringUtil.randomNumeric(6);
@@ -90,8 +107,12 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		 * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/pom.xml
 		 */
 		String json = HttpUtil.doFormDataPost(URL, params, headers, true);
-		log.info("{}", json);
-		return true;
+		JsonNode node = JacksonUtil.readTree(json).get(CODE);
+		if (node.asInt() == OK) {
+			return Result.ok(captcha);
+		}
+		log.info("错误信息：{}", json);
+		return Result.fail(node.asText(), ERRORS.get(node.asText()));
 	}
 
 }

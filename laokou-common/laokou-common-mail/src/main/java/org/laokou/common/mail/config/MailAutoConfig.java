@@ -19,14 +19,16 @@ package org.laokou.common.mail.config;
 
 import org.laokou.common.mail.service.MailService;
 import org.laokou.common.mail.service.impl.MailServiceImpl;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 /**
  * @author laokou
  */
-@AutoConfiguration
+@AutoConfigureAfter
+@EnableConfigurationProperties(MailProperties.class)
 public class MailAutoConfig {
 
 	@Bean

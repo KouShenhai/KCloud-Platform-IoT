@@ -17,11 +17,13 @@
 
 package org.laokou.common.sms.service;
 
+import org.laokou.common.i18n.dto.Result;
+
 /**
  * @author laokou
  */
 public interface SmsService {
 
-	Boolean send(String mobile);
+	Result<String> send(String mobile);
 
 }

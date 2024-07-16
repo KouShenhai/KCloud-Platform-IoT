@@ -29,6 +29,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
 import java.net.InetAddress;
 
 /**
@@ -37,13 +38,13 @@ import java.net.InetAddress;
  * @author laokou
  */
 @EnableAuth
+@EnableDiscoveryClient
+@EnableEncryptableProperties
+@EnableConfigurationProperties
 @EnableReactiveRedisRepository
+@EnableAspectJAutoProxy(exposeProxy = true)
 @SpringBootApplication(scanBasePackages = "org.laokou",
 		exclude = { RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
-@EnableConfigurationProperties
-@EnableEncryptableProperties
-@EnableAspectJAutoProxy(exposeProxy = true)
-@EnableDiscoveryClient
 public class GatewayApp {
 
 	/**

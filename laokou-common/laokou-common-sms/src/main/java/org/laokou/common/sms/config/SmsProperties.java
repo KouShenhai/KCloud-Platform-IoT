@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "sms")
 public class SmsProperties {
 
-	private GYY gyy = new GYY();
+	private final GYY gyy = new GYY();
 
 	@Data
 	public static class GYY {
