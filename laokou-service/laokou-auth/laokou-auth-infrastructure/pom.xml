@@ -50,6 +50,10 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-sms</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-mail</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

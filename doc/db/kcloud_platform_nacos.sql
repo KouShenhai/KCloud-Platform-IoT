@@ -592,7 +592,12 @@ VALUES (1568, 'auth-flow.json', 'LAOKOU_GROUP', e'[
 		'', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
 								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
-VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', e'# spring
+VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', e'# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
 spring:
   # security
   security:
@@ -660,7 +665,11 @@ spring:
       transport:
         port: 8769
         dashboard: sentinel.laokou.org:8972
-
+  mail:
+    host: smtp.qq.com
+    username: 2413176044@qq.com
+    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
+    default-encoding: UTF-8
 # actuator
 management:
   endpoints:
@@ -1728,7 +1737,12 @@ VALUES (34, 'auth-flow.json', 'LAOKOU_GROUP', e'[
 		'', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
 								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
-VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', e'# spring
+VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', e'# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
 spring:
   # security
   security:
@@ -1796,7 +1810,11 @@ spring:
       transport:
         port: 8769
         dashboard: sentinel.laokou.org:8972
-
+  mail:
+    host: smtp.qq.com
+    username: 2413176044@qq.com
+    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
+    default-encoding: UTF-8
 # actuator
 management:
   endpoints:
@@ -2306,7 +2324,12 @@ spring:
 		'127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'monitor公共配置', '', '', 'yaml', '', '');
 INSERT INTO public.config_info (id, data_id, group_id, content, md5, gmt_create, gmt_modified, src_user, src_ip,
 								app_name, tenant_id, c_desc, c_use, effect, type, c_schema, encrypted_data_key)
-VALUES (59, 'application-common.yaml', 'LAOKOU_GROUP', e'# spring
+VALUES (59, 'application-common.yaml', 'LAOKOU_GROUP', e'# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
 spring:
   # security
   security:
@@ -2374,7 +2397,11 @@ spring:
       transport:
         port: 8769
         dashboard: sentinel.laokou.org:8972
-
+  mail:
+    host: smtp.qq.com
+    username: 2413176044@qq.com
+    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
+    default-encoding: UTF-8
 # actuator
 management:
   endpoints:
