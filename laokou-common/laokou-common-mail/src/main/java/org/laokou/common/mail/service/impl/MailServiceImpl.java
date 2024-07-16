@@ -37,7 +37,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MailServiceImpl implements MailService {
 
-	private static final String CAPTCHA_TEMPLATE = "验证码：${captcha}，${minute}分钟内有效，请勿泄漏于他人！";
+	private static final String CAPTCHA_TEMPLATE = "验证码：${captcha}，${minute}分钟内容有效，您正在登录，若非本人操作，请勿泄露。";
 
 	private final MailProperties mailProperties;
 
