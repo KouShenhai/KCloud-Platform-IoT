@@ -37,5 +37,5 @@ public class PropertiesReportHandler implements MqttListener {
 	public void onMessage(MqttMessage message) {
 
 	}
-	
+
 }
