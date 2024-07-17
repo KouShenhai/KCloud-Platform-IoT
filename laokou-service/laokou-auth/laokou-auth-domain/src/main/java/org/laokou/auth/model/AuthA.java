@@ -157,7 +157,7 @@ public class AuthA extends AggregateRoot<Long> {
 	}
 
 	public AuthA(String username, String password, String tenantId, String grantType, String uuid, String captcha,
-			HttpServletRequest request) {
+				 HttpServletRequest request) {
 		this.id = IdGenerator.defaultSnowflakeId();
 		this.username = username;
 		this.password = password;
@@ -193,7 +193,14 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void updateUser(UserE user) {
 		if (ObjectUtil.isNull(user)) {
-			fail(OAUTH2_USERNAME_PASSWORD_ERROR);
+			switch (this.grantType) {
+				case MOBILE:
+				case MAIL:
+				case PASSWORD:
+				case AUTHORIZATION_CODE:
+					fail(OAUTH2_USERNAME_PASSWORD_ERROR);
+					break;
+			}
 		}
 		this.user = user;
 		this.creator = user.getId();
@@ -232,7 +239,7 @@ public class AuthA extends AggregateRoot<Long> {
 	}
 
 	public void checkUserPassword(PasswordEncoder passwordEncoder) {
-		if (StringUtil.isNotEmpty(this.password) && !passwordEncoder.matches(this.password, user.getPassword())) {
+		if (PASSWORD.equals(this.grantType) && !passwordEncoder.matches(this.password, user.getPassword())) {
 			fail(OAUTH2_USERNAME_PASSWORD_ERROR);
 		}
 	}
