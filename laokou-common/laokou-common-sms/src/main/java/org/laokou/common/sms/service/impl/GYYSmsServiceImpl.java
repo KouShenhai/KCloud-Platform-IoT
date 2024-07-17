@@ -24,6 +24,7 @@ import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.RandomStringUtil;
 import org.laokou.common.core.utils.TemplateUtil;
+import org.laokou.common.i18n.dto.Cache;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.sms.config.SmsProperties;
 
@@ -83,7 +84,7 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 
 	@Override
 	@SneakyThrows
-	public Result<String> send(String mobile) {
+	public Result<String> send(String mobile, int minute, Cache cache) {
 		String signId = smsProperties.getGyy().getSignId();
 		String appcode = smsProperties.getGyy().getAppcode();
 		String templateId = smsProperties.getGyy().getTemplateId();
@@ -91,7 +92,6 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		if (!isExit) {
 			return Result.fail("S_Sms_TemplateIdNotExist", "模板不存在");
 		}
-		int minute = 5;
 		String captcha = RandomStringUtil.randomNumeric(6);
 		Map<String, Object> param = Map.of("captcha", captcha, "minute", minute);
 		String paramValue = TemplateUtil.getContent(PARAMS_TEMPLATE, param);
@@ -110,6 +110,8 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		String json = HttpUtil.doFormDataPost(URL, params, headers, true);
 		JsonNode node = JacksonUtil.readTree(json).get(CODE);
 		if (node.asInt() == OK) {
+			// 写入缓存
+			cache.set(captcha, (long) minute * 60 * 1000);
 			return Result.ok(captcha);
 		}
 		log.info("错误信息：{}", json);

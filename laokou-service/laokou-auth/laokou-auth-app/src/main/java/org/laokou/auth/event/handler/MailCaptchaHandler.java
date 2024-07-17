@@ -27,6 +27,8 @@ import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mail.service.MailService;
+import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
@@ -40,20 +42,27 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @Component
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
-		selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+	selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class MailCaptchaHandler extends AbstractDomainEventHandler {
 
 	private final MailService mailService;
 
-	public MailCaptchaHandler(DomainEventPublisher domainEventPublisher, MailService mailService) {
+	private final RedisUtil redisUtil;
+
+	public MailCaptchaHandler(DomainEventPublisher domainEventPublisher, MailService mailService, RedisUtil redisUtil) {
 		super(domainEventPublisher);
 		this.mailService = mailService;
+		this.redisUtil = redisUtil;
 	}
 
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
-		Result<String> result = mailService.send(event.getUuid());
+		Result<String> result = mailService.send(event.getUuid(), 5, (value, expireTime) -> {
+			String mailCaptchaKey = RedisKeyUtil.getMailCaptchaKey(event.getUuid());
+			redisUtil.del(mailCaptchaKey);
+			redisUtil.set(mailCaptchaKey, value, expireTime);
+		});
 		log.info("邮箱：{}", result);
 	}
 

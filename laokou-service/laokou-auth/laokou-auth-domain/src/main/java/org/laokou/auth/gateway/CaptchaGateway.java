@@ -27,9 +27,9 @@ public interface CaptchaGateway {
 	/**
 	 * 写入Redis.
 	 * @param uuid UUID
-	 * @param code 验证码
+	 * @param captcha 验证码
 	 */
-	void setValue(String uuid, String code);
+	void setValue(String uuid, String captcha);
 
 	/**
 	 * 检查验证码.

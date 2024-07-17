@@ -15,16 +15,13 @@
  *
  */
 
-package org.laokou.common.mail.service;
-
-import org.laokou.common.i18n.dto.Cache;
-import org.laokou.common.i18n.dto.Result;
+package org.laokou.common.i18n.dto;
 
 /**
  * @author laokou
  */
-public interface MailService {
+public interface Cache {
 
-	Result<String> send(String mail, int minute, Cache cache);
+	void set(Object value, long expireTime);
 
 }

@@ -20,10 +20,11 @@ package org.laokou.auth.command.query;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.base.Captcha;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.auth.dto.CaptchaGetQry;
+import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
 import java.awt.*;
 
 /**
@@ -44,10 +45,10 @@ public class CaptchaGetQryExe {
 	 */
 	public Result<String> execute(CaptchaGetQry qry) {
 		String uuid = qry.getUuid();
-		Captcha captcha = generate();
-		String code = captcha.text();
-		String base64 = captcha.toBase64();
-		captchaGateway.setValue(uuid, code);
+		Captcha ca = generate();
+		String captcha = ca.text();
+		String base64 = ca.toBase64();
+		captchaGateway.setValue(uuid, captcha);
 		return Result.ok(base64);
 	}
 

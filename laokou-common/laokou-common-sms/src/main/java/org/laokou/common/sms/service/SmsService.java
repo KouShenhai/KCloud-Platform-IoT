@@ -17,6 +17,7 @@
 
 package org.laokou.common.sms.service;
 
+import org.laokou.common.i18n.dto.Cache;
 import org.laokou.common.i18n.dto.Result;
 
 /**
@@ -24,6 +25,6 @@ import org.laokou.common.i18n.dto.Result;
  */
 public interface SmsService {
 
-	Result<String> send(String mobile);
+	Result<String> send(String mobile, int minute, Cache cache);
 
 }

@@ -17,6 +17,10 @@
 
 package org.laokou.common.redis.utils;
 
+import org.springframework.util.DigestUtils;
+
+import java.nio.charset.StandardCharsets;
+
 /**
  * @author laokou
  */
@@ -27,7 +31,8 @@ public final class RedisKeyUtil {
 	 * @param uuid UUID
 	 */
 	public static String getUserCaptchaKey(String uuid) {
-		return "user:captcha:" + uuid;
+		String key = "user:captcha:" + uuid;
+		return DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
@@ -57,7 +62,7 @@ public final class RedisKeyUtil {
 	 * 手机验证码Key.
 	 * @param mobile 手机号
 	 */
-	public static String getMobileCodeKey(String mobile) {
+	public static String getMobileCaptchaKey(String mobile) {
 		return getUserCaptchaKey(mobile);
 	}
 
@@ -65,7 +70,7 @@ public final class RedisKeyUtil {
 	 * 邮箱验证码Key.
 	 * @param mail 邮箱
 	 */
-	public static String getMailCodeKey(String mail) {
+	public static String getMailCaptchaKey(String mail) {
 		return getUserCaptchaKey(mail);
 	}
 

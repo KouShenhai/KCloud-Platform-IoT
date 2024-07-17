@@ -22,6 +22,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RandomStringUtil;
 import org.laokou.common.core.utils.TemplateUtil;
+import org.laokou.common.i18n.dto.Cache;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mail.service.MailService;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
@@ -43,15 +44,16 @@ public class MailServiceImpl implements MailService {
 
 	@Override
 	@SneakyThrows
-	public Result<String> send(String mail) {
+	public Result<String> send(String mail, int minute, Cache cache) {
 		try {
-			int minute = 5;
 			String subject = "验证码";
 			String captcha = RandomStringUtil.randomNumeric(6);
 			Map<String, Object> params = Map.of("captcha", captcha, "minute", minute);
 			String content = TemplateUtil.getContent(CAPTCHA_TEMPLATE, params);
 			// 发送邮件
 			sendMail(subject, content, mail);
+			// 写入缓存
+			cache.set(captcha, (long) minute * 60 * 1000);
 			return Result.ok(captcha);
 		}
 		catch (Exception e) {
