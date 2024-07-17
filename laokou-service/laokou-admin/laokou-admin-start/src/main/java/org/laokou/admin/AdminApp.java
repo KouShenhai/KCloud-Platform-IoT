@@ -38,21 +38,21 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.net.InetAddress;
 
 /**
- * 启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
+ * 系统服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
  *
  * @author laokou
  */
-@SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
+@EnableRouter
+@EnableSecurity
+@EnableFeignClients
+@EnableTaskExecutor
+@EnableRedisRepository
 @EnableDiscoveryClient
+@EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
-@EnableEncryptableProperties
-@EnableFeignClients
-@EnableRedisRepository
-@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
-@EnableSecurity
-@EnableTaskExecutor
-@EnableRouter
+@ServletComponentScan(basePackageClasses = {ShutdownFilter.class})
+@SpringBootApplication(exclude = {SecurityFilterAutoConfiguration.class}, scanBasePackages = "org.laokou")
 public class AdminApp {
 
 	/**

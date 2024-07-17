@@ -38,7 +38,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.net.InetAddress;
 
 /**
- * 启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强（默认Cglib代理）
+ * 认证服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
  *
  * @author laokou
  */
@@ -50,9 +50,9 @@ import java.net.InetAddress;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
-@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
-@SpringBootApplication(scanBasePackages = "org.laokou", exclude = { OAuth2AuthorizationServerAutoConfiguration.class,
-		OAuth2AuthorizationServerJwtAutoConfiguration.class })
+@ServletComponentScan(basePackageClasses = {ShutdownFilter.class})
+@SpringBootApplication(scanBasePackages = "org.laokou", exclude = {OAuth2AuthorizationServerAutoConfiguration.class,
+	OAuth2AuthorizationServerJwtAutoConfiguration.class})
 public class AuthApp {
 
 	/**
