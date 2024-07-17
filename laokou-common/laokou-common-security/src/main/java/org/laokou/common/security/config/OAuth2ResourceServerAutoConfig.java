@@ -82,11 +82,12 @@ public class OAuth2ResourceServerAutoConfig {
 			.authorizeHttpRequests(customizer(springContextUtil, oAuth2ResourceServerProperties))
 			// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
 			// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
-			.oauth2ResourceServer(resource -> resource
-				.opaqueToken(token -> token.introspector(globalOpaqueTokenIntrospector))
-				.accessDeniedHandler((request, response, ex) -> OAuth2ExceptionHandler.handleAccessDenied(response, ex))
-				.authenticationEntryPoint(
-						(request1, response1, ex1) -> OAuth2ExceptionHandler.handleAuthentication(response1, ex1)))
+			.oauth2ResourceServer(
+					resource -> resource.opaqueToken(token -> token.introspector(globalOpaqueTokenIntrospector))
+						.accessDeniedHandler(
+								(request, response, ex) -> OAuth2ExceptionHandler.handleAccessDenied(response, ex))
+						.authenticationEntryPoint(
+								(request, response, ex) -> OAuth2ExceptionHandler.handleAuthentication(response, ex)))
 			.build();
 	}
 

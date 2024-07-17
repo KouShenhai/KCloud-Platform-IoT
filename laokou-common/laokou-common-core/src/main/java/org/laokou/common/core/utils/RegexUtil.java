@@ -60,6 +60,11 @@ public class RegexUtil {
 	private static final String NUMBER_REGEX = "^[0-9]*$";
 
 	/**
+	 * 验证码标签表达式.
+	 */
+	public static final String CAPTCHA_TAG = "(mail|mobile)Captcha";
+
+	/**
 	 * 邮箱验证.
 	 * @param mail 邮箱
 	 * @return 邮箱匹配结果

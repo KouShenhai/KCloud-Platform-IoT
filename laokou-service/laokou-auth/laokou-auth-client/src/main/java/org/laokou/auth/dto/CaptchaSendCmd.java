@@ -21,10 +21,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
+
+import static org.laokou.common.core.utils.RegexUtil.CAPTCHA_TAG;
 
 /**
  * @author laokou
@@ -40,6 +43,7 @@ public class CaptchaSendCmd extends CommonCommand {
 	private String uuid;
 
 	@NotBlank(message = "标签不能为空")
+	@Pattern(regexp = CAPTCHA_TAG, message = "标签错误")
 	private String tag;
 
 	@NotNull(message = "租户ID不能为空")
