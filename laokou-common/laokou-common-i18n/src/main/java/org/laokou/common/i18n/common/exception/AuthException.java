@@ -75,6 +75,16 @@ public final class AuthException extends GlobalException {
 	public static final String OAUTH2_USERNAME_PASSWORD_ERROR = "A_OAuth2_UsernamePasswordError";
 
 	/**
+	 * 手机号未注册.
+	 */
+	public static final String OAUTH2_MOBILE_NOT_REGISTERED = "A_OAuth2_MobileNotRegistered";
+
+	/**
+	 * 邮箱未注册.
+	 */
+	public static final String OAUTH2_MAIL_NOT_REGISTERED = "A_OAuth2_MailNotRegistered";
+
+	/**
 	 * 数据源不存在.
 	 */
 	public static final String OAUTH2_SOURCE_NOT_EXIST = "A_OAuth2_SourceNotExist";

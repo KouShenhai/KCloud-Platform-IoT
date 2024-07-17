@@ -15,3 +15,18 @@ export async function getCaptchaImageByUuidV3(
 		...(options || {}),
 	});
 }
+
+/** 验证码 根据UUID发送验证码 POST /v3/captchas */
+export async function sendCaptchaV3(
+	body: API.SendCaptchaParam,
+	options?: { [key: string]: any },
+) {
+	return request<any>('/api/auth/v3/captchas', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}

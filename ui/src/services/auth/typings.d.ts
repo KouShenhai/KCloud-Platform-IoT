@@ -14,13 +14,22 @@ declare namespace API {
 		value?: string;
 	}
 
+	type SendCaptchaParam = {
+		uuid: string;
+		tag: string;
+		tenantId: number;
+	};
+
 	type OAuth2Param = {
 		username?: string;
 		password?: string;
 		uuid?: string;
 		captcha?: string;
 		grant_type?: string;
-		tenant_id?: string;
+		tenant_id?: number;
+		code?: string;
+		mail?: string;
+		mobile?: string;
 	};
 
 	type LoginParam = {
@@ -31,7 +40,7 @@ declare namespace API {
 		mobile?: string;
 		mail_captcha?: string;
 		mobile_captcha?: string;
-		tenant_id?: string
+		tenant_id?: number
 	};
 
 	type Result = {
@@ -42,6 +51,6 @@ declare namespace API {
 		/** 响应结果 */
 		data?: any;
 		/** 链路ID */
-		traceId?: string;
+		traceId?: number;
 	};
 }

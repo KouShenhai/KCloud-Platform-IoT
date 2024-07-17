@@ -157,7 +157,7 @@ public class AuthA extends AggregateRoot<Long> {
 	}
 
 	public AuthA(String username, String password, String tenantId, String grantType, String uuid, String captcha,
-				 HttpServletRequest request) {
+			HttpServletRequest request) {
 		this.id = IdGenerator.defaultSnowflakeId();
 		this.username = username;
 		this.password = password;
@@ -200,13 +200,21 @@ public class AuthA extends AggregateRoot<Long> {
 			this.deptPath = user.getDeptPath();
 			this.tenantId = user.getTenantId();
 		}
-		switch (this.grantType) {
-			case MOBILE:
-			case MAIL:
-			case PASSWORD:
-			case AUTHORIZATION_CODE:
-				fail(OAUTH2_USERNAME_PASSWORD_ERROR);
+		else {
+			switch (this.grantType) {
+				case PASSWORD:
+				case AUTHORIZATION_CODE:
+					fail(OAUTH2_USERNAME_PASSWORD_ERROR);
+				case MOBILE:
+					fail(OAUTH2_MOBILE_NOT_REGISTERED);
+				case MAIL:
+					fail(OAUTH2_MAIL_NOT_REGISTERED);
+			}
 		}
+	}
+
+	public boolean isHasLog() {
+		return ObjectUtil.isNotNull(this.log);
 	}
 
 	public void updateSource(SourceV source) {

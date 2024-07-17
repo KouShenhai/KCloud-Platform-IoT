@@ -55,7 +55,8 @@ public class MailServiceImpl implements MailService {
 			// 写入缓存
 			cache.set(captcha, (long) minute * 60 * 1000);
 			return Result.ok(null);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.info("错误信息：{}", e.getMessage(), e);
 			return Result.fail("S_Mail_Error", e.getMessage());
 		}

@@ -13,7 +13,7 @@ import {LoginFormPage, ProFormCaptcha, ProFormText,} from '@ant-design/pro-compo
 import {Col, Divider, Image, message, Row, Space, Tabs} from 'antd';
 import {CSSProperties, useEffect, useRef, useState} from 'react';
 import {login} from '@/services/auth/authsController';
-import {getCaptchaImageByUuidV3} from '@/services/auth/captchasV3Controller';
+import {getCaptchaImageByUuidV3, sendCaptchaV3} from '@/services/auth/captchasV3Controller';
 // @ts-ignore
 import {history} from 'umi';
 import {getSecretInfoV3} from '@/services/auth/secretsV3Controller';
@@ -64,6 +64,7 @@ export default () => {
 	};
 
 	const encrypt = new JSEncrypt();
+
 	const getParams = (form: API.LoginParam) => {
 		switch (loginType) {
 			case 'usernamePassword': {
@@ -82,9 +83,19 @@ export default () => {
 				};
 			}
 			case 'mail':
-				return {};
+				return {
+					mail: form.mail,
+					code: form.mail_captcha,
+					tenant_id: form.tenant_id,
+					grant_type: 'mail'
+				};
 			case 'mobile':
-				return {};
+				return {
+					mobile: form.mobile,
+					code: form.mobile_captcha,
+					tenant_id: form.tenant_id,
+					grant_type: 'mobile'
+				};
 		}
 	};
 
@@ -121,12 +132,38 @@ export default () => {
 		})
 	}
 
+	const sendMailCaptcha = async () => {
+		const param = {
+			tenantId: formRef?.current?.getFieldValue("tenant_id"),
+			tag: 'mailCaptcha',
+			uuid: formRef?.current?.getFieldValue("mail")
+		}
+		sendCaptchaV3(param as API.SendCaptchaParam).catch(console.error)
+	}
+
+	const sendMobileCaptcha = async () => {
+		const param = {
+			tenantId: formRef?.current?.getFieldValue("tenant_id"),
+			tag: 'mobileCaptcha',
+			uuid: formRef?.current?.getFieldValue("mobile")
+		}
+		sendCaptchaV3(param as API.SendCaptchaParam).catch(console.error)
+	}
+
 	const getTenantIdByDomain = async () => {
 		getTenantIdByDomainNameV3().then(res => {
 			if (res.code === 'OK') {
 				setFormField({tenant_id: res.data})
 			}
 		})
+	}
+
+	const clearMailCaptcha = () => {
+		setFormField({mail_captcha: ''})
+	}
+
+	const clearMobileCaptcha = () => {
+		setFormField({mobile_captcha: ''})
 	}
 
 	useEffect(() => {
@@ -155,6 +192,8 @@ export default () => {
 			.catch(() => {
 				// 登录失败，刷新验证码
 				getCaptchaImage();
+				clearMailCaptcha();
+				clearMobileCaptcha();
 			});
 	};
 
@@ -387,9 +426,7 @@ export default () => {
 									message: '请输入验证码',
 								},
 							]}
-							onGetCaptcha={async () => {
-								message.success('获取验证码成功！验证码为：1234');
-							}}
+							onGetCaptcha={sendMobileCaptcha}
 						/>
 					</>
 				)}
@@ -437,9 +474,7 @@ export default () => {
 									message: '请输入验证码',
 								},
 							]}
-							onGetCaptcha={async () => {
-								message.success('获取验证码成功！验证码为：1234');
-							}}
+							onGetCaptcha={sendMailCaptcha}
 						/>
 					</>
 				)}
