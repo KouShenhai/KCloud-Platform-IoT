@@ -58,7 +58,7 @@ public class MobileCaptchaHandler extends AbstractDomainEventHandler {
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
-		Result<String> result = smsService.send(event.getUuid(), 5, (value, expireTime) -> {
+		Result<?> result = smsService.send(event.getUuid(), 5, (value, expireTime) -> {
 			String mobileCaptchaKey = RedisKeyUtil.getMobileCaptchaKey(event.getUuid());
 			redisUtil.del(mobileCaptchaKey);
 			redisUtil.set(mobileCaptchaKey, value, expireTime);

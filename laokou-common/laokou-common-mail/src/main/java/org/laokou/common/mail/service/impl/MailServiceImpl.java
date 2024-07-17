@@ -44,7 +44,7 @@ public class MailServiceImpl implements MailService {
 
 	@Override
 	@SneakyThrows
-	public Result<String> send(String mail, int minute, Cache cache) {
+	public <T> Result<T> send(String mail, int minute, Cache cache) {
 		try {
 			String subject = "验证码";
 			String captcha = RandomStringUtil.randomNumeric(6);
@@ -54,9 +54,8 @@ public class MailServiceImpl implements MailService {
 			sendMail(subject, content, mail);
 			// 写入缓存
 			cache.set(captcha, (long) minute * 60 * 1000);
-			return Result.ok(captcha);
-		}
-		catch (Exception e) {
+			return Result.ok(null);
+		} catch (Exception e) {
 			log.info("错误信息：{}", e.getMessage(), e);
 			return Result.fail("S_Mail_Error", e.getMessage());
 		}

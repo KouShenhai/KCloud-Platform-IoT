@@ -84,7 +84,7 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 
 	@Override
 	@SneakyThrows
-	public Result<String> send(String mobile, int minute, Cache cache) {
+	public <T> Result<T> send(String mobile, int minute, Cache cache) {
 		String signId = smsProperties.getGyy().getSignId();
 		String appcode = smsProperties.getGyy().getAppcode();
 		String templateId = smsProperties.getGyy().getTemplateId();
@@ -99,7 +99,7 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		Map<String, String> headers = Map.of(AUTHORIZATION, "APPCODE " + appcode);
 		// smsSignId（短信前缀）和templateId（短信模板），可登录国阳云控制台自助申请。参考文档：http://help.guoyangyun.com/Problem/Qm.html
 		Map<String, String> params = Map.of("mobile", mobile, "param", paramValue, "smsSignId", signId, "templateId",
-				templateId);
+			templateId);
 		log.info("模板内容：{}", TEMPLATES.get(templateId));
 		/*
 		 * 重要提示如下: HttpUtils请从
@@ -112,7 +112,7 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		if (node.asInt() == OK) {
 			// 写入缓存
 			cache.set(captcha, (long) minute * 60 * 1000);
-			return Result.ok(captcha);
+			return Result.ok(null);
 		}
 		log.info("错误信息：{}", json);
 		return Result.fail(node.asText(), ERRORS.get(node.asText()));

@@ -58,7 +58,7 @@ public class MailCaptchaHandler extends AbstractDomainEventHandler {
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
-		Result<String> result = mailService.send(event.getUuid(), 5, (value, expireTime) -> {
+		Result<?> result = mailService.send(event.getUuid(), 5, (value, expireTime) -> {
 			String mailCaptchaKey = RedisKeyUtil.getMailCaptchaKey(event.getUuid());
 			redisUtil.del(mailCaptchaKey);
 			redisUtil.set(mailCaptchaKey, value, expireTime);

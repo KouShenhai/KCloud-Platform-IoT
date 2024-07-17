@@ -25,6 +25,6 @@ import org.laokou.common.i18n.dto.Result;
  */
 public interface MailService {
 
-	Result<String> send(String mail, int minute, Cache cache);
+	<T> Result<T> send(String mail, int minute, Cache cache);
 
 }

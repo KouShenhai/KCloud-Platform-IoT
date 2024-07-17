@@ -25,6 +25,6 @@ import org.laokou.common.i18n.dto.Result;
  */
 public interface SmsService {
 
-	Result<String> send(String mobile, int minute, Cache cache);
+	<T> Result<T> send(String mobile, int minute, Cache cache);
 
 }
