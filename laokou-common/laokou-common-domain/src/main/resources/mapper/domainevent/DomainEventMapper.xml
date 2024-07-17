@@ -21,7 +21,7 @@
 <mapper namespace="org.laokou.common.domain.database.DomainEventMapper">
 
   <update id="updateStatusById">
-    update boot_sys_domain_event
+    update boot_domain_event
     set event_status = 'CONSUMED',
         version      = version + 1
     where id = #{id}

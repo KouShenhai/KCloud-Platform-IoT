@@ -1,0 +1,1837 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>kcloud_platform_nacos 数据库设计文档</title>
+    <style type="text/css">
+        body {
+            padding-bottom: 50px
+        }
+
+        body, td {
+            font-family: verdana, fantasy;
+            font-size: 12px;
+            line-height: 150%
+        }
+
+        table {
+            width: 100%;
+            background-color: #ccc;
+            margin: 5px 0
+        }
+
+        td {
+            background-color: #fff;
+            padding: 3px 3px 3px 10px
+        }
+
+        thead td {
+            text-align: center;
+            font-weight: 700;
+            background-color: #eee;
+            padding: 3px;
+        }
+		
+		.text-center{
+			text-align:center;
+            padding: 3px;			
+		}
+
+        a:active, a:link, a:visited {
+            color: #015fb6;
+            text-decoration: none
+        }
+
+        a:hover {
+            color: #e33e06
+        }
+    </style>
+</head>
+<body style="text-align:center">
+    <div style="width: 850px; margin: 20px auto; text-align: left">
+        <a name="index"></a>
+        <h2 style="text-align: center; line-height: 50px">kcloud_platform_nacos数据库设计文档</h2>
+        <div>
+            <b>数据库名：kcloud_platform_nacos</b><br>
+            <b>文档版本：v1.0.1</b><br>
+            <b>文档描述：无</b><br>
+        </div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>表名</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td><a href="#config_info">config_info</a></td>
+                        <td>config_info</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td><a href="#config_info_aggr">config_info_aggr</a></td>
+                        <td>增加租户字段</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td><a href="#config_info_beta">config_info_beta</a></td>
+                        <td>config_info_beta</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td><a href="#config_info_tag">config_info_tag</a></td>
+                        <td>config_info_tag</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td><a href="#config_tags_relation">config_tags_relation</a></td>
+                        <td>config_tag_relation</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td><a href="#databasechangelog">databasechangelog</a></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td><a href="#databasechangeloglock">databasechangeloglock</a></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td><a href="#group_capacity">group_capacity</a></td>
+                        <td>集群、各Group容量信息表</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td><a href="#his_config_info">his_config_info</a></td>
+                        <td>多租户改造</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td><a href="#permissions">permissions</a></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td><a href="#roles">roles</a></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td><a href="#tenant_capacity">tenant_capacity</a></td>
+                        <td>租户容量信息表</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td><a href="#tenant_info">tenant_info</a></td>
+                        <td>tenant_info</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td><a href="#users">users</a></td>
+                        <td></td>
+                    </tr>
+
+        </table>
+        <a name="config_info"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：config_info</b>
+        </div>
+        <div>说明：config_info</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>data_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>data_id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>group_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>content</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>content</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>md5</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(32)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>md5</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>src_user</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>source user</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>src_ip</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>source ip</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>app_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>c_desc</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>c_use</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>effect</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>type</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>gmt_create</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>gmt_modified</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">15</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>租户字段</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">16</td>
+                        <td>c_schema</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">17</td>
+                        <td>encrypted_data_key</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>秘钥</td>
+                    </tr>
+
+        </table>
+        <a name="config_info_aggr"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：config_info_aggr</b>
+        </div>
+        <div>说明：增加租户字段</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>data_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>data_id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>group_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>group_id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>datum_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>datum_id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>content</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>内容</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>gmt_modified</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>修改时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>app_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>租户字段</td>
+                    </tr>
+
+        </table>
+        <a name="config_info_beta"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：config_info_beta</b>
+        </div>
+        <div>说明：config_info_beta</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>data_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>data_id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>group_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>group_id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>app_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>app_name</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>content</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>content</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>beta_ips</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(1024)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>betaIps</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>md5</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(32)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>md5</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>src_user</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>source user</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>src_ip</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>source ip</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>encrypted_data_key</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>秘钥</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>gmt_create</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>gmt_modified</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>租户字段</td>
+                    </tr>
+
+        </table>
+        <a name="config_info_tag"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：config_info_tag</b>
+        </div>
+        <div>说明：config_info_tag</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>data_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>data_id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>group_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>group_id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>tag_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>tag_id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>app_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>app_name</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>tenant_id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>content</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>content</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>md5</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(32)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>md5</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>src_user</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>source user</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>src_ip</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>source ip</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>gmt_create</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>gmt_modified</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="config_tags_relation"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：config_tags_relation</b>
+        </div>
+        <div>说明：config_tag_relation</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>tag_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>tag_name</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>tag_type</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>tag_type</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>data_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>data_id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>group_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>group_id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>nid</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>tenant_id</td>
+                    </tr>
+
+        </table>
+        <a name="databasechangelog"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：databasechangelog</b>
+        </div>
+        <div>说明：</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>author</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>filename</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>dateexecuted</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>orderexecuted</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>exectype</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(10)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>md5sum</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(35)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>description</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>comments</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>tag</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>liquibase</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(20)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>contexts</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>labels</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>deployment_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(10)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+
+        </table>
+        <a name="databasechangeloglock"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：databasechangeloglock</b>
+        </div>
+        <div>说明：</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>locked</td>
+                        <td class="text-center">bool</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>lockgranted</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>lockedby</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+
+        </table>
+        <a name="group_capacity"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：group_capacity</b>
+        </div>
+        <div>说明：集群、各Group容量信息表</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>主键ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>group_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>Group ID，空字符表示整个集群</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>quota</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>配额，0表示使用默认值</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>usage</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>使用量</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>max_size</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>单个配置大小上限，单位为字节，0表示使用默认值</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>max_aggr_count</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>聚合子配置最大个数，，0表示使用默认值</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>max_aggr_size</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>max_history_count</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>最大变更历史数量</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>gmt_create</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>gmt_modified</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="his_config_info"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：his_config_info</b>
+        </div>
+        <div>说明：多租户改造</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>nid</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>data_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>group_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>app_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>app_name</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>content</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>md5</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(32)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>src_user</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>src_ip</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>op_type</td>
+                        <td class="text-center">bpchar</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>encrypted_data_key</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>秘钥</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>gmt_create</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>gmt_modified</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>租户字段</td>
+                    </tr>
+
+        </table>
+        <a name="permissions"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：permissions</b>
+        </div>
+        <div>说明：</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>role</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>resource</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>action</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(8)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+
+        </table>
+        <a name="roles"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：roles</b>
+        </div>
+        <div>说明：</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>username</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>role</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+
+        </table>
+        <a name="tenant_capacity"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：tenant_capacity</b>
+        </div>
+        <div>说明：租户容量信息表</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>主键ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>Tenant ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>quota</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>配额，0表示使用默认值</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>usage</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>使用量</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>max_size</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>单个配置大小上限，单位为字节，0表示使用默认值</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>max_aggr_count</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>聚合子配置最大个数</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>max_aggr_size</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>max_history_count</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>最大变更历史数量</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>gmt_create</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>gmt_modified</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="tenant_info"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：tenant_info</b>
+        </div>
+        <div>说明：tenant_info</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>kp</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>kp</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>tenant_desc</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>tenant_desc</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>create_source</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(32)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>create_source</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>gmt_create</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>gmt_modified</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>修改时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>tenant_id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>tenant_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>tenant_name</td>
+                    </tr>
+
+        </table>
+        <a name="users"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：users</b>
+        </div>
+        <div>说明：</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>username</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>password</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(500)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>enabled</td>
+                        <td class="text-center">bool</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">true</td>
+                        <td></td>
+                    </tr>
+
+        </table>
+    </div>
+</body>
+</html>

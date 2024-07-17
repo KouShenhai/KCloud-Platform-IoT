@@ -1,0 +1,4081 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>kcloud_platform_snail_job 数据库设计文档</title>
+    <style type="text/css">
+        body {
+            padding-bottom: 50px
+        }
+
+        body, td {
+            font-family: verdana, fantasy;
+            font-size: 12px;
+            line-height: 150%
+        }
+
+        table {
+            width: 100%;
+            background-color: #ccc;
+            margin: 5px 0
+        }
+
+        td {
+            background-color: #fff;
+            padding: 3px 3px 3px 10px
+        }
+
+        thead td {
+            text-align: center;
+            font-weight: 700;
+            background-color: #eee;
+            padding: 3px;
+        }
+		
+		.text-center{
+			text-align:center;
+            padding: 3px;			
+		}
+
+        a:active, a:link, a:visited {
+            color: #015fb6;
+            text-decoration: none
+        }
+
+        a:hover {
+            color: #e33e06
+        }
+    </style>
+</head>
+<body style="text-align:center">
+    <div style="width: 850px; margin: 20px auto; text-align: left">
+        <a name="index"></a>
+        <h2 style="text-align: center; line-height: 50px">kcloud_platform_snail_job数据库设计文档</h2>
+        <div>
+            <b>数据库名：kcloud_platform_snail_job</b><br>
+            <b>文档版本：v1.0.1</b><br>
+            <b>文档描述：无</b><br>
+        </div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>表名</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td><a href="#databasechangelog">databasechangelog</a></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td><a href="#databasechangeloglock">databasechangeloglock</a></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td><a href="#sj_distributed_lock">sj_distributed_lock</a></td>
+                        <td>锁定表</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td><a href="#sj_group_config">sj_group_config</a></td>
+                        <td>组配置</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td><a href="#sj_job">sj_job</a></td>
+                        <td>任务信息</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td><a href="#sj_job_log_message">sj_job_log_message</a></td>
+                        <td>调度日志</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td><a href="#sj_job_summary">sj_job_summary</a></td>
+                        <td>DashBoard_Job</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td><a href="#sj_job_task">sj_job_task</a></td>
+                        <td>任务实例</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td><a href="#sj_job_task_batch">sj_job_task_batch</a></td>
+                        <td>任务批次</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td><a href="#sj_namespace">sj_namespace</a></td>
+                        <td>命名空间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td><a href="#sj_notify_config">sj_notify_config</a></td>
+                        <td>通知配置</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td><a href="#sj_notify_recipient">sj_notify_recipient</a></td>
+                        <td>告警通知接收人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td><a href="#sj_retry_dead_letter_0">sj_retry_dead_letter_0</a></td>
+                        <td>死信队列表</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td><a href="#sj_retry_scene_config">sj_retry_scene_config</a></td>
+                        <td>场景配置</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">15</td>
+                        <td><a href="#sj_retry_summary">sj_retry_summary</a></td>
+                        <td>DashBoard_Retry</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">16</td>
+                        <td><a href="#sj_retry_task_0">sj_retry_task_0</a></td>
+                        <td>任务表</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">17</td>
+                        <td><a href="#sj_retry_task_log">sj_retry_task_log</a></td>
+                        <td>任务日志基础信息表</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">18</td>
+                        <td><a href="#sj_retry_task_log_message">sj_retry_task_log_message</a></td>
+                        <td>任务调度日志信息记录表</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">19</td>
+                        <td><a href="#sj_sequence_alloc">sj_sequence_alloc</a></td>
+                        <td>号段模式序号ID分配表</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">20</td>
+                        <td><a href="#sj_server_node">sj_server_node</a></td>
+                        <td>服务器节点</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">21</td>
+                        <td><a href="#sj_system_user">sj_system_user</a></td>
+                        <td>系统用户表</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">22</td>
+                        <td><a href="#sj_system_user_permission">sj_system_user_permission</a></td>
+                        <td>系统用户权限表</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">23</td>
+                        <td><a href="#sj_workflow">sj_workflow</a></td>
+                        <td>工作流</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">24</td>
+                        <td><a href="#sj_workflow_node">sj_workflow_node</a></td>
+                        <td>工作流节点</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">25</td>
+                        <td><a href="#sj_workflow_task_batch">sj_workflow_task_batch</a></td>
+                        <td>工作流批次</td>
+                    </tr>
+
+        </table>
+        <a name="databasechangelog"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：databasechangelog</b>
+        </div>
+        <div>说明：</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>author</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>filename</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>dateexecuted</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>orderexecuted</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>exectype</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(10)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>md5sum</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(35)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>description</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>comments</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>tag</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>liquibase</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(20)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>contexts</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>labels</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>deployment_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(10)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+
+        </table>
+        <a name="databasechangeloglock"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：databasechangeloglock</b>
+        </div>
+        <div>说明：</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>locked</td>
+                        <td class="text-center">bool</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>lockgranted</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>lockedby</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td></td>
+                    </tr>
+
+        </table>
+        <a name="sj_distributed_lock"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_distributed_lock</b>
+        </div>
+        <div>说明：锁定表</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>锁名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>locked_by</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>锁定者</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_distributed_lock_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>lock_until</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP3</td>
+                        <td>锁定时长</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>locked_at</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP3</td>
+                        <td>锁定时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_group_config"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_group_config</b>
+        </div>
+        <div>说明：组配置</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>version</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>版本号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>group_partition</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>分区</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_group_config_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>description</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>组描述</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>token</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'SJ_cKqBTPzCsWA3VyuCfFoccmuIEGXjr5KT'::character varying</td>
+                        <td>token</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>group_status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>组状态 0、未启用 1、启用</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>id_generator_mode</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>唯一id生成模式 默认号段模式</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>init_scene</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>是否初始化场景 0 否 1 是</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>bucket_index</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>bucket</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_job"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_job</b>
+        </div>
+        <div>说明：任务信息</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>job_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>args_str</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>执行方法参数</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>next_trigger_at</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>下次触发时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>trigger_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>触发类型 1.CRON 表达式 2. 固定时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>trigger_interval</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>间隔时长</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_job_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>args_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>参数类型 </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>job_status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>任务状态 0、关闭、1、开启</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>task_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>任务类型 1、集群 2、广播 3、切片</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>route_key</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">4</td>
+                        <td>路由策略</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>executor_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>执行器类型</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>executor_info</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">NULL::character varying</td>
+                        <td>执行器名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">15</td>
+                        <td>block_strategy</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>阻塞策略 1、丢弃 2、覆盖 3、并行</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">16</td>
+                        <td>executor_timeout</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>任务执行超时时间，单位秒</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">17</td>
+                        <td>max_retry_times</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>最大重试次数</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">18</td>
+                        <td>parallel_num</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>并行数</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">19</td>
+                        <td>retry_interval</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>重试间隔 ( s ) </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">20</td>
+                        <td>bucket_index</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>bucket</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">21</td>
+                        <td>resident</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>是否是常驻任务</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">22</td>
+                        <td>description</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>描述</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">23</td>
+                        <td>ext_attrs</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>扩展字段</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">24</td>
+                        <td>deleted</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>逻辑删除 1、删除</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">25</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">26</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_job_log_message"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_job_log_message</b>
+        </div>
+        <div>说明：调度日志</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>job_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>任务信息id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>task_batch_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>任务批次id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>task_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>调度任务id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>message</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>调度信息</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_job_log_message_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>log_num</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>日志数量</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>real_time</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>上报时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>ext_attrs</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>扩展字段</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_job_summary"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_job_summary</b>
+        </div>
+        <div>说明：DashBoard_Job</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>business_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>业务id  ( job_id或workflow_id ) </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_job_summary_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>system_task_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">3</td>
+                        <td>任务类型 3、JOB任务 4、WORKFLOW任务</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>trigger_at</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>统计时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>success_num</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>执行成功-日志数量</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>fail_num</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>执行失败-日志数量</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>fail_reason</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(512)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>失败原因</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>stop_num</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>执行失败-日志数量</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>stop_reason</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(512)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>失败原因</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>cancel_num</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>执行失败-日志数量</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>cancel_reason</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(512)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>失败原因</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">15</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_job_task"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_job_task</b>
+        </div>
+        <div>说明：任务实例</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>job_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>任务信息id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>task_batch_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>调度任务id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>result_message</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>执行结果</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>args_str</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>执行方法参数</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_job_task_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>parent_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>父执行器id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>task_status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>执行的状态 0、失败 1、成功</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>retry_count</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>重试次数</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>client_info</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">NULL::character varying</td>
+                        <td>客户端地址 clientId#ip port</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>args_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>参数类型 </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>ext_attrs</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>扩展字段</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">15</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_job_task_batch"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_job_task_batch</b>
+        </div>
+        <div>说明：任务批次</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>job_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>任务id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_job_task_batch_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>workflow_node_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>工作流节点id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>parent_workflow_node_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>工作流任务父批次id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>workflow_task_batch_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>工作流任务批次id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>task_batch_status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>任务批次状态 0、失败 1、成功</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>operation_reason</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>操作原因</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>execution_at</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>任务执行时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>system_task_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">3</td>
+                        <td>任务类型 3、JOB任务 4、WORKFLOW任务</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>parent_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>父节点</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>ext_attrs</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>扩展字段</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>deleted</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>逻辑删除 1、删除</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">15</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">16</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_namespace"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_namespace</b>
+        </div>
+        <div>说明：命名空间</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>unique_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>唯一id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_namespace_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>description</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>描述</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>deleted</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>逻辑删除 1、删除</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_notify_config"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_notify_config</b>
+        </div>
+        <div>说明：通知配置</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>business_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>业务id  ( job_id或workflow_id或scene_name ) </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>recipient_ids</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>接收人id列表</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_notify_config_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>system_task_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">3</td>
+                        <td>任务类型 1. 重试任务 2. 重试回调 3、JOB任务 4、WORKFLOW任务</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>notify_status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>通知状态 0、未启用 1、启用</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>notify_threshold</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>通知阈值</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>notify_scene</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>通知场景</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>rate_limiter_status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>限流状态 0、未启用 1、启用</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>rate_limiter_threshold</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>每秒限流阈值</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>description</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>描述</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_notify_recipient"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_notify_recipient</b>
+        </div>
+        <div>说明：告警通知接收人</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>recipient_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>接收人名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>notify_attribute</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(512)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>配置属性</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_notify_recipient_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>notify_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>通知类型 1、钉钉 2、邮件 3、企业微信 4 飞书 5 webhook</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>description</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>描述</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_retry_dead_letter_0"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_retry_dead_letter_0</b>
+        </div>
+        <div>说明：死信队列表</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>unique_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>同组下id唯一</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>scene_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>场景名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>idempotent_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>幂等id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>args_str</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>执行方法参数</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>ext_attrs</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>扩展字段</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_retry_dead_letter_0_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>biz_no</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>业务编号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>executor_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(512)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>执行器名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>task_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>任务类型 1、重试数据 2、回调数据</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_retry_scene_config"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_retry_scene_config</b>
+        </div>
+        <div>说明：场景配置</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>scene_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>场景名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_retry_scene_config_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>scene_status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>组状态 0、未启用 1、启用</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>max_retry_count</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">5</td>
+                        <td>最大重试次数</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>back_off</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>1、默认等级 2、固定间隔时间 3、CRON 表达式</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>trigger_interval</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(16)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>间隔时长</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>deadline_request</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">60000</td>
+                        <td>Deadline Request 调用链超时 单位毫秒</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>executor_timeout</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">5</td>
+                        <td>任务执行超时时间，单位秒</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>route_key</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">4</td>
+                        <td>路由策略</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>description</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>描述</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_retry_summary"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_retry_summary</b>
+        </div>
+        <div>说明：DashBoard_Retry</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_retry_summary_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>scene_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>场景名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>trigger_at</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>统计时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>running_num</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>重试中-日志数量</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>finish_num</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>重试完成-日志数量</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>max_count_num</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>重试到达最大次数-日志数量</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>suspend_num</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>暂停重试-日志数量</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_retry_task_0"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_retry_task_0</b>
+        </div>
+        <div>说明：任务表</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>unique_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>同组下id唯一</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>scene_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>场景名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>idempotent_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>幂等id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>args_str</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>执行方法参数</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>ext_attrs</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>扩展字段</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>next_trigger_at</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>下次触发时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_retry_task_0_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>biz_no</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>业务编号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>executor_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(512)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>执行器名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>retry_count</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>重试次数</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>retry_status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>重试状态 0、重试中 1、成功 2、最大重试次数</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>task_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>任务类型 1、重试数据 2、回调数据</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">15</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">16</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_retry_task_log"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_retry_task_log</b>
+        </div>
+        <div>说明：任务日志基础信息表</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>unique_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>同组下id唯一</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>scene_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>场景名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>idempotent_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>幂等id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>args_str</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>执行方法参数</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>ext_attrs</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>扩展字段</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_retry_task_log_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>biz_no</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>业务编号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>executor_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(512)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>执行器名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>retry_status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>重试状态 0、重试中 1、成功 2、最大次数</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>task_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>任务类型 1、重试数据 2、回调数据</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_retry_task_log_message"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_retry_task_log_message</b>
+        </div>
+        <div>说明：任务调度日志信息记录表</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>unique_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>同组下id唯一</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>message</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>异常信息</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_retry_task_log_message_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>log_num</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>日志数量</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>real_time</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>上报时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_sequence_alloc"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_sequence_alloc</b>
+        </div>
+        <div>说明：号段模式序号ID分配表</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_sequence_alloc_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>max_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>最大id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>step</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">100</td>
+                        <td>步长</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>更新时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_server_node"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_server_node</b>
+        </div>
+        <div>说明：服务器节点</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>host_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>主机id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>host_ip</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>机器ip</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>host_port</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>机器端口</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>expire_at</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>过期时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>node_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>节点类型 1、客户端 2、是服务端</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_server_node_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>ext_attrs</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>扩展字段</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_system_user"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_system_user</b>
+        </div>
+        <div>说明：系统用户表</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>username</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>账号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>password</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(128)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>密码</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_system_user_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>role</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>角色：1-普通用户、2-管理员</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_system_user_permission"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_system_user_permission</b>
+        </div>
+        <div>说明：系统用户权限表</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>system_user_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>系统用户id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_system_user_permission_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_workflow"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_workflow</b>
+        </div>
+        <div>说明：工作流</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>workflow_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>工作流名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>trigger_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>触发类型 1.CRON 表达式 2. 固定时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>trigger_interval</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(255)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>间隔时长</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>next_trigger_at</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>下次触发时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>flow_info</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>流程信息</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>version</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>版本号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_workflow_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>workflow_status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>工作流状态 0、关闭、1、开启</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>block_strategy</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>阻塞策略 1、丢弃 2、覆盖 3、并行</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>executor_timeout</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>任务执行超时时间，单位秒</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>description</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">''::character varying</td>
+                        <td>描述</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>bucket_index</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>bucket</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">15</td>
+                        <td>ext_attrs</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>扩展字段</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">16</td>
+                        <td>deleted</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>逻辑删除 1、删除</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">17</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">18</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_workflow_node"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_workflow_node</b>
+        </div>
+        <div>说明：工作流节点</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>node_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>节点名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>job_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>任务信息id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>workflow_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>工作流ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>node_info</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>节点信息 </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>version</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>版本号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_workflow_node_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>node_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>1、任务节点 2、条件节点</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>expression_type</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>1、SpEl、2、Aviator 3、QL</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>fail_strategy</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>失败策略 1、跳过 2、阻塞</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>workflow_node_status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>工作流节点状态 0、关闭、1、开启</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>priority_level</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">1</td>
+                        <td>优先级</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>ext_attrs</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>扩展字段</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">15</td>
+                        <td>deleted</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>逻辑删除 1、删除</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">16</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">17</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+        <a name="sj_workflow_task_batch"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：sj_workflow_task_batch</b>
+        </div>
+        <div>说明：工作流批次</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>group_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>组名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>workflow_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>工作流任务id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>flow_info</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>流程信息</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">nextval'sj_workflow_task_batch_id_seq'::regclass</td>
+                        <td>主键</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>namespace_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(64)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">'764d604ec6fc45f68cd92514c40e9e1a'::character varying</td>
+                        <td>命名空间id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>task_batch_status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>任务批次状态 0、失败 1、成功</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>operation_reason</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>操作原因</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>execution_at</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>任务执行时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>ext_attrs</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(256)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">''::character varying</td>
+                        <td>扩展字段</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>deleted</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>逻辑删除 1、删除</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>create_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>update_dt</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+
+        </table>
+    </div>
+</body>
+</html>
