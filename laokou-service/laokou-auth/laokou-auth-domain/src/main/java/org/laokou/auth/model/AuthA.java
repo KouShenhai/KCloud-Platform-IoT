@@ -192,22 +192,21 @@ public class AuthA extends AggregateRoot<Long> {
 	}
 
 	public void updateUser(UserE user) {
-		if (ObjectUtil.isNull(user)) {
-			switch (this.grantType) {
-				case MOBILE:
-				case MAIL:
-				case PASSWORD:
-				case AUTHORIZATION_CODE:
-					fail(OAUTH2_USERNAME_PASSWORD_ERROR);
-					break;
-			}
+		if (ObjectUtil.isNotNull(user)) {
+			this.user = user;
+			this.creator = user.getId();
+			this.editor = user.getId();
+			this.deptId = user.getDeptId();
+			this.deptPath = user.getDeptPath();
+			this.tenantId = user.getTenantId();
 		}
-		this.user = user;
-		this.creator = user.getId();
-		this.editor = user.getId();
-		this.deptId = user.getDeptId();
-		this.deptPath = user.getDeptPath();
-		this.tenantId = user.getTenantId();
+		switch (this.grantType) {
+			case MOBILE:
+			case MAIL:
+			case PASSWORD:
+			case AUTHORIZATION_CODE:
+				fail(OAUTH2_USERNAME_PASSWORD_ERROR);
+		}
 	}
 
 	public void updateSource(SourceV source) {
