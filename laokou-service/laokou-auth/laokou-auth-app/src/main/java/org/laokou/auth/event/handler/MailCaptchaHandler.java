@@ -25,6 +25,8 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.mail.service.MailService;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
@@ -41,13 +43,18 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 		selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class MailCaptchaHandler extends AbstractDomainEventHandler {
 
-	public MailCaptchaHandler(DomainEventPublisher domainEventPublisher) {
+	private final MailService mailService;
+
+	public MailCaptchaHandler(DomainEventPublisher domainEventPublisher, MailService mailService) {
 		super(domainEventPublisher);
+		this.mailService = mailService;
 	}
 
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-		log.info("邮箱：{}", domainEvent);
+		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
+		Result<String> result = mailService.send(event.getUuid());
+		log.info("邮箱：{}", result);
 	}
 
 	@Override

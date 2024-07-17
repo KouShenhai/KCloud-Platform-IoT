@@ -42,18 +42,17 @@ import java.net.InetAddress;
  *
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = "org.laokou",
-		exclude = { OAuth2AuthorizationServerAutoConfiguration.class,
-				OAuth2AuthorizationServerJwtAutoConfiguration.class })
-@EnableConfigurationProperties
-@EnableEncryptableProperties
-@EnableDiscoveryClient
-@EnableRedisRepository
-@EnableTaskExecutor
 @EnableRouter
 @EnableWarmUp
-@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
+@EnableTaskExecutor
+@EnableRedisRepository
+@EnableDiscoveryClient
+@EnableEncryptableProperties
+@EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
+@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
+@SpringBootApplication(scanBasePackages = "org.laokou", exclude = { OAuth2AuthorizationServerAutoConfiguration.class,
+		OAuth2AuthorizationServerJwtAutoConfiguration.class })
 public class AuthApp {
 
 	/**

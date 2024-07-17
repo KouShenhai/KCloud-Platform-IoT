@@ -25,6 +25,7 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.sms.service.SmsService;
 import org.springframework.stereotype.Component;
 
@@ -52,8 +53,8 @@ public class MobileCaptchaHandler extends AbstractDomainEventHandler {
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
-		smsService.send(event.getUuid());
-		log.info("手机号：{}", domainEvent);
+		Result<String> result = smsService.send(event.getUuid());
+		log.info("发送信息：{}", result);
 	}
 
 	@Override
