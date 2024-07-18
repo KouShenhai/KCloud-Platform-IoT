@@ -32,13 +32,13 @@ import javax.sql.DataSource;
 /**
  * @author laokou
  */
-@ConditionalOnClass({ DataSource.class })
-@AutoConfiguration(before = { JdbcTemplateAutoConfiguration.class })
+@ConditionalOnClass({DataSource.class})
+@AutoConfiguration(before = {JdbcTemplateAutoConfiguration.class})
 public class OAuth2SecurityAutoConfig {
 
 	@Bean
-	@ConditionalOnMissingBean(RegisteredClientRepository.class)
 	@Master
+	@ConditionalOnMissingBean(RegisteredClientRepository.class)
 	public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
 		return new JdbcRegisteredClientRepository(jdbcTemplate);
 	}
