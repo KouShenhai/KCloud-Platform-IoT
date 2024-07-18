@@ -21,11 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.common.constant.EventStatus;
-import org.laokou.common.i18n.common.constant.EventType;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
-
-import java.time.LocalDateTime;
 
 /**
  * @author laokou
@@ -39,18 +35,8 @@ public class SendCaptchaEvent extends DefaultDomainEvent {
 
 	private String uuid;
 
-	public void create(String topic, String tag, EventType eventType, EventStatus eventStatus, String appName,
-			String sourceName, LocalDateTime timestamp) {
-		create(topic, tag, eventType, eventStatus);
-		super.createDate = timestamp;
-		super.updateDate = timestamp;
-		super.appName = appName;
-		super.sourceName = sourceName;
-	}
-
 	@Override
-	protected void create(String topic, String tag, EventType eventType, EventStatus eventStatus) {
-		super.create(topic, tag, eventType, eventStatus);
+	protected void generatorId() {
 		super.id = IdGenerator.defaultSnowflakeId();
 	}
 

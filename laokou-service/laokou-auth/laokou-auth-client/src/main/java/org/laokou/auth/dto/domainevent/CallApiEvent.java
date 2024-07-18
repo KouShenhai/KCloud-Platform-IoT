@@ -23,60 +23,16 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
-import java.io.Serial;
-
 /**
- * 登录事件.
- *
  * @author laokou
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginEvent extends DefaultDomainEvent {
+public class CallApiEvent extends DefaultDomainEvent {
 
-	@Serial
-	private static final long serialVersionUID = -325094951800650353L;
-
-	/**
-	 * 登录的用户名.
-	 */
-	private String username;
-
-	/**
-	 * 登录的IP地址.
-	 */
-	private String ip;
-
-	/**
-	 * 登录的归属地.
-	 */
-	private String address;
-
-	/**
-	 * 登录的浏览器.
-	 */
-	private String browser;
-
-	/**
-	 * 登录的操作系统.
-	 */
-	private String os;
-
-	/**
-	 * 登录状态 0登录成功 1登录失败.
-	 */
 	private Integer status;
-
-	/**
-	 * 错误信息.
-	 */
 	private String errorMessage;
-
-	/**
-	 * 登录类型.
-	 */
-	private String type;
 
 	@Override
 	protected void generatorId() {

@@ -22,6 +22,8 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.common.constant.EventStatus;
 import org.laokou.common.i18n.common.constant.EventType;
 
+import java.time.LocalDateTime;
+
 /**
  * 默认领域事件.
  *
@@ -32,8 +34,13 @@ import org.laokou.common.i18n.common.constant.EventType;
 public class DefaultDomainEvent extends DomainEvent<Long> {
 
 	@Override
-	protected void create(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
-			EventStatus eventStatus) {
+	protected void generatorId() {
+		super.id = System.currentTimeMillis();
+	}
+
+	public void create(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
+					   EventStatus eventStatus, LocalDateTime timestamp) {
+		generatorId();
 		super.tenantId = aggregateRoot.getTenantId();
 		super.deptId = aggregateRoot.getDeptId();
 		super.deptPath = aggregateRoot.getDeptPath();
@@ -46,14 +53,21 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.aggregateId = aggregateRoot.getId();
 		super.tag = tag;
 		super.topic = topic;
+		super.createDate = timestamp;
+		super.updateDate = timestamp;
 	}
 
-	@Override
-	protected void create(String topic, String tag, EventType eventType, EventStatus eventStatus) {
+	public void create(String topic, String tag, EventType eventType, EventStatus eventStatus, String appName,
+					   String sourceName, LocalDateTime timestamp) {
+		generatorId();
 		super.eventType = eventType;
 		super.eventStatus = eventStatus;
 		super.tag = tag;
 		super.topic = topic;
+		super.createDate = timestamp;
+		super.updateDate = timestamp;
+		super.appName = appName;
+		super.sourceName = sourceName;
 	}
 
 }

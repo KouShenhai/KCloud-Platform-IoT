@@ -20,9 +20,7 @@ package org.laokou.common.log.domainevent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.common.constant.EventStatus;
-import org.laokou.common.i18n.common.constant.EventType;
-import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 import java.io.Serial;
@@ -78,33 +76,8 @@ public class OperateEvent extends DefaultDomainEvent {
 	protected Long takeTime;
 
 	@Override
-	protected void create(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
-			EventStatus eventStatus) {
-
+	protected void generatorId() {
+		super.id = IdGenerator.defaultSnowflakeId();
 	}
-
-	// public OperateEvent(OperateLog operateLog, HttpServletRequest request,
-	// UserContextHolder.User user, String appName,
-	// Integer status, EventType eventType) {
-	// super(IdGenerator.defaultSnowflakeId(), user.getId(), eventType, CREATED,
-	// LAOKOU_OPERATE_EVENT_TOPIC,
-	// user.getSourceName(), appName, user.getId(), user.getId(), user.getDeptId(),
-	// user.getDeptPath(),
-	// user.getTenantId(), DateUtil.now(), DateUtil.now());
-	// this.takeTime = operateLog.getTakeTime();
-	// this.errorMessage = operateLog.getErrorMessage();
-	// this.operator = user.getUsername();
-	// String ip = IpUtil.getIpAddr(request);
-	// this.address = AddressUtil.getRealAddress(ip);
-	// this.ip = ip;
-	// this.userAgent = request.getHeader(HttpHeaders.USER_AGENT);
-	// this.requestParams = operateLog.getRequestParams();
-	// this.requestType = request.getMethod();
-	// this.methodName = operateLog.getMethodName();
-	// this.uri = request.getRequestURI();
-	// this.moduleName = operateLog.getModuleName();
-	// this.name = operateLog.getName();
-	// this.status = status;
-	// }
 
 }
