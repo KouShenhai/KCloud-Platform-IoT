@@ -31,6 +31,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
+import static org.laokou.common.i18n.common.constant.Constant.FAIL;
+import static org.laokou.common.i18n.common.constant.Constant.OK;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.exception.AuthException.*;
 import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
@@ -92,16 +94,6 @@ public class AuthA extends AggregateRoot<Long> {
 	 * 租户ID.
 	 */
 	public static final String TENANT_ID = "tenant_id";
-
-	/**
-	 * 成功.
-	 */
-	private static final int OK = 0;
-
-	/**
-	 * 失败.
-	 */
-	private static final int FAIL = 1;
 
 	/**
 	 * 用户名.

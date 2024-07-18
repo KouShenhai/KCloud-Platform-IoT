@@ -17,10 +17,10 @@
 
 package org.laokou.auth.dto.domainevent;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.dto.ApiLog;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 /**
@@ -28,12 +28,25 @@ import org.laokou.common.i18n.dto.DefaultDomainEvent;
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class CallApiEvent extends DefaultDomainEvent {
+
+	private String code;
+
+	private String name;
 
 	private Integer status;
 
 	private String errorMessage;
+
+	private String param;
+
+	public CallApiEvent(ApiLog apiLog) {
+		this.code = apiLog.getCode();
+		this.name = apiLog.getName() + "【" + apiLog.getDesc() + "】";
+		this.status = apiLog.getStatus();
+		this.errorMessage = apiLog.getErrorMessage();
+		this.param = apiLog.getParam();
+	}
 
 	@Override
 	protected void generatorId() {

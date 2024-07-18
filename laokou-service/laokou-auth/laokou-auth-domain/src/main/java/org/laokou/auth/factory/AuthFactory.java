@@ -34,9 +34,6 @@ public class AuthFactory {
 		String tenantId = request.getParameter(TENANT_ID);
 		String code = request.getParameter(CODE);
 		String mail = request.getParameter(MAIL);
-		// log.info("租户ID：{}", tenantId);
-		// log.info("验证码：{}", code);
-		// log.info("邮箱：{}", mail);
 		return new AuthA(EMPTY, EMPTY, tenantId, MAIL, mail, code, request);
 	}
 
@@ -44,9 +41,6 @@ public class AuthFactory {
 		String tenantId = request.getParameter(TENANT_ID);
 		String code = request.getParameter(CODE);
 		String mobile = request.getParameter(MOBILE);
-		// log.info("租户ID：{}", tenantId);
-		// log.info("验证码：{}", code);
-		// log.info("手机：{}", mobile);
 		return new AuthA(EMPTY, EMPTY, tenantId, MOBILE, mobile, code, request);
 	}
 
@@ -56,19 +50,12 @@ public class AuthFactory {
 		String captcha = request.getParameter(CAPTCHA);
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
-		// log.info("UUID：{}", uuid);
-		// log.info("验证码：{}", captcha);
-		// log.info("用户名：{}", username);
-		// log.info("密码：{}", password);
-		// log.info("租户ID：{}", tenantId);
 		return new AuthA(username, password, tenantId, PASSWORD, uuid, captcha, request);
 	}
 
 	public static AuthA authorizationCode(HttpServletRequest request) {
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
-		// log.info("用户名：{}", username);
-		// log.info("密码：{}", password);
 		return new AuthA(username, password, EMPTY, AUTHORIZATION_CODE, EMPTY, EMPTY, request);
 	}
 

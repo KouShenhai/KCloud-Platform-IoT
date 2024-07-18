@@ -18,6 +18,7 @@
 package org.laokou.common.domain.handler;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
@@ -32,10 +33,11 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 /**
  * @author laokou
  */
+@Slf4j
 @RequiredArgsConstructor
 public abstract class AbstractDomainEventHandler implements RocketMQListener<MessageExt> {
 
-	private final DomainEventPublisher domainEventPublisher;
+	protected final DomainEventPublisher domainEventPublisher;
 
 	@Override
 	public void onMessage(MessageExt messageExt) {
@@ -54,6 +56,7 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 				domainEventPublisher.publishToModify(domainEvent);
 			}
 			else {
+				log.error("错误信息：{}", e.getMessage(), e);
 				throw e;
 			}
 		}

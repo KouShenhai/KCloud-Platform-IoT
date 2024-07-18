@@ -20,6 +20,9 @@ package org.laokou.common.i18n.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.utils.DateUtil;
+
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -38,6 +41,8 @@ public abstract class ApiLog extends DTO {
 
 	private String desc;
 
+	private LocalDateTime timestamp;
+
 	protected abstract String getApiCode();
 
 	protected abstract String getApiName();
@@ -49,6 +54,7 @@ public abstract class ApiLog extends DTO {
 		this.status = status;
 		this.desc = desc;
 		this.errorMessage = errorMessage;
+		this.timestamp = DateUtil.now();
 	}
 
 }

@@ -21,10 +21,8 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.laokou.common.i18n.dto.ApiLog;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.sms.entity.SendSmsApiLog;
@@ -43,33 +41,28 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
 		selectorExpression = MOBILE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
-public class MobileCaptchaHandler extends AbstractDomainEventHandler {
+public class SendMobileCaptchaEventHandler extends AbstractSendCaptchaEventHandler {
 
 	private final SmsService smsService;
 
 	private final RedisUtil redisUtil;
 
-	public MobileCaptchaHandler(DomainEventPublisher domainEventPublisher, SmsService smsService, RedisUtil redisUtil) {
+	public SendMobileCaptchaEventHandler(DomainEventPublisher domainEventPublisher, SmsService smsService,
+			RedisUtil redisUtil) {
 		super(domainEventPublisher);
 		this.smsService = smsService;
 		this.redisUtil = redisUtil;
 	}
 
 	@Override
-	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
+	protected ApiLog getApiLog(SendCaptchaEvent event) {
 		SendSmsApiLog smsApiLog = new SendSmsApiLog();
 		smsService.send(smsApiLog, event.getUuid(), 5, (value, expireTime) -> {
 			String mobileCaptchaKey = RedisKeyUtil.getMobileCaptchaKey(event.getUuid());
 			redisUtil.del(mobileCaptchaKey);
 			redisUtil.set(mobileCaptchaKey, value, expireTime);
 		});
-		log.info("发送信息：{}", smsApiLog);
-	}
-
-	@Override
-	protected DefaultDomainEvent convert(String msg) {
-		return JacksonUtil.toBean(msg, SendCaptchaEvent.class);
+		return smsApiLog;
 	}
 
 }

@@ -31,7 +31,7 @@ import org.laokou.common.sms.config.SmsProperties;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
+import static org.laokou.common.i18n.common.constant.Constant.*;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
