@@ -42,7 +42,7 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @Component
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
-	selectorExpression = MOBILE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+		selectorExpression = MOBILE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class MobileCaptchaHandler extends AbstractDomainEventHandler {
 
 	private final SmsService smsService;

@@ -28,7 +28,9 @@ import org.laokou.common.sms.service.SmsService;
 public abstract class AbstractSmsServiceImpl implements SmsService {
 
 	protected static final int OK = 0;
+
 	protected static final int FAIL = 1;
+
 	protected final SmsProperties smsProperties;
 
 }

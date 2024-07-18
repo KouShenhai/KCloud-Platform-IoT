@@ -59,7 +59,8 @@ public class MailServiceImpl extends AbstractMailServiceImpl {
 			// 写入缓存
 			cache.set(captcha, (long) minute * 60 * 1000);
 			apiLog.update(params, OK, EMPTY, desc);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("错误信息：{}", e.getMessage(), e);
 			apiLog.update(params, FAIL, e.getMessage(), desc);
 		}

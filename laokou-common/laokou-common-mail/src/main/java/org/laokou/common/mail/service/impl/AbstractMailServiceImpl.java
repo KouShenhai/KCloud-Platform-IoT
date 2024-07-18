@@ -25,6 +25,7 @@ import org.laokou.common.mail.service.MailService;
 public abstract class AbstractMailServiceImpl implements MailService {
 
 	protected static final int OK = 0;
+
 	protected static final int FAIL = 1;
 
 }
