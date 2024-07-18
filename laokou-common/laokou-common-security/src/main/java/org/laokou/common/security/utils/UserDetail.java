@@ -51,7 +51,7 @@ import static org.laokou.common.i18n.common.exception.SystemException.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
 public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2AuthenticatedPrincipal {
 
 	@Serial
@@ -231,6 +231,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 
 	/**
 	 * Get the OAuth 2.0 token attributes.
+	 *
 	 * @return the OAuth 2.0 token attributes
 	 */
 	@Override
@@ -255,8 +256,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (StringUtil.isNotEmpty(this.username)) {
 			try {
 				this.username = AESUtil.decrypt(this.username);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new SystemException(MessageUtil.getMessage(AES_DECRYPT_USERNAME_FAIL));
 			}
 		}
@@ -266,8 +266,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (StringUtil.isNotEmpty(this.mail)) {
 			try {
 				this.mail = AESUtil.decrypt(this.mail);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new SystemException(MessageUtil.getMessage(AES_DECRYPT_MAIL_FAIL));
 			}
 		}
@@ -277,8 +276,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (StringUtil.isNotEmpty(this.mobile)) {
 			try {
 				this.mobile = AESUtil.decrypt(this.mobile);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new SystemException(MessageUtil.getMessage(AES_DECRYPT_MOBILE_FAIL));
 			}
 		}
