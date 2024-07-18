@@ -15,16 +15,26 @@
  *
  */
 
-package org.laokou.common.domain.config;
+package org.laokou.common.sms.entity;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import lombok.Data;
+import org.laokou.common.i18n.dto.ApiLog;
 
-/**
- * @author laokou
- */
-@AutoConfiguration
-@MapperScan("org.laokou.common.domain.mapper")
-public class DomainAutoConfig {
+@Data
+public class SendSmsApiLog extends ApiLog {
+
+	public SendSmsApiLog(String param, Integer status, String errorMessage, String desc) {
+		super(param, status, errorMessage, desc);
+	}
+
+	@Override
+	protected String getApiCode() {
+		return "sendSmsCaptcha";
+	}
+
+	@Override
+	protected String getApiName() {
+		return "发送短信验证码";
+	}
 
 }

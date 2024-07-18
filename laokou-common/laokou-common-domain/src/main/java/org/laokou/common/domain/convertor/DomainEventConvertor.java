@@ -17,7 +17,7 @@
 
 package org.laokou.common.domain.convertor;
 
-import org.laokou.common.domain.database.dataobject.DomainEventDO;
+import org.laokou.common.domain.entity.DomainEventDO;
 import org.laokou.common.domain.model.DomainEventA;
 import org.laokou.common.i18n.dto.Convertor;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
