@@ -18,10 +18,8 @@
 package org.laokou.common.security.config;
 
 import com.baomidou.dynamic.datasource.annotation.Master;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
@@ -33,8 +31,7 @@ import javax.sql.DataSource;
  * @author laokou
  */
 @ConditionalOnClass({ DataSource.class })
-@AutoConfiguration(before = { JdbcTemplateAutoConfiguration.class })
-public class OAuth2SecurityAutoConfig {
+public class OAuth2SecurityConfig {
 
 	@Bean
 	@Master

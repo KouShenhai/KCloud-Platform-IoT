@@ -29,7 +29,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.laokou.common.security.config.OAuth2ResourceServerAutoConfig.customizer;
+import static org.laokou.common.security.config.OAuth2ResourceServerConfig.customizer;
 
 /**
  * 资源服务器配置.

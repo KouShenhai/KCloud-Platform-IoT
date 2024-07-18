@@ -23,7 +23,6 @@ import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -56,11 +55,10 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 @Data
 @EnableWebSecurity
 @EnableMethodSecurity
-@AutoConfiguration(after = { OAuth2AuthorizationAutoConfig.class })
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.security.oauth2.resource-server",
 		name = "enabled")
-public class OAuth2ResourceServerAutoConfig {
+public class OAuth2ResourceServerConfig {
 
 	@Bean
 	@Order(HIGHEST_PRECEDENCE + 1000)
