@@ -9,7 +9,7 @@ dependencies:
     specifier: ^5.0.1
     version: 5.3.7(react-dom@18.3.1)(react@18.3.1)
   '@ant-design/pro-components':
-    specifier: ^2.7.14
+    specifier: ^2.4.4
     version: 2.7.14(antd@5.19.2)(rc-field-form@1.44.0)(react-dom@18.3.1)(react@18.3.1)
   '@umijs/max':
     specifier: ^4.3.1
@@ -38,8 +38,8 @@ devDependencies:
     specifier: ^4.3.1
     version: 4.3.6(eslint@8.57.0)(stylelint@14.16.1)(typescript@5.5.2)
   husky:
-    specifier: ^9
-    version: 9.1.0
+    specifier: ^9.1.1
+    version: 9.1.1
   lint-staged:
     specifier: ^13.2.0
     version: 13.3.0
@@ -9092,8 +9092,8 @@ packages:
     resolution: {integrity: sha512-nZXjEF2nbo7lIw3mgYjItAfgQXog3OjJogSbKa2CQIIvSGWcKgeJnQlNXip6NglNzYH45nSRiEVimMvYL8DDqQ==}
     engines: {node: '>=14.18.0'}
 
-  /husky@9.1.0:
-    resolution: {integrity: sha512-8XCjbomYTGdNF2h50dio3T3zghmZ9f/ZNzr99YwSkvDdhEjJGs5qzy8tbFx+SG8yCx2wn9nMVfZxVrr/yT8gNQ==}
+  /husky@9.1.1:
+    resolution: {integrity: sha512-fCqlqLXcBnXa/TJXmT93/A36tJsjdJkibQ1MuIiFyCCYUlpYpIaj2mv1w+3KR6Rzu1IC3slFTje5f6DUp2A2rg==}
     engines: {node: '>=18'}
     hasBin: true
     dev: true
