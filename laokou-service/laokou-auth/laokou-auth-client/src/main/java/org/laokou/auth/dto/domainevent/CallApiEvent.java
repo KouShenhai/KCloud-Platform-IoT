@@ -32,6 +32,7 @@ import org.laokou.common.i18n.dto.DefaultDomainEvent;
 public class CallApiEvent extends DefaultDomainEvent {
 
 	private Integer status;
+
 	private String errorMessage;
 
 	@Override
