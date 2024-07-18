@@ -15,20 +15,16 @@
  *
  */
 
-package org.laokou.common.sms.service.impl;
+package org.laokou.common.mail.service.impl;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.sms.config.SmsProperties;
-import org.laokou.common.sms.service.SmsService;
+import org.laokou.common.mail.service.MailService;
 
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public abstract class AbstractSmsServiceImpl implements SmsService {
+public abstract class AbstractMailServiceImpl implements MailService {
 
 	protected static final int OK = 0;
 	protected static final int FAIL = 1;
-	protected final SmsProperties smsProperties;
 
 }

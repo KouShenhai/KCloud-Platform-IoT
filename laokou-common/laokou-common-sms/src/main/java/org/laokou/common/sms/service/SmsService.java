@@ -17,14 +17,14 @@
 
 package org.laokou.common.sms.service;
 
+import org.laokou.common.i18n.dto.ApiLog;
 import org.laokou.common.i18n.dto.Cache;
-import org.laokou.common.i18n.dto.Result;
 
 /**
  * @author laokou
  */
 public interface SmsService {
 
-	<T> Result<T> send(String mobile, int minute, Cache cache);
+	void send(ApiLog apiLog, String mobile, int minute, Cache cache);
 
 }

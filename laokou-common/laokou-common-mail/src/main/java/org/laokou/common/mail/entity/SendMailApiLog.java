@@ -15,40 +15,25 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.common.mail.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.ApiLog;
 
+/**
+ * @author laokou
+ */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public abstract class ApiLog extends DTO {
+public class SendMailApiLog extends ApiLog {
 
-	private String code;
+	@Override
+	protected String getApiCode() {
+		return "sendMailCaptcha";
+	}
 
-	private String name;
-
-	private String param;
-
-	private Integer status;
-
-	private String errorMessage;
-
-	private String desc;
-
-	protected abstract String getApiCode();
-
-	protected abstract String getApiName();
-
-	public void update(String param, Integer status, String errorMessage, String desc) {
-		this.code = getApiCode();
-		this.name = getApiName();
-		this.param = param;
-		this.status = status;
-		this.desc = desc;
-		this.errorMessage = errorMessage;
+	@Override
+	protected String getApiName() {
+		return "发送邮箱验证码";
 	}
 
 }

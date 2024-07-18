@@ -25,9 +25,9 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.sms.entity.SendSmsApiLog;
 import org.laokou.common.sms.service.SmsService;
 import org.springframework.stereotype.Component;
 
@@ -42,7 +42,7 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @Component
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
-		selectorExpression = MOBILE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+	selectorExpression = MOBILE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class MobileCaptchaHandler extends AbstractDomainEventHandler {
 
 	private final SmsService smsService;
@@ -58,12 +58,13 @@ public class MobileCaptchaHandler extends AbstractDomainEventHandler {
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
-		Result<?> result = smsService.send(event.getUuid(), 5, (value, expireTime) -> {
+		SendSmsApiLog smsApiLog = new SendSmsApiLog();
+		smsService.send(smsApiLog, event.getUuid(), 5, (value, expireTime) -> {
 			String mobileCaptchaKey = RedisKeyUtil.getMobileCaptchaKey(event.getUuid());
 			redisUtil.del(mobileCaptchaKey);
 			redisUtil.set(mobileCaptchaKey, value, expireTime);
 		});
-		log.info("发送信息：{}", result);
+		log.info("发送信息：{}", smsApiLog);
 	}
 
 	@Override

@@ -23,10 +23,6 @@ import org.laokou.common.i18n.dto.ApiLog;
 @Data
 public class SendSmsApiLog extends ApiLog {
 
-	public SendSmsApiLog(String param, Integer status, String errorMessage, String desc) {
-		super(param, status, errorMessage, desc);
-	}
-
 	@Override
 	protected String getApiCode() {
 		return "sendSmsCaptcha";

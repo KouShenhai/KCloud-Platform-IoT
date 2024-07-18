@@ -17,14 +17,14 @@
 
 package org.laokou.common.mail.service;
 
+import org.laokou.common.i18n.dto.ApiLog;
 import org.laokou.common.i18n.dto.Cache;
-import org.laokou.common.i18n.dto.Result;
 
 /**
  * @author laokou
  */
 public interface MailService {
 
-	<T> Result<T> send(String mail, int minute, Cache cache);
+	void send(ApiLog apiLog, String mail, int minute, Cache cache);
 
 }

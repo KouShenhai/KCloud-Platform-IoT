@@ -20,23 +20,25 @@ package org.laokou.common.mail.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.RandomStringUtil;
 import org.laokou.common.core.utils.TemplateUtil;
+import org.laokou.common.i18n.dto.ApiLog;
 import org.laokou.common.i18n.dto.Cache;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.mail.service.MailService;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Map;
 
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+
 /**
  * @author laokou
  */
 @Slf4j
 @RequiredArgsConstructor
-public class MailServiceImpl implements MailService {
+public class MailServiceImpl extends AbstractMailServiceImpl {
 
 	private static final String CAPTCHA_TEMPLATE = "验证码：${captcha}，${minute}分钟内容有效，您正在登录，若非本人操作，请勿泄露。";
 
@@ -44,21 +46,22 @@ public class MailServiceImpl implements MailService {
 
 	@Override
 	@SneakyThrows
-	public <T> Result<T> send(String mail, int minute, Cache cache) {
+	public void send(ApiLog apiLog, String mail, int minute, Cache cache) {
+		String desc = "QQ邮箱";
+		String subject = "验证码";
+		String captcha = RandomStringUtil.randomNumeric(6);
+		Map<String, Object> param = Map.of("captcha", captcha, "minute", minute);
+		String content = TemplateUtil.getContent(CAPTCHA_TEMPLATE, param);
+		String params = JacksonUtil.toJsonStr(Map.of("mail", mail, "content", content));
 		try {
-			String subject = "验证码";
-			String captcha = RandomStringUtil.randomNumeric(6);
-			Map<String, Object> params = Map.of("captcha", captcha, "minute", minute);
-			String content = TemplateUtil.getContent(CAPTCHA_TEMPLATE, params);
 			// 发送邮件
 			sendMail(subject, content, mail);
 			// 写入缓存
 			cache.set(captcha, (long) minute * 60 * 1000);
-			return Result.ok(null);
-		}
-		catch (Exception e) {
-			log.info("错误信息：{}", e.getMessage(), e);
-			return Result.fail("S_Mail_Error", e.getMessage());
+			apiLog.update(params, OK, EMPTY, desc);
+		} catch (Exception e) {
+			log.error("错误信息：{}", e.getMessage(), e);
+			apiLog.update(params, FAIL, e.getMessage(), desc);
 		}
 	}
 
