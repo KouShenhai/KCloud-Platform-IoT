@@ -91,7 +91,6 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	/**
 	 * 新增租户.
-	 *
 	 * @param tenant 租户对象
 	 */
 	@Override
@@ -106,7 +105,6 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	/**
 	 * 修改租户.
-	 *
 	 * @param tenant 租户对象
 	 */
 	@Override
@@ -122,7 +120,6 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	/**
 	 * 根据IDS删除租户.
-	 *
 	 * @param ids IDS
 	 */
 	@Override
@@ -130,7 +127,8 @@ public class TenantGatewayImpl implements TenantGateway {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				tenantMapper.deleteByIds(Arrays.asList(ids));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -141,8 +139,7 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	/**
 	 * 下载租户数据库压缩包.
-	 *
-	 * @param id       ID
+	 * @param id ID
 	 * @param response 响应对象
 	 */
 	@Override
@@ -165,14 +162,14 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	/**
 	 * 新增租户.
-	 *
 	 * @param tenantDO 租户数据模型
 	 */
 	private void create(TenantDO tenantDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				tenantMapper.insert(tenantDO);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -183,14 +180,14 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	/**
 	 * 修改租户.
-	 *
 	 * @param tenantDO 租户数据模型
 	 */
 	private void modify(TenantDO tenantDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				tenantMapper.updateById(tenantDO);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -201,10 +198,9 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	/**
 	 * SQL写入本地文件.
-	 *
-	 * @param fileName  SQL文件名称
-	 * @param name      写入文件名称
-	 * @param tenantId  租户ID
+	 * @param fileName SQL文件名称
+	 * @param name 写入文件名称
+	 * @param tenantId 租户ID
 	 * @param packageId 套餐ID
 	 * @return 文件对象
 	 */
@@ -215,8 +211,8 @@ public class TenantGatewayImpl implements TenantGateway {
 		File file = FileUtil.createFile(tempPath, name);
 		Assert.isTrue(StringUtil.isNotEmpty(tempPath), "tempPath is empty");
 		try (InputStream inputStream = ResourceUtil.getResource("scripts/" + fileName).getInputStream();
-			 FileOutputStream outputStream = new FileOutputStream(file);
-			 FileChannel outChannel = outputStream.getChannel()) {
+				FileOutputStream outputStream = new FileOutputStream(file);
+				FileChannel outChannel = outputStream.getChannel()) {
 			ByteBuffer buffer = ByteBuffer.wrap(inputStream.readAllBytes());
 			ByteBuffer buff = ByteBuffer.wrap(CollectionUtil.toStr(getSql(tenantId, packageId), EMPTY).getBytes());
 			outChannel.write(buffer);
@@ -229,7 +225,6 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	/**
 	 * 删除临时文件.
-	 *
 	 * @param file 文件对象
 	 */
 	private void deleteTempFile(File file) {
@@ -240,8 +235,7 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	/**
 	 * 查询菜单、用户和部门列表转换为SQL语句列表.
-	 *
-	 * @param tenantId  租户ID
+	 * @param tenantId 租户ID
 	 * @param packageId 套餐ID
 	 * @return SQL语句列表
 	 */
@@ -256,9 +250,9 @@ public class TenantGatewayImpl implements TenantGateway {
 		Map<String, String> userMap = JacksonUtil.toMap(user, String.class, String.class);
 		Map<String, String> deptMap = JacksonUtil.toMap(dept, String.class, String.class);
 		List<String> userSqlList = TableTemplate.getInsertSqlScriptList(Collections.singletonList(userMap),
-			BOOT_SYS_USER);
+				BOOT_SYS_USER);
 		List<String> deptSqlList = TableTemplate.getInsertSqlScriptList(Collections.singletonList(deptMap),
-			BOOT_SYS_DEPT);
+				BOOT_SYS_DEPT);
 		List<String> menuSqlList = TableTemplate.getInsertSqlScriptList(menuMapList, BOOT_SYS_MENU);
 		List<String> list = new ArrayList<>(userSqlList.size() + deptSqlList.size() + menuSqlList.size() + 1);
 		list.addAll(userSqlList);
@@ -270,7 +264,6 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	/**
 	 * 查询菜单列表转换为Map列表.
-	 *
 	 * @param menuList 菜单数据模型列表
 	 * @return Map列表
 	 */
@@ -282,11 +275,10 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	/**
 	 * 查询菜单列表.
-	 *
-	 * @param tenantId  租户ID
-	 * @param userId    用户ID
-	 * @param deptId    部门ID
-	 * @param deptPath  部门PATH
+	 * @param tenantId 租户ID
+	 * @param userId 用户ID
+	 * @param deptId 部门ID
+	 * @param deptPath 部门PATH
 	 * @param packageId 套餐ID
 	 * @return 菜单列表
 	 */
@@ -308,10 +300,9 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	/**
 	 * 构建用户数据模型.
-	 *
 	 * @param tenantId 租户ID
-	 * @param userId   用户ID
-	 * @param deptId   部门ID
+	 * @param userId 用户ID
+	 * @param deptId 部门ID
 	 * @param deptPath 部门PATH
 	 * @return 用户数据模型
 	 */
@@ -337,10 +328,9 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	/**
 	 * 构建部门数据模型.
-	 *
 	 * @param tenantId 租户ID
-	 * @param userId   用户ID
-	 * @param deptId   部门ID
+	 * @param userId 用户ID
+	 * @param deptId 部门ID
 	 * @param deptPath 部门PATH
 	 * @return 部门数据模型
 	 */
@@ -365,7 +355,6 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	/**
 	 * 构建修改用户SQL.
-	 *
 	 * @param userId 用户ID
 	 * @return 修改用户SQL
 	 */

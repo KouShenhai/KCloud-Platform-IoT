@@ -50,7 +50,6 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	/**
 	 * 修改菜单.
-	 *
 	 * @param menu 菜单对象
 	 */
 	@Override
@@ -69,7 +68,6 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	/**
 	 * 新增菜单.
-	 *
 	 * @param menu 菜单对象
 	 */
 	@Override
@@ -82,7 +80,6 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	/**
 	 * 根据ID删除菜单.
-	 *
 	 * @param ids IDS
 	 */
 	@Override
@@ -90,7 +87,8 @@ public class MenuGatewayImpl implements MenuGateway {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				menuMapper.deleteByIds(Arrays.asList(ids));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(LogUtil.record(e.getMessage()));
@@ -100,14 +98,14 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	/**
 	 * 修改菜单.
-	 *
 	 * @param menuDO 菜单数据模型
 	 */
 	private void modify(MenuDO menuDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				menuMapper.updateById(menuDO);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(LogUtil.record(e.getMessage()));
@@ -117,14 +115,14 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	/**
 	 * 新增菜单.
-	 *
 	 * @param menuDO 菜单数据模型
 	 */
 	private void create(MenuDO menuDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				menuMapper.insert(menuDO);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());

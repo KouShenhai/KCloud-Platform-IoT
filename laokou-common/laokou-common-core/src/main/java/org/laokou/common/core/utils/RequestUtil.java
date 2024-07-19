@@ -20,6 +20,7 @@ package org.laokou.common.core.utils;
 import com.blueconic.browscap.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.Assert;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.context.request.RequestAttributes;
@@ -29,6 +30,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.io.IOException;
 import java.util.Arrays;
 
+import static org.laokou.common.core.utils.IpUtil.LOCAL_IPV4;
 import static org.laokou.common.i18n.common.constant.TraceConstant.DOMAIN_NAME;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
@@ -74,7 +76,8 @@ public class RequestUtil {
 	 * @return 域名
 	 */
 	public static String getDomainName(HttpServletRequest request) {
-		return request.getHeader(DOMAIN_NAME);
+		String domainName = request.getHeader(DOMAIN_NAME);
+		return StringUtil.isEmpty(domainName) ? LOCAL_IPV4 : domainName;
 	}
 
 	/**

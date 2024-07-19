@@ -60,7 +60,6 @@ public class IpGatewayImpl implements IpGateway {
 
 	/**
 	 * 新增IP.
-	 *
 	 * @param ip IP对象
 	 */
 	@Override
@@ -70,7 +69,6 @@ public class IpGatewayImpl implements IpGateway {
 
 	/**
 	 * 根据IDS删除IP.
-	 *
 	 * @param ids IDS
 	 */
 	@Override
@@ -78,7 +76,8 @@ public class IpGatewayImpl implements IpGateway {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				ipMapper.deleteByIds(Arrays.asList(ids));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -89,7 +88,6 @@ public class IpGatewayImpl implements IpGateway {
 
 	/**
 	 * 刷新IP至Redis.
-	 *
 	 * @param ip IP对象
 	 */
 	@Override
@@ -103,19 +101,19 @@ public class IpGatewayImpl implements IpGateway {
 		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(label);
 		redisUtil.hDel(ipCacheHashKey);
 		redisUtil.hSet(ipCacheHashKey,
-			list.stream().collect(Collectors.toMap(IpDO::getValue, val -> DEFAULT_TENANT_ID)), NOT_EXPIRE);
+				list.stream().collect(Collectors.toMap(IpDO::getValue, val -> DEFAULT_TENANT_ID)), NOT_EXPIRE);
 	}
 
 	/**
 	 * 新增IP.
-	 *
 	 * @param ipDO IP数据模型
 	 */
 	private void create(IpDO ipDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				ipMapper.insert(ipDO);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();

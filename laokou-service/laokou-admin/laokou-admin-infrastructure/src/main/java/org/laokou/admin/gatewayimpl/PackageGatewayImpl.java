@@ -61,7 +61,6 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	/**
 	 * 新增套餐.
-	 *
 	 * @param pack 套餐对象
 	 */
 	@Override
@@ -75,7 +74,6 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	/**
 	 * 修改套餐.
-	 *
 	 * @param pack 套餐对象
 	 */
 	@Override
@@ -93,7 +91,6 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	/**
 	 * 根据IDS删除套餐.
-	 *
 	 * @param ids IDS
 	 */
 	@Override
@@ -101,7 +98,8 @@ public class PackageGatewayImpl implements PackageGateway {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				packageMapper.deleteByIds(Arrays.asList(ids));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
@@ -111,16 +109,16 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	/**
 	 * 新增套餐.
-	 *
 	 * @param packageDO 套餐数据模型
-	 * @param pack      套餐对象
+	 * @param pack 套餐对象
 	 */
 	private void create(PackageDO packageDO, Package pack) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				packageMapper.insert(packageDO);
 				createPackageMenu(packageDO, pack.getMenuIds());
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
@@ -130,16 +128,16 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	/**
 	 * 修改套餐.
-	 *
 	 * @param packageDO 套餐数据模型
-	 * @param pack      套餐对象
+	 * @param pack 套餐对象
 	 */
 	private void modify(PackageDO packageDO, Package pack) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				packageMapper.updateById(packageDO);
 				modifyPackageMenu(packageDO, pack.getMenuIds());
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -150,9 +148,8 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	/**
 	 * 修改套餐菜单.
-	 *
 	 * @param packageDO 套餐对象
-	 * @param menuIds   菜单ID
+	 * @param menuIds 菜单ID
 	 */
 	private void modifyPackageMenu(PackageDO packageDO, List<Long> menuIds) {
 		if (CollectionUtil.isNotEmpty(menuIds)) {
@@ -172,9 +169,8 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	/**
 	 * 转换套餐菜单数据模型.
-	 *
 	 * @param packageId 套餐ID
-	 * @param menuId    菜单ID
+	 * @param menuId 菜单ID
 	 * @return 套餐菜单数据模型
 	 */
 	private PackageMenuDO convert(Long packageId, Long menuId) {

@@ -75,7 +75,6 @@ public class OssGatewayImpl implements OssGateway {
 
 	/**
 	 * 新增OSS.
-	 *
 	 * @param oss OSS对象
 	 */
 	@Override
@@ -88,14 +87,13 @@ public class OssGatewayImpl implements OssGateway {
 
 	/**
 	 * 修改OSS.
-	 *
 	 * @param oss OSS对象
 	 */
 	@Override
 	public void modify(Oss oss) {
 		// oss.checkNullId();
 		long count = ossMapper.selectCount(
-			Wrappers.lambdaQuery(OssDO.class).eq(OssDO::getName, oss.getName()).ne(OssDO::getId, oss.getId()));
+				Wrappers.lambdaQuery(OssDO.class).eq(OssDO::getName, oss.getName()).ne(OssDO::getId, oss.getId()));
 		oss.checkName(count);
 		OssDO ossDO = ossConvertor.toDataObject(oss);
 		ossDO.setVersion(ossMapper.selectVersion(ossDO.getId()));
@@ -104,7 +102,6 @@ public class OssGatewayImpl implements OssGateway {
 
 	/**
 	 * 根据IDS删除OSS.
-	 *
 	 * @param ids IDS
 	 */
 	@Override
@@ -112,7 +109,8 @@ public class OssGatewayImpl implements OssGateway {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				ossMapper.deleteByIds(Arrays.asList(ids));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -142,9 +140,10 @@ public class OssGatewayImpl implements OssGateway {
 			OssDO ossDO = algorithm.select(getOssListCache(), EMPTY);
 			// 修改URL
 			file.modifyUrl(null, new AmazonS3StorageDriver(ossConvertor.convertEntity(ossDO)).upload(file),
-				springContextUtil.getAppName());
+					springContextUtil.getAppName());
 			return file;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			file.modifyUrl(e, EMPTY, springContextUtil.getAppName());
 			throw e;
 		}
@@ -156,7 +155,8 @@ public class OssGatewayImpl implements OssGateway {
 		List<Object> objList = redisUtil.lGetAll(ossConfigKey);
 		if (CollectionUtil.isNotEmpty(objList)) {
 			return ConvertUtil.sourceToTarget(objList, OssDO.class);
-		} else {
+		}
+		else {
 			List<OssDO> result = ossMapper
 				.selectList(Wrappers.lambdaQuery(OssDO.class).eq(OssDO::getTenantId, tenantId));
 			if (CollectionUtil.isEmpty(result)) {
@@ -171,14 +171,14 @@ public class OssGatewayImpl implements OssGateway {
 
 	/**
 	 * 新增OSS.
-	 *
 	 * @param ossDO OSS数据模型
 	 */
 	private void create(OssDO ossDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				ossMapper.insert(ossDO);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -189,14 +189,14 @@ public class OssGatewayImpl implements OssGateway {
 
 	/**
 	 * 修改OSS.
-	 *
 	 * @param ossDO OSS数据模型
 	 */
 	private void modify(OssDO ossDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				ossMapper.updateById(ossDO);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();

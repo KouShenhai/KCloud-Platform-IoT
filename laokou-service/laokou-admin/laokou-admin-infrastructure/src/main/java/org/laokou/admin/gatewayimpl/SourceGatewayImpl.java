@@ -50,7 +50,6 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	/**
 	 * 新增数据源.
-	 *
 	 * @param source 数据源对象
 	 */
 	@Override
@@ -64,7 +63,6 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	/**
 	 * 修改数据源.
-	 *
 	 * @param source 数据源对象
 	 */
 	@Override
@@ -82,7 +80,6 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	/**
 	 * 根据IDS删除数据源.
-	 *
 	 * @param ids IDS
 	 */
 	@Override
@@ -90,7 +87,8 @@ public class SourceGatewayImpl implements SourceGateway {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				sourceMapper.deleteByIds(Arrays.asList(ids));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -101,14 +99,14 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	/**
 	 * 修改数据源.
-	 *
 	 * @param sourceDO 数据源数据模型
 	 */
 	private void modify(SourceDO sourceDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				sourceMapper.updateById(sourceDO);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -119,14 +117,14 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	/**
 	 * 新增数据源.
-	 *
 	 * @param sourceDO 数据源数据模型
 	 */
 	private void create(SourceDO sourceDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				sourceMapper.insert(sourceDO);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();

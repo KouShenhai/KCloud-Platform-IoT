@@ -116,14 +116,21 @@
     <!--liquibase-core版本-->
     <liquibase-core.version>4.28.0</liquibase-core.version>
     <!--protobuf-java版本-->
-    <protobuf-java.version>4.27.2</protobuf-java.version>
+    <protobuf-java.version>3.25.3</protobuf-java.version>
     <!--jsqlparser版本-->
     <jsqlparser.version>5.0</jsqlparser.version>
+    <!--grpc-netty版本-->
+    <grpc-netty.version>1.65.1</grpc-netty.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-netty</artifactId>
+        <version>${grpc-netty.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.github.jsqlparser</groupId>
         <artifactId>jsqlparser</artifactId>
@@ -207,6 +214,11 @@
       <dependency>
         <groupId>com.alibaba.nacos</groupId>
         <artifactId>nacos-api</artifactId>
+        <version>${nacos.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba.nacos</groupId>
+        <artifactId>nacos-common</artifactId>
         <version>${nacos.version}</version>
       </dependency>
       <dependency>

@@ -34,6 +34,11 @@ import static org.laokou.common.i18n.common.constant.StringConstant.COMMA;
 public class IpUtil {
 
 	/**
+	 * 本地IP-IPV4.
+	 */
+	public static final String LOCAL_IPV4 = "127.0.0.1";
+
+	/**
 	 * 未知IP.
 	 */
 	private static final String UNKNOWN_IP = "unknown";
@@ -42,11 +47,6 @@ public class IpUtil {
 	 * 本地IP-IPV6.
 	 */
 	private static final String LOCAL_IPV6 = "0:0:0:0:0:0:0:1";
-
-	/**
-	 * 本地IP-IPV4.
-	 */
-	private static final String LOCAL_IPV4 = "127.0.0.1";
 
 	/**
 	 * 解析IP地址.

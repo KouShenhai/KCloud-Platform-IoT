@@ -66,7 +66,6 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	/**
 	 * 新增角色.
-	 *
 	 * @param role 角色对象
 	 */
 	@Override
@@ -79,14 +78,13 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	/**
 	 * 修改角色.
-	 *
 	 * @param role 角色对象
 	 */
 	@Override
 	public void modify(Role role) {
 		// role.checkNullId();
 		long count = roleMapper.selectCount(
-			Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()).ne(RoleDO::getId, role.getId()));
+				Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()).ne(RoleDO::getId, role.getId()));
 		role.checkName(count);
 		RoleDO roleDO = roleConvertor.toDataObject(role);
 		// 版本号
@@ -96,7 +94,6 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	/**
 	 * 根据IDS删除角色.
-	 *
 	 * @param ids IDS
 	 */
 	@Override
@@ -104,7 +101,8 @@ public class RoleGatewayImpl implements RoleGateway {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				roleMapper.deleteByIds(Arrays.asList(ids));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(LogUtil.record(e.getMessage()));
@@ -114,9 +112,8 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	/**
 	 * 新增角色.
-	 *
 	 * @param roleDO 角色数据模型
-	 * @param role   角色对象
+	 * @param role 角色对象
 	 */
 	private void create(RoleDO roleDO, Role role) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
@@ -124,7 +121,8 @@ public class RoleGatewayImpl implements RoleGateway {
 				roleMapper.insert(roleDO);
 				createRoleDept(roleDO, role.getDeptIds());
 				createRoleMenu(roleDO, role.getMenuIds());
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -136,9 +134,8 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	/**
 	 * 修改角色.
-	 *
 	 * @param roleDO 角色数据模型
-	 * @param role   角色对象
+	 * @param role 角色对象
 	 */
 	private void modify(RoleDO roleDO, Role role) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
@@ -146,7 +143,8 @@ public class RoleGatewayImpl implements RoleGateway {
 				roleMapper.updateById(roleDO);
 				modifyRoleDept(roleDO, role.getDeptIds());
 				modifyRoleMenu(roleDO, role.getMenuIds());
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -157,26 +155,24 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	/**
 	 * 新增角色部门.
-	 *
-	 * @param roleDO  角色对象
+	 * @param roleDO 角色对象
 	 * @param deptIds 部门IDS
 	 */
 	private void createRoleDept(RoleDO roleDO, List<Long> deptIds) {
 		List<RoleDeptDO> list = deptIds.parallelStream().map(deptId -> to(roleDO.getId(), deptId)).toList();
 		mybatisUtil.batch(list, RoleDeptMapper.class, UserContextHolder.get().getSourceName(),
-			RoleDeptMapper::insertOne);
+				RoleDeptMapper::insertOne);
 	}
 
 	/**
 	 * 新增角色菜单.
-	 *
-	 * @param roleDO  角色对象
+	 * @param roleDO 角色对象
 	 * @param menuIds 菜单IDS
 	 */
 	private void createRoleMenu(RoleDO roleDO, List<Long> menuIds) {
 		List<RoleMenuDO> list = menuIds.parallelStream().map(menuId -> convert(roleDO.getId(), menuId)).toList();
 		mybatisUtil.batch(list, RoleMenuMapper.class, UserContextHolder.get().getSourceName(),
-			RoleMenuMapper::insertOne);
+				RoleMenuMapper::insertOne);
 	}
 
 	private void modifyRoleMenu(RoleDO roleDO, List<Long> menuIds) {
@@ -207,7 +203,6 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	/**
 	 * 转换为角色部门数据模型.
-	 *
 	 * @param roleId 角色ID
 	 * @param deptId 部门ID
 	 * @return 角色部门数据模型
@@ -225,7 +220,6 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	/**
 	 * 转换为角色菜单数据模型.
-	 *
 	 * @param roleId 角色ID
 	 * @param menuId 菜单ID
 	 * @return 角色菜单数据模型

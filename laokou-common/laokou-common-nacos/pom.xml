@@ -78,6 +78,14 @@
       <artifactId>nacos-api</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.alibaba.nacos</groupId>
+      <artifactId>nacos-common</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+    </dependency>
+    <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>

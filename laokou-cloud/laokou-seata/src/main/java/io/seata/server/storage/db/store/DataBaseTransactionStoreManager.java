@@ -15,15 +15,6 @@
  */
 package io.seata.server.storage.db.store;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.sql.DataSource;
-
 import io.seata.common.exception.StoreException;
 import io.seata.common.loader.EnhancedServiceLoader;
 import io.seata.common.util.CollectionUtils;
@@ -42,6 +33,11 @@ import io.seata.server.storage.SessionConverter;
 import io.seata.server.store.AbstractTransactionStoreManager;
 import io.seata.server.store.SessionStorable;
 import io.seata.server.store.TransactionStoreManager;
+import lombok.Setter;
+
+import javax.sql.DataSource;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static io.seata.common.DefaultValues.DEFAULT_QUERY_LIMIT;
 
@@ -50,25 +46,39 @@ import static io.seata.common.DefaultValues.DEFAULT_QUERY_LIMIT;
  *
  * @author zhangsen
  */
+@Setter
 public class DataBaseTransactionStoreManager extends AbstractTransactionStoreManager
 		implements TransactionStoreManager {
-
-	private static volatile DataBaseTransactionStoreManager instance;
 
 	/**
 	 * The constant CONFIG.
 	 */
 	protected static final Configuration CONFIG = ConfigurationFactory.getInstance();
 
+	private static volatile DataBaseTransactionStoreManager instance;
+
 	/**
-	 * The Log store.
+	 * The Log store. -- SETTER -- Sets log store.
+	 * @param logStore the log store
 	 */
 	protected LogStore logStore;
 
 	/**
-	 * The Log query limit.
+	 * The Log query limit. -- SETTER -- Sets log query limit.
+	 * @param logQueryLimit the log query limit
 	 */
 	protected int logQueryLimit;
+
+	/**
+	 * Instantiates a new Database transaction store manager.
+	 */
+	private DataBaseTransactionStoreManager() {
+		logQueryLimit = CONFIG.getInt(ConfigurationKeys.STORE_DB_LOG_QUERY_LIMIT, DEFAULT_QUERY_LIMIT);
+		String datasourceType = CONFIG.getConfig(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE);
+		// init dataSource
+		DataSource logStoreDataSource = EnhancedServiceLoader.load(DataSourceProvider.class, datasourceType).provide();
+		logStore = new LogStoreDataBaseDAO(logStoreDataSource);
+	}
 
 	/**
 	 * Get the instance.
@@ -82,17 +92,6 @@ public class DataBaseTransactionStoreManager extends AbstractTransactionStoreMan
 			}
 		}
 		return instance;
-	}
-
-	/**
-	 * Instantiates a new Database transaction store manager.
-	 */
-	private DataBaseTransactionStoreManager() {
-		logQueryLimit = CONFIG.getInt(ConfigurationKeys.STORE_DB_LOG_QUERY_LIMIT, DEFAULT_QUERY_LIMIT);
-		String datasourceType = CONFIG.getConfig(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE);
-		// init dataSource
-		DataSource logStoreDataSource = EnhancedServiceLoader.load(DataSourceProvider.class, datasourceType).provide();
-		logStore = new LogStoreDataBaseDAO(logStoreDataSource);
 	}
 
 	@Override
@@ -252,22 +251,6 @@ public class DataBaseTransactionStoreManager extends AbstractTransactionStoreMan
 			}
 		}
 		return globalSession;
-	}
-
-	/**
-	 * Sets log store.
-	 * @param logStore the log store
-	 */
-	public void setLogStore(LogStore logStore) {
-		this.logStore = logStore;
-	}
-
-	/**
-	 * Sets log query limit.
-	 * @param logQueryLimit the log query limit
-	 */
-	public void setLogQueryLimit(int logQueryLimit) {
-		this.logQueryLimit = logQueryLimit;
 	}
 
 }
