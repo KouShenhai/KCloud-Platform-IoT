@@ -48,10 +48,10 @@ import java.time.ZoneId;
 @Component
 @EnableScheduling
 @PropertySource("/application.yml")
-@ComponentScan(basePackages = "com.alibaba.nacos", excludeFilters = {
-	@ComponentScan.Filter(type = FilterType.CUSTOM, classes = {NacosTypeExcludeFilter.class}),
-	@ComponentScan.Filter(type = FilterType.CUSTOM, classes = {TypeExcludeFilter.class}),
-	@ComponentScan.Filter(type = FilterType.CUSTOM, classes = {AutoConfigurationExcludeFilter.class})})
+@ComponentScan(basePackages = "com.alibaba.nacos",
+		excludeFilters = { @ComponentScan.Filter(type = FilterType.CUSTOM, classes = { NacosTypeExcludeFilter.class }),
+				@ComponentScan.Filter(type = FilterType.CUSTOM, classes = { TypeExcludeFilter.class }),
+				@ComponentScan.Filter(type = FilterType.CUSTOM, classes = { AutoConfigurationExcludeFilter.class }) })
 public class ConsoleConfig {
 
 	@Autowired
