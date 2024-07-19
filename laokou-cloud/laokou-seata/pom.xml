@@ -29,7 +29,7 @@
     <!--jraft-core版本-->
     <jraft-core.version>1.3.14</jraft-core.version>
     <!--netty版本-->
-    <netty.version>4.1.111.Final</netty.version>
+    <netty.version>4.1.112.Final</netty.version>
   </properties>
 
   <dependencies>
