@@ -59,6 +59,7 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	/**
 	 * 新增部门.
+	 *
 	 * @param dept 部门对象
 	 */
 	@Override
@@ -73,13 +74,14 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	/**
 	 * 修改部门.
+	 *
 	 * @param dept 部门对象
 	 */
 	@Override
 	public void modify(Dept dept) {
 		// dept.checkNullId();
 		long count = deptMapper.selectCount(
-				Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, dept.getName()).ne(DeptDO::getId, dept.getId()));
+			Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, dept.getName()).ne(DeptDO::getId, dept.getId()));
 		dept.checkName(count);
 		dept.checkIdAndPid();
 		DeptDO deptDO = deptConvertor.toDataObject(dept);
@@ -95,15 +97,15 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	/**
 	 * 根据ID删除部门.
+	 *
 	 * @param ids IDS
 	 */
 	@Override
 	public void remove(Long[] ids) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				deptMapper.deleteBatchIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
+				deptMapper.deleteByIds(Arrays.asList(ids));
+			} catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
@@ -113,9 +115,10 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	/**
 	 * 修改部门.
-	 * @param deptDO 部门数据模型
-	 * @param oldPath 旧部门PATH
-	 * @param newPath 新部门PATH
+	 *
+	 * @param deptDO   部门数据模型
+	 * @param oldPath  旧部门PATH
+	 * @param newPath  新部门PATH
 	 * @param children 部门子节点列表
 	 */
 	public void modify(DeptDO deptDO, String oldPath, String newPath, List<DeptDO> children) {
@@ -124,8 +127,7 @@ public class DeptGatewayImpl implements DeptGateway {
 				deptMapper.updateById(deptDO);
 				// 修改PATH
 				modifyPath(oldPath, newPath, children);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
@@ -135,14 +137,14 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	/**
 	 * 新增部门.
+	 *
 	 * @param deptDO 部门数据模型
 	 */
 	private void create(DeptDO deptDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				deptMapper.insert(deptDO);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
@@ -152,20 +154,22 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	/**
 	 * 修改部门子节点PATH.
-	 * @param oldPath 旧部门PATH
-	 * @param newPath 新部门PATH
+	 *
+	 * @param oldPath  旧部门PATH
+	 * @param newPath  新部门PATH
 	 * @param children 部门子节点列表
 	 */
 	private void modifyPath(String oldPath, String newPath, List<DeptDO> children) {
 		if (CollectionUtil.isNotEmpty(children)) {
 			children.parallelStream().forEach(item -> item.setPath(item.getPath().replace(oldPath, newPath)));
 			mybatisUtil.batch(children, DeptMapper.class, DynamicDataSourceContextHolder.peek(),
-					DeptMapper::updateById);
+				DeptMapper::updateById);
 		}
 	}
 
 	/**
 	 * 查看部门PATH.
+	 *
 	 * @param deptDO 部门对象
 	 * @return 部门PATH
 	 */

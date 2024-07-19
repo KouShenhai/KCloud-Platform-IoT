@@ -50,6 +50,7 @@ public class DictGatewayImpl implements DictGateway {
 
 	/**
 	 * 新增字典.
+	 *
 	 * @param dict 字典对象
 	 */
 	@Override
@@ -64,6 +65,7 @@ public class DictGatewayImpl implements DictGateway {
 
 	/**
 	 * 修改字典.
+	 *
 	 * @param dict 字典对象
 	 */
 	@Override
@@ -83,15 +85,15 @@ public class DictGatewayImpl implements DictGateway {
 
 	/**
 	 * 根据ID删除字典.
+	 *
 	 * @param ids IDS
 	 */
 	@Override
 	public void remove(Long[] ids) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				dictMapper.deleteBatchIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
+				dictMapper.deleteByIds(Arrays.asList(ids));
+			} catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
@@ -101,14 +103,14 @@ public class DictGatewayImpl implements DictGateway {
 
 	/**
 	 * 新增字典.
+	 *
 	 * @param dictTypeDO 字典数据模型
 	 */
 	private void create(DictTypeDO dictTypeDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				dictMapper.insert(dictTypeDO);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
@@ -118,14 +120,14 @@ public class DictGatewayImpl implements DictGateway {
 
 	/**
 	 * 修改字典.
+	 *
 	 * @param dictTypeDO 字典数据模型
 	 */
 	private void modify(DictTypeDO dictTypeDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				dictMapper.updateById(dictTypeDO);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
