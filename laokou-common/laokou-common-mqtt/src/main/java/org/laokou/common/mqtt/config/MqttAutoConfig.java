@@ -18,7 +18,6 @@
 package org.laokou.common.mqtt.config;
 
 import org.laokou.common.mqtt.template.MqttTemplate;
-import org.laokou.common.netty.config.Client;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -27,17 +26,18 @@ import org.springframework.context.annotation.Bean;
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnProperty(prefix = "spring.mqtt", name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "spring.mqtt-broker", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class MqttAutoConfig {
 
-	@Bean(name = "mqttClient", initMethod = "open", destroyMethod = "close")
-	public Client mqttClient(SpringMqttBrokerProperties springMqttBrokerProperties) {
-		return new MqttClient(springMqttBrokerProperties);
+	@Bean(name = "mqttManager", initMethod = "open", destroyMethod = "close")
+	public MqttManager mqttManager(SpringMqttBrokerProperties springMqttBrokerProperties,
+			MqttLoadBalancer mqttLoadBalancer) {
+		return new MqttManager(springMqttBrokerProperties, mqttLoadBalancer);
 	}
 
 	@Bean
-	public MqttTemplate mqttTemplate(Client mqttClient) {
-		return new MqttTemplate(mqttClient);
+	public MqttTemplate mqttTemplate(MqttManager mqttManager) {
+		return new MqttTemplate(mqttManager);
 	}
 
 }

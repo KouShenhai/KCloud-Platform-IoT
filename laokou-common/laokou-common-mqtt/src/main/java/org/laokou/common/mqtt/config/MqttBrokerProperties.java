@@ -18,32 +18,43 @@
 package org.laokou.common.mqtt.config;
 
 import lombok.Data;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.laokou.common.core.utils.IdGenerator;
 
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * @author laokou
  */
 @Data
-@Component
-@ConfigurationProperties(prefix = "spring.mqtt-broker")
-public class SpringMqttBrokerProperties implements InitializingBean {
+public class MqttBrokerProperties {
 
-	private Boolean enabled = false;
+	private String username = EMPTY;
 
-	private Map<String, MqttBrokerProperties> configs = Map.of("default", new MqttBrokerProperties());
+	private String password = EMPTY;
 
-	@Override
-	public void afterPropertiesSet() {
-		configs.forEach((k, v) -> {
-			if (CollectionUtil.isEmpty(v.getTopics())) {
-				throw new IllegalStateException("Topics must not be empty.");
-			}
-		});
-	}
+	private String uri = "tcp://127.0.0.1:1883";
+
+	private String clientId = String.valueOf(IdGenerator.defaultSnowflakeId());
+
+	private int qos = 2;
+
+	private boolean clearStart = true;
+
+	private int receiveMaximum = 5;
+
+	private long maximumPacketSize = 1024;
+
+	private int connectionTimeout = 10;
+
+	private int keepAliveInterval = 15;
+
+	private boolean automaticReconnect = true;
+
+	private boolean manualAcks = true;
+
+	private Set<String> topics = new HashSet<>(0);
 
 }

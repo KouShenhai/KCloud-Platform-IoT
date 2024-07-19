@@ -23,12 +23,9 @@ import org.eclipse.paho.mqttv5.client.MqttConnectionOptions;
 import org.eclipse.paho.mqttv5.client.persist.MemoryPersistence;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
-import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.netty.config.Client;
 
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -38,97 +35,79 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * @author laokou
  */
 @Slf4j
-public class MqttClient implements Client {
+public class MqttClient {
 
 	/**
-	 * 服务停止前的消息主题。
+	 * 服务下线主题.
 	 */
 	private static final String WILL_TOPIC = "will_topic";
 
 	/**
-	 * 服务下线。
+	 * 服务下线数据.
 	 */
 	private static final byte[] WILL_DATA = "offline".getBytes(UTF_8);
 
-	private final SpringMqttBrokerProperties springMqttBrokerProperties;
+	private final MqttBrokerProperties mqttBrokerProperties;
 
-	private final AtomicInteger ATOMIC = new AtomicInteger(0);
+	private org.eclipse.paho.mqttv5.client.MqttClient client;
 
-	private volatile boolean running;
+	private final MqttLoadBalancer mqttLoadBalancer;
 
-	private volatile org.eclipse.paho.mqttv5.client.MqttClient client;
-
-	public MqttClient(SpringMqttBrokerProperties springMqttBrokerProperties) {
-		this.springMqttBrokerProperties = springMqttBrokerProperties;
+	public MqttClient(MqttBrokerProperties mqttBrokerProperties, MqttLoadBalancer mqttLoadBalancer) {
+		this.mqttBrokerProperties = mqttBrokerProperties;
+		this.mqttLoadBalancer = mqttLoadBalancer;
 	}
 
-	@Override
 	@SneakyThrows
-	public synchronized void open() {
-		if (running) {
-			log.error("MQTT已连接");
-			return;
-		}
+	public void open() {
 		try {
-			client = new org.eclipse.paho.mqttv5.client.MqttClient(springMqttBrokerProperties.getHost(),
-					springMqttBrokerProperties.getClientId(), new MemoryPersistence());
-			// 手动ack接收确认
-			client.setManualAcks(springMqttBrokerProperties.isManualAcks());
-			client.setCallback(new MqttMessageCallback());
+			client = new org.eclipse.paho.mqttv5.client.MqttClient(mqttBrokerProperties.getUri(),
+					mqttBrokerProperties.getClientId(), new MemoryPersistence());
+			client.setManualAcks(mqttBrokerProperties.isManualAcks());
+			client.setCallback(new MqttMessageCallback(mqttLoadBalancer, mqttBrokerProperties, client));
 			client.connect(options());
-			if (CollectionUtil.isNotEmpty(springMqttBrokerProperties.getTopics())) {
-				client.subscribe(springMqttBrokerProperties.getTopics().toArray(String[]::new),
-						springMqttBrokerProperties.getTopics().stream().mapToInt(item -> 2).toArray());
-			}
+			client.subscribe(mqttBrokerProperties.getTopics().toArray(String[]::new),
+					mqttBrokerProperties.getTopics()
+						.stream()
+						.mapToInt(item -> mqttBrokerProperties.getQos())
+						.toArray());
 			log.info("MQTT连接成功");
-			running = true;
-			ATOMIC.set(0);
 		}
 		catch (Exception e) {
-			// 最大重试100次
-			int count = ATOMIC.incrementAndGet();
-			if (count <= 100) {
-				log.error("连接失败，5秒后重连");
-				// 5秒后重连
-				Thread.sleep(5000);
-				log.error("进行第 {} 次重连", count);
-				open();
-			}
+			log.error("MQTT连接失败，错误信息：{}", e.getMessage(), e);
 		}
 	}
 
-	@Override
 	@SneakyThrows
-	public synchronized void close() {
-		running = false;
+	public void close() {
 		if (ObjectUtil.isNotNull(client)) {
 			// 等待10秒
 			client.disconnectForcibly(10);
 			client.close();
+			log.info("关闭MQTT连接");
 		}
-		log.info("关闭MQTT连接");
 	}
 
-	@Override
 	@SneakyThrows
-	public void send(String topic, String payload) {
-		client.publish(topic, payload.getBytes(StandardCharsets.UTF_8), 2, false);
+	public void send(String topic, String payload, int qos) {
+		client.publish(topic, payload.getBytes(StandardCharsets.UTF_8), qos, false);
 	}
 
 	private MqttConnectionOptions options() {
 		MqttConnectionOptions options = new MqttConnectionOptions();
-		options.setCleanStart(springMqttBrokerProperties.isClearStart());
-		options.setUserName(springMqttBrokerProperties.getUsername());
-		options.setPassword(springMqttBrokerProperties.getPassword().getBytes(StandardCharsets.UTF_8));
-		options.setReceiveMaximum(springMqttBrokerProperties.getReceiveMaximum());
-		options.setMaximumPacketSize(springMqttBrokerProperties.getMaximumPacketSize());
-		options.setWill(WILL_TOPIC, new MqttMessage(WILL_DATA, 2, false, new MqttProperties()));
+		options.setCleanStart(mqttBrokerProperties.isClearStart());
+		options.setUserName(mqttBrokerProperties.getUsername());
+		options.setPassword(mqttBrokerProperties.getPassword().getBytes(StandardCharsets.UTF_8));
+		options.setReceiveMaximum(mqttBrokerProperties.getReceiveMaximum());
+		options.setMaximumPacketSize(mqttBrokerProperties.getMaximumPacketSize());
+		options.setWill(WILL_TOPIC,
+				new MqttMessage(WILL_DATA, mqttBrokerProperties.getQos(), false, new MqttProperties()));
 		// 超时时间
-		options.setConnectionTimeout(springMqttBrokerProperties.getConnectionTimeout());
+		options.setConnectionTimeout(mqttBrokerProperties.getConnectionTimeout());
 		// 会话心跳
-		options.setKeepAliveInterval(springMqttBrokerProperties.getKeepAliveInterval());
+		options.setKeepAliveInterval(mqttBrokerProperties.getKeepAliveInterval());
 		// 开启重连
-		options.setAutomaticReconnect(springMqttBrokerProperties.isAutomaticReconnect());
+		options.setAutomaticReconnect(mqttBrokerProperties.isAutomaticReconnect());
 		return options;
 	}
 

@@ -15,17 +15,15 @@
  *
  */
 
-package org.laokou.common.netty.config;
+package org.laokou.common.mqtt.config;
+
+import org.eclipse.paho.mqttv5.common.MqttMessage;
 
 /**
  * @author laokou
  */
-public interface Client {
+public interface MqttLoadBalancer {
 
-	void open();
-
-	void close();
-
-	void send(String key, String payload);
+	void messageArrived(String topic, MqttMessage message);
 
 }

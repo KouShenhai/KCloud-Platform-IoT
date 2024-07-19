@@ -17,31 +17,21 @@
 
 package org.laokou.common.mqtt.config;
 
-import io.micrometer.common.lang.NonNullApi;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Component;
+import lombok.Data;
+import org.eclipse.paho.mqttv5.common.MqttMessage;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.io.Serializable;
 
 /**
- * 可参考 RocketMQ 实现.
- *
  * @author laokou
  */
-@Component
-@NonNullApi
-public final class MqttListenerContainer implements InitializingBean {
+@Data
+public class MqttMessageExt implements Serializable {
 
-	private static final Map<String, MqttListener> MQTT_TOPIC_MAP = new ConcurrentHashMap<>();
+	private String productId;
 
-	public static MqttListener get(String topic) {
-		return MQTT_TOPIC_MAP.get(topic);
-	}
+	private String deviceId;
 
-	@Override
-	public void afterPropertiesSet() {
-
-	}
+	private MqttMessage mqttMessage;
 
 }
