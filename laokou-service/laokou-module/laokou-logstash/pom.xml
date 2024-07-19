@@ -5,7 +5,7 @@
   <parent>
     <artifactId>laokou-module</artifactId>
     <groupId>org.laokou</groupId>
-    <version>3.3.1</version>
+    <version>3.3.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-logstash</artifactId>

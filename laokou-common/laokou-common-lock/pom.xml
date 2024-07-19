@@ -6,7 +6,7 @@
   <parent>
     <artifactId>laokou-common</artifactId>
     <groupId>org.laokou</groupId>
-    <version>3.3.1</version>
+    <version>3.3.2</version>
   </parent>
   <artifactId>laokou-common-lock</artifactId>
 
