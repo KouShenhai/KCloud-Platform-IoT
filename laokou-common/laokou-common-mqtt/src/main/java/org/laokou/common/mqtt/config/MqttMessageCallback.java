@@ -17,6 +17,8 @@
 
 package org.laokou.common.mqtt.config;
 
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.client.IMqttToken;
 import org.eclipse.paho.mqttv5.client.MqttCallback;
@@ -30,7 +32,14 @@ import org.laokou.common.i18n.utils.LogUtil;
  * @author laokou
  */
 @Slf4j
+@RequiredArgsConstructor
 public class MqttMessageCallback implements MqttCallback {
+
+	private final MqttLoadBalancer mqttLoadBalancer;
+
+	private final MqttBrokerProperties mqttBrokerProperties;
+
+	private final org.eclipse.paho.mqttv5.client.MqttClient client;
 
 	@Override
 	public void disconnected(MqttDisconnectResponse disconnectResponse) {
@@ -44,7 +53,7 @@ public class MqttMessageCallback implements MqttCallback {
 
 	@Override
 	public void messageArrived(String topic, MqttMessage message) {
-		MqttListenerContainer.get(topic).onMessage(message);
+		mqttLoadBalancer.messageArrived(topic, message);
 	}
 
 	@Override
@@ -53,8 +62,19 @@ public class MqttMessageCallback implements MqttCallback {
 	}
 
 	@Override
+	@SneakyThrows
 	public void connectComplete(boolean reconnect, String uri) {
-		log.info("MQTT建立连接");
+		if (reconnect) {
+			// client.subscribe(mqttBrokerProperties.getTopics().toArray(String[]::new),
+			// mqttBrokerProperties.getTopics()
+			// .stream()
+			// .mapToInt(item -> mqttBrokerProperties.getQos())
+			// .toArray());
+			// log.info("MQTT重新建立连接");
+		}
+		else {
+			log.info("MQTT建立连接");
+		}
 	}
 
 	@Override
