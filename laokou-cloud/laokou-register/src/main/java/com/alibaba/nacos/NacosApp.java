@@ -32,8 +32,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
  * @author nacos
  */
 @ServletComponentScan
+@SpringBootApplication
 @EnableEncryptableProperties
-@SpringBootApplication(scanBasePackages = "com.alibaba.nacos")
 public class NacosApp {
 
 	public static void main(String[] args) {

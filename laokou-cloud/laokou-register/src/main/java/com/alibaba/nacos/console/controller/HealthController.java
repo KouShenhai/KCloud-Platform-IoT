@@ -37,30 +37,31 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/v1/console/health")
 @ExtractorManager.Extractor(httpExtractor = ConsoleDefaultHttpParamExtractor.class)
 public class HealthController {
-
-	/**
-	 * Whether the Nacos is in broken states or not, and cannot recover except by being
-	 * restarted.
-	 * @return HTTP code equal to 200 indicates that Nacos is in right states. HTTP code
-	 * equal to 500 indicates that Nacos is in broken states.
-	 */
-	@GetMapping("/liveness")
-	public ResponseEntity<String> liveness() {
-		return ResponseEntity.ok().body("OK");
-	}
-
-	/**
-	 * Ready to receive the request or not.
-	 * @return HTTP code equal to 200 indicates that Nacos is ready. HTTP code equal to
-	 * 500 indicates that Nacos is not ready.
-	 */
-	@GetMapping("/readiness")
-	public ResponseEntity<String> readiness(HttpServletRequest request) {
-		ReadinessResult result = ModuleHealthCheckerHolder.getInstance().checkReadiness();
-		if (result.isSuccess()) {
-			return ResponseEntity.ok().body("OK");
-		}
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result.getResultMessage());
-	}
-
+    
+    /**
+     * Whether the Nacos is in broken states or not, and cannot recover except by being restarted.
+     *
+     * @return HTTP code equal to 200 indicates that Nacos is in right states. HTTP code equal to 500 indicates that
+     * Nacos is in broken states.
+     */
+    @GetMapping("/liveness")
+    public ResponseEntity<String> liveness() {
+        return ResponseEntity.ok().body("OK");
+    }
+    
+    /**
+     * Ready to receive the request or not.
+     *
+     * @return HTTP code equal to 200 indicates that Nacos is ready. HTTP code equal to 500 indicates that Nacos is not
+     * ready.
+     */
+    @GetMapping("/readiness")
+    public ResponseEntity<String> readiness(HttpServletRequest request) {
+        ReadinessResult result = ModuleHealthCheckerHolder.getInstance().checkReadiness();
+        if (result.isSuccess()) {
+            return ResponseEntity.ok().body("OK");
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result.getResultMessage());
+    }
+    
 }

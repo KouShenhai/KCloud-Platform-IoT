@@ -34,7 +34,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.alibaba.nacos.common.utils.StringUtils.*;
+import static com.alibaba.nacos.common.utils.StringUtils.FOLDER_SEPARATOR;
+import static com.alibaba.nacos.common.utils.StringUtils.TOP_PATH;
+import static com.alibaba.nacos.common.utils.StringUtils.WINDOWS_FOLDER_SEPARATOR;
 
 /**
  * Server state controller.
@@ -45,47 +47,47 @@ import static com.alibaba.nacos.common.utils.StringUtils.*;
 @RequestMapping("/v1/console/server")
 @ExtractorManager.Extractor(httpExtractor = ConsoleDefaultHttpParamExtractor.class)
 public class ServerStateController {
-
-	private static final String ANNOUNCEMENT_FILE = "announcement.conf";
-
-	private static final String GUIDE_FILE = "console-guide.conf";
-
-	/**
-	 * Get server state of current server.
-	 * @return state json.
-	 */
-	@GetMapping("/state")
-	public ResponseEntity<Map<String, String>> serverState() {
-		Map<String, String> serverState = new HashMap<>(4);
-		for (ModuleState each : ModuleStateHolder.getInstance().getAllModuleStates()) {
-			each.getStates().forEach((s, o) -> serverState.put(s, null == o ? null : o.toString()));
-		}
-		return ResponseEntity.ok().body(serverState);
-	}
-
-	@GetMapping("/announcement")
-	public RestResult<String> getAnnouncement(
-			@RequestParam(required = false, name = "language", defaultValue = "zh-CN") String language) {
-		String file = ANNOUNCEMENT_FILE.substring(0, ANNOUNCEMENT_FILE.length() - 5) + "_" + language + ".conf";
-		if (file.contains(TOP_PATH) || file.contains(FOLDER_SEPARATOR) || file.contains(WINDOWS_FOLDER_SEPARATOR)) {
-			throw new IllegalArgumentException("Invalid filename");
-		}
-		File announcementFile = new File(EnvUtil.getConfPath(), file);
-		String announcement = null;
-		if (announcementFile.exists() && announcementFile.isFile()) {
-			announcement = DiskUtils.readFile(announcementFile);
-		}
-		return RestResultUtils.success(announcement);
-	}
-
-	@GetMapping("/guide")
-	public RestResult<String> getConsoleUiGuide() {
-		File guideFile = new File(EnvUtil.getConfPath(), GUIDE_FILE);
-		String guideInformation = null;
-		if (guideFile.exists() && guideFile.isFile()) {
-			guideInformation = DiskUtils.readFile(guideFile);
-		}
-		return RestResultUtils.success(guideInformation);
-	}
-
+    
+    private static final String ANNOUNCEMENT_FILE = "announcement.conf";
+    
+    private static final String GUIDE_FILE = "console-guide.conf";
+    
+    /**
+     * Get server state of current server.
+     *
+     * @return state json.
+     */
+    @GetMapping("/state")
+    public ResponseEntity<Map<String, String>> serverState() {
+        Map<String, String> serverState = new HashMap<>(4);
+        for (ModuleState each : ModuleStateHolder.getInstance().getAllModuleStates()) {
+            each.getStates().forEach((s, o) -> serverState.put(s, null == o ? null : o.toString()));
+        }
+        return ResponseEntity.ok().body(serverState);
+    }
+    
+    @GetMapping("/announcement")
+    public RestResult<String> getAnnouncement(
+            @RequestParam(required = false, name = "language", defaultValue = "zh-CN") String language) {
+        String file = ANNOUNCEMENT_FILE.substring(0, ANNOUNCEMENT_FILE.length() - 5) + "_" + language + ".conf";
+        if (file.contains(TOP_PATH) || file.contains(FOLDER_SEPARATOR) || file.contains(WINDOWS_FOLDER_SEPARATOR)) {
+            throw new IllegalArgumentException("Invalid filename");
+        }
+        File announcementFile = new File(EnvUtil.getConfPath(), file);
+        String announcement = null;
+        if (announcementFile.exists() && announcementFile.isFile()) {
+            announcement = DiskUtils.readFile(announcementFile);
+        }
+        return RestResultUtils.success(announcement);
+    }
+    
+    @GetMapping("/guide")
+    public RestResult<String> getConsoleUiGuide() {
+        File guideFile = new File(EnvUtil.getConfPath(), GUIDE_FILE);
+        String guideInformation = null;
+        if (guideFile.exists() && guideFile.isFile()) {
+            guideInformation = DiskUtils.readFile(guideFile);
+        }
+        return RestResultUtils.success(guideInformation);
+    }
 }
