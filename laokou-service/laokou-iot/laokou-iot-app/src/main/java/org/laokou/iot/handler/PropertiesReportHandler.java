@@ -18,23 +18,19 @@
 package org.laokou.iot.handler;
 
 import lombok.RequiredArgsConstructor;
-import org.eclipse.paho.mqttv5.common.MqttMessage;
-import org.laokou.common.mqtt.annotation.MqttMessageListener;
 import org.laokou.common.mqtt.config.MqttListener;
+import org.laokou.common.mqtt.config.MqttMessageExt;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.iot.common.constant.Constant.PROPERTIES_REPORT;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-@MqttMessageListener(topic = PROPERTIES_REPORT)
 public class PropertiesReportHandler implements MqttListener {
 
 	@Override
-	public void onMessage(MqttMessage message) {
+	public void onMessage(MqttMessageExt messageExt) {
 
 	}
 

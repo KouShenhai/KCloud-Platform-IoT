@@ -15,7 +15,26 @@
  *
  */
 
+package org.laokou.iot.consumer.test;
+
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.mqtt.config.MqttListener;
+import org.laokou.common.mqtt.config.MqttMessageExt;
+import org.springframework.stereotype.Component;
+
 /**
  * @author laokou
  */
-package org.laokou.common.mqtt.annotation;
+@Slf4j
+@Component
+public class Test implements MqttListener {
+
+	@Override
+	public void onMessage(MqttMessageExt messageExt) {
+		/*
+		 * log.info("消息：{}，已被接收，正在处理中", new String(message.getPayload(),
+		 * StandardCharsets.UTF_8));
+		 */
+	}
+
+}

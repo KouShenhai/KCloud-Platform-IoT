@@ -22,33 +22,35 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.laokou.common.algorithm.template.Algorithm;
 import org.laokou.common.algorithm.template.select.RandomSelectAlgorithm;
 import org.laokou.common.i18n.utils.ResourceUtil;
-import org.laokou.common.mqtt.annotation.MqttMessageListener;
 import org.laokou.common.mqtt.config.MqttListener;
+import org.laokou.common.mqtt.config.MqttMessageExt;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.COMMA;
 
 @Slf4j
+@Component
 @RequiredArgsConstructor
-@MqttMessageListener(topic = "/55/D1PGLPG58KZ2/monitor/get")
 public class GetMonitorSubscribeTest implements MqttListener {
 
 	// private final MqttTemplate mqttTemplate;
 
 	@Override
-	public void onMessage(MqttMessage message) {
-		log.info("订阅实时监测消息：{}，已被接收，正在处理中", new String(message.getPayload(), StandardCharsets.UTF_8));
+	public void onMessage(MqttMessageExt messageExt) {
+		/*
+		 * log.info("订阅实时监测消息：{}，已被接收，正在处理中", new String(message.getPayload(),
+		 * StandardCharsets.UTF_8));
+		 */
 		List<Sensor> list = new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(
 				new InputStreamReader(ResourceUtil.getResource("1.csv").getInputStream()))) {

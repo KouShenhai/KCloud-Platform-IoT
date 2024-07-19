@@ -15,21 +15,21 @@
  *
  */
 
-package org.laokou.common.mqtt.annotation;
+package org.laokou.iot.consumer.test;
 
+import org.eclipse.paho.mqttv5.common.MqttMessage;
+import org.laokou.common.mqtt.config.MqttLoadBalancer;
 import org.springframework.stereotype.Component;
-
-import java.lang.annotation.*;
 
 /**
  * @author laokou
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
 @Component
-public @interface MqttMessageListener {
+public class MqttContainer implements MqttLoadBalancer {
 
-	String topic();
+	@Override
+	public void messageArrived(String topic, MqttMessage message) {
+		System.out.println(topic);
+	}
 
 }

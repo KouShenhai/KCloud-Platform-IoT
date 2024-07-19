@@ -17,7 +17,6 @@
 
 package org.laokou.iot;
 
-import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
@@ -31,7 +30,6 @@ import java.net.UnknownHostException;
  * @author laokou
  */
 @EnableTaskExecutor
-@RequiredArgsConstructor
 @SpringBootApplication(scanBasePackages = "org.laokou")
 public class IotApp implements CommandLineRunner {
 

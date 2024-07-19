@@ -18,7 +18,7 @@
 package org.laokou.common.mqtt.template;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.netty.config.Client;
+import org.laokou.common.mqtt.config.MqttManager;
 
 /**
  * @author laokou
@@ -26,10 +26,10 @@ import org.laokou.common.netty.config.Client;
 @RequiredArgsConstructor
 public class MqttTemplate {
 
-	private final Client mqttClient;
+	private final MqttManager mqttManager;
 
-	public void send(String topic, String payload) {
-		mqttClient.send(topic, payload);
+	public void send(String key, String topic, String payload, int qos) {
+		mqttManager.getSession(key).send(topic, payload, qos);
 	}
 
 }

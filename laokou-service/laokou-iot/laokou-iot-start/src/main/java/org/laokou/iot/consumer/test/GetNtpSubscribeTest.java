@@ -18,19 +18,20 @@
 package org.laokou.iot.consumer.test;
 
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.paho.mqttv5.common.MqttMessage;
-import org.laokou.common.mqtt.annotation.MqttMessageListener;
 import org.laokou.common.mqtt.config.MqttListener;
-
-import java.nio.charset.StandardCharsets;
+import org.laokou.common.mqtt.config.MqttMessageExt;
+import org.springframework.stereotype.Component;
 
 @Slf4j
-@MqttMessageListener(topic = "/55/D1PGLPG58KZ2/ntp/get")
+@Component
 public class GetNtpSubscribeTest implements MqttListener {
 
 	@Override
-	public void onMessage(MqttMessage message) {
-		log.info("订阅时钟同步消息：{}，已被接收，正在处理中", new String(message.getPayload(), StandardCharsets.UTF_8));
+	public void onMessage(MqttMessageExt messageExt) {
+		/*
+		 * log.info("订阅时钟同步消息：{}，已被接收，正在处理中", new String(message.getPayload(),
+		 * StandardCharsets.UTF_8));
+		 */
 	}
 
 }
