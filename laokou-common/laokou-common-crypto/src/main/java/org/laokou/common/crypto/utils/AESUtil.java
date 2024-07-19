@@ -58,13 +58,14 @@ public class AESUtil {
 
 	static {
 		try (InputStream inputStream1 = ResourceUtil.getResource("conf/secretKey.b256").getInputStream();
-			 InputStream inputStream2 = ResourceUtil.getResource("conf/secretIV.b12").getInputStream()) {
+				InputStream inputStream2 = ResourceUtil.getResource("conf/secretIV.b12").getInputStream()) {
 			String key = new String(inputStream1.readAllBytes(), StandardCharsets.UTF_8).trim();
 			Assert.isTrue(key.length() == 32, "密钥长度必须32位");
 			String iv = new String(inputStream2.readAllBytes(), StandardCharsets.UTF_8).trim();
 			SECRET_KEY = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), AES);
 			SECRET_IV = iv.getBytes(StandardCharsets.UTF_8);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -115,7 +116,6 @@ public class AESUtil {
 
 	/**
 	 * 对象属性加密/解密.
-	 *
 	 * @param obj 对象
 	 */
 	public static void transform(Object obj) {

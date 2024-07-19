@@ -51,10 +51,10 @@ public class OpenApiDocAutoConfig {
 			.externalDocs(new ExternalDocumentation().description("老寇IoT云平台").url("https://github.com/KouShenhai"))
 			.addSecurityItem(new SecurityRequirement().addList(AUTHORIZATION))
 			.components(new Components().addSecuritySchemes(AUTHORIZATION,
-				new SecurityScheme().name(AUTHORIZATION)
-					.type(SecurityScheme.Type.HTTP)
-					.scheme("bearer")
-					.bearerFormat("JWT")));
+					new SecurityScheme().name(AUTHORIZATION)
+						.type(SecurityScheme.Type.HTTP)
+						.scheme("bearer")
+						.bearerFormat("JWT")));
 
 	}
 
