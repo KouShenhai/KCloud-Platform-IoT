@@ -15,19 +15,33 @@
  *
  */
 
-package org.laokou.mqtt.config;
+package org.laokou.common.mqtt.config;
 
-import org.eclipse.paho.mqttv5.common.MqttMessage;
+import io.micrometer.common.lang.NonNullApi;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * 可参考 RocketMQ 实现.
+ *
  * @author laokou
  */
-public interface MqttListener {
+@Component
+@NonNullApi
+public final class MqttListenerContainer implements InitializingBean {
 
-	/**
-	 * 消息订阅.
-	 * @param message 消息
-	 */
-	void onMessage(MqttMessage message);
+	private static final Map<String, MqttListener> MQTT_TOPIC_MAP = new ConcurrentHashMap<>();
+
+	public static MqttListener get(String topic) {
+		return MQTT_TOPIC_MAP.get(topic);
+	}
+
+	@Override
+	public void afterPropertiesSet() {
+
+	}
 
 }

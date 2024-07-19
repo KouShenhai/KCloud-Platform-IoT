@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.mqtt.config;
+package org.laokou.common.mqtt.config;
 
 import lombok.Data;
 import org.laokou.common.core.utils.IdGenerator;

@@ -15,9 +15,8 @@
  *
  */
 
-package org.laokou.mqtt.config;
+package org.laokou.common.mqtt.config;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.client.IMqttToken;
 import org.eclipse.paho.mqttv5.client.MqttCallback;
@@ -31,10 +30,7 @@ import org.laokou.common.i18n.utils.LogUtil;
  * @author laokou
  */
 @Slf4j
-@RequiredArgsConstructor
 public class MqttMessageCallback implements MqttCallback {
-
-	private final MqttStrategy mqttStrategy;
 
 	@Override
 	public void disconnected(MqttDisconnectResponse disconnectResponse) {
@@ -48,7 +44,7 @@ public class MqttMessageCallback implements MqttCallback {
 
 	@Override
 	public void messageArrived(String topic, MqttMessage message) {
-		mqttStrategy.get(topic).onMessage(message);
+		MqttListenerContainer.get(topic).onMessage(message);
 	}
 
 	@Override

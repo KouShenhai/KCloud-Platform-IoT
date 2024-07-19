@@ -20,8 +20,8 @@ package org.laokou.iot.consumer.test;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
-import org.laokou.mqtt.annotation.MqttMessageListener;
-import org.laokou.mqtt.config.MqttListener;
+import org.laokou.common.mqtt.annotation.MqttMessageListener;
+import org.laokou.common.mqtt.config.MqttListener;
 
 import java.nio.charset.StandardCharsets;
 

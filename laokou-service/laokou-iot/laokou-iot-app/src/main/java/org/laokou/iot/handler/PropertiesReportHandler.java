@@ -19,8 +19,8 @@ package org.laokou.iot.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
-import org.laokou.mqtt.annotation.MqttMessageListener;
-import org.laokou.mqtt.config.MqttListener;
+import org.laokou.common.mqtt.annotation.MqttMessageListener;
+import org.laokou.common.mqtt.config.MqttListener;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.iot.common.constant.Constant.PROPERTIES_REPORT;

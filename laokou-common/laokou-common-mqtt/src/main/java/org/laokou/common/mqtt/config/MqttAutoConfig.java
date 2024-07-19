@@ -15,10 +15,10 @@
  *
  */
 
-package org.laokou.mqtt.config;
+package org.laokou.common.mqtt.config;
 
+import org.laokou.common.mqtt.template.MqttTemplate;
 import org.laokou.common.netty.config.Client;
-import org.laokou.mqtt.template.MqttTemplate;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -31,8 +31,8 @@ import org.springframework.context.annotation.Bean;
 public class MqttAutoConfig {
 
 	@Bean(name = "mqttClient", initMethod = "open", destroyMethod = "close")
-	public Client mqttClient(SpringMqttBrokerProperties springMqttBrokerProperties, MqttStrategy mqttStrategy) {
-		return new MqttClient(springMqttBrokerProperties, mqttStrategy);
+	public Client mqttClient(SpringMqttBrokerProperties springMqttBrokerProperties) {
+		return new MqttClient(springMqttBrokerProperties);
 	}
 
 	@Bean

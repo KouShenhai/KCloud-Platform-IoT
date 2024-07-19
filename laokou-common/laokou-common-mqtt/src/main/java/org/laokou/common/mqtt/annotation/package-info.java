@@ -15,21 +15,7 @@
  *
  */
 
-package org.laokou.mqtt.template;
-
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.netty.config.Client;
-
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class MqttTemplate {
-
-	private final Client mqttClient;
-
-	public void send(String topic, String payload) {
-		mqttClient.send(topic, payload);
-	}
-
-}
+package org.laokou.common.mqtt.annotation;

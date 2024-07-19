@@ -15,21 +15,21 @@
  *
  */
 
-package org.laokou.mqtt.annotation;
+package org.laokou.common.mqtt.template;
 
-import org.springframework.stereotype.Component;
-
-import java.lang.annotation.*;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.netty.config.Client;
 
 /**
  * @author laokou
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Component
-public @interface MqttMessageListener {
+@RequiredArgsConstructor
+public class MqttTemplate {
 
-	String topic();
+	private final Client mqttClient;
+
+	public void send(String topic, String payload) {
+		mqttClient.send(topic, payload);
+	}
 
 }

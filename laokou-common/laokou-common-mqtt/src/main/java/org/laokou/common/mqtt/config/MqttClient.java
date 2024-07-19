@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.mqtt.config;
+package org.laokou.common.mqtt.config;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -52,17 +52,14 @@ public class MqttClient implements Client {
 
 	private final SpringMqttBrokerProperties springMqttBrokerProperties;
 
-	private final MqttStrategy mqttStrategy;
-
 	private final AtomicInteger ATOMIC = new AtomicInteger(0);
 
 	private volatile boolean running;
 
 	private volatile org.eclipse.paho.mqttv5.client.MqttClient client;
 
-	public MqttClient(SpringMqttBrokerProperties springMqttBrokerProperties, MqttStrategy mqttStrategy) {
+	public MqttClient(SpringMqttBrokerProperties springMqttBrokerProperties) {
 		this.springMqttBrokerProperties = springMqttBrokerProperties;
-		this.mqttStrategy = mqttStrategy;
 	}
 
 	@Override
@@ -77,7 +74,7 @@ public class MqttClient implements Client {
 					springMqttBrokerProperties.getClientId(), new MemoryPersistence());
 			// 手动ack接收确认
 			client.setManualAcks(springMqttBrokerProperties.isManualAcks());
-			client.setCallback(new MqttMessageCallback(mqttStrategy));
+			client.setCallback(new MqttMessageCallback());
 			client.connect(options());
 			if (CollectionUtil.isNotEmpty(springMqttBrokerProperties.getTopics())) {
 				client.subscribe(springMqttBrokerProperties.getTopics().toArray(String[]::new),

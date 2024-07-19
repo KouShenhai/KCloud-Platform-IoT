@@ -15,13 +15,21 @@
  *
  */
 
-package org.laokou.mqtt.config;
+package org.laokou.common.mqtt.annotation;
+
+import org.springframework.stereotype.Component;
+
+import java.lang.annotation.*;
 
 /**
  * @author laokou
  */
-public interface MqttStrategy {
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Component
+public @interface MqttMessageListener {
 
-	MqttListener get(String topic);
+	String topic();
 
 }

@@ -26,8 +26,8 @@ import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.laokou.common.algorithm.template.Algorithm;
 import org.laokou.common.algorithm.template.select.RandomSelectAlgorithm;
 import org.laokou.common.i18n.utils.ResourceUtil;
-import org.laokou.mqtt.annotation.MqttMessageListener;
-import org.laokou.mqtt.config.MqttListener;
+import org.laokou.common.mqtt.annotation.MqttMessageListener;
+import org.laokou.common.mqtt.config.MqttListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;

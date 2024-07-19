@@ -15,7 +15,19 @@
  *
  */
 
+package org.laokou.common.mqtt.config;
+
+import org.eclipse.paho.mqttv5.common.MqttMessage;
+
 /**
  * @author laokou
  */
-package org.laokou.mqtt.annotation;
+public interface MqttListener {
+
+	/**
+	 * 消息订阅.
+	 * @param message 消息
+	 */
+	void onMessage(MqttMessage message);
+
+}
