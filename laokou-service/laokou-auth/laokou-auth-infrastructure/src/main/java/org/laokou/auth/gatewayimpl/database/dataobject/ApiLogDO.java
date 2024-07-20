@@ -15,23 +15,31 @@
  *
  */
 
-package org.laokou.auth.convertor;
+package org.laokou.auth.gatewayimpl.database.dataobject;
 
-import org.laokou.auth.dto.domainevent.LoginEvent;
-import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.auth.model.LogV;
-import org.laokou.common.i18n.dto.Convertor;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingInheritanceStrategy;
-import org.mapstruct.ReportingPolicy;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
 
-import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
+import static org.laokou.auth.gatewayimpl.database.dataobject.ApiLogDO.BOOT_SYS_API_LOG;
 
 /**
  * @author laokou
  */
-@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE,
-		mappingInheritanceStrategy = MappingInheritanceStrategy.AUTO_INHERIT_ALL_FROM_CONFIG)
-public interface LogConvertor extends Convertor<LoginEvent, LogV, LoginLogDO> {
+@Data
+@TableName(BOOT_SYS_API_LOG)
+public class ApiLogDO extends BaseDO {
+
+	public static final String BOOT_SYS_API_LOG = "boot_sys_api_log";
+
+	private String code;
+
+	private String name;
+
+	private Integer status;
+
+	private String errorMessage;
+
+	private String param;
 
 }

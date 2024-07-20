@@ -58,8 +58,9 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 	}
 
 	public void create(String topic, String tag, EventType eventType, EventStatus eventStatus, String appName,
-			String sourceName, LocalDateTime timestamp) {
+			String sourceName, LocalDateTime timestamp, Long aggregateId) {
 		generatorId();
+		super.aggregateId = aggregateId;
 		super.eventType = eventType;
 		super.eventStatus = eventStatus;
 		super.tag = tag;

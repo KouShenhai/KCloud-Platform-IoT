@@ -79,7 +79,7 @@ public class LoginEvent extends DefaultDomainEvent {
 	private String type;
 
 	@Override
-	protected void generatorId() {
+	public void generatorId() {
 		super.id = IdGenerator.defaultSnowflakeId();
 	}
 

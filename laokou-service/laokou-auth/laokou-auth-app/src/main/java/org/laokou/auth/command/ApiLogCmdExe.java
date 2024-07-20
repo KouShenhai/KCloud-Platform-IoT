@@ -19,7 +19,7 @@ package org.laokou.auth.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.AuthDomainService;
-import org.laokou.auth.dto.LoginLogCmd;
+import org.laokou.auth.dto.ApiLogCmd;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,12 +27,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class LoginLogCmdExe {
+public class ApiLogCmdExe {
 
 	private final AuthDomainService authDomainService;
 
-	public void executeVoid(LoginLogCmd cmd) {
-		authDomainService.recordLoginLog(cmd.getDomainEvent());
+	public void executeVoid(ApiLogCmd cmd) {
+		authDomainService.recordApiLog(cmd.getDomainEvent());
 	}
 
 }

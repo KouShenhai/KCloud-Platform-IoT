@@ -51,9 +51,16 @@ public class AuthDomainService {
 
 	private final LoginLogGateway loginLogGateway;
 
+	private final ApiLogGateway apiLogGateway;
+
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
-	public void recordLog(DefaultDomainEvent domainEvent) {
-		loginLogGateway.createLog(domainEvent);
+	public void recordLoginLog(DefaultDomainEvent domainEvent) {
+		loginLogGateway.createLoginLog(domainEvent);
+	}
+
+	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
+	public void recordApiLog(DefaultDomainEvent domainEvent) {
+		apiLogGateway.createApiLog(domainEvent);
 	}
 
 	public void auth(AuthA auth) {

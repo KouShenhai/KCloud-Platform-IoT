@@ -45,7 +45,7 @@ public abstract class AbstractSendCaptchaEventHandler extends AbstractDomainEven
 		ApiLog apiLog = getApiLog(event);
 		CallApiEvent callApiEvent = new CallApiEvent(apiLog);
 		callApiEvent.create(LAOKOU_LOG_TOPIC, API_TAG, API, CREATED, event.getAppName(), event.getSourceName(),
-				apiLog.getTimestamp());
+				apiLog.getTimestamp(), event.getAggregateId());
 		domainEventPublisher.publishToCreate(callApiEvent);
 	}
 

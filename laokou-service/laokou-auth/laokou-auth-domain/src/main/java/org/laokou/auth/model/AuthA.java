@@ -154,7 +154,7 @@ public class AuthA extends AggregateRoot<Long> {
 		this.username = username;
 		this.password = password;
 		this.grantType = grantType;
-		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : null;
+		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : 0L;
 		this.captcha = new CaptchaV(uuid, captcha);
 		this.request = request;
 	}
@@ -180,7 +180,7 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void createUserByAuthorizationCode() {
 		currentUser = this.username;
-		this.user = new UserE(currentUser, EMPTY, EMPTY, 0L);
+		this.user = new UserE(currentUser, EMPTY, EMPTY, this.tenantId);
 	}
 
 	public void updateUser(UserE user) {
@@ -190,7 +190,6 @@ public class AuthA extends AggregateRoot<Long> {
 			this.editor = user.getId();
 			this.deptId = user.getDeptId();
 			this.deptPath = user.getDeptPath();
-			this.tenantId = user.getTenantId();
 		}
 		else {
 			switch (this.grantType) {

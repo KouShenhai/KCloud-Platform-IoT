@@ -18,7 +18,7 @@
 package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.convertor.LogConvertor;
+import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.gateway.LoginLogGateway;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
@@ -33,13 +33,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoginLogGatewayImpl implements LoginLogGateway {
 
-	private final LogConvertor logConvertor;
+	private final LoginLogConvertor loginLogConvertor;
 
 	private final LoginLogMapper loginLogMapper;
 
 	@Override
-	public void createLog(DefaultDomainEvent domainEvent) {
-		LoginLogDO loginLogDO = logConvertor.toDataObj((LoginEvent) domainEvent);
+	public void createLoginLog(DefaultDomainEvent domainEvent) {
+		LoginLogDO loginLogDO = loginLogConvertor.toDataObj((LoginEvent) domainEvent);
 		loginLogMapper.insert(loginLogDO);
 	}
 

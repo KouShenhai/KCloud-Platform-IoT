@@ -20,7 +20,7 @@ package org.laokou.auth.service.authentication;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.AuthDomainService;
-import org.laokou.auth.convertor.LogConvertor;
+import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
@@ -61,7 +61,7 @@ public class OAuth2AuthenticationProvider {
 
 	private final ExtensionExecutor extensionExecutor;
 
-	private final LogConvertor logConvertor;
+	private final LoginLogConvertor loginLogConvertor;
 
 	public UsernamePasswordAuthenticationToken authentication(AuthA auth) {
 		try {
@@ -91,7 +91,7 @@ public class OAuth2AuthenticationProvider {
 
 	private LoginEvent to(AuthA auth) {
 		LogV log = auth.getLog();
-		LoginEvent loginEvent = logConvertor.convertClientObject(log);
+		LoginEvent loginEvent = loginLogConvertor.convertClientObject(log);
 		loginEvent.create(auth, LAOKOU_LOG_TOPIC, LOGIN_TAG, LOGIN, CREATED, log.timestamp());
 		return loginEvent;
 	}

@@ -32,6 +32,7 @@ import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
@@ -67,11 +68,12 @@ public class CreateDomainEventHandler implements RocketMQListener<MessageExt> {
 				domainEventService.create(new DomainEventA(msg, defaultDomainEvent));
 				return defaultDomainEvent;
 			}, executor)
-				.thenAcceptAsync(defaultDomainEvent -> domainEventPublisher.publish(defaultDomainEvent.getTopic(),
-						defaultDomainEvent.getTag(), msg), executor);
+				.thenAcceptAsync(evt -> domainEventPublisher.publish(evt.getTopic(), evt.getTag(), msg), executor)
+				.thenRunAsync(ThreadContext::clearMap, executor)
+				.get();
 		}
-		finally {
-			ThreadContext.clearMap();
+		catch (InterruptedException | ExecutionException e) {
+			throw new RuntimeException(e);
 		}
 	}
 

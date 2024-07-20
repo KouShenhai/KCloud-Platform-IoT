@@ -24,6 +24,7 @@ import org.laokou.auth.extensionpoint.CaptchaValidatorExtPt;
 import org.laokou.auth.gateway.SourceGateway;
 import org.laokou.auth.model.SourceV;
 import org.laokou.auth.model.UserE;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
@@ -63,7 +64,7 @@ public class CaptchaSendCmdExe {
 		// 发布发送验证码事件
 		SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getTag(), cmd.getUuid());
 		sendCaptchaEvent.create(LAOKOU_CAPTCHA_TOPIC, cmd.getTag(), CAPTCHA, CREATED, springContextUtil.getAppName(),
-				getSourceName(cmd.getTenantId()), DateUtil.now());
+				getSourceName(cmd.getTenantId()), DateUtil.now(), IdGenerator.defaultSnowflakeId());
 		domainEventPublisher.publishToCreate(sendCaptchaEvent);
 	}
 

@@ -73,7 +73,7 @@ public class DomainEventA extends AggregateRoot<Long> {
 		this.eventStatus = domainEvent.getEventStatus().name();
 		this.sourceName = domainEvent.getSourceName();
 		this.appName = domainEvent.getAppName();
-		this.aggregateId = domainEvent.getId();
+		this.aggregateId = domainEvent.getAggregateId();
 		this.tag = domainEvent.getTag();
 		this.topic = domainEvent.getTopic();
 	}

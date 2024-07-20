@@ -15,11 +15,15 @@
  *
  */
 
-package org.laokou.auth.command;
+package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.ability.AuthDomainService;
-import org.laokou.auth.dto.LoginLogCmd;
+import org.laokou.auth.convertor.ApiLogConvertor;
+import org.laokou.auth.dto.domainevent.CallApiEvent;
+import org.laokou.auth.gateway.ApiLogGateway;
+import org.laokou.auth.gatewayimpl.database.ApiLogMapper;
+import org.laokou.auth.gatewayimpl.database.dataobject.ApiLogDO;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,12 +31,16 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class LoginLogCmdExe {
+public class ApiLogGatewayImpl implements ApiLogGateway {
 
-	private final AuthDomainService authDomainService;
+	private final ApiLogConvertor apiLogConvertor;
 
-	public void executeVoid(LoginLogCmd cmd) {
-		authDomainService.recordLoginLog(cmd.getDomainEvent());
+	private final ApiLogMapper apiLogMapper;
+
+	@Override
+	public void createApiLog(DefaultDomainEvent domainEvent) {
+		ApiLogDO apiLogDO = apiLogConvertor.toDataObj((CallApiEvent) domainEvent);
+		apiLogMapper.insert(apiLogDO);
 	}
 
 }

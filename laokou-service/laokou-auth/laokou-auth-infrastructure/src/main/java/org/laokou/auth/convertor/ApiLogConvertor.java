@@ -15,24 +15,23 @@
  *
  */
 
-package org.laokou.auth.command;
+package org.laokou.auth.convertor;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.auth.ability.AuthDomainService;
-import org.laokou.auth.dto.LoginLogCmd;
-import org.springframework.stereotype.Component;
+import org.laokou.auth.dto.domainevent.CallApiEvent;
+import org.laokou.auth.gatewayimpl.database.dataobject.ApiLogDO;
+import org.laokou.auth.model.LogV;
+import org.laokou.common.i18n.dto.Convertor;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingInheritanceStrategy;
+import org.mapstruct.ReportingPolicy;
+
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class LoginLogCmdExe {
-
-	private final AuthDomainService authDomainService;
-
-	public void executeVoid(LoginLogCmd cmd) {
-		authDomainService.recordLoginLog(cmd.getDomainEvent());
-	}
+@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE,
+		mappingInheritanceStrategy = MappingInheritanceStrategy.AUTO_INHERIT_ALL_FROM_CONFIG)
+public interface ApiLogConvertor extends Convertor<CallApiEvent, LogV, ApiLogDO> {
 
 }

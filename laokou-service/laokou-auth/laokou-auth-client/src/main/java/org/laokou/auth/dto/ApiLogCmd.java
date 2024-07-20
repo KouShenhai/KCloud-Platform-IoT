@@ -15,24 +15,22 @@
  *
  */
 
-package org.laokou.auth.command;
+package org.laokou.auth.dto;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.auth.ability.AuthDomainService;
-import org.laokou.auth.dto.LoginLogCmd;
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class LoginLogCmdExe {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ApiLogCmd extends CommonCommand {
 
-	private final AuthDomainService authDomainService;
-
-	public void executeVoid(LoginLogCmd cmd) {
-		authDomainService.recordLoginLog(cmd.getDomainEvent());
-	}
+	private DefaultDomainEvent domainEvent;
 
 }

@@ -42,7 +42,7 @@ public class CallApiEvent extends DefaultDomainEvent {
 
 	public CallApiEvent(ApiLog apiLog) {
 		this.code = apiLog.getCode();
-		this.name = apiLog.getName() + "【" + apiLog.getDesc() + "】";
+		this.name = apiLog.getName() + "（" + apiLog.getDesc() + "）";
 		this.status = apiLog.getStatus();
 		this.errorMessage = apiLog.getErrorMessage();
 		this.param = apiLog.getParam();
