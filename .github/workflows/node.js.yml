@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm ci --prefix ./your-directory
+      - run: npm ci --prefix ./ui
       - run: npm cache clean --force
       - run: npm install
       - run: npm run dev
