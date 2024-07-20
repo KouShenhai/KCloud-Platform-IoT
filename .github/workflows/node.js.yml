@@ -17,15 +17,18 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         node-version: [ 18.x ]
     steps:
-      - uses: actions/checkout@v4
-      - name: Use UI
-        uses: ./ui
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm cache clean --force
-      - run: npm install
-      - run: npm run dev
-      - run: npm run build
+      - name: Cache Clean
+        run: npm cache clean --force
+      - name: Install
+        run: npm install --prefix ./ui
+      - name: Run
+        run: npm run dev --prefix ./ui
+      - name: Build
+        run: npm run build --prefix ./ui
