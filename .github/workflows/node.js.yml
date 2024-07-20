@@ -16,7 +16,6 @@ jobs:
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         node-version: [ 18.x ]
-        os: [ ubuntu-latest, windows-latest, macOS-latest ]
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
@@ -25,10 +24,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm cache clean --force
-        working-directory: ui
+        working-directory: ./ui
       - run: npm install
-        working-directory: ui
+        working-directory: ./ui
       - run: npm run dev
-        working-directory: ui
+        working-directory: ./ui
       - run: npm run build
-        working-directory: ui
+        working-directory: ./ui
