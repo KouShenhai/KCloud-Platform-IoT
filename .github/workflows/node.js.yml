@@ -18,16 +18,13 @@ jobs:
         node-version: [ 18.x ]
     steps:
       - uses: actions/checkout@v4
+        working-directory: ./ui
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm cache clean --force
-        working-directory: ./ui
       - run: npm install
-        working-directory: ./ui
       - run: npm run dev
-        working-directory: ./ui
       - run: npm run build
-        working-directory: ./ui
