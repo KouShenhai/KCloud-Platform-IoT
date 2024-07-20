@@ -29,7 +29,5 @@ jobs:
         run: npm cache clean --force
       - name: Install
         run: npm install --prefix ./ui
-      - name: Run
-        run: npm run dev --prefix ./ui
       - name: Build
         run: npm run build --prefix ./ui
