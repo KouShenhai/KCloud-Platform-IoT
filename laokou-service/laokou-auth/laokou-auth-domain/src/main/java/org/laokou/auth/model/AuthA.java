@@ -149,12 +149,13 @@ public class AuthA extends AggregateRoot<Long> {
 	}
 
 	public AuthA(String username, String password, String tenantId, String grantType, String uuid, String captcha,
-			HttpServletRequest request) {
+				 HttpServletRequest request) {
 		this.id = IdGenerator.defaultSnowflakeId();
 		this.username = username;
 		this.password = password;
 		this.grantType = grantType;
-		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : 0L;
+		// 用于tenantId判空
+		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : null;
 		this.captcha = new CaptchaV(uuid, captcha);
 		this.request = request;
 	}
@@ -180,7 +181,7 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void createUserByAuthorizationCode() {
 		currentUser = this.username;
-		this.user = new UserE(currentUser, EMPTY, EMPTY, this.tenantId);
+		this.user = new UserE(currentUser, EMPTY, EMPTY, 0L);
 	}
 
 	public void updateUser(UserE user) {
@@ -190,8 +191,7 @@ public class AuthA extends AggregateRoot<Long> {
 			this.editor = user.getId();
 			this.deptId = user.getDeptId();
 			this.deptPath = user.getDeptPath();
-		}
-		else {
+		} else {
 			switch (this.grantType) {
 				case PASSWORD:
 				case AUTHORIZATION_CODE:
