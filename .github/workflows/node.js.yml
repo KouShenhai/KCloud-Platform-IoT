@@ -24,6 +24,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+      - run: cd ui
       - run: npm cache clean --force
       - run: npm install
       - run: npm run dev
