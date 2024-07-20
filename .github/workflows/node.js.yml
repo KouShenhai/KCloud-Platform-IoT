@@ -12,6 +12,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./ui
     strategy:
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
@@ -24,7 +28,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: cd ui
       - run: npm cache clean --force
       - run: npm install
       - run: npm run dev
