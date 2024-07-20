@@ -52,9 +52,8 @@ import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAIL
 @WebFilter(filterName = "shutdownFilter", urlPatterns = "/graceful-shutdown")
 public class ShutdownFilter implements Filter, org.springframework.web.server.WebFilter {
 
-	private final SpringContextUtil springContextUtil;
-
 	private static final ScheduledExecutorService NEWED_SCHEDULED_THREAD_POOL = Executors.newScheduledThreadPool(1);
+	private final SpringContextUtil springContextUtil;
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -95,13 +94,12 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 				int second = 60 * 1000;
 				long start = IdGenerator.SystemClock.now();
 				NEWED_SCHEDULED_THREAD_POOL.scheduleWithFixedDelay(() -> {
-					long end = IdGenerator.SystemClock.now();
 					// 一分钟内没完成 或 计数器为0 -> 结束
-					if (end - start >= second || ShutdownHolder.get() == 0) {
+					if (IdGenerator.SystemClock.now() - start >= second || ShutdownHolder.get() == 0) {
 						ThreadUtil.shutdown(NEWED_SCHEDULED_THREAD_POOL, 10);
 						// 关闭应用
 						int exitCode = SpringApplication.exit(springContextUtil.getApplicationContext(),
-								new ExitCodeGeneratorImpl());
+							new ExitCodeGeneratorImpl());
 						System.exit(exitCode);
 					}
 				}, 0, 1, TimeUnit.SECONDS);

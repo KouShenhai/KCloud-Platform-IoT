@@ -19,12 +19,6 @@ package org.laokou.admin.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.LogGateway;
-import org.laokou.admin.dto.domainevent.FileUploadEvent;
-import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
-import org.laokou.admin.gatewayimpl.database.OssLogMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.OssLogDO;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,64 +29,5 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class LogGatewayImpl implements LogGateway {
-
-	private final OperateLogMapper operateLogMapper;
-
-	private final OssLogMapper ossLogMapper;
-
-	// @Override
-	// public void create(OperateEvent event, DefaultDomainEvent evt) {
-	// operateLogMapper.insert(null);
-	// }
-	//
-	// @Override
-	// public void create(FileUploadEvent event, DefaultDomainEvent evt) {
-	// ossLogMapper.insert(convert(event, evt));
-	// }
-
-	private OssLogDO convert(FileUploadEvent fileUploadEvent, DefaultDomainEvent evt) {
-		OssLogDO logDO = new OssLogDO();
-		logDO.setMd5(fileUploadEvent.getMd5());
-		logDO.setUrl(fileUploadEvent.getUrl());
-		logDO.setName(fileUploadEvent.getName());
-		logDO.setSize(fileUploadEvent.getSize());
-		logDO.setStatus(fileUploadEvent.getStatus());
-		logDO.setErrorMessage(fileUploadEvent.getErrorMessage());
-		logDO.setId(IdGenerator.defaultSnowflakeId());
-		logDO.setEditor(evt.getEditor());
-		logDO.setCreator(evt.getCreator());
-		logDO.setCreateDate(evt.getCreateDate());
-		logDO.setUpdateDate(evt.getUpdateDate());
-		logDO.setDeptId(evt.getDeptId());
-		logDO.setDeptPath(evt.getDeptPath());
-		logDO.setTenantId(evt.getTenantId());
-		return logDO;
-	}
-
-	// private OperateLogDO convert(OperateEvent operateEvent, DecorateDomainEvent evt) {
-	// OperateLogDO logDO = new OperateLogDO();
-	// logDO.setName(operateEvent.getName());
-	// logDO.setModuleName(operateEvent.getModuleName());
-	// logDO.setUri(operateEvent.getUri());
-	// logDO.setMethodName(operateEvent.getMethodName());
-	// logDO.setRequestType(operateEvent.getRequestType());
-	// logDO.setRequestParams(operateEvent.getRequestParams());
-	// logDO.setUserAgent(operateEvent.getUserAgent());
-	// logDO.setIp(operateEvent.getIp());
-	// logDO.setStatus(operateEvent.getStatus());
-	// logDO.setOperator(operateEvent.getOperator());
-	// logDO.setErrorMessage(operateEvent.getErrorMessage());
-	// logDO.setTakeTime(operateEvent.getTakeTime());
-	// logDO.setAddress(operateEvent.getAddress());
-	// logDO.setId(IdGenerator.defaultSnowflakeId());
-	// logDO.setEditor(evt.getEditor());
-	// logDO.setCreator(evt.getCreator());
-	// logDO.setCreateDate(evt.getCreateDate());
-	// logDO.setUpdateDate(evt.getUpdateDate());
-	// logDO.setDeptId(evt.getDeptId());
-	// logDO.setDeptPath(evt.getDeptPath());
-	// logDO.setTenantId(evt.getTenantId());
-	// return logDO;
-	// }
 
 }

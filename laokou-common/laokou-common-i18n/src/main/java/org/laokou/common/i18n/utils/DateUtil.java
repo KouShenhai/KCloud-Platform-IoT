@@ -402,47 +402,51 @@ public class DateUtil {
 		return localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
 	}
 
-	public interface Constant {
+	public static final class Constant {
 
 		/**
 		 * yyyy-MM-dd HH:mm:ss.
 		 */
-		String YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS = "yyyy-MM-dd HH:mm:ss";
+		public static final String YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS = "yyyy-MM-dd HH:mm:ss";
 
 		/**
 		 * yyyyMMddHHmmss.
 		 */
-		String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+		public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
 		/**
 		 * yyyyMM.
 		 */
-		String YYYYMM = "yyyyMM";
+		public static final String YYYYMM = "yyyyMM";
 
 		/**
 		 * yyyy-MM-dd.
 		 */
-		String YYYY_ROD_MM_ROD_DD = "yyyy-MM-dd";
+		public static final String YYYY_ROD_MM_ROD_DD = "yyyy-MM-dd";
 
 		/**
 		 * yyyy年MM月dd日.
 		 */
-		String YYYY_TEXT_MM_TEXT_DD_TEXT = "yyyy年MM月dd日";
+		public static final String YYYY_TEXT_MM_TEXT_DD_TEXT = "yyyy年MM月dd日";
 
 		/**
 		 * yyyy.MM.dd.
 		 */
-		String YYYY_DOT_MM_DOT_DD = "yyyy.MM.dd";
+		public static final String YYYY_DOT_MM_DOT_DD = "yyyy.MM.dd";
 
 		/**
 		 * yyyyMMdd.
 		 */
-		String YYYYMMDD = "yyyyMMdd";
+		public static final String YYYYMMDD = "yyyyMMdd";
 
 		/**
 		 * GMT+8.
 		 */
-		String DEFAULT_TIMEZONE = "GMT+8";
+		public static final String DEFAULT_TIMEZONE = "GMT+8";
+
+		private Constant() {
+
+		}
 
 	}
 
