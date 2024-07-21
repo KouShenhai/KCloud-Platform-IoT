@@ -28,10 +28,7 @@ import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import static org.laokou.common.core.config.TaskExecutorAutoConfig.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * @author laokou
@@ -73,7 +70,6 @@ public class DomainEventServiceImpl implements DomainEventService {
 	}
 
 	@Override
-	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void update(DomainEventA domainEventA) {
 		try {
 			DynamicDataSourceContextHolder.push(DOMAIN);

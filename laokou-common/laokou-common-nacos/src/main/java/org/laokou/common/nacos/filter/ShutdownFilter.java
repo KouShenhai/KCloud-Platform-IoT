@@ -53,6 +53,7 @@ import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAIL
 public class ShutdownFilter implements Filter, org.springframework.web.server.WebFilter {
 
 	private static final ScheduledExecutorService NEWED_SCHEDULED_THREAD_POOL = Executors.newScheduledThreadPool(1);
+
 	private final SpringContextUtil springContextUtil;
 
 	@Override
@@ -97,9 +98,9 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 					// 一分钟内没完成 或 计数器为0 -> 结束
 					if (IdGenerator.SystemClock.now() - start >= second || ShutdownHolder.get() == 0) {
 						ThreadUtil.shutdown(NEWED_SCHEDULED_THREAD_POOL, 10);
-						// 关闭应用
+						log.info("关闭应用");
 						int exitCode = SpringApplication.exit(springContextUtil.getApplicationContext(),
-							new ExitCodeGeneratorImpl());
+								new ExitCodeGeneratorImpl());
 						System.exit(exitCode);
 					}
 				}, 0, 1, TimeUnit.SECONDS);

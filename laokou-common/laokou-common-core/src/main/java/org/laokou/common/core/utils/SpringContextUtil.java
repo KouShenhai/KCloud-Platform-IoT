@@ -48,24 +48,6 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	private final Environment environment;
 
-	public String getAppName() {
-		try {
-			return ObjectUtil.requireNotNull(environment.getProperty("spring.application.name"));
-		}
-		catch (Exception e) {
-			return "application";
-		}
-	}
-
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		SpringContextUtil.applicationContext = applicationContext;
-	}
-
-	public ApplicationContext getApplicationContext() {
-		return applicationContext;
-	}
-
 	/**
 	 * 获取工厂.
 	 * @return 工厂
@@ -164,22 +146,39 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	}
 
 	/**
-	 * 销毁上下文.
-	 */
-	@Override
-	public void destroy() {
-		applicationContext = null;
-	}
-
-	/**
 	 * 推送事件.
 	 * @param event 事件
 	 */
 	public static void publishEvent(ApplicationEvent event) {
 		if (ObjectUtil.isNotNull(applicationContext)) {
-			// log.info("发布Spring事件");
 			applicationContext.publishEvent(event);
 		}
+	}
+
+	public String getAppName() {
+		try {
+			return ObjectUtil.requireNotNull(environment.getProperty("spring.application.name"));
+		}
+		catch (Exception e) {
+			return "application";
+		}
+	}
+
+	public ApplicationContext getApplicationContext() {
+		return applicationContext;
+	}
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		SpringContextUtil.applicationContext = applicationContext;
+	}
+
+	/**
+	 * 销毁上下文.
+	 */
+	@Override
+	public void destroy() {
+		applicationContext = null;
 	}
 
 }

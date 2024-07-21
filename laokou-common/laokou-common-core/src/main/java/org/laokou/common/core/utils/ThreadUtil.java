@@ -17,6 +17,7 @@
 
 package org.laokou.common.core.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.concurrent.ExecutorService;
@@ -28,6 +29,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  *
  * @author laokou
  */
+@Slf4j
 public class ThreadUtil {
 
 	/**
@@ -46,6 +48,9 @@ public class ThreadUtil {
 			catch (InterruptedException e) {
 				executorService.shutdownNow();
 				Thread.currentThread().interrupt();
+			}
+			finally {
+				log.info("关闭线程池");
 			}
 		}
 	}
