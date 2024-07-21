@@ -37,7 +37,6 @@ public final class BigDecimalUtil {
 
 	/**
 	 * 提供精确的加法运算.
-	 *
 	 * @param v1 被加数
 	 * @param v2 加数
 	 * @return 两个参数的和
@@ -50,7 +49,6 @@ public final class BigDecimalUtil {
 
 	/**
 	 * 提供精确的减法运算.
-	 *
 	 * @param v1 被减数
 	 * @param v2 减数
 	 * @return 两个参数的差
@@ -63,7 +61,6 @@ public final class BigDecimalUtil {
 
 	/**
 	 * 提供精确的乘法运算.
-	 *
 	 * @param v1 被乘数
 	 * @param v2 乘数
 	 * @return 两个参数的积
@@ -76,7 +73,6 @@ public final class BigDecimalUtil {
 
 	/**
 	 * 提供（相对）精确的除法运算，当发生除不尽的情况时，精确到 小数点以后10位，以后的数字四舍五入.
-	 *
 	 * @param v1 被除数
 	 * @param v2 除数
 	 * @return 两个参数的商
@@ -87,9 +83,8 @@ public final class BigDecimalUtil {
 
 	/**
 	 * 提供（相对）精确的除法运算。当发生除不尽的情况时，由scale参数指 定精度，以后的数字四舍五入.
-	 *
-	 * @param v1    被除数
-	 * @param v2    除数
+	 * @param v1 被除数
+	 * @param v2 除数
 	 * @param scale 表示表示需要精确到小数点以后几位。
 	 * @return 两个参数的商
 	 */
@@ -104,8 +99,7 @@ public final class BigDecimalUtil {
 
 	/**
 	 * 提供精确的小数位四舍五入处理.
-	 *
-	 * @param v     需要四舍五入的数字
+	 * @param v 需要四舍五入的数字
 	 * @param scale 小数点后保留几位
 	 * @return 四舍五入后的结果
 	 */
@@ -120,7 +114,6 @@ public final class BigDecimalUtil {
 
 	/**
 	 * 返回两个数中大的一个值.
-	 *
 	 * @param v1 需要被对比的第一个数
 	 * @param v2 需要被对比的第二个数
 	 * @return 返回两个数中大的一个值
@@ -133,7 +126,6 @@ public final class BigDecimalUtil {
 
 	/**
 	 * 返回两个数中小的一个值.
-	 *
 	 * @param v1 需要被对比的第一个数
 	 * @param v2 需要被对比的第二个数
 	 * @return 返回两个数中小的一个值
@@ -146,7 +138,6 @@ public final class BigDecimalUtil {
 
 	/**
 	 * 精确对比两个数字.
-	 *
 	 * @param v1 需要被对比的第一个数
 	 * @param v2 需要被对比的第二个数
 	 * @return 如果两个数一样则返回0，如果第一个数比第二个数大则返回1，反之返回-1

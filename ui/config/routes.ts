@@ -28,4 +28,9 @@ export default [
 		component: './Login',
 		layout: false,
 	},
+	{
+		name: '系统管理',
+		path: '/sys/log/api',
+		component: './Sys/Log/api'
+	}
 ];
