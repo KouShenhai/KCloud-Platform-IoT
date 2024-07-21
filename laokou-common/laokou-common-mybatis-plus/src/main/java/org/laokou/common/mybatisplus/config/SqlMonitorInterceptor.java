@@ -47,7 +47,8 @@ import static org.laokou.common.i18n.common.constant.StringConstant.SPACE;
  */
 @Slf4j
 @RequiredArgsConstructor
-@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})
+@Intercepts({
+		@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
 public class SqlMonitorInterceptor implements Interceptor {
 
 	private final SpringContextUtil springContextUtil;
@@ -61,7 +62,8 @@ public class SqlMonitorInterceptor implements Interceptor {
 		if (target instanceof StatementHandler statementHandler) {
 			// 替换空格、制表符、换页符
 			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", SPACE);
-			springContextUtil.publishEvent(new SqlLogEvent("SQL日志", springContextUtil.getAppName(), sql, time, DateUtil.now()));
+			springContextUtil
+				.publishEvent(new SqlLogEvent("SQL日志", springContextUtil.getAppName(), sql, time, DateUtil.now()));
 			log.info("\nConsume Time：{} ms \nExecute SQL：{}\n", time, sql);
 		}
 		return obj;

@@ -87,7 +87,8 @@ public class ElasticsearchTemplate {
 					if (response.acknowledged()) {
 						log.info("索引：{} -> 创建索引成功", name);
 						return Boolean.TRUE;
-					} else {
+					}
+					else {
 						log.error("索引：{} -> 创建索引失败", name);
 						return Boolean.FALSE;
 					}
@@ -109,7 +110,8 @@ public class ElasticsearchTemplate {
 		boolean acknowledged = createIndexResponse.acknowledged();
 		if (acknowledged) {
 			log.info("索引：{} -> 创建索引成功", name);
-		} else {
+		}
+		else {
 			log.error("索引：{} -> 创建索引失败", name);
 		}
 	}
@@ -124,7 +126,8 @@ public class ElasticsearchTemplate {
 		boolean acknowledged = deleteIndexResponse.acknowledged();
 		if (acknowledged) {
 			log.info("索引：{} -> 删除索引成功", StringUtil.collectionToDelimitedString(names, COMMA));
-		} else {
+		}
+		else {
 			log.error("索引：{} -> 删除索引失败", StringUtil.collectionToDelimitedString(names, COMMA));
 		}
 	}
@@ -140,7 +143,8 @@ public class ElasticsearchTemplate {
 			.index(idx -> idx.index(index).refresh(Refresh.True).id(id).document(obj));
 		if (StringUtil.isNotEmpty(response.result().jsonValue())) {
 			log.info("索引：{} -> 同步索引成功", index);
-		} else {
+		}
+		else {
 			log.error("索引：{} -> 同步索引失败", index);
 		}
 	}
@@ -152,7 +156,8 @@ public class ElasticsearchTemplate {
 				if (StringUtil.isNotEmpty(resp.result().jsonValue())) {
 					log.info("索引：{} -> 异步同步索引成功", index);
 					return Boolean.TRUE;
-				} else {
+				}
+				else {
 					log.error("索引：{} -> 异步同步索引失败", index);
 					return Boolean.FALSE;
 				}
@@ -166,7 +171,8 @@ public class ElasticsearchTemplate {
 			.errors();
 		if (errors) {
 			log.error("索引：{} -> 批量同步索引失败", index);
-		} else {
+		}
+		else {
 			log.info("索引：{} -> 批量同步索引成功", index);
 		}
 	}
@@ -179,7 +185,8 @@ public class ElasticsearchTemplate {
 				if (resp.errors()) {
 					log.error("索引：{} -> 异步批量同步索引失败", index);
 					return Boolean.FALSE;
-				} else {
+				}
+				else {
 					log.info("索引：{} -> 异步批量同步索引成功", index);
 					return Boolean.TRUE;
 				}
@@ -220,7 +227,8 @@ public class ElasticsearchTemplate {
 				Field field = clazz.getDeclaredField(k);
 				field.setAccessible(true);
 				ReflectionUtils.setField(field, source, v.getFirst());
-			} catch (NoSuchFieldException e) {
+			}
+			catch (NoSuchFieldException e) {
 				throw new RuntimeException(e);
 			}
 		});
@@ -231,7 +239,8 @@ public class ElasticsearchTemplate {
 			Field field = source.getClass().getDeclaredField(PRIMARY_KEY);
 			field.setAccessible(true);
 			ReflectionUtils.setField(field, source, id);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("ID赋值失败，错误信息：{}", e.getMessage(), e);
 		}
 	}
@@ -276,7 +285,7 @@ public class ElasticsearchTemplate {
 	}
 
 	private Map<String, co.elastic.clients.elasticsearch.core.search.HighlightField> getHighlightFieldMap(
-		List<Search.HighlightField> fields) {
+			List<Search.HighlightField> fields) {
 		return fields.stream().collect(Collectors.toMap(Search.HighlightField::getName, j -> {
 			co.elastic.clients.elasticsearch.core.search.HighlightField.Builder builder = new co.elastic.clients.elasticsearch.core.search.HighlightField.Builder();
 			builder.fragmentSize(j.getFragmentSize());
@@ -426,11 +435,11 @@ public class ElasticsearchTemplate {
 		boolean eagerGlobalOrdinals = mapping.isEagerGlobalOrdinals();
 		switch (type) {
 			case TEXT -> mappingBuilder.properties(field,
-				fn -> fn.text(t -> t.index(true)
-					.fielddata(fielddata)
-					.eagerGlobalOrdinals(eagerGlobalOrdinals)
-					.searchAnalyzer(searchAnalyzer)
-					.analyzer(analyzer)));
+					fn -> fn.text(t -> t.index(true)
+						.fielddata(fielddata)
+						.eagerGlobalOrdinals(eagerGlobalOrdinals)
+						.searchAnalyzer(searchAnalyzer)
+						.analyzer(analyzer)));
 			case KEYWORD ->
 				mappingBuilder.properties(field, fn -> fn.keyword(t -> t.eagerGlobalOrdinals(eagerGlobalOrdinals)));
 			case LONG -> mappingBuilder.properties(field, fn -> fn.long_(t -> t));
@@ -484,12 +493,12 @@ public class ElasticsearchTemplate {
 		field.setAccessible(true);
 		String value = String.valueOf(ReflectionUtils.getField(field, obj));
 		return new Search.Field(Arrays.asList(names), value, searchField.type(), searchField.query(),
-			searchField.condition());
+				searchField.condition());
 	}
 
 	private Search.Highlight getHighlight(Highlight highlight) {
 		return new Search.Highlight(Arrays.asList(highlight.preTags()), Arrays.asList(highlight.postTags()),
-			highlight.requireFieldMatch(), getHighlightField(highlight.fields()));
+				highlight.requireFieldMatch(), getHighlightField(highlight.fields()));
 	}
 
 	private List<Search.HighlightField> getHighlightField(HighlightField[] fields) {

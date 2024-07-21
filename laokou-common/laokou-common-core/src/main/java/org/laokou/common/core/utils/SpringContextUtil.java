@@ -46,12 +46,12 @@ import java.util.Map;
 public class SpringContextUtil implements ApplicationContextAware, DisposableBean {
 
 	private final Environment environment;
+
 	@Getter
 	private ApplicationContext applicationContext;
 
 	/**
 	 * 获取工厂.
-	 *
 	 * @return 工厂
 	 */
 	public DefaultListableBeanFactory getFactory() {
@@ -60,7 +60,6 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	/**
 	 * 根据名称获取Bean.
-	 *
 	 * @param name 名称
 	 * @return Bean
 	 */
@@ -70,7 +69,6 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	/**
 	 * 根据名称判断Bean.
-	 *
 	 * @param name 名称
 	 * @return 判断结果
 	 */
@@ -80,7 +78,6 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	/**
 	 * 根据名称判断单例.
-	 *
 	 * @param name 名称
 	 * @return 判断结果
 	 */
@@ -90,9 +87,8 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	/**
 	 * 根据类型获取Bean.
-	 *
 	 * @param requiredType 类型
-	 * @param <T>          泛型
+	 * @param <T> 泛型
 	 * @return Bean
 	 */
 	public <T> T getBean(Class<T> requiredType) {
@@ -101,10 +97,9 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	/**
 	 * 根据名称和类型获取Bean.
-	 *
-	 * @param name         名称
+	 * @param name 名称
 	 * @param requiredType 类型
-	 * @param <T>          泛型
+	 * @param <T> 泛型
 	 * @return Bean
 	 */
 	public <T> T getBean(String name, Class<T> requiredType) {
@@ -113,7 +108,6 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	/**
 	 * 根据名称获取类.
-	 *
 	 * @param name 名称
 	 * @return 类
 	 */
@@ -123,9 +117,8 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	/**
 	 * 根据类型获取类.
-	 *
 	 * @param requiredType 类型
-	 * @param <T>          泛型
+	 * @param <T> 泛型
 	 * @return 类
 	 */
 	public <T> Map<String, T> getType(Class<T> requiredType) {
@@ -134,10 +127,9 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	/**
 	 * 注册Bean.
-	 *
-	 * @param clazz    类
+	 * @param clazz 类
 	 * @param beanName 名称
-	 * @param <T>      泛型
+	 * @param <T> 泛型
 	 */
 	public <T> void registerBean(Class<T> clazz, String beanName) {
 		BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(clazz);
@@ -146,7 +138,6 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	/**
 	 * 注销Bean.
-	 *
 	 * @param beanName 名称
 	 */
 	public void removeBean(String beanName) {
@@ -158,7 +149,6 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	/**
 	 * 推送事件.
-	 *
 	 * @param event 事件
 	 */
 	public void publishEvent(ApplicationEvent event) {
@@ -170,7 +160,8 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	public String getAppName() {
 		try {
 			return ObjectUtil.requireNotNull(environment.getProperty("spring.application.name"));
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			return "application";
 		}
 	}

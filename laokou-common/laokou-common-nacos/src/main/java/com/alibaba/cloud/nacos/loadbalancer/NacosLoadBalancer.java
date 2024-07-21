@@ -136,7 +136,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	private final InetIPv6Utils inetIPv6Utils;
 
 	public NacosLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
-							 String serviceId, NacosDiscoveryProperties nacosDiscoveryProperties, InetIPv6Utils inetIPv6Utils) {
+			String serviceId, NacosDiscoveryProperties nacosDiscoveryProperties, InetIPv6Utils inetIPv6Utils) {
 		this.serviceId = serviceId;
 		this.inetIPv6Utils = inetIPv6Utils;
 		this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
@@ -151,14 +151,14 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		String ip = nacosDiscoveryProperties.getIp();
 		if (StringUtils.isNotEmpty(ip)) {
 			ipv6 = Pattern.matches(IPV4_REGEX, ip) ? nacosDiscoveryProperties.getMetadata().get(IPV6_KEY) : ip;
-		} else {
+		}
+		else {
 			ipv6 = inetIPv6Utils.findIPv6Address();
 		}
 	}
 
 	/**
 	 * 根据IP类型过滤服务实例.
-	 *
 	 * @param instances 服务实例
 	 * @return 服务实例列表
 	 */
@@ -170,7 +170,8 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 					if (StringUtils.isNotEmpty(instance.getMetadata().get(IPV6_KEY))) {
 						ipv6InstanceList.add(instance);
 					}
-				} else {
+				}
+				else {
 					ipv6InstanceList.add(instance);
 				}
 			}
@@ -179,7 +180,8 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 				return instances.stream()
 					.filter(instance -> Pattern.matches(IPV4_REGEX, instance.getHost()))
 					.collect(Collectors.toList());
-			} else {
+			}
+			else {
 				return ipv6InstanceList;
 			}
 		}
@@ -190,7 +192,6 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
 	/**
 	 * 路由负载均衡.
-	 *
 	 * @param request 请求
 	 * @return 服务实例（响应式）
 	 */
@@ -204,9 +205,8 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
 	/**
 	 * 路由负载均衡.
-	 *
 	 * @param serviceInstances 服务实例列表
-	 * @param request          请求
+	 * @param request 请求
 	 * @return 服务实例响应体
 	 */
 	private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> serviceInstances, Request<?> request) {
@@ -219,7 +219,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			String path = context.getClientRequest().getUrl().getPath();
 			HttpHeaders headers = context.getClientRequest().getHeaders();
 			if (ReactiveRequestUtil.pathMatcher(HttpMethod.GET.name(), path,
-				Map.of(HttpMethod.GET.name(), Collections.singleton(GRACEFUL_SHUTDOWN_URL)))) {
+					Map.of(HttpMethod.GET.name(), Collections.singleton(GRACEFUL_SHUTDOWN_URL)))) {
 				ServiceInstance serviceInstance = serviceInstances.stream()
 					.filter(instance -> match(instance, headers))
 					.findFirst()
@@ -243,7 +243,6 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
 	/**
 	 * 服务实例响应.
-	 *
 	 * @param serviceInstances 服务实例
 	 * @return 响应结果
 	 */
@@ -263,15 +262,17 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 				if (!CollectionUtils.isEmpty(sameClusterInstances)) {
 					instancesToChoose = sameClusterInstances;
 				}
-			} else {
+			}
+			else {
 				log.warn("A cross-cluster call occurs，name = {}, clusterName = {}, instance = {}", serviceId,
-					clusterName, serviceInstances);
+						clusterName, serviceInstances);
 			}
 			instancesToChoose = this.filterInstanceByIpType(instancesToChoose);
 			// 路由权重
 			ServiceInstance instance = NacosBalancer.getHostByRandomWeight3(instancesToChoose);
 			return new DefaultResponse(instance);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.warn("NacosLoadBalancer error", e);
 			return null;
 		}
@@ -279,7 +280,6 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
 	/**
 	 * 判断服务灰度路由.
-	 *
 	 * @param headers 请求头
 	 * @return 判断结果
 	 */
@@ -290,9 +290,8 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
 	/**
 	 * 根据IP和端口匹配服务节点.
-	 *
 	 * @param serviceInstance 服务实例
-	 * @param headers         请求头
+	 * @param headers 请求头
 	 * @return 匹配结果
 	 */
 	private boolean match(ServiceInstance serviceInstance, HttpHeaders headers) {
@@ -301,7 +300,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		Assert.isTrue(StringUtil.isNotEmpty(host), "service-host is empty");
 		Assert.isTrue(StringUtil.isNotEmpty(port), "service-port is empty");
 		return ObjectUtil.equals(host, serviceInstance.getHost())
-			&& Integer.parseInt(port) == serviceInstance.getPort();
+				&& Integer.parseInt(port) == serviceInstance.getPort();
 	}
 
 }
