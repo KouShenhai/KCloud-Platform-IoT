@@ -17,6 +17,7 @@
 
 package org.laokou.admin.common.utils;
 
+import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
 import com.baomidou.dynamic.datasource.creator.hikaricp.HikariDataSourceCreator;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -30,7 +31,6 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.stereotype.Component;
 
@@ -57,12 +57,15 @@ public class DsUtil {
 
 	private final SourceMapper sourceMapper;
 
-	private final DynamicUtil dynamicUtil;
+	private final HikariDataSourceCreator hikariDataSourceCreator;
+
+	private final DynamicRoutingDataSource dynamicRoutingDataSource;
 
 	private final DefaultConfigProperties defaultConfigProperties;
 
 	/**
 	 * 根据数据源名称加载数据源至本地内存.
+	 *
 	 * @param sourceName 数据源名称
 	 * @return 数据源名称
 	 */
@@ -79,7 +82,7 @@ public class DsUtil {
 	public void addDs(String sourceName, DataSourceProperty properties) {
 		// 校验数据源
 		validateDs(properties);
-		dynamicUtil.getDataSource().addDataSource(sourceName, dataSource(properties));
+		dynamicRoutingDataSource.addDataSource(sourceName, dataSource(properties));
 	}
 
 	public DataSourceProperty properties(SourceDO source) {
@@ -92,7 +95,6 @@ public class DsUtil {
 	}
 
 	private DataSource dataSource(DataSourceProperty properties) {
-		HikariDataSourceCreator hikariDataSourceCreator = dynamicUtil.getHikariDataSourceCreator();
 		return hikariDataSourceCreator.createDataSource(properties);
 	}
 
@@ -103,7 +105,7 @@ public class DsUtil {
 	}
 
 	public boolean validateDs(String sourceName) {
-		return !dynamicUtil.getDataSources().containsKey(sourceName);
+		return !dynamicRoutingDataSource.getDataSources().containsKey(sourceName);
 	}
 
 	@SneakyThrows
@@ -112,8 +114,7 @@ public class DsUtil {
 		PreparedStatement ps = null;
 		try {
 			Class.forName(properties.getDriverClassName());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("加载数据源驱动失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			// throw new DataSourceException(CUSTOM_SERVER_ERROR, "加载数据源驱动失败");
 		}
@@ -121,9 +122,8 @@ public class DsUtil {
 			// 1秒后连接超时
 			DriverManager.setLoginTimeout(1);
 			connection = DriverManager.getConnection(properties.getUrl(), properties.getUsername(),
-					properties.getPassword());
-		}
-		catch (Exception e) {
+				properties.getPassword());
+		} catch (Exception e) {
 			log.error("数据源连接超时，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			throw e;
 			// throw new RuntimeException(CUSTOM_SERVER_ERROR, "数据源连接超时");
@@ -144,8 +144,7 @@ public class DsUtil {
 				list = defaultTenantTables.parallelStream()
 					.filter(table -> !tables.contains(table))
 					.collect(Collectors.toSet());
-			}
-			else {
+			} else {
 				list = defaultTenantTables;
 			}
 			if (CollectionUtil.isNotEmpty(list)) {
@@ -153,8 +152,7 @@ public class DsUtil {
 				// String.format("表 %s 不存在", StringUtil.collectionToDelimitedString(list,
 				// DROP)));
 			}
-		}
-		finally {
+		} finally {
 			if (ObjectUtil.isNotNull(connection)) {
 				connection.close();
 			}

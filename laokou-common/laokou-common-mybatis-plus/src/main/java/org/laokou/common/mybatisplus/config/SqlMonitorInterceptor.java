@@ -17,6 +17,7 @@
 
 package org.laokou.common.mybatisplus.config;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.logging.jdbc.PreparedStatementLogger;
@@ -32,7 +33,6 @@ import org.laokou.common.mybatisplus.handler.event.SqlLogEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Properties;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.SPACE;
 
@@ -46,16 +46,11 @@ import static org.laokou.common.i18n.common.constant.StringConstant.SPACE;
  * @see PreparedStatementLogger
  */
 @Slf4j
-@Intercepts({
-		@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
+@RequiredArgsConstructor
+@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})
 public class SqlMonitorInterceptor implements Interceptor {
 
-	private Properties properties;
-
-	@Override
-	public void setProperties(Properties properties) {
-		this.properties = properties;
-	}
+	private final SpringContextUtil springContextUtil;
 
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
@@ -66,7 +61,7 @@ public class SqlMonitorInterceptor implements Interceptor {
 		if (target instanceof StatementHandler statementHandler) {
 			// 替换空格、制表符、换页符
 			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", SPACE);
-			SpringContextUtil.publishEvent(new SqlLogEvent("SQL日志", getAppName(), sql, time, DateUtil.now()));
+			springContextUtil.publishEvent(new SqlLogEvent("SQL日志", springContextUtil.getAppName(), sql, time, DateUtil.now()));
 			log.info("\nConsume Time：{} ms \nExecute SQL：{}\n", time, sql);
 		}
 		return obj;
@@ -79,14 +74,6 @@ public class SqlMonitorInterceptor implements Interceptor {
 		String str = preparedStatement.toString();
 		int index = str.indexOf("wrapping");
 		return str.substring(index + 9);
-	}
-
-	private String getAppName() {
-		return properties.getProperty("appName");
-	}
-
-	private long getMillis() {
-		return Long.parseLong(properties.getProperty("millis"));
 	}
 
 }

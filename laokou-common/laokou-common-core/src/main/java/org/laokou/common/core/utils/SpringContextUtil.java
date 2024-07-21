@@ -18,6 +18,7 @@
 package org.laokou.common.core.utils;
 
 import io.micrometer.common.lang.NonNullApi;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -44,101 +45,111 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SpringContextUtil implements ApplicationContextAware, DisposableBean {
 
-	private static ApplicationContext applicationContext;
-
 	private final Environment environment;
+	@Getter
+	private ApplicationContext applicationContext;
 
 	/**
 	 * 获取工厂.
+	 *
 	 * @return 工厂
 	 */
-	public static DefaultListableBeanFactory getFactory() {
+	public DefaultListableBeanFactory getFactory() {
 		return (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
 	}
 
 	/**
 	 * 根据名称获取Bean.
+	 *
 	 * @param name 名称
 	 * @return Bean
 	 */
-	public static Object getBean(String name) {
+	public Object getBean(String name) {
 		return applicationContext.getBean(name);
 	}
 
 	/**
-	 * 根据类型获取Bean.
-	 * @param requiredType 类型
-	 * @param <T> 泛型
-	 * @return Bean
-	 */
-	public static <T> T getBean(Class<T> requiredType) {
-		return applicationContext.getBean(requiredType);
-	}
-
-	/**
-	 * 根据名称和类型获取Bean.
-	 * @param name 名称
-	 * @param requiredType 类型
-	 * @param <T> 泛型
-	 * @return Bean
-	 */
-	public static <T> T getBean(String name, Class<T> requiredType) {
-		return applicationContext.getBean(name, requiredType);
-	}
-
-	/**
 	 * 根据名称判断Bean.
+	 *
 	 * @param name 名称
 	 * @return 判断结果
 	 */
-	public static boolean containsBean(String name) {
+	public boolean containsBean(String name) {
 		return applicationContext.containsBean(name);
 	}
 
 	/**
 	 * 根据名称判断单例.
+	 *
 	 * @param name 名称
 	 * @return 判断结果
 	 */
-	public static boolean isSingleton(String name) {
+	public boolean isSingleton(String name) {
 		return applicationContext.isSingleton(name);
 	}
 
 	/**
+	 * 根据类型获取Bean.
+	 *
+	 * @param requiredType 类型
+	 * @param <T>          泛型
+	 * @return Bean
+	 */
+	public <T> T getBean(Class<T> requiredType) {
+		return applicationContext.getBean(requiredType);
+	}
+
+	/**
+	 * 根据名称和类型获取Bean.
+	 *
+	 * @param name         名称
+	 * @param requiredType 类型
+	 * @param <T>          泛型
+	 * @return Bean
+	 */
+	public <T> T getBean(String name, Class<T> requiredType) {
+		return applicationContext.getBean(name, requiredType);
+	}
+
+	/**
 	 * 根据名称获取类.
+	 *
 	 * @param name 名称
 	 * @return 类
 	 */
-	public static Class<?> getType(String name) {
+	public Class<?> getType(String name) {
 		return ObjectUtil.requireNotNull(applicationContext.getType(name));
 	}
 
 	/**
 	 * 根据类型获取类.
+	 *
 	 * @param requiredType 类型
-	 * @param <T> 泛型
+	 * @param <T>          泛型
 	 * @return 类
 	 */
-	public static <T> Map<String, T> getType(Class<T> requiredType) {
+	public <T> Map<String, T> getType(Class<T> requiredType) {
 		return applicationContext.getBeansOfType(requiredType);
 	}
 
 	/**
 	 * 注册Bean.
-	 * @param clazz 类
+	 *
+	 * @param clazz    类
 	 * @param beanName 名称
-	 * @param <T> 泛型
+	 * @param <T>      泛型
 	 */
-	public static <T> void registerBean(Class<T> clazz, String beanName) {
+	public <T> void registerBean(Class<T> clazz, String beanName) {
 		BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(clazz);
 		getFactory().registerBeanDefinition(beanName, beanDefinitionBuilder.getBeanDefinition());
 	}
 
 	/**
 	 * 注销Bean.
+	 *
 	 * @param beanName 名称
 	 */
-	public static void removeBean(String beanName) {
+	public void removeBean(String beanName) {
 		DefaultListableBeanFactory beanFactory = getFactory();
 		if (beanFactory.containsBeanDefinition(beanName)) {
 			beanFactory.removeBeanDefinition(beanName);
@@ -147,9 +158,10 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	/**
 	 * 推送事件.
+	 *
 	 * @param event 事件
 	 */
-	public static void publishEvent(ApplicationEvent event) {
+	public void publishEvent(ApplicationEvent event) {
 		if (ObjectUtil.isNotNull(applicationContext)) {
 			applicationContext.publishEvent(event);
 		}
@@ -158,19 +170,14 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	public String getAppName() {
 		try {
 			return ObjectUtil.requireNotNull(environment.getProperty("spring.application.name"));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return "application";
 		}
 	}
 
-	public ApplicationContext getApplicationContext() {
-		return applicationContext;
-	}
-
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		SpringContextUtil.applicationContext = applicationContext;
+		this.applicationContext = applicationContext;
 	}
 
 	/**

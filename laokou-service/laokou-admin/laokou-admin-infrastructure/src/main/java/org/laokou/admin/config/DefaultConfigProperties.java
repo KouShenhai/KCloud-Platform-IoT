@@ -40,11 +40,6 @@ public class DefaultConfigProperties {
 	private String tenantPrefix;
 
 	/**
-	 * 定义key.
-	 */
-	private String definitionKey;
-
-	/**
 	 * 租户表集合.
 	 */
 	private Set<String> tenantTables = new HashSet<>(0);
