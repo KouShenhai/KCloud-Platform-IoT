@@ -22,6 +22,7 @@ image:https://www.codefactor.io/repository/github/KouShenhai/KCloud-Platform-IoT
 image:https://img.shields.io/github/stars/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub stars,link=https://github.com/KouShenhai/KCloud-Platform-IoT/stargazers]
 image:https://img.shields.io/github/forks/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub forks,link=https://github.com/KouShenhai/KCloud-Platform-IoT/forks]
 image:https://img.shields.io/github/watchers/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub watchers,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
+image:https://cla-assistant.io/readme/badge/KouShenhai/KCloud-Platform-IoT[CLA assistant,link=https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT]
 image:https://img.shields.io/github/last-commit/KouShenhai/KCloud-Platform-IoT[GitHub last commit,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
 
 image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/star.svg?theme=dark[Gitee star,link=https://gitee.com/laokouyun/KCloud-Platform-IoT/stargazers]
@@ -198,7 +199,7 @@ link:性能测试.adoc[请点击我，查看详情]
 
 === 😝 贡献者许可协议
 
-https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT[SAP 个人贡献者许可协议]
+https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT[SAP 贡献者许可协议]
 
 === 😛 用户权益（点个Star，拜托啦~🙏）
 
