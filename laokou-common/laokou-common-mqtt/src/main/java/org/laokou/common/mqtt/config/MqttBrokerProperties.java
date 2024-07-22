@@ -39,9 +39,11 @@ public class MqttBrokerProperties {
 
 	private String clientId = String.valueOf(IdGenerator.defaultSnowflakeId());
 
-	private int qos = 2;
+	private int subscribeQos = 0;
 
-	private boolean clearStart = true;
+	private int sendQos = 1;
+
+	private boolean clearStart = false;
 
 	private int receiveMaximum = 5;
 

@@ -69,7 +69,7 @@ public class MqttClient {
 			client.subscribe(mqttBrokerProperties.getTopics().toArray(String[]::new),
 					mqttBrokerProperties.getTopics()
 						.stream()
-						.mapToInt(item -> mqttBrokerProperties.getQos())
+						.mapToInt(item -> mqttBrokerProperties.getSubscribeQos())
 						.toArray());
 			log.info("MQTT连接成功");
 		}
@@ -93,6 +93,11 @@ public class MqttClient {
 		client.publish(topic, payload.getBytes(StandardCharsets.UTF_8), qos, false);
 	}
 
+	@SneakyThrows
+	public void send(String topic, String payload) {
+		send(topic, payload, mqttBrokerProperties.getSendQos());
+	}
+
 	private MqttConnectionOptions options() {
 		MqttConnectionOptions options = new MqttConnectionOptions();
 		options.setCleanStart(mqttBrokerProperties.isClearStart());
@@ -101,7 +106,7 @@ public class MqttClient {
 		options.setReceiveMaximum(mqttBrokerProperties.getReceiveMaximum());
 		options.setMaximumPacketSize(mqttBrokerProperties.getMaximumPacketSize());
 		options.setWill(WILL_TOPIC,
-				new MqttMessage(WILL_DATA, mqttBrokerProperties.getQos(), false, new MqttProperties()));
+				new MqttMessage(WILL_DATA, mqttBrokerProperties.getSendQos(), false, new MqttProperties()));
 		// 超时时间
 		options.setConnectionTimeout(mqttBrokerProperties.getConnectionTimeout());
 		// 会话心跳
