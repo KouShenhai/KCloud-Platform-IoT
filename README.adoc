@@ -196,6 +196,10 @@ image::https://www.murphysec.com/platform3/v31/badge/1810494453766979584.svg[htt
 
 link:性能测试.adoc[请点击我，查看详情]
 
+=== 😝 贡献者协议
+
+https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT[SAP 个人贡献者许可协议]
+
 === 😛 用户权益（点个Star，拜托啦~🙏）
 
 - 采用Apache2.0开源协议，请保留作者、Copyright信息
