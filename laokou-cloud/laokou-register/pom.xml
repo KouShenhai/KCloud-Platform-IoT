@@ -66,6 +66,10 @@
           <groupId>com.mysql</groupId>
           <artifactId>mysql-connector-j</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.apache.tomcat.embed</groupId>
+          <artifactId>tomcat-embed-websocket</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -99,6 +103,11 @@
           <artifactId>mysql-connector-j</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba.nacos</groupId>
+      <artifactId>nacos-datasource-plugin</artifactId>
+      <version>${nacos.version}</version>
     </dependency>
     <dependency>
       <groupId>io.xuxiaowei.nacos</groupId>
