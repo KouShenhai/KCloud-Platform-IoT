@@ -1,6 +1,6 @@
 import {EllipsisOutlined, SearchOutlined} from '@ant-design/icons';
 import type {ProColumns} from '@ant-design/pro-components';
-import {ProTable, TableDropdown} from '@ant-design/pro-components';
+import {ProTable} from '@ant-design/pro-components';
 import {Button, Dropdown, Input} from 'antd';
 
 export default () => {
@@ -102,16 +102,7 @@ export default () => {
 			key: 'option',
 			valueType: 'option',
 			render: () => [
-				<a key="link">链路</a>,
-				<a key="link2">报警</a>,
-				<a key="link3">监控</a>,
-				<TableDropdown
-					key="actionGroup"
-					menus={[
-						{key: 'copy', name: '复制'},
-						{key: 'delete', name: '删除'},
-					]}
-				/>,
+				<a key="link">查看</a>
 			],
 		},
 	];
@@ -130,6 +121,7 @@ export default () => {
 			rowKey="key"
 			pagination={{
 				showQuickJumper: true,
+				showSizeChanger: true
 			}}
 			search={{
 				layout: 'vertical',
