@@ -19,8 +19,8 @@ package org.laokou.common.mqtt.config;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author laokou
@@ -32,7 +32,7 @@ public class MqttManager {
 
 	private final MqttLoadBalancer mqttLoadBalancer;
 
-	private static final Map<String, MqttClient> MQTT_SESSION_MAP = new HashMap<>(16);
+	private static final Map<String, MqttClient> MQTT_SESSION_MAP = new ConcurrentHashMap<>(16);
 
 	public MqttClient getSession(String key) {
 		return MQTT_SESSION_MAP.get(key);
