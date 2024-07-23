@@ -43,12 +43,13 @@ public final class I18nRequestContextFilter extends OrderedRequestContextFilter 
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-		throws ServletException, IOException {
+			throws ServletException, IOException {
 		ServletRequestAttributes attributes = new ServletRequestAttributes(request, response);
 		initContextHolders(request, attributes);
 		try {
 			filterChain.doFilter(request, response);
-		} finally {
+		}
+		finally {
 			resetContextHolders();
 			if (logger.isTraceEnabled()) {
 				logger.trace("Cleared thread-bound request context: " + request);
@@ -59,8 +60,7 @@ public final class I18nRequestContextFilter extends OrderedRequestContextFilter 
 
 	/**
 	 * 往国际化本地线程变量写入初始化上下文请求的值.
-	 *
-	 * @param request           请求对象
+	 * @param request 请求对象
 	 * @param requestAttributes 请求属性
 	 */
 	private void initContextHolders(HttpServletRequest request, ServletRequestAttributes requestAttributes) {

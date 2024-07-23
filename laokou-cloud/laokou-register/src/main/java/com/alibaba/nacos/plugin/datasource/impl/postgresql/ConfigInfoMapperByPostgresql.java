@@ -37,7 +37,6 @@ import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.alibaba.nacos.common.utils.NamespaceUtil;
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.alibaba.nacos.plugin.datasource.constants.DataSourceConstant;
-import com.alibaba.nacos.plugin.datasource.mapper.AbstractMapper;
 import com.alibaba.nacos.plugin.datasource.mapper.ConfigInfoMapper;
 import com.alibaba.nacos.plugin.datasource.model.MapperContext;
 import com.alibaba.nacos.plugin.datasource.model.MapperResult;
@@ -54,7 +53,7 @@ import java.util.List;
  * @author laokou
  **/
 
-public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements ConfigInfoMapper {
+public class ConfigInfoMapperByPostgresql extends AbstractMapperByPostgresql implements ConfigInfoMapper {
 
 	@Override
 	public String getDataSource() {

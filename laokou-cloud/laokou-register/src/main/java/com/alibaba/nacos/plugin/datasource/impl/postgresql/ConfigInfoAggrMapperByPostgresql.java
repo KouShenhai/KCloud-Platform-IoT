@@ -33,23 +33,21 @@
 
 package com.alibaba.nacos.plugin.datasource.impl.postgresql;
 
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.alibaba.nacos.plugin.datasource.constants.DataSourceConstant;
-import com.alibaba.nacos.plugin.datasource.mapper.AbstractMapper;
-import com.alibaba.nacos.plugin.datasource.mapper.ConfigInfoBetaMapper;
+import com.alibaba.nacos.plugin.datasource.mapper.ConfigInfoAggrMapper;
 import com.alibaba.nacos.plugin.datasource.model.MapperContext;
 import com.alibaba.nacos.plugin.datasource.model.MapperResult;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The postgresql implementation of ConfigInfoBetaMapper.
+ * The postgresql implementation of ConfigInfoAggrMapper.
  *
  * @author hyx
  * @author laokou
  **/
-
-public class ConfigInfoBetaMapperByPostgreSql extends AbstractMapper implements ConfigInfoBetaMapper {
+public class ConfigInfoAggrMapperByPostgresql extends AbstractMapperByPostgresql implements ConfigInfoAggrMapper {
 
 	@Override
 	public String getDataSource() {
@@ -57,15 +55,15 @@ public class ConfigInfoBetaMapperByPostgreSql extends AbstractMapper implements 
 	}
 
 	@Override
-	public MapperResult findAllConfigInfoBetaForDumpAllFetchRows(MapperContext context) {
+	public MapperResult findConfigInfoAggrByPageFetchRows(MapperContext context) {
 		int startRow = context.getStartRow();
 		int pageSize = context.getPageSize();
-		String sql = " SELECT t.id,data_id,group_id,tenant_id,app_name,content,md5,gmt_modified,beta_ips,encrypted_data_key "
-				+ " FROM ( SELECT id FROM config_info_beta  ORDER BY id LIMIT " + pageSize + " OFFSET " + startRow
-				+ " )" + "  g, config_info_beta t WHERE g.id = t.id ";
-		List<Object> paramList = new ArrayList<>(2);
-		paramList.add(startRow);
-		paramList.add(pageSize);
+		String dataId = (String) context.getWhereParameter("dataId");
+		String groupId = (String) context.getWhereParameter("groupId");
+		String tenantId = (String) context.getWhereParameter("tenantId");
+		String sql = "SELECT data_id,group_id,tenant_id,datum_id,app_name,content FROM config_info_aggr WHERE data_id= ? AND "
+				+ "group_id= ? AND tenant_id= ? ORDER BY datum_id LIMIT " + pageSize + " OFFSET " + startRow;
+		List<Object> paramList = CollectionUtils.list(new Object[] { dataId, groupId, tenantId });
 		return new MapperResult(sql, paramList);
 	}
 

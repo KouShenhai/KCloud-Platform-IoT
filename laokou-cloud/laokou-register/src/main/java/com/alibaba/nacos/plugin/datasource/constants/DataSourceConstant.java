@@ -43,16 +43,6 @@ package com.alibaba.nacos.plugin.datasource.constants;
 public class DataSourceConstant {
 
 	/**
-	 * mysql类型.
-	 */
-	public static final String MYSQL = "mysql";
-
-	/**
-	 * derby类型.
-	 */
-	public static final String DERBY = "derby";
-
-	/**
 	 * postgresql类型.
 	 */
 	public static final String POSTGRESQL = "postgresql";

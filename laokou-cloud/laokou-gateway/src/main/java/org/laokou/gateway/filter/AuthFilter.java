@@ -144,7 +144,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			// 表单提交
 			MediaType mediaType = getContentType(request);
 			if (requestURL.contains(TOKEN_URL) && POST.matches(getMethodName(request))
-				&& APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
+					&& APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
 				return decode(exchange, chain);
 			}
 			// 获取token
@@ -155,7 +155,8 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			// 增加令牌
 			return chain
 				.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, token).build()).build());
-		} finally {
+		}
+		finally {
 			I18nReactiveUtil.reset();
 		}
 	}
@@ -167,8 +168,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	/**
 	 * OAuth2解密. see {@link ModifyRequestBodyGatewayFilterFactory}
-	 *
-	 * @param chain    chain
+	 * @param chain chain
 	 * @param exchange exchange
 	 * @return 响应式
 	 */
@@ -176,7 +176,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		ServerRequest serverRequest = ServerRequest.create(exchange, HandlerStrategies.withDefaults().messageReaders());
 		Mono<String> modifiedBody = serverRequest.bodyToMono(String.class).flatMap(decrypt());
 		BodyInserter<Mono<String>, ReactiveHttpOutputMessage> bodyInserter = BodyInserters.fromPublisher(modifiedBody,
-			String.class);
+				String.class);
 		HttpHeaders headers = new HttpHeaders();
 		headers.putAll(exchange.getRequest().getHeaders());
 		headers.remove(CONTENT_LENGTH);
@@ -190,9 +190,8 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	/**
 	 * 释放缓存.
-	 *
 	 * @param outputMessage 输出消息
-	 * @param throwable     异常
+	 * @param throwable 异常
 	 * @return 释放结果
 	 */
 	private Mono<Void> release(CachedBodyOutputMessage outputMessage, Throwable throwable) {
@@ -201,7 +200,6 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	/**
 	 * 用户名/密码 解密.
-	 *
 	 * @return 解密结果
 	 */
 	private Function<String, Mono<String>> decrypt() {
@@ -209,7 +207,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			// 获取请求密码并解密
 			Map<String, String> paramMap = MapUtil.parseParamMap(s);
 			if (ObjectUtil.equals(PASSWORD, paramMap.getOrDefault(GRANT_TYPE, EMPTY)) && paramMap.containsKey(PASSWORD)
-				&& paramMap.containsKey(USERNAME)) {
+					&& paramMap.containsKey(USERNAME)) {
 				log.info("===> OAuth2.1 用户名密码认证模式 <===");
 				try {
 					String password = paramMap.get(PASSWORD);
@@ -221,7 +219,8 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 					if (StringUtil.isNotEmpty(username)) {
 						paramMap.put(USERNAME, RSAUtil.decryptByPrivateKey(username));
 					}
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				}
 			}
@@ -231,14 +230,13 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	/**
 	 * 构建请求装饰器.
-	 *
-	 * @param exchange      服务网络交换机
-	 * @param headers       请求头
+	 * @param exchange 服务网络交换机
+	 * @param headers 请求头
 	 * @param outputMessage 输出消息
 	 * @return 请求装饰器
 	 */
 	private ServerHttpRequestDecorator requestDecorator(ServerWebExchange exchange, HttpHeaders headers,
-														CachedBodyOutputMessage outputMessage) {
+			CachedBodyOutputMessage outputMessage) {
 		return new ServerHttpRequestDecorator(exchange.getRequest()) {
 			@Override
 			@NonNull
@@ -248,7 +246,8 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 				httpHeaders.putAll(super.getHeaders());
 				if (contentLength > 0) {
 					httpHeaders.setContentLength(contentLength);
-				} else {
+				}
+				else {
 					httpHeaders.set(HttpHeaders.TRANSFER_ENCODING, CHUNKED);
 				}
 				return httpHeaders;

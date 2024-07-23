@@ -35,7 +35,6 @@ package com.alibaba.nacos.plugin.datasource.impl.postgresql;
 
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.alibaba.nacos.plugin.datasource.constants.DataSourceConstant;
-import com.alibaba.nacos.plugin.datasource.mapper.AbstractMapper;
 import com.alibaba.nacos.plugin.datasource.mapper.ConfigTagsRelationMapper;
 import com.alibaba.nacos.plugin.datasource.model.MapperContext;
 import com.alibaba.nacos.plugin.datasource.model.MapperResult;
@@ -50,7 +49,8 @@ import java.util.List;
  * @author laokou
  **/
 
-public class ConfigTagsRelationMapperByPostgreSql extends AbstractMapper implements ConfigTagsRelationMapper {
+public class ConfigTagsRelationMapperByPostgresql extends AbstractMapperByPostgresql
+		implements ConfigTagsRelationMapper {
 
 	@Override
 	public String getDataSource() {

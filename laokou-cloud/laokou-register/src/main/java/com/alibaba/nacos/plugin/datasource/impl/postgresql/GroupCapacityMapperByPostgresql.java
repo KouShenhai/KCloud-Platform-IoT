@@ -35,7 +35,6 @@ package com.alibaba.nacos.plugin.datasource.impl.postgresql;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.alibaba.nacos.plugin.datasource.constants.DataSourceConstant;
-import com.alibaba.nacos.plugin.datasource.mapper.AbstractMapper;
 import com.alibaba.nacos.plugin.datasource.mapper.GroupCapacityMapper;
 import com.alibaba.nacos.plugin.datasource.model.MapperContext;
 import com.alibaba.nacos.plugin.datasource.model.MapperResult;
@@ -46,7 +45,7 @@ import com.alibaba.nacos.plugin.datasource.model.MapperResult;
  * @author lixiaoshuang
  * @author laokou
  */
-public class GroupCapacityMapperByPostgreSql extends AbstractMapper implements GroupCapacityMapper {
+public class GroupCapacityMapperByPostgresql extends AbstractMapperByPostgresql implements GroupCapacityMapper {
 
 	@Override
 	public String getDataSource() {
