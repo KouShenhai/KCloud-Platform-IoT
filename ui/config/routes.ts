@@ -30,7 +30,30 @@ export default [
 	},
 	{
 		name: '系统管理',
-		path: '/sys/log/api',
-		component: './Sys/Log/api'
+		icon: 'setting',
+		path: '/sys',
+		routes: [
+			{
+				name: '日志管理',
+				path: '/sys/log',
+				routes: [
+					{
+						name: '登录日志',
+						path: '/sys/log/login',
+						component: './Sys/Log/login'
+					},
+					{
+						name: 'API日志',
+						path: '/sys/log/api',
+						component: './Sys/Log/api'
+					},
+					{
+						name: '领域日志',
+						path: '/sys/log/domain',
+						component: './Sys/Log/domain'
+					}
+				]
+			}
+		]
 	}
 ];

@@ -16,17 +16,16 @@ export async function getInitialState(): Promise<{
 }> {
 	return {
 		name: 'admin',
-		avatar: './1.jpg',
+		avatar: '/1.jpg',
 	};
 }
 
 export const layout = () => {
 	return {
-		logo: './logo.png',
+		logo: '/logo.png',
 		menu: {
 			locale: false,
 		},
-
 		layout: 'mix',
 		splitMenus: false,
 		fixSiderbar: true,
@@ -35,9 +34,8 @@ export const layout = () => {
 		colorPrimary: "#1677FF",
 		fixedHeader: true,
 		siderMenuType: "sub",
-
 		avatarProps: {
-			src: './1.jpg',
+			src: '/1.jpg',
 			size: 'small',
 			title: 'admin',
 			render: (_props: any, dom: string | number | boolean | ReactElement | Iterable<ReactNode> | ReactPortal | null | undefined) => {
