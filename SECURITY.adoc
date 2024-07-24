@@ -1,9 +1,0 @@
-= Spring Boot Version
-
-[width=50%, cols="1,1"]
-|===
-|Version |Security
-
-|3.x.x   |✅
-|2.x.x   |❌
-|===
