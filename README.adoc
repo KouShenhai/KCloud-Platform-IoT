@@ -203,21 +203,15 @@ https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT[SAP 贡献者许可协�
 
 === 😛 用户权益（点个Star，拜托啦~🙏）
 
-- 采用Apache2.0开源协议，请保留作者、Copyright信息【毕设、二开、商用免授权】
-- 采用Apache2.0开源协议，请保留作者、Copyright信息【毕设、二开、商用免授权】
-- 采用Apache2.0开源协议，请保留作者、Copyright信息【毕设、二开、商用免授权】
+- 采用Apache2.0开源协议，请保留作者、Copyright信息【免费用于毕设、二开、商用、二次开源】
+- 采用Apache2.0开源协议，请保留作者、Copyright信息【免费用于毕设、二开、商用、二次开源】
+- 采用Apache2.0开源协议，请保留作者、Copyright信息【免费用于毕设、二开、商用、二次开源】
 
 === 😻 开源协议
 
 KCloud-Platform-IoT 开源软件遵循 https://www.apache.org/licenses/LICENSE-2.0.html[Apache 2.0 协议] 请务必保留作者、Copyright信息
 
-=== 🐰 开源授权
-
-- 二次开源，请联系作者授权【加入授权名单】
-- 二次开源，请联系作者授权【加入授权名单】
-- 二次开源，请联系作者授权【加入授权名单】
-
-=== 🐮 授权名单
+=== 🐮 二次开源登记
 
 [width=100%]
 |===
