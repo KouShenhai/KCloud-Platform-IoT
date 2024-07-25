@@ -38,6 +38,11 @@ public class ReportApp {
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志
 		System.setProperty("nacos.logging.default.config.enabled", "false");
+		// -Dnacos.remote.client.rpc.tls.enable=true
+		// -Dnacos.remote.client.rpc.tls.mutualAuth=true
+		// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
+		// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
+		// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
 		new SpringApplicationBuilder(ReportApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

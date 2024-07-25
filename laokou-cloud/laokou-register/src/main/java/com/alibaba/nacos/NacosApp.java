@@ -40,6 +40,12 @@ public class NacosApp {
 		// @formatter:off
 		// -Dnacos.home => Nacos的根目录
 		// Nacos控制台 => 【http/https】://【ip:8848】/nacos
+		// -Dnacos.remote.server.rpc.tls.enableTls=true
+		// -Dnacos.remote.server.rpc.tls.mutualAuthEnable=true
+		// -Dnacos.remote.server.rpc.tls.compatibility=false
+		// -Dnacos.remote.server.rpc.tls.certChainFile=nacos-server-cert.pem
+		// -Dnacos.remote.server.rpc.tls.certPrivateKey=nacos-server-key.pem
+		// -Dnacos.remote.server.rpc.tls.trustCollectionCertFile=nacos-ca-cert.pem
 		// @formatter:on
 		new SpringApplicationBuilder(NacosApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
