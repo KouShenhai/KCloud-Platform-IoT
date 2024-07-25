@@ -86,7 +86,6 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 
 	/**
 	 * 校验客户端.
-	 *
 	 * @param client 客户端
 	 */
 	private void validateClient(Client client) {

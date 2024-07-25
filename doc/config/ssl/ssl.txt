@@ -15,6 +15,8 @@
  *
  */
 
+---开始---gateway---开始---
+
 生成证书命令（域名）：keytool -genkey -alias laokou-gateway -keyalg RSA -keysize 2048 -storetype PKCS12 -validity 3650 -keystore scg-keystore.p12 -ext san=ip:127.0.0.1,dns:localhost -storepass laokou
 
 nginx证书：openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /opt/key.pem -out /opt/cert.pem
@@ -22,3 +24,15 @@ nginx证书：openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /opt/k
 导出证书：keytool -export -alias laokou-gateway-crt -file gateway.crt -keystore scg-keystore.p12 -storepass laokou
 
 导入JDK（密码：changeit）：keytool -import -alias <别名> -keystore <Java Home路径>\lib\security\cacerts -file <证书名称>
+
+---结束---gateway---结束---
+
+---开始---nacos---开始---
+
+生成私钥：openssl genpkey -algorithm RSA -out nacos-key.pem -pkeyopt rsa_keygen_bits:2048
+
+生成签名：openssl req -new -key nacos-key.pem -out nacos-cert.csr
+
+生成证书：openssl x509 -req -in nacos-cert.csr -signkey nacos-key.pem -out nacos-cert.pem -days 365
+
+---结束---nacos---结束---
