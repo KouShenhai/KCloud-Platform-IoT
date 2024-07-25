@@ -24,6 +24,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
 import java.net.InetAddress;
 
 /**
@@ -44,7 +45,11 @@ public class LogtashApp {
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
-		// -Dtls.enable=true -Dtls.client.authServer=true -Dtls.client.trustCertPath=d:\\nacos.crt
+		// -Dnacos.remote.client.rpc.tls.enable=true
+		// -Dnacos.remote.client.rpc.tls.mutualAuth=true
+		// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
+		// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
+		// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
 		// @formatter:on
 		new SpringApplicationBuilder(LogtashApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
