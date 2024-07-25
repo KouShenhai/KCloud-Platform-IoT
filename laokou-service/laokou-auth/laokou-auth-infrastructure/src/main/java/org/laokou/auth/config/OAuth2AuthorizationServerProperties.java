@@ -56,6 +56,13 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 	private String issuer;
 
 	/**
+	 * Whether multiple issuers are allowed per host. Using path components in the URL of
+	 * the issuer identifier enables supporting multiple issuers per host in a
+	 * multi-tenant hosting configuration.
+	 */
+	private boolean multipleIssuersAllowed = false;
+
+	/**
 	 * Registered clients of the Authorization Server.
 	 */
 	private final Map<String, Client> client = new HashMap<>(0);
@@ -79,6 +86,7 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 
 	/**
 	 * 校验客户端.
+	 *
 	 * @param client 客户端
 	 */
 	private void validateClient(Client client) {

@@ -58,6 +58,7 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 		OAuth2AuthorizationServerProperties.OidcEndpoint oidc = endpoint.getOidc();
 		AuthorizationServerSettings.Builder builder = AuthorizationServerSettings.builder();
 		map.from(this.properties::getIssuer).to(builder::issuer);
+		map.from(this.properties::isMultipleIssuersAllowed).to(builder::multipleIssuersAllowed);
 		map.from(endpoint::getAuthorizationUri).to(builder::authorizationEndpoint);
 		map.from(endpoint::getDeviceAuthorizationUri).to(builder::deviceAuthorizationEndpoint);
 		map.from(endpoint::getDeviceVerificationUri).to(builder::deviceVerificationEndpoint);
@@ -80,7 +81,7 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 	}
 
 	private RegisteredClient getRegisteredClient(String registrationId,
-			OAuth2AuthorizationServerProperties.Client client) {
+												 OAuth2AuthorizationServerProperties.Client client) {
 		OAuth2AuthorizationServerProperties.Registration registration = client.getRegistration();
 		PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
 		RegisteredClient.Builder builder = RegisteredClient.withId(registrationId);
@@ -134,7 +135,7 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 			.as(this::signatureAlgorithm)
 			.to(builder::idTokenSignatureAlgorithm);
 		return serverProperties.getSsl().isEnabled() ? builder.x509CertificateBoundAccessTokens(true).build()
-				: builder.build();
+			: builder.build();
 	}
 
 	private JwsAlgorithm jwsAlgorithm(String signingAlgorithm) {
