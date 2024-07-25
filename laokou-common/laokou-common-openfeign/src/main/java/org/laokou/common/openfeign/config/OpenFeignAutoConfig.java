@@ -111,8 +111,8 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 			msg = String.format("，请求ID：%s", idMap.get(uniqueKey));
 		}
 		log.info("OpenFeign分布式调用，令牌：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}，是否开启灰度路由：{}" + msg, authorization,
-			LogUtil.record(userId), LogUtil.record(username), LogUtil.record(tenantId), LogUtil.record(traceId),
-			LogUtil.record(serviceGray));
+				LogUtil.record(userId), LogUtil.record(username), LogUtil.record(tenantId), LogUtil.record(traceId),
+				LogUtil.record(serviceGray));
 	}
 
 	@Bean

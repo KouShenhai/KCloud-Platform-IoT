@@ -67,7 +67,11 @@ public class AuthApp {
 		// SpringSecurity 子线程读取父线程的上下文
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 		// 请查看 HttpLoginProcessor，https://github.com/alibaba/nacos/pull/3654
-		// -Dtls.enable=true -Dtls.client.authServer=true -Dtls.client.trustCertPath=d:\\nacos.crt
+		// -Dnacos.remote.client.rpc.tls.enable=true
+		// -Dnacos.remote.client.rpc.tls.mutualAuth=true
+		// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
+		// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
+		// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
 		// @formatter:on
 		new SpringApplicationBuilder(AuthApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
