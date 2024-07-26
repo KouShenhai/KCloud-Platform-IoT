@@ -10,7 +10,7 @@
 
   <properties>
     <!--snail-job版本-->
-    <snail-job.version>1.1.0</snail-job.version>
+    <snail-job.version>1.1.1</snail-job.version>
     <!--mybatis-spring版本-->
     <mybatis-spring.version>3.0.3</mybatis-spring.version>
     <!--guava-retrying版本-->
