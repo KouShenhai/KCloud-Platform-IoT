@@ -257,6 +257,7 @@ public final class FuryFactory {
 		FURY.register(net.sf.jsqlparser.statement.select.ForMode.class);
 		FURY.register(net.sf.jsqlparser.statement.select.MySqlSqlCacheFlags.class);
 		FURY.register(net.sf.jsqlparser.statement.select.PlainSelect.BigQuerySelectQualifier.class);
+		FURY.register(net.sf.jsqlparser.statement.update.UpdateModifierPriority.class);
 	}
 
 	public static byte[] serialize(Object object) {

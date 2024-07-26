@@ -43,6 +43,7 @@ public class ReportApp {
 		// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
 		// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
 		// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
+		// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
 		new SpringApplicationBuilder(ReportApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

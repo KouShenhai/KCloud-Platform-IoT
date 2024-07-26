@@ -15,6 +15,13 @@
  *
  */
 
+
+ => laokou123【密码】
+ => zh【国家】
+ => laokouyun【地区、组织、名称】
+ => 2413176044@qq.com【邮箱】
+
+
 ---开始---gateway---开始---
 
 生成证书命令（域名）：keytool -genkey -alias laokou-gateway -keyalg RSA -keysize 2048 -storetype PKCS12 -validity 3650 -keystore scg-keystore.p12 -ext san=ip:127.0.0.1,dns:localhost -storepass laokou
@@ -27,12 +34,39 @@ nginx证书：openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /opt/k
 
 ---结束---gateway---结束---
 
----开始---nacos---开始---
 
-生成私钥：openssl genpkey -algorithm RSA -out nacos-key.pem -pkeyopt rsa_keygen_bits:2048
+---开始---nacos-ca---开始---
 
-生成签名：openssl req -new -key nacos-key.pem -out nacos-cert.csr
+注意：Country Name,State or Province Name,Organization Name
 
-生成证书：openssl x509 -req -in nacos-cert.csr -signkey nacos-key.pem -out nacos-cert.pem -days 365
+生成CA私钥：openssl genrsa -out nacos-ca-key.pem -aes128 2048
 
----结束---nacos---结束---
+生成CA证书：openssl req -new -x509 -key nacos-ca-key.pem -out nacos-ca-cert.pem -days 3650
+
+---结束---nacos-ca---结束---
+
+
+---开始---nacos-server-cert---开始---
+
+生成私钥：openssl genrsa -out nacos-server-key.pem -aes128 2048
+
+生成签名：openssl req -new -key nacos-server-key.pem -out nacos-server-csr.pem
+
+生成证书：openssl ca -in nacos-server-csr.pem -cert nacos-ca-cert.pem -keyfile nacos-ca-key.pem -out nacos-server-cert.pem -days 3650
+
+报错修改：根据报错提醒创建/CA/newcerts并授权，创建index.txt和serial并写入01
+
+---结束---nacos-server-cert---结束---
+
+
+---开始---nacos-client-cert---开始---
+
+生成私钥：openssl genrsa -out nacos-client-key.pem -aes128 2048
+
+生成签名：openssl req -new -key nacos-client-key.pem -out nacos-client-csr.pem
+
+生成证书：openssl ca -in nacos-client-csr.pem -cert nacos-ca-cert.pem -keyfile nacos-ca-key.pem -out nacos-client-cert.pem -days 3650
+
+报错修改：根据报错提醒创建/CA/newcerts并授权，创建index.txt和serial并写入01
+
+---结束---nacos-client-cert---结束---

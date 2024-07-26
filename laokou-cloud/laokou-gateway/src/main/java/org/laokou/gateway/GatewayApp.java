@@ -61,6 +61,7 @@ public class GatewayApp {
 		// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
 		// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
 		// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
+		// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
 		// @formatter:on
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}

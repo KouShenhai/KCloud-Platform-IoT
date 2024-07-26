@@ -46,6 +46,7 @@ public class NacosApp {
 		// -Dnacos.remote.server.rpc.tls.certChainFile=nacos-server-cert.pem
 		// -Dnacos.remote.server.rpc.tls.certPrivateKey=nacos-server-key.pem
 		// -Dnacos.remote.server.rpc.tls.trustCollectionCertFile=nacos-ca-cert.pem
+		// -Dnacos.remote.server.rpc.tls.certPrivateKeyPassword=laokou123
 		// @formatter:on
 		new SpringApplicationBuilder(NacosApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
