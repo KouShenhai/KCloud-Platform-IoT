@@ -48,9 +48,6 @@ spring:
           - data-id: application-common.yaml
             group: ${NACOS-GROUP}
             refresh: true
-          - data-id: application-common-seata.yaml
-            group: ${NACOS-GROUP}
-            refresh: true
           - data-id: application-common-elasticsearch.yaml
             group: ${NACOS-GROUP}
             refresh: true

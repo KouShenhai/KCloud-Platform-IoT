@@ -90,7 +90,6 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 |Spring Authorization Server |1.3.1
 |Mybatis Plus                |3.5.7
 |Nacos                       |2.4.0.1
-|Seata                       |2.0.0
 |Sentinel                    |1.8.8
 |Redis                       |7.2.5
 |Elasticsearch               |8.14.3
@@ -113,7 +112,7 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
 - 负载均衡：Spring Cloud Loadbalancer
 - 服务熔断&降级&限流：Sentinel
 - 分库分表：Mybatis Plus
-- 分布式事务：Seata & RocketMQ
+- 分布式事务：RocketMQ
 - 消息队列：RocketMQ & Kafka & MQTT
 - 服务监控：Spring Boot Admin & Prometheus
 - 高亮搜索：Elasticsearch
@@ -167,7 +166,6 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
         └── laokou-common-openfeign                --- 远程调用组件
         └── laokou-common-data-cache               --- 数据缓存组件
         └── laokou-common-mybatis-plus             --- 对象映射组件
-        └── laokou-common-seata                    --- 分布式事务组件
         └── laokou-common-tdengine                 --- 时序数据库组件
         └── laokou-common-sentinel                 --- 服务限流&熔断降级组件
 ├── laokou-cloud
@@ -175,7 +173,6 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
         └── laokou-monitor                         --- 服务监控
         └── laokou-register                        --- 服务治理
         └── laokou-sentinel                        --- 流量治理
-        └── laokou-seata                           --- 分布式事务
         └── laokou-snail-job                       --- 分布式任务调度
 ├── laokou-service
         └── laokou-iot                             --- 物联网模块

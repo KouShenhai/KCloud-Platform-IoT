@@ -17,7 +17,7 @@
  *
  */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <groupId>org.laokou</groupId>
@@ -33,7 +33,6 @@
     <module>laokou-gateway</module>
     <module>laokou-monitor</module>
     <module>laokou-register</module>
-    <module>laokou-seata</module>
     <module>laokou-sentinel</module>
     <module>laokou-snail-job</module>
   </modules>

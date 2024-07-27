@@ -65,16 +65,6 @@ public final class SystemException extends GlobalException {
 	public static final String FLOWED = "S_Sentinel_Flowed";
 
 	/**
-	 * 分布式事务已宕机.
-	 */
-	public static final String DISTRIBUTED_TRANSACTION_DOWNTIME = "S_Seata_TransactionDowntime";
-
-	/**
-	 * 分布式事务已超时.
-	 */
-	public static final String DISTRIBUTED_TRANSACTION_TIMEOUT = "S_Seata_TransactionTimeout";
-
-	/**
 	 * 表不存在.
 	 */
 	public static final String TABLE_NOT_EXIST = "S_DS_TableNotExist";

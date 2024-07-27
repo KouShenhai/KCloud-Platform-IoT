@@ -189,10 +189,6 @@
         <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-        <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
-        <SEATA-USERNAME>seata</SEATA-USERNAME>
-        <SEATA-PASSWORD>seata</SEATA-PASSWORD>
-        <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
         <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
         <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
         <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
@@ -235,10 +231,6 @@
         <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-        <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
-        <SEATA-USERNAME>seata</SEATA-USERNAME>
-        <SEATA-PASSWORD>seata</SEATA-PASSWORD>
-        <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
         <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
         <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
         <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
@@ -309,14 +301,6 @@
         <NACOS-USERNAME>${NACOS_USERNAME:nacos}</NACOS-USERNAME>
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-PASSWORD>${NACOS_PASSWORD:nacos}</NACOS-PASSWORD>
-        <!--suppress UnresolvedMavenProperty -->
-        <SEATA-GROUP>${SEATA_GROUP:SEATA_GROUP}</SEATA-GROUP>
-        <!--suppress UnresolvedMavenProperty -->
-        <SEATA-USERNAME>${SEATA_USERNAME:seata}</SEATA-USERNAME>
-        <!--suppress UnresolvedMavenProperty -->
-        <SEATA-PASSWORD>${SEATA_PASSWORD:seata}</SEATA-PASSWORD>
-        <!--suppress UnresolvedMavenProperty -->
-        <SEATA-LOG-PATH>${SEATA_LOG_PATH:/opt}</SEATA-LOG-PATH>
         <!--suppress UnresolvedMavenProperty -->
         <SENTINEL-USERNAME>${SENTINEL_USERNAME:sentinel}</SENTINEL-USERNAME>
         <!--suppress UnresolvedMavenProperty -->

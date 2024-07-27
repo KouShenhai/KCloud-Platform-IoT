@@ -120,12 +120,26 @@
     <!--jsqlparser版本-->
     <jsqlparser.version>5.0</jsqlparser.version>
     <!--grpc-netty版本-->
-    <grpc-netty.version>1.65.1</grpc-netty.version>
+    <grpc-netty.version>1.64.2</grpc-netty.version>
+    <!--proto-google-common-protos版本-->
+    <proto-google-common-protos.version>2.29.0</proto-google-common-protos.version>
+    <!--error_prone_annotations版本-->
+    <error_prone_annotations.version>2.23.0</error_prone_annotations.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.google.errorprone</groupId>
+        <artifactId>error_prone_annotations</artifactId>
+        <version>${error_prone_annotations.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.api.grpc</groupId>
+        <artifactId>proto-google-common-protos</artifactId>
+        <version>${proto-google-common-protos.version}</version>
+      </dependency>
       <dependency>
         <groupId>io.grpc</groupId>
         <artifactId>grpc-netty</artifactId>
@@ -600,11 +614,6 @@
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-seata</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
         <version>${guava.version}</version>
@@ -677,11 +686,6 @@
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-common-openapi-doc</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-seata</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>

@@ -46,7 +46,7 @@
 |负载均衡                    |Spring Cloud Loadbalancer
 |服务熔断&降级&限流            |Sentinel
 |分库分表                    |Mybatis Plus
-|分布式事务                   |Seata & RocketMQ
+|分布式事务                   |RocketMQ
 |消息队列                    |RocketMQ & Kafka & MQTT
 |服务监控                    |Spring Boot Admin & Prometheus
 |高亮搜索                    |Elasticsearch

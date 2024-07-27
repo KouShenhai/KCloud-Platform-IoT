@@ -6,9 +6,6 @@ S_Sentinel_SystemBlocked
 S_Sentinel_ParamFlowed
 S_Sentinel_Authority
 
-S_Seata_TransactionTimeout
-S_Seata_TransactionDowntime
-
 S_Ip_Blacked
 S_Ip_Restricted
 
