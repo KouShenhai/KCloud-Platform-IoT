@@ -38,11 +38,6 @@ public class DomainEventDO extends BaseDO {
 	private String eventType;
 
 	/**
-	 * 事件状态.
-	 */
-	private String eventStatus;
-
-	/**
 	 * 数据源名称.
 	 */
 	private String sourceName;
@@ -66,10 +61,5 @@ public class DomainEventDO extends BaseDO {
 	 * 聚合根ID.
 	 */
 	private Long aggregateId;
-
-	/**
-	 * 扩展属性.
-	 */
-	private String attribute;
 
 }

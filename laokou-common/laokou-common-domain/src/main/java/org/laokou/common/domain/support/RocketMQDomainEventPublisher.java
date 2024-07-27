@@ -20,12 +20,8 @@ package org.laokou.common.domain.support;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CREATE_EVENT_TOPIC;
-import static org.laokou.common.domain.constant.MqConstant.LAOKOU_MODIFY_EVENT_TOPIC;
 
 @RequiredArgsConstructor
 @Component("domainEventPublisher")
@@ -34,27 +30,9 @@ public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 	private final RocketMqTemplate rocketMqTemplate;
 
 	@Override
-	public <ID> void publishToCreate(DomainEvent<ID> payload) {
-		String traceId = String.valueOf(IdGenerator.defaultSnowflakeId());
-		rocketMqTemplate.sendAsyncMessage(LAOKOU_CREATE_EVENT_TOPIC, payload, traceId);
-
-	}
-
-	@Override
-	public <ID> void publishToModify(DomainEvent<ID> payload) {
-		String traceId = String.valueOf(IdGenerator.defaultSnowflakeId());
-		rocketMqTemplate.sendAsyncMessage(LAOKOU_MODIFY_EVENT_TOPIC, payload, traceId);
-	}
-
-	@Override
-	public void publish(String topic, String tag, Object payload) {
-		String traceId = String.valueOf(IdGenerator.defaultSnowflakeId());
-		if (StringUtil.isNotEmpty(tag)) {
-			rocketMqTemplate.sendAsyncMessage(topic, tag, payload, traceId);
-		}
-		else {
-			rocketMqTemplate.sendAsyncMessage(topic, payload, traceId);
-		}
+	public void publishToCreate(DomainEvent<Long> payload) {
+		rocketMqTemplate.sendTransactionMessage(payload.getTopic(), payload.getTag(), payload, payload.getId(),
+			IdGenerator.defaultSnowflakeId());
 	}
 
 }

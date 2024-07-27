@@ -56,9 +56,10 @@ public class JacksonUtil {
 
 	/**
 	 * json字符转Bean.
-	 * @param json json json字符串
-	 * @param clazz class 类
-	 * @param <T> type 类型
+	 *
+	 * @param json  json字符串
+	 * @param clazz 类
+	 * @param <T>   类型
 	 * @return Bean
 	 */
 	@SneakyThrows
@@ -68,9 +69,24 @@ public class JacksonUtil {
 	}
 
 	/**
+	 * json字符转Bean.
+	 *
+	 * @param arr   字节数组
+	 * @param clazz 类
+	 * @param <T>   类型
+	 * @return Bean
+	 */
+	@SneakyThrows
+	public static <T> T toBean(byte[] arr, Class<T> clazz) {
+		return MAPPER.readValue(arr, javaType(clazz));
+
+	}
+
+	/**
 	 * 创建JavaType.
+	 *
 	 * @param clazz 类型
-	 * @param <T> 泛型
+	 * @param <T>   泛型
 	 * @return JavaType
 	 */
 	public static <T> JavaType javaType(Class<T> clazz) {
@@ -79,9 +95,10 @@ public class JacksonUtil {
 
 	/**
 	 * 流转为Bean.
+	 *
 	 * @param inputStream 流
-	 * @param clazz 类
-	 * @param <T> 泛型
+	 * @param clazz       类
+	 * @param <T>         泛型
 	 * @return Bean
 	 */
 	@SneakyThrows
@@ -91,6 +108,7 @@ public class JacksonUtil {
 
 	/**
 	 * 序列化为json字符串.
+	 *
 	 * @param obj 对象
 	 * @return json字符串
 	 */
@@ -101,7 +119,8 @@ public class JacksonUtil {
 
 	/**
 	 * 序列化为字符串.
-	 * @param obj 对象
+	 *
+	 * @param obj      对象
 	 * @param isFormat 是否格式化
 	 * @return json字符串
 	 */
@@ -118,9 +137,10 @@ public class JacksonUtil {
 
 	/**
 	 * json字符串转对象集合.
-	 * @param json json数组
+	 *
+	 * @param json  json数组
 	 * @param clazz 类型
-	 * @param <T> 泛型
+	 * @param <T>   泛型
 	 * @return 对象集合
 	 */
 	@SneakyThrows
@@ -134,11 +154,12 @@ public class JacksonUtil {
 
 	/**
 	 * Json反序列化Map.
-	 * @param json json字符串
-	 * @param keyClass K 键类
+	 *
+	 * @param json       json字符串
+	 * @param keyClass   K 键类
 	 * @param valueClass V 值类
-	 * @param <K> 键泛型
-	 * @param <V> 值泛型
+	 * @param <K>        键泛型
+	 * @param <V>        值泛型
 	 * @return map
 	 */
 	@SneakyThrows
@@ -148,10 +169,11 @@ public class JacksonUtil {
 
 	/**
 	 * 创建mapType.
-	 * @param keyClass 键类
+	 *
+	 * @param keyClass   键类
 	 * @param valueClass 值类
-	 * @param <K> 键泛型
-	 * @param <V> 值泛型
+	 * @param <K>        键泛型
+	 * @param <V>        值泛型
 	 * @return MapType
 	 */
 	public static <K, V> MapType mapType(Class<K> keyClass, Class<V> valueClass) {
@@ -160,9 +182,10 @@ public class JacksonUtil {
 
 	/**
 	 * Map转对象.
-	 * @param obj 对象
+	 *
+	 * @param obj   对象
 	 * @param clazz 类型
-	 * @param <T> 泛型
+	 * @param <T>   泛型
 	 * @return 对象
 	 */
 	public static <T> T toValue(Object obj, Class<T> clazz) {
@@ -171,12 +194,13 @@ public class JacksonUtil {
 
 	/**
 	 * Map转对象.
-	 * @param obj 对象
-	 * @param keyClass 键类
+	 *
+	 * @param obj        对象
+	 * @param keyClass   键类
 	 * @param valueClass 值类
-	 * @param <K> 键泛型
-	 * @param <T> 泛型
-	 * @param <V> 值泛型
+	 * @param <K>        键泛型
+	 * @param <T>        泛型
+	 * @param <V>        值泛型
 	 * @return 对象
 	 */
 	public static <T, K, V> T toMap(Object obj, Class<K> keyClass, Class<V> valueClass) {
@@ -185,6 +209,7 @@ public class JacksonUtil {
 
 	/**
 	 * json字符串转树节点.
+	 *
 	 * @param json json字符串
 	 * @return 树节点
 	 */

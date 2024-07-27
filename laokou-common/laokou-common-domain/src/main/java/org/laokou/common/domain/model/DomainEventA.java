@@ -56,21 +56,14 @@ public class DomainEventA extends AggregateRoot<Long> {
 	 */
 	private Long aggregateId;
 
-	/**
-	 * 扩展属性.
-	 */
-	private String attribute;
-
-	public DomainEventA(String json, DefaultDomainEvent domainEvent) {
+	public DomainEventA(DefaultDomainEvent domainEvent) {
 		this.id = domainEvent.getId();
-		this.attribute = json;
 		this.tenantId = domainEvent.getTenantId();
 		this.deptId = domainEvent.getDeptId();
 		this.deptPath = domainEvent.getDeptPath();
 		this.creator = domainEvent.getCreator();
 		this.editor = domainEvent.getEditor();
 		this.eventType = domainEvent.getEventType().name();
-		this.eventStatus = domainEvent.getEventStatus().name();
 		this.sourceName = domainEvent.getSourceName();
 		this.appName = domainEvent.getAppName();
 		this.aggregateId = domainEvent.getAggregateId();

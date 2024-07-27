@@ -20,7 +20,6 @@ package org.laokou.common.i18n.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.common.constant.EventStatus;
 import org.laokou.common.i18n.common.constant.EventType;
 
 import java.io.Serial;
@@ -54,11 +53,6 @@ public abstract class DomainEvent<ID> implements Serializable {
 	 * 事件类型.
 	 */
 	protected EventType eventType;
-
-	/**
-	 * 事件状态.
-	 */
-	protected EventStatus eventStatus;
 
 	/**
 	 * MQ主题.

@@ -23,10 +23,12 @@ import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 
 import static org.apache.rocketmq.client.producer.SendStatus.SEND_OK;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
 /**
@@ -230,14 +232,27 @@ public class RocketMqTemplate {
 	 * @param topic 主题
 	 * @param payload 消息
 	 * @param transactionId 事务ID
+	 * @param traceId 链路ID
 	 * @param <T> 泛型
-	 * @return 发送结果
 	 */
-	public <T> boolean sendTransactionMessage(String topic, T payload, Long transactionId) {
+	public <T> void sendTransactionMessage(String topic, T payload, Long transactionId, Long traceId) {
+		sendTransactionMessage(topic, EMPTY, payload, transactionId, traceId);
+	}
+
+	/**
+	 * 事务消息.
+	 * @param topic 主题
+	 * @param payload 消息
+	 * @param transactionId 事务ID
+	 * @param traceId 链路ID
+	 * @param <T> 泛型
+	 */
+	public <T> void sendTransactionMessage(String topic, String tag, T payload, Long transactionId, Long traceId) {
 		Message<T> message = MessageBuilder.withPayload(payload)
 			.setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId)
+			.setHeader(TRACE_ID, traceId)
 			.build();
-		return rocketMQTemplate.sendMessageInTransaction(topic, message, null).getSendStatus().equals(SEND_OK);
+		rocketMQTemplate.sendMessageInTransaction(getTopicTag(topic, tag), message, null);
 	}
 
 	/**
@@ -264,7 +279,7 @@ public class RocketMqTemplate {
 	}
 
 	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message) {
-		rocketMQTemplate.asyncSend(String.format(TOPIC_TAG, topic, tag), message, new SendCallback() {
+		rocketMQTemplate.asyncSend(getTopicTag(topic, tag), message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("RocketMQ异步消息发送成功【Tag标签，默认超时时间】");
@@ -278,7 +293,7 @@ public class RocketMqTemplate {
 	}
 
 	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message, long timeout) {
-		rocketMQTemplate.asyncSend(String.format(TOPIC_TAG, topic, tag), message, new SendCallback() {
+		rocketMQTemplate.asyncSend(getTopicTag(topic, tag), message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("RocketMQ异步消息发送成功【Tag标签，指定超时时间】");
@@ -317,6 +332,10 @@ public class RocketMqTemplate {
 				log.error("RocketMQ异步消息发送失败【无Tag标签，默认超时时间】，报错信息", throwable);
 			}
 		});
+	}
+
+	private String getTopicTag(String topic, String tag) {
+		return StringUtil.isEmpty(tag) ? topic : String.format(TOPIC_TAG, topic, tag);
 	}
 
 }

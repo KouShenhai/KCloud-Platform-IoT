@@ -19,7 +19,6 @@ package org.laokou.common.i18n.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.common.constant.EventStatus;
 import org.laokou.common.i18n.common.constant.EventType;
 
 import java.time.LocalDateTime;
@@ -39,7 +38,7 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 	}
 
 	public void create(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
-			EventStatus eventStatus, LocalDateTime timestamp) {
+			LocalDateTime timestamp) {
 		generatorId();
 		super.tenantId = aggregateRoot.getTenantId();
 		super.deptId = aggregateRoot.getDeptId();
@@ -47,7 +46,6 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.creator = aggregateRoot.getCreator();
 		super.editor = aggregateRoot.getEditor();
 		super.eventType = eventType;
-		super.eventStatus = eventStatus;
 		super.sourceName = aggregateRoot.getSourceName();
 		super.appName = aggregateRoot.getAppName();
 		super.aggregateId = aggregateRoot.getId();
@@ -57,12 +55,11 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.updateDate = timestamp;
 	}
 
-	public void create(String topic, String tag, EventType eventType, EventStatus eventStatus, String appName,
-			String sourceName, LocalDateTime timestamp, Long aggregateId) {
+	public void create(String topic, String tag, EventType eventType, String appName, String sourceName,
+			LocalDateTime timestamp, Long aggregateId) {
 		generatorId();
 		super.aggregateId = aggregateId;
 		super.eventType = eventType;
-		super.eventStatus = eventStatus;
 		super.tag = tag;
 		super.topic = topic;
 		super.createDate = timestamp;

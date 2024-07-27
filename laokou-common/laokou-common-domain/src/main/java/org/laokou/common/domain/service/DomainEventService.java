@@ -28,6 +28,6 @@ public interface DomainEventService {
 
 	void create(DomainEventA domainEventA);
 
-	void update(DomainEventA domainEventA);
+	Long count(Long id);
 
 }

@@ -18,6 +18,7 @@
 package org.laokou.common.domain.service.impl;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.domain.convertor.DomainEventConvertor;
@@ -27,7 +28,6 @@ import org.laokou.common.domain.model.DomainEventA;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -54,39 +54,20 @@ public class DomainEventServiceImpl implements DomainEventService {
 				try {
 					DomainEventDO eventDO = domainEventConvertor.toDataObject(domainEventA);
 					domainEventMapper.insert(eventDO);
-				}
-				catch (Exception e) {
-					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-					r.setRollbackOnly();
-					if (!(e instanceof DataIntegrityViolationException)) {
-						throw new RuntimeException(LogUtil.record(e.getMessage()));
-					}
-				}
-			});
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
-	}
-
-	@Override
-	public void update(DomainEventA domainEventA) {
-		try {
-			DynamicDataSourceContextHolder.push(DOMAIN);
-			transactionalUtil.defaultExecuteWithoutResult(r -> {
-				try {
-					domainEventMapper.updateStatusById(domainEventA.getId());
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 					r.setRollbackOnly();
 					throw new RuntimeException(LogUtil.record(e.getMessage()));
 				}
 			});
-		}
-		finally {
+		} finally {
 			DynamicDataSourceContextHolder.clear();
 		}
+	}
+
+	@Override
+	public Long count(Long id) {
+		return domainEventMapper.selectCount(Wrappers.lambdaQuery(DomainEventDO.class).eq(DomainEventDO::getId, id));
 	}
 
 }

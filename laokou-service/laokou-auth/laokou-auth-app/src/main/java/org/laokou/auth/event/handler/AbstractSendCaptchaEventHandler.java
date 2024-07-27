@@ -27,7 +27,6 @@ import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 import static org.laokou.auth.common.constant.MqConstant.API_TAG;
 import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOG_TOPIC;
-import static org.laokou.common.i18n.common.constant.EventStatus.CREATED;
 import static org.laokou.common.i18n.common.constant.EventType.API;
 
 /**
@@ -44,7 +43,7 @@ public abstract class AbstractSendCaptchaEventHandler extends AbstractDomainEven
 		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
 		ApiLog apiLog = getApiLog(event);
 		CallApiEvent callApiEvent = new CallApiEvent(apiLog);
-		callApiEvent.create(LAOKOU_LOG_TOPIC, API_TAG, API, CREATED, event.getAppName(), event.getSourceName(),
+		callApiEvent.create(LAOKOU_LOG_TOPIC, API_TAG, API, event.getAppName(), event.getSourceName(),
 				apiLog.getTimestamp(), event.getAggregateId());
 		domainEventPublisher.publishToCreate(callApiEvent);
 	}

@@ -15,23 +15,7 @@
  *
  */
 
-package org.laokou.common.domain.constant;
-
 /**
  * @author laokou
  */
-public final class MqConstant {
-
-	public static final String LAOKOU_CREATE_EVENT_TOPIC = "laokou_create_event_topic";
-
-	public static final String LAOKOU_CREATE_EVENT_CONSUMER_GROUP = "laokou_create_event_consumer_group";
-
-	public static final String LAOKOU_MODIFY_EVENT_CONSUMER_GROUP = "laokou_modify_event_consumer_group";
-
-	public static final String LAOKOU_MODIFY_EVENT_TOPIC = "laokou_modify_event_topic";
-
-	private MqConstant() {
-
-	}
-
-}
+package org.laokou.common.rocketmq.handler;

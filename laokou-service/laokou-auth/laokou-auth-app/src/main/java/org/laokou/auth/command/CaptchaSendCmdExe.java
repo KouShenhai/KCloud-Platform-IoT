@@ -37,7 +37,6 @@ import org.springframework.stereotype.Component;
 import static org.laokou.auth.common.constant.Constant.SCENARIO;
 import static org.laokou.auth.common.constant.Constant.USE_CASE_CAPTCHA;
 import static org.laokou.auth.common.constant.MqConstant.LAOKOU_CAPTCHA_TOPIC;
-import static org.laokou.common.i18n.common.constant.EventStatus.CREATED;
 import static org.laokou.common.i18n.common.constant.EventType.CAPTCHA;
 import static org.laokou.common.i18n.common.exception.AuthException.OAUTH2_SOURCE_NOT_EXIST;
 
@@ -59,12 +58,12 @@ public class CaptchaSendCmdExe {
 	public void executeVoid(CaptchaSendCmd cmd) {
 		// 校验
 		extensionExecutor.executeVoid(CaptchaValidatorExtPt.class,
-				BizScenario.valueOf(cmd.getTag(), USE_CASE_CAPTCHA, SCENARIO),
-				extension -> extension.validate(cmd.getUuid()));
+			BizScenario.valueOf(cmd.getTag(), USE_CASE_CAPTCHA, SCENARIO),
+			extension -> extension.validate(cmd.getUuid()));
 		// 发布发送验证码事件
 		SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getTag(), cmd.getUuid());
-		sendCaptchaEvent.create(LAOKOU_CAPTCHA_TOPIC, cmd.getTag(), CAPTCHA, CREATED, springContextUtil.getAppName(),
-				getSourceName(cmd.getTenantId()), DateUtil.now(), IdGenerator.defaultSnowflakeId());
+		sendCaptchaEvent.create(LAOKOU_CAPTCHA_TOPIC, cmd.getTag(), CAPTCHA, springContextUtil.getAppName(),
+			getSourceName(cmd.getTenantId()), DateUtil.now(), IdGenerator.defaultSnowflakeId());
 		domainEventPublisher.publishToCreate(sendCaptchaEvent);
 	}
 

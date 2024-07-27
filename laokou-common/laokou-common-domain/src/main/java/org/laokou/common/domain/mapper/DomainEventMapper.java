@@ -18,7 +18,6 @@
 package org.laokou.common.domain.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.laokou.common.domain.entity.DomainEventDO;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
@@ -29,7 +28,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface DomainEventMapper extends CrudMapper<Long, Integer, DomainEventDO> {
-
-	void updateStatusById(@Param("id") Long id);
 
 }

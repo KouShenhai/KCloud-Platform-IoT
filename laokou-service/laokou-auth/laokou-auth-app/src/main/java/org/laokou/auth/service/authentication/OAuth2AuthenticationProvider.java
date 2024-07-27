@@ -41,7 +41,6 @@ import static org.laokou.auth.common.constant.Constant.SCENARIO;
 import static org.laokou.auth.common.constant.Constant.USE_CASE_AUTH;
 import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOG_TOPIC;
 import static org.laokou.auth.common.constant.MqConstant.LOGIN_TAG;
-import static org.laokou.common.i18n.common.constant.EventStatus.CREATED;
 import static org.laokou.common.i18n.common.constant.EventType.LOGIN;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
@@ -92,7 +91,7 @@ public class OAuth2AuthenticationProvider {
 	private LoginEvent to(AuthA auth) {
 		LogV log = auth.getLog();
 		LoginEvent loginEvent = loginLogConvertor.convertClientObject(log);
-		loginEvent.create(auth, LAOKOU_LOG_TOPIC, LOGIN_TAG, LOGIN, CREATED, log.timestamp());
+		loginEvent.create(auth, LAOKOU_LOG_TOPIC, LOGIN_TAG, LOGIN, log.timestamp());
 		return loginEvent;
 	}
 
