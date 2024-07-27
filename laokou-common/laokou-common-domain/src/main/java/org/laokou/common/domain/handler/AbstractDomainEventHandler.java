@@ -45,10 +45,13 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 			ThreadContext.put(TRACE_ID, traceId);
 			String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
 			handleDomainEvent(convert(msg));
-		} catch (Exception e) {
-			log.error("消费失败，主题Topic：{}，偏移量Offset：{}，错误信息：{}", messageExt.getTopic(), messageExt.getCommitLogOffset(), e.getMessage(), e);
+		}
+		catch (Exception e) {
+			log.error("消费失败，主题Topic：{}，偏移量Offset：{}，错误信息：{}", messageExt.getTopic(), messageExt.getCommitLogOffset(),
+					e.getMessage(), e);
 			throw e;
-		} finally {
+		}
+		finally {
 			ThreadContext.clearMap();
 		}
 	}

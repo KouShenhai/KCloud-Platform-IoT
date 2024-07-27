@@ -32,7 +32,7 @@ public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 	@Override
 	public void publishToCreate(DomainEvent<Long> payload) {
 		rocketMqTemplate.sendTransactionMessage(payload.getTopic(), payload.getTag(), payload, payload.getId(),
-			IdGenerator.defaultSnowflakeId());
+				IdGenerator.defaultSnowflakeId());
 	}
 
 }

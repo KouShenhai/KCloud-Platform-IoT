@@ -34,7 +34,8 @@ public abstract class AbstractTransactionHandler implements RocketMQLocalTransac
 			executeExtLocalTransaction(message, args);
 			log.info("执行本地事务，事务提交");
 			return RocketMQLocalTransactionState.COMMIT;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("执行本地事务，事务回滚，错误信息：{}", e.getMessage(), e);
 			return RocketMQLocalTransactionState.ROLLBACK;
 		}
@@ -49,7 +50,8 @@ public abstract class AbstractTransactionHandler implements RocketMQLocalTransac
 			}
 			log.info("事务回查后，事务回滚");
 			return RocketMQLocalTransactionState.ROLLBACK;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.info("事务回查异常，事务回滚，错误信息：{}", e.getMessage(), e);
 			return RocketMQLocalTransactionState.ROLLBACK;
 		}
@@ -57,15 +59,13 @@ public abstract class AbstractTransactionHandler implements RocketMQLocalTransac
 
 	/**
 	 * 本地事务实现.
-	 *
 	 * @param message 消息
-	 * @param args    参数
+	 * @param args 参数
 	 */
 	protected abstract void executeExtLocalTransaction(Message message, Object args);
 
 	/**
 	 * 本地事务检查.
-	 *
 	 * @param message 消息
 	 * @return boolean
 	 */

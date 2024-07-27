@@ -28,7 +28,6 @@ import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerIntercep
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
-import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.SpringContextUtil;
@@ -57,13 +56,9 @@ import java.util.concurrent.TimeUnit;
 @MapperScan("org.laokou.common.mybatisplus.mapper")
 public class MybatisPlusAutoConfig {
 
-	private static final Cache<String, byte[]> CACHE = Caffeine.newBuilder()
-		.maximumSize(1024)
-		.expireAfterWrite(5, TimeUnit.SECONDS)
-		.build();
-
 	static {
-		JsqlParserGlobal.setJsqlParseCache(new FurySerialCaffeineJsqlParseCache(CACHE));
+		JsqlParserGlobal.setJsqlParseCache(new FurySerialCaffeineJsqlParseCache(
+				Caffeine.newBuilder().maximumSize(1024).expireAfterWrite(5, TimeUnit.SECONDS).build()));
 	}
 
 	@Bean

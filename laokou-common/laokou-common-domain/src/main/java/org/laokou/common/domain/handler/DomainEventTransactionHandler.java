@@ -42,7 +42,8 @@ public class DomainEventTransactionHandler extends AbstractTransactionHandler {
 
 	@Override
 	protected void executeExtLocalTransaction(Message message, Object args) {
-		domainEventService.create(new DomainEventA(JacksonUtil.toBean((byte[]) message.getPayload(), DefaultDomainEvent.class)));
+		byte[] payload = (byte[]) message.getPayload();
+		domainEventService.create(new DomainEventA(payload, JacksonUtil.toBean(payload, DefaultDomainEvent.class)));
 	}
 
 	@Override
@@ -50,4 +51,5 @@ public class DomainEventTransactionHandler extends AbstractTransactionHandler {
 		String txId = Objects.requireNonNull(message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID)).toString();
 		return domainEventService.count(Long.parseLong(txId)) > 0;
 	}
+
 }

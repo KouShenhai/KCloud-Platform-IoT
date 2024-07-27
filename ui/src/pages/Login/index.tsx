@@ -361,6 +361,10 @@ export default () => {
 											required: true,
 											message: '请输入验证码',
 										},
+										{
+											pattern: /^\d{4}$/,
+											message: '请输入4位数字的验证码'
+										}
 									]}
 								/>
 							</Col>
@@ -400,7 +404,7 @@ export default () => {
 								{
 									pattern: /^1\d{10}$/,
 									message: '手机号格式错误',
-								},
+								}
 							]}
 						/>
 						<ProFormCaptcha
@@ -425,6 +429,10 @@ export default () => {
 									required: true,
 									message: '请输入验证码',
 								},
+								{
+									pattern: /^\d{6}$/,
+									message: '请输入6位数字的验证码'
+								}
 							]}
 							onGetCaptcha={sendMobileCaptcha}
 						/>
@@ -473,6 +481,10 @@ export default () => {
 									required: true,
 									message: '请输入验证码',
 								},
+								{
+									pattern: /^\d{6}$/,
+									message: '请输入6位数字的验证码'
+								}
 							]}
 							onGetCaptcha={sendMailCaptcha}
 						/>

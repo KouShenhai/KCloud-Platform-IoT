@@ -23,6 +23,8 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * @author laokou
  */
@@ -56,7 +58,12 @@ public class DomainEventA extends AggregateRoot<Long> {
 	 */
 	private Long aggregateId;
 
-	public DomainEventA(DefaultDomainEvent domainEvent) {
+	/**
+	 * 扩展属性.
+	 */
+	private String attribute;
+
+	public DomainEventA(byte[] payload, DefaultDomainEvent domainEvent) {
 		this.id = domainEvent.getId();
 		this.tenantId = domainEvent.getTenantId();
 		this.deptId = domainEvent.getDeptId();
@@ -69,6 +76,7 @@ public class DomainEventA extends AggregateRoot<Long> {
 		this.aggregateId = domainEvent.getAggregateId();
 		this.tag = domainEvent.getTag();
 		this.topic = domainEvent.getTopic();
+		this.attribute = new String(payload, StandardCharsets.UTF_8);
 	}
 
 }

@@ -208,7 +208,6 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			Map<String, String> paramMap = MapUtil.parseParamMap(s);
 			if (ObjectUtil.equals(PASSWORD, paramMap.getOrDefault(GRANT_TYPE, EMPTY)) && paramMap.containsKey(PASSWORD)
 					&& paramMap.containsKey(USERNAME)) {
-				log.info("===> OAuth2.1 用户名密码认证模式 <===");
 				try {
 					String password = paramMap.get(PASSWORD);
 					String username = paramMap.get(USERNAME);
@@ -221,7 +220,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 					}
 				}
 				catch (Exception e) {
-					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+					log.error("用户名密码认证模式，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				}
 			}
 			return Mono.just(MapUtil.parseParams(paramMap));

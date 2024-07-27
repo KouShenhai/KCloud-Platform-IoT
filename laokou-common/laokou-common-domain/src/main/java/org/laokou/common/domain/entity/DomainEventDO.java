@@ -62,4 +62,9 @@ public class DomainEventDO extends BaseDO {
 	 */
 	private Long aggregateId;
 
+	/**
+	 * 扩展属性.
+	 */
+	private String attribute;
+
 }
