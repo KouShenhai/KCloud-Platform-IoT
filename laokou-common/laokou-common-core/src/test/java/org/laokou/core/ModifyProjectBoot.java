@@ -18,7 +18,9 @@
 package org.laokou.core;
 
 import org.laokou.common.core.utils.FileUtil;
-import java.io.*;
+
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -31,34 +33,25 @@ import java.util.List;
  */
 public class ModifyProjectBoot {
 
-	// -------------------------------------------------------------------------不可修改-------------------------------------------------------------------------
-	private static int count = 0;
-
 	private static final List<String> MODULES = List.of("laokou-cloud", "laokou-common", "laokou-service");
-
 	private static final String MODIFY_POM_FILE_SUFFIX = "pom.xml";
-
 	private static final String MODIFY_JAVA_FILE_SUFFIX = ".java";
-
 	private static final String MODIFY_XML_FILE_SUFFIX = ".xml";
-
-	// -------------------------------------------------------------------------不可修改-------------------------------------------------------------------------
-
 	// -------------------------------------------------------------------------需要修改-------------------------------------------------------------------------
 	// 新项目名称
-	private static final String NEW_PROJECT_NAME = "new_laokou";
+	private static final String NEW_PROJECT_NAME = "New_KCloud-Platform-IoT";
 
+	// -------------------------------------------------------------------------不可修改-------------------------------------------------------------------------
 	// 新模块名称
 	private static final String NEW_MODULE_NAME = "newlaokou";
-
 	// 新分组ID
-	private static final String NEW_GROUP_ID = "new.laokou";
-
+	private static final String NEW_GROUP_ID = "cn.org.laokou";
 	// 新包名路径
 	private static final String NEW_PACKAGE_PATH = "\\\\cn\\\\org\\\\laokou\\\\";
-
 	// 新包名名称
 	private static final String NEW_PACKAGE_NAME = "cn.org.laokou";
+	// -------------------------------------------------------------------------不可修改-------------------------------------------------------------------------
+	private static int count = 0;
 
 	// -------------------------------------------------------------------------需要修改-------------------------------------------------------------------------
 
@@ -81,14 +74,11 @@ public class ModifyProjectBoot {
 				byte[] buff;
 				if (filePath.endsWith(MODIFY_JAVA_FILE_SUFFIX)) {
 					buff = getJavaFileAsByte(filePath);
-				}
-				else if (filePath.endsWith(MODIFY_POM_FILE_SUFFIX)) {
+				} else if (filePath.endsWith(MODIFY_POM_FILE_SUFFIX)) {
 					buff = getPomFileAsByte(filePath);
-				}
-				else if (filePath.endsWith(MODIFY_XML_FILE_SUFFIX)) {
+				} else if (filePath.endsWith(MODIFY_XML_FILE_SUFFIX)) {
 					buff = getXmlFileAsByte(filePath);
-				}
-				else {
+				} else {
 					buff = Files.readAllBytes(Paths.get(filePath));
 				}
 				Files.write(Paths.get(newPath), buff);
