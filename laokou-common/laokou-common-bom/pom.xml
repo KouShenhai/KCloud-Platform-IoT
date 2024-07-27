@@ -122,7 +122,7 @@
     <!--grpc-netty版本-->
     <grpc-netty.version>1.64.2</grpc-netty.version>
     <!--proto-google-common-protos版本-->
-    <proto-google-common-protos.version>2.29.0</proto-google-common-protos.version>
+    <proto-google-common-protos.version>2.42.0</proto-google-common-protos.version>
     <!--error_prone_annotations版本-->
     <error_prone_annotations.version>2.23.0</error_prone_annotations.version>
   </properties>
