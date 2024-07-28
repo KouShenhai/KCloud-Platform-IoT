@@ -119,8 +119,8 @@
     <protobuf-java.version>3.25.4</protobuf-java.version>
     <!--jsqlparser版本-->
     <jsqlparser.version>5.0</jsqlparser.version>
-    <!--grpc-netty版本-->
-    <grpc-netty.version>1.64.2</grpc-netty.version>
+    <!--grpc版本-->
+    <grpc.version>1.64.2</grpc.version>
     <!--proto-google-common-protos版本-->
     <proto-google-common-protos.version>2.29.0</proto-google-common-protos.version>
     <!--error_prone_annotations版本-->
@@ -129,11 +129,51 @@
     <okio-jvm.version>3.6.0</okio-jvm.version>
     <!--checker-qual版本-->
     <checker-qual.version>3.42.0</checker-qual.version>
+    <!--commons-io版本-->
+    <commons-io.version>2.16.1</commons-io.version>
+    <!--fastjson版本-->
+    <fastjson.version>2.0.52</fastjson.version>
+    <!--httpclient版本-->
+    <httpclient.versin>4.5.13</httpclient.versin>
+    <!--commons-text版本-->
+    <commons-text.version>1.12.0</commons-text.version>
+    <!--zstd-jni版本-->
+    <zstd-jni.version>1.5.6-3</zstd-jni.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.github.luben</groupId>
+        <artifactId>zstd-jni</artifactId>
+        <version>${zstd-jni.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-text</artifactId>
+        <version>${commons-text.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>${httpclient.versin}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>fastjson</artifactId>
+        <version>${fastjson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba.fastjson2</groupId>
+        <artifactId>fastjson2</artifactId>
+        <version>${fastjson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons-io.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.checkerframework</groupId>
         <artifactId>checker-qual</artifactId>
@@ -157,7 +197,32 @@
       <dependency>
         <groupId>io.grpc</groupId>
         <artifactId>grpc-netty</artifactId>
-        <version>${grpc-netty.version}</version>
+        <version>${grpc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-api</artifactId>
+        <version>${grpc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-stub</artifactId>
+        <version>${grpc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-netty-shaded</artifactId>
+        <version>${grpc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-core</artifactId>
+        <version>${grpc.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-context</artifactId>
+        <version>${grpc.version}</version>
       </dependency>
       <dependency>
         <groupId>com.github.jsqlparser</groupId>

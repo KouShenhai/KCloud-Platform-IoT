@@ -22,6 +22,12 @@
     <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk-s3</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
@@ -52,6 +58,12 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-openfeign</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId></groupId>
+          <artifactId></artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
