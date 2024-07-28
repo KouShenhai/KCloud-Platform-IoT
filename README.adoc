@@ -164,6 +164,7 @@ image::doc/image/老寇IoT云平台架构图-阿里巴巴.png[架构图,align=ce
         └── laokou-common-secret                   --- 接口验签组件
         └── laokou-common-security                 --- 认证授权组件
         └── laokou-common-openfeign                --- 远程调用组件
+        └── laokou-common-snail-job                --- 任务调度组件
         └── laokou-common-data-cache               --- 数据缓存组件
         └── laokou-common-mybatis-plus             --- 对象映射组件
         └── laokou-common-tdengine                 --- 时序数据库组件

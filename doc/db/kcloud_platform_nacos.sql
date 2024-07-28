@@ -652,18 +652,6 @@ VALUES (2159, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
       missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2023-10-26 08:54:23', '2023-11-06 18:14:00',
 		'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'kafka公共配置', '', '', 'yaml', '',
 		'');
-INSERT INTO "public"."config_info"
-VALUES (2178, 'application-logstash.yaml', 'LAOKOU_GROUP', 'spring:
-  xxl-job:
-    admin:
-      address: http://xxl.job.laokou.org:9095/xxl-job-admin
-    executor:
-      app-name: laokou-logstash
-      port: -1
-      log-path: ./logs/xxl-job/laokou-logstash
-      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
-      intentionalities: 7', '81c3de6319db8560c68935977f2d141f', '2023-11-03 07:37:45', '2024-01-30 14:46:47', 'nacos',
-		'0:0:0:0:0:0:0:1', 'laokou-logstash', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 
 INSERT INTO "public"."config_info"
 VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', '[
@@ -890,18 +878,6 @@ VALUES (40, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
       missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2024-05-25 18:13:10.65',
 		'2024-05-25 18:13:10.65', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'kafka公共配置', NULL,
 		NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info"
-VALUES (41, 'application-logstash.yaml', 'LAOKOU_GROUP', 'spring:
-  xxl-job:
-    admin:
-      address: http://xxl.job.laokou.org:9095/xxl-job-admin
-    executor:
-      app-name: laokou-logstash
-      port: -1
-      log-path: ./logs/xxl-job/laokou-logstash
-      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
-      intentionalities: 7', '81c3de6319db8560c68935977f2d141f', '2024-05-25 18:13:10.655', '2024-05-25 18:13:10.655',
-		NULL, '127.0.0.1', 'laokou-logstash', '8140e92b-fb43-48f5-b63b-7506185206a5', '', NULL, NULL, 'yaml', NULL, '');
 
 INSERT INTO "public"."config_info"
 VALUES (44, 'admin-degrade.json', 'LAOKOU_GROUP', '[
@@ -1635,18 +1611,6 @@ VALUES (62, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
       missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2024-05-25 18:13:33.413',
 		'2024-05-25 18:13:33.413', NULL, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'kafka公共配置', NULL,
 		NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info"
-VALUES (63, 'application-logstash.yaml', 'LAOKOU_GROUP', 'spring:
-  xxl-job:
-    admin:
-      address: http://xxl.job.laokou.org:9095/xxl-job-admin
-    executor:
-      app-name: laokou-logstash
-      port: -1
-      log-path: ./logs/xxl-job/laokou-logstash
-      access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe
-      intentionalities: 7', '81c3de6319db8560c68935977f2d141f', '2024-05-25 18:13:33.419', '2024-05-25 18:13:33.419',
-		NULL, '127.0.0.1', 'laokou-logstash', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', NULL, NULL, 'yaml', NULL, '');
 
 INSERT INTO "public"."config_info"
 VALUES (66, 'admin-degrade.json', 'LAOKOU_GROUP', '[
@@ -2209,8 +2173,6 @@ VALUES (1270, 'rocketmq', '', 'application-common-rocketmq.yaml', 'LAOKOU_GROUP'
 INSERT INTO "public"."config_tags_relation"
 VALUES (2159, 'kafka', '', 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3',
 		684);
-INSERT INTO "public"."config_tags_relation"
-VALUES (2178, 'logstash', '', 'application-logstash.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 685);
 INSERT INTO "public"."config_tags_relation"
 VALUES (103, 'elasticsearch', '', 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP',
 		'a61abd4c-ef96-42a5-99a1-616adee531f3', 689);
@@ -3335,3 +3297,71 @@ ALTER TABLE "public"."tenant_info"
 -- ----------------------------
 ALTER TABLE "public"."users"
 	ADD CONSTRAINT "users_pkey" PRIMARY KEY ("username");
+
+
+INSERT INTO "public"."config_info" ("id", "data_id", "group_id", "content", "md5", "gmt_create", "gmt_modified",
+									"src_user", "src_ip", "app_name", "tenant_id", "c_desc", "c_use", "effect", "type",
+									"c_schema", "encrypted_data_key")
+VALUES (1, 'application-common-snail-job.yaml', 'LAOKOU_GROUP', 'snail-job:
+  # 任务调度服务器信息
+  server:
+    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
+    host: 127.0.0.1
+    # 服务器通讯端口（不是后台管理页面服务端口）
+    port: 1788
+  # 命名空间
+  namespace: 764d604ec6fc45f68cd92514c40e9e1a
+  # 接入组名
+  group: snail_job_demo_group
+  # 接入组 token
+  token: SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj
+  # 客户端绑定IP，必须服务器可以访问到；默认自动推断，在服务器无法调度客户端时需要手动配置
+  host: 127.0.0.1
+  # 客户端通讯端口，默认 1789
+  port: 1789', '103fce5e353593d7b5c3d72899b0a9f2', '2024-07-28 16:32:49.148', '2024-07-28 16:32:49.148', 'nacos',
+		'0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'snail-job公共配置', NULL, NULL, 'yaml', NULL,
+		'');
+INSERT INTO "public"."config_info" ("id", "data_id", "group_id", "content", "md5", "gmt_create", "gmt_modified",
+									"src_user", "src_ip", "app_name", "tenant_id", "c_desc", "c_use", "effect", "type",
+									"c_schema", "encrypted_data_key")
+VALUES (2, 'application-common-snail-job.yaml', 'LAOKOU_GROUP', 'snail-job:
+  # 任务调度服务器信息
+  server:
+    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
+    host: 127.0.0.1
+    # 服务器通讯端口（不是后台管理页面服务端口）
+    port: 1788
+  # 命名空间
+  namespace: 764d604ec6fc45f68cd92514c40e9e1a
+  # 接入组名
+  group: snail_job_demo_group
+  # 接入组 token
+  token: SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj
+  # 客户端绑定IP，必须服务器可以访问到；默认自动推断，在服务器无法调度客户端时需要手动配置
+  host: 127.0.0.1
+  # 客户端通讯端口，默认 1789
+  port: 1789', '103fce5e353593d7b5c3d72899b0a9f2', '2024-07-28 16:33:43.169', '2024-07-28 16:33:43.169', 'nacos',
+		'0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'snail-job公共配置', NULL, NULL, 'yaml', NULL,
+		'');
+INSERT INTO "public"."config_info" ("id", "data_id", "group_id", "content", "md5", "gmt_create", "gmt_modified",
+									"src_user", "src_ip", "app_name", "tenant_id", "c_desc", "c_use", "effect", "type",
+									"c_schema", "encrypted_data_key")
+VALUES (3, 'application-common-snail-job.yaml', 'LAOKOU_GROUP', 'snail-job:
+  # 任务调度服务器信息
+  server:
+    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
+    host: 127.0.0.1
+    # 服务器通讯端口（不是后台管理页面服务端口）
+    port: 1788
+  # 命名空间
+  namespace: 764d604ec6fc45f68cd92514c40e9e1a
+  # 接入组名
+  group: snail_job_demo_group
+  # 接入组 token
+  token: SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj
+  # 客户端绑定IP，必须服务器可以访问到；默认自动推断，在服务器无法调度客户端时需要手动配置
+  host: 127.0.0.1
+  # 客户端通讯端口，默认 1789
+  port: 1789', '103fce5e353593d7b5c3d72899b0a9f2', '2024-07-28 16:33:48.618', '2024-07-28 16:33:48.618', 'nacos',
+		'0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'snail-job公共配置', NULL, NULL, 'yaml', NULL,
+		'');

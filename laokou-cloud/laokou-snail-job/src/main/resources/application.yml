@@ -61,6 +61,18 @@ logging:
   config: classpath:logback-boot.xml
 
 snail-job:
+  mail:
+    auth: true
+    connectionTimeout: 0
+    enabled: true
+    from: 2413176044@qq.com
+    host: smtp.qq.com
+    pass: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
+    port: 465
+    sslEnable: false
+    starttlsEnable: false
+    timeout: 0
+    user: 2413176044@qq.com
   retry-pull-page-size: 1000 # 拉取重试数据的每批次的大小
   job-pull-page-size: 1000 # 拉取重试数据的每批次的大小
   netty-port: 1788  # 服务端netty端口
