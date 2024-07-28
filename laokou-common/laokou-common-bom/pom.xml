@@ -132,7 +132,7 @@
     <!--commons-io版本-->
     <commons-io.version>2.16.1</commons-io.version>
     <!--fastjson版本-->
-    <fastjson.version>2.0.52</fastjson.version>
+    <fastjson.version>2.0.52.android8</fastjson.version>
     <!--httpclient版本-->
     <httpclient.versin>4.5.13</httpclient.versin>
     <!--commons-text版本-->
