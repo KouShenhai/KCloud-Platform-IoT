@@ -79,7 +79,7 @@ public class DomainEventServiceImpl implements DomainEventService {
 		}
 	}
 
-	public void removeOldByAppNameOfThreeMonths(String appName) {
+	public void deleteOldByAppNameOfThreeMonths(String appName) {
 		try {
 			DynamicDataSourceContextHolder.push(DOMAIN);
 			transactionalUtil.defaultExecuteWithoutResult(r -> {
