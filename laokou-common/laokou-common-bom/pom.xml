@@ -134,7 +134,7 @@
     <!--fastjson版本-->
     <fastjson.version>2.0.52</fastjson.version>
     <!--httpclient版本-->
-    <httpclient.versin>4.5.13</httpclient.versin>
+    <httpclient.versin>4.5.14</httpclient.versin>
     <!--commons-text版本-->
     <commons-text.version>1.12.0</commons-text.version>
     <!--zstd-jni版本-->
