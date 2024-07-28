@@ -138,7 +138,7 @@
     <!--commons-text版本-->
     <commons-text.version>1.12.0</commons-text.version>
     <!--zstd-jni版本-->
-    <zstd-jni.version>1.5.6-3</zstd-jni.version>
+    <zstd-jni.version>1.5.6-4</zstd-jni.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
