@@ -125,11 +125,25 @@
     <proto-google-common-protos.version>2.29.0</proto-google-common-protos.version>
     <!--error_prone_annotations版本-->
     <error_prone_annotations.version>2.23.0</error_prone_annotations.version>
+    <!--okio-jvm版本-->
+    <okio-jvm.version>3.6.0</okio-jvm.version>
+    <!--checker-qual版本-->
+    <checker-qual.version>3.42.0</checker-qual.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.checkerframework</groupId>
+        <artifactId>checker-qual</artifactId>
+        <version>${checker-qual.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.squareup.okio</groupId>
+        <artifactId>okio-jvm</artifactId>
+        <version>${okio-jvm.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.google.errorprone</groupId>
         <artifactId>error_prone_annotations</artifactId>
