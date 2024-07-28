@@ -49,7 +49,7 @@ public class DomainEventTransactionHandler extends AbstractTransactionHandler {
 	@Override
 	protected boolean checkExtLocalTransaction(Message message) {
 		String txId = Objects.requireNonNull(message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID)).toString();
-		return domainEventService.count(Long.parseLong(txId)) > 0;
+		return domainEventService.countById(Long.parseLong(txId)) > 0;
 	}
 
 }

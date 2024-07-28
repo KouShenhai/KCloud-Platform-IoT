@@ -1,3 +1,4 @@
+-- sj_namespace
 CREATE TABLE sj_namespace
 (
 	id          bigserial PRIMARY KEY,
@@ -21,7 +22,7 @@ COMMENT ON COLUMN sj_namespace.update_dt IS '修改时间';
 COMMENT ON TABLE sj_namespace IS '命名空间';
 
 INSERT INTO sj_namespace (id, name, unique_id, create_dt, update_dt, deleted)
-VALUES (1, 'Default', '764d604ec6fc45f68cd92514c40e9e1a', now(), now(), 0);
+VALUES (1, 'laokou', '764d604ec6fc45f68cd92514c40e9e1a', now(), now(), 0);
 
 -- sj_group_config
 CREATE TABLE sj_group_config
@@ -821,3 +822,43 @@ COMMENT ON COLUMN sj_workflow_task_batch.deleted IS '逻辑删除 1、删除';
 COMMENT ON COLUMN sj_workflow_task_batch.create_dt IS '创建时间';
 COMMENT ON COLUMN sj_workflow_task_batch.update_dt IS '修改时间';
 COMMENT ON TABLE sj_workflow_task_batch IS '工作流批次';
+
+INSERT INTO "public"."sj_group_config" ("id", "namespace_id", "group_name", "description", "token", "group_status",
+										"version", "group_partition", "id_generator_mode", "init_scene", "bucket_index",
+										"create_dt", "update_dt")
+VALUES (2, '764d604ec6fc45f68cd92514c40e9e1a', 'laokou_admin_job_group', '', 'SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj', 1,
+		1, 0, 2, 1, 21, '2024-07-29 00:32:40.580265', '2024-07-29 00:32:40.580265');
+INSERT INTO "public"."sj_group_config" ("id", "namespace_id", "group_name", "description", "token", "group_status",
+										"version", "group_partition", "id_generator_mode", "init_scene", "bucket_index",
+										"create_dt", "update_dt")
+VALUES (3, '764d604ec6fc45f68cd92514c40e9e1a', 'laokou_auth_job_group', '', 'SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI', 1, 1,
+		0, 2, 1, 6, '2024-07-29 00:33:01.291591', '2024-07-29 00:33:01.291591');
+
+INSERT INTO "public"."sj_job" ("id", "namespace_id", "group_name", "job_name", "args_str", "args_type",
+							   "next_trigger_at", "job_status", "task_type", "route_key", "executor_type",
+							   "executor_info", "trigger_type", "trigger_interval", "block_strategy",
+							   "executor_timeout", "max_retry_times", "parallel_num", "retry_interval", "bucket_index",
+							   "resident", "description", "ext_attrs", "deleted", "create_dt", "update_dt")
+VALUES (2, '764d604ec6fc45f68cd92514c40e9e1a', 'laokou_admin_job_group',
+		'每天凌晨4点定时执行删除领域事件【laokou-admin】', 'laokou-admin', 1, 1722196800000, 1, 1, 4, 1,
+		'deleteDomainEventJobExecutor', 3, '0 0 4 * * ?', 1, 60, 3, 1, 3, 23, 0, '', '', 0,
+		'2024-07-28 23:42:16.960346', '2024-07-28 23:42:16.960346');
+INSERT INTO "public"."sj_job" ("id", "namespace_id", "group_name", "job_name", "args_str", "args_type",
+							   "next_trigger_at", "job_status", "task_type", "route_key", "executor_type",
+							   "executor_info", "trigger_type", "trigger_interval", "block_strategy",
+							   "executor_timeout", "max_retry_times", "parallel_num", "retry_interval", "bucket_index",
+							   "resident", "description", "ext_attrs", "deleted", "create_dt", "update_dt")
+VALUES (1, '764d604ec6fc45f68cd92514c40e9e1a', 'laokou_auth_job_group', '每天凌晨5点定时执行删除领域事件【laokou-auth】',
+		'laokou-auth', 1, 1722200400000, 1, 1, 4, 1, 'deleteDomainEventJobExecutor', 3, '0 0 5 * * ?', 1, 60, 3, 1, 3,
+		13, 0, '', '', 0, '2024-07-28 23:33:06.423294', '2024-07-28 23:40:03.784511');
+
+INSERT INTO "public"."sj_job_summary" ("id", "namespace_id", "group_name", "business_id", "system_task_type",
+									   "trigger_at", "success_num", "fail_num", "fail_reason", "stop_num",
+									   "stop_reason", "cancel_num", "cancel_reason", "create_dt", "update_dt")
+VALUES (3, '764d604ec6fc45f68cd92514c40e9e1a', 'laokou_auth_job_group', 1, 3, '2024-07-29 00:00:00', 1, 0, '[]', 0,
+		'[]', 0, '[]', '2024-07-29 00:43:28.589763', '2024-07-29 00:47:28.582055');
+INSERT INTO "public"."sj_job_summary" ("id", "namespace_id", "group_name", "business_id", "system_task_type",
+									   "trigger_at", "success_num", "fail_num", "fail_reason", "stop_num",
+									   "stop_reason", "cancel_num", "cancel_reason", "create_dt", "update_dt")
+VALUES (4, '764d604ec6fc45f68cd92514c40e9e1a', 'laokou_admin_job_group', 2, 3, '2024-07-29 00:00:00', 0, 0, '[]', 0,
+		'[]', 1, '[{"reason":2,"total":1}]', '2024-07-29 00:43:28.589763', '2024-07-29 00:47:28.582055');

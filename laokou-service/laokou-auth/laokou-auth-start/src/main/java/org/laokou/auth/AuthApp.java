@@ -17,6 +17,7 @@
 
 package org.laokou.auth;
 
+import com.aizuda.snailjob.client.starter.EnableSnailJob;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
@@ -44,6 +45,7 @@ import java.net.InetAddress;
  */
 @EnableRouter
 @EnableWarmUp
+@EnableSnailJob
 @EnableTaskExecutor
 @EnableRedisRepository
 @EnableDiscoveryClient

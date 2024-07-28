@@ -68,11 +68,30 @@ public class DomainEventServiceImpl implements DomainEventService {
 	}
 
 	@Override
-	public Long count(Long id) {
+	public Long countById(Long id) {
 		try {
 			DynamicDataSourceContextHolder.push(DOMAIN);
 			return domainEventMapper
 				.selectCount(Wrappers.lambdaQuery(DomainEventDO.class).eq(DomainEventDO::getId, id));
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
+	}
+
+	public void removeOldByAppNameOfThreeMonths(String appName) {
+		try {
+			DynamicDataSourceContextHolder.push(DOMAIN);
+			transactionalUtil.defaultExecuteWithoutResult(r -> {
+				try {
+					domainEventMapper.deleteOldByAppNameOfThreeMonths(appName);
+				}
+				catch (Exception e) {
+					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+					r.setRollbackOnly();
+					throw new RuntimeException(LogUtil.record(e.getMessage()));
+				}
+			});
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

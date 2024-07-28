@@ -28,6 +28,8 @@ public interface DomainEventService {
 
 	void create(DomainEventA domainEventA);
 
-	Long count(Long id);
+	Long countById(Long id);
+
+	void removeOldByAppNameOfThreeMonths(String appName);
 
 }
