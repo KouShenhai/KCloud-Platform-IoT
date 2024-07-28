@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -19,6 +19,10 @@
     <mybatis-spring.version>3.0.3</mybatis-spring.version>
     <!--liquibase-core版本-->
     <liquibase-core.version>4.29.0</liquibase-core.version>
+    <!--commons-text版本-->
+    <commons-text.version>1.12.0</commons-text.version>
+    <!--scala-library版本-->
+    <scala-library.version>2.13.10</scala-library.version>
   </properties>
 
   <dependencies>
@@ -30,6 +34,10 @@
         <exclusion>
           <groupId>org.mybatis</groupId>
           <artifactId>mybatis-spring</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.checkerframework</groupId>
+          <artifactId>checker-qual</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -52,6 +60,12 @@
       <groupId>com.aizuda</groupId>
       <artifactId>snail-job-server-common</artifactId>
       <version>${snail-job.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.scala-lang</groupId>
+          <artifactId>scala-library</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.aizuda</groupId>
@@ -80,6 +94,12 @@
       <groupId>com.github.rholder</groupId>
       <artifactId>guava-retrying</artifactId>
       <version>${guava-retrying.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.code.findbugs</groupId>
+          <artifactId>jsr305</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -106,6 +126,22 @@
       <groupId>org.liquibase</groupId>
       <artifactId>liquibase-core</artifactId>
       <version>${liquibase-core.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-text</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+      <version>${commons-text.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala-library.version}</version>
     </dependency>
   </dependencies>
 
