@@ -41,7 +41,7 @@
     <!--commons-io版本-->
     <commons-io.version>2.16.1</commons-io.version>
     <!--grpc版本-->
-    <grpc.version>1.64.2</grpc.version>
+    <grpc.version>1.65.1</grpc.version>
     <!--error_prone_annotations版本-->
     <error_prone_annotations.version>2.23.0</error_prone_annotations.version>
   </properties>

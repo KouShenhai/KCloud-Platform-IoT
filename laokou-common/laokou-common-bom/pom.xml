@@ -120,7 +120,7 @@
     <!--jsqlparser版本-->
     <jsqlparser.version>5.0</jsqlparser.version>
     <!--grpc版本-->
-    <grpc.version>1.64.2</grpc.version>
+    <grpc.version>1.65.1</grpc.version>
     <!--proto-google-common-protos版本-->
     <proto-google-common-protos.version>2.29.0</proto-google-common-protos.version>
     <!--error_prone_annotations版本-->
