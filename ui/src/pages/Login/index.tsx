@@ -362,8 +362,8 @@ export default () => {
 											message: '请输入验证码',
 										},
 										{
-											pattern: /^\d{4}$/,
-											message: '请输入4位数字的验证码'
+											pattern: /^[A-Za-z0-9]{4}$/,
+											message: '请输入4位验证码（数字和字母）'
 										}
 									]}
 								/>

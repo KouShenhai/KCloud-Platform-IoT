@@ -67,7 +67,7 @@ public class AuthApp {
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		// SpringSecurity 子线程读取父线程的上下文
-		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.TTL_MODE_INHERITABLETHREADLOCAL);
 		// 请查看 HttpLoginProcessor，https://github.com/alibaba/nacos/pull/3654
 		// -Dnacos.remote.client.rpc.tls.enable=true
 		// -Dnacos.remote.client.rpc.tls.mutualAuth=true
