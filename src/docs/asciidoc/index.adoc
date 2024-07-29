@@ -1,6 +1,7 @@
-= 老寇IoT云平台文档
+= 老寇IoT云平台课程
 
 == 课程-介绍
+
 link:开篇.html[开篇【必读】]
 
 == 课程-项目篇
@@ -13,7 +14,7 @@ link:开篇.html[开篇【必读】]
 
 === Asciidoctor篇
 
-link:Maven生成Spring官方文档.html[Maven生成Spring官方文档【必读】]  
+link:Maven生成Spring官方文档.html[Maven生成Spring官方文档【必读】]
 
 link:Asciidoctor使用指南.html[Asciidoctor使用指南【必读】]
 
