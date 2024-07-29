@@ -32,7 +32,8 @@ services:
     volumes:
       - ./tdengine/data:/var/lib/taos
       - ./tdengine/logs:/var/log/taos
-    network_mode: bridge
+    networks:
+      - laokou_network
   emqx:
     image: emqx/emqx:5.7.1
     container_name: emqx
@@ -47,7 +48,8 @@ services:
       - "18083:18083"
     environment:
       - TZ=Asia/Shanghai
-    network_mode: bridge
+    networks:
+      - laokou_network
   postgresql:
     image: postgis/postgis:16-3.4
     container_name: postgresql
@@ -63,7 +65,8 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=laokou123
       - TZ=Asia/Shanghai
-    network_mode: bridge
+    networks:
+      - laokou_network
   redis:
     image: redis:7.2.5
     container_name: redis
@@ -75,12 +78,12 @@ services:
       - "6379:6379"
     volumes:
       - ./redis7/conf/redis.conf:/etc/redis/redis.conf
-      # 请手动授予rw权限，不然无法写入文件
       - ./redis7/data:/data
     command: redis-server --appendonly yes --requirepass 'laokou123'
     environment:
       - TZ=Asia/Shanghai
-    network_mode: bridge
+    networks:
+      - laokou_network
   kafka:
     image: bitnami/kafka:3.7.1
     container_name: kafka
@@ -113,7 +116,8 @@ services:
       - KAFKA_CFG_NODE_ID=1
     restart: always
     privileged: true
-    network_mode: bridge
+    networks:
+      - laokou_network
     extra_hosts:
       - "kafka.laokou.org:192.168.30.1"
   rocketmq-namesrv:
@@ -129,7 +133,8 @@ services:
     environment:
       - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
       - TZ=Asia/Shanghai
-    network_mode: bridge
+    networks:
+      - laokou_network
   rocketmq-broker:
     image: apache/rocketmq:5.3.0
     container_name: rocketmq-broker
@@ -142,16 +147,17 @@ services:
       - "10911:10911"
       - "10909:10909"
       - "10912:10912"
-    command: sh mqbroker -n 192.168.30.1:9876 -c /home/rocketmq/conf/broker.conf autoCreateTopicEnable=true
+    # 自动创建主题
+    command: sh mqbroker -n rocketmq-namesrv:9876 -c /home/rocketmq/conf/broker.conf autoCreateTopicEnable=true
     environment:
       - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
       - TZ=Asia/Shanghai
     volumes:
       - ./rocketmq5/broker/conf/broker.conf:/home/rocketmq/conf/broker.conf
-    network_mode: bridge
+    networks:
+      - laokou_network
     depends_on:
       - rocketmq-namesrv
-  # curl -s -X POST https://elasticsearch.laokou.org:9200/_security/user/kibana_system/_password -d "{\"password\":\"laokou123\"}"
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.14.2
     container_name: elasticsearch
@@ -164,7 +170,6 @@ services:
       - "9300:9300"
     volumes:
       - ./elasticsearch8/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      # 请手动授予rw权限，不然无法写入文件
       - ./elasticsearch8/data:/usr/share/elasticsearch/data
       - ./elasticsearch8/logs:/usr/share/elasticsearch/logs
       - ./elasticsearch8/plugins:/usr/share/elasticsearch/plugins
@@ -173,7 +178,8 @@ services:
       - TZ=Asia/Shanghai
       - ES_JAVA_OPTS=-Xmx1g -Xms1g
       - ELASTIC_PASSWORD=laokou123
-    network_mode: bridge
+    networks:
+      - laokou_network
     ulimits:
       memlock:
         soft: -1
@@ -195,7 +201,8 @@ services:
       - env/nacos.env
     extra_hosts:
       - "postgresql.laokou.org:192.168.30.1"
-    network_mode: bridge
+    networks:
+      - laokou_network
     depends_on:
       - postgresql
   laokou-sentinel:
@@ -213,7 +220,8 @@ services:
       - env/sentinel.env
     extra_hosts:
       - "sentinel.laokou.org:192.168.30.1"
-    network_mode: bridge
+    networks:
+      - laokou_network
   laokou-monitor:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.2.1
     container_name: laokou-monitor
@@ -232,7 +240,8 @@ services:
       - "nacos.laokou.org:192.168.30.1"
     depends_on:
       - laokou-register
-    network_mode: bridge
+    networks:
+      - laokou_network
   laokou-gateway:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.2.1
     container_name: laokou-gateway
@@ -250,7 +259,8 @@ services:
       - "redis.laokou.org:192.168.30.1"
     restart: always
     privileged: true
-    network_mode: bridge
+    networks:
+      - laokou_network
     depends_on:
       - laokou-register
   laokou-im:
@@ -271,7 +281,8 @@ services:
       - "rocketmq.laokou.org:192.168.30.1"
     restart: always
     privileged: true
-    network_mode: bridge
+    networks:
+      - laokou_network
     depends_on:
       - laokou-register
   laokou-auth:
@@ -293,7 +304,8 @@ services:
       - "vue.laokou.org:192.168.30.1"
     restart: always
     privileged: true
-    network_mode: bridge
+    networks:
+      - laokou_network
     depends_on:
       - laokou-register
       - laokou-admin
@@ -317,7 +329,8 @@ services:
       - "elasticsearch.laokou.org:192.168.30.1"
     restart: always
     privileged: true
-    network_mode: bridge
+    networks:
+      - laokou_network
     depends_on:
       - laokou-register
       - elasticsearch
@@ -338,7 +351,8 @@ services:
       - "elasticsearch.laokou.org:192.168.30.1"
     restart: always
     privileged: true
-    network_mode: bridge
+    networks:
+      - laokou_network
     depends_on:
       - laokou-register
       - elasticsearch
@@ -361,6 +375,11 @@ services:
       - "vue.laokou.org:192.168.30.1"
       - "api.laokou.org:192.168.30.1"
       - "nginx.laokou.org:192.168.30.1"
-    network_mode: bridge
+    networks:
+      - laokou_network
     depends_on:
       - laokou-admin
+
+networks:
+  laokou_network:
+    driver: bridge
