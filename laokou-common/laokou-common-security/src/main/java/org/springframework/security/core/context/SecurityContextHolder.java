@@ -91,7 +91,7 @@ public class SecurityContextHolder {
 		initialize();
 	}
 
-	private static void initialize() {
+	private static synchronized void initialize() {
 		initializeStrategy();
 		initializeCount++;
 	}
