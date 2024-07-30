@@ -68,7 +68,7 @@ services:
     networks:
       - laokou_network
   redis:
-    image: redis:7.2.5
+    image: redis:7.4.0
     container_name: redis
     # 保持容器在没有守护程序的情况下运行
     tty: true
