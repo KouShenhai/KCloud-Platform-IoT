@@ -91,8 +91,6 @@
     <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     <!--mapstruct版本-->
     <mapstruct.version>1.6.0.RC1</mapstruct.version>
-    <!--spring-integration-mqtt版本-->
-    <spring-integration-mqtt.version>6.3.2</spring-integration-mqtt.version>
     <!--log4j2-ttl-thread-context-map版本-->
     <log4j2-ttl-thread-context-map.version>1.4.0</log4j2-ttl-thread-context-map.version>
     <!--transmittable-thread-local版本-->
@@ -426,11 +424,6 @@
         <groupId>com.alibaba</groupId>
         <artifactId>transmittable-thread-local</artifactId>
         <version>${transmittable-thread-local.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.integration</groupId>
-        <artifactId>spring-integration-mqtt</artifactId>
-        <version>${spring-integration-mqtt.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
