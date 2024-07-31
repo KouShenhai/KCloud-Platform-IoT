@@ -4,17 +4,125 @@ Copyright 2022-2024
 The project was developed by Lao Kou.
 
 ------
+This project has a bundle Spring Framework:
+                            Spring Framework
+                            =================
+
+Please visit the git for more information:
+
+  * https://github.com/spring-projects/spring-framework.git
+
+Copyright 2002-2020 the original author or authors.
+
+The Spring Framework licenses this file to you under the Apache License,
+version 2.0 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at:
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations
+under the License.
+
+Also, please refer to each LICENSE.<component>.txt file, which is located in
+the 'license' directory of the distribution file, for the license terms of the
+components that this product depends on.
+
+------
 This project has a bundle Spring Boot:
-                            The Spring Boot Project
+                            Spring Boot
                             =================
 
 Please visit the Spring Boot web site for more information:
 
   * https://spring.io/projects/spring-boot
 
-Copyright 2014 The Spring Boot Project
+Copyright 2012-2019 the original author or authors.
 
 The Spring Boot Project licenses this file to you under the Apache License,
+version 2.0 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at:
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations
+under the License.
+
+Also, please refer to each LICENSE.<component>.txt file, which is located in
+the 'license' directory of the distribution file, for the license terms of the
+components that this product depends on.
+
+------
+This project has a bundle Spring Cloud:
+                            Spring Cloud
+                            =================
+
+Please visit the Spring Cloud web site for more information:
+
+  * https://spring.io/projects/spring-cloud
+
+Copyright 2016-2019 the original author or authors.
+
+The Spring Cloud Project licenses this file to you under the Apache License,
+version 2.0 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at:
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations
+under the License.
+
+Also, please refer to each LICENSE.<component>.txt file, which is located in
+the 'license' directory of the distribution file, for the license terms of the
+components that this product depends on.
+
+------
+This project has a bundle Spring Cloud Alibaba:
+                            Spring Cloud Alibaba
+                            =================
+
+Please visit the git for more information:
+
+  * https://github.com/alibaba/spring-cloud-alibaba.git
+
+Copyright 2013-2023 the original author or authors.
+
+The Spring Cloud Alibaba licenses this file to you under the Apache License,
+version 2.0 (the "License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at:
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations
+under the License.
+
+Also, please refer to each LICENSE.<component>.txt file, which is located in
+the 'license' directory of the distribution file, for the license terms of the
+components that this product depends on.
+
+------
+This project has a bundle Spring Authorization Server:
+                            Spring Authorization Server
+                            =================
+
+Please visit the Spring Authorization Server web site for more information:
+
+  * https://spring.io/projects/spring-authorization-server
+
+Copyright 2020-2024 the original author or authors.
+
+The Spring Authorization Server Project licenses this file to you under the Apache License,
 version 2.0 (the "License"); you may not use this file except in compliance
 with the License. You may obtain a copy of the License at:
 
