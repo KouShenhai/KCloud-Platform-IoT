@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.elasticsearch.annotation;
+package org.laokou.common.elasticsearch.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,7 +38,9 @@ public class Search {
 
 	private Highlight highlight;
 
-	private List<Field> fields;
+	private Integer pageNo = 1;
+
+	private Integer pageSize = 10;
 
 	private co.elastic.clients.elasticsearch._types.query_dsl.Query query;
 
@@ -54,23 +56,6 @@ public class Search {
 		private boolean requireFieldMatch;
 
 		private List<HighlightField> fields;
-
-	}
-
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class Field {
-
-		private List<String> names;
-
-		private String value;
-
-		private QueryType type;
-
-		private Query query;
-
-		private Condition condition = Condition.EQ;
 
 	}
 
