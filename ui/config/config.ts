@@ -6,7 +6,9 @@ const {REACT_APP_ENV = 'dev'} = process.env;
 
 // @ts-ignore
 export default defineConfig({
-	antd: {},
+	antd: {
+		// theme: {}
+	},
 	access: {},
 	model: {},
 	initialState: {},
@@ -14,7 +16,7 @@ export default defineConfig({
 	theme: {
 		// 如果不想要 configProvide 动态设置主题需要把这个设置为 default
 		// 只有设置为 variable， 才能使用 configProvide 动态设置主色调
-		'root-entry-name': 'default',
+		'root-entry-name': 'default'
 	},
 	/**
 	 * 开启 hash 模式.
