@@ -2,10 +2,9 @@
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
-import {RequestConfig} from "@@/plugin-request/request";
 import {Dropdown, message, theme} from "antd";
 // @ts-ignore
-import {history, RuntimeAntdConfig} from 'umi';
+import {history} from 'umi';
 import {LogoutOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
 import {logoutV3} from "@/services/auth/logoutsV3Controller";
@@ -68,12 +67,33 @@ export const layout = () => {
 			//菜单的样式配置
 			sider: {
 				//侧边菜单的配置 ，这里具体看文档
+				colorMenuBackground: 'rgb(16 18 26)',
+				colorTextMenuTitle: '#ffffff',
+				colorMenuItemDivider: 'transparent',
+				colorTextMenu: '#dee1f0',
+				colorTextMenuSelected: '#ffffff',
+				colorTextMenuItemHover: '#ffffff',
+				colorTextMenuActive: '#ffffff',
+				colorBgMenuItemSelected: '#00c1de',
 			},
+			header: {
+				colorBgHeader: 'rgb(16 18 26)',
+				colorHeaderTitle: '#ffffff',
+				colorTextMenu: '#dee1f0',
+				colorTextRightActionsItem: '#ffffff',
+				colorBgRightActionsItemHover: '#00c1de',
+				heightLayoutHeader: 60
+			}
 		},
 	};
 };
 
-export const request: RequestConfig = {
+export const request: {
+	responseInterceptors: ((response: any) => any)[];
+	requestInterceptors: (((config: any) => any) | ((error: any) => any))[];
+	timeout: number;
+	errorConfig: { errorThrower(): void; errorHandler(error: any): void }
+} = {
 	timeout: 60000,
 	// other axios options you want
 	errorConfig: {
@@ -108,7 +128,7 @@ export const request: RequestConfig = {
 			return error;
 		},
 	],
-	// 相应拦截
+	// 响应拦截
 	responseInterceptors: [
 		(response: any) => {
 			const {status, data} = response;
@@ -123,7 +143,10 @@ export const request: RequestConfig = {
 	],
 };
 
-export const antd: RuntimeAntdConfig = (memo: {
+export const antd: (memo: { theme: { algorithm?: any }; appConfig: { message: { maxCount: number } } }) => {
+	theme: { algorithm?: any };
+	appConfig: { message: { maxCount: number } }
+} = (memo: {
 	theme: { algorithm?: any; }; appConfig: {
 		message: {
 			// 配置 message 最大显示数，超过限制时，最早的消息会被自动关闭
