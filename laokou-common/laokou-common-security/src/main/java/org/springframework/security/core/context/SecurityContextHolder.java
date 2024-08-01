@@ -99,7 +99,7 @@ public class SecurityContextHolder {
 	private static void initializeStrategy() {
 		if (MODE_PRE_INITIALIZED.equals(strategyName)) {
 			Assert.state(strategy != null, "When using " + MODE_PRE_INITIALIZED
-				+ ", setContextHolderStrategy must be called with the fully constructed strategy");
+					+ ", setContextHolderStrategy must be called with the fully constructed strategy");
 			return;
 		}
 		if (!StringUtils.hasText(strategyName)) {
@@ -127,7 +127,8 @@ public class SecurityContextHolder {
 			Class<?> clazz = Class.forName(strategyName);
 			Constructor<?> customStrategy = clazz.getConstructor();
 			strategy = (SecurityContextHolderStrategy) customStrategy.newInstance();
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			ReflectionUtils.handleReflectionException(ex);
 		}
 	}
@@ -141,7 +142,6 @@ public class SecurityContextHolder {
 
 	/**
 	 * Obtain the current <code>SecurityContext</code>.
-	 *
 	 * @return the security context (never <code>null</code>)
 	 */
 	public static SecurityContext getContext() {
@@ -150,7 +150,6 @@ public class SecurityContextHolder {
 
 	/**
 	 * Associates a new <code>SecurityContext</code> with the current thread of execution.
-	 *
 	 * @param context the new <code>SecurityContext</code> (may not be <code>null</code>)
 	 */
 	public static void setContext(SecurityContext context) {
@@ -159,7 +158,6 @@ public class SecurityContextHolder {
 
 	/**
 	 * Obtains a {@link Supplier} that returns the current context.
-	 *
 	 * @return a {@link Supplier} that returns the current context (never
 	 * <code>null</code> - create a default implementation if necessary)
 	 * @since 5.8
@@ -171,7 +169,6 @@ public class SecurityContextHolder {
 	/**
 	 * Sets a {@link Supplier} that will return the current context. Implementations can
 	 * override the default to avoid invoking {@link Supplier#get()}.
-	 *
 	 * @param deferredContext a {@link Supplier} that returns the {@link SecurityContext}
 	 * @since 5.8
 	 */
@@ -182,7 +179,6 @@ public class SecurityContextHolder {
 	/**
 	 * Primarily for troubleshooting purposes, this method shows how many times the class
 	 * has re-initialized its <code>SecurityContextHolderStrategy</code>.
-	 *
 	 * @return the count (should be one unless you've called
 	 * {@link #setStrategyName(String)} or
 	 * {@link #setContextHolderStrategy(SecurityContextHolderStrategy)} to switch to an
@@ -196,9 +192,8 @@ public class SecurityContextHolder {
 	 * Changes the preferred strategy. Do <em>NOT</em> call this method more than once for
 	 * a given JVM, as it will re-initialize the strategy and adversely affect any
 	 * existing threads using the old strategy.
-	 *
 	 * @param strategyName the fully qualified class name of the strategy that should be
-	 *                     used.
+	 * used.
 	 */
 	public static void setStrategyName(String strategyName) {
 		SecurityContextHolder.strategyName = strategyName;
@@ -207,7 +202,6 @@ public class SecurityContextHolder {
 
 	/**
 	 * Allows retrieval of the context strategy. See SEC-1188.
-	 *
 	 * @return the configured strategy for storing the security context.
 	 */
 	public static SecurityContextHolderStrategy getContextHolderStrategy() {
@@ -239,7 +233,6 @@ public class SecurityContextHolder {
 	 * <pre>
 	 *     SecurityContextHolder.setContextHolderStrategy(original);
 	 * </pre>
-	 *
 	 * @param strategy the {@link SecurityContextHolderStrategy} to use
 	 * @since 5.6
 	 */
@@ -260,7 +253,7 @@ public class SecurityContextHolder {
 	@Override
 	public String toString() {
 		return "SecurityContextHolder[strategy='" + strategy.getClass().getSimpleName() + "'; initializeCount="
-			+ initializeCount + "]";
+				+ initializeCount + "]";
 	}
 
 }
