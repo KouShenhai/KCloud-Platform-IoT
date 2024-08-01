@@ -63,7 +63,7 @@ public class CaptchaSendCmdExe {
 		// 发布发送验证码事件
 		SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getTag(), cmd.getUuid());
 		sendCaptchaEvent.create(LAOKOU_CAPTCHA_TOPIC, cmd.getTag(), CAPTCHA, springContextUtil.getAppName(),
-				getSourceName(cmd.getTenantId()), DateUtil.now(), IdGenerator.defaultSnowflakeId());
+				getSourceName(cmd.getTenantId()), DateUtil.nowInstant(), IdGenerator.defaultSnowflakeId());
 		domainEventPublisher.publishToCreate(sendCaptchaEvent);
 	}
 

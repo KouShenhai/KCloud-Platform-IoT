@@ -18,17 +18,12 @@
 package org.laokou.common.mybatisplus.mapper;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.laokou.common.core.utils.IdGenerator;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-
-import static org.laokou.common.i18n.utils.DateUtil.Constant.DEFAULT_TIMEZONE;
-import static org.laokou.common.i18n.utils.DateUtil.Constant.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS;
+import java.time.Instant;
 
 /**
  * 基类映射.
@@ -118,17 +113,13 @@ public abstract class BaseDO implements Serializable {
 	 * 创建时间.
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	@DateTimeFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS)
-	@JsonFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
-	protected LocalDateTime createDate;
+	protected Instant createDate;
 
 	/**
 	 * 修改时间.
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	@DateTimeFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS)
-	@JsonFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
-	protected LocalDateTime updateDate;
+	protected Instant updateDate;
 
 	/**
 	 * 删除标识 0未删除 1已删除.

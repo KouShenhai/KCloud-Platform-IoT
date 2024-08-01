@@ -17,7 +17,7 @@
 
 package org.laokou.auth.model;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * 日志值对象.
@@ -33,6 +33,6 @@ import java.time.LocalDateTime;
  * @param timestamp 时间
  */
 public record LogV(String username, String os, String ip, String address, String browser, Integer status,
-		String errorMessage, String type, LocalDateTime timestamp) {
+		String errorMessage, String type, Instant timestamp) {
 
 }

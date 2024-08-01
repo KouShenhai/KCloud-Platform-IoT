@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * @author laokou
@@ -80,7 +80,7 @@ public class LoginLogExcel implements Serializable {
 	@ColumnWidth(30)
 	@Schema(name = "createDate", description = "创建时间")
 	@ExcelProperty(value = "创建时间", index = 9)
-	private LocalDateTime createDate;
+	private Instant createDate;
 
 	public void setStatus(Integer status) {
 		this.status = status;

@@ -22,7 +22,7 @@ import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.io.Serial;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -69,7 +69,7 @@ public class UserCO extends ClientObject {
 	private String deptPath;
 
 	@Schema(name = "createDate", description = "创建时间")
-	private LocalDateTime createDate;
+	private Instant createDate;
 
 	@Schema(name = "superAdmin", description = "超级管理员标识 0否 1是")
 	private Integer superAdmin;

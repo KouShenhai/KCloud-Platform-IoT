@@ -286,8 +286,8 @@ public class TenantGatewayImpl implements TenantGateway {
 		List<MenuDO> menuList = menuMapper.selectTenantMenuListByPackageId(packageId);
 		menuList.forEach(item -> {
 			item.setTenantId(tenantId);
-			item.setCreateDate(DateUtil.now());
-			item.setUpdateDate(DateUtil.now());
+			item.setCreateDate(DateUtil.nowInstant());
+			item.setUpdateDate(DateUtil.nowInstant());
 			item.setCreator(userId);
 			item.setEditor(userId);
 			item.setVersion(0);
@@ -344,8 +344,8 @@ public class TenantGatewayImpl implements TenantGateway {
 		deptDO.setDeptId(deptDO.getId());
 		deptDO.setPid(0L);
 		deptDO.setTenantId(tenantId);
-		deptDO.setCreateDate(DateUtil.now());
-		deptDO.setUpdateDate(DateUtil.now());
+		deptDO.setCreateDate(DateUtil.nowInstant());
+		deptDO.setUpdateDate(DateUtil.nowInstant());
 		deptDO.setCreator(userId);
 		deptDO.setEditor(userId);
 		deptDO.setVersion(0);

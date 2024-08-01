@@ -22,7 +22,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.context.ApplicationEvent;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * @author laokou
@@ -38,9 +38,9 @@ public class SqlLogEvent extends ApplicationEvent {
 
 	private long costTime;
 
-	private LocalDateTime createDate;
+	private Instant createDate;
 
-	public SqlLogEvent(Object source, String appName, String sql, long costTime, LocalDateTime createDate) {
+	public SqlLogEvent(Object source, String appName, String sql, long costTime, Instant createDate) {
 		super(source);
 		this.sql = sql;
 		this.appName = appName;

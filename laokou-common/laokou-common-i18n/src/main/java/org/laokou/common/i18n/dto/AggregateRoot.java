@@ -19,7 +19,7 @@ package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * 聚合根.
@@ -57,12 +57,12 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	/**
 	 * 创建时间.
 	 */
-	protected LocalDateTime createDate;
+	protected Instant createDate;
 
 	/**
 	 * 修改时间.
 	 */
-	protected LocalDateTime updateDate;
+	protected Instant updateDate;
 
 	/**
 	 * 数据源名称.

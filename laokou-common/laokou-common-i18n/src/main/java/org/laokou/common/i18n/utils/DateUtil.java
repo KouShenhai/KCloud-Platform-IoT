@@ -150,6 +150,10 @@ public class DateUtil {
 		return localDateTime1.isAfter(localDateTime2);
 	}
 
+	public static Instant nowInstant() {
+		return Instant.now();
+	}
+
 	/**
 	 * 判断 d1 在 d2 前.
 	 * @param localDateTime1 时间1

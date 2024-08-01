@@ -21,9 +21,10 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.laokou.common.core.context.UserContextHolder;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import static org.laokou.common.mybatisplus.mapper.BaseDO.*;
 
@@ -39,8 +40,8 @@ public class DataObjectHandler implements MetaObjectHandler {
 		UserContextHolder.User user = UserContextHolder.get();
 		this.strictInsertFill(metaObject, CREATOR, user::getId, Long.class);
 		this.strictInsertFill(metaObject, EDITOR, user::getId, Long.class);
-		this.strictInsertFill(metaObject, CREATE_DATE, LocalDateTime::now, LocalDateTime.class);
-		this.strictInsertFill(metaObject, UPDATE_DATE, LocalDateTime::now, LocalDateTime.class);
+		this.strictInsertFill(metaObject, CREATE_DATE, DateUtil::nowInstant, Instant.class);
+		this.strictInsertFill(metaObject, UPDATE_DATE, DateUtil::nowInstant, Instant.class);
 		this.strictInsertFill(metaObject, DEL_FLAG, () -> 0, Integer.class);
 		this.strictInsertFill(metaObject, VERSION, () -> 0, Integer.class);
 		this.strictInsertFill(metaObject, DEPT_ID, user::getDeptId, Long.class);
@@ -52,7 +53,7 @@ public class DataObjectHandler implements MetaObjectHandler {
 	public void updateFill(MetaObject metaObject) {
 		UserContextHolder.User user = UserContextHolder.get();
 		this.strictUpdateFill(metaObject, EDITOR, user::getId, Long.class);
-		this.strictUpdateFill(metaObject, UPDATE_DATE, LocalDateTime::now, LocalDateTime.class);
+		this.strictUpdateFill(metaObject, UPDATE_DATE, DateUtil::nowInstant, Instant.class);
 	}
 
 }

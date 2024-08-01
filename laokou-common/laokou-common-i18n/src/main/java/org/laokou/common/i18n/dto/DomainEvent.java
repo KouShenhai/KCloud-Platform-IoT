@@ -24,7 +24,7 @@ import org.laokou.common.i18n.common.constant.EventType;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * 领域事件.
@@ -102,12 +102,12 @@ public abstract class DomainEvent<ID> implements Serializable {
 	/**
 	 * 创建时间.
 	 */
-	protected LocalDateTime createDate;
+	protected Instant createDate;
 
 	/**
 	 * 修改时间.
 	 */
-	protected LocalDateTime updateDate;
+	protected Instant updateDate;
 
 	protected abstract void generatorId();
 

@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * @author laokou
@@ -132,7 +132,7 @@ public class OperateLogExcel implements Serializable {
 	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
 			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
 	@ExcelProperty(value = "操作时间", index = 13)
-	private LocalDateTime createDate;
+	private Instant createDate;
 
 	@ColumnWidth(40)
 	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")

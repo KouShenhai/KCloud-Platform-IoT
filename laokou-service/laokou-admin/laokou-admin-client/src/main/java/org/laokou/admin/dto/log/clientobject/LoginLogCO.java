@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * @author laokou
@@ -58,6 +58,6 @@ public class LoginLogCO extends ClientObject {
 	private String type;
 
 	@Schema(name = "createDate", description = "创建时间")
-	private LocalDateTime createDate;
+	private Instant createDate;
 
 }

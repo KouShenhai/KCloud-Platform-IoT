@@ -22,7 +22,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Set;
 
 /**
@@ -42,7 +42,7 @@ public class MessageCO extends ClientObject {
 	private String content;
 
 	@Schema(name = "createDate", description = "创建时间")
-	private LocalDateTime createDate;
+	private Instant createDate;
 
 	@Schema(name = "type", description = "消息类型 0通知 1提醒")
 	private Integer type;

@@ -17,7 +17,6 @@
 
 package org.laokou.logstash.handler;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import jakarta.annotation.PostConstruct;
@@ -31,19 +30,16 @@ import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.DOLLAR;
 import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
-import static org.laokou.common.i18n.utils.DateUtil.Constant.DEFAULT_TIMEZONE;
-import static org.laokou.common.i18n.utils.DateUtil.Constant.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS;
 
 /**
  * @author laokou
@@ -161,9 +157,7 @@ public class TraceHandler {
 
 		private String profile;
 
-		@DateTimeFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS)
-		@JsonFormat(pattern = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
-		private LocalDateTime dateTime;
+		private Instant dateTime;
 
 		private String userId;
 

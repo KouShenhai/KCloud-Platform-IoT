@@ -21,7 +21,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.common.constant.EventType;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * 默认领域事件.
@@ -38,7 +38,7 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 	}
 
 	public void create(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
-			LocalDateTime timestamp) {
+			Instant timestamp) {
 		generatorId();
 		super.tenantId = aggregateRoot.getTenantId();
 		super.deptId = aggregateRoot.getDeptId();
@@ -56,7 +56,7 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 	}
 
 	public void create(String topic, String tag, EventType eventType, String appName, String sourceName,
-			LocalDateTime timestamp, Long aggregateId) {
+			Instant timestamp, Long aggregateId) {
 		generatorId();
 		super.aggregateId = aggregateId;
 		super.eventType = eventType;
