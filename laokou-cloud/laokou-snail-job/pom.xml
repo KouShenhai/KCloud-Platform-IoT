@@ -18,7 +18,7 @@
     <!--mybatis-spring版本-->
     <mybatis-spring.version>3.0.3</mybatis-spring.version>
     <!--liquibase-core版本-->
-    <liquibase-core.version>4.29.0</liquibase-core.version>
+    <liquibase-core.version>4.29.1</liquibase-core.version>
     <!--commons-text版本-->
     <commons-text.version>1.12.0</commons-text.version>
     <!--scala-library版本-->

@@ -40,7 +40,7 @@
     <!--mybatis-spring版本-->
     <mybatis-spring.version>3.0.3</mybatis-spring.version>
     <!--redisson版本-->
-    <redisson.version>3.34.0</redisson.version>
+    <redisson.version>3.34.1</redisson.version>
     <!--jsoup版本-->
     <jsoup.version>1.18.1</jsoup.version>
     <!--jasypt版本-->
@@ -112,7 +112,7 @@
     <!--browscap-java版本-->
     <browscap-java.version>1.4.4</browscap-java.version>
     <!--liquibase-core版本-->
-    <liquibase-core.version>4.29.0</liquibase-core.version>
+    <liquibase-core.version>4.29.1</liquibase-core.version>
     <!--protobuf-java版本-->
     <protobuf-java.version>3.25.4</protobuf-java.version>
     <!--jsqlparser版本-->
