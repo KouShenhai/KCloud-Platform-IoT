@@ -21,7 +21,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.InstantDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.DateUtil;
@@ -33,6 +35,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -71,6 +74,9 @@ public class HttpMessageConverterConfig {
 		// LocalDateTime
 		javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
 		javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
+		// Instant
+		javaTimeModule.addSerializer(Instant.class, new CustomInstantSerializer(InstantSerializer.INSTANCE, false,false, dateTimeFormatter));
+		javaTimeModule.addDeserializer(Instant.class, new CustomInstantDeserializer(InstantDeserializer.INSTANT, dateTimeFormatter));
 		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
 		mapper.registerModule(javaTimeModule);
 		converter.setObjectMapper(mapper);

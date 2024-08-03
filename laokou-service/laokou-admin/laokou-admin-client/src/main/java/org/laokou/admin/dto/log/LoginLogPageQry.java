@@ -17,29 +17,26 @@
 
 package org.laokou.admin.dto.log;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.StringUtil;
 
 /**
  * @author laokou
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Schema(name = "导出登录日志命令请求", description = "导出登录日志命令请求")
-public class LoginLogExportCmd extends LoginLogPageQry {
+@Schema(name = "登录日志分页查询参数", description = "登录日志分页查询参数")
+public class LoginLogPageQry extends PageQuery {
 
-	@JsonIgnore
-	@Schema(name = "响应参数", description = "响应参数")
-	private HttpServletResponse response;
+	@Schema(name = "登录的用户名", description = "登录的用户名")
+	private String username;
 
-	public LoginLogExportCmd response(HttpServletResponse response) {
-		this.response = response;
-		return this;
+	@Schema(name = "登录状态 0登录成功 1登录失败", description = "登录状态 0登录成功 1登录失败")
+	private Integer status;
+
+	public void setUsername(String username) {
+		this.username = StringUtil.like(username);
 	}
 
 }

@@ -55,16 +55,10 @@ public class LoginLogDO extends BaseDO {
 	@Schema(name = "status", description = "登录状态 0登录成功 1登录失败")
 	private Integer status;
 
-	@Schema(name = "message", description = "登录信息")
-	private String message;
+	@Schema(name = "登录信息", description = "登录信息")
+	private String errorMessage;
 
 	@Schema(name = "type", description = "登录类型")
 	private String type;
-
-	public LoginLogDO(String username, Integer status, Long tenantId) {
-		this.username = username;
-		this.status = status;
-		this.tenantId = tenantId;
-	}
 
 }

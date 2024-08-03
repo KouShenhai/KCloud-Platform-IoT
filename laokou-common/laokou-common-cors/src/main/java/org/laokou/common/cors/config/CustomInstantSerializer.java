@@ -15,28 +15,20 @@
  *
  */
 
-package org.laokou.admin.dto.log;
+package org.laokou.common.cors.config;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.StringUtil;
+import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
+
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author laokou
  */
-@Data
-@Schema(name = "LoginLogListQry", description = "登录日志列表查询参数")
-public class LoginLogListQry extends PageQuery {
+public class CustomInstantSerializer extends InstantSerializer {
 
-	@Schema(name = "username", description = "登录的用户名")
-	private String username;
-
-	@Schema(name = "status", description = "登录状态 0登录成功 1登录失败")
-	private Integer status;
-
-	public void setUsername(String username) {
-		this.username = StringUtil.like(username);
+	public CustomInstantSerializer(InstantSerializer base, Boolean useTimestamp, Boolean useNanoseconds,
+			DateTimeFormatter formatter) {
+		super(base, useTimestamp, useNanoseconds, formatter);
 	}
 
 }

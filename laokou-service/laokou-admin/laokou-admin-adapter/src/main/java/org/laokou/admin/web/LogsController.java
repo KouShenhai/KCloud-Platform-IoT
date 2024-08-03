@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.LogsServiceI;
 import org.laokou.admin.dto.log.LoginLogExportCmd;
-import org.laokou.admin.dto.log.LoginLogListQry;
+import org.laokou.admin.dto.log.LoginLogPageQry;
 import org.laokou.admin.dto.log.OperateLogExportCmd;
 import org.laokou.admin.dto.log.OperateLogListQry;
 import org.laokou.admin.dto.log.clientobject.LoginLogCO;
@@ -69,8 +69,9 @@ public class LogsController {
 	@PostMapping("login-list")
 	@Operation(summary = "日志管理", description = "查询登录日志列表")
 	@PreAuthorize("hasAuthority('logs:login-list')")
-	public Result<Datas<LoginLogCO>> findLoginList(@RequestBody LoginLogListQry qry) {
-		return logsServiceI.loginList(qry);
+	public Result<Datas<LoginLogCO>> findLoginList(@RequestBody LoginLogPageQry qry) {
+		// return logsServiceI.loginList(qry);
+		return null;
 	}
 
 	@PostMapping("export-login")
@@ -78,7 +79,7 @@ public class LogsController {
 	@PreAuthorize("hasAuthority('logs:export-login')")
 	@OperateLog(module = "日志管理", operation = "导出登录日志")
 	public void exportLogin(@RequestBody LoginLogExportCmd cmd, HttpServletResponse response) {
-		logsServiceI.exportLogin(cmd.response(response));
+		logsServiceI.exportLogin(new LoginLogExportCmd(response));
 	}
 
 }

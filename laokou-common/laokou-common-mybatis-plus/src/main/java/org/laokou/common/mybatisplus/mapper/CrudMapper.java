@@ -28,7 +28,7 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 /**
  * @author laokou
  */
-@Schema(name = "CrudMapper", description = "增删改查Mapper")
+@Schema(name = "增删改查Mapper", description = "增删改查Mapper")
 public interface CrudMapper<ID, VERSION, DO> extends BaseMapper<DO> {
 
 	/**

@@ -17,26 +17,23 @@
 
 package org.laokou.admin.command.log.query;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.admin.convertor.LoginLogConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
-import org.laokou.admin.dto.log.LoginLogListQry;
+import org.laokou.admin.dto.log.LoginLogPageQry;
 import org.laokou.admin.dto.log.clientobject.LoginLogCO;
 import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_LOGIN_LOG;
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
 
 /**
  * 查询登录日志列表执行器.
@@ -45,7 +42,7 @@ import static org.laokou.common.i18n.common.DSConstant.TENANT;
  */
 @Component
 @RequiredArgsConstructor
-public class LoginLogListQryExe {
+public class LoginLogPageQryExe {
 
 	private final LoginLogMapper loginLogMapper;
 
@@ -58,18 +55,23 @@ public class LoginLogListQryExe {
 	 * @param qry 查询登录日志列表参数
 	 * @return 登录日志列表
 	 */
-	@DS(TENANT)
+	// @DS(TENANT)
 	@SneakyThrows
 	@DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
-	public Result<Datas<LoginLogCO>> execute(LoginLogListQry qry) {
-		LoginLogDO loginLogDO = null;
-		PageQuery page = qry;
-		CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture
-			.supplyAsync(() -> loginLogMapper.selectListByCondition(loginLogDO, page), executor);
-		CompletableFuture<Long> c2 = CompletableFuture
-			.supplyAsync(() -> loginLogMapper.selectObjCount(loginLogDO, page), executor);
-		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.create(c1.get().stream().map(loginLogConvertor::convertClientObj).toList(), c2.get()));
+	public Result<Datas<LoginLogCO>> execute(LoginLogPageQry qry) {
+		List<LoginLogDO> page = loginLogMapper.selectList(Wrappers.emptyWrapper());
+		return Result.ok(Datas.create(page.stream().map(loginLogConvertor::convertClientObj).toList(), 0));
+		// LoginLogDO loginLogDO = null;
+		// CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture
+		// .supplyAsync(() -> loginLogMapper.selectListByCondition(loginLogDO, qry),
+		// executor);
+		// CompletableFuture<Long> c2 = CompletableFuture
+		// .supplyAsync(() -> loginLogMapper.selectObjCount(loginLogDO, qry), executor);
+		// CompletableFuture.allOf(List.of(c1,
+		// c2).toArray(CompletableFuture[]::new)).join();
+		// return
+		// Result.ok(Datas.create(c1.get().stream().map(loginLogConvertor::convertClientObj).toList(),
+		// c2.get()));
 	}
 
 	// private LoginLogDO convert(LoginLogListQry qry) {

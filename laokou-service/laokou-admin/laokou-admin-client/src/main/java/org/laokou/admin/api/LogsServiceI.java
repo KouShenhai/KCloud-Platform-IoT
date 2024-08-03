@@ -18,7 +18,7 @@
 package org.laokou.admin.api;
 
 import org.laokou.admin.dto.log.LoginLogExportCmd;
-import org.laokou.admin.dto.log.LoginLogListQry;
+import org.laokou.admin.dto.log.LoginLogPageQry;
 import org.laokou.admin.dto.log.OperateLogExportCmd;
 import org.laokou.admin.dto.log.OperateLogListQry;
 import org.laokou.admin.dto.log.clientobject.LoginLogCO;
@@ -51,7 +51,7 @@ public interface LogsServiceI {
 	 * @param qry 查询登录日志列表参数
 	 * @return 登录日志列表
 	 */
-	Result<Datas<LoginLogCO>> loginList(LoginLogListQry qry);
+	Result<Datas<LoginLogCO>> pageLogin(LoginLogPageQry qry);
 
 	/**
 	 * 导出登录日志.
