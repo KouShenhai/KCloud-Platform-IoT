@@ -85,7 +85,7 @@ services:
     networks:
       - laokou_network
   kafka:
-    image: bitnami/kafka:3.7.1
+    image: bitnami/kafka:3.8.0
     container_name: kafka
     tty: true
     ports:
