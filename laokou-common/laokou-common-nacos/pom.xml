@@ -109,7 +109,6 @@
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-google-common-protos</artifactId>
-      <version>2.42.0</version>
     </dependency>
   </dependencies>
 

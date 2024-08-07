@@ -44,20 +44,20 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("v3/oss")
-@Tag(name = "OssV3Controller", description = "OSS管理")
+@Tag(name = "OSS管理", description = "OSS管理")
 public class OssV3Controller {
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('oss:page')")
-	@Operation(summary = "OSS管理", description = "分页查询OSS列表")
+	@Operation(summary = "分页查询OSS列表", description = "分页查询OSS列表")
 	public Result<Datas<OssCO>> pageV3(@RequestBody OssListQry qry) {
 		return null;
 	}
 
 	@TraceLog
 	@OperateLog(module = "OSS管理", operation = "上传文件")
-	@Operation(summary = "OSS管理", description = "上传文件")
+	@Operation(summary = "上传文件", description = "上传文件")
 	@PostMapping(value = "upload", consumes = MULTIPART_FORM_DATA_VALUE)
 	public Result<?> uploadV3(@RequestPart("file") MultipartFile file) {
 		return null;
@@ -66,7 +66,7 @@ public class OssV3Controller {
 	@Idempotent
 	@PostMapping
 	@Operation(summary = "OSS管理", description = "新增OSS")
-	@OperateLog(module = "OSS管理", operation = "新增OSS")
+	@OperateLog(module = "新增OSS", operation = "新增OSS")
 	@PreAuthorize("hasAuthority('oss:save')")
 	public void saveV3(@RequestBody OssCreateCmd cmd) {
 	}
@@ -74,7 +74,7 @@ public class OssV3Controller {
 	@TraceLog
 	@GetMapping("{id}")
 	@DataCache(name = OSS, key = "#id")
-	@Operation(summary = "OSS管理", description = "查看OSS")
+	@Operation(summary = "查看OSS", description = "查看OSS")
 	public Result<OssCO> getByIdV3(@PathVariable("id") Long id) {
 		return null;
 	}
@@ -83,14 +83,14 @@ public class OssV3Controller {
 	@PreAuthorize("hasAuthority('oss:modify')")
 	@OperateLog(module = "OSS管理", operation = "修改OSS")
 	@DataCache(name = OSS, key = "#cmd.co.id", type = DEL)
-	@Operation(summary = "OSS管理", description = "修改OSS")
+	@Operation(summary = "修改OSS", description = "修改OSS")
 	public void modifyV3(@RequestBody OssModifyCmd cmd) {
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('oss:remove')")
 	@OperateLog(module = "OSS管理", operation = "删除OSS")
-	@Operation(summary = "OSS管理", description = "删除OSS")
+	@Operation(summary = "删除OSS", description = "删除OSS")
 	public void removeV3(@RequestBody Long[] ids) {
 
 	}
