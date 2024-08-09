@@ -28,7 +28,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.model.AuthA.MOBILE;
+import static org.laokou.auth.factory.AuthFactory.MOBILE;
 
 /**
  * 手机号处理器.

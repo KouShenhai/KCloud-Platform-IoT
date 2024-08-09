@@ -66,7 +66,7 @@ public class OAuth2AuthenticationProvider {
 		try {
 			// 校验
 			extensionExecutor.executeVoid(AuthValidatorExtPt.class,
-					BizScenario.valueOf(auth.getGrantType(), USE_CASE_AUTH, SCENARIO),
+					BizScenario.valueOf(auth.getGrantType().getCode(), USE_CASE_AUTH, SCENARIO),
 					extension -> extension.validate(auth));
 			// 认证
 			authDomainService.auth(auth);

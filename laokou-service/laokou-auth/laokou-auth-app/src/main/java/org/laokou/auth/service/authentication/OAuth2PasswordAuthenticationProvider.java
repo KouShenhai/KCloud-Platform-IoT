@@ -24,10 +24,11 @@ import org.laokou.auth.model.AuthA;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
-import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.auth.factory.AuthFactory.PASSWORD;
 
 /**
  * 密码处理器.
@@ -57,7 +58,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
 
 	@Override
 	AuthorizationGrantType getGrantType() {
-		return new AuthorizationGrantType(OAuth2ParameterNames.PASSWORD);
+		return new AuthorizationGrantType(PASSWORD);
 	}
 
 }

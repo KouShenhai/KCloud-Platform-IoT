@@ -31,6 +31,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
+import static org.laokou.auth.model.GrantType.*;
 import static org.laokou.common.i18n.common.constant.Constant.FAIL;
 import static org.laokou.common.i18n.common.constant.Constant.OK;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
@@ -46,56 +47,6 @@ import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
 public class AuthA extends AggregateRoot<Long> {
 
 	/**
-	 * 邮箱.
-	 */
-	public static final String MAIL = "mail";
-
-	/**
-	 * 手机号.
-	 */
-	public static final String MOBILE = "mobile";
-
-	/**
-	 * 密码.
-	 */
-	public static final String PASSWORD = "password";
-
-	/**
-	 * 授权码.
-	 */
-	public static final String AUTHORIZATION_CODE = "authorization_code";
-
-	/**
-	 * 用户名.
-	 */
-	public static final String USERNAME = "username";
-
-	/**
-	 * 验证码.
-	 */
-	public static final String CAPTCHA = "captcha";
-
-	/**
-	 * UUID.
-	 */
-	public static final String UUID = "uuid";
-
-	/**
-	 * 认证类型.
-	 */
-	public static final String GRANT_TYPE = "grant_type";
-
-	/**
-	 * 验证码.
-	 */
-	public static final String CODE = "code";
-
-	/**
-	 * 租户ID.
-	 */
-	public static final String TENANT_ID = "tenant_id";
-
-	/**
 	 * 用户名.
 	 */
 	private String username;
@@ -108,7 +59,7 @@ public class AuthA extends AggregateRoot<Long> {
 	/**
 	 * 认证类型 mail邮箱 mobile手机号 password密码 authorization_code授权码.
 	 */
-	private String grantType;
+	private GrantType grantType;
 
 	/**
 	 * 验证码值对象.
@@ -148,7 +99,7 @@ public class AuthA extends AggregateRoot<Long> {
 	public AuthA() {
 	}
 
-	public AuthA(String username, String password, String tenantId, String grantType, String uuid, String captcha,
+	public AuthA(String username, String password, String tenantId, GrantType grantType, String uuid, String captcha,
 			HttpServletRequest request) {
 		this.id = IdGenerator.defaultSnowflakeId();
 		this.username = username;
@@ -193,18 +144,7 @@ public class AuthA extends AggregateRoot<Long> {
 			this.deptPath = user.getDeptPath();
 		}
 		else {
-			switch (this.grantType) {
-				case PASSWORD:
-				case AUTHORIZATION_CODE:
-					fail(OAUTH2_USERNAME_PASSWORD_ERROR);
-					break;
-				case MOBILE:
-					fail(OAUTH2_MOBILE_NOT_REGISTERED);
-					break;
-				case MAIL:
-					fail(OAUTH2_MAIL_NOT_REGISTERED);
-					break;
-			}
+			fail(grantType.getErrorCode());
 		}
 	}
 
@@ -274,7 +214,7 @@ public class AuthA extends AggregateRoot<Long> {
 		Capabilities capabilities = RequestUtil.getCapabilities(request);
 		String os = capabilities.getPlatform();
 		String browser = capabilities.getBrowser();
-		this.log = new LogV(currentUser, os, ip, address, browser, status, errorMessage, grantType,
+		this.log = new LogV(currentUser, os, ip, address, browser, status, errorMessage, grantType.getCode(),
 				DateUtil.nowInstant());
 	}
 

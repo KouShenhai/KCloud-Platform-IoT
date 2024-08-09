@@ -20,8 +20,8 @@ package org.laokou.auth.factory;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.GrantType;
 
-import static org.laokou.auth.model.AuthA.*;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
@@ -30,18 +30,63 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 @Slf4j
 public class AuthFactory {
 
+	/**
+	 * 邮箱.
+	 */
+	public static final String MAIL = "mail";
+
+	/**
+	 * 手机号.
+	 */
+	public static final String MOBILE = "mobile";
+
+	/**
+	 * 密码.
+	 */
+	public static final String PASSWORD = "password";
+
+	/**
+	 * 授权码.
+	 */
+	public static final String AUTHORIZATION_CODE = "authorization_code";
+
+	/**
+	 * 用户名.
+	 */
+	public static final String USERNAME = "username";
+
+	/**
+	 * 验证码.
+	 */
+	public static final String CAPTCHA = "captcha";
+
+	/**
+	 * UUID.
+	 */
+	public static final String UUID = "uuid";
+
+	/**
+	 * 验证码.
+	 */
+	public static final String CODE = "code";
+
+	/**
+	 * 租户ID.
+	 */
+	public static final String TENANT_ID = "tenant_id";
+
 	public static AuthA mail(HttpServletRequest request) {
 		String tenantId = request.getParameter(TENANT_ID);
 		String code = request.getParameter(CODE);
 		String mail = request.getParameter(MAIL);
-		return new AuthA(EMPTY, EMPTY, tenantId, MAIL, mail, code, request);
+		return new AuthA(EMPTY, EMPTY, tenantId, GrantType.MAIL, mail, code, request);
 	}
 
 	public static AuthA mobile(HttpServletRequest request) {
 		String tenantId = request.getParameter(TENANT_ID);
 		String code = request.getParameter(CODE);
 		String mobile = request.getParameter(MOBILE);
-		return new AuthA(EMPTY, EMPTY, tenantId, MOBILE, mobile, code, request);
+		return new AuthA(EMPTY, EMPTY, tenantId, GrantType.MOBILE, mobile, code, request);
 	}
 
 	public static AuthA password(HttpServletRequest request) {
@@ -50,13 +95,13 @@ public class AuthFactory {
 		String captcha = request.getParameter(CAPTCHA);
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
-		return new AuthA(username, password, tenantId, PASSWORD, uuid, captcha, request);
+		return new AuthA(username, password, tenantId, GrantType.PASSWORD, uuid, captcha, request);
 	}
 
 	public static AuthA authorizationCode(HttpServletRequest request) {
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
-		return new AuthA(username, password, EMPTY, AUTHORIZATION_CODE, EMPTY, EMPTY, request);
+		return new AuthA(username, password, EMPTY, GrantType.AUTHORIZATION_CODE, EMPTY, EMPTY, request);
 	}
 
 }

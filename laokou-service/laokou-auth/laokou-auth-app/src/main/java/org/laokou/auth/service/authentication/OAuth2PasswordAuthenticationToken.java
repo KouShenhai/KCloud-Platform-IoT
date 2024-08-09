@@ -19,9 +19,10 @@ package org.laokou.auth.service.authentication;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 
 import java.util.Map;
+
+import static org.laokou.auth.factory.AuthFactory.PASSWORD;
 
 /**
  * 密码令牌.
@@ -37,7 +38,7 @@ public class OAuth2PasswordAuthenticationToken extends AbstractOAuth2Authenticat
 	 */
 	protected OAuth2PasswordAuthenticationToken(Authentication clientPrincipal,
 			Map<String, Object> additionalParameters) {
-		super(new AuthorizationGrantType(OAuth2ParameterNames.PASSWORD), clientPrincipal, additionalParameters);
+		super(new AuthorizationGrantType(PASSWORD), clientPrincipal, additionalParameters);
 	}
 
 }
