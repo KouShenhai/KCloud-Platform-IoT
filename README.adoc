@@ -92,7 +92,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 |Nacos                       |2.4.0.1
 |Sentinel                    |1.8.8
 |Redis                       |7.4.0
-|Elasticsearch               |8.14.3
+|Elasticsearch               |8.15.0
 |RocketMQ                    |5.3.0
 |Netty                       |4.1.112.Final
 |Kafka                       |3.8.0
