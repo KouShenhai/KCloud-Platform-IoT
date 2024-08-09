@@ -8,6 +8,13 @@
     <artifactId>KCloud-Platform-IoT</artifactId>
     <version>3.3.2</version>
   </parent>
+
   <artifactId>laokou-archetype</artifactId>
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-core</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>
