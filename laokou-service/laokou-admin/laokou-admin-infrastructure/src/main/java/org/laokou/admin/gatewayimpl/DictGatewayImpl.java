@@ -20,7 +20,7 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.convertor.DictConvertor2;
+import org.laokou.admin.convertor.DictTConvertor;
 import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
@@ -46,10 +46,11 @@ public class DictGatewayImpl implements DictGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final DictConvertor2 dictConvertor2;
+	private final DictTConvertor dictTConvertor;
 
 	/**
 	 * 新增字典.
+	 *
 	 * @param dict 字典对象
 	 */
 	@Override
@@ -59,11 +60,12 @@ public class DictGatewayImpl implements DictGateway {
 			// .eq(DictTypeDO::getValue, dict.getValue())
 			.eq(DictTypeDO::getType, dict.getType()));
 		dict.checkTypeAndValue(count);
-		create(dictConvertor2.toDataObject(dict));
+		create(dictTConvertor.toDataObject(dict));
 	}
 
 	/**
 	 * 修改字典.
+	 *
 	 * @param dict 字典对象
 	 */
 	@Override
@@ -75,7 +77,7 @@ public class DictGatewayImpl implements DictGateway {
 			.eq(DictTypeDO::getType, dict.getType())
 			.ne(DictTypeDO::getId, dict.getId()));
 		dict.checkTypeAndValue(count);
-		DictTypeDO dictTypeDO = dictConvertor2.toDataObject(dict);
+		DictTypeDO dictTypeDO = dictTConvertor.toDataObject(dict);
 		// 版本号
 		dictTypeDO.setVersion(dictMapper.selectVersion(dictTypeDO.getId()));
 		modify(dictTypeDO);
@@ -83,6 +85,7 @@ public class DictGatewayImpl implements DictGateway {
 
 	/**
 	 * 根据ID删除字典.
+	 *
 	 * @param ids IDS
 	 */
 	@Override
@@ -90,8 +93,7 @@ public class DictGatewayImpl implements DictGateway {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				dictMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
@@ -101,14 +103,14 @@ public class DictGatewayImpl implements DictGateway {
 
 	/**
 	 * 新增字典.
+	 *
 	 * @param dictTypeDO 字典数据模型
 	 */
 	private void create(DictTypeDO dictTypeDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				dictMapper.insert(dictTypeDO);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
@@ -118,14 +120,14 @@ public class DictGatewayImpl implements DictGateway {
 
 	/**
 	 * 修改字典.
+	 *
 	 * @param dictTypeDO 字典数据模型
 	 */
 	private void modify(DictTypeDO dictTypeDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				dictMapper.updateById(dictTypeDO);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());

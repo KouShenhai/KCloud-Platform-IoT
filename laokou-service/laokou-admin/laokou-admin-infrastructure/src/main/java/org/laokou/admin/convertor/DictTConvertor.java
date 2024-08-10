@@ -32,6 +32,6 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
  * @author laokou
  */
 @Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface DictConvertor2 extends Convertor<DictTypeCO, Dict, DictTypeDO> {
+public interface DictTConvertor extends Convertor<DictTypeCO, Dict, DictTypeDO> {
 
 }

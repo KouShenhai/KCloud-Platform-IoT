@@ -20,7 +20,7 @@ package org.laokou.admin.command.dict.query;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.admin.convertor.DictConvertor2;
+import org.laokou.admin.convertor.DictTConvertor;
 import org.laokou.admin.dto.dict.DictListQry;
 import org.laokou.admin.dto.dict.clientobject.DictTypeCO;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
@@ -48,10 +48,11 @@ public class DictTypeListQryExe {
 
 	private final Executor executor;
 
-	private final DictConvertor2 dictConvertor2;
+	private final DictTConvertor dictTConvertor;
 
 	/**
 	 * 执行查询部门列表.
+	 *
 	 * @param qry 查询部门列表参数
 	 * @return 部门列表
 	 */
@@ -61,9 +62,9 @@ public class DictTypeListQryExe {
 		CompletableFuture<List<DictTypeDO>> c1 = CompletableFuture
 			.supplyAsync(() -> dictMapper.selectPageByCondition(qry), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> dictMapper.selectCountByCondition(qry),
-				executor);
+			executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.create(c1.get().stream().map(dictConvertor2::convertClientObj).toList(), c2.get()));
+		return Result.ok(Datas.create(c1.get().stream().map(dictTConvertor::convertClientObj).toList(), c2.get()));
 	}
 
 }
