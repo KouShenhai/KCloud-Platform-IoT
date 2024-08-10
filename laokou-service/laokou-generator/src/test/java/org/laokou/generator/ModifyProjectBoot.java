@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.archetype;
+package org.laokou.generator;
 
 import org.laokou.common.core.utils.FileUtil;
 

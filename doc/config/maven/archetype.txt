@@ -1,0 +1,88 @@
+mvn clean archetype:create-from-project
+
+cd target/generated-sources/archetype/
+mvn clean install
+
+// setting.xml配置
+<servers>
+	  <server>
+	  <id>nexus-releases</id>
+	  <username>admin</username>
+	  <password>laokou123</password>
+	</server>
+	<server>
+	  <id>nexus-snapshots</id>
+	  <username>admin</username>
+	  <password>laokou123</password>
+	</server>
+</servers>
+
+<profile>
+    <id>nexus</id>
+    <repositories>
+        <repository>
+            <id>nexus-releases</id>
+            <url>http://127.0.0.1:8001/repository/maven-releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>snapshot</id>
+            <url>http://127.0.0.1:8001/repository/maven-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+</profile>
+
+<activeProfiles>
+    <activeProfile>nexus</activeProfile>
+</activeProfiles>
+
+<mirror>
+  <id>nexus-releases</id>
+  <mirrorOf>central</mirrorOf>
+  <name>central repository</name>
+  <url>http://127.0.0.1:8001/repository/maven-public/</url>
+</mirror>
+
+// 增加私库配置
+--- target/generated-sources/archetype/pom.xml ---
+  <distributionManagement>
+    <repository>
+      <!-- 与 maven setting 文件中的 server id对应 -->
+      <id>nexus-releases</id>
+      <url>http://127.0.0.1:8001/repository/maven-releases/</url>
+      <releases>
+      	  <enabled>true</enabled>
+      </releases>
+      <snapshots>
+      	  <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>http://127.0.0.1:8001/repository/maven-snapshots/</url>
+      <releases>
+      	  <enabled>false</enabled>
+      </releases>
+      <snapshots>
+      	  <enabled>true</enabled>
+      </snapshots>
+    </snapshotRepository>
+  </distributionManagement>
+--- target/generated-sources/archetype/pom.xml ---
+
+// 推送
+mvn deploy
+
+// 使用
+mvn archetype:generate -DgroupId=org.laokou -DartifactId=laokou-test -Dversion=3.3.2 -Dpackage=org.laokou.test -DarchetypeGroupId=org.laokou -DarchetypeArtifactId=laokou-cola-archetype -DarchetypeVersion=3.3.2 -DinteractiveMode=false
