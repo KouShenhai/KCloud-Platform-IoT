@@ -52,7 +52,6 @@ public class DictTypeListQryExe {
 
 	/**
 	 * 执行查询部门列表.
-	 *
 	 * @param qry 查询部门列表参数
 	 * @return 部门列表
 	 */
@@ -62,7 +61,7 @@ public class DictTypeListQryExe {
 		CompletableFuture<List<DictTypeDO>> c1 = CompletableFuture
 			.supplyAsync(() -> dictMapper.selectPageByCondition(qry), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> dictMapper.selectCountByCondition(qry),
-			executor);
+				executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
 		return Result.ok(Datas.create(c1.get().stream().map(dictTConvertor::convertClientObj).toList(), c2.get()));
 	}

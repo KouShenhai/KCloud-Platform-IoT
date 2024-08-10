@@ -41,7 +41,6 @@ public class DictModifyCmdExe {
 
 	/**
 	 * 执行修改字典.
-	 *
 	 * @param cmd 修改字典参数
 	 */
 	@DS(TENANT)

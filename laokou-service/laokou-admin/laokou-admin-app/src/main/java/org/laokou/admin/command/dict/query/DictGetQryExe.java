@@ -43,7 +43,6 @@ public class DictGetQryExe {
 
 	/**
 	 * 执行查看字典.
-	 *
 	 * @param qry 查看字典参数
 	 * @return 字典
 	 */

@@ -41,7 +41,6 @@ public class DictCreateCmdExe {
 
 	/**
 	 * 执行新增字典.
-	 *
 	 * @param cmd 新增字典参数
 	 */
 	@DS(TENANT)
