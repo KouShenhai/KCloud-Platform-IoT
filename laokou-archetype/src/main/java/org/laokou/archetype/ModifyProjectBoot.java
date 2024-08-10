@@ -42,11 +42,6 @@ public class ModifyProjectBoot {
 
 	private static final String MODIFY_XML_FILE_SUFFIX = ".xml";
 
-	// -------------------------------------------------------------------------需要修改-------------------------------------------------------------------------
-	// 新项目名称
-	private static final String NEW_PROJECT_NAME = "New_KCloud-Platform-IoT";
-
-	// -------------------------------------------------------------------------不可修改-------------------------------------------------------------------------
 	// 新模块名称
 	private static final String NEW_MODULE_NAME = "newlaokou";
 
@@ -59,10 +54,10 @@ public class ModifyProjectBoot {
 	// 新包名名称
 	private static final String NEW_PACKAGE_NAME = "cn.org.laokou";
 
-	// -------------------------------------------------------------------------不可修改-------------------------------------------------------------------------
-	private static int count = 0;
+	// 新项目名称
+	private static final String NEW_PROJECT_NAME = "New_KCloud-Platform-IoT";
 
-	// -------------------------------------------------------------------------需要修改-------------------------------------------------------------------------
+	private static int count = 0;
 
 	public static void main(String[] args) throws IOException {
 

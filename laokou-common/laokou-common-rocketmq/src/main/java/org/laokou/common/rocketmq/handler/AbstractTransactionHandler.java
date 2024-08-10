@@ -52,7 +52,7 @@ public abstract class AbstractTransactionHandler implements RocketMQLocalTransac
 			return RocketMQLocalTransactionState.ROLLBACK;
 		}
 		catch (Exception e) {
-			log.info("事务回查异常，事务回滚，错误信息：{}", e.getMessage(), e);
+			log.error("事务回查异常，事务回滚，错误信息：{}", e.getMessage(), e);
 			return RocketMQLocalTransactionState.ROLLBACK;
 		}
 	}
