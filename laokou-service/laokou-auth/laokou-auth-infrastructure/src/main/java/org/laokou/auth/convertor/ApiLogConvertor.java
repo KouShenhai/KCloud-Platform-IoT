@@ -19,19 +19,28 @@ package org.laokou.auth.convertor;
 
 import org.laokou.auth.dto.domainevent.CallApiEvent;
 import org.laokou.auth.gatewayimpl.database.dataobject.ApiLogDO;
-import org.laokou.auth.model.LogV;
-import org.laokou.common.i18n.dto.Convertor;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingInheritanceStrategy;
-import org.mapstruct.ReportingPolicy;
-
-import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**
  * @author laokou
  */
-@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE,
-		mappingInheritanceStrategy = MappingInheritanceStrategy.AUTO_INHERIT_ALL_FROM_CONFIG)
-public interface ApiLogConvertor extends Convertor<CallApiEvent, LogV, ApiLogDO> {
+public class ApiLogConvertor {
+
+	public static ApiLogDO toDataObject(CallApiEvent callApiEvent) {
+		ApiLogDO apiLogDO = new ApiLogDO();
+		apiLogDO.setId(callApiEvent.getId());
+		apiLogDO.setCreator(callApiEvent.getCreator());
+		apiLogDO.setEditor(callApiEvent.getEditor());
+		apiLogDO.setCreateDate(callApiEvent.getCreateDate());
+		apiLogDO.setUpdateDate(callApiEvent.getUpdateDate());
+		apiLogDO.setDeptId(callApiEvent.getDeptId());
+		apiLogDO.setDeptPath(callApiEvent.getDeptPath());
+		apiLogDO.setTenantId(callApiEvent.getTenantId());
+		apiLogDO.setCode(callApiEvent.getCode());
+		apiLogDO.setName(callApiEvent.getName());
+		apiLogDO.setStatus(callApiEvent.getStatus());
+		apiLogDO.setErrorMessage(callApiEvent.getErrorMessage());
+		apiLogDO.setParam(callApiEvent.getParam());
+		return apiLogDO;
+	}
 
 }

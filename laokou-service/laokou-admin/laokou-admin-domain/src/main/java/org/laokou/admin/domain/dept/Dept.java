@@ -24,10 +24,11 @@ import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
+ * 部门.
+ *
  * @author laokou
  */
 @Data
-@Schema(name = "Dept", description = "部门")
 public class Dept extends AggregateRoot<Long> {
 
 	@Schema(name = "name", description = "部门名称")

@@ -1,5 +1,3 @@
-<?xml version="1.0"?>
-<!--
 /*
  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
@@ -16,11 +14,24 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE suppressions PUBLIC
-  "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
-  "https://checkstyle.org/dtds/suppressions_1_2.dtd">
-<suppressions>
-  <!-- https://checkstyle.sourceforge.io/filters/suppressionfilter.html -->
-  <suppress files="[\\/]org[\\/]laokou[\\/]admin[\\/]convertor[\\/].*ConvertorImpl.java" checks=".*"/>
-</suppressions>
+
+package org.laokou.admin.convertor;
+
+import org.laokou.admin.domain.dict.Dict;
+import org.laokou.admin.dto.dict.clientobject.DictTypeCO;
+import org.laokou.admin.gatewayimpl.database.dataobject.DictTypeDO;
+import org.laokou.common.i18n.dto.Convertor;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
+
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
+
+/**
+ * 字典转换器.
+ *
+ * @author laokou
+ */
+@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface DictConvertor2 extends Convertor<DictTypeCO, Dict, DictTypeDO> {
+
+}

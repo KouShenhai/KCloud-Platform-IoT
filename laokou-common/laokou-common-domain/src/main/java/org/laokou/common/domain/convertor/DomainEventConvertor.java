@@ -19,17 +19,30 @@ package org.laokou.common.domain.convertor;
 
 import org.laokou.common.domain.entity.DomainEventDO;
 import org.laokou.common.domain.model.DomainEventA;
-import org.laokou.common.i18n.dto.Convertor;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
-
-import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**
  * @author laokou
  */
-@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface DomainEventConvertor extends Convertor<DefaultDomainEvent, DomainEventA, DomainEventDO> {
+public class DomainEventConvertor {
+
+	public static DomainEventDO toDataObject(DomainEventA domainEventA) {
+		DomainEventDO domainEventDO = new DomainEventDO();
+		domainEventDO.setId(domainEventA.getId());
+		domainEventDO.setCreator(domainEventA.getCreator());
+		domainEventDO.setEditor(domainEventA.getEditor());
+		domainEventDO.setCreateDate(domainEventA.getCreateDate());
+		domainEventDO.setUpdateDate(domainEventA.getUpdateDate());
+		domainEventDO.setDeptId(domainEventA.getDeptId());
+		domainEventDO.setDeptPath(domainEventA.getDeptPath());
+		domainEventDO.setTenantId(domainEventA.getTenantId());
+		domainEventDO.setEventType(domainEventA.getEventType());
+		domainEventDO.setSourceName(domainEventA.getSourceName());
+		domainEventDO.setTopic(domainEventA.getTopic());
+		domainEventDO.setTag(domainEventA.getTag());
+		domainEventDO.setAppName(domainEventA.getAppName());
+		domainEventDO.setAggregateId(domainEventA.getAggregateId());
+		domainEventDO.setAttribute(domainEventA.getAttribute());
+		return domainEventDO;
+	}
 
 }

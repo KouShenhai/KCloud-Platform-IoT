@@ -19,21 +19,59 @@ package org.laokou.auth.convertor;
 
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.UserE;
-import org.laokou.common.i18n.dto.Convertor;
 import org.laokou.common.security.utils.UserDetail;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingInheritanceStrategy;
-import org.mapstruct.ReportingPolicy;
-
-import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**
- * 用户转换器.
- *
  * @author laokou
  */
-@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE,
-		mappingInheritanceStrategy = MappingInheritanceStrategy.AUTO_INHERIT_ALL_FROM_CONFIG)
-public interface UserConvertor extends Convertor<UserDetail, UserE, UserDO> {
+public class UserConvertor {
+
+	public static UserDetail toClientObject(UserE userE) {
+		UserDetail userDetail = new UserDetail();
+		userDetail.setId(userE.getId());
+		userDetail.setUsername(userE.getUsername());
+		userDetail.setAvatar(userE.getAvatar());
+		userDetail.setSuperAdmin(userE.getSuperAdmin());
+		userDetail.setStatus(userE.getStatus());
+		userDetail.setMail(userE.getMail());
+		userDetail.setMobile(userE.getMobile());
+		userDetail.setPassword(userE.getPassword());
+		userDetail.setDeptId(userE.getDeptId());
+		userDetail.setDeptPath(userE.getDeptPath());
+		userDetail.setTenantId(userE.getTenantId());
+		return userDetail;
+	}
+
+	public static UserE toEntity(UserDO userDO) {
+		UserE userE = new UserE();
+		userE.setId(userDO.getId());
+		userE.setUsername(userDO.getUsername());
+		userE.setPassword(userDO.getPassword());
+		userE.setSuperAdmin(userDO.getSuperAdmin());
+		userE.setAvatar(userDO.getAvatar());
+		userE.setMail(userDO.getMail());
+		userE.setStatus(userDO.getStatus());
+		userE.setMobile(userDO.getMobile());
+		userE.setDeptId(userDO.getDeptId());
+		userE.setTenantId(userDO.getTenantId());
+		userE.setDeptPath(userDO.getDeptPath());
+		return userE;
+	}
+
+	public static UserDO toDataObject(UserE userE) {
+		UserDO userDO = new UserDO();
+		userDO.setId(userE.getId());
+		userDO.setDeptId(userE.getDeptId());
+		userDO.setDeptPath(userE.getDeptPath());
+		userDO.setTenantId(userE.getTenantId());
+		userDO.setUsername(userE.getUsername());
+		userDO.setPassword(userE.getPassword());
+		userDO.setSuperAdmin(userE.getSuperAdmin());
+		userDO.setAvatar(userE.getAvatar());
+		userDO.setMail(userE.getMail());
+		userDO.setStatus(userE.getStatus());
+		userDO.setMobile(userE.getMobile());
+		return userDO;
+	}
 
 }

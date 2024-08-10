@@ -20,18 +20,44 @@ package org.laokou.auth.convertor;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.auth.model.LogV;
-import org.laokou.common.i18n.dto.Convertor;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingInheritanceStrategy;
-import org.mapstruct.ReportingPolicy;
-
-import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**
  * @author laokou
  */
-@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE,
-		mappingInheritanceStrategy = MappingInheritanceStrategy.AUTO_INHERIT_ALL_FROM_CONFIG)
-public interface LoginLogConvertor extends Convertor<LoginEvent, LogV, LoginLogDO> {
+public class LoginLogConvertor {
+
+	public static LoginEvent toClientObject(LogV logV) {
+		LoginEvent loginEvent = new LoginEvent();
+		loginEvent.setUsername(logV.username());
+		loginEvent.setIp(logV.ip());
+		loginEvent.setAddress(logV.address());
+		loginEvent.setBrowser(logV.browser());
+		loginEvent.setOs(logV.os());
+		loginEvent.setStatus(logV.status());
+		loginEvent.setErrorMessage(logV.errorMessage());
+		loginEvent.setType(logV.type());
+		return loginEvent;
+	}
+
+	public static LoginLogDO toDataObject(LoginEvent loginEvent) {
+		LoginLogDO loginLogDO = new LoginLogDO();
+		loginLogDO.setId(loginEvent.getId());
+		loginLogDO.setCreator(loginEvent.getCreator());
+		loginLogDO.setEditor(loginEvent.getEditor());
+		loginLogDO.setCreateDate(loginEvent.getCreateDate());
+		loginLogDO.setUpdateDate(loginEvent.getUpdateDate());
+		loginLogDO.setDeptId(loginEvent.getDeptId());
+		loginLogDO.setDeptPath(loginEvent.getDeptPath());
+		loginLogDO.setTenantId(loginEvent.getTenantId());
+		loginLogDO.setUsername(loginEvent.getUsername());
+		loginLogDO.setIp(loginEvent.getIp());
+		loginLogDO.setAddress(loginEvent.getAddress());
+		loginLogDO.setBrowser(loginEvent.getBrowser());
+		loginLogDO.setOs(loginEvent.getOs());
+		loginLogDO.setStatus(loginEvent.getStatus());
+		loginLogDO.setErrorMessage(loginEvent.getErrorMessage());
+		loginLogDO.setType(loginEvent.getType());
+		return loginLogDO;
+	}
 
 }

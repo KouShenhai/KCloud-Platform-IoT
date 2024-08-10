@@ -53,8 +53,6 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final DeptConvertor deptConvertor;
-
 	private final MybatisUtil mybatisUtil;
 
 	/**
@@ -65,7 +63,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	public void create(Dept dept) {
 		long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, dept.getName()));
 		dept.checkName(count);
-		DeptDO deptDO = deptConvertor.toDataObject(dept);
+		DeptDO deptDO = DeptConvertor.toDataObject(dept);
 		// 修改新path
 		deptDO.setPath(getNewPath(deptDO));
 		create(deptDO);
@@ -82,7 +80,7 @@ public class DeptGatewayImpl implements DeptGateway {
 				Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, dept.getName()).ne(DeptDO::getId, dept.getId()));
 		dept.checkName(count);
 		dept.checkIdAndPid();
-		DeptDO deptDO = deptConvertor.toDataObject(dept);
+		DeptDO deptDO = DeptConvertor.toDataObject(dept);
 		// 修改新path
 		deptDO.setPath(getNewPath(deptDO));
 		String oldPath = deptMapper.selectPathById(deptDO.getId());

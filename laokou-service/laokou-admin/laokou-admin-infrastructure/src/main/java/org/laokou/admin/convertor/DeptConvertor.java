@@ -20,18 +20,45 @@ package org.laokou.admin.convertor;
 import org.laokou.admin.domain.dept.Dept;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.common.i18n.dto.Convertor;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
-
-import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**
- * 部门转换器.
- *
  * @author laokou
  */
-@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface DeptConvertor extends Convertor<DeptCO, Dept, DeptDO> {
+public class DeptConvertor {
+
+	public static Dept toEntity(DeptCO co) {
+		Dept dept = new Dept();
+		dept.setId(co.getId());
+		dept.setName(co.getName());
+		dept.setPid(co.getPid());
+		dept.setSort(co.getSort());
+		return dept;
+	}
+
+	public static DeptCO toClientObject(DeptDO deptDO) {
+		DeptCO deptCO = new DeptCO();
+		deptCO.setId(deptDO.getId());
+		deptCO.setName(deptDO.getName());
+		deptCO.setPid(deptDO.getPid());
+		deptCO.setSort(deptDO.getSort());
+		return deptCO;
+	}
+
+	public static DeptDO toDataObject(Dept dept) {
+		DeptDO deptDO = new DeptDO();
+		deptDO.setId(dept.getId());
+		deptDO.setCreator(dept.getCreator());
+		deptDO.setEditor(dept.getEditor());
+		deptDO.setCreateDate(dept.getCreateDate());
+		deptDO.setUpdateDate(dept.getUpdateDate());
+		deptDO.setDeptId(dept.getDeptId());
+		deptDO.setDeptPath(dept.getDeptPath());
+		deptDO.setTenantId(dept.getTenantId());
+		deptDO.setPid(dept.getPid());
+		deptDO.setName(dept.getName());
+		deptDO.setPath(dept.getPath());
+		deptDO.setSort(dept.getSort());
+		return deptDO;
+	}
 
 }

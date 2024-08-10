@@ -21,7 +21,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.DeptConvertor;
 import org.laokou.admin.dto.dept.DeptListQry;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.admin.gatewayimpl.database.DeptMapper;
@@ -45,8 +44,6 @@ import static org.laokou.common.i18n.common.DSConstant.TENANT;
 public class DeptListQryExe {
 
 	private final DeptMapper deptMapper;
-
-	private final DeptConvertor deptConvertor;
 
 	/**
 	 * 执行查询部门列表.

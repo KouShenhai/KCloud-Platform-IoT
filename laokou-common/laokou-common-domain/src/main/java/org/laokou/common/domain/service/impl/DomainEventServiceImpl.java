@@ -40,8 +40,6 @@ public class DomainEventServiceImpl implements DomainEventService {
 
 	private static final String DOMAIN = "domain";
 
-	private final DomainEventConvertor domainEventConvertor;
-
 	private final DomainEventMapper domainEventMapper;
 
 	private final TransactionalUtil transactionalUtil;
@@ -52,7 +50,7 @@ public class DomainEventServiceImpl implements DomainEventService {
 			DynamicDataSourceContextHolder.push(DOMAIN);
 			transactionalUtil.defaultExecuteWithoutResult(r -> {
 				try {
-					DomainEventDO eventDO = domainEventConvertor.toDataObject(domainEventA);
+					DomainEventDO eventDO = DomainEventConvertor.toDataObject(domainEventA);
 					domainEventMapper.insert(eventDO);
 				}
 				catch (Exception e) {

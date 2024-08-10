@@ -19,19 +19,14 @@ package org.laokou.admin.convertor;
 
 import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.dto.dict.clientobject.DictTypeCO;
-import org.laokou.admin.gatewayimpl.database.dataobject.DictTypeDO;
-import org.laokou.common.i18n.dto.Convertor;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
-
-import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 /**
- * 字典转换器.
- *
  * @author laokou
  */
-@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface DictConvertor extends Convertor<DictTypeCO, Dict, DictTypeDO> {
+public class DictTypeConvertor {
+
+	public static Dict toEntity(DictTypeCO co) {
+		return new Dict();
+	}
 
 }

@@ -56,11 +56,7 @@ public class OAuth2AuthenticationProvider {
 
 	private final DomainEventPublisher domainEventPublisher;
 
-	private final UserConvertor userConvertor;
-
 	private final ExtensionExecutor extensionExecutor;
-
-	private final LoginLogConvertor loginLogConvertor;
 
 	public UsernamePasswordAuthenticationToken authentication(AuthA auth) {
 		try {
@@ -90,7 +86,7 @@ public class OAuth2AuthenticationProvider {
 
 	private LoginEvent to(AuthA auth) {
 		LogV log = auth.getLog();
-		LoginEvent loginEvent = loginLogConvertor.convertClientObject(log);
+		LoginEvent loginEvent = LoginLogConvertor.toClientObject(log);
 		loginEvent.create(auth, LAOKOU_LOG_TOPIC, LOGIN_TAG, LOGIN, log.timestamp());
 		return loginEvent;
 	}
@@ -98,7 +94,7 @@ public class OAuth2AuthenticationProvider {
 	private UserDetail convert(AuthA auth) {
 		MenuV menu = auth.getMenu();
 		DeptV dept = auth.getDept();
-		UserDetail userDetail = userConvertor.convertClientObject(auth.getUser());
+		UserDetail userDetail = UserConvertor.toClientObject(auth.getUser());
 		userDetail.update(menu.permissions(), dept.deptPaths(), auth.getSourceName());
 		return userDetail;
 	}

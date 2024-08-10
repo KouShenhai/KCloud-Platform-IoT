@@ -21,9 +21,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.gateway.UserGateway;
-import org.laokou.auth.model.UserE;
 import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.auth.model.UserE;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
@@ -46,8 +46,6 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final UserMapper userMapper;
 
-	private final UserConvertor userConvertor;
-
 	/**
 	 * 查看用户信息.
 	 * @param user 用户对象
@@ -56,8 +54,8 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	public UserE getProfile(UserE user) {
 		try {
-			UserDO userDO = userMapper.selectByConditions(userConvertor.toDataObject(user));
-			return ObjectUtil.isNotNull(userDO) ? userConvertor.convertEntity(userDO) : null;
+			UserDO userDO = userMapper.selectByConditions(UserConvertor.toDataObject(user));
+			return ObjectUtil.isNotNull(userDO) ? UserConvertor.toEntity(userDO) : null;
 		}
 		catch (BadSqlGrammarException e) {
 			log.error("表 {} 不存在，错误信息：{}，详情见日志", BOOT_SYS_USER, LogUtil.record(e.getMessage()), e);

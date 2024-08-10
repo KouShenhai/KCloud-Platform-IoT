@@ -37,15 +37,13 @@ public class DeptModifyCmdExe {
 
 	private final DeptGateway deptGateway;
 
-	private final DeptConvertor deptConvertor;
-
 	/**
 	 * 执行修改部门.
 	 * @param cmd 修改部门参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(DeptModifyCmd cmd) {
-		deptGateway.modify(deptConvertor.toEntity(cmd.getDeptCO()));
+		deptGateway.modify(DeptConvertor.toEntity(cmd.getDeptCO()));
 	}
 
 }

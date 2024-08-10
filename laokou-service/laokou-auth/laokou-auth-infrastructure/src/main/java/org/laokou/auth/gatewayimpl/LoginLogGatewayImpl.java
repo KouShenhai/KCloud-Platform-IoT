@@ -33,13 +33,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoginLogGatewayImpl implements LoginLogGateway {
 
-	private final LoginLogConvertor loginLogConvertor;
-
 	private final LoginLogMapper loginLogMapper;
 
 	@Override
 	public void createLoginLog(DefaultDomainEvent domainEvent) {
-		LoginLogDO loginLogDO = loginLogConvertor.toDataObj((LoginEvent) domainEvent);
+		LoginLogDO loginLogDO = LoginLogConvertor.toDataObject((LoginEvent) domainEvent);
 		loginLogMapper.insert(loginLogDO);
 	}
 

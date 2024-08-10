@@ -19,7 +19,7 @@ package org.laokou.admin.command.dict.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.DictConvertor;
+import org.laokou.admin.convertor.DictConvertor2;
 import org.laokou.admin.dto.dict.DictGetQry;
 import org.laokou.admin.dto.dict.clientobject.DictTypeCO;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
@@ -39,7 +39,7 @@ public class DictGetQryExe {
 
 	private final DictMapper dictMapper;
 
-	private final DictConvertor dictConvertor;
+	private final DictConvertor2 dictConvertor2;
 
 	/**
 	 * 执行查看字典.
@@ -48,7 +48,7 @@ public class DictGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<DictTypeCO> execute(DictGetQry qry) {
-		return Result.ok(dictConvertor.convertClientObj(dictMapper.selectById(qry.getId())));
+		return Result.ok(dictConvertor2.convertClientObj(dictMapper.selectById(qry.getId())));
 	}
 
 }

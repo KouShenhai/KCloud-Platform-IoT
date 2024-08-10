@@ -37,15 +37,13 @@ public class DeptCreateCmdExe {
 
 	private final DeptGateway deptGateway;
 
-	private final DeptConvertor deptConvertor;
-
 	/**
 	 * 执行新增部门.
 	 * @param cmd 新增部门参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(DeptCreateCmd cmd) {
-		deptGateway.create(deptConvertor.toEntity(cmd.getDeptCO()));
+		deptGateway.create(DeptConvertor.toEntity(cmd.getDeptCO()));
 	}
 
 }

@@ -33,13 +33,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ApiLogGatewayImpl implements ApiLogGateway {
 
-	private final ApiLogConvertor apiLogConvertor;
-
 	private final ApiLogMapper apiLogMapper;
 
 	@Override
 	public void createApiLog(DefaultDomainEvent domainEvent) {
-		ApiLogDO apiLogDO = apiLogConvertor.toDataObj((CallApiEvent) domainEvent);
+		ApiLogDO apiLogDO = ApiLogConvertor.toDataObject((CallApiEvent) domainEvent);
 		apiLogMapper.insert(apiLogDO);
 	}
 

@@ -39,8 +39,6 @@ public class DeptGetQryExe {
 
 	private final DeptMapper deptMapper;
 
-	private final DeptConvertor deptConvertor;
-
 	/**
 	 * 执行查看部门.
 	 * @param qry 查看部门参数
@@ -48,7 +46,7 @@ public class DeptGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<DeptCO> execute(DeptGetQry qry) {
-		return Result.ok(deptConvertor.convertClientObj(deptMapper.selectById(qry.getId())));
+		return Result.ok(DeptConvertor.toClientObject(deptMapper.selectById(qry.getId())));
 	}
 
 }
