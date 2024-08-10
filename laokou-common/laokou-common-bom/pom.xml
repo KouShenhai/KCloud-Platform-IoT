@@ -145,6 +145,36 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-cola-adapter</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-cola-app</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-cola-client</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-cola-domain</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-cola-infrastructure</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-cola-start</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
         <groupId>com.aizuda</groupId>
         <artifactId>snail-job-client-starter</artifactId>
         <version>${snail-job.version}</version>
@@ -522,7 +552,32 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
+        <artifactId>laokou-auth-start</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-logstash-start</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-im-start</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-iot-start</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-auth-app</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-api-start</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>

@@ -29,6 +29,7 @@
     <module>laokou-cloud</module>
     <module>laokou-service</module>
     <module>laokou-tool</module>
+    <module>laokou-cola</module>
   </modules>
   <name>KCloud-Platform-IoT</name>
   <description>一个企业级微服务架构的云服务多租户IoT平台</description>
@@ -70,6 +71,7 @@
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <asciidoctor-maven-plugin.version>3.0.0</asciidoctor-maven-plugin.version>
     <spring-javaformat-maven-plugin.version>0.0.42</spring-javaformat-maven-plugin.version>
+    <maven-archetype-plugin.version>3.2.1</maven-archetype-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -404,6 +406,11 @@
             </path>
           </annotationProcessorPaths>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-archetype-plugin</artifactId>
+        <version>${maven-archetype-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>io.fabric8</groupId>
