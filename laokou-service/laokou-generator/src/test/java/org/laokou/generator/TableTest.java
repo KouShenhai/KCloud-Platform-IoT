@@ -22,8 +22,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.core.utils.TemplateUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.generator.domain.Table;
 import org.laokou.generator.dto.GenerateCmd;
 import org.laokou.generator.repository.TableColumnDO;
@@ -78,7 +78,7 @@ class TableTest {
 
 	@SneakyThrows
 	private String getContent(Map<String, Object> map) {
-		try (InputStream inputStream = ResourceUtil.getResource("templates/infrastructure/dataobject/do.ftl")
+		try (InputStream inputStream = ResourceUtil.getResource("templates/do.ftl")
 			.getInputStream()) {
 			byte[] bytes = inputStream.readAllBytes();
 			String template = new String(bytes, StandardCharsets.UTF_8);
