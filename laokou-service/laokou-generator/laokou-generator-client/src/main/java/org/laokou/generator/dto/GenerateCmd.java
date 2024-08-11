@@ -41,4 +41,6 @@ public class GenerateCmd {
 
 	private String author;
 
+	private String version;
+
 }

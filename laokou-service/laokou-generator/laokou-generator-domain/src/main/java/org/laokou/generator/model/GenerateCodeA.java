@@ -39,6 +39,8 @@ public class GenerateCodeA extends AggregateRoot<Long> {
 
 	private String moduleName;
 
+	private String version;
+
 	private TableV tableV;
 
 	public Map<String, Object> toMap() {
