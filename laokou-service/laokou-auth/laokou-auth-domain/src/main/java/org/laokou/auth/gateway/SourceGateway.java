@@ -29,7 +29,6 @@ public interface SourceGateway {
 
 	/**
 	 * 查看数据源名称.
-	 *
 	 * @param user 用户信息
 	 * @return 数据源名称
 	 */

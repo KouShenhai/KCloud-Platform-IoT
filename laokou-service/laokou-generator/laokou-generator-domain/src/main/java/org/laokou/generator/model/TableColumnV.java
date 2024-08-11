@@ -18,7 +18,7 @@
 package org.laokou.generator.model;
 
 /**
- * @param comment   备注.
+ * @param comment 备注.
  * @param fieldName 属性名称.
  * @param fieldType 属性类型.
  * @author laokou

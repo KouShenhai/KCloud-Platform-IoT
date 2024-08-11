@@ -43,7 +43,6 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	/**
 	 * 查看数据源.
-	 *
 	 * @param user 用户对象
 	 * @return 数据源
 	 */
