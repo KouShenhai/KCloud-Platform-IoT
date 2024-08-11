@@ -146,6 +146,36 @@
     <dependencies>
       <dependency>
         <groupId>org.laokou</groupId>
+        <artifactId>laokou-generator-start</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-generator-adapter</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-generator-app</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-generator-client</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-generator-domain</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-generator-infrastructure</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-cola-adapter</artifactId>
         <version>${laokou.version}</version>
       </dependency>

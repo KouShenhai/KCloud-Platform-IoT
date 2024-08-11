@@ -55,17 +55,17 @@ public class AuthDomainService {
 
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void recordLoginLog(DefaultDomainEvent domainEvent) {
-		loginLogGateway.createLoginLog(domainEvent);
+		loginLogGateway.create(domainEvent);
 	}
 
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void recordApiLog(DefaultDomainEvent domainEvent) {
-		apiLogGateway.createApiLog(domainEvent);
+		apiLogGateway.create(domainEvent);
 	}
 
 	public void auth(AuthA auth) {
 		auth.updateAppName(springContextUtil.getAppName());
-		auth.updateSource(sourceGateway.getSourceName(auth.getUser()));
+		auth.updateSource(sourceGateway.getName(auth.getUser()));
 		// 校验验证码
 		checkCaptcha(auth);
 		auth.updateUser(userGateway.getProfile(auth.getUser()));
@@ -76,7 +76,7 @@ public class AuthDomainService {
 		auth.updateMenu(menuGateway.getPermissions(auth.getUser()));
 		// 校验权限
 		auth.checkMenuPermissions();
-		auth.updateDept(deptGateway.getDeptPaths(auth.getUser()));
+		auth.updateDept(deptGateway.getPaths(auth.getUser()));
 		// 认证成功
 		auth.ok();
 	}

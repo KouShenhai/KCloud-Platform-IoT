@@ -24,6 +24,6 @@ import org.laokou.common.i18n.dto.DefaultDomainEvent;
  */
 public interface ApiLogGateway {
 
-	void createApiLog(DefaultDomainEvent domainEvent);
+	void create(DefaultDomainEvent domainEvent);
 
 }

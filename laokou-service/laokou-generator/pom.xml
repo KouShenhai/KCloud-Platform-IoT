@@ -8,29 +8,14 @@
     <version>3.3.2</version>
   </parent>
   <artifactId>laokou-generator</artifactId>
-  <dependencies>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-mybatis-plus</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-undertow</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-log4j2</artifactId>
-    </dependency>
-  </dependencies>
+  <packaging>pom</packaging>
+  <modules>
+    <module>laokou-generator-start</module>
+    <module>laokou-generator-infrastructure</module>
+    <module>laokou-generator-adapter</module>
+    <module>laokou-generator-app</module>
+    <module>laokou-generator-client</module>
+    <module>laokou-generator-domain</module>
+  </modules>
 
 </project>

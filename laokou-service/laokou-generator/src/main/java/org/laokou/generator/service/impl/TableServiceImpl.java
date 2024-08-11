@@ -19,8 +19,8 @@ package org.laokou.generator.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.DSTypeEnum;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.generator.domain.DataType;
 import org.laokou.generator.domain.TableColumnV;
 import org.laokou.generator.domain.TableE;
 import org.laokou.generator.domain.TableV;
@@ -59,7 +59,7 @@ public class TableServiceImpl implements TableService {
 	}
 
 	private List<TableV> convert(TableE tableE, Map<String, String> tableMap,
-			Map<String, List<TableColumnDO>> cloumnMap) {
+								 Map<String, List<TableColumnDO>> cloumnMap) {
 		List<TableV> tableVList = new ArrayList<>(cloumnMap.size());
 		cloumnMap.forEach((tableName, items) -> {
 			String tableComment = tableMap.get(tableName);
@@ -71,8 +71,8 @@ public class TableServiceImpl implements TableService {
 
 	private TableColumnV convert(TableColumnDO columnDO) {
 		String fieldName = StringUtil.convertUnder(columnDO.getName());
-		String fieldType = DSTypeEnum.valueOf(columnDO.getDataType().toUpperCase()).getValue();
-		return new TableColumnV(columnDO.getName(), columnDO.getComment(), fieldName, fieldType);
+		String fieldType = DataType.valueOf(columnDO.getDataType().toUpperCase()).getValue();
+		return new TableColumnV(columnDO.getComment(), fieldName, fieldType);
 	}
 
 	private TableV convert(String name, String comment, String tablePrefix, List<TableColumnV> columns) {

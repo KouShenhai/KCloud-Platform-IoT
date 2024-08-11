@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.generator.model;
 
 import lombok.Getter;
 
@@ -23,7 +23,7 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum DSTypeEnum {
+public enum DataType {
 
 	// @formatter:off
 	TINYINT("Integer"),
@@ -42,8 +42,8 @@ public enum DSTypeEnum {
 	TEXT("String"),
 	MEDIUMTEXT("String"),
 	LONGTEXT("String"),
-	DATE("Date"),
-	DATETIME("LocalDateTime"),
+	DATE("Instant"),
+	DATETIME("Instant"),
 	NUMBER("Integer"),
 	BINARY_INTEGER("Integer"),
 	LONG("String"),
@@ -54,7 +54,7 @@ public enum DSTypeEnum {
 	NVARCHAR2("String"),
 	CLOB("String"),
 	BLOB("String"),
-	TIMESTAMP("Date"),
+	TIMESTAMP("Instant"),
 	INT8("Long"),
 	INT4("Integer"),
 	INT2("Integer"),
@@ -63,7 +63,7 @@ public enum DSTypeEnum {
 
 	private final String value;
 
-	DSTypeEnum(String value) {
+	DataType(String value) {
 		this.value = value;
 	}
 

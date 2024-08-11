@@ -29,9 +29,10 @@ public interface DeptGateway {
 
 	/**
 	 * 查询部门PATHS列表.
+	 *
 	 * @param user 用户对象
 	 * @return 部门PATHS列表
 	 */
-	DeptV getDeptPaths(UserE user);
+	DeptV getPaths(UserE user);
 
 }

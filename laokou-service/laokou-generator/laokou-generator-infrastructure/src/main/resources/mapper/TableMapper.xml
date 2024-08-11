@@ -18,9 +18,9 @@
  */
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.generator.repository.TableMapper">
+<mapper namespace="org.laokou.generator.gatewayimpl.database.TableMapper">
 
-  <select id="selectObjs" resultType="org.laokou.generator.repository.TableDO">
+  <select id="selectObjs" resultType="org.laokou.generator.gatewayimpl.database.dataobject.TableDO">
     select relname as name,
     cast (obj_description (relfilenode, 'pg_class') as varchar) as comment
     from pg_class
@@ -32,7 +32,7 @@
       </foreach>
     </if>
   </select>
-  <select id="selectColumns" resultType="org.laokou.generator.repository.TableColumnDO">
+  <select id="selectColumns" resultType="org.laokou.generator.gatewayimpl.database.dataobject.TableColumnDO">
     select table_name as tableName,column_name as name, udt_name as dataType, col_description ( oid, attnum ) as comment
     from information_schema.columns a
     join pg_attribute b on b.attname = a.column_name

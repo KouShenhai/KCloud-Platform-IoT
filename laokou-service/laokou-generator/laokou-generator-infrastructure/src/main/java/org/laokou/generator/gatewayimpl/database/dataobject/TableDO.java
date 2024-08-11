@@ -15,15 +15,18 @@
  *
  */
 
-package org.laokou.generator.domain;
+package org.laokou.generator.gatewayimpl.database.dataobject;
+
+import lombok.Data;
 
 /**
- * @param comment 备注.
- * @param name 列名.
- * @param fieldName 属性名称.
- * @param fieldType 属性类型.
  * @author laokou
  */
-public record TableColumnV(String name, String comment, String fieldName, String fieldType) {
+@Data
+public class TableDO {
+
+	private String name;
+
+	private String comment;
 
 }

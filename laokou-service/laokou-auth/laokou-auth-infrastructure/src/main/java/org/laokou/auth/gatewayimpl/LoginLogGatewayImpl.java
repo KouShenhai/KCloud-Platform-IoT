@@ -36,7 +36,7 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 	private final LoginLogMapper loginLogMapper;
 
 	@Override
-	public void createLoginLog(DefaultDomainEvent domainEvent) {
+	public void create(DefaultDomainEvent domainEvent) {
 		LoginLogDO loginLogDO = LoginLogConvertor.toDataObject((LoginEvent) domainEvent);
 		loginLogMapper.insert(loginLogDO);
 	}

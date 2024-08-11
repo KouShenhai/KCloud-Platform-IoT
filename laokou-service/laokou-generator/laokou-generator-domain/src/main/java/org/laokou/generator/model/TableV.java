@@ -15,18 +15,13 @@
  *
  */
 
-package org.laokou.generator.repository;
+package org.laokou.generator.model;
 
-import lombok.Data;
+import java.util.List;
 
 /**
  * @author laokou
  */
-@Data
-public class TableDO {
-
-	private String name;
-
-	private String comment;
+public record TableV(String name, String comment, List<TableColumnV> fields, String className, String instanceName) {
 
 }

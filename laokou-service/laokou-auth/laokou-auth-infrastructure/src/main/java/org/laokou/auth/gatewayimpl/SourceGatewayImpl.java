@@ -20,10 +20,10 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.SourceGateway;
-import org.laokou.auth.model.SourceV;
-import org.laokou.auth.model.UserE;
 import org.laokou.auth.gatewayimpl.database.SourceMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.auth.model.SourceV;
+import org.laokou.auth.model.UserE;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.stereotype.Component;
 
@@ -43,11 +43,12 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	/**
 	 * 查看数据源.
+	 *
 	 * @param user 用户对象
 	 * @return 数据源
 	 */
 	@Override
-	public SourceV getSourceName(UserE user) {
+	public SourceV getName(UserE user) {
 		// 默认主表
 		if (user.isDefaultTenant()) {
 			return new SourceV(MASTER);

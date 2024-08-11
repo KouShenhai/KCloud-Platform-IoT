@@ -36,7 +36,7 @@ public class ApiLogGatewayImpl implements ApiLogGateway {
 	private final ApiLogMapper apiLogMapper;
 
 	@Override
-	public void createApiLog(DefaultDomainEvent domainEvent) {
+	public void create(DefaultDomainEvent domainEvent) {
 		ApiLogDO apiLogDO = ApiLogConvertor.toDataObject((CallApiEvent) domainEvent);
 		apiLogMapper.insert(apiLogDO);
 	}

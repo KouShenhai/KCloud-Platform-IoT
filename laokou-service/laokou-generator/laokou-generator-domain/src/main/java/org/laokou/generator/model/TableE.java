@@ -15,22 +15,24 @@
  *
  */
 
-package org.laokou.generator.repository;
+package org.laokou.generator.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 /**
  * @author laokou
  */
 @Data
-public class TableColumnDO {
+@NoArgsConstructor
+@AllArgsConstructor
+public class TableE {
 
-	private String tableName;
+	private Set<String> tables;
 
-	private String name;
-
-	private String dataType;
-
-	private String comment;
+	private String tablePrefix;
 
 }

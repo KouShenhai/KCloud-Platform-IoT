@@ -15,24 +15,14 @@
  *
  */
 
-package org.laokou.generator.domain;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.Set;
+package org.laokou.generator.model;
 
 /**
+ * @param comment   备注.
+ * @param fieldName 属性名称.
+ * @param fieldType 属性类型.
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class TableE {
-
-	private Set<String> tables;
-
-	private String tablePrefix;
+public record TableColumnV(String comment, String fieldName, String fieldType) {
 
 }

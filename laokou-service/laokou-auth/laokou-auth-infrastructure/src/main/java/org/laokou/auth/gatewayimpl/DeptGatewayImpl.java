@@ -20,9 +20,9 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.DeptGateway;
+import org.laokou.auth.gatewayimpl.database.DeptMapper;
 import org.laokou.auth.model.DeptV;
 import org.laokou.auth.model.UserE;
-import org.laokou.auth.gatewayimpl.database.DeptMapper;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
@@ -48,21 +48,21 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	/**
 	 * 查看部门PATHS.
+	 *
 	 * @param user 用户对象
 	 * @return 部门PATHS
 	 */
 	@Override
-	public DeptV getDeptPaths(UserE user) {
+	public DeptV getPaths(UserE user) {
 		try {
 			if (user.isSuperAdministrator()) {
 				return new DeptV(new HashSet<>(deptMapper.selectDeptPaths()));
 			}
 			return new DeptV(new HashSet<>(deptMapper.selectDeptPathsByUserId(user.getId())));
-		}
-		catch (BadSqlGrammarException e) {
+		} catch (BadSqlGrammarException e) {
 			log.error("表 {} 不存在，错误信息：{}，详情见日志", BOOT_SYS_DEPT, LogUtil.record(e.getMessage()), e);
 			throw new SystemException(TABLE_NOT_EXIST,
-					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { BOOT_SYS_DEPT }));
+				MessageUtil.getMessage(TABLE_NOT_EXIST, new String[]{BOOT_SYS_DEPT}));
 		}
 	}
 

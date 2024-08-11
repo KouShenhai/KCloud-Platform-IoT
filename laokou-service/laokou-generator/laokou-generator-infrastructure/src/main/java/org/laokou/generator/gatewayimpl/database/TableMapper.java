@@ -15,13 +15,26 @@
  *
  */
 
-package org.laokou.generator.domain;
+package org.laokou.generator.gatewayimpl.database;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.laokou.generator.gatewayimpl.database.dataobject.TableColumnDO;
+import org.laokou.generator.gatewayimpl.database.dataobject.TableDO;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author laokou
  */
-public record TableV(String name, String comment, List<TableColumnV> fields, String className, String instanceName) {
+@Repository
+@Mapper
+public interface TableMapper {
+
+	List<TableDO> selectObjs(@Param("tableNames") Set<String> tableNames);
+
+	List<TableColumnDO> selectColumns(@Param("tableNames") Set<String> tableNames);
 
 }

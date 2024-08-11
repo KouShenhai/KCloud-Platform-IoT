@@ -15,24 +15,22 @@
  *
  */
 
-package org.laokou.generator.repository;
+package org.laokou.generator.gatewayimpl.database.dataobject;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Set;
+import lombok.Data;
 
 /**
  * @author laokou
  */
-@Repository
-@Mapper
-public interface TableMapper {
+@Data
+public class TableColumnDO {
 
-	List<TableDO> selectObjs(@Param("tableNames") Set<String> tableNames);
+	private String tableName;
 
-	List<TableColumnDO> selectColumns(@Param("tableNames") Set<String> tableNames);
+	private String name;
+
+	private String dataType;
+
+	private String comment;
 
 }
