@@ -20,30 +20,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.generator.repository.TableMapper">
 
-    <select id="selectTables" resultType="org.laokou.generator.repository.TableDO">
-        select table_name as name, table_comment as comment from information_schema.`tables`
-        where table_schema = (select database())
-        <if test="tableNames != null and tableNames.size() > 0">
-            and table_name in
-            <foreach collection="tableNames" item="item" open="(" close=")">
-                #{item}
-            </foreach>
-        </if>
-    </select>
-    <select id="selectTableColumns" resultType="org.laokou.generator.repository.TableColumnDO">
-        select table_name as tableName,column_name as name, data_type as dataType, column_comment as comment, column_key as `key`
-        from information_schema.`columns`
-        <where>
-            table_schema = (select database())
-            <if test="tableNames != null and tableNames.size() > 0">
-                and table_name in
-                <foreach collection="tableNames" item="item" open="(" close=")">
-                    #{item}
-                </foreach>
-            </if>
-            and column_name not in ('id','del_flag','version','create_date','update_date','creator','editor','dept_id','dept_path','tenant_id')
-        </where>
-        order by ordinal_position
-    </select>
+  <select id="selectObjs" resultType="org.laokou.generator.repository.TableDO">
+    select relname as name,
+    cast (obj_description (relfilenode, 'pg_class') as varchar) as comment
+    from pg_class
+    where relname in ( select tablename from pg_tables where schemaname = 'public' and tablename like 'boot_%')
+    <if test="tableNames != null and tableNames.size() > 0">
+      and relname in
+      <foreach collection="tableNames" item="item" open="(" close=")">
+        #{item}
+      </foreach>
+    </if>
+  </select>
+  <select id="selectColumns" resultType="org.laokou.generator.repository.TableColumnDO">
+    select table_name as tableName,column_name as name, udt_name as dataType, col_description ( oid, attnum ) as comment
+    from information_schema.columns a
+    join pg_attribute b on b.attname = a.column_name
+    join pg_class c on c.relname = a.table_name
+    <where>
+      table_name like 'boot_%'
+      AND c.oid = b.attrelid
+      AND b.attnum > 0
+      <if test="tableNames != null and tableNames.size() > 0">
+        and table_name in
+        <foreach collection="tableNames" item="item" open="(" close=")">
+          #{item}
+        </foreach>
+      </if>
+      and column_name not in
+      ('id','del_flag','version','create_date','update_date','creator','editor','dept_id','dept_path','tenant_id')
+    </where>
+    order by ordinal_position
+  </select>
 
 </mapper>

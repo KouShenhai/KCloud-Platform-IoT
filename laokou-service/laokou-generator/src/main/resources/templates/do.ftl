@@ -22,10 +22,12 @@ import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 /**
+* ${comment}
+*
 * @author ${author}
 */
 @Data
-@TableName("${tableName}")
+@TableName("${name}")
 public class ${className}DO extends BaseDO {
 
 <#list fields as field>

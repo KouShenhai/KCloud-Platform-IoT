@@ -33,6 +33,4 @@ public class TableColumnDO {
 
 	private String comment;
 
-	private String key;
-
 }

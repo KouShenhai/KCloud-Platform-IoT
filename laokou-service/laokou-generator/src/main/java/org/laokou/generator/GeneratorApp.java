@@ -17,10 +17,13 @@
 
 package org.laokou.generator;
 
+import lombok.SneakyThrows;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+
+import java.net.InetAddress;
 
 /**
  * @author laokou
@@ -29,7 +32,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = "org.laokou")
 public class GeneratorApp {
 
+	@SneakyThrows
 	public static void main(String[] args) {
+		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		new SpringApplicationBuilder(GeneratorApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

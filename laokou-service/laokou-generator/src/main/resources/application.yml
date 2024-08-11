@@ -19,8 +19,8 @@ spring:
     dynamic:
       datasource:
         master:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://mysql.laokou.org:3306/kcloud_platform_alibaba?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: root
           password: laokou123
 

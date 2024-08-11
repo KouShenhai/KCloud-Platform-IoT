@@ -17,30 +17,13 @@
 
 package org.laokou.generator.domain;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Value;
-import lombok.experimental.SuperBuilder;
-
 /**
+ * @param comment 备注.
+ * @param name 列名.
+ * @param fieldName 属性名称.
+ * @param fieldType 属性类型.
  * @author laokou
  */
-@Value
-@SuperBuilder
-public class TableColumn {
-
-	@Schema(name = "name", description = "列名")
-	String name;
-
-	@Schema(name = "dataType", description = "数据类型")
-	String dataType;
-
-	@Schema(name = "comment", description = "备注")
-	String comment;
-
-	@Schema(name = "fieldName", description = "属性名称")
-	String fieldName;
-
-	@Schema(name = "fieldType", description = "属性类型")
-	String fieldType;
+public record TableColumnV(String name, String comment, String fieldName, String fieldType) {
 
 }

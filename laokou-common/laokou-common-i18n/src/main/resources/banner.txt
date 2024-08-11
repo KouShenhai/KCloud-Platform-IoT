@@ -27,7 +27,7 @@ GitHub：https://github.com/KouShenhai
 Gitee：https://gitee.com/laokouyun
 CSDN：https://kcloud.blog.csdn.net
 
-版本：${version.laokou}
+版本：${laokou.version}
 
 ${AnsiColor.CYAN}端口：${server.port}，PID：${PID}，启动环境：${spring.profiles.active}
 
@@ -39,8 +39,8 @@ ${java.vm.name} ${java.vendor.version:} (build ${java.runtime.version}，${java.
 ${AnsiColor.BRIGHT_YELLOW}Java 类版本号：${java.class.version}
 
 ${AnsiColor.GREEN}Spring Boot版本：${spring-boot.version}
-${AnsiColor.BRIGHT_GREEN}Spring Cloud版本：${version.spring-cloud}
-${AnsiColor.YELLOW}Spring Cloud Alibaba版本：${version.spring-cloud-alibaba}
+${AnsiColor.BRIGHT_GREEN}Spring Cloud版本：${spring-cloud.version}
+${AnsiColor.YELLOW}Spring Cloud Alibaba版本：${spring-cloud-alibaba.version}
 
 ${AnsiColor.BRIGHT_MAGENTA}时区：${user.timezone}，语言：${user.language}，国家：${user.country}，文件编码：${file.encoding}
 ${AnsiColor.BLUE}JDK所在目录：${java.home}

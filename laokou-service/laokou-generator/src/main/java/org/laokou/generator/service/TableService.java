@@ -17,8 +17,8 @@
 
 package org.laokou.generator.service;
 
-import org.laokou.generator.domain.Table;
-import org.laokou.generator.dto.GenerateCmd;
+import org.laokou.generator.domain.TableE;
+import org.laokou.generator.domain.TableV;
 
 import java.util.List;
 
@@ -27,6 +27,6 @@ import java.util.List;
  */
 public interface TableService {
 
-	List<Table> findList(GenerateCmd cmd);
+	List<TableV> list(TableE tableE);
 
 }

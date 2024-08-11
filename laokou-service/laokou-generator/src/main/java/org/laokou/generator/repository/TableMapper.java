@@ -31,8 +31,8 @@ import java.util.Set;
 @Mapper
 public interface TableMapper {
 
-	List<TableDO> selectTables(@Param("tableNames") Set<String> tableNames);
+	List<TableDO> selectObjs(@Param("tableNames") Set<String> tableNames);
 
-	List<TableColumnDO> selectTableColumns(@Param("tableNames") Set<String> tableNames);
+	List<TableColumnDO> selectColumns(@Param("tableNames") Set<String> tableNames);
 
 }

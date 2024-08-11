@@ -17,26 +17,11 @@
 
 package org.laokou.generator.domain;
 
-import lombok.Data;
-import lombok.experimental.SuperBuilder;
-
 import java.util.List;
 
 /**
  * @author laokou
  */
-@Data
-@SuperBuilder
-public class Table {
-
-	private String name;
-
-	private String comment;
-
-	private List<TableColumn> fields;
-
-	private String className;
-
-	private String instanceName;
+public record TableV(String name, String comment, List<TableColumnV> fields, String className, String instanceName) {
 
 }

@@ -15,20 +15,24 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.database;
+package org.laokou.generator.domain;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.laokou.auth.gatewayimpl.database.dataobject.ApiLogDO;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.springframework.stereotype.Repository;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 /**
- * Api日志.
- *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface ApiLogMapper extends CrudMapper<Long, Integer, ApiLogDO> {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class TableE {
+
+	private Set<String> tables;
+
+	private String tablePrefix;
 
 }

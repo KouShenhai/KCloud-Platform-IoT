@@ -21,9 +21,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.DSTypeEnum;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.generator.domain.Table;
-import org.laokou.generator.domain.TableColumn;
-import org.laokou.generator.dto.GenerateCmd;
+import org.laokou.generator.domain.TableColumnV;
+import org.laokou.generator.domain.TableE;
+import org.laokou.generator.domain.TableV;
 import org.laokou.generator.repository.TableColumnDO;
 import org.laokou.generator.repository.TableDO;
 import org.laokou.generator.repository.TableMapper;
@@ -49,44 +49,37 @@ public class TableServiceImpl implements TableService {
 	private final TableMapper tableMapper;
 
 	@Override
-	public List<Table> findList(GenerateCmd cmd) {
-		List<TableDO> tables = tableMapper.selectTables(cmd.getTables());
-		List<TableColumnDO> tableColumns = tableMapper.selectTableColumns(cmd.getTables());
-		Map<String, List<TableColumnDO>> map = tableColumns.stream()
+	public List<TableV> list(TableE tableE) {
+		List<TableDO> tables = tableMapper.selectObjs(tableE.getTables());
+		List<TableColumnDO> tableColumns = tableMapper.selectColumns(tableE.getTables());
+		Map<String, List<TableColumnDO>> cloumnMap = tableColumns.stream()
 			.collect(Collectors.groupingBy(TableColumnDO::getTableName));
 		Map<String, String> tableMap = tables.stream().collect(Collectors.toMap(TableDO::getName, TableDO::getComment));
-		return convert(cmd, tableMap, map);
+		return convert(tableE, tableMap, cloumnMap);
 	}
 
-	private List<Table> convert(GenerateCmd cmd, Map<String, String> tableMap, Map<String, List<TableColumnDO>> map) {
-		List<Table> tableList = new ArrayList<>(map.size());
-		map.forEach((tableName, items) -> {
+	private List<TableV> convert(TableE tableE, Map<String, String> tableMap,
+			Map<String, List<TableColumnDO>> cloumnMap) {
+		List<TableV> tableVList = new ArrayList<>(cloumnMap.size());
+		cloumnMap.forEach((tableName, items) -> {
 			String tableComment = tableMap.get(tableName);
-			List<TableColumn> columns = items.stream().map(this::convert).toList();
-			tableList.add(convert(tableName, tableComment, cmd.getTablePrefix(), columns));
+			List<TableColumnV> columns = items.stream().map(this::convert).toList();
+			tableVList.add(convert(tableName, tableComment, tableE.getTablePrefix(), columns));
 		});
-		return tableList;
+		return tableVList;
 	}
 
-	private TableColumn convert(TableColumnDO columnDO) {
-		return TableColumn.builder()
-			.name(columnDO.getName())
-			.fieldName(StringUtil.convertUnder(columnDO.getName()))
-			.dataType(columnDO.getDataType())
-			.comment(columnDO.getComment())
-			.fieldType(DSTypeEnum.valueOf(columnDO.getDataType().toUpperCase()).getValue())
-			.build();
+	private TableColumnV convert(TableColumnDO columnDO) {
+		String fieldName = StringUtil.convertUnder(columnDO.getName());
+		String fieldType = DSTypeEnum.valueOf(columnDO.getDataType().toUpperCase()).getValue();
+		return new TableColumnV(columnDO.getName(), columnDO.getComment(), fieldName, fieldType);
 	}
 
-	private Table convert(String name, String comment, String tablePrefix, List<TableColumn> columns) {
+	private TableV convert(String name, String comment, String tablePrefix, List<TableColumnV> columns) {
 		String newName = name.replace(tablePrefix, EMPTY);
-		return Table.builder()
-			.name(name)
-			.comment(comment)
-			.fields(columns)
-			.className(StringUtil.convertUnder(UNDER.concat(newName)))
-			.instanceName(StringUtil.convertUnder(newName))
-			.build();
+		String className = StringUtil.convertUnder(UNDER.concat(newName));
+		String instanceName = StringUtil.convertUnder(newName);
+		return new TableV(name, comment, columns, className, instanceName);
 	}
 
 }
