@@ -34,7 +34,7 @@ import java.util.List;
 public class ModifyProjectBoot {
 
 	private static final List<String> MODULES = List.of("laokou-cloud", "laokou-common", "laokou-service",
-		"laokou-archetype", "checkstyle");
+		"laokou-cola", "laokou-tool", "checkstyle");
 
 	private static final String MODIFY_POM_FILE_SUFFIX = "pom.xml";
 
@@ -48,14 +48,17 @@ public class ModifyProjectBoot {
 	// 新分组ID
 	private static final String NEW_GROUP_ID = "cn.org.laokou";
 
-	// 新包名路径
-	private static final String NEW_PACKAGE_PATH = "\\\\cn\\\\org\\\\laokou\\\\";
+	// 新包名路径[Linux]
+	private static final String NEW_PACKAGE_PATH_LINUX = "/cn/org/laokou/";
+
+	// 新包名路径[Window]
+	private static final String NEW_PACKAGE_PATH_WINDOW = "\\\\cn\\\\org\\\\laokou\\\\";
 
 	// 新包名名称
 	private static final String NEW_PACKAGE_NAME = "cn.org.laokou";
 
 	// 新项目名称
-	private static final String NEW_PROJECT_NAME = "New_KCloud-Platform-IoT";
+	private static final String NEW_PROJECT_NAME = "New-KCloud-Platform-IoT";
 
 	private static int count = 0;
 
@@ -122,7 +125,7 @@ public class ModifyProjectBoot {
 
 	private static String getNewPath(String path) {
 		return path.replaceAll("laokou-", NEW_MODULE_NAME + "-")
-			.replaceAll("\\\\org\\\\laokou\\\\", NEW_PACKAGE_PATH)
+			.replaceAll(getOldPackagePath(), getNewPackagePath())
 			.replace("KCloud-Platform-IoT", NEW_PROJECT_NAME);
 	}
 
@@ -142,6 +145,18 @@ public class ModifyProjectBoot {
 	private static byte[] getXmlFileAsByte(String path) throws IOException {
 		String str = Files.readString(Paths.get(path));
 		return str.replaceAll("org.laokou", NEW_PACKAGE_NAME).getBytes(StandardCharsets.UTF_8);
+	}
+
+	private static String getOldPackagePath() {
+		return isWindows() ? "\\\\org\\\\laokou\\\\" : "/org/laokou/";
+	}
+
+	private static String getNewPackagePath() {
+		return isWindows() ? NEW_PACKAGE_PATH_WINDOW : NEW_PACKAGE_PATH_LINUX;
+	}
+
+	private static boolean isWindows() {
+		return System.getProperty("os.name").toLowerCase().contains("windows");
 	}
 
 }
