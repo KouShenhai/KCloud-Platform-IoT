@@ -90,9 +90,6 @@ spring:
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
 
-file:
-  temp-path: @TEMP-PATH@
-
 springdoc:
   api-docs:
     enabled: @KNIFE4J-ENABLED@

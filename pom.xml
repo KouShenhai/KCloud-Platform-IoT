@@ -197,8 +197,6 @@
         <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
         <SSL-ENABLED>false</SSL-ENABLED>
         <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
-        <TEMP-PATH>d:/laokou/temp</TEMP-PATH>
-        <UPLOAD-PATH>/</UPLOAD-PATH>
         <KNIFE4J-ENABLED>true</KNIFE4J-ENABLED>
         <ROUTER-AUTH-ENABLED>false</ROUTER-AUTH-ENABLED>
         <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
@@ -239,8 +237,6 @@
         <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
         <SSL-ENABLED>true</SSL-ENABLED>
         <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
-        <TEMP-PATH>d:/laokou/temp</TEMP-PATH>
-        <UPLOAD-PATH>/</UPLOAD-PATH>
         <KNIFE4J-ENABLED>true</KNIFE4J-ENABLED>
         <ROUTER-AUTH-ENABLED>true</ROUTER-AUTH-ENABLED>
         <ROUTER-AUTH-USERNAME>laokou</ROUTER-AUTH-USERNAME>
@@ -312,10 +308,6 @@
         <SSL-ENABLED>true</SSL-ENABLED>
         <!--suppress UnresolvedMavenProperty -->
         <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
-        <!--suppress UnresolvedMavenProperty -->
-        <TEMP-PATH>${TEMP_PATH:/opt/temp}</TEMP-PATH>
-        <!--suppress UnresolvedMavenProperty -->
-        <UPLOAD-PATH>${UPLOAD_PATH:/}</UPLOAD-PATH>
         <KNIFE4J-ENABLED>false</KNIFE4J-ENABLED>
         <!--suppress UnresolvedMavenProperty -->
         <ROUTER-AUTH-ENABLED>${ROUTER_AUTH_ENABLED:true}</ROUTER-AUTH-ENABLED>
