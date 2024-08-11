@@ -26,6 +26,8 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
+import static org.laokou.common.core.utils.SystemUtil.isWindows;
+
 /**
  * 一键修改项目.
  *
@@ -34,7 +36,7 @@ import java.util.List;
 public class ModifyProjectBoot {
 
 	private static final List<String> MODULES = List.of("laokou-cloud", "laokou-common", "laokou-service",
-			"laokou-cola", "laokou-tool", "checkstyle");
+		"laokou-cola", "laokou-tool", "checkstyle");
 
 	private static final String MODIFY_POM_FILE_SUFFIX = "pom.xml";
 
@@ -81,14 +83,11 @@ public class ModifyProjectBoot {
 				byte[] buff;
 				if (filePath.endsWith(MODIFY_JAVA_FILE_SUFFIX)) {
 					buff = getJavaFileAsByte(filePath);
-				}
-				else if (filePath.endsWith(MODIFY_POM_FILE_SUFFIX)) {
+				} else if (filePath.endsWith(MODIFY_POM_FILE_SUFFIX)) {
 					buff = getPomFileAsByte(filePath);
-				}
-				else if (filePath.endsWith(MODIFY_XML_FILE_SUFFIX)) {
+				} else if (filePath.endsWith(MODIFY_XML_FILE_SUFFIX)) {
 					buff = getXmlFileAsByte(filePath);
-				}
-				else {
+				} else {
 					buff = Files.readAllBytes(Paths.get(filePath));
 				}
 				Files.write(Paths.get(newPath), buff);
@@ -156,10 +155,6 @@ public class ModifyProjectBoot {
 
 	private static String getNewPackagePath() {
 		return isWindows() ? NEW_PACKAGE_PATH_WINDOW : NEW_PACKAGE_PATH_LINUX;
-	}
-
-	private static boolean isWindows() {
-		return System.getProperty("os.name").toLowerCase().contains("windows");
 	}
 
 }
