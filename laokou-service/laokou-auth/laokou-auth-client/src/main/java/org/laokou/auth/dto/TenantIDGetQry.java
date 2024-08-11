@@ -30,7 +30,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TenantGetIDQry extends CommonCommand {
+public class TenantIDGetQry extends CommonCommand {
 
 	private String domainName;
 

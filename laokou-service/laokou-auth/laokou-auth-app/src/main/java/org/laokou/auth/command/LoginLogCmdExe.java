@@ -19,7 +19,7 @@ package org.laokou.auth.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.AuthDomainService;
-import org.laokou.auth.dto.LoginLogCmd;
+import org.laokou.auth.dto.LoginLogSaveCmd;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,7 +31,7 @@ public class LoginLogCmdExe {
 
 	private final AuthDomainService authDomainService;
 
-	public void executeVoid(LoginLogCmd cmd) {
+	public void executeVoid(LoginLogSaveCmd cmd) {
 		authDomainService.recordLoginLog(cmd.getDomainEvent());
 	}
 

@@ -29,7 +29,7 @@ import org.laokou.common.i18n.dto.DefaultDomainEvent;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginLogCmd extends CommonCommand {
+public class ApiLogSaveCmd extends CommonCommand {
 
 	private DefaultDomainEvent domainEvent;
 

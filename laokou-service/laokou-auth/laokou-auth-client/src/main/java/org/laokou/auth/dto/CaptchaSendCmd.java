@@ -17,7 +17,6 @@
 
 package org.laokou.auth.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -30,13 +29,14 @@ import org.laokou.common.i18n.dto.CommonCommand;
 import static org.laokou.common.core.utils.RegexUtil.CAPTCHA_TAG;
 
 /**
+ * 发送验证码命令请求.
+ *
  * @author laokou
  */
 @Data
 @Valid
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "发送验证码命令请求", description = "发送验证码命令请求")
 public class CaptchaSendCmd extends CommonCommand {
 
 	@NotBlank(message = "UUID不能为空")

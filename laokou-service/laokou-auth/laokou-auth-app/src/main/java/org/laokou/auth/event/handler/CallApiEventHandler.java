@@ -21,7 +21,7 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.command.ApiLogCmdExe;
-import org.laokou.auth.dto.ApiLogCmd;
+import org.laokou.auth.dto.ApiLogSaveCmd;
 import org.laokou.auth.dto.domainevent.CallApiEvent;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
@@ -52,7 +52,7 @@ public class CallApiEventHandler extends AbstractDomainEventHandler {
 
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-		apiLogCmdExe.executeVoid(new ApiLogCmd(domainEvent));
+		apiLogCmdExe.executeVoid(new ApiLogSaveCmd(domainEvent));
 	}
 
 	@Override

@@ -17,7 +17,7 @@
 
 package org.laokou.auth.api;
 
-import org.laokou.auth.dto.TenantGetIDQry;
+import org.laokou.auth.dto.TenantIDGetQry;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 
@@ -41,6 +41,6 @@ public interface TenantsServiceI {
 	 * @param qry 根据域名查看租户ID
 	 * @return 租户ID
 	 */
-	Result<Long> getIdByDomainName(TenantGetIDQry qry);
+	Result<Long> getIdByDomainName(TenantIDGetQry qry);
 
 }

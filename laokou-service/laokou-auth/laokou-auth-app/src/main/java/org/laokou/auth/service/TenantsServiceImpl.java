@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.TenantsServiceI;
 import org.laokou.auth.command.query.TenantGetIDQryExe;
 import org.laokou.auth.command.query.TenantListOptionQryExe;
-import org.laokou.auth.dto.TenantGetIDQry;
+import org.laokou.auth.dto.TenantIDGetQry;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
@@ -56,7 +56,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	 * @return 租户ID
 	 */
 	@Override
-	public Result<Long> getIdByDomainName(TenantGetIDQry qry) {
+	public Result<Long> getIdByDomainName(TenantIDGetQry qry) {
 		return tenantGetIDQryExe.execute(qry);
 	}
 

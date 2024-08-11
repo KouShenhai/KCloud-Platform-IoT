@@ -20,7 +20,7 @@ package org.laokou.auth.event.handler;
 import io.micrometer.common.lang.NonNullApi;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.command.LoginLogCmdExe;
-import org.laokou.auth.dto.LoginLogCmd;
+import org.laokou.auth.dto.LoginLogSaveCmd;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
@@ -52,7 +52,7 @@ public class LoginEventHandler extends AbstractDomainEventHandler {
 
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-		loginLogCmdExe.executeVoid(new LoginLogCmd(domainEvent));
+		loginLogCmdExe.executeVoid(new LoginLogSaveCmd(domainEvent));
 	}
 
 	@Override

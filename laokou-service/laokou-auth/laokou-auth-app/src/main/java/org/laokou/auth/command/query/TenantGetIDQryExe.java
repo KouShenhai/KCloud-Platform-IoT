@@ -20,7 +20,7 @@ package org.laokou.auth.command.query;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.config.TenantProperties;
-import org.laokou.auth.dto.TenantGetIDQry;
+import org.laokou.auth.dto.TenantIDGetQry;
 import org.laokou.auth.gatewayimpl.database.TenantMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.common.core.utils.RegexUtil;
@@ -58,7 +58,7 @@ public class TenantGetIDQryExe {
 	 * @return 租户ID
 	 */
 	@DataCache(name = TENANT_ID, key = "#qry.domainName")
-	public Result<Long> execute(TenantGetIDQry qry) {
+	public Result<Long> execute(TenantIDGetQry qry) {
 		String domainName = qry.getDomainName();
 		if (StringUtil.isEmpty(domainName) || RegexUtil.ipRegex(domainName)) {
 			return Result.ok(DEFAULT_TENANT_ID);

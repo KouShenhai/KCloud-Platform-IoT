@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.TenantsServiceI;
-import org.laokou.auth.dto.TenantGetIDQry;
+import org.laokou.auth.dto.TenantIDGetQry;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
@@ -55,7 +55,7 @@ public class TenantsV3Controller {
 	@GetMapping("id")
 	@Operation(summary = "根据域名查看ID", description = "根据域名查看ID")
 	public Result<Long> getIdByDomainNameV3(HttpServletRequest request) {
-		return tenantsServiceI.getIdByDomainName(new TenantGetIDQry(RequestUtil.getDomainName(request)));
+		return tenantsServiceI.getIdByDomainName(new TenantIDGetQry(RequestUtil.getDomainName(request)));
 	}
 
 }
