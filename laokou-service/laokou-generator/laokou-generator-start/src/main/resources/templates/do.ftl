@@ -15,7 +15,7 @@
 *
 */
 
-package ${packageName}.${moduleName}.gatewayimpl.database.dataobject;
+package ${packageName}.gatewayimpl.database.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

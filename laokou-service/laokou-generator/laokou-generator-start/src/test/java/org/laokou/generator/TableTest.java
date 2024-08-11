@@ -18,25 +18,16 @@
 package org.laokou.generator;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.core.utils.TemplateUtil;
-import org.laokou.common.i18n.utils.ResourceUtil;
-import org.laokou.generator.domain.TableE;
-import org.laokou.generator.domain.TableV;
-import org.laokou.generator.repository.TableColumnDO;
-import org.laokou.generator.repository.TableDO;
-import org.laokou.generator.repository.TableMapper;
-import org.laokou.generator.service.TableService;
+import org.laokou.generator.gatewayimpl.database.TableMapper;
+import org.laokou.generator.gatewayimpl.database.dataobject.TableColumnDO;
+import org.laokou.generator.gatewayimpl.database.dataobject.TableDO;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -50,8 +41,6 @@ class TableTest {
 
 	private final TableMapper tableMapper;
 
-	private final TableService tableService;
-
 	@Test
 	void testTable() {
 		List<TableDO> tables = tableMapper.selectObjs(Set.of("boot_sys_user"));
@@ -64,26 +53,27 @@ class TableTest {
 		log.info("获取字段：{}", JacksonUtil.toJsonStr(tableColumns));
 	}
 
-	@Test
-	void testClass() {
-		TableE tableE = new TableE(Set.of("boot_sys_menu"), "boot_sys_");
-		TableV tableV = tableService.list(tableE).getFirst();
-		String str = JacksonUtil.toJsonStr(tableV);
-		log.info("{}", str);
-		Map<String, Object> map = JacksonUtil.toMap(tableV, String.class, Object.class);
-		map.put("packageName", "org.laokou");
-		map.put("moduleName", "iot");
-		map.put("author", "laokou");
-		log.info("{}", getContent(map));
-	}
-
-	@SneakyThrows
-	private String getContent(Map<String, Object> map) {
-		try (InputStream inputStream = ResourceUtil.getResource("templates/do.ftl").getInputStream()) {
-			byte[] bytes = inputStream.readAllBytes();
-			String template = new String(bytes, StandardCharsets.UTF_8);
-			return TemplateUtil.getContent(template, map);
-		}
-	}
+	// @Test
+	// void testClass() {
+	// TableE tableE = new TableE(Set.of("boot_sys_menu"), "boot_sys_");
+	// TableV tableV = tableService.list(tableE).getFirst();
+	// String str = JacksonUtil.toJsonStr(tableV);
+	// log.info("{}", str);
+	// Map<String, Object> map = JacksonUtil.toMap(tableV, String.class, Object.class);
+	// map.put("packageName", "org.laokou");
+	// map.put("moduleName", "iot");
+	// map.put("author", "laokou");
+	// log.info("{}", getContent(map));
+	// }
+	//
+	// @SneakyThrows
+	// private String getContent(Map<String, Object> map) {
+	// try (InputStream inputStream =
+	// ResourceUtil.getResource("templates/do.ftl").getInputStream()) {
+	// byte[] bytes = inputStream.readAllBytes();
+	// String template = new String(bytes, StandardCharsets.UTF_8);
+	// return TemplateUtil.getContent(template, map);
+	// }
+	// }
 
 }

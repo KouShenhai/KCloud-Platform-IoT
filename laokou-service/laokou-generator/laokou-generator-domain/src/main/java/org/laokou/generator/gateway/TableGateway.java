@@ -15,17 +15,17 @@
  *
  */
 
-package org.laokou.generator.service;
+package org.laokou.generator.gateway;
 
-import org.laokou.generator.domain.TableE;
-import org.laokou.generator.domain.TableV;
+import org.laokou.generator.model.TableE;
+import org.laokou.generator.model.TableV;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface TableService {
+public interface TableGateway {
 
 	List<TableV> list(TableE tableE);
 

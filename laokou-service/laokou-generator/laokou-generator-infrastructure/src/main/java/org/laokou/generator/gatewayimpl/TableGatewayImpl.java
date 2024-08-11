@@ -15,19 +15,18 @@
  *
  */
 
-package org.laokou.generator.service.impl;
+package org.laokou.generator.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.generator.domain.DataType;
-import org.laokou.generator.domain.TableColumnV;
-import org.laokou.generator.domain.TableE;
-import org.laokou.generator.domain.TableV;
-import org.laokou.generator.repository.TableColumnDO;
-import org.laokou.generator.repository.TableDO;
-import org.laokou.generator.repository.TableMapper;
-import org.laokou.generator.service.TableService;
+import org.laokou.generator.gateway.TableGateway;
+import org.laokou.generator.gatewayimpl.database.TableMapper;
+import org.laokou.generator.gatewayimpl.database.dataobject.TableColumnDO;
+import org.laokou.generator.gatewayimpl.database.dataobject.TableDO;
+import org.laokou.generator.model.DataType;
+import org.laokou.generator.model.TableColumnV;
+import org.laokou.generator.model.TableE;
+import org.laokou.generator.model.TableV;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,14 +40,12 @@ import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
 /**
  * @author laokou
  */
-@Slf4j
 @Service
 @RequiredArgsConstructor
-public class TableServiceImpl implements TableService {
+public class TableGatewayImpl implements TableGateway {
 
 	private final TableMapper tableMapper;
 
-	@Override
 	public List<TableV> list(TableE tableE) {
 		List<TableDO> tables = tableMapper.selectObjs(tableE.getTables());
 		List<TableColumnDO> tableColumns = tableMapper.selectColumns(tableE.getTables());

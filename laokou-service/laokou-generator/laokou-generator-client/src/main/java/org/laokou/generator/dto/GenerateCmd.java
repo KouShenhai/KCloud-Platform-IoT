@@ -39,4 +39,6 @@ public class GenerateCmd {
 
 	private String moduleName;
 
+	private String author;
+
 }
