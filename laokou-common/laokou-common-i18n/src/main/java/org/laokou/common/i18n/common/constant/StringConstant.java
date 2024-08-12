@@ -17,8 +17,6 @@
 
 package org.laokou.common.i18n.common.constant;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 /**
  * 字符串常量.
  *
@@ -36,7 +34,9 @@ public final class StringConstant {
 	 */
 	public static final String AT = "@";
 
-	@Schema(name = "TRUE", description = "TRUE")
+	/**
+	 * true.
+	 */
 	public static final String TRUE = "true";
 
 	/**
@@ -44,52 +44,74 @@ public final class StringConstant {
 	 */
 	public static final String SLASH = "/";
 
-	@Schema(name = "ERECT", description = "分割参数")
+	/**
+	 * 分割参数.
+	 */
 	public static final String ERECT = "|";
 
-	@Schema(name = "DROP", description = "分割参数")
+	/**
+	 * 分割参数.
+	 */
 	public static final String DROP = "、";
 
-	@Schema(name = "BACKSLASH", description = "分割参数")
+	/**
+	 * 分割参数.
+	 */
 	public static final String BACKSLASH = "\\";
 
-	@Schema(name = "STAR", description = "分割参数")
-	public static final String STAR = "*";
-
-	@Schema(name = "PERCENT", description = "百分号")
+	/**
+	 * 百分号.
+	 */
 	public static final String PERCENT = "%";
 
-	@Schema(name = "DOT", description = "分割参数")
+	/**
+	 * 分割参数.
+	 */
 	public static final String DOT = ".";
 
-	@Schema(name = "RISK", description = "分割参数")
+	/**
+	 * 分割参数.
+	 */
 	public static final String RISK = ":";
 
-	@Schema(name = "COMMA", description = "分割参数")
+	/**
+	 * 分割参数.
+	 */
 	public static final String COMMA = ",";
 
-	@Schema(name = "CHINESE_COMMA", description = "分割参数")
-	public static final String CHINESE_COMMA = "，";
-
-	@Schema(name = "LEFT", description = "左括号")
+	/**
+	 * 左括号.
+	 */
 	public static final String LEFT = "(";
 
-	@Schema(name = "RIGHT", description = "右括号")
+	/**
+	 * 右括号.
+	 */
 	public static final String RIGHT = ")";
 
-	@Schema(name = "SPACE", description = "空格")
+	/**
+	 * 空格.
+	 */
 	public static final String SPACE = " ";
 
-	@Schema(name = "EQUAL", description = "等于")
+	/**
+	 * 等于.
+	 */
 	public static final String EQUAL = "=";
 
-	@Schema(name = "UNDER", description = "分割参数")
+	/**
+	 * 分割参数.
+	 */
 	public static final String UNDER = "_";
 
-	@Schema(name = "DOUBLE_QUOT", description = "双引号")
+	/**
+	 * 双引号.
+	 */
 	public static final String DOUBLE_QUOT = "\"";
 
-	@Schema(name = "SINGLE_QUOT", description = "单引号")
+	/**
+	 * 单引号.
+	 */
 	public static final String SINGLE_QUOT = "'";
 
 	/**

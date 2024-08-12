@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.DSConstant.INSERT_SQL_TEMPLATE;
 import static org.laokou.common.i18n.common.constant.StringConstant.*;
 
 /**
@@ -60,9 +59,9 @@ public class TableTemplate {
 				.stream()
 				.map(i -> SINGLE_QUOT + StringUtil.empty(i) + SINGLE_QUOT)
 				.toList();
-			String sql = String.format(INSERT_SQL_TEMPLATE, tableName,
-					StringUtil.collectionToDelimitedString(keys, COMMA),
-					StringUtil.collectionToDelimitedString(values, COMMA));
+			String sql = "";// String.format(INSERT_SQL_TEMPLATE, tableName,
+			// StringUtil.collectionToDelimitedString(keys, COMMA),
+			// StringUtil.collectionToDelimitedString(values, COMMA));
 			sqlList.add(sql);
 		});
 		return sqlList;

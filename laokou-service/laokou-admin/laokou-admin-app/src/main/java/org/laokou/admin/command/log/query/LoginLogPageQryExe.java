@@ -21,7 +21,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.admin.convertor.LoginLogConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.log.LoginLogPageQry;
 import org.laokou.admin.dto.log.clientobject.LoginLogCO;
 import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
@@ -32,8 +31,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.Executor;
-
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_LOGIN_LOG;
 
 /**
  * 查询登录日志列表执行器.
@@ -57,7 +54,7 @@ public class LoginLogPageQryExe {
 	 */
 	// @DS(TENANT)
 	@SneakyThrows
-	@DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
+	// @DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
 	public Result<Datas<LoginLogCO>> execute(LoginLogPageQry qry) {
 		List<LoginLogDO> page = loginLogMapper.selectList(Wrappers.emptyWrapper());
 		return Result.ok(Datas.create(page.stream().map(loginLogConvertor::convertClientObj).toList(), 0));

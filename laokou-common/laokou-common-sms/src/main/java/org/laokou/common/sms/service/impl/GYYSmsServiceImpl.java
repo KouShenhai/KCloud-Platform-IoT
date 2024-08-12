@@ -71,13 +71,13 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 	@Override
 	@SneakyThrows
 	public void send(ApiLog apiLog, String mobile, int minute, Cache cache) {
-		String desc = "阿里云市场【国阳云】";
+		String remark = "阿里云市场【国阳云】";
 		String signId = smsProperties.getGyy().getSignId();
 		String appcode = smsProperties.getGyy().getAppcode();
 		String templateId = smsProperties.getGyy().getTemplateId();
 		boolean isExit = TEMPLATES.containsKey(templateId);
 		if (!isExit) {
-			apiLog.update(JacksonUtil.EMPTY_JSON, FAIL, "模板不存在", desc);
+			apiLog.update(JacksonUtil.EMPTY_JSON, FAIL, "模板不存在", remark);
 			return;
 		}
 		String captcha = RandomStringUtil.randomNumeric(6);
@@ -100,10 +100,10 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		if (code == OK) {
 			// 写入缓存
 			cache.set(captcha, (long) minute * 60 * 1000);
-			apiLog.update(JacksonUtil.toJsonStr(params), OK, EMPTY, desc);
+			apiLog.update(JacksonUtil.toJsonStr(params), OK, EMPTY, remark);
 			return;
 		}
-		apiLog.update(JacksonUtil.toJsonStr(params), FAIL, jsonNode.get("msg").asText(), desc);
+		apiLog.update(JacksonUtil.toJsonStr(params), FAIL, jsonNode.get("msg").asText(), remark);
 	}
 
 }

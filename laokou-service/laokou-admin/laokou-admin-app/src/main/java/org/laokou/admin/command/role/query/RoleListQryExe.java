@@ -21,7 +21,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.admin.convertor.RoleConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.role.RoleListQry;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
@@ -35,8 +34,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_ROLE;
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 
 /**
  * 查询角色列表执行器.
@@ -60,7 +58,7 @@ public class RoleListQryExe {
 	 */
 	@SneakyThrows
 	@DS(TENANT)
-	@DataFilter(tableAlias = BOOT_SYS_ROLE)
+	// @DataFilter(tableAlias = BOOT_SYS_ROLE)
 	public Result<Datas<RoleCO>> execute(RoleListQry qry) {
 		RoleDO roleDO = new RoleDO(qry.getName());
 		PageQuery page = qry;

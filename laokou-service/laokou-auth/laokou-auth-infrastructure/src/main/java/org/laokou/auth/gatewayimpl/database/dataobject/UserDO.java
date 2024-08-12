@@ -25,7 +25,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 import java.io.Serial;
 
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_USER;
+import static org.laokou.auth.common.constant.Constant.TABLE_USER;
 
 /**
  * 用户.
@@ -33,10 +33,8 @@ import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_USER;
  * @author laokou
  */
 @Data
-@TableName(BOOT_SYS_USER)
+@TableName(TABLE_USER)
 public class UserDO extends BaseDO {
-
-	public static final String BOOT_SYS_USER = "boot_sys_user";
 
 	@Serial
 	private static final long serialVersionUID = 1181289215379287683L;

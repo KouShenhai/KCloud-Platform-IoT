@@ -17,13 +17,10 @@
 
 package org.laokou.auth.gatewayimpl.database.dataobject;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 import java.io.Serial;
-
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_TENANT;
 
 /**
  * 租户.
@@ -31,7 +28,7 @@ import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_TENANT;
  * @author laokou
  */
 @Data
-@TableName(BOOT_SYS_TENANT)
+// @TableName(BOOT_SYS_TENANT)
 public class TenantDO extends BaseDO {
 
 	public static final String BOOT_SYS_TENANT = "boot_sys_tenant";

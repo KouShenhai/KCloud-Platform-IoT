@@ -20,7 +20,6 @@ package org.laokou.admin.command.pack.query;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.admin.convertor.PackageConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.packages.PackageListQry;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.laokou.admin.gatewayimpl.database.PackageMapper;
@@ -33,8 +32,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
-
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_PACKAGE;
 
 /**
  * 查询套餐列表执行器.
@@ -57,7 +54,7 @@ public class PackageListQryExe {
 	 * @return 套餐列表
 	 */
 	@SneakyThrows
-	@DataFilter(tableAlias = BOOT_SYS_PACKAGE)
+	// @DataFilter(tableAlias = BOOT_SYS_PACKAGE)
 	public Result<Datas<PackageCO>> execute(PackageListQry qry) {
 		PackageDO packageDO = new PackageDO(qry.getName());
 		PageQuery page = qry;

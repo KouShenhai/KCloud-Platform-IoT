@@ -15,7 +15,20 @@
  *
  */
 
+package org.laokou.generator.web;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 /**
  * @author laokou
  */
-package org.laokou.common.i18n.common;
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("v3/generators")
+@Tag(name = "生成器", description = "生成器")
+public class GeneratorsV3Controller {
+
+}

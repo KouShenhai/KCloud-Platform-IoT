@@ -47,7 +47,7 @@ public class QQMailServiceImpl extends AbstractMailServiceImpl {
 	@Override
 	@SneakyThrows
 	public void send(ApiLog apiLog, String mail, int minute, Cache cache) {
-		String desc = "QQ邮箱";
+		String remark = "QQ邮箱";
 		String subject = "验证码";
 		String captcha = RandomStringUtil.randomNumeric(6);
 		Map<String, Object> param = Map.of("captcha", captcha, "minute", minute);
@@ -58,11 +58,11 @@ public class QQMailServiceImpl extends AbstractMailServiceImpl {
 			sendMail(subject, content, mail);
 			// 写入缓存
 			cache.set(captcha, (long) minute * 60 * 1000);
-			apiLog.update(params, OK, EMPTY, desc);
+			apiLog.update(params, OK, EMPTY, remark);
 		}
 		catch (Exception e) {
 			log.error("错误信息：{}", e.getMessage(), e);
-			apiLog.update(params, FAIL, e.getMessage(), desc);
+			apiLog.update(params, FAIL, e.getMessage(), remark);
 		}
 	}
 

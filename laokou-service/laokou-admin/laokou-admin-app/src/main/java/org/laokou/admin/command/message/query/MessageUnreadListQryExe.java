@@ -34,7 +34,7 @@ import org.springframework.transaction.TransactionDefinition;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 
 /**
  * 查询未读消息列表执行器.

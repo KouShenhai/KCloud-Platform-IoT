@@ -21,7 +21,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.admin.convertor.MessageConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.message.MessageListQry;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
@@ -35,8 +34,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_MESSAGE;
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 
 /**
  * 查询消息列表执行器.
@@ -55,12 +53,13 @@ public class MessageListQryExe {
 
 	/**
 	 * 执行查询消息列表.
+	 *
 	 * @param qry 查询消息列表参数
 	 * @return 消息列表
 	 */
 	@SneakyThrows
 	@DS(TENANT)
-	@DataFilter(tableAlias = BOOT_SYS_MESSAGE)
+	// @DataFilter(tableAlias = BOOT_SYS_MESSAGE)
 	public Result<Datas<MessageCO>> execute(MessageListQry qry) {
 		MessageDO messageDO = convert(qry);
 		PageQuery page = qry;

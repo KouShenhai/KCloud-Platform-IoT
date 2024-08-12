@@ -37,6 +37,21 @@ public final class Constant {
 	 */
 	public static final String USE_CASE_CAPTCHA = "captcha";
 
+	/**
+	 * 菜单表.
+	 */
+	public static final String TABLE_MENU = "boot_sys_menu";
+
+	/**
+	 * 用户表.
+	 */
+	public static final String TABLE_USER = "boot_sys_user";
+
+	/**
+	 * 部门表.
+	 */
+	public static final String TABLE_DEPT = "boot_sys_dept";
+
 	private Constant() {
 	}
 

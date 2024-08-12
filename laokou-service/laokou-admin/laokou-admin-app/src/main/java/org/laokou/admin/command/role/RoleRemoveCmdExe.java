@@ -24,7 +24,7 @@ import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.dto.role.RoleRemoveCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 
 /**
  * 删除角色执行器.

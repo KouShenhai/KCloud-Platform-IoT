@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_DEPT;
+import static org.laokou.auth.common.constant.Constant.TABLE_DEPT;
 import static org.laokou.common.i18n.common.exception.SystemException.TABLE_NOT_EXIST;
 
 /**
@@ -60,9 +60,9 @@ public class DeptGatewayImpl implements DeptGateway {
 			return new DeptV(new HashSet<>(deptMapper.selectDeptPathsByUserId(user.getId())));
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 {} 不存在，错误信息：{}，详情见日志", BOOT_SYS_DEPT, LogUtil.record(e.getMessage()), e);
+			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_DEPT, LogUtil.record(e.getMessage()), e);
 			throw new SystemException(TABLE_NOT_EXIST,
-					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { BOOT_SYS_DEPT }));
+					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { TABLE_DEPT }));
 		}
 	}
 

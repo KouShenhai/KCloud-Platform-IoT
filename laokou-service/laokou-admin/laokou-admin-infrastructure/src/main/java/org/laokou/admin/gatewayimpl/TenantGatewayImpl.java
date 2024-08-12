@@ -52,10 +52,12 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.laokou.common.i18n.common.DSConstant.*;
 import static org.laokou.common.i18n.common.constant.StringConstant.COMMA;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
@@ -249,17 +251,20 @@ public class TenantGatewayImpl implements TenantGateway {
 		List<Map<String, String>> menuMapList = getMenuMapList(menuList);
 		Map<String, String> userMap = JacksonUtil.toMap(user, String.class, String.class);
 		Map<String, String> deptMap = JacksonUtil.toMap(dept, String.class, String.class);
-		List<String> userSqlList = TableTemplate.getInsertSqlScriptList(Collections.singletonList(userMap),
-				BOOT_SYS_USER);
-		List<String> deptSqlList = TableTemplate.getInsertSqlScriptList(Collections.singletonList(deptMap),
-				BOOT_SYS_DEPT);
-		List<String> menuSqlList = TableTemplate.getInsertSqlScriptList(menuMapList, BOOT_SYS_MENU);
-		List<String> list = new ArrayList<>(userSqlList.size() + deptSqlList.size() + menuSqlList.size() + 1);
-		list.addAll(userSqlList);
-		list.addAll(deptSqlList);
-		list.addAll(menuSqlList);
-		list.add(getUpdateUsernameSql(userId));
-		return list;
+		// List<String> userSqlList =
+		// TableTemplate.getInsertSqlScriptList(Collections.singletonList(userMap),
+		// BOOT_SYS_USER);
+		// List<String> deptSqlList =
+		// TableTemplate.getInsertSqlScriptList(Collections.singletonList(deptMap),
+		// BOOT_SYS_DEPT);
+		List<String> menuSqlList = TableTemplate.getInsertSqlScriptList(menuMapList, "");
+		// List<String> list = new ArrayList<>(userSqlList.size() + 1 + menuSqlList.size()
+		// + 1);
+		// list.addAll(userSqlList);
+		// list.addAll(deptSqlList);
+		// list.addAll(menuSqlList);
+		// list.add(getUpdateUsernameSql(userId));
+		return null;
 	}
 
 	/**
@@ -359,7 +364,9 @@ public class TenantGatewayImpl implements TenantGateway {
 	 * @return 修改用户SQL
 	 */
 	private String getUpdateUsernameSql(long userId) {
-		return String.format(UPDATE_USERNAME_BY_ID_SQL_TEMPLATE, BOOT_SYS_USER, TENANT_USERNAME, null, userId);
+		return null;
+		// return String.format(UPDATE_USERNAME_BY_ID_SQL_TEMPLATE, BOOT_SYS_USER,
+		// TENANT_USERNAME, null, userId);
 	}
 
 }

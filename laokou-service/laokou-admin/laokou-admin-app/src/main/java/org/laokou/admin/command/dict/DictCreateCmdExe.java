@@ -24,7 +24,7 @@ import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.dto.dict.DictCreateCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 
 /**
  * 新增字典执行器.

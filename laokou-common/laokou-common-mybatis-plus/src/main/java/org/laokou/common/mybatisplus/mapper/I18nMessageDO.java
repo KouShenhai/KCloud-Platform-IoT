@@ -17,10 +17,7 @@
 
 package org.laokou.common.mybatisplus.mapper;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_I18N_MESSAGE;
 
 /**
  * 国际化.
@@ -28,7 +25,7 @@ import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_I18N_MESSAGE;
  * @author laokou
  */
 @Data
-@TableName(BOOT_SYS_I18N_MESSAGE)
+// @TableName(BOOT_SYS_I18N_MESSAGE)
 public class I18nMessageDO extends BaseDO {
 
 	private String code;

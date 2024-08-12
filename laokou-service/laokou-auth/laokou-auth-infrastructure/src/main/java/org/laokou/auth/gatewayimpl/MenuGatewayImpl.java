@@ -20,9 +20,9 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.MenuGateway;
+import org.laokou.auth.gatewayimpl.database.MenuMapper;
 import org.laokou.auth.model.MenuV;
 import org.laokou.auth.model.UserE;
-import org.laokou.auth.gatewayimpl.database.MenuMapper;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_MENU;
+import static org.laokou.auth.common.constant.Constant.TABLE_MENU;
 import static org.laokou.common.i18n.common.exception.SystemException.TABLE_NOT_EXIST;
 
 /**
@@ -60,9 +60,9 @@ public class MenuGatewayImpl implements MenuGateway {
 			return new MenuV(new HashSet<>(menuMapper.selectPermissionsByUserId(user.getId())));
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 {} 不存在，错误信息：{}，详情见日志", BOOT_SYS_MENU, LogUtil.record(e.getMessage()), e);
+			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_MENU, LogUtil.record(e.getMessage()), e);
 			throw new SystemException(TABLE_NOT_EXIST,
-					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { BOOT_SYS_MENU }));
+					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { TABLE_MENU }));
 		}
 	}
 

@@ -26,7 +26,7 @@ import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionDefinition;
 
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 
 /**
  * 查看未读消息数执行器.

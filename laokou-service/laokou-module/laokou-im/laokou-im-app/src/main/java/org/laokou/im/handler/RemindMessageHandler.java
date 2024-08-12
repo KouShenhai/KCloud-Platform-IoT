@@ -18,22 +18,20 @@
 package org.laokou.im.handler;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.common.netty.config.Server;
 import org.springframework.stereotype.Component;
-import java.util.concurrent.Executor;
 
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
-import static org.laokou.common.i18n.common.RocketMqConstant.*;
+import java.util.concurrent.Executor;
 
 /**
  * @author laokou
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(consumerGroup = LAOKOU_REMIND_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC,
-		selectorExpression = LAOKOU_REMIND_MESSAGE_TAG, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
+// @RocketMQMessageListener(consumerGroup = LAOKOU_REMIND_MESSAGE_CONSUMER_GROUP, topic =
+// LAOKOU_MESSAGE_TOPIC,
+// selectorExpression = LAOKOU_REMIND_MESSAGE_TAG, messageModel = BROADCASTING,
+// consumeMode = CONCURRENTLY)
 public class RemindMessageHandler extends AbstractMessageHandler {
 
 	public RemindMessageHandler(Server webSocketServer, Executor executor) {

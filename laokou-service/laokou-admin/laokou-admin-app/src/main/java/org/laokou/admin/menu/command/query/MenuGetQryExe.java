@@ -26,7 +26,7 @@ import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 
 /**
  * 查看菜单执行器.

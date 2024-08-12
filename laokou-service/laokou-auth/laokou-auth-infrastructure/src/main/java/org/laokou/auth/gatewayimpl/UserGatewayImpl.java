@@ -31,7 +31,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_USER;
+import static org.laokou.auth.common.constant.Constant.TABLE_USER;
 import static org.laokou.common.i18n.common.exception.SystemException.TABLE_NOT_EXIST;
 
 /**
@@ -58,9 +58,9 @@ public class UserGatewayImpl implements UserGateway {
 			return ObjectUtil.isNotNull(userDO) ? UserConvertor.toEntity(userDO) : null;
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 {} 不存在，错误信息：{}，详情见日志", BOOT_SYS_USER, LogUtil.record(e.getMessage()), e);
+			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_USER, LogUtil.record(e.getMessage()), e);
 			throw new SystemException(TABLE_NOT_EXIST,
-					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { BOOT_SYS_USER }));
+					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { TABLE_USER }));
 		}
 	}
 

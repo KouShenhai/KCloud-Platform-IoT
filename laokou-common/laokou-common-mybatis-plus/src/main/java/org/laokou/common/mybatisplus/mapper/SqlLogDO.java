@@ -17,10 +17,7 @@
 
 package org.laokou.common.mybatisplus.mapper;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_SQL_LOG;
 
 /**
  * SQL日志.
@@ -28,7 +25,7 @@ import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_SQL_LOG;
  * @author laokou
  */
 @Data
-@TableName(BOOT_SYS_SQL_LOG)
+// @TableName(BOOT_SYS_SQL_LOG)
 public class SqlLogDO extends BaseDO {
 
 	/**

@@ -39,8 +39,6 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.DSConstant.LIKE;
-import static org.laokou.common.i18n.common.DSConstant.OR;
 import static org.laokou.common.i18n.common.constant.StringConstant.*;
 
 /**
@@ -98,14 +96,14 @@ public class DataFilterAop {
 				sqlFilter.append(tableAlias)
 					.append(deptPathColumn)
 					.append(SPACE)
-					.append(LIKE)
+					// .append(LIKE)
 					.append(SPACE)
 					.append(DOUBLE_QUOT)
 					.append(deptPath.trim())
 					.append(PERCENT)
 					.append(DOUBLE_QUOT)
 					.append(SPACE)
-					.append(OR)
+					// .append(OR)
 					.append(SPACE);
 			}
 		}

@@ -19,14 +19,12 @@ package org.laokou.admin.command.log;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.log.LoginLogExportCmd;
 import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_LOGIN_LOG;
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 
 /**
  * 导出登录日志执行器.
@@ -44,7 +42,7 @@ public class LoginLogExportCmdExe {
 	 * @param cmd 导出登录日志参数
 	 */
 	@DS(TENANT)
-	@DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
+	// @DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
 	public void executeVoid(LoginLogExportCmd cmd) {
 		PageQuery pageQuery = cmd;
 		// ExcelUtil.doExport(cmd.getResponse(),

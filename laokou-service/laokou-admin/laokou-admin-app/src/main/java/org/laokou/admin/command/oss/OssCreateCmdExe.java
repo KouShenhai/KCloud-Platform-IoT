@@ -24,7 +24,7 @@ import org.laokou.admin.domain.gateway.OssGateway;
 import org.laokou.admin.dto.oss.OssCreateCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 
 /**
  * 新增OSS执行器.

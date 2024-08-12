@@ -20,7 +20,6 @@ package org.laokou.admin.command.user.query;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.admin.convertor.UserConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
@@ -33,7 +32,6 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_USER;
 
 /**
  * 查询用户列表执行器.
@@ -56,7 +54,7 @@ public class UserListQryExe {
 	 * @return 用户列表
 	 */
 	@SneakyThrows
-	@DataFilter(tableAlias = BOOT_SYS_USER)
+	// @DataFilter(tableAlias = BOOT_SYS_USER)
 	public Result<Datas<UserCO>> execute(UserListQry qry) {
 		UserDO userDO = new UserDO(qry.getUsername());
 		CompletableFuture<List<UserDO>> c1 = CompletableFuture

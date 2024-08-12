@@ -23,7 +23,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 import java.io.Serial;
 
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_SOURCE;
+import static org.laokou.auth.gatewayimpl.database.dataobject.SourceDO.TABLE_SOURCE;
 
 /**
  * 数据源.
@@ -31,10 +31,10 @@ import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_SOURCE;
  * @author laokou
  */
 @Data
-@TableName(BOOT_SYS_SOURCE)
+@TableName(TABLE_SOURCE)
 public class SourceDO extends BaseDO {
 
-	public static final String BOOT_SYS_SOURCE = "boot_sys_source";
+	protected static final String TABLE_SOURCE = "boot_sys_source";
 
 	@Serial
 	private static final long serialVersionUID = 7616743906900137371L;

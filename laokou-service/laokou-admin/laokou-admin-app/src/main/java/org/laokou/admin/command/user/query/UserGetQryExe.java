@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 import static org.laokou.common.i18n.common.constant.SuperAdmin.YES;
 
 /**

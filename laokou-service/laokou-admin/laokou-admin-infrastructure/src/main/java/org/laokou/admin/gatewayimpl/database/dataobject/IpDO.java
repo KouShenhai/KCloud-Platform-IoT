@@ -17,18 +17,15 @@
 
 package org.laokou.admin.gatewayimpl.database.dataobject;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
-
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_IP;
 
 /**
  * @author laokou
  */
 @Data
-@TableName(BOOT_SYS_IP)
+// @TableName(BOOT_SYS_IP)
 @Schema(name = "IpDO", description = "IP")
 public class IpDO extends BaseDO {
 

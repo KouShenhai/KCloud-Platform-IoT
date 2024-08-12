@@ -17,13 +17,10 @@
 
 package org.laokou.admin.gatewayimpl.database.dataobject;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 import java.io.Serial;
-
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_MENU;
 
 /**
  * 菜单.
@@ -31,7 +28,7 @@ import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_MENU;
  * @author laokou
  */
 @Data
-@TableName(BOOT_SYS_MENU)
+// @TableName(BOOT_SYS_MENU)
 public class MenuDO extends BaseDO {
 
 	@Serial

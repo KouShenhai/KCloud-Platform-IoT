@@ -19,16 +19,10 @@ package org.laokou.admin.event.handler;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
-
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_FILE_UPLOAD_EVENT_CONSUMER_GROUP;
-import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_FILE_UPLOAD_EVENT_TOPIC;
 
 /**
  * OSS日志处理.
@@ -38,8 +32,10 @@ import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_FILE_UPLOAD_
 @Slf4j
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_FILE_UPLOAD_EVENT_CONSUMER_GROUP,
-		topic = LAOKOU_FILE_UPLOAD_EVENT_TOPIC, messageModel = CLUSTERING, consumeMode = ORDERLY)
+/*
+ * @RocketMQMessageListener(consumerGroup = LAOKOU_FILE_UPLOAD_EVENT_CONSUMER_GROUP, topic
+ * = LAOKOU_FILE_UPLOAD_EVENT_TOPIC, messageModel = CLUSTERING, consumeMode = ORDERLY)
+ */
 public class FileUploadEventHandler extends AbstractDomainEventHandler {
 
 	public FileUploadEventHandler(DomainEventPublisher domainEventPublisher) {

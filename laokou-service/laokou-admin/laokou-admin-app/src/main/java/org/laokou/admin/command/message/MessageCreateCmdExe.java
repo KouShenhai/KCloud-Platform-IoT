@@ -24,7 +24,7 @@ import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.dto.message.MessageCreateCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 
 /**
  * 新增消息执行器.

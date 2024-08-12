@@ -24,7 +24,7 @@ import org.laokou.admin.menu.gateway.MenuGateway;
 import org.laokou.admin.menu.dto.MenuRemoveCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 
 /**
  * 删除树菜单执行器.

@@ -19,7 +19,6 @@ package org.laokou.admin.command.user.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.user.UserOptionListQry;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
@@ -29,8 +28,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_USER;
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 
 /**
  * 查询用户下拉框选择项列表执行器.
@@ -49,7 +47,7 @@ public class UserOptionListQryExe {
 	 * @return 用户下拉框选择项列表
 	 */
 	@DS(TENANT)
-	@DataFilter(tableAlias = BOOT_SYS_USER)
+	// @DataFilter(tableAlias = BOOT_SYS_USER)
 	public Result<List<Option>> execute(UserOptionListQry qry) {
 		List<UserDO> list = userMapper.selectOptionList(qry, null);
 		return Result

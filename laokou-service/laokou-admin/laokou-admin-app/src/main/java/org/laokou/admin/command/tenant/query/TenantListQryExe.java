@@ -20,7 +20,6 @@ package org.laokou.admin.command.tenant.query;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.admin.convertor.TenantConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.tenant.TenantListQry;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
@@ -33,8 +32,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
-
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_TENANT;
 
 /**
  * 查询租户列表执行器.
@@ -57,7 +54,7 @@ public class TenantListQryExe {
 	 * @return 租户列表
 	 */
 	@SneakyThrows
-	@DataFilter(tableAlias = BOOT_SYS_TENANT)
+	// @DataFilter(tableAlias = BOOT_SYS_TENANT)
 	public Result<Datas<TenantCO>> execute(TenantListQry qry) {
 		TenantDO tenantDO = new TenantDO(qry.getName());
 		PageQuery page = qry;

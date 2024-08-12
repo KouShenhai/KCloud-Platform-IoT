@@ -24,7 +24,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 import java.io.Serial;
 
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_DICT_TYPE;
+import static org.laokou.admin.gatewayimpl.database.dataobject.DictTypeDO.BOOT_SYS_DICT_TYPE;
 
 /**
  * @author laokou
@@ -33,6 +33,8 @@ import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_DICT_TYPE;
 @TableName(BOOT_SYS_DICT_TYPE)
 @Schema(name = "DictTypeDO", description = "字典类型")
 public class DictTypeDO extends BaseDO {
+
+	protected static final String BOOT_SYS_DICT_TYPE = "boot_sys_dict_type";
 
 	@Serial
 	private static final long serialVersionUID = 956432385619473630L;

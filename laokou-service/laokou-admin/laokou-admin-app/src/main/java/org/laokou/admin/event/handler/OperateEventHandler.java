@@ -19,18 +19,12 @@ package org.laokou.admin.event.handler;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.laokou.common.log.domainevent.OperateEvent;
 import org.springframework.stereotype.Component;
-
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.ORDERLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_OPERATE_EVENT_CONSUMER_GROUP;
-import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_OPERATE_EVENT_TOPIC;
 
 /**
  * 操作日志处理.
@@ -40,8 +34,9 @@ import static org.laokou.common.i18n.common.RocketMqConstant.LAOKOU_OPERATE_EVEN
 @Slf4j
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_OPERATE_EVENT_CONSUMER_GROUP, topic = LAOKOU_OPERATE_EVENT_TOPIC,
-		messageModel = CLUSTERING, consumeMode = ORDERLY)
+// @RocketMQMessageListener(consumerGroup = LAOKOU_OPERATE_EVENT_CONSUMER_GROUP, topic =
+// LAOKOU_OPERATE_EVENT_TOPIC,
+// messageModel = CLUSTERING, consumeMode = ORDERLY)
 public class OperateEventHandler extends AbstractDomainEventHandler {
 
 	public OperateEventHandler(DomainEventPublisher domainEventPublisher) {

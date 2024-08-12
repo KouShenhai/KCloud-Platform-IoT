@@ -24,7 +24,7 @@ import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.admin.dto.dept.DeptCreateCmd;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 
 /**
  * 新增部门执行器.

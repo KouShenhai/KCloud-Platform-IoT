@@ -21,7 +21,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.admin.convertor.OperateLogConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.log.OperateLogListQry;
 import org.laokou.admin.dto.log.clientobject.OperateLogCO;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
@@ -36,8 +35,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_OPERATE_LOG;
-import static org.laokou.common.i18n.common.DSConstant.TENANT;
+import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 
 /**
  * 查询操作日志列表执行器.
@@ -61,7 +59,7 @@ public class OperateLogListQryExe {
 	 */
 	@SneakyThrows
 	@DS(TENANT)
-	@DataFilter(tableAlias = BOOT_SYS_OPERATE_LOG)
+	// @DataFilter(tableAlias = BOOT_SYS_OPERATE_LOG)
 	public Result<Datas<OperateLogCO>> execute(OperateLogListQry qry) {
 		OperateLogDO operateLogDO = new OperateLogDO(qry.getModuleName(), qry.getStatus(), UserUtil.getTenantId());
 		PageQuery page = qry;

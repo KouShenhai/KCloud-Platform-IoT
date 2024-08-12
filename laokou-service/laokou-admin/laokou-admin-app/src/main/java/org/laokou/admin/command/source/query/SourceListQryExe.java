@@ -20,7 +20,6 @@ package org.laokou.admin.command.source.query;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.admin.convertor.SourceConvertor;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.source.SourceListQry;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
@@ -33,8 +32,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
-
-import static org.laokou.common.i18n.common.DSConstant.BOOT_SYS_SOURCE;
 
 /**
  * 查询数据源列表执行器.
@@ -57,7 +54,7 @@ public class SourceListQryExe {
 	 * @return 数据源列表
 	 */
 	@SneakyThrows
-	@DataFilter(tableAlias = BOOT_SYS_SOURCE)
+	// @DataFilter(tableAlias = BOOT_SYS_SOURCE)
 	public Result<Datas<SourceCO>> execute(SourceListQry qry) {
 		SourceDO sourceDO = new SourceDO(qry.getName());
 		PageQuery page = qry;
