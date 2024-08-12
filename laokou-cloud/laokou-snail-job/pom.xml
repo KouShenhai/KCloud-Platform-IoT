@@ -16,7 +16,7 @@
     <!--guava-retrying版本-->
     <guava-retrying.version>2.0.0</guava-retrying.version>
     <!--mybatis-spring版本-->
-    <mybatis-spring.version>3.0.3</mybatis-spring.version>
+    <mybatis-spring.version>3.0.4</mybatis-spring.version>
     <!--liquibase-core版本-->
     <liquibase-core.version>4.29.1</liquibase-core.version>
     <!--commons-text版本-->
