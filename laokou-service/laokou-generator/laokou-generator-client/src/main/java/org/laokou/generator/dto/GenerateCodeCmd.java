@@ -29,7 +29,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GenerateCmd {
+public class GenerateCodeCmd {
 
 	private Set<String> tables;
 

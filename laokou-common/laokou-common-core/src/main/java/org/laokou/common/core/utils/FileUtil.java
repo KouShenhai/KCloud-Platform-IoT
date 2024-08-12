@@ -43,8 +43,9 @@ public class FileUtil {
 
 	/**
 	 * 创建目录及文件.
+	 *
 	 * @param directory 目录
-	 * @param fileName 文件名
+	 * @param fileName  文件名
 	 * @return 创建后的文件对象
 	 */
 	@SneakyThrows
@@ -78,8 +79,13 @@ public class FileUtil {
 		Files.write(path, buff);
 	}
 
+	public static void write(Path path, String str) {
+
+	}
+
 	/**
 	 * 获取文件扩展名.
+	 *
 	 * @param fileName 文件名称
 	 * @return 文件扩展名
 	 */
@@ -121,6 +127,7 @@ public class FileUtil {
 
 	/**
 	 * zip压缩包.
+	 *
 	 * @param source 源
 	 * @param target 目标
 	 */

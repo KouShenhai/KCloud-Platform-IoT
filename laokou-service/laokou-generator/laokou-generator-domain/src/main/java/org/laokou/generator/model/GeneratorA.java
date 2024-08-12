@@ -17,35 +17,58 @@
 
 package org.laokou.generator.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.AggregateRoot;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author laokou
  */
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class GenerateCodeA extends AggregateRoot<Long> {
+public class GeneratorA extends AggregateRoot<Long> {
 
-	private String author;
+	private final String author;
 
-	private String packageName;
+	private final String packageName;
 
-	private String moduleName;
+	private final String moduleName;
 
-	private String version;
+	private final String version;
+
+	private TableE tableE;
 
 	private TableV tableV;
+
+	private List<Template> templates;
+
+	public GeneratorA(String author, String packageName, String moduleName, String version) {
+		this.id = IdGenerator.defaultSnowflakeId();
+		this.author = author;
+		this.packageName = packageName;
+		this.moduleName = moduleName;
+		this.version = version;
+	}
+
+	public void updateTable(TableV tableV) {
+		this.tableV = tableV;
+	}
+
+	public void updateTable(TableE tableE) {
+		this.tableE = tableE;
+	}
+
+	public void updateTemplates(List<Template> templates) {
+		this.templates = templates;
+	}
 
 	public Map<String, Object> toMap() {
 		Map<String, Object> map = JacksonUtil.toMap(tableV, String.class, Object.class);
 		map.put("author", author);
+		map.put("version", version);
 		map.put("packageName", packageName);
 		return map;
 	}
