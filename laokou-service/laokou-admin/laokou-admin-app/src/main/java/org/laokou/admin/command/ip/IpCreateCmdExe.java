@@ -18,7 +18,6 @@
 package org.laokou.admin.command.ip;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.IpConvertor;
 import org.laokou.admin.domain.gateway.IpGateway;
 import org.laokou.admin.dto.ip.IpCreateCmd;
 import org.springframework.stereotype.Component;
@@ -34,14 +33,12 @@ public class IpCreateCmdExe {
 
 	private final IpGateway ipGateway;
 
-	private final IpConvertor ipConvertor;
-
 	/**
 	 * 执行新增IP.
 	 * @param cmd 新增IP参数
 	 */
 	public void executeVoid(IpCreateCmd cmd) {
-		ipGateway.create(ipConvertor.toEntity(cmd.getIpCO()));
+		// ipGateway.create(ipConvertor.toEntity(cmd.getIpCO()));
 	}
 
 }

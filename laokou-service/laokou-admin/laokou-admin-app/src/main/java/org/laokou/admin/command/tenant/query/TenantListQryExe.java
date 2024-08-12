@@ -19,7 +19,6 @@ package org.laokou.admin.command.tenant.query;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.dto.tenant.TenantListQry;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
@@ -46,8 +45,6 @@ public class TenantListQryExe {
 
 	private final Executor executor;
 
-	private final TenantConvertor tenantConvertor;
-
 	/**
 	 * 执行查询租户列表.
 	 * @param qry 查询租户列表参数
@@ -63,7 +60,10 @@ public class TenantListQryExe {
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> tenantMapper.selectCountByCondition(tenantDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.create(c1.get().stream().map(tenantConvertor::convertClientObj).toList(), c2.get()));
+		return null;
+		// return
+		// Result.ok(Datas.create(c1.get().stream().map(tenantConvertor::convertClientObj).toList(),
+		// c2.get()));
 	}
 
 }

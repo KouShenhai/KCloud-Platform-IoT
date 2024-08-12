@@ -19,7 +19,6 @@ package org.laokou.admin.menu.command;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.menu.gateway.MenuGateway;
 import org.laokou.admin.menu.dto.MenuModifyCmd;
 import org.springframework.stereotype.Component;
@@ -37,15 +36,13 @@ public class MenuModifyCmdExe {
 
 	private final MenuGateway menuGateway;
 
-	private final MenuConvertor menuConvertor;
-
 	/**
 	 * 执行删除菜单.
 	 * @param cmd 删除菜单参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(MenuModifyCmd cmd) {
-		menuGateway.modify(menuConvertor.toEntity(cmd.getMenuCO()));
+		// menuGateway.modify(menuConvertor.toEntity(cmd.getMenuCO()));
 	}
 
 }

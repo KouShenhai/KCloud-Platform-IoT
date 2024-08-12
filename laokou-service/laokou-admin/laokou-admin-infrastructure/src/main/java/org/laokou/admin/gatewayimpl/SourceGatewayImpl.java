@@ -20,7 +20,6 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.convertor.SourceConvertor;
 import org.laokou.admin.domain.gateway.SourceGateway;
 import org.laokou.admin.domain.source.Source;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
@@ -46,8 +45,6 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final SourceConvertor sourceConvertor;
-
 	/**
 	 * 新增数据源.
 	 * @param source 数据源对象
@@ -58,7 +55,7 @@ public class SourceGatewayImpl implements SourceGateway {
 		long count = sourceMapper
 			.selectCount(Wrappers.lambdaQuery(SourceDO.class).eq(SourceDO::getName, source.getName()));
 		source.checkName(count);
-		create(sourceConvertor.toDataObject(source));
+		// create(sourceConvertor.toDataObject(source));
 	}
 
 	/**
@@ -73,9 +70,9 @@ public class SourceGatewayImpl implements SourceGateway {
 			.eq(SourceDO::getName, source.getName())
 			.ne(SourceDO::getId, source.getId()));
 		source.checkName(count);
-		SourceDO sourceDO = sourceConvertor.toDataObject(source);
-		sourceDO.setVersion(sourceMapper.selectVersion(sourceDO.getId()));
-		modify(sourceDO);
+		// SourceDO sourceDO = sourceConvertor.toDataObject(source);
+		// sourceDO.setVersion(sourceMapper.selectVersion(sourceDO.getId()));
+		// modify(sourceDO);
 	}
 
 	/**

@@ -20,7 +20,6 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.convertor.IpConvertor;
 import org.laokou.admin.domain.gateway.IpGateway;
 import org.laokou.admin.domain.ip.Ip;
 import org.laokou.admin.gatewayimpl.database.IpMapper;
@@ -52,8 +51,6 @@ public class IpGatewayImpl implements IpGateway {
 
 	private final IpMapper ipMapper;
 
-	private final IpConvertor ipConvertor;
-
 	private final TransactionalUtil transactionalUtil;
 
 	private final RedisUtil redisUtil;
@@ -64,7 +61,7 @@ public class IpGatewayImpl implements IpGateway {
 	 */
 	@Override
 	public void create(Ip ip) {
-		create(ipConvertor.toDataObject(ip));
+		// create(ipConvertor.toDataObject(ip));
 	}
 
 	/**

@@ -21,7 +21,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
@@ -45,8 +44,6 @@ public class MenuListQryExe {
 
 	private final MenuMapper menuMapper;
 
-	private final MenuConvertor menuConvertor;
-
 	/**
 	 * 执行查询菜单列表.
 	 * @param qry 查询菜单列表参数
@@ -54,7 +51,9 @@ public class MenuListQryExe {
 	 */
 	@DS(TENANT)
 	public Result<List<MenuCO>> execute(MenuListQry qry) {
-		return Result.ok(getMenuList(qry).stream().map(menuConvertor::convertClientObj).toList());
+		return null;
+		// return
+		// Result.ok(getMenuList(qry).stream().map(menuConvertor::convertClientObj).toList());
 	}
 
 	private List<MenuDO> getMenuList(MenuListQry qry) {

@@ -19,7 +19,6 @@ package org.laokou.admin.command.role.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.dto.role.RoleGetQry;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
@@ -39,8 +38,6 @@ public class RoleGetQryExe {
 
 	private final RoleMapper roleMapper;
 
-	private final RoleConvertor roleConvertor;
-
 	/**
 	 * 执行查看角色.
 	 * @param qry 查看角色参数
@@ -48,7 +45,9 @@ public class RoleGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<RoleCO> execute(RoleGetQry qry) {
-		return Result.ok(roleConvertor.convertClientObj(roleMapper.selectById(qry.getId())));
+		return null;
+		// return
+		// Result.ok(roleConvertor.convertClientObj(roleMapper.selectById(qry.getId())));
 	}
 
 }

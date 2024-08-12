@@ -53,10 +53,6 @@
     <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
     <!--springdoc-openapi版本-->
     <springdoc-openapi.version>2.6.0</springdoc-openapi.version>
-    <!--mapstruct版本-->
-    <mapstruct.version>1.6.0.RC1</mapstruct.version>
-    <!--lombok-mapstruct-binding版本-->
-    <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     <!--lombok版本-->
     <lombok.version>1.18.34</lombok.version>
     <docker.host>tcp://127.0.0.1:2375</docker.host>
@@ -75,14 +71,6 @@
   </properties>
   <dependencyManagement>
     <dependencies>
-      <!-- 定义 mapstruct 版本 -->
-      <dependency>
-        <groupId>org.mapstruct</groupId>
-        <artifactId>mapstruct-parent</artifactId>
-        <version>${mapstruct.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
       <!-- 定义 common 版本 -->
       <dependency>
         <groupId>org.laokou</groupId>
@@ -380,23 +368,6 @@
             <arg>-Xlint:deprecation</arg>
             <arg>-parameters</arg>
           </compilerArgs>
-          <annotationProcessorPaths>
-            <path>
-              <groupId>org.mapstruct</groupId>
-              <artifactId>mapstruct-processor</artifactId>
-              <version>${mapstruct.version}</version>
-            </path>
-            <path>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-              <version>${lombok.version}</version>
-            </path>
-            <path>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok-mapstruct-binding</artifactId>
-              <version>${lombok-mapstruct-binding.version}</version>
-            </path>
-          </annotationProcessorPaths>
         </configuration>
       </plugin>
       <plugin>

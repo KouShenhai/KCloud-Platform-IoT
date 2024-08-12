@@ -19,7 +19,6 @@ package org.laokou.admin.command.source.query;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.admin.convertor.SourceConvertor;
 import org.laokou.admin.dto.source.SourceListQry;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
@@ -46,8 +45,6 @@ public class SourceListQryExe {
 
 	private final Executor executor;
 
-	private final SourceConvertor sourceConvertor;
-
 	/**
 	 * 执行查询数据源列表.
 	 * @param qry 查询数据源列表参数
@@ -63,7 +60,10 @@ public class SourceListQryExe {
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> sourceMapper.selectCountByCondition(sourceDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.create(c1.get().stream().map(sourceConvertor::convertClientObj).toList(), c2.get()));
+		return null;
+		// return
+		// Result.ok(Datas.create(c1.get().stream().map(sourceConvertor::convertClientObj).toList(),
+		// c2.get()));
 	}
 
 }

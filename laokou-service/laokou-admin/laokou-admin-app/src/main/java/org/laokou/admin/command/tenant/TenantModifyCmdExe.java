@@ -18,7 +18,6 @@
 package org.laokou.admin.command.tenant;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.dto.tenant.TenantModifyCmd;
@@ -36,8 +35,6 @@ public class TenantModifyCmdExe {
 
 	private final TenantGateway tenantGateway;
 
-	private final TenantConvertor tenantConvertor;
-
 	/**
 	 * 执行修改租户.
 	 * @param cmd 修改租户参数
@@ -47,7 +44,8 @@ public class TenantModifyCmdExe {
 	}
 
 	private Tenant convert(TenantCO co) {
-		return tenantConvertor.toEntity(co);
+		// return tenantConvertor.toEntity(co);
+		return null;
 	}
 
 }

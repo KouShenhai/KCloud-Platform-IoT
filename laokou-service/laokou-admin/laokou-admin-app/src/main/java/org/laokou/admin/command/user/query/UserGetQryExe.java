@@ -19,7 +19,6 @@ package org.laokou.admin.command.user.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.dto.user.UserGetQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
@@ -50,8 +49,6 @@ public class UserGetQryExe {
 
 	private final UserRoleMapper userRoleMapper;
 
-	private final UserConvertor userConvertor;
-
 	/**
 	 * 执行查看用户.
 	 * @param qry 查看用户参数
@@ -60,9 +57,10 @@ public class UserGetQryExe {
 	@DS(TENANT)
 	public Result<UserCO> execute(UserGetQry qry) {
 		UserDO userDO = userMapper.selectById(qry.getId());
-		UserCO co = userConvertor.convertClientObj(userDO);
-		co.setRoleIds(getRoleIds(userDO));
-		return Result.ok(co);
+		// UserCO co = userConvertor.convertClientObj(userDO);
+		// co.setRoleIds(getRoleIds(userDO));
+		// return Result.ok(co);
+		return null;
 	}
 
 	private List<Long> getRoleIds(UserDO userDO) {

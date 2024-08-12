@@ -19,7 +19,6 @@ package org.laokou.admin.command.ip.query;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.admin.convertor.IpConvertor;
 import org.laokou.admin.dto.ip.IpListQry;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
 import org.laokou.admin.gatewayimpl.database.IpMapper;
@@ -46,8 +45,6 @@ public class IpListQryExe {
 
 	private final Executor executor;
 
-	private final IpConvertor ipConvertor;
-
 	/**
 	 * 查询IP列表.
 	 * @param qry 查询IP列表参数
@@ -62,7 +59,10 @@ public class IpListQryExe {
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ipMapper.selectCountByCondition(ipDO, page),
 				executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.create(c1.get().stream().map(ipConvertor::convertClientObj).toList(), c2.get()));
+		return null;
+		// return
+		// Result.ok(Datas.create(c1.get().stream().map(ipConvertor::convertClientObj).toList(),
+		// c2.get()));
 	}
 
 }

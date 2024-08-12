@@ -19,7 +19,6 @@ package org.laokou.admin.command.oss.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.OssConvertor;
 import org.laokou.admin.dto.oss.OssGetQry;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.admin.gatewayimpl.database.OssMapper;
@@ -39,8 +38,6 @@ public class OssGetQryExe {
 
 	private final OssMapper ossMapper;
 
-	private final OssConvertor ossConvertor;
-
 	/**
 	 * 执行查看OSS.
 	 * @param qry 查看OSS参数
@@ -48,7 +45,9 @@ public class OssGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<OssCO> execute(OssGetQry qry) {
-		return Result.ok(ossConvertor.convertClientObj(ossMapper.selectById(qry.getId())));
+		return null;
+		// return
+		// Result.ok(ossConvertor.convertClientObj(ossMapper.selectById(qry.getId())));
 	}
 
 }

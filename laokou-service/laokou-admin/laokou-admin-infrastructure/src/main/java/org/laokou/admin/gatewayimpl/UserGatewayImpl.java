@@ -21,7 +21,6 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
@@ -55,8 +54,6 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final UserMapper userMapper;
 
-	private final UserConvertor userConvertor;
-
 	private final PasswordEncoder passwordEncoder;
 
 	private final MybatisUtil mybatisUtil;
@@ -75,11 +72,11 @@ public class UserGatewayImpl implements UserGateway {
 		checkMobile(user);
 		// 检查邮箱
 		checkMail(user);
-		UserDO userDO = userConvertor.toDataObject(user);
+		// UserDO userDO = userConvertor.toDataObject(user);
 		// 版本号
-		userDO.setVersion(userMapper.selectVersion(userDO.getId()));
+		// userDO.setVersion(userMapper.selectVersion(userDO.getId()));
 		// 修改
-		modify(userDO, user.getRoleIds());
+		// modify(userDO, user.getRoleIds());
 	}
 
 	@Override
@@ -89,9 +86,9 @@ public class UserGatewayImpl implements UserGateway {
 		// 检查用户名重复
 		long count = userMapper.selectUsernameCount(user.getUsername(), null);
 		user.checkUserName(count);
-		UserDO userDO = userConvertor.toDataObject(user);
+		// UserDO userDO = userConvertor.toDataObject(user);
 		// 新增
-		create(userDO, user.getRoleIds());
+		// create(userDO, user.getRoleIds());
 	}
 
 	@Override

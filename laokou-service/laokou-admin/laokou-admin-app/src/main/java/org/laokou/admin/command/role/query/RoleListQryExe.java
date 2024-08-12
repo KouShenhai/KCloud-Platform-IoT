@@ -20,7 +20,6 @@ package org.laokou.admin.command.role.query;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.dto.role.RoleListQry;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
@@ -49,8 +48,6 @@ public class RoleListQryExe {
 
 	private final Executor executor;
 
-	private final RoleConvertor roleConvertor;
-
 	/**
 	 * 执行查询角色列表.
 	 * @param qry 查询角色列表参数
@@ -67,7 +64,10 @@ public class RoleListQryExe {
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> roleMapper.selectCountByCondition(roleDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.create(c1.get().stream().map(roleConvertor::convertClientObj).toList(), c2.get()));
+		return null;
+		// return
+		// Result.ok(Datas.create(c1.get().stream().map(roleConvertor::convertClientObj).toList(),
+		// c2.get()));
 	}
 
 }

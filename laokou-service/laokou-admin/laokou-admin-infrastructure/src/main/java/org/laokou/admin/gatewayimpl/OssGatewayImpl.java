@@ -20,8 +20,6 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.config.driver.AmazonS3StorageDriver;
-import org.laokou.admin.convertor.OssConvertor;
 import org.laokou.admin.domain.gateway.OssGateway;
 import org.laokou.admin.domain.oss.File;
 import org.laokou.admin.domain.oss.Oss;
@@ -67,8 +65,6 @@ public class OssGatewayImpl implements OssGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final OssConvertor ossConvertor;
-
 	private final RedisUtil redisUtil;
 
 	private final SpringContextUtil springContextUtil;
@@ -81,8 +77,8 @@ public class OssGatewayImpl implements OssGateway {
 	public void create(Oss oss) {
 		long count = ossMapper.selectCount(Wrappers.lambdaQuery(OssDO.class).eq(OssDO::getName, oss.getName()));
 		oss.checkName(count);
-		OssDO ossDO = ossConvertor.toDataObject(oss);
-		create(ossDO);
+		// OssDO ossDO = ossConvertor.toDataObject(oss);
+		// create(ossDO);
 	}
 
 	/**
@@ -95,9 +91,9 @@ public class OssGatewayImpl implements OssGateway {
 		long count = ossMapper.selectCount(
 				Wrappers.lambdaQuery(OssDO.class).eq(OssDO::getName, oss.getName()).ne(OssDO::getId, oss.getId()));
 		oss.checkName(count);
-		OssDO ossDO = ossConvertor.toDataObject(oss);
-		ossDO.setVersion(ossMapper.selectVersion(ossDO.getId()));
-		modify(ossDO);
+		// OssDO ossDO = ossConvertor.toDataObject(oss);
+		// ossDO.setVersion(ossMapper.selectVersion(ossDO.getId()));
+		// modify(ossDO);
 	}
 
 	/**
@@ -139,8 +135,9 @@ public class OssGatewayImpl implements OssGateway {
 			Algorithm algorithm = new PollSelectAlgorithm();
 			OssDO ossDO = algorithm.select(getOssListCache(), EMPTY);
 			// 修改URL
-			file.modifyUrl(null, new AmazonS3StorageDriver(ossConvertor.convertEntity(ossDO)).upload(file),
-					springContextUtil.getAppName());
+			// file.modifyUrl(null, new
+			// AmazonS3StorageDriver(ossConvertor.convertEntity(ossDO)).upload(file),
+			// springContextUtil.getAppName());
 			return file;
 		}
 		catch (Exception e) {

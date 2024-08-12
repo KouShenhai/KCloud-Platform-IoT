@@ -20,7 +20,6 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.convertor.DictTConvertor;
 import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
@@ -46,8 +45,6 @@ public class DictGatewayImpl implements DictGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final DictTConvertor dictTConvertor;
-
 	/**
 	 * 新增字典.
 	 * @param dict 字典对象
@@ -59,7 +56,7 @@ public class DictGatewayImpl implements DictGateway {
 			// .eq(DictTypeDO::getValue, dict.getValue())
 			.eq(DictTypeDO::getType, dict.getType()));
 		dict.checkTypeAndValue(count);
-		create(dictTConvertor.toDataObject(dict));
+		// create(dictTConvertor.toDataObject(dict));
 	}
 
 	/**
@@ -75,10 +72,10 @@ public class DictGatewayImpl implements DictGateway {
 			.eq(DictTypeDO::getType, dict.getType())
 			.ne(DictTypeDO::getId, dict.getId()));
 		dict.checkTypeAndValue(count);
-		DictTypeDO dictTypeDO = dictTConvertor.toDataObject(dict);
+		// DictTypeDO dictTypeDO = dictTConvertor.toDataObject(dict);
 		// 版本号
-		dictTypeDO.setVersion(dictMapper.selectVersion(dictTypeDO.getId()));
-		modify(dictTypeDO);
+		// dictTypeDO.setVersion(dictMapper.selectVersion(dictTypeDO.getId()));
+		// modify(dictTypeDO);
 	}
 
 	/**

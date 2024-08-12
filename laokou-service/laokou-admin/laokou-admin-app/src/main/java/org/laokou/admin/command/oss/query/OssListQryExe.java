@@ -20,7 +20,6 @@ package org.laokou.admin.command.oss.query;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.admin.convertor.OssConvertor;
 import org.laokou.admin.dto.oss.OssListQry;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.admin.gatewayimpl.database.OssMapper;
@@ -49,11 +48,8 @@ public class OssListQryExe {
 
 	private final Executor executor;
 
-	private final OssConvertor ossConvertor;
-
 	/**
 	 * 执行查询OSS列表.
-	 *
 	 * @param qry 查询OSS列表参数
 	 * @return OSS列表
 	 */
@@ -66,9 +62,12 @@ public class OssListQryExe {
 		CompletableFuture<List<OssDO>> c1 = CompletableFuture
 			.supplyAsync(() -> ossMapper.selectListByCondition(ossDO, page), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ossMapper.selectCountByCondition(ossDO, page),
-			executor);
+				executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.create(c1.get().stream().map(ossConvertor::convertClientObj).toList(), c2.get()));
+		return null;
+		// return
+		// Result.ok(Datas.create(c1.get().stream().map(ossConvertor::convertClientObj).toList(),
+		// c2.get()));
 	}
 
 }

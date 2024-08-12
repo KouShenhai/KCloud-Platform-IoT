@@ -20,7 +20,6 @@ package org.laokou.admin.command.message;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.dto.message.MessageReadCmd;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
@@ -44,8 +43,6 @@ public class MessageReadCmdExe {
 
 	private final MessageMapper messageMapper;
 
-	private final MessageConvertor messageConvertor;
-
 	/**
 	 * 执行读取消息.
 	 * @param cmd 读取消息参数
@@ -54,8 +51,10 @@ public class MessageReadCmdExe {
 	@DS(TENANT)
 	public Result<MessageCO> execute(MessageReadCmd cmd) {
 		Long detailId = cmd.getDetailId();
+		return null;
 		// messageGateway.read(new MessageDetail(detailId, YES.ordinal()));
-		return Result.ok(messageConvertor.convertClientObj(messageMapper.selectByDetailId(detailId)));
+		// return
+		// Result.ok(messageConvertor.convertClientObj(messageMapper.selectByDetailId(detailId)));
 	}
 
 }

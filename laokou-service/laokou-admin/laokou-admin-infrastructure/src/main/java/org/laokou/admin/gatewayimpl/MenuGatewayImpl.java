@@ -20,7 +20,6 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.menu.Menu;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
@@ -46,8 +45,6 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final MenuConvertor menuConvertor;
-
 	/**
 	 * 修改菜单.
 	 * @param menu 菜单对象
@@ -60,10 +57,10 @@ public class MenuGatewayImpl implements MenuGateway {
 		long count = menuMapper
 			.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, null).ne(MenuDO::getId, menu.getId()));
 		// menu.checkName(count);
-		MenuDO menuDO = menuConvertor.toDataObject(menu);
+		// MenuDO menuDO = menuConvertor.toDataObject(menu);
 		// 版本号
-		menuDO.setVersion(menuMapper.selectVersion(menuDO.getId()));
-		modify(menuDO);
+		// menuDO.setVersion(menuMapper.selectVersion(menuDO.getId()));
+		// modify(menuDO);
 	}
 
 	/**
@@ -75,7 +72,7 @@ public class MenuGatewayImpl implements MenuGateway {
 		// 检查菜单名称
 		long count = menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, null));
 		// menu.checkName(count);
-		create(menuConvertor.toDataObject(menu));
+		// create(menuConvertor.toDataObject(menu));
 	}
 
 	/**

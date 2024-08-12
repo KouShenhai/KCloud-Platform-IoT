@@ -19,7 +19,6 @@ package org.laokou.admin.command.user.query;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
@@ -31,7 +30,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 查询用户列表执行器.
@@ -46,8 +44,6 @@ public class UserListQryExe {
 
 	private final Executor executor;
 
-	private final UserConvertor userConvertor;
-
 	/**
 	 * 执行查询用户列表.
 	 * @param qry 查询用户列表参数
@@ -61,9 +57,11 @@ public class UserListQryExe {
 			.supplyAsync(() -> userMapper.selectListByCondition(userDO, qry), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> userMapper.selectCountByCondition(userDO, qry),
 				executor);
-		return Result
-			.ok(Datas.create(c1.get(30, TimeUnit.SECONDS).stream().map(userConvertor::convertClientObj).toList(),
-					c2.get(30, TimeUnit.SECONDS)));
+		// return Result
+		// .ok(Datas.create(c1.get(30,
+		// TimeUnit.SECONDS).stream().map(userConvertor::convertClientObj).toList(),
+		// c2.get(30, TimeUnit.SECONDS)));
+		return null;
 	}
 
 }

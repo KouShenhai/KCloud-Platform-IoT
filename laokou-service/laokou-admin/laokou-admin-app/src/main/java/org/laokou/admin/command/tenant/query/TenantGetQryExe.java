@@ -18,7 +18,6 @@
 package org.laokou.admin.command.tenant.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.dto.tenant.TenantGetQry;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
@@ -36,15 +35,15 @@ public class TenantGetQryExe {
 
 	private final TenantMapper tenantMapper;
 
-	private final TenantConvertor tenantConvertor;
-
 	/**
 	 * 执行查看租户.
 	 * @param qry 查看租户参数
 	 * @return 租户
 	 */
 	public Result<TenantCO> execute(TenantGetQry qry) {
-		return Result.ok(tenantConvertor.convertClientObj(tenantMapper.selectById(qry.getId())));
+		return null;
+		// return
+		// Result.ok(tenantConvertor.convertClientObj(tenantMapper.selectById(qry.getId())));
 	}
 
 }

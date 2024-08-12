@@ -18,7 +18,6 @@
 package org.laokou.admin.command.source.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.SourceConvertor;
 import org.laokou.admin.dto.source.SourceGetQry;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
@@ -36,15 +35,15 @@ public class SourceGetQryExe {
 
 	private final SourceMapper sourceMapper;
 
-	private final SourceConvertor sourceConvertor;
-
 	/**
 	 * 执行查看数据源.
 	 * @param qry 查看数据源参数
 	 * @return 数据源
 	 */
 	public Result<SourceCO> execute(SourceGetQry qry) {
-		return Result.ok(sourceConvertor.convertClientObj(sourceMapper.selectById(qry.getId())));
+		return null;
+		// return
+		// Result.ok(sourceConvertor.convertClientObj(sourceMapper.selectById(qry.getId())));
 	}
 
 }

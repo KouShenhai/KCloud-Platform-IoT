@@ -19,7 +19,6 @@ package org.laokou.admin.command.pack.query;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.admin.convertor.PackageConvertor;
 import org.laokou.admin.dto.packages.PackageListQry;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.laokou.admin.gatewayimpl.database.PackageMapper;
@@ -46,8 +45,6 @@ public class PackageListQryExe {
 
 	private final Executor executor;
 
-	private final PackageConvertor packageConvertor;
-
 	/**
 	 * 执行查询套餐列表.
 	 * @param qry 查询套餐列表
@@ -63,7 +60,10 @@ public class PackageListQryExe {
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> packageMapper.selectCountByCondition(packageDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.create(c1.get().stream().map(packageConvertor::convertClientObj).toList(), c2.get()));
+		return null;
+		// return
+		// Result.ok(Datas.create(c1.get().stream().map(packageConvertor::convertClientObj).toList(),
+		// c2.get()));
 	}
 
 }

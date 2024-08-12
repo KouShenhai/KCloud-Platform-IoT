@@ -19,7 +19,6 @@ package org.laokou.admin.command.oss;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.OssConvertor;
 import org.laokou.admin.domain.gateway.OssGateway;
 import org.laokou.admin.dto.oss.OssCreateCmd;
 import org.springframework.stereotype.Component;
@@ -37,15 +36,13 @@ public class OssCreateCmdExe {
 
 	private final OssGateway ossGateway;
 
-	private final OssConvertor ossConvertor;
-
 	/**
 	 * 执行新增OSS.
 	 * @param cmd 新增OSS参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(OssCreateCmd cmd) {
-		ossGateway.create(ossConvertor.toEntity(cmd.getOssCO()));
+		// ossGateway.create(ossConvertor.toEntity(cmd.getOssCO()));
 	}
 
 }

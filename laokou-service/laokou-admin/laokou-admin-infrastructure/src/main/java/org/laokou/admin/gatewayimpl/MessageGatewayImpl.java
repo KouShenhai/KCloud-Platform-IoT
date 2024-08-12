@@ -20,7 +20,6 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
 import org.laokou.admin.domain.message.MessageDetail;
@@ -54,8 +53,6 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final MessageConvertor messageConvertor;
-
 	private final MessageDetailMapper messageDetailMapper;
 
 	private final MybatisUtil mybatisUtil;
@@ -66,7 +63,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	 */
 	@Override
 	public void create(Message message) {
-		create(messageConvertor.toDataObject(message), message);
+		// create(messageConvertor.toDataObject(message), message);
 		// rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC,
 		// getMessageTag(message.getType()),
 		// JacksonUtil.toJsonStr(org.laokou.common.i18n.dto.Message.builder()

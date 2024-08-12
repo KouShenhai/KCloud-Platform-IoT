@@ -18,7 +18,6 @@
 package org.laokou.admin.command.ip;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.IpConvertor;
 import org.laokou.admin.domain.gateway.IpGateway;
 import org.laokou.admin.domain.ip.Ip;
 import org.laokou.admin.dto.ip.IpRefreshCmd;
@@ -34,8 +33,6 @@ import org.springframework.stereotype.Component;
 public class IpRefreshCmdExe {
 
 	private final IpGateway ipGateway;
-
-	private final IpConvertor ipConvertor;
 
 	/**
 	 * 执行IP刷新至Redis.

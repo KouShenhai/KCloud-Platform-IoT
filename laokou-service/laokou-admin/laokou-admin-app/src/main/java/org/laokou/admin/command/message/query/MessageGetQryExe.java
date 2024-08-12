@@ -19,7 +19,6 @@ package org.laokou.admin.command.message.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.dto.message.MessageGetQry;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
@@ -39,8 +38,6 @@ public class MessageGetQryExe {
 
 	private final MessageMapper messageMapper;
 
-	private final MessageConvertor messageConvertor;
-
 	/**
 	 * 执行查看消息.
 	 * @param qry 查看消息参数
@@ -48,7 +45,9 @@ public class MessageGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<MessageCO> execute(MessageGetQry qry) {
-		return Result.ok(messageConvertor.convertClientObj(messageMapper.selectById(qry.getId())));
+		return null;
+		// return
+		// Result.ok(messageConvertor.convertClientObj(messageMapper.selectById(qry.getId())));
 	}
 
 }

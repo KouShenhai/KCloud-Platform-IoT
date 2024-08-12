@@ -19,7 +19,6 @@ package org.laokou.admin.menu.command.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuTenantListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
@@ -41,8 +40,6 @@ import static org.laokou.admin.config.DsTenantProcessor.TENANT;
 public class MenuTenantListQryExe {
 
 	private final MenuMapper menuMapper;
-
-	private final MenuConvertor menuConvertor;
 
 	/**
 	 * 执行查看租户树菜单.

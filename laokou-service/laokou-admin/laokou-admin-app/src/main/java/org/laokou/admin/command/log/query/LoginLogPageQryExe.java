@@ -20,7 +20,6 @@ package org.laokou.admin.command.log.query;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.admin.convertor.LoginLogConvertor;
 import org.laokou.admin.dto.log.LoginLogPageQry;
 import org.laokou.admin.dto.log.clientobject.LoginLogCO;
 import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
@@ -45,8 +44,6 @@ public class LoginLogPageQryExe {
 
 	private final Executor executor;
 
-	private final LoginLogConvertor loginLogConvertor;
-
 	/**
 	 * 执行查询登录日志列表.
 	 * @param qry 查询登录日志列表参数
@@ -57,7 +54,10 @@ public class LoginLogPageQryExe {
 	// @DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
 	public Result<Datas<LoginLogCO>> execute(LoginLogPageQry qry) {
 		List<LoginLogDO> page = loginLogMapper.selectList(Wrappers.emptyWrapper());
-		return Result.ok(Datas.create(page.stream().map(loginLogConvertor::convertClientObj).toList(), 0));
+		return null;
+		// return
+		// Result.ok(Datas.create(page.stream().map(loginLogConvertor::convertClientObj).toList(),
+		// 0));
 		// LoginLogDO loginLogDO = null;
 		// CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture
 		// .supplyAsync(() -> loginLogMapper.selectListByCondition(loginLogDO, qry),

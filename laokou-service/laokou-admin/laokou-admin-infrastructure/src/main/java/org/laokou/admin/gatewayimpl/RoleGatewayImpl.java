@@ -20,7 +20,6 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.domain.role.Role;
 import org.laokou.admin.gatewayimpl.database.RoleDeptMapper;
@@ -62,8 +61,6 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final RoleConvertor roleConvertor;
-
 	/**
 	 * 新增角色.
 	 * @param role 角色对象
@@ -72,8 +69,8 @@ public class RoleGatewayImpl implements RoleGateway {
 	public void create(Role role) {
 		long count = roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()));
 		role.checkName(count);
-		RoleDO roleDO = roleConvertor.toDataObject(role);
-		create(roleDO, role);
+		// RoleDO roleDO = roleConvertor.toDataObject(role);
+		// create(roleDO, role);
 	}
 
 	/**
@@ -86,10 +83,10 @@ public class RoleGatewayImpl implements RoleGateway {
 		long count = roleMapper.selectCount(
 				Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()).ne(RoleDO::getId, role.getId()));
 		role.checkName(count);
-		RoleDO roleDO = roleConvertor.toDataObject(role);
+		// RoleDO roleDO = roleConvertor.toDataObject(role);
 		// 版本号
-		roleDO.setVersion(roleMapper.selectVersion(roleDO.getId()));
-		modify(roleDO, role);
+		// roleDO.setVersion(roleMapper.selectVersion(roleDO.getId()));
+		// modify(roleDO, role);
 	}
 
 	/**

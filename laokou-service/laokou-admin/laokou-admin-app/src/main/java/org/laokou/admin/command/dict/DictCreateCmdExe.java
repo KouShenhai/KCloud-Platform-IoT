@@ -19,7 +19,6 @@ package org.laokou.admin.command.dict;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.DictTConvertor;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.dto.dict.DictCreateCmd;
 import org.springframework.stereotype.Component;
@@ -37,15 +36,13 @@ public class DictCreateCmdExe {
 
 	private final DictGateway dictGateway;
 
-	private final DictTConvertor dictTConvertor;
-
 	/**
 	 * 执行新增字典.
 	 * @param cmd 新增字典参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(DictCreateCmd cmd) {
-		dictGateway.create(dictTConvertor.toEntity(cmd.getDictTypeCO()));
+		// dictGateway.create(dictTConvertor.toEntity(cmd.getDictTypeCO()));
 	}
 
 }

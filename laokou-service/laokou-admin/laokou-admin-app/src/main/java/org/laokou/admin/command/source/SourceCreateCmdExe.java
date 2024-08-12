@@ -18,7 +18,6 @@
 package org.laokou.admin.command.source;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.SourceConvertor;
 import org.laokou.admin.domain.gateway.SourceGateway;
 import org.laokou.admin.dto.source.SourceCreateCmd;
 import org.springframework.stereotype.Component;
@@ -34,14 +33,12 @@ public class SourceCreateCmdExe {
 
 	private final SourceGateway sourceGateway;
 
-	private final SourceConvertor sourceConvertor;
-
 	/**
 	 * 执行新增数据源.
 	 * @param cmd 新增数据源参数
 	 */
 	public void executeVoid(SourceCreateCmd cmd) {
-		sourceGateway.create(sourceConvertor.toEntity(cmd.getSourceCO()));
+		// sourceGateway.create(sourceConvertor.toEntity(cmd.getSourceCO()));
 	}
 
 }

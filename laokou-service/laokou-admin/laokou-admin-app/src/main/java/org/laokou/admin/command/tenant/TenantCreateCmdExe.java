@@ -18,7 +18,6 @@
 package org.laokou.admin.command.tenant;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.dto.tenant.TenantCreateCmd;
 import org.springframework.stereotype.Component;
@@ -34,14 +33,12 @@ public class TenantCreateCmdExe {
 
 	private final TenantGateway tenantGateway;
 
-	private final TenantConvertor tenantConvertor;
-
 	/**
 	 * 执行新增租户.
 	 * @param cmd 新增租户参数
 	 */
 	public void executeVoid(TenantCreateCmd cmd) {
-		tenantGateway.create(tenantConvertor.toEntity(cmd.getTenantCO()));
+		// tenantGateway.create(tenantConvertor.toEntity(cmd.getTenantCO()));
 	}
 
 }

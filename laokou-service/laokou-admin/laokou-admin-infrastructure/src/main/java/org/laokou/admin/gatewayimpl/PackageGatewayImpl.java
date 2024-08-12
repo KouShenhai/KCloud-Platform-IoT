@@ -20,7 +20,6 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.convertor.PackageConvertor;
 import org.laokou.admin.domain.gateway.PackageGateway;
 import org.laokou.admin.domain.pack.Package;
 import org.laokou.admin.gatewayimpl.database.PackageMapper;
@@ -55,8 +54,6 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final PackageConvertor packageConvertor;
-
 	private final MybatisUtil mybatisUtil;
 
 	/**
@@ -68,8 +65,8 @@ public class PackageGatewayImpl implements PackageGateway {
 		long count = packageMapper
 			.selectCount(Wrappers.lambdaQuery(PackageDO.class).eq(PackageDO::getName, pack.getName()));
 		pack.checkName(count);
-		PackageDO packageDO = packageConvertor.toDataObject(pack);
-		create(packageDO, pack);
+		// PackageDO packageDO = packageConvertor.toDataObject(pack);
+		// create(packageDO, pack);
 	}
 
 	/**
@@ -83,10 +80,10 @@ public class PackageGatewayImpl implements PackageGateway {
 			.eq(PackageDO::getName, pack.getName())
 			.ne(PackageDO::getId, pack.getId()));
 		pack.checkName(count);
-		PackageDO packageDO = packageConvertor.toDataObject(pack);
+		// PackageDO packageDO = packageConvertor.toDataObject(pack);
 		// 版本号
-		packageDO.setVersion(packageMapper.selectVersion(packageDO.getId()));
-		modify(packageDO, pack);
+		// packageDO.setVersion(packageMapper.selectVersion(packageDO.getId()));
+		// modify(packageDO, pack);
 	}
 
 	/**

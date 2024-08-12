@@ -19,7 +19,6 @@ package org.laokou.admin.command.role;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.dto.role.RoleCreateCmd;
 import org.springframework.stereotype.Component;
@@ -37,7 +36,7 @@ public class RoleCreateCmdExe {
 
 	private final RoleGateway roleGateway;
 
-	private final RoleConvertor roleConvertor;
+	// private final RoleConvertor roleConvertor;
 
 	/**
 	 * 执行新增角色.
@@ -45,7 +44,7 @@ public class RoleCreateCmdExe {
 	 */
 	@DS(TENANT)
 	public void executeVoid(RoleCreateCmd cmd) {
-		roleGateway.create(roleConvertor.toEntity(cmd.getRoleCO()));
+		// roleGateway.create(roleConvertor.toEntity(cmd.getRoleCO()));
 	}
 
 }

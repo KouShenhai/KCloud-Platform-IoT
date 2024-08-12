@@ -22,5 +22,4 @@
   "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 <suppressions>
   <!-- https://checkstyle.sourceforge.io/filters/suppressionfilter.html -->
-  <suppress files="[\\/]org[\\/]laokou[\\/]admin[\\/]convertor[\\/].*ConvertorImpl.java" checks=".*"/>
 </suppressions>

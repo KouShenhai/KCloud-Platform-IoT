@@ -19,7 +19,6 @@ package org.laokou.admin.command.message;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.dto.message.MessageCreateCmd;
 import org.springframework.stereotype.Component;
@@ -37,15 +36,13 @@ public class MessageCreateCmdExe {
 
 	private final MessageGateway messageGateway;
 
-	private final MessageConvertor messageConvertor;
-
 	/**
 	 * 执行新增消息.
 	 * @param cmd 新增消息参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(MessageCreateCmd cmd) {
-		messageGateway.create(messageConvertor.toEntity(cmd.getMessageCO()));
+		// messageGateway.create(messageConvertor.toEntity(cmd.getMessageCO()));
 	}
 
 }

@@ -19,7 +19,6 @@ package org.laokou.admin.menu.command.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuGetQry;
 import org.laokou.admin.menu.dto.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
@@ -39,8 +38,6 @@ public class MenuGetQryExe {
 
 	private final MenuMapper menuMapper;
 
-	private final MenuConvertor menuConvertor;
-
 	/**
 	 * 执行查看菜单.
 	 * @param qry 查看菜单参数
@@ -48,7 +45,9 @@ public class MenuGetQryExe {
 	 */
 	@DS(TENANT)
 	public Result<MenuCO> execute(MenuGetQry qry) {
-		return Result.ok(menuConvertor.convertClientObj(menuMapper.selectById(qry.getId())));
+		return null;
+		// return
+		// Result.ok(menuConvertor.convertClientObj(menuMapper.selectById(qry.getId())));
 	}
 
 }

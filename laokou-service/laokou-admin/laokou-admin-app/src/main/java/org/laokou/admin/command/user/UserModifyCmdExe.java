@@ -19,7 +19,6 @@ package org.laokou.admin.command.user;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.dto.user.UserModifyCmd;
 import org.springframework.stereotype.Component;
@@ -37,15 +36,13 @@ public class UserModifyCmdExe {
 
 	private final UserGateway userGateway;
 
-	private final UserConvertor userConvertor;
-
 	/**
 	 * 执行修改用户.
 	 * @param cmd 修改用户参数
 	 */
 	@DS(TENANT)
 	public void executeVoid(UserModifyCmd cmd) {
-		userGateway.modify(userConvertor.toEntity(cmd.getUserCO()));
+		// userGateway.modify(userConvertor.toEntity(cmd.getUserCO()));
 	}
 
 }

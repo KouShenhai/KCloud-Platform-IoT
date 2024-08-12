@@ -20,7 +20,6 @@ package org.laokou.admin.command.log.query;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.admin.convertor.OperateLogConvertor;
 import org.laokou.admin.dto.log.OperateLogListQry;
 import org.laokou.admin.dto.log.clientobject.OperateLogCO;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
@@ -50,8 +49,6 @@ public class OperateLogListQryExe {
 
 	private final Executor executor;
 
-	private final OperateLogConvertor operateLogConvertor;
-
 	/**
 	 * 执行查询操作日志列表.
 	 * @param qry 查询操作日志列表参数
@@ -68,7 +65,10 @@ public class OperateLogListQryExe {
 		CompletableFuture<Long> c2 = CompletableFuture
 			.supplyAsync(() -> operateLogMapper.selectObjCount(operateLogDO, page), executor);
 		CompletableFuture.allOf(List.of(c1, c2).toArray(CompletableFuture[]::new)).join();
-		return Result.ok(Datas.create(c1.get().stream().map(operateLogConvertor::convertClientObj).toList(), c2.get()));
+		return null;
+		// return
+		// Result.ok(Datas.create(c1.get().stream().map(operateLogConvertor::convertClientObj).toList(),
+		// c2.get()));
 	}
 
 }

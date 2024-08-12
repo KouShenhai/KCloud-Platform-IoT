@@ -25,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.config.DefaultConfigProperties;
-import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
@@ -85,8 +84,6 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private final MenuMapper menuMapper;
 
-	private final TenantConvertor tenantConvertor;
-
 	private final DefaultConfigProperties defaultConfigProperties;
 
 	private final Environment env;
@@ -100,9 +97,10 @@ public class TenantGatewayImpl implements TenantGateway {
 		long count = tenantMapper
 			.selectCount(Wrappers.lambdaQuery(TenantDO.class).eq(TenantDO::getName, tenant.getName()));
 		tenant.checkName(count);
-		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
-		tenantDO.setLabel(defaultConfigProperties.getTenantPrefix() + tenantMapper.selectMaxLabelNum());
-		create(tenantDO);
+		// TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
+		// tenantDO.setLabel(defaultConfigProperties.getTenantPrefix() +
+		// tenantMapper.selectMaxLabelNum());
+		// create(tenantDO);
 	}
 
 	/**
@@ -115,9 +113,9 @@ public class TenantGatewayImpl implements TenantGateway {
 			.eq(TenantDO::getName, tenant.getName())
 			.ne(TenantDO::getId, tenant.getId()));
 		tenant.checkName(count);
-		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
-		tenantDO.setVersion(tenantMapper.selectVersion(tenantDO.getId()));
-		modify(tenantDO);
+		// TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
+		// tenantDO.setVersion(tenantMapper.selectVersion(tenantDO.getId()));
+		// modify(tenantDO);
 	}
 
 	/**

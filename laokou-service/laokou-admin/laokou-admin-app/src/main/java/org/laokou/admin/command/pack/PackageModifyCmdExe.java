@@ -18,7 +18,6 @@
 package org.laokou.admin.command.pack;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.PackageConvertor;
 import org.laokou.admin.domain.gateway.PackageGateway;
 import org.laokou.admin.dto.packages.PackageModifyCmd;
 import org.springframework.stereotype.Component;
@@ -34,14 +33,12 @@ public class PackageModifyCmdExe {
 
 	private final PackageGateway packageGateway;
 
-	private final PackageConvertor packageConvertor;
-
 	/**
 	 * 执行修改套餐.
 	 * @param cmd 修改套餐参数
 	 */
 	public void executeVoid(PackageModifyCmd cmd) {
-		packageGateway.modify(packageConvertor.toEntity(cmd.getPackageCO()));
+		// packageGateway.modify(packageConvertor.toEntity(cmd.getPackageCO()));
 	}
 
 }

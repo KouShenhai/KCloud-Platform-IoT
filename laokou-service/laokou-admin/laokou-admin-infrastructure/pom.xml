@@ -58,12 +58,6 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-openfeign</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId></groupId>
-          <artifactId></artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
