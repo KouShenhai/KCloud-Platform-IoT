@@ -20,13 +20,15 @@ package org.laokou.common.core.utils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -79,8 +81,36 @@ public class FileUtil {
 		Files.write(path, buff);
 	}
 
-	public static void write(Path path, String str) {
-
+	public static void write(File file, InputStream in, long size, long chunkSize, Executor executor) throws IOException {
+		if (in instanceof FileInputStream fis) {
+			try (FileChannel inChannel = fis.getChannel()) {
+				long chunkCount = (size / chunkSize) + (size % chunkSize == 0 ? 0 : 1);
+				List<CompletableFuture<Void>> futures = new ArrayList<>((int) chunkCount);
+				// position指针
+				for (long index = 0, position = 0, endSize = position + chunkSize; index < chunkCount; index++, position = index * chunkSize) {
+					long finalPosition = position;
+					futures.add(CompletableFuture.runAsync(() -> {
+						try (RandomAccessFile accessFile = new RandomAccessFile(file, "rw");
+							 FileChannel outChannel = accessFile.getChannel()) {
+							// 结束位置
+							long finalEndSize = endSize;
+							if (finalEndSize > size) {
+								finalEndSize = size;
+							}
+							outChannel.position(finalPosition);
+							//零拷贝
+							//transferFrom 与 transferTo 区别
+							//transferTo 最多拷贝2gb，和源文件大小保持一致
+							//transferFrom 每个线程拷贝20MB
+							inChannel.transferTo(finalPosition, finalEndSize, outChannel);
+						} catch (IOException e) {
+							throw new RuntimeException(e);
+						}
+					}, executor));
+				}
+				futures.forEach(CompletableFuture::join);
+			}
+		}
 	}
 
 	/**
