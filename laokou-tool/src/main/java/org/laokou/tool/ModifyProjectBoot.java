@@ -22,7 +22,10 @@ import org.laokou.common.core.utils.FileUtil;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
@@ -72,7 +75,7 @@ public class ModifyProjectBoot {
 
 		// 修改projectName、packageName、groupId、artifactId
 		String projectPath = System.getProperty("user.dir");
-		Files.walkFileTree(Paths.get(projectPath), new SimpleFileVisitor<>() {
+		FileUtil.walkFileTree(Paths.get(projectPath), new SimpleFileVisitor<>() {
 
 			@Override
 			public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
@@ -91,9 +94,9 @@ public class ModifyProjectBoot {
 					buff = getXmlFileAsByte(filePath);
 				}
 				else {
-					buff = Files.readAllBytes(Paths.get(filePath));
+					buff = FileUtil.getBytes(Paths.get(filePath));
 				}
-				Files.write(Paths.get(newPath), buff);
+				FileUtil.write(Paths.get(newPath), buff);
 				return FileVisitResult.CONTINUE;
 			}
 
@@ -135,12 +138,12 @@ public class ModifyProjectBoot {
 	}
 
 	private static byte[] getJavaFileAsByte(String path) throws IOException {
-		String str = Files.readString(Paths.get(path));
+		String str = FileUtil.getStr(Paths.get(path));
 		return str.replaceAll("org.laokou", NEW_PACKAGE_NAME).getBytes(StandardCharsets.UTF_8);
 	}
 
 	private static byte[] getPomFileAsByte(String path) throws IOException {
-		String str = Files.readString(Paths.get(path));
+		String str = FileUtil.getStr(Paths.get(path));
 		return str.replaceAll("org.laokou", NEW_GROUP_ID)
 			.replaceAll("laokou-", NEW_MODULE_NAME + "-")
 			.replace("KCloud-Platform-IoT", NEW_PROJECT_NAME)
@@ -148,7 +151,7 @@ public class ModifyProjectBoot {
 	}
 
 	private static byte[] getXmlFileAsByte(String path) throws IOException {
-		String str = Files.readString(Paths.get(path));
+		String str = FileUtil.getStr(Paths.get(path));
 		return str.replaceAll("org.laokou", NEW_PACKAGE_NAME).getBytes(StandardCharsets.UTF_8);
 	}
 

@@ -23,10 +23,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -44,9 +43,8 @@ public class FileUtil {
 
 	/**
 	 * 创建目录及文件.
-	 *
 	 * @param directory 目录
-	 * @param fileName  文件名
+	 * @param fileName 文件名
 	 * @return 创建后的文件对象
 	 */
 	@SneakyThrows
@@ -66,9 +64,22 @@ public class FileUtil {
 		return Files.readAllBytes(path);
 	}
 
+	public static String getStr(Path path) throws IOException {
+		return Files.readString(path, StandardCharsets.UTF_8);
+	}
+
+	@SneakyThrows
+	public static Path walkFileTree(Path path, FileVisitor<? super Path> visitor) {
+		return Files.walkFileTree(path, visitor);
+	}
+
+	@SneakyThrows
+	public static void write(Path path, byte[] buff) {
+		Files.write(path, buff);
+	}
+
 	/**
 	 * 获取文件扩展名.
-	 *
 	 * @param fileName 文件名称
 	 * @return 文件扩展名
 	 */
@@ -83,8 +94,13 @@ public class FileUtil {
 	}
 
 	@SneakyThrows
+	public static void copy(Path source, OutputStream out) {
+		Files.copy(source, out);
+	}
+
+	@SneakyThrows
 	public static void deleteFile(String path) {
-		Files.walkFileTree(Path.of(path), new SimpleFileVisitor<>() {
+		walkFileTree(Path.of(path), new SimpleFileVisitor<>() {
 			@Override
 			public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
 				deleteFile(path.toFile());
@@ -105,7 +121,6 @@ public class FileUtil {
 
 	/**
 	 * zip压缩包.
-	 *
 	 * @param source 源
 	 * @param target 目标
 	 */
@@ -113,14 +128,14 @@ public class FileUtil {
 	public static void zip(String source, String target) {
 		try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(target))) {
 			Path sourceDir = Path.of(source);
-			Files.walkFileTree(sourceDir, new SimpleFileVisitor<>() {
+			walkFileTree(sourceDir, new SimpleFileVisitor<>() {
 				@Override
 				@SneakyThrows
 				public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
 					// 对于每个文件，创建一个 ZipEntry 并写入
 					Path targetPath = sourceDir.relativize(path);
 					zos.putNextEntry(new ZipEntry(sourceDir.getFileName() + SLASH + targetPath));
-					Files.copy(path, zos);
+					copy(path, zos);
 					zos.closeEntry();
 					return FileVisitResult.CONTINUE;
 				}
