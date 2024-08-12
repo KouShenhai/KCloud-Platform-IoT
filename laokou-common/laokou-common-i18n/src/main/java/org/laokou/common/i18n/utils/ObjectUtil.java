@@ -39,16 +39,8 @@ public class ObjectUtil {
 	}
 
 	/**
-	 * 哈希码.
-	 * @param args 参数
-	 * @return 哈希码
-	 */
-	public static int hash(Object... args) {
-		return Objects.hash(args);
-	}
-
-	/**
 	 * 对象不允许为空.
+	 *
 	 * @param obj 对象
 	 * @param <T> 泛型
 	 * @return 对象
