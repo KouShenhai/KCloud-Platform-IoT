@@ -39,7 +39,9 @@ public final class StringConstant {
 	@Schema(name = "TRUE", description = "TRUE")
 	public static final String TRUE = "true";
 
-	@Schema(name = "SLASH", description = "分割参数")
+	/**
+	 * 分割参数.
+	 */
 	public static final String SLASH = "/";
 
 	@Schema(name = "ERECT", description = "分割参数")

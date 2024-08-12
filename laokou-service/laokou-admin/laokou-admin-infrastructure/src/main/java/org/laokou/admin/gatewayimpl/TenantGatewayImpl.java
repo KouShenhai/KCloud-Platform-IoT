@@ -155,7 +155,7 @@ public class TenantGatewayImpl implements TenantGateway {
 		Assert.isTrue(ObjectUtil.isNotNull(tenantDO), "tenantDO is null");
 		try (ServletOutputStream outputStream = response.getOutputStream()) {
 			File file = writeTempFile(fileName, name, id, tenantDO.getPackageId());
-			FileUtil.zip(file, outputStream);
+			// FileUtil.zip(file, outputStream);
 			deleteTempFile(file);
 		}
 	}

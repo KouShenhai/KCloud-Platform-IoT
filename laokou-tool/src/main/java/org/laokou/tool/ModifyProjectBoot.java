@@ -36,7 +36,7 @@ import static org.laokou.common.core.utils.SystemUtil.isWindows;
 public class ModifyProjectBoot {
 
 	private static final List<String> MODULES = List.of("laokou-cloud", "laokou-common", "laokou-service",
-		"laokou-cola", "laokou-tool", "checkstyle");
+			"laokou-cola", "laokou-tool", "checkstyle");
 
 	private static final String MODIFY_POM_FILE_SUFFIX = "pom.xml";
 
@@ -83,11 +83,14 @@ public class ModifyProjectBoot {
 				byte[] buff;
 				if (filePath.endsWith(MODIFY_JAVA_FILE_SUFFIX)) {
 					buff = getJavaFileAsByte(filePath);
-				} else if (filePath.endsWith(MODIFY_POM_FILE_SUFFIX)) {
+				}
+				else if (filePath.endsWith(MODIFY_POM_FILE_SUFFIX)) {
 					buff = getPomFileAsByte(filePath);
-				} else if (filePath.endsWith(MODIFY_XML_FILE_SUFFIX)) {
+				}
+				else if (filePath.endsWith(MODIFY_XML_FILE_SUFFIX)) {
 					buff = getXmlFileAsByte(filePath);
-				} else {
+				}
+				else {
 					buff = Files.readAllBytes(Paths.get(filePath));
 				}
 				Files.write(Paths.get(newPath), buff);
