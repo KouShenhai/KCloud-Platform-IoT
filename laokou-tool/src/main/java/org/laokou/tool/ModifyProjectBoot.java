@@ -39,7 +39,7 @@ import static org.laokou.common.core.utils.SystemUtil.isWindows;
 public class ModifyProjectBoot {
 
 	private static final List<String> MODULES = List.of("laokou-cloud", "laokou-common", "laokou-service",
-			"laokou-cola", "laokou-tool", "checkstyle");
+		"laokou-cola", "laokou-tool", "checkstyle");
 
 	private static final String MODIFY_POM_FILE_SUFFIX = "pom.xml";
 
@@ -67,11 +67,7 @@ public class ModifyProjectBoot {
 
 	private static int count = 0;
 
-	public static void main(String[] args) throws IOException {
-
-		// 请在根目录移除maven-checkstyle-plugin
-		// 请在根目录移除maven-checkstyle-plugin
-		// 请在根目录移除maven-checkstyle-plugin
+	public static void main(String[] args) {
 
 		// 修改projectName、packageName、groupId、artifactId
 		String projectPath = System.getProperty("user.dir");
@@ -86,14 +82,11 @@ public class ModifyProjectBoot {
 				byte[] buff;
 				if (filePath.endsWith(MODIFY_JAVA_FILE_SUFFIX)) {
 					buff = getJavaFileAsByte(filePath);
-				}
-				else if (filePath.endsWith(MODIFY_POM_FILE_SUFFIX)) {
+				} else if (filePath.endsWith(MODIFY_POM_FILE_SUFFIX)) {
 					buff = getPomFileAsByte(filePath);
-				}
-				else if (filePath.endsWith(MODIFY_XML_FILE_SUFFIX)) {
+				} else if (filePath.endsWith(MODIFY_XML_FILE_SUFFIX)) {
 					buff = getXmlFileAsByte(filePath);
-				}
-				else {
+				} else {
 					buff = FileUtil.getBytes(Paths.get(filePath));
 				}
 				FileUtil.write(Paths.get(newPath), buff);
