@@ -40,7 +40,6 @@ public class ObjectUtil {
 
 	/**
 	 * 对象不允许为空.
-	 *
 	 * @param obj 对象
 	 * @param <T> 泛型
 	 * @return 对象
