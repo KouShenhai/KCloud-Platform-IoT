@@ -101,8 +101,8 @@ public class FileUtil {
 							outChannel.position(finalPosition);
 							// 零拷贝
 							// transferFrom 与 transferTo 区别
-							// transferTo 最多拷贝2gb，和源文件大小保持一致
-							// transferFrom 每个线程拷贝20MB
+							// transferTo 最多拷贝2gb，和源文件大小保持一致【发送，从当前通道读取数据并写入外部通道】
+							// transferFrom【接收，从外部通道读取数据并写入当前通道】
 							inChannel.transferTo(finalPosition, finalEndSize, outChannel);
 						}
 						catch (IOException e) {
