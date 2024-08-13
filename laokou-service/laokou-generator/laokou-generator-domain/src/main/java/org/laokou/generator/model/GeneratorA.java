@@ -22,7 +22,6 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.AggregateRoot;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,30 +38,21 @@ public class GeneratorA extends AggregateRoot<Long> {
 
 	private final String version;
 
-	private TableE tableE;
+	private final TableE tableE;
 
-	private TableV tableV;
+	private volatile TableV tableV;
 
-	private List<Template> templates;
-
-	public GeneratorA(String author, String packageName, String moduleName, String version) {
+	public GeneratorA(String author, String packageName, String moduleName, String version, TableE tableE) {
 		this.id = IdGenerator.defaultSnowflakeId();
 		this.author = author;
 		this.packageName = packageName;
 		this.moduleName = moduleName;
 		this.version = version;
+		this.tableE = tableE;
 	}
 
 	public void updateTable(TableV tableV) {
 		this.tableV = tableV;
-	}
-
-	public void updateTable(TableE tableE) {
-		this.tableE = tableE;
-	}
-
-	public void updateTemplates(List<Template> templates) {
-		this.templates = templates;
 	}
 
 	public Map<String, Object> toMap() {

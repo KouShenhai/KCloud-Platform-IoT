@@ -67,8 +67,7 @@ public class RouterHandler implements ApplicationListener<ApplicationReadyEvent>
 	@SneakyThrows
 	private String getRouter(Map<String, Object> dataMap) {
 		try (InputStream inputStream = ResourceUtil.getResource("templates/router_template.json").getInputStream()) {
-			byte[] bytes = inputStream.readAllBytes();
-			String template = new String(bytes, StandardCharsets.UTF_8);
+			String template = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 			return TemplateUtil.getContent(template, dataMap);
 		}
 	}

@@ -23,7 +23,10 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 树节菜单工具类.
@@ -74,7 +77,7 @@ public class TreeUtil {
 		}
 		for (T node : nodes) {
 			T parentNode = nodeMap.get(node.getPid());
-			if (ObjectUtil.isNotNull(parentNode) && node.getPid().equals(parentNode.getId())) {
+			if (ObjectUtil.isNotNull(parentNode) && ObjectUtil.equals(node.getPid(), parentNode.getId())) {
 				parentNode.getChildren().add(node);
 			}
 		}
@@ -83,19 +86,19 @@ public class TreeUtil {
 
 	@Data
 	@NoArgsConstructor
-	@Schema(name = "TreeNode", description = "树节点")
+	@Schema(name = "树节点", description = "树节点")
 	public static class TreeNode<T> extends ClientObject {
 
-		@Schema(name = "id", description = "ID")
+		@Schema(name = "ID", description = "ID")
 		private Long id;
 
-		@Schema(name = "name", description = "名称")
+		@Schema(name = "名称", description = "名称")
 		private String name;
 
-		@Schema(name = "pid", description = "父节点ID")
+		@Schema(name = "父节点ID", description = "父节点ID")
 		private Long pid;
 
-		@Schema(name = "children", description = "子节点")
+		@Schema(name = "子节点", description = "子节点")
 		private List<T> children = new ArrayList<>(8);
 
 		public TreeNode(Long id, String name, Long pid) {

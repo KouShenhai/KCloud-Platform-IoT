@@ -18,14 +18,26 @@
 package org.laokou.generator.ability;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.laokou.common.core.utils.FileUtil;
+import org.laokou.common.core.utils.TemplateUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.generator.gateway.TableGateway;
 import org.laokou.generator.model.GeneratorA;
 import org.laokou.generator.model.TableV;
 import org.laokou.generator.model.Template;
 import org.springframework.stereotype.Component;
 
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+
+import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
 
 /**
  * @author laokou
@@ -34,17 +46,63 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GeneratorDomainService {
 
+	/**
+	 * 代码生成路径.
+	 */
+	private static final String SOURCE_PATH = "";
+
+	/**
+	 * ZIP压缩路径.
+	 */
+	private static final String TARGET_PATH = "";
+
+	/**
+	 * 模板路径.
+	 */
+	private static final String TEMPLATE_PATH = "templates";
+
 	private final TableGateway tableGateway;
 
+	private final Executor executor;
+
 	public void generateCode(GeneratorA generatorA) {
-		// 表字段信息
+		// 表字段
 		List<TableV> list = tableGateway.list(generatorA.getTableE());
 		// 模板
-		generatorA.updateTemplates(getTemplates());
+		List<Template> templates = getTemplates();
+		// 生成代码
+		generateCode(generatorA, list, templates);
+	}
+
+	private void generateCode(GeneratorA generatorA, List<TableV> list, List<Template> templates) {
+		// 生成到本地指定目录
+		list.forEach(item -> generateCode(generatorA, item, templates));
+		// ZIP压缩到指定目录
+		FileUtil.zip(SOURCE_PATH, TARGET_PATH);
+	}
+
+	private void generateCode(GeneratorA generatorA, TableV tableV, List<Template> templates) {
+		templates.parallelStream().map(item -> CompletableFuture.runAsync(() -> {
+			generatorA.updateTable(tableV);
+			String content = getContent(generatorA.toMap(), item.getTemplatePath(item.getTemplatePath(TEMPLATE_PATH)));
+			// 写入文件
+			FileUtil.write(
+					Path.of(SOURCE_PATH + SLASH
+							+ item.getFilePath(generatorA.getPackageName(), generatorA.getModuleName())),
+					content.getBytes(StandardCharsets.UTF_8));
+		}, executor)).toList().forEach(CompletableFuture::join);
+	}
+
+	@SneakyThrows
+	private String getContent(Map<String, Object> map, String templatePath) {
+		try (InputStream inputStream = ResourceUtil.getResource(templatePath).getInputStream()) {
+			String template = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+			return TemplateUtil.getContent(template, map);
+		}
 	}
 
 	private List<Template> getTemplates() {
-		List<Template> templates = new ArrayList<>(26);
+		List<Template> templates = new ArrayList<>(29);
 		templates.add(Template.SAVE_CMD);
 		templates.add(Template.MODIFY_CMD);
 		templates.add(Template.REMOVE_CMD);
@@ -71,6 +129,9 @@ public class GeneratorDomainService {
 		templates.add(Template.CONTROLLER);
 		templates.add(Template.MAPPER);
 		templates.add(Template.MAPPER_XML);
+		templates.add(Template.API);
+		templates.add(Template.VIEW);
+		templates.add(Template.FORM_VIEW);
 		return templates;
 	}
 

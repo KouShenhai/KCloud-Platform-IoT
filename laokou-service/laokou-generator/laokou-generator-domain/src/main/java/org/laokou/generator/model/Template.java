@@ -329,6 +329,42 @@ public enum Template {
 		public String getFilePath(String packageName, String moduleName) {
 			return "";
 		}
+	},
+
+	VIEW {
+		@Override
+		public String getTemplatePath(String path) {
+			return "";
+		}
+
+		@Override
+		public String getFilePath(String packageName, String moduleName) {
+			return "";
+		}
+	},
+
+	FORM_VIEW {
+		@Override
+		public String getTemplatePath(String path) {
+			return "";
+		}
+
+		@Override
+		public String getFilePath(String packageName, String moduleName) {
+			return "";
+		}
+	},
+
+	API {
+		@Override
+		public String getTemplatePath(String path) {
+			return "";
+		}
+
+		@Override
+		public String getFilePath(String packageName, String moduleName) {
+			return "";
+		}
 	};
 
 	public abstract String getTemplatePath(String path);

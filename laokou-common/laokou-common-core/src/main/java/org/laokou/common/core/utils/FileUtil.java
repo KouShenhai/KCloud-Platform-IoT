@@ -47,9 +47,8 @@ public class FileUtil {
 
 	/**
 	 * 创建目录及文件.
-	 *
 	 * @param directory 目录
-	 * @param fileName  文件名
+	 * @param fileName 文件名
 	 * @return 创建后的文件对象
 	 */
 	@SneakyThrows
@@ -84,18 +83,18 @@ public class FileUtil {
 	}
 
 	public static void write(File file, InputStream in, long size, long chunkSize, Executor executor)
-		throws IOException {
+			throws IOException {
 		if (in instanceof FileInputStream fis) {
 			try (FileChannel inChannel = fis.getChannel()) {
 				long chunkCount = (size / chunkSize) + (size % chunkSize == 0 ? 0 : 1);
 				List<CompletableFuture<Void>> futures = new ArrayList<>((int) chunkCount);
 				// position指针
 				for (long index = 0, position = 0,
-					 endSize = position + chunkSize; index < chunkCount; index++, position = index * chunkSize) {
+						endSize = position + chunkSize; index < chunkCount; index++, position = index * chunkSize) {
 					long finalPosition = position;
 					futures.add(CompletableFuture.runAsync(() -> {
 						try (RandomAccessFile accessFile = new RandomAccessFile(file, RW);
-							 FileChannel outChannel = accessFile.getChannel()) {
+								FileChannel outChannel = accessFile.getChannel()) {
 							// 结束位置
 							long finalEndSize = endSize;
 							if (finalEndSize > size) {
@@ -107,7 +106,8 @@ public class FileUtil {
 							// transferTo 最多拷贝2gb，和源文件大小保持一致【发送，从当前通道读取数据并写入外部通道】
 							// transferFrom【接收，从外部通道读取数据并写入当前通道】
 							inChannel.transferTo(finalPosition, finalEndSize, outChannel);
-						} catch (IOException e) {
+						}
+						catch (IOException e) {
 							throw new RuntimeException(e);
 						}
 					}, executor));
@@ -119,7 +119,6 @@ public class FileUtil {
 
 	/**
 	 * 获取文件扩展名.
-	 *
 	 * @param fileName 文件名称
 	 * @return 文件扩展名
 	 */
@@ -161,14 +160,13 @@ public class FileUtil {
 
 	/**
 	 * zip压缩包.
-	 *
-	 * @param source 源
-	 * @param target 目标
+	 * @param sourcePath 源路径
+	 * @param targetPath 目标路径
 	 */
 	@SneakyThrows
-	public static void zip(String source, String target) {
-		try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(target))) {
-			Path sourceDir = Path.of(source);
+	public static void zip(String sourcePath, String targetPath) {
+		try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(targetPath))) {
+			Path sourceDir = Path.of(sourcePath);
 			walkFileTree(sourceDir, new SimpleFileVisitor<>() {
 				@Override
 				@SneakyThrows
