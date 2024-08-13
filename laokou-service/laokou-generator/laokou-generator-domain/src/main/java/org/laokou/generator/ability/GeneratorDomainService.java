@@ -67,18 +67,20 @@ public class GeneratorDomainService {
 
 	public void generateCode(GeneratorA generatorA) {
 		// 表字段
-		List<TableV> list = tableGateway.list(generatorA.getTableE());
+		List<TableV> tables = tableGateway.list(generatorA.getTableE());
 		// 模板
 		List<Template> templates = getTemplates();
 		// 生成代码
-		generateCode(generatorA, list, templates);
+		generateCode(generatorA, tables, templates);
 	}
 
-	private void generateCode(GeneratorA generatorA, List<TableV> list, List<Template> templates) {
-		// 生成到本地指定目录
-		list.forEach(item -> generateCode(generatorA, item, templates));
+	private void generateCode(GeneratorA generatorA, List<TableV> tables, List<Template> templates) {
+		// 生成到本地指定目录【临时】
+		tables.forEach(item -> generateCode(generatorA, item, templates));
 		// ZIP压缩到指定目录
 		FileUtil.zip(SOURCE_PATH, TARGET_PATH);
+		// 删除临时文件
+		FileUtil.deleteFile(SOURCE_PATH);
 	}
 
 	private void generateCode(GeneratorA generatorA, TableV tableV, List<Template> templates) {
