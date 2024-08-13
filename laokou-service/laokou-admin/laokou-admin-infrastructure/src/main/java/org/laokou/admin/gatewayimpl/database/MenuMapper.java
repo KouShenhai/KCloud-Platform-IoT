@@ -36,7 +36,6 @@ public interface MenuMapper extends CrudMapper<Long, Integer, MenuDO> {
 
 	/**
 	 * 根据用户ID查询菜单列表.
-	 *
 	 * @param userId 用户ID
 	 * @return 菜单列表
 	 */
@@ -46,7 +45,6 @@ public interface MenuMapper extends CrudMapper<Long, Integer, MenuDO> {
 
 	/**
 	 * 根据角色ID查看菜单IDS.
-	 *
 	 * @param roleId 角色ID
 	 * @return 菜单IDS
 	 */
@@ -54,14 +52,12 @@ public interface MenuMapper extends CrudMapper<Long, Integer, MenuDO> {
 
 	/**
 	 * 查询租户菜单列表.
-	 *
 	 * @return 租户菜单列表
 	 */
 	List<MenuDO> selectTenantMenuList();
 
 	/**
 	 * 根据套餐ID查询租户菜单列表.
-	 *
 	 * @param packageId 套餐ID
 	 * @return 租户菜单列表
 	 */

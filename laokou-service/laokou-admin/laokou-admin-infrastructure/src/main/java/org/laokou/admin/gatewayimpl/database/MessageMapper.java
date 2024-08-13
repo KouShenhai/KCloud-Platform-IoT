@@ -43,7 +43,6 @@ public interface MessageMapper extends CrudMapper<Long, Integer, MessageDO> {
 
 	/**
 	 * 根据详情ID查看消息.
-	 *
 	 * @param detailId 详情ID
 	 * @return 消息
 	 */
@@ -51,16 +50,15 @@ public interface MessageMapper extends CrudMapper<Long, Integer, MessageDO> {
 
 	/**
 	 * 根据用户ID和Type查询未读消息列表.
-	 *
-	 * @param type      类型
-	 * @param userId    用户ID
+	 * @param type 类型
+	 * @param userId 用户ID
 	 * @param pageQuery 分页
 	 * @return 未读消息列表
 	 */
 	List<MessageDO> selectUnreadListByCondition(@Param("userId") Long userId, @Param("type") Integer type,
-												@Param(PAGE_QUERY) PageQuery pageQuery);
+			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 	long selectUnreadCountByCondition(@Param("userId") Long userId, @Param("type") Integer type,
-									  @Param(PAGE_QUERY) PageQuery pageQuery);
+			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

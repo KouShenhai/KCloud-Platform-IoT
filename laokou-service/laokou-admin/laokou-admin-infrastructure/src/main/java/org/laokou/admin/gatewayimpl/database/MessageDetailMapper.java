@@ -34,7 +34,6 @@ public interface MessageDetailMapper extends CrudMapper<Long, Integer, MessageDe
 
 	/**
 	 * 根据用户ID查看未读消息数.
-	 *
 	 * @param userId 用户ID
 	 * @return 未读消息数
 	 */

@@ -39,8 +39,7 @@ public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 
 	/**
 	 * 新增用户.
-	 *
-	 * @param user      用户对象
+	 * @param user 用户对象
 	 * @param secretKey 密钥
 	 * @return 新增结果
 	 */
@@ -48,7 +47,6 @@ public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 
 	/**
 	 * 查询用户下拉框选择项列表.
-	 *
 	 * @param secretKey 密钥
 	 * @param pageQuery 分页参数
 	 * @return 用户下拉框选择项列表
@@ -57,8 +55,7 @@ public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 
 	/**
 	 * 分页查询用户列表.
-	 *
-	 * @param user      用户对象
+	 * @param user 用户对象
 	 * @param pageQuery 分页参数
 	 * @return 用户列表
 	 */
@@ -66,8 +63,7 @@ public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 
 	/**
 	 * 查看用户总数.
-	 *
-	 * @param user      用户对象
+	 * @param user 用户对象
 	 * @param pageQuery 分页参数
 	 * @return 用户总数
 	 */

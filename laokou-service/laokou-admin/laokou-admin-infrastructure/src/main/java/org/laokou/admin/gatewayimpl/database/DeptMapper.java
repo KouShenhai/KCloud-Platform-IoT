@@ -36,7 +36,6 @@ public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
 
 	/**
 	 * 根据角色ID查看部门.
-	 *
 	 * @param roleId 角色ID
 	 * @return 部门
 	 */
@@ -44,7 +43,6 @@ public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
 
 	/**
 	 * 根据部门父节点ID查看部门.
-	 *
 	 * @param id 部门ID
 	 * @return 部门
 	 */
@@ -52,7 +50,6 @@ public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
 
 	/**
 	 * 根据PATH模糊查询部门子节点列表.
-	 *
 	 * @param path 部门PATH
 	 * @return 部门子节点列表
 	 */

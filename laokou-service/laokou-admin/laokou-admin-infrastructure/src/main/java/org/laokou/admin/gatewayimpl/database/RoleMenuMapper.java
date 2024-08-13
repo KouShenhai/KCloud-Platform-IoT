@@ -34,7 +34,6 @@ public interface RoleMenuMapper extends CrudMapper<Long, Integer, RoleMenuDO> {
 
 	/**
 	 * 根据角色ID删除角色菜单.
-	 *
 	 * @param roleId 角色ID
 	 */
 	void deleteByRoleId(@Param("roleId") Long roleId);

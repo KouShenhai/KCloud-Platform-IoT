@@ -34,7 +34,6 @@ public interface RoleDeptMapper extends CrudMapper<Long, Integer, RoleDeptDO> {
 
 	/**
 	 * 根据角色ID删除角色部门.
-	 *
 	 * @param roleId 角色ID
 	 */
 	void deleteByRoleId(@Param("roleId") Long roleId);

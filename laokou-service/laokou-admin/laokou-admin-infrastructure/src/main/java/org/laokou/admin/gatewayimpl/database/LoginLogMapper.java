@@ -39,8 +39,7 @@ public interface LoginLogMapper extends CrudMapper<Long, Integer, LoginLogDO> {
 
 	/**
 	 * 查询登录日志列表.
-	 *
-	 * @param log       登录日志数据模型
+	 * @param log 登录日志数据模型
 	 * @param pageQuery 分页参数
 	 * @return 登录日志列表
 	 */

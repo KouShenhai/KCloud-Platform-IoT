@@ -77,12 +77,10 @@ public class UserDO extends BaseDO {
 	 */
 	private String usernamePhrase;
 
-
 	/**
 	 * 邮箱短语.
 	 */
 	private String mailPhrase;
-
 
 	/**
 	 * 手机号短语.
