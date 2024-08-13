@@ -17,6 +17,8 @@
 
 package org.laokou.generator.model;
 
+import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
+
 public enum Template {
 
 	SAVE_CMD {
@@ -26,7 +28,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -38,7 +45,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -50,7 +62,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -62,7 +79,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -74,7 +96,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -86,7 +113,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -98,7 +130,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -110,7 +147,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -122,7 +164,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -134,7 +181,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -146,7 +198,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -158,7 +215,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -170,7 +232,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -182,7 +249,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -194,7 +266,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -206,7 +283,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -218,7 +300,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -230,7 +317,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -242,7 +334,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -250,12 +347,18 @@ public enum Template {
 	DO {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + SLASH + "do.ftl";
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
-			return "";
+		public String getFileDirectory(String packageName, String moduleName) {
+			return moduleName + "/src/main/java/" + packageName.replaceAll("\\.", SLASH)
+					+ "/gatewayimpl/database/dataobject";
+		}
+
+		@Override
+		public String getFileName(String className) {
+			return "DO.java";
 		}
 	},
 
@@ -266,7 +369,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -278,7 +386,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -290,7 +403,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -302,7 +420,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -314,7 +437,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -326,7 +454,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -338,7 +471,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -350,7 +488,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	},
@@ -362,13 +505,20 @@ public enum Template {
 		}
 
 		@Override
-		public String getFilePath(String packageName, String moduleName) {
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className) {
 			return "";
 		}
 	};
 
 	public abstract String getTemplatePath(String path);
 
-	public abstract String getFilePath(String packageName, String moduleName);
+	public abstract String getFileDirectory(String packageName, String moduleName);
+
+	public abstract String getFileName(String className);
 
 }

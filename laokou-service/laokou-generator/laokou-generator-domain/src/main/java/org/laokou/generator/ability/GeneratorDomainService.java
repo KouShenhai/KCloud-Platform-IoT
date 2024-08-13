@@ -28,9 +28,9 @@ import org.laokou.generator.model.TableV;
 import org.laokou.generator.model.Template;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -49,12 +49,12 @@ public class GeneratorDomainService {
 	/**
 	 * 代码生成路径.
 	 */
-	private static final String SOURCE_PATH = "";
+	private static final String SOURCE_PATH = "D:\\cola\\laokou";
 
 	/**
 	 * ZIP压缩路径.
 	 */
-	private static final String TARGET_PATH = "";
+	private static final String TARGET_PATH = "D:\\cola\\laokou.zip";
 
 	/**
 	 * 模板路径.
@@ -69,7 +69,7 @@ public class GeneratorDomainService {
 		// 表字段
 		List<TableV> tables = tableGateway.list(generatorA.getTableE());
 		// 模板
-		List<Template> templates = getTemplates();
+		List<Template> templates = getTemplate();
 		// 生成代码
 		generateCode(generatorA, tables, templates);
 	}
@@ -86,12 +86,13 @@ public class GeneratorDomainService {
 	private void generateCode(GeneratorA generatorA, TableV tableV, List<Template> templates) {
 		templates.parallelStream().map(item -> CompletableFuture.runAsync(() -> {
 			generatorA.updateTable(tableV);
-			String content = getContent(generatorA.toMap(), item.getTemplatePath(item.getTemplatePath(TEMPLATE_PATH)));
+			String content = getContent(generatorA.toMap(), item.getTemplatePath(TEMPLATE_PATH));
 			// 写入文件
-			FileUtil.write(
-					Path.of(SOURCE_PATH + SLASH
-							+ item.getFilePath(generatorA.getPackageName(), generatorA.getModuleName())),
-					content.getBytes(StandardCharsets.UTF_8));
+			File file = FileUtil.createFile(
+					SOURCE_PATH + SLASH
+							+ item.getFileDirectory(generatorA.getPackageName(), generatorA.getModuleName()),
+					item.getFileName(tableV.className()));
+			FileUtil.write(file, content.getBytes(StandardCharsets.UTF_8));
 		}, executor)).toList().forEach(CompletableFuture::join);
 	}
 
@@ -101,6 +102,10 @@ public class GeneratorDomainService {
 			String template = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 			return TemplateUtil.getContent(template, map);
 		}
+	}
+
+	private List<Template> getTemplate() {
+		return List.of(Template.DO);
 	}
 
 	private List<Template> getTemplates() {

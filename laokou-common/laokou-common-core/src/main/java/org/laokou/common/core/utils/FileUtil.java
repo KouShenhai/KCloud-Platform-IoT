@@ -82,6 +82,13 @@ public class FileUtil {
 		Files.write(path, buff);
 	}
 
+	@SneakyThrows
+	public static void write(File file, byte[] buff) {
+		try (FileOutputStream fos = new FileOutputStream(file)) {
+			fos.write(buff);
+		}
+	}
+
 	public static void write(File file, InputStream in, long size, long chunkSize, Executor executor)
 			throws IOException {
 		if (in instanceof FileInputStream fis) {

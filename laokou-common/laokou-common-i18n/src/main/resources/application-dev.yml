@@ -1,6 +1,3 @@
-laokou:
-  version: ${laokou.version:}
-spring-cloud:
-  version: ${spring-cloud.version:}
-spring-cloud-alibaba:
-  version: ${spring-cloud-alibaba.version:}
+laokou-version: ${laokou.version}
+spring-cloud-version: ${spring-cloud.version}
+spring-cloud-alibaba-version: ${spring-cloud-alibaba.version}
