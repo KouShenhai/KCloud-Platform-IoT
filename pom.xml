@@ -66,7 +66,7 @@
     <versions-maven-plugin.version>2.17.1</versions-maven-plugin.version>
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <asciidoctor-maven-plugin.version>3.0.0</asciidoctor-maven-plugin.version>
-    <spring-javaformat-maven-plugin.version>0.0.42</spring-javaformat-maven-plugin.version>
+    <spring-javaformat-maven-plugin.version>0.0.43</spring-javaformat-maven-plugin.version>
     <maven-archetype-plugin.version>3.2.1</maven-archetype-plugin.version>
   </properties>
   <dependencyManagement>
