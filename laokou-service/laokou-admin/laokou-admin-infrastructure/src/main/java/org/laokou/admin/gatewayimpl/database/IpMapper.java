@@ -33,8 +33,8 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  *
  * @author laokou
  */
-@Repository
 @Mapper
+@Repository
 public interface IpMapper extends CrudMapper<Long, Integer, IpDO> {
 
 	List<IpDO> selectListByCondition(@Param("ip") IpDO ip, @Param(PAGE_QUERY) PageQuery pageQuery);

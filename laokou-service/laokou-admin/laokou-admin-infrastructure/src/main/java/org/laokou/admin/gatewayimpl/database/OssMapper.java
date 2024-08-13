@@ -33,8 +33,8 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  *
  * @author laokou
  */
-@Repository
 @Mapper
+@Repository
 public interface OssMapper extends CrudMapper<Long, Integer, OssDO> {
 
 	List<OssDO> selectListByCondition(@Param("oss") OssDO oss, @Param(PAGE_QUERY) PageQuery pageQuery);

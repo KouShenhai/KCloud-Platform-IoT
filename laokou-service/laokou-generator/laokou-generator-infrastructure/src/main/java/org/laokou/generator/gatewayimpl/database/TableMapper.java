@@ -29,8 +29,8 @@ import java.util.Set;
 /**
  * @author laokou
  */
-@Repository
 @Mapper
+@Repository
 public interface TableMapper extends CrudMapper<Long, Integer, TableDO> {
 
 	List<TableDO> selectObjects(@Param("tableNames") Set<String> tableNames);

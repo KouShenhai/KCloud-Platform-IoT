@@ -33,8 +33,8 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  *
  * @author laokou
  */
-@Repository
 @Mapper
+@Repository
 public interface DictMapper extends CrudMapper<Long, Integer, DictTypeDO> {
 
 	List<DictTypeDO> selectPageByCondition(@Param(PAGE_QUERY) PageQuery pageQuery);

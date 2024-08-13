@@ -17,10 +17,8 @@
 
 package org.laokou.auth.gatewayimpl.database.dataobject;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.laokou.common.mybatisplus.handler.CryptoTypeHandler;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 import java.io.Serial;
@@ -42,7 +40,6 @@ public class UserDO extends BaseDO {
 	/**
 	 * 用户名.
 	 */
-	@TableField(value = "username", typeHandler = CryptoTypeHandler.class)
 	private String username;
 
 	/**
@@ -63,7 +60,6 @@ public class UserDO extends BaseDO {
 	/**
 	 * 邮箱.
 	 */
-	@TableField(value = "mail", typeHandler = CryptoTypeHandler.class)
 	private String mail;
 
 	/**
@@ -74,7 +70,23 @@ public class UserDO extends BaseDO {
 	/**
 	 * 手机号.
 	 */
-	@TableField(value = "mobile", typeHandler = CryptoTypeHandler.class)
 	private String mobile;
+
+	/**
+	 * 用户名短语.
+	 */
+	private String usernamePhrase;
+
+
+	/**
+	 * 邮箱短语.
+	 */
+	private String mailPhrase;
+
+
+	/**
+	 * 手机号短语.
+	 */
+	private String mobilePhrase;
 
 }

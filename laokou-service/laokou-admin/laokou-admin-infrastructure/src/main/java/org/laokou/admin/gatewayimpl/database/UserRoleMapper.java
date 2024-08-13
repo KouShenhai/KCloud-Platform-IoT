@@ -30,12 +30,13 @@ import java.util.List;
  *
  * @author laokou
  */
-@Repository
 @Mapper
+@Repository
 public interface UserRoleMapper extends CrudMapper<Long, Integer, UserRoleDO> {
 
 	/**
 	 * 根据用户ID查询角色IDS.
+	 *
 	 * @param userId 用户ID
 	 * @return 角色IDS
 	 */
@@ -43,6 +44,7 @@ public interface UserRoleMapper extends CrudMapper<Long, Integer, UserRoleDO> {
 
 	/**
 	 * 根据用户ID删除用户角色.
+	 *
 	 * @param userId 用户ID
 	 */
 	void deleteByUserId(@Param("userId") Long userId);
