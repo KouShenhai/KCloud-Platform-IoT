@@ -15,24 +15,11 @@
  *
  */
 
-package org.laokou.generator.gatewayimpl.database;
-
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.laokou.generator.gatewayimpl.database.dataobject.TableDO;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Set;
+package org.laokou.generator.factory;
 
 /**
  * @author laokou
  */
-@Repository
-@Mapper
-public interface TableMapper extends CrudMapper<Long, Integer, TableDO> {
-
-	List<TableDO> selectObjects(@Param("tableNames") Set<String> tableNames);
+public class GeneratorFactory {
 
 }

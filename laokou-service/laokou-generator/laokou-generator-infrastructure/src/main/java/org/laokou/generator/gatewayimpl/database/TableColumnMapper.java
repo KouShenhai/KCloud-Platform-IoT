@@ -20,7 +20,7 @@ package org.laokou.generator.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.laokou.generator.gatewayimpl.database.dataobject.TableDO;
+import org.laokou.generator.gatewayimpl.database.dataobject.TableColumnDO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,8 +31,8 @@ import java.util.Set;
  */
 @Repository
 @Mapper
-public interface TableMapper extends CrudMapper<Long, Integer, TableDO> {
+public interface TableColumnMapper extends CrudMapper<Long, Integer, TableColumnDO> {
 
-	List<TableDO> selectObjects(@Param("tableNames") Set<String> tableNames);
+	List<TableColumnDO> selectObjects(@Param("tableNames") Set<String> tableNames);
 
 }

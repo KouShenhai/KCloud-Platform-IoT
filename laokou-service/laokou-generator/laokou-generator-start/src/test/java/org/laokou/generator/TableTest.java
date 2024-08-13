@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.generator.ability.GeneratorDomainService;
+import org.laokou.generator.gatewayimpl.database.TableColumnMapper;
 import org.laokou.generator.gatewayimpl.database.TableMapper;
 import org.laokou.generator.gatewayimpl.database.dataobject.TableColumnDO;
 import org.laokou.generator.gatewayimpl.database.dataobject.TableDO;
@@ -44,17 +45,19 @@ class TableTest {
 
 	private final TableMapper tableMapper;
 
+	private final TableColumnMapper tableColumnMapper;
+
 	private final GeneratorDomainService generatorDomainService;
 
 	@Test
 	void testTable() {
-		List<TableDO> tables = tableMapper.selectObjs(Set.of("boot_sys_user"));
+		List<TableDO> tables = tableMapper.selectObjects(Set.of("boot_sys_user"));
 		log.info("获取表：{}", JacksonUtil.toJsonStr(tables));
 	}
 
 	@Test
 	void testTableColumn() {
-		List<TableColumnDO> tableColumns = tableMapper.selectColumns(Set.of("boot_sys_user"));
+		List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects(Set.of("boot_sys_user"));
 		log.info("获取字段：{}", JacksonUtil.toJsonStr(tableColumns));
 	}
 

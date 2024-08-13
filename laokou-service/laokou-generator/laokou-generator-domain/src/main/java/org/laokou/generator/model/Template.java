@@ -17,7 +17,9 @@
 
 package org.laokou.generator.model;
 
+import static org.laokou.common.i18n.common.constant.StringConstant.ROD;
 import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
+import static org.laokou.generator.model.Constant.*;
 
 public enum Template {
 
@@ -126,17 +128,17 @@ public enum Template {
 	CONVERTOR {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + SLASH + "convertor.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(String packageName, String moduleName) {
-			return "";
+			return moduleName + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + packageName + "/convertor";
 		}
 
 		@Override
 		public String getFileName(String className) {
-			return "";
+			return className + "Converter.java";
 		}
 	},
 
@@ -352,12 +354,13 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(String packageName, String moduleName) {
-			return moduleName + "/src/main/java/" + packageName + "/gatewayimpl/database/dataobject";
+			return moduleName + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + packageName
+					+ "/gatewayimpl/database/dataobject";
 		}
 
 		@Override
 		public String getFileName(String className) {
-			return "DO.java";
+			return className + "DO.java";
 		}
 	},
 
@@ -415,17 +418,17 @@ public enum Template {
 	CONTROLLER {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + SLASH + "controller.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(String packageName, String moduleName) {
-			return "";
+			return moduleName + ROD + COLA_ADAPTER + JAVA_PATH + packageName + "/web";
 		}
 
 		@Override
 		public String getFileName(String className) {
-			return "";
+			return className + "Controller.java";
 		}
 	},
 
@@ -449,17 +452,17 @@ public enum Template {
 	MAPPER {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + SLASH + "mapper.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(String packageName, String moduleName) {
-			return "";
+			return moduleName + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + packageName + "/gatewayimpl/database";
 		}
 
 		@Override
 		public String getFileName(String className) {
-			return "";
+			return className + "Mapper.java";
 		}
 	},
 

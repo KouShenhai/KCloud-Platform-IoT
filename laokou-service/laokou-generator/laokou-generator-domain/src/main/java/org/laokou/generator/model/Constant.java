@@ -15,24 +15,30 @@
  *
  */
 
-package org.laokou.generator.gatewayimpl.database;
-
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.laokou.generator.gatewayimpl.database.dataobject.TableDO;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Set;
+package org.laokou.generator.model;
 
 /**
  * @author laokou
  */
-@Repository
-@Mapper
-public interface TableMapper extends CrudMapper<Long, Integer, TableDO> {
+public final class Constant {
 
-	List<TableDO> selectObjects(@Param("tableNames") Set<String> tableNames);
+	public static final String JAVA_PATH = "/src/main/java/";
+
+	public static final String RESOURCE_PATH = "/src/main/resource/";
+
+	public static final String COLA_APP = "app";
+
+	public static final String COLA_DOMAIN = "domain";
+
+	public static final String COLA_ADAPTER = "adapter";
+
+	public static final String COLA_CLIENT = "client";
+
+	public static final String COLA_INFRASTRUCTURE = "infrastructure";
+
+	public static final String COLA_START = "start";
+
+	private Constant() {
+	}
 
 }

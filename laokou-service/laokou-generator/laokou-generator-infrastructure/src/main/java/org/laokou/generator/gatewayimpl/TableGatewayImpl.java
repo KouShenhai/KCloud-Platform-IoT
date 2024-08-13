@@ -20,6 +20,7 @@ package org.laokou.generator.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.generator.gateway.TableGateway;
+import org.laokou.generator.gatewayimpl.database.TableColumnMapper;
 import org.laokou.generator.gatewayimpl.database.TableMapper;
 import org.laokou.generator.gatewayimpl.database.dataobject.TableColumnDO;
 import org.laokou.generator.gatewayimpl.database.dataobject.TableDO;
@@ -46,9 +47,11 @@ public class TableGatewayImpl implements TableGateway {
 
 	private final TableMapper tableMapper;
 
+	private final TableColumnMapper tableColumnMapper;
+
 	public List<TableV> list(TableE tableE) {
-		List<TableDO> tables = tableMapper.selectObjs(tableE.getTables());
-		List<TableColumnDO> tableColumns = tableMapper.selectColumns(tableE.getTables());
+		List<TableDO> tables = tableMapper.selectObjects(tableE.getTables());
+		List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects(tableE.getTables());
 		Map<String, List<TableColumnDO>> cloumnMap = tableColumns.stream()
 			.collect(Collectors.groupingBy(TableColumnDO::getTableName));
 		Map<String, String> tableMap = tables.stream().collect(Collectors.toMap(TableDO::getName, TableDO::getComment));

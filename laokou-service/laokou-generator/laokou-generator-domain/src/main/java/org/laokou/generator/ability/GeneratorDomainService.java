@@ -49,7 +49,7 @@ public class GeneratorDomainService {
 	/**
 	 * 代码生成路径.
 	 */
-	private static final String SOURCE_PATH = "D:\\cola\\laokou";
+	private static final String SOURCE_PATH = "D:\\cola\\laokou-test";
 
 	/**
 	 * ZIP压缩路径.
@@ -107,35 +107,35 @@ public class GeneratorDomainService {
 
 	private List<Template> getTemplates() {
 		List<Template> templates = new ArrayList<>(29);
-		templates.add(Template.SAVE_CMD);
-		templates.add(Template.MODIFY_CMD);
-		templates.add(Template.REMOVE_CMD);
-		templates.add(Template.PAGE_QRY);
-		templates.add(Template.GET_QRY);
-		templates.add(Template.IMPORT_CMD);
-		templates.add(Template.EXPORT_CMD);
+		// templates.add(Template.SAVE_CMD);
+		// templates.add(Template.MODIFY_CMD);
+		// templates.add(Template.REMOVE_CMD);
+		// templates.add(Template.PAGE_QRY);
+		// templates.add(Template.GET_QRY);
+		// templates.add(Template.IMPORT_CMD);
+		// templates.add(Template.EXPORT_CMD);
 		templates.add(Template.CONVERTOR);
-		templates.add(Template.SAVE_CMD_EXE);
-		templates.add(Template.MODIFY_CMD_EXE);
-		templates.add(Template.REMOVE_CMD_EXE);
-		templates.add(Template.PAGE_QRY_EXE);
-		templates.add(Template.GET_QRY_EXE);
-		templates.add(Template.IMPORT_CMD_EXE);
-		templates.add(Template.EXPORT_CMD_EXE);
-		templates.add(Template.ENTITY);
-		templates.add(Template.SERVICE_I);
-		templates.add(Template.SERVICE_IMPL);
-		templates.add(Template.DOMAIN_SERVICE);
+		// templates.add(Template.SAVE_CMD_EXE);
+		// templates.add(Template.MODIFY_CMD_EXE);
+		// templates.add(Template.REMOVE_CMD_EXE);
+		// templates.add(Template.PAGE_QRY_EXE);
+		// templates.add(Template.GET_QRY_EXE);
+		// templates.add(Template.IMPORT_CMD_EXE);
+		// templates.add(Template.EXPORT_CMD_EXE);
+		// templates.add(Template.ENTITY);
+		// templates.add(Template.SERVICE_I);
+		// templates.add(Template.SERVICE_IMPL);
+		// templates.add(Template.DOMAIN_SERVICE);
 		templates.add(Template.DO);
-		templates.add(Template.CO);
-		templates.add(Template.GATEWAY);
-		templates.add(Template.GATEWAY_IMPL);
+		// templates.add(Template.CO);
+		// templates.add(Template.GATEWAY);
+		// templates.add(Template.GATEWAY_IMPL);
 		templates.add(Template.CONTROLLER);
 		templates.add(Template.MAPPER);
-		templates.add(Template.MAPPER_XML);
-		templates.add(Template.API);
-		templates.add(Template.VIEW);
-		templates.add(Template.FORM_VIEW);
+		// templates.add(Template.MAPPER_XML);
+		// templates.add(Template.API);
+		// templates.add(Template.VIEW);
+		// templates.add(Template.FORM_VIEW);
 		return templates;
 	}
 
