@@ -24,6 +24,8 @@ import org.laokou.common.i18n.dto.AggregateRoot;
 
 import java.util.Map;
 
+import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
+
 /**
  * @author laokou
  */
@@ -40,7 +42,7 @@ public class GeneratorA extends AggregateRoot<Long> {
 
 	private final TableE tableE;
 
-	private volatile TableV tableV;
+	private TableV tableV;
 
 	public GeneratorA(String author, String packageName, String moduleName, String version, TableE tableE) {
 		this.id = IdGenerator.defaultSnowflakeId();
@@ -49,6 +51,10 @@ public class GeneratorA extends AggregateRoot<Long> {
 		this.moduleName = moduleName;
 		this.version = version;
 		this.tableE = tableE;
+	}
+
+	public String getPackagePath() {
+		return packageName.replaceAll("\\.", SLASH) + SLASH + tableV.instanceName();
 	}
 
 	public void updateTable(TableV tableV) {

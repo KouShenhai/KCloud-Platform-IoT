@@ -66,32 +66,33 @@ public class GeneratorDomainService {
 	private final Executor executor;
 
 	public void generateCode(GeneratorA generatorA) {
-		// 表字段
+		// 表信息
 		List<TableV> tables = tableGateway.list(generatorA.getTableE());
 		// 模板
-		List<Template> templates = getTemplate();
+		List<Template> templates = getTemplates();
 		// 生成代码
 		generateCode(generatorA, tables, templates);
 	}
 
 	private void generateCode(GeneratorA generatorA, List<TableV> tables, List<Template> templates) {
-		// 生成到本地指定目录【临时】
+		// 生成到本地指定目录【临时文件】
 		tables.forEach(item -> generateCode(generatorA, item, templates));
 		// ZIP压缩到指定目录
 		FileUtil.zip(SOURCE_PATH, TARGET_PATH);
-		// 删除临时文件
+		// 删除【临时文件】
 		FileUtil.deleteFile(SOURCE_PATH);
 	}
 
 	private void generateCode(GeneratorA generatorA, TableV tableV, List<Template> templates) {
+		// 更新表信息
+		generatorA.updateTable(tableV);
+		// 根据模板批量生成代码
 		templates.parallelStream().map(item -> CompletableFuture.runAsync(() -> {
-			generatorA.updateTable(tableV);
 			String content = getContent(generatorA.toMap(), item.getTemplatePath(TEMPLATE_PATH));
 			// 写入文件
-			File file = FileUtil.createFile(
-					SOURCE_PATH + SLASH
-							+ item.getFileDirectory(generatorA.getPackageName(), generatorA.getModuleName()),
-					item.getFileName(tableV.className()));
+			String directory = SOURCE_PATH + SLASH
+					+ item.getFileDirectory(generatorA.getPackagePath(), generatorA.getModuleName());
+			File file = FileUtil.createFile(directory, item.getFileName(tableV.className()));
 			FileUtil.write(file, content.getBytes(StandardCharsets.UTF_8));
 		}, executor)).toList().forEach(CompletableFuture::join);
 	}
@@ -102,10 +103,6 @@ public class GeneratorDomainService {
 			String template = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 			return TemplateUtil.getContent(template, map);
 		}
-	}
-
-	private List<Template> getTemplate() {
-		return List.of(Template.DO);
 	}
 
 	private List<Template> getTemplates() {

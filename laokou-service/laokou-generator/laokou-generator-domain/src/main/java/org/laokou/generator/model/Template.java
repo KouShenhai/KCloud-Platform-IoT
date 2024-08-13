@@ -352,8 +352,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(String packageName, String moduleName) {
-			return moduleName + "/src/main/java/" + packageName.replaceAll("\\.", SLASH)
-					+ "/gatewayimpl/database/dataobject";
+			return moduleName + "/src/main/java/" + packageName + "/gatewayimpl/database/dataobject";
 		}
 
 		@Override
