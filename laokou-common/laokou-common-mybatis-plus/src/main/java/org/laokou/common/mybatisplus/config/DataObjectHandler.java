@@ -40,8 +40,8 @@ public class DataObjectHandler implements MetaObjectHandler {
 		UserContextHolder.User user = UserContextHolder.get();
 		this.strictInsertFill(metaObject, CREATOR, user::getId, Long.class);
 		this.strictInsertFill(metaObject, EDITOR, user::getId, Long.class);
-		this.strictInsertFill(metaObject, CREATE_DATE, DateUtil::nowInstant, Instant.class);
-		this.strictInsertFill(metaObject, UPDATE_DATE, DateUtil::nowInstant, Instant.class);
+		this.strictInsertFill(metaObject, CREATE_TIME, DateUtil::nowInstant, Instant.class);
+		this.strictInsertFill(metaObject, UPDATE_TIME, DateUtil::nowInstant, Instant.class);
 		this.strictInsertFill(metaObject, DEL_FLAG, () -> 0, Integer.class);
 		this.strictInsertFill(metaObject, VERSION, () -> 0, Integer.class);
 		this.strictInsertFill(metaObject, DEPT_ID, user::getDeptId, Long.class);
@@ -53,7 +53,7 @@ public class DataObjectHandler implements MetaObjectHandler {
 	public void updateFill(MetaObject metaObject) {
 		UserContextHolder.User user = UserContextHolder.get();
 		this.strictUpdateFill(metaObject, EDITOR, user::getId, Long.class);
-		this.strictUpdateFill(metaObject, UPDATE_DATE, DateUtil::nowInstant, Instant.class);
+		this.strictUpdateFill(metaObject, UPDATE_TIME, DateUtil::nowInstant, Instant.class);
 	}
 
 }

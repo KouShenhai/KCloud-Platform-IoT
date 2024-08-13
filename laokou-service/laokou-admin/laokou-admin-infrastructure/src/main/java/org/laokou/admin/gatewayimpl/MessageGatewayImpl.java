@@ -141,7 +141,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		MessageDetailDO messageDetailDO = new MessageDetailDO();
 		messageDetailDO.setUserId(Long.parseLong(userId));
 		messageDetailDO.setId(IdGenerator.defaultSnowflakeId());
-		messageDetailDO.setCreateDate(DateUtil.nowInstant());
+		messageDetailDO.setCreateTime(DateUtil.nowInstant());
 		messageDetailDO.setCreator(UserUtil.getUserId());
 		messageDetailDO.setEditor(UserUtil.getUserId());
 		messageDetailDO.setDeptId(UserUtil.getDeptId());

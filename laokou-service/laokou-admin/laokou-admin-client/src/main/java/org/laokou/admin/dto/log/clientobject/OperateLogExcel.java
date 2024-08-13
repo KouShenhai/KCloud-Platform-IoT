@@ -128,11 +128,11 @@ public class OperateLogExcel implements Serializable {
 	private String errorMessage;
 
 	@ColumnWidth(40)
-	@Schema(name = "createDate", description = "创建时间")
+	@Schema(name = "创建时间", description = "创建时间")
 	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
 			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
 	@ExcelProperty(value = "操作时间", index = 13)
-	private Instant createDate;
+	private Instant createTime;
 
 	@ColumnWidth(40)
 	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")

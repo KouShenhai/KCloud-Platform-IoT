@@ -4,8 +4,8 @@ create table if not exists public.boot_domain_event
 		primary key,
 	creator      bigint        default 0,
 	editor       bigint        default 0,
-	create_date  timestamp(6)  default CURRENT_TIMESTAMP not null,
-	update_date  timestamp(6)  default CURRENT_TIMESTAMP not null,
+	create_time  timestamp(6)  default CURRENT_TIMESTAMP not null,
+	update_time  timestamp(6)  default CURRENT_TIMESTAMP not null,
 	del_flag     smallint      default 0                 not null,
 	version      integer       default 0                 not null,
 	dept_id      bigint        default 0,
@@ -28,9 +28,9 @@ comment on column public.boot_domain_event.creator is '创建人';
 
 comment on column public.boot_domain_event.editor is '编辑人';
 
-comment on column public.boot_domain_event.create_date is '创建时间';
+comment on column public.boot_domain_event.create_time is '创建时间';
 
-comment on column public.boot_domain_event.update_date is '修改时间';
+comment on column public.boot_domain_event.update_time is '修改时间';
 
 comment on column public.boot_domain_event.del_flag is '删除标识 0未删除 1已删除';
 

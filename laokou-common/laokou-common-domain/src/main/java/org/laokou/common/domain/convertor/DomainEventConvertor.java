@@ -30,8 +30,8 @@ public class DomainEventConvertor {
 		domainEventDO.setId(domainEventA.getId());
 		domainEventDO.setCreator(domainEventA.getCreator());
 		domainEventDO.setEditor(domainEventA.getEditor());
-		domainEventDO.setCreateDate(domainEventA.getCreateDate());
-		domainEventDO.setUpdateDate(domainEventA.getUpdateDate());
+		domainEventDO.setCreateTime(domainEventA.getCreateTime());
+		domainEventDO.setUpdateTime(domainEventA.getUpdateTime());
 		domainEventDO.setDeptId(domainEventA.getDeptId());
 		domainEventDO.setDeptPath(domainEventA.getDeptPath());
 		domainEventDO.setTenantId(domainEventA.getTenantId());

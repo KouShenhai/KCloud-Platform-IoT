@@ -72,7 +72,7 @@ public class OperateLogCO extends ClientObject {
 	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
 	private Long takeTime;
 
-	@Schema(name = "createDate", description = "创建时间")
-	private Instant createDate;
+	@Schema(name = "创建时间", description = "创建时间")
+	private Instant createTime;
 
 }

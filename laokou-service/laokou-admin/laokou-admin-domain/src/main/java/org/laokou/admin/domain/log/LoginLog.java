@@ -53,7 +53,7 @@ public class LoginLog {
 	@Schema(name = "type", description = "登录类型")
 	private String type;
 
-	@Schema(name = "createDate", description = "创建时间")
-	private Instant createDate;
+	@Schema(name = "创建时间", description = "创建时间")
+	private Instant createTime;
 
 }

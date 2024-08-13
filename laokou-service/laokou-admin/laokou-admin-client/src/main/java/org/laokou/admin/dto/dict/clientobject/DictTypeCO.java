@@ -45,7 +45,7 @@ public class DictTypeCO extends ClientObject {
 	@Schema(name = "remark", description = "字典备注")
 	private String remark;
 
-	@Schema(name = "createDate", description = "创建时间")
-	private Instant createDate;
+	@Schema(name = "创建时间", description = "创建时间")
+	private Instant createTime;
 
 }

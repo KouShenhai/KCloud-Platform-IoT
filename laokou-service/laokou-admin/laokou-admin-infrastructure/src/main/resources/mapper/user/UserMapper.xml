@@ -20,74 +20,76 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.UserMapper">
 
-    <sql id="columns">
-        `id`,
-        creator,
-        editor,
-        create_date,
-        update_date,
-        dept_id,
-        dept_path,
-        tenant_id,
-        username,
-        `password`
-    </sql>
+  <sql id="columns">
+    `id`,
+    creator,
+    editor,
+    create_time,
+    update_time,
+    dept_id,
+    dept_path,
+    tenant_id,
+    username,
+    `password`
+  </sql>
 
-    <insert id="insertObj" useGeneratedKeys="false">
-        insert into boot_sys_user(<include refid="columns"/>)
-        values (
-        #{user.id},
-        #{user.creator},
-        #{user.editor},
-        #{user.createDate},
-        #{user.updateDate},
-        #{user.deptId},
-        #{user.deptPath},
-        #{user.tenantId},
-        aes_encrypt(#{user.username}, #{secretKey}),
-        #{user.password}
-        )
-    </insert>
+  <insert id="insertObj" useGeneratedKeys="false">
+    insert into boot_sys_user(<include refid="columns"/>)
+    values (
+    #{user.id},
+    #{user.creator},
+    #{user.editor},
+    #{user.createTime},
+    #{user.updateTime},
+    #{user.deptId},
+    #{user.deptPath},
+    #{user.tenantId},
+    aes_encrypt(#{user.username}, #{secretKey}),
+    #{user.password}
+    )
+  </insert>
 
-    <select id="selectOptionList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
-        select id
-        ,aes_decrypt(`username`, #{secretKey}) as `username`
-        from boot_sys_user
-        where del_flag = 0
-        and `status` = 0
-        order by id desc
-    </select>
-    <select id="selectListByCondition" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
-        select id
-        ,aes_decrypt(`username`, #{secretKey}) as `username`
-        ,super_admin
-        ,create_date
-        ,avatar
-        ,`status`
-        FROM boot_sys_user
-        where del_flag = 0
-        and create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
-        <if test="user.username != null and user.username != ''">
-            and aes_decrypt(`username`, #{secretKey}) like #{user.username}
-        </if>
-        order by id desc
-        limit ${pageQuery.pageIndex},${pageQuery.pageSize}
-    </select>
-    <select id="selectCountByCondition" resultType="long">
-        select count(1) as num
-        FROM boot_sys_user
-        where del_flag = 0
-        and create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
-        <if test="user.username != null and user.username != ''">
-            and aes_decrypt(`username`, #{secretKey}) like #{user.username}
-        </if>
-    </select>
-    <select id="selectUsernameCount" resultType="long">
-        select count(1)
-        from boot_sys_user
-        where aes_decrypt(`username`, #{secretKey}) = #{username}
-    </select>
-    <select id="selectVersion" resultType="integer">
-        select version from boot_sys_user where id = #{id}
-    </select>
+  <select id="selectOptionList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
+    select id
+    , aes_decrypt(` username `, #{secretKey}) as `username`
+    from boot_sys_user
+    where del_flag = 0
+    and ` status ` = 0
+    order by id desc
+  </select>
+  <select id="selectListByCondition" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
+    select id
+    ,aes_decrypt(`username`, #{secretKey}) as `username`
+    ,super_admin
+    ,create_time
+    ,avatar
+    ,`status`
+    FROM boot_sys_user
+    where del_flag = 0
+    and create_time between #{pageQuery.startTime} and #{pageQuery.endTime}
+    <if test="user.username != null and user.username != ''">
+      and aes_decrypt(`username`, #{secretKey}) like #{user.username}
+    </if>
+    order by id desc
+    limit ${pageQuery.pageIndex},${pageQuery.pageSize}
+  </select>
+  <select id="selectCountByCondition" resultType="long">
+    select count(1) as num
+    FROM boot_sys_user
+    where del_flag = 0
+    and create_time between #{pageQuery.startTime} and #{pageQuery.endTime}
+    <if test="user.username != null and user.username != ''">
+      and aes_decrypt(`username`, #{secretKey}) like #{user.username}
+    </if>
+  </select>
+  <select id="selectUsernameCount" resultType="long">
+    select count(1)
+    from boot_sys_user
+    where aes_decrypt(` username `, #{secretKey}) = #{username}
+  </select>
+  <select id="selectVersion" resultType="integer">
+    select version
+    from boot_sys_user
+    where id = #{id}
+  </select>
 </mapper>

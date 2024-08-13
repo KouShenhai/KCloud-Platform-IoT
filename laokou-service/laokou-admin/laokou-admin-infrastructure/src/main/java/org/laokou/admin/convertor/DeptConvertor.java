@@ -49,8 +49,8 @@ public class DeptConvertor {
 		deptDO.setId(dept.getId());
 		deptDO.setCreator(dept.getCreator());
 		deptDO.setEditor(dept.getEditor());
-		deptDO.setCreateDate(dept.getCreateDate());
-		deptDO.setUpdateDate(dept.getUpdateDate());
+		deptDO.setCreateTime(dept.getCreateTime());
+		deptDO.setUpdateTime(dept.getUpdateTime());
 		deptDO.setDeptId(dept.getDeptId());
 		deptDO.setDeptPath(dept.getDeptPath());
 		deptDO.setTenantId(dept.getTenantId());

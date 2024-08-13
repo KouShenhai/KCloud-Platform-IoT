@@ -41,8 +41,8 @@ public class MessageCO extends ClientObject {
 	@Schema(name = "content", description = "消息内容")
 	private String content;
 
-	@Schema(name = "createDate", description = "创建时间")
-	private Instant createDate;
+	@Schema(name = "创建时间", description = "创建时间")
+	private Instant createTime;
 
 	@Schema(name = "type", description = "消息类型 0通知 1提醒")
 	private Integer type;

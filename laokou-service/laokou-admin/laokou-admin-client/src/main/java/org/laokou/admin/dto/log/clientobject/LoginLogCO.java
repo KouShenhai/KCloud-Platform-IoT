@@ -58,6 +58,6 @@ public class LoginLogCO extends ClientObject {
 	private String type;
 
 	@Schema(name = "创建时间", description = "创建时间")
-	private Instant createDate;
+	private Instant createTime;
 
 }

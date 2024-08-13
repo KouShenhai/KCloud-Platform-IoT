@@ -4,8 +4,8 @@ create table if not exists public.boot_sys_dept
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    smallint      default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -25,9 +25,9 @@ comment on column public.boot_sys_dept.creator is '创建人';
 
 comment on column public.boot_sys_dept.editor is '编辑人';
 
-comment on column public.boot_sys_dept.create_date is '创建时间';
+comment on column public.boot_sys_dept.create_time is '创建时间';
 
-comment on column public.boot_sys_dept.update_date is '修改时间';
+comment on column public.boot_sys_dept.update_time is '修改时间';
 
 comment on column public.boot_sys_dept.del_flag is '删除标识 0未删除 1已删除';
 
@@ -50,47 +50,47 @@ comment on column public.boot_sys_dept.sort is '部门排序';
 alter table public.boot_sys_dept
 	owner to root;
 
-INSERT INTO public.boot_sys_dept (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_dept (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, name, path, sort)
 VALUES (1535858679453085698, 1341620898007281665, 1341620898007281665, '2022-11-02 22:35:30.000000',
 		'2023-09-22 11:31:42.000000', 0, 4, 1535887940687765505, '0,1535887940687765505', 0, 1535887940687765505,
 		'广州分公司', '0,1535887940687765505,1535858679453085698', 666);
-INSERT INTO public.boot_sys_dept (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_dept (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, name, path, sort)
 VALUES (1535881356595175426, 1341620898007281665, 1341620898007281665, '2022-11-02 22:35:30.000000',
 		'2023-09-22 11:31:42.000000', 0, 18, 1535887940687765505, '0,1535887940687765505', 0, 1535887940687765505,
 		'长沙分公司', '0,1535887940687765505,1535881356595175426', 111);
-INSERT INTO public.boot_sys_dept (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_dept (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, name, path, sort)
 VALUES (1535887129341599746, 1341620898007281665, 1341620898007281665, '2022-11-02 22:35:30.000000',
 		'2023-09-22 11:31:42.000000', 0, 8, 1535887940687765505, '0,1535887940687765505', 0, 1535887940687765505,
 		'深圳分公司', '0,1535887940687765505,1535887129341599746', 888);
-INSERT INTO public.boot_sys_dept (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_dept (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, name, path, sort)
 VALUES (1535887940687765505, 1341620898007281665, 1341620898007281665, '2022-11-16 12:12:55.000000',
 		'2023-09-22 11:31:42.000000', 0, 38, 1535887940687765505, '0,1535887940687765505', 0, 0, '老寇云集团',
 		'0,1535887940687765505', 1000);
-INSERT INTO public.boot_sys_dept (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_dept (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, name, path, sort)
 VALUES (1584488175088373761, 1341620898007281665, 1341620898007281665, '2022-11-02 22:35:30.000000',
 		'2023-09-22 11:31:42.000000', 0, 43, 1535887940687765505, '0,1535887940687765505', 0, 1535881356595175426,
 		'研发部', '0,1535887940687765505,1535881356595175426,1584488175088373761', 20);
-INSERT INTO public.boot_sys_dept (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_dept (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, name, path, sort)
 VALUES (1584488411756171265, 1341620898007281665, 1341620898007281665, '2022-11-02 22:35:30.000000',
 		'2023-09-22 11:31:42.000000', 0, 9, 1535887940687765505, '0,1535887940687765505', 0, 1535881356595175426,
 		'市场部', '0,1535887940687765505,1535881356595175426,1584488411756171265', 10);
-INSERT INTO public.boot_sys_dept (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_dept (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, name, path, sort)
 VALUES (1584488411756171266, 1341620898007281665, 1341620898007281665, '2022-11-02 22:35:30.000000',
 		'2023-09-22 11:31:42.000000', 0, 19, 1535887940687765505, '0,1535887940687765505', 0, 1584488175088373761,
 		'开发组', '0,1535887940687765505,1535881356595175426,1584488175088373761,1584488411756171266', 15);
-INSERT INTO public.boot_sys_dept (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_dept (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, name, path, sort)
 VALUES (1584488411756171268, 1341620898007281665, 1341620898007281665, '2023-02-10 22:01:36.000000',
 		'2023-09-22 11:31:42.000000', 0, 9, 1535887940687765505, '0,1535887940687765505', 0, 1584488175088373761,
 		'运维组', '0,1535887940687765505,1535881356595175426,1584488175088373761,1584488411756171268', 5);
-INSERT INTO public.boot_sys_dept (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_dept (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, name, path, sort)
 VALUES (1584488411756171269, 1341620898007281665, 1341620898007281665, '2023-02-10 22:06:44.000000',
 		'2023-09-22 11:31:42.000000', 0, 8, 1535887940687765505, '0,1535887940687765505', 0, 1584488175088373761,
@@ -102,8 +102,8 @@ create table if not exists public.boot_sys_dict_item
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    smallint      default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -125,9 +125,9 @@ comment on column public.boot_sys_dict_item.creator is '创建人';
 
 comment on column public.boot_sys_dict_item.editor is '编辑人';
 
-comment on column public.boot_sys_dict_item.create_date is '创建时间';
+comment on column public.boot_sys_dict_item.create_time is '创建时间';
 
-comment on column public.boot_sys_dict_item.update_date is '修改时间';
+comment on column public.boot_sys_dict_item.update_time is '修改时间';
 
 comment on column public.boot_sys_dict_item.del_flag is '删除标识 0未删除 1已删除';
 
@@ -160,8 +160,8 @@ create table if not exists public.boot_sys_dict_type
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    smallint      default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -181,9 +181,9 @@ comment on column public.boot_sys_dict_type.creator is '创建人';
 
 comment on column public.boot_sys_dict_type.editor is '编辑人';
 
-comment on column public.boot_sys_dict_type.create_date is '创建时间';
+comment on column public.boot_sys_dict_type.create_time is '创建时间';
 
-comment on column public.boot_sys_dict_type.update_date is '修改时间';
+comment on column public.boot_sys_dict_type.update_time is '修改时间';
 
 comment on column public.boot_sys_dict_type.del_flag is '删除标识 0未删除 1已删除';
 
@@ -211,7 +211,7 @@ create unique index if not exists type_tenant_id_idx
 
 comment on index public.type_tenant_id_idx is '类型_租户ID_唯一索引';
 
-INSERT INTO public.boot_sys_dict_type (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_dict_type (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, name, type, remark, status)
 VALUES (1, 1341620898007281665, 1341620898007281665, '2024-05-09 00:15:30.000000', '2024-05-09 00:15:40.000000', 0, 0,
 		1535887940687765505, '0/1535887940687765505', 0, 'dict-type.manage.name.menu.show-hide', 'sys_menu_show_hide',
@@ -223,8 +223,8 @@ create table if not exists public.boot_sys_i18n_message
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    smallint      default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -243,9 +243,9 @@ comment on column public.boot_sys_i18n_message.creator is '创建人';
 
 comment on column public.boot_sys_i18n_message.editor is '编辑人';
 
-comment on column public.boot_sys_i18n_message.create_date is '创建时间';
+comment on column public.boot_sys_i18n_message.create_time is '创建时间';
 
-comment on column public.boot_sys_i18n_message.update_date is '修改时间';
+comment on column public.boot_sys_i18n_message.update_time is '修改时间';
 
 comment on column public.boot_sys_i18n_message.del_flag is '删除标识 0未删除 1已删除';
 
@@ -271,19 +271,19 @@ create index if not exists code_tenant_id_idx
 
 comment on index public.code_tenant_id_idx is '编码_租户ID_唯一索引';
 
-INSERT INTO public.boot_sys_i18n_message (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_i18n_message (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, code, zh_message, en_message)
 VALUES (1, 1341620898007281665, 1341620898007281665, '2024-05-07 10:45:30.000000', '2024-05-07 10:45:37.000000', 0, 0,
 		1535887940687765505, '0/1535887940687765505', 0, 'sys.manage', '系统管理', 'System Management');
-INSERT INTO public.boot_sys_i18n_message (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_i18n_message (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, code, zh_message, en_message)
 VALUES (2, 1341620898007281665, 1341620898007281665, '2024-05-07 10:45:30.000000', '2024-05-07 10:45:37.000000', 0, 0,
 		1535887940687765505, '0/1535887940687765505', 0, 'menu.manage', '菜单管理', 'Menu Management');
-INSERT INTO public.boot_sys_i18n_message (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_i18n_message (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, code, zh_message, en_message)
 VALUES (3, 1341620898007281665, 1341620898007281665, '2024-05-07 10:45:30.000000', '2024-05-07 10:45:37.000000', 0, 0,
 		1535887940687765505, '0/1535887940687765505', 0, 'menu.manage.query', '查询', 'Query');
-INSERT INTO public.boot_sys_i18n_message (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_i18n_message (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, code, zh_message, en_message)
 VALUES (4, 1341620898007281665, 1341620898007281665, '2024-05-07 10:45:30.000000', '2024-05-07 10:45:37.000000', 0, 0,
 		1535887940687765505, '0/1535887940687765505', 0, 'dict.manage', '字典管理', 'Dictionary Management');
@@ -294,8 +294,8 @@ create table if not exists public.boot_sys_ip
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    smallint      default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -313,9 +313,9 @@ comment on column public.boot_sys_ip.creator is '创建人';
 
 comment on column public.boot_sys_ip.editor is '编辑人';
 
-comment on column public.boot_sys_ip.create_date is '创建时间';
+comment on column public.boot_sys_ip.create_time is '创建时间';
 
-comment on column public.boot_sys_ip.update_date is '修改时间';
+comment on column public.boot_sys_ip.update_time is '修改时间';
 
 comment on column public.boot_sys_ip.del_flag is '删除标识 0未删除 1已删除';
 
@@ -343,8 +343,8 @@ create table if not exists public.boot_sys_login_log
 		primary key,
 	creator       bigint        default 0,
 	editor        bigint        default 0,
-	create_date   timestamp(6)  default CURRENT_TIMESTAMP not null,
-	update_date   timestamp(6)  default CURRENT_TIMESTAMP not null,
+	create_time   timestamp(6)  default CURRENT_TIMESTAMP not null,
+	update_time   timestamp(6)  default CURRENT_TIMESTAMP not null,
 	del_flag      smallint      default 0                 not null,
 	version       integer       default 0                 not null,
 	dept_id       bigint        default 0,
@@ -368,9 +368,9 @@ comment on column public.boot_sys_login_log.creator is '创建人';
 
 comment on column public.boot_sys_login_log.editor is '编辑人';
 
-comment on column public.boot_sys_login_log.create_date is '创建时间';
+comment on column public.boot_sys_login_log.create_time is '创建时间';
 
-comment on column public.boot_sys_login_log.update_date is '修改时间';
+comment on column public.boot_sys_login_log.update_time is '修改时间';
 
 comment on column public.boot_sys_login_log.del_flag is '删除标识 0未删除 1已删除';
 
@@ -407,8 +407,8 @@ create table if not exists public.boot_sys_menu
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    smallint      default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -434,9 +434,9 @@ comment on column public.boot_sys_menu.creator is '创建人';
 
 comment on column public.boot_sys_menu.editor is '编辑人';
 
-comment on column public.boot_sys_menu.create_date is '创建时间';
+comment on column public.boot_sys_menu.create_time is '创建时间';
 
-comment on column public.boot_sys_menu.update_date is '修改时间';
+comment on column public.boot_sys_menu.update_time is '修改时间';
 
 comment on column public.boot_sys_menu.del_flag is '删除标识 0未删除 1已删除';
 
@@ -471,27 +471,27 @@ comment on column public.boot_sys_menu.url is '菜单链接';
 alter table public.boot_sys_menu
 	owner to root;
 
-INSERT INTO public.boot_sys_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, permission, type, name, path, icon, sort, hidden, status, url)
 VALUES (1, 1, 1, '2024-06-04 17:20:42.000000', '2024-06-04 17:20:46.000000', 0, 0, 1, '0,1', 0, 0, null, 0, '系统管理',
 		null, 'sys', 9000, 0, 0, null);
-INSERT INTO public.boot_sys_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, permission, type, name, path, icon, sort, hidden, status, url)
 VALUES (2, 1, 1, '2024-06-04 17:27:14.000000', '2024-06-04 17:27:12.000000', 0, 0, 1, '0,1', 0, 1, null, 0, '菜单管理',
 		null, 'sys', 900, 0, 0, null);
-INSERT INTO public.boot_sys_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, permission, type, name, path, icon, sort, hidden, status, url)
 VALUES (4, 1, 1, '2024-06-04 17:27:14.000000', '2024-06-04 17:27:12.000000', 0, 0, 1, '0,1', 0, 2, 'menu:save', 1,
 		'新增', null, 'sys', 30, 0, 0, null);
-INSERT INTO public.boot_sys_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, permission, type, name, path, icon, sort, hidden, status, url)
 VALUES (5, 1, 1, '2024-06-04 17:27:14.000000', '2024-06-04 17:27:12.000000', 0, 0, 1, '0,1', 0, 2, 'menu:modify', 1,
 		'修改', null, 'sys', 20, 0, 0, null);
-INSERT INTO public.boot_sys_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, permission, type, name, path, icon, sort, hidden, status, url)
 VALUES (3, 1, 1, '2024-06-04 17:27:14.000000', '2024-06-04 17:27:12.000000', 0, 0, 1, '0,1', 0, 2, 'menu:list', 1,
 		'查询', null, 'sys', 40, 0, 0, null);
-INSERT INTO public.boot_sys_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, pid, permission, type, name, path, icon, sort, hidden, status, url)
 VALUES (6, 1, 1, '2024-06-04 17:27:14.000000', '2024-06-04 17:27:12.000000', 0, 0, 1, '0,1', 0, 2, 'menu:remove', 1,
 		'删除', null, 'sys', 10, 0, 0, null);
@@ -502,8 +502,8 @@ create table if not exists public.boot_sys_message
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    smallint      default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -522,9 +522,9 @@ comment on column public.boot_sys_message.creator is '创建人';
 
 comment on column public.boot_sys_message.editor is '编辑人';
 
-comment on column public.boot_sys_message.create_date is '创建时间';
+comment on column public.boot_sys_message.create_time is '创建时间';
 
-comment on column public.boot_sys_message.update_date is '修改时间';
+comment on column public.boot_sys_message.update_time is '修改时间';
 
 comment on column public.boot_sys_message.del_flag is '删除标识 0未删除 1已删除';
 
@@ -551,8 +551,8 @@ create table if not exists public.boot_sys_message_detail
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    smallint      default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -571,9 +571,9 @@ comment on column public.boot_sys_message_detail.creator is '创建人';
 
 comment on column public.boot_sys_message_detail.editor is '编辑人';
 
-comment on column public.boot_sys_message_detail.create_date is '创建时间';
+comment on column public.boot_sys_message_detail.create_time is '创建时间';
 
-comment on column public.boot_sys_message_detail.update_date is '修改时间';
+comment on column public.boot_sys_message_detail.update_time is '修改时间';
 
 comment on column public.boot_sys_message_detail.del_flag is '删除标识 0未删除 1已删除';
 
@@ -603,8 +603,8 @@ create table if not exists public.boot_sys_operate_log
 		primary key,
 	creator        bigint        default 0                      not null,
 	editor         bigint        default 0                      not null,
-	create_date    timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date    timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time    timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time    timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag       smallint      default 0                      not null,
 	version        integer       default 0                      not null,
 	dept_id        bigint        default 0                      not null,
@@ -633,9 +633,9 @@ comment on column public.boot_sys_operate_log.creator is '创建人';
 
 comment on column public.boot_sys_operate_log.editor is '编辑人';
 
-comment on column public.boot_sys_operate_log.create_date is '创建时间';
+comment on column public.boot_sys_operate_log.create_time is '创建时间';
 
-comment on column public.boot_sys_operate_log.update_date is '修改时间';
+comment on column public.boot_sys_operate_log.update_time is '修改时间';
 
 comment on column public.boot_sys_operate_log.del_flag is '删除标识 0未删除 1已删除';
 
@@ -682,8 +682,8 @@ create table if not exists public.boot_sys_oss
 		primary key,
 	creator                   bigint        default 0                      not null,
 	editor                    bigint        default 0                      not null,
-	create_date               timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date               timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time               timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time               timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag                  smallint      default 0                      not null,
 	version                   integer       default 0                      not null,
 	dept_id                   bigint        default 0                      not null,
@@ -706,9 +706,9 @@ comment on column public.boot_sys_oss.creator is '创建人';
 
 comment on column public.boot_sys_oss.editor is '编辑人';
 
-comment on column public.boot_sys_oss.create_date is '创建时间';
+comment on column public.boot_sys_oss.create_time is '创建时间';
 
-comment on column public.boot_sys_oss.update_date is '修改时间';
+comment on column public.boot_sys_oss.update_time is '修改时间';
 
 comment on column public.boot_sys_oss.del_flag is '删除标识 0未删除 1已删除';
 
@@ -737,13 +737,13 @@ comment on column public.boot_sys_oss.path_style_access_enabled is '路径样式
 alter table public.boot_sys_oss
 	owner to root;
 
-INSERT INTO public.boot_sys_oss (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_oss (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								 tenant_id, name, endpoint, region, access_key, secret_key, bucket_name,
 								 path_style_access_enabled)
 VALUES (1, 1341620898007281665, 1341620898007281665, '2023-01-05 16:36:37.000000', '2023-09-18 15:15:05.000000', 0, 32,
 		1535881356595175426, '0,1535887940687765505,1535881356595175426', 0, 'Minio OSS', 'http://127.0.0.1:9000',
 		'Shenzhen', 'minioadmin', 'minioadmin', 'laokou-minio-bucket', 1);
-INSERT INTO public.boot_sys_oss (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_oss (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								 tenant_id, name, endpoint, region, access_key, secret_key, bucket_name,
 								 path_style_access_enabled)
 VALUES (1537444981390794754, 1341620898007281665, 1707428076142559234, '2022-11-02 14:35:46.000000',
@@ -757,8 +757,8 @@ create table if not exists public.boot_sys_oss_log
 		primary key,
 	creator       bigint        default 0                      not null,
 	editor        bigint        default 0                      not null,
-	create_date   timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date   timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time   timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time   timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag      smallint      default 0                      not null,
 	version       integer       default 0                      not null,
 	dept_id       bigint        default 0                      not null,
@@ -780,9 +780,9 @@ comment on column public.boot_sys_oss_log.creator is '创建人';
 
 comment on column public.boot_sys_oss_log.editor is '编辑人';
 
-comment on column public.boot_sys_oss_log.create_date is '创建时间';
+comment on column public.boot_sys_oss_log.create_time is '创建时间';
 
-comment on column public.boot_sys_oss_log.update_date is '修改时间';
+comment on column public.boot_sys_oss_log.update_time is '修改时间';
 
 comment on column public.boot_sys_oss_log.del_flag is '删除标识 0未删除 1已删除';
 
@@ -815,8 +815,8 @@ create table if not exists public.boot_sys_package
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    smallint      default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -833,9 +833,9 @@ comment on column public.boot_sys_package.creator is '创建人';
 
 comment on column public.boot_sys_package.editor is '编辑人';
 
-comment on column public.boot_sys_package.create_date is '创建时间';
+comment on column public.boot_sys_package.create_time is '创建时间';
 
-comment on column public.boot_sys_package.update_date is '修改时间';
+comment on column public.boot_sys_package.update_time is '修改时间';
 
 comment on column public.boot_sys_package.del_flag is '删除标识 0未删除 1已删除';
 
@@ -852,15 +852,15 @@ comment on column public.boot_sys_package.name is '套餐名称';
 alter table public.boot_sys_package
 	owner to root;
 
-INSERT INTO public.boot_sys_package (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									 dept_path, tenant_id, name)
 VALUES (1, 1341620898007281665, 1341620898007281665, '2023-02-09 13:38:42.000000', '2023-09-25 17:27:57.000000', 0, 10,
 		1535881356595175426, '0,1535887940687765505,1535881356595175426', 0, '普通套餐');
-INSERT INTO public.boot_sys_package (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									 dept_path, tenant_id, name)
 VALUES (2, 1341620898007281665, 1707428076142559234, '2023-02-09 16:44:04.000000', '2023-10-27 22:07:09.000000', 0, 18,
 		1584488175088373761, '0,1535887940687765505,1535881356595175426,1584488175088373761', 0, '豪华套餐');
-INSERT INTO public.boot_sys_package (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									 dept_path, tenant_id, name)
 VALUES (3, 1341620898007281665, 1341620898007281665, '2023-02-09 17:09:08.000000', '2023-09-17 16:03:47.000000', 0, 15,
 		1584488175088373761, '0,1535887940687765505,1535881356595175426,1584488175088373761', 0, '免费套餐');
@@ -871,8 +871,8 @@ create table if not exists public.boot_sys_package_menu
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    smallint      default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -890,9 +890,9 @@ comment on column public.boot_sys_package_menu.creator is '创建人';
 
 comment on column public.boot_sys_package_menu.editor is '编辑人';
 
-comment on column public.boot_sys_package_menu.create_date is '创建时间';
+comment on column public.boot_sys_package_menu.create_time is '创建时间';
 
-comment on column public.boot_sys_package_menu.update_date is '修改时间';
+comment on column public.boot_sys_package_menu.update_time is '修改时间';
 
 comment on column public.boot_sys_package_menu.del_flag is '删除标识 0未删除 1已删除';
 
@@ -911,239 +911,239 @@ comment on column public.boot_sys_package_menu.menu_id is '菜单ID';
 alter table public.boot_sys_package_menu
 	owner to root;
 
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1703318817726894082, 1341620898007281665, 0, '2023-09-17 09:11:27.000000', '2023-09-17 09:11:27.000000', 0, 0,
 		1535887940687765505, '0', 0, 3, 1552304553893392386);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1703318817726894083, 1341620898007281665, 0, '2023-09-17 09:11:27.000000', '2023-09-17 09:11:27.000000', 0, 0,
 		1535887940687765505, '0', 0, 3, 1551957039155638274);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1703318817726894084, 1341620898007281665, 0, '2023-09-17 09:11:27.000000', '2023-09-17 09:11:27.000000', 0, 0,
 		1535887940687765505, '0', 0, 3, 1535858679453085698);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1703318817726894085, 1341620898007281665, 0, '2023-09-17 09:11:27.000000', '2023-09-17 09:11:27.000000', 0, 0,
 		1535887940687765505, '0', 0, 3, 1391677542887788567);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1703318817726894086, 1341620898007281665, 0, '2023-09-17 09:11:27.000000', '2023-09-17 09:11:27.000000', 0, 0,
 		1535887940687765505, '0', 0, 3, 1535878154046939137);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1704579019149778946, 1341620898007281665, 0, '2023-09-20 19:30:01.000000', '2023-09-20 19:30:01.000000', 0, 0,
 		1535887940687765505, '0', 0, 9, 1535878154046939137);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1706239103995072513, 1341620898007281665, 0, '2023-09-25 04:55:31.000000', '2023-09-25 04:55:31.000000', 0, 0,
 		1535887940687765505, '0', 0, 1, 1552304553893392386);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1706239103995072514, 1341620898007281665, 0, '2023-09-25 04:55:31.000000', '2023-09-25 04:55:31.000000', 0, 0,
 		1535887940687765505, '0', 0, 1, 1551957039155638274);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1706239103995072515, 1341620898007281665, 0, '2023-09-25 04:55:31.000000', '2023-09-25 04:55:31.000000', 0, 0,
 		1535887940687765505, '0', 0, 1, 1535858679453085698);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1706239103995072516, 1341620898007281665, 0, '2023-09-25 04:55:31.000000', '2023-09-25 04:55:31.000000', 0, 0,
 		1535887940687765505, '0', 0, 1, 1391677542887788567);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1706239103995072517, 1341620898007281665, 0, '2023-09-25 04:55:31.000000', '2023-09-25 04:55:31.000000', 0, 0,
 		1535887940687765505, '0', 0, 1, 1535878154046939137);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1706239103995072518, 1341620898007281665, 0, '2023-09-25 04:55:31.000000', '2023-09-25 04:55:31.000000', 0, 0,
 		1535887940687765505, '0', 0, 1, 1535881356595175426);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1706239103995072519, 1341620898007281665, 0, '2023-09-25 04:55:31.000000', '2023-09-25 04:55:31.000000', 0, 0,
 		1535887940687765505, '0', 0, 1, 1535886982654205953);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680514994178, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1539615028590673921);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680514994179, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1550116610713944065);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680514994180, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1540000886082768897);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680514994181, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1540001496240754689);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680514994182, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1564996817056710666);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680514994183, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1535888146045083649);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680514994184, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1535858679453085698);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680514994185, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1549758203624480770);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680514994186, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1552304865207218177);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680514994187, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1552304713121755138);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680514994188, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1552305016701284353);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680514994189, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1550117239402364930);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680514994190, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1564996817056710695);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680514994191, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1539396453854629890);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382785, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1535887129341599746);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382786, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1550117550498086913);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382787, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1539402478934646785);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382788, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1564996817056710693);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382789, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1564996817056710665);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382790, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1391677542887788567);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382791, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1535887940687765505);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382792, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1540001809446211586);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382793, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1535888341252186114);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382794, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1564996817056710692);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382795, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1564996817056710694);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382796, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1564996817056710688);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382797, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1535887276649750530);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382798, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1539251440843857922);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382799, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1535881356595175426);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382800, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1539265093588545538);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382801, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1539250224424394753);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382802, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1539989085181972481);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382803, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1535887450809835521);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382804, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1535886982654205953);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382805, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1535878154046939137);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382806, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1535881096963563522);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382807, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1551957039155638274);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382808, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1540001992288505857);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382809, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1552304553893392386);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382810, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1564996817056710699);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1830806680523382811, 1707428076142559234, 0, '2023-10-27 06:16:25.000000', '2023-10-27 06:16:25.000000', 0, 0,
 		1535887940687765505, '0', 0, 2, 1535887779873955841);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1867661767434502145, 1707428076142559234, 0, '2023-12-17 18:31:42.000000', '2023-12-17 18:31:42.000000', 0, 0,
 		1535887940687765505, '0', 0, 1867661687264575490, 1391677542887788567);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1867661767434502146, 1707428076142559234, 0, '2023-12-17 18:31:42.000000', '2023-12-17 18:31:42.000000', 0, 0,
 		1535887940687765505, '0', 0, 1867661687264575490, 1535858679453085698);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1867661767434502147, 1707428076142559234, 0, '2023-12-17 18:31:42.000000', '2023-12-17 18:31:42.000000', 0, 0,
 		1535887940687765505, '0', 0, 1867661687264575490, 1535878154046939137);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1867661767434502148, 1707428076142559234, 0, '2023-12-17 18:31:42.000000', '2023-12-17 18:31:42.000000', 0, 0,
 		1535887940687765505, '0', 0, 1867661687264575490, 1552304553893392386);
-INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_package_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 										  dept_path, tenant_id, package_id, menu_id)
 VALUES (1867661767434502149, 1707428076142559234, 0, '2023-12-17 18:31:42.000000', '2023-12-17 18:31:42.000000', 0, 0,
 		1535887940687765505, '0', 0, 1867661687264575490, 1551957039155638274);
@@ -1154,8 +1154,8 @@ create table if not exists public.boot_sys_role
 		primary key,
 	creator     bigint        default 0                        not null,
 	editor      bigint        default 0                        not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP        not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP        not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP        not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP        not null,
 	del_flag    smallint      default 0                        not null,
 	version     integer       default 0                        not null,
 	dept_id     bigint        default 0                        not null,
@@ -1174,9 +1174,9 @@ comment on column public.boot_sys_role.creator is '创建人';
 
 comment on column public.boot_sys_role.editor is '编辑人';
 
-comment on column public.boot_sys_role.create_date is '创建时间';
+comment on column public.boot_sys_role.create_time is '创建时间';
 
-comment on column public.boot_sys_role.update_date is '修改时间';
+comment on column public.boot_sys_role.update_time is '修改时间';
 
 comment on column public.boot_sys_role.del_flag is '删除标识 0未删除 1已删除';
 
@@ -1197,15 +1197,15 @@ comment on column public.boot_sys_role.data_scope is '数据范围 no无限制 c
 alter table public.boot_sys_role
 	owner to root;
 
-INSERT INTO public.boot_sys_role (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_role (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, name, sort, data_scope)
 VALUES (139167754288778856, 1341620898007281665, 1707428076142559234, '2021-11-27 17:11:15.000000',
 		'2023-12-17 17:42:29.000000', 0, 97, 1535887940687765505, '0,1535887940687765505', 0, '游客', 10, 'all');
-INSERT INTO public.boot_sys_role (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_role (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, name, sort, data_scope)
 VALUES (139167754288778857, 1341620898007281665, 1707428076142559234, '2021-11-27 17:11:19.000000',
 		'2023-12-17 17:40:13.000000', 0, 250, 1535887940687765505, '0,1535887940687765505', 0, '管理员', 100, 'all');
-INSERT INTO public.boot_sys_role (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_role (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, name, sort, data_scope)
 VALUES (1535949666183573505, 1341620898007281665, 1707428076142559234, '2022-06-12 19:38:32.000000',
 		'2023-12-17 17:41:35.000000', 0, 42, 1535881356595175426, '0,1535887940687765505,1535881356595175426', 0,
@@ -1217,8 +1217,8 @@ create table if not exists public.boot_sys_role_dept
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    smallint      default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -1235,9 +1235,9 @@ comment on column public.boot_sys_role_dept.creator is '创建人';
 
 comment on column public.boot_sys_role_dept.editor is '编辑人';
 
-comment on column public.boot_sys_role_dept.create_date is '创建时间';
+comment on column public.boot_sys_role_dept.create_time is '创建时间';
 
-comment on column public.boot_sys_role_dept.update_date is '修改时间';
+comment on column public.boot_sys_role_dept.update_time is '修改时间';
 
 comment on column public.boot_sys_role_dept.del_flag is '删除标识 0未删除 1已删除';
 
@@ -1260,15 +1260,15 @@ create index if not exists boot_sys_role_dept_dept_id_idx
 create index if not exists boot_sys_role_dept_role_id_idx
 	on public.boot_sys_role_dept (role_id);
 
-INSERT INTO public.boot_sys_role_dept (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_dept (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id)
 VALUES (1867635890650701826, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857);
-INSERT INTO public.boot_sys_role_dept (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_dept (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id)
 VALUES (1867636574062206977, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535881356595175426, '0,1535887940687765505', 0, 1535949666183573505);
-INSERT INTO public.boot_sys_role_dept (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_dept (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id)
 VALUES (1867637029043527681, 1707428076142559234, 0, '2023-12-17 17:42:33.000000', '2023-12-17 17:42:33.000000', 0, 0,
 		1584488175088373761, '0,1535887940687765505', 0, 139167754288778856);
@@ -1279,8 +1279,8 @@ create table if not exists public.boot_sys_role_menu
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    integer       default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -1298,9 +1298,9 @@ comment on column public.boot_sys_role_menu.creator is '创建人';
 
 comment on column public.boot_sys_role_menu.editor is '编辑人';
 
-comment on column public.boot_sys_role_menu.create_date is '创建时间';
+comment on column public.boot_sys_role_menu.create_time is '创建时间';
 
-comment on column public.boot_sys_role_menu.update_date is '修改时间';
+comment on column public.boot_sys_role_menu.update_time is '修改时间';
 
 comment on column public.boot_sys_role_menu.del_flag is '删除标识 0未删除 1已删除';
 
@@ -1325,619 +1325,619 @@ create index if not exists boot_sys_role_menu_menu_id_idx
 create index if not exists boot_sys_role_menu_role_id_idx
 	on public.boot_sys_role_menu (role_id);
 
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530946, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1550117239402364930);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530947, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1550116610713944065);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530948, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1549758203624480770);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530949, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1540001992288505857);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530950, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1539251440843857922);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530951, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1539250224424394753);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530952, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1858124727072112641);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530953, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1858114417615486977);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530954, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710681);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530955, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710712);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530956, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1545443597204094977);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530957, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1540001809446211586);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530958, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710713);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530959, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710672);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530960, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564228322215927810);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530961, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710707);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530962, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710683);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530963, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1540001496240754689);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530964, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710711);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530965, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1562972785472630785);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530966, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710699);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530967, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1545442687073681410);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530968, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1540000886082768897);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530969, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710706);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530970, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1537444981390794754);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530971, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710685);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530972, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1562972243434336257);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530973, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1545442932918616065);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530974, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1545445208781520897);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530975, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1552525480564416514);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530976, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1539615028590673921);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530977, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710702);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530978, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1562971829607526401);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530979, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1538469199368712193);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530980, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1545036486288732162);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530981, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1545443828113113090);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530982, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710710);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530983, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710684);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530984, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564214128678539265);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530985, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1562971590226014209);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530986, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710700);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530987, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1545443357407346689);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530988, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710686);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530989, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1547109188256260097);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530990, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1857290879413297153);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530991, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1545035717690912769);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530992, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1552526314178142209);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530993, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1539989085181972481);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530994, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1858910725859418113);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530995, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710708);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530996, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1545444853809184770);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530997, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1857262443861000194);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530998, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710694);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776530999, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1562972411969859586);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531000, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1545037580289044482);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531001, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1550117550498086913);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531002, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710682);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531003, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710693);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531004, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710657);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531005, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1560530418819862529);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531006, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1560528267620061186);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531007, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1563104888692600833);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531008, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710677);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531009, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710675);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531010, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535888341252186114);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531011, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1563333871266885634);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531012, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710688);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531013, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535887940687765505);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531014, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535888146045083649);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531015, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1545444197799067650);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531016, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710695);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531017, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710705);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531018, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710692);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531019, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710673);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531020, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710680);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531021, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535887450809835521);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531022, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535887779873955841);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531023, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710674);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531024, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710678);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531025, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710679);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531026, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710676);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531027, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535881096963563522);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531028, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535886982654205953);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531029, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1539265093588545538);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531030, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535887276649750530);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531031, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710665);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531032, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535859148908949506);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531033, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535887129341599746);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531034, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1539396453854629890);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531035, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535859588534923265);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531036, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535878154046939137);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531037, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535859326311231489);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531038, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535881356595175426);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531039, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1552304865207218177);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531040, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1552305016701284353);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531041, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1552304713121755138);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531042, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1552304553893392386);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531043, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1391677542887788567);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531044, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1551957039155638274);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890776531045, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1535858679453085698);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890793308162, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710701);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890793308163, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1564996817056710666);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867635890793308164, 1707428076142559234, 0, '2023-12-17 17:40:17.000000', '2023-12-17 17:40:17.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778857, 1539402478934646785);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481665, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1560528267620061186);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481666, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564996817056710682);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481667, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1550116610713944065);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481668, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564996817056710688);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481669, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564996817056710674);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481670, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564996817056710681);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481671, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564996817056710673);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481672, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1552304553893392386);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481673, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564996817056710686);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481674, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1551957039155638274);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481675, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564996817056710672);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481676, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1535858679453085698);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481677, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564996817056710692);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481678, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1535887779873955841);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481679, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564996817056710712);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481680, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1537444981390794754);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481681, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1391677542887788567);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481682, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1540000886082768897);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481683, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564996817056710713);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481684, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1539251440843857922);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481685, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1545444853809184770);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481686, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1545442932918616065);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481687, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1858114417615486977);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481688, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1535881356595175426);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481689, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1539250224424394753);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481690, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1535878154046939137);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481691, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1539989085181972481);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481692, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1535881096963563522);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481693, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1857262443861000194);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481694, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1535886982654205953);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481695, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564228322215927810);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481696, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1857290879413297153);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481697, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1539265093588545538);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481698, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1539402478934646785);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481699, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1560530418819862529);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481700, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564996817056710657);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481701, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1562971590226014209);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481702, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1545037580289044482);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481703, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1539396453854629890);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481704, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1545036486288732162);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481705, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1545035717690912769);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481706, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564996817056710711);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481707, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564996817056710666);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481708, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1564996817056710665);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867636574154481709, 1707428076142559234, 0, '2023-12-17 17:41:39.000000', '2023-12-17 17:41:39.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 1535949666183573505, 1549758203624480770);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867637029160968193, 1707428076142559234, 0, '2023-12-17 17:42:33.000000', '2023-12-17 17:42:33.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778856, 1552526314178142209);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867637029160968194, 1707428076142559234, 0, '2023-12-17 17:42:33.000000', '2023-12-17 17:42:33.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778856, 1552525480564416514);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867637029160968195, 1707428076142559234, 0, '2023-12-17 17:42:33.000000', '2023-12-17 17:42:33.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778856, 1391677542887788567);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867637029160968196, 1707428076142559234, 0, '2023-12-17 17:42:33.000000', '2023-12-17 17:42:33.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778856, 1535858679453085698);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867637029160968197, 1707428076142559234, 0, '2023-12-17 17:42:33.000000', '2023-12-17 17:42:33.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778856, 1537444981390794754);
-INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_role_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, role_id, menu_id)
 VALUES (1867637029160968198, 1707428076142559234, 0, '2023-12-17 17:42:33.000000', '2023-12-17 17:42:33.000000', 0, 0,
 		1535887940687765505, '0,1535887940687765505', 0, 139167754288778856, 1535878154046939137);
@@ -1948,8 +1948,8 @@ create table if not exists public.boot_sys_source
 		primary key,
 	creator           bigint        default 0                      not null,
 	editor            bigint        default 0                      not null,
-	create_date       timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date       timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time       timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time       timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag          smallint      default 0                      not null,
 	version           integer       default 0                      not null,
 	dept_id           bigint        default 0                      not null,
@@ -1970,9 +1970,9 @@ comment on column public.boot_sys_source.creator is '创建人';
 
 comment on column public.boot_sys_source.editor is '编辑人';
 
-comment on column public.boot_sys_source.create_date is '创建时间';
+comment on column public.boot_sys_source.create_time is '创建时间';
 
-comment on column public.boot_sys_source.update_date is '修改时间';
+comment on column public.boot_sys_source.update_time is '修改时间';
 
 comment on column public.boot_sys_source.del_flag is '删除标识 0未删除 1已删除';
 
@@ -1997,7 +1997,7 @@ comment on column public.boot_sys_source.password is '数据源的密码';
 alter table public.boot_sys_source
 	owner to root;
 
-INSERT INTO public.boot_sys_source (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_source (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									dept_path, tenant_id, name, driver_class_name, url, username, password)
 VALUES (1, 1537114827246292994, 1707428076142559234, '2023-09-12 23:49:06.000000', '2024-01-04 16:41:26.000000', 0, 5,
 		1584488411756171266, '0,1535887940687765505,1535881356595175426,1584488175088373761,1584488411756171266', 0,
@@ -2011,8 +2011,8 @@ create table if not exists public.boot_sys_sql_log
 		primary key,
 	creator     bigint        default 0,
 	editor      bigint        default 0,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP not null,
 	del_flag    smallint      default 0                 not null,
 	version     integer       default 0                 not null,
 	dept_id     bigint        default 0,
@@ -2031,9 +2031,9 @@ comment on column public.boot_sys_sql_log.creator is '创建人';
 
 comment on column public.boot_sys_sql_log.editor is '编辑人';
 
-comment on column public.boot_sys_sql_log.create_date is '创建时间';
+comment on column public.boot_sys_sql_log.create_time is '创建时间';
 
-comment on column public.boot_sys_sql_log.update_date is '修改时间';
+comment on column public.boot_sys_sql_log.update_time is '修改时间';
 
 comment on column public.boot_sys_sql_log.del_flag is '删除标识 0未删除 1已删除';
 
@@ -2063,8 +2063,8 @@ create table if not exists public.boot_sys_tenant
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    smallint      default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -2084,9 +2084,9 @@ comment on column public.boot_sys_tenant.creator is '创建人';
 
 comment on column public.boot_sys_tenant.editor is '编辑人';
 
-comment on column public.boot_sys_tenant.create_date is '创建时间';
+comment on column public.boot_sys_tenant.create_time is '创建时间';
 
-comment on column public.boot_sys_tenant.update_date is '修改时间';
+comment on column public.boot_sys_tenant.update_time is '修改时间';
 
 comment on column public.boot_sys_tenant.del_flag is '删除标识 0未删除 1已删除';
 
@@ -2109,7 +2109,7 @@ comment on column public.boot_sys_tenant.package_id is '套餐ID';
 alter table public.boot_sys_tenant
 	owner to root;
 
-INSERT INTO public.boot_sys_tenant (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_tenant (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									dept_path, tenant_id, name, label, source_id, package_id)
 VALUES (1703312526740615171, 1341620898007281665, 1707428076142559234, '2023-09-17 15:42:27.000000',
 		'2023-12-17 18:37:13.000000', 0, 1, 1535881356595175426, '0,1535887940687765505,1535881356595175426', 0,
@@ -2121,8 +2121,8 @@ create table if not exists public.boot_sys_user
 		primary key,
 	creator         bigint                      default 0                                                        not null,
 	editor          bigint                      default 0                                                        not null,
-	create_date     timestamp(6) with time zone default CURRENT_TIMESTAMP                                        not null,
-	update_date     timestamp(6) with time zone default CURRENT_TIMESTAMP                                        not null,
+	create_time     timestamp(6) with time zone default CURRENT_TIMESTAMP                                        not null,
+	update_time     timestamp(6) with time zone default CURRENT_TIMESTAMP                                        not null,
 	del_flag        smallint                    default 0                                                        not null,
 	version         integer                     default 0                                                        not null,
 	dept_id         bigint                      default 0                                                        not null,
@@ -2148,9 +2148,9 @@ comment on column public.boot_sys_user.creator is '创建人';
 
 comment on column public.boot_sys_user.editor is '编辑人';
 
-comment on column public.boot_sys_user.create_date is '创建时间';
+comment on column public.boot_sys_user.create_time is '创建时间';
 
-comment on column public.boot_sys_user.update_date is '修改时间';
+comment on column public.boot_sys_user.update_time is '修改时间';
 
 comment on column public.boot_sys_user.del_flag is '删除标识 0未删除 1已删除';
 
@@ -2200,7 +2200,7 @@ create unique index if not exists mobile_tenant_id_idx
 
 comment on index public.mobile_tenant_id_idx is '手机号_租户ID_唯一索引';
 
-INSERT INTO public.boot_sys_user (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_user (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, password, super_admin, mail, mobile, status, avatar, username_phrase,
 								  mail_phrase, mobile_phrase, username)
 VALUES (1, 1, 1, '2022-01-01 12:13:11.000000 +00:00', '2024-04-29 15:52:52.000000 +00:00', 0, 0, 1, '0,1', 0,
@@ -2211,7 +2211,7 @@ VALUES (1, 1, 1, '2022-01-01 12:13:11.000000 +00:00', '2024-04-29 15:52:52.00000
 		'Ylh4QTF0YmdEWWJR2TEQZt/I7tdiOALwVrZXFxK5boI=~Ylh4QTF0YmdEWWJR3zQSZDEzo/mQ2Kt2ooeStwwy1DM=~Ylh4QTF0YmdEWWJR2jYQYvkuHP0mNYNzkmUPAkpRnNs=~Ylh4QTF0YmdEWWJR2DQWY04zb3FkQTCmuPFi97WrI08=~Ylh4QTF0YmdEWWJR2jIXZToqPakPCzCwmjz4XLwksmM=~Ylh4QTF0YmdEWWJR3DMRYRY/bEOz79QYxdiB5xtGMoU=~Ylh4QTF0YmdEWWJR3TUVYYBJ7iU6aLpsTeXBwNhb1lk=~Ylh4QTF0YmdEWWJR2zEVFRAKn1yHzG9spDDE8afQ1Ls=~Ylh4QTF0YmdEWWJR3zFhJLv17Ndjz3ymZABhpoKJPCE=~Ylh4QTF0YmdEWWJR30VQJOy8KF8pYc2r4yJkfOWIWnw=~Ylh4QTF0YmdEWWJRq3RQe8Vs9XmHQG6AkHOCtSwt6cA=~Ylh4QTF0YmdEWWJRmnQPNipHlgS+8wcVPz+EC5gdeeM=~Ylh4QTF0YmdEWWJRmitCOoJ+zG0CpSympji+U7NWxUw=~Ylh4QTF0YmdEWWJRxWZOOE8J8sq9k7iJhdxbniMpw9I=',
 		'Ylh4QTF0YmdEWWJR2j0YOQJF4W0Ofxd/k/LFC4GzoQ==~Ylh4QTF0YmdEWWJR3DEVZk3r4C1hv2eOukkPSzTOffA=~Ylh4QTF0YmdEWWJR2TAWY8HwM9jwPxZFMFE0pFibp9k=',
 		'Ylh4QTF0YmdEWWJRimFMPGaJmldyuWIb9BNmUN1ULMI7');
-INSERT INTO public.boot_sys_user (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_user (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, password, super_admin, mail, mobile, status, avatar, username_phrase,
 								  mail_phrase, mobile_phrase, username)
 VALUES (5, 1, 1, '2022-06-15 16:48:28.000000 +00:00', '2024-04-29 15:52:52.000000 +00:00', 0, 1, 1535881356595175426,
@@ -2219,14 +2219,14 @@ VALUES (5, 1, 1, '2022-06-15 16:48:28.000000 +00:00', '2024-04-29 15:52:52.00000
 		null, 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400',
 		'Ylh4QTF0YmdEWWJRh2ROPuSvWyrTvf2MaPrw8GpjTBM=~Ylh4QTF0YmdEWWJRimpKYMTCzQiEJvp5Ar80c6jh1Wg=', null, null,
 		'Ylh4QTF0YmdEWWJRh2ROPj1LULONpfXTh6mWUOIX9SFO');
-INSERT INTO public.boot_sys_user (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_user (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, password, super_admin, mail, mobile, status, avatar, username_phrase,
 								  mail_phrase, mobile_phrase, username)
 VALUES (2, 1, 1, '2023-03-09 05:52:04.000000 +00:00', '2024-04-29 15:52:52.000000 +00:00', 0, 1, 1535881356595175426,
 		'0,1,1535881356595175426', 0, '{bcrypt}$2a$10$J0DMR5098R33H6F.s5H/deeMLyo/j4yyzZgAn6gkyC0j537G7veKG', 0, null,
 		null, 0, 'http://127.0.0.1:81/upload/node2/b4e5bb3944a046a6bb54f8bfd2c830c1.webp',
 		'Ylh4QTF0YmdEWWJRn2BSIeyAJZxxvGa9Rma06h4QOnQ=', null, null, 'Ylh4QTF0YmdEWWJRn2BSIeyAJZxxvGa9Rma06h4QOnQ=');
-INSERT INTO public.boot_sys_user (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_user (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, password, super_admin, mail, mobile, status, avatar, username_phrase,
 								  mail_phrase, mobile_phrase, username)
 VALUES (3, 1, 1, '2022-01-31 03:29:35.000000 +00:00', '2024-04-29 15:52:52.000000 +00:00', 0, 0, 1, '0,1', 0,
@@ -2234,7 +2234,7 @@ VALUES (3, 1, 1, '2022-01-31 03:29:35.000000 +00:00', '2024-04-29 15:52:52.00000
 		'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400',
 		'Ylh4QTF0YmdEWWJRgGpUJiNPIjdI2XP1ZWEFUmonJDs=~Ylh4QTF0YmdEWWJRhHBSPSMrKeV2KZK27WU4BJGux6Q=~Ylh4QTF0YmdEWWJRnnZJYJsjtsAm+CPpK1W9SDWk46s=',
 		null, null, 'Ylh4QTF0YmdEWWJRgGpUJmBT8fGpMah42bhHMZ9Aapk+jQ==');
-INSERT INTO public.boot_sys_user (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path,
+INSERT INTO public.boot_sys_user (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
 								  tenant_id, password, super_admin, mail, mobile, status, avatar, username_phrase,
 								  mail_phrase, mobile_phrase, username)
 VALUES (4, 1, 1, '2022-06-15 16:33:39.000000 +00:00', '2024-04-29 15:52:52.000000 +00:00', 0, 0, 1, '0,1', 0,
@@ -2249,8 +2249,8 @@ create table if not exists public.boot_sys_user_role
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    smallint      default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -2268,9 +2268,9 @@ comment on column public.boot_sys_user_role.creator is '创建人';
 
 comment on column public.boot_sys_user_role.editor is '编辑人';
 
-comment on column public.boot_sys_user_role.create_date is '创建时间';
+comment on column public.boot_sys_user_role.create_time is '创建时间';
 
-comment on column public.boot_sys_user_role.update_date is '修改时间';
+comment on column public.boot_sys_user_role.update_time is '修改时间';
 
 comment on column public.boot_sys_user_role.del_flag is '删除标识 0未删除 1已删除';
 
@@ -2295,11 +2295,11 @@ create index if not exists boot_sys_user_role_role_id_idx
 create index if not exists boot_sys_user_role_user_id_idx
 	on public.boot_sys_user_role (user_id);
 
-INSERT INTO public.boot_sys_user_role (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_user_role (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, user_id, role_id)
 VALUES (1867684172970319873, 1707428076142559234, 0, '2023-12-17 19:16:13.000000', '2023-12-17 19:16:13.000000', 0, 0,
 		1535881356595175426, '0,1535887940687765505,1535881356595175426', 0, 1707428077144997889, 139167754288778857);
-INSERT INTO public.boot_sys_user_role (id, creator, editor, create_date, update_date, del_flag, version, dept_id,
+INSERT INTO public.boot_sys_user_role (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
 									   dept_path, tenant_id, user_id, role_id)
 VALUES (1867684335130501122, 1707428076142559234, 0, '2023-12-17 19:16:32.000000', '2023-12-17 19:16:32.000000', 0, 0,
 		1535881356595175426, '0,1535887940687765505,1535881356595175426', 0, 1707428076452937730, 139167754288778857);
@@ -2356,8 +2356,8 @@ create table if not exists public.boot_sys_api_log
 		primary key,
 	creator       bigint        default 0,
 	editor        bigint        default 0,
-	create_date   timestamp(6)  default CURRENT_TIMESTAMP not null,
-	update_date   timestamp(6)  default CURRENT_TIMESTAMP not null,
+	create_time   timestamp(6)  default CURRENT_TIMESTAMP not null,
+	update_time   timestamp(6)  default CURRENT_TIMESTAMP not null,
 	del_flag      smallint      default 0                 not null,
 	version       integer       default 0                 not null,
 	dept_id       bigint        default 0,
@@ -2378,9 +2378,9 @@ comment on column public.boot_sys_api_log.creator is '创建人';
 
 comment on column public.boot_sys_api_log.editor is '编辑人';
 
-comment on column public.boot_sys_api_log.create_date is '创建时间';
+comment on column public.boot_sys_api_log.create_time is '创建时间';
 
-comment on column public.boot_sys_api_log.update_date is '修改时间';
+comment on column public.boot_sys_api_log.update_time is '修改时间';
 
 comment on column public.boot_sys_api_log.del_flag is '删除标识 0未删除 1已删除';
 

@@ -51,12 +51,12 @@ public abstract class BaseDO implements Serializable {
 	/**
 	 * 创建时间.
 	 */
-	public static final String CREATE_DATE = "createDate";
+	public static final String CREATE_TIME = "createTime";
 
 	/**
 	 * 修改时间.
 	 */
-	public static final String UPDATE_DATE = "updateDate";
+	public static final String UPDATE_TIME = "updateTime";
 
 	/**
 	 * 删除标识.
@@ -113,13 +113,13 @@ public abstract class BaseDO implements Serializable {
 	 * 创建时间.
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	protected Instant createDate;
+	protected Instant createTime;
 
 	/**
 	 * 修改时间.
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-	protected Instant updateDate;
+	protected Instant updateTime;
 
 	/**
 	 * 删除标识 0未删除 1已删除.

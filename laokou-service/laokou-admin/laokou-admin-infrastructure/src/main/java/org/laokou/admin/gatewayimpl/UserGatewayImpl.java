@@ -188,8 +188,8 @@ public class UserGatewayImpl implements UserGateway {
 		userRoleDO.setDeptPath(userDO.getDeptPath());
 		userRoleDO.setRoleId(roleId);
 		userRoleDO.setUserId(userDO.getId());
-		userRoleDO.setCreateDate(DateUtil.nowInstant());
-		userRoleDO.setUpdateDate(DateUtil.nowInstant());
+		userRoleDO.setCreateTime(DateUtil.nowInstant());
+		userRoleDO.setUpdateTime(DateUtil.nowInstant());
 		userRoleDO.setCreator(userDO.getCreator());
 		userRoleDO.setEditor(userDO.getEditor());
 		return userRoleDO;

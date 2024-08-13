@@ -48,7 +48,7 @@
         </foreach>
       </if>
       and column_name not in
-      ('id','del_flag','version','create_date','update_date','creator','editor','dept_id','dept_path','tenant_id')
+      ('id','del_flag','version','create_time','update_time','creator','editor','dept_id','dept_path','tenant_id')
     </where>
     order by ordinal_position
   </select>

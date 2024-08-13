@@ -4,8 +4,8 @@ create table if not exists public.boot_iot_device
 		primary key,
 	creator     bigint        default 0                      not null,
 	editor      bigint        default 0                      not null,
-	create_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
-	update_date timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	create_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
+	update_time timestamp(6)  default CURRENT_TIMESTAMP      not null,
 	del_flag    smallint      default 0                      not null,
 	version     integer       default 0                      not null,
 	dept_id     bigint        default 0                      not null,
@@ -24,9 +24,9 @@ comment on column public.boot_iot_device.creator is '创建人';
 
 comment on column public.boot_iot_device.editor is '编辑人';
 
-comment on column public.boot_iot_device.create_date is '创建时间';
+comment on column public.boot_iot_device.create_time is '创建时间';
 
-comment on column public.boot_iot_device.update_date is '修改时间';
+comment on column public.boot_iot_device.update_time is '修改时间';
 
 comment on column public.boot_iot_device.del_flag is '删除标识 0未删除 1已删除';
 
@@ -47,4 +47,7 @@ comment on column public.boot_iot_device.status is '设备状态 0在线 1离线
 alter table public.boot_iot_device
 	owner to root;
 
-INSERT INTO public.boot_iot_device (id, creator, editor, create_date, update_date, del_flag, version, dept_id, dept_path, tenant_id, key, name, status) VALUES (1, 1341620898007281665, 1341620898007281665, '2024-05-11 03:56:15.821857', '2024-05-11 03:56:15.821857', 0, 0, 1535887940687765505, '0,1535887940687765505', 0, '139c5556-8494-5753-ac97-de09f2a6a929', 'HFCL设备', 0);
+INSERT INTO public.boot_iot_device (id, creator, editor, create_time, update_time, del_flag, version, dept_id,
+									dept_path, tenant_id, key, name, status)
+VALUES (1, 1341620898007281665, 1341620898007281665, '2024-05-11 03:56:15.821857', '2024-05-11 03:56:15.821857', 0, 0,
+		1535887940687765505, '0,1535887940687765505', 0, '139c5556-8494-5753-ac97-de09f2a6a929', 'HFCL设备', 0);

@@ -68,8 +68,8 @@ public class UserCO extends ClientObject {
 	@Schema(name = "deptPath", description = "部门PATH")
 	private String deptPath;
 
-	@Schema(name = "createDate", description = "创建时间")
-	private Instant createDate;
+	@Schema(name = "创建时间", description = "创建时间")
+	private Instant createTime;
 
 	@Schema(name = "superAdmin", description = "超级管理员标识 0否 1是")
 	private Integer superAdmin;

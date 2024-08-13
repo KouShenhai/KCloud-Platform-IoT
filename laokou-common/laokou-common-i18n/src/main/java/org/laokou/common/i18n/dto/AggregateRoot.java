@@ -57,12 +57,12 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	/**
 	 * 创建时间.
 	 */
-	protected Instant createDate;
+	protected Instant createTime;
 
 	/**
 	 * 修改时间.
 	 */
-	protected Instant updateDate;
+	protected Instant updateTime;
 
 	/**
 	 * 数据源名称.

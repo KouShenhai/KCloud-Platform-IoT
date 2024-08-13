@@ -51,8 +51,8 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.aggregateId = aggregateRoot.getId();
 		super.tag = tag;
 		super.topic = topic;
-		super.createDate = timestamp;
-		super.updateDate = timestamp;
+		super.createTime = timestamp;
+		super.updateTime = timestamp;
 	}
 
 	public void create(String topic, String tag, EventType eventType, String appName, String sourceName,
@@ -62,8 +62,8 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.eventType = eventType;
 		super.tag = tag;
 		super.topic = topic;
-		super.createDate = timestamp;
-		super.updateDate = timestamp;
+		super.createTime = timestamp;
+		super.updateTime = timestamp;
 		super.appName = appName;
 		super.sourceName = sourceName;
 	}

@@ -78,9 +78,9 @@ public class LoginLogExcel implements Serializable {
 	private String type;
 
 	@ColumnWidth(30)
-	@Schema(name = "createDate", description = "创建时间")
+	@Schema(name = "创建时间", description = "创建时间")
 	@ExcelProperty(value = "创建时间", index = 9)
-	private Instant createDate;
+	private Instant createTime;
 
 	public void setStatus(Integer status) {
 		this.status = status;

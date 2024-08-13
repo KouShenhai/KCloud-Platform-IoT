@@ -38,14 +38,14 @@ public class SqlLogEvent extends ApplicationEvent {
 
 	private long costTime;
 
-	private Instant createDate;
+	private Instant createTime;
 
-	public SqlLogEvent(Object source, String appName, String sql, long costTime, Instant createDate) {
+	public SqlLogEvent(Object source, String appName, String sql, long costTime, Instant createTime) {
 		super(source);
 		this.sql = sql;
 		this.appName = appName;
 		this.costTime = costTime;
-		this.createDate = createDate;
+		this.createTime = createTime;
 	}
 
 }

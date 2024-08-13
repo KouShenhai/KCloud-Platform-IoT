@@ -289,8 +289,8 @@ public class TenantGatewayImpl implements TenantGateway {
 		List<MenuDO> menuList = menuMapper.selectTenantMenuListByPackageId(packageId);
 		menuList.forEach(item -> {
 			item.setTenantId(tenantId);
-			item.setCreateDate(DateUtil.nowInstant());
-			item.setUpdateDate(DateUtil.nowInstant());
+			item.setCreateTime(DateUtil.nowInstant());
+			item.setUpdateTime(DateUtil.nowInstant());
 			item.setCreator(userId);
 			item.setEditor(userId);
 			item.setVersion(0);
@@ -319,8 +319,8 @@ public class TenantGatewayImpl implements TenantGateway {
 		// userDO.setSuperAdmin(YES.ordinal());
 		// userDO.setDeptId(deptId);
 		// userDO.setDeptPath(deptPath);
-		// userDO.setCreateDate(DateUtil.now());
-		// userDO.setUpdateDate(DateUtil.now());
+		// userDO.setCreateTime(DateUtil.now());
+		// userDO.setUpdateTime(DateUtil.now());
 		// userDO.setCreator(userId);
 		// userDO.setEditor(userId);
 		// userDO.setVersion(NumberConstant.DEFAULT);
@@ -347,8 +347,8 @@ public class TenantGatewayImpl implements TenantGateway {
 		deptDO.setDeptId(deptDO.getId());
 		deptDO.setPid(0L);
 		deptDO.setTenantId(tenantId);
-		deptDO.setCreateDate(DateUtil.nowInstant());
-		deptDO.setUpdateDate(DateUtil.nowInstant());
+		deptDO.setCreateTime(DateUtil.nowInstant());
+		deptDO.setUpdateTime(DateUtil.nowInstant());
 		deptDO.setCreator(userId);
 		deptDO.setEditor(userId);
 		deptDO.setVersion(0);

@@ -20,41 +20,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.UserRoleMapper">
 
-    <sql id="columns">
-        `id`,
-        creator,
-        editor,
-        create_date,
-        update_date,
-        dept_id,
-        dept_path,
-        tenant_id,
-        user_id,
-        role_id
-    </sql>
+  <sql id="columns">
+    `id`,
+    creator,
+    editor,
+    create_time,
+    update_time,
+    dept_id,
+    dept_path,
+    tenant_id,
+    user_id,
+    role_id
+  </sql>
 
-    <insert id="insertOne" useGeneratedKeys="false">
-        insert into boot_sys_user_role(<include refid="columns"/>)
-        values (
-                #{id},
-                #{creator},
-                #{editor},
-                #{createDate},
-                #{updateDate},
-                #{deptId},
-                #{deptPath},
-                #{tenantId},
-                #{userId},
-                #{roleId}
-        )
-    </insert>
-    <delete id="deleteByUserId">
-        delete from boot_sys_user_role
-        where user_id = #{userId}
-    </delete>
-    <select id="selectRoleIdsByUserId" resultType="java.lang.Long">
-        select role_id
-        from boot_sys_user_role
-        where user_id = #{userId}
-    </select>
+  <insert id="insertOne" useGeneratedKeys="false">
+    insert into boot_sys_user_role(<include refid="columns"/>)
+    values (
+    #{id},
+    #{creator},
+    #{editor},
+    #{createTime},
+    #{updateTime},
+    #{deptId},
+    #{deptPath},
+    #{tenantId},
+    #{userId},
+    #{roleId}
+    )
+  </insert>
+  <delete id="deleteByUserId">
+    delete
+    from boot_sys_user_role
+    where user_id = #{userId}
+  </delete>
+  <select id="selectRoleIdsByUserId" resultType="java.lang.Long">
+    select role_id
+    from boot_sys_user_role
+    where user_id = #{userId}
+  </select>
 </mapper>

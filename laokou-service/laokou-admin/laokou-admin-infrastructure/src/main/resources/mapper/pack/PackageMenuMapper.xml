@@ -20,41 +20,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.PackageMenuMapper">
 
-    <sql id="columns">
-        `id`,
-        creator,
-        editor,
-        create_date,
-        update_date,
-        dept_id,
-        dept_path,
-        tenant_id,
-        package_id,
-        menu_id
-    </sql>
+  <sql id="columns">
+    `id`,
+    creator,
+    editor,
+    create_time,
+    update_time,
+    dept_id,
+    dept_path,
+    tenant_id,
+    package_id,
+    menu_id
+  </sql>
 
-    <insert id="insertOne" useGeneratedKeys="false">
-        insert into boot_sys_package_menu(<include refid="columns"/>)
-        values (
-        #{id},
-        #{creator},
-        #{editor},
-        #{createDate},
-        #{updateDate},
-        #{deptId},
-        #{deptPath},
-        #{tenantId},
-        #{packageId},
-        #{menuId}
-        )
-    </insert>
-    <delete id="deleteByPackageId">
-        delete from boot_sys_package_menu
-        where package_id = #{packageId}
-    </delete>
-    <select id="selectMenuIdsByPackageId" resultType="java.lang.Long">
-        select menu_id
-        from boot_sys_package_menu
-        where package_id = #{packageId}
-    </select>
+  <insert id="insertOne" useGeneratedKeys="false">
+    insert into boot_sys_package_menu(<include refid="columns"/>)
+    values (
+    #{id},
+    #{creator},
+    #{editor},
+    #{createTime},
+    #{updateTime},
+    #{deptId},
+    #{deptPath},
+    #{tenantId},
+    #{packageId},
+    #{menuId}
+    )
+  </insert>
+  <delete id="deleteByPackageId">
+    delete
+    from boot_sys_package_menu
+    where package_id = #{packageId}
+  </delete>
+  <select id="selectMenuIdsByPackageId" resultType="java.lang.Long">
+    select menu_id
+    from boot_sys_package_menu
+    where package_id = #{packageId}
+  </select>
 </mapper>

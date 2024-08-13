@@ -102,12 +102,12 @@ public abstract class DomainEvent<ID> implements Serializable {
 	/**
 	 * 创建时间.
 	 */
-	protected Instant createDate;
+	protected Instant createTime;
 
 	/**
 	 * 修改时间.
 	 */
-	protected Instant updateDate;
+	protected Instant updateTime;
 
 	protected abstract void generatorId();
 

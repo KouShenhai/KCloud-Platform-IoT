@@ -23,7 +23,7 @@
   <delete id="deleteOldByAppNameOfThreeMonths">
     delete
     from boot_domain_event
-    where create_date <![CDATA[ < ]]> (now() - interval '3 month')
+    where create_time <![CDATA[ < ]]> (now() - interval '3 month')
       and app_name = #{appName}
   </delete>
 

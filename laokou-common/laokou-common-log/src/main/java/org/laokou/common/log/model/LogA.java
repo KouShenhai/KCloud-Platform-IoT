@@ -129,8 +129,8 @@ public class LogA extends AggregateRoot<Long> {
 		this.deptPath = user.getDeptPath();
 		this.tenantId = user.getTenantId();
 		this.id = IdGenerator.defaultSnowflakeId();
-		this.createDate = DateUtil.nowInstant();
-		this.updateDate = this.createDate;
+		this.createTime = DateUtil.nowInstant();
+		this.updateTime = this.createTime;
 		this.creator = user.getId();
 		this.editor = this.creator;
 		this.appName = appName;
