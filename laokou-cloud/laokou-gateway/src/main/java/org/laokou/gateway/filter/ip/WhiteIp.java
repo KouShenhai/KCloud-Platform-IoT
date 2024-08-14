@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -46,7 +47,7 @@ import static org.laokou.common.i18n.common.exception.SystemException.IP_RESTRIC
 @Component
 @RequiredArgsConstructor
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.cloud.gateway.ip.white",
-		name = "enabled")
+	name = "enabled")
 public class WhiteIp extends AbstractIp {
 
 	private final ReactiveRedisUtil reactiveRedisUtil;
@@ -55,8 +56,9 @@ public class WhiteIp extends AbstractIp {
 
 	/**
 	 * 校验IP并响应（白名单）.
+	 *
 	 * @param exchange 服务网络交换机
-	 * @param chain 链式过滤器
+	 * @param chain    链式过滤器
 	 * @return 响应结果
 	 */
 	@Override
@@ -68,7 +70,7 @@ public class WhiteIp extends AbstractIp {
 		}
 		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(WHITE);
 		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
-			if (Boolean.FALSE.equals(r)) {
+			if (ObjectUtil.equals(Boolean.FALSE, r)) {
 				log.error("IP为{}被限制", hostAddress);
 				return ReactiveResponseUtil.response(exchange, Result.fail(IP_RESTRICTED));
 			}
