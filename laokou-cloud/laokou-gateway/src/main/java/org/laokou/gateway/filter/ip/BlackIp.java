@@ -47,7 +47,7 @@ import static org.laokou.common.i18n.common.exception.SystemException.IP_BLACKED
 @Component
 @RequiredArgsConstructor
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.cloud.gateway.ip.black",
-	name = "enabled")
+		name = "enabled")
 public class BlackIp extends AbstractIp {
 
 	private final ReactiveRedisUtil reactiveRedisUtil;
@@ -56,9 +56,8 @@ public class BlackIp extends AbstractIp {
 
 	/**
 	 * 校验IP并响应（黑名单）.
-	 *
 	 * @param exchange 服务网络交换机
-	 * @param chain    链式过滤器
+	 * @param chain 链式过滤器
 	 * @return 响应结果
 	 */
 	@Override
