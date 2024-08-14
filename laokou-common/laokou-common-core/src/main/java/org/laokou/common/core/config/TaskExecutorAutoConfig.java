@@ -63,7 +63,7 @@ public class TaskExecutorAutoConfig {
 		String enabled = environment.getProperty(THREADS_VIRTUAL_ENABLED);
 		if (ObjectUtil.equals(TRUE, enabled)) {
 			// 虚拟线程
-			return new VirtualThreadTaskExecutor(threadNamePrefix);
+			return TtlExecutors.getTtlExecutor(new VirtualThreadTaskExecutor(threadNamePrefix));
 		}
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 		// 核心池大小
