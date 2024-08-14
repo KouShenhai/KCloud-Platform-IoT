@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @EnableEncryptableProperties
 @EnableTransactionManagement(proxyTargetClass = true)
-@SpringBootApplication(scanBasePackages = { "com.aizuda.snailjob.server.starter.*" })
+@SpringBootApplication(scanBasePackages = {"com.aizuda.snailjob.server.starter.*"})
 public class SnailJobApp {
 
 	public static void main(String[] args) {
@@ -41,7 +41,7 @@ public class SnailJobApp {
 
 	@Bean
 	public ApplicationRunner nettyStartupChecker(NettyHttpServer nettyHttpServer,
-			ServletWebServerFactory serverFactory) {
+												 ServletWebServerFactory serverFactory) {
 		return args -> {
 			// 最长自旋10秒，保证nettyHttpServer启动完成
 			int waitCount = 0;

@@ -27,63 +27,64 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class DispatchService implements Lifecycle {
 
-	/**
-	 * 分配器线程
-	 */
-	private final ScheduledExecutorService dispatchService = Executors
-		.newSingleThreadScheduledExecutor(r -> new Thread(r, "dispatch-service"));
+    /**
+     * 分配器线程
+     */
+    private final ScheduledExecutorService dispatchService = Executors
+            .newSingleThreadScheduledExecutor(r -> new Thread(r, "dispatch-service"));
 
-	/**
-	 * 调度时长
-	 */
-	public static final Long PERIOD = SystemConstants.SCHEDULE_PERIOD;
+    /**
+     * 调度时长
+     */
+    public static final Long PERIOD = SystemConstants.SCHEDULE_PERIOD;
 
-	/**
-	 * 延迟30s为了尽可能保障集群节点都启动完成在进行rebalance
-	 */
-	public static final Long INITIAL_DELAY = SystemConstants.SCHEDULE_INITIAL_DELAY;
+    /**
+     * 延迟30s为了尽可能保障集群节点都启动完成在进行rebalance
+     */
+    public static final Long INITIAL_DELAY = SystemConstants.SCHEDULE_INITIAL_DELAY;
 
-	@Override
-	public void start() {
+    @Override
+    public void start() {
 
-		// TODO待优化
-		ActorRef actorRef = ActorGenerator.scanBucketActor();
+        // TODO待优化
+        ActorRef actorRef = ActorGenerator.scanBucketActor();
 
-		dispatchService.scheduleAtFixedRate(() -> {
+        dispatchService.scheduleAtFixedRate(() -> {
 
-			try {
-				// 当正在rebalance时延迟10s，尽量等待所有节点都完成rebalance
-				if (DistributeInstance.RE_BALANCE_ING.get()) {
-					SnailJobLog.LOCAL.info("正在rebalance中....");
-					TimeUnit.SECONDS.sleep(INITIAL_DELAY);
-				}
+            try {
+                // 当正在rebalance时延迟10s，尽量等待所有节点都完成rebalance
+                if (DistributeInstance.RE_BALANCE_ING.get()) {
+                    SnailJobLog.LOCAL.info("正在rebalance中....");
+                    TimeUnit.SECONDS.sleep(INITIAL_DELAY);
+                }
 
-				Set<Integer> currentConsumerBuckets = getConsumerBucket();
-				if (CollUtil.isNotEmpty(currentConsumerBuckets)) {
-					ConsumerBucket scanTaskDTO = new ConsumerBucket();
-					scanTaskDTO.setBuckets(currentConsumerBuckets);
-					actorRef.tell(scanTaskDTO, actorRef);
-				}
+                Set<Integer> currentConsumerBuckets = getConsumerBucket();
+                if (CollUtil.isNotEmpty(currentConsumerBuckets)) {
+                    ConsumerBucket scanTaskDTO = new ConsumerBucket();
+                    scanTaskDTO.setBuckets(currentConsumerBuckets);
+                    actorRef.tell(scanTaskDTO, actorRef);
+                }
 
-			}
-			catch (Exception e) {
-				SnailJobLog.LOCAL.error("分发异常", e);
-			}
+            } catch (Exception e) {
+                SnailJobLog.LOCAL.error("分发异常", e);
+            }
 
-		}, INITIAL_DELAY, PERIOD, TimeUnit.SECONDS);
-	}
 
-	/**
-	 * 分配当前POD负责消费的桶
-	 * @return {@link GroupConfig} 组上下文
-	 */
-	private Set<Integer> getConsumerBucket() {
-		return DistributeInstance.INSTANCE.getConsumerBucket();
-	}
+        }, INITIAL_DELAY, PERIOD, TimeUnit.SECONDS);
+    }
 
-	@Override
-	public void close() {
 
-	}
+    /**
+     * 分配当前POD负责消费的桶
+     *
+     * @return {@link  GroupConfig} 组上下文
+     */
+    private Set<Integer> getConsumerBucket() {
+        return DistributeInstance.INSTANCE.getConsumerBucket();
+    }
 
+    @Override
+    public void close() {
+
+    }
 }
