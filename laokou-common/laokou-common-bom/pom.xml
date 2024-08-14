@@ -134,7 +134,7 @@
     <!--zstd-jni版本-->
     <zstd-jni.version>1.5.6-3</zstd-jni.version>
     <!--snail-job版本-->
-    <snail-job.version>1.1.1</snail-job.version>
+    <snail-job.version>1.1.2</snail-job.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
