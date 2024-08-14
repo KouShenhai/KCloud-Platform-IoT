@@ -39,125 +39,131 @@ import java.util.Objects;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @RequiredArgsConstructor
 public class ConsumerBucketActor extends AbstractActor {
-    private final AccessTemplate accessTemplate;
-    private final ServerNodeMapper serverNodeMapper;
-    private final SystemProperties systemProperties;
-    private static final String DEFAULT_JOB_KEY = "DEFAULT_JOB_KEY";
-    private static final String DEFAULT_WORKFLOW_KEY = "DEFAULT_JOB_KEY";
 
-    @Override
-    public Receive createReceive() {
-        return receiveBuilder().match(ConsumerBucket.class, consumerBucket -> {
+	private final AccessTemplate accessTemplate;
 
-            try {
-                doDispatch(consumerBucket);
-            } catch (Exception e) {
-                SnailJobLog.LOCAL.error("Data dispatcher processing exception. [{}]", consumerBucket, e);
-            }
+	private final ServerNodeMapper serverNodeMapper;
 
-        }).build();
-    }
+	private final SystemProperties systemProperties;
 
-    private void doDispatch(final ConsumerBucket consumerBucket) {
-        if (CollUtil.isEmpty(consumerBucket.getBuckets())) {
-            return;
-        }
+	private static final String DEFAULT_JOB_KEY = "DEFAULT_JOB_KEY";
 
-        // 扫描job && workflow
-        doScanJobAndWorkflow(consumerBucket);
+	private static final String DEFAULT_WORKFLOW_KEY = "DEFAULT_JOB_KEY";
 
-        // 扫描重试
-        doScanRetry(consumerBucket);
-    }
+	@Override
+	public Receive createReceive() {
+		return receiveBuilder().match(ConsumerBucket.class, consumerBucket -> {
 
-    private void doScanRetry(final ConsumerBucket consumerBucket) {
-        List<GroupConfig> groupConfigs = null;
-        try {
-            // 查询桶对应组信息
-            groupConfigs = accessTemplate.getGroupConfigAccess().list(
-                    new LambdaQueryWrapper<GroupConfig>()
-                            .select(GroupConfig::getGroupName, GroupConfig::getGroupPartition, GroupConfig::getNamespaceId)
-                            .eq(GroupConfig::getGroupStatus, StatusEnum.YES.getStatus())
-                            .in(GroupConfig::getBucketIndex, consumerBucket.getBuckets())
-            );
-        } catch (Exception e) {
-            SnailJobLog.LOCAL.error("生成重试任务异常.", e);
-        }
+			try {
+				doDispatch(consumerBucket);
+			}
+			catch (Exception e) {
+				SnailJobLog.LOCAL.error("Data dispatcher processing exception. [{}]", consumerBucket, e);
+			}
 
-        if (CollUtil.isNotEmpty(groupConfigs)) {
-            for (final GroupConfig groupConfig : groupConfigs) {
-                CacheConsumerGroup.addOrUpdate(groupConfig.getGroupName(), groupConfig.getNamespaceId());
-                ScanTask scanTask = new ScanTask();
-                scanTask.setNamespaceId(groupConfig.getNamespaceId());
-                scanTask.setGroupName(groupConfig.getGroupName());
-                scanTask.setBuckets(consumerBucket.getBuckets());
-                scanTask.setGroupPartition(groupConfig.getGroupPartition());
-                produceScanActorTask(scanTask);
-            }
-        }
-    }
+		}).build();
+	}
 
-    private void doScanJobAndWorkflow(final ConsumerBucket consumerBucket) {
-        ScanTask scanTask = new ScanTask();
-        scanTask.setBuckets(consumerBucket.getBuckets());
+	private void doDispatch(final ConsumerBucket consumerBucket) {
+		if (CollUtil.isEmpty(consumerBucket.getBuckets())) {
+			return;
+		}
 
-        // 扫描定时任务数据
-        ActorRef scanJobActorRef = cacheActorRef(DEFAULT_JOB_KEY, SyetemTaskTypeEnum.JOB);
-        scanJobActorRef.tell(scanTask, scanJobActorRef);
+		// 扫描job && workflow
+		doScanJobAndWorkflow(consumerBucket);
 
-        // 扫描DAG工作流任务数据
-        ActorRef scanWorkflowActorRef = cacheActorRef(DEFAULT_WORKFLOW_KEY, SyetemTaskTypeEnum.WORKFLOW);
-        scanWorkflowActorRef.tell(scanTask, scanWorkflowActorRef);
-    }
+		// 扫描重试
+		doScanRetry(consumerBucket);
+	}
 
-    /**
-     * 扫描任务生成器
-     *
-     * @param scanTask {@link  ScanTask} 组上下文
-     */
-    private void produceScanActorTask(ScanTask scanTask) {
+	private void doScanRetry(final ConsumerBucket consumerBucket) {
+		List<GroupConfig> groupConfigs = null;
+		try {
+			// 查询桶对应组信息
+			groupConfigs = accessTemplate.getGroupConfigAccess()
+				.list(new LambdaQueryWrapper<GroupConfig>()
+					.select(GroupConfig::getGroupName, GroupConfig::getGroupPartition, GroupConfig::getNamespaceId)
+					.eq(GroupConfig::getGroupStatus, StatusEnum.YES.getStatus())
+					.in(GroupConfig::getBucketIndex, consumerBucket.getBuckets()));
+		}
+		catch (Exception e) {
+			SnailJobLog.LOCAL.error("生成重试任务异常.", e);
+		}
 
-        String groupName = scanTask.getGroupName();
+		if (CollUtil.isNotEmpty(groupConfigs)) {
+			for (final GroupConfig groupConfig : groupConfigs) {
+				CacheConsumerGroup.addOrUpdate(groupConfig.getGroupName(), groupConfig.getNamespaceId());
+				ScanTask scanTask = new ScanTask();
+				scanTask.setNamespaceId(groupConfig.getNamespaceId());
+				scanTask.setGroupName(groupConfig.getGroupName());
+				scanTask.setBuckets(consumerBucket.getBuckets());
+				scanTask.setGroupPartition(groupConfig.getGroupPartition());
+				produceScanActorTask(scanTask);
+			}
+		}
+	}
 
-        // 缓存按照
-        cacheRateLimiter(groupName);
+	private void doScanJobAndWorkflow(final ConsumerBucket consumerBucket) {
+		ScanTask scanTask = new ScanTask();
+		scanTask.setBuckets(consumerBucket.getBuckets());
 
-        // 扫描重试数据
-        ActorRef scanRetryActorRef = cacheActorRef(groupName, SyetemTaskTypeEnum.RETRY);
-        scanRetryActorRef.tell(scanTask, scanRetryActorRef);
+		// 扫描定时任务数据
+		ActorRef scanJobActorRef = cacheActorRef(DEFAULT_JOB_KEY, SyetemTaskTypeEnum.JOB);
+		scanJobActorRef.tell(scanTask, scanJobActorRef);
 
-        // 扫描回调数据
-        ActorRef scanCallbackActorRef = cacheActorRef(groupName, SyetemTaskTypeEnum.CALLBACK);
-        scanCallbackActorRef.tell(scanTask, scanCallbackActorRef);
+		// 扫描DAG工作流任务数据
+		ActorRef scanWorkflowActorRef = cacheActorRef(DEFAULT_WORKFLOW_KEY, SyetemTaskTypeEnum.WORKFLOW);
+		scanWorkflowActorRef.tell(scanTask, scanWorkflowActorRef);
+	}
 
-    }
+	/**
+	 * 扫描任务生成器
+	 * @param scanTask {@link ScanTask} 组上下文
+	 */
+	private void produceScanActorTask(ScanTask scanTask) {
 
-    /**
-     * 缓存限流对象
-     */
-    private void cacheRateLimiter(String groupName) {
-        List<ServerNode> serverNodes = serverNodeMapper.selectList(new LambdaQueryWrapper<ServerNode>()
-                .eq(ServerNode::getGroupName, groupName));
-        Cache<String, RateLimiter> rateLimiterCache = CacheGroupRateLimiter.getAll();
-        for (ServerNode serverNode : serverNodes) {
-            RateLimiter rateLimiter = rateLimiterCache.getIfPresent(serverNode.getHostId());
-            if (Objects.isNull(rateLimiter)) {
-                rateLimiterCache.put(serverNode.getHostId(), RateLimiter.create(systemProperties.getLimiter()));
-            }
-        }
+		String groupName = scanTask.getGroupName();
 
-    }
+		// 缓存按照
+		cacheRateLimiter(groupName);
 
-    /**
-     * 缓存Actor对象
-     */
-    private ActorRef cacheActorRef(String groupName, SyetemTaskTypeEnum typeEnum) {
-        ActorRef scanActorRef = CacheGroupScanActor.get(groupName, typeEnum);
-        if (Objects.isNull(scanActorRef)) {
-            scanActorRef = typeEnum.getActorRef().get();
-            // 缓存扫描器actor
-            CacheGroupScanActor.put(groupName, typeEnum, scanActorRef);
-        }
-        return scanActorRef;
-    }
+		// 扫描重试数据
+		ActorRef scanRetryActorRef = cacheActorRef(groupName, SyetemTaskTypeEnum.RETRY);
+		scanRetryActorRef.tell(scanTask, scanRetryActorRef);
+
+		// 扫描回调数据
+		ActorRef scanCallbackActorRef = cacheActorRef(groupName, SyetemTaskTypeEnum.CALLBACK);
+		scanCallbackActorRef.tell(scanTask, scanCallbackActorRef);
+
+	}
+
+	/**
+	 * 缓存限流对象
+	 */
+	private void cacheRateLimiter(String groupName) {
+		List<ServerNode> serverNodes = serverNodeMapper
+			.selectList(new LambdaQueryWrapper<ServerNode>().eq(ServerNode::getGroupName, groupName));
+		Cache<String, RateLimiter> rateLimiterCache = CacheGroupRateLimiter.getAll();
+		for (ServerNode serverNode : serverNodes) {
+			RateLimiter rateLimiter = rateLimiterCache.getIfPresent(serverNode.getHostId());
+			if (Objects.isNull(rateLimiter)) {
+				rateLimiterCache.put(serverNode.getHostId(), RateLimiter.create(systemProperties.getLimiter()));
+			}
+		}
+
+	}
+
+	/**
+	 * 缓存Actor对象
+	 */
+	private ActorRef cacheActorRef(String groupName, SyetemTaskTypeEnum typeEnum) {
+		ActorRef scanActorRef = CacheGroupScanActor.get(groupName, typeEnum);
+		if (Objects.isNull(scanActorRef)) {
+			scanActorRef = typeEnum.getActorRef().get();
+			// 缓存扫描器actor
+			CacheGroupScanActor.put(groupName, typeEnum, scanActorRef);
+		}
+		return scanActorRef;
+	}
+
 }

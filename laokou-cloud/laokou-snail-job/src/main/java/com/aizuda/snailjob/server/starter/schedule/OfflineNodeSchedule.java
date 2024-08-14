@@ -33,63 +33,68 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class OfflineNodeSchedule extends AbstractSchedule implements Lifecycle {
-    private final ServerNodeMapper serverNodeMapper;
 
-    @Override
-    protected void doExecute() {
+	private final ServerNodeMapper serverNodeMapper;
 
-        try {
-            // 删除内存缓存的待下线的机器
-            LocalDateTime endTime = LocalDateTime.now().minusSeconds(
-                    ServerRegister.DELAY_TIME + (ServerRegister.DELAY_TIME / 3));
+	@Override
+	protected void doExecute() {
 
-            List<ServerNode> serverNodes = serverNodeMapper.selectList(
-                    new LambdaQueryWrapper<ServerNode>().select(ServerNode::getId)
-                            .le(ServerNode::getExpireAt, endTime));
-            if (CollUtil.isNotEmpty(serverNodes)) {
-                // 先删除DB中需要下线的机器
-                serverNodeMapper.deleteByIds(StreamUtils.toSet(serverNodes, ServerNode::getId));
-            }
+		try {
+			// 删除内存缓存的待下线的机器
+			LocalDateTime endTime = LocalDateTime.now()
+				.minusSeconds(ServerRegister.DELAY_TIME + (ServerRegister.DELAY_TIME / 3));
 
-            Set<RegisterNodeInfo> allPods = CacheRegisterTable.getAllPods();
-            Set<RegisterNodeInfo> waitOffline = allPods.stream().filter(registerNodeInfo -> registerNodeInfo.getExpireAt().isBefore(endTime)).collect(
-                    Collectors.toSet());
-            Set<String> podIds = StreamUtils.toSet(waitOffline, RegisterNodeInfo::getHostId);
-            if (CollUtil.isEmpty(podIds)) {
-                return;
-            }
+			List<ServerNode> serverNodes = serverNodeMapper
+				.selectList(new LambdaQueryWrapper<ServerNode>().select(ServerNode::getId)
+					.le(ServerNode::getExpireAt, endTime));
+			if (CollUtil.isNotEmpty(serverNodes)) {
+				// 先删除DB中需要下线的机器
+				serverNodeMapper.deleteByIds(StreamUtils.toSet(serverNodes, ServerNode::getId));
+			}
 
-            for (final RegisterNodeInfo registerNodeInfo : waitOffline) {
-                CacheRegisterTable.remove(registerNodeInfo.getGroupName(), registerNodeInfo.getNamespaceId(), registerNodeInfo.getHostId());
-            }
+			Set<RegisterNodeInfo> allPods = CacheRegisterTable.getAllPods();
+			Set<RegisterNodeInfo> waitOffline = allPods.stream()
+				.filter(registerNodeInfo -> registerNodeInfo.getExpireAt().isBefore(endTime))
+				.collect(Collectors.toSet());
+			Set<String> podIds = StreamUtils.toSet(waitOffline, RegisterNodeInfo::getHostId);
+			if (CollUtil.isEmpty(podIds)) {
+				return;
+			}
 
-        } catch (Exception e) {
-            SnailJobLog.LOCAL.error("clearOfflineNode 失败", e);
-        }
-    }
+			for (final RegisterNodeInfo registerNodeInfo : waitOffline) {
+				CacheRegisterTable.remove(registerNodeInfo.getGroupName(), registerNodeInfo.getNamespaceId(),
+						registerNodeInfo.getHostId());
+			}
 
-    @Override
-    public String lockName() {
-        return "clearOfflineNode";
-    }
+		}
+		catch (Exception e) {
+			SnailJobLog.LOCAL.error("clearOfflineNode 失败", e);
+		}
+	}
 
-    @Override
-    public String lockAtMost() {
-        return "PT10S";
-    }
+	@Override
+	public String lockName() {
+		return "clearOfflineNode";
+	}
 
-    @Override
-    public String lockAtLeast() {
-        return "PT5S";
-    }
+	@Override
+	public String lockAtMost() {
+		return "PT10S";
+	}
 
-    @Override
-    public void start() {
-        taskScheduler.scheduleWithFixedDelay(this::execute, Instant.now(), Duration.parse("PT5S"));
-    }
+	@Override
+	public String lockAtLeast() {
+		return "PT5S";
+	}
 
-    @Override
-    public void close() {
+	@Override
+	public void start() {
+		taskScheduler.scheduleWithFixedDelay(this::execute, Instant.now(), Duration.parse("PT5S"));
+	}
 
-    }
+	@Override
+	public void close() {
+
+	}
+
 }
