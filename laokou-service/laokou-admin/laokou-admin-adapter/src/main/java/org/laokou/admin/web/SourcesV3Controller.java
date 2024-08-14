@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -49,7 +49,7 @@ public class SourcesV3Controller {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('source:page')")
 	@Operation(summary = "数据源管理", description = "查询数据源列表")
-	public Result<Datas<SourceCO>> pageV3() {
+	public Result<Page<SourceCO>> pageV3() {
 		return null;
 	}
 

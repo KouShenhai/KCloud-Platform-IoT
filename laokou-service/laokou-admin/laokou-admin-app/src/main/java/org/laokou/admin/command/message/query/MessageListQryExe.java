@@ -24,7 +24,7 @@ import org.laokou.admin.dto.message.MessageListQry;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -56,7 +56,7 @@ public class MessageListQryExe {
 	@SneakyThrows
 	@DS(TENANT)
 	// @DataFilter(tableAlias = BOOT_SYS_MESSAGE)
-	public Result<Datas<MessageCO>> execute(MessageListQry qry) {
+	public Result<Page<MessageCO>> execute(MessageListQry qry) {
 		MessageDO messageDO = convert(qry);
 		PageQuery page = qry;
 		CompletableFuture<List<MessageDO>> c1 = CompletableFuture

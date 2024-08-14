@@ -25,7 +25,7 @@ import org.laokou.admin.dto.packages.*;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.constant.Type;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -53,7 +53,7 @@ public class PackagesController {
 	@PostMapping("list")
 	@Operation(summary = "套餐管理", description = "查询套餐列表")
 	@PreAuthorize("hasAuthority('packages:list')")
-	public Result<Datas<PackageCO>> findList(@RequestBody PackageListQry qry) {
+	public Result<Page<PackageCO>> findList(@RequestBody PackageListQry qry) {
 		return packagesServiceI.findList(qry);
 	}
 

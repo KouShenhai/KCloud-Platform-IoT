@@ -28,7 +28,7 @@ import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.user.*;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -152,7 +152,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	 * @return 用户列表
 	 */
 	@Override
-	public Result<Datas<UserCO>> page(UserListQry qry) {
+	public Result<Page<UserCO>> page(UserListQry qry) {
 		return userListQryExe.execute(qry);
 	}
 

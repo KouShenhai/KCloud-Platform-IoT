@@ -23,7 +23,7 @@ import org.laokou.admin.dto.ip.IpListQry;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
 import org.laokou.admin.gatewayimpl.database.IpMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.IpDO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -51,7 +51,7 @@ public class IpListQryExe {
 	 * @return IP列表
 	 */
 	@SneakyThrows
-	public Result<Datas<IpCO>> execute(IpListQry qry) {
+	public Result<Page<IpCO>> execute(IpListQry qry) {
 		IpDO ipDO = new IpDO(qry.getLabel());
 		PageQuery page = qry;
 		CompletableFuture<List<IpDO>> c1 = CompletableFuture

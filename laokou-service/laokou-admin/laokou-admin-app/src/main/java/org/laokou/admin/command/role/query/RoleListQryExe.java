@@ -24,7 +24,7 @@ import org.laokou.admin.dto.role.RoleListQry;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -56,7 +56,7 @@ public class RoleListQryExe {
 	@SneakyThrows
 	@DS(TENANT)
 	// @DataFilter(tableAlias = BOOT_SYS_ROLE)
-	public Result<Datas<RoleCO>> execute(RoleListQry qry) {
+	public Result<Page<RoleCO>> execute(RoleListQry qry) {
 		RoleDO roleDO = new RoleDO(qry.getName());
 		PageQuery page = qry;
 		CompletableFuture<List<RoleDO>> c1 = CompletableFuture

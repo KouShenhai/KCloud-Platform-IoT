@@ -28,7 +28,7 @@ import org.laokou.admin.dto.ip.IpCreateCmd;
 import org.laokou.admin.dto.ip.IpListQry;
 import org.laokou.admin.dto.ip.IpRefreshCmd;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -73,7 +73,7 @@ public class IpsServiceImpl implements IpsServiceI {
 	 * @return IP列表
 	 */
 	@Override
-	public Result<Datas<IpCO>> findList(IpListQry qry) {
+	public Result<Page<IpCO>> findList(IpListQry qry) {
 		return ipListQryExe.execute(qry);
 	}
 

@@ -24,7 +24,7 @@ import org.laokou.admin.api.RolesServiceI;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.role.*;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
@@ -49,7 +49,7 @@ public class RolesController {
 	@PostMapping("list")
 	@Operation(summary = "角色管理", description = "查询角色列表")
 	@PreAuthorize("hasAuthority('roles:list')")
-	public Result<Datas<RoleCO>> findList(@RequestBody RoleListQry qry) {
+	public Result<Page<RoleCO>> findList(@RequestBody RoleListQry qry) {
 		return rolesServiceI.findList(qry);
 	}
 

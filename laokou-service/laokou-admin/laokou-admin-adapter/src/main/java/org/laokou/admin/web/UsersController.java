@@ -24,7 +24,7 @@ import org.laokou.admin.api.UsersServiceI;
 import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -54,7 +54,7 @@ public class UsersController {
 	@PostMapping("v1/users/page")
 	@Operation(summary = "用户管理", description = "分页查询用户列表")
 	@PreAuthorize("hasAuthority('user:page')")
-	public Result<Datas<UserCO>> pageV1(@RequestBody UserListQry qry) {
+	public Result<Page<UserCO>> pageV1(@RequestBody UserListQry qry) {
 		return usersServiceI.page(qry);
 	}
 

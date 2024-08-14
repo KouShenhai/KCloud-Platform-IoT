@@ -25,7 +25,7 @@ import org.laokou.admin.dto.cluster.ClusterInstanceListQry;
 import org.laokou.admin.dto.cluster.ClusterServiceListQry;
 import org.laokou.admin.dto.cluster.clientobject.ClusterInstanceCO;
 import org.laokou.admin.dto.cluster.clientobject.ClusterServiceCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,7 +46,7 @@ public class ClustersController {
 	@PostMapping("service-list")
 	@Operation(summary = "集群管理", description = "查询服务列表")
 	@PreAuthorize("hasAuthority('clusters:service-list')")
-	public Result<Datas<ClusterServiceCO>> findServiceList(@RequestBody ClusterServiceListQry qry) {
+	public Result<Page<ClusterServiceCO>> findServiceList(@RequestBody ClusterServiceListQry qry) {
 		return clustersServiceI.findServiceList(qry);
 	}
 
@@ -54,7 +54,7 @@ public class ClustersController {
 	@PostMapping("instance-list")
 	@Operation(summary = "集群管理", description = "查询实例列表")
 	@PreAuthorize("hasAuthority('clusters:instance-list')")
-	public Result<Datas<ClusterInstanceCO>> findInstanceList(@RequestBody ClusterInstanceListQry qry) {
+	public Result<Page<ClusterInstanceCO>> findInstanceList(@RequestBody ClusterInstanceListQry qry) {
 		return clustersServiceI.findInstanceList(qry);
 	}
 

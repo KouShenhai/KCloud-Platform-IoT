@@ -25,7 +25,7 @@ import org.laokou.admin.dto.oss.OssListQry;
 import org.laokou.admin.dto.oss.OssModifyCmd;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
@@ -51,7 +51,7 @@ public class OssV3Controller {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('oss:page')")
 	@Operation(summary = "分页查询OSS列表", description = "分页查询OSS列表")
-	public Result<Datas<OssCO>> pageV3(@RequestBody OssListQry qry) {
+	public Result<Page<OssCO>> pageV3(@RequestBody OssListQry qry) {
 		return null;
 	}
 

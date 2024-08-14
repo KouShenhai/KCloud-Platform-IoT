@@ -20,7 +20,7 @@ package org.laokou.admin.api;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.laokou.admin.dto.source.*;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public interface SourcesServiceI {
 	 * @param qry 查询数据源列表参数
 	 * @return 数据源列表
 	 */
-	Result<Datas<SourceCO>> findList(SourceListQry qry);
+	Result<Page<SourceCO>> findList(SourceListQry qry);
 
 	/**
 	 * 查询数据源下拉框选择项列表.

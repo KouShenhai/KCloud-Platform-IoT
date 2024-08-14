@@ -20,7 +20,7 @@ package org.laokou.common.mongodb.template;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.mongodb.clientobject.SearchCO;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -57,7 +57,7 @@ public class MongodbTemplate {
 		return obj;
 	}
 
-	public Datas<Map> query(SearchCO queryCO) {
+	public Page<Map> query(SearchCO queryCO) {
 		final long startTime = IdGenerator.SystemClock.now();
 		final Query query = new Query();
 		final String collectionName = queryCO.getCollectionName();

@@ -20,7 +20,7 @@ package org.laokou.admin.api;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.role.*;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public interface RolesServiceI {
 	 * @param qry 查询角色列表
 	 * @return 角色列表
 	 */
-	Result<Datas<RoleCO>> findList(RoleListQry qry);
+	Result<Page<RoleCO>> findList(RoleListQry qry);
 
 	/**
 	 * 查询角色下拉框选择项列表.

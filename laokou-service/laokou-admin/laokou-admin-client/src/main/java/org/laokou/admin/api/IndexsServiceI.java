@@ -22,7 +22,7 @@ import org.laokou.admin.dto.index.IndexListQry;
 import org.laokou.admin.dto.index.IndexTraceGetQry;
 import org.laokou.admin.dto.index.IndexTraceListQry;
 import org.laokou.admin.dto.index.clientobject.IndexCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
 import java.util.Map;
@@ -39,7 +39,7 @@ public interface IndexsServiceI {
 	 * @param qry 查询索引列表参数
 	 * @return 索引列表
 	 */
-	Result<Datas<IndexCO>> findList(IndexListQry qry);
+	Result<Page<IndexCO>> findList(IndexListQry qry);
 
 	/**
 	 * 根据索引名称查看索引信息.
@@ -53,7 +53,7 @@ public interface IndexsServiceI {
 	 * @param qry 查询分布式链路索引列表参数
 	 * @return 分布式链路索引列表
 	 */
-	Result<Datas<Map<String, Object>>> findTraceList(IndexTraceListQry qry);
+	Result<Page<Map<String, Object>>> findTraceList(IndexTraceListQry qry);
 
 	/**
 	 * 根据ID查看分布式链路索引.

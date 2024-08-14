@@ -26,7 +26,7 @@ import org.laokou.admin.dto.oss.clientobject.FileCO;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.constant.Type;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
@@ -53,7 +53,7 @@ public class OssController {
 	@PostMapping("list")
 	@Operation(summary = "OSS管理", description = "查询OSS列表")
 	@PreAuthorize("hasAuthority('oss:list')")
-	public Result<Datas<OssCO>> findList(@RequestBody OssListQry qry) {
+	public Result<Page<OssCO>> findList(@RequestBody OssListQry qry) {
 		return ossServiceI.findList(qry);
 	}
 

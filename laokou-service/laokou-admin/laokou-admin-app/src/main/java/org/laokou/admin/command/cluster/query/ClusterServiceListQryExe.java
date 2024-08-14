@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.dto.cluster.ClusterServiceListQry;
 import org.laokou.admin.dto.cluster.clientobject.ClusterServiceCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.utils.ServiceUtil;
@@ -48,7 +48,7 @@ public class ClusterServiceListQryExe {
 	 * @param qry 查询服务列表参数
 	 * @return 服务列表
 	 */
-	public Result<Datas<ClusterServiceCO>> execute(ClusterServiceListQry qry) {
+	public Result<Page<ClusterServiceCO>> execute(ClusterServiceListQry qry) {
 		Integer pageNum = qry.getPageNum();
 		Integer pageSize = qry.getPageSize();
 		String serviceId = qry.getServiceId();

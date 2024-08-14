@@ -23,7 +23,7 @@ import org.laokou.admin.dto.log.OperateLogExportCmd;
 import org.laokou.admin.dto.log.OperateLogListQry;
 import org.laokou.admin.dto.log.clientobject.LoginLogCO;
 import org.laokou.admin.dto.log.clientobject.OperateLogCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
 /**
@@ -38,7 +38,7 @@ public interface LogsServiceI {
 	 * @param qry 查询操作日志列表参数
 	 * @return 操作日志列表
 	 */
-	Result<Datas<OperateLogCO>> findOperateList(OperateLogListQry qry);
+	Result<Page<OperateLogCO>> findOperateList(OperateLogListQry qry);
 
 	/**
 	 * 导出操作日志.
@@ -51,7 +51,7 @@ public interface LogsServiceI {
 	 * @param qry 查询登录日志列表参数
 	 * @return 登录日志列表
 	 */
-	Result<Datas<LoginLogCO>> pageLogin(LoginLogPageQry qry);
+	Result<Page<LoginLogCO>> pageLogin(LoginLogPageQry qry);
 
 	/**
 	 * 导出登录日志.

@@ -27,7 +27,7 @@ import org.laokou.admin.command.tenant.query.TenantGetQryExe;
 import org.laokou.admin.command.tenant.query.TenantListQryExe;
 import org.laokou.admin.dto.tenant.*;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -85,7 +85,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	 * @return 租户列表
 	 */
 	@Override
-	public Result<Datas<TenantCO>> findList(TenantListQry qry) {
+	public Result<Page<TenantCO>> findList(TenantListQry qry) {
 		return tenantListQryExe.execute(qry);
 	}
 

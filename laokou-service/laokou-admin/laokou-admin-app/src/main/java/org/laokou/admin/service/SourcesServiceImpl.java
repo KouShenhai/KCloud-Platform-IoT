@@ -28,7 +28,7 @@ import org.laokou.admin.command.source.SourceModifyCmdExe;
 import org.laokou.admin.command.source.query.SourceGetQryExe;
 import org.laokou.admin.command.source.query.SourceListQryExe;
 import org.laokou.admin.command.source.query.SourceOptionListQryExe;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -98,7 +98,7 @@ public class SourcesServiceImpl implements SourcesServiceI {
 	 * @return 数据源列表
 	 */
 	@Override
-	public Result<Datas<SourceCO>> findList(SourceListQry qry) {
+	public Result<Page<SourceCO>> findList(SourceListQry qry) {
 		return sourceListQryExe.execute(qry);
 	}
 

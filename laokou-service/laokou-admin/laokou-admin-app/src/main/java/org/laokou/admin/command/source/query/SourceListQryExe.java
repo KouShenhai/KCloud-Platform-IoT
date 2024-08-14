@@ -23,7 +23,7 @@ import org.laokou.admin.dto.source.SourceListQry;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -52,7 +52,7 @@ public class SourceListQryExe {
 	 */
 	@SneakyThrows
 	// @DataFilter(tableAlias = BOOT_SYS_SOURCE)
-	public Result<Datas<SourceCO>> execute(SourceListQry qry) {
+	public Result<Page<SourceCO>> execute(SourceListQry qry) {
 		SourceDO sourceDO = new SourceDO(qry.getName());
 		PageQuery page = qry;
 		CompletableFuture<List<SourceDO>> c1 = CompletableFuture

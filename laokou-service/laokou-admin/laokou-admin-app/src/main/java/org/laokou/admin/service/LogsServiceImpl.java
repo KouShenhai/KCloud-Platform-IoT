@@ -29,7 +29,7 @@ import org.laokou.admin.dto.log.OperateLogExportCmd;
 import org.laokou.admin.dto.log.OperateLogListQry;
 import org.laokou.admin.dto.log.clientobject.LoginLogCO;
 import org.laokou.admin.dto.log.clientobject.OperateLogCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +56,7 @@ public class LogsServiceImpl implements LogsServiceI {
 	 * @return 操作日志列表
 	 */
 	@Override
-	public Result<Datas<OperateLogCO>> findOperateList(OperateLogListQry qry) {
+	public Result<Page<OperateLogCO>> findOperateList(OperateLogListQry qry) {
 		return operateLogListQryExe.execute(qry);
 	}
 
@@ -75,7 +75,7 @@ public class LogsServiceImpl implements LogsServiceI {
 	 * @return 登录日志列表
 	 */
 	@Override
-	public Result<Datas<LoginLogCO>> pageLogin(LoginLogPageQry qry) {
+	public Result<Page<LoginLogCO>> pageLogin(LoginLogPageQry qry) {
 		return loginLogPageQryExe.execute(qry);
 	}
 

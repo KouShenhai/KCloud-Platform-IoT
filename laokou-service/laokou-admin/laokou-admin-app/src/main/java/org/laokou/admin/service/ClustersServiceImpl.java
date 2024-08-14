@@ -25,7 +25,7 @@ import org.laokou.admin.dto.cluster.ClusterInstanceListQry;
 import org.laokou.admin.dto.cluster.ClusterServiceListQry;
 import org.laokou.admin.dto.cluster.clientobject.ClusterInstanceCO;
 import org.laokou.admin.dto.cluster.clientobject.ClusterServiceCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +48,7 @@ public class ClustersServiceImpl implements ClustersServiceI {
 	 * @return 服务列表
 	 */
 	@Override
-	public Result<Datas<ClusterServiceCO>> findServiceList(ClusterServiceListQry qry) {
+	public Result<Page<ClusterServiceCO>> findServiceList(ClusterServiceListQry qry) {
 		return clusterServiceListQryExe.execute(qry);
 	}
 
@@ -58,7 +58,7 @@ public class ClustersServiceImpl implements ClustersServiceI {
 	 * @return 服务实例列表
 	 */
 	@Override
-	public Result<Datas<ClusterInstanceCO>> findInstanceList(ClusterInstanceListQry qry) {
+	public Result<Page<ClusterInstanceCO>> findInstanceList(ClusterInstanceListQry qry) {
 		return clusterInstanceListQryExe.execute(qry);
 	}
 

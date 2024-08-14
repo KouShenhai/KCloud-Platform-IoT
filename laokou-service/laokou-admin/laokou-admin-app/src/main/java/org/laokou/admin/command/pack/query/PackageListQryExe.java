@@ -23,7 +23,7 @@ import org.laokou.admin.dto.packages.PackageListQry;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.laokou.admin.gatewayimpl.database.PackageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -52,7 +52,7 @@ public class PackageListQryExe {
 	 */
 	@SneakyThrows
 	// @DataFilter(tableAlias = BOOT_SYS_PACKAGE)
-	public Result<Datas<PackageCO>> execute(PackageListQry qry) {
+	public Result<Page<PackageCO>> execute(PackageListQry qry) {
 		PackageDO packageDO = new PackageDO(qry.getName());
 		PageQuery page = qry;
 		CompletableFuture<List<PackageDO>> c1 = CompletableFuture

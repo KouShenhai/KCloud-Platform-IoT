@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.DictsServiceI;
 import org.laokou.admin.dto.dict.DictListQry;
 import org.laokou.admin.dto.dict.clientobject.DictTypeCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.validation.annotation.Validated;
@@ -45,7 +45,7 @@ public class DictTypesController {
 	@PostMapping("v1/dict-types/page")
 	// @PreAuthorize("hasAuthority('dict-type:page')")
 	@Operation(summary = "字典类型管理", description = "分页查询字典列表")
-	public Result<Datas<DictTypeCO>> pageV1(@Validated @RequestBody DictListQry qry) {
+	public Result<Page<DictTypeCO>> pageV1(@Validated @RequestBody DictListQry qry) {
 		return dictsServiceI.page(qry);
 	}
 	/*

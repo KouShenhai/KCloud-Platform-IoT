@@ -24,7 +24,7 @@ import org.laokou.admin.dto.dict.DictListQry;
 import org.laokou.admin.dto.dict.clientobject.DictTypeCO;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictTypeDO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -54,7 +54,7 @@ public class DictTypeListQryExe {
 	 */
 	@SneakyThrows
 	@DS(TENANT)
-	public Result<Datas<DictTypeCO>> execute(DictListQry qry) {
+	public Result<Page<DictTypeCO>> execute(DictListQry qry) {
 		CompletableFuture<List<DictTypeDO>> c1 = CompletableFuture
 			.supplyAsync(() -> dictMapper.selectPageByCondition(qry), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> dictMapper.selectCountByCondition(qry),

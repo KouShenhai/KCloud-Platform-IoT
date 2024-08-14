@@ -25,7 +25,7 @@ import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -61,7 +61,7 @@ public class UsersV3Controller {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('user:page')")
 	@Operation(summary = "用户管理", description = "分页查询用户列表")
-	public Result<Datas<UserCO>> pageV3(@RequestBody UserListQry qry) {
+	public Result<Page<UserCO>> pageV3(@RequestBody UserListQry qry) {
 		return null;
 	}
 

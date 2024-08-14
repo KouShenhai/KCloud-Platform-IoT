@@ -25,7 +25,7 @@ import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.admin.command.oss.*;
 import org.laokou.admin.command.oss.query.OssGetQryExe;
 import org.laokou.admin.command.oss.query.OssListQryExe;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -93,7 +93,7 @@ public class OssServiceImpl implements OssServiceI {
 	 * @return OSS列表
 	 */
 	@Override
-	public Result<Datas<OssCO>> findList(OssListQry qry) {
+	public Result<Page<OssCO>> findList(OssListQry qry) {
 		return ossListQryExe.execute(qry);
 	}
 

@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
@@ -50,7 +50,7 @@ public class TenantsV3Controller {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('tenant:page')")
 	@Operation(summary = "租户管理", description = "分页查询租户列表")
-	public Result<Datas<TenantCO>> pageV3() {
+	public Result<Page<TenantCO>> pageV3() {
 		return null;
 	}
 

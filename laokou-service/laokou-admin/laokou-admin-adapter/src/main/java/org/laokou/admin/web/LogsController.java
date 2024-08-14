@@ -28,7 +28,7 @@ import org.laokou.admin.dto.log.OperateLogExportCmd;
 import org.laokou.admin.dto.log.OperateLogListQry;
 import org.laokou.admin.dto.log.clientobject.LoginLogCO;
 import org.laokou.admin.dto.log.clientobject.OperateLogCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -53,7 +53,7 @@ public class LogsController {
 	@PostMapping("operate-list")
 	@Operation(summary = "日志管理", description = "查询操作日志列表")
 	@PreAuthorize("hasAuthority('logs:operate-list')")
-	public Result<Datas<OperateLogCO>> findOperateList(@RequestBody OperateLogListQry qry) {
+	public Result<Page<OperateLogCO>> findOperateList(@RequestBody OperateLogListQry qry) {
 		return logsServiceI.findOperateList(qry);
 	}
 
@@ -69,7 +69,7 @@ public class LogsController {
 	@PostMapping("login-list")
 	@Operation(summary = "日志管理", description = "查询登录日志列表")
 	@PreAuthorize("hasAuthority('logs:login-list')")
-	public Result<Datas<LoginLogCO>> findLoginList(@RequestBody LoginLogPageQry qry) {
+	public Result<Page<LoginLogCO>> findLoginList(@RequestBody LoginLogPageQry qry) {
 		// return logsServiceI.loginList(qry);
 		return null;
 	}

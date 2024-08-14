@@ -27,14 +27,14 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 集合.
+ * 分页.
  *
  * @author laokou
  */
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public final class Datas<T> implements Serializable {
+public final class Page<T> implements Serializable {
 
 	/**
 	 * 总数.
@@ -51,12 +51,12 @@ public final class Datas<T> implements Serializable {
 	 * @param <T> 泛型
 	 * @return 空对象集合
 	 */
-	public static <T> Datas<T> empty() {
-		return new Datas<>(0, Collections.emptyList());
+	public static <T> Page<T> empty() {
+		return new Page<>(0, Collections.emptyList());
 	}
 
-	public static <T> Datas<T> create(List<T> list, long total) {
-		return new Datas<>(total, list);
+	public static <T> Page<T> create(List<T> list, long total) {
+		return new Page<>(total, list);
 	}
 
 }

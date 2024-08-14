@@ -22,7 +22,7 @@ import org.laokou.admin.dto.ip.IpCreateCmd;
 import org.laokou.admin.dto.ip.IpListQry;
 import org.laokou.admin.dto.ip.IpRefreshCmd;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
 /**
@@ -49,7 +49,7 @@ public interface IpsServiceI {
 	 * @param qry 查询IP列表参数
 	 * @return IP列表
 	 */
-	Result<Datas<IpCO>> findList(IpListQry qry);
+	Result<Page<IpCO>> findList(IpListQry qry);
 
 	/**
 	 * 刷新IP至Redis.

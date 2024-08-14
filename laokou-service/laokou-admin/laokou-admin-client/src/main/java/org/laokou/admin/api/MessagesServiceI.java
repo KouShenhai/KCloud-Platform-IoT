@@ -19,7 +19,7 @@ package org.laokou.admin.api;
 
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.dto.message.*;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
 /**
@@ -40,7 +40,7 @@ public interface MessagesServiceI {
 	 * @param qry 查询消息列表参数
 	 * @return 消息列表
 	 */
-	Result<Datas<MessageCO>> findList(MessageListQry qry);
+	Result<Page<MessageCO>> findList(MessageListQry qry);
 
 	/**
 	 * 读取消息.
@@ -61,7 +61,7 @@ public interface MessagesServiceI {
 	 * @param qry 查询未读消息列表参数
 	 * @return 未读消息列表
 	 */
-	Result<Datas<MessageCO>> findUnreadList(MessageUnreadListQry qry);
+	Result<Page<MessageCO>> findUnreadList(MessageUnreadListQry qry);
 
 	/**
 	 * 查看未读消息数.

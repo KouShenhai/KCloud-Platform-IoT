@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.role.*;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -46,7 +46,7 @@ public class RolesV3Controller {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('role:page')")
 	@Operation(summary = "角色管理", description = "分页查询角色列表")
-	public Result<Datas<RoleCO>> pageV3() {
+	public Result<Page<RoleCO>> pageV3() {
 		return null;
 	}
 

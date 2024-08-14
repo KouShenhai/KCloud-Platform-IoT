@@ -20,7 +20,7 @@ package org.laokou.admin.api;
 import org.laokou.admin.dto.oss.*;
 import org.laokou.admin.dto.oss.clientobject.FileCO;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
 /**
@@ -60,7 +60,7 @@ public interface OssServiceI {
 	 * @param qry 查询OSS列表参数
 	 * @return OSS列表
 	 */
-	Result<Datas<OssCO>> findList(OssListQry qry);
+	Result<Page<OssCO>> findList(OssListQry qry);
 
 	/**
 	 * 上传文件.

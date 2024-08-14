@@ -25,7 +25,7 @@ import org.laokou.admin.dto.source.*;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.constant.Type;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -53,7 +53,7 @@ public class SourcesController {
 	@PostMapping("list")
 	@Operation(summary = "数据源管理", description = "查询数据源列表")
 	@PreAuthorize("hasAuthority('sources:list')")
-	public Result<Datas<SourceCO>> findList(@RequestBody SourceListQry qry) {
+	public Result<Page<SourceCO>> findList(@RequestBody SourceListQry qry) {
 		return sourcesServiceI.findList(qry);
 	}
 

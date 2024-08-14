@@ -24,7 +24,7 @@ import org.laokou.admin.api.MessagesServiceI;
 import org.laokou.admin.dto.message.*;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
@@ -59,7 +59,7 @@ public class MessagesController {
 	@PostMapping("list")
 	@Operation(summary = "消息管理", description = "查询消息列表")
 	@PreAuthorize("hasAuthority('messages:list')")
-	public Result<Datas<MessageCO>> findList(@RequestBody MessageListQry qry) {
+	public Result<Page<MessageCO>> findList(@RequestBody MessageListQry qry) {
 		return messagesServiceI.findList(qry);
 	}
 
@@ -83,7 +83,7 @@ public class MessagesController {
 	@TraceLog
 	@PostMapping("unread-list")
 	@Operation(summary = "消息管理", description = "未读消息列表")
-	public Result<Datas<MessageCO>> findUnreadList(@RequestBody MessageUnreadListQry qry) {
+	public Result<Page<MessageCO>> findUnreadList(@RequestBody MessageUnreadListQry qry) {
 		return messagesServiceI.findUnreadList(qry);
 	}
 

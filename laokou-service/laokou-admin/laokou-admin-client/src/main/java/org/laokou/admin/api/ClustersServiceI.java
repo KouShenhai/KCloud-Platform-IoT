@@ -21,7 +21,7 @@ import org.laokou.admin.dto.cluster.ClusterInstanceListQry;
 import org.laokou.admin.dto.cluster.ClusterServiceListQry;
 import org.laokou.admin.dto.cluster.clientobject.ClusterInstanceCO;
 import org.laokou.admin.dto.cluster.clientobject.ClusterServiceCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
 /**
@@ -36,13 +36,13 @@ public interface ClustersServiceI {
 	 * @param qry 服务列表查询参数
 	 * @return 服务列表
 	 */
-	Result<Datas<ClusterServiceCO>> findServiceList(ClusterServiceListQry qry);
+	Result<Page<ClusterServiceCO>> findServiceList(ClusterServiceListQry qry);
 
 	/**
 	 * 查询服务实例列表.
 	 * @param qry 服务实例查询参数
 	 * @return 服务实例列表
 	 */
-	Result<Datas<ClusterInstanceCO>> findInstanceList(ClusterInstanceListQry qry);
+	Result<Page<ClusterInstanceCO>> findInstanceList(ClusterInstanceListQry qry);
 
 }

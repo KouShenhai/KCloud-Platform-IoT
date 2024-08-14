@@ -23,7 +23,7 @@ import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -51,7 +51,7 @@ public class UserListQryExe {
 	 */
 	@SneakyThrows
 	// @DataFilter(tableAlias = BOOT_SYS_USER)
-	public Result<Datas<UserCO>> execute(UserListQry qry) {
+	public Result<Page<UserCO>> execute(UserListQry qry) {
 		UserDO userDO = new UserDO(qry.getUsername());
 		CompletableFuture<List<UserDO>> c1 = CompletableFuture
 			.supplyAsync(() -> userMapper.selectListByCondition(userDO, qry), executor);

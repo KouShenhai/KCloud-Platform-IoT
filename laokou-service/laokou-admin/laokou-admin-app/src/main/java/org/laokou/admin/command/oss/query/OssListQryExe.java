@@ -24,7 +24,7 @@ import org.laokou.admin.dto.oss.OssListQry;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.admin.gatewayimpl.database.OssMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -56,7 +56,7 @@ public class OssListQryExe {
 	@DS(TENANT)
 	@SneakyThrows
 	// @DataFilter(tableAlias = BOOT_SYS_OSS)
-	public Result<Datas<OssCO>> execute(OssListQry qry) {
+	public Result<Page<OssCO>> execute(OssListQry qry) {
 		OssDO ossDO = new OssDO(qry.getName());
 		PageQuery page = qry;
 		CompletableFuture<List<OssDO>> c1 = CompletableFuture

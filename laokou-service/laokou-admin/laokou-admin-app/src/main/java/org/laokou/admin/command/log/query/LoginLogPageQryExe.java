@@ -24,7 +24,7 @@ import org.laokou.admin.dto.log.LoginLogPageQry;
 import org.laokou.admin.dto.log.clientobject.LoginLogCO;
 import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -52,7 +52,7 @@ public class LoginLogPageQryExe {
 	// @DS(TENANT)
 	@SneakyThrows
 	// @DataFilter(tableAlias = BOOT_SYS_LOGIN_LOG)
-	public Result<Datas<LoginLogCO>> execute(LoginLogPageQry qry) {
+	public Result<Page<LoginLogCO>> execute(LoginLogPageQry qry) {
 		List<LoginLogDO> page = loginLogMapper.selectList(Wrappers.emptyWrapper());
 		return null;
 		// return

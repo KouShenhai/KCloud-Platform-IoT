@@ -28,7 +28,7 @@ import org.laokou.admin.command.pack.PackageModifyCmdExe;
 import org.laokou.admin.command.pack.query.PackageGetQryExe;
 import org.laokou.admin.command.pack.query.PackageListQryExe;
 import org.laokou.admin.command.pack.query.PackageOptionListQryExe;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -88,7 +88,7 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	 * @return 套餐列表
 	 */
 	@Override
-	public Result<Datas<PackageCO>> findList(PackageListQry qry) {
+	public Result<Page<PackageCO>> findList(PackageListQry qry) {
 		return packageListQryExe.execute(qry);
 	}
 

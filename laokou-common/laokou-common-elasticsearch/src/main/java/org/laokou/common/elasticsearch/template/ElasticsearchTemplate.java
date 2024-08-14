@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.annotation.*;
 import org.laokou.common.elasticsearch.entity.Search;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
@@ -196,12 +196,12 @@ public class ElasticsearchTemplate {
 	}
 
 	@SneakyThrows
-	public <R> Datas<R> search(List<String> names, Search search, Class<R> clazz) {
+	public <R> Page<R> search(List<String> names, Search search, Class<R> clazz) {
 		SearchRequest searchRequest = getSearchRequest(names, search);
 		SearchResponse<R> response = elasticsearchClient.search(searchRequest, clazz);
 		HitsMetadata<R> hits = response.hits();
 		assert hits.total() != null;
-		return Datas.create(hits.hits().stream().map(item -> {
+		return Page.create(hits.hits().stream().map(item -> {
 			R source = item.source();
 			if (source != null) {
 				// ID赋值

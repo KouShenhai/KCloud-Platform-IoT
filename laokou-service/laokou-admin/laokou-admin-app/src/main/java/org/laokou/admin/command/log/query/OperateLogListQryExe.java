@@ -24,7 +24,7 @@ import org.laokou.admin.dto.log.OperateLogListQry;
 import org.laokou.admin.dto.log.clientobject.OperateLogCO;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
@@ -57,7 +57,7 @@ public class OperateLogListQryExe {
 	@SneakyThrows
 	@DS(TENANT)
 	// @DataFilter(tableAlias = BOOT_SYS_OPERATE_LOG)
-	public Result<Datas<OperateLogCO>> execute(OperateLogListQry qry) {
+	public Result<Page<OperateLogCO>> execute(OperateLogListQry qry) {
 		OperateLogDO operateLogDO = new OperateLogDO(qry.getModuleName(), qry.getStatus(), UserUtil.getTenantId());
 		PageQuery page = qry;
 		CompletableFuture<List<OperateLogDO>> c1 = CompletableFuture

@@ -32,7 +32,7 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.annotation.*;
 import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.test.context.TestConstructor;
@@ -118,7 +118,7 @@ class Elasticsearch8ApiTest extends CommonTest {
 		try {
 			Search.Highlight highlight = new Search.Highlight();
 			Search search = new Search(highlight, 1, 10, null);
-			Datas<Result> results = elasticsearchTemplate.search(List.of("laokou_res", "laokou_res_1"), search,
+			Page<Result> results = elasticsearchTemplate.search(List.of("laokou_res", "laokou_res_1"), search,
 					Result.class);
 			log.info("{}", results);
 		}

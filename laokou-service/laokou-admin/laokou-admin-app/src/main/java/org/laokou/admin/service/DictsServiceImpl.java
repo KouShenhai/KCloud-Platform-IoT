@@ -28,7 +28,7 @@ import org.laokou.admin.command.dict.DictModifyCmdExe;
 import org.laokou.admin.command.dict.query.DictGetQryExe;
 import org.laokou.admin.command.dict.query.DictTypeListQryExe;
 import org.laokou.admin.command.dict.query.DictOptionListQryExe;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -108,7 +108,7 @@ public class DictsServiceImpl implements DictsServiceI {
 	 * @return 字典列表
 	 */
 	@Override
-	public Result<Datas<DictTypeCO>> page(DictListQry qry) {
+	public Result<Page<DictTypeCO>> page(DictListQry qry) {
 		return dictTypeListQryExe.execute(qry);
 	}
 

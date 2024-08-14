@@ -20,7 +20,7 @@ package org.laokou.admin.api;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.laokou.admin.dto.packages.*;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public interface PackagesServiceI {
 	 * @param qry 查询套餐列表参数
 	 * @return 套餐列表
 	 */
-	Result<Datas<PackageCO>> findList(PackageListQry qry);
+	Result<Page<PackageCO>> findList(PackageListQry qry);
 
 	/**
 	 * 根据ID查看套餐.

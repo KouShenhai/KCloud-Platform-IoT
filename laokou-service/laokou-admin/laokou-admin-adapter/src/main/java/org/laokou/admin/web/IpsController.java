@@ -26,7 +26,7 @@ import org.laokou.admin.dto.ip.IpListQry;
 import org.laokou.admin.dto.ip.IpRefreshCmd;
 import org.laokou.admin.dto.ip.IpRemoveCmd;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.lock.annotation.Lock4j;
@@ -51,7 +51,7 @@ public class IpsController {
 	@TraceLog
 	@Operation(summary = "黑名单", description = "查询IP列表")
 	@PreAuthorize("hasAuthority('ips:black-list')")
-	public Result<Datas<IpCO>> findBlacklist(@RequestBody IpListQry qry) {
+	public Result<Page<IpCO>> findBlacklist(@RequestBody IpListQry qry) {
 		return ipsServiceI.findList(qry);
 	}
 
@@ -76,7 +76,7 @@ public class IpsController {
 	@TraceLog
 	@Operation(summary = "白名单", description = "查询IP列表")
 	@PreAuthorize("hasAuthority('ips:white-list')")
-	public Result<Datas<IpCO>> findWhitelist(@RequestBody IpListQry qry) {
+	public Result<Page<IpCO>> findWhitelist(@RequestBody IpListQry qry) {
 		return ipsServiceI.findList(qry);
 	}
 

@@ -23,7 +23,7 @@ import org.laokou.admin.dto.message.MessageUnreadListQry;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -54,7 +54,7 @@ public class MessageUnreadListQryExe {
 	 * @return 未读消息列表
 	 */
 	@DS(TENANT)
-	public Result<Datas<MessageCO>> execute(MessageUnreadListQry qry) {
+	public Result<Page<MessageCO>> execute(MessageUnreadListQry qry) {
 		PageQuery pageQuery = qry;
 		List<MessageDO> list = transactionalUtil.defaultExecute(
 				r -> messageMapper.selectUnreadListByCondition(UserUtil.getUserId(), qry.getType(), pageQuery),

@@ -27,7 +27,7 @@ import org.laokou.admin.command.message.query.MessageGetQryExe;
 import org.laokou.admin.command.message.query.MessageListQryExe;
 import org.laokou.admin.command.message.query.MessageUnreadCountGetQryExe;
 import org.laokou.admin.command.message.query.MessageUnreadListQryExe;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +67,7 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	 * @return 消息列表
 	 */
 	@Override
-	public Result<Datas<MessageCO>> findList(MessageListQry qry) {
+	public Result<Page<MessageCO>> findList(MessageListQry qry) {
 		return messageListQryExe.execute(qry);
 	}
 
@@ -97,7 +97,7 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	 * @return 未读消息列表
 	 */
 	@Override
-	public Result<Datas<MessageCO>> findUnreadList(MessageUnreadListQry qry) {
+	public Result<Page<MessageCO>> findUnreadList(MessageUnreadListQry qry) {
 		return messageUnreadListQryExe.execute(qry);
 	}
 

@@ -21,7 +21,7 @@ import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.user.*;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
 import java.util.List;
@@ -95,6 +95,6 @@ public interface UsersServiceI {
 	 * @param qry 查询用户列表参数
 	 * @return 用户列表
 	 */
-	Result<Datas<UserCO>> page(UserListQry qry);
+	Result<Page<UserCO>> page(UserListQry qry);
 
 }

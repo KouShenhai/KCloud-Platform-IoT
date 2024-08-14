@@ -28,7 +28,7 @@ import org.laokou.admin.command.role.RoleModifyCmdExe;
 import org.laokou.admin.command.role.query.RoleGetQryExe;
 import org.laokou.admin.command.role.query.RoleListQryExe;
 import org.laokou.admin.command.role.query.RoleOptionListQryExe;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +61,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	 * @return 查询角色列表
 	 */
 	@Override
-	public Result<Datas<RoleCO>> findList(RoleListQry qry) {
+	public Result<Page<RoleCO>> findList(RoleListQry qry) {
 		return roleListQryExe.execute(qry);
 	}
 

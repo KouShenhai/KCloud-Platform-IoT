@@ -20,7 +20,7 @@ package org.laokou.admin.command.cluster.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.cluster.ClusterInstanceListQry;
 import org.laokou.admin.dto.cluster.clientobject.ClusterInstanceCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.nacos.utils.ServiceUtil;
 import org.springframework.cloud.client.ServiceInstance;
@@ -44,12 +44,12 @@ public class ClusterInstanceListQryExe {
 	 * @param qry 查询服务实例列表参数
 	 * @return 服务实例列表
 	 */
-	public Result<Datas<ClusterInstanceCO>> execute(ClusterInstanceListQry qry) {
+	public Result<Page<ClusterInstanceCO>> execute(ClusterInstanceListQry qry) {
 		Integer pageNum = qry.getPageNum();
 		Integer pageSize = qry.getPageSize();
 		String serviceId = qry.getServiceId();
 		List<ServiceInstance> instances = serviceUtil.getInstances(serviceId);
-		return Result.ok(Datas.create(instances.stream()
+		return Result.ok(Page.create(instances.stream()
 			.map(item -> convert(item, serviceId.substring(7)))
 			.skip((long) (pageNum - 1) * pageSize)
 			.limit(pageSize)

@@ -20,7 +20,7 @@ package org.laokou.admin.api;
 import org.laokou.admin.dto.dict.clientobject.DictTypeCO;
 import org.laokou.common.i18n.dto.Option;
 import org.laokou.admin.dto.dict.*;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
 import java.util.List;
@@ -69,6 +69,6 @@ public interface DictsServiceI {
 	 * @param qry 查询字典列表参数
 	 * @return 字典列表
 	 */
-	Result<Datas<DictTypeCO>> page(DictListQry qry);
+	Result<Page<DictTypeCO>> page(DictListQry qry);
 
 }

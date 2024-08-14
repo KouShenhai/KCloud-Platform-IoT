@@ -23,7 +23,7 @@ import org.laokou.admin.dto.tenant.TenantListQry;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -52,7 +52,7 @@ public class TenantListQryExe {
 	 */
 	@SneakyThrows
 	// @DataFilter(tableAlias = BOOT_SYS_TENANT)
-	public Result<Datas<TenantCO>> execute(TenantListQry qry) {
+	public Result<Page<TenantCO>> execute(TenantListQry qry) {
 		TenantDO tenantDO = new TenantDO(qry.getName());
 		PageQuery page = qry;
 		CompletableFuture<List<TenantDO>> c1 = CompletableFuture

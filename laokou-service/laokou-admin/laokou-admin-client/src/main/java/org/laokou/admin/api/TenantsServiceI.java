@@ -19,7 +19,7 @@ package org.laokou.admin.api;
 
 import org.laokou.admin.dto.tenant.*;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
 /**
@@ -52,7 +52,7 @@ public interface TenantsServiceI {
 	 * @param qry 查询租户列表参数
 	 * @return 租户列表
 	 */
-	Result<Datas<TenantCO>> findList(TenantListQry qry);
+	Result<Page<TenantCO>> findList(TenantListQry qry);
 
 	/**
 	 * 根据ID查看租户.
