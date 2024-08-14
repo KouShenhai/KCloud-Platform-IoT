@@ -16,89 +16,11 @@
     </dependency>
     <dependency>
       <groupId>org.apache.rocketmq</groupId>
-      <artifactId>rocketmq-spring-boot-starter</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.rocketmq</groupId>
-          <artifactId>rocketmq-acl</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.rocketmq</groupId>
-          <artifactId>rocketmq-client</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.rocketmq</groupId>
-          <artifactId>rocketmq-common</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.rocketmq</groupId>
-          <artifactId>rocketmq-remoting</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.rocketmq</groupId>
-          <artifactId>rocketmq-srvutil</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.rocketmq</groupId>
-      <artifactId>rocketmq-acl</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>com.google.protobuf</groupId>
-          <artifactId>protobuf-java</artifactId>
-        </exclusion>
-      </exclusions>
+      <artifactId>rocketmq-v5-client-spring-boot-starter</artifactId>
     </dependency>
     <dependency>
       <groupId>com.google.protobuf</groupId>
       <artifactId>protobuf-java</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.rocketmq</groupId>
-      <artifactId>rocketmq-client</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.rocketmq</groupId>
-      <artifactId>rocketmq-common</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>com.squareup.okio</groupId>
-          <artifactId>okio-jvm</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.alibaba</groupId>
-          <artifactId>fastjson</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.alibaba.fastjson2</groupId>
-          <artifactId>fastjson2</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.grpc</groupId>
-          <artifactId>grpc-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.grpc</groupId>
-          <artifactId>grpc-stub</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.grpc</groupId>
-          <artifactId>grpc-netty-shaded</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.grpc</groupId>
-          <artifactId>grpc-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.grpc</groupId>
-          <artifactId>grpc-context</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.github.luben</groupId>
-          <artifactId>zstd-jni</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.rocketmq</groupId>

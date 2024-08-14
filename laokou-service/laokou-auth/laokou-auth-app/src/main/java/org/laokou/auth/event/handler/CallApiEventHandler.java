@@ -19,7 +19,7 @@ package org.laokou.auth.event.handler;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.apache.rocketmq.client.annotation.RocketMQMessageListener;
 import org.laokou.auth.command.ApiLogCmdExe;
 import org.laokou.auth.dto.ApiLogSaveCmd;
 import org.laokou.auth.dto.domainevent.CallApiEvent;
@@ -29,8 +29,6 @@ import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
 
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
 import static org.laokou.auth.common.constant.MqConstant.*;
 
 /**
@@ -39,8 +37,7 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @Slf4j
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_API_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
-		selectorExpression = API_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+@RocketMQMessageListener(consumerGroup = LAOKOU_API_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC, tag = API_TAG)
 public class CallApiEventHandler extends AbstractDomainEventHandler {
 
 	private final ApiLogCmdExe apiLogCmdExe;

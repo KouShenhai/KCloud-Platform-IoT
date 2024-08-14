@@ -20,8 +20,9 @@ package org.laokou.common.domain.handler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
-import org.apache.rocketmq.common.message.MessageExt;
-import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.apache.rocketmq.client.apis.consumer.ConsumeResult;
+import org.apache.rocketmq.client.apis.message.MessageView;
+import org.apache.rocketmq.client.core.RocketMQListener;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
@@ -34,26 +35,25 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
  */
 @Slf4j
 @RequiredArgsConstructor
-public abstract class AbstractDomainEventHandler implements RocketMQListener<MessageExt> {
+public abstract class AbstractDomainEventHandler implements RocketMQListener {
 
 	protected final DomainEventPublisher domainEventPublisher;
 
 	@Override
-	public void onMessage(MessageExt messageExt) {
+	public ConsumeResult consume(MessageView messageView) {
 		try {
-			String traceId = messageExt.getProperty(TRACE_ID);
+			String traceId = messageView.getProperties().get(TRACE_ID);
 			ThreadContext.put(TRACE_ID, traceId);
-			String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
+			String msg = new String(messageView.getBody().array(), StandardCharsets.UTF_8);
 			handleDomainEvent(convert(msg));
-		}
-		catch (Exception e) {
-			log.error("消费失败，主题Topic：{}，偏移量Offset：{}，错误信息：{}", messageExt.getTopic(), messageExt.getCommitLogOffset(),
-					e.getMessage(), e);
+		} catch (Exception e) {
+			log.error("消费失败，主题Topic：{}，错误信息：{}", messageView.getTopic(),
+				e.getMessage(), e);
 			throw e;
-		}
-		finally {
+		} finally {
 			ThreadContext.clearMap();
 		}
+		return ConsumeResult.SUCCESS;
 	}
 
 	protected abstract void handleDomainEvent(DefaultDomainEvent domainEvent);

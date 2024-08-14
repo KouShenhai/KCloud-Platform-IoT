@@ -20,13 +20,15 @@ package org.laokou.logstash.handler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
-import org.apache.rocketmq.common.message.MessageExt;
-import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.apache.rocketmq.client.apis.consumer.ConsumeResult;
+import org.apache.rocketmq.client.apis.message.MessageView;
+import org.apache.rocketmq.client.core.RocketMQListener;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 
 import java.nio.charset.StandardCharsets;
 
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
 /**
@@ -36,29 +38,28 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
  */
 @Slf4j
 @RequiredArgsConstructor
-public abstract class AbstractDLQHandler implements RocketMQListener<MessageExt> {
+public abstract class AbstractDLQHandler implements RocketMQListener {
 
 	private final RocketMqTemplate rocketMqTemplate;
 
 	@Override
-	public void onMessage(MessageExt messageExt) {
-		String traceId = messageExt.getProperty(TRACE_ID);
+	public ConsumeResult consume(MessageView messageView) {
+		String traceId = messageView.getProperties().get(TRACE_ID);
 		ThreadContext.put(TRACE_ID, traceId);
-		String topic = messageExt.getTopic();
-		String tag = messageExt.getTags();
-		Object payload = new String(messageExt.getBody(), StandardCharsets.UTF_8);
+		String topic = messageView.getTopic();
+		String tag = messageView.getTag().orElse(EMPTY);
+		Object payload = new String(messageView.getBody().array(), StandardCharsets.UTF_8);
 		log.info("接收消息 ===> topic：{}，tag：{}，msg：{}", topic, tag, payload);
 		try {
 			if (StringUtil.isNotEmpty(tag)) {
 				rocketMqTemplate.sendAsyncMessage(topic, tag, payload, traceId);
-			}
-			else {
+			} else {
 				rocketMqTemplate.sendAsyncMessage(topic, payload, traceId);
 			}
-		}
-		finally {
+		} finally {
 			ThreadContext.clearMap();
 		}
+		return ConsumeResult.SUCCESS;
 	}
 
 }

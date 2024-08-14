@@ -19,7 +19,7 @@ package org.laokou.auth.event.handler;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.apache.rocketmq.client.annotation.RocketMQMessageListener;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.ApiLog;
@@ -29,8 +29,6 @@ import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
 import static org.laokou.auth.common.constant.MqConstant.*;
 
 /**
@@ -39,8 +37,7 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @Slf4j
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
-		selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+@RocketMQMessageListener(consumerGroup = LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC, tag = MAIL_TAG)
 public class SendMailCaptchaEventHandler extends AbstractSendCaptchaEventHandler {
 
 	private final MailService mailService;
@@ -48,7 +45,7 @@ public class SendMailCaptchaEventHandler extends AbstractSendCaptchaEventHandler
 	private final RedisUtil redisUtil;
 
 	public SendMailCaptchaEventHandler(DomainEventPublisher domainEventPublisher, MailService mailService,
-			RedisUtil redisUtil) {
+									   RedisUtil redisUtil) {
 		super(domainEventPublisher);
 		this.mailService = mailService;
 		this.redisUtil = redisUtil;

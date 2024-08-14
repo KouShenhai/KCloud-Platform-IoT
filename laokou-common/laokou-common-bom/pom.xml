@@ -865,7 +865,7 @@
       </dependency>
       <dependency>
         <groupId>org.apache.rocketmq</groupId>
-        <artifactId>rocketmq-spring-boot-starter</artifactId>
+        <artifactId>rocketmq-v5-client-spring-boot-starter</artifactId>
         <version>${rocketmq-spring.version}</version>
       </dependency>
       <dependency>

@@ -17,7 +17,7 @@
 
 package org.laokou.common.rocketmq.config;
 
-import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.apache.rocketmq.client.core.RocketMQClientTemplate;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -29,8 +29,8 @@ import org.springframework.context.annotation.Bean;
 public class RocketMqAutoConfig {
 
 	@Bean
-	public RocketMqTemplate rocketMqTemplate(RocketMQTemplate rocketMQTemplate) {
-		return new RocketMqTemplate(rocketMQTemplate);
+	public RocketMqTemplate rocketMqTemplate(RocketMQClientTemplate rocketMQClientTemplate) {
+		return new RocketMqTemplate(rocketMQClientTemplate);
 	}
 
 }

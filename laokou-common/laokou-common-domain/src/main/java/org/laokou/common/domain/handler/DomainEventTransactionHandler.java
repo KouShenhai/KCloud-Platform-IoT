@@ -18,17 +18,9 @@
 package org.laokou.common.domain.handler;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
-import org.apache.rocketmq.spring.support.RocketMQHeaders;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.model.DomainEventA;
-import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.apache.rocketmq.client.annotation.RocketMQTransactionListener;
 import org.laokou.common.rocketmq.handler.AbstractTransactionHandler;
-import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
 
 /**
  * @author laokou
@@ -37,19 +29,5 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @RocketMQTransactionListener
 public class DomainEventTransactionHandler extends AbstractTransactionHandler {
-
-	private final DomainEventService domainEventService;
-
-	@Override
-	protected void executeExtLocalTransaction(Message message, Object args) {
-		byte[] payload = (byte[]) message.getPayload();
-		domainEventService.create(new DomainEventA(payload, JacksonUtil.toBean(payload, DefaultDomainEvent.class)));
-	}
-
-	@Override
-	protected boolean checkExtLocalTransaction(Message message) {
-		String txId = Objects.requireNonNull(message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID)).toString();
-		return domainEventService.countById(Long.parseLong(txId)) > 0;
-	}
 
 }

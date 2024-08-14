@@ -18,57 +18,63 @@
 package org.laokou.common.rocketmq.handler;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
-import org.apache.rocketmq.spring.core.RocketMQLocalTransactionState;
-import org.springframework.messaging.Message;
+import org.apache.rocketmq.client.apis.message.MessageView;
+import org.apache.rocketmq.client.apis.producer.TransactionResolution;
+import org.apache.rocketmq.client.core.RocketMQTransactionChecker;
 
 /**
  * @author laokou
  */
 @Slf4j
-public abstract class AbstractTransactionHandler implements RocketMQLocalTransactionListener {
+public abstract class AbstractTransactionHandler implements RocketMQTransactionChecker {
 
 	@Override
-	public RocketMQLocalTransactionState executeLocalTransaction(Message message, Object args) {
-		try {
-			executeExtLocalTransaction(message, args);
-			log.info("执行本地事务，事务提交");
-			return RocketMQLocalTransactionState.COMMIT;
-		}
-		catch (Exception e) {
-			log.error("执行本地事务，事务回滚，错误信息：{}", e.getMessage(), e);
-			return RocketMQLocalTransactionState.ROLLBACK;
-		}
+	public TransactionResolution check(MessageView messageView) {
+		return TransactionResolution.COMMIT;
 	}
 
-	@Override
-	public RocketMQLocalTransactionState checkLocalTransaction(Message message) {
-		try {
-			if (checkExtLocalTransaction(message)) {
-				log.info("事务回查后，事务提交");
-				return RocketMQLocalTransactionState.COMMIT;
-			}
-			log.info("事务回查后，事务回滚");
-			return RocketMQLocalTransactionState.ROLLBACK;
-		}
-		catch (Exception e) {
-			log.error("事务回查异常，事务回滚，错误信息：{}", e.getMessage(), e);
-			return RocketMQLocalTransactionState.ROLLBACK;
-		}
-	}
-
-	/**
-	 * 本地事务实现.
-	 * @param message 消息
-	 * @param args 参数
-	 */
-	protected abstract void executeExtLocalTransaction(Message message, Object args);
-
-	/**
-	 * 本地事务检查.
-	 * @param message 消息
-	 * @return boolean
-	 */
-	protected abstract boolean checkExtLocalTransaction(Message message);
+	//
+//	@Override
+//	public RocketMQLocalTransactionState executeLocalTransaction(Message message, Object args) {
+//		try {
+//			executeExtLocalTransaction(message, args);
+//			log.info("执行本地事务，事务提交");
+//			return RocketMQLocalTransactionState.COMMIT;
+//		}
+//		catch (Exception e) {
+//			log.error("执行本地事务，事务回滚，错误信息：{}", e.getMessage(), e);
+//			return RocketMQLocalTransactionState.ROLLBACK;
+//		}
+//	}
+//
+//	@Override
+//	public RocketMQLocalTransactionState checkLocalTransaction(Message message) {
+//		try {
+//			if (checkExtLocalTransaction(message)) {
+//				log.info("事务回查后，事务提交");
+//				return RocketMQLocalTransactionState.COMMIT;
+//			}
+//			log.info("事务回查后，事务回滚");
+//			return RocketMQLocalTransactionState.ROLLBACK;
+//		}
+//		catch (Exception e) {
+//			log.error("事务回查异常，事务回滚，错误信息：{}", e.getMessage(), e);
+//			return RocketMQLocalTransactionState.ROLLBACK;
+//		}
+//	}
+//
+//	/**
+//	 * 本地事务实现.
+//	 * @param message 消息
+//	 * @param args 参数
+//	 */
+//	protected abstract void executeExtLocalTransaction(Message message, Object args);
+//
+//	/**
+//	 * 本地事务检查.
+//	 * @param message 消息
+//	 * @return boolean
+//	 */
+//	protected abstract boolean checkExtLocalTransaction(Message message);
 
 }
