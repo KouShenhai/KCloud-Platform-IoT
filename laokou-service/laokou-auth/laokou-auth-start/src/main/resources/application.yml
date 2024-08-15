@@ -14,114 +14,11 @@
 #    * limitations under the License.
 #    *
 #    */
-# server
 server:
   port: ${SERVER_PORT:1111}
-  ssl:
-    # 开启证书
-    enabled: @SSL-ENABLED@
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: @SSL-ENABLED@
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
+
 spring:
   application:
     name: @pom.parent.artifactId@
   profiles:
-    # dev|test|prod
     active: @PROFILE-ACTIVE@
-  cloud:
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: @NACOS-CONFIG-ADDRESS@
-            namespace: @NACOS-NAMESPACE@
-            data-id: auth-flow.json
-            data-type: json
-            group-id: @NACOS-GROUP@
-            rule-type: flow
-            username: @NACOS-USERNAME@
-            password: @NACOS-PASSWORD@
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    # network
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # OAuth2
-  security:
-    oauth2:
-      authorization-server:
-        enabled: true
-        # 多租户
-        multiple-issuers-allowed: false
-        client:
-          default:
-            token:
-              authorization-code-time-to-live: 1h
-              access-token-time-to-live: 1h
-              refresh-token-time-to-live: 6h
-              device-code-time-to-live: 1h
-            registration:
-              id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-name: OAuth2.1认证
-              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
-              client-authentication-methods:
-                - client_secret_basic
-              authorization-grant-types:
-                - password
-                - mail
-                - mobile
-                - client_credentials
-                - refresh_token
-                - authorization_code
-                - urn:ietf:params:oauth:grant-type:device_code
-                - urn:ietf:params:oauth:grant-type:jwt-bearer
-                - urn:ietf:params:oauth:grant-type:token-exchange
-              scopes:
-                - password
-                - mail
-                - mobile
-                - openid
-              redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://vue.laokou.org
-                - https://laokou.org.cn
-              post-logout-redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://vue.laokou.org
-                - https://laokou.org.cn
-            # 客户端请求访问时需要授权同意
-            require-authorization-consent: true
-            # PKCE
-            require-proof-key: false
-  threads:
-    virtual:
-      enabled: true
-
-logging:
-  config: classpath:log4j2-@PROFILE-ACTIVE@.xml
-
-springdoc:
-  api-docs:
-    enabled: @KNIFE4J-ENABLED@

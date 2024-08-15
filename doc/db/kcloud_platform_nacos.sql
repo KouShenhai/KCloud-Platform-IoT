@@ -12,9 +12,108 @@
  Target Server Version : 160002 (160002)
  File Encoding         : 65001
 
- Date: 16/07/2024 22:00:53
+ Date: 16/08/2024 00:25:27
 */
 
+
+-- ----------------------------
+-- Sequence structure for config_info_aggr_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq";
+CREATE SEQUENCE "public"."config_info_aggr_id_seq"
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_beta_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq";
+CREATE SEQUENCE "public"."config_info_beta_id_seq"
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_id_seq";
+CREATE SEQUENCE "public"."config_info_id_seq"
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_tag_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq";
+CREATE SEQUENCE "public"."config_info_tag_id_seq"
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_tags_relation_nid_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq";
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq"
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for group_capacity_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq";
+CREATE SEQUENCE "public"."group_capacity_id_seq"
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for his_config_info_nid_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq";
+CREATE SEQUENCE "public"."his_config_info_nid_seq"
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for tenant_capacity_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq";
+CREATE SEQUENCE "public"."tenant_capacity_id_seq"
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for tenant_info_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq";
+CREATE SEQUENCE "public"."tenant_info_id_seq"
+	INCREMENT 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1;
 
 -- ----------------------------
 -- Table structure for config_info
@@ -88,49 +187,144 @@ spring:
 		'2023-11-06 18:02:43', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'redis公共配置',
 		'', '', 'yaml', '', '');
 INSERT INTO "public"."config_info"
-VALUES (82, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
+VALUES (48, 'application-gateway.yaml', 'LAOKOU_GROUP', 'server:
+  # 开启请求压缩
+  compression:
+    enabled: true
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+    # 证书密码
+    key-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: native
+  # 优雅停机
+  shutdown: graceful
+  netty:
+    # 请求的最大初始行长度
+    max-initial-line-length: 4096
+  servlet:
+    context-path: /api
 # spring
 spring:
-  boot:
-    # admin
-    admin:
+  threads:
+    virtual:
+      enabled: true
+  webflux:
+    multipart:
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-in-memory-size: 4096
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # key可以自定义
+        db0:
+          nacos:
+            server-addr: https://nacos.laokou.org:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            data-id: gateway-flow.json
+            rule-type: gw_flow # 网关规则
+            group-id: LAOKOU_GROUP
+            data-type: json
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      cache:
+        caffeine:
+          # 初始容量 => 30
+          # 最大容量 => 4096
+          # 淘汰规则 => 最后一次写操作后经过30s过期
+          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
+        # 开启缓存
+        enabled: true
+      nacos:
+        # 开启Nacos路由负载均衡
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+    # gateway
+    gateway:
       discovery:
-        ignored-services:
-          - laokou-im
-      notify:
-        mail:
-          from: 2413176044@qq.com
-          to: 2413176044@qq.com
-          template: META-INF/spring-boot-admin-server/mail/status-changed.html
-  # security
-  security:
-    user:
-      # root
-      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
-      # laokou123
-      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
-  # mail
-  mail:
-    host: smtp.qq.com
-	username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8
+        locator:
+          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
+          # 查看DiscoveryLocatorProperties
+          enabled: false
+          # 开启服务ID强制小写
+          lower-case-service-id: true
+      httpclient:
+        ssl:
+          # 信任所有下游证书
+          use-insecure-trust-manager: true
+        # 关闭netty日志
+        wiretap: false
+        pool:
+          # 连接池中连接的最大空闲时间
+          max-idle-time: 10m
+          # 最大连接数
+          max-connections: 10000
+          # 连接池中连接的最大存活时间
+          max-life-time: 5m
+          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
+          # fixed     固定数量线程池
+          # disabled  不使用线程池（只有一个线程）
+          type: fixed
+          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
+          acquire-timeout: 60000
+        # 连接超时时间（毫秒），默认30s
+        connect-timeout: 60000
+      httpserver:
+        # 关闭netty日志
+        wiretap: false
+      router:
+        auth:
+          enabled: true
+          username: laokou
+          password: laokou123
+      ip:
+        white:
+          enabled: false
+        black:
+          enabled: false
+logging:
+  config: classpath:log4j2-prod.xml
 
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always', 'de1c37757329b0ad75488bf39024489c', '2023-01-16 12:01:23', '2023-07-21 12:37:26', 'nacos',
-		'0:0:0:0:0:0:0:1', 'laokou-monitor', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'spring boot admin monitor', '',
-		'', 'yaml', '', '');
+knife4j:
+  gateway:
+    enabled: false
+    tags-sorter: order
+    operations-sorter: order
+    # 手动
+    strategy: manual
+    routes:
+      - name: 认证服务
+        url: /auth/v3/api-docs?group=default
+        service-name: laokou-auth
+        context-path: /auth
+        order: 1
+      - name: 管理服务
+        url: /admin/v3/api-docs?group=default
+        service-name: laokou-admin
+        context-path: /admin
+        order: 2', '2aea88d0b795d394961d2b969a4eaad8', '2024-05-25 18:13:10.704', '2024-08-16 00:14:41.024', 'nacos',
+		'0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway配置', '', '', 'yaml', '',
+		'');
 INSERT INTO "public"."config_info"
 VALUES (103, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
@@ -195,124 +389,6 @@ VALUES (1568, 'auth-flow.json', 'LAOKOU_GROUP', '[
   }
 ]', '6ae7639ff49789dd99787e908efa836d', '2023-02-26 15:01:51', '2024-05-25 18:20:09.951', 'nacos', '127.0.0.1',
 		'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'auth sentinel  flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info"
-VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
-spring:
-  # security
-  security:
-    oauth2:
-      resource-server:
-        enabled: true
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /**/v3/api-docs/**=laokou-gateway
-              - /v3/api-docs/**=laokou-auth,laokou-admin
-              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
-              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
-              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
-              - /error=laokou-admin,laokou-auth
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
-              - /favicon.ico=laokou-gateway
-              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
-              - /v3/secrets=laokou-gateway,laokou-auth
-              - /graceful-shutdown=laokou-auth
-              - /ws=laokou-gateway
-              - /doc.html=laokou-gateway
-            POST:
-              - /v3/captchas=laokou-auth,laokou-gateway
-            DELETE:
-              - /v3/logouts=laokou-auth,laokou-gateway
-  # task
-  task-execution:
-    thread-name-prefix: laokou-ttl-task-
-    pool:
-      core-size: 33
-      keep-alive: 180s
-    fork-join-pool:
-      core-size: 33
-  cloud:
-    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
-    openfeign:
-      compression:
-        response:
-          enabled: true
-        request:
-          enabled: true
-      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
-      okhttp:
-        enabled: true
-      circuitbreaker:
-        enabled: true
-      httpclient:
-        enabled: false
-        hc5:
-          enabled: false
-        disable-ssl-validation: true
-      client:
-        config:
-          default:
-            connectTimeout: 120000 #连接超时
-            readTimeout: 120000 #读取超时
-            logger-level: full
-      lazy-attributes-resolution: true
-    # sentinel
-    sentinel:
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        port: 8769
-        dashboard: sentinel.laokou.org:8972
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-
-# server
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
-    threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 256
-    # 每块buffer的空间大小
-    buffer-size: 1024
-    # 分配堆外内存
-    direct-buffers: true
-
-# feign
-feign:
-  sentinel:
-    enabled: true
-    default-rule: default
-    rules:
-      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
-      default:
-        - grade: 2 # 异常数策略
-          count: 1 # 异常数模式下为对应的阈值
-          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
-          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
-          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html', 'e83a99587ac917866dee016df29fd662', '2023-01-13 12:16:46', '2024-05-26 00:03:05.977',
-		'nacos', '127.0.0.1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info"
 VALUES (26, 'router.json', 'LAOKOU_GROUP', '[
   {
@@ -444,45 +520,9 @@ VALUES (1569, 'admin-flow.json', 'LAOKOU_GROUP', '[
 ]', '31d82f93a5909b2529f159848116e162', '2023-02-26 15:03:07', '2024-05-25 18:19:15.142', 'nacos', '127.0.0.1',
 		'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"
-VALUES (1799, 'application-common-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  # https://codecentric.github.io/spring-boot-admin/current
-  boot:
-    # admin
-    admin:
-      client:
-        url: https://monitor.laokou.org:5000
-        # root
-        username: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
-        # laokou123
-        password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)',
-		'7d934a9e4b0ebe9803a17ccd520dca3e', '2023-07-18 16:59:45', '2023-11-06 18:09:16', 'nacos', '0:0:0:0:0:0:0:1',
-		'', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'monitor公共配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info"
 VALUES (2118, 'application-report.yaml', 'LAOKOU_GROUP', 'server:
   port: 8088', '89f7b26715cf760d099a258200381fe0', '2023-10-01 04:56:06', '2024-05-01 00:45:57', 'nacos',
 		'0:0:0:0:0:0:0:1', 'laokou-report', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info"
-VALUES (48, 'application-gateway.yaml', 'LAOKOU_GROUP', '# ip
-spring:
-  cloud:
-    gateway:
-      ip:
-        white:
-          enabled: false
-        black:
-          enabled: false
-
-knife4j:
-  # 聚合swagger文档
-  gateway:
-    enabled: false', '20b272cb01dae1613a01b3b46d61e487', '2024-05-25 18:13:10.704', '2024-05-25 18:46:33.133', 'nacos',
-		'127.0.0.1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway配置', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info"
 VALUES (1477, 'application-mail.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
@@ -616,6 +656,124 @@ VALUES (36, 'router.json', 'LAOKOU_GROUP', '[
 ]', '0ed5d74d692a46b070c46572b94ca61d', '2024-05-25 18:13:10.616', '2024-05-25 18:16:32.596', 'nacos', '127.0.0.1',
 		'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', '动态路由配置', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"
+VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
+spring:
+  # security
+  security:
+    oauth2:
+      resource-server:
+        enabled: true
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /**/v3/api-docs/**=laokou-gateway
+              - /v3/api-docs/**=laokou-auth,laokou-admin
+              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
+              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
+              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
+              - /error=laokou-admin,laokou-auth
+              - /v3/tenants/options=laokou-auth,laokou-gateway
+              - /v3/tenants/id=laokou-auth,laokou-gateway
+              - /favicon.ico=laokou-gateway
+              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
+              - /v3/secrets=laokou-gateway,laokou-auth
+              - /graceful-shutdown=laokou-auth
+              - /ws=laokou-gateway
+              - /doc.html=laokou-gateway
+            POST:
+              - /v3/captchas=laokou-auth,laokou-gateway
+            DELETE:
+              - /v3/logouts=laokou-auth,laokou-gateway
+  # task
+  task-execution:
+    thread-name-prefix: laokou-ttl-task-
+    pool:
+      core-size: 33
+      keep-alive: 180s
+    fork-join-pool:
+      core-size: 33
+  cloud:
+    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
+    openfeign:
+      compression:
+        response:
+          enabled: true
+        request:
+          enabled: true
+      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
+      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
+      okhttp:
+        enabled: true
+      circuitbreaker:
+        enabled: true
+      httpclient:
+        enabled: false
+        hc5:
+          enabled: false
+        disable-ssl-validation: true
+      client:
+        config:
+          default:
+            connectTimeout: 120000 #连接超时
+            readTimeout: 120000 #读取超时
+            logger-level: full
+      lazy-attributes-resolution: true
+    # sentinel
+    sentinel:
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        port: 8769
+        dashboard: sentinel.laokou.org:8972
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+# server
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 256
+    # 每块buffer的空间大小
+    buffer-size: 1024
+    # 分配堆外内存
+    direct-buffers: true
+
+# feign
+feign:
+  sentinel:
+    enabled: true
+    default-rule: default
+    rules:
+      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
+      default:
+        - grade: 2 # 异常数策略
+          count: 1 # 异常数模式下为对应的阈值
+          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
+          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
+          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
+tenant:
+  domain-names:
+    - laokou.org
+    - laokouyun.org
+    - laokou.org.cn
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html', '71cf04102f0e554a6c79fb84929ee8ce', '2023-01-13 12:16:46', '2024-08-15 21:57:19.805',
+		'nacos', '127.0.0.1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info"
 VALUES (2159, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
   kafka:
     bootstrap-servers: kafka.laokou.org:9092
@@ -652,7 +810,144 @@ VALUES (2159, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
       missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2023-10-26 08:54:23', '2023-11-06 18:14:00',
 		'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'kafka公共配置', '', '', 'yaml', '',
 		'');
+INSERT INTO "public"."config_info"
+VALUES (70, 'application-gateway.yaml', 'LAOKOU_GROUP', 'server:
+  # 开启请求压缩
+  compression:
+    enabled: true
+  ssl:
+    # 开启证书
+    enabled: false
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+    # 证书密码
+    key-password: laokou
+  http2:
+    enabled: false
+  forward-headers-strategy: native
+  # 优雅停机
+  shutdown: graceful
+  netty:
+    # 请求的最大初始行长度
+    max-initial-line-length: 4096
+  servlet:
+    context-path: /api
+# spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  webflux:
+    multipart:
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-in-memory-size: 4096
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # key可以自定义
+        db0:
+          nacos:
+            server-addr: http://nacos.laokou.org:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            data-id: gateway-flow.json
+            rule-type: gw_flow # 网关规则
+            group-id: LAOKOU_GROUP
+            data-type: json
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      cache:
+        caffeine:
+          # 初始容量 => 30
+          # 最大容量 => 4096
+          # 淘汰规则 => 最后一次写操作后经过30s过期
+          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
+        # 开启缓存
+        enabled: true
+      nacos:
+        # 开启Nacos路由负载均衡
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+    # gateway
+    gateway:
+      discovery:
+        locator:
+          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
+          # 查看DiscoveryLocatorProperties
+          enabled: false
+          # 开启服务ID强制小写
+          lower-case-service-id: true
+      httpclient:
+        ssl:
+          # 信任所有下游证书
+          use-insecure-trust-manager: true
+        # 关闭netty日志
+        wiretap: false
+        pool:
+          # 连接池中连接的最大空闲时间
+          max-idle-time: 10m
+          # 最大连接数
+          max-connections: 10000
+          # 连接池中连接的最大存活时间
+          max-life-time: 5m
+          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
+          # fixed     固定数量线程池
+          # disabled  不使用线程池（只有一个线程）
+          type: fixed
+          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
+          acquire-timeout: 60000
+        # 连接超时时间（毫秒），默认30s
+        connect-timeout: 60000
+      httpserver:
+        # 关闭netty日志
+        wiretap: false
+      router:
+        auth:
+          enabled: true
+          username: laokou
+          password: laokou123
+      ip:
+        white:
+          enabled: false
+        black:
+          enabled: false
+logging:
+  config: classpath:log4j2-dev.xml
 
+knife4j:
+  gateway:
+    enabled: true
+    tags-sorter: order
+    operations-sorter: order
+    # 手动
+    strategy: manual
+    routes:
+      - name: 认证服务
+        url: /auth/v3/api-docs?group=default
+        service-name: laokou-auth
+        context-path: /auth
+        order: 1
+      - name: 管理服务
+        url: /admin/v3/api-docs?group=default
+        service-name: laokou-admin
+        context-path: /admin
+        order: 2', '5110905c66886c51c9963ba99fa60044', '2024-05-25 18:13:33.458', '2024-08-16 00:20:04.234', 'nacos',
+		'127.0.0.1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway配置', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info"
 VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', '[
   {
@@ -780,43 +1075,6 @@ spring:
 		'nacos', '127.0.0.1', 'laokou-mail', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'mail配置', '', '', 'yaml', '',
 		'');
 INSERT INTO "public"."config_info"
-VALUES (38, 'application-common-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  # https://codecentric.github.io/spring-boot-admin/current
-  boot:
-    # admin
-    admin:
-      client:
-        url: https://monitor.laokou.org:5000
-        # root
-        username: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
-        # laokou123
-        password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)',
-		'7d934a9e4b0ebe9803a17ccd520dca3e', '2024-05-25 18:13:10.637', '2024-05-25 18:13:10.637', NULL, '127.0.0.1', '',
-		'8140e92b-fb43-48f5-b63b-7506185206a5', 'monitor公共配置', NULL, NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info"
-VALUES (70, 'application-gateway.yaml', 'LAOKOU_GROUP', '# ip
-spring:
-  cloud:
-    gateway:
-      ip:
-        white:
-          enabled: false
-        black:
-          enabled: false
-
-knife4j:
-  # 聚合swagger文档
-  gateway:
-    enabled: true', 'b4ccbf4df335be2d07acf78a456ad733', '2024-05-25 18:13:33.458', '2024-05-25 18:46:18.892', 'nacos',
-		'127.0.0.1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway配置', '', '', 'yaml', '', '');
-
-INSERT INTO "public"."config_info"
 VALUES (33, 'gateway-flow.json', 'LAOKOU_GROUP', '[
   {
     "resource": "laokou-auth",
@@ -878,7 +1136,6 @@ VALUES (40, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
       missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2024-05-25 18:13:10.65',
 		'2024-05-25 18:13:10.65', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'kafka公共配置', NULL,
 		NULL, 'yaml', NULL, '');
-
 INSERT INTO "public"."config_info"
 VALUES (44, 'admin-degrade.json', 'LAOKOU_GROUP', '[
   {
@@ -1051,7 +1308,6 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html', 'e83a99587ac917866dee016df29fd662', '2024-05-25 18:13:10.622', '2024-05-26 00:02:32.884',
 		'nacos', '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-
 INSERT INTO "public"."config_info"
 VALUES (27, 'application-common-redis.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
@@ -1078,49 +1334,144 @@ spring:
 		'2024-05-25 18:13:10.544', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'redis公共配置', NULL,
 		NULL, 'yaml', NULL, '');
 INSERT INTO "public"."config_info"
-VALUES (28, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
+VALUES (1273, 'application-gateway.yaml', 'LAOKOU_GROUP', 'server:
+  # 开启请求压缩
+  compression:
+    enabled: true
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+    # 证书密码
+    key-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: native
+  # 优雅停机
+  shutdown: graceful
+  netty:
+    # 请求的最大初始行长度
+    max-initial-line-length: 4096
+  servlet:
+    context-path: /api
 # spring
 spring:
-  boot:
-    # admin
-    admin:
+  threads:
+    virtual:
+      enabled: true
+  webflux:
+    multipart:
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-in-memory-size: 4096
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # key可以自定义
+        db0:
+          nacos:
+            server-addr: https://nacos.laokou.org:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            data-id: gateway-flow.json
+            rule-type: gw_flow # 网关规则
+            group-id: LAOKOU_GROUP
+            data-type: json
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      cache:
+        caffeine:
+          # 初始容量 => 30
+          # 最大容量 => 4096
+          # 淘汰规则 => 最后一次写操作后经过30s过期
+          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
+        # 开启缓存
+        enabled: true
+      nacos:
+        # 开启Nacos路由负载均衡
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+    # gateway
+    gateway:
       discovery:
-        ignored-services:
-          - laokou-im
-      notify:
-        mail:
-          from: 2413176044@qq.com
-          to: 2413176044@qq.com
-          template: META-INF/spring-boot-admin-server/mail/status-changed.html
-  # security
-  security:
-    user:
-      # root
-      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
-      # laokou123
-      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
-  # mail
-  mail:
-    host: smtp.qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8
-    username: 2413176044@qq.com
+        locator:
+          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
+          # 查看DiscoveryLocatorProperties
+          enabled: false
+          # 开启服务ID强制小写
+          lower-case-service-id: true
+      httpclient:
+        ssl:
+          # 信任所有下游证书
+          use-insecure-trust-manager: true
+        # 关闭netty日志
+        wiretap: false
+        pool:
+          # 连接池中连接的最大空闲时间
+          max-idle-time: 10m
+          # 最大连接数
+          max-connections: 10000
+          # 连接池中连接的最大存活时间
+          max-life-time: 5m
+          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
+          # fixed     固定数量线程池
+          # disabled  不使用线程池（只有一个线程）
+          type: fixed
+          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
+          acquire-timeout: 60000
+        # 连接超时时间（毫秒），默认30s
+        connect-timeout: 60000
+      httpserver:
+        # 关闭netty日志
+        wiretap: false
+      router:
+        auth:
+          enabled: true
+          username: laokou
+          password: laokou123
+      ip:
+        white:
+          enabled: false
+        black:
+          enabled: false
+logging:
+  config: classpath:log4j2-test.xml
 
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always', 'de1c37757329b0ad75488bf39024489c', '2024-05-25 18:13:10.57', '2024-05-25 18:13:10.57',
-		NULL, '127.0.0.1', 'laokou-monitor', '8140e92b-fb43-48f5-b63b-7506185206a5', 'spring boot admin monitor', NULL,
-		NULL, 'yaml', NULL, '');
+knife4j:
+  gateway:
+    enabled: true
+    tags-sorter: order
+    operations-sorter: order
+    # 手动
+    strategy: manual
+    routes:
+      - name: 认证服务
+        url: /auth/v3/api-docs?group=default
+        service-name: laokou-auth
+        context-path: /auth
+        order: 1
+      - name: 管理服务
+        url: /admin/v3/api-docs?group=default
+        service-name: laokou-admin
+        context-path: /admin
+        order: 2', '03a3abda3304fe2ecd39aaa4cfe33639', '2023-01-22 13:16:13', '2024-08-16 00:11:07.096', 'nacos',
+		'0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway配置', '', '', 'yaml', '',
+		'');
 INSERT INTO "public"."config_info"
 VALUES (29, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
@@ -1148,90 +1499,6 @@ VALUES (30, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'rocketmq:
 		NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'rocketmq公共配置', NULL, NULL, 'yaml', NULL,
 		'');
 INSERT INTO "public"."config_info"
-VALUES (1273, 'application-gateway.yaml', 'LAOKOU_GROUP', '# ip
-spring:
-  cloud:
-    gateway:
-      ip:
-        white:
-          enabled: false
-        black:
-          enabled: false
-
-knife4j:
-  # 聚合swagger文档
-  gateway:
-    enabled: true', 'b4ccbf4df335be2d07acf78a456ad733', '2023-01-22 13:16:13', '2024-05-25 18:46:00.582', 'nacos',
-		'127.0.0.1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info"
-VALUES (46, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: false', '7270e14a875205fafe93949b552af527', '2024-05-25 18:13:10.69', '2024-06-29 14:13:14.802', 'nacos',
-		'0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info"
 VALUES (31, 'application-sms.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -1258,50 +1525,6 @@ spring:
     default-encoding: UTF-8', '3e16e7d481fcc41559736dc5f7258251', '2024-05-25 18:13:10.594', '2024-07-16 21:52:24.67',
 		'nacos', '127.0.0.1', 'laokou-mail', '8140e92b-fb43-48f5-b63b-7506185206a5', 'mail配置', '', '', 'yaml', '',
 		'');
-INSERT INTO "public"."config_info"
-VALUES (19, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  boot:
-    # admin
-    admin:
-      discovery:
-        ignored-services:
-          - laokou-im
-      notify:
-        mail:
-          from: 2413176044@qq.com
-          to: 2413176044@qq.com
-          template: META-INF/spring-boot-admin-server/mail/status-changed.html
-  # security
-  security:
-    user:
-      # root
-      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
-      # laokou123
-      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
-  # mail
-  mail:
-    host: smtp.qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8
-    username: 2413176044@qq.com
-
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always', 'de1c37757329b0ad75488bf39024489c', '2024-05-25 18:12:47.335', '2024-05-25 18:13:33.308',
-		NULL, '127.0.0.1', 'laokou-monitor', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'spring boot admin monitor', NULL,
-		NULL, 'yaml', NULL, '');
 INSERT INTO "public"."config_info"
 VALUES (61, 'application-report.yaml', 'LAOKOU_GROUP', 'server:
   port: 8088', '89f7b26715cf760d099a258200381fe0', '2024-05-25 18:13:33.406', '2024-05-25 18:13:33.406', NULL,
@@ -1436,26 +1659,6 @@ VALUES (57, 'admin-flow.json', 'LAOKOU_GROUP', '[
   }
 ]', '31d82f93a5909b2529f159848116e162', '2024-05-25 18:13:33.382', '2024-05-25 18:19:26.212', 'nacos', '127.0.0.1',
 		'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info"
-VALUES (60, 'application-common-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  # https://codecentric.github.io/spring-boot-admin/current
-  boot:
-    # admin
-    admin:
-      client:
-        url: http://monitor.laokou.org:5000
-        # root
-        username: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
-        # laokou123
-        password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)',
-		'cd09a01f0564c89b652fe9db269795e9', '2024-05-25 18:13:33.4', '2024-05-25 18:47:54.592', 'nacos', '127.0.0.1',
-		'', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'monitor公共配置', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info"
 VALUES (59, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
 spring:
@@ -1611,7 +1814,155 @@ VALUES (62, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
       missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2024-05-25 18:13:33.413',
 		'2024-05-25 18:13:33.413', NULL, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'kafka公共配置', NULL,
 		NULL, 'yaml', NULL, '');
+INSERT INTO "public"."config_info"
+VALUES (68, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
 
+server:
+  ssl:
+    # 开启证书
+    enabled: false
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: false
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: http://nacos.laokou.org:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            group-id: LAOKOU_GROUP
+            data-id: admin-flow.json
+            data-type: json
+            rule-type: flow
+            username: nacos
+            password: nacos
+        db1:
+          nacos:
+            server-addr: http://nacos.laokou.org:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            group-id: LAOKOU_GROUP
+            data-id: admin-degrade.json
+            data-type: json
+            rule-type: degrade
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # 不开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+
+logging:
+  config: classpath:log4j2-dev.xml
+
+springdoc:
+  api-docs:
+    enabled: true
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+snail-job:
+  # 任务调度服务器信息
+  server:
+    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
+    host: snail.job.laokou.org
+    # 服务器通讯端口（不是后台管理页面服务端口）
+    port: 1788
+  # 命名空间
+  namespace: 764d604ec6fc45f68cd92514c40e9e1a
+  # 接入组名
+  group: laokou_admin_job_group
+  # 接入组 token
+  token: SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj
+  # 客户端通讯端口，默认 1789
+  port: 1790', 'c24eb507487996abb6d22f5ec35692da', '2024-05-25 18:13:33.447', '2024-08-16 00:20:19.661', 'nacos',
+		'127.0.0.1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info"
 VALUES (66, 'admin-degrade.json', 'LAOKOU_GROUP', '[
   {
@@ -1633,149 +1984,28 @@ VALUES (66, 'admin-degrade.json', 'LAOKOU_GROUP', '[
 ]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2024-05-25 18:13:33.436', '2024-05-25 18:13:33.436', NULL, '127.0.0.1',
 		'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel degrade rule', NULL, NULL, 'json', NULL,
 		'');
-
-INSERT INTO "public"."config_info"
-VALUES (68, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: true', 'ef43225dfe22aafd066a2f8a86fcbde5', '2024-05-25 18:13:33.447', '2024-06-29 14:14:10.129', 'nacos',
-		'0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info"
-VALUES (2022, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: true', 'ef43225dfe22aafd066a2f8a86fcbde5', '2023-09-28 11:37:33', '2024-06-29 14:12:17.779', 'nacos',
-		'0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info"
 VALUES (69, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
 
+server:
+  ssl:
+    # 开启证书
+    enabled: false
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: false
+  forward-headers-strategy: framework
+  shutdown: graceful
 # spring
 spring:
   datasource:
@@ -1808,7 +2038,6 @@ spring:
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
           hikari:
-            pool-name: HikariCP
             connection-timeout: 180000
             validation-timeout: 3000
             idle-timeout: 180000
@@ -1816,75 +2045,93 @@ spring:
             maximum-pool-size: 60
             minimum-idle: 10
             is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-      - boot_sys_user
-      - boot_sys_menu
-      - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: true', '10abe61bed146c004291a5e8204280ca', '2024-05-25 18:13:33.452', '2024-07-16 21:48:52.435', 'nacos',
-		'127.0.0.1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info"
-VALUES (2025, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
       datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: http://nacos.laokou.org:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            data-id: auth-flow.json
+            data-type: json
+            group-id: LAOKOU_GROUP
+            rule-type: flow
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # OAuth2
+  security:
+    oauth2:
+      authorization-server:
+        enabled: true
+        # 多租户
+        multiple-issuers-allowed: false
+        client:
+          default:
+            token:
+              authorization-code-time-to-live: 1h
+              access-token-time-to-live: 1h
+              refresh-token-time-to-live: 6h
+              device-code-time-to-live: 1h
+            registration:
+              id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-name: OAuth2.1认证
+              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
+              client-authentication-methods:
+                - client_secret_basic
+              authorization-grant-types:
+                - password
+                - mail
+                - mobile
+                - client_credentials
+                - refresh_token
+                - authorization_code
+                - urn:ietf:params:oauth:grant-type:device_code
+                - urn:ietf:params:oauth:grant-type:jwt-bearer
+                - urn:ietf:params:oauth:grant-type:token-exchange
+              scopes:
+                - password
+                - mail
+                - mobile
+                - openid
+              redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+              post-logout-redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+            # 客户端请求访问时需要授权同意
+            require-authorization-consent: true
+            # PKCE
+            require-proof-key: false
+  threads:
+    virtual:
+      enabled: true
+
+logging:
+  config: classpath:log4j2-dev.xml
+
+springdoc:
+  api-docs:
+    enabled: true
+
 # mybatis-plus
 mybatis-plus:
   # 全局处理
@@ -1904,79 +2151,21 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
 
-springdoc:
-  api-docs:
-    enabled: true', '10abe61bed146c004291a5e8204280ca', '2023-09-28 11:51:44', '2024-07-16 21:47:50.072', 'nacos',
-		'127.0.0.1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info"
-VALUES (47, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-      - boot_sys_user
-      - boot_sys_menu
-      - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: false', 'efc1ae262968e3fe57290083641e4577', '2024-05-25 18:13:10.697', '2024-07-16 21:48:26.726', 'nacos',
-		'127.0.0.1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+snail-job:
+  # 任务调度服务器信息
+  server:
+    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
+    host: snail.job.laokou.org
+    # 服务器通讯端口（不是后台管理页面服务端口）
+    port: 1788
+  # 命名空间
+  namespace: 764d604ec6fc45f68cd92514c40e9e1a
+  # 接入组名
+  group: laokou_auth_job_group
+  # 接入组 token
+  token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI', 'cdc8685cb34fe88d0fb61b1f5ef20be3', '2024-05-25 18:13:33.452',
+		'2024-08-16 00:19:50.404', 'nacos', '127.0.0.1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '',
+		'', 'yaml', '', '');
 INSERT INTO "public"."config_info"
 VALUES (1475, 'application-sms.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
@@ -2003,6 +2192,1001 @@ sms:
     appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)',
 		'3adcbf9b68966d16ac2136f236f2f919', '2024-05-25 18:12:47.349', '2024-07-16 21:51:04.709', 'nacos', '127.0.0.1',
 		'laokou-sms', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'sms配置', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info"
+VALUES (19, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: false
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: false
+  shutdown: graceful
+# spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  cloud:
+    config:
+      initialize-on-context-refresh: true
+  boot:
+    # admin
+    admin:
+      discovery:
+        ignored-services:
+          - laokou-im
+      notify:
+        mail:
+          from: 2413176044@qq.com
+          to: 2413176044@qq.com
+          template: META-INF/spring-boot-admin-server/mail/status-changed.html
+  # security
+  security:
+    user:
+      # root
+      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
+      # laokou123
+      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
+  # mail
+  mail:
+    host: smtp.qq.com
+    username: 2413176044@qq.com
+    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
+    default-encoding: UTF-8
+
+logging:
+  config: classpath:log4j2-dev.xml
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always', '8de077fd51216a4f43ffce6cd420dca0', '2024-05-25 18:12:47.335', '2024-08-16 00:13:48.075',
+		'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', '0dac1a68-2f01-40df-bd26-bf0cb199057a',
+		'spring boot admin monitor', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info"
+VALUES (5, 'application-im.yaml', 'LAOKOU_GROUP', 'server:
+  ssl:
+    # 开启证书
+    enabled: false
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: false
+  shutdown: graceful
+#spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  websocket-server:
+    ip: 0.0.0.0
+    port: ${WEBSOCKET_SERVER_PORT:1000}
+    app-name: ${spring.application.name}-server
+    boss-core-size: 2
+    worker-core-size: 32
+  webflux:
+    multipart:
+      max-in-memory-size: -1
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-headers-size: -1
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+
+logging:
+  config: classpath:log4j2-dev.xml
+', '944465d8411b828b761d95020c586d34', '2024-08-15 22:09:12.648', '2024-08-16 00:13:59.972', 'nacos', '0:0:0:0:0:0:0:1',
+		'laokou-im', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info"
+VALUES (6, 'application-im.yaml', 'LAOKOU_GROUP', 'server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  shutdown: graceful
+#spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  websocket-server:
+    ip: 0.0.0.0
+    port: ${WEBSOCKET_SERVER_PORT:1000}
+    app-name: ${spring.application.name}-server
+    boss-core-size: 2
+    worker-core-size: 32
+  webflux:
+    multipart:
+      max-in-memory-size: -1
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-headers-size: -1
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+
+logging:
+  config: classpath:log4j2-prod.xml
+', '22705d26748bcbddeb8334c4c0851fc4', '2024-08-15 22:09:22.47', '2024-08-16 00:14:14.076', 'nacos', '0:0:0:0:0:0:0:1',
+		'laokou-im', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info"
+VALUES (46, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: https://nacos.laokou.org:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            group-id: LAOKOU_GROUP
+            data-id: admin-flow.json
+            data-type: json
+            rule-type: flow
+            username: nacos
+            password: nacos
+        db1:
+          nacos:
+            server-addr: https://nacos.laokou.org:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            group-id: LAOKOU_GROUP
+            data-id: admin-degrade.json
+            data-type: json
+            rule-type: degrade
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # 不开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+
+logging:
+  config: classpath:log4j2-prod.xml
+
+springdoc:
+  api-docs:
+    enabled: false
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+snail-job:
+  # 任务调度服务器信息
+  server:
+    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
+    host: snail.job.laokou.org
+    # 服务器通讯端口（不是后台管理页面服务端口）
+    port: 1788
+  # 命名空间
+  namespace: 764d604ec6fc45f68cd92514c40e9e1a
+  # 接入组名
+  group: laokou_admin_job_group
+  # 接入组 token
+  token: SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj
+  # 客户端通讯端口，默认 1789
+  port: 1790', '0ee7f16913549706ea0887575ec7247d', '2024-05-25 18:13:10.69', '2024-08-16 00:14:57.43', 'nacos',
+		'0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info"
+VALUES (2022, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: https://nacos.laokou.org:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            group-id: LAOKOU_GROUP
+            data-id: admin-flow.json
+            data-type: json
+            rule-type: flow
+            username: nacos
+            password: nacos
+        db1:
+          nacos:
+            server-addr: https://nacos.laokou.org:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            group-id: LAOKOU_GROUP
+            data-id: admin-degrade.json
+            data-type: json
+            rule-type: degrade
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # 不开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+
+logging:
+  config: classpath:log4j2-test.xml
+
+springdoc:
+  api-docs:
+    enabled: true
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+snail-job:
+  # 任务调度服务器信息
+  server:
+    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
+    host: snail.job.laokou.org
+    # 服务器通讯端口（不是后台管理页面服务端口）
+    port: 1788
+  # 命名空间
+  namespace: 764d604ec6fc45f68cd92514c40e9e1a
+  # 接入组名
+  group: laokou_admin_job_group
+  # 接入组 token
+  token: SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj
+  # 客户端通讯端口，默认 1789
+  port: 1790', '2a926f4d392ef98cc5bf93cb5f612c14', '2023-09-28 11:37:33', '2024-08-16 00:03:37', 'nacos',
+		'0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info"
+VALUES (47, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 60000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: https://nacos.laokou.org:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            data-id: auth-flow.json
+            data-type: json
+            group-id: LAOKOU_GROUP
+            rule-type: flow
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # OAuth2
+  security:
+    oauth2:
+      authorization-server:
+        enabled: true
+        # 多租户
+        multiple-issuers-allowed: false
+        client:
+          default:
+            token:
+              authorization-code-time-to-live: 1h
+              access-token-time-to-live: 1h
+              refresh-token-time-to-live: 6h
+              device-code-time-to-live: 1h
+            registration:
+              id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-name: OAuth2.1认证
+              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
+              client-authentication-methods:
+                - client_secret_basic
+              authorization-grant-types:
+                - password
+                - mail
+                - mobile
+                - client_credentials
+                - refresh_token
+                - authorization_code
+                - urn:ietf:params:oauth:grant-type:device_code
+                - urn:ietf:params:oauth:grant-type:jwt-bearer
+                - urn:ietf:params:oauth:grant-type:token-exchange
+              scopes:
+                - password
+                - mail
+                - mobile
+                - openid
+              redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+              post-logout-redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+            # 客户端请求访问时需要授权同意
+            require-authorization-consent: true
+            # PKCE
+            require-proof-key: false
+  threads:
+    virtual:
+      enabled: true
+
+logging:
+  config: classpath:log4j2-prod.xml
+
+springdoc:
+  api-docs:
+    enabled: false
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: true
+    ignore-tables:
+      - boot_sys_source
+      - boot_sys_tenant
+      - boot_domain_event
+      - boot_sys_user
+      - boot_sys_menu
+      - boot_sys_dept
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+snail-job:
+  # 任务调度服务器信息
+  server:
+    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
+    host: snail.job.laokou.org
+    # 服务器通讯端口（不是后台管理页面服务端口）
+    port: 1788
+  # 命名空间
+  namespace: 764d604ec6fc45f68cd92514c40e9e1a
+  # 接入组名
+  group: laokou_auth_job_group
+  # 接入组 token
+  token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI', '84c9cabe5d268cdf707df2d42361c5c2', '2024-05-25 18:13:10.697',
+		'2024-08-16 00:15:09.584', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5',
+		'', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info"
+VALUES (2025, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 60000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: https://nacos.laokou.org:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            data-id: auth-flow.json
+            data-type: json
+            group-id: LAOKOU_GROUP
+            rule-type: flow
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # OAuth2
+  security:
+    oauth2:
+      authorization-server:
+        enabled: true
+        # 多租户
+        multiple-issuers-allowed: false
+        client:
+          default:
+            token:
+              authorization-code-time-to-live: 1h
+              access-token-time-to-live: 1h
+              refresh-token-time-to-live: 6h
+              device-code-time-to-live: 1h
+            registration:
+              id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-name: OAuth2.1认证
+              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
+              client-authentication-methods:
+                - client_secret_basic
+              authorization-grant-types:
+                - password
+                - mail
+                - mobile
+                - client_credentials
+                - refresh_token
+                - authorization_code
+                - urn:ietf:params:oauth:grant-type:device_code
+                - urn:ietf:params:oauth:grant-type:jwt-bearer
+                - urn:ietf:params:oauth:grant-type:token-exchange
+              scopes:
+                - password
+                - mail
+                - mobile
+                - openid
+              redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+              post-logout-redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+            # 客户端请求访问时需要授权同意
+            require-authorization-consent: true
+            # PKCE
+            require-proof-key: false
+  threads:
+    virtual:
+      enabled: true
+
+logging:
+  config: classpath:log4j2-test.xml
+
+springdoc:
+  api-docs:
+    enabled: true
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: true
+    ignore-tables:
+      - boot_sys_source
+      - boot_sys_tenant
+      - boot_domain_event
+      - boot_sys_user
+      - boot_sys_menu
+      - boot_sys_dept
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+snail-job:
+  # 任务调度服务器信息
+  server:
+    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
+    host: snail.job.laokou.org
+    # 服务器通讯端口（不是后台管理页面服务端口）
+    port: 1788
+  # 命名空间
+  namespace: 764d604ec6fc45f68cd92514c40e9e1a
+  # 接入组名
+  group: laokou_auth_job_group
+  # 接入组 token
+  token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI', '57570e084f91cc5d3c38a3c0d0cc7155', '2023-09-28 11:51:44',
+		'2024-08-16 00:10:30.942', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3',
+		'', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info"
+VALUES (28, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  shutdown: graceful
+# spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  cloud:
+    config:
+      initialize-on-context-refresh: true
+  boot:
+    # admin
+    admin:
+      discovery:
+        ignored-services:
+          - laokou-im
+      notify:
+        mail:
+          from: 2413176044@qq.com
+          to: 2413176044@qq.com
+          template: META-INF/spring-boot-admin-server/mail/status-changed.html
+  # security
+  security:
+    user:
+      # root
+      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
+      # laokou123
+      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
+  # mail
+  mail:
+    host: smtp.qq.com
+    username: 2413176044@qq.com
+    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
+    default-encoding: UTF-8
+
+logging:
+  config: classpath:log4j2-prod.xml
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always', '2eb46bd1e2c5705aef472a5efb248ec6', '2024-05-25 18:13:10.57', '2024-08-16 00:14:26.94',
+		'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', '8140e92b-fb43-48f5-b63b-7506185206a5',
+		'spring boot admin monitor', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info"
+VALUES (82, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  shutdown: graceful
+# spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  cloud:
+    config:
+      initialize-on-context-refresh: true
+  boot:
+    # admin
+    admin:
+      discovery:
+        ignored-services:
+          - laokou-im
+      notify:
+        mail:
+          from: 2413176044@qq.com
+          to: 2413176044@qq.com
+          template: META-INF/spring-boot-admin-server/mail/status-changed.html
+  # security
+  security:
+    user:
+      # root
+      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
+      # laokou123
+      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
+  # mail
+  mail:
+    host: smtp.qq.com
+    username: 2413176044@qq.com
+    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
+    default-encoding: UTF-8
+
+logging:
+  config: classpath:log4j2-test.xml
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always', 'd8fe931c686586663ab9db98c2c6b1de', '2023-01-16 12:01:23', '2024-08-16 00:11:57.928',
+		'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', 'a61abd4c-ef96-42a5-99a1-616adee531f3',
+		'spring boot admin monitor', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info"
+VALUES (4, 'application-im.yaml', 'LAOKOU_GROUP', 'server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  shutdown: graceful
+#spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  websocket-server:
+    ip: 0.0.0.0
+    port: ${WEBSOCKET_SERVER_PORT:1000}
+    app-name: ${spring.application.name}-server
+    boss-core-size: 2
+    worker-core-size: 32
+  webflux:
+    multipart:
+      max-in-memory-size: -1
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-headers-size: -1
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+
+logging:
+  config: classpath:log4j2-test.xml
+', 'f896579eeda9c5bbe075bc00cd310988', '2024-08-15 22:08:53.835', '2024-08-16 00:12:29.145', 'nacos', '0:0:0:0:0:0:0:1',
+		'laokou-im', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
@@ -2164,8 +3348,6 @@ COMMENT ON TABLE "public"."config_tags_relation" IS 'config_tag_relation';
 INSERT INTO "public"."config_tags_relation"
 VALUES (1567, 'gateway', '', 'gateway-flow.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 358);
 INSERT INTO "public"."config_tags_relation"
-VALUES (82, 'monitor', '', 'application-monitor.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 469);
-INSERT INTO "public"."config_tags_relation"
 VALUES (16, 'redis', '', 'application-common-redis.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 672);
 INSERT INTO "public"."config_tags_relation"
 VALUES (1270, 'rocketmq', '', 'application-common-rocketmq.yaml', 'LAOKOU_GROUP',
@@ -2180,21 +3362,24 @@ INSERT INTO "public"."config_tags_relation"
 VALUES (2118, 'report', '', 'application-report.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 720);
 INSERT INTO "public"."config_tags_relation"
 VALUES (1570, 'admin', '', 'admin-degrade.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 4);
-
 INSERT INTO "public"."config_tags_relation"
 VALUES (26, 'gateway', '', 'router.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 54);
-INSERT INTO "public"."config_tags_relation"
-VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 55);
-INSERT INTO "public"."config_tags_relation"
-VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 57);
-INSERT INTO "public"."config_tags_relation"
-VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 60);
-INSERT INTO "public"."config_tags_relation"
-VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 3);
 INSERT INTO "public"."config_tags_relation"
 VALUES (1475, 'sms', '', 'application-sms.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 5);
 INSERT INTO "public"."config_tags_relation"
 VALUES (1477, 'mail', '', 'application-mail.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 6);
+INSERT INTO "public"."config_tags_relation"
+VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 25);
+INSERT INTO "public"."config_tags_relation"
+VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 44);
+INSERT INTO "public"."config_tags_relation"
+VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 45);
+INSERT INTO "public"."config_tags_relation"
+VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 46);
+INSERT INTO "public"."config_tags_relation"
+VALUES (82, 'monitor', '', 'application-monitor.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 47);
+INSERT INTO "public"."config_tags_relation"
+VALUES (4, 'im', '', 'application-im.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 48);
 
 -- ----------------------------
 -- Table structure for databasechangelog
@@ -2318,511 +3503,6 @@ COMMENT ON TABLE "public"."his_config_info" IS '多租户改造';
 -- ----------------------------
 -- Records of his_config_info
 -- ----------------------------
-INSERT INTO "public"."his_config_info"
-VALUES (2025, 1, 'application-auth.yaml', 'LAOKOU_GROUP', 'laokou-auth', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-	  - boot_sys_user
-	  - boot_sys_menu
-	  - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: true', 'cc6da796e35e2f5453568cf8fc213655', '2024-07-16 21:46:15.561251', '2024-07-16 21:46:15.566',
-		'nacos', '127.0.0.1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
-INSERT INTO "public"."his_config_info"
-VALUES (2025, 2, 'application-auth.yaml', 'LAOKOU_GROUP', 'laokou-auth', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-	  - boot_sys_user
-	  - boot_sys_menu
-	  - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: true', 'cc6da796e35e2f5453568cf8fc213655', '2024-07-16 21:47:36.074497', '2024-07-16 21:47:36.078',
-		'nacos', '127.0.0.1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
-INSERT INTO "public"."his_config_info"
-VALUES (2025, 3, 'application-auth.yaml', 'LAOKOU_GROUP', 'laokou-auth', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-	    - boot_sys_user
-	    - boot_sys_menu
-	    - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: true', '4bf564f759d4ee4c6d788fd5eebbd519', '2024-07-16 21:47:50.07215', '2024-07-16 21:47:50.075', 'nacos',
-		'127.0.0.1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
-INSERT INTO "public"."his_config_info"
-VALUES (47, 4, 'application-auth.yaml', 'LAOKOU_GROUP', 'laokou-auth', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-	  - boot_sys_user
-	  - boot_sys_menu
-	  - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: false', '0069c2c95c7d8819768e7d53dec6c9cc', '2024-07-16 21:48:09.879648', '2024-07-16 21:48:09.882',
-		'nacos', '127.0.0.1', 'U         ', '8140e92b-fb43-48f5-b63b-7506185206a5', '');
-INSERT INTO "public"."his_config_info"
-VALUES (47, 5, 'application-auth.yaml', 'LAOKOU_GROUP', 'laokou-auth', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-	    - boot_sys_user
-	    - boot_sys_menu
-	    - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: false', '448c282f677441ecbb4d84ac957c4087', '2024-07-16 21:48:26.725416', '2024-07-16 21:48:26.727',
-		'nacos', '127.0.0.1', 'U         ', '8140e92b-fb43-48f5-b63b-7506185206a5', '');
-INSERT INTO "public"."his_config_info"
-VALUES (69, 6, 'application-auth.yaml', 'LAOKOU_GROUP', 'laokou-auth', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-	  - boot_domain_event
-      - boot_sys_user
-	  - boot_sys_menu
-	  - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: true', '4d88f2658025b7986a0ce911854d7465', '2024-07-16 21:48:52.434581', '2024-07-16 21:48:52.436',
-		'nacos', '127.0.0.1', 'U         ', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '');
-INSERT INTO "public"."his_config_info"
-VALUES (1475, 7, 'application-sms.yaml', 'LAOKOU_GROUP', 'laokou-sms', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-sms:
-  gyy:
-	enabled: true
-    template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
-    sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
-    appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)',
-		'b995cc92ea19b27e1342da1d41b921be', '2024-07-16 21:50:25.921746', '2024-07-16 21:50:25.926', 'nacos',
-		'127.0.0.1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
-INSERT INTO "public"."his_config_info"
-VALUES (31, 8, 'application-sms.yaml', 'LAOKOU_GROUP', 'laokou-sms', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-sms:
-  gyy:
-    enabled: true
-    template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
-    sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
-    appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)',
-		'3adcbf9b68966d16ac2136f236f2f919', '2024-07-16 21:50:44.321948', '2024-07-16 21:50:44.323', 'nacos',
-		'127.0.0.1', 'U         ', '8140e92b-fb43-48f5-b63b-7506185206a5', '');
-INSERT INTO "public"."his_config_info"
-VALUES (22, 9, 'application-sms.yaml', 'LAOKOU_GROUP', 'laokou-sms', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-sms:
-  gyy:
-	enabled: true
-    template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
-    sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
-    appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)',
-		'b995cc92ea19b27e1342da1d41b921be', '2024-07-16 21:51:04.70854', '2024-07-16 21:51:04.71', 'nacos', '127.0.0.1',
-		'U         ', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '');
-INSERT INTO "public"."his_config_info"
-VALUES (23, 10, 'application-mail.yaml', 'LAOKOU_GROUP', 'laokou-mail', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-spring:
-  # mail
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8', '3e16e7d481fcc41559736dc5f7258251', '2024-07-16 21:51:27.173699',
-		'2024-07-16 21:51:27.175', 'nacos', '127.0.0.1', 'U         ', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '');
-INSERT INTO "public"."his_config_info"
-VALUES (32, 11, 'application-mail.yaml', 'LAOKOU_GROUP', 'laokou-mail', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-spring:
-  # mail
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: hhqkeodvfywfebaf
-    default-encoding: UTF-8', 'b933d73af97a47df7b93af80b8bc4227', '2024-07-16 21:51:46.861634',
-		'2024-07-16 21:51:46.864', 'nacos', '127.0.0.1', 'U         ', '8140e92b-fb43-48f5-b63b-7506185206a5', '');
-INSERT INTO "public"."his_config_info"
-VALUES (1477, 12, 'application-mail.yaml', 'LAOKOU_GROUP', 'laokou-mail', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-spring:
-  # mail
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8', '3e16e7d481fcc41559736dc5f7258251', '2024-07-16 21:52:10.148834',
-		'2024-07-16 21:52:10.152', 'nacos', '127.0.0.1', 'U         ', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '');
-INSERT INTO "public"."his_config_info"
-VALUES (32, 13, 'application-mail.yaml', 'LAOKOU_GROUP', 'laokou-mail', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-spring:
-  # mail
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: hhqkeodvfywfebaf
-    default-encoding: UTF-8', 'b933d73af97a47df7b93af80b8bc4227', '2024-07-16 21:52:24.670038',
-		'2024-07-16 21:52:24.672', 'nacos', '127.0.0.1', 'U         ', '8140e92b-fb43-48f5-b63b-7506185206a5', '');
 
 -- ----------------------------
 -- Table structure for permissions
@@ -2970,9 +3650,72 @@ INSERT INTO "public"."users"
 VALUES ('nacos', '$2a$10$oVX1zRtaql9Jbsyzaaovx.TU2M6Bw0ZpCbPYWOIED58d1ougzaFRm', 'f');
 
 -- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_info_aggr_id_seq"
+	OWNED BY "public"."config_info_aggr"."id";
+SELECT setval('"public"."config_info_aggr_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_info_beta_id_seq"
+	OWNED BY "public"."config_info_beta"."id";
+SELECT setval('"public"."config_info_beta_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_info_id_seq"
+	OWNED BY "public"."config_info"."id";
+SELECT setval('"public"."config_info_id_seq"', 6, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_info_tag_id_seq"
+	OWNED BY "public"."config_info_tag"."id";
+SELECT setval('"public"."config_info_tag_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_tags_relation_nid_seq"
+	OWNED BY "public"."config_tags_relation"."nid";
+SELECT setval('"public"."config_tags_relation_nid_seq"', 48, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."group_capacity_id_seq"
+	OWNED BY "public"."group_capacity"."id";
+SELECT setval('"public"."group_capacity_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."his_config_info_nid_seq"
+	OWNED BY "public"."his_config_info"."nid";
+SELECT setval('"public"."his_config_info_nid_seq"', 151, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."tenant_capacity_id_seq"
+	OWNED BY "public"."tenant_capacity"."id";
+SELECT setval('"public"."tenant_capacity_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."tenant_info_id_seq"
+	OWNED BY "public"."tenant_info"."id";
+SELECT setval('"public"."tenant_info_id_seq"', 1, false);
+
+-- ----------------------------
 -- Auto increment value for config_info
 -- ----------------------------
-SELECT setval('"public"."config_info_id_seq"', 1, false);
+SELECT setval('"public"."config_info_id_seq"', 6, true);
 
 -- ----------------------------
 -- Indexes structure for table config_info
@@ -3118,7 +3861,7 @@ ALTER TABLE "public"."config_info_tag"
 -- ----------------------------
 -- Auto increment value for config_tags_relation
 -- ----------------------------
-SELECT setval('"public"."config_tags_relation_nid_seq"', 6, true);
+SELECT setval('"public"."config_tags_relation_nid_seq"', 48, true);
 
 -- ----------------------------
 -- Indexes structure for table config_tags_relation
@@ -3185,7 +3928,7 @@ ALTER TABLE "public"."group_capacity"
 -- ----------------------------
 -- Auto increment value for his_config_info
 -- ----------------------------
-SELECT setval('"public"."his_config_info_nid_seq"', 13, true);
+SELECT setval('"public"."his_config_info_nid_seq"', 151, true);
 
 -- ----------------------------
 -- Indexes structure for table his_config_info
@@ -3297,590 +4040,3 @@ ALTER TABLE "public"."tenant_info"
 -- ----------------------------
 ALTER TABLE "public"."users"
 	ADD CONSTRAINT "users_pkey" PRIMARY KEY ("username");
-
--- 修改
-UPDATE "public"."config_info"
-SET "data_id"            = 'application-auth.yaml',
-	"group_id"           = 'LAOKOU_GROUP',
-	"content"            = '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-      - boot_sys_user
-      - boot_sys_menu
-      - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: false
-
-snail-job:
-  # 任务调度服务器信息
-  server:
-    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
-    host: snail.job.laokou.org
-    # 服务器通讯端口（不是后台管理页面服务端口）
-    port: 1788
-  # 命名空间
-  namespace: 764d604ec6fc45f68cd92514c40e9e1a
-  # 接入组名
-  group: laokou_auth_job_group
-  # 接入组 token
-  token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI',
-	"md5"                = 'c9c4f7ed2abcebd9bac6adf4273237f5',
-	"gmt_create"         = '2024-05-25 18:13:10.697',
-	"gmt_modified"       = '2024-07-29 00:42:38.148',
-	"src_user"           = 'nacos',
-	"src_ip"             = '0:0:0:0:0:0:0:1',
-	"app_name"           = 'laokou-auth',
-	"tenant_id"          = '8140e92b-fb43-48f5-b63b-7506185206a5',
-	"c_desc"             = '',
-	"c_use"              = '',
-	"effect"             = '',
-	"type"               = 'yaml',
-	"c_schema"           = '',
-	"encrypted_data_key" = ''
-WHERE "id" = 47;
-UPDATE "public"."config_info"
-SET "data_id"            = 'application-auth.yaml',
-	"group_id"           = 'LAOKOU_GROUP',
-	"content"            = '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-      - boot_sys_user
-      - boot_sys_menu
-      - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: true
-
-snail-job:
-  # 任务调度服务器信息
-  server:
-    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
-    host: snail.job.laokou.org
-    # 服务器通讯端口（不是后台管理页面服务端口）
-    port: 1788
-  # 命名空间
-  namespace: 764d604ec6fc45f68cd92514c40e9e1a
-  # 接入组名
-  group: laokou_auth_job_group
-  # 接入组 token
-  token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI',
-	"md5"                = '4e721758bbac58140ed7077e345abe12',
-	"gmt_create"         = '2024-05-25 18:13:33.452',
-	"gmt_modified"       = '2024-07-29 00:39:55.36',
-	"src_user"           = 'nacos',
-	"src_ip"             = '0:0:0:0:0:0:0:1',
-	"app_name"           = 'laokou-auth',
-	"tenant_id"          = '0dac1a68-2f01-40df-bd26-bf0cb199057a',
-	"c_desc"             = '',
-	"c_use"              = '',
-	"effect"             = '',
-	"type"               = 'yaml',
-	"c_schema"           = '',
-	"encrypted_data_key" = ''
-WHERE "id" = 69;
-UPDATE "public"."config_info"
-SET "data_id"            = 'application-auth.yaml',
-	"group_id"           = 'LAOKOU_GROUP',
-	"content"            = '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-      - boot_sys_user
-      - boot_sys_menu
-      - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: true
-
-snail-job:
-  # 任务调度服务器信息
-  server:
-    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
-    host: snail.job.laokou.org
-    # 服务器通讯端口（不是后台管理页面服务端口）
-    port: 1788
-  # 命名空间
-  namespace: 764d604ec6fc45f68cd92514c40e9e1a
-  # 接入组名
-  group: laokou_auth_job_group
-  # 接入组 token
-  token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI',
-	"md5"                = '4e721758bbac58140ed7077e345abe12',
-	"gmt_create"         = '2023-09-28 11:51:44',
-	"gmt_modified"       = '2024-07-29 00:39:39.432',
-	"src_user"           = 'nacos',
-	"src_ip"             = '0:0:0:0:0:0:0:1',
-	"app_name"           = 'laokou-auth',
-	"tenant_id"          = 'a61abd4c-ef96-42a5-99a1-616adee531f3',
-	"c_desc"             = '',
-	"c_use"              = '',
-	"effect"             = '',
-	"type"               = 'yaml',
-	"c_schema"           = '',
-	"encrypted_data_key" = ''
-WHERE "id" = 2025;
-UPDATE "public"."config_info"
-SET "data_id"            = 'application-admin.yaml',
-	"group_id"           = 'LAOKOU_GROUP',
-	"content"            = '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: false
-
-snail-job:
-  # 任务调度服务器信息
-  server:
-    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
-    host: snail.job.laokou.org
-    # 服务器通讯端口（不是后台管理页面服务端口）
-    port: 1788
-  # 命名空间
-  namespace: 764d604ec6fc45f68cd92514c40e9e1a
-  # 接入组名
-  group: laokou_admin_job_group
-  # 接入组 token
-  token: SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj',
-	"md5"                = '27d2daf2382682ee12341db55984ddd1',
-	"gmt_create"         = '2024-05-25 18:13:10.69',
-	"gmt_modified"       = '2024-07-29 00:39:03.214',
-	"src_user"           = 'nacos',
-	"src_ip"             = '0:0:0:0:0:0:0:1',
-	"app_name"           = 'laokou-admin',
-	"tenant_id"          = '8140e92b-fb43-48f5-b63b-7506185206a5',
-	"c_desc"             = '',
-	"c_use"              = '',
-	"effect"             = '',
-	"type"               = 'yaml',
-	"c_schema"           = '',
-	"encrypted_data_key" = ''
-WHERE "id" = 46;
-UPDATE "public"."config_info"
-SET "data_id"            = 'application-admin.yaml',
-	"group_id"           = 'LAOKOU_GROUP',
-	"content"            = '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: true
-
-snail-job:
-  # 任务调度服务器信息
-  server:
-    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
-    host: snail.job.laokou.org
-    # 服务器通讯端口（不是后台管理页面服务端口）
-    port: 1788
-  # 命名空间
-  namespace: 764d604ec6fc45f68cd92514c40e9e1a
-  # 接入组名
-  group: laokou_admin_job_group
-  # 接入组 token
-  token: SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj',
-	"md5"                = '80cba2f77f2728e010ceae1951f58057',
-	"gmt_create"         = '2024-05-25 18:13:33.447',
-	"gmt_modified"       = '2024-07-29 00:38:48.818',
-	"src_user"           = 'nacos',
-	"src_ip"             = '0:0:0:0:0:0:0:1',
-	"app_name"           = 'laokou-admin',
-	"tenant_id"          = '0dac1a68-2f01-40df-bd26-bf0cb199057a',
-	"c_desc"             = '',
-	"c_use"              = '',
-	"effect"             = '',
-	"type"               = 'yaml',
-	"c_schema"           = '',
-	"encrypted_data_key" = ''
-WHERE "id" = 68;
-UPDATE "public"."config_info"
-SET "data_id"            = 'application-admin.yaml',
-	"group_id"           = 'LAOKOU_GROUP',
-	"content"            = '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            pool-name: HikariCP
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-springdoc:
-  api-docs:
-    enabled: true
-
-snail-job:
-  # 任务调度服务器信息
-  server:
-    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
-    host: snail.job.laokou.org
-    # 服务器通讯端口（不是后台管理页面服务端口）
-    port: 1788
-  # 命名空间
-  namespace: 764d604ec6fc45f68cd92514c40e9e1a
-  # 接入组名
-  group: laokou_admin_job_group
-  # 接入组 token
-  token: SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj',
-	"md5"                = '80cba2f77f2728e010ceae1951f58057',
-	"gmt_create"         = '2023-09-28 11:37:33',
-	"gmt_modified"       = '2024-07-29 00:38:24.794',
-	"src_user"           = 'nacos',
-	"src_ip"             = '0:0:0:0:0:0:0:1',
-	"app_name"           = 'laokou-admin',
-	"tenant_id"          = 'a61abd4c-ef96-42a5-99a1-616adee531f3',
-	"c_desc"             = '',
-	"c_use"              = '',
-	"effect"             = '',
-	"type"               = 'yaml',
-	"c_schema"           = '',
-	"encrypted_data_key" = ''
-WHERE "id" = 2022;

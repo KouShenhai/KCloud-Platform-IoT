@@ -14,36 +14,11 @@
 #    * limitations under the License.
 #    *
 #    */
-# server
 server:
-  port: 5000
-  ssl:
-    # 开启证书
-    enabled: @SSL-ENABLED@
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: @SSL-ENABLED@
-  shutdown: graceful
-# spring
+  port: ${SERVER_PORT:5000}
+
 spring:
-  threads:
-    virtual:
-      enabled: true
   application:
     name: @artifactId@
-  # dev|test|prod
   profiles:
     active: @PROFILE-ACTIVE@
-  cloud:
-    config:
-      initialize-on-context-refresh: true
-
-logging:
-  config: classpath:log4j2-@PROFILE-ACTIVE@.xml

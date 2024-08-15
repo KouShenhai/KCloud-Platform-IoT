@@ -37,7 +37,6 @@ spring:
   application:
     name: @pom.parent.artifactId@
   profiles:
-    # 环境 dev|test|prod
     active: @PROFILE-ACTIVE@
   cloud:
     # loadbalancer
@@ -53,4 +52,4 @@ spring:
       enabled: true
 
 logging:
-  config: classpath:log4j2-@PROFILE-ACTIVE@.xml
+  config: classpath:log4j2-test.xml
