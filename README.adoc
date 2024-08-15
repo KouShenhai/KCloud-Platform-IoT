@@ -89,7 +89,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 |Spring Boot Admin           |3.3.3
 |Spring Authorization Server |1.3.1
 |Mybatis Plus                |3.5.7
-|Nacos                       |2.4.0.1
+|Nacos                       |2.4.1
 |Sentinel                    |1.8.8
 |Redis                       |7.4.0
 |Elasticsearch               |8.15.0
