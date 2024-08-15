@@ -125,3 +125,11 @@ logging:
 springdoc:
   api-docs:
     enabled: @KNIFE4J-ENABLED@
+
+rocketmq:
+  producer:
+    endpoints: 127.0.0.1:8081
+  simple-consumer:
+    endpoints: 127.0.0.1:8081
+    filter-expression-type: tag
+    tag: "mailCaptcha"
