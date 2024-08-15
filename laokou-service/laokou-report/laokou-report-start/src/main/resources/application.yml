@@ -19,7 +19,7 @@ server:
   port: ${SERVER_PORT:10002}
   ssl:
     # 开启证书
-    enabled: @SSL-ENABLED@
+    enabled: true
     # 证书位置
     key-store: classpath:scg-keystore.p12
     # 证书别名
@@ -29,7 +29,7 @@ server:
     # 证书密码
     key-store-password: laokou
   http2:
-    enabled: @SSL-ENABLED@
+    enabled: true
   forward-headers-strategy: framework
   shutdown: graceful
 # spring
@@ -51,4 +51,4 @@ spring:
         - veth.*
 
 logging:
-  config: classpath:log4j2-@PROFILE-ACTIVE@.xml
+  config: classpath:log4j2-test.xml

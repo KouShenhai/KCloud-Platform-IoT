@@ -14,82 +14,10 @@
 #    * limitations under the License.
 #    *
 #    */
-# server
 server:
   port: ${SERVER_PORT:9990}
-  ssl:
-    # 开启证书
-    enabled: @SSL-ENABLED@
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: @SSL-ENABLED@
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
 spring:
   application:
     name: @pom.parent.artifactId@
   profiles:
-    # 环境 dev|test|prod
     active: @PROFILE-ACTIVE@
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: -1
-      max-request-size: -1
-  cloud:
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: @NACOS-CONFIG-ADDRESS@
-            namespace: @NACOS-NAMESPACE@
-            group-id: @NACOS-GROUP@
-            data-id: admin-flow.json
-            data-type: json
-            rule-type: flow
-            username: @NACOS-USERNAME@
-            password: @NACOS-PASSWORD@
-        db1:
-          nacos:
-            server-addr: @NACOS-CONFIG-ADDRESS@
-            namespace: @NACOS-NAMESPACE@
-            group-id: @NACOS-GROUP@
-            data-id: admin-degrade.json
-            data-type: json
-            rule-type: degrade
-            username: @NACOS-USERNAME@
-            password: @NACOS-PASSWORD@
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # 不开启虚拟线程
-  threads:
-    virtual:
-      enabled: true
-  liquibase:
-    enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.xml
-
-logging:
-  config: classpath:log4j2-@PROFILE-ACTIVE@.xml
-
-springdoc:
-  api-docs:
-    enabled: @KNIFE4J-ENABLED@

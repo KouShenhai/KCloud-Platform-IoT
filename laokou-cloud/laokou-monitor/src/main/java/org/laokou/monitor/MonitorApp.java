@@ -32,10 +32,10 @@ import java.net.InetAddress;
  *
  * @author laokou
  */
-@SpringBootApplication
 @EnableAdminServer
-@EnableEncryptableProperties
 @EnableDiscoveryClient
+@SpringBootApplication
+@EnableEncryptableProperties
 public class MonitorApp {
 
 	/**

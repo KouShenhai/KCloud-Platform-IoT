@@ -1,46 +1,8 @@
 server:
   port: ${SERVER_PORT:10001}
-  ssl:
-    # 开启证书
-    enabled: @SSL-ENABLED@
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: @SSL-ENABLED@
-  shutdown: graceful
-#spring
+
 spring:
-  threads:
-    virtual:
-      enabled: true
-  websocket-server:
-    ip: 0.0.0.0
-    port: ${WEBSOCKET_SERVER_PORT:1000}
-    app-name: ${spring.application.name}-server
-    boss-core-size: 2
-    worker-core-size: 32
   application:
     name: @pom.parent.artifactId@
   profiles:
-    # 环境 dev|test|prod
     active: @PROFILE-ACTIVE@
-  webflux:
-    multipart:
-      max-in-memory-size: -1
-      max-parts: -1
-      max-disk-usage-per-part: -1
-      max-headers-size: -1
-  cloud:
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-
-logging:
-  config: classpath:log4j2-@PROFILE-ACTIVE@.xml

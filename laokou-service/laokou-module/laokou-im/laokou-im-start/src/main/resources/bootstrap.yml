@@ -35,3 +35,6 @@ spring:
           - data-id: application-common-redis.yaml
             group: ${NACOS-GROUP}
             refresh: true
+          - data-id: application-im.yaml
+            group: ${NACOS-GROUP}
+            refresh: true
