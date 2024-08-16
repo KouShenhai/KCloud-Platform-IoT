@@ -21,7 +21,10 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.core.config.TaskExecutorAutoConfig.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 @RequiredArgsConstructor
 @Component("domainEventPublisher")
@@ -30,9 +33,10 @@ public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 	private final RocketMqTemplate rocketMqTemplate;
 
 	@Override
+	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void publishToCreate(DomainEvent<Long> payload) {
 		rocketMqTemplate.sendTransactionMessage(payload.getTopic(), payload.getTag(), payload, payload.getId(),
-				IdGenerator.defaultSnowflakeId());
+			IdGenerator.defaultSnowflakeId());
 	}
 
 }
