@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.cors.config;
+package org.laokou.common.core.config;
 
 import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
 
@@ -24,7 +24,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * @author laokou
  */
-public class CustomInstantSerializer extends InstantSerializer {
+public final class CustomInstantSerializer extends InstantSerializer {
 
 	public CustomInstantSerializer(InstantSerializer base, Boolean useTimestamp, Boolean useNanoseconds,
 			DateTimeFormatter formatter) {

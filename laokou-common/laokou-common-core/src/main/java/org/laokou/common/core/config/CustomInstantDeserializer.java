@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.cors.config;
+package org.laokou.common.core.config;
 
 import com.fasterxml.jackson.datatype.jsr310.deser.InstantDeserializer;
 
@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * @author laokou
  */
-public class CustomInstantDeserializer extends InstantDeserializer<Instant> {
+public final class CustomInstantDeserializer extends InstantDeserializer<Instant> {
 
 	public CustomInstantDeserializer(InstantDeserializer<Instant> base, DateTimeFormatter f) {
 		super(base, f);

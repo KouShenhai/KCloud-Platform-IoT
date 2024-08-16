@@ -54,7 +54,8 @@ public class TaskExecutorAutoConfig {
 
 	@Bean
 	public Executor workStealingPoolExecutor(SpringTaskExecutionProperties springTaskExecutionProperties) {
-		return Executors.newWorkStealingPool(springTaskExecutionProperties.getForkJoinPool().getCoreSize());
+		return TtlExecutors.getTtlExecutorService(
+				Executors.newWorkStealingPool(springTaskExecutionProperties.getForkJoinPool().getCoreSize()));
 	}
 
 	@Bean(value = THREAD_POOL_TASK_EXECUTOR_NAME)
