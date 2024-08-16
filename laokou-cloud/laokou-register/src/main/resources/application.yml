@@ -120,7 +120,7 @@ server:
   shutdown: graceful
 spring:
   application:
-    name: @pom.artifactId@
+    name: ${APP_NAME:laokou-register}
   profiles:
     active: @PROFILE-ACTIVE@
   sql:

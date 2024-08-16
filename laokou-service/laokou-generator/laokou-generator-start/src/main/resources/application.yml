@@ -1,5 +1,5 @@
 server:
-  port: 8086
+  port: ${SERVER_PORT:8086}
   undertow:
     threads:
       # 设置IO线程数，来执行非阻塞任务，负责多个连接数
@@ -14,7 +14,7 @@ server:
       enabled: true
 spring:
   application:
-    name: @pom.artifactId@
+    name: ${APP_NAME:laokou-generator}
   datasource:
     dynamic:
       datasource:

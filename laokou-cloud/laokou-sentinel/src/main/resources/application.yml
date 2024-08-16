@@ -17,7 +17,7 @@ sentinel:
   dashboard:
     version: '@project.version@'
 server:
-  port: 8972
+  port: ${SERVER_PORT:8972}
   servlet:
     encoding:
       charset: UTF-8
@@ -43,6 +43,6 @@ server:
     enabled: false
 spring:
   application:
-    name: @pom.artifactId@
+    name: ${APP_NAME:laokou-sentinel}
   profiles:
     active: @PROFILE-ACTIVE@

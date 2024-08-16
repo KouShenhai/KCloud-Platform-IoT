@@ -35,7 +35,7 @@ server:
 # spring
 spring:
   application:
-    name: @pom.parent.artifactId@
+    name: ${APP_NAME:laokou-report}
   profiles:
     # dev|test|prod
     active: @PROFILE-ACTIVE@

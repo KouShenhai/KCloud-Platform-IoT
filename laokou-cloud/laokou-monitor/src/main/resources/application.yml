@@ -19,6 +19,6 @@ server:
 
 spring:
   application:
-    name: @artifactId@
+    name: ${APP_NAME:laokou-monitor}
   profiles:
     active: @PROFILE-ACTIVE@

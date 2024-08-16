@@ -19,6 +19,6 @@ server:
 
 spring:
   application:
-    name: @pom.parent.artifactId@
+    name: ${APP_NAME:laokou-auth}
   profiles:
     active: @PROFILE-ACTIVE@

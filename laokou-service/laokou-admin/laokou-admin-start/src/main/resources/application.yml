@@ -18,6 +18,6 @@ server:
   port: ${SERVER_PORT:9990}
 spring:
   application:
-    name: @pom.parent.artifactId@
+    name: ${APP_NAME:laokou-admin}
   profiles:
     active: @PROFILE-ACTIVE@

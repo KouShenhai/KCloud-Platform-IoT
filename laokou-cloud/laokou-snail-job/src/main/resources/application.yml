@@ -19,7 +19,7 @@ server:
 
 spring:
   application:
-    name: @pom.artifactId@
+    name: ${APP_NAME:laokou-snail-job}
   main:
     banner-mode: off
   profiles:

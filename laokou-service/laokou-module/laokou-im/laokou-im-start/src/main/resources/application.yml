@@ -3,6 +3,6 @@ server:
 
 spring:
   application:
-    name: @pom.parent.artifactId@
+    name: ${APP_NAME:laokou-im}
   profiles:
     active: @PROFILE-ACTIVE@
