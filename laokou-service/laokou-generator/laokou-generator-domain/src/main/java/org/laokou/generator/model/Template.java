@@ -30,12 +30,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -47,12 +47,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -64,12 +64,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -81,12 +81,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -98,12 +98,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -115,12 +115,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -132,13 +132,14 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
-			return moduleName + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + packageName + "/convertor";
+		public String getFileDirectory(GeneratorA generatorA) {
+			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + generatorA.getPackagePath()
+				+ "/convertor";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
-			return className + "Converter.java";
+		public String getFileName(GeneratorA generatorA) {
+			return generatorA.getTableV().className() + "Converter.java";
 		}
 	},
 
@@ -149,12 +150,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -166,12 +167,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -183,12 +184,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -200,12 +201,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -217,12 +218,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -234,12 +235,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -251,12 +252,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -268,12 +269,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -285,12 +286,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -298,17 +299,17 @@ public enum Template {
 	SERVICE_I {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + SLASH + "serviceI.ftl";
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
-			return "";
+		public String getFileDirectory(GeneratorA generatorA) {
+			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getPackagePath() + "/api";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
-			return "";
+		public String getFileName(GeneratorA generatorA) {
+			return generatorA.getTableV().className() + "sServiceI.java";
 		}
 	},
 
@@ -319,12 +320,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -336,12 +337,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -353,12 +354,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -370,14 +371,14 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
-			return moduleName + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + packageName
+		public String getFileDirectory(GeneratorA generatorA) {
+			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + generatorA.getPackagePath()
 				+ "/gatewayimpl/database/dataobject";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
-			return className + "DO.java";
+		public String getFileName(GeneratorA generatorA) {
+			return generatorA.getTableV().className() + "DO.java";
 		}
 	},
 
@@ -388,13 +389,14 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
-			return moduleName + ROD + COLA_CLIENT + JAVA_PATH + packageName + "/dto/clientobject";
+		public String getFileDirectory(GeneratorA generatorA) {
+			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getPackagePath()
+				+ "/dto/clientobject";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
-			return className + "CO.java";
+		public String getFileName(GeneratorA generatorA) {
+			return generatorA.getTableV().className() + "CO.java";
 		}
 	},
 
@@ -405,12 +407,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -422,12 +424,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -439,13 +441,13 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
-			return moduleName + ROD + COLA_ADAPTER + JAVA_PATH + packageName + "/web";
+		public String getFileDirectory(GeneratorA generatorA) {
+			return generatorA.getModuleName() + ROD + COLA_ADAPTER + JAVA_PATH + generatorA.getPackagePath() + "/web";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
-			return className + "Controller" + version.toUpperCase() + ".java";
+		public String getFileName(GeneratorA generatorA) {
+			return generatorA.getTableV().className() + "sController" + generatorA.getVersion().toUpperCase() + ".java";
 		}
 	},
 
@@ -456,12 +458,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -473,13 +475,14 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
-			return moduleName + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + packageName + "/gatewayimpl/database";
+		public String getFileDirectory(GeneratorA generatorA) {
+			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + generatorA.getPackagePath()
+				+ "/gatewayimpl/database";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
-			return className + "Mapper.java";
+		public String getFileName(GeneratorA generatorA) {
+			return generatorA.getTableV().className() + "Mapper.java";
 		}
 	},
 
@@ -490,12 +493,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -507,12 +510,12 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	},
@@ -524,20 +527,20 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileDirectory(String packageName, String moduleName) {
+		public String getFileDirectory(GeneratorA generatorA) {
 			return "";
 		}
 
 		@Override
-		public String getFileName(String className, String version) {
+		public String getFileName(GeneratorA generatorA) {
 			return "";
 		}
 	};
 
 	public abstract String getTemplatePath(String path);
 
-	public abstract String getFileDirectory(String packageName, String moduleName);
+	public abstract String getFileDirectory(GeneratorA generatorA);
 
-	public abstract String getFileName(String className, String version);
+	public abstract String getFileName(GeneratorA generatorA);
 
 }

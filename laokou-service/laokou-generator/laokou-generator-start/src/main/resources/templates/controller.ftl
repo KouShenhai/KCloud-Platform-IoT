@@ -101,7 +101,7 @@ public class ${className}s${(version)?upper_case}Controller {
 	@DataCache(name = ${(className)?upper_case}S, key = "#id")
 	@Operation(summary = "查看${comment}详情", description = "查看${comment}详情")
 	public Result<UserCO> getById${(version)?upper_case}(@PathVariable("id") Long id) {
-		return ${instanceName}sServiceI.getById(id);
+		return ${instanceName}sServiceI.getById(new ${className}GetQry(id));
 	}
 
 }

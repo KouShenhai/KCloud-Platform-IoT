@@ -90,9 +90,8 @@ public class GeneratorDomainService {
 		templates.parallelStream().map(item -> CompletableFuture.runAsync(() -> {
 			String content = getContent(generatorA.toMap(), item.getTemplatePath(TEMPLATE_PATH));
 			// 写入文件
-			String directory = SOURCE_PATH + SLASH
-				+ item.getFileDirectory(generatorA.getPackagePath(), generatorA.getModuleName());
-			File file = FileUtil.createFile(directory, item.getFileName(tableV.className(), generatorA.getVersion()));
+			String directory = SOURCE_PATH + SLASH + item.getFileDirectory(generatorA);
+			File file = FileUtil.createFile(directory, item.getFileName(generatorA));
 			FileUtil.write(file, content.getBytes(StandardCharsets.UTF_8));
 		}, executor)).toList().forEach(CompletableFuture::join);
 	}
@@ -123,7 +122,7 @@ public class GeneratorDomainService {
 		// templates.add(Template.IMPORT_CMD_EXE);
 		// templates.add(Template.EXPORT_CMD_EXE);
 		// templates.add(Template.ENTITY);
-		// templates.add(Template.SERVICE_I);
+		templates.add(Template.SERVICE_I);
 		// templates.add(Template.SERVICE_IMPL);
 		// templates.add(Template.DOMAIN_SERVICE);
 		templates.add(Template.DO);
