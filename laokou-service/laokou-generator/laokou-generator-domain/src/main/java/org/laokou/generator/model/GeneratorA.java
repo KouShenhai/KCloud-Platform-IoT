@@ -53,8 +53,12 @@ public class GeneratorA extends AggregateRoot<Long> {
 		this.tableE = tableE;
 	}
 
+	public String getDomainPackagePath() {
+		return getPackagePath() + SLASH + tableV.instanceName();
+	}
+
 	public String getPackagePath() {
-		return packageName.replaceAll("\\.", SLASH) + SLASH + tableV.instanceName();
+		return packageName.replaceAll("\\.", SLASH);
 	}
 
 	public void updateTable(TableV tableV) {

@@ -106,7 +106,7 @@ public class GeneratorDomainService {
 
 	private List<Template> getTemplates() {
 		List<Template> templates = new ArrayList<>(29);
-		// templates.add(Template.SAVE_CMD);
+		templates.add(Template.SAVE_CMD);
 		// templates.add(Template.MODIFY_CMD);
 		// templates.add(Template.REMOVE_CMD);
 		// templates.add(Template.PAGE_QRY);

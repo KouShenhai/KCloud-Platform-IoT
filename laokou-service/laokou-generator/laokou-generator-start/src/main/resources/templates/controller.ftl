@@ -16,7 +16,7 @@
  *
  */
 
-package ${packageName}.${instanceName}.web;
+package ${packageName}.web;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,12 +25,7 @@ import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.web.bind.annotation.*;
 import ${packageName}.${instanceName}.api.${className}sServiceI;
-import ${packageName}.${instanceName}.dto.${className}ListQry;
-import ${packageName}.${instanceName}.dto.${className}SaveCmd;
-import ${packageName}.${instanceName}.dto.${className}ModifyCmd;
-import ${packageName}.${instanceName}.dto.${className}RemoveCmd;
-import ${packageName}.${instanceName}.dto.${className}ExportCmd;
-import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
+import ${packageName}.${instanceName}.dto.*;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -57,8 +52,8 @@ public class ${className}s${(version)?upper_case}Controller {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('${instanceName}:save')")
-	@OperateLog(module = "新增${comment}", operation = "新增${comment}")
-	@Operation(summary = "新增${comment}", description = "新增${comment}")
+	@OperateLog(module = "保存${comment}", operation = "保存${comment}")
+	@Operation(summary = "保存${comment}", description = "保存${comment}")
 	public void save${(version)?upper_case}(@RequestBody ${className}SaveCmd cmd) {
 		${instanceName}sServiceI.save(cmd);
 	}
@@ -80,9 +75,17 @@ public class ${className}s${(version)?upper_case}Controller {
 		${instanceName}sServiceI.remove(new ${className}RemoveCmd(ids));
 	}
 
+	@PostMapping("import")
+	@PreAuthorize("hasAuthority('${instanceName}:import')")
+	@Operation(summary = "导入${comment}", description = "导入${comment}")
+	@OperateLog(module = "导入${comment}", operation = "导入${comment}")
+	public void import${(version)?upper_case}(@RequestBody ${className}ImportCmd cmd) {
+		${instanceName}sServiceI.importI(cmd);
+	}
+
 	@PostMapping("export")
-	@Operation(summary = "导出${comment}", description = "导出${comment}")
 	@PreAuthorize("hasAuthority('${instanceName}:export')")
+	@Operation(summary = "导出${comment}", description = "导出${comment}")
 	@OperateLog(module = "导出${comment}", operation = "导出${comment}")
 	public void export${(version)?upper_case}(@RequestBody ${className}ExportCmd cmd) {
 		${instanceName}sServiceI.export(cmd);

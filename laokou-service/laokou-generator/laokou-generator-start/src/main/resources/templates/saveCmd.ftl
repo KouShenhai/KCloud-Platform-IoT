@@ -16,32 +16,20 @@
  *
  */
 
-package ${packageName}.${instanceName}.api;
+package ${packageName}.${instanceName}.dto;
 
-import ${packageName}.${instanceName}.dto.*;
-import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.i18n.dto.Result;
-
-import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author ${author}
  */
-public interface ${className}sServiceI {
+@Data
+public class ${className}SaveCmd extends CommonCommand {
 
-	void save(${className}SaveCmd cmd);
-
-	void modify(${className}ModifyCmd cmd);
-
-	void remove(${className}RemoveCmd cmd);
-
-	void importI(${className}ImportCmd cmd);
-
-	void export(${className}ExportCmd cmd);
-
-	Result<Page<${className}CO>> page(${className}PageQry qry);
-
-	Result<${className}CO> getById(${className}GetQry qry);
+	private ${className}CO ${instanceName}CO;
 
 }
 // @formatter:on
