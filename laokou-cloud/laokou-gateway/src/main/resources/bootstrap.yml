@@ -29,12 +29,14 @@ spring:
         secure: @SSL-ENABLED@
         # true 临时 false 持久
         ephemeral: true
+        cluster-name: ${NACOS-CLUSTER-NAME}-gateway
       config:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
         username: ${NACOS-USERNAME}
         password: ${NACOS-PASSWORD}
         group: ${NACOS-GROUP}
+        cluster-name: ${NACOS-CLUSTER-NAME}-gateway
         refresh-enabled: true
         file-extension: yaml
         extension-configs:

@@ -21,7 +21,7 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import org.laokou.auth.config.filter.OAuth2AuthorizationFilter;
+import org.laokou.common.trace.config.TraceRequestFilter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -123,7 +123,7 @@ class OAuth2AuthorizationServerConfig {
 			.oidc(Customizer.withDefaults())
 			.authorizationService(authorizationService)
 			.authorizationServerSettings(authorizationServerSettings);
-		return http.addFilterBefore(new OAuth2AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+		return http.addFilterBefore(new TraceRequestFilter(), UsernamePasswordAuthenticationFilter.class)
 				.exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(LOGIN_URL))).build();
 	}
 	// @formatter:on

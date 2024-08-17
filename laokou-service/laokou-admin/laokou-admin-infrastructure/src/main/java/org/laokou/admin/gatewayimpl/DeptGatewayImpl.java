@@ -34,7 +34,6 @@ import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.COMMA;
@@ -99,7 +98,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	public void remove(Long[] ids) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				deptMapper.deleteByIds(Arrays.asList(ids));
+				// deptMapper.deleteByIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);

@@ -15,7 +15,27 @@
  *
  */
 
+package org.laokou.common.log4j2.utils;
+
+import org.apache.logging.log4j.ThreadContext;
+
+import static org.laokou.common.i18n.common.constant.TraceConstant.*;
+
 /**
  * @author laokou
  */
-package org.laokou.common.trace.interceptor;
+public class TraceUtil {
+
+	public static void putContext(String traceId, String userId, String tenantId, String username, String spanId) {
+		ThreadContext.put(TRACE_ID, traceId);
+		ThreadContext.put(USER_ID, userId);
+		ThreadContext.put(TENANT_ID, tenantId);
+		ThreadContext.put(USER_NAME, username);
+		ThreadContext.put(SPAN_ID, spanId);
+	}
+
+	public static void clearContext() {
+		ThreadContext.clearMap();
+	}
+
+}

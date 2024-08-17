@@ -29,6 +29,7 @@ import org.springframework.messaging.support.MessageBuilder;
 
 import static org.apache.rocketmq.client.producer.SendStatus.SEND_OK;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
 import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
 /**
@@ -111,9 +112,20 @@ public class RocketMqTemplate {
 	 * @param traceId 链路ID
 	 * @param <T> 泛型
 	 */
-	public <T> void sendAsyncMessage(String topic, String tag, T payload, String traceId) {
-		Message<T> message = MessageBuilder.withPayload(payload).setHeader(TRACE_ID, traceId).build();
+	public <T> void sendAsyncMessage(String topic, String tag, T payload, String traceId, String spanId) {
+		Message<T> message = MessageBuilder.withPayload(payload)
+			.setHeader(SPAN_ID, spanId)
+			.setHeader(TRACE_ID, traceId)
+			.build();
 		sendAsyncMessage(topic, tag, message);
+	}
+
+	public <T> void sendAsyncMessage(String topic, T payload, String traceId, String spanId) {
+		Message<T> message = MessageBuilder.withPayload(payload)
+			.setHeader(SPAN_ID, spanId)
+			.setHeader(TRACE_ID, traceId)
+			.build();
+		sendAsyncMessage(topic, message);
 	}
 
 	/**
@@ -235,8 +247,8 @@ public class RocketMqTemplate {
 	 * @param traceId 链路ID
 	 * @param <T> 泛型
 	 */
-	public <T> void sendTransactionMessage(String topic, T payload, Long transactionId, Long traceId) {
-		sendTransactionMessage(topic, EMPTY, payload, transactionId, traceId);
+	public <T> void sendTransactionMessage(String topic, T payload, Long transactionId, String traceId, String spanId) {
+		sendTransactionMessage(topic, EMPTY, payload, transactionId, traceId, spanId);
 	}
 
 	/**
@@ -247,10 +259,12 @@ public class RocketMqTemplate {
 	 * @param traceId 链路ID
 	 * @param <T> 泛型
 	 */
-	public <T> void sendTransactionMessage(String topic, String tag, T payload, Long transactionId, Long traceId) {
+	public <T> void sendTransactionMessage(String topic, String tag, T payload, Long transactionId, String traceId,
+			String spanId) {
 		Message<T> message = MessageBuilder.withPayload(payload)
 			.setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId)
 			.setHeader(TRACE_ID, traceId)
+			.setHeader(SPAN_ID, spanId)
 			.build();
 		rocketMQTemplate.sendMessageInTransaction(getTopicTag(topic, tag), message, null);
 	}

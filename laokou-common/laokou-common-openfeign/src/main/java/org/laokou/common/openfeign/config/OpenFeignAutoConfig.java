@@ -79,18 +79,20 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String authorization = request.getHeader(AUTHORIZATION);
 		String traceId = request.getHeader(TRACE_ID);
+		String spanId = request.getHeader(SPAN_ID);
 		String userId = request.getHeader(USER_ID);
 		String username = request.getHeader(USER_NAME);
 		String tenantId = request.getHeader(TENANT_ID);
 		String serviceGray = request.getHeader(SERVICE_GRAY);
 		template.header(TRACE_ID, traceId);
+		template.header(SPAN_ID, spanId);
 		template.header(AUTHORIZATION, authorization);
 		template.header(USER_ID, userId);
 		template.header(USER_NAME, username);
 		template.header(TENANT_ID, tenantId);
 		template.header(SERVICE_GRAY, serviceGray);
 		final boolean idempotent = IdempotentUtil.isIdempotent();
-		String msg = EMPTY;
+		String requestId = EMPTY;
 		if (idempotent) {
 			// 获取当前Feign客户端的接口名称
 			String clientName = template.feignTarget().type().getName();
@@ -107,12 +109,12 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 				idempotentKey = idempotentUtil.getIdempotentKey();
 				idMap.put(uniqueKey, idempotentKey);
 			}
+			requestId = idempotentKey;
 			template.header(REQUEST_ID, idempotentKey);
-			msg = String.format("，请求ID：%s", idMap.get(uniqueKey));
 		}
-		log.info("OpenFeign分布式调用，令牌：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}，是否开启灰度路由：{}" + msg, authorization,
+		log.info("OpenFeign分布式调用，令牌：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}，标签ID：{}，是否开启灰度路由：{}，请求ID：{}", authorization,
 				LogUtil.record(userId), LogUtil.record(username), LogUtil.record(tenantId), LogUtil.record(traceId),
-				LogUtil.record(serviceGray));
+				LogUtil.record(spanId), LogUtil.record(serviceGray), LogUtil.record(requestId));
 	}
 
 	@Bean

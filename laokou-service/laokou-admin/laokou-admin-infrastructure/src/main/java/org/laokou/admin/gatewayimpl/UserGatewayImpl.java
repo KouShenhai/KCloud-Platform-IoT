@@ -39,7 +39,6 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -95,7 +94,7 @@ public class UserGatewayImpl implements UserGateway {
 	public void remove(Long[] ids) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				userMapper.deleteByIds(Arrays.asList(ids));
+				// userMapper.deleteByIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);

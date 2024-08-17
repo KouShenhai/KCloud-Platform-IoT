@@ -135,11 +135,18 @@
     <zstd-jni.version>1.5.6-3</zstd-jni.version>
     <!--snail-job版本-->
     <snail-job.version>1.1.2</snail-job.version>
+    <!--micrometer-tracing-bridge-otel版本-->
+    <micrometer-tracing-bridge-otel.version>1.2.9</micrometer-tracing-bridge-otel.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-tracing-bridge-otel</artifactId>
+        <version>${micrometer-tracing-bridge-otel.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-generator-start</artifactId>
@@ -812,11 +819,6 @@
         <groupId>com.github.oshi</groupId>
         <artifactId>oshi-core</artifactId>
         <version>${oshi.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>de.codecentric</groupId>
-        <artifactId>spring-boot-admin-starter-client</artifactId>
-        <version>${spring-boot-admin.version}</version>
       </dependency>
       <dependency>
         <groupId>org.redisson</groupId>

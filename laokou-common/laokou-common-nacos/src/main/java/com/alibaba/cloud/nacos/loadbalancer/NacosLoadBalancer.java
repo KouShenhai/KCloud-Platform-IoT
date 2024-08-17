@@ -86,17 +86,17 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	/**
 	 * 服务主机.
 	 */
-	private static final String SERVICE_HOST = "service-host";
+	public static final String SERVICE_HOST = "service-host";
 
 	/**
 	 * 服务端口.
 	 */
-	private static final String SERVICE_PORT = "service-port";
+	public static final String SERVICE_PORT = "service-port";
 
 	/**
 	 * 服务灰度.
 	 */
-	private static final String SERVICE_GRAY = "service-gray";
+	public static final String SERVICE_GRAY = "service-gray";
 
 	/**
 	 * Nacos集群配置.
@@ -211,7 +211,6 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 */
 	private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> serviceInstances, Request<?> request) {
 		if (serviceInstances.isEmpty()) {
-			log.warn("No servers available for service: {}", this.serviceId);
 			return new EmptyResponse();
 		}
 		if (request.getContext() instanceof RequestDataContext context) {
@@ -248,7 +247,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 */
 	private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> serviceInstances) {
 		if (serviceInstances.isEmpty()) {
-			log.warn("No servers available for service: {}", this.serviceId);
+			log.error("No servers available for service: {}", this.serviceId);
 			return new EmptyResponse();
 		}
 		try {
@@ -273,7 +272,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			return new DefaultResponse(instance);
 		}
 		catch (Exception e) {
-			log.warn("NacosLoadBalancer error", e);
+			log.error("NacosLoadBalancer error", e);
 			return null;
 		}
 	}

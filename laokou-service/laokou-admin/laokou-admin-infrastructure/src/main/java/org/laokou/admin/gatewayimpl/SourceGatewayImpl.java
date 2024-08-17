@@ -29,8 +29,6 @@ import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-
 /**
  * 数据源管理.
  *
@@ -83,7 +81,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	public void remove(Long[] ids) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				sourceMapper.deleteByIds(Arrays.asList(ids));
+				// sourceMapper.deleteByIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());

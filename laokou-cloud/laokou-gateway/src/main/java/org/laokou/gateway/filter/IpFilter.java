@@ -20,7 +20,7 @@ package org.laokou.gateway.filter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.gateway.filter.ip.Ip;
-import org.laokou.gateway.utils.I18nReactiveUtil;
+import org.laokou.gateway.utils.ReactiveI18nUtil;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -47,11 +47,11 @@ public class IpFilter implements GlobalFilter, Ordered {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		try {
 			// 国际化
-			I18nReactiveUtil.set(exchange);
+			ReactiveI18nUtil.set(exchange);
 			return validate(exchange, chain);
 		}
 		finally {
-			I18nReactiveUtil.reset();
+			ReactiveI18nUtil.reset();
 		}
 	}
 

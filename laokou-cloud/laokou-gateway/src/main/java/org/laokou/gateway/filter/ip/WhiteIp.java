@@ -70,7 +70,7 @@ public class WhiteIp extends AbstractIp {
 		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(WHITE);
 		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
 			if (ObjectUtil.equals(Boolean.FALSE, r)) {
-				log.error("IP为{}被限制", hostAddress);
+				log.info("IP为{}被限制", hostAddress);
 				return ReactiveResponseUtil.response(exchange, Result.fail(IP_RESTRICTED));
 			}
 			return chain.filter(exchange);

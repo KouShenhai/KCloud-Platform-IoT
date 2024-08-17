@@ -29,8 +29,6 @@ import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-
 /**
  * 字典管理.
  *
@@ -86,7 +84,7 @@ public class DictGatewayImpl implements DictGateway {
 	public void remove(Long[] ids) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				dictMapper.deleteByIds(Arrays.asList(ids));
+				// dictMapper.deleteByIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);

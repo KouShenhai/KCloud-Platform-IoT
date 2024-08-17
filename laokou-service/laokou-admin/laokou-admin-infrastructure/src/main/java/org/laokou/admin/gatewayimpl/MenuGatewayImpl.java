@@ -29,8 +29,6 @@ import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-
 /**
  * 菜单管理.
  *
@@ -83,7 +81,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	public void remove(Long[] ids) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				menuMapper.deleteByIds(Arrays.asList(ids));
+				// menuMapper.deleteByIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);

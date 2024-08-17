@@ -17,19 +17,16 @@
 
 package org.laokou.common.secret.filter;
 
-import jakarta.servlet.*;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletRequestWrapper;
 import lombok.SneakyThrows;
+import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.core.annotation.Order;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
-
-import static org.laokou.common.core.utils.RequestUtil.getRequestBody;
 
 /**
  * @author laokou
@@ -43,7 +40,7 @@ public class RequestFilter implements Filter {
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) {
 		ServletRequest requestWrapper = null;
 		if (servletRequest instanceof HttpServletRequest request) {
-			requestWrapper = new RequestWrapper(request);
+			requestWrapper = new RequestUtil.RequestWrapper(request);
 		}
 		if (ObjectUtil.isNull(requestWrapper)) {
 			chain.doFilter(servletRequest, servletResponse);
@@ -51,62 +48,6 @@ public class RequestFilter implements Filter {
 		else {
 			chain.doFilter(requestWrapper, servletResponse);
 		}
-	}
-
-	public static class RequestWrapper extends HttpServletRequestWrapper {
-
-		private final byte[] REQUEST_BODY;
-
-		/**
-		 * Constructs a request object wrapping the given request.
-		 * @param request the {@link HttpServletRequest} to be wrapped.
-		 * @throws IllegalArgumentException if the request is null
-		 */
-		public RequestWrapper(HttpServletRequest request) {
-			super(request);
-			REQUEST_BODY = getRequestBody(request);
-		}
-
-		@Override
-		public BufferedReader getReader() {
-			return new BufferedReader(new ByteArrayInputStreamReader(REQUEST_BODY));
-		}
-
-		private static class ByteArrayInputStreamReader extends InputStreamReader {
-
-			public ByteArrayInputStreamReader(byte[] body) {
-				super(new ByteArrayInputStream(body));
-			}
-
-		}
-
-		@Override
-		public ServletInputStream getInputStream() {
-			ByteArrayInputStream inputStream = new ByteArrayInputStream(REQUEST_BODY);
-			return new ServletInputStream() {
-
-				@Override
-				public int read() {
-					return inputStream.read();
-				}
-
-				@Override
-				public boolean isFinished() {
-					return false;
-				}
-
-				@Override
-				public boolean isReady() {
-					return false;
-				}
-
-				@Override
-				public void setReadListener(ReadListener readListener) {
-					throw new UnsupportedOperationException();
-				}
-			};
-		}
-
 	}
 
 }

@@ -33,6 +33,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
+import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
 import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
 @RequiredArgsConstructor
@@ -47,7 +48,9 @@ public abstract class AbstractMessageHandler implements RocketMQListener<Message
 		try {
 			String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
 			String traceId = messageExt.getProperty(TRACE_ID);
+			String spanId = messageExt.getProperty(SPAN_ID);
 			ThreadContext.put(TRACE_ID, traceId);
+			ThreadContext.put(SPAN_ID, spanId);
 			log(msg);
 			send(msg);
 		}

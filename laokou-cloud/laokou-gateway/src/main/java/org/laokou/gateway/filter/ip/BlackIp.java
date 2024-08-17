@@ -70,7 +70,7 @@ public class BlackIp extends AbstractIp {
 		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(BLACK);
 		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
 			if (ObjectUtil.equals(Boolean.TRUE, r)) {
-				log.error("IP为{}已列入黑名单", hostAddress);
+				log.info("IP为{}已列入黑名单", hostAddress);
 				return ReactiveResponseUtil.response(exchange, Result.fail(IP_BLACKED));
 			}
 			return chain.filter(exchange);

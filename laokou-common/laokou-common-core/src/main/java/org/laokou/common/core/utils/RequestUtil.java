@@ -18,7 +18,10 @@
 package org.laokou.common.core.utils;
 
 import com.blueconic.browscap.*;
+import jakarta.servlet.ReadListener;
+import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.Assert;
@@ -27,10 +30,14 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 
 import static org.laokou.common.core.utils.IpUtil.LOCAL_IPV4;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.constant.TraceConstant.DOMAIN_NAME;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
@@ -89,9 +96,74 @@ public class RequestUtil {
 		return PARSER.parse(request.getHeader(USER_AGENT));
 	}
 
+	public static String getParamValue(HttpServletRequest request, String paramName) {
+		String paramValue = request.getHeader(paramName);
+		// 从参数中获取
+		if (StringUtil.isEmpty(paramValue)) {
+			paramValue = request.getParameter(paramName);
+		}
+		return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
+	}
+
 	@SneakyThrows
 	public static byte[] getRequestBody(HttpServletRequest request) {
 		return StreamUtils.copyToByteArray(request.getInputStream());
+	}
+
+	public static class RequestWrapper extends HttpServletRequestWrapper {
+
+		private final byte[] REQUEST_BODY;
+
+		/**
+		 * Constructs a request object wrapping the given request.
+		 * @param request the {@link HttpServletRequest} to be wrapped.
+		 * @throws IllegalArgumentException if the request is null
+		 */
+		public RequestWrapper(HttpServletRequest request) {
+			super(request);
+			REQUEST_BODY = getRequestBody(request);
+		}
+
+		@Override
+		public BufferedReader getReader() {
+			return new BufferedReader(new ByteArrayInputStreamReader(REQUEST_BODY));
+		}
+
+		@Override
+		public ServletInputStream getInputStream() {
+			ByteArrayInputStream inputStream = new ByteArrayInputStream(REQUEST_BODY);
+			return new ServletInputStream() {
+
+				@Override
+				public int read() {
+					return inputStream.read();
+				}
+
+				@Override
+				public boolean isFinished() {
+					return false;
+				}
+
+				@Override
+				public boolean isReady() {
+					return false;
+				}
+
+				@Override
+				public void setReadListener(ReadListener readListener) {
+					throw new UnsupportedOperationException();
+				}
+			};
+		}
+
+		private static class ByteArrayInputStreamReader extends InputStreamReader {
+
+			public ByteArrayInputStreamReader(byte[] body) {
+				super(new ByteArrayInputStream(body));
+			}
+
+		}
+
 	}
 
 }

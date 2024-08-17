@@ -15,45 +15,49 @@
  *
  */
 
-package org.laokou.auth.config.filter;
+package org.laokou.common.trace.config;
 
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.ThreadContext;
 import org.laokou.common.core.context.ShutdownHolder;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.log4j2.utils.TraceUtil;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
+import java.io.IOException;
+
+import static org.laokou.common.core.utils.RequestUtil.getParamValue;
+import static org.laokou.common.i18n.common.constant.TraceConstant.*;
 import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAILABLE;
 
 /**
- * 认证过滤器.
- *
  * @author laokou
  */
-@Slf4j
 @NonNullApi
-public class OAuth2AuthorizationFilter extends OncePerRequestFilter {
+public class TraceRequestFilter extends OncePerRequestFilter {
 
 	@Override
-	@SneakyThrows
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+			throws ServletException, IOException {
 		try {
-			ThreadContext.put(TRACE_ID, request.getHeader(TRACE_ID));
 			if (ShutdownHolder.status()) {
 				ResponseUtil.response(response, Result.fail(SERVICE_UNAVAILABLE));
 				return;
 			}
+			String traceId = getParamValue(request, TRACE_ID);
+			String userId = getParamValue(request, USER_ID);
+			String username = getParamValue(request, USER_NAME);
+			String tenantId = getParamValue(request, TENANT_ID);
+			String spanId = getParamValue(request, SPAN_ID);
+			TraceUtil.putContext(traceId, userId, tenantId, username, spanId);
 			chain.doFilter(request, response);
 		}
 		finally {
-			ThreadContext.clearMap();
+			TraceUtil.clearContext();
 		}
 	}
 

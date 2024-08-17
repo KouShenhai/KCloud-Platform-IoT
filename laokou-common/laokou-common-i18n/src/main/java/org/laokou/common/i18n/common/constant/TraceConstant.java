@@ -54,6 +54,11 @@ public final class TraceConstant {
 	 */
 	public static final String REQUEST_ID = "request-id";
 
+	/**
+	 * 标签ID.
+	 */
+	public static final String SPAN_ID = "span-id";
+
 	private TraceConstant() {
 	}
 

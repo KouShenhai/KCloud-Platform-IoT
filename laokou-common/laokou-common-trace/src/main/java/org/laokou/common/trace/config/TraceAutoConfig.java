@@ -17,22 +17,23 @@
 
 package org.laokou.common.trace.config;
 
-import org.laokou.common.trace.interceptor.TraceInterceptor;
+import io.micrometer.common.lang.NonNullApi;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * @author laokou
  */
+@NonNullApi
 @AutoConfiguration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-public class TraceAutoConfig implements WebMvcConfigurer {
+public class TraceAutoConfig {
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new TraceInterceptor()).addPathPatterns("/**");
+	@Bean
+	public OncePerRequestFilter oncePerRequestFilter() {
+		return new TraceRequestFilter();
 	}
 
 }

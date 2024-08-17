@@ -27,6 +27,7 @@ import org.laokou.common.rocketmq.template.RocketMqTemplate;
 
 import java.nio.charset.StandardCharsets;
 
+import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
 import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
 /**
@@ -43,17 +44,19 @@ public abstract class AbstractDLQHandler implements RocketMQListener<MessageExt>
 	@Override
 	public void onMessage(MessageExt messageExt) {
 		String traceId = messageExt.getProperty(TRACE_ID);
+		String spanId = messageExt.getProperty(SPAN_ID);
 		ThreadContext.put(TRACE_ID, traceId);
+		ThreadContext.put(SPAN_ID, spanId);
 		String topic = messageExt.getTopic();
 		String tag = messageExt.getTags();
 		Object payload = new String(messageExt.getBody(), StandardCharsets.UTF_8);
 		log.info("接收消息 ===> topic：{}，tag：{}，msg：{}", topic, tag, payload);
 		try {
 			if (StringUtil.isNotEmpty(tag)) {
-				rocketMqTemplate.sendAsyncMessage(topic, tag, payload, traceId);
+				rocketMqTemplate.sendAsyncMessage(topic, tag, payload, traceId, spanId);
 			}
 			else {
-				rocketMqTemplate.sendAsyncMessage(topic, payload, traceId);
+				rocketMqTemplate.sendAsyncMessage(topic, payload, traceId, spanId);
 			}
 		}
 		finally {

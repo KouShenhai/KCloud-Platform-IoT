@@ -43,7 +43,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -104,7 +103,7 @@ public class OssGatewayImpl implements OssGateway {
 	public void remove(Long[] ids) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				ossMapper.deleteByIds(Arrays.asList(ids));
+				// ossMapper.deleteByIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());

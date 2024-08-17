@@ -52,7 +52,6 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -126,7 +125,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	public void remove(Long[] ids) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				tenantMapper.deleteByIds(Arrays.asList(ids));
+				// tenantMapper.deleteByIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());

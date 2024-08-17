@@ -32,7 +32,6 @@ import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,7 +71,7 @@ public class IpGatewayImpl implements IpGateway {
 	public void remove(Long[] ids) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				ipMapper.deleteByIds(Arrays.asList(ids));
+				// ipMapper.deleteByIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());

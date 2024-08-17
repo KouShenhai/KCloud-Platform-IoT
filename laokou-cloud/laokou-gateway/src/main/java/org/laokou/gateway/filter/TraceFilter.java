@@ -17,10 +17,12 @@
 
 package org.laokou.gateway.filter;
 
+import io.micrometer.tracing.Tracer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.ThreadContext;
 import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.log4j2.utils.TraceUtil;
 import org.laokou.common.nacos.utils.ReactiveRequestUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -30,6 +32,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import static com.alibaba.cloud.nacos.loadbalancer.NacosLoadBalancer.*;
 import static org.laokou.common.i18n.common.constant.TraceConstant.*;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.getHost;
 
@@ -38,10 +41,12 @@ import static org.laokou.common.nacos.utils.ReactiveRequestUtil.getHost;
  *
  * @author laokou
  */
-@Component
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class TraceFilter implements GlobalFilter, Ordered {
+
+	private final Tracer tracer;
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -51,28 +56,32 @@ public class TraceFilter implements GlobalFilter, Ordered {
 			String userId = ReactiveRequestUtil.getParamValue(request, USER_ID);
 			String tenantId = ReactiveRequestUtil.getParamValue(request, TENANT_ID);
 			String username = ReactiveRequestUtil.getParamValue(request, USER_NAME);
-			String traceId = ReactiveRequestUtil.getParamValue(request, TRACE_ID);
-			ThreadContext.put(TRACE_ID, traceId);
-			ThreadContext.put(USER_ID, userId);
-			ThreadContext.put(TENANT_ID, tenantId);
-			ThreadContext.put(USER_NAME, username);
-			// 获取uri
-			String requestURL = ReactiveRequestUtil.getRequestURL(request);
-			log.info("请求路径：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}，主机：{}", requestURL, LogUtil.record(userId),
-					LogUtil.record(username), LogUtil.record(tenantId), LogUtil.record(traceId), host);
+			String serviceGray = ReactiveRequestUtil.getParamValue(request, SERVICE_GRAY);
+			String serviceHost = ReactiveRequestUtil.getParamValue(request, SERVICE_HOST);
+			String servicePort = ReactiveRequestUtil.getParamValue(request, SERVICE_PORT);
+			String traceId = ObjectUtil.requireNotNull(tracer.currentTraceContext().context()).traceId();
+			String spanId = ObjectUtil.requireNotNull(tracer.currentTraceContext().context()).spanId();
+			TraceUtil.putContext(traceId, userId, tenantId, username, spanId);
+			log.info("请求路径：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}，标签ID：{}，主机：{}", ReactiveRequestUtil.getRequestURL(request),
+					LogUtil.record(userId), LogUtil.record(username), LogUtil.record(tenantId), LogUtil.record(traceId),
+					LogUtil.record(spanId), host);
 			return chain.filter(exchange.mutate()
 				.request(request.mutate()
 					.header(USER_NAME, username)
 					.header(TENANT_ID, tenantId)
 					.header(USER_ID, userId)
 					.header(TRACE_ID, traceId)
+					.header(SPAN_ID, spanId)
+					.header(SERVICE_HOST, serviceHost)
+					.header(SERVICE_PORT, servicePort)
+					.header(SERVICE_GRAY, serviceGray)
 					.header(DOMAIN_NAME, host)
 					.build())
 				.build());
 		}
 		finally {
 			// 清除
-			ThreadContext.clearMap();
+			TraceUtil.clearContext();
 		}
 	}
 

@@ -12,7 +12,7 @@
  Target Server Version : 160002 (160002)
  File Encoding         : 65001
 
- Date: 16/08/2024 00:25:27
+ Date: 17/08/2024 15:40:12
 */
 
 
@@ -731,8 +731,14 @@ management:
       exposure:
         include: "*"
   endpoint:
+    gateway:
+      enabled: true
     health:
       show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
 
 # server
 server:
@@ -771,8 +777,8 @@ tenant:
 
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html', '71cf04102f0e554a6c79fb84929ee8ce', '2023-01-13 12:16:46', '2024-08-15 21:57:19.805',
-		'nacos', '127.0.0.1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+    path: /swagger-ui.html', '84c26fe801c708c6e137ceeef1de8cb7', '2023-01-13 12:16:46', '2024-08-17 13:38:22.648',
+		'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info"
 VALUES (2159, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
   kafka:
@@ -1137,6 +1143,131 @@ VALUES (40, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
 		'2024-05-25 18:13:10.65', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'kafka公共配置', NULL,
 		NULL, 'yaml', NULL, '');
 INSERT INTO "public"."config_info"
+VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
+spring:
+  # security
+  security:
+    oauth2:
+      resource-server:
+        enabled: true
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /**/v3/api-docs/**=laokou-gateway
+              - /v3/api-docs/**=laokou-auth,laokou-admin
+              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
+              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
+              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
+              - /error=laokou-admin,laokou-auth
+              - /v3/tenants/options=laokou-auth,laokou-gateway
+              - /v3/tenants/id=laokou-auth,laokou-gateway
+              - /favicon.ico=laokou-gateway
+              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
+              - /v3/secrets=laokou-gateway,laokou-auth
+              - /graceful-shutdown=laokou-auth
+              - /ws=laokou-gateway
+              - /doc.html=laokou-gateway
+            POST:
+              - /v3/captchas=laokou-auth,laokou-gateway
+            DELETE:
+              - /v3/logouts=laokou-auth,laokou-gateway
+  # task
+  task-execution:
+    thread-name-prefix: laokou-ttl-task-
+    pool:
+      core-size: 33
+      keep-alive: 180s
+    fork-join-pool:
+      core-size: 33
+  cloud:
+    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
+    openfeign:
+      compression:
+        response:
+          enabled: true
+        request:
+          enabled: true
+      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
+      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
+      okhttp:
+        enabled: true
+      circuitbreaker:
+        enabled: true
+      httpclient:
+        enabled: false
+        hc5:
+          enabled: false
+        disable-ssl-validation: true
+      client:
+        config:
+          default:
+            connectTimeout: 120000 #连接超时
+            readTimeout: 120000 #读取超时
+            logger-level: full
+      lazy-attributes-resolution: true
+    # sentinel
+    sentinel:
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        port: 8769
+        dashboard: sentinel.laokou.org:8972
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+
+# server
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 256
+    # 每块buffer的空间大小
+    buffer-size: 1024
+    # 分配堆外内存
+    direct-buffers: true
+
+# feign
+feign:
+  sentinel:
+    enabled: true
+    default-rule: default
+    rules:
+      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
+      default:
+        - grade: 2 # 异常数策略
+          count: 1 # 异常数模式下为对应的阈值
+          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
+          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
+          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
+tenant:
+  domain-names:
+    - laokou.org
+    - laokouyun.org
+    - laokou.org.cn
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html', '8e5f97f41171f86f2130fc97e35eb9c0', '2024-05-25 18:13:10.622', '2024-08-17 13:40:39.136',
+		'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info"
 VALUES (44, 'admin-degrade.json', 'LAOKOU_GROUP', '[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
@@ -1189,125 +1320,6 @@ VALUES (34, 'auth-flow.json', 'LAOKOU_GROUP', '[
   }
 ]', '6ae7639ff49789dd99787e908efa836d', '2024-05-25 18:13:10.604', '2024-05-25 18:19:55.655', 'nacos', '127.0.0.1',
 		'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', 'auth sentinel  flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info"
-VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
-spring:
-  # security
-  security:
-    oauth2:
-      resource-server:
-        enabled: true
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /**/v3/api-docs/**=laokou-gateway
-              - /v3/api-docs/**=laokou-auth,laokou-admin
-              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
-              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
-              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
-              - /error=laokou-admin,laokou-auth
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
-              - /favicon.ico=laokou-gateway
-              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
-              - /v3/secrets=laokou-gateway,laokou-auth
-              - /graceful-shutdown=laokou-auth
-              - /ws=laokou-gateway
-              - /doc.html=laokou-gateway
-			POST:
-			  - /v3/captchas=laokou-auth,laokou-gateway
-            DELETE:
-              - /v3/logouts=laokou-auth,laokou-gateway
-  # task
-  task-execution:
-    thread-name-prefix: laokou-ttl-task-
-    pool:
-      core-size: 33
-      keep-alive: 180s
-    fork-join-pool:
-      core-size: 33
-  cloud:
-    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
-    openfeign:
-      compression:
-        response:
-          enabled: true
-        request:
-          enabled: true
-      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
-      okhttp:
-        enabled: true
-      circuitbreaker:
-        enabled: true
-      httpclient:
-        enabled: false
-        hc5:
-          enabled: false
-        disable-ssl-validation: true
-      client:
-        config:
-          default:
-            connectTimeout: 120000 #连接超时
-            readTimeout: 120000 #读取超时
-            logger-level: full
-      lazy-attributes-resolution: true
-    # sentinel
-    sentinel:
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        port: 8769
-        dashboard: sentinel.laokou.org:8972
-
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-
-# server
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
-    threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 256
-    # 每块buffer的空间大小
-    buffer-size: 1024
-    # 分配堆外内存
-    direct-buffers: true
-
-# feign
-feign:
-  sentinel:
-    enabled: true
-    default-rule: default
-    rules:
-      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
-      default:
-        - grade: 2 # 异常数策略
-          count: 1 # 异常数模式下为对应的阈值
-          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
-          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
-          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html', 'e83a99587ac917866dee016df29fd662', '2024-05-25 18:13:10.622', '2024-05-26 00:02:32.884',
-		'nacos', '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info"
 VALUES (27, 'application-common-redis.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
@@ -1660,124 +1672,6 @@ VALUES (57, 'admin-flow.json', 'LAOKOU_GROUP', '[
 ]', '31d82f93a5909b2529f159848116e162', '2024-05-25 18:13:33.382', '2024-05-25 18:19:26.212', 'nacos', '127.0.0.1',
 		'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"
-VALUES (59, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
-spring:
-  # security
-  security:
-    oauth2:
-      resource-server:
-        enabled: true
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /**/v3/api-docs/**=laokou-gateway
-              - /v3/api-docs/**=laokou-auth,laokou-admin
-              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
-              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
-              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
-              - /error=laokou-admin,laokou-auth
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
-              - /favicon.ico=laokou-gateway
-              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
-              - /v3/secrets=laokou-gateway,laokou-auth
-              - /graceful-shutdown=laokou-auth
-              - /ws=laokou-gateway
-              - /doc.html=laokou-gateway
-            POST:
-              - /v3/captchas=laokou-auth,laokou-gateway
-            DELETE:
-              - /v3/logouts=laokou-auth,laokou-gateway
-  # task
-  task-execution:
-    thread-name-prefix: laokou-ttl-task-
-    pool:
-      core-size: 33
-      keep-alive: 180s
-    fork-join-pool:
-      core-size: 33
-  cloud:
-    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
-    openfeign:
-      compression:
-        response:
-          enabled: true
-        request:
-          enabled: true
-      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
-      okhttp:
-        enabled: true
-      circuitbreaker:
-        enabled: true
-      httpclient:
-        enabled: false
-        hc5:
-          enabled: false
-        disable-ssl-validation: true
-      client:
-        config:
-          default:
-            connectTimeout: 120000 #连接超时
-            readTimeout: 120000 #读取超时
-            logger-level: full
-      lazy-attributes-resolution: true
-    # sentinel
-    sentinel:
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        port: 8769
-        dashboard: sentinel.laokou.org:8972
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-
-# server
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
-    threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 256
-    # 每块buffer的空间大小
-    buffer-size: 1024
-    # 分配堆外内存
-    direct-buffers: true
-
-# feign
-feign:
-  sentinel:
-    enabled: true
-    default-rule: default
-    rules:
-      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
-      default:
-        - grade: 2 # 异常数策略
-          count: 1 # 异常数模式下为对应的阈值
-          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
-          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
-          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html', 'e83a99587ac917866dee016df29fd662', '2024-05-25 18:13:33.393', '2024-05-26 00:02:51.42',
-		'nacos', '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info"
 VALUES (62, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
   kafka:
     bootstrap-servers: kafka.laokou.org:9092
@@ -1963,6 +1857,130 @@ snail-job:
   # 客户端通讯端口，默认 1789
   port: 1790', 'c24eb507487996abb6d22f5ec35692da', '2024-05-25 18:13:33.447', '2024-08-16 00:20:19.661', 'nacos',
 		'127.0.0.1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info"
+VALUES (59, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
+spring:
+  # security
+  security:
+    oauth2:
+      resource-server:
+        enabled: true
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /**/v3/api-docs/**=laokou-gateway
+              - /v3/api-docs/**=laokou-auth,laokou-admin
+              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
+              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
+              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
+              - /error=laokou-admin,laokou-auth
+              - /v3/tenants/options=laokou-auth,laokou-gateway
+              - /v3/tenants/id=laokou-auth,laokou-gateway
+              - /favicon.ico=laokou-gateway
+              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
+              - /v3/secrets=laokou-gateway,laokou-auth
+              - /graceful-shutdown=laokou-auth
+              - /ws=laokou-gateway
+              - /doc.html=laokou-gateway
+            POST:
+              - /v3/captchas=laokou-auth,laokou-gateway
+            DELETE:
+              - /v3/logouts=laokou-auth,laokou-gateway
+  # task
+  task-execution:
+    thread-name-prefix: laokou-ttl-task-
+    pool:
+      core-size: 33
+      keep-alive: 180s
+    fork-join-pool:
+      core-size: 33
+  cloud:
+    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
+    openfeign:
+      compression:
+        response:
+          enabled: true
+        request:
+          enabled: true
+      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
+      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
+      okhttp:
+        enabled: true
+      circuitbreaker:
+        enabled: true
+      httpclient:
+        enabled: false
+        hc5:
+          enabled: false
+        disable-ssl-validation: true
+      client:
+        config:
+          default:
+            connectTimeout: 120000 #连接超时
+            readTimeout: 120000 #读取超时
+            logger-level: full
+      lazy-attributes-resolution: true
+    # sentinel
+    sentinel:
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        port: 8769
+        dashboard: sentinel.laokou.org:8972
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+
+# server
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 256
+    # 每块buffer的空间大小
+    buffer-size: 1024
+    # 分配堆外内存
+    direct-buffers: true
+
+# feign
+feign:
+  sentinel:
+    enabled: true
+    default-rule: default
+    rules:
+      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
+      default:
+        - grade: 2 # 异常数策略
+          count: 1 # 异常数模式下为对应的阈值
+          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
+          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
+          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
+tenant:
+  domain-names:
+    - laokou.org
+    - laokouyun.org
+    - laokou.org.cn
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html', '84c26fe801c708c6e137ceeef1de8cb7', '2024-05-25 18:13:33.393', '2024-08-17 13:38:48.282',
+		'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info"
 VALUES (66, 'admin-degrade.json', 'LAOKOU_GROUP', '[
   {
@@ -3369,8 +3387,6 @@ VALUES (1475, 'sms', '', 'application-sms.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-
 INSERT INTO "public"."config_tags_relation"
 VALUES (1477, 'mail', '', 'application-mail.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 6);
 INSERT INTO "public"."config_tags_relation"
-VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 25);
-INSERT INTO "public"."config_tags_relation"
 VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 44);
 INSERT INTO "public"."config_tags_relation"
 VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 45);
@@ -3380,6 +3396,8 @@ INSERT INTO "public"."config_tags_relation"
 VALUES (82, 'monitor', '', 'application-monitor.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 47);
 INSERT INTO "public"."config_tags_relation"
 VALUES (4, 'im', '', 'application-im.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 48);
+INSERT INTO "public"."config_tags_relation"
+VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 50);
 
 -- ----------------------------
 -- Table structure for databasechangelog
@@ -3682,7 +3700,7 @@ SELECT setval('"public"."config_info_tag_id_seq"', 1, false);
 -- ----------------------------
 ALTER SEQUENCE "public"."config_tags_relation_nid_seq"
 	OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq"', 48, true);
+SELECT setval('"public"."config_tags_relation_nid_seq"', 50, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -3696,7 +3714,7 @@ SELECT setval('"public"."group_capacity_id_seq"', 1, false);
 -- ----------------------------
 ALTER SEQUENCE "public"."his_config_info_nid_seq"
 	OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq"', 151, true);
+SELECT setval('"public"."his_config_info_nid_seq"', 157, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -3861,7 +3879,7 @@ ALTER TABLE "public"."config_info_tag"
 -- ----------------------------
 -- Auto increment value for config_tags_relation
 -- ----------------------------
-SELECT setval('"public"."config_tags_relation_nid_seq"', 48, true);
+SELECT setval('"public"."config_tags_relation_nid_seq"', 50, true);
 
 -- ----------------------------
 -- Indexes structure for table config_tags_relation
@@ -3928,7 +3946,7 @@ ALTER TABLE "public"."group_capacity"
 -- ----------------------------
 -- Auto increment value for his_config_info
 -- ----------------------------
-SELECT setval('"public"."his_config_info_nid_seq"', 151, true);
+SELECT setval('"public"."his_config_info_nid_seq"', 157, true);
 
 -- ----------------------------
 -- Indexes structure for table his_config_info

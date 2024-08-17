@@ -32,9 +32,9 @@ import static org.laokou.common.core.i18n.I18nRequestContextFilter.LANG;
  *
  * @author laokou
  */
-public class I18nReactiveUtil {
+public class ReactiveI18nUtil {
 
-	private I18nReactiveUtil() {
+	private ReactiveI18nUtil() {
 
 	}
 

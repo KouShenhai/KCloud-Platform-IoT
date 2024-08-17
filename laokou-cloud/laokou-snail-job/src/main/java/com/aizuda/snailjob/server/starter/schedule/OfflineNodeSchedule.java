@@ -49,7 +49,8 @@ public class OfflineNodeSchedule extends AbstractSchedule implements Lifecycle {
 					.le(ServerNode::getExpireAt, endTime));
 			if (CollUtil.isNotEmpty(serverNodes)) {
 				// 先删除DB中需要下线的机器
-				serverNodeMapper.deleteByIds(StreamUtils.toSet(serverNodes, ServerNode::getId));
+				// serverNodeMapper.deleteByIds(StreamUtils.toSet(serverNodes,
+				// ServerNode::getId));
 			}
 
 			Set<RegisterNodeInfo> allPods = CacheRegisterTable.getAllPods();
