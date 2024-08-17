@@ -30,9 +30,9 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 /**
  * @author laokou
  */
-@Component
-@Aspect
 @Slf4j
+@Aspect
+@Component
 public class TraceLogAop {
 
 	@Around("@annotation(org.laokou.common.trace.annotation.TraceLog)")
