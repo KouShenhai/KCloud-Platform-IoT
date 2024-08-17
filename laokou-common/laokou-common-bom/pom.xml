@@ -48,7 +48,7 @@
     <!--captcha版本-->
     <easy-captcha.version>1.6.2</easy-captcha.version>
     <!--guava版本-->
-    <guava.version>33.2.1-jre</guava.version>
+    <guava.version>33.3.0-jre</guava.version>
     <!--oshi版本-->
     <oshi.version>6.6.2</oshi.version>
     <!--elasticsearch版本-->
