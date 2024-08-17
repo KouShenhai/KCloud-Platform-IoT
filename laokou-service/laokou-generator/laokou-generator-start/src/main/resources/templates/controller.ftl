@@ -18,10 +18,30 @@
 
 package ${packageName}.${instanceName}.web;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.laokou.common.i18n.dto.Option;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.web.bind.annotation.*;
+import ${packageName}.${instanceName}.api.${className}sServiceI;
+import ${packageName}.${instanceName}.dto.${className}ListQry;
+import ${packageName}.${instanceName}.dto.${className}SaveCmd;
+import ${packageName}.${instanceName}.dto.${className}ModifyCmd;
+import ${packageName}.${instanceName}.dto.${className}RemoveCmd;
+import ${packageName}.${instanceName}.dto.${className}ExportCmd;
+import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
+import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.idempotent.annotation.Idempotent;
+import org.laokou.common.log.annotation.OperateLog;
+import org.laokou.common.trace.annotation.TraceLog;
+import org.springframework.security.access.prepost.PreAuthorize;
+
+import java.util.List;
+
+import static org.laokou.common.data.cache.constant.NameConstant.USERS;
+import static org.laokou.common.data.cache.constant.Type.DEL;
 
 /**
  * @author ${author}
@@ -29,8 +49,60 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("${version}/${instanceName}s")
-@Tag(name = "${comment}", description = "${comment}")
+@Tag(name = "${comment}管理", description = "${comment}管理")
 public class ${className}s${(version)?upper_case}Controller {
+
+	private final ${className}sServiceI ${instanceName}sServiceI;
+
+	@Idempotent
+	@PostMapping
+	@PreAuthorize("hasAuthority('${instanceName}:save')")
+	@OperateLog(module = "新增${comment}", operation = "新增${comment}")
+	@Operation(summary = "新增${comment}", description = "新增${comment}")
+	public void save${(version)?upper_case}(@RequestBody ${className}SaveCmd cmd) {
+		${instanceName}sServiceI.save(cmd);
+	}
+
+	@PutMapping
+	@PreAuthorize("hasAuthority('${instanceName}:modify')")
+	@DataCache(name = USERS, key = "#cmd.co.id", type = DEL)
+	@OperateLog(module = "修改${comment}", operation = "修改${comment}")
+	@Operation(summary = "修改${comment}", description = "修改${comment}")
+	public void modify${(version)?upper_case}(@RequestBody ${className}ModifyCmd cmd) {
+		${instanceName}sServiceI.modify(cmd);
+	}
+
+	@DeleteMapping
+	@PreAuthorize("hasAuthority('${instanceName}:remove')")
+	@OperateLog(module = "删除${comment}", operation = "删除${comment}")
+	@Operation(summary = "删除${comment}", description = "删除${comment}")
+	public void remove${(version)?upper_case}(@RequestBody Long[] ids) {
+		${instanceName}sServiceI.remove(new ${className}RemoveCmd(ids));
+	}
+
+	@PostMapping("export")
+	@Operation(summary = "导出${comment}", description = "导出${comment}")
+	@PreAuthorize("hasAuthority('${instanceName}:export')")
+	@OperateLog(module = "导出${comment}", operation = "导出${comment}")
+	public void export${(version)?upper_case}(@RequestBody ${className}ExportCmd cmd) {
+		${instanceName}sServiceI.export(cmd);
+	}
+
+	@TraceLog
+	@PostMapping("page")
+	@PreAuthorize("hasAuthority('${instanceName}:page')")
+	@Operation(summary = "分页查询${comment}列表", description = "分页查询${comment}列表")
+	public Result<Page<${className}CO>> page${(version)?upper_case}(@RequestBody ${className}PageQry qry) {
+		return ${instanceName}sServiceI.page(qry);
+	}
+
+	@TraceLog
+	@GetMapping("{id}")
+	@DataCache(name = ${(className)?upper_case}S, key = "#id")
+	@Operation(summary = "查看${comment}详情", description = "查看${comment}详情")
+	public Result<UserCO> getById${(version)?upper_case}(@PathVariable("id") Long id) {
+		return ${instanceName}sServiceI.getById(id);
+	}
 
 }
 // @formatter:on

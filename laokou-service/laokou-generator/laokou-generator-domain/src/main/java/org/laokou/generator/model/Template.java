@@ -35,7 +35,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -52,7 +52,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -69,7 +69,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -86,7 +86,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -103,7 +103,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -120,7 +120,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -137,7 +137,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return className + "Converter.java";
 		}
 	},
@@ -154,7 +154,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -171,7 +171,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -188,7 +188,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -205,7 +205,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -222,7 +222,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -239,7 +239,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -256,7 +256,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -273,7 +273,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -290,7 +290,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -307,7 +307,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -324,7 +324,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -341,7 +341,24 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
+			return "";
+		}
+	},
+
+	DOMAIN_EVENT {
+		@Override
+		public String getTemplatePath(String path) {
+			return "";
+		}
+
+		@Override
+		public String getFileDirectory(String packageName, String moduleName) {
+			return "";
+		}
+
+		@Override
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -355,11 +372,11 @@ public enum Template {
 		@Override
 		public String getFileDirectory(String packageName, String moduleName) {
 			return moduleName + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + packageName
-					+ "/gatewayimpl/database/dataobject";
+				+ "/gatewayimpl/database/dataobject";
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return className + "DO.java";
 		}
 	},
@@ -367,17 +384,17 @@ public enum Template {
 	CO {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + SLASH + "co.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(String packageName, String moduleName) {
-			return "";
+			return moduleName + ROD + COLA_CLIENT + JAVA_PATH + packageName + "/dto/clientobject";
 		}
 
 		@Override
-		public String getFileName(String className) {
-			return "";
+		public String getFileName(String className, String version) {
+			return className + "CO.java";
 		}
 	},
 
@@ -393,7 +410,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -410,7 +427,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -427,8 +444,8 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
-			return className + "Controller.java";
+		public String getFileName(String className, String version) {
+			return className + "Controller" + version.toUpperCase() + ".java";
 		}
 	},
 
@@ -444,7 +461,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -461,7 +478,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return className + "Mapper.java";
 		}
 	},
@@ -478,7 +495,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -495,7 +512,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	},
@@ -512,7 +529,7 @@ public enum Template {
 		}
 
 		@Override
-		public String getFileName(String className) {
+		public String getFileName(String className, String version) {
 			return "";
 		}
 	};
@@ -521,6 +538,6 @@ public enum Template {
 
 	public abstract String getFileDirectory(String packageName, String moduleName);
 
-	public abstract String getFileName(String className);
+	public abstract String getFileName(String className, String version);
 
 }
