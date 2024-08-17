@@ -15,15 +15,12 @@
  *
  */
 
-package org.laokou.common.trace.interceptor;
+package org.laokou.common.trace.utils;
 
-import io.micrometer.common.lang.NonNullApi;
-import io.micrometer.common.lang.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.ThreadContext;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.constant.TraceConstant.*;
@@ -31,33 +28,41 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.*;
 /**
  * @author laokou
  */
-@NonNullApi
-public class TraceInterceptor implements HandlerInterceptor {
+public class TraceUtil {
 
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		String traceId = getParamValue(request, TRACE_ID);
-		String userId = getParamValue(request, USER_ID);
-		String username = getParamValue(request, USER_NAME);
-		String tenantId = getParamValue(request, TENANT_ID);
+	public static void putContext(String traceId, String userId, String username, String tenantId) {
 		ThreadContext.put(TRACE_ID, traceId);
 		ThreadContext.put(USER_ID, userId);
 		ThreadContext.put(TENANT_ID, tenantId);
 		ThreadContext.put(USER_NAME, username);
-		return true;
+//		Span currentSpan = tracer.currentSpan();
+//		if (currentSpan != null) {
+//			currentSpan.tag(SPAN_TRACE_ID, traceId);
+//			currentSpan.tag(SPAN_USER_ID, userId);
+//			currentSpan.tag(SPAN_TENANT_ID, tenantId);
+//			currentSpan.tag(SPAN_USER_NAME, username);
+//		}
 	}
 
-	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
-			@Nullable Exception ex) {
+	public static void clearContext() {
 		ThreadContext.clearMap();
 	}
 
-	private String getParamValue(HttpServletRequest request, String paramName) {
+	public static String getParamValue(HttpServletRequest request, String paramName) {
 		String paramValue = request.getHeader(paramName);
 		// 从参数中获取
 		if (StringUtil.isEmpty(paramValue)) {
 			paramValue = request.getParameter(paramName);
+		}
+		return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
+	}
+
+	public static String getParamValue(ServerHttpRequest request, String paramName) {
+		// 从header中获取
+		String paramValue = request.getHeaders().getFirst(paramName);
+		// 从参数中获取
+		if (StringUtil.isEmpty(paramValue)) {
+			paramValue = request.getQueryParams().getFirst(paramName);
 		}
 		return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
 	}

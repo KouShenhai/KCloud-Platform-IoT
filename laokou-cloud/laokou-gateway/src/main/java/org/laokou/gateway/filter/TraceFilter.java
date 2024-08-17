@@ -19,9 +19,9 @@ package org.laokou.gateway.filter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.ThreadContext;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.nacos.utils.ReactiveRequestUtil;
+import org.laokou.common.trace.utils.TraceUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -38,8 +38,8 @@ import static org.laokou.common.nacos.utils.ReactiveRequestUtil.getHost;
  *
  * @author laokou
  */
-@Component
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class TraceFilter implements GlobalFilter, Ordered {
 
@@ -52,14 +52,11 @@ public class TraceFilter implements GlobalFilter, Ordered {
 			String tenantId = ReactiveRequestUtil.getParamValue(request, TENANT_ID);
 			String username = ReactiveRequestUtil.getParamValue(request, USER_NAME);
 			String traceId = ReactiveRequestUtil.getParamValue(request, TRACE_ID);
-			ThreadContext.put(TRACE_ID, traceId);
-			ThreadContext.put(USER_ID, userId);
-			ThreadContext.put(TENANT_ID, tenantId);
-			ThreadContext.put(USER_NAME, username);
+			TraceUtil.putContext(traceId, userId, tenantId, username);
 			// 获取uri
 			String requestURL = ReactiveRequestUtil.getRequestURL(request);
 			log.info("请求路径：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}，主机：{}", requestURL, LogUtil.record(userId),
-					LogUtil.record(username), LogUtil.record(tenantId), LogUtil.record(traceId), host);
+				LogUtil.record(username), LogUtil.record(tenantId), LogUtil.record(traceId), host);
 			return chain.filter(exchange.mutate()
 				.request(request.mutate()
 					.header(USER_NAME, username)
@@ -69,10 +66,9 @@ public class TraceFilter implements GlobalFilter, Ordered {
 					.header(DOMAIN_NAME, host)
 					.build())
 				.build());
-		}
-		finally {
+		} finally {
 			// 清除
-			ThreadContext.clearMap();
+			TraceUtil.clearContext();
 		}
 	}
 

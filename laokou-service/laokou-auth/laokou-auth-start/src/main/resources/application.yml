@@ -22,3 +22,8 @@ spring:
     name: ${APP_NAME:laokou-auth}
   profiles:
     active: @PROFILE-ACTIVE@
+
+logging:
+  level:
+    io.micrometer: DEBUG
+    com.baomidou.mybatisplus: DEBUG

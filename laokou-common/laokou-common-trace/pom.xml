@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <artifactId>laokou-common</artifactId>
@@ -42,6 +42,29 @@
       <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>
     </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>io.micrometer</groupId>-->
+    <!--      <artifactId>micrometer-tracing-bridge-otel</artifactId>-->
+    <!--      <exclusions>-->
+    <!--        <exclusion>-->
+    <!--          <groupId>io.opentelemetry</groupId>-->
+    <!--          <artifactId>opentelemetry-api-incubator</artifactId>-->
+    <!--        </exclusion>-->
+    <!--      </exclusions>-->
+    <!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>io.opentelemetry</groupId>-->
+    <!--      <artifactId>opentelemetry-api</artifactId>-->
+    <!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>io.opentelemetry</groupId>-->
+    <!--      <artifactId>opentelemetry-sdk</artifactId>-->
+    <!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>org.apache.skywalking</groupId>-->
+    <!--      <artifactId>apm-toolkit-micrometer-registry</artifactId>-->
+    <!--      <version>9.3.0</version> &lt;!&ndash; 请根据你的实际需求选择合适的版本 &ndash;&gt;-->
+    <!--    </dependency>-->
   </dependencies>
 
 </project>

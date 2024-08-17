@@ -53,6 +53,11 @@ public final class TraceConstant {
 	 * 请求ID.
 	 */
 	public static final String REQUEST_ID = "request-id";
+	
+	public static final String SPAN_USER_ID = "user.id";
+	public static final String SPAN_USER_NAME = "user.name";
+	public static final String SPAN_TRACE_ID = "trace.id";
+	public static final String SPAN_TENANT_ID = "tenant.id";
 
 	private TraceConstant() {
 	}

@@ -17,11 +17,14 @@
 
 package org.laokou.common.trace.config;
 
-import org.laokou.common.trace.interceptor.ReactiveTraceInterceptor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.WebFilter;
+
+import static org.laokou.common.i18n.common.constant.TraceConstant.*;
+import static org.laokou.common.trace.utils.TraceUtil.*;
 
 /**
  * @author laokou
@@ -32,7 +35,19 @@ public class ReactiveTraceAutoConfig {
 
 	@Bean
 	public WebFilter webFilter() {
-		return new ReactiveTraceInterceptor();
+		return (exchange, chain) -> {
+			try {
+				ServerHttpRequest request = exchange.getRequest();
+				String userId = getParamValue(request, USER_ID);
+				String tenantId = getParamValue(request, TENANT_ID);
+				String username = getParamValue(request, USER_NAME);
+				String traceId = getParamValue(request, TRACE_ID);
+				putContext(traceId, tenantId, userId, username);
+				return chain.filter(exchange);
+			} finally {
+				clearContext();
+			}
+		};
 	}
 
 }

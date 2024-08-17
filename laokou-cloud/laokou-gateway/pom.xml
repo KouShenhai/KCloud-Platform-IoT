@@ -167,6 +167,18 @@
       <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>
     </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>io.micrometer</groupId>-->
+    <!--      <artifactId>micrometer-tracing-bridge-otel</artifactId>-->
+    <!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>io.opentelemetry</groupId>-->
+    <!--      <artifactId>opentelemetry-api</artifactId>-->
+    <!--    </dependency>-->
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-trace</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
