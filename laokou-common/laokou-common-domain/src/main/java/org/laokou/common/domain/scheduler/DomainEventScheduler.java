@@ -41,7 +41,8 @@ public class DomainEventScheduler {
 		try {
 			domainEventService.deleteOldByAppNameOfThreeMonths(param);
 			return ExecuteResult.success();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("参数为{}，定时执行删除前三个月的领域事件任务失败，错误信息：{}", param, e.getMessage(), e);
 			return ExecuteResult.failure();
 		}

@@ -20,8 +20,7 @@ package org.laokou.auth.event.handler;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.laokou.auth.command.ApiLogCmdExe;
-import org.laokou.auth.dto.ApiLogSaveCmd;
+import org.laokou.auth.ability.AuthDomainService;
 import org.laokou.auth.dto.domainevent.CallApiEvent;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
@@ -43,16 +42,16 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 		selectorExpression = API_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class CallApiEventHandler extends AbstractDomainEventHandler {
 
-	private final ApiLogCmdExe apiLogCmdExe;
+	private final AuthDomainService authDomainService;
 
-	public CallApiEventHandler(DomainEventPublisher domainEventPublisher, ApiLogCmdExe apiLogCmdExe) {
+	public CallApiEventHandler(DomainEventPublisher domainEventPublisher, AuthDomainService authDomainService) {
 		super(domainEventPublisher);
-		this.apiLogCmdExe = apiLogCmdExe;
+		this.authDomainService = authDomainService;
 	}
 
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-		apiLogCmdExe.executeVoid(new ApiLogSaveCmd(domainEvent));
+		authDomainService.recordApiLog(domainEvent);
 	}
 
 	@Override

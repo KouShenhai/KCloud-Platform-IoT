@@ -18,7 +18,6 @@
 package org.laokou.generator.model;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.ROD;
-import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
 import static org.laokou.generator.model.Constant.*;
 
 public enum Template {
@@ -26,13 +25,13 @@ public enum Template {
 	SAVE_CMD {
 		@Override
 		public String getTemplatePath(String path) {
-			return path + SLASH + "saveCmd.ftl";
+			return path + "/client/saveCmd.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
 			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
-				+ "/dto";
+					+ "/dto";
 		}
 
 		@Override
@@ -44,13 +43,13 @@ public enum Template {
 	MODIFY_CMD {
 		@Override
 		public String getTemplatePath(String path) {
-			return path + SLASH + "modifyCmd.ftl";
+			return path + "/client/modifyCmd.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
 			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
-				+ "/dto";
+					+ "/dto";
 		}
 
 		@Override
@@ -62,13 +61,13 @@ public enum Template {
 	REMOVE_CMD {
 		@Override
 		public String getTemplatePath(String path) {
-			return path + SLASH + "removeCmd.ftl";
+			return path + "/client/removeCmd.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
 			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
-				+ "/dto";
+					+ "/dto";
 		}
 
 		@Override
@@ -80,13 +79,13 @@ public enum Template {
 	PAGE_QRY {
 		@Override
 		public String getTemplatePath(String path) {
-			return path + SLASH + "pageQry.ftl";
+			return path + "/client/pageQry.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
 			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
-				+ "/dto";
+					+ "/dto";
 		}
 
 		@Override
@@ -98,13 +97,13 @@ public enum Template {
 	GET_QRY {
 		@Override
 		public String getTemplatePath(String path) {
-			return path + SLASH + "getQry.ftl";
+			return path + "/client/getQry.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
 			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
-				+ "/dto";
+					+ "/dto";
 		}
 
 		@Override
@@ -116,13 +115,13 @@ public enum Template {
 	IMPORT_CMD {
 		@Override
 		public String getTemplatePath(String path) {
-			return path + SLASH + "importCmd.ftl";
+			return path + "/client/importCmd.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
 			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
-				+ "/dto";
+					+ "/dto";
 		}
 
 		@Override
@@ -134,13 +133,13 @@ public enum Template {
 	CONVERTOR {
 		@Override
 		public String getTemplatePath(String path) {
-			return path + SLASH + "convertor.ftl";
+			return path + "/infrastructure/convertor.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + generatorA.getDomainPackagePath()
-				+ "/convertor";
+			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH
+					+ generatorA.getDomainPackagePath() + "/convertor";
 		}
 
 		@Override
@@ -152,13 +151,13 @@ public enum Template {
 	EXPORT_CMD {
 		@Override
 		public String getTemplatePath(String path) {
-			return path + SLASH + "exportCmd.ftl";
+			return path + "/client/exportCmd.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + generatorA.getDomainPackagePath()
-				+ "/dto";
+			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
+					+ "/dto";
 		}
 
 		@Override
@@ -306,12 +305,13 @@ public enum Template {
 	SERVICE_I {
 		@Override
 		public String getTemplatePath(String path) {
-			return path + SLASH + "serviceI.ftl";
+			return path + "/client/serviceI.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath() + "/api";
+			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
+					+ "/api";
 		}
 
 		@Override
@@ -323,12 +323,13 @@ public enum Template {
 	SERVICE_IMPL {
 		@Override
 		public String getTemplatePath(String path) {
-			return path + SLASH + "serviceImpl.ftl";
+			return path + "/app/serviceImpl.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath() + "/service";
+			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath()
+					+ "/service";
 		}
 
 		@Override
@@ -374,13 +375,13 @@ public enum Template {
 	DO {
 		@Override
 		public String getTemplatePath(String path) {
-			return path + SLASH + "do.ftl";
+			return path + "/infrastructure/do.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + generatorA.getDomainPackagePath()
-				+ "/gatewayimpl/database/dataobject";
+			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH
+					+ generatorA.getDomainPackagePath() + "/gatewayimpl/database/dataobject";
 		}
 
 		@Override
@@ -392,13 +393,13 @@ public enum Template {
 	CO {
 		@Override
 		public String getTemplatePath(String path) {
-			return path + SLASH + "co.ftl";
+			return path + "/client/co.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
 			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
-				+ "/dto/clientobject";
+					+ "/dto/clientobject";
 		}
 
 		@Override
@@ -444,7 +445,7 @@ public enum Template {
 	CONTROLLER {
 		@Override
 		public String getTemplatePath(String path) {
-			return path + SLASH + "controller.ftl";
+			return path + "/adapter/controller.ftl";
 		}
 
 		@Override
@@ -478,13 +479,13 @@ public enum Template {
 	MAPPER {
 		@Override
 		public String getTemplatePath(String path) {
-			return path + SLASH + "mapper.ftl";
+			return path + "/infrastructure/mapper.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + generatorA.getDomainPackagePath()
-				+ "/gatewayimpl/database";
+			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH
+					+ generatorA.getDomainPackagePath() + "/gatewayimpl/database";
 		}
 
 		@Override
