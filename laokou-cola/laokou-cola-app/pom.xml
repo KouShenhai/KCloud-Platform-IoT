@@ -14,10 +14,6 @@
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-cola-client</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
       <artifactId>laokou-cola-infrastructure</artifactId>
     </dependency>
   </dependencies>
