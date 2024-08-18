@@ -26,9 +26,11 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author ${author}
  */
 @Data
-public class ${className}SaveCmd extends CommonCommand {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ${className}ImportCmd extends CommonCommand {
 
-	private ${className}CO ${instanceName}CO;
+	private MultipartFile[] files;
 
 }
 // @formatter:on

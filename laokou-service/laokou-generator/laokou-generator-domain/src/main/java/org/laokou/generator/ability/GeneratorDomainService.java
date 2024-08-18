@@ -107,12 +107,12 @@ public class GeneratorDomainService {
 	private List<Template> getTemplates() {
 		List<Template> templates = new ArrayList<>(29);
 		templates.add(Template.SAVE_CMD);
-		// templates.add(Template.MODIFY_CMD);
-		// templates.add(Template.REMOVE_CMD);
-		// templates.add(Template.PAGE_QRY);
-		// templates.add(Template.GET_QRY);
-		// templates.add(Template.IMPORT_CMD);
-		// templates.add(Template.EXPORT_CMD);
+		templates.add(Template.MODIFY_CMD);
+		templates.add(Template.REMOVE_CMD);
+		templates.add(Template.PAGE_QRY);
+		templates.add(Template.GET_QRY);
+		templates.add(Template.IMPORT_CMD);
+		templates.add(Template.EXPORT_CMD);
 		templates.add(Template.CONVERTOR);
 		// templates.add(Template.SAVE_CMD_EXE);
 		// templates.add(Template.MODIFY_CMD_EXE);
@@ -123,7 +123,7 @@ public class GeneratorDomainService {
 		// templates.add(Template.EXPORT_CMD_EXE);
 		// templates.add(Template.ENTITY);
 		templates.add(Template.SERVICE_I);
-		// templates.add(Template.SERVICE_IMPL);
+		templates.add(Template.SERVICE_IMPL);
 		// templates.add(Template.DOMAIN_SERVICE);
 		templates.add(Template.DO);
 		templates.add(Template.CO);

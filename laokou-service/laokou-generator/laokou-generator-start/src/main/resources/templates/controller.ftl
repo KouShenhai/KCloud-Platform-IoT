@@ -75,12 +75,12 @@ public class ${className}s${(version)?upper_case}Controller {
 		${instanceName}sServiceI.remove(new ${className}RemoveCmd(ids));
 	}
 
-	@PostMapping("import")
+	@PostMapping("import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('${instanceName}:import')")
 	@Operation(summary = "导入${comment}", description = "导入${comment}")
 	@OperateLog(module = "导入${comment}", operation = "导入${comment}")
-	public void import${(version)?upper_case}(@RequestBody ${className}ImportCmd cmd) {
-		${instanceName}sServiceI.importI(cmd);
+	public void import${(version)?upper_case}(@RequestPart("file") MultipartFile[] files) {
+		${instanceName}sServiceI.importI(new ${className}ImportCmd(files));
 	}
 
 	@PostMapping("export")

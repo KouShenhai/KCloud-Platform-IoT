@@ -26,9 +26,9 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author ${author}
  */
 @Data
-public class ${className}SaveCmd extends CommonCommand {
-
-	private ${className}CO ${instanceName}CO;
+@NoArgsConstructor
+@AllArgsConstructor
+public class ${className}ExportCmd extends CommonCommand {
 
 }
 // @formatter:on

@@ -44,90 +44,90 @@ public enum Template {
 	MODIFY_CMD {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + SLASH + "modifyCmd.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
 				+ "/dto";
 		}
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "ModifyCmd.java";
 		}
 	},
 
 	REMOVE_CMD {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + SLASH + "removeCmd.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
 				+ "/dto";
 		}
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "RemoveCmd.java";
 		}
 	},
 
 	PAGE_QRY {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + SLASH + "pageQry.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
 				+ "/dto";
 		}
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "PageQry.java";
 		}
 	},
 
 	GET_QRY {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + SLASH + "getQry.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
 				+ "/dto";
 		}
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "GetQry.java";
 		}
 	},
 
 	IMPORT_CMD {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + SLASH + "importCmd.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
 				+ "/dto";
 		}
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "ImportCmd.java";
 		}
 	},
 
@@ -152,7 +152,7 @@ public enum Template {
 	EXPORT_CMD {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + SLASH + "exportCmd.ftl";
 		}
 
 		@Override
@@ -163,7 +163,7 @@ public enum Template {
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "ExportCmd.java";
 		}
 	},
 
@@ -323,17 +323,17 @@ public enum Template {
 	SERVICE_IMPL {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + SLASH + "serviceImpl.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return "";
+			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath() + "/service";
 		}
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "sServiceImpl.java";
 		}
 	},
 

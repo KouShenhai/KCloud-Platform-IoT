@@ -26,7 +26,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author ${author}
  */
 @Data
-public class ${className}SaveCmd extends CommonCommand {
+public class ${className}ModifyCmd extends CommonCommand {
 
 	private ${className}CO ${instanceName}CO;
 

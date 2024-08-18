@@ -18,17 +18,15 @@
 
 package ${packageName}.${instanceName}.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author ${author}
  */
 @Data
-public class ${className}SaveCmd extends CommonCommand {
-
-	private ${className}CO ${instanceName}CO;
+public class ${className}PageQry extends PageQuery {
 
 }
 // @formatter:on
