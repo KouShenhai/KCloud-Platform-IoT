@@ -169,51 +169,54 @@ public enum Template {
 	SAVE_CMD_EXE {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + "/app/saveCmdExe.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return "";
+			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath()
+					+ "/command";
 		}
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "SaveCmdExe.java";
 		}
 	},
 
 	MODIFY_CMD_EXE {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + "/app/modifyCmdExe.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return "";
+			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath()
+					+ "/command";
 		}
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "ModifyCmdExe.java";
 		}
 	},
 
 	REMOVE_CMD_EXE {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + "/app/removeCmdExe.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return "";
+			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath()
+					+ "/command";
 		}
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "RemoveCmdExe.java";
 		}
 	},
 
@@ -254,34 +257,36 @@ public enum Template {
 	IMPORT_CMD_EXE {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + "/app/importCmdExe.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return "";
+			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath()
+					+ "/command";
 		}
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "ImportCmdExe.java";
 		}
 	},
 
 	EXPORT_CMD_EXE {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + "/app/exportCmdExe.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return "";
+			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath()
+					+ "/command";
 		}
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "ExportCmdExe.java";
 		}
 	},
 

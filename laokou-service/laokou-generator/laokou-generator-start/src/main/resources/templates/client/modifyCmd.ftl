@@ -28,7 +28,9 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class ${className}ModifyCmd extends CommonCommand {
 
-	private ${className}CO ${instanceName}CO;
+	private ${className}CO co;
+
+	private String tag = "modify${className}";
 
 }
 // @formatter:on

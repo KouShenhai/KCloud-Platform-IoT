@@ -29,6 +29,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ${className}ExportCmd extends CommonCommand {
-
+	private String tag = "export${className}";
 }
 // @formatter:on

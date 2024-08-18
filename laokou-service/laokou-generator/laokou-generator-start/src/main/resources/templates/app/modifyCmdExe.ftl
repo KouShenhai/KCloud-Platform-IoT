@@ -19,30 +19,30 @@
 package ${packageName}.${instanceName}.command;
 
 import lombok.RequiredArgsConstructor;
-import ${packageName}.${instanceName}.dto.${className}SaveCmd;
+import ${packageName}.${instanceName}.dto.${className}ModifyCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.core.utils.SpringContextUtil;
-import ${packageName}.${instanceName}.dto.domainevent.Save${className}Event;
+import ${packageName}.${instanceName}.dto.domainevent.Modify${className}Event;
 
 /**
  * @author ${author}
  */
 @Component
 @RequiredArgsConstructor
-public class ${className}SaveCmdExe {
+public class ${className}ModifyCmdExe {
 
 	private final DomainEventPublisher domainEventPublisher;
 
 	private final SpringContextUtil springContextUtil;
 
-	public void executeVoid(${className}SaveCmd cmd) {
+	public void executeVoid(${className}ModifyCmd cmd) {
 		// 校验参数
 
-		// 创建保存${comment}事件
-		Save${className}Event save${className}Event = new Save${className}Event();
-		save${className}Event.create(LAOKOU_${(className)?upper_case}_TOPIC, cmd.getTag(), ${(className)?upper_case}, springContextUtil.getAppName(),
-		domainEventPublisher.publishToCreate(save${className}Event);
+		// 创建修改${comment}事件
+		Modify${className}Event modify${className}Event = new Modify${className}Event();
+		modify${className}Event.create(LAOKOU_${(className)?upper_case}_TOPIC, cmd.getTag(), ${(className)?upper_case}, springContextUtil.getAppName(),
+		domainEventPublisher.publishToCreate(modify${className}Event);
 	}
 
 }

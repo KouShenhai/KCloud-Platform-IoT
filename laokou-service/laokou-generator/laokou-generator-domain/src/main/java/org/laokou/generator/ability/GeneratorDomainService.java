@@ -114,9 +114,9 @@ public class GeneratorDomainService {
 		templates.add(Template.IMPORT_CMD);
 		templates.add(Template.EXPORT_CMD);
 		templates.add(Template.CONVERTOR);
-		// templates.add(Template.SAVE_CMD_EXE);
-		// templates.add(Template.MODIFY_CMD_EXE);
-		// templates.add(Template.REMOVE_CMD_EXE);
+		templates.add(Template.SAVE_CMD_EXE);
+		templates.add(Template.MODIFY_CMD_EXE);
+		templates.add(Template.REMOVE_CMD_EXE);
 		// templates.add(Template.PAGE_QRY_EXE);
 		// templates.add(Template.GET_QRY_EXE);
 		// templates.add(Template.IMPORT_CMD_EXE);
