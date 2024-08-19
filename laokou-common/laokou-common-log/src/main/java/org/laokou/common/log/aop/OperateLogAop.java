@@ -25,7 +25,6 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -47,8 +46,6 @@ import java.lang.reflect.Method;
 @RequiredArgsConstructor
 public class OperateLogAop {
 
-	private static final ThreadLocal<Long> TASK_TIME_LOCAL = new ThreadLocal<>();
-
 	private final SpringContextUtil springContextUtil;
 
 	public void doAround() {
@@ -57,7 +54,7 @@ public class OperateLogAop {
 
 	@Before("@annotation(org.laokou.common.log.annotation.OperateLog)")
 	public void doBefore() {
-		TASK_TIME_LOCAL.set(IdGenerator.SystemClock.now());
+		//TASK_TIME_LOCAL.set(IdGenerator.SystemClock.now());
 	}
 
 	/**
@@ -99,11 +96,11 @@ public class OperateLogAop {
 			// 组装请求参数
 			operate.decorateRequestParams(args);
 			// 计算消耗时间
-			operate.calculateTaskTime(TASK_TIME_LOCAL.get());
+			//operate.calculateTaskTime(TASK_TIME_LOCAL.get());
 			// 修改状态
 			operate.updateStatus(e);
 		} finally {
-			TASK_TIME_LOCAL.remove();
+			//TASK_TIME_LOCAL.remove();
 		}
 	}
 
