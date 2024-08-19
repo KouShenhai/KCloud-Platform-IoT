@@ -54,8 +54,7 @@ public class TraceHandler {
 
 	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_trace_consumer_group")
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
-		Map<String, Object> dataMap = messages
-			.stream()
+		Map<String, Object> dataMap = messages.stream()
 			.map(this::getTraceIndex)
 			.toList()
 			.stream()
@@ -86,9 +85,7 @@ public class TraceHandler {
 	}
 
 	private boolean isTrace(String str) {
-		return StringUtil.isNotEmpty(str)
-			&& str.startsWith("${")
-			&& str.endsWith("}");
+		return StringUtil.isNotEmpty(str) && str.startsWith("${") && str.endsWith("}");
 	}
 
 	private String getIndexName() {
