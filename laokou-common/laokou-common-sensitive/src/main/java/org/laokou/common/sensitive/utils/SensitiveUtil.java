@@ -17,12 +17,7 @@
 
 package org.laokou.common.sensitive.utils;
 
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.sensitive.annotation.SensitiveField;
-import org.springframework.util.ReflectionUtils;
-
-import java.lang.reflect.Field;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.*;
 
@@ -31,34 +26,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.*;
  */
 public class SensitiveUtil {
 
-	public static void transform(Object obj) {
-		Field[] fields = obj.getClass().getDeclaredFields();
-		for (Field field : fields) {
-			boolean annotationPresent = field.isAnnotationPresent(SensitiveField.class);
-			if (annotationPresent) {
-				// 私有属性
-				field.setAccessible(true);
-				Object o = ReflectionUtils.getField(field, obj);
-				if (ObjectUtil.isNull(o)) {
-					continue;
-				}
-				String data = o.toString();
-				SensitiveField sensitiveField = field.getAnnotation(SensitiveField.class);
-				data = format(sensitiveField.type(), data);
-				// 属性赋值
-				ReflectionUtils.setField(field, obj, data);
-			}
-		}
-	}
-
-	public static String format(Type type, String str) {
-		return switch (type) {
-			case MAIL -> formatMail(str);
-			case MOBILE -> formatMobile(str);
-		};
-	}
-
-	private static String formatMail(String mail) {
+	public static String formatMail(String mail) {
 		if (StringUtil.isEmpty(mail)) {
 			return EMPTY;
 		}
@@ -66,12 +34,10 @@ public class SensitiveUtil {
 		if (index == -1) {
 			return mail;
 		}
-		String begin = mail.substring(0, 1);
-		String end = mail.substring(index);
-		return begin + START_START + START_START + end;
+		return START_START.concat(START_START).concat(mail.substring(index));
 	}
 
-	private static String formatMobile(String mobile) {
+	public static String formatMobile(String mobile, int start, int end) {
 		if (StringUtil.isEmpty(mobile)) {
 			return EMPTY;
 		}
@@ -79,9 +45,8 @@ public class SensitiveUtil {
 		if (mobile.length() != mobileLen) {
 			return mobile;
 		}
-		String begin = mobile.substring(0, 3);
-		String end = mobile.substring(7);
-		return begin + START_START + START_START + end;
+		String str = mobile.substring(start, end + 1);
+		return mobile.replace(str, START_START.concat(START_START));
 	}
 
 }

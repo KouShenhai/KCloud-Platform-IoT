@@ -43,6 +43,7 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	/**
 	 * 查看数据源.
+	 *
 	 * @param user 用户对象
 	 * @return 数据源
 	 */
@@ -52,7 +53,7 @@ public class SourceGatewayImpl implements SourceGateway {
 		if (user.isDefaultTenant()) {
 			return new SourceV(MASTER);
 		}
-		SourceDO sourceDO = sourceMapper.selectByTenantId(user.getTenantId());
+		SourceDO sourceDO = sourceMapper.selectOneByTenantId(user.getTenantId());
 		return ObjectUtil.isNotNull(sourceDO) ? new SourceV(sourceDO.getName()) : null;
 	}
 

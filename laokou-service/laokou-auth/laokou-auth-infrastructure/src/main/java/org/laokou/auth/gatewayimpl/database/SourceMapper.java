@@ -34,9 +34,10 @@ public interface SourceMapper extends CrudMapper<Long, Integer, SourceDO> {
 
 	/**
 	 * 根据租户ID查询数据源.
+	 *
 	 * @param tenantId 租户ID
 	 * @return 数据源
 	 */
-	SourceDO selectByTenantId(@Param("tenantId") Long tenantId);
+	SourceDO selectOneByTenantId(@Param("tenantId") Long tenantId);
 
 }

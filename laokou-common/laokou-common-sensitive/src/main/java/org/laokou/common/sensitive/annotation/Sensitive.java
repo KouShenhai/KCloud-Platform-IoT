@@ -17,14 +17,25 @@
 
 package org.laokou.common.sensitive.annotation;
 
+import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.lang.annotation.*;
 
 /**
  * @author laokou
  */
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Target(ElementType.FIELD)
+@JacksonAnnotationsInside
+@Retention(RetentionPolicy.RUNTIME)
+@JsonSerialize(using = SensitiveSerializer.class)
 public @interface Sensitive {
+
+	Type type();
+
+	int start() default 0;
+
+	int end() default 0;
 
 }

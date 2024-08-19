@@ -17,18 +17,26 @@
 
 package org.laokou.common.sensitive.annotation;
 
-import org.laokou.common.sensitive.utils.Type;
-
-import java.lang.annotation.*;
+import org.laokou.common.sensitive.utils.SensitiveUtil;
 
 /**
  * @author laokou
  */
-@Target({ ElementType.FIELD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface SensitiveField {
+public enum Type {
 
-	Type type();
+	MAIL {
+		@Override
+		public String format(String str, int start, int end) {
+			return SensitiveUtil.formatMail(str);
+		}
+	},
+	MOBILE {
+		@Override
+		public String format(String str, int start, int end) {
+			return SensitiveUtil.formatMobile(str, start, end);
+		}
+	};
+
+	public abstract String format(String str, int start, int end);
 
 }
