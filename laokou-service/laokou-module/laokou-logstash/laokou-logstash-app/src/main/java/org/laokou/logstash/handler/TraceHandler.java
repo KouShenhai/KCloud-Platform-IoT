@@ -62,7 +62,8 @@ public class TraceHandler {
 			.stream()
 			.collect(Collectors.toMap(TraceIndex::getId, traceIndex -> traceIndex));
 		if (MapUtil.isNotEmpty(dataMap)) {
-			elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE, TraceIndex.class).thenAcceptAsync(res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap));
+			elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE, TraceIndex.class)
+				.thenAcceptAsync(res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap));
 		}
 		ack.acknowledge();
 	}
