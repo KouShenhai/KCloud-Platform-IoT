@@ -18,10 +18,15 @@
 package org.laokou.api.web;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.secret.annotation.ApiSecret;
+import org.laokou.common.sensitive.annotation.Sensitive;
+import org.laokou.common.sensitive.annotation.SensitiveType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +42,11 @@ import java.io.Serializable;
 @Tag(name = "ApisController", description = "API管理")
 public class ApisController {
 
+	@GetMapping("/test")
+	public Test2 test() {
+		return new Test2("2413176044@qq.com");
+	}
+
 	@ApiSecret
 	@PostMapping("v3/apis")
 	public void test(@RequestBody Test test) {
@@ -49,6 +59,16 @@ public class ApisController {
 		private String id;
 
 		private String name;
+
+	}
+
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class Test2 {
+
+		@Sensitive(type = SensitiveType.MAIL)
+		private String mail;
 
 	}
 
