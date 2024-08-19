@@ -20,9 +20,9 @@ package org.laokou.common.idempotent.aop;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
@@ -46,8 +46,8 @@ public class IdempotentAop {
 
 	private final RedisUtil redisUtil;
 
-	@Before("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
-	public void doBefore() {
+	@Around("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
+	public Object doAround(ProceedingJoinPoint point) throws Throwable {
 		String requestId = getRequestId();
 		if (StringUtil.isEmpty(requestId)) {
 			throw new RuntimeException("提交失败，令牌不能为空");
@@ -56,10 +56,16 @@ public class IdempotentAop {
 		if (!redisUtil.setIfAbsent(apiIdempotentKey, 0, MINUTE_FIVE_EXPIRE)) {
 			throw new RuntimeException("不可重复提交请求");
 		}
+		doBefore();
+		Object proceed = point.proceed();
+		doAfter();
+		return proceed;
+	}
+
+	public void doBefore() {
 		IdempotentUtil.openIdempotent();
 	}
 
-	@After("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
 	public void doAfter() {
 		IdempotentUtil.cleanIdempotent();
 	}

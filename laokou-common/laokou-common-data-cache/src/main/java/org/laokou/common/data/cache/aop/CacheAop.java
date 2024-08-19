@@ -29,7 +29,6 @@ import org.laokou.common.data.cache.constant.Type;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -45,12 +44,10 @@ public class CacheAop {
 
 	private final CacheManager cacheManager;
 
-	@Around("@annotation(org.laokou.common.data.cache.annotation.DataCache)")
-	public Object doAround(ProceedingJoinPoint point) {
+	@Around("@annotation(dataCache)")
+	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		String[] parameterNames = signature.getParameterNames();
-		DataCache dataCache = AnnotationUtils.findAnnotation(signature.getMethod(), DataCache.class);
-		Assert.isTrue(ObjectUtil.isNotNull(dataCache), "@DataCache is null");
 		Type type = dataCache.type();
 		String name = dataCache.name();
 		String field = SpringExpressionUtil.parse(dataCache.key(), parameterNames, point.getArgs(), String.class);

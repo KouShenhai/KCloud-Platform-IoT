@@ -19,8 +19,9 @@ package org.laokou.common.secret.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.secret.utils.SecretUtil;
@@ -61,8 +62,8 @@ public class ApiSecretAop {
 	 */
 	public static final String APP_SECRET = "app-secret";
 
-	@Before("@annotation(org.laokou.common.secret.annotation.ApiSecret)")
-	public void doBefore() {
+	@Around("@annotation(org.laokou.common.secret.annotation.ApiSecret)")
+	public Object doAround(ProceedingJoinPoint point) throws Throwable {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String nonce = request.getHeader(NONCE);
 		String timestamp = request.getHeader(TIMESTAMP);
@@ -71,6 +72,7 @@ public class ApiSecretAop {
 		String appSecret = request.getHeader(APP_SECRET);
 		Map<String, String> parameterMap = MapUtil.getParameters(request);
 		SecretUtil.verification(appKey, appSecret, sign, nonce, timestamp, parameterMap);
+		return point.proceed();
 	}
 
 }

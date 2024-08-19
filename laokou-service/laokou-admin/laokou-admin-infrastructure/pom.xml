@@ -17,6 +17,10 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
+      <artifactId>laokou-admin-domain</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
       <artifactId>laokou-common-algorithm</artifactId>
     </dependency>
     <dependency>

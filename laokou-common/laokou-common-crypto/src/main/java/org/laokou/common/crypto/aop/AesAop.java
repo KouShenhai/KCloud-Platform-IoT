@@ -21,16 +21,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.crypto.annotation.Crypto;
-import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.crypto.constant.Algorithm;
+import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
-
-import java.lang.reflect.Method;
 
 /**
  * AES切面.
@@ -42,13 +38,10 @@ import java.lang.reflect.Method;
 @Slf4j
 public class AesAop {
 
-	@Around("@annotation(org.laokou.common.crypto.annotation.Crypto)")
-	public Object doAround(ProceedingJoinPoint point) throws Throwable {
-		MethodSignature signature = (MethodSignature) point.getSignature();
-		Method method = signature.getMethod();
-		Crypto crypto = AnnotationUtils.findAnnotation(method, Crypto.class);
+	@Around("@annotation(crypto)")
+	public Object doAround(ProceedingJoinPoint point, Crypto crypto) throws Throwable {
 		Object proceed = point.proceed();
-		if (ObjectUtil.requireNotNull(crypto).type() == Algorithm.AES) {
+		if (ObjectUtil.equals(crypto.type(), Algorithm.AES)) {
 			if (proceed instanceof Result<?> result) {
 				Object data = result.getData();
 				AESUtil.transform(data);

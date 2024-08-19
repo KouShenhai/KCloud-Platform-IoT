@@ -19,28 +19,23 @@ package org.laokou.common.log.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.reflect.MethodSignature;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.model.LogA;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-
-import java.lang.reflect.Method;
 
 /**
  * 操作日志切面.
  *
  * @author laokou
  */
+@Slf4j
 @Aspect
 @Component
 @RequiredArgsConstructor
@@ -48,60 +43,36 @@ public class OperateLogAop {
 
 	private final SpringContextUtil springContextUtil;
 
-	public void doAround() {
-
-	}
-
-	@Before("@annotation(org.laokou.common.log.annotation.OperateLog)")
-	public void doBefore() {
-		//TASK_TIME_LOCAL.set(IdGenerator.SystemClock.now());
-	}
-
-	/**
-	 * 处理完请求后执行.
-	 *
-	 * @param joinPoint 切面对象
-	 */
-	@AfterReturning(pointcut = "@annotation(org.laokou.common.log.annotation.OperateLog)")
-	public void doAfterReturning(JoinPoint joinPoint) {
-		handleLog(joinPoint, null);
-	}
-
-	/**
-	 * 异常处理。
-	 *
-	 * @param joinPoint 切面对象
-	 * @param e         异常
-	 */
-	@AfterThrowing(pointcut = "@annotation(org.laokou.common.log.annotation.OperateLog)", throwing = "e")
-	public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
-		handleLog(joinPoint, e);
-	}
-
-	private void handleLog(JoinPoint joinPoint, Exception e) {
+	@Around("@annotation(operateLog)")
+	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) {
+		long startTime = IdGenerator.SystemClock.now();
+		// 应用名称
+		String appName = springContextUtil.getAppName();
+		HttpServletRequest request = RequestUtil.getHttpServletRequest();
+		LogA operate = new LogA(operateLog.module(), operateLog.operation(), request, appName);
+		String className = point.getTarget().getClass().getName();
+		String methodName = point.getSignature().getName();
+		Object[] args = point.getArgs();
+		// 组装类名
+		operate.decorateMethodName(className, methodName);
+		// 组装请求参数
+		operate.decorateRequestParams(args);
+		Object proceed = null;
+		Throwable throwable = null;
 		try {
-			// 应用名称
-			String appName = springContextUtil.getAppName();
-			HttpServletRequest request = RequestUtil.getHttpServletRequest();
-			MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-			Method method = methodSignature.getMethod();
-			OperateLog log = AnnotationUtils.findAnnotation(method, OperateLog.class);
-			Assert.isTrue(ObjectUtil.isNotNull(log), "@OperateLog is null");
-			String className = joinPoint.getTarget().getClass().getName();
-			String methodName = joinPoint.getSignature().getName();
-			Object[] args = joinPoint.getArgs();
-			LogA operate = new LogA(log.module(), log.operation(), request, appName);
-			// 组装类名
-			operate.decorateMethodName(className, methodName);
-			// 组装请求参数
-			operate.decorateRequestParams(args);
-			// 计算消耗时间
-			//operate.calculateTaskTime(TASK_TIME_LOCAL.get());
-			// 修改状态
-			operate.updateStatus(e);
-		} finally {
-			//TASK_TIME_LOCAL.remove();
+			proceed = point.proceed();
 		}
+		catch (Throwable e) {
+			log.error("错误信息：{}", e.getMessage(), e);
+			throwable = e;
+		}
+		finally {
+			// 计算消耗时间
+			operate.calculateTaskTime(startTime);
+			// 修改错误
+			operate.updateThrowable(throwable);
+		}
+		return proceed;
 	}
 
 }

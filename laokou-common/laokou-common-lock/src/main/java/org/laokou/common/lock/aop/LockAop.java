@@ -27,17 +27,12 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.SpringExpressionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.lock.Lock;
 import org.laokou.common.lock.RedissonLock;
 import org.laokou.common.lock.TypeEnum;
 import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-
-import java.lang.reflect.Method;
 
 import static org.laokou.common.i18n.common.exception.StatusCode.TOO_MANY_REQUESTS;
 
@@ -54,16 +49,12 @@ public class LockAop {
 
 	private final RedisUtil redisUtil;
 
-	@Around("@annotation(org.laokou.common.lock.annotation.Lock4j)")
-	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
-		Object obj;
+	@Around("@annotation(lock4j)")
+	public Object doAround(ProceedingJoinPoint joinPoint, Lock4j lock4j) throws Throwable {
 		// 获取注解
 		Signature signature = joinPoint.getSignature();
 		MethodSignature methodSignature = (MethodSignature) signature;
-		Method method = methodSignature.getMethod();
 		String[] parameterNames = methodSignature.getParameterNames();
-		Lock4j lock4j = AnnotationUtils.findAnnotation(method, Lock4j.class);
-		Assert.isTrue(ObjectUtil.isNotNull(lock4j), "@Lock4j is null");
 		String expression = lock4j.key();
 		if (expression.contains("#{") && expression.contains("}")) {
 			expression = SpringExpressionUtil.parse(expression, parameterNames, joinPoint.getArgs(), String.class);
@@ -73,22 +64,17 @@ public class LockAop {
 		int retry = lock4j.retry();
 		final TypeEnum lockType = lock4j.type();
 		Lock lock = new RedissonLock(redisUtil);
-
 		boolean isLocked = false;
-
 		try {
-
 			do {
 				// 设置锁的自动过期时间，则执行业务的时间一定要小于锁的自动过期时间，否则就会报错
 				isLocked = lock.tryLock(lockType, expression, expire, timeout);
 			}
 			while (!isLocked && --retry > 0);
-
 			if (!isLocked) {
 				throw new SystemException(TOO_MANY_REQUESTS);
 			}
-
-			obj = joinPoint.proceed();
+			return joinPoint.proceed();
 		}
 		catch (Throwable throwable) {
 			log.error("错误信息：{}，详情见日志", LogUtil.record(throwable.getMessage()), throwable);
@@ -100,7 +86,6 @@ public class LockAop {
 				lock.unlock(lockType, expression);
 			}
 		}
-		return obj;
 	}
 
 }

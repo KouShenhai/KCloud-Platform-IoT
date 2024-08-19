@@ -19,23 +19,18 @@ package org.laokou.admin.common.aop;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.security.utils.UserUtil;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -52,36 +47,32 @@ import static org.laokou.common.i18n.common.constant.StringConstant.*;
 @RequiredArgsConstructor
 public class DataFilterAop {
 
-	@Before("@annotation(org.laokou.admin.domain.annotation.DataFilter)")
-	public void doBefore(JoinPoint point) {
+	@Around("@annotation(dataFilter)")
+	public Object doAround(ProceedingJoinPoint point, DataFilter dataFilter) throws Throwable {
 		Object param = Arrays.stream(point.getArgs()).filter(arg -> arg instanceof PageQuery).findFirst().orElse(null);
 		if (param instanceof PageQuery pageQuery) {
 			UserDetail userDetail = UserUtil.user();
 			// 超级管理员不过滤数据
 			if (userDetail.isSuperAdministrator()) {
-				return;
+				return point.proceed();
 			}
 			try {
 				// 数据过滤
-				pageQuery.setSqlFilter(getSqlFilter(userDetail, point));
+				pageQuery.setSqlFilter(getSqlFilter(userDetail, dataFilter));
 			}
 			catch (Exception ex) {
 				log.error("错误信息：{}，详情见日志", LogUtil.record(ex.getMessage()), ex);
 			}
 		}
+		return point.proceed();
 	}
 
 	/**
 	 * 获取数据过滤的SQL.
-	 * @param point 切面对象
 	 * @param userDetail 用户
 	 * @return 拼接的SQL
 	 */
-	private String getSqlFilter(UserDetail userDetail, JoinPoint point) {
-		MethodSignature signature = (MethodSignature) point.getSignature();
-		Method method = signature.getMethod();
-		DataFilter dataFilter = AnnotationUtils.findAnnotation(method, DataFilter.class);
-		Assert.isTrue(ObjectUtil.isNotNull(dataFilter), "@DataFilter is null");
+	private String getSqlFilter(UserDetail userDetail, DataFilter dataFilter) {
 		String tableAlias = dataFilter.tableAlias();
 		String deptPathColumn = dataFilter.deptPath();
 		String creatorColumn = dataFilter.creator();

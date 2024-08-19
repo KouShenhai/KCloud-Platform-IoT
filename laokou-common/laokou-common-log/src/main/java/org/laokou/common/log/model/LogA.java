@@ -138,12 +138,13 @@ public class LogA extends AggregateRoot<Long> {
 		this.operator = user.getUsername();
 	}
 
-	public void updateStatus(Exception e) {
-		if (ObjectUtil.isNotNull(e)) {
-			fail(e);
+	public void updateThrowable(Throwable throwable) {
+		if (ObjectUtil.isNotNull(throwable)) {
+			this.errorMessage = throwable.getMessage();
+			this.status = FAIL;
 		}
 		else {
-			ok();
+			this.status = OK;
 		}
 	}
 
@@ -171,15 +172,6 @@ public class LogA extends AggregateRoot<Long> {
 				this.requestParams = JacksonUtil.toJsonStr(obj, true);
 			}
 		}
-	}
-
-	private void ok() {
-		this.status = OK;
-	}
-
-	private void fail(Exception e) {
-		this.errorMessage = e.getMessage();
-		this.status = FAIL;
 	}
 
 	private void deleteAny(Map<String, String> map, String... keys) {
