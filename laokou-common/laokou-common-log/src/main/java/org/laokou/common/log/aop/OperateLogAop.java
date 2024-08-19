@@ -51,6 +51,10 @@ public class OperateLogAop {
 
 	private final SpringContextUtil springContextUtil;
 
+	public void doAround() {
+
+	}
+
 	@Before("@annotation(org.laokou.common.log.annotation.OperateLog)")
 	public void doBefore() {
 		TASK_TIME_LOCAL.set(IdGenerator.SystemClock.now());
@@ -58,6 +62,7 @@ public class OperateLogAop {
 
 	/**
 	 * 处理完请求后执行.
+	 *
 	 * @param joinPoint 切面对象
 	 */
 	@AfterReturning(pointcut = "@annotation(org.laokou.common.log.annotation.OperateLog)")
@@ -67,8 +72,9 @@ public class OperateLogAop {
 
 	/**
 	 * 异常处理。
+	 *
 	 * @param joinPoint 切面对象
-	 * @param e 异常
+	 * @param e         异常
 	 */
 	@AfterThrowing(pointcut = "@annotation(org.laokou.common.log.annotation.OperateLog)", throwing = "e")
 	public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
@@ -96,8 +102,7 @@ public class OperateLogAop {
 			operate.calculateTaskTime(TASK_TIME_LOCAL.get());
 			// 修改状态
 			operate.updateStatus(e);
-		}
-		finally {
+		} finally {
 			TASK_TIME_LOCAL.remove();
 		}
 	}
