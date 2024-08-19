@@ -34,6 +34,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.*;
@@ -56,6 +57,7 @@ public class TraceHandler {
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
 		Map<String, Object> dataMap = messages.stream()
 			.map(this::getTraceIndex)
+			.filter(Objects::nonNull)
 			.toList()
 			.stream()
 			.collect(Collectors.toMap(TraceIndex::getId, traceIndex -> traceIndex));
