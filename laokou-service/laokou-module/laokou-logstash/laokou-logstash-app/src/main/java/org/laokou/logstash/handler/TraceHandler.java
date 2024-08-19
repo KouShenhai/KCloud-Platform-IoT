@@ -98,7 +98,7 @@ public class TraceHandler {
 
 	private String replaceValue(String value) {
 		if (value.startsWith(DOLLAR) || UNDEFINED.equals(value)) {
-			return "暂无信息";
+			return "";
 		}
 		return value;
 	}
