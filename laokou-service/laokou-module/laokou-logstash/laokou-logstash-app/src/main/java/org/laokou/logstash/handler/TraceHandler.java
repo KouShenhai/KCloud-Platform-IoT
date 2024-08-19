@@ -17,18 +17,14 @@
 
 package org.laokou.logstash.handler;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.core.utils.RegexUtil;
+import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -37,6 +33,8 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.DOLLAR;
 import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
@@ -53,73 +51,48 @@ public class TraceHandler {
 
 	private static final String TRACE = "laokou_trace";
 
-	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_logstash_consumer_group")
+	private final ElasticsearchTemplate elasticsearchTemplate;
+
+	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_trace_consumer_group")
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
-		// messages.parallelStream().forEach(this::saveIndex);
+		Map<String, Object> dataMap = messages
+			.stream()
+			.map(this::getTraceIndex)
+			.toList()
+			.stream()
+			.collect(Collectors.toMap(TraceIndex::getId, traceIndex -> traceIndex));
+		if (MapUtil.isNotEmpty(dataMap)) {
+			elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE, TraceIndex.class).thenAcceptAsync(res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap));
+		}
 		ack.acknowledge();
 	}
 
-	/**
-	 * 每个月最后一天的23：50：00创建下一个月的索引.
-	 */
-	public void createTraceIndexJob() {
-		// 单个参数
-		String ym = "123";
-		log.info("接收调度中心参数：{}", ym);
-		if (StringUtil.isEmpty(ym)) {
-			ym = DateUtil.format(DateUtil.plusMonths(DateUtil.nowDate(), 1), DateUtil.YYYYMM);
+	private TraceIndex getTraceIndex(String str) {
+		TraceIndex traceIndex = JacksonUtil.toBean(str, TraceIndex.class);
+		String traceId = traceIndex.getTraceId();
+		String spanId = traceIndex.getSpanId();
+		if (isTrace(traceId, spanId)) {
+			traceIndex.setId(String.valueOf(IdGenerator.defaultSnowflakeId()));
+			traceIndex.setTenantId(replaceValue(traceIndex.getTenantId()));
+			traceIndex.setUserId(replaceValue(traceIndex.getUserId()));
+			traceIndex.setUsername(replaceValue(traceIndex.getUsername()));
+			return traceIndex;
 		}
-		else {
-			if (!RegexUtil.numberRegex(ym) || ym.length() != 6) {
-				// XxlJobHelper.log("时间格式错误");
-				// XxlJobHelper.handleFail("时间格式错误");
-				return;
-			}
-		}
-		try {
-			// 创建索引
-			createIndex(ym);
-			// XxlJobHelper.handleSuccess("创建索引【{" + getIndexName(ym) + "}】执行成功");
-			// XxlJobHelper.log("创建索引【{" + getIndexName(ym) + "}】执行成功");
-		}
-		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-			// XxlJobHelper.log("创建索引【{" + getIndexName(ym) + "}】执行失败");
-			// XxlJobHelper.handleFail("创建索引【{" + getIndexName(ym) + "}】执行失败");
-		}
+		return null;
 	}
 
-	private void saveIndex(String s) {
-		try {
-			TraceIndex traceIndex = JacksonUtil.toBean(s, TraceIndex.class);
-			if (StringUtil.isNotEmpty(traceIndex.getTraceId()) && RegexUtil.numberRegex(traceIndex.getTraceId())) {
-				try {
-					traceIndex.setId(IdGenerator.defaultSnowflakeId());
-					traceIndex.setTenantId(replaceValue(traceIndex.getTenantId()));
-					traceIndex.setUserId(replaceValue(traceIndex.getUserId()));
-					traceIndex.setUsername(replaceValue(traceIndex.getUsername()));
-					String indexName = getIndexName(DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMM));
-					// elasticsearchTemplate.syncIndexAsync(EMPTY, indexName,
-					// JacksonUtil.toJsonStr(traceIndex));
-				}
-				catch (Exception e) {
-					log.error("同步数据报错", e);
-				}
-			}
-		}
-		catch (Exception ignored) {
-		}
+	private boolean isTrace(String traceId, String spanId) {
+		return isTrace(traceId) && isTrace(spanId);
 	}
 
-	@PostConstruct
-	public void createTraceIndex() {
-		String ym = DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMM);
-		// 创建索引
-		createIndex(ym);
+	private boolean isTrace(String str) {
+		return StringUtil.isNotEmpty(str)
+			&& str.startsWith("${")
+			&& str.endsWith("}");
 	}
 
-	private String getIndexName(String ym) {
-		return TRACE + UNDER + ym;
+	private String getIndexName() {
+		return TRACE + UNDER + DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMMDD);
 	}
 
 	private String replaceValue(String value) {
@@ -129,29 +102,10 @@ public class TraceHandler {
 		return value;
 	}
 
-	@SneakyThrows
-	private void createIndex(String ym) {
-		String indexName = getIndexName(ym);
-		// try {
-		// if (!elasticsearchTemplate.isIndexExists(indexName)) {
-		// elasticsearchTemplate.createAsyncIndex(indexName, TRACE, TraceIndex.class);
-		// log.info("索引【{}】创建成功", indexName);
-		// }
-		// else {
-		// log.info("索引【{}】已存在", indexName);
-		// }
-		// }
-		// catch (Exception e) {
-		// log.error("创建索引【{}】失败，错误信息：{}，详情见日志", indexName,
-		// LogUtil.record(e.getMessage()), e);
-		// }
-	}
-
 	@Data
 	public final static class TraceIndex implements Serializable {
 
-		@JsonSerialize(using = ToStringSerializer.class)
-		private Long id;
+		private String id;
 
 		private String appName;
 
@@ -166,6 +120,8 @@ public class TraceHandler {
 		private String tenantId;
 
 		private String traceId;
+
+		private String spanId;
 
 		private String ip;
 
