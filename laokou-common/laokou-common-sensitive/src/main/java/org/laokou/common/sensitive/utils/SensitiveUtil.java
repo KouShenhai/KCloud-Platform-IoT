@@ -34,7 +34,8 @@ public class SensitiveUtil {
 		if (index == -1) {
 			return mail;
 		}
-		return START_START.concat(START_START).concat(mail.substring(index));
+		String str = mail.substring(index);
+		return getStar(mail.length() - str.length()).concat(str);
 	}
 
 	public static String formatMobile(String mobile, int start, int end) {
@@ -46,7 +47,11 @@ public class SensitiveUtil {
 			return mobile;
 		}
 		String str = mobile.substring(start, end + 1);
-		return mobile.replace(str, START_START.concat(START_START));
+		return mobile.replace(str, getStar(end - start));
+	}
+
+	private static String getStar(int len) {
+		return START.repeat(Math.max(0, len));
 	}
 
 }

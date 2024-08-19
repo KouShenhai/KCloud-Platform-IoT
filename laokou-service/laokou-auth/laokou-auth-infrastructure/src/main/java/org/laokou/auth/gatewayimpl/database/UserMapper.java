@@ -34,7 +34,6 @@ public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 
 	/**
 	 * 查看用户信息.
-	 *
 	 * @param user 用户对象
 	 * @return 用户信息
 	 */

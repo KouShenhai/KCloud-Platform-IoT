@@ -32,7 +32,7 @@ import java.lang.annotation.*;
 @JsonSerialize(using = SensitiveSerializer.class)
 public @interface Sensitive {
 
-	Type type();
+	SensitiveType type();
 
 	int start() default 0;
 

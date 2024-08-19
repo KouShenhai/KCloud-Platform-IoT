@@ -17,22 +17,25 @@
 
 package org.laokou.common.crypto.annotation;
 
-import org.laokou.common.crypto.constant.Algorithm;
+import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.lang.annotation.*;
-
-import static org.laokou.common.crypto.constant.Algorithm.AES;
 
 /**
  * 加密.
  *
  * @author laokou
  */
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Crypto {
+@Target({ ElementType.FIELD })
+@JacksonAnnotationsInside
+@Retention(RetentionPolicy.RUNTIME)
+@JsonSerialize(using = CryptoSerializer.class)
+public @interface JacksonCrypto {
 
-	Algorithm type() default AES;
+	CryptoType type() default CryptoType.AES;
+
+	boolean isEncrypt() default true;
 
 }

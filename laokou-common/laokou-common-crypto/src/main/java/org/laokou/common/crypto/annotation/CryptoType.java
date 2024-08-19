@@ -15,21 +15,38 @@
  *
  */
 
-package org.laokou.common.crypto.constant;
+package org.laokou.common.crypto.annotation;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import org.laokou.common.crypto.utils.AESUtil;
+import org.laokou.common.crypto.utils.RSAUtil;
 
-/**
- * 操作类型枚举.
- *
- * @author laokou
- */
-public enum Type {
+public enum CryptoType {
 
-	@Schema(name = "ENCRYPT", description = "加密")
-	ENCRYPT,
+	AES {
+		@Override
+		public String decrypt(String str) {
+			return AESUtil.decrypt(str);
+		}
 
-	@Schema(name = "DECRYPT", description = "解密")
-	DECRYPT
+		@Override
+		public String encrypt(String str) {
+			return AESUtil.encrypt(str);
+		}
+	},
+	RSA {
+		@Override
+		public String decrypt(String str) {
+			return RSAUtil.decryptByPrivateKey(str);
+		}
+
+		@Override
+		public String encrypt(String str) {
+			return RSAUtil.encryptByPublicKey(str);
+		}
+	};
+
+	public abstract String decrypt(String str);
+
+	public abstract String encrypt(String str);
 
 }

@@ -15,22 +15,28 @@
  *
  */
 
-package org.laokou.common.crypto.annotation;
+package org.laokou.common.sensitive.annotation;
 
-import org.laokou.common.crypto.constant.Type;
-
-import java.lang.annotation.*;
+import org.laokou.common.sensitive.utils.SensitiveUtil;
 
 /**
- * AES加密.
- *
  * @author laokou
  */
-@Target({ ElementType.FIELD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Aes {
+public enum SensitiveType {
 
-	Type type() default Type.ENCRYPT;
+	MAIL {
+		@Override
+		public String format(String str, int start, int end) {
+			return SensitiveUtil.formatMail(str);
+		}
+	},
+	MOBILE {
+		@Override
+		public String format(String str, int start, int end) {
+			return SensitiveUtil.formatMobile(str, start, end);
+		}
+	};
+
+	public abstract String format(String str, int start, int end);
 
 }

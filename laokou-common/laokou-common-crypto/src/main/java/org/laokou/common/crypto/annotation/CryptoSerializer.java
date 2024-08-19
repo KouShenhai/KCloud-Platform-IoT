@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.sensitive.annotation;
+package org.laokou.common.crypto.annotation;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -33,24 +33,27 @@ import java.io.IOException;
  */
 @NoArgsConstructor
 @AllArgsConstructor
-public class SensitiveSerializer extends JsonSerializer<String> implements ContextualSerializer {
+public class CryptoSerializer extends JsonSerializer<String> implements ContextualSerializer {
 
-	private SensitiveType sensitiveType;
+	private CryptoType cryptoType;
 
-	private int start;
-
-	private int end;
+	private boolean isEncrypt;
 
 	@Override
 	public void serialize(String str, JsonGenerator generator, SerializerProvider provider) throws IOException {
-		generator.writeString(sensitiveType.format(str, start, end));
+		if (isEncrypt) {
+			generator.writeString(cryptoType.encrypt(str));
+		}
+		else {
+			generator.writeString(cryptoType.decrypt(str));
+		}
 	}
 
 	@Override
 	public JsonSerializer<?> createContextual(SerializerProvider provider, BeanProperty beanProperty) {
-		Sensitive sensitive = beanProperty.getAnnotation(Sensitive.class);
-		if (ObjectUtil.isNotNull(sensitive)) {
-			return new SensitiveSerializer(sensitive.type(), sensitive.start(), sensitive.end());
+		JacksonCrypto jacksonCrypto = beanProperty.getAnnotation(JacksonCrypto.class);
+		if (ObjectUtil.isNotNull(jacksonCrypto)) {
+			return new CryptoSerializer(jacksonCrypto.type(), jacksonCrypto.isEncrypt());
 		}
 		throw new RuntimeException();
 	}

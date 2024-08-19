@@ -69,54 +69,54 @@ public class RSAUtil {
 
 	/**
 	 * 根据私钥解密.
-	 * @param body 数据
+	 * @param str 字符串
 	 * @param key 私钥
 	 * @return 解密后的字符串
 	 */
-	public static String decryptByPrivateKey(String body, String key) {
+	public static String decryptByPrivateKey(String str, String key) {
 		try {
 			byte[] privateKey = StringUtil.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PRIVATE_KEY);
-			byte[] bytes = decryptByPrivateKey(decryptBase64(body), privateKey);
+			byte[] bytes = decryptByPrivateKey(decryptBase64(str), privateKey);
 			return new String(ObjectUtil.requireNotNull(bytes), StandardCharsets.UTF_8);
 		}
 		catch (Exception e) {
-			return body;
+			return str;
 		}
 	}
 
 	/**
 	 * 根据私钥解密.
-	 * @param body 数据
+	 * @param str 字符串
 	 * @return 解密后的字符串
 	 */
-	public static String decryptByPrivateKey(String body) {
-		return decryptByPrivateKey(body, PRIVATE_KEY);
+	public static String decryptByPrivateKey(String str) {
+		return decryptByPrivateKey(str, PRIVATE_KEY);
 	}
 
 	/**
 	 * 根据公钥加密.
-	 * @param body 数据
+	 * @param str 字符串
 	 * @param key 公钥
 	 * @return 加密后的字符串
 	 */
-	public static String encryptByPublicKey(String body, String key) {
+	public static String encryptByPublicKey(String str, String key) {
 		try {
 			byte[] publicKey = StringUtil.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PUBLIC_KEY);
-			byte[] bytes = encryptByPublicKey(body.getBytes(StandardCharsets.UTF_8), publicKey);
+			byte[] bytes = encryptByPublicKey(str.getBytes(StandardCharsets.UTF_8), publicKey);
 			return encryptBase64(bytes);
 		}
 		catch (Exception e) {
-			return body;
+			return str;
 		}
 	}
 
 	/**
 	 * 根据公钥加密.
-	 * @param body 数据
+	 * @param str 字符串
 	 * @return 加密后的字符串
 	 */
-	public static String encryptByPublicKey(String body) {
-		return encryptByPublicKey(body, PUBLIC_KEY);
+	public static String encryptByPublicKey(String str) {
+		return encryptByPublicKey(str, PUBLIC_KEY);
 	}
 
 	/**
@@ -129,52 +129,52 @@ public class RSAUtil {
 
 	/**
 	 * base64解密.
-	 * @param body 数据
+	 * @param str 字符串
 	 * @return 解密后的字符串
 	 */
-	private static byte[] decryptBase64(String body) {
-		return Base64.getMimeDecoder().decode(body);
+	private static byte[] decryptBase64(String str) {
+		return Base64.getMimeDecoder().decode(str);
 	}
 
 	/**
 	 * base64加密.
-	 * @param bodyBytes 数据
+	 * @param strBytes 字符串
 	 * @return 加密后的字符串
 	 */
-	private static String encryptBase64(byte[] bodyBytes) {
-		return Base64.getEncoder().encodeToString(bodyBytes);
+	private static String encryptBase64(byte[] strBytes) {
+		return Base64.getEncoder().encodeToString(strBytes);
 	}
 
 	/**
 	 * 根据公钥加密.
-	 * @param bodyBytes 加密字符
+	 * @param strBytes 字符串
 	 * @param keyBytes 公钥
 	 * @return 加密后的字符串
 	 */
 	@SneakyThrows
-	private static byte[] encryptByPublicKey(byte[] bodyBytes, byte[] keyBytes) {
+	private static byte[] encryptByPublicKey(byte[] strBytes, byte[] keyBytes) {
 		X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
 		KeyFactory keyFactory = KeyFactory.getInstance(RSA, SUN_RSA_SIGN_PROVIDER);
 		PublicKey publicKey = keyFactory.generatePublic(x509KeySpec);
 		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
 		cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-		return cipher.doFinal(bodyBytes);
+		return cipher.doFinal(strBytes);
 	}
 
 	/**
 	 * 根据私钥解密.
-	 * @param bodyBytes 加密字符
+	 * @param strBytes 字符串
 	 * @param keyBytes 私钥
 	 * @return 解密后的字符串
 	 */
 	@SneakyThrows
-	private static byte[] decryptByPrivateKey(byte[] bodyBytes, byte[] keyBytes) {
+	private static byte[] decryptByPrivateKey(byte[] strBytes, byte[] keyBytes) {
 		PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
 		KeyFactory keyFactory = KeyFactory.getInstance(RSA, SUN_RSA_SIGN_PROVIDER);
 		Key privateKey = keyFactory.generatePrivate(pkcs8KeySpec);
 		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
 		cipher.init(Cipher.DECRYPT_MODE, privateKey);
-		return cipher.doFinal(bodyBytes);
+		return cipher.doFinal(strBytes);
 	}
 
 }

@@ -18,12 +18,9 @@
 package org.laokou.common.crypto.utils;
 
 import lombok.SneakyThrows;
-import org.laokou.common.crypto.annotation.Aes;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.Assert;
-import org.springframework.util.ReflectionUtils;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -31,7 +28,6 @@ import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
@@ -112,33 +108,6 @@ public class AESUtil {
 		cipher.init(Cipher.DECRYPT_MODE, key, gcmSpec);
 		byte[] decryptedBytes = cipher.doFinal(decoded, GCM_IV_LENGTH, decoded.length - GCM_IV_LENGTH);
 		return new String(decryptedBytes, StandardCharsets.UTF_8);
-	}
-
-	/**
-	 * 对象属性加密/解密.
-	 * @param obj 对象
-	 */
-	public static void transform(Object obj) {
-		Field[] fields = obj.getClass().getDeclaredFields();
-		for (Field field : fields) {
-			boolean annotationPresent = field.isAnnotationPresent(Aes.class);
-			if (annotationPresent) {
-				// 私有属性
-				field.setAccessible(true);
-				Object o = ReflectionUtils.getField(field, obj);
-				if (ObjectUtil.isNull(o)) {
-					continue;
-				}
-				String data = o.toString();
-				Aes aes = field.getAnnotation(Aes.class);
-				data = switch (aes.type()) {
-					case DECRYPT -> decrypt(data);
-					case ENCRYPT -> encrypt(data);
-				};
-				// 属性赋值
-				ReflectionUtils.setField(field, obj, data);
-			}
-		}
 	}
 
 }

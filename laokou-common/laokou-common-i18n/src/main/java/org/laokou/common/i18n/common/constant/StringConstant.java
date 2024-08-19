@@ -137,6 +137,11 @@ public final class StringConstant {
 	/**
 	 * 分割参数.
 	 */
+	public static final String START = "*";
+
+	/**
+	 * 分割参数.
+	 */
 	public static final String START_START = "**";
 
 	private StringConstant() {

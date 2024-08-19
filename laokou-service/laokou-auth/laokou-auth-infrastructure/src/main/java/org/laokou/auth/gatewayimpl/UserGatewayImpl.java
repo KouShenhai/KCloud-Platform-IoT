@@ -48,7 +48,6 @@ public class UserGatewayImpl implements UserGateway {
 
 	/**
 	 * 查看用户信息.
-	 *
 	 * @param user 用户对象
 	 * @return 用户信息
 	 */
@@ -57,10 +56,11 @@ public class UserGatewayImpl implements UserGateway {
 		try {
 			UserDO userDO = userMapper.selectOneByCondition(UserConvertor.toDataObject(user));
 			return ObjectUtil.isNotNull(userDO) ? UserConvertor.toEntity(userDO) : null;
-		} catch (BadSqlGrammarException e) {
+		}
+		catch (BadSqlGrammarException e) {
 			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_USER, LogUtil.record(e.getMessage()), e);
 			throw new SystemException(TABLE_NOT_EXIST,
-				MessageUtil.getMessage(TABLE_NOT_EXIST, new String[]{TABLE_USER}));
+					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { TABLE_USER }));
 		}
 	}
 
