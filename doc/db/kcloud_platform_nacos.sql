@@ -12,7 +12,7 @@
  Target Server Version : 160002 (160002)
  File Encoding         : 65001
 
- Date: 17/08/2024 15:40:12
+ Date: 20/08/2024 23:38:08
 */
 
 
@@ -716,13 +716,13 @@ spring:
           default:
             connectTimeout: 120000 #连接超时
             readTimeout: 120000 #读取超时
-            logger-level: full
+            logger-level: none
       lazy-attributes-resolution: true
     # sentinel
     sentinel:
+      web-context-unify: false
       eager: true #开启饥饿加载，直接初始化
       transport:
-        port: 8769
         dashboard: sentinel.laokou.org:8972
 # actuator
 management:
@@ -777,7 +777,7 @@ tenant:
 
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html', '84c26fe801c708c6e137ceeef1de8cb7', '2023-01-13 12:16:46', '2024-08-17 13:38:22.648',
+    path: /swagger-ui.html', '6a901103efdeae2ed57499c5cbb37cf0', '2023-01-13 12:16:46', '2024-08-20 23:02:19.606',
 		'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info"
 VALUES (2159, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
@@ -1143,6 +1143,59 @@ VALUES (40, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
 		'2024-05-25 18:13:10.65', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'kafka公共配置', NULL,
 		NULL, 'yaml', NULL, '');
 INSERT INTO "public"."config_info"
+VALUES (44, 'admin-degrade.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "POST:https://laokou-flowable/work/task/api/query",
+    "count": 200,
+    "grade": 0,
+    "slowRatioThreshold": 0.1,
+    "minRequestAmount": 5,
+    "timeWindow": 30
+  },
+  {
+    "resource": "POST:https://laokou-flowable/work/definition/api/query",
+    "count": 200,
+    "grade": 0,
+    "slowRatioThreshold": 0.1,
+    "minRequestAmount": 5,
+    "timeWindow": 30
+  }
+]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2024-05-25 18:13:10.676', '2024-05-25 18:13:10.676', NULL, '127.0.0.1',
+		'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel degrade rule', NULL, NULL, 'json', NULL,
+		'');
+INSERT INTO "public"."config_info"
+VALUES (35, 'admin-flow.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "/v3/users/profile",
+    "limitApp": "default",
+    "count": 300,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]', '31d82f93a5909b2529f159848116e162', '2024-05-25 18:13:10.61', '2024-05-25 18:19:37.997', 'nacos', '127.0.0.1',
+		'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info"
+VALUES (34, 'auth-flow.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "/v3/captchas/{uuid}",
+    "limitApp": "default",
+    "count": 300,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/secrets",
+    "limitApp": "default",
+    "count": 300,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]', '6ae7639ff49789dd99787e908efa836d', '2024-05-25 18:13:10.604', '2024-05-25 18:19:55.655', 'nacos', '127.0.0.1',
+		'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', 'auth sentinel  flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info"
 VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
 spring:
   # security
@@ -1203,13 +1256,13 @@ spring:
           default:
             connectTimeout: 120000 #连接超时
             readTimeout: 120000 #读取超时
-            logger-level: full
+            logger-level: none
       lazy-attributes-resolution: true
     # sentinel
     sentinel:
+      web-context-unify: false
       eager: true #开启饥饿加载，直接初始化
       transport:
-        port: 8769
         dashboard: sentinel.laokou.org:8972
 
 # actuator
@@ -1265,61 +1318,8 @@ tenant:
 
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html', '8e5f97f41171f86f2130fc97e35eb9c0', '2024-05-25 18:13:10.622', '2024-08-17 13:40:39.136',
+    path: /swagger-ui.html', '345a021a3aff5b7d1fc6ce3993f4ec10', '2024-05-25 18:13:10.622', '2024-08-20 23:01:27.445',
 		'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info"
-VALUES (44, 'admin-degrade.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "POST:https://laokou-flowable/work/task/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  },
-  {
-    "resource": "POST:https://laokou-flowable/work/definition/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  }
-]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2024-05-25 18:13:10.676', '2024-05-25 18:13:10.676', NULL, '127.0.0.1',
-		'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel degrade rule', NULL, NULL, 'json', NULL,
-		'');
-INSERT INTO "public"."config_info"
-VALUES (35, 'admin-flow.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "/v3/users/profile",
-    "limitApp": "default",
-    "count": 300,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  }
-]', '31d82f93a5909b2529f159848116e162', '2024-05-25 18:13:10.61', '2024-05-25 18:19:37.997', 'nacos', '127.0.0.1',
-		'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info"
-VALUES (34, 'auth-flow.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "/v3/captchas/{uuid}",
-    "limitApp": "default",
-    "count": 300,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/secrets",
-    "limitApp": "default",
-    "count": 300,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  }
-]', '6ae7639ff49789dd99787e908efa836d', '2024-05-25 18:13:10.604', '2024-05-25 18:19:55.655', 'nacos', '127.0.0.1',
-		'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', 'auth sentinel  flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"
 VALUES (27, 'application-common-redis.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
@@ -1858,6 +1858,27 @@ snail-job:
   port: 1790', 'c24eb507487996abb6d22f5ec35692da', '2024-05-25 18:13:33.447', '2024-08-16 00:20:19.661', 'nacos',
 		'127.0.0.1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info"
+VALUES (66, 'admin-degrade.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "POST:https://laokou-flowable/work/task/api/query",
+    "count": 200,
+    "grade": 0,
+    "slowRatioThreshold": 0.1,
+    "minRequestAmount": 5,
+    "timeWindow": 30
+  },
+  {
+    "resource": "POST:https://laokou-flowable/work/definition/api/query",
+    "count": 200,
+    "grade": 0,
+    "slowRatioThreshold": 0.1,
+    "minRequestAmount": 5,
+    "timeWindow": 30
+  }
+]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2024-05-25 18:13:33.436', '2024-05-25 18:13:33.436', NULL, '127.0.0.1',
+		'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel degrade rule', NULL, NULL, 'json', NULL,
+		'');
+INSERT INTO "public"."config_info"
 VALUES (59, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
 spring:
   # security
@@ -1918,13 +1939,13 @@ spring:
           default:
             connectTimeout: 120000 #连接超时
             readTimeout: 120000 #读取超时
-            logger-level: full
+            logger-level: none
       lazy-attributes-resolution: true
     # sentinel
     sentinel:
+      web-context-unify: false
       eager: true #开启饥饿加载，直接初始化
       transport:
-        port: 8769
         dashboard: sentinel.laokou.org:8972
 # actuator
 management:
@@ -1979,29 +2000,8 @@ tenant:
 
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html', '84c26fe801c708c6e137ceeef1de8cb7', '2024-05-25 18:13:33.393', '2024-08-17 13:38:48.282',
+    path: /swagger-ui.html', '6a901103efdeae2ed57499c5cbb37cf0', '2024-05-25 18:13:33.393', '2024-08-20 23:02:06.89',
 		'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info"
-VALUES (66, 'admin-degrade.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "POST:https://laokou-flowable/work/task/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  },
-  {
-    "resource": "POST:https://laokou-flowable/work/definition/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  }
-]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2024-05-25 18:13:33.436', '2024-05-25 18:13:33.436', NULL, '127.0.0.1',
-		'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel degrade rule', NULL, NULL, 'json', NULL,
-		'');
 INSERT INTO "public"."config_info"
 VALUES (69, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
@@ -3397,7 +3397,7 @@ VALUES (82, 'monitor', '', 'application-monitor.yaml', 'LAOKOU_GROUP', 'a61abd4c
 INSERT INTO "public"."config_tags_relation"
 VALUES (4, 'im', '', 'application-im.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 48);
 INSERT INTO "public"."config_tags_relation"
-VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 50);
+VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 59);
 
 -- ----------------------------
 -- Table structure for databasechangelog
@@ -3700,7 +3700,7 @@ SELECT setval('"public"."config_info_tag_id_seq"', 1, false);
 -- ----------------------------
 ALTER SEQUENCE "public"."config_tags_relation_nid_seq"
 	OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq"', 50, true);
+SELECT setval('"public"."config_tags_relation_nid_seq"', 59, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -3714,7 +3714,7 @@ SELECT setval('"public"."group_capacity_id_seq"', 1, false);
 -- ----------------------------
 ALTER SEQUENCE "public"."his_config_info_nid_seq"
 	OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq"', 157, true);
+SELECT setval('"public"."his_config_info_nid_seq"', 171, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -3879,7 +3879,7 @@ ALTER TABLE "public"."config_info_tag"
 -- ----------------------------
 -- Auto increment value for config_tags_relation
 -- ----------------------------
-SELECT setval('"public"."config_tags_relation_nid_seq"', 50, true);
+SELECT setval('"public"."config_tags_relation_nid_seq"', 59, true);
 
 -- ----------------------------
 -- Indexes structure for table config_tags_relation
@@ -3946,7 +3946,7 @@ ALTER TABLE "public"."group_capacity"
 -- ----------------------------
 -- Auto increment value for his_config_info
 -- ----------------------------
-SELECT setval('"public"."his_config_info_nid_seq"', 157, true);
+SELECT setval('"public"."his_config_info_nid_seq"', 171, true);
 
 -- ----------------------------
 -- Indexes structure for table his_config_info

@@ -23,7 +23,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 import java.io.Serial;
 
-import static org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO.BOOT_SYS_LOGIN_LOG;
+import static org.laokou.auth.common.constant.Constant.TABLE_LOGIN_LOG;
 
 /**
  * 登录日志.
@@ -31,10 +31,8 @@ import static org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO.BOOT_SY
  * @author laokou
  */
 @Data
-@TableName(BOOT_SYS_LOGIN_LOG)
+@TableName(TABLE_LOGIN_LOG)
 public class LoginLogDO extends BaseDO {
-
-	public static final String BOOT_SYS_LOGIN_LOG = "boot_sys_login_log";
 
 	@Serial
 	private static final long serialVersionUID = 4289483981365827983L;

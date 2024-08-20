@@ -21,16 +21,14 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
-import static org.laokou.auth.gatewayimpl.database.dataobject.ApiLogDO.BOOT_SYS_API_LOG;
+import static org.laokou.auth.common.constant.Constant.TABLE_API_LOG;
 
 /**
  * @author laokou
  */
 @Data
-@TableName(BOOT_SYS_API_LOG)
+@TableName(TABLE_API_LOG)
 public class ApiLogDO extends BaseDO {
-
-	public static final String BOOT_SYS_API_LOG = "boot_sys_api_log";
 
 	private String code;
 

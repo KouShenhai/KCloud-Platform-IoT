@@ -38,6 +38,11 @@ public final class Constant {
 	public static final String USE_CASE_CAPTCHA = "captcha";
 
 	/**
+	 * 数据源表.
+	 */
+	public static final String TABLE_SOURCE = "boot_sys_source";
+
+	/**
 	 * 菜单表.
 	 */
 	public static final String TABLE_MENU = "boot_sys_menu";
@@ -51,6 +56,21 @@ public final class Constant {
 	 * 部门表.
 	 */
 	public static final String TABLE_DEPT = "boot_sys_dept";
+
+	/**
+	 * 租户表.
+	 */
+	public static final String TABLE_TENANT = "boot_sys_tenant";
+
+	/**
+	 * API日志表.
+	 */
+	public static final String TABLE_API_LOG = "boot_sys_api_log";
+
+	/**
+	 * 登录日志表.
+	 */
+	public static final String TABLE_LOGIN_LOG = "boot_sys_login_log";
 
 	private Constant() {
 	}
