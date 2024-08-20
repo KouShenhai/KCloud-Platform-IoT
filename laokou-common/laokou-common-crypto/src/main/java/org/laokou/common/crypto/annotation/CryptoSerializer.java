@@ -43,7 +43,8 @@ public class CryptoSerializer extends JsonSerializer<String> implements Contextu
 	public void serialize(String str, JsonGenerator generator, SerializerProvider provider) throws IOException {
 		if (isEncrypt) {
 			generator.writeString(cipherType.encrypt(str));
-		} else {
+		}
+		else {
 			generator.writeString(cipherType.decrypt(str));
 		}
 	}

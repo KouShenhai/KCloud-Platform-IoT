@@ -28,7 +28,7 @@ import java.lang.annotation.*;
  * @author laokou
  */
 @Documented
-@Target({ElementType.FIELD})
+@Target({ ElementType.FIELD })
 @JacksonAnnotationsInside
 @Retention(RetentionPolicy.RUNTIME)
 @JsonSerialize(using = CryptoSerializer.class)
