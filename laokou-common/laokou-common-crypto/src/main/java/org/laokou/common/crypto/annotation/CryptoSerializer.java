@@ -35,25 +35,24 @@ import java.io.IOException;
 @AllArgsConstructor
 public class CryptoSerializer extends JsonSerializer<String> implements ContextualSerializer {
 
-	private CryptoType cryptoType;
+	private CipherType cipherType;
 
 	private boolean isEncrypt;
 
 	@Override
 	public void serialize(String str, JsonGenerator generator, SerializerProvider provider) throws IOException {
 		if (isEncrypt) {
-			generator.writeString(cryptoType.encrypt(str));
-		}
-		else {
-			generator.writeString(cryptoType.decrypt(str));
+			generator.writeString(cipherType.encrypt(str));
+		} else {
+			generator.writeString(cipherType.decrypt(str));
 		}
 	}
 
 	@Override
 	public JsonSerializer<?> createContextual(SerializerProvider provider, BeanProperty beanProperty) {
-		JacksonCrypto jacksonCrypto = beanProperty.getAnnotation(JacksonCrypto.class);
-		if (ObjectUtil.isNotNull(jacksonCrypto)) {
-			return new CryptoSerializer(jacksonCrypto.type(), jacksonCrypto.isEncrypt());
+		Cipher cipher = beanProperty.getAnnotation(Cipher.class);
+		if (ObjectUtil.isNotNull(cipher)) {
+			return new CryptoSerializer(cipher.type(), cipher.isEncrypt());
 		}
 		throw new RuntimeException();
 	}

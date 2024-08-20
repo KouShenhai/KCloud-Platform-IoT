@@ -17,25 +17,36 @@
 
 package org.laokou.common.crypto.annotation;
 
-import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.laokou.common.crypto.utils.AESUtil;
+import org.laokou.common.crypto.utils.RSAUtil;
 
-import java.lang.annotation.*;
+public enum CipherType {
 
-/**
- * 加密.
- *
- * @author laokou
- */
-@Documented
-@Target({ ElementType.FIELD })
-@JacksonAnnotationsInside
-@Retention(RetentionPolicy.RUNTIME)
-@JsonSerialize(using = CryptoSerializer.class)
-public @interface JacksonCrypto {
+	AES {
+		@Override
+		public String decrypt(String str) {
+			return AESUtil.decrypt(str);
+		}
 
-	CryptoType type() default CryptoType.AES;
+		@Override
+		public String encrypt(String str) {
+			return AESUtil.encrypt(str);
+		}
+	},
+	RSA {
+		@Override
+		public String decrypt(String str) {
+			return RSAUtil.decryptByPrivateKey(str);
+		}
 
-	boolean isEncrypt() default true;
+		@Override
+		public String encrypt(String str) {
+			return RSAUtil.encryptByPublicKey(str);
+		}
+	};
+
+	public abstract String decrypt(String str);
+
+	public abstract String encrypt(String str);
 
 }
