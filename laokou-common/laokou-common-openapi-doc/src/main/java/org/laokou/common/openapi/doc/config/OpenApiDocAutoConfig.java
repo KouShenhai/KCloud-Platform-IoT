@@ -45,16 +45,16 @@ public class OpenApiDocAutoConfig {
 		return new OpenAPI()
 			.info(new Info().title("API文档")
 				.description("API文档")
-				.version("3.3.2")
+				.version("3.3.3")
 				.contact(new Contact().name("laokou").url("https://github.com/KouShenhai").email("2413176044@qq.com"))
 				.license(new License().name("Apache 2.0").url("https://www.apache.org/licenses/LICENSE-2.0.html")))
 			.externalDocs(new ExternalDocumentation().description("老寇IoT云平台").url("https://github.com/KouShenhai"))
 			.addSecurityItem(new SecurityRequirement().addList(AUTHORIZATION))
 			.components(new Components().addSecuritySchemes(AUTHORIZATION,
-					new SecurityScheme().name(AUTHORIZATION)
-						.type(SecurityScheme.Type.HTTP)
-						.scheme("bearer")
-						.bearerFormat("JWT")));
+				new SecurityScheme().name(AUTHORIZATION)
+					.type(SecurityScheme.Type.HTTP)
+					.scheme("bearer")
+					.bearerFormat("JWT")));
 
 	}
 
