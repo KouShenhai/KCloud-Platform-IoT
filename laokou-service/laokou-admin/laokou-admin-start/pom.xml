@@ -88,11 +88,13 @@
   </dependencies>
   <build>
     <plugins>
+      <!-- 打包插件，将 Java 源代码编译为字节码（.class 文件） -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin.version}</version>
       </plugin>
+      <!-- 专门用于 Spring Boot 应用的打包和运行，提供打包为可执行 JAR/WAR 文件的功能，还可以在开发过程中直接运行应用 -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>

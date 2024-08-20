@@ -346,6 +346,7 @@
           </execution>
         </executions>
       </plugin>
+      <!-- 打包插件，将 Java 源代码编译为字节码（.class 文件） -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
