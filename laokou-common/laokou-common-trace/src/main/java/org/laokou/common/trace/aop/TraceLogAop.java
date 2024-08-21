@@ -25,6 +25,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
 import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
 /**
@@ -40,6 +41,7 @@ public class TraceLogAop {
 		Object proceed = point.proceed();
 		if (proceed instanceof Result<?> result) {
 			result.setTraceId(ThreadContext.get(TRACE_ID));
+			result.setSpanId(ThreadContext.get(SPAN_ID));
 			return result;
 		}
 		return proceed;

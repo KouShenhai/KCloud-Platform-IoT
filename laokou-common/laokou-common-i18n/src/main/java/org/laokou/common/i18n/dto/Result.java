@@ -31,31 +31,26 @@ import static org.laokou.common.i18n.common.exception.StatusCode.OK;
  * @author laokou
  */
 @Data
-@Schema(name = "Result", description = "请求响应统一格式")
+@Schema(name = "请求响应统一格式", description = "请求响应统一格式")
 public class Result<T> implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -1286769110881865369L;
 
-	@Schema(name = "code", description = "状态编码", example = "OK")
+	@Schema(name = "状态编码", description = "状态编码", example = "OK")
 	private String code;
 
-	@Schema(name = "msg", description = "响应描述", example = "请求成功")
+	@Schema(name = "响应描述", description = "响应描述", example = "请求成功")
 	private String msg;
 
-	@Schema(name = "data", description = "响应结果")
+	@Schema(name = "响应结果", description = "响应结果")
 	private T data;
 
-	@Schema(name = "traceId", description = "链路ID")
+	@Schema(name = "链路ID", description = "链路ID")
 	private String traceId;
 
-	public boolean success() {
-		return ObjectUtil.equals(this.code, OK);
-	}
-
-	public boolean error() {
-		return !success();
-	}
+	@Schema(name = "标签ID", description = "标签ID")
+	private String spanId;
 
 	public static <T> Result<T> ok(T data) {
 		Result<T> result = new Result<>();
@@ -77,6 +72,14 @@ public class Result<T> implements Serializable {
 		result.setCode(code);
 		result.setMsg(msg);
 		return result;
+	}
+
+	public boolean success() {
+		return ObjectUtil.equals(this.code, OK);
+	}
+
+	public boolean error() {
+		return !success();
 	}
 
 }
