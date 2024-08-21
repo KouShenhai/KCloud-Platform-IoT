@@ -43,7 +43,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new I18nInterceptor());
+		registry.addInterceptor(new I18nInterceptor()).addPathPatterns("/**");
 	}
 
 }
