@@ -22,20 +22,14 @@ import com.alibaba.nacos.common.model.RestResult;
 import com.alibaba.nacos.common.model.RestResultUtils;
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.alibaba.nacos.console.paramcheck.ConsoleDefaultHttpParamExtractor;
-import com.alibaba.nacos.core.namespace.repository.NamespacePersistService;
 import com.alibaba.nacos.core.namespace.model.Namespace;
+import com.alibaba.nacos.core.namespace.repository.NamespacePersistService;
 import com.alibaba.nacos.core.paramcheck.ExtractorManager;
 import com.alibaba.nacos.core.service.NamespaceOperationService;
 import com.alibaba.nacos.plugin.auth.constant.ActionTypes;
 import com.alibaba.nacos.plugin.auth.impl.constant.AuthConstants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -51,17 +45,17 @@ import java.util.regex.Pattern;
 @ExtractorManager.Extractor(httpExtractor = ConsoleDefaultHttpParamExtractor.class)
 public class NamespaceController {
 
-	@Autowired
-	private NamespacePersistService namespacePersistService;
-
-	@Autowired
-	private NamespaceOperationService namespaceOperationService;
+	private static final int NAMESPACE_ID_MAX_LENGTH = 128;
 
 	private final Pattern namespaceIdCheckPattern = Pattern.compile("^[\\w-]+");
 
 	private final Pattern namespaceNameCheckPattern = Pattern.compile("^[^@#$%^&*]+$");
 
-	private static final int NAMESPACE_ID_MAX_LENGTH = 128;
+	@Autowired
+	private NamespacePersistService namespacePersistService;
+
+	@Autowired
+	private NamespaceOperationService namespaceOperationService;
 
 	/**
 	 * Get namespace list.

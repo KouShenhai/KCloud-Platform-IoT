@@ -44,6 +44,8 @@
     <grpc.version>1.66.0</grpc.version>
     <!--error_prone_annotations版本-->
     <error_prone_annotations.version>2.30.0</error_prone_annotations.version>
+    <!--hessian版本-->
+    <hessian.version>4.0.4</hessian.version>
   </properties>
 
   <dependencies>
@@ -52,6 +54,10 @@
       <artifactId>nacos-config</artifactId>
       <version>${nacos.version}</version>
       <exclusions>
+        <exclusion>
+          <groupId>com.alipay.sofa</groupId>
+          <artifactId>hessian</artifactId>
+        </exclusion>
         <exclusion>
           <groupId>org.apache.tomcat.embed</groupId>
           <artifactId>tomcat-embed-core</artifactId>
@@ -260,6 +266,11 @@
       <groupId>com.google.errorprone</groupId>
       <artifactId>error_prone_annotations</artifactId>
       <version>${error_prone_annotations.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.alipay.sofa</groupId>
+      <artifactId>hessian</artifactId>
+      <version>${hessian.version}</version>
     </dependency>
   </dependencies>
 
