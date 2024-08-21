@@ -37,9 +37,9 @@ public class FurySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 
 	public FurySerialCaffeineJsqlParseCache(Cache<String, byte[]> cache) {
 		super(cache);
-		this.executor = EXECUTOR;
+		super.executor = EXECUTOR;
 		// 开启异步
-		this.async = true;
+		super.async = true;
 	}
 
 	@Override
