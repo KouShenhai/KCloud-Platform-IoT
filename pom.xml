@@ -34,6 +34,27 @@
   <name>KCloud-Platform-IoT</name>
   <description>一个企业级微服务架构的云服务多租户IoT平台</description>
   <url>https://koushenhai.github.io/KCloud-Platform-IoT</url>
+  <developers>
+    <developer>
+      <name>laokou</name>
+      <email>2413176044@qq.com</email>
+      <organization>https://github.com/KouShenhai</organization>
+    </developer>
+  </developers>
+  <scm>
+    <tag>kcloud-platform-iot-3.3.3.RELEASE</tag>
+    <url>https://github.com/KouShenhai/KCloud-Platform-IoT</url>
+    <connection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IoT.git</connection>
+    <developerConnection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IoT.git</developerConnection>
+  </scm>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
   <properties>
     <laokou.version>3.3.3</laokou.version>
     <java.version>21</java.version>
