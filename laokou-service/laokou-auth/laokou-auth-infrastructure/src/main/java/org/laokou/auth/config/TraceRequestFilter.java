@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.trace.config;
+package org.laokou.auth.config;
 
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.FilterChain;
@@ -25,13 +25,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.context.ShutdownHolder;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.log4j2.utils.TraceUtil;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-import static org.laokou.common.core.utils.RequestUtil.getParamValue;
-import static org.laokou.common.i18n.common.constant.TraceConstant.*;
 import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAILABLE;
 
 /**
@@ -43,22 +40,11 @@ public class TraceRequestFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
-		try {
-			if (ShutdownHolder.status()) {
-				ResponseUtil.response(response, Result.fail(SERVICE_UNAVAILABLE));
-				return;
-			}
-			String traceId = getParamValue(request, TRACE_ID);
-			String userId = getParamValue(request, USER_ID);
-			String username = getParamValue(request, USER_NAME);
-			String tenantId = getParamValue(request, TENANT_ID);
-			String spanId = getParamValue(request, SPAN_ID);
-			TraceUtil.putContext(traceId, userId, tenantId, username, spanId);
-			chain.doFilter(request, response);
+		if (ShutdownHolder.status()) {
+			ResponseUtil.response(response, Result.fail(SERVICE_UNAVAILABLE));
+			return;
 		}
-		finally {
-			TraceUtil.clearContext();
-		}
+		chain.doFilter(request, response);
 	}
 
 }

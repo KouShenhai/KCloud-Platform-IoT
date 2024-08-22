@@ -19,7 +19,7 @@ package org.laokou.common.ratelimiter.driver.spi;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.PATH;
+import static org.laokou.common.ratelimiter.driver.spi.Type.PATH;
 
 /**
  * @author laokou
@@ -32,7 +32,7 @@ public class PathKeyProvider implements org.laokou.common.ratelimiter.driver.spi
 	}
 
 	@Override
-	public TypeEnum accept() {
+	public Type accept() {
 		return PATH;
 	}
 

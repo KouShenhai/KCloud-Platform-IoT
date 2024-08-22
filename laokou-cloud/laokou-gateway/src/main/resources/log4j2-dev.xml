@@ -29,7 +29,7 @@
     <!-- 日志文件大小 -->
     <property name="LOG_ROLL_SIZE" value="500 MB"/>
     <!-- 服务名称 -->
-    <property name="APP_NAME" value="laokou-gateway"/>
+    <property name="SERVICE_ID" value="laokou-gateway"/>
     <!-- -Dlog4j.skipJansi=false -->
     <!-- 日志格式 -->
     <!--
@@ -37,9 +37,9 @@
         %t 线程
     -->
     <property name="LOG_CONSOLE_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${APP_NAME} - ${sys:ip}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ip}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
     <property name="LOG_FILE_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${APP_NAME} - ${sys:ip}] - [%X{traceId}] - [%X{spanId}] - [ %-5level] - [%t] - %logger : %msg%n"/>
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ip}] - [%X{traceId}] - [%X{spanId}] - [ %-5level] - [%t] - %logger : %msg%n"/>
     <!-- 日志保留30天 -->
     <property name="LOG_DAYS" value="30"/>
     <!-- 1天滚动一次 -->
@@ -50,8 +50,8 @@
     <Console name="console" target="SYSTEM_OUT">
       <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
     </Console>
-    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${APP_NAME}.log"
-                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${APP_NAME}-%d{yyyy-MM-dd}.%i.log.gz"
+    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.log"
+                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}-%d{yyyy-MM-dd}.%i.log.gz"
                              immediateFlush="false">
       <Filters>
         <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>

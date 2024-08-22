@@ -245,6 +245,7 @@ public class RocketMqTemplate {
 	 * @param payload 消息
 	 * @param transactionId 事务ID
 	 * @param traceId 链路ID
+	 * @param spanId 标签ID
 	 * @param <T> 泛型
 	 */
 	public <T> void sendTransactionMessage(String topic, T payload, Long transactionId, String traceId, String spanId) {
@@ -257,6 +258,8 @@ public class RocketMqTemplate {
 	 * @param payload 消息
 	 * @param transactionId 事务ID
 	 * @param traceId 链路ID
+	 * @param spanId 标签ID
+	 * @param tag 标签
 	 * @param <T> 泛型
 	 */
 	public <T> void sendTransactionMessage(String topic, String tag, T payload, Long transactionId, String traceId,

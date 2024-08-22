@@ -159,40 +159,8 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.micrometer</groupId>
-      <artifactId>micrometer-tracing-bridge-otel</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>io.opentelemetry</groupId>
-          <artifactId>opentelemetry-api-incubator</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.opentelemetry</groupId>
-          <artifactId>opentelemetry-sdk</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.opentelemetry</groupId>
-          <artifactId>opentelemetry-context</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-sdk</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>io.opentelemetry</groupId>
-          <artifactId>opentelemetry-api-incubator</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-context</artifactId>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-trace</artifactId>
     </dependency>
   </dependencies>
   <build>

@@ -17,16 +17,14 @@
 
 package org.laokou.common.trace.aop;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.ThreadContext;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.trace.utils.TraceUtil;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
-import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
 /**
  * @author laokou
@@ -34,14 +32,17 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 @Slf4j
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class TraceLogAop {
+
+	private final TraceUtil traceUtil;
 
 	@Around("@annotation(org.laokou.common.trace.annotation.TraceLog)")
 	public Object doAround(ProceedingJoinPoint point) throws Throwable {
 		Object proceed = point.proceed();
 		if (proceed instanceof Result<?> result) {
-			result.setTraceId(ThreadContext.get(TRACE_ID));
-			result.setSpanId(ThreadContext.get(SPAN_ID));
+			result.setTraceId(traceUtil.getTraceId());
+			result.setSpanId(traceUtil.getSpanId());
 			return result;
 		}
 		return proceed;

@@ -15,26 +15,43 @@
  *
  */
 
-package org.laokou.common.ratelimiter.driver.spi;
+package org.laokou.common.trace.utils;
 
-import jakarta.servlet.http.HttpServletRequest;
+import io.micrometer.tracing.TraceContext;
+import io.micrometer.tracing.Tracer;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-import static org.laokou.common.ratelimiter.driver.spi.Type.DEFAULT;
 
 /**
  * @author laokou
  */
-public class DefaultKeyProvider implements org.laokou.common.ratelimiter.driver.spi.KeyProvider {
+@Component
+@RequiredArgsConstructor
+public class TraceUtil {
 
-	@Override
-	public String resolve(HttpServletRequest request) {
-		return EMPTY;
+	private final Tracer tracer;
+
+	public String getTraceId() {
+		TraceContext context = getContext();
+		if (ObjectUtil.isNull(context)) {
+			return EMPTY;
+		}
+		return context.traceId();
 	}
 
-	@Override
-	public Type accept() {
-		return DEFAULT;
+	public String getSpanId() {
+		TraceContext context = getContext();
+		if (ObjectUtil.isNull(context)) {
+			return EMPTY;
+		}
+		return context.spanId();
+	}
+
+	private TraceContext getContext() {
+		return tracer.currentTraceContext().context();
 	}
 
 }

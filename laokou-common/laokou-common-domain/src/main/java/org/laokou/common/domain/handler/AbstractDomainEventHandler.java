@@ -19,14 +19,16 @@ package org.laokou.common.domain.handler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.ThreadContext;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.i18n.common.constant.Constant;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.slf4j.MDC;
 
 import java.nio.charset.StandardCharsets;
 
+import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
 import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
 /**
@@ -40,9 +42,11 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 
 	@Override
 	public void onMessage(MessageExt messageExt) {
+		String traceId = messageExt.getProperty(TRACE_ID);
+		String spanId = messageExt.getProperty(SPAN_ID);
+		MDC.put(Constant.TRACE_ID, traceId);
+		MDC.put(Constant.SPAN_ID, spanId);
 		try {
-			String traceId = messageExt.getProperty(TRACE_ID);
-			ThreadContext.put(TRACE_ID, traceId);
 			String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
 			handleDomainEvent(convert(msg));
 		}
@@ -52,7 +56,7 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 			throw e;
 		}
 		finally {
-			ThreadContext.clearMap();
+			MDC.clear();
 		}
 	}
 
