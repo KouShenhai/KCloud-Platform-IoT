@@ -33,7 +33,7 @@
     <!--spring-boot版本-->
     <spring-boot.version>2.7.18</spring-boot.version>
     <!--postgresql版本-->
-    <postgresql.version>42.7.3</postgresql.version>
+    <postgresql.version>42.7.4</postgresql.version>
     <!--liquibase-core版本-->
     <liquibase-core.version>4.29.1</liquibase-core.version>
     <!--protobuf-java版本-->
