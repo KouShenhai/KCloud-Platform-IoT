@@ -65,6 +65,7 @@ import java.util.stream.Collectors;
 import static org.laokou.common.core.utils.RegexUtil.IPV4_REGEX;
 import static org.laokou.common.core.utils.RegexUtil.URL_VERSION_REGEX;
 import static org.laokou.common.i18n.common.constant.StringConstant.TRUE;
+import static org.laokou.common.i18n.common.constant.TraceConstant.*;
 
 /**
  * nacos路由负载均衡.
@@ -82,21 +83,6 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 * 优雅停机URL.
 	 */
 	public static final String GRACEFUL_SHUTDOWN_URL = "/graceful-shutdown";
-
-	/**
-	 * 服务主机.
-	 */
-	public static final String SERVICE_HOST = "service-host";
-
-	/**
-	 * 服务端口.
-	 */
-	public static final String SERVICE_PORT = "service-port";
-
-	/**
-	 * 服务灰度.
-	 */
-	public static final String SERVICE_GRAY = "service-gray";
 
 	/**
 	 * Nacos集群配置.

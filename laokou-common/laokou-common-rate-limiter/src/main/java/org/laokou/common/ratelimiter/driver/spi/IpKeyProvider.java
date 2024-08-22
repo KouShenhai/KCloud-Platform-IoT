@@ -20,7 +20,7 @@ package org.laokou.common.ratelimiter.driver.spi;
 import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.common.core.utils.IpUtil;
 
-import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
+import static org.laokou.common.ratelimiter.driver.spi.Type.IP;
 
 /**
  * @author laokou
@@ -33,7 +33,7 @@ public class IpKeyProvider implements org.laokou.common.ratelimiter.driver.spi.K
 	}
 
 	@Override
-	public TypeEnum accept() {
+	public Type accept() {
 		return IP;
 	}
 

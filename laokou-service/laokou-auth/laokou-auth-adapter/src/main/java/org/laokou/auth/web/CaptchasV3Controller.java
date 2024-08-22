@@ -30,7 +30,7 @@ import org.redisson.api.RateIntervalUnit;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
+import static org.laokou.common.ratelimiter.driver.spi.Type.IP;
 
 /**
  * @author laokou

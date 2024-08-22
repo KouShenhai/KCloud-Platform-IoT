@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.*;
+import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
 
 /**
  * @author laokou
@@ -46,8 +46,6 @@ import static org.laokou.common.i18n.common.constant.StringConstant.*;
 @Component
 @RequiredArgsConstructor
 public class TraceHandler {
-
-	private static final String UNDEFINED = "undefined";
 
 	private static final String TRACE = "laokou_trace";
 
@@ -74,9 +72,6 @@ public class TraceHandler {
 		String spanId = traceIndex.getSpanId();
 		if (isTrace(traceId, spanId)) {
 			traceIndex.setId(String.valueOf(IdGenerator.defaultSnowflakeId()));
-			traceIndex.setTenantId(replaceValue(traceIndex.getTenantId()));
-			traceIndex.setUserId(replaceValue(traceIndex.getUserId()));
-			traceIndex.setUsername(replaceValue(traceIndex.getUsername()));
 			return traceIndex;
 		}
 		return null;
@@ -94,29 +89,16 @@ public class TraceHandler {
 		return TRACE + UNDER + DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMMDD);
 	}
 
-	private String replaceValue(String value) {
-		if (value.startsWith(DOLLAR) || UNDEFINED.equals(value)) {
-			return EMPTY;
-		}
-		return value;
-	}
-
 	@Data
 	public final static class TraceIndex implements Serializable {
 
 		private String id;
 
-		private String appName;
+		private String serviceId;
 
 		private String profile;
 
 		private Instant dateTime;
-
-		private String userId;
-
-		private String username;
-
-		private String tenantId;
 
 		private String traceId;
 

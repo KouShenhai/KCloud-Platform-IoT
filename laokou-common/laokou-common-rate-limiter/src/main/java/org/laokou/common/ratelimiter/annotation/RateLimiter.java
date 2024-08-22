@@ -17,13 +17,13 @@
 
 package org.laokou.common.ratelimiter.annotation;
 
-import org.laokou.common.ratelimiter.driver.spi.TypeEnum;
+import org.laokou.common.ratelimiter.driver.spi.Type;
 import org.redisson.api.RateIntervalUnit;
 import org.redisson.api.RateType;
 
 import java.lang.annotation.*;
 
-import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.DEFAULT;
+import static org.laokou.common.ratelimiter.driver.spi.Type.DEFAULT;
 import static org.redisson.api.RateIntervalUnit.SECONDS;
 import static org.redisson.api.RateType.OVERALL;
 
@@ -53,7 +53,7 @@ public @interface RateLimiter {
 	/**
 	 * 类型.
 	 */
-	TypeEnum type() default DEFAULT;
+	Type type() default DEFAULT;
 
 	/**
 	 * 单位.

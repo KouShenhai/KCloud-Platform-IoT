@@ -25,24 +25,9 @@ package org.laokou.common.i18n.common.constant;
 public final class TraceConstant {
 
 	/**
-	 * 用户名.
-	 */
-	public static final String USER_NAME = "user-name";
-
-	/**
 	 * 链路ID.
 	 */
 	public static final String TRACE_ID = "trace-id";
-
-	/**
-	 * 用户ID.
-	 */
-	public static final String USER_ID = "user-id";
-
-	/**
-	 * 租户ID.
-	 */
-	public static final String TENANT_ID = "tenant-id";
 
 	/**
 	 * 域名.
@@ -58,6 +43,21 @@ public final class TraceConstant {
 	 * 标签ID.
 	 */
 	public static final String SPAN_ID = "span-id";
+
+	/**
+	 * 服务主机.
+	 */
+	public static final String SERVICE_HOST = "service-host";
+
+	/**
+	 * 服务端口.
+	 */
+	public static final String SERVICE_PORT = "service-port";
+
+	/**
+	 * 服务灰度.
+	 */
+	public static final String SERVICE_GRAY = "service-gray";
 
 	private TraceConstant() {
 	}

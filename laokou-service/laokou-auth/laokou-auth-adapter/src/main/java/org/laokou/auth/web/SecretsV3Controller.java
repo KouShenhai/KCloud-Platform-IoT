@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
+import static org.laokou.common.ratelimiter.driver.spi.Type.IP;
 
 /**
  * @author laokou

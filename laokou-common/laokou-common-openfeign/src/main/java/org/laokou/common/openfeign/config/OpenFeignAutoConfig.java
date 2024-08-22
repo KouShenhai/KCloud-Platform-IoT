@@ -24,7 +24,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
@@ -36,7 +35,6 @@ import java.util.Map;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
 import static org.laokou.common.i18n.common.constant.TraceConstant.*;
 
@@ -56,11 +54,6 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.*;
 @AutoConfiguration(before = SentinelFeignAutoConfiguration.class)
 public class OpenFeignAutoConfig extends ErrorDecoder.Default implements RequestInterceptor {
 
-	/**
-	 * 服务灰度.
-	 */
-	private static final String SERVICE_GRAY = "service-gray";
-
 	private final IdempotentUtil idempotentUtil;
 
 	@Bean
@@ -77,22 +70,11 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 	@Override
 	public void apply(RequestTemplate template) {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
-		String authorization = request.getHeader(AUTHORIZATION);
-		String traceId = request.getHeader(TRACE_ID);
-		String spanId = request.getHeader(SPAN_ID);
-		String userId = request.getHeader(USER_ID);
-		String username = request.getHeader(USER_NAME);
-		String tenantId = request.getHeader(TENANT_ID);
-		String serviceGray = request.getHeader(SERVICE_GRAY);
-		template.header(TRACE_ID, traceId);
-		template.header(SPAN_ID, spanId);
-		template.header(AUTHORIZATION, authorization);
-		template.header(USER_ID, userId);
-		template.header(USER_NAME, username);
-		template.header(TENANT_ID, tenantId);
-		template.header(SERVICE_GRAY, serviceGray);
+		template.header(AUTHORIZATION, request.getHeader(AUTHORIZATION));
+		template.header(SERVICE_HOST, request.getHeader(SERVICE_HOST));
+		template.header(SERVICE_PORT, request.getHeader(SERVICE_PORT));
+		template.header(SERVICE_GRAY, request.getHeader(SERVICE_GRAY));
 		final boolean idempotent = IdempotentUtil.isIdempotent();
-		String requestId = EMPTY;
 		if (idempotent) {
 			// 获取当前Feign客户端的接口名称
 			String clientName = template.feignTarget().type().getName();
@@ -109,12 +91,8 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 				idempotentKey = idempotentUtil.getIdempotentKey();
 				idMap.put(uniqueKey, idempotentKey);
 			}
-			requestId = idempotentKey;
 			template.header(REQUEST_ID, idempotentKey);
 		}
-		log.info("OpenFeign分布式调用，令牌：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}，标签ID：{}，是否开启灰度路由：{}，请求ID：{}", authorization,
-				LogUtil.record(userId), LogUtil.record(username), LogUtil.record(tenantId), LogUtil.record(traceId),
-				LogUtil.record(spanId), LogUtil.record(serviceGray), LogUtil.record(requestId));
 	}
 
 	@Bean

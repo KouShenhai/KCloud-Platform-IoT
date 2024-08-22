@@ -31,6 +31,10 @@ public final class Constant {
 
 	public static final String DLQ = "%DLQ%";
 
+	public static final String TRACE_ID = "traceId";
+
+	public static final String SPAN_ID = "spanId";
+
 	public static final int OK = 0;
 
 	public static final int FAIL = 1;

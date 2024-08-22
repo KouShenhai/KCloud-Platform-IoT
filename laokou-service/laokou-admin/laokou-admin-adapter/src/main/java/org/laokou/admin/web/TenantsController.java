@@ -36,7 +36,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static org.laokou.common.data.cache.constant.NameConstant.TENANTS;
-import static org.laokou.common.ratelimiter.driver.spi.TypeEnum.IP;
+import static org.laokou.common.ratelimiter.driver.spi.Type.IP;
 import static org.redisson.api.RateIntervalUnit.MINUTES;
 
 /**
