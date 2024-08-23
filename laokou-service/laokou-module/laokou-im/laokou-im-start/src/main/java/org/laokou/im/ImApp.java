@@ -39,8 +39,8 @@ import java.net.InetAddress;
 @EnableTaskExecutor
 @EnableRedisRepository
 @SpringBootApplication(scanBasePackages = "org.laokou",
-		exclude = { ReactiveSecurityAutoConfiguration.class, ReactiveManagementWebSecurityAutoConfiguration.class,
-				ReactiveUserDetailsServiceAutoConfiguration.class })
+	exclude = {ReactiveSecurityAutoConfiguration.class, ReactiveManagementWebSecurityAutoConfiguration.class,
+		ReactiveUserDetailsServiceAutoConfiguration.class})
 @EnableEncryptableProperties
 @EnableDiscoveryClient
 public class ImApp {
@@ -60,6 +60,7 @@ public class ImApp {
 		// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
 		// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
 		// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
+		// -Dserver.port=10001
 		// @formatter:on
 		new SpringApplicationBuilder(ImApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}

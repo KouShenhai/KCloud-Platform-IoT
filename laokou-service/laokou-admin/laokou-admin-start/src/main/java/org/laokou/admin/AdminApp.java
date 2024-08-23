@@ -53,8 +53,8 @@ import java.net.InetAddress;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
-@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
-@SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
+@ServletComponentScan(basePackageClasses = {ShutdownFilter.class})
+@SpringBootApplication(exclude = {SecurityFilterAutoConfiguration.class}, scanBasePackages = "org.laokou")
 public class AdminApp {
 
 	/**
@@ -74,6 +74,7 @@ public class AdminApp {
 		// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
 		// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
 		// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
+		// -Dserver.port=9990
 		// @formatter:on
 		new SpringApplicationBuilder(AdminApp.class).web(WebApplicationType.SERVLET).run(args);
 	}

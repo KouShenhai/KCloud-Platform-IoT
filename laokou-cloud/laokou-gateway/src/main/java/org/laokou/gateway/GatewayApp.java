@@ -45,7 +45,7 @@ import java.net.InetAddress;
 @EnableReactiveRedisRepository
 @EnableAspectJAutoProxy(exposeProxy = true)
 @SpringBootApplication(scanBasePackages = "org.laokou",
-		exclude = { RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
+	exclude = {RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class})
 public class GatewayApp {
 
 	/**
@@ -63,6 +63,7 @@ public class GatewayApp {
 		// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
 		// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
 		// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
+		// -Dserver.port=5555
 		// @formatter:on
 		// 开启reactor的上下文传递
 		Hooks.enableAutomaticContextPropagation();

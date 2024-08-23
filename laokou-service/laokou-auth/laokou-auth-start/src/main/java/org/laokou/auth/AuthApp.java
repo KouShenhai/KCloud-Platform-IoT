@@ -52,9 +52,9 @@ import java.net.InetAddress;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
-@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
-@SpringBootApplication(scanBasePackages = "org.laokou", exclude = { OAuth2AuthorizationServerAutoConfiguration.class,
-		OAuth2AuthorizationServerJwtAutoConfiguration.class })
+@ServletComponentScan(basePackageClasses = {ShutdownFilter.class})
+@SpringBootApplication(scanBasePackages = "org.laokou", exclude = {OAuth2AuthorizationServerAutoConfiguration.class,
+	OAuth2AuthorizationServerJwtAutoConfiguration.class})
 public class AuthApp {
 
 	/**
@@ -76,6 +76,7 @@ public class AuthApp {
 		// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
 		// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
 		// -Dcsp.sentinel.api.port=8722
+		// -Dserver.port=1111
 		// @formatter:on
 		new SpringApplicationBuilder(AuthApp.class).web(WebApplicationType.SERVLET).run(args);
 	}

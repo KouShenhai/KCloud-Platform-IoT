@@ -37,9 +37,9 @@
         %t 线程
     -->
     <property name="LOG_CONSOLE_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ip}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ip}:${sys:server.port}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
     <property name="LOG_FILE_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ip}] - [%X{traceId}] - [%X{spanId}] - [ %-5level] - [%t] - %logger : %msg%n"/>
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ip}:${sys:server.port}] - [%X{traceId}] - [%X{spanId}] - [ %-5level] - [%t] - %logger : %msg%n"/>
     <!-- 日志保留30天 -->
     <property name="LOG_DAYS" value="30"/>
     <!-- 1天滚动一次 -->
