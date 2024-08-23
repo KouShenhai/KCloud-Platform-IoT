@@ -104,7 +104,7 @@ public class TraceHandler {
 
 		private String spanId;
 
-		private String ip;
+		private String address;
 
 		private String level;
 
