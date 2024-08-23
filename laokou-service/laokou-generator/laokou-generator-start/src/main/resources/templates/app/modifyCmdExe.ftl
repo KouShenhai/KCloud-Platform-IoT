@@ -21,7 +21,7 @@ package ${packageName}.${instanceName}.command;
 import lombok.RequiredArgsConstructor;
 import ${packageName}.${instanceName}.dto.${className}ModifyCmd;
 import org.springframework.stereotype.Component;
-
+import${packageName}.${instanceName}.ability.${className}DomainService;
 
 /**
  * @author ${author}
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ${className}ModifyCmdExe {
 
-	private final
+	private final ${className}DomainService ${instanceName}DomainService;
 
 	public void executeVoid(${className}ModifyCmd cmd) {
 		// 校验参数

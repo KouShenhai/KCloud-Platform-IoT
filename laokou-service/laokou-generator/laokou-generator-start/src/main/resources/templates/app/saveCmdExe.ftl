@@ -21,6 +21,7 @@ package ${packageName}.${instanceName}.command;
 import lombok.RequiredArgsConstructor;
 import ${packageName}.${instanceName}.dto.${className}SaveCmd;
 import org.springframework.stereotype.Component;
+import${packageName}.${instanceName}.ability.${className}DomainService;
 
 /**
  * @author ${author}
@@ -28,6 +29,8 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ${className}SaveCmdExe {
+
+	private final ${className}DomainService ${instanceName}DomainService;
 
 	public void executeVoid(${className}SaveCmd cmd) {
 		// 校验参数

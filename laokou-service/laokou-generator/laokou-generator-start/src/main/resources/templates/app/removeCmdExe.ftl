@@ -21,6 +21,7 @@ package ${packageName}.${instanceName}.command;
 import lombok.RequiredArgsConstructor;
 import ${packageName}.${instanceName}.dto.${className}RemoveCmd;
 import org.springframework.stereotype.Component;
+import${packageName}.${instanceName}.ability.${className}DomainService;
 
 /**
  * @author ${author}
@@ -28,6 +29,8 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ${className}RemoveCmdExe {
+
+	private final ${className}DomainService ${instanceName}DomainService;
 
 	public void executeVoid(${className}RemoveCmd cmd) {
 		// 校验参数
