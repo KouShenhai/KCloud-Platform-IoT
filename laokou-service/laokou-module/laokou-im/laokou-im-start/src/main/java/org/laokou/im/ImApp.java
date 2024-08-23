@@ -39,8 +39,8 @@ import java.net.InetAddress;
 @EnableTaskExecutor
 @EnableRedisRepository
 @SpringBootApplication(scanBasePackages = "org.laokou",
-	exclude = {ReactiveSecurityAutoConfiguration.class, ReactiveManagementWebSecurityAutoConfiguration.class,
-		ReactiveUserDetailsServiceAutoConfiguration.class})
+		exclude = { ReactiveSecurityAutoConfiguration.class, ReactiveManagementWebSecurityAutoConfiguration.class,
+				ReactiveUserDetailsServiceAutoConfiguration.class })
 @EnableEncryptableProperties
 @EnableDiscoveryClient
 public class ImApp {

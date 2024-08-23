@@ -25,7 +25,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.lang.Nullable;
-import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
 
@@ -33,7 +33,7 @@ import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
  * @author laokou
  */
 @NonNullApi
-public class UserContextInterceptor implements HandlerInterceptor {
+public class UserContextInterceptor implements AsyncHandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {

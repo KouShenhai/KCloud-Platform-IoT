@@ -15,21 +15,25 @@
  *
  */
 
-package org.laokou.common.security.annotation;
+package org.laokou.common.trace.utils;
 
-import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
-import org.laokou.common.security.config.OAuth2ResourceServerConfig;
-import org.laokou.common.security.config.OAuth2SecurityConfig;
-import org.laokou.common.security.config.WebMvcConfig;
-import org.springframework.context.annotation.Import;
+import org.slf4j.MDC;
 
-import java.lang.annotation.*;
+import static org.laokou.common.i18n.common.constant.Constant.SPAN_ID;
+import static org.laokou.common.i18n.common.constant.Constant.TRACE_ID;
 
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({ WebMvcConfig.class, GlobalOpaqueTokenIntrospector.class, OAuth2SecurityConfig.class,
-		OAuth2ResourceServerConfig.class })
-public @interface EnableSecurity {
+/**
+ * @author laokou
+ */
+public class MDCUtil {
+
+	public static void put(String traceId, String spanId) {
+		MDC.put(TRACE_ID, traceId);
+		MDC.put(SPAN_ID, spanId);
+	}
+
+	public static void clear() {
+		MDC.clear();
+	}
 
 }

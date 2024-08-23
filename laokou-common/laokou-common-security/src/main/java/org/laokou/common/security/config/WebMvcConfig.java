@@ -15,21 +15,19 @@
  *
  */
 
-package org.laokou.common.security.annotation;
+package org.laokou.common.security.config;
 
-import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
-import org.laokou.common.security.config.OAuth2ResourceServerConfig;
-import org.laokou.common.security.config.OAuth2SecurityConfig;
-import org.laokou.common.security.config.WebMvcConfig;
-import org.springframework.context.annotation.Import;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.lang.annotation.*;
+/**
+ * @author laokou
+ */
+public class WebMvcConfig implements WebMvcConfigurer {
 
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({ WebMvcConfig.class, GlobalOpaqueTokenIntrospector.class, OAuth2SecurityConfig.class,
-		OAuth2ResourceServerConfig.class })
-public @interface EnableSecurity {
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new UserContextInterceptor()).addPathPatterns("/**");
+	}
 
 }
