@@ -21,9 +21,6 @@ package ${packageName}.${instanceName}.command;
 import lombok.RequiredArgsConstructor;
 import ${packageName}.${instanceName}.dto.${className}RemoveCmd;
 import org.springframework.stereotype.Component;
-import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.core.utils.SpringContextUtil;
-import ${packageName}.${instanceName}.dto.domainevent.Remove${className}Event;
 
 /**
  * @author ${author}
@@ -32,17 +29,8 @@ import ${packageName}.${instanceName}.dto.domainevent.Remove${className}Event;
 @RequiredArgsConstructor
 public class ${className}RemoveCmdExe {
 
-	private final DomainEventPublisher domainEventPublisher;
-
-	private final SpringContextUtil springContextUtil;
-
 	public void executeVoid(${className}RemoveCmd cmd) {
 		// 校验参数
-
-		// 创建删除${comment}事件
-		Remove${className}Event remove${className}Event = new Remove${className}Event();
-		remove${className}Event.create(LAOKOU_${(className)?upper_case}_TOPIC, cmd.getTag(), ${(className)?upper_case}, springContextUtil.getAppName(),
-		domainEventPublisher.publishToCreate(remove${className}Event);
 	}
 
 }
