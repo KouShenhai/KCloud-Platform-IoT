@@ -17,8 +17,6 @@
 
 package org.laokou.common.core.config;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -30,17 +28,13 @@ import static org.laokou.common.core.utils.HttpUtil.getHttpClient;
 /**
  * @author laokou
  */
-@Data
 @Configuration
-@ConfigurationProperties("server.ssl")
 public class RestClientConfig {
-
-	private boolean enabled;
 
 	@Bean
 	public RestClient restClient() {
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-		factory.setHttpClient(getHttpClient(enabled));
+		factory.setHttpClient(getHttpClient(true));
 		RestTemplate restTemplate = new RestTemplate(factory);
 		return RestClient.create(restTemplate);
 	}
