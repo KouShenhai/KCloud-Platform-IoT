@@ -203,9 +203,9 @@ services:
       memlock:
         soft: -1
         hard: -1
-  laokou-register:
+  register:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.2.1
-    container_name: laokou-register
+    container_name: register
     # 保持容器在没有守护程序的情况下运行
     tty: true
     restart: always
@@ -224,9 +224,9 @@ services:
       - laokou_network
     depends_on:
       - postgresql
-  laokou-sentinel:
+  sentinel:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sentinel:3.2.1
-    container_name: laokou-sentinel
+    container_name: sentinel
     # 保持容器在没有守护程序的情况下运行
     tty: true
     restart: always
@@ -241,9 +241,9 @@ services:
       - "sentinel.laokou.org:192.168.30.1"
     networks:
       - laokou_network
-  laokou-monitor:
+  monitor:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.2.1
-    container_name: laokou-monitor
+    container_name: monitor
     # 保持容器在没有守护程序的情况下运行
     tty: true
     restart: always
@@ -261,9 +261,9 @@ services:
       - laokou-register
     networks:
       - laokou_network
-  laokou-gateway:
+  gateway:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.2.1
-    container_name: laokou-gateway
+    container_name: gateway
     tty: true
     env_file:
       - env/common.env
