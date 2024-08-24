@@ -56,8 +56,6 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 
-	private final UserContextInterceptor userContextInterceptor;
-
 	private final RedisUtil redisUtil;
 
 	@Master
@@ -71,7 +69,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 			return decryptInfo((UserDetail) obj);
 		}
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token,
-				new OAuth2TokenType(ACCESS_TOKEN));
+			new OAuth2TokenType(ACCESS_TOKEN));
 		if (ObjectUtil.isNull(authorization)) {
 			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED);
 		}
@@ -95,6 +93,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 
 	/**
 	 * 解密字段.
+	 *
 	 * @param userDetail 用户信息
 	 * @return UserDetail
 	 */
@@ -103,15 +102,14 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 			// 解密
 			userDetail.decrypt();
 			return userDetail;
-		}
-		catch (GlobalException e) {
+		} catch (GlobalException e) {
 			throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 	}
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(userContextInterceptor);
+		registry.addInterceptor(new UserContextInterceptor()).addPathPatterns("/**");
 	}
 
 }
