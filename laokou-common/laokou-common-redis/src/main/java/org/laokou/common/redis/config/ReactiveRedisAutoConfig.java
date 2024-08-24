@@ -39,12 +39,12 @@ import static org.laokou.common.redis.config.GlobalJsonJacksonCodec.getStringRed
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnClass({ RedissonConfig.class, ReactiveRedisConnectionFactory.class, ReactiveRedisTemplate.class,
+@ConditionalOnClass({ RedissonAutoConfig.class, ReactiveRedisConnectionFactory.class, ReactiveRedisTemplate.class,
 		Flux.class })
 public class ReactiveRedisAutoConfig {
 
-	@Bean
-	@ConditionalOnMissingBean(name = "reactiveRedisTemplate")
+	@Bean("reactiveRedisTemplate")
+	@ConditionalOnMissingBean(ReactiveRedisTemplate.class)
 	public ReactiveRedisTemplate<String, Object> reactiveRedisTemplate(
 			ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
 		Jackson2JsonRedisSerializer<Object> jsonRedisSerializer = getJsonRedisSerializer();

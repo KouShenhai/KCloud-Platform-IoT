@@ -63,6 +63,10 @@
       <artifactId>rocketmq-common</artifactId>
       <exclusions>
         <exclusion>
+          <groupId>io.opentelemetry</groupId>
+          <artifactId>opentelemetry-api-incubator</artifactId>
+        </exclusion>
+        <exclusion>
           <groupId>com.squareup.okio</groupId>
           <artifactId>okio-jvm</artifactId>
         </exclusion>
@@ -143,6 +147,10 @@
     <dependency>
       <groupId>com.github.luben</groupId>
       <artifactId>zstd-jni</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-api-incubator</artifactId>
     </dependency>
   </dependencies>
 

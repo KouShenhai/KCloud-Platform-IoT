@@ -17,19 +17,18 @@
 
 package org.laokou.common.redis.config;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,15 +39,19 @@ import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
  * @author livk
  * @author laokou
  */
+@AutoConfiguration
 @ConditionalOnClass(Redisson.class)
-@Configuration
 @EnableConfigurationProperties(RedisProperties.class)
-public class RedissonConfig {
+public class RedissonAutoConfig {
 
-	@Schema(name = "REDIS_PROTOCOL_PREFIX", description = "Redis未加密连接")
+	/**
+	 * Redis未加密连接.
+	 */
 	private static final String REDIS_PROTOCOL_PREFIX = "redis://";
 
-	@Schema(name = "REDISS_PROTOCOL_PREFIX", description = "Redis加密连接")
+	/**
+	 * Redis加密连接.
+	 */
 	private static final String REDISS_PROTOCOL_PREFIX = "rediss://";
 
 	@Bean

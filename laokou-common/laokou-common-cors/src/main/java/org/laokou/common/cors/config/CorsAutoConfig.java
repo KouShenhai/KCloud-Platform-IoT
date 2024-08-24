@@ -38,8 +38,8 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 public class CorsAutoConfig {
 
 	@Bean
-	@ConditionalOnMissingBean(CorsFilter.class)
 	@Order(HIGHEST_PRECEDENCE)
+	@ConditionalOnMissingBean(CorsFilter.class)
 	public CorsFilter corsFilter() {
 		CorsConfiguration config = new CorsConfiguration();
 		// 允许所有域名跨域

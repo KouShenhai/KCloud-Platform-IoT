@@ -36,18 +36,12 @@ public class TraceUtil {
 
 	public String getTraceId() {
 		TraceContext context = getContext();
-		if (ObjectUtil.isNull(context)) {
-			return EMPTY;
-		}
-		return context.traceId();
+		return ObjectUtil.isNull(context) ? EMPTY : context.traceId();
 	}
 
 	public String getSpanId() {
 		TraceContext context = getContext();
-		if (ObjectUtil.isNull(context)) {
-			return EMPTY;
-		}
-		return context.spanId();
+		return ObjectUtil.isNull(context) ? EMPTY : context.spanId();
 	}
 
 	private TraceContext getContext() {

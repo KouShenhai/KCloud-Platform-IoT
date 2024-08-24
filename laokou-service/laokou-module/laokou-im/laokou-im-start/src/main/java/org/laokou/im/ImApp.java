@@ -37,12 +37,11 @@ import java.net.InetAddress;
  */
 @EnableRouter
 @EnableTaskExecutor
-@EnableRedisRepository
-@SpringBootApplication(scanBasePackages = "org.laokou",
-		exclude = { ReactiveSecurityAutoConfiguration.class, ReactiveManagementWebSecurityAutoConfiguration.class,
-				ReactiveUserDetailsServiceAutoConfiguration.class })
-@EnableEncryptableProperties
 @EnableDiscoveryClient
+@EnableRedisRepository
+@EnableEncryptableProperties
+@SpringBootApplication(scanBasePackages = "org.laokou", exclude = { ReactiveSecurityAutoConfiguration.class,
+		ReactiveManagementWebSecurityAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
 public class ImApp {
 
 	/**

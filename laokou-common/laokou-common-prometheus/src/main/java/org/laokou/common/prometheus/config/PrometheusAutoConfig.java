@@ -15,19 +15,24 @@
  *
  */
 
-package org.laokou.common.security.annotation;
+package org.laokou.common.prometheus.config;
 
-import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
-import org.laokou.common.security.config.OAuth2ResourceServerConfig;
-import org.laokou.common.security.config.OAuth2SecurityConfig;
-import org.springframework.context.annotation.Import;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 
-import java.lang.annotation.*;
+/**
+ * @author laokou
+ */
+@AutoConfiguration
+public class PrometheusAutoConfig {
 
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({ GlobalOpaqueTokenIntrospector.class, OAuth2SecurityConfig.class, OAuth2ResourceServerConfig.class })
-public @interface EnableSecurity {
+	@Bean
+	MeterRegistryCustomizer<MeterRegistry> configurer(Environment environment) {
+		return (registry) -> registry.config()
+			.commonTags("application", environment.getProperty("spring.application.name"));
+	}
 
 }
