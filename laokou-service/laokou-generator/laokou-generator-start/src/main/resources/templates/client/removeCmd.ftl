@@ -32,11 +32,5 @@ public class ${className}RemoveCmd extends CommonCommand {
 
 	private Long[] ids;
 
-	private String tag = "modify${className}";
-
-	public ${className}RemoveCmd(Long[] ids) {
-		this.ids = ids;
-	}
-
 }
 // @formatter:on

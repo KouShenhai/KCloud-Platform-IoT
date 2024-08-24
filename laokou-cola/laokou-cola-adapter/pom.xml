@@ -16,6 +16,16 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-cola-app</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-openapi-doc</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.laokou</groupId>
+          <artifactId>laokou-common-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
   </dependencies>
 
 </project>

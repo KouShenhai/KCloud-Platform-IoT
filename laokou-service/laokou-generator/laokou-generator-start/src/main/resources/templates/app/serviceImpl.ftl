@@ -77,12 +77,12 @@ public class ${className}sServiceImpl implements ${className}sServiceI {
 
 	@Override
 	public Result<Page<${className}CO>> page(${className}PageQry qry) {
-		return ${instanceName}SaveCmdExe.execute(qry);
+		return ${instanceName}PageQryExe.execute(qry);
 	}
 
 	@Override
 	public Result<${className}CO> getById(${className}GetQry qry) {
-		return ${instanceName}SaveCmdExe.execute(qry);
+		return ${instanceName}GetQryExe.execute(qry);
 	}
 
 }

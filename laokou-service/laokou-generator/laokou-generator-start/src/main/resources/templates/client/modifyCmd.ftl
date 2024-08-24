@@ -30,7 +30,5 @@ public class ${className}ModifyCmd extends CommonCommand {
 
 	private ${className}CO co;
 
-	private String tag = "modify${className}";
-
 }
 // @formatter:on

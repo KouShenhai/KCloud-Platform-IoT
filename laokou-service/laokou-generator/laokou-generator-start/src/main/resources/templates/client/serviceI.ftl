@@ -21,8 +21,7 @@ package ${packageName}.${instanceName}.api;
 import ${packageName}.${instanceName}.dto.*;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
-
-import java.util.List;
+import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
 
 /**
  * @author ${author}

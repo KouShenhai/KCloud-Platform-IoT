@@ -144,7 +144,7 @@ public enum Template {
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return generatorA.getTableV().className() + "Converter.java";
+			return generatorA.getTableV().className() + "Convertor.java";
 		}
 	},
 

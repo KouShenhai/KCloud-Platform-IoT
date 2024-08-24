@@ -30,7 +30,5 @@ public class ${className}SaveCmd extends CommonCommand {
 
 	private ${className}CO co;
 
-	private String tag = "save${className}";
-
 }
 // @formatter:on

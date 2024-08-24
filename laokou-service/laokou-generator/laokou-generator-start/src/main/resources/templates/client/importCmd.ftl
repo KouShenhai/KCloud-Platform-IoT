@@ -32,11 +32,5 @@ public class ${className}ImportCmd extends CommonCommand {
 
 	private MultipartFile[] files;
 
-	private String tag = "import${className}";
-
-	public ${className}ImportCmd(MultipartFile[] files) {
-		this.files = files;
-	}
-
 }
 // @formatter:on

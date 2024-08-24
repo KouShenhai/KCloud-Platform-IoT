@@ -45,7 +45,7 @@ import static org.laokou.common.data.cache.constant.Type.DEL;
 @RequiredArgsConstructor
 @RequestMapping("${version}/${instanceName}s")
 @Tag(name = "${comment}管理", description = "${comment}管理")
-public class ${className}s${(version)?upper_case}Controller {
+public class ${className}sController${(version)?upper_case} {
 
 	private final ${className}sServiceI ${instanceName}sServiceI;
 
