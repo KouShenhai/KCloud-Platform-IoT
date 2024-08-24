@@ -47,12 +47,13 @@ public class FileUtil {
 
 	/**
 	 * 创建目录及文件.
+	 *
 	 * @param directory 目录
-	 * @param fileName 文件名
+	 * @param fileName  文件名
 	 * @return 创建后的文件对象
 	 */
 	@SneakyThrows
-	public static File createFile(String directory, String fileName) {
+	public static File create(String directory, String fileName) {
 		File directoryFile = new File(directory);
 		if (!directoryFile.exists()) {
 			log.info("目录创建：{}", directoryFile.mkdirs());
@@ -90,18 +91,18 @@ public class FileUtil {
 	}
 
 	public static void write(File file, InputStream in, long size, long chunkSize, Executor executor)
-			throws IOException {
+		throws IOException {
 		if (in instanceof FileInputStream fis) {
 			try (FileChannel inChannel = fis.getChannel()) {
 				long chunkCount = (size / chunkSize) + (size % chunkSize == 0 ? 0 : 1);
 				List<CompletableFuture<Void>> futures = new ArrayList<>((int) chunkCount);
 				// position指针
 				for (long index = 0, position = 0,
-						endSize = position + chunkSize; index < chunkCount; index++, position = index * chunkSize) {
+					 endSize = position + chunkSize; index < chunkCount; index++, position = index * chunkSize) {
 					long finalPosition = position;
 					futures.add(CompletableFuture.runAsync(() -> {
 						try (RandomAccessFile accessFile = new RandomAccessFile(file, RW);
-								FileChannel outChannel = accessFile.getChannel()) {
+							 FileChannel outChannel = accessFile.getChannel()) {
 							// 结束位置
 							long finalEndSize = endSize;
 							if (finalEndSize > size) {
@@ -113,8 +114,7 @@ public class FileUtil {
 							// transferTo 最多拷贝2gb，和源文件大小保持一致【发送，从当前通道读取数据并写入外部通道】
 							// transferFrom【接收，从外部通道读取数据并写入当前通道】
 							inChannel.transferTo(finalPosition, finalEndSize, outChannel);
-						}
-						catch (IOException e) {
+						} catch (IOException e) {
 							throw new RuntimeException(e);
 						}
 					}, executor));
@@ -126,17 +126,12 @@ public class FileUtil {
 
 	/**
 	 * 获取文件扩展名.
+	 *
 	 * @param fileName 文件名称
 	 * @return 文件扩展名
 	 */
 	public static String getFileExt(String fileName) {
 		return fileName.substring(fileName.lastIndexOf(DOT));
-	}
-
-	public static void deleteFile(File file) {
-		if (file.exists()) {
-			log.info("删除文件：{}", file.delete());
-		}
 	}
 
 	@SneakyThrows
@@ -145,28 +140,43 @@ public class FileUtil {
 	}
 
 	@SneakyThrows
-	public static void deleteFile(String path) {
-		walkFileTree(Path.of(path), new SimpleFileVisitor<>() {
-			@Override
-			public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
-				deleteFile(path.toFile());
-				return FileVisitResult.CONTINUE;
-			}
+	public static void delete(Path path) {
+		Files.delete(path);
+	}
 
-			@Override
-			public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
-				return FileVisitResult.CONTINUE;
-			}
+	public static boolean isExist(Path path) {
+		return Files.exists(path);
+	}
 
-			@Override
-			public FileVisitResult visitFileFailed(Path file, IOException exc) {
-				return FileVisitResult.CONTINUE;
-			}
-		});
+	@SneakyThrows
+	public static void delete(String directory) {
+		Path path = Path.of(directory);
+		if (isExist(path)) {
+			walkFileTree(path, new SimpleFileVisitor<>() {
+
+				@Override
+				public FileVisitResult visitFile(Path filePath, BasicFileAttributes attrs) {
+					delete(filePath);
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult postVisitDirectory(Path dirPath, IOException exc) {
+					delete(dirPath);
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFileFailed(Path file, IOException exc) {
+					return FileVisitResult.CONTINUE;
+				}
+			});
+		}
 	}
 
 	/**
 	 * zip压缩包.
+	 *
 	 * @param sourcePath 源路径
 	 * @param targetPath 目标路径
 	 */
@@ -177,20 +187,20 @@ public class FileUtil {
 			walkFileTree(sourceDir, new SimpleFileVisitor<>() {
 				@Override
 				@SneakyThrows
-				public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
+				public FileVisitResult visitFile(Path filePath, BasicFileAttributes attrs) {
 					// 对于每个文件，创建一个 ZipEntry 并写入
-					Path targetPath = sourceDir.relativize(path);
+					Path targetPath = sourceDir.relativize(filePath);
 					zos.putNextEntry(new ZipEntry(sourceDir.getFileName() + SLASH + targetPath));
-					copy(path, zos);
+					copy(filePath, zos);
 					zos.closeEntry();
 					return FileVisitResult.CONTINUE;
 				}
 
 				@Override
 				@SneakyThrows
-				public FileVisitResult preVisitDirectory(Path path, BasicFileAttributes attrs) {
+				public FileVisitResult preVisitDirectory(Path dirPath, BasicFileAttributes attrs) {
 					// 对于每个目录，创建一个 ZipEntry（目录也需要在 ZIP 中存在）
-					Path targetPath = sourceDir.relativize(path);
+					Path targetPath = sourceDir.relativize(dirPath);
 					zos.putNextEntry(new ZipEntry(sourceDir.getFileName() + SLASH + targetPath + SLASH));
 					zos.closeEntry();
 					return FileVisitResult.CONTINUE;

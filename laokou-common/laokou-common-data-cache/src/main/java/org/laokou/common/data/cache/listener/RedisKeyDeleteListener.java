@@ -28,8 +28,8 @@ import org.springframework.stereotype.Component;
  *
  * @author laokou
  */
-@Component
 @Slf4j
+@Component
 public class RedisKeyDeleteListener extends KeyDeleteEventMessageListener {
 
 	public RedisKeyDeleteListener(RedisMessageListenerContainer listenerContainer) {

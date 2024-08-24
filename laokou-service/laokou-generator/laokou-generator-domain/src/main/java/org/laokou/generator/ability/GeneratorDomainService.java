@@ -75,12 +75,12 @@ public class GeneratorDomainService {
 	}
 
 	private void generateCode(GeneratorA generatorA, List<TableV> tables, List<Template> templates) {
-		// 生成到本地指定目录【临时文件】
+		// 生成到本地指定目录【临时】
 		tables.forEach(item -> generateCode(generatorA, item, templates));
 		// ZIP压缩到指定目录
-		FileUtil.zip(SOURCE_PATH, TARGET_PATH);
-		// 删除【临时文件】
-		FileUtil.deleteFile(SOURCE_PATH);
+		// FileUtil.zip(SOURCE_PATH, TARGET_PATH);
+		// 删除【临时文件夹及目录】
+		// FileUtil.delete(SOURCE_PATH);
 	}
 
 	private void generateCode(GeneratorA generatorA, TableV tableV, List<Template> templates) {
@@ -91,7 +91,7 @@ public class GeneratorDomainService {
 			String content = getContent(generatorA.toMap(), item.getTemplatePath(TEMPLATE_PATH));
 			// 写入文件
 			String directory = SOURCE_PATH + SLASH + item.getFileDirectory(generatorA);
-			File file = FileUtil.createFile(directory, item.getFileName(generatorA));
+			File file = FileUtil.create(directory, item.getFileName(generatorA));
 			FileUtil.write(file, content.getBytes(StandardCharsets.UTF_8));
 		}, executor)).toList().forEach(CompletableFuture::join);
 	}
