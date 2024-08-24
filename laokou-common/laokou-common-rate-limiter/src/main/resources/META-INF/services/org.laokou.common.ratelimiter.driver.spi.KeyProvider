@@ -1,3 +1,0 @@
-org.laokou.common.ratelimiter.driver.spi.DefaultKeyProvider
-org.laokou.common.ratelimiter.driver.spi.IpKeyProvider
-org.laokou.common.ratelimiter.driver.spi.PathKeyProvider

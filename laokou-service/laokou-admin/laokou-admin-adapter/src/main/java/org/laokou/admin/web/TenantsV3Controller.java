@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static org.laokou.common.data.cache.constant.NameConstant.TENANTS;
 import static org.laokou.common.data.cache.constant.Type.DEL;
-import static org.laokou.common.ratelimiter.driver.spi.Type.IP;
+import static org.laokou.common.ratelimiter.aop.Type.IP;
 import static org.redisson.api.RateIntervalUnit.MINUTES;
 
 /**
@@ -91,7 +91,7 @@ public class TenantsV3Controller {
 	@PreAuthorize("hasAuthority('tenant:download-ds')")
 	@OperateLog(module = "租户管理", operation = "下载数据库")
 	@Operation(summary = "租户管理", description = "下载数据库")
-	@RateLimiter(id = "DOWNLOAD_TENANT_DS", rate = 5, interval = 10, unit = MINUTES, type = IP)
+	@RateLimiter(key = "DOWNLOAD_TENANT_DS", rate = 5, interval = 10, unit = MINUTES, type = IP)
 	public void downloadDSV3(@PathVariable("id") Long id, HttpServletResponse response) {
 
 	}

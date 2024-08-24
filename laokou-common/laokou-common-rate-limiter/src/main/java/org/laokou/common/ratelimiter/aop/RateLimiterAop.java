@@ -22,9 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
-import org.laokou.common.ratelimiter.driver.KeyManager;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.redisson.api.RateIntervalUnit;
 import org.redisson.api.RateType;
@@ -53,7 +53,9 @@ public class RateLimiterAop {
 
 	@Around("@annotation(rateLimiter)")
 	public Object doAround(ProceedingJoinPoint point, RateLimiter rateLimiter) throws Throwable {
-		String key = getKey(rateLimiter.id().concat(UNDER).concat(KeyManager.key(rateLimiter.type())));
+		String key = getKey(rateLimiter.key()
+			.concat(UNDER)
+			.concat(rateLimiter.type().resolve(RequestUtil.getHttpServletRequest())));
 		long rate = rateLimiter.rate();
 		long interval = rateLimiter.interval();
 		RateIntervalUnit unit = rateLimiter.unit();
@@ -64,8 +66,8 @@ public class RateLimiterAop {
 		return point.proceed();
 	}
 
-	private String getKey(String id) {
-		return "rate_limiter.{" + String.format(RATE_LIMITER_KEY, id) + "}.tokens";
+	private String getKey(String key) {
+		return "rate_limiter.{" + String.format(RATE_LIMITER_KEY, key) + "}.tokens";
 	}
 
 }

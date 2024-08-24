@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.laokou.common.ratelimiter.driver.spi.Type.IP;
+import static org.laokou.common.ratelimiter.aop.Type.IP;
 
 /**
  * @author laokou
@@ -46,7 +46,7 @@ public class SecretsV3Controller {
 	@TraceLog
 	@GetMapping
 	@Operation(summary = "获取密钥", description = "获取密钥")
-	@RateLimiter(id = "AUTH_SECRET", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
+	@RateLimiter(key = "AUTH_SECRET", type = IP, unit = RateIntervalUnit.MINUTES, interval = 30, rate = 100)
 	public Result<SecretCO> getInfoV3() {
 		return secretsServiceI.getInfo();
 	}

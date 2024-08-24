@@ -17,13 +17,13 @@
 
 package org.laokou.common.ratelimiter.annotation;
 
-import org.laokou.common.ratelimiter.driver.spi.Type;
+import org.laokou.common.ratelimiter.aop.Type;
 import org.redisson.api.RateIntervalUnit;
 import org.redisson.api.RateType;
 
 import java.lang.annotation.*;
 
-import static org.laokou.common.ratelimiter.driver.spi.Type.DEFAULT;
+import static org.laokou.common.ratelimiter.aop.Type.DEFAULT;
 import static org.redisson.api.RateIntervalUnit.SECONDS;
 import static org.redisson.api.RateType.OVERALL;
 
@@ -38,7 +38,7 @@ public @interface RateLimiter {
 	/**
 	 * 标识.
 	 */
-	String id();
+	String key();
 
 	/**
 	 * 令牌速率.

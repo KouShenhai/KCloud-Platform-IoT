@@ -36,7 +36,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static org.laokou.common.data.cache.constant.NameConstant.TENANTS;
-import static org.laokou.common.ratelimiter.driver.spi.Type.IP;
+import static org.laokou.common.ratelimiter.aop.Type.IP;
 import static org.redisson.api.RateIntervalUnit.MINUTES;
 
 /**
@@ -96,7 +96,7 @@ public class TenantsController {
 	@PreAuthorize("hasAuthority('tenants:download-datasource')")
 	@Operation(summary = "租户管理", description = "下载数据库")
 	@OperateLog(module = "租户管理", operation = "下载数据库")
-	@RateLimiter(id = "DOWNLOAD_TENANT_DATASOURCE", rate = 5, interval = 10, unit = MINUTES, type = IP)
+	@RateLimiter(key = "DOWNLOAD_TENANT_DATASOURCE", rate = 5, interval = 10, unit = MINUTES, type = IP)
 	public void downloadDatasource(@PathVariable("id") Long id, HttpServletResponse response) {
 		tenantsServiceI.downloadDatasource(new TenantDownloadDatasourceCmd(id, response));
 	}
