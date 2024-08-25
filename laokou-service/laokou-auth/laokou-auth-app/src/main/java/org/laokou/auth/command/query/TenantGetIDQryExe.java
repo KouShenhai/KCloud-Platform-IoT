@@ -19,7 +19,6 @@ package org.laokou.auth.command.query;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.config.TenantProperties;
 import org.laokou.auth.dto.TenantIDGetQry;
 import org.laokou.auth.gatewayimpl.database.TenantMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.TenantDO;
@@ -28,6 +27,7 @@ import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.tenant.config.TenantProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;

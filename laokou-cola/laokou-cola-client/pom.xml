@@ -13,8 +13,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>easyexcel-core</artifactId>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-excel</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>

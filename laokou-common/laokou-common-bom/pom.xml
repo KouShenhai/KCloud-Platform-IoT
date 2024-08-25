@@ -153,6 +153,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-tenant</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
         <groupId>io.github.openfeign</groupId>
         <artifactId>feign-okhttp</artifactId>
         <version>${feign.version}</version>

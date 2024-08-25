@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.config;
+package org.laokou.common.tenant.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

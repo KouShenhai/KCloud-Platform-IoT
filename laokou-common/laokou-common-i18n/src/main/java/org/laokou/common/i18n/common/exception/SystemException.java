@@ -72,17 +72,17 @@ public final class SystemException extends GlobalException {
 	/**
 	 * 用户名解密失败.
 	 */
-	public static final String AES_DECRYPT_USERNAME_FAIL = "S_User_AESDecryptUsernameFail";
+	public static final String USERNAME_AES_DECRYPT_FAIL = "S_User_UsernameAESDecryptFail";
 
 	/**
 	 * 手机号解密失败.
 	 */
-	public static final String AES_DECRYPT_MOBILE_FAIL = "S_User_AESDecryptMobileFail";
+	public static final String MOBILE_AES_DECRYPT_FAIL = "S_User_MobileAESDecryptFail";
 
 	/**
 	 * 邮箱解密失败.
 	 */
-	public static final String AES_DECRYPT_MAIL_FAIL = "S_User_AESDecryptMailFail";
+	public static final String MAIL_AES_DECRYPT_FAIL = "S_User_MailAESDecryptFail";
 
 	public SystemException(String code) {
 		super(code);
