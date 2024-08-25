@@ -1,3 +1,4 @@
+// @formatter:off
 /*
  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
@@ -15,23 +16,27 @@
  *
  */
 
-package org.laokou.generator.gatewayimpl.database;
+package ${packageName}.${instanceName}.model;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.laokou.generator.gatewayimpl.database.dataobject.TableColumnDO;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import lombok.Data;
 
 /**
- * @author laokou
+ * @author ${author}
  */
-@Mapper
-@Repository
-public interface TableColumnMapper extends CrudMapper<Long, Integer, TableColumnDO> {
+@Data
+public class ${className}E {
 
-	List<TableColumnDO> selectObjects(@Param("tableName") String tableName);
+	/**
+     * ID.
+	 */
+	private Long id;
+<#list fields as field>
+
+	/**
+	* ${field.comment}.
+	*/
+	private ${field.fieldType} ${field.fieldName};
+</#list>
 
 }
+// @formatter:on

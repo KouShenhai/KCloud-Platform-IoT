@@ -21,8 +21,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 /**
  * @author laokou
  */
@@ -31,7 +29,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class TableE {
 
-	private Set<String> tables;
+	private String table;
 
 	private String tablePrefix;
 

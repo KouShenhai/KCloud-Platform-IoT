@@ -35,14 +35,12 @@ public class ${className}CO extends ClientObject {
      * ID.
 	 */
 	private Long id;
-
 <#list fields as field>
 
 	/**
 	* ${field.comment}.
 	*/
 	private ${field.fieldType} ${field.fieldName};
-
 </#list>
 
 }

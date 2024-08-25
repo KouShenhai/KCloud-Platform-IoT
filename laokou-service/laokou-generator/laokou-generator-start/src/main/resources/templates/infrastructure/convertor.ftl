@@ -19,11 +19,27 @@
 package ${packageName}.${instanceName}.convertor;
 
 import ${packageName}.${instanceName}.gatewayimpl.database.dataobject.${className}DO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
+import ${packageName}.${instanceName}.model.${className}E;
 
 /**
  * @author ${author}
  */
 public class ${className}Convertor {
+
+	public static ${className}DO toDataObject(${className}E ${instanceName}E) {
+		${className}DO ${instanceName}DO = ConvertUtil.sourceToTarget(${instanceName}E, ${className}DO.class);
+		if (ObjectUtil.isNull(${instanceName}DO.getId())) {
+			${instanceName}DO.generatorId();
+		}
+		return ${instanceName}DO;
+	}
+
+	public static ${className}CO toClientObject(${className}DO ${instanceName}DO) {
+		return ConvertUtil.sourceToTarget(${instanceName}DO, ${className}CO.class);
+	}
 
 }
 // @formatter:on

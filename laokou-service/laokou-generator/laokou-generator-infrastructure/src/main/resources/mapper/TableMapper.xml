@@ -21,16 +21,11 @@
 <mapper namespace="org.laokou.generator.gatewayimpl.database.TableMapper">
 
   <select id="selectObjects" resultType="org.laokou.generator.gatewayimpl.database.dataobject.TableDO">
-    select relname as name,
-    cast (obj_description (relfilenode, 'pg_class') as varchar) as comment
+    select relname                                                   as name,
+           cast(obj_description(relfilenode, 'pg_class') as varchar) as comment
     from pg_class
-    where relname in ( select tablename from pg_tables where schemaname = 'public' and tablename like 'boot_%')
-    <if test="tableNames != null and tableNames.size() > 0">
-      and relname in
-      <foreach collection="tableNames" item="item" open="(" close=")">
-        #{item}
-      </foreach>
-    </if>
+    where relname in (select tablename from pg_tables where schemaname = 'public' and tablename like 'boot_%')
+      and relname = #{tableName}
   </select>
 
 </mapper>

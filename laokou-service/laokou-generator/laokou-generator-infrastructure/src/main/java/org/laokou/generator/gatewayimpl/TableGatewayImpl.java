@@ -50,8 +50,8 @@ public class TableGatewayImpl implements TableGateway {
 	private final TableColumnMapper tableColumnMapper;
 
 	public List<TableV> list(TableE tableE) {
-		List<TableDO> tables = tableMapper.selectObjects(tableE.getTables());
-		List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects(tableE.getTables());
+		List<TableDO> tables = tableMapper.selectObjects(tableE.getTable());
+		List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects(tableE.getTable());
 		Map<String, List<TableColumnDO>> cloumnMap = tableColumns.stream()
 			.collect(Collectors.groupingBy(TableColumnDO::getTableName));
 		Map<String, String> tableMap = tables.stream().collect(Collectors.toMap(TableDO::getName, TableDO::getComment));
@@ -59,7 +59,7 @@ public class TableGatewayImpl implements TableGateway {
 	}
 
 	private List<TableV> convert(TableE tableE, Map<String, String> tableMap,
-			Map<String, List<TableColumnDO>> cloumnMap) {
+								 Map<String, List<TableColumnDO>> cloumnMap) {
 		List<TableV> tableVList = new ArrayList<>(cloumnMap.size());
 		cloumnMap.forEach((tableName, items) -> {
 			String tableComment = tableMap.get(tableName);

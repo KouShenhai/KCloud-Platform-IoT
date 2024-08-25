@@ -121,13 +121,13 @@ public class GeneratorDomainService {
 		// templates.add(Template.GET_QRY_EXE);
 		// templates.add(Template.IMPORT_CMD_EXE);
 		// templates.add(Template.EXPORT_CMD_EXE);
-		// templates.add(Template.ENTITY);
+		templates.add(Template.ENTITY);
 		templates.add(Template.SERVICE_I);
 		templates.add(Template.SERVICE_IMPL);
 		// templates.add(Template.DOMAIN_SERVICE);
 		templates.add(Template.DO);
 		templates.add(Template.CO);
-		// templates.add(Template.GATEWAY);
+		templates.add(Template.GATEWAY);
 		// templates.add(Template.GATEWAY_IMPL);
 		templates.add(Template.CONTROLLER);
 		templates.add(Template.MAPPER);

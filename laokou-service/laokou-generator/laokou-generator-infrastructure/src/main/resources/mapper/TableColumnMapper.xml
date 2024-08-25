@@ -29,12 +29,7 @@
       table_name like 'boot_%'
       AND c.oid = b.attrelid
       AND b.attnum > 0
-      <if test="tableNames != null and tableNames.size() > 0">
-        and table_name in
-        <foreach collection="tableNames" item="item" open="(" close=")">
-          #{item}
-        </foreach>
-      </if>
+      and table_name = #{tableName}
       and column_name not in
       ('id','del_flag','version','create_time','update_time','creator','editor','dept_id','dept_path','tenant_id')
     </where>

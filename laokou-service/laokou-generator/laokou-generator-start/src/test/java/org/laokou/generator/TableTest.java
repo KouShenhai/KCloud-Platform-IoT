@@ -51,21 +51,24 @@ class TableTest {
 
 	@Test
 	void testTable() {
-		List<TableDO> tables = tableMapper.selectObjects(Set.of("boot_sys_user"));
+		List<TableDO> tables = tableMapper.selectObjects("boot_sys_user");
 		log.info("获取表：{}", JacksonUtil.toJsonStr(tables));
 	}
 
 	@Test
 	void testTableColumn() {
-		List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects(Set.of("boot_sys_user"));
+		List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects("boot_sys_user");
 		log.info("获取字段：{}", JacksonUtil.toJsonStr(tableColumns));
 	}
 
 	@Test
 	void testGenerateCode() {
-		TableE tableE = new TableE(Set.of("boot_sys_user"), "boot_sys_");
-		GeneratorA generatorA = new GeneratorA("laokou", "org.laokou.test", "laokou-test", "v3", tableE);
-		generatorDomainService.generateCode(generatorA);
+		Set<String> tables = Set.of("boot_sys_user", "boot_sys_menu", "boot_sys_tenant");
+		tables.forEach(item -> {
+			TableE tableE = new TableE(item, "boot_sys_");
+			GeneratorA generatorA = new GeneratorA("laokou", "org.laokou.test", "laokou-test", "v3", tableE);
+			generatorDomainService.generateCode(generatorA);
+		});
 	}
 
 }

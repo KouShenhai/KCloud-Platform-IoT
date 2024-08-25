@@ -24,7 +24,6 @@ import org.laokou.generator.gatewayimpl.database.dataobject.TableDO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author laokou
@@ -33,6 +32,6 @@ import java.util.Set;
 @Repository
 public interface TableMapper extends CrudMapper<Long, Integer, TableDO> {
 
-	List<TableDO> selectObjects(@Param("tableNames") Set<String> tableNames);
+	List<TableDO> selectObjects(@Param("tableName") String tableName);
 
 }

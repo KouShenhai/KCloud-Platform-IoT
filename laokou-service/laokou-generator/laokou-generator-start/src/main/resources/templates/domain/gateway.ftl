@@ -1,3 +1,4 @@
+// @formatter:off
 /*
  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
@@ -15,23 +16,20 @@
  *
  */
 
-package org.laokou.generator.gatewayimpl.database;
+package ${packageName}.${instanceName}.gateway;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.laokou.generator.gatewayimpl.database.dataobject.TableColumnDO;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import ${packageName}.${instanceName}.model.${className}E;
 
 /**
- * @author laokou
+ * @author ${author}
  */
-@Mapper
-@Repository
-public interface TableColumnMapper extends CrudMapper<Long, Integer, TableColumnDO> {
+public interface ${className}Gateway {
 
-	List<TableColumnDO> selectObjects(@Param("tableName") String tableName);
+	void create(${className}E ${instanceName}E);
+
+	void update(${className}E ${instanceName}E);
+
+	void delete(Long[] ids);
 
 }
+// @formatter:on
