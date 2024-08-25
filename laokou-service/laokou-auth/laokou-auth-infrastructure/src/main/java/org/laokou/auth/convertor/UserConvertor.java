@@ -18,6 +18,9 @@
 package org.laokou.auth.convertor;
 
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.DeptV;
+import org.laokou.auth.model.MenuV;
 import org.laokou.auth.model.UserE;
 import org.laokou.common.security.utils.UserDetail;
 
@@ -26,7 +29,10 @@ import org.laokou.common.security.utils.UserDetail;
  */
 public class UserConvertor {
 
-	public static UserDetail toClientObject(UserE userE) {
+	public static UserDetail toClientObject(AuthA auth) {
+		UserE userE = auth.getUser();
+		MenuV menu = auth.getMenu();
+		DeptV dept = auth.getDept();
 		UserDetail userDetail = new UserDetail();
 		userDetail.setId(userE.getId());
 		userDetail.setUsername(userE.getUsername());
@@ -39,6 +45,9 @@ public class UserConvertor {
 		userDetail.setDeptId(userE.getDeptId());
 		userDetail.setDeptPath(userE.getDeptPath());
 		userDetail.setTenantId(userE.getTenantId());
+		userDetail.setPermissions(menu.permissions());
+		userDetail.setDeptPaths(dept.deptPaths());
+		userDetail.setSourceName(auth.getSourceName());
 		return userDetail;
 	}
 

@@ -193,12 +193,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
 	}
 
-	public void update(Set<String> permissions, Set<String> deptPaths, String sourceName) {
-		this.permissions = permissions;
-		this.deptPaths = deptPaths;
-		this.sourceName = sourceName;
-	}
-
 	@Override
 	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {

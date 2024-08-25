@@ -25,9 +25,7 @@ import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.DeptV;
 import org.laokou.auth.model.LogV;
-import org.laokou.auth.model.MenuV;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
@@ -62,19 +60,17 @@ public class OAuth2AuthenticationProvider {
 		try {
 			// 校验
 			extensionExecutor.executeVoid(AuthValidatorExtPt.class,
-					BizScenario.valueOf(auth.getGrantType().getCode(), USE_CASE_AUTH, SCENARIO),
-					extension -> extension.validate(auth));
+				BizScenario.valueOf(auth.getGrantType().getCode(), USE_CASE_AUTH, SCENARIO),
+				extension -> extension.validate(auth));
 			// 认证
 			authDomainService.auth(auth);
 			// 转换
-			UserDetail userDetail = convert(auth);
+			UserDetail userDetail = UserConvertor.toClientObject(auth);
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
-					userDetail.getAuthorities());
-		}
-		catch (AuthException | SystemException e) {
+				userDetail.getAuthorities());
+		} catch (AuthException | SystemException e) {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
-		}
-		finally {
+		} finally {
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();
 			if (auth.isHasLog()) {
@@ -89,14 +85,6 @@ public class OAuth2AuthenticationProvider {
 		LoginEvent loginEvent = LoginLogConvertor.toClientObject(log);
 		loginEvent.create(auth, LAOKOU_LOG_TOPIC, LOGIN_TAG, LOGIN, log.timestamp());
 		return loginEvent;
-	}
-
-	private UserDetail convert(AuthA auth) {
-		MenuV menu = auth.getMenu();
-		DeptV dept = auth.getDept();
-		UserDetail userDetail = UserConvertor.toClientObject(auth.getUser());
-		userDetail.update(menu.permissions(), dept.deptPaths(), auth.getSourceName());
-		return userDetail;
 	}
 
 }
