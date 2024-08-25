@@ -347,17 +347,18 @@ public enum Template {
 	DOMAIN_SERVICE {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + "/domain/domainService.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return "";
+			return generatorA.getModuleName() + ROD + COLA_DOMAIN + JAVA_PATH + generatorA.getDomainPackagePath()
+				+ "/ability";
 		}
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "DomainService.java";
 		}
 	},
 
@@ -435,17 +436,18 @@ public enum Template {
 	GATEWAY_IMPL {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + "/infrastructure/gatewayImpl.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return "";
+			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH + generatorA.getDomainPackagePath()
+				+ "/gatewayimpl";
 		}
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "GatewayImpl.java";
 		}
 	},
 

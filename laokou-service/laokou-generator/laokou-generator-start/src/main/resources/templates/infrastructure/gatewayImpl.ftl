@@ -16,28 +16,36 @@
 *
 */
 
-package ${packageName}.${instanceName}.command;
+package ${packageName}.${instanceName}.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import ${packageName}.${instanceName}.dto.${className}RemoveCmd;
+import ${packageName}.${instanceName}.model.${className}E;
 import org.springframework.stereotype.Component;
-import ${packageName}.${instanceName}.ability.${className}DomainService;
+import ${packageName}.${instanceName}.gateway.UserGateway;
+import ${packageName}.${instanceName}.gatewayimpl.database.UserMapper;
 
 /**
- *
- * 删除${comment}命令执行器.
- *
- * @author ${author}
- */
+*
+* ${comment}网关实现.
+*
+* @author ${author}
+*/
 @Component
 @RequiredArgsConstructor
-public class ${className}RemoveCmdExe {
+public class ${className}GatewayImpl implements ${className}Gateway {
 
-	private final ${className}DomainService ${instanceName}DomainService;
+	private final ${className}Mapper ${instanceName}Mapper;
 
-	public void executeVoid(${className}RemoveCmd cmd) {
-		// 校验参数
-		${instanceName}DomainService.delete(cmd.getIds());
+	public void create(${className}E ${instanceName}E) {
+
+	}
+
+	public void update(${className}E ${instanceName}E) {
+
+	}
+
+	public void delete(Long[] ids) {
+
 	}
 
 }

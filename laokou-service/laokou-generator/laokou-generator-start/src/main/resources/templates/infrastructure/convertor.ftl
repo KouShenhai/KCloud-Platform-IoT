@@ -44,5 +44,9 @@ public class ${className}Convertor {
 		return ConvertUtil.sourceToTarget(${instanceName}DO, ${className}CO.class);
 	}
 
+	public static ${className}E toEntity(${className}CO ${instanceName}CO) {
+		return ConvertUtil.sourceToTarget(${instanceName}CO, ${className}E.class);
+	}
+
 }
 // @formatter:on

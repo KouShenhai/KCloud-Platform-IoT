@@ -63,11 +63,17 @@ class TableTest {
 
 	@Test
 	void testGenerateCode() {
+		// 版本号
 		String version = "v3";
+		// 作者
 		String author = "laokou";
+		// 表前缀
 		String tablePrefix = "boot_sys_";
+		// 模块名
 		String moduleName = "laokou-admin";
+		// 包名
 		String packageName = "org.laokou.admin";
+		// 表名
 		Set<String> tableNames = Set.of("boot_sys_user", "boot_sys_menu", "boot_sys_tenant");
 		tableNames.forEach(item -> {
 			TableE tableE = new TableE(item, tablePrefix);

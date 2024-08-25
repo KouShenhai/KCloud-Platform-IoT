@@ -21,6 +21,7 @@ package ${packageName}.${instanceName}.command;
 import lombok.RequiredArgsConstructor;
 import ${packageName}.${instanceName}.dto.${className}ModifyCmd;
 import org.springframework.stereotype.Component;
+import ${packageName}.${instanceName}.convertor.${className}Convertor;
 import ${packageName}.${instanceName}.ability.${className}DomainService;
 
 /**
@@ -37,6 +38,7 @@ public class ${className}ModifyCmdExe {
 
 	public void executeVoid(${className}ModifyCmd cmd) {
 		// 校验参数
+		${instanceName}DomainService.update(${className}Convertor.toEntity(cmd.getCo()));
 	}
 
 }

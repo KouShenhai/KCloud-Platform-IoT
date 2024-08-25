@@ -16,32 +16,36 @@
  *
  */
 
-package ${packageName}.${instanceName}.gateway;
+package ${packageName}.${instanceName}.ability;
 
+import lombok.RequiredArgsConstructor;
+import ${packageName}.${instanceName}.gateway.*;
 import ${packageName}.${instanceName}.model.${className}E;
+import org.springframework.stereotype.Component;
 
 /**
  *
- * ${comment}网关【防腐】.
+ * ${comment}领域服务.
  *
  * @author ${author}
  */
-public interface ${className}Gateway {
+@Component
+@RequiredArgsConstructor
+public class ${className}DomainService {
 
-    /**
-     * 新增${comment}.
-     */
-	void create(${className}E ${instanceName}E);
+	private final ${className}Gateway ${instanceName}Gateway;
 
-    /**
-	 * 修改${comment}.
-     */
-	void update(${className}E ${instanceName}E);
+	public void create(${className}E ${instanceName}E) {
+		${instanceName}Gateway.create(${instanceName}E);
+	}
 
-	/**
-     * 删除${comment}.
-	 */
-	void delete(Long[] ids);
+    public void update(${className}E ${instanceName}E) {
+		${instanceName}Gateway.update(${instanceName}E);
+	}
+
+	public void delete(Long[] ids) {
+		${instanceName}Gateway.delete(ids);
+	}
 
 }
 // @formatter:on
