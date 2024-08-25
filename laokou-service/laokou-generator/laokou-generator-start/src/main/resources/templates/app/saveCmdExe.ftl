@@ -24,6 +24,9 @@ import org.springframework.stereotype.Component;
 import ${packageName}.${instanceName}.ability.${className}DomainService;
 
 /**
+ *
+ * 保存${comment}命令执行器.
+ *
  * @author ${author}
  */
 @Component

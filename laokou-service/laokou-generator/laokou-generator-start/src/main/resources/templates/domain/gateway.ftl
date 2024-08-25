@@ -21,6 +21,9 @@ package ${packageName}.${instanceName}.gateway;
 import ${packageName}.${instanceName}.model.${className}E;
 
 /**
+ *
+ * ${comment}网关【防腐】.
+ *
  * @author ${author}
  */
 public interface ${className}Gateway {

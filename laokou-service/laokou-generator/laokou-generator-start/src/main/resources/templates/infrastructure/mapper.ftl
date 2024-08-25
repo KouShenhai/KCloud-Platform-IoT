@@ -24,6 +24,9 @@ import ${packageName}.${instanceName}.gatewayimpl.database.dataobject.${classNam
 import org.springframework.stereotype.Repository;
 
 /**
+ *
+ * ${comment}数据库映射.
+ *
  * @author ${author}
  */
 @Mapper

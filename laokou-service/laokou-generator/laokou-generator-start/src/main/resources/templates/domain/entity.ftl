@@ -21,6 +21,9 @@ package ${packageName}.${instanceName}.model;
 import lombok.Data;
 
 /**
+ *
+ * ${comment}领域对象【实体】.
+ *
  * @author ${author}
  */
 @Data

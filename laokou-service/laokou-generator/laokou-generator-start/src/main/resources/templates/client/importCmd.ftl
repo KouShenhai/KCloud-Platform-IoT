@@ -25,6 +25,9 @@ import org.laokou.common.i18n.dto.CommonCommand;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
+ *
+ * 导入${comment}命令.
+ *
  * @author ${author}
  */
 @Data

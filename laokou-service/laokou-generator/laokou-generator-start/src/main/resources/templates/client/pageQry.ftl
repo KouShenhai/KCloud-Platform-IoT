@@ -22,6 +22,9 @@ import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 
 /**
+ *
+ * 分页查询${comment}命令.
+ *
  * @author ${author}
  */
 @Data

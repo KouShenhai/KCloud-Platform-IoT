@@ -30,6 +30,9 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
+ *
+ * ${comment}接口实现类.
+ *
  * @author ${author}
  */
 @Service
@@ -49,6 +52,7 @@ public class ${className}sServiceImpl implements ${className}sServiceI {
 	private final ${className}PageQryExe ${instanceName}PageQryExe;
 
 	private final ${className}GetQryExe ${instanceName}GetQryExe;
+
 
 	@Override
 	public void save(${className}SaveCmd cmd) {

@@ -23,6 +23,9 @@ import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
+ *
+ * 修改${comment}命令.
+ *
  * @author ${author}
  */
 @Data

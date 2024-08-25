@@ -24,6 +24,9 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
+ *
+ * 查看${comment}请求.
+ *
  * @author ${author}
  */
 @Data

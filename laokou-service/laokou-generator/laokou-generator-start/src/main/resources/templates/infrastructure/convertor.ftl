@@ -25,6 +25,9 @@ import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
 import ${packageName}.${instanceName}.model.${className}E;
 
 /**
+ *
+ * ${comment}转换器.
+ *
  * @author ${author}
  */
 public class ${className}Convertor {

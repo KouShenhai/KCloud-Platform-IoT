@@ -24,8 +24,11 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
-* @author ${author}
-*/
+ *
+ * ${comment}客户端对象.
+ *
+ * @author ${author}
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

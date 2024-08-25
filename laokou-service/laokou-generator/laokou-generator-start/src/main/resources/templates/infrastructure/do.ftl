@@ -23,7 +23,8 @@ import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 /**
- * ${comment}
+ *
+ * ${comment}数据对象.
  *
  * @author ${author}
  */
