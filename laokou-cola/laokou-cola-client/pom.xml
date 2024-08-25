@@ -11,4 +11,15 @@
 
   <artifactId>laokou-cola-client</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>easyexcel-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-core</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

@@ -21,8 +21,9 @@ package ${packageName}.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
+import org.springframework.http.MediaType;
+import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
 import org.springframework.web.bind.annotation.*;
 import ${packageName}.${instanceName}.api.${className}sServiceI;
 import ${packageName}.${instanceName}.dto.*;
@@ -32,8 +33,7 @@ import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
-
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 import static org.laokou.common.data.cache.constant.NameConstant.USERS;
 import static org.laokou.common.data.cache.constant.Type.DEL;
@@ -75,7 +75,7 @@ public class ${className}sController${(version)?upper_case} {
 		${instanceName}sServiceI.remove(new ${className}RemoveCmd(ids));
 	}
 
-	@PostMapping("import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('${instanceName}:import')")
 	@Operation(summary = "导入${comment}", description = "导入${comment}")
 	@OperateLog(module = "导入${comment}", operation = "导入${comment}")

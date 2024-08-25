@@ -21,7 +21,7 @@ package ${packageName}.${instanceName}.command;
 import lombok.RequiredArgsConstructor;
 import ${packageName}.${instanceName}.dto.${className}RemoveCmd;
 import org.springframework.stereotype.Component;
-import${packageName}.${instanceName}.ability.${className}DomainService;
+import ${packageName}.${instanceName}.ability.${className}DomainService;
 
 /**
  * @author ${author}

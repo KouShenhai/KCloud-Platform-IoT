@@ -37,7 +37,6 @@ public class ${className}DO extends BaseDO {
 	 * ${field.comment}.
 	 */
 	private ${field.fieldType} ${field.fieldName};
-
 </#list>
 }
 // @formatter:on

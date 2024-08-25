@@ -19,7 +19,8 @@
 package ${packageName}.${instanceName}.dto;
 
 import lombok.Data;
-import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**

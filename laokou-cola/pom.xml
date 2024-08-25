@@ -13,6 +13,10 @@
   <version>3.3.3</version>
   <packaging>pom</packaging>
 
+  <properties>
+    <version>3.3.3</version>
+  </properties>
+
   <modules>
     <module>laokou-cola-start</module>
     <module>laokou-cola-infrastructure</module>
@@ -21,5 +25,40 @@
     <module>laokou-cola-client</module>
     <module>laokou-cola-domain</module>
   </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-cola-adapter</artifactId>
+        <version>${version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-cola-app</artifactId>
+        <version>${version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-cola-client</artifactId>
+        <version>${version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-cola-domain</artifactId>
+        <version>${version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-cola-infrastructure</artifactId>
+        <version>${version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-cola-start</artifactId>
+        <version>${version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
 </project>

@@ -18,7 +18,6 @@
 
 package ${packageName}.${instanceName}.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 

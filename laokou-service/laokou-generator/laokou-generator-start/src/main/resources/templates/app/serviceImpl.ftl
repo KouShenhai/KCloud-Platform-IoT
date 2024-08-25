@@ -16,7 +16,7 @@
  *
  */
 
-package org.laokou.admin.service;
+package ${packageName}.${instanceName}.service;
 
 import lombok.RequiredArgsConstructor;
 import ${packageName}.${instanceName}.api.${className}sServiceI;

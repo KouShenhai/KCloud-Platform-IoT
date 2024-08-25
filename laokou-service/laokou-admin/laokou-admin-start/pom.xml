@@ -26,10 +26,6 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-openapi-doc</artifactId>
-    </dependency>
-    <dependency>
       <groupId>com.github.ulisesbocchio</groupId>
       <artifactId>jasypt-spring-boot-starter</artifactId>
       <exclusions>
