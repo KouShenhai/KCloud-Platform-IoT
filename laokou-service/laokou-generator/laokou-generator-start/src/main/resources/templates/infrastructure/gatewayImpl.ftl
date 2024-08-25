@@ -21,8 +21,9 @@ package ${packageName}.${instanceName}.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import ${packageName}.${instanceName}.model.${className}E;
 import org.springframework.stereotype.Component;
-import ${packageName}.${instanceName}.gateway.UserGateway;
-import ${packageName}.${instanceName}.gatewayimpl.database.UserMapper;
+import ${packageName}.${instanceName}.gateway.${className}Gateway;
+import ${packageName}.${instanceName}.gatewayimpl.database.${className}Mapper;
+import java.util.Arrays;
 
 /**
 *
@@ -37,15 +38,17 @@ public class ${className}GatewayImpl implements ${className}Gateway {
 	private final ${className}Mapper ${instanceName}Mapper;
 
 	public void create(${className}E ${instanceName}E) {
-
+		${instanceName}Mapper.insert(${className}Convertor.toDataObject(${instanceName}E));
 	}
 
 	public void update(${className}E ${instanceName}E) {
-
+		${className}DO ${instanceName}DO = ${className}Convertor.toDataObject(${instanceName}E);
+		${instanceName}DO.setVersion(${instanceName}Mapper.selectVersion(${instanceName}E.getId()));
+		${instanceName}Mapper.updateById(${instanceName}DO);
 	}
 
 	public void delete(Long[] ids) {
-
+		${instanceName}Mapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }
