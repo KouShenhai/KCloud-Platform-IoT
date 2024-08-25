@@ -31,21 +31,12 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 @Schema(name = "增删改查Mapper", description = "增删改查Mapper")
 public interface CrudMapper<ID, VERSION, DO> extends BaseMapper<DO> {
 
-	/**
-	 * 查看版本号.
-	 * @param id ID
-	 * @return 版本号
-	 */
 	VERSION selectVersion(ID id);
 
-	/**
-	 * 插入数据.
-	 * @param entity 插入对象
-	 */
-	void insertOne(DO entity);
+	void insertOne(DO Do);
 
-	void selectObjList(@Param("param") DO param, @Param(PAGE_QUERY) PageQuery pageQuery, ResultHandler<DO> handler);
+	void selectObjList(@Param(PAGE_QUERY) PageQuery pageQuery, ResultHandler<DO> handler);
 
-	long selectObjCount(@Param("param") DO param, @Param(PAGE_QUERY) PageQuery pageQuery);
+	long selectObjCount(@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

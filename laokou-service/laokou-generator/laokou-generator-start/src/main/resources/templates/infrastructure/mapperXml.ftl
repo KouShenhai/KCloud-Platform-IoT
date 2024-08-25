@@ -18,34 +18,11 @@
  */
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.auth.gatewayimpl.database.UserMapper">
-
-  <select id="selectOneByCondition" resultType="org.laokou.auth.gatewayimpl.database.dataobject.UserDO">
-    select id
-    ,username
-    ,password
-    ,avatar
-    ,super_admin
-    ,status
-    ,mail
-    ,mobile
-    ,dept_id
-    ,dept_path
-    ,tenant_id
-    from boot_sys_user
-    <where>
-      <if test="user.username != null and user.username != ''">
-        and username = #{user.username}
-      </if>
-      <if test="user.mail != null and user.mail != ''">
-        and mail = #{user.mail}
-      </if>
-      <if test="user.mobile != null and user.mobile != ''">
-        and mobile = #{user.mobile}
-      </if>
-      and del_flag = 0
-    </where>
-    limit 1
-  </select>
+<mapper namespace="${packageName}.${instanceName}.gatewayimpl.database.${className}Mapper">
+	<select id="selectVersion" resultType="integer">
+		select version
+		from ${name}
+		where id = ${id}
+	</select>
 
 </mapper>

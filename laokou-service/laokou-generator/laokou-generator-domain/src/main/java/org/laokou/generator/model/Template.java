@@ -471,17 +471,18 @@ public enum Template {
 	MAPPER_XML {
 		@Override
 		public String getTemplatePath(String path) {
-			return "";
+			return path + "/infrastructure/mapperXml.ftl";
 		}
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return "";
+			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + RESOURCE_PATH
+				+ "/mapper/" + generatorA.getTableV().instanceName();
 		}
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return "";
+			return generatorA.getTableV().className() + "Mapper.xml";
 		}
 	},
 

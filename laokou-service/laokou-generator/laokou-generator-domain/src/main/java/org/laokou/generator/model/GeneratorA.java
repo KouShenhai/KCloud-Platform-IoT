@@ -67,6 +67,7 @@ public class GeneratorA extends AggregateRoot<Long> {
 
 	public Map<String, Object> toMap() {
 		Map<String, Object> map = JacksonUtil.toMap(tableV, String.class, Object.class);
+		map.put("id", "#{id}");
 		map.put("author", author);
 		map.put("version", version);
 		map.put("packageName", packageName);

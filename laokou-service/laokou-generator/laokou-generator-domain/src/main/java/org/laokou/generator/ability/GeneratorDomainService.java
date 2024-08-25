@@ -131,7 +131,7 @@ public class GeneratorDomainService {
 		templates.add(Template.GATEWAY_IMPL);
 		templates.add(Template.CONTROLLER);
 		templates.add(Template.MAPPER);
-		// templates.add(Template.MAPPER_XML);
+		templates.add(Template.MAPPER_XML);
 		// templates.add(Template.API);
 		// templates.add(Template.VIEW);
 		// templates.add(Template.FORM_VIEW);
