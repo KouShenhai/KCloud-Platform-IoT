@@ -49,7 +49,7 @@ public class GeneratorDomainService {
 	/**
 	 * 代码生成路径.
 	 */
-	private static final String SOURCE_PATH = "D:\\cola\\laokou-test";
+	private static final String SOURCE_PATH = "D:\\koushenhai\\project\\KCloud-Platform-IoT\\laokou-service\\laokou-admin";
 
 	/**
 	 * ZIP压缩路径.

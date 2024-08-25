@@ -63,10 +63,15 @@ class TableTest {
 
 	@Test
 	void testGenerateCode() {
-		Set<String> tables = Set.of("boot_sys_user", "boot_sys_menu", "boot_sys_tenant");
-		tables.forEach(item -> {
-			TableE tableE = new TableE(item, "boot_sys_");
-			GeneratorA generatorA = new GeneratorA("laokou", "org.laokou.test", "laokou-test", "v3", tableE);
+		String version = "v3";
+		String author = "laokou";
+		String tablePrefix = "boot_sys_";
+		String moduleName = "laokou-admin";
+		String packageName = "org.laokou.admin";
+		Set<String> tableNames = Set.of("boot_sys_user", "boot_sys_menu", "boot_sys_tenant");
+		tableNames.forEach(item -> {
+			TableE tableE = new TableE(item, tablePrefix);
+			GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE);
 			generatorDomainService.generateCode(generatorA);
 		});
 	}

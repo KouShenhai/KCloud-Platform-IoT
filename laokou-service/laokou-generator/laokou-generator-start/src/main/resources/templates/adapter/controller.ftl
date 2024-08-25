@@ -35,10 +35,13 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.multipart.MultipartFile;
 
-import static org.laokou.common.data.cache.constant.NameConstant.USERS;
+import static org.laokou.common.data.cache.constant.NameConstant.${(className)?upper_case}S;
 import static org.laokou.common.data.cache.constant.Type.DEL;
 
 /**
+ *
+ * ${comment}管理控制器.
+ *
  * @author ${author}
  */
 @RestController
@@ -60,9 +63,9 @@ public class ${className}sController${(version)?upper_case} {
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('${instanceName}:modify')")
-	@DataCache(name = USERS, key = "#cmd.co.id", type = DEL)
 	@OperateLog(module = "修改${comment}", operation = "修改${comment}")
 	@Operation(summary = "修改${comment}", description = "修改${comment}")
+	@DataCache(name = ${(className)?upper_case}S, key = "#cmd.co.id", type = DEL)
 	public void modify${(version)?upper_case}(@RequestBody ${className}ModifyCmd cmd) {
 		${instanceName}sServiceI.modify(cmd);
 	}
@@ -103,7 +106,7 @@ public class ${className}sController${(version)?upper_case} {
 	@GetMapping("{id}")
 	@DataCache(name = ${(className)?upper_case}S, key = "#id")
 	@Operation(summary = "查看${comment}详情", description = "查看${comment}详情")
-	public Result<UserCO> getById${(version)?upper_case}(@PathVariable("id") Long id) {
+	public Result<${className}CO> getById${(version)?upper_case}(@PathVariable("id") Long id) {
 		return ${instanceName}sServiceI.getById(new ${className}GetQry(id));
 	}
 
