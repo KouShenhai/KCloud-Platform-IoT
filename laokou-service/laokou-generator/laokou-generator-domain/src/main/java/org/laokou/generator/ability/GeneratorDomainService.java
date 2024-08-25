@@ -117,10 +117,10 @@ public class GeneratorDomainService {
 		templates.add(Template.SAVE_CMD_EXE);
 		templates.add(Template.MODIFY_CMD_EXE);
 		templates.add(Template.REMOVE_CMD_EXE);
-		// templates.add(Template.PAGE_QRY_EXE);
-		// templates.add(Template.GET_QRY_EXE);
-		// templates.add(Template.IMPORT_CMD_EXE);
-		// templates.add(Template.EXPORT_CMD_EXE);
+		templates.add(Template.PAGE_QRY_EXE);
+		templates.add(Template.GET_QRY_EXE);
+		templates.add(Template.IMPORT_CMD_EXE);
+		templates.add(Template.EXPORT_CMD_EXE);
 		templates.add(Template.ENTITY);
 		templates.add(Template.SERVICE_I);
 		templates.add(Template.SERVICE_IMPL);

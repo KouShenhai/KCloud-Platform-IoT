@@ -53,8 +53,8 @@ import java.net.InetAddress;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
-@ServletComponentScan(basePackageClasses = {ShutdownFilter.class})
-@SpringBootApplication(exclude = {SecurityFilterAutoConfiguration.class}, scanBasePackages = "org.laokou")
+@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
+@SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
 public class AdminApp {
 
 	/**

@@ -33,6 +33,7 @@ import org.springframework.test.context.TestConstructor;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author laokou
@@ -75,11 +76,11 @@ class TableTest {
 		String packageName = "org.laokou.admin";
 		// 表名
 		Set<String> tableNames = Set.of("boot_sys_user", "boot_sys_menu", "boot_sys_tenant");
-		tableNames.forEach(item -> {
+		tableNames.stream().map(item -> CompletableFuture.runAsync(() -> {
 			TableE tableE = new TableE(item, tablePrefix);
 			GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE);
 			generatorDomainService.generateCode(generatorA);
-		});
+		})).forEach(CompletableFuture::join);
 	}
 
 }

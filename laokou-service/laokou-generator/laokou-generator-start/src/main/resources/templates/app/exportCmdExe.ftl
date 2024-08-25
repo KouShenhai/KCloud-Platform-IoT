@@ -16,29 +16,25 @@
  *
  */
 
-package ${packageName}.${instanceName}.gatewayimpl.database;
+package ${packageName}.${instanceName}.command;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import ${packageName}.${instanceName}.gatewayimpl.database.dataobject.${className}DO;
-import org.springframework.stereotype.Repository;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.i18n.dto.PageQuery;
+import lombok.RequiredArgsConstructor;
+import ${packageName}.${instanceName}.dto.${className}ExportCmd;
+import org.springframework.stereotype.Component;
 
 /**
  *
- * ${comment}数据库映射.
+ * 导出${comment}命令执行器.
  *
  * @author ${author}
  */
-@Mapper
-@Repository
-public interface ${className}Mapper extends CrudMapper<Long, Integer, ${className}DO> {
+@Component
+@RequiredArgsConstructor
+public class ${className}ExportCmdExe {
 
-	List<${className}DO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
-
-	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
+	public void executeVoid(${className}ExportCmd cmd) {
+		// 校验参数
+	}
 
 }
 // @formatter:on

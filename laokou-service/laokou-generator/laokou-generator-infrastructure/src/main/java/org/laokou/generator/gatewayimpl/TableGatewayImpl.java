@@ -59,7 +59,7 @@ public class TableGatewayImpl implements TableGateway {
 	}
 
 	private List<TableV> convert(TableE tableE, Map<String, String> tableMap,
-								 Map<String, List<TableColumnDO>> cloumnMap) {
+			Map<String, List<TableColumnDO>> cloumnMap) {
 		List<TableV> tableVList = new ArrayList<>(cloumnMap.size());
 		cloumnMap.forEach((tableName, items) -> {
 			String tableComment = tableMap.get(tableName);

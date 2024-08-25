@@ -47,7 +47,7 @@ public class ${className}sServiceImpl implements ${className}sServiceI {
 
 	private final ${className}ImportCmdExe ${instanceName}ImportCmdExe;
 
-	private final ${className}ExortCmdExe ${instanceName}ExportCmdExe;
+	private final ${className}ExportCmdExe ${instanceName}ExportCmdExe;
 
 	private final ${className}PageQryExe ${instanceName}PageQryExe;
 

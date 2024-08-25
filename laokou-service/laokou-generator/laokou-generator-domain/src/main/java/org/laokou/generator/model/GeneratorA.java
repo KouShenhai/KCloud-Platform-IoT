@@ -70,6 +70,7 @@ public class GeneratorA extends AggregateRoot<Long> {
 		map.put("id", "#{id}");
 		map.put("author", author);
 		map.put("version", version);
+		map.put("pageQuery", "${pageQuery");
 		map.put("packageName", packageName);
 		return map;
 	}
