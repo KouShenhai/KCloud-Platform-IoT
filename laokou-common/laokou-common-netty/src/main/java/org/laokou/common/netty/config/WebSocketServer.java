@@ -25,6 +25,7 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -38,12 +39,13 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 public class WebSocketServer extends AbstractServer {
 
 	public WebSocketServer(String ip, int port, ChannelInitializer<?> channelInitializer, int bossCoreSize,
-			int workerCoreSize) {
+						   int workerCoreSize) {
 		super(ip, port, channelInitializer, bossCoreSize, workerCoreSize);
 	}
 
 	/**
 	 * 主从Reactor多线程模式.
+	 *
 	 * @return AbstractBootstrap
 	 */
 	@Override
@@ -72,9 +74,8 @@ public class WebSocketServer extends AbstractServer {
 		if (ObjectUtil.isNotNull(channel)) {
 			if (channel.isActive() && channel.isWritable()) {
 				channel.writeAndFlush(obj);
-			}
-			else {
-				log.error("丢弃消息");
+			} else {
+				log.error("丢弃消息：{}", ((TextWebSocketFrame) obj).text());
 			}
 		}
 	}
