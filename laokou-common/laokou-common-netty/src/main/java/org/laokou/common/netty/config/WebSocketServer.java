@@ -39,13 +39,12 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 public class WebSocketServer extends AbstractServer {
 
 	public WebSocketServer(String ip, int port, ChannelInitializer<?> channelInitializer, int bossCoreSize,
-						   int workerCoreSize) {
+			int workerCoreSize) {
 		super(ip, port, channelInitializer, bossCoreSize, workerCoreSize);
 	}
 
 	/**
 	 * 主从Reactor多线程模式.
-	 *
 	 * @return AbstractBootstrap
 	 */
 	@Override
@@ -74,7 +73,8 @@ public class WebSocketServer extends AbstractServer {
 		if (ObjectUtil.isNotNull(channel)) {
 			if (channel.isActive() && channel.isWritable()) {
 				channel.writeAndFlush(obj);
-			} else {
+			}
+			else {
 				log.error("推送失败，丢弃消息：{}", ((TextWebSocketFrame) obj).text());
 			}
 		}

@@ -27,18 +27,19 @@ import org.springframework.stereotype.Component;
 import ${packageName}.${instanceName}.convertor.${className}Convertor;
 
 /**
- * 查看${comment}请求执行器.
- *
- * @author ${author}
- */
+* 查看${comment}请求执行器.
+*
+* @author ${author}
+*/
 @Component
 @RequiredArgsConstructor
-public class UserGetQryExe {
+public class ${className}GetQryExe {
 
-	private final ${className}Mapper ${instanceName}Mapper;
+private final ${className}Mapper ${instanceName}Mapper;
 
-	public Result<${className}CO> execute(${className}GetQry qry) {
-		return Result.ok(UserConvertor.toClientObject(userMapper.selectById(qry.getId())));
+public Result
+<${className}CO> execute(${className}GetQry qry) {
+	return Result.ok(${className}Convertor.toClientObject(${instanceName}Mapper.selectById(qry.getId())));
 	}
-}
-// @formatter:on
+	}
+	// @formatter:on
