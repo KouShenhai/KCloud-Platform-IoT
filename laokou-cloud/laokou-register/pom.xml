@@ -31,7 +31,7 @@
     <!--nacos版本-->
     <nacos.version>2.4.1</nacos.version>
     <!--spring-boot版本-->
-    <spring-boot.version>2.7.18</spring-boot.version>
+    <spring-boot.version>3.3.3</spring-boot.version>
     <!--postgresql版本-->
     <postgresql.version>42.7.4</postgresql.version>
     <!--liquibase-core版本-->
