@@ -75,7 +75,7 @@ public class WebSocketServer extends AbstractServer {
 			if (channel.isActive() && channel.isWritable()) {
 				channel.writeAndFlush(obj);
 			} else {
-				log.error("丢弃消息：{}", ((TextWebSocketFrame) obj).text());
+				log.error("推送失败，丢弃消息：{}", ((TextWebSocketFrame) obj).text());
 			}
 		}
 	}
