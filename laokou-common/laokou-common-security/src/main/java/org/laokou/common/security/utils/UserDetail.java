@@ -25,7 +25,6 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Identifier;
-import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.core.GrantedAuthority;
@@ -89,6 +88,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	/**
 	 * 密码.
 	 */
+	@JsonIgnore
 	private transient String password;
 
 	/**
@@ -272,7 +272,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 			try {
 				this.username = AESUtil.decrypt(this.username);
 			} catch (Exception e) {
-				throw new SystemException(MessageUtil.getMessage(USERNAME_AES_DECRYPT_FAIL));
+				throw new SystemException(USERNAME_AES_DECRYPT_FAIL);
 			}
 		}
 	}
@@ -282,7 +282,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 			try {
 				this.mail = AESUtil.decrypt(this.mail);
 			} catch (Exception e) {
-				throw new SystemException(MessageUtil.getMessage(MAIL_AES_DECRYPT_FAIL));
+				throw new SystemException(MAIL_AES_DECRYPT_FAIL);
 			}
 		}
 	}
@@ -292,7 +292,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 			try {
 				this.mobile = AESUtil.decrypt(this.mobile);
 			} catch (Exception e) {
-				throw new SystemException(MessageUtil.getMessage(MOBILE_AES_DECRYPT_FAIL));
+				throw new SystemException(MOBILE_AES_DECRYPT_FAIL);
 			}
 		}
 	}
