@@ -19,8 +19,9 @@ package org.laokou.common.security.utils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Identifier;
@@ -47,8 +48,8 @@ import static org.laokou.common.i18n.common.exception.SystemException.*;
  *
  * @author laokou
  */
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
 public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2AuthenticatedPrincipal {
 
@@ -88,7 +89,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	/**
 	 * 密码.
 	 */
-	@JsonIgnore
 	private transient String password;
 
 	/**
@@ -121,10 +121,14 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	 */
 	private String sourceName;
 
+	public UserDetail() {
+		super(IdGenerator.defaultSnowflakeId());
+	}
+
 	public UserDetail(Long id, String username, String avatar, Integer superAdmin, Integer status, String mail,
-			String mobile, Long deptId, String deptPath, Set<String> deptPaths, Set<String> permissions, Long tenantId,
-			String sourceName) {
-		super.id = id;
+					  String mobile, Long deptId, String deptPath, Set<String> deptPaths, Set<String> permissions, Long tenantId,
+					  String sourceName) {
+		super(id);
 		this.username = username;
 		this.avatar = avatar;
 		this.superAdmin = superAdmin;
@@ -242,6 +246,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 
 	/**
 	 * Get the OAuth 2.0 token attributes.
+	 *
 	 * @return the OAuth 2.0 token attributes
 	 */
 	@Override
@@ -266,8 +271,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (StringUtil.isNotEmpty(this.username)) {
 			try {
 				this.username = AESUtil.decrypt(this.username);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new SystemException(MessageUtil.getMessage(USERNAME_AES_DECRYPT_FAIL));
 			}
 		}
@@ -277,8 +281,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (StringUtil.isNotEmpty(this.mail)) {
 			try {
 				this.mail = AESUtil.decrypt(this.mail);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new SystemException(MessageUtil.getMessage(MAIL_AES_DECRYPT_FAIL));
 			}
 		}
@@ -288,8 +291,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (StringUtil.isNotEmpty(this.mobile)) {
 			try {
 				this.mobile = AESUtil.decrypt(this.mobile);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new SystemException(MessageUtil.getMessage(MOBILE_AES_DECRYPT_FAIL));
 			}
 		}

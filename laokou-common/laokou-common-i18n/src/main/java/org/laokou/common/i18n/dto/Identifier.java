@@ -34,4 +34,8 @@ public abstract class Identifier<ID> implements Serializable {
 	 */
 	protected ID id;
 
+	protected Identifier(ID id) {
+		this.id = id;
+	}
+
 }
