@@ -22,10 +22,8 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.AuthDomainService;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.convertor.UserConvertor;
-import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.LogV;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
@@ -37,9 +35,6 @@ import org.springframework.stereotype.Component;
 
 import static org.laokou.auth.common.constant.Constant.SCENARIO;
 import static org.laokou.auth.common.constant.Constant.USE_CASE_AUTH;
-import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOG_TOPIC;
-import static org.laokou.auth.common.constant.MqConstant.LOGIN_TAG;
-import static org.laokou.common.i18n.common.constant.EventType.LOGIN;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 
@@ -60,31 +55,26 @@ public class OAuth2AuthenticationProvider {
 		try {
 			// 校验
 			extensionExecutor.executeVoid(AuthValidatorExtPt.class,
-				BizScenario.valueOf(auth.getGrantType().getCode(), USE_CASE_AUTH, SCENARIO),
-				extension -> extension.validate(auth));
+					BizScenario.valueOf(auth.getGrantType().getCode(), USE_CASE_AUTH, SCENARIO),
+					extension -> extension.validate(auth));
 			// 认证
 			authDomainService.auth(auth);
 			// 转换
 			UserDetail userDetail = UserConvertor.toClientObject(auth);
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
-				userDetail.getAuthorities());
-		} catch (AuthException | SystemException e) {
+					userDetail.getAuthorities());
+		}
+		catch (AuthException | SystemException e) {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
-		} finally {
+		}
+		finally {
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();
 			if (auth.isHasLog()) {
 				// 发布登录事件
-				domainEventPublisher.publishToCreate(to(auth));
+				domainEventPublisher.publishToCreate(LoginLogConvertor.toClientObject(auth));
 			}
 		}
-	}
-
-	private LoginEvent to(AuthA auth) {
-		LogV log = auth.getLog();
-		LoginEvent loginEvent = LoginLogConvertor.toClientObject(log);
-		loginEvent.create(auth, LAOKOU_LOG_TOPIC, LOGIN_TAG, LOGIN, log.timestamp());
-		return loginEvent;
 	}
 
 }

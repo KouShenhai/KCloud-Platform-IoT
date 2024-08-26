@@ -37,7 +37,7 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.id = System.currentTimeMillis();
 	}
 
-	public void create(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
+	protected DefaultDomainEvent(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
 			Instant timestamp) {
 		generatorId();
 		super.tenantId = aggregateRoot.getTenantId();
@@ -55,7 +55,7 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.updateTime = timestamp;
 	}
 
-	public void create(String topic, String tag, EventType eventType, String appName, String sourceName,
+	protected DefaultDomainEvent(String topic, String tag, EventType eventType, String appName, String sourceName,
 			Instant timestamp, Long aggregateId) {
 		generatorId();
 		super.aggregateId = aggregateId;

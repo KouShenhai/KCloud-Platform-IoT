@@ -20,6 +20,7 @@ package org.laokou.auth.dto.domainevent;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.common.constant.EventType;
 import org.laokou.common.i18n.dto.ApiLog;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
@@ -40,7 +41,9 @@ public class CallApiEvent extends DefaultDomainEvent {
 
 	private String param;
 
-	public CallApiEvent(ApiLog apiLog) {
+	public CallApiEvent(ApiLog apiLog, String topic, String tag, EventType eventType, String appName, String sourceName,
+			Long aggregateId) {
+		super(topic, tag, eventType, appName, sourceName, apiLog.getTimestamp(), aggregateId);
 		this.code = apiLog.getCode();
 		this.name = apiLog.getName() + "（" + apiLog.getRemark() + "）";
 		this.status = apiLog.getStatus();

@@ -45,7 +45,7 @@ public class GeneratorA extends AggregateRoot<Long> {
 	private TableV tableV;
 
 	public GeneratorA(String author, String packageName, String moduleName, String version, TableE tableE) {
-		this.id = IdGenerator.defaultSnowflakeId();
+		super(IdGenerator.defaultSnowflakeId());
 		this.author = author;
 		this.packageName = packageName;
 		this.moduleName = moduleName;

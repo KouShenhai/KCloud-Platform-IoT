@@ -29,26 +29,13 @@ import org.laokou.common.security.utils.UserDetail;
  */
 public class UserConvertor {
 
-	public static UserDetail toClientObject(AuthA auth) {
-		UserE userE = auth.getUser();
-		MenuV menu = auth.getMenu();
-		DeptV dept = auth.getDept();
-		UserDetail userDetail = new UserDetail();
-		userDetail.setId(userE.getId());
-		userDetail.setUsername(userE.getUsername());
-		userDetail.setAvatar(userE.getAvatar());
-		userDetail.setSuperAdmin(userE.getSuperAdmin());
-		userDetail.setStatus(userE.getStatus());
-		userDetail.setMail(userE.getMail());
-		userDetail.setMobile(userE.getMobile());
-		userDetail.setPassword(userE.getPassword());
-		userDetail.setDeptId(userE.getDeptId());
-		userDetail.setDeptPath(userE.getDeptPath());
-		userDetail.setTenantId(userE.getTenantId());
-		userDetail.setPermissions(menu.permissions());
-		userDetail.setDeptPaths(dept.deptPaths());
-		userDetail.setSourceName(auth.getSourceName());
-		return userDetail;
+	public static UserDetail toClientObject(AuthA authA) {
+		UserE userE = authA.getUser();
+		MenuV menuV = authA.getMenu();
+		DeptV deptV = authA.getDept();
+		return new UserDetail(userE.getId(), userE.getUsername(), userE.getAvatar(), userE.getSuperAdmin(),
+				userE.getStatus(), userE.getMail(), userE.getMobile(), userE.getDeptId(), userE.getDeptPath(),
+				deptV.deptPaths(), menuV.permissions(), userE.getTenantId(), authA.getSourceName());
 	}
 
 	public static UserE toEntity(UserDO userDO) {

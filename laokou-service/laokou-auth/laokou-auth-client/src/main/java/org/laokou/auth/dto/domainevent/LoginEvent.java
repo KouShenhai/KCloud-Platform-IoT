@@ -17,13 +17,15 @@
 
 package org.laokou.auth.dto.domainevent;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.common.constant.EventType;
+import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 import java.io.Serial;
+import java.time.Instant;
 
 /**
  * 登录事件.
@@ -32,7 +34,6 @@ import java.io.Serial;
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class LoginEvent extends DefaultDomainEvent {
 
 	@Serial
@@ -81,6 +82,20 @@ public class LoginEvent extends DefaultDomainEvent {
 	@Override
 	public void generatorId() {
 		super.id = IdGenerator.defaultSnowflakeId();
+	}
+
+	public LoginEvent(String type, String errorMessage, Integer status, String browser, String os, String ip,
+			String address, String username, AggregateRoot<Long> aggregateRoot, String topic, String tag,
+			EventType eventType, Instant timestamp) {
+		super(aggregateRoot, topic, tag, eventType, timestamp);
+		this.type = type;
+		this.errorMessage = errorMessage;
+		this.status = status;
+		this.browser = browser;
+		this.os = os;
+		this.ip = ip;
+		this.address = address;
+		this.username = username;
 	}
 
 }

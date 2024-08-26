@@ -19,9 +19,7 @@ package org.laokou.common.log.model;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.dto.AggregateRoot;
@@ -40,9 +38,7 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
  *
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
 public class LogA extends AggregateRoot<Long> {
 
 	private static final Set<String> REMOVE_PARAMS = Set.of("username", "password", "mail", "mobile");
@@ -54,17 +50,17 @@ public class LogA extends AggregateRoot<Long> {
 	/**
 	 * 操作名称.
 	 */
-	private String name;
+	private final String name;
 
 	/**
 	 * 操作的模块名称.
 	 */
-	private String moduleName;
+	private final String moduleName;
 
 	/**
 	 * 操作的URI.
 	 */
-	private String uri;
+	private final String uri;
 
 	/**
 	 * 操作的方法名.
@@ -74,7 +70,7 @@ public class LogA extends AggregateRoot<Long> {
 	/**
 	 * 操作的请求类型.
 	 */
-	private String requestType;
+	private final String requestType;
 
 	/**
 	 * 操作的请求参数.
@@ -84,22 +80,22 @@ public class LogA extends AggregateRoot<Long> {
 	/**
 	 * 操作的浏览器.
 	 */
-	private String userAgent;
+	private final String userAgent;
 
 	/**
 	 * 操作的IP地址.
 	 */
-	private String ip;
+	private final String ip;
 
 	/**
 	 * 操作的归属地.
 	 */
-	private String address;
+	private final String address;
 
 	/**
 	 * 操作人.
 	 */
-	private String operator;
+	private final String operator;
 
 	/**
 	 * 错误信息.
@@ -117,6 +113,7 @@ public class LogA extends AggregateRoot<Long> {
 	private Long costTime;
 
 	public LogA(String moduleName, String name, HttpServletRequest request, String appName) {
+		super(IdGenerator.defaultSnowflakeId());
 		UserContextHolder.User user = UserContextHolder.get();
 		this.moduleName = moduleName;
 		this.name = name;
@@ -128,7 +125,6 @@ public class LogA extends AggregateRoot<Long> {
 		this.deptId = user.getDeptId();
 		this.deptPath = user.getDeptPath();
 		this.tenantId = user.getTenantId();
-		this.id = IdGenerator.defaultSnowflakeId();
 		this.createTime = DateUtil.nowInstant();
 		this.updateTime = this.createTime;
 		this.creator = user.getId();

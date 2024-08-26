@@ -17,9 +17,7 @@
 
 package org.laokou.common.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
@@ -28,15 +26,13 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
 public class DomainEventA extends AggregateRoot<Long> {
 
 	/**
 	 * 事件类型.
 	 */
-	private String eventType;
+	private final String eventType;
 
 	/**
 	 * 事件状态.
@@ -46,25 +42,25 @@ public class DomainEventA extends AggregateRoot<Long> {
 	/**
 	 * MQ主题.
 	 */
-	private String topic;
+	private final String topic;
 
 	/**
 	 * 标签.
 	 */
-	private String tag;
+	private final String tag;
 
 	/**
 	 * 聚合根ID.
 	 */
-	private Long aggregateId;
+	private final Long aggregateId;
 
 	/**
 	 * 扩展属性.
 	 */
-	private String attribute;
+	private final String attribute;
 
 	public DomainEventA(byte[] payload, DefaultDomainEvent domainEvent) {
-		this.id = domainEvent.getId();
+		super(domainEvent.getId());
 		this.tenantId = domainEvent.getTenantId();
 		this.deptId = domainEvent.getDeptId();
 		this.deptPath = domainEvent.getDeptPath();

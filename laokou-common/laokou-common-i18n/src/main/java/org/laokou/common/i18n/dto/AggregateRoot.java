@@ -74,4 +74,8 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	 */
 	protected String appName;
 
+	public AggregateRoot(ID id) {
+		super.id = id;
+	}
+
 }
