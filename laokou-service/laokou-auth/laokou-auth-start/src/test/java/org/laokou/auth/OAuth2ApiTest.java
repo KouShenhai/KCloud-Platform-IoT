@@ -20,6 +20,7 @@ package org.laokou.auth;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.dto.LogoutCmd;
@@ -30,10 +31,13 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.crypto.utils.RSAUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -85,6 +89,8 @@ class OAuth2ApiTest {
 
 	private final WebApplicationContext webApplicationContext;
 
+	private final OAuth2AuthorizationService oAuth2AuthorizationService;
+
 	private final ServerProperties serverProperties;
 
 	private final RestClient restClient;
@@ -112,7 +118,15 @@ class OAuth2ApiTest {
 		log.info("解密密码：{}", decryptPassword);
 		log.info("uuid：{}", UUID);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
+		String token = getRefreshToken(tokenMap.get(REFRESH_TOKEN));
+		log.info("刷新token：{}", token);
+		log.info("---------- 模拟认证开始 ----------");
+		Assertions.assertNotNull(token);
+		GlobalOpaqueTokenIntrospector introspector = new GlobalOpaqueTokenIntrospector(oAuth2AuthorizationService,
+				redisUtil);
+		OAuth2AuthenticatedPrincipal principal = introspector.introspect(token);
+		log.info("认证数据：{}", JacksonUtil.toJsonStr(principal));
+		log.info("---------- 模拟认证结束 ----------");
 		log.info("---------- 用户名密码认证模式结束 ----------");
 	}
 
