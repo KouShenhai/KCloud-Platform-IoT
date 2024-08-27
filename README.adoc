@@ -117,7 +117,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 - 消息队列：RocketMQ & Kafka & MQTT
 - 服务监控：Spring Boot Admin & Prometheus
 - 高亮搜索：Elasticsearch
-- 链路跟踪：SkyWalking
+- 链路跟踪：Jaeger
 - 任务调度：Snail Job
 - 日志分析：EFK
 - 缓存&分布式锁：Redis & Redisson
