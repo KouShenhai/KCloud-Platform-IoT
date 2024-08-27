@@ -20,7 +20,6 @@ package ${packageName}.${instanceName}.convertor;
 
 import ${packageName}.${instanceName}.gatewayimpl.database.dataobject.${className}DO;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
 import ${packageName}.${instanceName}.model.${className}E;
 
