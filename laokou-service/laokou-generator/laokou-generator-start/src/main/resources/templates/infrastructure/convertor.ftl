@@ -32,9 +32,9 @@ import ${packageName}.${instanceName}.model.${className}E;
  */
 public class ${className}Convertor {
 
-	public static ${className}DO toDataObject(${className}E ${instanceName}E) {
+	public static ${className}DO toDataObject(${className}E ${instanceName}E, boolean isInsert) {
 		${className}DO ${instanceName}DO = ConvertUtil.sourceToTarget(${instanceName}E, ${className}DO.class);
-		if (ObjectUtil.isNull(${instanceName}DO.getId())) {
+		if (isInsert) {
 			${instanceName}DO.generatorId();
 		}
 		return ${instanceName}DO;

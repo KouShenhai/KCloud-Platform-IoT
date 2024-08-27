@@ -47,7 +47,7 @@ public class ${className}GatewayImpl implements ${className}Gateway {
 	public void create(${className}E ${instanceName}E) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				${instanceName}Mapper.insert(${className}Convertor.toDataObject(${instanceName}E));
+				${instanceName}Mapper.insert(${className}Convertor.toDataObject(${instanceName}E, true));
 			}
 			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
@@ -59,7 +59,7 @@ public class ${className}GatewayImpl implements ${className}Gateway {
 	}
 
 	public void update(${className}E ${instanceName}E) {
-		${className}DO ${instanceName}DO = ${className}Convertor.toDataObject(${instanceName}E);
+		${className}DO ${instanceName}DO = ${className}Convertor.toDataObject(${instanceName}E, false);
 		${instanceName}DO.setVersion(${instanceName}Mapper.selectVersion(${instanceName}E.getId()));
 		update(${instanceName}DO);
 	}
