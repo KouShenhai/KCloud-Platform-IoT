@@ -98,7 +98,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 |Netty                       |4.1.112.Final
 |Kafka                       |3.8.0
 |EMQX                        |5.7.2
-|Postgresql                  |16.3
+|Postgresql                  |16.4
 |TDengine                    |3.3.2.0
 |Liquibase                   |4.29.1
 |Snail Job                   |1.1.2
