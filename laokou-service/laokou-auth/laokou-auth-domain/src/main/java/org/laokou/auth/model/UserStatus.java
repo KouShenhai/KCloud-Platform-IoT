@@ -27,7 +27,7 @@ public enum UserStatus {
 	/**
 	 * 启用.
 	 */
-	ENABLED,
+	ENABLE,
 
 	/**
 	 * 禁用.
