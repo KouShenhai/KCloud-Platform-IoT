@@ -86,7 +86,7 @@
     <!--gson版本-->
     <gson.version>2.11.0</gson.version>
     <!--swagger-annotations-jakarta版本-->
-    <swagger-annotations-jakarta.version>2.2.22</swagger-annotations-jakarta.version>
+    <swagger-annotations-jakarta.version>2.2.23</swagger-annotations-jakarta.version>
     <!--disruptor版本-->
     <disruptor.version>3.4.4</disruptor.version>
     <!--log4j2-ttl-thread-context-map版本-->
