@@ -43,8 +43,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
 import java.net.InetAddress;
-import java.util.concurrent.Executor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * mybatis-plus配置.
@@ -52,13 +51,16 @@ import java.util.concurrent.TimeUnit;
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnClass({ DataSource.class })
+@ConditionalOnClass({DataSource.class})
 @MapperScan("org.laokou.common.mybatisplus.mapper")
 public class MybatisPlusAutoConfig {
 
+	private static final ExecutorService EXECUTOR = new ThreadPoolExecutor(8, 16, 60, TimeUnit.SECONDS,
+		new LinkedBlockingQueue<>(256), new ThreadPoolExecutor.CallerRunsPolicy());
+
 	static {
 		JsqlParserGlobal.setJsqlParseCache(new FurySerialCaffeineJsqlParseCache(
-				Caffeine.newBuilder().maximumSize(1024).expireAfterWrite(5, TimeUnit.SECONDS).build()));
+			Caffeine.newBuilder().maximumSize(1024).expireAfterWrite(5, TimeUnit.SECONDS).build(), EXECUTOR, true));
 	}
 
 	@Bean
@@ -85,14 +87,14 @@ public class MybatisPlusAutoConfig {
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
 	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties,
-			DataSource dataSource, Executor workStealingPoolExecutor) {
+														 DataSource dataSource, Executor workStealingPoolExecutor) {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 		// 数据权限插件
 		interceptor.addInnerInterceptor(new DataFilterInterceptor());
 		// 多租户插件
 		if (mybatisPlusExtProperties.getTenant().isEnabled()) {
 			interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(
-					new GlobalTenantLineHandler(mybatisPlusExtProperties.getTenant().getIgnoreTables())));
+				new GlobalTenantLineHandler(mybatisPlusExtProperties.getTenant().getIgnoreTables())));
 		}
 		// 动态表名插件
 		DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
@@ -140,12 +142,12 @@ public class MybatisPlusAutoConfig {
 	 * 异步分页. 解除每页500条限制.
 	 */
 	private AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor(DataSource dataSource,
-			Executor workStealingPoolExecutor) {
+																			Executor workStealingPoolExecutor) {
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
 		AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor = new AsyncPaginationInnerInterceptor(
-				DbType.POSTGRE_SQL, dataSource, workStealingPoolExecutor);
+			DbType.POSTGRE_SQL, dataSource, workStealingPoolExecutor);
 		// -1表示不受限制
 		asyncPaginationInnerInterceptor.setMaxLimit(-1L);
 		// 溢出总页数后是进行处理，查看源码就知道是干啥的

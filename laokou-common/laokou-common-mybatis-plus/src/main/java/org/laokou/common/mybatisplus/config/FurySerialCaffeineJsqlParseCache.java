@@ -20,10 +20,7 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.extension.parser.cache.AbstractCaffeineJsqlParseCache;
 import com.github.benmanes.caffeine.cache.Cache;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Executor;
 
 /**
  * jsqlparser 缓存 fury 序列化 Caffeine 缓存实现.
@@ -32,14 +29,15 @@ import java.util.concurrent.TimeUnit;
  */
 public class FurySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseCache {
 
-	private static final ExecutorService EXECUTOR = new ThreadPoolExecutor(8, 16, 60, TimeUnit.SECONDS,
-			new LinkedBlockingQueue<>(256), new ThreadPoolExecutor.CallerRunsPolicy());
-
 	public FurySerialCaffeineJsqlParseCache(Cache<String, byte[]> cache) {
 		super(cache);
-		super.executor = EXECUTOR;
+	}
+
+	public FurySerialCaffeineJsqlParseCache(Cache<String, byte[]> cache, Executor executor, boolean async) {
+		super(cache);
+		super.executor = executor;
 		// 开启异步
-		super.async = true;
+		super.async = async;
 	}
 
 	@Override
