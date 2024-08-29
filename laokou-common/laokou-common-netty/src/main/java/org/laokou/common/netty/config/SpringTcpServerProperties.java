@@ -42,9 +42,9 @@ public class SpringTcpServerProperties {
 	private int port;
 
 	/**
-	 * 应用名称.
+	 * 服务ID.
 	 */
-	private String appName;
+	private String serviceId;
 
 	private Integer bossCoreSize = 1;
 

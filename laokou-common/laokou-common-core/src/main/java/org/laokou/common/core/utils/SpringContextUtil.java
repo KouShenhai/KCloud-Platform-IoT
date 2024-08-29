@@ -20,7 +20,6 @@ package org.laokou.common.core.utils;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
@@ -39,22 +38,19 @@ import java.util.Map;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @NonNullApi
 @RequiredArgsConstructor
 public class SpringContextUtil implements ApplicationContextAware, DisposableBean {
 
-	private final Environment environment;
-
 	@Getter
-	private ApplicationContext applicationContext;
+	private static ApplicationContext applicationContext;
 
 	/**
 	 * 获取工厂.
 	 * @return 工厂
 	 */
-	public DefaultListableBeanFactory getFactory() {
+	public static DefaultListableBeanFactory getFactory() {
 		return (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
 	}
 
@@ -63,7 +59,7 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	 * @param name 名称
 	 * @return Bean
 	 */
-	public Object getBean(String name) {
+	public static Object getBean(String name) {
 		return applicationContext.getBean(name);
 	}
 
@@ -72,7 +68,7 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	 * @param name 名称
 	 * @return 判断结果
 	 */
-	public boolean containsBean(String name) {
+	public static boolean containsBean(String name) {
 		return applicationContext.containsBean(name);
 	}
 
@@ -81,7 +77,7 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	 * @param name 名称
 	 * @return 判断结果
 	 */
-	public boolean isSingleton(String name) {
+	public static boolean isSingleton(String name) {
 		return applicationContext.isSingleton(name);
 	}
 
@@ -91,7 +87,7 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	 * @param <T> 泛型
 	 * @return Bean
 	 */
-	public <T> T getBean(Class<T> requiredType) {
+	public static <T> T getBean(Class<T> requiredType) {
 		return applicationContext.getBean(requiredType);
 	}
 
@@ -102,7 +98,7 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	 * @param <T> 泛型
 	 * @return Bean
 	 */
-	public <T> T getBean(String name, Class<T> requiredType) {
+	public static <T> T getBean(String name, Class<T> requiredType) {
 		return applicationContext.getBean(name, requiredType);
 	}
 
@@ -111,7 +107,7 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	 * @param name 名称
 	 * @return 类
 	 */
-	public Class<?> getType(String name) {
+	public static Class<?> getType(String name) {
 		return ObjectUtil.requireNotNull(applicationContext.getType(name));
 	}
 
@@ -121,7 +117,7 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	 * @param <T> 泛型
 	 * @return 类
 	 */
-	public <T> Map<String, T> getType(Class<T> requiredType) {
+	public static <T> Map<String, T> getType(Class<T> requiredType) {
 		return applicationContext.getBeansOfType(requiredType);
 	}
 
@@ -131,7 +127,7 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	 * @param beanName 名称
 	 * @param <T> 泛型
 	 */
-	public <T> void registerBean(Class<T> clazz, String beanName) {
+	public static <T> void registerBean(Class<T> clazz, String beanName) {
 		BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(clazz);
 		getFactory().registerBeanDefinition(beanName, beanDefinitionBuilder.getBeanDefinition());
 	}
@@ -140,7 +136,7 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	 * 注销Bean.
 	 * @param beanName 名称
 	 */
-	public void removeBean(String beanName) {
+	public static void removeBean(String beanName) {
 		DefaultListableBeanFactory beanFactory = getFactory();
 		if (beanFactory.containsBeanDefinition(beanName)) {
 			beanFactory.removeBeanDefinition(beanName);
@@ -151,15 +147,15 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	 * 推送事件.
 	 * @param event 事件
 	 */
-	public void publishEvent(ApplicationEvent event) {
+	public static void publishEvent(ApplicationEvent event) {
 		if (ObjectUtil.isNotNull(applicationContext)) {
 			applicationContext.publishEvent(event);
 		}
 	}
 
-	public String getAppName() {
+	public static String getServiceId() {
 		try {
-			return ObjectUtil.requireNotNull(environment.getProperty("spring.application.name"));
+			return ObjectUtil.requireNotNull(getBean(Environment.class).getProperty("spring.application.name"));
 		}
 		catch (Exception e) {
 			return "application";
@@ -168,7 +164,7 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.applicationContext = applicationContext;
+		SpringContextUtil.applicationContext = applicationContext;
 	}
 
 	/**

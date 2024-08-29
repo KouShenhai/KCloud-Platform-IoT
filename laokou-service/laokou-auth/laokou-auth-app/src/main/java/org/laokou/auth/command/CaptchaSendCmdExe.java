@@ -51,8 +51,6 @@ public class CaptchaSendCmdExe {
 
 	private final SourceGateway sourceGateway;
 
-	private final SpringContextUtil springContextUtil;
-
 	public void executeVoid(CaptchaSendCmd cmd) {
 		// 校验
 		extensionExecutor.executeVoid(CaptchaValidatorExtPt.class,
@@ -60,7 +58,7 @@ public class CaptchaSendCmdExe {
 				extension -> extension.validate(cmd.getUuid()));
 		// 发布发送验证码事件
 		SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getTag(), cmd.getUuid(), LAOKOU_CAPTCHA_TOPIC,
-				cmd.getTag(), CAPTCHA, springContextUtil.getAppName(), getSourceName(cmd.getTenantId()));
+				cmd.getTag(), CAPTCHA, SpringContextUtil.getServiceId(), getSourceName(cmd.getTenantId()));
 		domainEventPublisher.publishToCreate(sendCaptchaEvent);
 	}
 

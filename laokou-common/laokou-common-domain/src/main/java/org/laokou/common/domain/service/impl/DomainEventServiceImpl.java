@@ -77,12 +77,12 @@ public class DomainEventServiceImpl implements DomainEventService {
 		}
 	}
 
-	public void deleteOldByAppNameOfThreeMonths(String appName) {
+	public void deleteOldByServiceIdOfThreeMonths(String serviceId) {
 		try {
 			DynamicDataSourceContextHolder.push(DOMAIN);
 			transactionalUtil.defaultExecuteWithoutResult(r -> {
 				try {
-					domainEventMapper.deleteOldByAppNameOfThreeMonths(appName);
+					domainEventMapper.deleteOldByServiceIdOfThreeMonths(serviceId);
 				}
 				catch (Exception e) {
 					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);

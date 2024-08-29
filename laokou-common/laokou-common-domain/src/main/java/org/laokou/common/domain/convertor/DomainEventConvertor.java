@@ -39,7 +39,7 @@ public class DomainEventConvertor {
 		domainEventDO.setSourceName(domainEventA.getSourceName());
 		domainEventDO.setTopic(domainEventA.getTopic());
 		domainEventDO.setTag(domainEventA.getTag());
-		domainEventDO.setAppName(domainEventA.getAppName());
+		domainEventDO.setServiceId(domainEventA.getServiceId());
 		domainEventDO.setAggregateId(domainEventA.getAggregateId());
 		domainEventDO.setAttribute(domainEventA.getAttribute());
 		return domainEventDO;

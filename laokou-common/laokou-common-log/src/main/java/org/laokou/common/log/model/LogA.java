@@ -112,7 +112,7 @@ public class LogA extends AggregateRoot<Long> {
 	 */
 	private Long costTime;
 
-	public LogA(String moduleName, String name, HttpServletRequest request, String appName) {
+	public LogA(String moduleName, String name, HttpServletRequest request, String serviceId) {
 		super(IdGenerator.defaultSnowflakeId());
 		UserContextHolder.User user = UserContextHolder.get();
 		this.moduleName = moduleName;
@@ -129,7 +129,7 @@ public class LogA extends AggregateRoot<Long> {
 		this.updateTime = this.createTime;
 		this.creator = user.getId();
 		this.editor = this.creator;
-		this.appName = appName;
+		this.serviceId = serviceId;
 		this.sourceName = user.getSourceName();
 		this.operator = user.getUsername();
 	}

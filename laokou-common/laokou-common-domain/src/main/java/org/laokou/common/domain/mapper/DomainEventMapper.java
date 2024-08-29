@@ -30,6 +30,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DomainEventMapper extends CrudMapper<Long, Integer, DomainEventDO> {
 
-	void deleteOldByAppNameOfThreeMonths(@Param("appName") String appName);
+	void deleteOldByServiceIdOfThreeMonths(@Param("serviceId") String serviceId);
 
 }

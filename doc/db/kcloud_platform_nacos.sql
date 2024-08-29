@@ -2302,7 +2302,7 @@ spring:
   websocket-server:
     ip: 0.0.0.0
     port: ${WEBSOCKET_SERVER_PORT:1000}
-    app-name: ${spring.application.name}-server
+    service-id: ${spring.application.name}-server
     boss-core-size: 2
     worker-core-size: 32
   webflux:
@@ -2345,7 +2345,7 @@ spring:
   websocket-server:
     ip: 0.0.0.0
     port: ${WEBSOCKET_SERVER_PORT:1000}
-    app-name: ${spring.application.name}-server
+    service-id: ${spring.application.name}-server
     boss-core-size: 2
     worker-core-size: 32
   webflux:
@@ -3186,7 +3186,7 @@ spring:
   websocket-server:
     ip: 0.0.0.0
     port: ${WEBSOCKET_SERVER_PORT:1000}
-    app-name: ${spring.application.name}-server
+    service-id: ${spring.application.name}-server
     boss-core-size: 2
     worker-core-size: 32
   webflux:

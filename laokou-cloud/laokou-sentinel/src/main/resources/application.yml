@@ -43,6 +43,6 @@ server:
     enabled: false
 spring:
   application:
-    name: ${APP_NAME:laokou-sentinel}
+    name: ${SERVICE_ID:laokou-sentinel}
   profiles:
     active: @PROFILE-ACTIVE@

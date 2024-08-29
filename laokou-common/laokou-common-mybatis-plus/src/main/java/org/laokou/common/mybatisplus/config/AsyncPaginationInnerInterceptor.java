@@ -76,12 +76,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
- * @see PaginationInnerInterceptor 分页拦截器
- * <p>
- * 默认对 left join 进行优化,虽然能优化count,但是加上分页的话如果1对多本身结果条数就是不正确的
  * @author hubin
  * @author gitkakafu
  * @author laokou
+ * @see PaginationInnerInterceptor 分页拦截器
+ * <p>
+ * 默认对 left join 进行优化,虽然能优化count,但是加上分页的话如果1对多本身结果条数就是不正确的
  * @since 3.4.0
  */
 @Data
@@ -141,20 +141,20 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 
 	private DataSource dataSource;
 
-	private java.util.concurrent.Executor workStealingPoolExecutor;
+	private java.util.concurrent.Executor executor;
 
 	public AsyncPaginationInnerInterceptor(DbType dbType, DataSource dataSource,
-			java.util.concurrent.Executor workStealingPoolExecutor) {
+			java.util.concurrent.Executor executor) {
 		this.dbType = dbType;
 		this.dataSource = dataSource;
-		this.workStealingPoolExecutor = workStealingPoolExecutor;
+		this.executor = executor;
 	}
 
 	public AsyncPaginationInnerInterceptor(IDialect dialect, DataSource dataSource,
-			java.util.concurrent.Executor workStealingPoolExecutor) {
+			java.util.concurrent.Executor executor) {
 		this.dialect = dialect;
 		this.dataSource = dataSource;
-		this.workStealingPoolExecutor = workStealingPoolExecutor;
+		this.executor = executor;
 	}
 
 	/**
@@ -203,7 +203,7 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 			catch (Exception e) {
 				log.error("查询失败，错误信息：{}", e.getMessage(), e);
 			}
-		}, workStealingPoolExecutor);
+		}, this.executor);
 		COUNT_LOCAL.set(future);
 		return true;
 	}

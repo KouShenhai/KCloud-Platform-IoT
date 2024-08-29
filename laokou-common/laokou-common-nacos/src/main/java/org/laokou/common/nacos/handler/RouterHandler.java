@@ -44,15 +44,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class RouterHandler implements ApplicationListener<ApplicationReadyEvent> {
 
-	private final SpringContextUtil springContextUtil;
-
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
-		String appName = springContextUtil.getAppName();
-		Assert.isTrue(StringUtil.isNotEmpty(appName), " app name is empty");
+		String serviceId = SpringContextUtil.getServiceId();
+		Assert.isTrue(StringUtil.isNotEmpty(serviceId), "ServiceID is empty");
 		Map<String, Object> map = new HashMap<>(2);
-		String abbr = appName.substring(7);
-		map.put("appName", appName);
+		String abbr = serviceId.substring(7);
+		map.put("serviceId", serviceId);
 		map.put("abbr", abbr);
 		String router = getRouter(map);
 		log.info("\n----------Nacos路由配置开始(请复制到router.json)----------" + "{}"

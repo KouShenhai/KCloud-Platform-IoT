@@ -1,7 +1,6 @@
-
 {
-  "id": "${appName}",
-  "uri": "lb://${appName}",
+  "id": "${serviceId}",
+  "uri": "lb://${serviceId}",
   "predicates": [
     {
       "name": "Path",

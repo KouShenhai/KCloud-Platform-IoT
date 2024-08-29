@@ -4,6 +4,6 @@ server:
 
 spring:
   application:
-    name: ${APP_NAME:laokou-api}
+    name: ${SERVICE_ID:laokou-api}
   profiles:
     active: @PROFILE-ACTIVE@

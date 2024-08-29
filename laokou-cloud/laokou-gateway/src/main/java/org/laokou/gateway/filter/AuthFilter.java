@@ -118,8 +118,6 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 */
 	private static final String COMMON_DATA_ID = "application-common.yaml";
 
-	private final SpringContextUtil springContextUtil;
-
 	private final OAuth2ResourceServerProperties oAuth2ResourceServerProperties;
 
 	private final ConfigUtil configUtil;
@@ -289,7 +287,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	private void initURLMap() {
 		urlMap = Optional.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
-				springContextUtil.getAppName()))
+				SpringContextUtil.getServiceId()))
 			.orElseGet(ConcurrentHashMap::new);
 	}
 

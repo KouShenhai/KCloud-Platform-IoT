@@ -19,6 +19,6 @@ server:
 
 spring:
   application:
-    name: ${APP_NAME:laokou-auth}
+    name: ${SERVICE_ID:laokou-auth}
   profiles:
     active: @PROFILE-ACTIVE@

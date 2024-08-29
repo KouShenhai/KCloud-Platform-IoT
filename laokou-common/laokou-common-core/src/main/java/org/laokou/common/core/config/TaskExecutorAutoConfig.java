@@ -28,7 +28,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.TRUE;
 
@@ -51,12 +50,6 @@ public class TaskExecutorAutoConfig {
 	 * 虚拟线程开关.
 	 */
 	private static final String THREADS_VIRTUAL_ENABLED = "spring.threads.virtual.enabled";
-
-	@Bean
-	public Executor workStealingPoolExecutor(SpringTaskExecutionProperties springTaskExecutionProperties) {
-		return TtlExecutors.getTtlExecutorService(
-				Executors.newWorkStealingPool(springTaskExecutionProperties.getForkJoinPool().getCoreSize()));
-	}
 
 	@Bean(value = THREAD_POOL_TASK_EXECUTOR_NAME)
 	public Executor executor(SpringTaskExecutionProperties springTaskExecutionProperties, Environment environment) {

@@ -112,8 +112,8 @@ public class AuthA extends AggregateRoot<Long> {
 		this.request = request;
 	}
 
-	public void updateAppName(String appName) {
-		this.appName = appName;
+	public void updateServiceId(String serviceId) {
+		this.serviceId = serviceId;
 	}
 
 	public void createUserByPassword() {

@@ -43,8 +43,6 @@ public class AuthDomainService {
 
 	private final SourceGateway sourceGateway;
 
-	private final SpringContextUtil springContextUtil;
-
 	private final CaptchaGateway captchaGateway;
 
 	private final PasswordEncoder passwordEncoder;
@@ -64,7 +62,7 @@ public class AuthDomainService {
 	}
 
 	public void auth(AuthA auth) {
-		auth.updateAppName(springContextUtil.getAppName());
+		auth.updateServiceId(SpringContextUtil.getServiceId());
 		auth.updateSource(sourceGateway.getName(auth.getUser()));
 		// 校验验证码
 		checkCaptcha(auth);

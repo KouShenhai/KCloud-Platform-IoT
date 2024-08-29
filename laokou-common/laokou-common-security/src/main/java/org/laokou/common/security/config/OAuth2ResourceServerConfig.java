@@ -64,8 +64,7 @@ public class OAuth2ResourceServerConfig {
 	@Order(HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
 	SecurityFilterChain resourceFilterChain(GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector,
-			SpringContextUtil springContextUtil, OAuth2ResourceServerProperties oAuth2ResourceServerProperties,
-			HttpSecurity http) throws Exception {
+			OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http) throws Exception {
 		return http
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.httpStrictTransportSecurity(
 					hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)))
@@ -77,7 +76,7 @@ public class OAuth2ResourceServerConfig {
 			.httpBasic(AbstractHttpConfigurer::disable)
 			// 基于token，关闭session
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.authorizeHttpRequests(customizer(springContextUtil, oAuth2ResourceServerProperties))
+			.authorizeHttpRequests(customizer(oAuth2ResourceServerProperties))
 			// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
 			// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
 			.oauth2ResourceServer(
@@ -91,10 +90,10 @@ public class OAuth2ResourceServerConfig {
 
 	@NotNull
 	public static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> customizer(
-			SpringContextUtil springContextUtil, OAuth2ResourceServerProperties oAuth2ResourceServerProperties) {
+			OAuth2ResourceServerProperties oAuth2ResourceServerProperties) {
 		Map<String, Set<String>> uriMap = Optional
 			.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
-					springContextUtil.getAppName()))
+					SpringContextUtil.getServiceId()))
 			.orElseGet(ConcurrentHashMap::new);
 		return request -> request.requestMatchers(HttpMethod.GET,
 				Optional.ofNullable(uriMap.get(HttpMethod.GET.name())).orElseGet(HashSet::new).toArray(String[]::new))

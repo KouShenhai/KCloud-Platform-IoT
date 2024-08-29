@@ -30,6 +30,6 @@ public interface DomainEventService {
 
 	Long countById(Long id);
 
-	void deleteOldByAppNameOfThreeMonths(String appName);
+	void deleteOldByServiceIdOfThreeMonths(String serviceId);
 
 }

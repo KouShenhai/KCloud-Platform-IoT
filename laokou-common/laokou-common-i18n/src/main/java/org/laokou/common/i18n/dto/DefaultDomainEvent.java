@@ -47,7 +47,7 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.editor = aggregateRoot.getEditor();
 		super.eventType = eventType;
 		super.sourceName = aggregateRoot.getSourceName();
-		super.appName = aggregateRoot.getAppName();
+		super.serviceId = aggregateRoot.getServiceId();
 		super.aggregateId = aggregateRoot.getId();
 		super.tag = tag;
 		super.topic = topic;
@@ -55,7 +55,7 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.updateTime = timestamp;
 	}
 
-	protected DefaultDomainEvent(String topic, String tag, EventType eventType, String appName, String sourceName,
+	protected DefaultDomainEvent(String topic, String tag, EventType eventType, String serviceId, String sourceName,
 			Instant timestamp, Long aggregateId) {
 		generatorId();
 		super.aggregateId = aggregateId;
@@ -64,7 +64,7 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.topic = topic;
 		super.createTime = timestamp;
 		super.updateTime = timestamp;
-		super.appName = appName;
+		super.serviceId = serviceId;
 		super.sourceName = sourceName;
 	}
 

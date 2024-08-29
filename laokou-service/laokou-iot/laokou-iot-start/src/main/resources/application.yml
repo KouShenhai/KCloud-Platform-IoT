@@ -17,13 +17,13 @@ spring:
   freemarker:
     check-template-location: false
   application:
-    name: ${APP_NAME:laokou-iot}
+    name: ${SERVICE_ID:laokou-iot}
   tcp-server:
     ip: 0.0.0.0
     port: ${TCP_SERVER_PORT:2000}
-    app-name: ${spring.application.name}-server
     boss-core-size: 2
     worker-core-size: 32
+    service-id: ${spring.application.name}-server
   mqtt-broker:
     enabled: true
     configs:

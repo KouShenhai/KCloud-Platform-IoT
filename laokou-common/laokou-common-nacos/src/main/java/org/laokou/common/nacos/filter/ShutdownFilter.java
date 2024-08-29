@@ -54,8 +54,6 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 
 	private static final ScheduledExecutorService NEWED_SCHEDULED_THREAD_POOL = Executors.newScheduledThreadPool(1);
 
-	private final SpringContextUtil springContextUtil;
-
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		log.info("加载优雅停机过滤器");
@@ -99,7 +97,7 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 					if (IdGenerator.SystemClock.now() - start >= second || ShutdownHolder.get() == 0) {
 						ThreadUtil.shutdown(NEWED_SCHEDULED_THREAD_POOL, 10);
 						log.info("关闭应用");
-						int exitCode = SpringApplication.exit(springContextUtil.getApplicationContext(),
+						int exitCode = SpringApplication.exit(SpringContextUtil.getApplicationContext(),
 								new ExitCodeGeneratorImpl());
 						System.exit(exitCode);
 					}

@@ -41,15 +41,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OperateLogAop {
 
-	private final SpringContextUtil springContextUtil;
-
 	@Around("@annotation(operateLog)")
 	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) {
 		long startTime = IdGenerator.SystemClock.now();
-		// 应用名称
-		String appName = springContextUtil.getAppName();
+		// 服务ID
+		String serviceId = SpringContextUtil.getServiceId();
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
-		LogA operate = new LogA(operateLog.module(), operateLog.operation(), request, appName);
+		LogA operate = new LogA(operateLog.module(), operateLog.operation(), request, serviceId);
 		String className = point.getTarget().getClass().getName();
 		String methodName = point.getSignature().getName();
 		Object[] args = point.getArgs();

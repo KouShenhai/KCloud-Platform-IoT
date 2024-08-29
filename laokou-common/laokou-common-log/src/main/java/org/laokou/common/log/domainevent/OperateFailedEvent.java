@@ -29,8 +29,8 @@ public class OperateFailedEvent extends OperateEvent {
 
 	// public OperateFailedEvent(OperateLog operateLog, HttpServletRequest request,
 	// UserContextHolder.User user,
-	// String appName) {
-	// super(operateLog, request, user, appName, 1, null);
+	// String serviceId) {
+	// super(operateLog, request, user, serviceId, 1, null);
 	// }
 
 }

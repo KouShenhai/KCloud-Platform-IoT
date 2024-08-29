@@ -120,7 +120,7 @@ server:
   shutdown: graceful
 spring:
   application:
-    name: ${APP_NAME:laokou-register}
+    name: ${SERVICE_ID:laokou-register}
   profiles:
     active: @PROFILE-ACTIVE@
   sql:

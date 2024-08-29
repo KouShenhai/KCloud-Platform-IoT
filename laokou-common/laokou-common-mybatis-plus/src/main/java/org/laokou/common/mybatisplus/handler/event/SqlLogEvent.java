@@ -32,7 +32,7 @@ import java.time.Instant;
 @ToString
 public class SqlLogEvent extends ApplicationEvent {
 
-	private String appName;
+	private String serviceId;
 
 	private String sql;
 
@@ -40,10 +40,10 @@ public class SqlLogEvent extends ApplicationEvent {
 
 	private Instant createTime;
 
-	public SqlLogEvent(Object source, String appName, String sql, long costTime, Instant createTime) {
+	public SqlLogEvent(Object source, String serviceId, String sql, long costTime, Instant createTime) {
 		super(source);
 		this.sql = sql;
-		this.appName = appName;
+		this.serviceId = serviceId;
 		this.costTime = costTime;
 		this.createTime = createTime;
 	}

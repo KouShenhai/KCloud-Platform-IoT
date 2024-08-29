@@ -39,7 +39,7 @@ public class DomainEventScheduler {
 	public ExecuteResult jobExecute(JobArgs jobArgs) {
 		String param = jobArgs.getJobParams().toString();
 		try {
-			domainEventService.deleteOldByAppNameOfThreeMonths(param);
+			domainEventService.deleteOldByServiceIdOfThreeMonths(param);
 			return ExecuteResult.success();
 		}
 		catch (Exception e) {

@@ -41,9 +41,9 @@ public class CallApiEvent extends DefaultDomainEvent {
 
 	private String param;
 
-	public CallApiEvent(ApiLog apiLog, String topic, String tag, EventType eventType, String appName, String sourceName,
-			Long aggregateId) {
-		super(topic, tag, eventType, appName, sourceName, apiLog.getTimestamp(), aggregateId);
+	public CallApiEvent(ApiLog apiLog, String topic, String tag, EventType eventType, String serviceId,
+			String sourceName, Long aggregateId) {
+		super(topic, tag, eventType, serviceId, sourceName, apiLog.getTimestamp(), aggregateId);
 		this.code = apiLog.getCode();
 		this.name = apiLog.getName() + "（" + apiLog.getRemark() + "）";
 		this.status = apiLog.getStatus();

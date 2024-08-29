@@ -14,7 +14,7 @@ server:
       enabled: true
 spring:
   application:
-    name: ${APP_NAME:laokou-generator}
+    name: ${SERVICE_ID:laokou-generator}
   datasource:
     dynamic:
       datasource:

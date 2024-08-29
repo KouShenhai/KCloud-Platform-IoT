@@ -20,11 +20,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.common.domain.mapper.DomainEventMapper">
 
-  <delete id="deleteOldByAppNameOfThreeMonths">
+  <delete id="deleteOldByServiceIdOfThreeMonths">
     delete
     from boot_domain_event
     where create_time <![CDATA[ < ]]> (now() - interval '3 month')
-      and app_name = #{appName}
+      and service_id = #{serviceId}
   </delete>
 
 </mapper>

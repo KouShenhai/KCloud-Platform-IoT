@@ -36,8 +36,8 @@ public class SendCaptchaEvent extends DefaultDomainEvent {
 	private String uuid;
 
 	public SendCaptchaEvent(String uuid, String captchaTag, String topic, String tag, EventType eventType,
-			String appName, String sourceName) {
-		super(topic, tag, eventType, appName, sourceName, DateUtil.nowInstant(), IdGenerator.defaultSnowflakeId());
+			String serviceId, String sourceName) {
+		super(topic, tag, eventType, serviceId, sourceName, DateUtil.nowInstant(), IdGenerator.defaultSnowflakeId());
 		this.uuid = uuid;
 		this.captchaTag = captchaTag;
 	}

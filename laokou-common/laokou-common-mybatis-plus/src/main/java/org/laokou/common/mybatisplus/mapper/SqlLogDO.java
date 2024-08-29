@@ -29,9 +29,9 @@ import lombok.Data;
 public class SqlLogDO extends BaseDO {
 
 	/**
-	 * 应用名称.
+	 * 服务ID.
 	 */
-	private String appName;
+	private String serviceId;
 
 	/**
 	 * SQL.

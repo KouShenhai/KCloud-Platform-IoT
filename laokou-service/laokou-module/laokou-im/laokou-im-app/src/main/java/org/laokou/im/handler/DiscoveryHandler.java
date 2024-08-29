@@ -52,8 +52,8 @@ public class DiscoveryHandler implements ApplicationListener<ApplicationReadyEve
 		String ip = InetAddress.getLocalHost().getHostAddress();
 		String group = configUtil.getGroup();
 		int port = webSocketServerProperties.getPort();
-		String appName = webSocketServerProperties.getAppName();
-		serviceUtil.registerInstance(appName, group, ip, port);
+		String serviceId = webSocketServerProperties.getServiceId();
+		serviceUtil.registerInstance(serviceId, group, ip, port);
 	}
 
 	@SneakyThrows
@@ -62,8 +62,8 @@ public class DiscoveryHandler implements ApplicationListener<ApplicationReadyEve
 		String ip = InetAddress.getLocalHost().getHostAddress();
 		String group = configUtil.getGroup();
 		int port = webSocketServerProperties.getPort();
-		String appName = webSocketServerProperties.getAppName();
-		serviceUtil.deregisterInstance(appName, group, ip, port);
+		String serviceId = webSocketServerProperties.getServiceId();
+		serviceUtil.deregisterInstance(serviceId, group, ip, port);
 	}
 
 }

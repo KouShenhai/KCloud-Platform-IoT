@@ -105,48 +105,48 @@ public class ServiceUtil {
 
 	/**
 	 * 注册实例.
-	 * @param serviceName 服务名称
+	 * @param serviceId 服务ID
 	 * @param ip 服务IP
 	 * @param port 服务端口
 	 */
 	@SneakyThrows
-	public void registerInstance(String serviceName, String ip, int port) {
-		getNacosNamingService().registerInstance(serviceName, ip, port);
+	public void registerInstance(String serviceId, String ip, int port) {
+		getNacosNamingService().registerInstance(serviceId, ip, port);
 	}
 
 	/**
 	 * 注册服务.
-	 * @param serviceName 服务名称
+	 * @param serviceId 服务ID
 	 * @param group 服务分组
 	 * @param ip 服务IP
 	 * @param port 服务端口
 	 */
 	@SneakyThrows
-	public void registerInstance(String serviceName, String group, String ip, int port) {
-		getNacosNamingService().registerInstance(serviceName, group, ip, port);
+	public void registerInstance(String serviceId, String group, String ip, int port) {
+		getNacosNamingService().registerInstance(serviceId, group, ip, port);
 	}
 
 	/**
 	 * 注销服务.
-	 * @param serviceName 服务名称
+	 * @param serviceId 服务ID
 	 * @param ip 服务IP
 	 * @param port 服务端口
 	 */
 	@SneakyThrows
-	public void deregisterInstance(String serviceName, String ip, int port) {
-		getNacosNamingService().deregisterInstance(serviceName, ip, port);
+	public void deregisterInstance(String serviceId, String ip, int port) {
+		getNacosNamingService().deregisterInstance(serviceId, ip, port);
 	}
 
 	/**
 	 * 注销服务.
-	 * @param serviceName 服务名称
+	 * @param serviceId 服务ID
 	 * @param group 服务分组
 	 * @param ip 服务IP
 	 * @param port 服务端口
 	 */
 	@SneakyThrows
-	public void deregisterInstance(String serviceName, String group, String ip, int port) {
-		getNacosNamingService().deregisterInstance(serviceName, group, ip, port);
+	public void deregisterInstance(String serviceId, String group, String ip, int port) {
+		getNacosNamingService().deregisterInstance(serviceId, group, ip, port);
 	}
 
 }

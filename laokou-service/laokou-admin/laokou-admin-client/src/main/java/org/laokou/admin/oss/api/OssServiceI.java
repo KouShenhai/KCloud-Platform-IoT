@@ -31,49 +31,42 @@ public interface OssServiceI {
 
 	/**
 	 * 保存OSS.
-	 *
 	 * @param cmd 保存命令
 	 */
 	void save(OssSaveCmd cmd);
 
 	/**
 	 * 修改OSS.
-	 *
 	 * @param cmd 修改命令
 	 */
 	void modify(OssModifyCmd cmd);
 
 	/**
 	 * 删除OSS.
-	 *
 	 * @param cmd 删除命令
 	 */
 	void remove(OssRemoveCmd cmd);
 
 	/**
 	 * 导入OSS.
-	 *
 	 * @param cmd 导入命令
 	 */
 	void importI(OssImportCmd cmd);
 
 	/**
 	 * 导出OSS.
-	 *
 	 * @param cmd 导出命令
 	 */
 	void export(OssExportCmd cmd);
 
 	/**
 	 * 分页查询OSS.
-	 *
 	 * @param qry 分页查询请求
 	 */
 	Result<Page<OssCO>> page(OssPageQry qry);
 
 	/**
 	 * 查看OSS.
-	 *
 	 * @param qry 查看请求
 	 */
 	Result<OssCO> getById(OssGetQry qry);

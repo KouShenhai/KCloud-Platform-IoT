@@ -17,7 +17,6 @@
 
 package org.laokou.common.mybatisplus.config;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.logging.jdbc.PreparedStatementLogger;
@@ -46,12 +45,9 @@ import static org.laokou.common.i18n.common.constant.StringConstant.SPACE;
  * @see PreparedStatementLogger
  */
 @Slf4j
-@RequiredArgsConstructor
 @Intercepts({
 		@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
 public class SqlMonitorInterceptor implements Interceptor {
-
-	private final SpringContextUtil springContextUtil;
 
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
@@ -62,8 +58,8 @@ public class SqlMonitorInterceptor implements Interceptor {
 		if (target instanceof StatementHandler statementHandler) {
 			// 替换空格、制表符、换页符
 			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", SPACE);
-			springContextUtil.publishEvent(
-					new SqlLogEvent("SQL日志", springContextUtil.getAppName(), sql, time, DateUtil.nowInstant()));
+			SpringContextUtil.publishEvent(
+					new SqlLogEvent("SQL日志", SpringContextUtil.getServiceId(), sql, time, DateUtil.nowInstant()));
 			log.info("\nConsume Time：{} ms \nExecute SQL：{}\n", time, sql);
 		}
 		return obj;

@@ -7,9 +7,9 @@
       "description": "WebSocket端口."
     },
     {
-      "name": "spring.websocket.app-name",
+      "name": "spring.websocket.service-id",
       "type": "java.lang.String",
-      "description": "WebSocket应用名称."
+      "description": "WebSocket服务ID."
     },
     {
       "name": "spring.websocket.pool-name",

@@ -70,9 +70,9 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	protected String sourceName;
 
 	/**
-	 * 应用名称.
+	 * 服务ID.
 	 */
-	protected String appName;
+	protected String serviceId;
 
 	protected AggregateRoot(ID id) {
 		super(id);

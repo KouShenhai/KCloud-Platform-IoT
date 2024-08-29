@@ -18,6 +18,6 @@ server:
   port: ${SERVER_PORT:9990}
 spring:
   application:
-    name: ${APP_NAME:laokou-admin}
+    name: ${SERVICE_ID:laokou-admin}
   profiles:
     active: @PROFILE-ACTIVE@

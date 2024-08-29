@@ -29,8 +29,8 @@ public class OperateSucceededEvent extends OperateEvent {
 
 	// public OperateSucceededEvent(OperateLog operateLog, HttpServletRequest request,
 	// UserContextHolder.User user,
-	// String appName) {
-	// super(operateLog, request, user, appName, 0, null);
+	// String serviceId) {
+	// super(operateLog, request, user, serviceId, 0, null);
 	// }
 
 }

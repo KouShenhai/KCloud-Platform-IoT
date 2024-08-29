@@ -53,9 +53,9 @@ public class DomainEventDO extends BaseDO {
 	private String tag;
 
 	/**
-	 * 应用名称.
+	 * 服务ID.
 	 */
-	private String appName;
+	private String serviceId;
 
 	/**
 	 * 聚合根ID.

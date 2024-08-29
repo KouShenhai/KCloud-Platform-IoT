@@ -35,7 +35,7 @@ server:
 # spring
 spring:
   application:
-    name: ${APP_NAME:laokou-logstash}
+    name: ${SERVICE_ID:laokou-logstash}
   profiles:
     active: @PROFILE-ACTIVE@
   cloud:

@@ -19,7 +19,7 @@ server:
 
 spring:
   application:
-    name: ${APP_NAME:laokou-snail-job}
+    name: ${SERVICE_ID:laokou-snail-job}
   main:
     banner-mode: off
   profiles:
