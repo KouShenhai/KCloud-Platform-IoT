@@ -30,6 +30,7 @@
     <module>laokou-service</module>
     <module>laokou-tool</module>
     <module>laokou-cola</module>
+    <module>laokou-sample</module>
   </modules>
   <name>KCloud-Platform-IoT</name>
   <description>一个企业级微服务架构的云服务多租户IoT平台</description>

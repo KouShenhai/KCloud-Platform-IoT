@@ -5,9 +5,11 @@
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-IoT</artifactId>
     <version>3.3.3</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>laokou-tool</artifactId>
+  <version>3.3.3</version>
 
   <dependencies>
     <dependency>
