@@ -134,7 +134,7 @@
     <!--commons-text版本-->
     <commons-text.version>1.12.0</commons-text.version>
     <!--zstd-jni版本-->
-    <zstd-jni.version>1.5.6-3</zstd-jni.version>
+    <zstd-jni.version>1.5.6-5</zstd-jni.version>
     <!--snail-job版本-->
     <snail-job.version>1.1.2</snail-job.version>
     <!--micrometer版本-->
