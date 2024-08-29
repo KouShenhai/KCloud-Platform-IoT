@@ -33,7 +33,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.io.Serial;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.constant.SuperAdmin.YES;
@@ -120,8 +123,8 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 
 	public UserDetail() {
 		super(IdGenerator.defaultSnowflakeId());
-		this.deptPaths = new HashSet<>(0);
-		this.permissions = new HashSet<>(0);
+		this.deptPaths = Collections.emptySet();
+		this.permissions = Collections.emptySet();
 	}
 
 	public UserDetail(Long id, String username, String avatar, Integer superAdmin, Integer status, String mail,
