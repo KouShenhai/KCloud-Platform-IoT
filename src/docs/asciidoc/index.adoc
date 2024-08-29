@@ -2,7 +2,7 @@
 
 == 课程-介绍
 
-https://koushenhai.github.io/KCloud-Platform-IoT/archive/docs/.vuepress/dist[项目文档]
+https://koushenhai.github.io[项目文档]
 
 link:开篇.html[开篇【必读】]
 
