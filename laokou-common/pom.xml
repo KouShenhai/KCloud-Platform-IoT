@@ -69,7 +69,7 @@
     <module>laokou-common-sms</module>
     <module>laokou-common-oss</module>
     <module>laokou-common-excel</module>
-      <module>laokou-common-snail-job</module>
+    <module>laokou-common-snail-job</module>
   </modules>
 
 </project>
