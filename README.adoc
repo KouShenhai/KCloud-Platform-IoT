@@ -54,7 +54,7 @@ https://www.laokou.org.cn[老寇IoT云平台在线体验（请点击我，境外
 
 === 🔖 在线文档
 
-https://koushenhai.github.io[老寇IoT云平台在线文档（请点击我）]
+https://koushenhai.github.io/KCloud-Platform-IoT/archive/docs/.vuepress/dist[老寇IoT云平台在线文档（请点击我）]
 
 === 😎 开发计划
 
