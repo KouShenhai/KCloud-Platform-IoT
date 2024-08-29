@@ -47,4 +47,3 @@ hs_err_pid*
 node_modules
 .umi
 .husky
-dist
