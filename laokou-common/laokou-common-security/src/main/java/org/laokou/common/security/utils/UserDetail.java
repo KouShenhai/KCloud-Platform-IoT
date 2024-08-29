@@ -33,10 +33,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.io.Serial;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.constant.SuperAdmin.YES;
@@ -104,12 +101,12 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	/**
 	 * 部门PATH集合.
 	 */
-	private Set<String> deptPaths;
+	private final Set<String> deptPaths;
 
 	/**
 	 * 菜单权限标识集合.
 	 */
-	private Set<String> permissions;
+	private final Set<String> permissions;
 
 	/**
 	 * 租户ID.
@@ -123,11 +120,13 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 
 	public UserDetail() {
 		super(IdGenerator.defaultSnowflakeId());
+		this.deptPaths = new HashSet<>(0);
+		this.permissions = new HashSet<>(0);
 	}
 
 	public UserDetail(Long id, String username, String avatar, Integer superAdmin, Integer status, String mail,
-			String mobile, Long deptId, String deptPath, Set<String> deptPaths, Set<String> permissions, Long tenantId,
-			String sourceName) {
+					  String mobile, Long deptId, String deptPath, Set<String> deptPaths, Set<String> permissions, Long tenantId,
+					  String sourceName) {
 		super(id);
 		this.username = username;
 		this.avatar = avatar;
@@ -246,6 +245,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 
 	/**
 	 * Get the OAuth 2.0 token attributes.
+	 *
 	 * @return the OAuth 2.0 token attributes
 	 */
 	@Override
@@ -270,8 +270,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (StringUtil.isNotEmpty(this.username)) {
 			try {
 				this.username = AESUtil.decrypt(this.username);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new SystemException(USERNAME_AES_DECRYPT_FAIL);
 			}
 		}
@@ -281,8 +280,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (StringUtil.isNotEmpty(this.mail)) {
 			try {
 				this.mail = AESUtil.decrypt(this.mail);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new SystemException(MAIL_AES_DECRYPT_FAIL);
 			}
 		}
@@ -292,8 +290,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (StringUtil.isNotEmpty(this.mobile)) {
 			try {
 				this.mobile = AESUtil.decrypt(this.mobile);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new SystemException(MOBILE_AES_DECRYPT_FAIL);
 			}
 		}
