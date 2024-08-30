@@ -40,7 +40,7 @@ image:https://img.shields.io/badge/Maven-3.9.4-blue[Maven,link=https://maven.apa
 image:https://tokei.rs/b1/github/KouShenhai/KCloud-Platform-IoT?category=lines[代码行数,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
 image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源交流群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
 
-=== 😋 项目背景[科学上网]
+=== 😋 项目背景
 
 - 学习微服务架构设计并实践于生产
 - 整合所学技术方便快速搭建项目
@@ -60,7 +60,7 @@ https://koushenhai.github.io[老寇IoT云平台在线文档（请点击我）]
 
 https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2[开发计划（需要登录）]
 
-=== 🎁 项目推荐
+=== 🎁 项目推荐[科学上网]
 
 https://github.com/KouShenhai/KCloud-Platform-Reactive-IoT[作者的另一个开源IoT项目（响应式）]
 
