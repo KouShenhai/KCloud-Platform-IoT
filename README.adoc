@@ -40,7 +40,7 @@ image:https://img.shields.io/badge/Maven-3.9.4-blue[Maven,link=https://maven.apa
 image:https://tokei.rs/b1/github/KouShenhai/KCloud-Platform-IoT?category=lines[代码行数,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
 image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源交流群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
 
-=== 😋 项目背景
+=== 😋 项目背景[科学上网]
 
 - 学习微服务架构设计并实践于生产
 - 整合所学技术方便快速搭建项目
@@ -48,11 +48,11 @@ image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源
 - 复制粘贴代码提高生产效率
 - 学习DDD思想并落地实践
 
-=== 🔗 在线体验（正在重构，敬请期待）
+=== 🔗 在线体验（科学上网）
 
 https://www.laokou.org.cn[老寇IoT云平台在线体验（请点击我，境外服务器网络延迟请稍候）]
 
-=== 🔖 在线文档
+=== 🔖 在线文档[科学上网]
 
 https://koushenhai.github.io[老寇IoT云平台在线文档（请点击我）]
 
