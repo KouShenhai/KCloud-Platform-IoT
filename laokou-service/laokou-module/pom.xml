@@ -22,10 +22,10 @@
   <parent>
     <artifactId>laokou-service</artifactId>
     <groupId>org.laokou</groupId>
-    <version>3.3.3</version>
+    <version>3.3.4</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <version>3.3.3</version>
+  <version>3.3.4</version>
   <artifactId>laokou-module</artifactId>
   <packaging>pom</packaging>
   <modules>

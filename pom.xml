@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.laokou</groupId>
   <artifactId>KCloud-Platform-IoT</artifactId>
-  <version>3.3.3</version>
+  <version>3.3.4</version>
   <packaging>pom</packaging>
   <modules>
     <module>laokou-common</module>
@@ -43,7 +43,7 @@
     </developer>
   </developers>
   <scm>
-    <tag>kcloud-platform-iot-3.3.3.RELEASE</tag>
+    <tag>kcloud-platform-iot-3.3.4.RELEASE</tag>
     <url>https://github.com/KouShenhai/KCloud-Platform-IoT</url>
     <connection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IoT.git</connection>
     <developerConnection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IoT.git</developerConnection>
@@ -57,7 +57,7 @@
     </license>
   </licenses>
   <properties>
-    <laokou.version>3.3.3</laokou.version>
+    <laokou.version>3.3.4</laokou.version>
     <java.version>21</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -66,7 +66,7 @@
     <spring-boot-maven-plugin.version>3.3.3</spring-boot-maven-plugin.version>
     <maven-surefire-plugin.version>3.5.0</maven-surefire-plugin.version>
     <!--spring-boot版本-->
-    <spring-boot.version>3.3.3</spring-boot.version>
+    <spring-boot.version>3.3.4-SNAPSHOT</spring-boot.version>
     <!--spring-cloud版本-->
     <spring-cloud.version>2023.0.3</spring-cloud.version>
     <!--spring-framework版本-->
@@ -336,8 +336,8 @@
         <configuration>
           <!--备份版本-->
           <generateBackupPoms>true</generateBackupPoms>
-          <newVersion>3.3.4</newVersion>
-          <oldVersion>3.3.3</oldVersion>
+          <newVersion>3.4.0</newVersion>
+          <oldVersion>3.3.4</oldVersion>
         </configuration>
       </plugin>
       <plugin>
@@ -378,11 +378,17 @@
           <target>${maven.compiler.target}</target>
           <encoding>${project.build.sourceEncoding}</encoding>
           <compilerArgs>
+            <!-- 关闭对不推荐使用的编译器选项的警告 -->
             <arg>-Xlint:-options</arg>
+            <!--  启用对可变参数使用的警告 -->
             <arg>-Xlint:varargs</arg>
+            <!-- 启用对使用原始类型（`raw types`）的警告 -->
             <arg>-Xlint:rawtypes</arg>
+            <!-- 启用对未检查的操作的警告，比如未检查的类型转换 -->
             <arg>-Xlint:unchecked</arg>
+            <!-- 启用对使用过时 API 的警告 -->
             <arg>-Xlint:deprecation</arg>
+            <!-- 在编译的字节码中保留方法参数的名称，这对反射或序列化框架非常有用 -->
             <arg>-parameters</arg>
           </compilerArgs>
         </configuration>
@@ -429,10 +435,6 @@
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
           <skip>true</skip>
-          <argLine>
-            --add-opens java.base/java.util=ALL-UNNAMED
-            --add-opens java.base/java.lang=ALL-UNNAMED
-          </argLine>
         </configuration>
       </plugin>
       <plugin>
