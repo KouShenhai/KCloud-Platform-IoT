@@ -26,10 +26,9 @@ public interface Lock {
 
 	/**
 	 * 尝试加锁.
-	 *
-	 * @param type    类型
-	 * @param key     键
-	 * @param expire  过期时间
+	 * @param type 类型
+	 * @param key 键
+	 * @param expire 过期时间
 	 * @param timeout 锁等待超时时间
 	 * @return Boolean
 	 * @throws InterruptedException 线程中断异常
@@ -38,9 +37,8 @@ public interface Lock {
 
 	/**
 	 * 释放锁.
-	 *
 	 * @param type 锁类型
-	 * @param key  键
+	 * @param key 键
 	 */
 	void unlock(Type type, String key);
 

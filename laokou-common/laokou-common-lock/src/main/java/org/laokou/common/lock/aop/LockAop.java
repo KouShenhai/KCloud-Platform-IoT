@@ -75,10 +75,12 @@ public class LockAop {
 				throw new SystemException(TOO_MANY_REQUESTS);
 			}
 			return joinPoint.proceed();
-		} catch (Throwable throwable) {
+		}
+		catch (Throwable throwable) {
 			log.error("错误信息：{}，详情见日志", LogUtil.record(throwable.getMessage()), throwable);
 			throw throwable;
-		} finally {
+		}
+		finally {
 			// 释放锁
 			if (isLocked) {
 				lock.unlock(lockType, expression);

@@ -21,7 +21,7 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.redisson.api.RLock;
 
 /**
- * 锁类型枚举
+ * 锁类型枚举.
  *
  * @author laokou
  */

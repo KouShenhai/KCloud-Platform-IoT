@@ -128,8 +128,8 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	}
 
 	public UserDetail(Long id, String username, String avatar, Integer superAdmin, Integer status, String mail,
-					  String mobile, Long deptId, String deptPath, Set<String> deptPaths, Set<String> permissions, Long tenantId,
-					  String sourceName) {
+			String mobile, Long deptId, String deptPath, Set<String> deptPaths, Set<String> permissions, Long tenantId,
+			String sourceName) {
 		super(id);
 		this.username = username;
 		this.avatar = avatar;
@@ -248,7 +248,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 
 	/**
 	 * Get the OAuth 2.0 token attributes.
-	 *
 	 * @return the OAuth 2.0 token attributes
 	 */
 	@Override
@@ -273,7 +272,8 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (StringUtil.isNotEmpty(this.username)) {
 			try {
 				this.username = AESUtil.decrypt(this.username);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				throw new SystemException(USERNAME_AES_DECRYPT_FAIL);
 			}
 		}
@@ -283,7 +283,8 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (StringUtil.isNotEmpty(this.mail)) {
 			try {
 				this.mail = AESUtil.decrypt(this.mail);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				throw new SystemException(MAIL_AES_DECRYPT_FAIL);
 			}
 		}
@@ -293,7 +294,8 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (StringUtil.isNotEmpty(this.mobile)) {
 			try {
 				this.mobile = AESUtil.decrypt(this.mobile);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				throw new SystemException(MOBILE_AES_DECRYPT_FAIL);
 			}
 		}

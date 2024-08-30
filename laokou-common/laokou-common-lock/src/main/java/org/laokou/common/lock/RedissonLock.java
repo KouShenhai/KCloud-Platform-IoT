@@ -36,9 +36,8 @@ public class RedissonLock extends AbstractLock<RLock> {
 
 	/**
 	 * 获取锁.
-	 *
 	 * @param type 锁类型
-	 * @param key  键
+	 * @param key 键
 	 * @return RLock
 	 */
 	@Override
@@ -48,9 +47,8 @@ public class RedissonLock extends AbstractLock<RLock> {
 
 	/**
 	 * 尝试加锁.
-	 *
-	 * @param lock    锁
-	 * @param expire  过期时间
+	 * @param lock 锁
+	 * @param expire 过期时间
 	 * @param timeout 超时时间
 	 */
 	@Override
@@ -60,7 +58,8 @@ public class RedissonLock extends AbstractLock<RLock> {
 		if (redisUtil.tryLock(lock, expire, timeout)) {
 			log.info("线程：{}，加锁成功", threadName);
 			return true;
-		} else {
+		}
+		else {
 			log.info("线程：{}，获取锁失败", threadName);
 			return false;
 		}
@@ -68,7 +67,6 @@ public class RedissonLock extends AbstractLock<RLock> {
 
 	/**
 	 * 释放锁.
-	 *
 	 * @param lock 锁
 	 */
 	@Override
@@ -83,7 +81,8 @@ public class RedissonLock extends AbstractLock<RLock> {
 					redisUtil.unlock(lock);
 					log.info("解锁成功");
 				}
-			} else {
+			}
+			else {
 				log.info("无线程持有，无需解锁");
 			}
 		}

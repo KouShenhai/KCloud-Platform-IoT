@@ -28,7 +28,7 @@ import static org.laokou.common.lock.Type.LOCK;
  *
  * @author laokou
  */
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Lock4j {
