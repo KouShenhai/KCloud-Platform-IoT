@@ -2,6 +2,8 @@
 
 == 课程-介绍
 
+https://koushenhai.github.io[项目文档]
+
 link:开篇.html[开篇【必读】]
 
 == 课程-项目篇
