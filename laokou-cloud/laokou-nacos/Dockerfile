@@ -15,8 +15,8 @@
 #  */
 FROM docker.io/sunrdocker/jdk21-jre-font-openssl-alpine:latest
 LABEL maintainer="laokou"
-LABEL description="laokou-register"
-COPY target/laokou-register.jar app.jar
+LABEL description="laokou-nacos"
+COPY target/laokou-nacos.jar app.jar
 EXPOSE 8848
 # >/dev/null 2>&1 标准输出和错误输出重定向nacos.log
 CMD java $JVM_OPTS $NACOS_OPTS -jar app.jar >/opt/nacos.log 2>&1

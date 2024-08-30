@@ -170,9 +170,9 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
         └── laokou-common-tdengine                 --- 时序数据库组件
         └── laokou-common-sentinel                 --- 服务限流&熔断降级组件
 ├── laokou-cloud
+        └── laokou-nacos                           --- 服务治理
         └── laokou-gateway                         --- API网关
         └── laokou-monitor                         --- 服务监控
-        └── laokou-register                        --- 服务治理
         └── laokou-sentinel                        --- 流量治理
         └── laokou-snail-job                       --- 分布式任务调度
 ├── laokou-service

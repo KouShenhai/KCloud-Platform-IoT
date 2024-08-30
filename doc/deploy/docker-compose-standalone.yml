@@ -204,7 +204,7 @@ services:
         soft: -1
         hard: -1
   register:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.2.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-nacos:3.2.1
     container_name: register
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -217,7 +217,7 @@ services:
     volumes:
       - ./nacos/logs:/opt
     env_file:
-      - env/nacos.env
+      - env/register.env
     networks:
       - laokou_network
     depends_on:

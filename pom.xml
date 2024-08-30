@@ -197,7 +197,7 @@
         <DATASOURCE-USERNAME-SNAIL-JOB>root</DATASOURCE-USERNAME-SNAIL-JOB>
         <DATASOURCE-PASSWORD-SNAIL-JOB>laokou123</DATASOURCE-PASSWORD-SNAIL-JOB>
         <DATASOURCE-HOST>postgresql</DATASOURCE-HOST>
-        <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-NACOS>
+        <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-nacos&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-NACOS>
         <DATASOURCE-PARAM-SNAIL-JOB>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-SNAIL-JOB>
         <DATASOURCE-PORT>5432</DATASOURCE-PORT>
         <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
@@ -234,7 +234,7 @@
           ENC(L22TUOP+1sSFU+2G/O6+/GCGTudE8Gb2Haf+0rlMxohzTd2l5nmdszMg4Me/Ogae)
         </DATASOURCE-PASSWORD-SNAIL-JOB>
         <DATASOURCE-HOST>postgresql</DATASOURCE-HOST>
-        <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-NACOS>
+        <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-nacos&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-NACOS>
         <DATASOURCE-PARAM-SNAIL-JOB>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-SNAIL-JOB>
         <DATASOURCE-PORT>5432</DATASOURCE-PORT>
         <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
@@ -242,8 +242,8 @@
         <DATASOURCE-DB-NACOS>kcloud_platform_nacos</DATASOURCE-DB-NACOS>
         <DATASOURCE-DB-SNAIL-JOB>kcloud_platform_snail_job</DATASOURCE-DB-SNAIL-JOB>
         <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
-        <NACOS-DISCOVERY-ADDRESS>https://register:8848</NACOS-DISCOVERY-ADDRESS>
-        <NACOS-CONFIG-ADDRESS>https://register:8848</NACOS-CONFIG-ADDRESS>
+        <NACOS-DISCOVERY-ADDRESS>https://nacos:8848</NACOS-DISCOVERY-ADDRESS>
+        <NACOS-CONFIG-ADDRESS>https://nacos:8848</NACOS-CONFIG-ADDRESS>
         <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
@@ -282,7 +282,7 @@
         <DATASOURCE-HOST>${DATASOURCE_HOST:postgresql}</DATASOURCE-HOST>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PARAM-NACOS>
-          ${DATASOURCE_PARAM_NACOS:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-register&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified}
+          ${DATASOURCE_PARAM_NACOS:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-nacos&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified}
         </DATASOURCE-PARAM-NACOS>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PARAM-SNAIL-JOB>
@@ -303,9 +303,9 @@
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-NAMESPACE>${NACOS_NAMESPACE:8140e92b-fb43-48f5-b63b-7506185206a5}</NACOS-NAMESPACE>
         <!--suppress UnresolvedMavenProperty -->
-        <NACOS-DISCOVERY-ADDRESS>${NACOS_DISCOVERY_ADDRESS:https://register:8848}</NACOS-DISCOVERY-ADDRESS>
+        <NACOS-DISCOVERY-ADDRESS>${NACOS_DISCOVERY_ADDRESS:https://nacos:8848}</NACOS-DISCOVERY-ADDRESS>
         <!--suppress UnresolvedMavenProperty -->
-        <NACOS-CONFIG-ADDRESS>${NACOS_CONFIG_ADDRESS:https://register:8848}</NACOS-CONFIG-ADDRESS>
+        <NACOS-CONFIG-ADDRESS>${NACOS_CONFIG_ADDRESS:https://nacos:8848}</NACOS-CONFIG-ADDRESS>
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-GROUP>${NACOS_GROUP:LAOKOU_GROUP}</NACOS-GROUP>
         <!--suppress UnresolvedMavenProperty -->

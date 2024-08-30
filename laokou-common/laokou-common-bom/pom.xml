@@ -722,7 +722,7 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-register</artifactId>
+        <artifactId>laokou-nacos</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>

@@ -32,7 +32,7 @@
   <modules>
     <module>laokou-gateway</module>
     <module>laokou-monitor</module>
-    <module>laokou-register</module>
+    <module>laokou-nacos</module>
     <module>laokou-sentinel</module>
     <module>laokou-snail-job</module>
   </modules>
