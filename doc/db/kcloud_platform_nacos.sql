@@ -2072,7 +2072,7 @@ spring:
         # 自定义名称
         db0:
           nacos:
-            server-addr: http://nacos.laokou.org:8848
+            server-addr: http://nacos:8848
             namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
             data-id: auth-flow.json
             data-type: json
@@ -2402,7 +2402,7 @@ spring:
         # 自定义名称
         db0:
           nacos:
-            server-addr: https://nacos.laokou.org:8848
+            server-addr: https://nacos:8848
             namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
             group-id: LAOKOU_GROUP
             data-id: admin-flow.json
@@ -2412,7 +2412,7 @@ spring:
             password: nacos
         db1:
           nacos:
-            server-addr: https://nacos.laokou.org:8848
+            server-addr: https://nacos:8848
             namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
             group-id: LAOKOU_GROUP
             data-id: admin-degrade.json
@@ -2551,7 +2551,7 @@ spring:
         # 自定义名称
         db0:
           nacos:
-            server-addr: https://nacos.laokou.org:8848
+            server-addr: https://nacos:8848
             namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
             group-id: LAOKOU_GROUP
             data-id: admin-flow.json
@@ -2561,7 +2561,7 @@ spring:
             password: nacos
         db1:
           nacos:
-            server-addr: https://nacos.laokou.org:8848
+            server-addr: https://nacos:8848
             namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
             group-id: LAOKOU_GROUP
             data-id: admin-degrade.json
@@ -2732,7 +2732,7 @@ spring:
         # 自定义名称
         db0:
           nacos:
-            server-addr: https://nacos.laokou.org:8848
+            server-addr: https://nacos:8848
             namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
             data-id: auth-flow.json
             data-type: json
@@ -2914,7 +2914,7 @@ spring:
         # 自定义名称
         db0:
           nacos:
-            server-addr: https://nacos.laokou.org:8848
+            server-addr: https://nacos:8848
             namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
             data-id: auth-flow.json
             data-type: json
