@@ -173,7 +173,7 @@ spring:
     # redis
     redis:
       client-type: lettuce
-      host: redis.laokou.org
+      host: redis
       port: 6379
       password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
       connect-timeout: 60000ms #连接超时时长（毫秒）
@@ -233,7 +233,7 @@ spring:
         # key可以自定义
         db0:
           nacos:
-            server-addr: https://nacos.laokou.org:8848
+            server-addr: https://register:8848
             namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
             data-id: gateway-flow.json
             rule-type: gw_flow # 网关规则
@@ -335,7 +335,7 @@ spring:
   # elasticsearch
   elasticsearch:
     uris:
-     - https://elasticsearch.laokou.org:9200
+     - https://elasticsearch:9200
     username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
     password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
     connection-timeout: 30s
@@ -345,7 +345,7 @@ INSERT INTO "public"."config_info"
 VALUES (1270, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'rocketmq:
   producer:
     group: laokou_producer_group
-  name-server: rocketmq.laokou.org:9876
+  name-server: rocketmq:9876
   consumer:
     pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2023-01-21 10:43:04', '2023-11-06 18:10:30', 'nacos',
 		'0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'rocketmq公共配置', '', '', 'yaml', '', '');
@@ -723,7 +723,7 @@ spring:
       web-context-unify: false
       eager: true #开启饥饿加载，直接初始化
       transport:
-        dashboard: sentinel.laokou.org:8972
+        dashboard: sentinel:8972
 # actuator
 management:
   endpoints:
@@ -782,7 +782,7 @@ springdoc:
 INSERT INTO "public"."config_info"
 VALUES (2159, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
   kafka:
-    bootstrap-servers: kafka.laokou.org:9092
+    bootstrap-servers: kafka:9092
     consumer:
       # 禁用自动提交（按周期）已消费offset
       enable-auto-commit: false
@@ -863,7 +863,7 @@ spring:
         # key可以自定义
         db0:
           nacos:
-            server-addr: http://nacos.laokou.org:8848
+            server-addr: http://register:8848
             namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
             data-id: gateway-flow.json
             rule-type: gw_flow # 网关规则
@@ -986,7 +986,7 @@ spring:
     # redis
     redis:
       client-type: lettuce
-      host: redis.laokou.org
+      host: redis
       port: 6379
       password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
       connect-timeout: 60000ms #连接超时时长（毫秒）
@@ -1009,7 +1009,7 @@ spring:
   # elasticsearch
   elasticsearch:
     uris:
-     - https://elasticsearch.laokou.org:9200
+     - https://elasticsearch:9200
     username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
     password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
     connection-timeout: 30s
@@ -1020,7 +1020,7 @@ INSERT INTO "public"."config_info"
 VALUES (21, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'rocketmq:
   producer:
     group: laokou_producer_group
-  name-server: rocketmq.laokou.org:9876
+  name-server: rocketmq:9876
   consumer:
     pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2024-05-25 18:12:47.344', '2024-05-25 18:13:33.332',
 		NULL, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'rocketmq公共配置', NULL, NULL, 'yaml', NULL,
@@ -1108,7 +1108,7 @@ VALUES (39, 'application-report.yaml', 'LAOKOU_GROUP', 'server:
 INSERT INTO "public"."config_info"
 VALUES (40, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
   kafka:
-    bootstrap-servers: kafka.laokou.org:9092
+    bootstrap-servers: kafka:9092
     consumer:
       # 禁用自动提交（按周期）已消费offset
       enable-auto-commit: false
@@ -1263,7 +1263,7 @@ spring:
       web-context-unify: false
       eager: true #开启饥饿加载，直接初始化
       transport:
-        dashboard: sentinel.laokou.org:8972
+        dashboard: sentinel:8972
 
 # actuator
 management:
@@ -1332,7 +1332,7 @@ spring:
     # redis
     redis:
       client-type: lettuce
-      host: redis.laokou.org
+      host: redis
       port: 6379
       password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
       connect-timeout: 60000ms #连接超时时长（毫秒）
@@ -1392,7 +1392,7 @@ spring:
         # key可以自定义
         db0:
           nacos:
-            server-addr: https://nacos.laokou.org:8848
+            server-addr: https://register:8848
             namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
             data-id: gateway-flow.json
             rule-type: gw_flow # 网关规则
@@ -1494,7 +1494,7 @@ spring:
   # elasticsearch
   elasticsearch:
     uris:
-     - https://elasticsearch.laokou.org:9200
+     - https://elasticsearch:9200
     username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
     password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
     connection-timeout: 30s
@@ -1505,7 +1505,7 @@ INSERT INTO "public"."config_info"
 VALUES (30, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'rocketmq:
   producer:
     group: laokou_producer_group
-  name-server: rocketmq.laokou.org:9876
+  name-server: rocketmq:9876
   consumer:
     pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2024-05-25 18:13:10.582', '2024-05-25 18:13:10.582',
 		NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'rocketmq公共配置', NULL, NULL, 'yaml', NULL,
@@ -1674,7 +1674,7 @@ VALUES (57, 'admin-flow.json', 'LAOKOU_GROUP', '[
 INSERT INTO "public"."config_info"
 VALUES (62, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
   kafka:
-    bootstrap-servers: kafka.laokou.org:9092
+    bootstrap-servers: kafka:9092
     consumer:
       # 禁用自动提交（按周期）已消费offset
       enable-auto-commit: false
@@ -1746,7 +1746,7 @@ spring:
         # 自定义名称
         db0:
           nacos:
-            server-addr: http://nacos.laokou.org:8848
+            server-addr: http://register:8848
             namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
             group-id: LAOKOU_GROUP
             data-id: admin-flow.json
@@ -1756,7 +1756,7 @@ spring:
             password: nacos
         db1:
           nacos:
-            server-addr: http://nacos.laokou.org:8848
+            server-addr: http://register:8848
             namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
             group-id: LAOKOU_GROUP
             data-id: admin-degrade.json
@@ -1789,7 +1789,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -1804,7 +1804,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -1845,7 +1845,7 @@ snail-job:
   # 任务调度服务器信息
   server:
     # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
-    host: snail.job.laokou.org
+    host: job
     # 服务器通讯端口（不是后台管理页面服务端口）
     port: 1788
   # 命名空间
@@ -1946,7 +1946,7 @@ spring:
       web-context-unify: false
       eager: true #开启饥饿加载，直接初始化
       transport:
-        dashboard: sentinel.laokou.org:8972
+        dashboard: sentinel:8972
 # actuator
 management:
   endpoints:
@@ -2036,7 +2036,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2051,7 +2051,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2173,7 +2173,7 @@ snail-job:
   # 任务调度服务器信息
   server:
     # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
-    host: snail.job.laokou.org
+    host: job
     # 服务器通讯端口（不是后台管理页面服务端口）
     port: 1788
   # 命名空间
@@ -2445,7 +2445,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2460,7 +2460,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2501,7 +2501,7 @@ snail-job:
   # 任务调度服务器信息
   server:
     # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
-    host: snail.job.laokou.org
+    host: job
     # 服务器通讯端口（不是后台管理页面服务端口）
     port: 1788
   # 命名空间
@@ -2594,7 +2594,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2609,7 +2609,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2650,7 +2650,7 @@ snail-job:
   # 任务调度服务器信息
   server:
     # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
-    host: snail.job.laokou.org
+    host: job
     # 服务器通讯端口（不是后台管理页面服务端口）
     port: 1788
   # 命名空间
@@ -2696,7 +2696,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2711,7 +2711,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2833,7 +2833,7 @@ snail-job:
   # 任务调度服务器信息
   server:
     # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
-    host: snail.job.laokou.org
+    host: job
     # 服务器通讯端口（不是后台管理页面服务端口）
     port: 1788
   # 命名空间
@@ -2878,7 +2878,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2893,7 +2893,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql.laokou.org:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-register&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -3015,7 +3015,7 @@ snail-job:
   # 任务调度服务器信息
   server:
     # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
-    host: snail.job.laokou.org
+    host: job
     # 服务器通讯端口（不是后台管理页面服务端口）
     port: 1788
   # 命名空间

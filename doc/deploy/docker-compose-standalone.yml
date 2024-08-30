@@ -105,7 +105,7 @@ services:
       # 定义kafka服务端socket监听端口
       - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
       # 外网访问地址
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka.laokou.org:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
       # 允许使用PLAINTEXT监听器，默认false，不建议在生产环境使用
       - ALLOW_PLAINTEXT_LISTENER=yes
       # 设置broker最大内存，和初始内存
@@ -118,8 +118,6 @@ services:
     privileged: true
     networks:
       - laokou_network
-    extra_hosts:
-      - "kafka.laokou.org:192.168.30.1"
   rocketmq-namesrv:
     image: apache/rocketmq:5.3.0
     container_name: rocketmq-namesrv
@@ -142,6 +140,8 @@ services:
     tty: true
     restart: always
     privileged: true
+    extra_hosts:
+      - "rocketmq:rocketmq-broker"
     ports:
       - "10909:10909"
       - "10911:10911"
@@ -218,8 +218,6 @@ services:
       - ./nacos/logs:/opt
     env_file:
       - env/nacos.env
-    extra_hosts:
-      - "postgresql.laokou.org:192.168.30.1"
     networks:
       - laokou_network
     depends_on:
@@ -237,8 +235,6 @@ services:
       - ./sentinel/logs:/opt
     env_file:
       - env/sentinel.env
-    extra_hosts:
-      - "sentinel.laokou.org:192.168.30.1"
     networks:
       - laokou_network
   monitor:
@@ -254,9 +250,6 @@ services:
       - ./monitor/logs:/opt
     env_file:
       - env/monitor.env
-    extra_hosts:
-      - "monitor.laokou.org:192.168.30.1"
-      - "nacos.laokou.org:192.168.30.1"
     depends_on:
       - admin
       - auth
@@ -275,10 +268,6 @@ services:
       - "5555:5555"
     volumes:
       - ./gateway/logs:/opt
-    extra_hosts:
-      - "nacos.laokou.org:192.168.30.1"
-      - "kafka.laokou.org:192.168.30.1"
-      - "redis.laokou.org:192.168.30.1"
     restart: always
     privileged: true
     networks:
@@ -296,12 +285,6 @@ services:
       - "1111:1111"
     volumes:
       - ./auth/logs:/opt
-    extra_hosts:
-      - "nacos.laokou.org:192.168.30.1"
-      - "kafka.laokou.org:192.168.30.1"
-      - "redis.laokou.org:192.168.30.1"
-      - "postgresql.laokou.org:192.168.30.1"
-      - "vue.laokou.org:192.168.30.1"
     restart: always
     privileged: true
     networks:
@@ -320,13 +303,6 @@ services:
       - "9990:9990"
     volumes:
       - ./admin/logs:/opt
-    extra_hosts:
-      - "nacos.laokou.org:192.168.30.1"
-      - "kafka.laokou.org:192.168.30.1"
-      - "redis.laokou.org:192.168.30.1"
-      - "postgresql.laokou.org:192.168.30.1"
-      - "rocketmq.laokou.org:192.168.30.1"
-      - "elasticsearch.laokou.org:192.168.30.1"
     restart: always
     privileged: true
     networks:
@@ -345,10 +321,6 @@ services:
       - "10003:10003"
     volumes:
       - ./logstash/logs:/opt
-    extra_hosts:
-      - "nacos.laokou.org:192.168.30.1"
-      - "kafka.laokou.org:192.168.30.1"
-      - "elasticsearch.laokou.org:192.168.30.1"
     restart: always
     privileged: true
     networks:
@@ -371,10 +343,6 @@ services:
       - ./nginx/ssl:/etc/nginx/ssl
       - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/logs:/var/log/nginx
-    extra_hosts:
-      - "vue.laokou.org:192.168.30.1"
-      - "api.laokou.org:192.168.30.1"
-      - "nginx.laokou.org:192.168.30.1"
     networks:
       - laokou_network
     depends_on:

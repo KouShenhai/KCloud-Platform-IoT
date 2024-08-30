@@ -109,7 +109,7 @@
       </PatternLayout>
       <Property name="max.block.ms">2000</Property>
       <Property name="request.timeout.ms">2000</Property>
-      <Property name="bootstrap.servers">kafka.laokou.org:9092</Property>
+      <Property name="bootstrap.servers">kafka:9092</Property>
     </Kafka>
   </Appenders>
   <Loggers>
