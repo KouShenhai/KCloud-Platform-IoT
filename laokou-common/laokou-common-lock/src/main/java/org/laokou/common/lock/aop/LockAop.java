@@ -29,7 +29,7 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.lock.Lock;
 import org.laokou.common.lock.RedissonLock;
-import org.laokou.common.lock.TypeEnum;
+import org.laokou.common.lock.Type;
 import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
@@ -62,7 +62,7 @@ public class LockAop {
 		long expire = lock4j.expire();
 		long timeout = lock4j.timeout();
 		int retry = lock4j.retry();
-		final TypeEnum lockType = lock4j.type();
+		final Type lockType = lock4j.type();
 		Lock lock = new RedissonLock(redisUtil);
 		boolean isLocked = false;
 		try {
@@ -75,12 +75,10 @@ public class LockAop {
 				throw new SystemException(TOO_MANY_REQUESTS);
 			}
 			return joinPoint.proceed();
-		}
-		catch (Throwable throwable) {
+		} catch (Throwable throwable) {
 			log.error("错误信息：{}，详情见日志", LogUtil.record(throwable.getMessage()), throwable);
 			throw throwable;
-		}
-		finally {
+		} finally {
 			// 释放锁
 			if (isLocked) {
 				lock.unlock(lockType, expression);

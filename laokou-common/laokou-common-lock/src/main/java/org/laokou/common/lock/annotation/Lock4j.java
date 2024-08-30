@@ -17,18 +17,18 @@
 
 package org.laokou.common.lock.annotation;
 
-import org.laokou.common.lock.TypeEnum;
+import org.laokou.common.lock.Type;
 
 import java.lang.annotation.*;
 
-import static org.laokou.common.lock.TypeEnum.LOCK;
+import static org.laokou.common.lock.Type.LOCK;
 
 /**
  * 分布式式锁注解.
  *
  * @author laokou
  */
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Lock4j {
@@ -51,7 +51,7 @@ public @interface Lock4j {
 	/**
 	 * 分布式锁类型.
 	 */
-	TypeEnum type() default LOCK;
+	Type type() default LOCK;
 
 	/**
 	 * 重试次数，默认3次.

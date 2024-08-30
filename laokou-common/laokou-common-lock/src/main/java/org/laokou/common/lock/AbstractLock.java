@@ -26,40 +26,44 @@ public abstract class AbstractLock<T> implements Lock {
 
 	/**
 	 * 尝试加锁.
-	 * @param typeEnum 类型
-	 * @param key 键
-	 * @param expire 过期时间
+	 *
+	 * @param type    类型
+	 * @param key     键
+	 * @param expire  过期时间
 	 * @param timeout 锁等待超时时间
 	 * @return Boolean
 	 * @throws InterruptedException 线程中断异常
 	 */
 	@Override
-	public Boolean tryLock(TypeEnum typeEnum, String key, long expire, long timeout) throws InterruptedException {
-		return tryLock(getLock(typeEnum, key), expire, timeout);
+	public Boolean tryLock(Type type, String key, long expire, long timeout) throws InterruptedException {
+		return tryLock(getLock(type, key), expire, timeout);
 	}
 
 	/**
 	 * 释放锁.
-	 * @param typeEnum 锁类型
-	 * @param key 键
+	 *
+	 * @param type 锁类型
+	 * @param key  键
 	 */
 	@Override
-	public void unlock(TypeEnum typeEnum, String key) {
-		unlock(getLock(typeEnum, key));
+	public void unlock(Type type, String key) {
+		unlock(getLock(type, key));
 	}
 
 	/**
 	 * 获取锁.
-	 * @param typeEnum 锁类型
-	 * @param key 键
+	 *
+	 * @param type 锁类型
+	 * @param key  键
 	 * @return T
 	 */
-	public abstract T getLock(TypeEnum typeEnum, String key);
+	public abstract T getLock(Type type, String key);
 
 	/**
 	 * 尝试加锁.
-	 * @param lock 锁
-	 * @param expire 过期时间
+	 *
+	 * @param lock    锁
+	 * @param expire  过期时间
 	 * @param timeout 线程等待超时时间
 	 * @return Boolean
 	 * @throws InterruptedException 线程中断异常
@@ -68,6 +72,7 @@ public abstract class AbstractLock<T> implements Lock {
 
 	/**
 	 * 释放锁.
+	 *
 	 * @param lock 锁
 	 */
 	public abstract void unlock(T lock);

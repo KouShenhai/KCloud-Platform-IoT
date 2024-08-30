@@ -26,20 +26,22 @@ public interface Lock {
 
 	/**
 	 * 尝试加锁.
-	 * @param typeEnum 类型
-	 * @param key 键
-	 * @param expire 过期时间
+	 *
+	 * @param type    类型
+	 * @param key     键
+	 * @param expire  过期时间
 	 * @param timeout 锁等待超时时间
 	 * @return Boolean
 	 * @throws InterruptedException 线程中断异常
 	 */
-	Boolean tryLock(TypeEnum typeEnum, String key, long expire, long timeout) throws InterruptedException;
+	Boolean tryLock(Type type, String key, long expire, long timeout) throws InterruptedException;
 
 	/**
 	 * 释放锁.
-	 * @param typeEnum 锁类型
-	 * @param key 键
+	 *
+	 * @param type 锁类型
+	 * @param key  键
 	 */
-	void unlock(TypeEnum typeEnum, String key);
+	void unlock(Type type, String key);
 
 }
