@@ -78,8 +78,8 @@
     <docker.host>tcp://127.0.0.1:2375</docker.host>
     <docker.registry>registry.cn-shenzhen.aliyuncs.com</docker.registry>
     <docker.namespace>koushenhai</docker.namespace>
-    <docker.username>koushenhai</docker.username>
-    <docker.password>5201314qsh</docker.password>
+    <docker.username>username</docker.username>
+    <docker.password>password</docker.password>
     <docker-maven-plugin.version>0.45.0</docker-maven-plugin.version>
     <maven-checkstyle-plugin.version>3.5.0</maven-checkstyle-plugin.version>
     <native-maven-plugin.version>0.10.2</native-maven-plugin.version>
