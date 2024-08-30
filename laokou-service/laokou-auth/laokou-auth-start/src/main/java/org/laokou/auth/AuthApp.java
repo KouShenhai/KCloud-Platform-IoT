@@ -22,6 +22,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.core.annotation.EnableWarmUp;
+import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
@@ -52,9 +53,9 @@ import java.net.InetAddress;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
-@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
-@SpringBootApplication(scanBasePackages = "org.laokou", exclude = { OAuth2AuthorizationServerAutoConfiguration.class,
-		OAuth2AuthorizationServerJwtAutoConfiguration.class })
+@ServletComponentScan(basePackageClasses = {ShutdownFilter.class})
+@SpringBootApplication(scanBasePackages = "org.laokou", exclude = {OAuth2AuthorizationServerAutoConfiguration.class,
+	OAuth2AuthorizationServerJwtAutoConfiguration.class})
 public class AuthApp {
 
 	/**
@@ -78,6 +79,8 @@ public class AuthApp {
 		// -Dcsp.sentinel.api.port=8722
 		// -Dserver.port=1111
 		// @formatter:on
+		// 忽略SSL认证
+		SslUtil.ignoreSSLTrust();
 		new SpringApplicationBuilder(AuthApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

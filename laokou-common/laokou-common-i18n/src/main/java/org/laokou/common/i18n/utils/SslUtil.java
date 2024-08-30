@@ -19,6 +19,7 @@ package org.laokou.common.i18n.utils;
 
 import lombok.SneakyThrows;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -37,6 +38,7 @@ public class SslUtil {
 
 	/**
 	 * ssl上下文.
+	 *
 	 * @return ssl上下文
 	 */
 	@SneakyThrows
@@ -44,12 +46,17 @@ public class SslUtil {
 		// X.509是密码学里公钥证书的格式标准，作为证书标准
 		X509TrustManager disabledTrustManager = new DisableValidationTrustManager();
 		// 信任库
-		TrustManager[] trustManagers = new TrustManager[] { disabledTrustManager };
+		TrustManager[] trustManagers = new TrustManager[]{disabledTrustManager};
 		// 怎么选择加密协议，请看 ProtocolVersion
 		// 为什么能找到对应的加密协议 请查看 SSLContextSpi
 		SSLContext sslContext = SSLContext.getInstance(TLS_PROTOCOL_VERSION);
 		sslContext.init(null, trustManagers, new SecureRandom());
 		return sslContext;
+	}
+
+	public static void ignoreSSLTrust() {
+		HttpsURLConnection.setDefaultSSLSocketFactory(sslContext().getSocketFactory());
+		HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> true);
 	}
 
 	public static class DisableValidationTrustManager implements X509TrustManager {

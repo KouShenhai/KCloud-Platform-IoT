@@ -19,6 +19,7 @@ package org.laokou.gateway;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
+import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
 import org.laokou.gateway.annotation.EnableAuth;
 import org.springframework.boot.WebApplicationType;
@@ -45,7 +46,7 @@ import java.net.InetAddress;
 @EnableReactiveRedisRepository
 @EnableAspectJAutoProxy(exposeProxy = true)
 @SpringBootApplication(scanBasePackages = "org.laokou",
-		exclude = { RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
+	exclude = {RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class})
 public class GatewayApp {
 
 	/**
@@ -65,6 +66,8 @@ public class GatewayApp {
 		// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
 		// -Dserver.port=5555
 		// @formatter:on
+		// 忽略SSL认证
+		SslUtil.ignoreSSLTrust();
 		// 开启reactor的上下文传递
 		Hooks.enableAutomaticContextPropagation();
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
