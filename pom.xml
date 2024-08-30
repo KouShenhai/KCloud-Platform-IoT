@@ -145,6 +145,11 @@
   </dependencyManagement>
   <repositories>
     <repository>
+      <id>ali-maven</id>
+      <name>ALiYun Maven</name>
+      <url>https://maven.aliyun.com/nexus/content/repositories/central/</url>
+    </repository>
+    <repository>
       <id>maven-central</id>
       <name>Maven Central</name>
       <url>https://repo.maven.apache.org/maven2</url>
@@ -382,7 +387,7 @@
             <arg>-Xlint:-options</arg>
             <!--  启用对可变参数使用的警告 -->
             <arg>-Xlint:varargs</arg>
-            <!-- 启用对使用原始类型（`raw types`）的警告 -->
+            <!-- 启用对使用原始类型raw types的警告 -->
             <arg>-Xlint:rawtypes</arg>
             <!-- 启用对未检查的操作的警告，比如未检查的类型转换 -->
             <arg>-Xlint:unchecked</arg>
@@ -398,6 +403,7 @@
         <artifactId>maven-archetype-plugin</artifactId>
         <version>${maven-archetype-plugin.version}</version>
       </plugin>
+      <!-- 执行Docker镜像的构建、推送和运行等操作 -->
       <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>docker-maven-plugin</artifactId>
