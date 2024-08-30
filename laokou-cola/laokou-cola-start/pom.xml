@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-cola</artifactId>
-    <version>3.3.4</version>
+    <version>3.4.0</version>
   </parent>
 
   <artifactId>laokou-cola-start</artifactId>
