@@ -59,12 +59,13 @@ module.exports = {
 							{text: 'SSL证书', link: '/pages/10bfa8/'},
 							{text: '一键修改项目模块', link: '/pages/10bfa9/'},
 							{text: '一键生成项目骨架', link: '/pages/1e1e32/'},
-							{text: '一键修改项目版本号', link: '/pages/77f103/'}
+							{text: '一键修改项目版本号', link: '/pages/77f103/'},
+							{text: '一键跳过测试用例', link: '/pages/843853/'},
 						]
 					},
 					{
 						text: '项目部署', link: '/test2', items: [
-							{text: '测试', link: '/test'},
+							{text: '项目部署之镜像打包与推送', link: '/pages/61389d/'}
 						]
 					},
 					{
@@ -88,9 +89,11 @@ module.exports = {
 		repo: 'KouShenhai/KCloud-Platform-IoT', // 导航栏右侧生成Github链接
 		searchMaxSuggestions: 10, // 搜索结果显示最大数
 		lastUpdated: '上次更新', // 更新的时间，及前缀文字   string | boolean (取值为git提交时间)
+
 		// docsDir: 'docs', // 编辑的文件夹
 		// editLinks: true, // 编辑链接
 		// editLinkText: '编辑',
+
 		// 以下配置是Vdoing主题改动的和新增的配置
 		sidebar: {mode: 'structuring', collapsable: false}, // 侧边栏  'structuring' | { mode: 'structuring', collapsable: Boolean} | 'auto' | 自定义    温馨提示：目录页数据依赖于结构化的侧边栏数据，如果你不设置为'structuring',将无法使用目录页
 
