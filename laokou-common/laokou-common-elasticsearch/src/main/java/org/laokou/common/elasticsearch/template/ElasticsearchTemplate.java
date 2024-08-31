@@ -73,7 +73,7 @@ public class ElasticsearchTemplate {
 	public <TDocument> CompletableFuture<Boolean> asyncCreateIndex(String name, String alias, Class<TDocument> clazz) {
 		return asyncExist(List.of(name)).thenApplyAsync(resp -> {
 			if (resp) {
-				log.error("索引：{} -> 创建索引失败，索引已存在", name);
+				log.info("索引：{} -> 创建索引失败，索引已存在", name);
 				return Boolean.FALSE;
 			}
 			return Boolean.TRUE;
@@ -84,9 +84,8 @@ public class ElasticsearchTemplate {
 					if (response.acknowledged()) {
 						log.info("索引：{} -> 创建索引成功", name);
 						return Boolean.TRUE;
-					}
-					else {
-						log.error("索引：{} -> 创建索引失败", name);
+					} else {
+						log.info("索引：{} -> 创建索引失败", name);
 						return Boolean.FALSE;
 					}
 				});
@@ -99,7 +98,7 @@ public class ElasticsearchTemplate {
 	public <TDocument> void createIndex(String name, String alias, Class<TDocument> clazz) {
 		// 判断索引是否存在
 		if (exist(List.of(name))) {
-			log.error("索引：{} -> 创建索引失败，索引已存在", name);
+			log.info("索引：{} -> 创建索引失败，索引已存在", name);
 			return;
 		}
 		Document document = convert(name, alias, clazz);
@@ -107,25 +106,23 @@ public class ElasticsearchTemplate {
 		boolean acknowledged = createIndexResponse.acknowledged();
 		if (acknowledged) {
 			log.info("索引：{} -> 创建索引成功", name);
-		}
-		else {
-			log.error("索引：{} -> 创建索引失败", name);
+		} else {
+			log.info("索引：{} -> 创建索引失败", name);
 		}
 	}
 
 	@SneakyThrows
 	public void deleteIndex(List<String> names) {
 		if (!exist(names)) {
-			log.error("索引：{} -> 删除索引失败，索引不存在", StringUtil.collectionToDelimitedString(names, COMMA));
+			log.info("索引：{} -> 删除索引失败，索引不存在", StringUtil.collectionToDelimitedString(names, COMMA));
 			return;
 		}
 		DeleteIndexResponse deleteIndexResponse = elasticsearchClient.indices().delete(getDeleteIndexRequest(names));
 		boolean acknowledged = deleteIndexResponse.acknowledged();
 		if (acknowledged) {
 			log.info("索引：{} -> 删除索引成功", StringUtil.collectionToDelimitedString(names, COMMA));
-		}
-		else {
-			log.error("索引：{} -> 删除索引失败", StringUtil.collectionToDelimitedString(names, COMMA));
+		} else {
+			log.info("索引：{} -> 删除索引失败", StringUtil.collectionToDelimitedString(names, COMMA));
 		}
 	}
 
@@ -140,9 +137,8 @@ public class ElasticsearchTemplate {
 			.index(idx -> idx.index(index).refresh(Refresh.True).id(id).document(obj));
 		if (StringUtil.isNotEmpty(response.result().jsonValue())) {
 			log.info("索引：{} -> 同步索引成功", index);
-		}
-		else {
-			log.error("索引：{} -> 同步索引失败", index);
+		} else {
+			log.info("索引：{} -> 同步索引失败", index);
 		}
 	}
 
@@ -153,9 +149,8 @@ public class ElasticsearchTemplate {
 				if (StringUtil.isNotEmpty(resp.result().jsonValue())) {
 					log.info("索引：{} -> 异步同步索引成功", index);
 					return Boolean.TRUE;
-				}
-				else {
-					log.error("索引：{} -> 异步同步索引失败", index);
+				} else {
+					log.info("索引：{} -> 异步同步索引失败", index);
 					return Boolean.FALSE;
 				}
 			});
@@ -167,13 +162,11 @@ public class ElasticsearchTemplate {
 				.bulk(bulk -> bulk.index(index).refresh(Refresh.True).operations(getBulkOperations(map)))
 				.errors();
 			if (errors) {
-				log.error("索引：{} -> 批量同步索引失败", index);
-			}
-			else {
+				log.info("索引：{} -> 批量同步索引失败", index);
+			} else {
 				log.info("索引：{} -> 批量同步索引成功", index);
 			}
-		}
-		catch (Throwable e) {
+		} catch (Throwable e) {
 			log.error("批量同步索引失败，错误信息：{}", e.getMessage(), e);
 		}
 	}
@@ -184,10 +177,9 @@ public class ElasticsearchTemplate {
 			.bulk(bulk -> bulk.index(index).refresh(Refresh.True).operations(getBulkOperations(map)))
 			.thenApplyAsync(resp -> {
 				if (resp.errors()) {
-					log.error("索引：{} -> 异步批量同步索引失败", index);
+					log.info("索引：{} -> 异步批量同步索引失败", index);
 					return Boolean.FALSE;
-				}
-				else {
+				} else {
 					log.info("索引：{} -> 异步批量同步索引成功", index);
 					return Boolean.TRUE;
 				}
@@ -224,8 +216,7 @@ public class ElasticsearchTemplate {
 				Field field = clazz.getDeclaredField(k);
 				field.setAccessible(true);
 				ReflectionUtils.setField(field, source, v.getFirst());
-			}
-			catch (NoSuchFieldException e) {
+			} catch (NoSuchFieldException e) {
 				throw new RuntimeException(e);
 			}
 		});
@@ -236,8 +227,7 @@ public class ElasticsearchTemplate {
 			Field field = source.getClass().getDeclaredField(PRIMARY_KEY);
 			field.setAccessible(true);
 			ReflectionUtils.setField(field, source, id);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("ID赋值失败，错误信息：{}", e.getMessage(), e);
 		}
 	}
@@ -294,7 +284,7 @@ public class ElasticsearchTemplate {
 	}
 
 	private Map<String, co.elastic.clients.elasticsearch.core.search.HighlightField> getHighlightFieldMap(
-			List<Search.HighlightField> fields) {
+		List<Search.HighlightField> fields) {
 		return fields.stream().collect(Collectors.toMap(Search.HighlightField::getName, j -> {
 			co.elastic.clients.elasticsearch.core.search.HighlightField.Builder builder = new co.elastic.clients.elasticsearch.core.search.HighlightField.Builder();
 			builder.fragmentSize(j.getFragmentSize());
@@ -444,7 +434,7 @@ public class ElasticsearchTemplate {
 		String format = field.format();
 		boolean isIndex = field.index();
 		return new Document.Mapping(value, type, searchAnalyzer, analyzer, fieldData, eagerGlobalOrdinals, format,
-				isIndex);
+			isIndex);
 	}
 
 }
