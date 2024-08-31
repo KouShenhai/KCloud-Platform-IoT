@@ -22,6 +22,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.util.StringUtils;
 
 import java.util.Map;
 import java.util.Set;
@@ -39,7 +40,8 @@ public class ReactiveRequestUtil {
 
 	/**
 	 * 获取参数值.
-	 * @param request 请求对象
+	 *
+	 * @param request   请求对象
 	 * @param paramName 请求参数名称
 	 * @return 参数值
 	 */
@@ -55,6 +57,7 @@ public class ReactiveRequestUtil {
 
 	/**
 	 * 获取请求路径URL.
+	 *
 	 * @param request 请求对象
 	 * @return 路径URL
 	 */
@@ -64,6 +67,7 @@ public class ReactiveRequestUtil {
 
 	/**
 	 * 获取主机.
+	 *
 	 * @param request 请求对象
 	 * @return 主机
 	 */
@@ -73,15 +77,18 @@ public class ReactiveRequestUtil {
 
 	/**
 	 * 获取请求格式.
+	 *
 	 * @param request 请求对象
 	 * @return 请求格式
 	 */
 	public static MediaType getContentType(ServerHttpRequest request) {
-		return request.getHeaders().getContentType();
+		String value = request.getHeaders().getFirst("content-type");
+		return StringUtils.hasLength(value) ? MediaType.parseMediaType(value) : null;
 	}
 
 	/**
 	 * 获取请求方法.
+	 *
 	 * @param request 请求对象
 	 * @return 请求方法
 	 */
@@ -91,9 +98,10 @@ public class ReactiveRequestUtil {
 
 	/**
 	 * 路径匹配.
+	 *
 	 * @param requestMethod 请求方法
-	 * @param requestURL 请求路径URL
-	 * @param urlMap url集合
+	 * @param requestURL    请求路径URL
+	 * @param urlMap        url集合
 	 * @return 匹配结果
 	 */
 	public static boolean pathMatcher(String requestMethod, String requestURL, Map<String, Set<String>> urlMap) {
@@ -111,8 +119,9 @@ public class ReactiveRequestUtil {
 
 	/**
 	 * 路径匹配.
+	 *
 	 * @param requestURL 请求路径URL
-	 * @param url 路径URL
+	 * @param url        路径URL
 	 * @return 匹配结果
 	 */
 	public static boolean pathMatcher(String requestURL, String url) {
