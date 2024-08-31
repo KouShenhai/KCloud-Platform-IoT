@@ -13,7 +13,7 @@
 #  * See the License for the specific language governing permissions and
 #  * limitations under the License.
 #  */
-FROM docker.io/tabatad/jdk21
+FROM docker.io/domenicopiol/builder-graalvm21:latest
 LABEL maintainer="laokou"
 LABEL description="laokou-logstash"
 COPY target/laokou-logstash-start.jar app.jar

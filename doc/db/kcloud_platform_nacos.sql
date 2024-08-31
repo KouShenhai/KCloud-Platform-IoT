@@ -345,7 +345,7 @@ INSERT INTO "public"."config_info"
 VALUES (1270, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'rocketmq:
   producer:
     group: laokou_producer_group
-  name-server: rocketmq:9876
+  name-server: rocketmq-namesrv:9876
   consumer:
     pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2023-01-21 10:43:04', '2023-11-06 18:10:30', 'nacos',
 		'0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'rocketmq公共配置', '', '', 'yaml', '', '');
@@ -1020,7 +1020,7 @@ INSERT INTO "public"."config_info"
 VALUES (21, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'rocketmq:
   producer:
     group: laokou_producer_group
-  name-server: rocketmq:9876
+  name-server: rocketmq-namesrv:9876
   consumer:
     pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2024-05-25 18:12:47.344', '2024-05-25 18:13:33.332',
 		NULL, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'rocketmq公共配置', NULL, NULL, 'yaml', NULL,
@@ -1505,7 +1505,7 @@ INSERT INTO "public"."config_info"
 VALUES (30, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'rocketmq:
   producer:
     group: laokou_producer_group
-  name-server: rocketmq:9876
+  name-server: rocketmq-namesrv:9876
   consumer:
     pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2024-05-25 18:13:10.582', '2024-05-25 18:13:10.582',
 		NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'rocketmq公共配置', NULL, NULL, 'yaml', NULL,

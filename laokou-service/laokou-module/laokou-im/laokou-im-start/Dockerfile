@@ -14,7 +14,7 @@
 #  * limitations under the License.
 #  */
 # 基础镜像
-FROM docker.io/tabatad/jdk21
+FROM docker.io/domenicopiol/builder-graalvm21:latest
 # 信息
 LABEL maintainer="laokou"
 LABEL description="laokou-im"

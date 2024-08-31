@@ -155,26 +155,6 @@ services:
       - laokou_network
     depends_on:
       - rocketmq-namesrv
-  rocketmq:
-    image: apache/rocketmq:5.3.0
-    container_name: rocketmq
-    # 保持容器在没有守护程序的情况下运行
-    tty: true
-    restart: always
-    privileged: true
-    networks:
-      - laokou_network
-    depends_on:
-      - rocketmq-broker
-      - rocketmq-namesrv
-    ports:
-      - "8080:8080"
-      - "8081:8081"
-    environment:
-      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
-      - TZ=Asia/Shanghai
-      - NAMESRV_ADDR=rocketmq-namesrv:9876
-    command: sh mqproxy
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
     container_name: elasticsearch
@@ -291,6 +271,8 @@ services:
       - nacos
       - admin
       - job
+      - rocketmq-namesrv
+      - rocketmq-broker
   admin:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.4.0
     container_name: admin
@@ -310,6 +292,8 @@ services:
       - nacos
       - elasticsearch
       - job
+      - rocketmq-namesrv
+      - rocketmq-broker
   logstash:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.0
     container_name: logstash
@@ -328,6 +312,9 @@ services:
     depends_on:
       - nacos
       - elasticsearch
+      - kafka
+      - rocketmq-namesrv
+      - rocketmq-broker
   job:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-snail-job:3.4.0
     container_name: job
