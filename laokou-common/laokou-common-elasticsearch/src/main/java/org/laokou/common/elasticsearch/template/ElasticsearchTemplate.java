@@ -362,7 +362,7 @@ public class ElasticsearchTemplate {
 		TypeMapping.Builder mappingBuilder = new TypeMapping.Builder();
 		mappingBuilder.dynamic(DynamicMapping.True);
 		List<Document.Mapping> mappings = document.getMappings();
-		mappings.forEach(item -> setProperties(mappingBuilder, item));
+		mappings.forEach(item -> item.getType().setProperties(mappingBuilder, item));
 		return mappingBuilder.build();
 	}
 
@@ -379,30 +379,6 @@ public class ElasticsearchTemplate {
 		co.elastic.clients.elasticsearch._types.analysis.Analyzer.Builder analyzerBuilder = new co.elastic.clients.elasticsearch._types.analysis.Analyzer.Builder();
 		analyzerBuilder.custom(fn -> fn.filter(args.getFilter()).tokenizer(args.getTokenizer()));
 		return analyzerBuilder.build();
-	}
-
-	private void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
-		Type type = mapping.getType();
-		String field = mapping.getField();
-		String analyzer = mapping.getAnalyzer();
-		boolean fielddata = mapping.isFielddata();
-		String searchAnalyzer = mapping.getSearchAnalyzer();
-		boolean eagerGlobalOrdinals = mapping.isEagerGlobalOrdinals();
-		String format = mapping.getFormat();
-		switch (type) {
-			case TEXT -> mappingBuilder.properties(field,
-					fn -> fn.text(t -> t.index(true)
-						.fielddata(fielddata)
-						.eagerGlobalOrdinals(eagerGlobalOrdinals)
-						.searchAnalyzer(searchAnalyzer)
-						.analyzer(analyzer)));
-			case KEYWORD ->
-				mappingBuilder.properties(field, fn -> fn.keyword(t -> t.eagerGlobalOrdinals(eagerGlobalOrdinals)));
-			case LONG -> mappingBuilder.properties(field, fn -> fn.long_(t -> t));
-			case DATE -> mappingBuilder.properties(field, fn -> fn.date(t -> t.format(format)));
-			default -> {
-			}
-		}
 	}
 
 	private <TDocument> Document convert(String name, String alias, Class<TDocument> clazz) {
@@ -466,7 +442,9 @@ public class ElasticsearchTemplate {
 		boolean fieldData = field.fielddata();
 		boolean eagerGlobalOrdinals = field.eagerGlobalOrdinals();
 		String format = field.format();
-		return new Document.Mapping(value, type, searchAnalyzer, analyzer, fieldData, eagerGlobalOrdinals, format);
+		boolean isIndex = field.index();
+		return new Document.Mapping(value, type, searchAnalyzer, analyzer, fieldData, eagerGlobalOrdinals, format,
+				isIndex);
 	}
 
 }

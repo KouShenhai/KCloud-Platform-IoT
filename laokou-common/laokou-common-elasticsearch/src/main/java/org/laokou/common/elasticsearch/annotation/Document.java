@@ -62,6 +62,8 @@ public class Document {
 
 		private String format;
 
+		private boolean index;
+
 	}
 
 	@Data

@@ -100,7 +100,7 @@
           "level":"%-5level",
           "thread":"%thread",
           "logger":"%logger",
-          "msg":"%m"
+          "msg":"%enc{%m}{JSON}"
           }
         </pattern>
       </PatternLayout>

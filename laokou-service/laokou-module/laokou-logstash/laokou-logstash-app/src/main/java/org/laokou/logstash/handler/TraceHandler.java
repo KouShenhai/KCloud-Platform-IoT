@@ -17,7 +17,6 @@
 
 package org.laokou.logstash.handler;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -111,7 +110,6 @@ public class TraceHandler {
 	public final static class TraceIndex implements Serializable {
 
 		@Field(type = Type.LONG)
-		@JsonIgnoreProperties(ignoreUnknown = true)
 		private String id;
 
 		@Field(type = Type.KEYWORD)
@@ -123,10 +121,10 @@ public class TraceHandler {
 		@Field(type = Type.DATE, format = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS_SSS)
 		private String dateTime;
 
-		@Field(type = Type.KEYWORD)
+		@Field(type = Type.KEYWORD, index = true)
 		private String traceId;
 
-		@Field(type = Type.KEYWORD)
+		@Field(type = Type.KEYWORD, index = true)
 		private String spanId;
 
 		@Field(type = Type.KEYWORD)

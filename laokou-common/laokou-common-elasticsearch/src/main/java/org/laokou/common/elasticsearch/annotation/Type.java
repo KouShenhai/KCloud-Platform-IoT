@@ -17,6 +17,7 @@
 
 package org.laokou.common.elasticsearch.annotation;
 
+import co.elastic.clients.elasticsearch._types.mapping.TypeMapping;
 import lombok.Getter;
 
 /**
@@ -25,32 +26,128 @@ import lombok.Getter;
 @Getter
 public enum Type {
 
-	// @formatter:off
-	AUTO("auto"),
-	TEXT("text"),
-	KEYWORD("keyword"),
-	LONG("long"),
-	INTEGER("integer"),
-	SHORT("short"),
-	BYTE("byte"),
-	DOUBLE("double"),
-	FLOAT("float"),
-	DATE("date"),
-	BOOLEAN("boolean"),
-	BINARY("binary"),
-	INTEGER_RANGE("integer_range"),
-	FLOAT_RANGE("float_range"),
-	LONG_RANGE("long_range"),
-	DOUBLE_RANGE("double_range"),
-	DATE_RANGE("date_range"),
-	OBJECT("object"),
-	IP("ip");
-	// @formatter:on
+	AUTO {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
 
-	private final String value;
+		}
+	},
+	TEXT {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+			mappingBuilder.properties(mapping.getField(),
+					fn -> fn.text(t -> t.index(mapping.isIndex())
+						.fielddata(mapping.isFielddata())
+						.eagerGlobalOrdinals(mapping.isEagerGlobalOrdinals())
+						.searchAnalyzer(mapping.getSearchAnalyzer())
+						.analyzer(mapping.getAnalyzer())));
+		}
+	},
+	KEYWORD {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+			mappingBuilder.properties(mapping.getField(), fn -> fn
+				.keyword(t -> t.index(mapping.isIndex()).eagerGlobalOrdinals(mapping.isEagerGlobalOrdinals())));
+		}
+	},
+	LONG {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+			mappingBuilder.properties(mapping.getField(), fn -> fn.long_(t -> t.index(mapping.isIndex())));
+		}
+	},
+	INTEGER {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
 
-	Type(String value) {
-		this.value = value;
-	}
+		}
+	},
+	SHORT {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+
+		}
+	},
+	BYTE {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+
+		}
+	},
+	DOUBLE {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+
+		}
+	},
+	FLOAT {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+
+		}
+	},
+	DATE {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+			mappingBuilder.properties(mapping.getField(),
+					fn -> fn.date(t -> t.index(mapping.isIndex()).format(mapping.getFormat())));
+		}
+	},
+	BOOLEAN {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+
+		}
+	},
+	BINARY {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+
+		}
+	},
+	INTEGER_RANGE {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+
+		}
+	},
+	FLOAT_RANGE {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+
+		}
+	},
+	LONG_RANGE {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+
+		}
+	},
+	DOUBLE_RANGE {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+
+		}
+	},
+	DATE_RANGE {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+
+		}
+	},
+	OBJECT {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+
+		}
+	},
+	IP {
+		@Override
+		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
+
+		}
+	};
+
+	public abstract void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping);
 
 }

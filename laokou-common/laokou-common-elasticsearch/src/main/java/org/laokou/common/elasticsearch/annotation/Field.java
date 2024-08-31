@@ -38,4 +38,6 @@ public @interface Field {
 
 	String format() default "";
 
+	boolean index() default false;
+
 }
