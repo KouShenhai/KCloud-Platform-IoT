@@ -36,4 +36,6 @@ public @interface Field {
 
 	boolean eagerGlobalOrdinals() default false;
 
+	String format() default "";
+
 }

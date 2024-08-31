@@ -53,9 +53,9 @@ import java.net.InetAddress;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
-@ServletComponentScan(basePackageClasses = {ShutdownFilter.class})
-@SpringBootApplication(scanBasePackages = "org.laokou", exclude = {OAuth2AuthorizationServerAutoConfiguration.class,
-	OAuth2AuthorizationServerJwtAutoConfiguration.class})
+@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
+@SpringBootApplication(scanBasePackages = "org.laokou", exclude = { OAuth2AuthorizationServerAutoConfiguration.class,
+		OAuth2AuthorizationServerJwtAutoConfiguration.class })
 public class AuthApp {
 
 	/**

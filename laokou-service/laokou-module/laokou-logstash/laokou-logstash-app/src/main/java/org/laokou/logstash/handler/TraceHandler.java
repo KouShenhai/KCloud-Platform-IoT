@@ -17,12 +17,17 @@
 
 package org.laokou.logstash.handler;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.elasticsearch.annotation.Field;
+import org.laokou.common.elasticsearch.annotation.Index;
+import org.laokou.common.elasticsearch.annotation.Setting;
+import org.laokou.common.elasticsearch.annotation.Type;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -31,13 +36,13 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
+import static org.laokou.common.i18n.utils.DateUtil.Constant.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS_SSS;
 
 /**
  * @author laokou
@@ -53,26 +58,38 @@ public class TraceHandler {
 
 	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_trace_consumer_group")
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
-		Map<String, Object> dataMap = messages.stream()
-			.map(this::getTraceIndex)
-			.filter(Objects::nonNull)
-			.toList()
-			.stream()
-			.collect(Collectors.toMap(TraceIndex::getId, traceIndex -> traceIndex));
-		if (MapUtil.isNotEmpty(dataMap)) {
-			elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE, TraceIndex.class)
-				.thenAcceptAsync(res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap));
+		try {
+			Map<String, Object> dataMap = messages.stream()
+				.map(this::getTraceIndex)
+				.filter(Objects::nonNull)
+				.toList()
+				.stream()
+				.collect(Collectors.toMap(TraceIndex::getId, traceIndex -> traceIndex));
+			if (MapUtil.isNotEmpty(dataMap)) {
+				elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE, TraceIndex.class)
+					.thenAcceptAsync(res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap));
+			}
 		}
-		ack.acknowledge();
+		catch (Throwable e) {
+			log.error("分布式链路写入失败，错误信息：{}", e.getMessage(), e);
+		}
+		finally {
+			ack.acknowledge();
+		}
 	}
 
 	private TraceIndex getTraceIndex(String str) {
-		TraceIndex traceIndex = JacksonUtil.toBean(str, TraceIndex.class);
-		String traceId = traceIndex.getTraceId();
-		String spanId = traceIndex.getSpanId();
-		if (isTrace(traceId, spanId)) {
-			traceIndex.setId(String.valueOf(IdGenerator.defaultSnowflakeId()));
-			return traceIndex;
+		try {
+			TraceIndex traceIndex = JacksonUtil.toBean(str, TraceIndex.class);
+			String traceId = traceIndex.getTraceId();
+			String spanId = traceIndex.getSpanId();
+			if (isTrace(traceId, spanId)) {
+				traceIndex.setId(String.valueOf(IdGenerator.defaultSnowflakeId()));
+				return traceIndex;
+			}
+		}
+		catch (Exception ex) {
+			log.error("分布式链路日志JSON转换失败，错误信息：{}", ex.getMessage(), ex);
 		}
 		return null;
 	}
@@ -82,7 +99,7 @@ public class TraceHandler {
 	}
 
 	private boolean isTrace(String str) {
-		return StringUtil.isNotEmpty(str) && str.startsWith("${") && str.endsWith("}");
+		return StringUtil.isNotEmpty(str) && !str.startsWith("${") && !str.endsWith("}");
 	}
 
 	private String getIndexName() {
@@ -90,28 +107,41 @@ public class TraceHandler {
 	}
 
 	@Data
+	@Index(setting = @Setting(refreshInterval = "-1"))
 	public final static class TraceIndex implements Serializable {
 
+		@Field(type = Type.LONG)
+		@JsonIgnoreProperties(ignoreUnknown = true)
 		private String id;
 
+		@Field(type = Type.KEYWORD)
 		private String serviceId;
 
+		@Field(type = Type.KEYWORD)
 		private String profile;
 
-		private Instant dateTime;
+		@Field(type = Type.DATE, format = YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS_SSS)
+		private String dateTime;
 
+		@Field(type = Type.KEYWORD)
 		private String traceId;
 
+		@Field(type = Type.KEYWORD)
 		private String spanId;
 
+		@Field(type = Type.KEYWORD)
 		private String address;
 
+		@Field(type = Type.KEYWORD)
 		private String level;
 
+		@Field(type = Type.KEYWORD)
 		private String thread;
 
+		@Field(type = Type.KEYWORD)
 		private String logger;
 
+		@Field(type = Type.KEYWORD)
 		private String msg;
 
 	}

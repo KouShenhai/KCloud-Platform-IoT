@@ -68,6 +68,11 @@ public class DateUtil {
 	public static final int YYYYMMDD = 6;
 
 	/**
+	 * yyyy-MM-dd HH:mm:ss.SSS.
+	 */
+	public static final int YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS_SSS = 7;
+
+	/**
 	 * 星期一.
 	 */
 	public static final int MONDAY = 0;
@@ -77,7 +82,7 @@ public class DateUtil {
 	 */
 	private static final String[] TIME_PATTERNS = { Constant.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS,
 			Constant.YYYYMMDDHHMMSS, Constant.YYYYMM, Constant.YYYY_ROD_MM_ROD_DD, Constant.YYYY_TEXT_MM_TEXT_DD_TEXT,
-			Constant.YYYY_DOT_MM_DOT_DD, Constant.YYYYMMDD };
+			Constant.YYYY_DOT_MM_DOT_DD, Constant.YYYYMMDD, Constant.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS_SSS };
 
 	/**
 	 * 星期数组.
@@ -412,6 +417,11 @@ public class DateUtil {
 		 * yyyy-MM-dd HH:mm:ss.
 		 */
 		public static final String YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS = "yyyy-MM-dd HH:mm:ss";
+
+		/**
+		 * yyyy-MM-dd HH:mm:ss.SSS.
+		 */
+		public static final String YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
 
 		/**
 		 * yyyyMMddHHmmss.

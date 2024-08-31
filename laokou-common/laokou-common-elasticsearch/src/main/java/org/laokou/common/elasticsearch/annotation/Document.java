@@ -60,6 +60,8 @@ public class Document {
 
 		private boolean eagerGlobalOrdinals;
 
+		private String format;
+
 	}
 
 	@Data

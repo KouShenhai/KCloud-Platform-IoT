@@ -93,7 +93,7 @@
           {
           "serviceId":"${SERVICE_ID}",
           "profile":"test",
-          "dateTime":"%d{yyyy-MM-dd HH:mm:ss}",
+          "dateTime":"%d{yyyy-MM-dd HH:mm:ss.SSS}",
           "userId":"${ctx:user-id}",
           "username":"${ctx:user-name}",
           "tenantId":"${ctx:tenant-id}",

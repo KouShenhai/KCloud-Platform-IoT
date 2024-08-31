@@ -52,4 +52,4 @@ spring:
       enabled: true
 
 logging:
-  config: classpath:log4j2-test.xml
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml

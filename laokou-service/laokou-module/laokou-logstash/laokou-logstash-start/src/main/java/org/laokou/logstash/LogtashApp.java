@@ -19,6 +19,7 @@ package org.laokou.logstash;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
+import org.laokou.common.i18n.utils.SslUtil;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -53,6 +54,8 @@ public class LogtashApp {
 		// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
 		// -Dserver.port=10003
 		// @formatter:on
+		// 忽略SSL认证
+		SslUtil.ignoreSSLTrust();
 		new SpringApplicationBuilder(LogtashApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

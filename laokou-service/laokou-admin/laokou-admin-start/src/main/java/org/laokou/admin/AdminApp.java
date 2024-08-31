@@ -21,6 +21,7 @@ import com.aizuda.snailjob.client.starter.EnableSnailJob;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
+import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
@@ -77,6 +78,8 @@ public class AdminApp {
 		// -Dcsp.sentinel.api.port=8723
 		// -Dserver.port=9990
 		// @formatter:on
+		// 忽略SSL认证
+		SslUtil.ignoreSSLTrust();
 		new SpringApplicationBuilder(AdminApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

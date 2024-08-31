@@ -13,7 +13,7 @@ export default {
 	dev: {
 		'/api/': {
 			// 要代理的地址
-			target: 'https://laokou.org:5555',
+			target: 'https://gateway:5555',
 			changeOrigin: true,
 			secure: false,
 			pathRewrite: {'^/api': ''},

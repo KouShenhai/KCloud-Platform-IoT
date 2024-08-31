@@ -46,7 +46,7 @@ import java.net.InetAddress;
 @EnableReactiveRedisRepository
 @EnableAspectJAutoProxy(exposeProxy = true)
 @SpringBootApplication(scanBasePackages = "org.laokou",
-	exclude = {RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class})
+		exclude = { RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
 public class GatewayApp {
 
 	/**

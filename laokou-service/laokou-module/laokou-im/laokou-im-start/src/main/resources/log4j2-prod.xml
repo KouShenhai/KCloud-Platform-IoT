@@ -93,7 +93,7 @@
           {
           "serviceId":"${SERVICE_ID}",
           "profile":"prod",
-          "dateTime":"%d{yyyy-MM-dd HH:mm:ss}",
+          "dateTime":"%d{yyyy-MM-dd HH:mm:ss.SSS}",
           "traceId":"%X{traceId}",
           "spanId":"%X{spanId}",
           "address":"${sys:ip}:${sys:server.port}]",

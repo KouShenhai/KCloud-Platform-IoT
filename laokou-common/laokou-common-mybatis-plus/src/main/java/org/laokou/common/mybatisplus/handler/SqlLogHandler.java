@@ -19,8 +19,6 @@ package org.laokou.common.mybatisplus.handler;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.mybatisplus.handler.event.SqlLogEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.retry.annotation.Backoff;
@@ -33,7 +31,6 @@ import static org.laokou.common.core.config.TaskExecutorAutoConfig.THREAD_POOL_T
 /**
  * @author laokou
  */
-@Slf4j
 @Component
 @NonNullApi
 @RequiredArgsConstructor
@@ -43,7 +40,7 @@ public class SqlLogHandler {
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	@Retryable(retryFor = Exception.class, backoff = @Backoff(delay = 2000, multiplier = 1.5))
 	public void sqlLogMessage(SqlLogEvent sqlLogEvent) {
-		log.info("{}", JacksonUtil.toJsonStr(sqlLogEvent));
+
 	}
 
 }

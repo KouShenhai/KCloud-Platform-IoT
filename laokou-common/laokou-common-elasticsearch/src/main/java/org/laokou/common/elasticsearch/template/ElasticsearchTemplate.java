@@ -161,16 +161,20 @@ public class ElasticsearchTemplate {
 			});
 	}
 
-	@SneakyThrows
 	public void bulkCreateDocument(String index, Map<String, Object> map) {
-		boolean errors = elasticsearchClient
-			.bulk(bulk -> bulk.index(index).refresh(Refresh.True).operations(getBulkOperations(map)))
-			.errors();
-		if (errors) {
-			log.error("索引：{} -> 批量同步索引失败", index);
+		try {
+			boolean errors = elasticsearchClient
+				.bulk(bulk -> bulk.index(index).refresh(Refresh.True).operations(getBulkOperations(map)))
+				.errors();
+			if (errors) {
+				log.error("索引：{} -> 批量同步索引失败", index);
+			}
+			else {
+				log.info("索引：{} -> 批量同步索引成功", index);
+			}
 		}
-		else {
-			log.info("索引：{} -> 批量同步索引成功", index);
+		catch (Throwable e) {
+			log.error("批量同步索引失败，错误信息：{}", e.getMessage(), e);
 		}
 	}
 
@@ -384,6 +388,7 @@ public class ElasticsearchTemplate {
 		boolean fielddata = mapping.isFielddata();
 		String searchAnalyzer = mapping.getSearchAnalyzer();
 		boolean eagerGlobalOrdinals = mapping.isEagerGlobalOrdinals();
+		String format = mapping.getFormat();
 		switch (type) {
 			case TEXT -> mappingBuilder.properties(field,
 					fn -> fn.text(t -> t.index(true)
@@ -394,6 +399,7 @@ public class ElasticsearchTemplate {
 			case KEYWORD ->
 				mappingBuilder.properties(field, fn -> fn.keyword(t -> t.eagerGlobalOrdinals(eagerGlobalOrdinals)));
 			case LONG -> mappingBuilder.properties(field, fn -> fn.long_(t -> t));
+			case DATE -> mappingBuilder.properties(field, fn -> fn.date(t -> t.format(format)));
 			default -> {
 			}
 		}
@@ -459,7 +465,8 @@ public class ElasticsearchTemplate {
 		String analyzer = field.analyzer();
 		boolean fieldData = field.fielddata();
 		boolean eagerGlobalOrdinals = field.eagerGlobalOrdinals();
-		return new Document.Mapping(value, type, searchAnalyzer, analyzer, fieldData, eagerGlobalOrdinals);
+		String format = field.format();
+		return new Document.Mapping(value, type, searchAnalyzer, analyzer, fieldData, eagerGlobalOrdinals, format);
 	}
 
 }

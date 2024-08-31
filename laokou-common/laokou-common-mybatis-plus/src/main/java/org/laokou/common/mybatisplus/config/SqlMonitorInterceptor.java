@@ -57,10 +57,10 @@ public class SqlMonitorInterceptor implements Interceptor {
 		Object target = invocation.getTarget();
 		if (target instanceof StatementHandler statementHandler) {
 			// 替换空格、制表符、换页符
-			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", SPACE);
+			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", SPACE).replaceAll("\"", "'");
 			SpringContextUtil.publishEvent(
 					new SqlLogEvent("SQL日志", SpringContextUtil.getServiceId(), sql, time, DateUtil.nowInstant()));
-			log.info("\nConsume Time：{} ms \nExecute SQL：{}\n", time, sql);
+			log.info("Consume Time：{} ms Execute SQL：{}", time, sql);
 		}
 		return obj;
 	}
