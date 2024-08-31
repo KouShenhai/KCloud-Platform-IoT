@@ -61,6 +61,7 @@ module.exports = {
 							{text: '一键生成项目骨架', link: '/pages/1e1e32/'},
 							{text: '一键修改项目版本号', link: '/pages/77f103/'},
 							{text: '一键跳过测试用例', link: '/pages/843853/'},
+							{text: '一键生成后端COLA代码', link: '/pages/889fdb/'}
 						]
 					},
 					{
