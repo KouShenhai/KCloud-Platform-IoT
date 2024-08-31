@@ -140,8 +140,6 @@ services:
     tty: true
     restart: always
     privileged: true
-    extra_hosts:
-      - "rocketmq:rocketmq-broker"
     ports:
       - "10909:10909"
       - "10911:10911"
@@ -157,9 +155,9 @@ services:
       - laokou_network
     depends_on:
       - rocketmq-namesrv
-  rocketmq-proxy:
+  rocketmq:
     image: apache/rocketmq:5.3.0
-    container_name: rocketmq-proxy
+    container_name: rocketmq
     # 保持容器在没有守护程序的情况下运行
     tty: true
     restart: always
@@ -203,9 +201,9 @@ services:
       memlock:
         soft: -1
         hard: -1
-  register:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-nacos:3.2.1
-    container_name: register
+  nacos:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-nacos:3.4.0
+    container_name: nacos
     # 保持容器在没有守护程序的情况下运行
     tty: true
     restart: always
@@ -217,13 +215,13 @@ services:
     volumes:
       - ./nacos/logs:/opt
     env_file:
-      - env/register.env
+      - env/nacos.env
     networks:
       - laokou_network
     depends_on:
       - postgresql
   sentinel:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sentinel:3.2.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sentinel:3.4.0
     container_name: sentinel
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -238,7 +236,7 @@ services:
     networks:
       - laokou_network
   monitor:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.2.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.4.0
     container_name: monitor
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -258,7 +256,7 @@ services:
     networks:
       - laokou_network
   gateway:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.2.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.4.0
     container_name: gateway
     tty: true
     env_file:
@@ -273,9 +271,9 @@ services:
     networks:
       - laokou_network
     depends_on:
-      - register
+      - nacos
   auth:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.2.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.4.0
     container_name: auth
     tty: true
     env_file:
@@ -290,10 +288,11 @@ services:
     networks:
       - laokou_network
     depends_on:
-      - register
+      - nacos
       - admin
+      - job
   admin:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.2.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.4.0
     container_name: admin
     tty: true
     env_file:
@@ -308,10 +307,11 @@ services:
     networks:
       - laokou_network
     depends_on:
-      - register
+      - nacos
       - elasticsearch
+      - job
   logstash:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.2.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.0
     container_name: logstash
     tty: true
     env_file:
@@ -326,27 +326,43 @@ services:
     networks:
       - laokou_network
     depends_on:
-      - register
+      - nacos
       - elasticsearch
-  nginx:
-    image: nginx:latest
-    container_name: nginx
-    # 保持容器在没有守护程序的情况下运行
+  job:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-snail-job:3.4.0
+    container_name: job
     tty: true
+    env_file:
+      - env/job.env
+    ports:
+      - "8088:8088"
+    volumes:
+      - ./job/logs:/opt
     restart: always
     privileged: true
-    ports:
-      - "443:443"
-      - "80:80"
-    volumes:
-      - ./nginx/dist:/usr/share/nginx/dist
-      - ./nginx/ssl:/etc/nginx/ssl
-      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/logs:/var/log/nginx
     networks:
       - laokou_network
     depends_on:
-      - admin
+      - postgresql
+#  nginx:
+#    image: nginx:latest
+#    container_name: nginx
+#    # 保持容器在没有守护程序的情况下运行
+#    tty: true
+#    restart: always
+#    privileged: true
+#    ports:
+#      - "443:443"
+#      - "80:80"
+#    volumes:
+#      - ./nginx/dist:/usr/share/nginx/dist
+#      - ./nginx/ssl:/etc/nginx/ssl
+#      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+#      - ./nginx/logs:/var/log/nginx
+#    networks:
+#      - laokou_network
+#    depends_on:
+#      - admin
 
 networks:
   laokou_network:

@@ -20,6 +20,7 @@ package org.laokou.monitor;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import lombok.SneakyThrows;
+import org.laokou.common.i18n.utils.SslUtil;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -54,7 +55,10 @@ public class MonitorApp {
 		// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
 		// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
 		// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
+		// -Dserver.port=5000
 		// @formatter:on
+		// 忽略SSL认证
+		SslUtil.ignoreSSLTrust();
 		new SpringApplicationBuilder(MonitorApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 
