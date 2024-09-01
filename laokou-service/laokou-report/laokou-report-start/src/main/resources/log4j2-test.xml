@@ -33,8 +33,12 @@
     <!-- -Dlog4j.skipJansi=false -->
     <!-- 日志格式 -->
     <!--
-        %d 日期
-        %t 线程
+			%d 日期
+			%t 线程
+
+			对于系统参数，使用${sys:xxx}即可，例如读取-Dserver.port=1111，即${sys:server.port}
+			spanId  => %X{spanId}
+			traceId => %X{traceId}
     -->
     <property name="LOG_CONSOLE_PATTERN"
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ip}:${sys:server.port}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
@@ -63,55 +67,14 @@
       </Policies>
       <DefaultRolloverStrategy max="${LOG_DAYS}"/>
     </RollingRandomAccessFile>
-    <RollingRandomAccessFile name="failover_kafka" fileName="${LOG_PATH}/${SERVICE_ID}_kafka.log"
-                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_kafka_%d{yyyy-MM-dd}.%i.log.gz"
-                             immediateFlush="false">
-      <Filters>
-        <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
-      </Filters>
-      <PatternLayout pattern="${LOG_FILE_PATTERN}"/>
-      <Policies>
-        <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
-        <SizeBasedTriggeringPolicy size="${LOG_ROLL_SIZE}"/>
-      </Policies>
-      <DefaultRolloverStrategy max="${LOG_DAYS}"/>
-    </RollingRandomAccessFile>
-    <Failover name="failover" primary="kafka" retryIntervalSeconds="600">
-      <Failovers>
-        <AppenderRef ref="failover_kafka"/>
-      </Failovers>
-    </Failover>
     <Async name="async_file" bufferSize="2000" blocking="false">
       <AppenderRef ref="file"/>
     </Async>
-    <Async name="async_kafka" bufferSize="2000" blocking="false">
-      <AppenderRef ref="failover"/>
-    </Async>
-    <Kafka name="kafka" topic="laokou_trace_topic" ignoreExceptions="false">
-      <PatternLayout>
-        <pattern>
-          {
-          "serviceId":"${SERVICE_ID}",
-          "profile":"test",
-          "dateTime":"%d{yyyy-MM-dd HH:mm:ss.SSS}",
-          "userId":"${ctx:user-id}",
-          "username":"${ctx:user-name}",
-          "tenantId":"${ctx:tenant-id}",
-          "traceId":"${ctx:trace-id}",
-          "spanId":"${ctx:span-id}",
-          "address":"${sys:ip}:${sys:server.port}]",
-          "level":"%-5level",
-          "thread":"%thread",
-          "logger":"%logger",
-          "msg":"%enc{%m}{JSON}"
-          }
-        </pattern>
-      </PatternLayout>
-      <Property name="max.block.ms">2000</Property>
-      <Property name="request.timeout.ms">2000</Property>
-      <Property name="bootstrap.servers">kafka:9092</Property>
-    </Kafka>
   </Appenders>
+  <!--
+   additivity      => 需不需要打印此logger继承的父logger，false只打印当前logger，true继续打印上一层logger，直至root
+   includeLocation => 显示文件行数，方法名等信息，true显示，false不显示，可以减少日志输出的体积，加快日志写入速度
+ -->
   <Loggers>
     <AsyncLogger name="org.laokou" additivity="FALSE" includeLocation="FALSE" level="INFO">
       <AppenderRef ref="console"/>

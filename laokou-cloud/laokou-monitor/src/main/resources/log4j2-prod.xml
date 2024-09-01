@@ -33,8 +33,12 @@
     <!-- -Dlog4j.skipJansi=false -->
     <!-- 日志格式 -->
     <!--
-        %d 日期
-        %t 线程
+			%d 日期
+			%t 线程
+
+			对于系统参数，使用${sys:xxx}即可，例如读取-Dserver.port=1111，即${sys:server.port}
+			spanId  => %X{spanId}
+			traceId => %X{traceId}
     -->
     <property name="LOG_CONSOLE_PATTERN"
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ip}:${sys:server.port}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
@@ -67,6 +71,10 @@
       <AppenderRef ref="file"/>
     </Async>
   </Appenders>
+  <!--
+   additivity      => 需不需要打印此logger继承的父logger，false只打印当前logger，true继续打印上一层logger，直至root
+   includeLocation => 显示文件行数，方法名等信息，true显示，false不显示，可以减少日志输出的体积，加快日志写入速度
+ -->
   <Loggers>
     <AsyncRoot level="ERROR" additivity="FALSE" includeLocation="FALSE">
       <AppenderRef ref="console"/>
