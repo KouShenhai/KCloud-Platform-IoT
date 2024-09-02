@@ -37,7 +37,7 @@
     <!--liquibase-core版本-->
     <liquibase-core.version>4.29.1</liquibase-core.version>
     <!--protobuf-java版本-->
-    <protobuf-java.version>3.25.4</protobuf-java.version>
+    <protobuf-java.version>4.28.0</protobuf-java.version>
     <!--commons-io版本-->
     <commons-io.version>2.16.1</commons-io.version>
     <!--grpc版本-->
