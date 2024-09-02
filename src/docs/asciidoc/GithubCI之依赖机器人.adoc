@@ -122,6 +122,7 @@ https://github.com/apps/renovate[Renovate安装地址]
 === 启用依赖更新
 
 image:image/tools/img_6.png[Renovate启用依赖更新1,600]
+
 image:image/tools/img_7.png[Renovate启用依赖更新2,500]
 
 检查 `renovate.json` 配置
