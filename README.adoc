@@ -213,8 +213,8 @@ KCloud-Platform-IoT 开源软件遵循 https://www.apache.org/licenses/LICENSE-2
 
 [width=100%]
 |===
-|序号 |项目
-|1   |https://gitee.com/xhtrepo/xht-cloud-platform[xht-cloud-platform]
+|序号 |Github项目| Gitee项目
+|1   |https://github.com/xhtcode/xht-cloud-platform[xht-cloud-platform]|https://gitee.com/xhtrepo/xht-cloud-platform[xht-cloud-platform]
 |===
 
 === 🔧 参与贡献
