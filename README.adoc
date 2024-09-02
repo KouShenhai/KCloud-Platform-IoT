@@ -197,7 +197,7 @@ link:性能测试.adoc[请点击我，查看详情]
 
 === 😝 贡献者许可协议
 
-https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT[SAP 贡献者许可协议]
+https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT[贡献者许可协议]
 
 === 😛 用户权益（点个Star，拜托啦~🙏）
 
