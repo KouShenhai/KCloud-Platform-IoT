@@ -27,7 +27,7 @@ public final class Base64Util {
 	 * @return 解密后的字符串
 	 */
 	public static byte[] decode(String str) {
-		return Base64.getMimeDecoder().decode(str);
+		return Base64.getDecoder().decode(str);
 	}
 
 	/**
@@ -37,6 +37,24 @@ public final class Base64Util {
 	 */
 	public static String encodeToString(byte[] strBytes) {
 		return Base64.getEncoder().encodeToString(strBytes);
+	}
+
+	/**
+	 * base64加密.
+	 * @param strBytes 字符串
+	 * @return 加密后的字符串
+	 */
+	public static String encodeToStringOfMime(byte[] strBytes) {
+		return Base64.getMimeEncoder().encodeToString(strBytes);
+	}
+
+	/**
+	 * base64解密.
+	 * @param str 字符串
+	 * @return 解密后的字符串
+	 */
+	public static byte[] decodeOfMime(String str) {
+		return Base64.getMimeDecoder().decode(str);
 	}
 
 }
