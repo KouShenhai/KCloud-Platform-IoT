@@ -15,40 +15,28 @@
  *
  */
 
-package org.laokou.common.i18n.utils;
+package org.laokou.common.core.utils;
 
-import java.util.Objects;
+import java.util.Base64;
 
-/**
- * 对象工具类.
- *
- * @author laokou
- */
-public final class ObjectUtil {
+public final class Base64Util {
 
-	public static boolean isNotNull(Object o) {
-		return Objects.nonNull(o);
-	}
-
-	public static boolean isNull(Object o) {
-		return Objects.isNull(o);
-	}
-
-	public static boolean equals(Object o1, Object o2) {
-		return Objects.equals(o1, o2);
+	/**
+	 * base64解密.
+	 * @param str 字符串
+	 * @return 解密后的字符串
+	 */
+	public static byte[] decode(String str) {
+		return Base64.getMimeDecoder().decode(str);
 	}
 
 	/**
-	 * 对象不允许为空.
-	 * @param obj 对象
-	 * @param <T> 泛型
-	 * @return 对象
+	 * base64加密.
+	 * @param strBytes 字符串
+	 * @return 加密后的字符串
 	 */
-	public static <T> T requireNotNull(T obj) {
-		if (obj == null) {
-			throw new NullPointerException();
-		}
-		return obj;
+	public static String encodeToString(byte[] strBytes) {
+		return Base64.getEncoder().encodeToString(strBytes);
 	}
 
 }

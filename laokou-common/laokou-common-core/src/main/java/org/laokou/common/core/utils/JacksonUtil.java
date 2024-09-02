@@ -39,7 +39,7 @@ import java.util.Map;
  * @author laokou
  */
 @Slf4j
-public class JacksonUtil {
+public final class JacksonUtil {
 
 	/**
 	 * 空JSON字符串.

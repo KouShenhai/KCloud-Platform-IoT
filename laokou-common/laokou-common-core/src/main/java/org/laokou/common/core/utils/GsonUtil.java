@@ -25,7 +25,7 @@ import com.google.gson.GsonBuilder;
  *
  * @author laokou
  */
-public class GsonUtil {
+public final class GsonUtil {
 
 	/**
 	 * 对象转为gson字符串.

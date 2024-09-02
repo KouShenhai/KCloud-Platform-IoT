@@ -46,7 +46,7 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
  *
  * @author laokou
  */
-public class RequestUtil {
+public final class RequestUtil {
 
 	private static final UserAgentParser PARSER;
 

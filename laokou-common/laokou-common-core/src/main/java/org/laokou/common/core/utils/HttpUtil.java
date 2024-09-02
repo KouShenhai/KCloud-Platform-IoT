@@ -54,7 +54,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  * @author laokou
  */
 @Slf4j
-public class HttpUtil {
+public final class HttpUtil {
 
 	/**
 	 * get请求.

@@ -48,7 +48,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.AT;
  * @since 2016-08-18
  */
 @Slf4j
-public class IdGenerator {
+public final class IdGenerator {
 
 	/**
 	 * 雪花算法.

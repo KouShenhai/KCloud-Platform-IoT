@@ -20,6 +20,7 @@ package org.laokou.common.core.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.beans.BeanUtils;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +31,7 @@ import java.util.List;
  * @author laokou
  */
 @Slf4j
-public class ConvertUtil extends BeanUtils {
+public final class ConvertUtil extends BeanUtils {
 
 	/**
 	 * 复制对象.

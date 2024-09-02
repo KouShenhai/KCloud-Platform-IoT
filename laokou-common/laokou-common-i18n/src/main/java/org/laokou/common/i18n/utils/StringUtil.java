@@ -33,7 +33,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.PERCENT;
  *
  * @author laokou
  */
-public class StringUtil {
+public final class StringUtil {
 
 	private static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
 

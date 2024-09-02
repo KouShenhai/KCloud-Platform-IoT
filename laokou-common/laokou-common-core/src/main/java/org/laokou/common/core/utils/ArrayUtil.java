@@ -26,7 +26,7 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-public class ArrayUtil {
+public final class ArrayUtil {
 
 	public static boolean isNotEmpty(byte[] array) {
 		return !isEmpty(array);

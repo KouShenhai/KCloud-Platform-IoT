@@ -29,7 +29,7 @@ import java.security.cert.X509Certificate;
 /**
  * @author laokou
  */
-public class SslUtil {
+public final class SslUtil {
 
 	/**
 	 * TLS协议版本.

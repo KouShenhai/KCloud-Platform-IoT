@@ -30,7 +30,7 @@ import java.util.Locale;
  *
  * @author laokou
  */
-public class DateUtil {
+public final class DateUtil {
 
 	/**
 	 * yyyy-MM-dd HH:mm:ss.

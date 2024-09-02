@@ -39,7 +39,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.*;
  *
  * @author laokou
  */
-public class MapUtil {
+public final class MapUtil {
 
 	/**
 	 * 判端不为空.

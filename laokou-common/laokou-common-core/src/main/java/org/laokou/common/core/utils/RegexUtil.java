@@ -27,7 +27,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  *
  * @author laokou
  */
-public class RegexUtil {
+public final class RegexUtil {
 
 	/**
 	 * URL版本正则表达式.

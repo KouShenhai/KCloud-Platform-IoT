@@ -31,7 +31,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.COMMA;
  * @author laokou
  */
 @Slf4j
-public class IpUtil {
+public final class IpUtil {
 
 	/**
 	 * 本地IP-IPV4.

@@ -19,6 +19,7 @@ package org.laokou.common.i18n.utils;
 
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -27,7 +28,7 @@ import java.nio.charset.StandardCharsets;
  *
  * @author laokou
  */
-public class MessageUtil {
+public final class MessageUtil {
 
 	private static final ReloadableResourceBundleMessageSource RESOURCE_BUNDLE_MESSAGE_SOURCE;
 

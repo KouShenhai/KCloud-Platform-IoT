@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  */
 // @formatter:on
 
-public class ValidatorUtil {
+public final class ValidatorUtil {
 
 	private static final ReloadableResourceBundleMessageSource VALIDATE_BUNDLE_MESSAGE_SOURCE;
 

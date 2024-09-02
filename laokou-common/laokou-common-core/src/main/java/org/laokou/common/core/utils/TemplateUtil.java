@@ -21,6 +21,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ import static freemarker.template.Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENT
  *
  * @author laokou
  */
-public class TemplateUtil extends FreeMarkerTemplateUtils {
+public final class TemplateUtil extends FreeMarkerTemplateUtils {
 
 	/**
 	 * 模板配置.

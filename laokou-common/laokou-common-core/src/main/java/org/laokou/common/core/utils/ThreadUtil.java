@@ -30,7 +30,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  * @author laokou
  */
 @Slf4j
-public class ThreadUtil {
+public final class ThreadUtil {
 
 	/**
 	 * 关闭线程池.

@@ -26,7 +26,7 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
  *
  * @author laokou
  */
-public class SpringExpressionUtil {
+public final class SpringExpressionUtil {
 
 	/**
 	 * 解析器.

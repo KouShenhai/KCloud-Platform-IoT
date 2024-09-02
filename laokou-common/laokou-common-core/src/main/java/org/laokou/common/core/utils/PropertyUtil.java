@@ -32,7 +32,7 @@ import java.util.List;
  *
  * @author laokou
  */
-public class PropertyUtil {
+public final class PropertyUtil {
 
 	/**
 	 * 从nacos获取配置文件并转为属性.

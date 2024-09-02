@@ -28,7 +28,7 @@ import static org.laokou.common.core.i18n.I18nRequestContextFilter.LANG;
 /**
  * @author laokou
  */
-public class I18nUtil {
+public final class I18nUtil {
 
 	/**
 	 * 请求头数据写入本地线程.

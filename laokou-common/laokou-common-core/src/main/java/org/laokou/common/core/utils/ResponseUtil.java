@@ -30,7 +30,7 @@ import java.nio.charset.StandardCharsets;
  *
  * @author laokou
  */
-public class ResponseUtil {
+public final class ResponseUtil {
 
 	/**
 	 * 响应给视图解析.

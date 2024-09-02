@@ -24,7 +24,7 @@ import static org.laokou.common.i18n.common.exception.StatusCode.INTERNAL_SERVER
  *
  * @author laokou
  */
-public class LogUtil {
+public final class LogUtil {
 
 	private static final String NO_MSG = "暂无信息";
 

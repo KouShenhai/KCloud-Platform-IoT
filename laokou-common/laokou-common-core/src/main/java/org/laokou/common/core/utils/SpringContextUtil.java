@@ -41,7 +41,7 @@ import java.util.Map;
 @Component
 @NonNullApi
 @RequiredArgsConstructor
-public class SpringContextUtil implements ApplicationContextAware, DisposableBean {
+public final class SpringContextUtil implements ApplicationContextAware, DisposableBean {
 
 	@Getter
 	private static ApplicationContext applicationContext;

@@ -33,7 +33,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  *
  * @author laokou
  */
-public class CollectionUtil {
+public final class CollectionUtil {
 
 	/**
 	 * 判断集合不为空.

@@ -41,7 +41,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
  * @author laokou
  */
 @Slf4j
-public class FileUtil {
+public final class FileUtil {
 
 	private static final String RW = "rw";
 

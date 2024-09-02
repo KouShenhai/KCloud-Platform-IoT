@@ -38,7 +38,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  *
  * @author laokou
  */
-public class AESUtil {
+public final class AESUtil {
 
 	private static final String AES = "AES";
 

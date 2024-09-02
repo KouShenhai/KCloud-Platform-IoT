@@ -60,7 +60,7 @@ import java.util.Random;
  * @version $Id: RandomStringUtils.java 1056988 2011-01-09 17:58:53Z niallp $
  * @since 1.0
  */
-public class RandomStringUtil {
+public final class RandomStringUtil {
 
 	/**
 	 * <p>

@@ -33,7 +33,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.*;
  *
  * @author laokou
  */
-public class AddressUtil {
+public final class AddressUtil {
 
 	/**
 	 * 未解析的位置.

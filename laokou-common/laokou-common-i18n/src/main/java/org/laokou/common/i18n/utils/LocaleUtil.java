@@ -29,7 +29,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.*;
  *
  * @author laokou
  */
-public class LocaleUtil {
+public final class LocaleUtil {
 
 	public static Locale toLocale(String language) {
 		try {

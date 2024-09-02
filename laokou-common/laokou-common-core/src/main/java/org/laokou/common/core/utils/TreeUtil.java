@@ -33,8 +33,7 @@ import java.util.Map;
  *
  * @author laokou
  */
-@Data
-public class TreeUtil {
+public final class TreeUtil {
 
 	/**
 	 * 构建树节点.
