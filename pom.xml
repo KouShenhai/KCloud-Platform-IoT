@@ -353,15 +353,23 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${maven-checkstyle-plugin.version}</version>
         <configuration>
+          <!-- 配置文件路径 -->
           <configLocation>checkstyle/checkstyle.xml</configLocation>
+          <!-- true表示在命令行或控制台输出检查结果，否则结果不会直接在控制台显示 -->
           <consoleOutput>true</consoleOutput>
+          <!-- true表示检查到错误，则整个构建过程失败 -->
           <failsOnError>true</failsOnError>
+          <!-- 是否直接构造失败，true只要任何一个代码规范不通过，从而直接构建失败，false代码检查不通过，不会导致构建失败，但会报告违规情况 -->
           <failOnViolation>true</failOnViolation>
+          <!-- 是否包含测试代码目录，true包含，false不包含，只检查主目录代码 -->
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
+          <!-- 是否跳过代码规范检查，true跳过，false不跳过 -->
           <skip>false</skip>
+          <!-- checkstyle报告是否包含代码引用链接，false不包含，true包含 -->
           <linkXRef>false</linkXRef>
         </configuration>
         <executions>
+          <!-- 执行mvn install启动代码规范扫描 -->
           <execution>
             <id>install</id>
             <phase>install</phase>
