@@ -19,7 +19,6 @@ package org.laokou.im.handler;
 
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.ThreadContext;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.core.utils.JacksonUtil;
@@ -27,6 +26,7 @@ import org.laokou.common.i18n.dto.Message;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.netty.config.Server;
+import org.laokou.common.trace.utils.MDCUtil;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
@@ -49,13 +49,12 @@ public abstract class AbstractMessageHandler implements RocketMQListener<Message
 			String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
 			String traceId = messageExt.getProperty(TRACE_ID);
 			String spanId = messageExt.getProperty(SPAN_ID);
-			ThreadContext.put(TRACE_ID, traceId);
-			ThreadContext.put(SPAN_ID, spanId);
+			MDCUtil.put(traceId, spanId);
 			log(msg);
 			send(msg);
 		}
 		finally {
-			ThreadContext.clearMap();
+			MDCUtil.clear();
 		}
 	}
 

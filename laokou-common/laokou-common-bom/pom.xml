@@ -89,8 +89,6 @@
     <swagger-annotations-jakarta.version>2.2.23</swagger-annotations-jakarta.version>
     <!--disruptor版本-->
     <disruptor.version>3.4.4</disruptor.version>
-    <!--log4j2-ttl-thread-context-map版本-->
-    <log4j2-ttl-thread-context-map.version>1.4.0</log4j2-ttl-thread-context-map.version>
     <!--transmittable-thread-local版本-->
     <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
     <!--mqttv5-client版本-->
@@ -524,11 +522,6 @@
         <groupId>org.laokou</groupId>
         <artifactId>laokou-logstash-app</artifactId>
         <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.alibaba</groupId>
-        <artifactId>log4j2-ttl-thread-context-map</artifactId>
-        <version>${log4j2-ttl-thread-context-map.version}</version>
       </dependency>
       <dependency>
         <groupId>com.alibaba</groupId>

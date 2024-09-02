@@ -19,11 +19,11 @@ package org.laokou.logstash.handler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.ThreadContext;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
+import org.laokou.common.trace.utils.MDCUtil;
 
 import java.nio.charset.StandardCharsets;
 
@@ -45,8 +45,7 @@ public abstract class AbstractDLQHandler implements RocketMQListener<MessageExt>
 	public void onMessage(MessageExt messageExt) {
 		String traceId = messageExt.getProperty(TRACE_ID);
 		String spanId = messageExt.getProperty(SPAN_ID);
-		ThreadContext.put(TRACE_ID, traceId);
-		ThreadContext.put(SPAN_ID, spanId);
+		MDCUtil.put(traceId, spanId);
 		String topic = messageExt.getTopic();
 		String tag = messageExt.getTags();
 		Object payload = new String(messageExt.getBody(), StandardCharsets.UTF_8);
@@ -60,7 +59,7 @@ public abstract class AbstractDLQHandler implements RocketMQListener<MessageExt>
 			}
 		}
 		finally {
-			ThreadContext.clearMap();
+			MDCUtil.clear();
 		}
 	}
 
