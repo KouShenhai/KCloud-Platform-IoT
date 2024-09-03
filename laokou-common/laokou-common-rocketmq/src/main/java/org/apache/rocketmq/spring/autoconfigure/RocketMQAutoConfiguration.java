@@ -34,6 +34,8 @@
 
 package org.apache.rocketmq.spring.autoconfigure;
 
+import com.alibaba.ttl.threadpool.ExecutorServiceTtlWrapper;
+import com.alibaba.ttl.threadpool.ExecutorTtlWrapper;
 import io.micrometer.common.lang.NonNullApi;
 import org.apache.rocketmq.client.AccessChannel;
 import org.apache.rocketmq.client.MQAdmin;
@@ -207,15 +209,22 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 		if (applicationContext.containsBean(CONSUMER_BEAN_NAME)) {
 			rocketMQTemplate.setConsumer((DefaultLitePullConsumer) applicationContext.getBean(CONSUMER_BEAN_NAME));
 		}
-		// 普通线程池
 		rocketMQTemplate.setMessageConverter(rocketMQMessageConverter.getMessageConverter());
-		if (executor instanceof ExecutorService executorService) {
-			rocketMQTemplate.setAsyncSenderExecutor(executorService);
+
+		if (executor instanceof ExecutorTtlWrapper executorTtlWrapper) {
+			Executor exec = executorTtlWrapper.unwrap();
+			// 虚拟线程池
+			if (exec instanceof VirtualThreadTaskExecutor virtualThreadTaskExecutor) {
+				rocketMQTemplate.setAsyncSenderExecutor(
+						Executors.newThreadPerTaskExecutor(virtualThreadTaskExecutor.getVirtualThreadFactory()));
+			}
 		}
-		// 虚拟线程池
-		if (executor instanceof VirtualThreadTaskExecutor virtualThreadTaskExecutor) {
-			rocketMQTemplate.setAsyncSenderExecutor(
-					Executors.newThreadPerTaskExecutor(virtualThreadTaskExecutor.getVirtualThreadFactory()));
+		if (executor instanceof ExecutorServiceTtlWrapper executorServiceTtlWrapper) {
+			// 普通线程池
+			ExecutorService service = executorServiceTtlWrapper.unwrap();
+			if (service instanceof ExecutorService executorService) {
+				rocketMQTemplate.setAsyncSenderExecutor(executorService);
+			}
 		}
 		return rocketMQTemplate;
 	}
