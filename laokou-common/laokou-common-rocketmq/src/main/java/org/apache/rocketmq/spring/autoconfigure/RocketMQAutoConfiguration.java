@@ -34,8 +34,6 @@
 
 package org.apache.rocketmq.spring.autoconfigure;
 
-import com.alibaba.ttl.threadpool.ExecutorServiceTtlWrapper;
-import com.alibaba.ttl.threadpool.ExecutorTtlWrapper;
 import io.micrometer.common.lang.NonNullApi;
 import org.apache.rocketmq.client.AccessChannel;
 import org.apache.rocketmq.client.MQAdmin;
@@ -47,7 +45,6 @@ import org.apache.rocketmq.spring.annotation.SelectorType;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQMessageConverter;
 import org.apache.rocketmq.spring.support.RocketMQUtil;
-import org.laokou.common.core.config.TaskExecutorAutoConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -62,13 +59,15 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
-import org.springframework.core.task.VirtualThreadTaskExecutor;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import static org.laokou.common.core.config.TaskExecutorAutoConfig.THREADS_VIRTUAL_ENABLED;
 
 /**
  * rocketmq支持虚拟线程池.
@@ -84,7 +83,7 @@ import java.util.concurrent.Executors;
 @Import({ MessageConverterConfiguration.class, ListenerContainerConfiguration.class,
 		ExtProducerResetConfiguration.class, ExtConsumerResetConfiguration.class,
 		RocketMQTransactionConfiguration.class, RocketMQListenerConfiguration.class })
-@AutoConfigureAfter({ TaskExecutorAutoConfig.class, MessageConverterConfiguration.class })
+@AutoConfigureAfter({ MessageConverterConfiguration.class })
 @AutoConfigureBefore({ RocketMQTransactionConfiguration.class })
 public class RocketMQAutoConfiguration implements ApplicationContextAware {
 
@@ -201,7 +200,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 	@Bean(destroyMethod = "destroy")
 	@Conditional(ProducerOrConsumerPropertyCondition.class)
 	@ConditionalOnMissingBean(name = ROCKETMQ_TEMPLATE_DEFAULT_GLOBAL_NAME)
-	public RocketMQTemplate rocketMQTemplate(RocketMQMessageConverter rocketMQMessageConverter, Executor executor) {
+	public RocketMQTemplate rocketMQTemplate(RocketMQMessageConverter rocketMQMessageConverter) {
 		RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
 		if (applicationContext.containsBean(PRODUCER_BEAN_NAME)) {
 			rocketMQTemplate.setProducer((DefaultMQProducer) applicationContext.getBean(PRODUCER_BEAN_NAME));
@@ -211,20 +210,13 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 		}
 		rocketMQTemplate.setMessageConverter(rocketMQMessageConverter.getMessageConverter());
 
-		if (executor instanceof ExecutorTtlWrapper executorTtlWrapper) {
-			Executor exec = executorTtlWrapper.unwrap();
-			// 虚拟线程池
-			if (exec instanceof VirtualThreadTaskExecutor virtualThreadTaskExecutor) {
-				rocketMQTemplate.setAsyncSenderExecutor(
-						Executors.newThreadPerTaskExecutor(virtualThreadTaskExecutor.getVirtualThreadFactory()));
-			}
+		if (environment.getProperty(THREADS_VIRTUAL_ENABLED, Boolean.class, false)) {
+			rocketMQTemplate.setAsyncSenderExecutor(Executors.newVirtualThreadPerTaskExecutor());
 		}
-		if (executor instanceof ExecutorServiceTtlWrapper executorServiceTtlWrapper) {
-			// 普通线程池
-			ExecutorService service = executorServiceTtlWrapper.unwrap();
-			if (service instanceof ExecutorService executorService) {
-				rocketMQTemplate.setAsyncSenderExecutor(executorService);
-			}
+		else {
+			ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(8, 16, 60, TimeUnit.SECONDS,
+					new LinkedBlockingQueue<>(256));
+			rocketMQTemplate.setAsyncSenderExecutor(threadPoolExecutor);
 		}
 		return rocketMQTemplate;
 	}

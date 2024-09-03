@@ -686,7 +686,6 @@ spring:
               - /v3/logouts=laokou-auth,laokou-gateway
   # task
   task-execution:
-    thread-name-prefix: laokou-ttl-task-
     pool:
       core-size: 33
       keep-alive: 180s
@@ -1226,7 +1225,6 @@ spring:
               - /v3/logouts=laokou-auth,laokou-gateway
   # task
   task-execution:
-    thread-name-prefix: laokou-ttl-task-
     pool:
       core-size: 33
       keep-alive: 180s
@@ -1909,7 +1907,6 @@ spring:
               - /v3/logouts=laokou-auth,laokou-gateway
   # task
   task-execution:
-    thread-name-prefix: laokou-ttl-task-
     pool:
       core-size: 33
       keep-alive: 180s

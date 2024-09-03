@@ -34,7 +34,6 @@
 
 package org.apache.rocketmq.spring.autoconfigure;
 
-import com.alibaba.ttl.threadpool.ExecutorTtlWrapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.rocketmq.client.producer.TransactionMQProducer;
 import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
@@ -42,7 +41,6 @@ import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQUtil;
 import org.jetbrains.annotations.NotNull;
-import org.laokou.common.core.config.TaskExecutorAutoConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -53,15 +51,15 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.core.task.VirtualThreadTaskExecutor;
+import org.springframework.core.env.Environment;
 
 import java.util.Map;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
+
+import static org.laokou.common.core.config.TaskExecutorAutoConfig.THREADS_VIRTUAL_ENABLED;
 
 /**
  * @author rocketmq
@@ -69,14 +67,13 @@ import java.util.stream.Collectors;
  */
 @Configuration
 @RequiredArgsConstructor
-@Import(TaskExecutorAutoConfig.class)
 public class RocketMQTransactionConfiguration implements ApplicationContextAware, SmartInitializingSingleton {
 
 	private final static Logger log = LoggerFactory.getLogger(RocketMQTransactionConfiguration.class);
 
-	private final Executor executor;
-
 	private ConfigurableApplicationContext applicationContext;
+
+	private final Environment environment;
 
 	@Override
 	public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
@@ -108,14 +105,9 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
 			throw new IllegalStateException(
 					annotation.rocketMQTemplateBeanName() + " already exists RocketMQLocalTransactionListener");
 		}
-
-		if (executor instanceof ExecutorTtlWrapper executorTtlWrapper) {
-			Executor exec = executorTtlWrapper.unwrap();
-			// 虚拟线程池
-			if (exec instanceof VirtualThreadTaskExecutor virtualThreadTaskExecutor) {
-				((TransactionMQProducer) rocketMQTemplate.getProducer()).setExecutorService(
-						Executors.newThreadPerTaskExecutor(virtualThreadTaskExecutor.getVirtualThreadFactory()));
-			}
+		if (environment.getProperty(THREADS_VIRTUAL_ENABLED, Boolean.class, false)) {
+			((TransactionMQProducer) rocketMQTemplate.getProducer())
+				.setExecutorService(Executors.newVirtualThreadPerTaskExecutor());
 		}
 		else {
 			ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(annotation.corePoolSize(),
@@ -123,7 +115,6 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
 					new LinkedBlockingDeque<>(annotation.blockingQueueSize()));
 			((TransactionMQProducer) rocketMQTemplate.getProducer()).setExecutorService(threadPoolExecutor);
 		}
-
 		((TransactionMQProducer) rocketMQTemplate.getProducer())
 			.setTransactionListener(RocketMQUtil.convert((RocketMQLocalTransactionListener) bean));
 		log.debug("RocketMQLocalTransactionListener {} register to {} success", clazz.getName(),

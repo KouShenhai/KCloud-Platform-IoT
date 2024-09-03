@@ -19,17 +19,14 @@ package org.laokou.common.core.config;
 
 import com.alibaba.ttl.threadpool.TtlExecutors;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
-import org.springframework.core.task.VirtualThreadTaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
-
-import static org.laokou.common.i18n.common.constant.StringConstant.TRUE;
+import java.util.concurrent.Executors;
 
 /**
  * 异步配置.
@@ -49,15 +46,13 @@ public class TaskExecutorAutoConfig {
 	/**
 	 * 虚拟线程开关.
 	 */
-	private static final String THREADS_VIRTUAL_ENABLED = "spring.threads.virtual.enabled";
+	public static final String THREADS_VIRTUAL_ENABLED = "spring.threads.virtual.enabled";
 
 	@Bean(value = THREAD_POOL_TASK_EXECUTOR_NAME)
 	public Executor executor(SpringTaskExecutionProperties springTaskExecutionProperties, Environment environment) {
-		String threadNamePrefix = springTaskExecutionProperties.getThreadNamePrefix();
-		String enabled = environment.getProperty(THREADS_VIRTUAL_ENABLED);
-		if (ObjectUtil.equals(TRUE, enabled)) {
+		if (environment.getProperty(THREADS_VIRTUAL_ENABLED, Boolean.class, false)) {
 			// 虚拟线程
-			return TtlExecutors.getTtlExecutor(new VirtualThreadTaskExecutor(threadNamePrefix));
+			return TtlExecutors.getTtlExecutorService(Executors.newVirtualThreadPerTaskExecutor());
 		}
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 		// 核心池大小
@@ -71,8 +66,6 @@ public class TaskExecutorAutoConfig {
 		executor.setAllowCoreThreadTimeOut(springTaskExecutionProperties.getPool().isAllowCoreThreadTimeout());
 		// 线程空闲时间
 		executor.setKeepAliveSeconds((int) springTaskExecutionProperties.getPool().getKeepAlive().toSeconds());
-		// 线程名字前缀
-		executor.setThreadNamePrefix(threadNamePrefix);
 		// 初始化
 		executor.initialize();
 		return TtlExecutors.getTtlExecutorService(executor.getThreadPoolExecutor());
