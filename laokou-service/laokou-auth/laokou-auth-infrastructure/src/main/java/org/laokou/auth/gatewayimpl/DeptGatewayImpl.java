@@ -29,7 +29,10 @@ import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.laokou.auth.common.constant.Constant.TABLE_DEPT;
 import static org.laokou.common.i18n.common.exception.SystemException.TABLE_NOT_EXIST;
@@ -48,6 +51,7 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	/**
 	 * 查看部门PATHS.
+	 *
 	 * @param user 用户对象
 	 * @return 部门PATHS
 	 */
@@ -55,15 +59,34 @@ public class DeptGatewayImpl implements DeptGateway {
 	public DeptV getPaths(UserE user) {
 		try {
 			if (user.isSuperAdministrator()) {
-				return new DeptV(new HashSet<>(deptMapper.selectDeptPaths()));
+				return new DeptV(new HashSet<>(getPaths(deptMapper.selectDeptPaths())));
 			}
-			return new DeptV(new HashSet<>(deptMapper.selectDeptPathsByUserId(user.getId())));
-		}
-		catch (BadSqlGrammarException e) {
+			return new DeptV(new HashSet<>(getPaths(deptMapper.selectDeptPathsByUserId(user.getId()))));
+		} catch (BadSqlGrammarException e) {
 			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_DEPT, LogUtil.record(e.getMessage()), e);
 			throw new SystemException(TABLE_NOT_EXIST,
-					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { TABLE_DEPT }));
+				MessageUtil.getMessage(TABLE_NOT_EXIST, new String[]{TABLE_DEPT}));
 		}
+	}
+
+	private Set<String> getPaths(List<String> list) {
+		// 字符串长度排序
+		list.sort(Comparator.comparingInt(String::length));
+		Set<String> paths = new HashSet<>(list.size());
+		paths.add(list.getFirst());
+		for (String path : list.subList(1, list.size())) {
+			int find = paths.size();
+			for (String p : paths) {
+				if (path.contains(p)) {
+					break;
+				}
+				find--;
+			}
+			if (find == 0) {
+				paths.add(path);
+			}
+		}
+		return paths;
 	}
 
 }
