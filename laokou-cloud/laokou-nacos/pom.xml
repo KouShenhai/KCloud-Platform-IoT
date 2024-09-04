@@ -35,7 +35,7 @@
     <!--postgresql版本-->
     <postgresql.version>42.7.4</postgresql.version>
     <!--liquibase-core版本-->
-    <liquibase-core.version>4.29.1</liquibase-core.version>
+    <liquibase-core.version>4.29.2</liquibase-core.version>
     <!--protobuf-java版本-->
     <protobuf-java.version>3.25.4</protobuf-java.version>
     <!--commons-io版本-->
