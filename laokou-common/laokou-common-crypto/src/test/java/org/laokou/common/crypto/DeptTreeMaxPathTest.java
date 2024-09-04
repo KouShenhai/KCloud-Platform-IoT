@@ -52,14 +52,14 @@ public class DeptTreeMaxPathTest {
 		Set<String> paths = new HashSet<>(list.size());
 		paths.add(list.getFirst());
 		for (String p : list.subList(1, list.size())) {
-			int count = 0;
+			int find = paths.size();
 			for (String path : paths) {
 				if (p.contains(path)) {
 					break;
 				}
-				count++;
+				find--;
 			}
-			if (count == paths.size()) {
+			if (find == 0) {
 				paths.add(p);
 			}
 		}

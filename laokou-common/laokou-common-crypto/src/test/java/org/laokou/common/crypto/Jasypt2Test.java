@@ -15,11 +15,15 @@
  *
  */
 
-package com.alibaba.nacos;
+package org.laokou.common.crypto;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * 只针对 spring-boot 2.x.x.
@@ -27,53 +31,52 @@ import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
  * @author laokou
  */
 @Slf4j
-public class JasyptTest_SB_2_X_X {
+public class Jasypt2Test {
 
-	private static final String PBEWITHMD5ANDDES = "PBEWithMD5AndDES";
+	@Test
+	void testJasypt2() {
+		String factor = "slat";
+		String plainText = "laokou";
+		String encryptWithMD5AndDESStr = encryptWithMD5AndDES(plainText, factor);
+		String decryptWithMD5AndDESStr = decryptWithMD5AndDES(encryptWithMD5AndDESStr, factor);
+		log.info("采用PBEWithMD5AndDES加密前原文密文：{}", encryptWithMD5AndDESStr);
+		log.info("采用PBEWithMD5AndDES解密后密文原文：{}", decryptWithMD5AndDESStr);
+		Assertions.assertArrayEquals(decryptWithMD5AndDESStr.getBytes(StandardCharsets.UTF_8), plainText.getBytes(StandardCharsets.UTF_8));
+	}
 
 	/**
 	 * Jasyp2.x 加密（PBEWithMD5AndDES）.
+	 *
 	 * @param plainText 待加密的原文
-	 * @param factor 加密秘钥
+	 * @param factor    加密秘钥
 	 * @return java.lang.String
 	 */
-	public static String encryptWithMD5(String plainText, String factor) {
-		// 1. 创建加解密工具实例
-		StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-		// 2. 加解密配置
-		EnvironmentStringPBEConfig config = new EnvironmentStringPBEConfig();
-		config.setAlgorithm(PBEWITHMD5ANDDES);
-		config.setPassword(factor);
-		encryptor.setConfig(config);
+	private String encryptWithMD5AndDES(String plainText, String factor) {
 		// 3. 加密
-		return encryptor.encrypt(plainText);
+		return encryptor(factor).encrypt(plainText);
 	}
 
 	/**
 	 * Jaspy2.x 解密（PBEWithMD5AndDES）.
+	 *
 	 * @param encryptedText 待解密密文
-	 * @param factor 解密秘钥
+	 * @param factor        解密秘钥
 	 * @return java.lang.String
 	 */
-	public static String decryptWithMD5(String encryptedText, String factor) {
+	private String decryptWithMD5AndDES(String encryptedText, String factor) {
+		// 3. 解密
+		return encryptor(factor).decrypt(encryptedText);
+	}
+
+	private StandardPBEStringEncryptor encryptor(String factor) {
 		// 1. 创建加解密工具实例
 		StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 		// 2. 加解密配置
 		EnvironmentStringPBEConfig config = new EnvironmentStringPBEConfig();
-		config.setAlgorithm(PBEWITHMD5ANDDES);
+		config.setAlgorithm("PBEWithMD5AndDES");
 		config.setPassword(factor);
 		encryptor.setConfig(config);
-		// 3. 解密
-		return encryptor.decrypt(encryptedText);
-	}
-
-	public static void main(String[] args) {
-		String factor = "slat";
-		String plainText = "111";
-		String encryptWithMD5Str = encryptWithMD5(plainText, factor);
-		String decryptWithMD5Str = decryptWithMD5(encryptWithMD5Str, factor);
-		log.info("采用MD5加密前原文密文：" + encryptWithMD5Str);
-		log.info("采用MD5解密后密文原文:" + decryptWithMD5Str);
+		return encryptor;
 	}
 
 }

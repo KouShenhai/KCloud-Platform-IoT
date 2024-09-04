@@ -15,11 +15,15 @@
  *
  */
 
-package com.alibaba.nacos;
+package org.laokou.common.crypto;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * 只针对 spring-boot 3.x.x.
@@ -27,38 +31,42 @@ import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
  * @author laokou
  */
 @Slf4j
-public class JasyptTest_SB_3_X_X {
+public class Jasypt3Test {
 
-	public static void main(String[] args) {
+	@Test
+	void testJasypt3() {
 		String factor = "slat";
 		String plainText = "laokou";
-		String encryptWithMD5Str = encryptWithHMACSHA512ANDAES(plainText, factor);
-		String decryptWithMD5Str = decryptWithHMACSHA512ANDAES(encryptWithMD5Str, factor);
-		log.info("采用HMACSHA512ANDAES加密前原文密文：" + encryptWithMD5Str);
-		log.info("采用HMACSHA512ANDAES解密后密文原文:" + decryptWithMD5Str);
+		String encryptWithMD5ANDAES256Str = encryptWithHMACSHA512ANDAES256(plainText, factor);
+		String decryptWithMD5ANDAES256Str = decryptWithHMACSHA512ANDAES256(encryptWithMD5ANDAES256Str, factor);
+		log.info("采用PBEWITHHMACSHA512ANDAES_256加密前原文密文：{}", encryptWithMD5ANDAES256Str);
+		log.info("采用PBEWITHHMACSHA512ANDAES_256解密后密文原文：{}", decryptWithMD5ANDAES256Str);
+		Assertions.assertArrayEquals(decryptWithMD5ANDAES256Str.getBytes(StandardCharsets.UTF_8), plainText.getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
 	 * Jasypt 3.x 加密（PBEWITHHMACSHA512ANDAES_256）.
+	 *
 	 * @param plainText 待加密的原文
-	 * @param factor 加密秘钥
+	 * @param factor    加密秘钥
 	 * @return java.lang.String
 	 */
-	public static String encryptWithHMACSHA512ANDAES(String plainText, String factor) {
+	public String encryptWithHMACSHA512ANDAES256(String plainText, String factor) {
 		return pooledPBEStringEncryptor(factor).encrypt(plainText);
 	}
 
 	/**
 	 * Jasypt 3.x 解密（PBEWITHHMACSHA512ANDAES_256）.
+	 *
 	 * @param encryptedText 待解密密文
-	 * @param factor 解密秘钥
+	 * @param factor        解密秘钥
 	 * @return java.lang.String
 	 */
-	public static String decryptWithHMACSHA512ANDAES(String encryptedText, String factor) {
+	public String decryptWithHMACSHA512ANDAES256(String encryptedText, String factor) {
 		return pooledPBEStringEncryptor(factor).decrypt(encryptedText);
 	}
 
-	public static PooledPBEStringEncryptor pooledPBEStringEncryptor(String factor) {
+	public PooledPBEStringEncryptor pooledPBEStringEncryptor(String factor) {
 		PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
 		SimpleStringPBEConfig config = new SimpleStringPBEConfig();
 		config.setPassword(factor);
