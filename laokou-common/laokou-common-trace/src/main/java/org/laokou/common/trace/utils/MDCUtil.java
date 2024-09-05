@@ -19,13 +19,14 @@ package org.laokou.common.trace.utils;
 
 import org.slf4j.MDC;
 
-import static org.laokou.common.i18n.common.constant.Constant.SPAN_ID;
-import static org.laokou.common.i18n.common.constant.Constant.TRACE_ID;
-
 /**
  * @author laokou
  */
 public class MDCUtil {
+
+	private static final String TRACE_ID = "traceId";
+
+	private static final String SPAN_ID = "spanId";
 
 	public static void put(String traceId, String spanId) {
 		MDC.put(TRACE_ID, traceId);

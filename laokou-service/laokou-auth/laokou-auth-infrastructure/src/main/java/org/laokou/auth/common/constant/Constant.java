@@ -23,21 +23,6 @@ package org.laokou.auth.common.constant;
 public final class Constant {
 
 	/**
-	 * 场景标识.
-	 */
-	public static final String SCENARIO = "IoT-Platform";
-
-	/**
-	 * 业务用例.
-	 */
-	public static final String USE_CASE_AUTH = "auth";
-
-	/**
-	 * 业务用例.
-	 */
-	public static final String USE_CASE_CAPTCHA = "captcha";
-
-	/**
 	 * 数据源表.
 	 */
 	public static final String TABLE_SOURCE = "boot_sys_source";

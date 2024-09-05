@@ -24,9 +24,9 @@ import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 
-import static org.laokou.auth.common.constant.Constant.SCENARIO;
-import static org.laokou.auth.common.constant.Constant.USE_CASE_AUTH;
 import static org.laokou.auth.factory.AuthFactory.AUTHORIZATION_CODE;
+import static org.laokou.auth.model.AuthA.USE_CASE_AUTH;
+import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_PASSWORD_REQUIRE;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_USERNAME_REQUIRE;
 

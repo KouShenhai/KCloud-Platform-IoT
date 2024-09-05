@@ -96,12 +96,17 @@ public class AuthA extends AggregateRoot<Long> {
 	 */
 	private String currentUser;
 
+	/**
+	 * 业务用例.
+	 */
+	public static final String USE_CASE_AUTH = "auth";
+
 	public AuthA() {
 		super(IdGenerator.defaultSnowflakeId());
 	}
 
 	public AuthA(String username, String password, String tenantId, GrantType grantType, String uuid, String captcha,
-			HttpServletRequest request) {
+				 HttpServletRequest request) {
 		super(IdGenerator.defaultSnowflakeId());
 		this.username = username;
 		this.password = password;
@@ -143,8 +148,7 @@ public class AuthA extends AggregateRoot<Long> {
 			this.editor = user.getId();
 			this.deptId = user.getDeptId();
 			this.deptPath = user.getDeptPath();
-		}
-		else {
+		} else {
 			fail(grantType.getErrorCode());
 		}
 	}
@@ -216,7 +220,7 @@ public class AuthA extends AggregateRoot<Long> {
 		String os = capabilities.getPlatform();
 		String browser = capabilities.getBrowser();
 		this.log = new LogV(currentUser, os, ip, address, browser, status, errorMessage, grantType.getCode(),
-				DateUtil.nowInstant());
+			DateUtil.nowInstant());
 	}
 
 }

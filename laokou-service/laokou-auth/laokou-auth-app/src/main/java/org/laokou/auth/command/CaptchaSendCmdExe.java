@@ -32,9 +32,9 @@ import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.common.constant.Constant.SCENARIO;
-import static org.laokou.auth.common.constant.Constant.USE_CASE_CAPTCHA;
 import static org.laokou.auth.common.constant.MqConstant.LAOKOU_CAPTCHA_TOPIC;
+import static org.laokou.auth.dto.CaptchaSendCmd.USE_CASE_CAPTCHA;
+import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 import static org.laokou.common.i18n.common.constant.EventType.CAPTCHA;
 import static org.laokou.common.i18n.common.exception.AuthException.OAUTH2_SOURCE_NOT_EXIST;
 
@@ -54,11 +54,11 @@ public class CaptchaSendCmdExe {
 	public void executeVoid(CaptchaSendCmd cmd) {
 		// 校验
 		extensionExecutor.executeVoid(CaptchaValidatorExtPt.class,
-				BizScenario.valueOf(cmd.getTag(), USE_CASE_CAPTCHA, SCENARIO),
-				extension -> extension.validate(cmd.getUuid()));
+			BizScenario.valueOf(cmd.getTag(), USE_CASE_CAPTCHA, SCENARIO),
+			extension -> extension.validate(cmd.getUuid()));
 		// 发布发送验证码事件
 		SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getTag(), cmd.getUuid(), LAOKOU_CAPTCHA_TOPIC,
-				cmd.getTag(), CAPTCHA, SpringContextUtil.getServiceId(), getSourceName(cmd.getTenantId()));
+			cmd.getTag(), CAPTCHA, SpringContextUtil.getServiceId(), getSourceName(cmd.getTenantId()));
 		domainEventPublisher.publishToCreate(sendCaptchaEvent);
 	}
 

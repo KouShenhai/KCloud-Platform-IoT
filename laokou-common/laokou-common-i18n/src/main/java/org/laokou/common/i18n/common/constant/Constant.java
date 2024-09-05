@@ -25,15 +25,16 @@ package org.laokou.common.i18n.common.constant;
 public final class Constant {
 
 	/**
+	 * 场景标识.
+	 */
+	public static final String SCENARIO = "IoT";
+
+	/**
 	 * 认证标识.
 	 */
 	public static final String AUTHORIZATION = "Authorization";
 
 	public static final String DLQ = "%DLQ%";
-
-	public static final String TRACE_ID = "traceId";
-
-	public static final String SPAN_ID = "spanId";
 
 	public static final int OK = 0;
 

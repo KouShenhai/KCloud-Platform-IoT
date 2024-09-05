@@ -26,8 +26,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
-import static org.laokou.common.core.utils.RegexUtil.CAPTCHA_TAG;
-
 /**
  * 发送验证码命令请求.
  *
@@ -38,6 +36,16 @@ import static org.laokou.common.core.utils.RegexUtil.CAPTCHA_TAG;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CaptchaSendCmd extends CommonCommand {
+
+	/**
+	 * 验证码标签表达式.
+	 */
+	private static final String CAPTCHA_TAG = "(mail|mobile)Captcha";
+
+	/**
+	 * 业务用例.
+	 */
+	public static final String USE_CASE_CAPTCHA = "captcha";
 
 	@NotBlank(message = "UUID不能为空")
 	private String uuid;

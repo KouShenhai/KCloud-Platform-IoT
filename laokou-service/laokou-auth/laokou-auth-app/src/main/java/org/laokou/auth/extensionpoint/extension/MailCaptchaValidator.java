@@ -23,9 +23,9 @@ import org.laokou.common.extension.Extension;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 
-import static org.laokou.auth.common.constant.Constant.SCENARIO;
-import static org.laokou.auth.common.constant.Constant.USE_CASE_CAPTCHA;
 import static org.laokou.auth.common.constant.MqConstant.MAIL_TAG;
+import static org.laokou.auth.dto.CaptchaSendCmd.USE_CASE_CAPTCHA;
+import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_MAIL_ERROR;
 
 /**
