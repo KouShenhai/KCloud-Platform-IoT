@@ -51,7 +51,6 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	/**
 	 * 查看部门PATHS.
-	 *
 	 * @param user 用户对象
 	 * @return 部门PATHS
 	 */
@@ -62,10 +61,11 @@ public class DeptGatewayImpl implements DeptGateway {
 				return new DeptV(new HashSet<>(getPaths(deptMapper.selectDeptPaths())));
 			}
 			return new DeptV(new HashSet<>(getPaths(deptMapper.selectDeptPathsByUserId(user.getId()))));
-		} catch (BadSqlGrammarException e) {
+		}
+		catch (BadSqlGrammarException e) {
 			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_DEPT, LogUtil.record(e.getMessage()), e);
 			throw new SystemException(TABLE_NOT_EXIST,
-				MessageUtil.getMessage(TABLE_NOT_EXIST, new String[]{TABLE_DEPT}));
+					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { TABLE_DEPT }));
 		}
 	}
 

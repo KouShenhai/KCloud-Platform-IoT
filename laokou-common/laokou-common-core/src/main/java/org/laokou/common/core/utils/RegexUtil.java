@@ -61,7 +61,6 @@ public final class RegexUtil {
 
 	/**
 	 * 邮箱验证.
-	 *
 	 * @param mail 邮箱
 	 * @return 邮箱匹配结果
 	 */
@@ -71,7 +70,6 @@ public final class RegexUtil {
 
 	/**
 	 * IP验证.
-	 *
 	 * @param ip IP地址
 	 * @return IP匹配结果
 	 */
@@ -81,7 +79,6 @@ public final class RegexUtil {
 
 	/**
 	 * 数字验证.
-	 *
 	 * @param number 数字
 	 * @return 数字匹配结果
 	 */
@@ -91,7 +88,6 @@ public final class RegexUtil {
 
 	/**
 	 * 数据源名称验证.
-	 *
 	 * @param sourceName 自由名称
 	 * @return 数据源名称匹配结果
 	 */
@@ -101,7 +97,6 @@ public final class RegexUtil {
 
 	/**
 	 * 手机号验证.
-	 *
 	 * @param mobile 手机号
 	 * @return 手机号匹配结果
 	 */
@@ -111,7 +106,6 @@ public final class RegexUtil {
 
 	/**
 	 * 根据正则表达式获取值.
-	 *
 	 * @param input 输入值
 	 * @param regex 正则表达式
 	 * @return 值
