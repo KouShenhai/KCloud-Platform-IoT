@@ -50,8 +50,8 @@ import static org.laokou.common.i18n.common.exception.SystemException.ROUTER_NOT
  * @author laokou
  */
 // @formatter:on
-@Component
 @Slf4j
+@Component
 @NonNullApi
 @Repository
 public class NacosRouteDefinitionRepository implements RouteDefinitionRepository, ApplicationEventPublisherAware {
@@ -68,7 +68,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	private ApplicationEventPublisher applicationEventPublisher;
 
 	public NacosRouteDefinitionRepository(ConfigUtil configUtil,
-			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
+										  ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
 		this.configUtil = configUtil;
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
 	}
