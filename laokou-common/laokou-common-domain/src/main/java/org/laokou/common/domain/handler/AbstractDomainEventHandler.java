@@ -37,7 +37,7 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 @RequiredArgsConstructor
 public abstract class AbstractDomainEventHandler implements RocketMQListener<MessageExt> {
 
-	protected final DomainEventPublisher domainEventPublisher;
+	protected final DomainEventPublisher rocketMQDomainEventPublisher;
 
 	@Override
 	public void onMessage(MessageExt messageExt) {
@@ -47,13 +47,11 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 		try {
 			String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
 			handleDomainEvent(convert(msg));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("消费失败，主题Topic：{}，偏移量Offset：{}，错误信息：{}", messageExt.getTopic(), messageExt.getCommitLogOffset(),
-					e.getMessage(), e);
+				e.getMessage(), e);
 			throw e;
-		}
-		finally {
+		} finally {
 			MDCUtil.clear();
 		}
 	}

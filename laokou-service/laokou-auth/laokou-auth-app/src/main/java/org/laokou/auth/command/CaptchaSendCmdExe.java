@@ -45,7 +45,7 @@ import static org.laokou.common.i18n.common.exception.AuthException.OAUTH2_SOURC
 @RequiredArgsConstructor
 public class CaptchaSendCmdExe {
 
-	private final DomainEventPublisher domainEventPublisher;
+	private final DomainEventPublisher rocketMQDomainEventPublisher;
 
 	private final ExtensionExecutor extensionExecutor;
 
@@ -54,12 +54,12 @@ public class CaptchaSendCmdExe {
 	public void executeVoid(CaptchaSendCmd cmd) {
 		// 校验
 		extensionExecutor.executeVoid(CaptchaValidatorExtPt.class,
-				BizScenario.valueOf(cmd.getTag(), USE_CASE_CAPTCHA, SCENARIO),
-				extension -> extension.validate(cmd.getUuid()));
+			BizScenario.valueOf(cmd.getTag(), USE_CASE_CAPTCHA, SCENARIO),
+			extension -> extension.validate(cmd.getUuid()));
 		// 发布发送验证码事件
 		SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getTag(), cmd.getUuid(), LAOKOU_CAPTCHA_TOPIC,
-				cmd.getTag(), CAPTCHA, SpringContextUtil.getServiceId(), getSourceName(cmd.getTenantId()));
-		domainEventPublisher.publishToCreate(sendCaptchaEvent);
+			cmd.getTag(), CAPTCHA, SpringContextUtil.getServiceId(), getSourceName(cmd.getTenantId()));
+		rocketMQDomainEventPublisher.publishToCreate(sendCaptchaEvent);
 	}
 
 	private String getSourceName(Long tenantId) {
