@@ -23,6 +23,8 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.OAuthFlow;
+import io.swagger.v3.oas.models.security.OAuthFlows;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -51,10 +53,18 @@ public class OpenApiDocAutoConfig {
 			.externalDocs(new ExternalDocumentation().description("老寇IoT云平台").url("https://github.com/KouShenhai"))
 			.addSecurityItem(new SecurityRequirement().addList(AUTHORIZATION))
 			.components(new Components().addSecuritySchemes(AUTHORIZATION,
-					new SecurityScheme().name(AUTHORIZATION)
-						.type(SecurityScheme.Type.HTTP)
-						.scheme("bearer")
-						.bearerFormat("JWT")));
+				new SecurityScheme().name(AUTHORIZATION)
+					.type(SecurityScheme.Type.OAUTH2)
+					.flows(
+						new OAuthFlows()
+							.authorizationCode(new OAuthFlow()
+								.tokenUrl("")
+								.refreshUrl("")
+							)
+					)
+					.in(SecurityScheme.In.HEADER)
+					.scheme("Bearer")
+					.bearerFormat("JWT")));
 
 	}
 

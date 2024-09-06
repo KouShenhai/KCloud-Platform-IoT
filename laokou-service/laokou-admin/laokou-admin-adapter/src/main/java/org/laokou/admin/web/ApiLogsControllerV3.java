@@ -48,7 +48,7 @@ public class ApiLogsControllerV3 {
 
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('api-log:save')")
+	@PreAuthorize("hasAuthority('sys:api-log:save')")
 	@OperateLog(module = "保存Api日志", operation = "保存Api日志")
 	@Operation(summary = "保存Api日志", description = "保存Api日志")
 	public void saveV3(@RequestBody ApiLogSaveCmd cmd) {
@@ -56,7 +56,7 @@ public class ApiLogsControllerV3 {
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('api-log:modify')")
+	@PreAuthorize("hasAuthority('sys:api-log:modify')")
 	@OperateLog(module = "修改Api日志", operation = "修改Api日志")
 	@Operation(summary = "修改Api日志", description = "修改Api日志")
 	public void modifyV3(@RequestBody ApiLogModifyCmd cmd) {
@@ -64,7 +64,7 @@ public class ApiLogsControllerV3 {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('api-log:remove')")
+	@PreAuthorize("hasAuthority('sys:api-log:remove')")
 	@OperateLog(module = "删除Api日志", operation = "删除Api日志")
 	@Operation(summary = "删除Api日志", description = "删除Api日志")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -72,7 +72,7 @@ public class ApiLogsControllerV3 {
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('api-log:import')")
+	@PreAuthorize("hasAuthority('sys:api-log:import')")
 	@Operation(summary = "导入Api日志", description = "导入Api日志")
 	@OperateLog(module = "导入Api日志", operation = "导入Api日志")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -80,7 +80,7 @@ public class ApiLogsControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('api-log:export')")
+	@PreAuthorize("hasAuthority('sys:api-log:export')")
 	@Operation(summary = "导出Api日志", description = "导出Api日志")
 	@OperateLog(module = "导出Api日志", operation = "导出Api日志")
 	public void exportV3(@RequestBody ApiLogExportCmd cmd) {
@@ -89,7 +89,7 @@ public class ApiLogsControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('api-log:page')")
+	@PreAuthorize("hasAuthority('sys:api-log:page')")
 	@Operation(summary = "分页查询Api日志列表", description = "分页查询Api日志列表")
 	public Result<Page<ApiLogCO>> pageV3(@RequestBody ApiLogPageQry qry) {
 		return apiLogsServiceI.page(qry);

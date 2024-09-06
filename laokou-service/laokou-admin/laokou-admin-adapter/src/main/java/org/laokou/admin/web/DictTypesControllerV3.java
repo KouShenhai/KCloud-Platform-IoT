@@ -48,7 +48,7 @@ public class DictTypesControllerV3 {
 
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('dict-type:save')")
+	@PreAuthorize("hasAuthority('sys:dict-type:save')")
 	@OperateLog(module = "保存字典类型", operation = "保存字典类型")
 	@Operation(summary = "保存字典类型", description = "保存字典类型")
 	public void saveV3(@RequestBody DictTypeSaveCmd cmd) {
@@ -56,7 +56,7 @@ public class DictTypesControllerV3 {
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('dict-type:modify')")
+	@PreAuthorize("hasAuthority('sys:dict-type:modify')")
 	@OperateLog(module = "修改字典类型", operation = "修改字典类型")
 	@Operation(summary = "修改字典类型", description = "修改字典类型")
 	public void modifyV3(@RequestBody DictTypeModifyCmd cmd) {
@@ -64,7 +64,7 @@ public class DictTypesControllerV3 {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('dict-type:remove')")
+	@PreAuthorize("hasAuthority('sys:dict-type:remove')")
 	@OperateLog(module = "删除字典类型", operation = "删除字典类型")
 	@Operation(summary = "删除字典类型", description = "删除字典类型")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -72,7 +72,7 @@ public class DictTypesControllerV3 {
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('dict-type:import')")
+	@PreAuthorize("hasAuthority('sys:dict-type:import')")
 	@Operation(summary = "导入字典类型", description = "导入字典类型")
 	@OperateLog(module = "导入字典类型", operation = "导入字典类型")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -80,7 +80,7 @@ public class DictTypesControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('dict-type:export')")
+	@PreAuthorize("hasAuthority('sys:dict-type:export')")
 	@Operation(summary = "导出字典类型", description = "导出字典类型")
 	@OperateLog(module = "导出字典类型", operation = "导出字典类型")
 	public void exportV3(@RequestBody DictTypeExportCmd cmd) {
@@ -89,7 +89,7 @@ public class DictTypesControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('dict-type:page')")
+	@PreAuthorize("hasAuthority('sys:dict-type:page')")
 	@Operation(summary = "分页查询字典类型列表", description = "分页查询字典类型列表")
 	public Result<Page<DictTypeCO>> pageV3(@RequestBody DictTypePageQry qry) {
 		return dictTypesServiceI.page(qry);

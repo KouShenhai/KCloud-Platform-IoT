@@ -52,7 +52,7 @@ public class MenusControllerV3 {
 
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('menu:save')")
+	@PreAuthorize("hasAuthority('sys:menu:save')")
 	@OperateLog(module = "保存菜单", operation = "保存菜单")
 	@Operation(summary = "保存菜单", description = "保存菜单")
 	public void saveV3(@RequestBody MenuSaveCmd cmd) {
@@ -60,7 +60,7 @@ public class MenusControllerV3 {
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('menu:modify')")
+	@PreAuthorize("hasAuthority('sys:menu:modify')")
 	@OperateLog(module = "修改菜单", operation = "修改菜单")
 	@Operation(summary = "修改菜单", description = "修改菜单")
 	@DataCache(name = MENUS, key = "#cmd.co.id", type = DEL)
@@ -69,7 +69,7 @@ public class MenusControllerV3 {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('menu:remove')")
+	@PreAuthorize("hasAuthority('sys:menu:remove')")
 	@OperateLog(module = "删除菜单", operation = "删除菜单")
 	@Operation(summary = "删除菜单", description = "删除菜单")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -77,7 +77,7 @@ public class MenusControllerV3 {
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('menu:import')")
+	@PreAuthorize("hasAuthority('sys:menu:import')")
 	@Operation(summary = "导入菜单", description = "导入菜单")
 	@OperateLog(module = "导入菜单", operation = "导入菜单")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -85,7 +85,7 @@ public class MenusControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('menu:export')")
+	@PreAuthorize("hasAuthority('sys:menu:export')")
 	@Operation(summary = "导出菜单", description = "导出菜单")
 	@OperateLog(module = "导出菜单", operation = "导出菜单")
 	public void exportV3(@RequestBody MenuExportCmd cmd) {
@@ -94,7 +94,7 @@ public class MenusControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('menu:page')")
+	@PreAuthorize("hasAuthority('sys:menu:page')")
 	@Operation(summary = "分页查询菜单列表", description = "分页查询菜单列表")
 	public Result<Page<MenuCO>> pageV3(@RequestBody MenuPageQry qry) {
 		return menusServiceI.page(qry);

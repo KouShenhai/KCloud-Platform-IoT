@@ -48,7 +48,7 @@ public class DictItemsControllerV3 {
 
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('dict-item:save')")
+	@PreAuthorize("hasAuthority('sys:dict-item:save')")
 	@OperateLog(module = "保存字典项", operation = "保存字典项")
 	@Operation(summary = "保存字典项", description = "保存字典项")
 	public void saveV3(@RequestBody DictItemSaveCmd cmd) {
@@ -56,7 +56,7 @@ public class DictItemsControllerV3 {
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('dict-item:modify')")
+	@PreAuthorize("hasAuthority('sys:dict-item:modify')")
 	@OperateLog(module = "修改字典项", operation = "修改字典项")
 	@Operation(summary = "修改字典项", description = "修改字典项")
 	public void modifyV3(@RequestBody DictItemModifyCmd cmd) {
@@ -64,7 +64,7 @@ public class DictItemsControllerV3 {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('dict-item:remove')")
+	@PreAuthorize("hasAuthority('sys:dict-item:remove')")
 	@OperateLog(module = "删除字典项", operation = "删除字典项")
 	@Operation(summary = "删除字典项", description = "删除字典项")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -72,7 +72,7 @@ public class DictItemsControllerV3 {
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('dict-item:import')")
+	@PreAuthorize("hasAuthority('sys:dict-item:import')")
 	@Operation(summary = "导入字典项", description = "导入字典项")
 	@OperateLog(module = "导入字典项", operation = "导入字典项")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -80,7 +80,7 @@ public class DictItemsControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('dict-item:export')")
+	@PreAuthorize("hasAuthority('sys:dict-item:export')")
 	@Operation(summary = "导出字典项", description = "导出字典项")
 	@OperateLog(module = "导出字典项", operation = "导出字典项")
 	public void exportV3(@RequestBody DictItemExportCmd cmd) {
@@ -89,7 +89,7 @@ public class DictItemsControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('dict-item:page')")
+	@PreAuthorize("hasAuthority('sys:dict-item:page')")
 	@Operation(summary = "分页查询字典项列表", description = "分页查询字典项列表")
 	public Result<Page<DictItemCO>> pageV3(@RequestBody DictItemPageQry qry) {
 		return dictItemsServiceI.page(qry);

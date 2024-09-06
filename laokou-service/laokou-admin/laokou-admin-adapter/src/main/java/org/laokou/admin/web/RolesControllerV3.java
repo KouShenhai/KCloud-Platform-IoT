@@ -48,7 +48,7 @@ public class RolesControllerV3 {
 
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('role:save')")
+	@PreAuthorize("hasAuthority('sys:role:save')")
 	@OperateLog(module = "保存角色", operation = "保存角色")
 	@Operation(summary = "保存角色", description = "保存角色")
 	public void saveV3(@RequestBody RoleSaveCmd cmd) {
@@ -56,7 +56,7 @@ public class RolesControllerV3 {
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('role:modify')")
+	@PreAuthorize("hasAuthority('sys:role:modify')")
 	@OperateLog(module = "修改角色", operation = "修改角色")
 	@Operation(summary = "修改角色", description = "修改角色")
 	public void modifyV3(@RequestBody RoleModifyCmd cmd) {
@@ -64,7 +64,7 @@ public class RolesControllerV3 {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('role:remove')")
+	@PreAuthorize("hasAuthority('sys:role:remove')")
 	@OperateLog(module = "删除角色", operation = "删除角色")
 	@Operation(summary = "删除角色", description = "删除角色")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -72,7 +72,7 @@ public class RolesControllerV3 {
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('role:import')")
+	@PreAuthorize("hasAuthority('sys:role:import')")
 	@Operation(summary = "导入角色", description = "导入角色")
 	@OperateLog(module = "导入角色", operation = "导入角色")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -80,7 +80,7 @@ public class RolesControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('role:export')")
+	@PreAuthorize("hasAuthority('sys:role:export')")
 	@Operation(summary = "导出角色", description = "导出角色")
 	@OperateLog(module = "导出角色", operation = "导出角色")
 	public void exportV3(@RequestBody RoleExportCmd cmd) {
@@ -89,7 +89,7 @@ public class RolesControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('role:page')")
+	@PreAuthorize("hasAuthority('sys:role:page')")
 	@Operation(summary = "分页查询角色列表", description = "分页查询角色列表")
 	public Result<Page<RoleCO>> pageV3(@RequestBody RolePageQry qry) {
 		return rolesServiceI.page(qry);

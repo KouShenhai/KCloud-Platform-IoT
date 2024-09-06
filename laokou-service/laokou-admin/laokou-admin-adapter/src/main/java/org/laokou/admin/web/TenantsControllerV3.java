@@ -52,7 +52,7 @@ public class TenantsControllerV3 {
 
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('tenant:save')")
+	@PreAuthorize("hasAuthority('sys:tenant:save')")
 	@OperateLog(module = "保存租户", operation = "保存租户")
 	@Operation(summary = "保存租户", description = "保存租户")
 	public void saveV3(@RequestBody TenantSaveCmd cmd) {
@@ -60,7 +60,7 @@ public class TenantsControllerV3 {
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('tenant:modify')")
+	@PreAuthorize("hasAuthority('sys:tenant:modify')")
 	@OperateLog(module = "修改租户", operation = "修改租户")
 	@Operation(summary = "修改租户", description = "修改租户")
 	@DataCache(name = TENANTS, key = "#cmd.co.id", type = DEL)
@@ -69,7 +69,7 @@ public class TenantsControllerV3 {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('tenant:remove')")
+	@PreAuthorize("hasAuthority('sys:tenant:remove')")
 	@OperateLog(module = "删除租户", operation = "删除租户")
 	@Operation(summary = "删除租户", description = "删除租户")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -77,7 +77,7 @@ public class TenantsControllerV3 {
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('tenant:import')")
+	@PreAuthorize("hasAuthority('sys:tenant:import')")
 	@Operation(summary = "导入租户", description = "导入租户")
 	@OperateLog(module = "导入租户", operation = "导入租户")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -85,7 +85,7 @@ public class TenantsControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('tenant:export')")
+	@PreAuthorize("hasAuthority('sys:tenant:export')")
 	@Operation(summary = "导出租户", description = "导出租户")
 	@OperateLog(module = "导出租户", operation = "导出租户")
 	public void exportV3(@RequestBody TenantExportCmd cmd) {
@@ -94,7 +94,7 @@ public class TenantsControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('tenant:page')")
+	@PreAuthorize("hasAuthority('sys:tenant:page')")
 	@Operation(summary = "分页查询租户列表", description = "分页查询租户列表")
 	public Result<Page<TenantCO>> pageV3(@RequestBody TenantPageQry qry) {
 		return tenantsServiceI.page(qry);

@@ -48,7 +48,7 @@ public class OssLogsControllerV3 {
 
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('oss-log:save')")
+	@PreAuthorize("hasAuthority('sys:oss-log:save')")
 	@OperateLog(module = "保存OSS日志", operation = "保存OSS日志")
 	@Operation(summary = "保存OSS日志", description = "保存OSS日志")
 	public void saveV3(@RequestBody OssLogSaveCmd cmd) {
@@ -56,7 +56,7 @@ public class OssLogsControllerV3 {
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('oss-log:modify')")
+	@PreAuthorize("hasAuthority('sys:oss-log:modify')")
 	@OperateLog(module = "修改OSS日志", operation = "修改OSS日志")
 	@Operation(summary = "修改OSS日志", description = "修改OSS日志")
 	public void modifyV3(@RequestBody OssLogModifyCmd cmd) {
@@ -64,7 +64,7 @@ public class OssLogsControllerV3 {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('oss-log:remove')")
+	@PreAuthorize("hasAuthority('sys:oss-log:remove')")
 	@OperateLog(module = "删除OSS日志", operation = "删除OSS日志")
 	@Operation(summary = "删除OSS日志", description = "删除OSS日志")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -72,7 +72,7 @@ public class OssLogsControllerV3 {
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('oss-log:import')")
+	@PreAuthorize("hasAuthority('sys:oss-log:import')")
 	@Operation(summary = "导入OSS日志", description = "导入OSS日志")
 	@OperateLog(module = "导入OSS日志", operation = "导入OSS日志")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -80,7 +80,7 @@ public class OssLogsControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('oss-log:export')")
+	@PreAuthorize("hasAuthority('sys:oss-log:export')")
 	@Operation(summary = "导出OSS日志", description = "导出OSS日志")
 	@OperateLog(module = "导出OSS日志", operation = "导出OSS日志")
 	public void exportV3(@RequestBody OssLogExportCmd cmd) {
@@ -89,7 +89,7 @@ public class OssLogsControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('oss-log:page')")
+	@PreAuthorize("hasAuthority('sys:oss-log:page')")
 	@Operation(summary = "分页查询OSS日志列表", description = "分页查询OSS日志列表")
 	public Result<Page<OssLogCO>> pageV3(@RequestBody OssLogPageQry qry) {
 		return ossLogsServiceI.page(qry);

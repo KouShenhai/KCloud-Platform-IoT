@@ -52,7 +52,7 @@ public class UsersControllerV3 {
 
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('user:save')")
+	@PreAuthorize("hasAuthority('sys:user:save')")
 	@OperateLog(module = "保存用户", operation = "保存用户")
 	@Operation(summary = "保存用户", description = "保存用户")
 	public void saveV3(@RequestBody UserSaveCmd cmd) {
@@ -60,7 +60,7 @@ public class UsersControllerV3 {
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('user:modify')")
+	@PreAuthorize("hasAuthority('sys:user:modify')")
 	@OperateLog(module = "修改用户", operation = "修改用户")
 	@Operation(summary = "修改用户", description = "修改用户")
 	@DataCache(name = USERS, key = "#cmd.co.id", type = DEL)
@@ -69,7 +69,7 @@ public class UsersControllerV3 {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('user:remove')")
+	@PreAuthorize("hasAuthority('sys:user:remove')")
 	@OperateLog(module = "删除用户", operation = "删除用户")
 	@Operation(summary = "删除用户", description = "删除用户")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -77,7 +77,7 @@ public class UsersControllerV3 {
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('user:import')")
+	@PreAuthorize("hasAuthority('sys:user:import')")
 	@Operation(summary = "导入用户", description = "导入用户")
 	@OperateLog(module = "导入用户", operation = "导入用户")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -85,7 +85,7 @@ public class UsersControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('user:export')")
+	@PreAuthorize("hasAuthority('sys:user:export')")
 	@Operation(summary = "导出用户", description = "导出用户")
 	@OperateLog(module = "导出用户", operation = "导出用户")
 	public void exportV3(@RequestBody UserExportCmd cmd) {
@@ -94,7 +94,7 @@ public class UsersControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('user:page')")
+	@PreAuthorize("hasAuthority('sys:user:page')")
 	@Operation(summary = "分页查询用户列表", description = "分页查询用户列表")
 	public Result<Page<UserCO>> pageV3(@RequestBody UserPageQry qry) {
 		return usersServiceI.page(qry);

@@ -48,7 +48,7 @@ public class OperateLogsControllerV3 {
 
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('operate-log:save')")
+	@PreAuthorize("hasAuthority('sys:operate-log:save')")
 	@OperateLog(module = "保存操作日志", operation = "保存操作日志")
 	@Operation(summary = "保存操作日志", description = "保存操作日志")
 	public void saveV3(@RequestBody OperateLogSaveCmd cmd) {
@@ -56,7 +56,7 @@ public class OperateLogsControllerV3 {
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('operate-log:modify')")
+	@PreAuthorize("hasAuthority('sys:operate-log:modify')")
 	@OperateLog(module = "修改操作日志", operation = "修改操作日志")
 	@Operation(summary = "修改操作日志", description = "修改操作日志")
 	public void modifyV3(@RequestBody OperateLogModifyCmd cmd) {
@@ -64,7 +64,7 @@ public class OperateLogsControllerV3 {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('operate-log:remove')")
+	@PreAuthorize("hasAuthority('sys:operate-log:remove')")
 	@OperateLog(module = "删除操作日志", operation = "删除操作日志")
 	@Operation(summary = "删除操作日志", description = "删除操作日志")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -72,7 +72,7 @@ public class OperateLogsControllerV3 {
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('operate-log:import')")
+	@PreAuthorize("hasAuthority('sys:operate-log:import')")
 	@Operation(summary = "导入操作日志", description = "导入操作日志")
 	@OperateLog(module = "导入操作日志", operation = "导入操作日志")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -80,7 +80,7 @@ public class OperateLogsControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('operate-log:export')")
+	@PreAuthorize("hasAuthority('sys:operate-log:export')")
 	@Operation(summary = "导出操作日志", description = "导出操作日志")
 	@OperateLog(module = "导出操作日志", operation = "导出操作日志")
 	public void exportV3(@RequestBody OperateLogExportCmd cmd) {
@@ -89,7 +89,7 @@ public class OperateLogsControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('operate-log:page')")
+	@PreAuthorize("hasAuthority('sys:operate-log:page')")
 	@Operation(summary = "分页查询操作日志列表", description = "分页查询操作日志列表")
 	public Result<Page<OperateLogCO>> pageV3(@RequestBody OperateLogPageQry qry) {
 		return operateLogsServiceI.page(qry);

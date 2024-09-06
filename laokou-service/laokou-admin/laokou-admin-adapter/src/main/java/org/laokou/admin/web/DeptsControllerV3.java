@@ -52,7 +52,7 @@ public class DeptsControllerV3 {
 
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('dept:save')")
+	@PreAuthorize("hasAuthority('sys:dept:save')")
 	@OperateLog(module = "保存部门", operation = "保存部门")
 	@Operation(summary = "保存部门", description = "保存部门")
 	public void saveV3(@RequestBody DeptSaveCmd cmd) {
@@ -60,7 +60,7 @@ public class DeptsControllerV3 {
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('dept:modify')")
+	@PreAuthorize("hasAuthority('sys:dept:modify')")
 	@OperateLog(module = "修改部门", operation = "修改部门")
 	@Operation(summary = "修改部门", description = "修改部门")
 	@DataCache(name = DEPTS, key = "#cmd.co.id", type = DEL)
@@ -69,7 +69,7 @@ public class DeptsControllerV3 {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('dept:remove')")
+	@PreAuthorize("hasAuthority('sys:dept:remove')")
 	@OperateLog(module = "删除部门", operation = "删除部门")
 	@Operation(summary = "删除部门", description = "删除部门")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -77,7 +77,7 @@ public class DeptsControllerV3 {
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('dept:import')")
+	@PreAuthorize("hasAuthority('sys:dept:import')")
 	@Operation(summary = "导入部门", description = "导入部门")
 	@OperateLog(module = "导入部门", operation = "导入部门")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -85,7 +85,7 @@ public class DeptsControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('dept:export')")
+	@PreAuthorize("hasAuthority('sys:dept:export')")
 	@Operation(summary = "导出部门", description = "导出部门")
 	@OperateLog(module = "导出部门", operation = "导出部门")
 	public void exportV3(@RequestBody DeptExportCmd cmd) {
@@ -94,7 +94,7 @@ public class DeptsControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('dept:page')")
+	@PreAuthorize("hasAuthority('sys:dept:page')")
 	@Operation(summary = "分页查询部门列表", description = "分页查询部门列表")
 	public Result<Page<DeptCO>> pageV3(@RequestBody DeptPageQry qry) {
 		return deptsServiceI.page(qry);

@@ -48,7 +48,7 @@ public class LoginLogsControllerV3 {
 
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('login-log:save')")
+	@PreAuthorize("hasAuthority('sys:login-log:save')")
 	@OperateLog(module = "保存登录日志", operation = "保存登录日志")
 	@Operation(summary = "保存登录日志", description = "保存登录日志")
 	public void saveV3(@RequestBody LoginLogSaveCmd cmd) {
@@ -56,7 +56,7 @@ public class LoginLogsControllerV3 {
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('login-log:modify')")
+	@PreAuthorize("hasAuthority('sys:login-log:modify')")
 	@OperateLog(module = "修改登录日志", operation = "修改登录日志")
 	@Operation(summary = "修改登录日志", description = "修改登录日志")
 	public void modifyV3(@RequestBody LoginLogModifyCmd cmd) {
@@ -64,7 +64,7 @@ public class LoginLogsControllerV3 {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('login-log:remove')")
+	@PreAuthorize("hasAuthority('sys:login-log:remove')")
 	@OperateLog(module = "删除登录日志", operation = "删除登录日志")
 	@Operation(summary = "删除登录日志", description = "删除登录日志")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -72,7 +72,7 @@ public class LoginLogsControllerV3 {
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('login-log:import')")
+	@PreAuthorize("hasAuthority('sys:login-log:import')")
 	@Operation(summary = "导入登录日志", description = "导入登录日志")
 	@OperateLog(module = "导入登录日志", operation = "导入登录日志")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -80,7 +80,7 @@ public class LoginLogsControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('login-log:export')")
+	@PreAuthorize("hasAuthority('sys:login-log:export')")
 	@Operation(summary = "导出登录日志", description = "导出登录日志")
 	@OperateLog(module = "导出登录日志", operation = "导出登录日志")
 	public void exportV3(@RequestBody LoginLogExportCmd cmd) {
@@ -89,7 +89,7 @@ public class LoginLogsControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('login-log:page')")
+	@PreAuthorize("hasAuthority('sys:login-log:page')")
 	@Operation(summary = "分页查询登录日志列表", description = "分页查询登录日志列表")
 	public Result<Page<LoginLogCO>> pageV3(@RequestBody LoginLogPageQry qry) {
 		return loginLogsServiceI.page(qry);

@@ -52,7 +52,7 @@ public class SourcesControllerV3 {
 
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('source:save')")
+	@PreAuthorize("hasAuthority('sys:source:save')")
 	@OperateLog(module = "保存数据源", operation = "保存数据源")
 	@Operation(summary = "保存数据源", description = "保存数据源")
 	public void saveV3(@RequestBody SourceSaveCmd cmd) {
@@ -60,7 +60,7 @@ public class SourcesControllerV3 {
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('source:modify')")
+	@PreAuthorize("hasAuthority('sys:source:modify')")
 	@OperateLog(module = "修改数据源", operation = "修改数据源")
 	@Operation(summary = "修改数据源", description = "修改数据源")
 	@DataCache(name = SOURCES, key = "#cmd.co.id", type = DEL)
@@ -69,7 +69,7 @@ public class SourcesControllerV3 {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('source:remove')")
+	@PreAuthorize("hasAuthority('sys:source:remove')")
 	@OperateLog(module = "删除数据源", operation = "删除数据源")
 	@Operation(summary = "删除数据源", description = "删除数据源")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -77,7 +77,7 @@ public class SourcesControllerV3 {
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('source:import')")
+	@PreAuthorize("hasAuthority('sys:source:import')")
 	@Operation(summary = "导入数据源", description = "导入数据源")
 	@OperateLog(module = "导入数据源", operation = "导入数据源")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -85,7 +85,7 @@ public class SourcesControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('source:export')")
+	@PreAuthorize("hasAuthority('sys:source:export')")
 	@Operation(summary = "导出数据源", description = "导出数据源")
 	@OperateLog(module = "导出数据源", operation = "导出数据源")
 	public void exportV3(@RequestBody SourceExportCmd cmd) {
@@ -94,7 +94,7 @@ public class SourcesControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('source:page')")
+	@PreAuthorize("hasAuthority('sys:source:page')")
 	@Operation(summary = "分页查询数据源列表", description = "分页查询数据源列表")
 	public Result<Page<SourceCO>> pageV3(@RequestBody SourcePageQry qry) {
 		return sourcesServiceI.page(qry);

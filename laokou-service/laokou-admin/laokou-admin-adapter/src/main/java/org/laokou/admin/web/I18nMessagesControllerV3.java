@@ -48,7 +48,7 @@ public class I18nMessagesControllerV3 {
 
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('i18n-message:save')")
+	@PreAuthorize("hasAuthority('sys:i18n-message:save')")
 	@OperateLog(module = "保存国际化", operation = "保存国际化")
 	@Operation(summary = "保存国际化", description = "保存国际化")
 	public void saveV3(@RequestBody I18nMessageSaveCmd cmd) {
@@ -56,7 +56,7 @@ public class I18nMessagesControllerV3 {
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('i18n-message:modify')")
+	@PreAuthorize("hasAuthority('sys:i18n-message:modify')")
 	@OperateLog(module = "修改国际化", operation = "修改国际化")
 	@Operation(summary = "修改国际化", description = "修改国际化")
 	public void modifyV3(@RequestBody I18nMessageModifyCmd cmd) {
@@ -64,7 +64,7 @@ public class I18nMessagesControllerV3 {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('i18n-message:remove')")
+	@PreAuthorize("hasAuthority('sys:i18n-message:remove')")
 	@OperateLog(module = "删除国际化", operation = "删除国际化")
 	@Operation(summary = "删除国际化", description = "删除国际化")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -72,7 +72,7 @@ public class I18nMessagesControllerV3 {
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('i18n-message:import')")
+	@PreAuthorize("hasAuthority('sys:i18n-message:import')")
 	@Operation(summary = "导入国际化", description = "导入国际化")
 	@OperateLog(module = "导入国际化", operation = "导入国际化")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -80,7 +80,7 @@ public class I18nMessagesControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('i18n-message:export')")
+	@PreAuthorize("hasAuthority('sys:i18n-message:export')")
 	@Operation(summary = "导出国际化", description = "导出国际化")
 	@OperateLog(module = "导出国际化", operation = "导出国际化")
 	public void exportV3(@RequestBody I18nMessageExportCmd cmd) {
@@ -89,7 +89,7 @@ public class I18nMessagesControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('i18n-message:page')")
+	@PreAuthorize("hasAuthority('sys:i18n-message:page')")
 	@Operation(summary = "分页查询国际化列表", description = "分页查询国际化列表")
 	public Result<Page<I18nMessageCO>> pageV3(@RequestBody I18nMessagePageQry qry) {
 		return i18nMessagesServiceI.page(qry);
