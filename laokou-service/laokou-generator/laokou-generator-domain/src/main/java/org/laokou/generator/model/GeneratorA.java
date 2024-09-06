@@ -42,15 +42,18 @@ public class GeneratorA extends AggregateRoot<Long> {
 
 	private final TableE tableE;
 
+	private final App app;
+
 	private TableV tableV;
 
-	public GeneratorA(String author, String packageName, String moduleName, String version, TableE tableE) {
+	public GeneratorA(String author, String packageName, String moduleName, String version, TableE tableE, App app) {
 		super(IdGenerator.defaultSnowflakeId());
 		this.author = author;
 		this.packageName = packageName;
 		this.moduleName = moduleName;
 		this.version = version;
 		this.tableE = tableE;
+		this.app = app;
 	}
 
 	public String getDomainPackagePath() {
@@ -72,6 +75,7 @@ public class GeneratorA extends AggregateRoot<Long> {
 		map.put("version", version);
 		map.put("pageQuery", "${pageQuery");
 		map.put("packageName", packageName);
+		map.put("app", app.name());
 		return map;
 	}
 

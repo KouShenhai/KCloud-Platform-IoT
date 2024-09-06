@@ -36,8 +36,6 @@ public final class Constant {
 
 	public static final String COLA_INFRASTRUCTURE = "infrastructure";
 
-	public static final String COLA_START = "start";
-
 	private Constant() {
 	}
 

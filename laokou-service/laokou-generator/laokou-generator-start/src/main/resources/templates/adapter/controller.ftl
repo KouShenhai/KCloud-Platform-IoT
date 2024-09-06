@@ -54,7 +54,7 @@ public class ${className}sController${(version)?upper_case} {
 
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('${instanceName}:save')")
+	@PreAuthorize("hasAuthority('${app?lower_case}:${instanceName}:save')")
 	@OperateLog(module = "保存${comment}", operation = "保存${comment}")
 	@Operation(summary = "保存${comment}", description = "保存${comment}")
 	public void save${(version)?upper_case}(@RequestBody ${className}SaveCmd cmd) {
@@ -62,7 +62,7 @@ public class ${className}sController${(version)?upper_case} {
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('${instanceName}:modify')")
+	@PreAuthorize("hasAuthority('${app?lower_case}:${instanceName}:modify')")
 	@OperateLog(module = "修改${comment}", operation = "修改${comment}")
 	@Operation(summary = "修改${comment}", description = "修改${comment}")
 	@DataCache(name = ${(className)?upper_case}S, key = "#cmd.co.id", type = DEL)
@@ -71,7 +71,7 @@ public class ${className}sController${(version)?upper_case} {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('${instanceName}:remove')")
+	@PreAuthorize("hasAuthority('${app?lower_case}:${instanceName}:remove')")
 	@OperateLog(module = "删除${comment}", operation = "删除${comment}")
 	@Operation(summary = "删除${comment}", description = "删除${comment}")
 	public void remove${(version)?upper_case}(@RequestBody Long[] ids) {
@@ -79,7 +79,7 @@ public class ${className}sController${(version)?upper_case} {
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('${instanceName}:import')")
+	@PreAuthorize("hasAuthority('${app?lower_case}:${instanceName}:import')")
 	@Operation(summary = "导入${comment}", description = "导入${comment}")
 	@OperateLog(module = "导入${comment}", operation = "导入${comment}")
 	public void import${(version)?upper_case}(@RequestPart("file") MultipartFile[] files) {
@@ -87,7 +87,7 @@ public class ${className}sController${(version)?upper_case} {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('${instanceName}:export')")
+	@PreAuthorize("hasAuthority('${app?lower_case}:${instanceName}:export')")
 	@Operation(summary = "导出${comment}", description = "导出${comment}")
 	@OperateLog(module = "导出${comment}", operation = "导出${comment}")
 	public void export${(version)?upper_case}(@RequestBody ${className}ExportCmd cmd) {
@@ -96,7 +96,7 @@ public class ${className}sController${(version)?upper_case} {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('${instanceName}:page')")
+	@PreAuthorize("hasAuthority('${app?lower_case}:${instanceName}:page')")
 	@Operation(summary = "分页查询${comment}列表", description = "分页查询${comment}列表")
 	public Result<Page<${className}CO>> page${(version)?upper_case}(@RequestBody ${className}PageQry qry) {
 		return ${instanceName}sServiceI.page(qry);

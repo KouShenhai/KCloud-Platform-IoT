@@ -26,6 +26,7 @@ import org.laokou.generator.gatewayimpl.database.TableColumnMapper;
 import org.laokou.generator.gatewayimpl.database.TableMapper;
 import org.laokou.generator.gatewayimpl.database.dataobject.TableColumnDO;
 import org.laokou.generator.gatewayimpl.database.dataobject.TableDO;
+import org.laokou.generator.model.App;
 import org.laokou.generator.model.GeneratorA;
 import org.laokou.generator.model.TableE;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -74,11 +75,13 @@ class TableTest {
 		String moduleName = "laokou-admin";
 		// 包名
 		String packageName = "org.laokou.admin";
+		// 应用
+		App app = App.SYS;
 		// 表名
 		Set<String> tableNames = Set.of("boot_sys_user", "boot_sys_menu", "boot_sys_tenant");
 		tableNames.stream().map(item -> CompletableFuture.runAsync(() -> {
 			TableE tableE = new TableE(item, tablePrefix);
-			GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE);
+			GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE, app);
 			generatorDomainService.generateCode(generatorA);
 		})).forEach(CompletableFuture::join);
 	}
