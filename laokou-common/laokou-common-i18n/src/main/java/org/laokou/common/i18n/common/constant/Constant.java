@@ -27,7 +27,7 @@ public final class Constant {
 	/**
 	 * 场景标识.
 	 */
-	public static final String SCENARIO = "IoT";
+	public static final String SCENARIO = "iot";
 
 	/**
 	 * 认证标识.
