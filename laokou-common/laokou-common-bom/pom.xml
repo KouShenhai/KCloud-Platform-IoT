@@ -88,7 +88,7 @@
     <!--swagger-annotations-jakarta版本-->
     <swagger-annotations-jakarta.version>2.2.23</swagger-annotations-jakarta.version>
     <!--disruptor版本-->
-    <disruptor.version>3.4.4</disruptor.version>
+    <disruptor.version>4.0.0</disruptor.version>
     <!--transmittable-thread-local版本-->
     <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
     <!--mqttv5-client版本-->

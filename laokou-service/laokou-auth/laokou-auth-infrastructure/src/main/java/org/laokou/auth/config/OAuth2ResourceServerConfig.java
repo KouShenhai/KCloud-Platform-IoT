@@ -19,6 +19,7 @@ package org.laokou.auth.config;
 
 import lombok.Data;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
+import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
@@ -38,24 +39,25 @@ import static org.laokou.common.security.config.OAuth2ResourceServerConfig.custo
 @Data
 @Configuration
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true,
-		prefix = "spring.security.oauth2.authorization-server", name = "enabled")
+	prefix = "spring.security.oauth2.authorization-server", name = "enabled")
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class OAuth2ResourceServerConfig {
 
 	/**
 	 * 不拦截拦截静态资源 如果您不想要警告消息并且需要性能优化，则可以为静态资源引入第二个过滤器链.
 	 * <a href="https://github.com/spring-projects/spring-security/issues/10938">优化配置</a>
-	 * @param http http配置
+	 *
+	 * @param http                           http配置
 	 * @param oAuth2ResourceServerProperties OAuth2配置文件
 	 * @return 认证过滤器
 	 * @throws Exception 异常
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
-			OAuth2ResourceServerProperties oAuth2ResourceServerProperties) throws Exception {
+												   OAuth2ResourceServerProperties oAuth2ResourceServerProperties) throws Exception {
 		return http
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.httpStrictTransportSecurity(
-					hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)))
+				hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)))
 			.authorizeHttpRequests(customizer(oAuth2ResourceServerProperties))
 			.cors(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
@@ -64,6 +66,9 @@ class OAuth2ResourceServerConfig {
 			// https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
 			// 登录页面 -> DefaultLoginPageGeneratingFilter
 			.formLogin(Customizer.withDefaults())
+			.exceptionHandling(config -> config
+				.accessDeniedHandler((request, response, ex) -> OAuth2ExceptionHandler.handleAuthentication(response, ex))
+				.authenticationEntryPoint((request, response, ex) -> OAuth2ExceptionHandler.handleAuthentication(response, ex)))
 			// 清除session
 			.logout(logout -> logout.clearAuthentication(true).invalidateHttpSession(true))
 			.build();
