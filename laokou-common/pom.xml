@@ -70,7 +70,6 @@
     <module>laokou-common-oss</module>
     <module>laokou-common-excel</module>
     <module>laokou-common-snail-job</module>
-    <module>laokou-common-knife4j-ui</module>
   </modules>
 
 </project>

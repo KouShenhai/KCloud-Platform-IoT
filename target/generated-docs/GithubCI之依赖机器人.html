@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Github CI之依赖机器人</title>
+<link rel="stylesheet" href="css/site.css">
+<script src="js/setup.js"></script><script defer src="js/site.js"></script>
+
+</head>
+<body class="article"><div id="banner-container" class="container" role="banner">
+  <div id="banner" class="contained" role="banner">
+    <div id="switch-theme">
+      <input type="checkbox" id="switch-theme-checkbox" />
+      <label for="switch-theme-checkbox">Dark Theme</label>
+    </div>
+  </div>
+</div>
+<div id="tocbar-container" class="container" role="navigation">
+  <div id="tocbar" class="contained" role="navigation">
+    <button id="toggle-toc"></button>
+  </div>
+</div>
+<div id="main-container" class="container">
+  <div id="main" class="contained">
+    <div id="doc" class="doc">
+<div id="header">
+<h1>Github CI之依赖机器人</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<span id="back-to-index"><a href="index.html">Back to index</a></span><ul class="sectlevel1">
+<li><a href="#_dependabot">Dependabot</a>
+<ul class="sectlevel2">
+<li><a href="#_介绍">介绍</a></li>
+<li><a href="#_官方地址">官方地址</a></li>
+<li><a href="#_拉取请求的频率">拉取请求的频率</a></li>
+<li><a href="#_自动停用">自动停用</a></li>
+<li><a href="#_启用依赖检查">启用依赖检查</a></li>
+<li><a href="#_配置说明">配置说明</a></li>
+</ul>
+</li>
+<li><a href="#_renovate">Renovate</a>
+<ul class="sectlevel2">
+<li><a href="#_介绍_2">介绍</a></li>
+<li><a href="#_安装地址">安装地址</a></li>
+<li><a href="#_启用依赖更新">启用依赖更新</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_dependabot"><a class="anchor" href="#_dependabot"></a>Dependabot</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_介绍"><a class="anchor" href="#_介绍"></a>介绍</h3>
+<div class="openblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre>Dependabot负责维护您的依赖项。您可以使用它来确保仓库自动跟上它所依赖的包和应用程序的最新版本。
+通过将dependabot.yml配置文件写入存储库，可启用Dependabot version updates。
+配置文件指定存储在仓库中的清单或其他包定义文件的位置，Dependabot使用此信息检查过时的包和应用程序。</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_官方地址"><a class="anchor" href="#_官方地址"></a>官方地址</h3>
+<div class="paragraph">
+<p><a href="https://docs.github.com/zh/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates">Dependabot官方地址</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_拉取请求的频率"><a class="anchor" href="#_拉取请求的频率"></a>拉取请求的频率</h3>
+<div class="paragraph">
+<p>配置文件中指定检查每个生态系统的新版本的频率：每日、每周或每月</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_自动停用"><a class="anchor" href="#_自动停用"></a>自动停用</h3>
+<div class="paragraph">
+<p>当存储库的维护者停止与Dependabot拉取请求交互时，Dependabot会暂时暂停其更新并发出通知</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_启用依赖检查"><a class="anchor" href="#_启用依赖检查"></a>启用依赖检查</h3>
+<div class="sect3">
+<h4 id="_创建仓库"><a class="anchor" href="#_创建仓库"></a>创建仓库</h4>
+<div class="openblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre>在Github上面创建一个开源仓库</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_创建文件"><a class="anchor" href="#_创建文件"></a>创建文件</h4>
+<div class="openblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre>先在根目录创建.github文件夹,然后创建dependabot.yml文件</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="image/tools/img_4.png" alt="创建文件图片" width="200"></span></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_编写内容"><a class="anchor" href="#_编写内容"></a>编写内容</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-yaml" data-lang="yaml">version: 2
+updates:
+  - package-ecosystem: "maven" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly" # 必填，每周执行一次，默认周一执行</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_提交代码"><a class="anchor" href="#_提交代码"></a>提交代码</h4>
+<div class="openblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre>git add .github/dependabot.yml &amp;&amp; git commit -m "提交依赖版本更新插件" &amp;&amp; git push</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_查看pr"><a class="anchor" href="#_查看pr"></a>查看PR</h4>
+<div class="openblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre>返回到项目，在Pull requests查看更新过期依赖版本所提交的请求</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="image/tools/img_5.png" alt="更新过期依赖版本所提交的请求图片" width="400"></span></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_配置说明"><a class="anchor" href="#_配置说明"></a>配置说明</h3>
+<div class="sect3">
+<h4 id="_schedule_interval"><a class="anchor" href="#_schedule_interval"></a>schedule.interval</h4>
+<div class="openblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre>检查新版本的频率，有3种时间类型</pre>
+</div>
+</div>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">频率</th>
+<th class="tableblock halign-left valign-top">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">daily</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">每个工作日（周一至周五）运行</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">weekly</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">每周运行一次。默认情况下为星期一，若要对此进行修改，请使用schedule.day</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">monthly</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">每月运行一次。在每月的第一天运行</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_schedule_day"><a class="anchor" href="#_schedule_day"></a>schedule.day</h4>
+<div class="openblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre>指定每周星期几执行一次,有7个值
+monday     =&gt; 星期一
+tuesday    =&gt; 星期二
+wednesday  =&gt; 星期三
+thursday   =&gt; 星期四
+friday     =&gt; 星期五
+saturday   =&gt; 星期六
+sunday     =&gt; 星期日</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-yaml" data-lang="yaml">version: 2
+updates:
+  - package-ecosystem: "maven" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly" # 必填，每周执行一次，默认周一执行
+      day: "sunday" # 每周日执行一次</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_renovate"><a class="anchor" href="#_renovate"></a>Renovate</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_介绍_2"><a class="anchor" href="#_介绍_2"></a>介绍</h3>
+<div class="openblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre>Mend Renovate 使用自动拉取请求使源代码依赖项保持最新状态。</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_安装地址"><a class="anchor" href="#_安装地址"></a>安装地址</h3>
+<div class="paragraph">
+<p><a href="https://github.com/apps/renovate">Renovate安装地址</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_启用依赖更新"><a class="anchor" href="#_启用依赖更新"></a>启用依赖更新</h3>
+<div class="paragraph">
+<p><span class="image"><img src="image/tools/img_6.png" alt="Renovate启用依赖更新1" width="600"></span></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="image/tools/img_7.png" alt="Renovate启用依赖更新2" width="500"></span></p>
+</div>
+<div class="paragraph">
+<p>检查 <code>renovate.json</code> 配置</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-json" data-lang="json">{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="image/tools/img_8.png" alt="Renovate启用依赖更新3"></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-09-02 22:17:44 +0800
+</div>
+</div>
+</div>
+  </div>
+</div>
+</body>
+</html>

@@ -20,10 +20,13 @@ package org.laokou.gateway.filter;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import jakarta.annotation.PostConstruct;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
+import org.laokou.common.core.utils.Base64Util;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.crypto.utils.RSAUtil;
@@ -45,7 +48,6 @@ import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ReactiveHttpOutputMessage;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
@@ -59,6 +61,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -103,6 +106,14 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 */
 	public static final String TOKEN_URL = "/oauth2/token";
 
+	private static final String CLIENT_ID = "client_id";
+
+	private static final String CLIENT_SECRET = "client_secret";
+
+	private static final String REDIRECT_URI = "redirect_uri";
+
+	private static final String CODE = "code";
+
 	/**
 	 * Chunked.
 	 */
@@ -139,11 +150,9 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 				return chain
 					.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
 			}
-			// 表单提交
-			MediaType mediaType = getContentType(request);
 			if (requestURL.contains(TOKEN_URL) && POST.matches(getMethodName(request))
-					&& APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
-				return decode(exchange, chain);
+					&& APPLICATION_FORM_URLENCODED.isCompatibleWith(getContentType(request))) {
+				return decodeOAuth2(exchange, chain);
 			}
 			// 获取token
 			String token = getParamValue(request, AUTHORIZATION);
@@ -170,9 +179,12 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 * @param exchange exchange
 	 * @return 响应式
 	 */
-	private Mono<Void> decode(ServerWebExchange exchange, GatewayFilterChain chain) {
+	private Mono<Void> decodeOAuth2(ServerWebExchange exchange, GatewayFilterChain chain) {
+		ServerHttpRequest request = exchange.getRequest();
 		ServerRequest serverRequest = ServerRequest.create(exchange, HandlerStrategies.withDefaults().messageReaders());
-		Mono<String> modifiedBody = serverRequest.bodyToMono(String.class).flatMap(decrypt());
+		AuthorizationCode authorizationCode = new AuthorizationCode(getParamValue(request, GRANT_TYPE),
+				getParamValue(request, CODE), getParamValue(request, REDIRECT_URI));
+		Mono<String> modifiedBody = serverRequest.bodyToMono(String.class).flatMap(decrypt(authorizationCode));
 		BodyInserter<Mono<String>, ReactiveHttpOutputMessage> bodyInserter = BodyInserters.fromPublisher(modifiedBody,
 				String.class);
 		HttpHeaders headers = new HttpHeaders();
@@ -182,6 +194,12 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		CachedBodyOutputMessage outputMessage = new CachedBodyOutputMessage(exchange, headers);
 		return bodyInserter.insert(outputMessage, new BodyInserterContext()).then(Mono.defer(() -> {
 			ServerHttpRequest decorator = requestDecorator(exchange, headers, outputMessage);
+			String clientToken = authorizationCode.getClientToken();
+			if (StringUtil.isNotEmpty(clientToken)) {
+				return chain.filter(exchange.mutate()
+					.request(decorator.mutate().header(AUTHORIZATION, clientToken).build())
+					.build());
+			}
 			return chain.filter(exchange.mutate().request(decorator).build());
 		})).onErrorResume((Function<Throwable, Mono<Void>>) throwable -> release(outputMessage, throwable));
 	}
@@ -200,7 +218,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 * 用户名/密码 解密.
 	 * @return 解密结果
 	 */
-	private Function<String, Mono<String>> decrypt() {
+	private Function<String, Mono<String>> decrypt(AuthorizationCode authorizationCode) {
 		return s -> {
 			// 获取请求密码并解密
 			Map<String, String> paramMap = MapUtil.parseParamMap(s);
@@ -220,6 +238,18 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 				catch (Exception e) {
 					log.error("用户名密码认证模式，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				}
+			}
+			// 适配Knife4j授权码模式【真的坑】
+			else if (paramMap.containsKey(CLIENT_ID) && paramMap.containsKey(CLIENT_SECRET)) {
+				String clientId = paramMap.get(CLIENT_ID);
+				String clientSecret = paramMap.get(CLIENT_SECRET);
+				authorizationCode.setClientToken("Basic " + Base64Util
+					.encodeToString(String.format("%s:%s", clientId, clientSecret).getBytes(StandardCharsets.UTF_8)));
+				paramMap.put(CODE, authorizationCode.getCode());
+				paramMap.put(GRANT_TYPE, authorizationCode.getGrantType());
+				paramMap.put(REDIRECT_URI, authorizationCode.getRedirectUri());
+				paramMap.remove(CLIENT_ID);
+				paramMap.remove(CLIENT_SECRET);
 			}
 			return Mono.just(MapUtil.parseParams(paramMap));
 		};
@@ -289,6 +319,26 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		urlMap = Optional.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
 				SpringContextUtil.getServiceId()))
 			.orElseGet(ConcurrentHashMap::new);
+	}
+
+	@Data
+	@NoArgsConstructor
+	static class AuthorizationCode {
+
+		private String clientToken;
+
+		private String grantType;
+
+		private String code;
+
+		private String redirectUri;
+
+		public AuthorizationCode(String grantType, String code, String redirectUri) {
+			this.grantType = grantType;
+			this.code = code;
+			this.redirectUri = redirectUri;
+		}
+
 	}
 
 }
