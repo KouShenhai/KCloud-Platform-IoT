@@ -104,15 +104,11 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	/**
 	 * 令牌URL.
 	 */
-	public static final String TOKEN_URL = "/oauth2/token";
+	private static final String TOKEN_URL = "/oauth2/token";
 
 	private static final String CLIENT_ID = "client_id";
 
 	private static final String CLIENT_SECRET = "client_secret";
-
-	private static final String REDIRECT_URI = "redirect_uri";
-
-	private static final String CODE = "code";
 
 	/**
 	 * Chunked.
@@ -151,7 +147,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 					.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
 			}
 			if (requestURL.contains(TOKEN_URL) && POST.matches(getMethodName(request))
-					&& APPLICATION_FORM_URLENCODED.isCompatibleWith(getContentType(request))) {
+				&& APPLICATION_FORM_URLENCODED.isCompatibleWith(getContentType(request))) {
 				return decodeOAuth2(exchange, chain);
 			}
 			// 获取token
@@ -162,8 +158,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			// 增加令牌
 			return chain
 				.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, token).build()).build());
-		}
-		finally {
+		} finally {
 			ReactiveI18nUtil.reset();
 		}
 	}
@@ -175,18 +170,17 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	/**
 	 * OAuth2解密. see {@link ModifyRequestBodyGatewayFilterFactory}
-	 * @param chain chain
+	 *
+	 * @param chain    chain
 	 * @param exchange exchange
 	 * @return 响应式
 	 */
 	private Mono<Void> decodeOAuth2(ServerWebExchange exchange, GatewayFilterChain chain) {
-		ServerHttpRequest request = exchange.getRequest();
 		ServerRequest serverRequest = ServerRequest.create(exchange, HandlerStrategies.withDefaults().messageReaders());
-		AuthorizationCode authorizationCode = new AuthorizationCode(getParamValue(request, GRANT_TYPE),
-				getParamValue(request, CODE), getParamValue(request, REDIRECT_URI));
+		AuthorizationCode authorizationCode = new AuthorizationCode();
 		Mono<String> modifiedBody = serverRequest.bodyToMono(String.class).flatMap(decrypt(authorizationCode));
 		BodyInserter<Mono<String>, ReactiveHttpOutputMessage> bodyInserter = BodyInserters.fromPublisher(modifiedBody,
-				String.class);
+			String.class);
 		HttpHeaders headers = new HttpHeaders();
 		headers.putAll(exchange.getRequest().getHeaders());
 		headers.remove(CONTENT_LENGTH);
@@ -206,8 +200,9 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	/**
 	 * 释放缓存.
+	 *
 	 * @param outputMessage 输出消息
-	 * @param throwable 异常
+	 * @param throwable     异常
 	 * @return 释放结果
 	 */
 	private Mono<Void> release(CachedBodyOutputMessage outputMessage, Throwable throwable) {
@@ -216,6 +211,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	/**
 	 * 用户名/密码 解密.
+	 *
 	 * @return 解密结果
 	 */
 	private Function<String, Mono<String>> decrypt(AuthorizationCode authorizationCode) {
@@ -223,7 +219,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			// 获取请求密码并解密
 			Map<String, String> paramMap = MapUtil.parseParamMap(s);
 			if (ObjectUtil.equals(PASSWORD, paramMap.getOrDefault(GRANT_TYPE, EMPTY)) && paramMap.containsKey(PASSWORD)
-					&& paramMap.containsKey(USERNAME)) {
+				&& paramMap.containsKey(USERNAME)) {
 				try {
 					String password = paramMap.get(PASSWORD);
 					String username = paramMap.get(USERNAME);
@@ -234,20 +230,16 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 					if (StringUtil.isNotEmpty(username)) {
 						paramMap.put(USERNAME, RSAUtil.decryptByPrivateKey(username));
 					}
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					log.error("用户名密码认证模式，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				}
 			}
-			// 适配Knife4j授权码模式【真的坑】
+			// 适配Knife4j授权码模式【真TMD坑】
 			else if (paramMap.containsKey(CLIENT_ID) && paramMap.containsKey(CLIENT_SECRET)) {
 				String clientId = paramMap.get(CLIENT_ID);
 				String clientSecret = paramMap.get(CLIENT_SECRET);
 				authorizationCode.setClientToken("Basic " + Base64Util
 					.encodeToString(String.format("%s:%s", clientId, clientSecret).getBytes(StandardCharsets.UTF_8)));
-				paramMap.put(CODE, authorizationCode.getCode());
-				paramMap.put(GRANT_TYPE, authorizationCode.getGrantType());
-				paramMap.put(REDIRECT_URI, authorizationCode.getRedirectUri());
 				paramMap.remove(CLIENT_ID);
 				paramMap.remove(CLIENT_SECRET);
 			}
@@ -257,13 +249,14 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	/**
 	 * 构建请求装饰器.
-	 * @param exchange 服务网络交换机
-	 * @param headers 请求头
+	 *
+	 * @param exchange      服务网络交换机
+	 * @param headers       请求头
 	 * @param outputMessage 输出消息
 	 * @return 请求装饰器
 	 */
 	private ServerHttpRequestDecorator requestDecorator(ServerWebExchange exchange, HttpHeaders headers,
-			CachedBodyOutputMessage outputMessage) {
+														CachedBodyOutputMessage outputMessage) {
 		return new ServerHttpRequestDecorator(exchange.getRequest()) {
 			@Override
 			@NonNull
@@ -273,8 +266,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 				httpHeaders.putAll(super.getHeaders());
 				if (contentLength > 0) {
 					httpHeaders.setContentLength(contentLength);
-				}
-				else {
+				} else {
 					httpHeaders.set(HttpHeaders.TRANSFER_ENCODING, CHUNKED);
 				}
 				return httpHeaders;
@@ -291,8 +283,8 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	/**
 	 * 订阅nacos消息通知，用于实时更新白名单URL.
 	 */
-	@PostConstruct
 	@SneakyThrows
+	@PostConstruct
 	public void initURL() {
 		String group = configUtil.getGroup();
 		ConfigService configService = configUtil.getConfigService();
@@ -304,7 +296,6 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 			@Override
 			public void receiveConfigInfo(String configInfo) {
-				log.info("接收到URL变动通知");
 				initURLMap();
 			}
 		});
@@ -326,18 +317,6 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	static class AuthorizationCode {
 
 		private String clientToken;
-
-		private String grantType;
-
-		private String code;
-
-		private String redirectUri;
-
-		public AuthorizationCode(String grantType, String code, String redirectUri) {
-			this.grantType = grantType;
-			this.code = code;
-			this.redirectUri = redirectUri;
-		}
 
 	}
 
