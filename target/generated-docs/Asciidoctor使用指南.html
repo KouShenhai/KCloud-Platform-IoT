@@ -1,225 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.20">
-<title>Asciidoctor使用指南</title>
-<link rel="stylesheet" href="css/site.css">
-<script src="js/setup.js"></script><script defer src="js/site.js"></script>
+	<meta charset="UTF-8">
+	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta content="Asciidoctor 2.0.20" name="generator">
+	<title>Asciidoctor使用指南</title>
+	<link href="css/site.css" rel="stylesheet">
+	<script src="js/setup.js"></script>
+	<script defer src="js/site.js"></script>
 
 </head>
-<body class="article"><div id="banner-container" class="container" role="banner">
-  <div id="banner" class="contained" role="banner">
-    <div id="switch-theme">
-      <input type="checkbox" id="switch-theme-checkbox" />
-      <label for="switch-theme-checkbox">Dark Theme</label>
-    </div>
-  </div>
+<body class="article">
+<div class="container" id="banner-container" role="banner">
+	<div class="contained" id="banner" role="banner">
+		<div id="switch-theme">
+			<input id="switch-theme-checkbox" type="checkbox"/>
+			<label for="switch-theme-checkbox">Dark Theme</label>
+		</div>
+	</div>
 </div>
-<div id="tocbar-container" class="container" role="navigation">
-  <div id="tocbar" class="contained" role="navigation">
-    <button id="toggle-toc"></button>
-  </div>
+<div class="container" id="tocbar-container" role="navigation">
+	<div class="contained" id="tocbar" role="navigation">
+		<button id="toggle-toc"></button>
+	</div>
 </div>
-<div id="main-container" class="container">
-  <div id="main" class="contained">
-    <div id="doc" class="doc">
-<div id="header">
-<h1>Asciidoctor使用指南</h1>
-<div id="toc" class="toc">
-<div id="toctitle">Table of Contents</div>
-<span id="back-to-index"><a href="index.html">Back to index</a></span><ul class="sectlevel1">
-<li><a href="#_介绍">介绍</a></li>
-<li><a href="#_官方地址">官方地址</a></li>
-<li><a href="#_应用场景">应用场景</a></li>
-<li><a href="#_快速入门">快速入门</a>
-<ul class="sectlevel2">
-<li><a href="#_标题">标题</a></li>
-<li><a href="#_无序列表">无序列表</a></li>
-<li><a href="#_图片">图片</a></li>
-<li><a href="#_网络链接">网络链接</a></li>
-<li><a href="#_文件链接">文件链接</a></li>
-<li><a href="#_表格">表格</a></li>
-<li><a href="#_代码块">代码块</a></li>
-<li><a href="#_小技巧">小技巧</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-<div id="content">
-<div class="sect1">
-<h2 id="_介绍"><a class="anchor" href="#_介绍"></a>介绍</h2>
-<div class="sectionbody">
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
-<pre>Asciidoctor是一个快速、开源、基于Ruby的文本处理器，用于将AsciiDoc®解析为文档模型并将其转换为输出格式，例如HTML5、DocBook5、手册页、PDF、EPUB3和其他格式。</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_官方地址"><a class="anchor" href="#_官方地址"></a>官方地址</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><a href="https://asciidoctor.org">Asciidoctor官方地址</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_应用场景"><a class="anchor" href="#_应用场景"></a>应用场景</h2>
-<div class="sectionbody">
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
+<div class="container" id="main-container">
+	<div class="contained" id="main">
+		<div class="doc" id="doc">
+			<div id="header">
+				<h1>Asciidoctor使用指南</h1>
+				<div class="toc" id="toc">
+					<div id="toctitle">Table of Contents</div>
+					<span id="back-to-index"><a href="index.html">Back to index</a></span>
+					<ul class="sectlevel1">
+						<li><a href="#_介绍">介绍</a></li>
+						<li><a href="#_官方地址">官方地址</a></li>
+						<li><a href="#_应用场景">应用场景</a></li>
+						<li><a href="#_快速入门">快速入门</a>
+							<ul class="sectlevel2">
+								<li><a href="#_标题">标题</a></li>
+								<li><a href="#_无序列表">无序列表</a></li>
+								<li><a href="#_图片">图片</a></li>
+								<li><a href="#_网络链接">网络链接</a></li>
+								<li><a href="#_文件链接">文件链接</a></li>
+								<li><a href="#_表格">表格</a></li>
+								<li><a href="#_代码块">代码块</a></li>
+								<li><a href="#_小技巧">小技巧</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div id="content">
+				<div class="sect1">
+					<h2 id="_介绍"><a class="anchor" href="#_介绍"></a>介绍</h2>
+					<div class="sectionbody">
+						<div class="openblock">
+							<div class="content">
+								<div class="literalblock">
+									<div class="content">
+										<pre>Asciidoctor是一个快速、开源、基于Ruby的文本处理器，用于将AsciiDoc®解析为文档模型并将其转换为输出格式，例如HTML5、DocBook5、手册页、PDF、EPUB3和其他格式。</pre>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="sect1">
+					<h2 id="_官方地址"><a class="anchor" href="#_官方地址"></a>官方地址</h2>
+					<div class="sectionbody">
+						<div class="paragraph">
+							<p><a href="https://asciidoctor.org">Asciidoctor官方地址</a></p>
+						</div>
+					</div>
+				</div>
+				<div class="sect1">
+					<h2 id="_应用场景"><a class="anchor" href="#_应用场景"></a>应用场景</h2>
+					<div class="sectionbody">
+						<div class="openblock">
+							<div class="content">
+								<div class="literalblock">
+									<div class="content">
 <pre>1.需要撰写复杂结构文档，如技术规范、手册、书籍等。
 2.需要生成多种输出格式，并保持格式的一致性。
 3.需要文档中包含复杂元素，如表格、脚注、图表等。</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_快速入门"><a class="anchor" href="#_快速入门"></a>快速入门</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_标题"><a class="anchor" href="#_标题"></a>标题</h3>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="sect1">
+					<h2 id="_快速入门"><a class="anchor" href="#_快速入门"></a>快速入门</h2>
+					<div class="sectionbody">
+						<div class="sect2">
+							<h3 id="_标题"><a class="anchor" href="#_标题"></a>标题</h3>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
 <pre>= 文档标题
 == 一级标题
 === 二级标题
 ==== 三级标题
 ===== 四级标题
 ====== 五级标题</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_无序列表"><a class="anchor" href="#_无序列表"></a>无序列表</h3>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
-<pre>语法 =&gt; * 文字</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>无序列表</p>
-<div class="ulist">
-<ul>
-<li>
-<p>无序列表</p>
-<div class="ulist">
-<ul>
-<li>
-<p>无序列表</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_图片"><a class="anchor" href="#_图片"></a>图片</h3>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
-<pre>区块图片,语法 =&gt; image::图片地址[图片描述,长度,高度,对齐=左对齐/居中/右对齐]（在HTML页面上面查看有问题）</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="sect2">
+							<h3 id="_无序列表"><a class="anchor" href="#_无序列表"></a>无序列表</h3>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
+											<pre>语法 =&gt; * 文字</pre>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="ulist">
+								<ul>
+									<li>
+										<p>无序列表</p>
+										<div class="ulist">
+											<ul>
+												<li>
+													<p>无序列表</p>
+													<div class="ulist">
+														<ul>
+															<li>
+																<p>无序列表</p>
+															</li>
+														</ul>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="sect2">
+							<h3 id="_图片"><a class="anchor" href="#_图片"></a>图片</h3>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
+											<pre>区块图片,语法 =&gt; image::图片地址[图片描述,长度,高度,对齐=左对齐/居中/右对齐]（在HTML页面上面查看有问题）</pre>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
 <pre>image::image/tools/img.png[目录,100,100,align=left]
 image::image/tools/img.png[目录,100,100,align=center]
 image::image/tools/img.png[目录,100,100,align=right]</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="imageblock text-left">
-<div class="content">
-<img src="image/tools/img.png" alt="目录" width="100" height="100">
-</div>
-</div>
-<div class="imageblock text-center">
-<div class="content">
-<img src="image/tools/img.png" alt="目录" width="100" height="100">
-</div>
-</div>
-<div class="imageblock text-right">
-<div class="content">
-<img src="image/tools/img.png" alt="目录" width="100" height="100">
-</div>
-</div>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
-<pre>行内图片,语法 =&gt; image:图片地址[图片描述,长度,位置,标题（鼠标移至图片上方看到的描述）]</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="imageblock text-left">
+								<div class="content">
+									<img alt="目录" height="100" src="image/tools/img.png" width="100">
+								</div>
+							</div>
+							<div class="imageblock text-center">
+								<div class="content">
+									<img alt="目录" height="100" src="image/tools/img.png" width="100">
+								</div>
+							</div>
+							<div class="imageblock text-right">
+								<div class="content">
+									<img alt="目录" height="100" src="image/tools/img.png" width="100">
+								</div>
+							</div>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
+											<pre>行内图片,语法 =&gt; image:图片地址[图片描述,长度,位置,标题（鼠标移至图片上方看到的描述）]</pre>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
 <pre>image:image/tools/img.png[目录,100,role=left,title="role=left"]
 image:image/tools/img.png[目录,100,role=right,title="role=right"]
 image:image/tools/img.png[目录,100,role=thumb,title="role=thumb"]
 image:image/tools/img.png[目录,100,role=related,title="role=related"]</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p><span class="image left"><img src="image/tools/img.png" alt="目录" width="100" title="role=left"></span>
-<span class="image right"><img src="image/tools/img.png" alt="目录" width="100" title="role=right"></span>
-<span class="image thumb"><img src="image/tools/img.png" alt="目录" width="100" title="role=thumb"></span>
-<span class="image related"><img src="image/tools/img.png" alt="目录" width="100" title="role=related"></span></p>
-</div>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="paragraph">
+								<p><span class="image left"><img alt="目录" src="image/tools/img.png" title="role=left"
+																 width="100"></span>
+									<span class="image right"><img alt="目录" src="image/tools/img.png" title="role=right"
+																   width="100"></span>
+									<span class="image thumb"><img alt="目录" src="image/tools/img.png" title="role=thumb"
+																   width="100"></span>
+									<span class="image related"><img alt="目录" src="image/tools/img.png" title="role=related"
+																	 width="100"></span></p>
+							</div>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
 <pre>图片浮动,语法
            =&gt; [.左浮动/右浮动]
            =&gt; image:[图片描述,长度]</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
 <pre>  [.float-group]
 -
   [.left]
@@ -227,205 +234,206 @@ image:image/tools/img.png[目录,100,role=related,title="role=related"]</pre>
 -
   [.right]
   image::image/tools/img.png[目录,100]</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph float-group left">
-<p><span class="image"><img src="image/tools/img.png" alt="目录" width="100"></span></p>
-</div>
-<div class="imageblock right">
-<div class="content">
-<img src="image/tools/img.png" alt="目录" width="100">
-</div>
-</div>
-<br style="clear: both;">
-</div>
-<div class="sect2">
-<h3 id="_网络链接"><a class="anchor" href="#_网络链接"></a>网络链接</h3>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
-<pre>语法 =&gt; 链接[描绘]</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
-<pre>https://github.com/KouShenhai/KCloud-Platform-IoT[老寇IoT云平台 Github 地址]</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p><a href="https://github.com/KouShenhai/KCloud-Platform-IoT">老寇IoT云平台 Github 地址</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_文件链接"><a class="anchor" href="#_文件链接"></a>文件链接</h3>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
-<pre>语法 =&gt; link:文件地址[描述]</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
-<pre>link:index.html[链接首页HTML]</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p><a href="index.html">链接首页HTML</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_表格"><a class="anchor" href="#_表格"></a>表格</h3>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="paragraph float-group left">
+								<p><span class="image"><img alt="目录" src="image/tools/img.png" width="100"></span></p>
+							</div>
+							<div class="imageblock right">
+								<div class="content">
+									<img alt="目录" src="image/tools/img.png" width="100">
+								</div>
+							</div>
+							<br style="clear: both;">
+						</div>
+						<div class="sect2">
+							<h3 id="_网络链接"><a class="anchor" href="#_网络链接"></a>网络链接</h3>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
+											<pre>语法 =&gt; 链接[描绘]</pre>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
+											<pre>https://github.com/KouShenhai/KCloud-Platform-IoT[老寇IoT云平台 Github 地址]</pre>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="paragraph">
+								<p><a href="https://github.com/KouShenhai/KCloud-Platform-IoT">老寇IoT云平台 Github
+									地址</a></p>
+							</div>
+						</div>
+						<div class="sect2">
+							<h3 id="_文件链接"><a class="anchor" href="#_文件链接"></a>文件链接</h3>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
+											<pre>语法 =&gt; link:文件地址[描述]</pre>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
+											<pre>link:index.html[链接首页HTML]</pre>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="paragraph">
+								<p><a href="index.html">链接首页HTML</a></p>
+							</div>
+						</div>
+						<div class="sect2">
+							<h3 id="_表格"><a class="anchor" href="#_表格"></a>表格</h3>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
 <pre>[长度,百分比]
 |===
 |内容 |内容
 |===</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
 <pre>[width=100%,cols="1,1"]
 |===
 |内容 |内容
 |===</pre>
-</div>
-</div>
-</div>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">内容</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">内容</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_代码块"><a class="anchor" href="#_代码块"></a>代码块</h3>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
+										</div>
+									</div>
+								</div>
+							</div>
+							<table class="tableblock frame-all grid-all stretch">
+								<colgroup>
+									<col style="width: 50%;">
+									<col style="width: 50%;">
+								</colgroup>
+								<tbody>
+								<tr>
+									<td class="tableblock halign-left valign-top"><p class="tableblock">内容</p></td>
+									<td class="tableblock halign-left valign-top"><p class="tableblock">内容</p></td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="sect2">
+							<h3 id="_代码块"><a class="anchor" href="#_代码块"></a>代码块</h3>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
 <pre>默认不换行,语法
              =&gt; [source,语言]
              =&gt; ----
              =&gt; 代码块
              =&gt; ----</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
 <pre>[source,java]
 ----
 public static void test() {
     String str = "1234567890qwertyuiopasdfghjklzxcvbnm";
 }
 ----</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="listingblock">
+								<div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">public static void test() {
     String str = "1234567890qwertyuiopasdfghjklzxcvbnm";
 }
 </code></pre>
-</div>
-</div>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
+								</div>
+							</div>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
 <pre>自动换行,语法
         =&gt; [source%nowrap,语言]
         =&gt; ----
         =&gt; 代码块
         =&gt; ----</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
 <pre>[source%nowrap,java]
 ----
 public static void test() {
     String str = "1234567890qwertyuiopasdfghjklzxcvbnm";
 }
 ----</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="listingblock">
+								<div class="content">
 <pre class="highlight nowrap"><code class="language-java" data-lang="java">public static void test() {
 	String str = "1234567890qwertyuiopasdfghjklzxcvbnm";
 }
 </code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_小技巧"><a class="anchor" href="#_小技巧"></a>小技巧</h3>
-<div class="openblock">
-<div class="content">
-<div class="literalblock">
-<div class="content">
+								</div>
+							</div>
+						</div>
+						<div class="sect2">
+							<h3 id="_小技巧"><a class="anchor" href="#_小技巧"></a>小技巧</h3>
+							<div class="openblock">
+								<div class="content">
+									<div class="literalblock">
+										<div class="content">
 <pre>// 清除图片浮动
 ++++
 &lt;br style="clear: both;"&gt;
 ++++</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="footer">
-<div id="footer-text">
-Last updated 2024-07-14 22:09:23 +0800
-</div>
-</div>
-</div>
-  </div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="footer">
+				<div id="footer-text">
+					Last updated 2024-07-14 22:09:23 +0800
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 </body>
 </html>
