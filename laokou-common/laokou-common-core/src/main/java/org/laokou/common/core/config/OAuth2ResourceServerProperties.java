@@ -41,6 +41,10 @@ public class OAuth2ResourceServerProperties {
 
 	private RequestMatcher requestMatcher = new RequestMatcher();
 
+	private String authorizationUrl;
+
+	private String tokenUrl;
+
 	@Data
 	public static class RequestMatcher {
 

@@ -31,7 +31,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.authentication.password.CompromisedPasswordChecker;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -54,7 +53,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.password.HaveIBeenPwnedRestApiPasswordChecker;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -73,7 +71,7 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
  */
 @Configuration
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true,
-		prefix = "spring.security.oauth2.authorization-server", name = "enabled")
+	prefix = "spring.security.oauth2.authorization-server", name = "enabled")
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class OAuth2AuthorizationServerConfig {
 
@@ -123,21 +121,17 @@ class OAuth2AuthorizationServerConfig {
 	}
 	// @formatter:on
 
-	@Bean
-	public CompromisedPasswordChecker compromisedPasswordChecker() {
-		return new HaveIBeenPwnedRestApiPasswordChecker();
-	}
-
 	/**
 	 * 构造注册信息.
+	 *
 	 * @param propertiesMapper 配置
-	 * @param jdbcTemplate JDBC模板
+	 * @param jdbcTemplate     JDBC模板
 	 * @return 注册信息
 	 */
 	@Bean
 	@ConditionalOnMissingBean(RegisteredClientRepository.class)
 	RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate,
-			OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
+														  OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
 		JdbcRegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
 		propertiesMapper.asRegisteredClients().parallelStream().forEachOrdered(registeredClientRepository::save);
 		return registeredClientRepository;
@@ -145,6 +139,7 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * jwt编码器.
+	 *
 	 * @param jwkSource jwk来源
 	 * @return jwt编码器
 	 */
@@ -155,6 +150,7 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * jwt解码器.
+	 *
 	 * @param jwkSource jwk来源
 	 * @return jwt解码器
 	 */
@@ -165,6 +161,7 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 获取jwk来源.
+	 *
 	 * @return jwk来源
 	 */
 	@Bean
@@ -176,6 +173,7 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 构建令牌生成器.
+	 *
 	 * @param jwtEncoder 加密编码
 	 * @return 令牌生成器
 	 */
@@ -183,30 +181,32 @@ class OAuth2AuthorizationServerConfig {
 	OAuth2TokenGenerator<OAuth2Token> tokenGenerator(JwtEncoder jwtEncoder) {
 		JwtGenerator generator = new JwtGenerator(jwtEncoder);
 		return new DelegatingOAuth2TokenGenerator(generator, new OAuth2AccessTokenGenerator(),
-				new OAuth2RefreshTokenGenerator());
+			new OAuth2RefreshTokenGenerator());
 	}
 
 	/**
 	 * 认证端点配置.
+	 *
 	 * @param propertiesMapper 属性映射器
 	 * @return 认证端点配置
 	 */
 	@Bean
 	@ConditionalOnMissingBean(AuthorizationServerSettings.class)
 	AuthorizationServerSettings authorizationServerSettings(
-			OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
+		OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
 		return propertiesMapper.asAuthorizationServerSettings();
 	}
 
 	/**
 	 * 单点登录配置.
-	 * @param passwordEncoder 密码编码器
+	 *
+	 * @param passwordEncoder        密码编码器
 	 * @param userDetailsServiceImpl 用户认证对象
 	 * @return 单点登录配置
 	 */
 	@Bean
 	AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder,
-			UserDetailsService userDetailsServiceImpl) {
+												  UserDetailsService userDetailsServiceImpl) {
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
 		daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl);
@@ -215,19 +215,21 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 认证授权配置.
-	 * @param jdbcTemplate JDBC模板
+	 *
+	 * @param jdbcTemplate               JDBC模板
 	 * @param registeredClientRepository 注册信息
 	 * @return 认证授权配置
 	 */
 	@Bean
 	@ConditionalOnMissingBean(OAuth2AuthorizationConsentService.class)
 	OAuth2AuthorizationConsentService authorizationConsentService(JdbcTemplate jdbcTemplate,
-			RegisteredClientRepository registeredClientRepository) {
+																  RegisteredClientRepository registeredClientRepository) {
 		return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
 	}
 
 	/**
 	 * 获取RSA加密Key.
+	 *
 	 * @return RSA加密Key
 	 */
 	private RSAKey getRsaKey() {
@@ -239,6 +241,7 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 生成RSA加密Key.
+	 *
 	 * @return 生成结果
 	 */
 	private KeyPair generateRsaKey() {
@@ -246,8 +249,7 @@ class OAuth2AuthorizationServerConfig {
 			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(RSA);
 			keyPairGenerator.initialize(2048);
 			return keyPairGenerator.generateKeyPair();
-		}
-		catch (Exception var2) {
+		} catch (Exception var2) {
 			throw new IllegalStateException(var2);
 		}
 	}

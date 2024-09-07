@@ -23,10 +23,8 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
-import io.swagger.v3.oas.models.security.OAuthFlow;
-import io.swagger.v3.oas.models.security.OAuthFlows;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.security.*;
+import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -43,7 +41,7 @@ public class OpenApiDocAutoConfig {
 
 	@Bean
 	@ConditionalOnMissingBean(OpenAPI.class)
-	OpenAPI openApi() {
+	OpenAPI openApi(OAuth2ResourceServerProperties oAuth2ResourceServerProperties) {
 		return new OpenAPI()
 			.info(new Info().title("API文档")
 				.description("API文档")
@@ -53,12 +51,18 @@ public class OpenApiDocAutoConfig {
 			.externalDocs(new ExternalDocumentation().description("老寇IoT云平台").url("https://github.com/KouShenhai"))
 			.addSecurityItem(new SecurityRequirement().addList(AUTHORIZATION))
 			.components(new Components().addSecuritySchemes(AUTHORIZATION,
-					new SecurityScheme().name(AUTHORIZATION)
-						.type(SecurityScheme.Type.OAUTH2)
-						.flows(new OAuthFlows().authorizationCode(new OAuthFlow().tokenUrl("").refreshUrl("")))
-						.in(SecurityScheme.In.HEADER)
-						.scheme("Bearer")
-						.bearerFormat("JWT")));
+				new SecurityScheme().name(AUTHORIZATION)
+					.type(SecurityScheme.Type.OAUTH2)
+					.flows(new OAuthFlows()
+						.authorizationCode(new OAuthFlow()
+							.authorizationUrl(oAuth2ResourceServerProperties.getAuthorizationUrl())
+							.tokenUrl(oAuth2ResourceServerProperties.getTokenUrl())
+							.scopes(new Scopes().addString("read", "读").addString("write", "写"))
+						)
+					)
+					.in(SecurityScheme.In.HEADER)
+					.scheme("Bearer")
+					.bearerFormat("JWT")));
 
 	}
 
