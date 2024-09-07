@@ -73,11 +73,11 @@ public class NacosLoadBalancerClientConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public ReactorLoadBalancer<ServiceInstance> nacosLoadBalancer(Environment environment,
-																  LoadBalancerClientFactory loadBalancerClientFactory, NacosDiscoveryProperties nacosDiscoveryProperties,
-																  InetIPv6Utils inetIPv6Utils) {
+			LoadBalancerClientFactory loadBalancerClientFactory, NacosDiscoveryProperties nacosDiscoveryProperties,
+			InetIPv6Utils inetIPv6Utils) {
 		String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
 		return new NacosLoadBalancer(loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class),
-			name, nacosDiscoveryProperties, inetIPv6Utils);
+				name, nacosDiscoveryProperties, inetIPv6Utils);
 	}
 
 	@Configuration(proxyBeanMethods = false)
@@ -89,9 +89,9 @@ public class NacosLoadBalancerClientConfiguration {
 		@ConditionalOnBean(ReactiveDiscoveryClient.class)
 		@ConditionalOnMissingBean
 		@ConditionalOnProperty(value = "spring.cloud.loadbalancer.configurations", havingValue = "default",
-			matchIfMissing = true)
+				matchIfMissing = true)
 		public ServiceInstanceListSupplier discoveryClientServiceInstanceListSupplier(
-			ConfigurableApplicationContext context) {
+				ConfigurableApplicationContext context) {
 			return ServiceInstanceListSupplier.builder().withDiscoveryClient().build(context);
 		}
 
@@ -100,7 +100,7 @@ public class NacosLoadBalancerClientConfiguration {
 		@ConditionalOnMissingBean
 		@ConditionalOnProperty(value = "spring.cloud.loadbalancer.configurations", havingValue = "zone-preference")
 		public ServiceInstanceListSupplier zonePreferenceDiscoveryClientServiceInstanceListSupplier(
-			ConfigurableApplicationContext context) {
+				ConfigurableApplicationContext context) {
 			return ServiceInstanceListSupplier.builder().withDiscoveryClient().withZonePreference().build(context);
 		}
 
@@ -115,9 +115,9 @@ public class NacosLoadBalancerClientConfiguration {
 		@ConditionalOnBean(DiscoveryClient.class)
 		@ConditionalOnMissingBean
 		@ConditionalOnProperty(value = "spring.cloud.loadbalancer.configurations", havingValue = "default",
-			matchIfMissing = true)
+				matchIfMissing = true)
 		public ServiceInstanceListSupplier discoveryClientServiceInstanceListSupplier(
-			ConfigurableApplicationContext context) {
+				ConfigurableApplicationContext context) {
 			return ServiceInstanceListSupplier.builder().withBlockingDiscoveryClient().build(context);
 		}
 
@@ -126,7 +126,7 @@ public class NacosLoadBalancerClientConfiguration {
 		@ConditionalOnMissingBean
 		@ConditionalOnProperty(value = "spring.cloud.loadbalancer.configurations", havingValue = "zone-preference")
 		public ServiceInstanceListSupplier zonePreferenceDiscoveryClientServiceInstanceListSupplier(
-			ConfigurableApplicationContext context) {
+				ConfigurableApplicationContext context) {
 			return ServiceInstanceListSupplier.builder()
 				.withBlockingDiscoveryClient()
 				.withZonePreference()

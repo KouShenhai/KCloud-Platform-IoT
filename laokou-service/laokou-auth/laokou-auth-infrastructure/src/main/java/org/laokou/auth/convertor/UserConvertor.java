@@ -33,9 +33,10 @@ public class UserConvertor {
 		UserE userE = authA.getUser();
 		MenuV menuV = authA.getMenu();
 		DeptV deptV = authA.getDept();
-		return new UserDetail(userE.getId(), userE.getUsername(), userE.getAvatar(), userE.getSuperAdmin(),
-				userE.getStatus(), userE.getMail(), userE.getMobile(), userE.getDeptId(), userE.getDeptPath(),
-				deptV.deptPaths(), menuV.permissions(), userE.getTenantId(), authA.getSourceName());
+		return new UserDetail(userE.getId(), userE.getUsername(), userE.getPassword(), userE.getAvatar(),
+				userE.getSuperAdmin(), userE.getStatus(), userE.getMail(), userE.getMobile(), userE.getDeptId(),
+				userE.getDeptPath(), deptV.deptPaths(), menuV.permissions(), userE.getTenantId(),
+				authA.getSourceName());
 	}
 
 	public static UserE toEntity(UserDO userDO) {

@@ -53,18 +53,12 @@ public class OpenApiDocAutoConfig {
 			.externalDocs(new ExternalDocumentation().description("老寇IoT云平台").url("https://github.com/KouShenhai"))
 			.addSecurityItem(new SecurityRequirement().addList(AUTHORIZATION))
 			.components(new Components().addSecuritySchemes(AUTHORIZATION,
-				new SecurityScheme().name(AUTHORIZATION)
-					.type(SecurityScheme.Type.OAUTH2)
-					.flows(
-						new OAuthFlows()
-							.authorizationCode(new OAuthFlow()
-								.tokenUrl("")
-								.refreshUrl("")
-							)
-					)
-					.in(SecurityScheme.In.HEADER)
-					.scheme("Bearer")
-					.bearerFormat("JWT")));
+					new SecurityScheme().name(AUTHORIZATION)
+						.type(SecurityScheme.Type.OAUTH2)
+						.flows(new OAuthFlows().authorizationCode(new OAuthFlow().tokenUrl("").refreshUrl("")))
+						.in(SecurityScheme.In.HEADER)
+						.scheme("Bearer")
+						.bearerFormat("JWT")));
 
 	}
 

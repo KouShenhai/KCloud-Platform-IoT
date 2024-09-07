@@ -56,6 +56,16 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	private static final long serialVersionUID = 3319752558160144611L;
 
 	/**
+	 * 部门PATH集合.
+	 */
+	private final Set<String> deptPaths;
+
+	/**
+	 * 菜单权限标识集合.
+	 */
+	private final Set<String> permissions;
+
+	/**
 	 * 用户名.
 	 */
 	private String username;
@@ -102,16 +112,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	private String deptPath;
 
 	/**
-	 * 部门PATH集合.
-	 */
-	private final Set<String> deptPaths;
-
-	/**
-	 * 菜单权限标识集合.
-	 */
-	private final Set<String> permissions;
-
-	/**
 	 * 租户ID.
 	 */
 	private Long tenantId;
@@ -127,11 +127,12 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		this.permissions = Collections.emptySet();
 	}
 
-	public UserDetail(Long id, String username, String avatar, Integer superAdmin, Integer status, String mail,
-			String mobile, Long deptId, String deptPath, Set<String> deptPaths, Set<String> permissions, Long tenantId,
-			String sourceName) {
+	public UserDetail(Long id, String username, String password, String avatar, Integer superAdmin, Integer status,
+			String mail, String mobile, Long deptId, String deptPath, Set<String> deptPaths, Set<String> permissions,
+			Long tenantId, String sourceName) {
 		super(id);
 		this.username = username;
+		this.password = password;
 		this.avatar = avatar;
 		this.superAdmin = superAdmin;
 		this.status = status;

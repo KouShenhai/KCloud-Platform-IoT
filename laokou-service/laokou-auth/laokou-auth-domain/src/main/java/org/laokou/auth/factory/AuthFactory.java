@@ -101,7 +101,8 @@ public class AuthFactory {
 	public static AuthA authorizationCode(HttpServletRequest request) {
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
-		return new AuthA(username, password, EMPTY, GrantType.AUTHORIZATION_CODE, EMPTY, EMPTY, request);
+		String tenantId = request.getParameter(TENANT_ID);
+		return new AuthA(username, password, tenantId, GrantType.AUTHORIZATION_CODE, EMPTY, EMPTY, request);
 	}
 
 }
