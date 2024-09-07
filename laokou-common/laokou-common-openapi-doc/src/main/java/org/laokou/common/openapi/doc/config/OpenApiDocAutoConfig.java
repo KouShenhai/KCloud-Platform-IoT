@@ -50,17 +50,17 @@ public class OpenApiDocAutoConfig {
 				.license(new License().name("Apache 2.0").url("https://www.apache.org/licenses/LICENSE-2.0.html")))
 			.externalDocs(new ExternalDocumentation().description("老寇IoT云平台").url("https://github.com/KouShenhai"))
 			.addSecurityItem(new SecurityRequirement().addList(AUTHORIZATION))
-			.components(new Components().addSecuritySchemes(AUTHORIZATION,
-				new SecurityScheme().name(AUTHORIZATION)
-					.type(SecurityScheme.Type.OAUTH2)
-					.flows(new OAuthFlows()
-						.authorizationCode(new OAuthFlow()
-							.authorizationUrl(oAuth2ResourceServerProperties.getAuthorizationUrl())
-							.tokenUrl(oAuth2ResourceServerProperties.getTokenUrl())
-							.scopes(new Scopes().addString("read", "读").addString("write", "写"))))
-					.in(SecurityScheme.In.HEADER)
-					.scheme("Bearer")
-					.bearerFormat("JWT")));
+			.components(
+					new Components().addSecuritySchemes(AUTHORIZATION,
+							new SecurityScheme().name(AUTHORIZATION)
+								.type(SecurityScheme.Type.OAUTH2)
+								.flows(new OAuthFlows().authorizationCode(new OAuthFlow()
+									.authorizationUrl(oAuth2ResourceServerProperties.getAuthorizationUrl())
+									.tokenUrl(oAuth2ResourceServerProperties.getTokenUrl())
+									.scopes(new Scopes().addString("read", "读").addString("write", "写"))))
+								.in(SecurityScheme.In.HEADER)
+								.scheme("Bearer")
+								.bearerFormat("JWT")));
 
 	}
 
