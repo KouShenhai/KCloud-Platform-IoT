@@ -12,7 +12,7 @@
  Target Server Version : 160004 (160004)
  File Encoding         : 65001
 
- Date: 07/09/2024 10:58:35
+ Date: 07/09/2024 16:42:19
 */
 
 
@@ -281,142 +281,6 @@ spring:
           max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
           max-idle: 10 #连接池最大空闲连接
           min-idle: 5 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2023-01-13 12:15:59', '2023-11-06 18:02:43', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'redis公共配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (48, 'application-gateway.yaml', 'LAOKOU_GROUP', 'server:
-  # 开启请求压缩
-  compression:
-    enabled: true
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-    # 证书密码
-    key-password: laokou
-  http2:
-    enabled: true
-  forward-headers-strategy: native
-  # 优雅停机
-  shutdown: graceful
-  netty:
-    # 请求的最大初始行长度
-    max-initial-line-length: 4096
-  servlet:
-    context-path: /api
-# spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  webflux:
-    multipart:
-      max-parts: -1
-      max-disk-usage-per-part: -1
-      max-in-memory-size: 4096
-  cloud:
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # key可以自定义
-        db0:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            data-id: gateway-flow.json
-            rule-type: gw_flow # 网关规则
-            group-id: LAOKOU_GROUP
-            data-type: json
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      cache:
-        caffeine:
-          # 初始容量 => 30
-          # 最大容量 => 4096
-          # 淘汰规则 => 最后一次写操作后经过30s过期
-          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
-        # 开启缓存
-        enabled: true
-      nacos:
-        # 开启Nacos路由负载均衡
-        enabled: true
-    # network
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-    # gateway
-    gateway:
-      discovery:
-        locator:
-          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
-          # 查看DiscoveryLocatorProperties
-          enabled: false
-          # 开启服务ID强制小写
-          lower-case-service-id: true
-      httpclient:
-        ssl:
-          # 信任所有下游证书
-          use-insecure-trust-manager: true
-        # 关闭netty日志
-        wiretap: false
-        pool:
-          # 连接池中连接的最大空闲时间
-          max-idle-time: 10m
-          # 最大连接数
-          max-connections: 10000
-          # 连接池中连接的最大存活时间
-          max-life-time: 5m
-          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
-          # fixed     固定数量线程池
-          # disabled  不使用线程池（只有一个线程）
-          type: fixed
-          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
-          acquire-timeout: 60000
-        # 连接超时时间（毫秒），默认30s
-        connect-timeout: 60000
-      httpserver:
-        # 关闭netty日志
-        wiretap: false
-      router:
-        auth:
-          enabled: true
-          username: laokou
-          password: laokou123
-      ip:
-        white:
-          enabled: false
-        black:
-          enabled: false
-logging:
-  config: classpath:log4j2-prod.xml
-
-knife4j:
-  gateway:
-    enabled: false
-    tags-sorter: order
-    operations-sorter: order
-    # 手动
-    strategy: manual
-    routes:
-      - name: 认证服务
-        url: /auth/v3/api-docs?group=default
-        service-name: laokou-auth
-        context-path: /auth
-        order: 1
-      - name: 管理服务
-        url: /admin/v3/api-docs?group=default
-        service-name: laokou-admin
-        context-path: /admin
-        order: 2', '2aea88d0b795d394961d2b969a4eaad8', '2024-05-25 18:13:10.704', '2024-08-16 00:14:41.024', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway配置', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (103, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -728,127 +592,6 @@ INSERT INTO "public"."config_info" VALUES (36, 'router.json', 'LAOKOU_GROUP', '[
     "order": 1
   }
 ]', '0ed5d74d692a46b070c46572b94ca61d', '2024-05-25 18:13:10.616', '2024-05-25 18:16:32.596', 'nacos', '127.0.0.1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', '动态路由配置', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
-spring:
-  # security
-  security:
-    oauth2:
-      resource-server:
-        enabled: true
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /**/v3/api-docs/**=laokou-gateway
-              - /v3/api-docs/**=laokou-auth,laokou-admin
-              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
-              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
-              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
-              - /error=laokou-admin,laokou-auth
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
-              - /favicon.ico=laokou-gateway
-              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
-              - /v3/secrets=laokou-gateway,laokou-auth
-              - /graceful-shutdown=laokou-auth
-              - /ws=laokou-gateway
-              - /doc.html=laokou-gateway
-            POST:
-              - /v3/captchas=laokou-auth,laokou-gateway
-            DELETE:
-              - /v3/logouts=laokou-auth,laokou-gateway
-  # task
-  task-execution:
-    pool:
-      core-size: 33
-      keep-alive: 180s
-    fork-join-pool:
-      core-size: 33
-  cloud:
-    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
-    openfeign:
-      compression:
-        response:
-          enabled: true
-        request:
-          enabled: true
-      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
-      okhttp:
-        enabled: true
-      circuitbreaker:
-        enabled: true
-      httpclient:
-        enabled: false
-        hc5:
-          enabled: false
-        disable-ssl-validation: true
-      client:
-        config:
-          default:
-            connectTimeout: 120000 #连接超时
-            readTimeout: 120000 #读取超时
-            logger-level: none
-      lazy-attributes-resolution: true
-    # sentinel
-    sentinel:
-      web-context-unify: false
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        dashboard: sentinel:8972
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    gateway:
-      enabled: true
-    health:
-      show-details: always
-  tracing:
-    enabled: true
-    propagation:
-      type: w3c
-
-# server
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
-    threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 256
-    # 每块buffer的空间大小
-    buffer-size: 1024
-    # 分配堆外内存
-    direct-buffers: true
-
-# feign
-feign:
-  sentinel:
-    enabled: true
-    default-rule: default
-    rules:
-      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
-      default:
-        - grade: 2 # 异常数策略
-          count: 1 # 异常数模式下为对应的阈值
-          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
-          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
-          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html', '6a901103efdeae2ed57499c5cbb37cf0', '2023-01-13 12:16:46', '2024-08-20 23:02:19.606', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (2159, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
   kafka:
     bootstrap-servers: kafka:9092
@@ -908,8 +651,6 @@ INSERT INTO "public"."config_info" VALUES (70, 'application-gateway.yaml', 'LAOK
   netty:
     # 请求的最大初始行长度
     max-initial-line-length: 4096
-  servlet:
-    context-path: /api
 # spring
 spring:
   threads:
@@ -1018,7 +759,7 @@ knife4j:
         url: /admin/v3/api-docs?group=default
         service-name: laokou-admin
         context-path: /admin
-        order: 2', '5110905c66886c51c9963ba99fa60044', '2024-05-25 18:13:33.458', '2024-08-16 00:20:04.234', 'nacos', '127.0.0.1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway配置', '', '', 'yaml', '', '');
+        order: 2', '53536b4ca08a0955243898587905b8e8', '2024-05-25 18:13:33.458', '2024-09-07 16:38:51.447', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway配置', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (59, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
 spring:
   # security
@@ -1026,6 +767,8 @@ spring:
     oauth2:
       resource-server:
         enabled: true
+        authorization-url: http://auth:1111/oauth2/authorize
+        token-url: http://gateway:5555/auth/oauth2/token
         request-matcher:
           ignore-patterns:
             GET:
@@ -1139,7 +882,141 @@ tenant:
 
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html', '6a901103efdeae2ed57499c5cbb37cf0', '2024-05-25 18:13:33.393', '2024-08-20 23:02:06.89', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+    path: /swagger-ui.html', 'f70976f585c7ad3ebea5028061ab78e7', '2024-05-25 18:13:33.393', '2024-09-07 15:30:12.631', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (48, 'application-gateway.yaml', 'LAOKOU_GROUP', 'server:
+  # 开启请求压缩
+  compression:
+    enabled: true
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+    # 证书密码
+    key-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: native
+  # 优雅停机
+  shutdown: graceful
+  netty:
+    # 请求的最大初始行长度
+    max-initial-line-length: 4096
+# spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  webflux:
+    multipart:
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-in-memory-size: 4096
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # key可以自定义
+        db0:
+          nacos:
+            server-addr: https://nacos:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            data-id: gateway-flow.json
+            rule-type: gw_flow # 网关规则
+            group-id: LAOKOU_GROUP
+            data-type: json
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      cache:
+        caffeine:
+          # 初始容量 => 30
+          # 最大容量 => 4096
+          # 淘汰规则 => 最后一次写操作后经过30s过期
+          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
+        # 开启缓存
+        enabled: true
+      nacos:
+        # 开启Nacos路由负载均衡
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+    # gateway
+    gateway:
+      discovery:
+        locator:
+          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
+          # 查看DiscoveryLocatorProperties
+          enabled: false
+          # 开启服务ID强制小写
+          lower-case-service-id: true
+      httpclient:
+        ssl:
+          # 信任所有下游证书
+          use-insecure-trust-manager: true
+        # 关闭netty日志
+        wiretap: false
+        pool:
+          # 连接池中连接的最大空闲时间
+          max-idle-time: 10m
+          # 最大连接数
+          max-connections: 10000
+          # 连接池中连接的最大存活时间
+          max-life-time: 5m
+          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
+          # fixed     固定数量线程池
+          # disabled  不使用线程池（只有一个线程）
+          type: fixed
+          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
+          acquire-timeout: 60000
+        # 连接超时时间（毫秒），默认30s
+        connect-timeout: 60000
+      httpserver:
+        # 关闭netty日志
+        wiretap: false
+      router:
+        auth:
+          enabled: true
+          username: laokou
+          password: laokou123
+      ip:
+        white:
+          enabled: false
+        black:
+          enabled: false
+logging:
+  config: classpath:log4j2-prod.xml
+
+knife4j:
+  gateway:
+    enabled: false
+    tags-sorter: order
+    operations-sorter: order
+    # 手动
+    strategy: manual
+    routes:
+      - name: 认证服务
+        url: /auth/v3/api-docs?group=default
+        service-name: laokou-auth
+        context-path: /auth
+        order: 1
+      - name: 管理服务
+        url: /admin/v3/api-docs?group=default
+        service-name: laokou-admin
+        context-path: /admin
+        order: 2', '4e9b78290343eb4d89e9fd86d9c6774f', '2024-05-25 18:13:10.704', '2024-09-07 16:39:05.047', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway配置', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', '[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
@@ -1347,128 +1224,6 @@ INSERT INTO "public"."config_info" VALUES (34, 'auth-flow.json', 'LAOKOU_GROUP',
     "controlBehavior": 0
   }
 ]', '6ae7639ff49789dd99787e908efa836d', '2024-05-25 18:13:10.604', '2024-05-25 18:19:55.655', 'nacos', '127.0.0.1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', 'auth sentinel  flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
-spring:
-  # security
-  security:
-    oauth2:
-      resource-server:
-        enabled: true
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /**/v3/api-docs/**=laokou-gateway
-              - /v3/api-docs/**=laokou-auth,laokou-admin
-              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
-              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
-              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
-              - /error=laokou-admin,laokou-auth
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
-              - /favicon.ico=laokou-gateway
-              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
-              - /v3/secrets=laokou-gateway,laokou-auth
-              - /graceful-shutdown=laokou-auth
-              - /ws=laokou-gateway
-              - /doc.html=laokou-gateway
-            POST:
-              - /v3/captchas=laokou-auth,laokou-gateway
-            DELETE:
-              - /v3/logouts=laokou-auth,laokou-gateway
-  # task
-  task-execution:
-    pool:
-      core-size: 33
-      keep-alive: 180s
-    fork-join-pool:
-      core-size: 33
-  cloud:
-    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
-    openfeign:
-      compression:
-        response:
-          enabled: true
-        request:
-          enabled: true
-      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
-      okhttp:
-        enabled: true
-      circuitbreaker:
-        enabled: true
-      httpclient:
-        enabled: false
-        hc5:
-          enabled: false
-        disable-ssl-validation: true
-      client:
-        config:
-          default:
-            connectTimeout: 120000 #连接超时
-            readTimeout: 120000 #读取超时
-            logger-level: none
-      lazy-attributes-resolution: true
-    # sentinel
-    sentinel:
-      web-context-unify: false
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        dashboard: sentinel:8972
-
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    gateway:
-      enabled: true
-    health:
-      show-details: always
-  tracing:
-    enabled: true
-    propagation:
-      type: w3c
-
-# server
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
-    threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 256
-    # 每块buffer的空间大小
-    buffer-size: 1024
-    # 分配堆外内存
-    direct-buffers: true
-
-# feign
-feign:
-  sentinel:
-    enabled: true
-    default-rule: default
-    rules:
-      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
-      default:
-        - grade: 2 # 异常数策略
-          count: 1 # 异常数模式下为对应的阈值
-          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
-          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
-          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html', '345a021a3aff5b7d1fc6ce3993f4ec10', '2024-05-25 18:13:10.622', '2024-08-20 23:01:27.445', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (27, 'application-common-redis.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -1491,142 +1246,6 @@ spring:
           max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
           max-idle: 10 #连接池最大空闲连接
           min-idle: 5 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2024-05-25 18:13:10.544', '2024-05-25 18:13:10.544', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'redis公共配置', NULL, NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info" VALUES (1273, 'application-gateway.yaml', 'LAOKOU_GROUP', 'server:
-  # 开启请求压缩
-  compression:
-    enabled: true
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-    # 证书密码
-    key-password: laokou
-  http2:
-    enabled: true
-  forward-headers-strategy: native
-  # 优雅停机
-  shutdown: graceful
-  netty:
-    # 请求的最大初始行长度
-    max-initial-line-length: 4096
-  servlet:
-    context-path: /api
-# spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  webflux:
-    multipart:
-      max-parts: -1
-      max-disk-usage-per-part: -1
-      max-in-memory-size: 4096
-  cloud:
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # key可以自定义
-        db0:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            data-id: gateway-flow.json
-            rule-type: gw_flow # 网关规则
-            group-id: LAOKOU_GROUP
-            data-type: json
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      cache:
-        caffeine:
-          # 初始容量 => 30
-          # 最大容量 => 4096
-          # 淘汰规则 => 最后一次写操作后经过30s过期
-          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
-        # 开启缓存
-        enabled: true
-      nacos:
-        # 开启Nacos路由负载均衡
-        enabled: true
-    # network
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-    # gateway
-    gateway:
-      discovery:
-        locator:
-          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
-          # 查看DiscoveryLocatorProperties
-          enabled: false
-          # 开启服务ID强制小写
-          lower-case-service-id: true
-      httpclient:
-        ssl:
-          # 信任所有下游证书
-          use-insecure-trust-manager: true
-        # 关闭netty日志
-        wiretap: false
-        pool:
-          # 连接池中连接的最大空闲时间
-          max-idle-time: 10m
-          # 最大连接数
-          max-connections: 10000
-          # 连接池中连接的最大存活时间
-          max-life-time: 5m
-          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
-          # fixed     固定数量线程池
-          # disabled  不使用线程池（只有一个线程）
-          type: fixed
-          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
-          acquire-timeout: 60000
-        # 连接超时时间（毫秒），默认30s
-        connect-timeout: 60000
-      httpserver:
-        # 关闭netty日志
-        wiretap: false
-      router:
-        auth:
-          enabled: true
-          username: laokou
-          password: laokou123
-      ip:
-        white:
-          enabled: false
-        black:
-          enabled: false
-logging:
-  config: classpath:log4j2-test.xml
-
-knife4j:
-  gateway:
-    enabled: true
-    tags-sorter: order
-    operations-sorter: order
-    # 手动
-    strategy: manual
-    routes:
-      - name: 认证服务
-        url: /auth/v3/api-docs?group=default
-        service-name: laokou-auth
-        context-path: /auth
-        order: 1
-      - name: 管理服务
-        url: /admin/v3/api-docs?group=default
-        service-name: laokou-admin
-        context-path: /admin
-        order: 2', '03a3abda3304fe2ecd39aaa4cfe33639', '2023-01-22 13:16:13', '2024-08-16 00:11:07.096', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway配置', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (29, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -1995,6 +1614,140 @@ INSERT INTO "public"."config_info" VALUES (66, 'admin-degrade.json', 'LAOKOU_GRO
     "timeWindow": 30
   }
 ]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2024-05-25 18:13:33.436', '2024-05-25 18:13:33.436', NULL, '127.0.0.1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel degrade rule', NULL, NULL, 'json', NULL, '');
+INSERT INTO "public"."config_info" VALUES (1273, 'application-gateway.yaml', 'LAOKOU_GROUP', 'server:
+  # 开启请求压缩
+  compression:
+    enabled: true
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+    # 证书密码
+    key-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: native
+  # 优雅停机
+  shutdown: graceful
+  netty:
+    # 请求的最大初始行长度
+    max-initial-line-length: 4096
+# spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  webflux:
+    multipart:
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-in-memory-size: 4096
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # key可以自定义
+        db0:
+          nacos:
+            server-addr: https://nacos:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            data-id: gateway-flow.json
+            rule-type: gw_flow # 网关规则
+            group-id: LAOKOU_GROUP
+            data-type: json
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      cache:
+        caffeine:
+          # 初始容量 => 30
+          # 最大容量 => 4096
+          # 淘汰规则 => 最后一次写操作后经过30s过期
+          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
+        # 开启缓存
+        enabled: true
+      nacos:
+        # 开启Nacos路由负载均衡
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+    # gateway
+    gateway:
+      discovery:
+        locator:
+          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
+          # 查看DiscoveryLocatorProperties
+          enabled: false
+          # 开启服务ID强制小写
+          lower-case-service-id: true
+      httpclient:
+        ssl:
+          # 信任所有下游证书
+          use-insecure-trust-manager: true
+        # 关闭netty日志
+        wiretap: false
+        pool:
+          # 连接池中连接的最大空闲时间
+          max-idle-time: 10m
+          # 最大连接数
+          max-connections: 10000
+          # 连接池中连接的最大存活时间
+          max-life-time: 5m
+          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
+          # fixed     固定数量线程池
+          # disabled  不使用线程池（只有一个线程）
+          type: fixed
+          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
+          acquire-timeout: 60000
+        # 连接超时时间（毫秒），默认30s
+        connect-timeout: 60000
+      httpserver:
+        # 关闭netty日志
+        wiretap: false
+      router:
+        auth:
+          enabled: true
+          username: laokou
+          password: laokou123
+      ip:
+        white:
+          enabled: false
+        black:
+          enabled: false
+logging:
+  config: classpath:log4j2-test.xml
+
+knife4j:
+  gateway:
+    enabled: true
+    tags-sorter: order
+    operations-sorter: order
+    # 手动
+    strategy: manual
+    routes:
+      - name: 认证服务
+        url: /auth/v3/api-docs?group=default
+        service-name: laokou-auth
+        context-path: /auth
+        order: 1
+      - name: 管理服务
+        url: /admin/v3/api-docs?group=default
+        service-name: laokou-admin
+        context-path: /admin
+        order: 2', '83a42fbb3c7e33650b926996566b5857', '2023-01-22 13:16:13', '2024-09-07 16:38:31.713', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway配置', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (1475, 'application-sms.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -2646,6 +2399,8 @@ spring:
                 - http://127.0.0.1:8001
                 - https://vue.laokou.org
                 - https://laokou.org.cn
+                - https://gateway:5555/webjars/oauth/oauth2.html
+                - http://gateway:5555/webjars/oauth/oauth2.html
               post-logout-redirect-uris:
                 - http://127.0.0.1:8000
                 - http://127.0.0.1:8001
@@ -2697,7 +2452,7 @@ snail-job:
   # 接入组名
   group: laokou_auth_job_group
   # 接入组 token
-  token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI', '4739f5784ac017865ebbd8713c756972', '2024-05-25 18:13:10.697', '2024-09-07 09:30:43.17', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+  token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI', '58bf009f61b194e203baad389f2cd09c', '2024-05-25 18:13:10.697', '2024-09-07 14:22:59.829', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (2025, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -2823,6 +2578,8 @@ spring:
                 - http://127.0.0.1:8001
                 - https://vue.laokou.org
                 - https://laokou.org.cn
+                - https://gateway:5555/webjars/oauth/oauth2.html
+                - http://gateway:5555/webjars/oauth/oauth2.html
               post-logout-redirect-uris:
                 - http://127.0.0.1:8000
                 - http://127.0.0.1:8001
@@ -2874,7 +2631,7 @@ snail-job:
   # 接入组名
   group: laokou_auth_job_group
   # 接入组 token
-  token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI', 'f4ea166d946b68fa97c2f524b90807a6', '2023-09-28 11:51:44', '2024-09-07 09:30:07.503', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+  token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI', 'b5764510ce95257f9dabd26b227960b3', '2023-09-28 11:51:44', '2024-09-07 14:22:12.252', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (82, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -3106,6 +2863,8 @@ spring:
                 - http://127.0.0.1:8001
                 - https://vue.laokou.org
                 - https://laokou.org.cn
+                - https://gateway:5555/webjars/oauth/oauth2.html
+                - http://gateway:5555/webjars/oauth/oauth2.html
               post-logout-redirect-uris:
                 - http://127.0.0.1:8000
                 - http://127.0.0.1:8001
@@ -3157,7 +2916,254 @@ snail-job:
   # 接入组名
   group: laokou_auth_job_group
   # 接入组 token
-  token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI', 'c060de55e7502c14aa225e82961e713c', '2024-05-25 18:13:33.452', '2024-09-07 09:30:26.241', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+  token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI', 'fc7f96f1a6afcb4d7e89698ff9808d55', '2024-05-25 18:13:33.452', '2024-09-07 14:22:32.933', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
+spring:
+  # security
+  security:
+    oauth2:
+      resource-server:
+        enabled: true
+        authorization-url: https://auth:1111/oauth2/authorize
+        token-url: https://gateway:5555/auth/oauth2/token
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /**/v3/api-docs/**=laokou-gateway
+              - /v3/api-docs/**=laokou-auth,laokou-admin
+              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
+              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
+              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
+              - /error=laokou-admin,laokou-auth
+              - /v3/tenants/options=laokou-auth,laokou-gateway
+              - /v3/tenants/id=laokou-auth,laokou-gateway
+              - /favicon.ico=laokou-gateway
+              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
+              - /v3/secrets=laokou-gateway,laokou-auth
+              - /graceful-shutdown=laokou-auth
+              - /ws=laokou-gateway
+              - /doc.html=laokou-gateway
+            POST:
+              - /v3/captchas=laokou-auth,laokou-gateway
+            DELETE:
+              - /v3/logouts=laokou-auth,laokou-gateway
+  # task
+  task-execution:
+    pool:
+      core-size: 33
+      keep-alive: 180s
+    fork-join-pool:
+      core-size: 33
+  cloud:
+    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
+    openfeign:
+      compression:
+        response:
+          enabled: true
+        request:
+          enabled: true
+      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
+      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
+      okhttp:
+        enabled: true
+      circuitbreaker:
+        enabled: true
+      httpclient:
+        enabled: false
+        hc5:
+          enabled: false
+        disable-ssl-validation: true
+      client:
+        config:
+          default:
+            connectTimeout: 120000 #连接超时
+            readTimeout: 120000 #读取超时
+            logger-level: none
+      lazy-attributes-resolution: true
+    # sentinel
+    sentinel:
+      web-context-unify: false
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        dashboard: sentinel:8972
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+
+# server
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 256
+    # 每块buffer的空间大小
+    buffer-size: 1024
+    # 分配堆外内存
+    direct-buffers: true
+
+# feign
+feign:
+  sentinel:
+    enabled: true
+    default-rule: default
+    rules:
+      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
+      default:
+        - grade: 2 # 异常数策略
+          count: 1 # 异常数模式下为对应的阈值
+          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
+          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
+          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
+tenant:
+  domain-names:
+    - laokou.org
+    - laokouyun.org
+    - laokou.org.cn
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html', 'a41f1ab8ab7377fc84c0215c5c45dadb', '2023-01-13 12:16:46', '2024-09-07 15:29:57.122', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
+spring:
+  # security
+  security:
+    oauth2:
+      resource-server:
+        enabled: true
+        authorization-url: https://auth:1111/oauth2/authorize
+        token-url: https://gateway:5555/auth/oauth2/token
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /**/v3/api-docs/**=laokou-gateway
+              - /v3/api-docs/**=laokou-auth,laokou-admin
+              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
+              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
+              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
+              - /error=laokou-admin,laokou-auth
+              - /v3/tenants/options=laokou-auth,laokou-gateway
+              - /v3/tenants/id=laokou-auth,laokou-gateway
+              - /favicon.ico=laokou-gateway
+              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
+              - /v3/secrets=laokou-gateway,laokou-auth
+              - /graceful-shutdown=laokou-auth
+              - /ws=laokou-gateway
+              - /doc.html=laokou-gateway
+            POST:
+              - /v3/captchas=laokou-auth,laokou-gateway
+            DELETE:
+              - /v3/logouts=laokou-auth,laokou-gateway
+  # task
+  task-execution:
+    pool:
+      core-size: 33
+      keep-alive: 180s
+    fork-join-pool:
+      core-size: 33
+  cloud:
+    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
+    openfeign:
+      compression:
+        response:
+          enabled: true
+        request:
+          enabled: true
+      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
+      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
+      okhttp:
+        enabled: true
+      circuitbreaker:
+        enabled: true
+      httpclient:
+        enabled: false
+        hc5:
+          enabled: false
+        disable-ssl-validation: true
+      client:
+        config:
+          default:
+            connectTimeout: 120000 #连接超时
+            readTimeout: 120000 #读取超时
+            logger-level: none
+      lazy-attributes-resolution: true
+    # sentinel
+    sentinel:
+      web-context-unify: false
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        dashboard: sentinel:8972
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+
+# server
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 256
+    # 每块buffer的空间大小
+    buffer-size: 1024
+    # 分配堆外内存
+    direct-buffers: true
+
+# feign
+feign:
+  sentinel:
+    enabled: true
+    default-rule: default
+    rules:
+      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
+      default:
+        - grade: 2 # 异常数策略
+          count: 1 # 异常数模式下为对应的阈值
+          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
+          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
+          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
+tenant:
+  domain-names:
+    - laokou.org
+    - laokouyun.org
+    - laokou.org.cn
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html', 'f731460478b44d08b7588beb3bb17817', '2024-05-25 18:13:10.622', '2024-09-07 15:30:25.91', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
@@ -3323,11 +3329,11 @@ INSERT INTO "public"."config_tags_relation" VALUES (26, 'gateway', '', 'router.j
 INSERT INTO "public"."config_tags_relation" VALUES (1475, 'sms', '', 'application-sms.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 5);
 INSERT INTO "public"."config_tags_relation" VALUES (1477, 'mail', '', 'application-mail.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 6);
 INSERT INTO "public"."config_tags_relation" VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 44);
-INSERT INTO "public"."config_tags_relation" VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 46);
 INSERT INTO "public"."config_tags_relation" VALUES (82, 'monitor', '', 'application-monitor.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 47);
 INSERT INTO "public"."config_tags_relation" VALUES (4, 'im', '', 'application-im.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 48);
-INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 59);
-INSERT INTO "public"."config_tags_relation" VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 2);
+INSERT INTO "public"."config_tags_relation" VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 7);
+INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 10);
+INSERT INTO "public"."config_tags_relation" VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 11);
 
 -- ----------------------------
 -- Table structure for databasechangelog
@@ -3644,7 +3650,7 @@ SELECT setval('"public"."config_tags_relation_nid_seq"', 59, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."config_tags_relation_nid_seq1"
 OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq1"', 2, true);
+SELECT setval('"public"."config_tags_relation_nid_seq1"', 11, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -3672,7 +3678,7 @@ SELECT setval('"public"."his_config_info_nid_seq"', 171, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."his_config_info_nid_seq1"
 OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq1"', 4, true);
+SELECT setval('"public"."his_config_info_nid_seq1"', 21, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -3783,7 +3789,7 @@ ALTER TABLE "public"."config_info_tag" ADD CONSTRAINT "config_info_tag_pkey" PRI
 -- ----------------------------
 -- Auto increment value for config_tags_relation
 -- ----------------------------
-SELECT setval('"public"."config_tags_relation_nid_seq1"', 2, true);
+SELECT setval('"public"."config_tags_relation_nid_seq1"', 11, true);
 
 -- ----------------------------
 -- Indexes structure for table config_tags_relation
@@ -3827,7 +3833,7 @@ ALTER TABLE "public"."group_capacity" ADD CONSTRAINT "group_capacity_pkey" PRIMA
 -- ----------------------------
 -- Auto increment value for his_config_info
 -- ----------------------------
-SELECT setval('"public"."his_config_info_nid_seq1"', 4, true);
+SELECT setval('"public"."his_config_info_nid_seq1"', 21, true);
 
 -- ----------------------------
 -- Indexes structure for table his_config_info

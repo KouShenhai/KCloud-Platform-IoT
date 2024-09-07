@@ -46,7 +46,7 @@ import java.net.InetAddress;
 @EnableReactiveRedisRepository
 @EnableAspectJAutoProxy(exposeProxy = true)
 @SpringBootApplication(scanBasePackages = "org.laokou",
-		exclude = { RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
+	exclude = {RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class})
 public class GatewayApp {
 
 	/**
@@ -69,6 +69,8 @@ public class GatewayApp {
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
 		// 开启reactor的上下文传递
+		// client_id     => 95TxSsTPFA3tF12TBSMmUVK0da
+		// client_secret => FpHwIfw4wY92dO
 		Hooks.enableAutomaticContextPropagation();
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}

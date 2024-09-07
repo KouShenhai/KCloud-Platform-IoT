@@ -199,6 +199,11 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-knife4j-ui</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-generator-adapter</artifactId>
         <version>${laokou.version}</version>
       </dependency>

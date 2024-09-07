@@ -57,9 +57,7 @@ public class OpenApiDocAutoConfig {
 						.authorizationCode(new OAuthFlow()
 							.authorizationUrl(oAuth2ResourceServerProperties.getAuthorizationUrl())
 							.tokenUrl(oAuth2ResourceServerProperties.getTokenUrl())
-							.scopes(new Scopes().addString("read", "读").addString("write", "写"))
-						)
-					)
+							.scopes(new Scopes().addString("read", "读").addString("write", "写"))))
 					.in(SecurityScheme.In.HEADER)
 					.scheme("Bearer")
 					.bearerFormat("JWT")));
