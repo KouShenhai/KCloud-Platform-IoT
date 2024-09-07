@@ -64,7 +64,7 @@ final class OAuth2EndpointUtils {
 
 	static MultiValueMap<String, String> getFormParameters(HttpServletRequest request) {
 		Map<String, String[]> parameterMap = request.getParameterMap();
-		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>(parameterMap.size());
 		parameterMap.forEach((key, values) -> parameters.add(key, values[0]));
 		return parameters;
 	}
@@ -84,19 +84,19 @@ final class OAuth2EndpointUtils {
 	}
 
 	static Map<String, Object> getParametersIfMatchesAuthorizationCodeGrantRequest(HttpServletRequest request,
-																				   String... exclusions) {
+			String... exclusions) {
 		if (!matchesAuthorizationCodeGrantRequest(request)) {
 			return Collections.emptyMap();
 		}
 		MultiValueMap<String, String> multiValueParameters = "GET".equals(request.getMethod())
-			? getQueryParameters(request) : getFormParameters(request);
+				? getQueryParameters(request) : getFormParameters(request);
 		for (String exclusion : exclusions) {
 			multiValueParameters.remove(exclusion);
 		}
 
 		Map<String, Object> parameters = new HashMap<>();
-		multiValueParameters.forEach(
-			(key, value) -> parameters.put(key, (value.size() == 1) ? value.getFirst() : value.toArray(new String[0])));
+		multiValueParameters.forEach((key, value) -> parameters.put(key,
+				(value.size() == 1) ? value.getFirst() : value.toArray(new String[0])));
 
 		return parameters;
 	}
@@ -104,12 +104,12 @@ final class OAuth2EndpointUtils {
 	static boolean matchesAuthorizationCodeGrantRequest(HttpServletRequest request) {
 		return AuthorizationGrantType.AUTHORIZATION_CODE.getValue()
 			.equals(request.getParameter(OAuth2ParameterNames.GRANT_TYPE))
-			&& request.getParameter(OAuth2ParameterNames.CODE) != null;
+				&& request.getParameter(OAuth2ParameterNames.CODE) != null;
 	}
 
 	static boolean matchesPkceTokenRequest(HttpServletRequest request) {
 		return matchesAuthorizationCodeGrantRequest(request)
-			&& request.getParameter(PkceParameterNames.CODE_VERIFIER) != null;
+				&& request.getParameter(PkceParameterNames.CODE_VERIFIER) != null;
 	}
 
 	static void throwError(String errorCode, String parameterName, String errorUri) {
