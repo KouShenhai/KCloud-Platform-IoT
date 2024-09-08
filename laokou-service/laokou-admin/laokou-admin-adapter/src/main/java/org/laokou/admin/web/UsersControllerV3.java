@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.api.UsersServiceI;
 import org.laokou.admin.user.dto.*;
 import org.laokou.admin.user.dto.clientobject.UserCO;
+import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
@@ -106,6 +107,13 @@ public class UsersControllerV3 {
 	@Operation(summary = "查看用户详情", description = "查看用户详情")
 	public Result<UserCO> getByIdV3(@PathVariable("id") Long id) {
 		return usersServiceI.getById(new UserGetQry(id));
+	}
+
+	@TraceLog
+	@GetMapping("profile")
+	@Operation(summary = "查看个人信息", description = "查看个人信息")
+	public Result<UserProfileCO> getProfileV3() {
+		return usersServiceI.getProfile();
 	}
 
 }

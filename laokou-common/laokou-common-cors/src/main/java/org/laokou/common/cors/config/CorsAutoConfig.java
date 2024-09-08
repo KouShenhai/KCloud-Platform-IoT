@@ -37,8 +37,8 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 @AutoConfiguration
 public class CorsAutoConfig {
 
+	@Order(HIGHEST_PRECEDENCE + 10)
 	@Bean
-	@Order(HIGHEST_PRECEDENCE)
 	@ConditionalOnMissingBean(CorsFilter.class)
 	public CorsFilter corsFilter() {
 		CorsConfiguration config = new CorsConfiguration();

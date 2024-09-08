@@ -81,6 +81,8 @@ public class AuthApp {
 		// @formatter:on
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
+		// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
+		// client_secret => FpHwIfw4wY92dO
 		new SpringApplicationBuilder(AuthApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

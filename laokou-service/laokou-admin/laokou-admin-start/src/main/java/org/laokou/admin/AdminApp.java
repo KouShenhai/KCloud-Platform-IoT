@@ -21,6 +21,7 @@ import com.aizuda.snailjob.client.starter.EnableSnailJob;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
+import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.nacos.filter.ShutdownFilter;
@@ -44,6 +45,7 @@ import java.net.InetAddress;
  *
  * @author laokou
  */
+@EnableWarmUp
 @EnableRouter
 @EnableSecurity
 @EnableSnailJob
@@ -80,6 +82,8 @@ public class AdminApp {
 		// @formatter:on
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
+		// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
+		// client_secret => FpHwIfw4wY92dO
 		new SpringApplicationBuilder(AdminApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

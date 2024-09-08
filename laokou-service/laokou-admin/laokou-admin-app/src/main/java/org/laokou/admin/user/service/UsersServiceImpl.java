@@ -22,8 +22,10 @@ import org.laokou.admin.user.api.UsersServiceI;
 import org.laokou.admin.user.command.*;
 import org.laokou.admin.user.command.query.UserGetQryExe;
 import org.laokou.admin.user.command.query.UserPageQryExe;
+import org.laokou.admin.user.command.query.UserProfileGetQryExe;
 import org.laokou.admin.user.dto.*;
 import org.laokou.admin.user.dto.clientobject.UserCO;
+import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
@@ -50,6 +52,8 @@ public class UsersServiceImpl implements UsersServiceI {
 	private final UserPageQryExe userPageQryExe;
 
 	private final UserGetQryExe userGetQryExe;
+
+	private final UserProfileGetQryExe userProfileGetQryExe;
 
 	@Override
 	public void save(UserSaveCmd cmd) {
@@ -84,6 +88,11 @@ public class UsersServiceImpl implements UsersServiceI {
 	@Override
 	public Result<UserCO> getById(UserGetQry qry) {
 		return userGetQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<UserProfileCO> getProfile() {
+		return userProfileGetQryExe.execute();
 	}
 
 }

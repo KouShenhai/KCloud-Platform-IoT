@@ -18,10 +18,11 @@
 package org.laokou.admin.user.convertor;
 
 import org.laokou.admin.user.dto.clientobject.UserCO;
+import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.security.utils.UserDetail;
 
 /**
  * 用户转换器.
@@ -31,19 +32,67 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 public class UserConvertor {
 
 	public static UserDO toDataObject(UserE userE) {
-		UserDO userDO = ConvertUtil.sourceToTarget(userE, UserDO.class);
-		if (ObjectUtil.isNull(userDO.getId())) {
+		UserDO userDO = new UserDO();
+		Long id = userE.getId();
+		if (ObjectUtil.isNull(id)) {
 			userDO.generatorId();
 		}
+		else {
+			userDO.setId(id);
+		}
+		userDO.setPassword(userE.getPassword());
+		userDO.setSuperAdmin(userE.getSuperAdmin());
+		userDO.setMail(userE.getMail());
+		userDO.setMobile(userE.getMobile());
+		userDO.setStatus(userE.getStatus());
+		userDO.setAvatar(userE.getAvatar());
+		userDO.setUsernamePhrase(userE.getUsernamePhrase());
+		userDO.setMailPhrase(userE.getMailPhrase());
+		userDO.setMobilePhrase(userE.getMobilePhrase());
+		userDO.setUsername(userE.getUsername());
 		return userDO;
 	}
 
+	public static UserProfileCO toClientObject(UserDetail userDetail) {
+		UserProfileCO userProfileCO = new UserProfileCO();
+		userProfileCO.setId(userDetail.getId());
+		userProfileCO.setUsername(userDetail.getUsername());
+		userProfileCO.setAvatar(userDetail.getAvatar());
+		userProfileCO.setTenantId(userDetail.getTenantId());
+		userProfileCO.setPermissions(userDetail.getPermissions());
+		return userProfileCO;
+	}
+
 	public static UserCO toClientObject(UserDO userDO) {
-		return ConvertUtil.sourceToTarget(userDO, UserCO.class);
+		UserCO userCO = new UserCO();
+		userCO.setId(userDO.getId());
+		userCO.setPassword(userDO.getPassword());
+		userCO.setSuperAdmin(userDO.getSuperAdmin());
+		userCO.setMail(userDO.getMail());
+		userCO.setMobile(userDO.getMobile());
+		userCO.setStatus(userDO.getStatus());
+		userCO.setAvatar(userDO.getAvatar());
+		userCO.setUsernamePhrase(userDO.getUsernamePhrase());
+		userCO.setMailPhrase(userDO.getMailPhrase());
+		userCO.setMobilePhrase(userDO.getMobilePhrase());
+		userCO.setUsername(userDO.getUsername());
+		return userCO;
 	}
 
 	public static UserE toEntity(UserCO userCO) {
-		return ConvertUtil.sourceToTarget(userCO, UserE.class);
+		UserE userE = new UserE();
+		userE.setId(userCO.getId());
+		userE.setPassword(userCO.getPassword());
+		userE.setSuperAdmin(userCO.getSuperAdmin());
+		userE.setMail(userCO.getMail());
+		userE.setMobile(userCO.getMobile());
+		userE.setStatus(userCO.getStatus());
+		userE.setAvatar(userCO.getAvatar());
+		userE.setUsernamePhrase(userCO.getUsernamePhrase());
+		userE.setMailPhrase(userCO.getMailPhrase());
+		userE.setMobilePhrase(userCO.getMobilePhrase());
+		userE.setUsername(userCO.getUsername());
+		return userE;
 	}
 
 }

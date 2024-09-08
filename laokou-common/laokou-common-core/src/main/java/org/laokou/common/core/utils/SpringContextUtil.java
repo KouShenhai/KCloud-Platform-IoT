@@ -19,7 +19,6 @@ package org.laokou.common.core.utils;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
@@ -28,7 +27,8 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
-import org.springframework.core.env.Environment;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -38,13 +38,17 @@ import java.util.Map;
  *
  * @author laokou
  */
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @Component
 @NonNullApi
-@RequiredArgsConstructor
 public final class SpringContextUtil implements ApplicationContextAware, DisposableBean {
 
+	public static final String APPLICATION_NAME = "spring.application.name";
+
+	public static final String DEFAULT_SERVICE_ID = "application";
+
 	@Getter
-	private static ApplicationContext applicationContext;
+	private volatile static ApplicationContext applicationContext = null;
 
 	/**
 	 * 获取工厂.
@@ -154,12 +158,11 @@ public final class SpringContextUtil implements ApplicationContextAware, Disposa
 	}
 
 	public static String getServiceId() {
-		try {
-			return ObjectUtil.requireNotNull(getBean(Environment.class).getProperty("spring.application.name"));
+		String property = applicationContext.getEnvironment().getProperty(APPLICATION_NAME);
+		if (property != null) {
+			return property;
 		}
-		catch (Exception e) {
-			return "application";
-		}
+		return DEFAULT_SERVICE_ID;
 	}
 
 	@Override

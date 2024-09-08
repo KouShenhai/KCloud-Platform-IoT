@@ -19,6 +19,7 @@ package org.laokou.admin.user.api;
 
 import org.laokou.admin.user.dto.*;
 import org.laokou.admin.user.dto.clientobject.UserCO;
+import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
@@ -70,5 +71,10 @@ public interface UsersServiceI {
 	 * @param qry 查看请求
 	 */
 	Result<UserCO> getById(UserGetQry qry);
+
+	/**
+	 * 查看个人信息.
+	 */
+	Result<UserProfileCO> getProfile();
 
 }

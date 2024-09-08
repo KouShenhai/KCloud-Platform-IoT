@@ -30,7 +30,6 @@ import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.SneakyThrows;
-import org.laokou.common.core.utils.SpringContextUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -44,6 +43,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import javax.sql.DataSource;
 import java.net.InetAddress;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -59,7 +59,7 @@ public class MybatisPlusAutoConfig {
 	static {
 		JsqlParserGlobal.setJsqlParseCache(new FurySerialCaffeineJsqlParseCache(
 				Caffeine.newBuilder().maximumSize(1024).expireAfterWrite(5, TimeUnit.SECONDS).build(),
-				SpringContextUtil.getBean(Executor.class), true));
+				Executors.newVirtualThreadPerTaskExecutor(), true));
 	}
 
 	@Bean
