@@ -68,7 +68,6 @@ public class UserConvertor {
 		String mobile = userDO.getMobile();
 		UserCO userCO = new UserCO();
 		userCO.setId(userDO.getId());
-		userCO.setPassword(userDO.getPassword());
 		userCO.setSuperAdmin(userDO.getSuperAdmin());
 		userCO.setStatus(userDO.getStatus());
 		userCO.setAvatar(userDO.getAvatar());
