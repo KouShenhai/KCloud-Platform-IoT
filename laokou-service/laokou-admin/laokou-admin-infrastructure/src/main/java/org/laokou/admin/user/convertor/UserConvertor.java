@@ -21,6 +21,7 @@ import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
+import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
 
@@ -35,8 +36,7 @@ public class UserConvertor {
 		UserDO userDO = new UserDO();
 		if (isInsert) {
 			userDO.generatorId();
-		}
-		else {
+		} else {
 			userDO.setId(userE.getId());
 		}
 		userDO.setPassword(userE.getPassword());
@@ -63,15 +63,24 @@ public class UserConvertor {
 	}
 
 	public static UserCO toClientObject(UserDO userDO) {
+		String username = userDO.getUsername();
+		String mail = userDO.getMail();
+		String mobile = userDO.getMobile();
 		UserCO userCO = new UserCO();
 		userCO.setId(userDO.getId());
 		userCO.setPassword(userDO.getPassword());
 		userCO.setSuperAdmin(userDO.getSuperAdmin());
-		userCO.setMail(userDO.getMail());
-		userCO.setMobile(userDO.getMobile());
 		userCO.setStatus(userDO.getStatus());
 		userCO.setAvatar(userDO.getAvatar());
-		userCO.setUsername(userDO.getUsername());
+		if (StringUtil.isNotEmpty(username)) {
+			userCO.setUsername(AESUtil.decrypt(username));
+		}
+		if (StringUtil.isNotEmpty(mail)) {
+			userCO.setMail(AESUtil.decrypt(mail));
+		}
+		if (StringUtil.isNotEmpty(mobile)) {
+			userCO.setMobile(AESUtil.decrypt(mobile));
+		}
 		return userCO;
 	}
 
