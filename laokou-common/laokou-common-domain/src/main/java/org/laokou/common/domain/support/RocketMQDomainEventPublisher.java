@@ -23,7 +23,7 @@ import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.common.trace.utils.TraceUtil;
 import org.springframework.stereotype.Component;
 
-@Component()
+@Component
 @RequiredArgsConstructor
 public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 
@@ -32,9 +32,9 @@ public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 	private final TraceUtil traceUtil;
 
 	@Override
-	public void publishToCreate(DomainEvent<Long> payload) {
+	public void publish(DomainEvent<Long> payload) {
 		rocketMqTemplate.sendTransactionMessage(payload.getTopic(), payload.getTag(), payload, payload.getId(),
-				traceUtil.getTraceId(), traceUtil.getSpanId());
+			traceUtil.getTraceId(), traceUtil.getSpanId());
 	}
 
 }

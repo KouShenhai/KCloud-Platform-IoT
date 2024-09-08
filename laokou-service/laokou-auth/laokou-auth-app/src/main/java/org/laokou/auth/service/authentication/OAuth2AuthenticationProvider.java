@@ -55,24 +55,22 @@ public class OAuth2AuthenticationProvider {
 		try {
 			// 校验
 			extensionExecutor.executeVoid(AuthValidatorExtPt.class,
-					BizScenario.valueOf(auth.getGrantType().getCode(), USE_CASE_AUTH, SCENARIO),
-					extension -> extension.validate(auth));
+				BizScenario.valueOf(auth.getGrantType().getCode(), USE_CASE_AUTH, SCENARIO),
+				extension -> extension.validate(auth));
 			// 认证
 			authDomainService.auth(auth);
 			// 转换
 			UserDetail userDetail = UserConvertor.toClientObject(auth);
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
-					userDetail.getAuthorities());
-		}
-		catch (AuthException | SystemException e) {
+				userDetail.getAuthorities());
+		} catch (AuthException | SystemException e) {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
-		}
-		finally {
+		} finally {
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();
 			if (auth.isHasLog()) {
 				// 发布登录事件
-				rocketMQDomainEventPublisher.publishToCreate(LoginLogConvertor.toClientObject(auth));
+				rocketMQDomainEventPublisher.publish(LoginLogConvertor.toClientObject(auth));
 			}
 		}
 	}
