@@ -47,9 +47,8 @@ public class UserGatewayImpl implements UserGateway {
 	public void create(UserE userE) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				userMapper.insert(UserConvertor.toDataObject(userE));
-			}
-			catch (Exception e) {
+				userMapper.insert(UserConvertor.toDataObject(userE, true));
+			} catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -59,7 +58,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	public void update(UserE userE) {
-		UserDO userDO = UserConvertor.toDataObject(userE);
+		UserDO userDO = UserConvertor.toDataObject(userE, false);
 		userDO.setVersion(userMapper.selectVersion(userE.getId()));
 		update(userDO);
 	}
@@ -68,8 +67,7 @@ public class UserGatewayImpl implements UserGateway {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				userMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -82,8 +80,7 @@ public class UserGatewayImpl implements UserGateway {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				userMapper.updateById(userDO);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();

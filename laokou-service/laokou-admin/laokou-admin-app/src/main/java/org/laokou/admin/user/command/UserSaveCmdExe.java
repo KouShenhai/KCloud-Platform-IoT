@@ -36,7 +36,7 @@ public class UserSaveCmdExe {
 
 	public void executeVoid(UserSaveCmd cmd) {
 		// 校验参数
-		userDomainService.create(UserConvertor.toEntity(cmd.getCo()));
+		userDomainService.create(UserConvertor.toEntity(cmd.getCo(), true));
 	}
 
 }

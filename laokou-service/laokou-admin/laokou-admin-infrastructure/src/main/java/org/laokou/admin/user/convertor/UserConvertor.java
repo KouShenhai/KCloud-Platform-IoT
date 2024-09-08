@@ -21,7 +21,7 @@ import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
 
 /**
@@ -31,14 +31,12 @@ import org.laokou.common.security.utils.UserDetail;
  */
 public class UserConvertor {
 
-	public static UserDO toDataObject(UserE userE) {
+	public static UserDO toDataObject(UserE userE, boolean isInsert) {
 		UserDO userDO = new UserDO();
-		Long id = userE.getId();
-		if (ObjectUtil.isNull(id)) {
+		if (isInsert) {
 			userDO.generatorId();
-		}
-		else {
-			userDO.setId(id);
+		} else {
+			userDO.setId(userE.getId());
 		}
 		userDO.setPassword(userE.getPassword());
 		userDO.setSuperAdmin(userE.getSuperAdmin());
@@ -72,26 +70,32 @@ public class UserConvertor {
 		userCO.setMobile(userDO.getMobile());
 		userCO.setStatus(userDO.getStatus());
 		userCO.setAvatar(userDO.getAvatar());
-		userCO.setUsernamePhrase(userDO.getUsernamePhrase());
-		userCO.setMailPhrase(userDO.getMailPhrase());
-		userCO.setMobilePhrase(userDO.getMobilePhrase());
 		userCO.setUsername(userDO.getUsername());
 		return userCO;
 	}
 
-	public static UserE toEntity(UserCO userCO) {
+	public static UserE toEntity(UserCO userCO, boolean isInsert) {
 		UserE userE = new UserE();
+		String username = userCO.getUsername();
+		String mail = userCO.getMail();
+		String mobile = userCO.getMobile();
 		userE.setId(userCO.getId());
+		userE.setUsername(username);
 		userE.setPassword(userCO.getPassword());
 		userE.setSuperAdmin(userCO.getSuperAdmin());
-		userE.setMail(userCO.getMail());
-		userE.setMobile(userCO.getMobile());
+		userE.setMail(mail);
+		userE.setMobile(mobile);
 		userE.setStatus(userCO.getStatus());
 		userE.setAvatar(userCO.getAvatar());
-		userE.setUsernamePhrase(userCO.getUsernamePhrase());
-		userE.setMailPhrase(userCO.getMailPhrase());
-		userE.setMobilePhrase(userCO.getMobilePhrase());
-		userE.setUsername(userCO.getUsername());
+		if (StringUtil.isNotEmpty(username) && isInsert) {
+			userE.setUsernamePhrase("");
+		}
+		if (StringUtil.isNotEmpty(mail)) {
+			userE.setMailPhrase("");
+		}
+		if (StringUtil.isNotEmpty(mobile)) {
+			userE.setMobilePhrase("");
+		}
 		return userE;
 	}
 

@@ -68,21 +68,6 @@ public class UserCO extends ClientObject {
 	private String avatar;
 
 	/**
-	 * 用户名短语.
-	 */
-	private String usernamePhrase;
-
-	/**
-	 * 邮箱短语.
-	 */
-	private String mailPhrase;
-
-	/**
-	 * 手机号短语.
-	 */
-	private String mobilePhrase;
-
-	/**
 	 * 用户名.
 	 */
 	private String username;

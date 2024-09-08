@@ -36,7 +36,7 @@ public class UserModifyCmdExe {
 
 	public void executeVoid(UserModifyCmd cmd) {
 		// 校验参数
-		userDomainService.update(UserConvertor.toEntity(cmd.getCo()));
+		userDomainService.update(UserConvertor.toEntity(cmd.getCo(), false));
 	}
 
 }
