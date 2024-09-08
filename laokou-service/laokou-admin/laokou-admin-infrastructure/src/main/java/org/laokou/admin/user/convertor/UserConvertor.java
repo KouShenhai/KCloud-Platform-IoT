@@ -35,7 +35,8 @@ public class UserConvertor {
 		UserDO userDO = new UserDO();
 		if (isInsert) {
 			userDO.generatorId();
-		} else {
+		}
+		else {
 			userDO.setId(userE.getId());
 		}
 		userDO.setPassword(userE.getPassword());

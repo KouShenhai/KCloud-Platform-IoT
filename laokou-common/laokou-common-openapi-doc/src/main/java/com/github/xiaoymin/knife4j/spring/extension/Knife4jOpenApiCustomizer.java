@@ -31,7 +31,6 @@
  * limitations under the License.
  */
 
-
 package com.github.xiaoymin.knife4j.spring.extension;
 
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
@@ -57,11 +56,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * 增强扩展属性支持
+ * 增强扩展属性支持.
  *
  * @author <a href="xiaoymin@foxmail.com">xiaoymin@foxmail.com</a>
- * @author laokou
- * 2022/12/11 22:40
+ * @author laokou 2022/12/11 22:40
  * @since 4.1.0
  */
 @Slf4j
@@ -69,6 +67,7 @@ import java.util.stream.Collectors;
 public class Knife4jOpenApiCustomizer implements GlobalOpenApiCustomizer {
 
 	final Knife4jProperties knife4jProperties;
+
 	final SpringDocConfigProperties properties;
 
 	@Override
@@ -76,7 +75,8 @@ public class Knife4jOpenApiCustomizer implements GlobalOpenApiCustomizer {
 		log.debug("Knife4j OpenApiCustomizer");
 		if (knife4jProperties.isEnable()) {
 			Knife4jSetting setting = knife4jProperties.getSetting();
-			OpenApiExtensionResolver openApiExtensionResolver = new OpenApiExtensionResolver(setting, knife4jProperties.getDocuments());
+			OpenApiExtensionResolver openApiExtensionResolver = new OpenApiExtensionResolver(setting,
+				knife4jProperties.getDocuments());
 			// 解析初始化
 			openApiExtensionResolver.start();
 			Map<String, Object> objectMap = new HashMap<>();
@@ -88,7 +88,7 @@ public class Knife4jOpenApiCustomizer implements GlobalOpenApiCustomizer {
 	}
 
 	/**
-	 * 往OpenAPI内tags字段添加x-order属性
+	 * 往OpenAPI内tags字段添加x-order属性.
 	 *
 	 * @param openApi openApi
 	 */
@@ -97,44 +97,38 @@ public class Knife4jOpenApiCustomizer implements GlobalOpenApiCustomizer {
 			return;
 		}
 		// 获取包扫描路径
-		Set<String> packagesToScan =
-			properties.getGroupConfigs().stream()
-				.map(SpringDocConfigProperties.GroupConfig::getPackagesToScan)
-				.filter(toScan -> !CollectionUtils.isEmpty(toScan))
-				.flatMap(List::stream)
-				.collect(Collectors.toSet());
+		Set<String> packagesToScan = properties.getGroupConfigs()
+			.stream()
+			.map(SpringDocConfigProperties.GroupConfig::getPackagesToScan)
+			.filter(toScan -> !CollectionUtils.isEmpty(toScan))
+			.flatMap(List::stream)
+			.collect(Collectors.toSet());
 		if (CollectionUtils.isEmpty(packagesToScan)) {
 			return;
 		}
 		// 扫描包下被ApiSupport注解的RestController Class
-		Set<Class<?>> classes =
-			packagesToScan.stream()
-				.map(this::scanPackageByAnnotation)
-				.flatMap(Set::stream)
-				.filter(clazz -> clazz.isAnnotationPresent(ApiSupport.class))
-				.collect(Collectors.toSet());
+		Set<Class<?>> classes = packagesToScan.stream()
+			.map(this::scanPackageByAnnotation)
+			.flatMap(Set::stream)
+			.filter(clazz -> clazz.isAnnotationPresent(ApiSupport.class))
+			.collect(Collectors.toSet());
 		if (!CollectionUtils.isEmpty(classes)) {
 			// ApiSupport oder值存入tagSortMap<Tag.name,ApiSupport.order>
 			Map<String, Integer> tagOrderMap = new HashMap<>();
-			classes.forEach(
-				clazz -> {
-					Tag tag = getTag(clazz);
-					if (Objects.nonNull(tag)) {
-						ApiSupport apiSupport = clazz.getAnnotation(ApiSupport.class);
-						tagOrderMap.putIfAbsent(tag.name(), apiSupport.order());
-					}
-				});
+			classes.forEach(clazz -> {
+				Tag tag = getTag(clazz);
+				if (Objects.nonNull(tag)) {
+					ApiSupport apiSupport = clazz.getAnnotation(ApiSupport.class);
+					tagOrderMap.putIfAbsent(tag.name(), apiSupport.order());
+				}
+			});
 			// 往openApi tags字段添加x-order增强属性
 			if (openApi.getTags() != null) {
-				openApi
-					.getTags()
-					.forEach(
-						tag -> {
-							if (tagOrderMap.containsKey(tag.getName())) {
-								tag.addExtension(
-									ExtensionsConstants.EXTENSION_ORDER, tagOrderMap.get(tag.getName()));
-							}
-						});
+				openApi.getTags().forEach(tag -> {
+					if (tagOrderMap.containsKey(tag.getName())) {
+						tag.addExtension(ExtensionsConstants.EXTENSION_ORDER, tagOrderMap.get(tag.getName()));
+					}
+				});
 			}
 		}
 	}
@@ -158,10 +152,8 @@ public class Knife4jOpenApiCustomizer implements GlobalOpenApiCustomizer {
 		return tag;
 	}
 
-	private Set<Class<?>> scanPackageByAnnotation(
-		String packageName) {
-		ClassPathScanningCandidateComponentProvider scanner =
-			new ClassPathScanningCandidateComponentProvider(false);
+	private Set<Class<?>> scanPackageByAnnotation(String packageName) {
+		ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
 		scanner.addIncludeFilter(new AnnotationTypeFilter(RestController.class));
 		Set<Class<?>> classes = new HashSet<>();
 		for (BeanDefinition beanDefinition : scanner.findCandidateComponents(packageName)) {
@@ -174,4 +166,5 @@ public class Knife4jOpenApiCustomizer implements GlobalOpenApiCustomizer {
 		}
 		return classes;
 	}
+
 }
