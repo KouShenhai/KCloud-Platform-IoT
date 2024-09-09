@@ -34,7 +34,7 @@ public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 	@Override
 	public void publish(DomainEvent<Long> payload) {
 		rocketMqTemplate.sendTransactionMessage(payload.getTopic(), payload.getTag(), payload, payload.getId(),
-				traceUtil.getTraceId(), traceUtil.getSpanId());
+			traceUtil.getTraceId(), traceUtil.getSpanId());
 	}
 
 }

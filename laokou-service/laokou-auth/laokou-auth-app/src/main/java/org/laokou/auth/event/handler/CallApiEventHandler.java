@@ -23,7 +23,7 @@ import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.ability.AuthDomainService;
 import org.laokou.auth.dto.domainevent.CallApiEvent;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.handler.RocketMQAbstractDomainEventHandler;
+import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
@@ -39,8 +39,8 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @Component
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_API_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
-		selectorExpression = API_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
-public class CallApiEventHandler extends RocketMQAbstractDomainEventHandler {
+	selectorExpression = API_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+public class CallApiEventHandler extends AbstractDomainEventHandler {
 
 	private final AuthDomainService authDomainService;
 

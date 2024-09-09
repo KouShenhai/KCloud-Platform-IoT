@@ -20,7 +20,7 @@ package org.laokou.auth.event.handler;
 import org.laokou.auth.dto.domainevent.CallApiEvent;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.handler.RocketMQAbstractDomainEventHandler;
+import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.ApiLog;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
@@ -32,7 +32,7 @@ import static org.laokou.common.i18n.common.constant.EventType.API;
 /**
  * @author laokou
  */
-public abstract class AbstractSendCaptchaEventHandler extends RocketMQAbstractDomainEventHandler {
+public abstract class AbstractSendCaptchaEventHandler extends AbstractDomainEventHandler {
 
 	protected AbstractSendCaptchaEventHandler(DomainEventPublisher domainEventPublisher) {
 		super(domainEventPublisher);
@@ -43,7 +43,7 @@ public abstract class AbstractSendCaptchaEventHandler extends RocketMQAbstractDo
 		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
 		ApiLog apiLog = getApiLog(event);
 		CallApiEvent callApiEvent = new CallApiEvent(apiLog, LAOKOU_LOG_TOPIC, API_TAG, API, event.getServiceId(),
-				event.getSourceName(), event.getAggregateId());
+			event.getSourceName(), event.getAggregateId());
 		rocketMQDomainEventPublisher.publish(callApiEvent);
 	}
 

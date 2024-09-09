@@ -35,8 +35,8 @@ import java.util.Objects;
  */
 @Component
 @RequiredArgsConstructor
-@RocketMQTransactionListener
-public class RocketMQDomainEventTransactionHandler extends AbstractTransactionHandler {
+@RocketMQTransactionListener(corePoolSize = 16, maximumPoolSize = 32)
+public class DomainEventTransactionHandler extends AbstractTransactionHandler {
 
 	private final DomainEventService domainEventService;
 
