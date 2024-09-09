@@ -17,6 +17,10 @@
 
 package org.laokou.common.domain.config;
 
+import com.lmax.disruptor.BlockingWaitStrategy;
+import com.lmax.disruptor.dsl.Disruptor;
+import com.lmax.disruptor.dsl.ProducerType;
+import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 
@@ -24,7 +28,36 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
  * @author laokou
  */
 @AutoConfiguration
+@RequiredArgsConstructor
 @MapperScan("org.laokou.common.domain.mapper")
 public class DomainAutoConfig {
+
+	// @Bean
+	public Disruptor<Object> sharedDisruptor() {
+		// 创建一个可以容纳不同事件的Disruptor
+		Disruptor<Object> disruptor = new Disruptor<>(Object::new, 8096, Thread.ofVirtual().factory(), ProducerType.SINGLE, new BlockingWaitStrategy());
+
+		// 多事件处理器配置
+//		EventHandler<Object>[] handlers = new EventHandler[]{
+//			(event, sequence, endOfBatch) -> {
+//				if (event instanceof TradeEvent) {
+//					// 处理TradeEvent
+//					TradeEvent tradeEvent = (TradeEvent) event;
+//					System.out.println("Processing trade event: " + tradeEvent.getTradeId());
+//				} else if (event instanceof OrderEvent) {
+//					// 处理OrderEvent
+//					OrderEvent orderEvent = (OrderEvent) event;
+//					System.out.println("Processing order event: " + orderEvent.getOrderId());
+//				}
+//			}
+//		};
+//
+//		disruptor.handleEventsWith(handlers);
+//
+//
+//		return disruptor;
+		disruptor.start();
+		return disruptor;
+	}
 
 }
