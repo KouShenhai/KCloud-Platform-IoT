@@ -26,7 +26,7 @@ public class DisruptorAbstractDomainEventHandler implements EventHandler<Default
 
 	@Override
 	public void onEvent(DefaultDomainEvent defaultDomainEvent, long l, boolean b) {
-
+		
 	}
 
 }

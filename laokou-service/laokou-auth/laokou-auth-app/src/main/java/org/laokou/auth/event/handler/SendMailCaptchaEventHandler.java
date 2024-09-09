@@ -23,10 +23,10 @@ import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.ApiLog;
+import org.laokou.common.mail.entity.SendMailApiLog;
+import org.laokou.common.mail.service.MailService;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.sms.entity.SendSmsApiLog;
-import org.laokou.common.sms.service.SmsService;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
@@ -39,30 +39,30 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @Slf4j
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
-	selectorExpression = MOBILE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
-public class SendMobileCaptchaEventHandlerRocketMQ extends RocketMQAbstractSendCaptchaEventHandler {
+@RocketMQMessageListener(consumerGroup = LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
+	selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+public class SendMailCaptchaEventHandler extends AbstractSendCaptchaEventHandler {
 
-	private final SmsService smsService;
+	private final MailService mailService;
 
 	private final RedisUtil redisUtil;
 
-	public SendMobileCaptchaEventHandlerRocketMQ(DomainEventPublisher domainEventPublisher, SmsService smsService,
-												 RedisUtil redisUtil) {
+	public SendMailCaptchaEventHandler(DomainEventPublisher domainEventPublisher, MailService mailService,
+									   RedisUtil redisUtil) {
 		super(domainEventPublisher);
-		this.smsService = smsService;
+		this.mailService = mailService;
 		this.redisUtil = redisUtil;
 	}
 
 	@Override
 	protected ApiLog getApiLog(SendCaptchaEvent event) {
-		SendSmsApiLog smsApiLog = new SendSmsApiLog();
-		smsService.send(smsApiLog, event.getUuid(), 5, (value, expireTime) -> {
-			String mobileCaptchaKey = RedisKeyUtil.getMobileCaptchaKey(event.getUuid());
-			redisUtil.del(mobileCaptchaKey);
-			redisUtil.set(mobileCaptchaKey, value, expireTime);
+		SendMailApiLog mailApiLog = new SendMailApiLog();
+		mailService.send(mailApiLog, event.getUuid(), 5, (value, expireTime) -> {
+			String mailCaptchaKey = RedisKeyUtil.getMailCaptchaKey(event.getUuid());
+			redisUtil.del(mailCaptchaKey);
+			redisUtil.set(mailCaptchaKey, value, expireTime);
 		});
-		return smsApiLog;
+		return mailApiLog;
 	}
 
 }

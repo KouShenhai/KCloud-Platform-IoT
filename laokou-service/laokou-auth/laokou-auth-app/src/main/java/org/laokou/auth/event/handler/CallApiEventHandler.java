@@ -17,41 +17,46 @@
 
 package org.laokou.auth.event.handler;
 
+import io.micrometer.common.lang.NonNullApi;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.laokou.auth.ability.AuthDomainService;
 import org.laokou.auth.dto.domainevent.CallApiEvent;
-import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.RocketMQAbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.i18n.dto.ApiLog;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.common.constant.MqConstant.API_TAG;
-import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOG_TOPIC;
-import static org.laokou.common.i18n.common.constant.EventType.API;
+import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
+import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
+import static org.laokou.auth.common.constant.MqConstant.*;
 
 /**
  * @author laokou
  */
-public abstract class RocketMQAbstractSendCaptchaEventHandler extends RocketMQAbstractDomainEventHandler {
+@Slf4j
+@Component
+@NonNullApi
+@RocketMQMessageListener(consumerGroup = LAOKOU_API_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
+	selectorExpression = API_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+public class CallApiEventHandler extends RocketMQAbstractDomainEventHandler {
 
-	protected RocketMQAbstractSendCaptchaEventHandler(DomainEventPublisher domainEventPublisher) {
+	private final AuthDomainService authDomainService;
+
+	public CallApiEventHandler(DomainEventPublisher domainEventPublisher, AuthDomainService authDomainService) {
 		super(domainEventPublisher);
+		this.authDomainService = authDomainService;
 	}
 
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
-		ApiLog apiLog = getApiLog(event);
-		CallApiEvent callApiEvent = new CallApiEvent(apiLog, LAOKOU_LOG_TOPIC, API_TAG, API, event.getServiceId(),
-			event.getSourceName(), event.getAggregateId());
-		rocketMQDomainEventPublisher.publish(callApiEvent);
+		authDomainService.recordApiLog(domainEvent);
 	}
 
 	@Override
 	protected DefaultDomainEvent convert(String msg) {
-		return JacksonUtil.toBean(msg, SendCaptchaEvent.class);
+		return JacksonUtil.toBean(msg, CallApiEvent.class);
 	}
-
-	protected abstract ApiLog getApiLog(SendCaptchaEvent event);
 
 }
