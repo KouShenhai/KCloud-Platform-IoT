@@ -30,7 +30,7 @@ import static org.laokou.common.domain.entity.DomainEventDO.BOOT_DOMAIN_EVENT;
 @TableName(BOOT_DOMAIN_EVENT)
 public class DomainEventDO extends BaseDO {
 
-	public static final String BOOT_DOMAIN_EVENT = "boot_domain_event";
+	protected static final String BOOT_DOMAIN_EVENT = "boot_domain_event";
 
 	/**
 	 * 事件类型.

@@ -35,11 +35,6 @@ public class DomainEventA extends AggregateRoot<Long> {
 	private final String eventType;
 
 	/**
-	 * 事件状态.
-	 */
-	private String eventStatus;
-
-	/**
 	 * MQ主题.
 	 */
 	private final String topic;
