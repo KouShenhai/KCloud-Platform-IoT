@@ -36,7 +36,7 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor
 @RocketMQTransactionListener
-public class DomainEventTransactionHandler extends AbstractTransactionHandler {
+public class RocketMQDomainEventTransactionHandler extends AbstractTransactionHandler {
 
 	private final DomainEventService domainEventService;
 
