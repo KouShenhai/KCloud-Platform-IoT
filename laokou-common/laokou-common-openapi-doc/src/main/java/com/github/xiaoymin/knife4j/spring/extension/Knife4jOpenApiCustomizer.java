@@ -76,7 +76,7 @@ public class Knife4jOpenApiCustomizer implements GlobalOpenApiCustomizer {
 		if (knife4jProperties.isEnable()) {
 			Knife4jSetting setting = knife4jProperties.getSetting();
 			OpenApiExtensionResolver openApiExtensionResolver = new OpenApiExtensionResolver(setting,
-				knife4jProperties.getDocuments());
+					knife4jProperties.getDocuments());
 			// 解析初始化
 			openApiExtensionResolver.start();
 			Map<String, Object> objectMap = new HashMap<>();
@@ -89,7 +89,6 @@ public class Knife4jOpenApiCustomizer implements GlobalOpenApiCustomizer {
 
 	/**
 	 * 往OpenAPI内tags字段添加x-order属性.
-	 *
 	 * @param openApi openApi
 	 */
 	private void addOrderExtension(OpenAPI openApi) {
@@ -160,7 +159,8 @@ public class Knife4jOpenApiCustomizer implements GlobalOpenApiCustomizer {
 			try {
 				Class<?> clazz = Class.forName(beanDefinition.getBeanClassName());
 				classes.add(clazz);
-			} catch (ClassNotFoundException ignore) {
+			}
+			catch (ClassNotFoundException ignore) {
 
 			}
 		}

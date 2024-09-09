@@ -40,13 +40,13 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @Component
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
-	selectorExpression = LOGIN_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+		selectorExpression = LOGIN_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class LoginEventHandler extends RocketMQAbstractDomainEventHandler {
 
 	private final AuthDomainService authDomainService;
 
 	public LoginEventHandler(DomainEventPublisher domainEventPublisher, AuthDomainService authDomainService,
-							 Tracer tracer) {
+			Tracer tracer) {
 		super(domainEventPublisher);
 		this.authDomainService = authDomainService;
 	}

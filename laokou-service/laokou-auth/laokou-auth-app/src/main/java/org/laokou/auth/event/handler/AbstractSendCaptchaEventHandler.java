@@ -43,7 +43,7 @@ public abstract class AbstractSendCaptchaEventHandler extends RocketMQAbstractDo
 		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
 		ApiLog apiLog = getApiLog(event);
 		CallApiEvent callApiEvent = new CallApiEvent(apiLog, LAOKOU_LOG_TOPIC, API_TAG, API, event.getServiceId(),
-			event.getSourceName(), event.getAggregateId());
+				event.getSourceName(), event.getAggregateId());
 		rocketMQDomainEventPublisher.publish(callApiEvent);
 	}
 

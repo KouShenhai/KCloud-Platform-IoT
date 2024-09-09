@@ -40,7 +40,7 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @Component
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
-	selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+		selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class SendMailCaptchaEventHandler extends AbstractSendCaptchaEventHandler {
 
 	private final MailService mailService;
@@ -48,7 +48,7 @@ public class SendMailCaptchaEventHandler extends AbstractSendCaptchaEventHandler
 	private final RedisUtil redisUtil;
 
 	public SendMailCaptchaEventHandler(DomainEventPublisher domainEventPublisher, MailService mailService,
-									   RedisUtil redisUtil) {
+			RedisUtil redisUtil) {
 		super(domainEventPublisher);
 		this.mailService = mailService;
 		this.redisUtil = redisUtil;

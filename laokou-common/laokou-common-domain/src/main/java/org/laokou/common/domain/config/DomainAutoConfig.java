@@ -36,9 +36,11 @@ import org.springframework.context.annotation.Bean;
 public class DomainAutoConfig {
 
 	@Bean(destroyMethod = "shutdown", initMethod = "start")
-	public Disruptor<DefaultDomainEvent> sharedDisruptor(DisruptorAbstractDomainEventHandler disruptorAbstractDomainEventHandler) {
+	public Disruptor<DefaultDomainEvent> sharedDisruptor(
+			DisruptorAbstractDomainEventHandler disruptorAbstractDomainEventHandler) {
 		// 创建一个可以容纳不同事件的Disruptor
-		Disruptor<DefaultDomainEvent> disruptor = new Disruptor<>(new DefaultDomainEventFactory(), 8096, Thread.ofVirtual().factory(), ProducerType.SINGLE, new YieldingWaitStrategy());
+		Disruptor<DefaultDomainEvent> disruptor = new Disruptor<>(new DefaultDomainEventFactory(), 8096,
+				Thread.ofVirtual().factory(), ProducerType.SINGLE, new YieldingWaitStrategy());
 		disruptor.handleEventsWith(disruptorAbstractDomainEventHandler);
 		return disruptor;
 	}
