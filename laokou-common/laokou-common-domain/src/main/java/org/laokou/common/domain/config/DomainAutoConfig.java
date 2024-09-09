@@ -23,7 +23,7 @@ import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 import org.laokou.common.domain.factory.DefaultDomainEventFactory;
 import org.laokou.common.domain.handler.DisruptorAbstractDomainEventHandler;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.laokou.common.i18n.dto.DefaultExtDomainEvent;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -36,17 +36,17 @@ import org.springframework.context.annotation.Bean;
 public class DomainAutoConfig {
 
 	@Bean(destroyMethod = "shutdown", initMethod = "start")
-	public Disruptor<DefaultDomainEvent> sharedDisruptor(
+	public Disruptor<DefaultExtDomainEvent> sharedDisruptor(
 			DisruptorAbstractDomainEventHandler disruptorAbstractDomainEventHandler) {
 		// 创建一个可以容纳不同事件的Disruptor
-		Disruptor<DefaultDomainEvent> disruptor = new Disruptor<>(new DefaultDomainEventFactory(), 8096,
+		Disruptor<DefaultExtDomainEvent> disruptor = new Disruptor<>(new DefaultDomainEventFactory(), 8096,
 				Thread.ofVirtual().factory(), ProducerType.SINGLE, new YieldingWaitStrategy());
 		disruptor.handleEventsWith(disruptorAbstractDomainEventHandler);
 		return disruptor;
 	}
 
 	@Bean
-	public RingBuffer<DefaultDomainEvent> ringBuffer(Disruptor<DefaultDomainEvent> sharedDisruptor) {
+	public RingBuffer<DefaultExtDomainEvent> ringBuffer(Disruptor<DefaultExtDomainEvent> sharedDisruptor) {
 		return sharedDisruptor.getRingBuffer();
 	}
 

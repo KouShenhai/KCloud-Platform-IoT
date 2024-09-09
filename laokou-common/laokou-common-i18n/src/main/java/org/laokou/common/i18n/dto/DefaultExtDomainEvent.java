@@ -15,16 +15,34 @@
  *
  */
 
-package org.laokou.common.domain.factory;
+package org.laokou.common.i18n.dto;
 
-import com.lmax.disruptor.EventFactory;
-import org.laokou.common.i18n.dto.DefaultExtDomainEvent;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class DefaultDomainEventFactory implements EventFactory<DefaultExtDomainEvent> {
+/**
+ * 默认扩展领域事件.
+ *
+ * @author laokou
+ */
+@Data
+@NoArgsConstructor
+public class DefaultExtDomainEvent extends DefaultDomainEvent {
 
-	@Override
-	public DefaultExtDomainEvent newInstance() {
-		return new DefaultExtDomainEvent();
+	/**
+	 * 领域类型.
+	 */
+	private DomainType domainType;
+
+	/**
+	 * 扩展属性.
+	 */
+	private String attribute;
+
+	public static enum DomainType {
+
+		ADMIN
+
 	}
 
 }
