@@ -8,7 +8,7 @@ import {history} from 'umi';
 import {LogoutOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
 import {logoutV3} from "@/services/auth/logoutsV3Controller";
-import {clearToken, getAccessToken} from "@/access";
+import {clearToken, getAccessToken, getExpiresTime, getRefreshToken} from "@/access";
 
 export async function getInitialState(): Promise<{
 	name: string;
@@ -135,8 +135,14 @@ export const request: {
 	requestInterceptors: [
 		(config: any) => {
 			const headers = config.headers ? config.headers : [];
-			// 刷新令牌
-			let accessToken = getAccessToken() || '';
+			const time = 5 * 60 * 1000;
+			const expiresTime = getExpiresTime();
+			const diffTime = expiresTime - new Date().getTime()
+			const refreshToken = getRefreshToken();
+			if (expiresTime && refreshToken && diffTime >= 0 && diffTime <= time) {
+				// 刷新令牌
+			}
+			const accessToken = getAccessToken() || '';
 			if (accessToken) {
 				headers['Authorization'] = `Bearer ${accessToken}`
 			}
