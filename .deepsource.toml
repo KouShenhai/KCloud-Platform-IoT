@@ -4,4 +4,4 @@ version = 1
 name = "java"
 
   [analyzers.meta]
-  runtime_version = "19"
+  runtime_version = "21"
