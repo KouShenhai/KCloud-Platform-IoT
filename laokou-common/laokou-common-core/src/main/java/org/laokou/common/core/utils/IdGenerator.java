@@ -345,7 +345,7 @@ public final class IdGenerator {
 			// System.currentTimeMillis() => 线程安全
 			ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(runnable -> {
 				Thread thread = new Thread(runnable, "system-clock-thread");
-				thread.setDaemon(true);
+				thread.setDaemon(false);
 				return thread;
 			});
 			scheduler.scheduleAtFixedRate(() -> now.set(System.currentTimeMillis()), period, period,
