@@ -36,7 +36,7 @@ import java.util.concurrent.Executors;
 @EnableAsync
 @AutoConfiguration
 @RequiredArgsConstructor
-public class TaskExecutorAutoConfig {
+public class TtlTaskExecutorAutoConfig {
 
 	/**
 	 * 线程池名称.
@@ -52,7 +52,7 @@ public class TaskExecutorAutoConfig {
 	public Executor executor(SpringTaskExecutionProperties springTaskExecutionProperties, Environment environment) {
 		if (environment.getProperty(THREADS_VIRTUAL_ENABLED, Boolean.class, false)) {
 			// 虚拟线程
-			return TtlExecutors.getTtlExecutorService(Executors.newVirtualThreadPerTaskExecutor());
+			return TtlExecutors.getTtlExecutorService(Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE));
 		}
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 		// 核心池大小
@@ -66,6 +66,8 @@ public class TaskExecutorAutoConfig {
 		executor.setAllowCoreThreadTimeOut(springTaskExecutionProperties.getPool().isAllowCoreThreadTimeout());
 		// 线程空闲时间
 		executor.setKeepAliveSeconds((int) springTaskExecutionProperties.getPool().getKeepAlive().toSeconds());
+		// 线程名称
+		executor.setThreadNamePrefix("ttl-task-");
 		// 初始化
 		executor.initialize();
 		return TtlExecutors.getTtlExecutorService(executor.getThreadPoolExecutor());

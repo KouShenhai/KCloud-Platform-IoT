@@ -58,14 +58,14 @@ public final class IdGenerator {
 	static {
 		try {
 			INSTANCE = new Snowflake(InetAddress.getLocalHost());
-		}
-		catch (UnknownHostException e) {
+		} catch (UnknownHostException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	/**
 	 * 默认雪花ID.
+	 *
 	 * @return long
 	 */
 	public static long defaultSnowflakeId() {
@@ -74,6 +74,7 @@ public final class IdGenerator {
 
 	/**
 	 * 雪花ID生成时间.
+	 *
 	 * @param snowflakeId 雪花ID
 	 * @return 时间
 	 */
@@ -162,14 +163,15 @@ public final class IdGenerator {
 
 		/**
 		 * 根据指定的数据中心ID和机器标志ID生成指定的序列号.
+		 *
 		 * @param dataCenterId 数据中心ID
-		 * @param machineId 机器标志ID
+		 * @param machineId    机器标志ID
 		 */
 		Snowflake(final long dataCenterId, final long machineId) {
 			Assert.isTrue(machineId <= MAX_MACHINE && machineId >= 0,
-					String.format("MachineId can't be greater than %s or less than 0", MAX_MACHINE));
+				String.format("MachineId can't be greater than %s or less than 0", MAX_MACHINE));
 			Assert.isTrue(dataCenterId <= MAX_DATACENTER && dataCenterId >= 0,
-					String.format("DtaCenterId can't be greater than %s or less than 0", MAX_DATACENTER));
+				String.format("DtaCenterId can't be greater than %s or less than 0", MAX_DATACENTER));
 			this.MACHINE_ID = machineId;
 			this.DATACENTER_ID = dataCenterId;
 		}
@@ -204,17 +206,15 @@ public final class IdGenerator {
 				NetworkInterface network = NetworkInterface.getByInetAddress(this.inetAddress);
 				if (ObjectUtil.isNull(network)) {
 					id = 1L;
-				}
-				else {
+				} else {
 					byte[] mac = network.getHardwareAddress();
 					if (null != mac) {
 						id = ((0x000000FF & (long) mac[mac.length - 2])
-								| (0x0000FF00 & (((long) mac[mac.length - 1]) << 8))) >> 6;
+							| (0x0000FF00 & (((long) mac[mac.length - 1]) << 8))) >> 6;
 						id = id % (Snowflake.MAX_DATACENTER + 1);
 					}
 				}
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				log.error("Error message：{}", e.getMessage(), e);
 			}
 			return id;
@@ -222,6 +222,7 @@ public final class IdGenerator {
 
 		/**
 		 * 最大机器标识ID.
+		 *
 		 * @param datacenterId 机器标识ID
 		 * @return 最大机器标识ID
 		 */
@@ -243,6 +244,7 @@ public final class IdGenerator {
 
 		/**
 		 * 生产雪花ID.
+		 *
 		 * @return 雪花ID
 		 */
 		public synchronized long nextId() {
@@ -259,12 +261,10 @@ public final class IdGenerator {
 							throw new RuntimeException(String
 								.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", offset));
 						}
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						throw new RuntimeException(e);
 					}
-				}
-				else {
+				} else {
 					throw new RuntimeException(String
 						.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", offset));
 				}
@@ -276,20 +276,19 @@ public final class IdGenerator {
 				if (sequence == 0L) {
 					currTimeStamp = getNextMill();
 				}
-			}
-			else {
+			} else {
 				// 不同毫秒内，序列号置为 1 - 2 随机数
 				sequence = ThreadLocalRandom.current().nextLong(1, 3);
 			}
 			lastTimeStamp = currTimeStamp;
 			// 时间戳部分
 			return (currTimeStamp - START_TIMESTAMP) << TIMESTAMP_LEFT
-					// 数据标识部分
-					| DATACENTER_ID << DATACENTER_LEFT
-					// 机器标识部分
-					| MACHINE_ID << MACHINE_LEFT
-					// 序列标识部分
-					| sequence;
+				// 数据标识部分
+				| DATACENTER_ID << DATACENTER_LEFT
+				// 机器标识部分
+				| MACHINE_ID << MACHINE_LEFT
+				// 序列标识部分
+				| sequence;
 		}
 
 	}
@@ -345,12 +344,12 @@ public final class IdGenerator {
 		private void scheduleClockUpdating() {
 			// System.currentTimeMillis() => 线程安全
 			ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(runnable -> {
-				Thread thread = new Thread(runnable, "System Clock");
+				Thread thread = new Thread(runnable, "system-clock-thread");
 				thread.setDaemon(true);
 				return thread;
 			});
 			scheduler.scheduleAtFixedRate(() -> now.set(System.currentTimeMillis()), period, period,
-					TimeUnit.MILLISECONDS);
+				TimeUnit.MILLISECONDS);
 		}
 
 		private long currentTimeMillis() {

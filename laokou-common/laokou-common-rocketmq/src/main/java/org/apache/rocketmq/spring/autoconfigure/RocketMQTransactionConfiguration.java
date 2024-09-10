@@ -41,6 +41,7 @@ import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQUtil;
 import org.jetbrains.annotations.NotNull;
+import org.laokou.common.core.config.TtlVirtualThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -59,7 +60,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.core.config.TaskExecutorAutoConfig.THREADS_VIRTUAL_ENABLED;
+import static org.laokou.common.core.config.TtlTaskExecutorAutoConfig.THREADS_VIRTUAL_ENABLED;
 
 /**
  * @author rocketmq
@@ -96,29 +97,28 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
 
 		if (!RocketMQLocalTransactionListener.class.isAssignableFrom(bean.getClass())) {
 			throw new IllegalStateException(
-					clazz + " is not instance of " + RocketMQLocalTransactionListener.class.getName());
+				clazz + " is not instance of " + RocketMQLocalTransactionListener.class.getName());
 		}
 		RocketMQTransactionListener annotation = clazz.getAnnotation(RocketMQTransactionListener.class);
 		RocketMQTemplate rocketMQTemplate = (RocketMQTemplate) applicationContext
 			.getBean(annotation.rocketMQTemplateBeanName());
 		if (((TransactionMQProducer) rocketMQTemplate.getProducer()).getTransactionListener() != null) {
 			throw new IllegalStateException(
-					annotation.rocketMQTemplateBeanName() + " already exists RocketMQLocalTransactionListener");
+				annotation.rocketMQTemplateBeanName() + " already exists RocketMQLocalTransactionListener");
 		}
 		if (environment.getProperty(THREADS_VIRTUAL_ENABLED, Boolean.class, false)) {
 			((TransactionMQProducer) rocketMQTemplate.getProducer())
-				.setExecutorService(Executors.newVirtualThreadPerTaskExecutor());
-		}
-		else {
+				.setExecutorService(Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE));
+		} else {
 			ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(annotation.corePoolSize(),
-					annotation.maximumPoolSize(), annotation.keepAliveTime(), annotation.keepAliveTimeUnit(),
-					new LinkedBlockingDeque<>(annotation.blockingQueueSize()));
+				annotation.maximumPoolSize(), annotation.keepAliveTime(), annotation.keepAliveTimeUnit(),
+				new LinkedBlockingDeque<>(annotation.blockingQueueSize()));
 			((TransactionMQProducer) rocketMQTemplate.getProducer()).setExecutorService(threadPoolExecutor);
 		}
 		((TransactionMQProducer) rocketMQTemplate.getProducer())
 			.setTransactionListener(RocketMQUtil.convert((RocketMQLocalTransactionListener) bean));
 		log.debug("RocketMQLocalTransactionListener {} register to {} success", clazz.getName(),
-				annotation.rocketMQTemplateBeanName());
+			annotation.rocketMQTemplateBeanName());
 	}
 
 }

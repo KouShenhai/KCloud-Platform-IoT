@@ -74,7 +74,7 @@ import org.springframework.core.env.Environment;
 import java.util.*;
 import java.util.concurrent.*;
 
-import static org.laokou.common.core.config.TaskExecutorAutoConfig.THREADS_VIRTUAL_ENABLED;
+import static org.laokou.common.core.config.TtlTaskExecutorAutoConfig.THREADS_VIRTUAL_ENABLED;
 
 /**
  * @author rocketmq
@@ -101,7 +101,7 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 	private final ScheduledExecutorService cleanExpireMsgExecutors;
 
 	public ConsumeMessageConcurrentlyService(DefaultMQPushConsumerImpl defaultMQPushConsumerImpl,
-			MessageListenerConcurrently messageListener) {
+											 MessageListenerConcurrently messageListener) {
 		this.defaultMQPushConsumerImpl = defaultMQPushConsumerImpl;
 		this.messageListener = messageListener;
 
@@ -110,41 +110,39 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 		this.consumeRequestQueue = new LinkedBlockingQueue<>();
 
 		String consumerGroupTag = (consumerGroup.length() > 100 ? consumerGroup.substring(0, 100) : consumerGroup)
-				+ "_";
+			+ "_";
 
 		Environment environment = SpringContextUtil.getBean(Environment.class);
 		if (environment.getProperty(THREADS_VIRTUAL_ENABLED, Boolean.class, false)) {
 			this.consumeExecutor = new ThreadPoolExecutor(0, // corePoolSize:
-																// 0，因为不需要保留核心线程
-					Integer.MAX_VALUE, // maximumPoolSize: 无限制，允许任意数量的虚拟线程
-					60L, // keepAliveTime: 虚拟线程不需要保持存活时间
-					TimeUnit.SECONDS, // 时间单位
-					new SynchronousQueue<>(), // 使用SynchronousQueue以确保每个任务都会创建一个新线程
-					Thread.ofVirtual().factory() // 使用虚拟线程工厂
+				// 0，因为不需要保留核心线程
+				Integer.MAX_VALUE, // maximumPoolSize: 无限制，允许任意数量的虚拟线程
+				60L, // keepAliveTime: 虚拟线程不需要保持存活时间
+				TimeUnit.SECONDS, // 时间单位
+				new SynchronousQueue<>(), // 使用SynchronousQueue以确保每个任务都会创建一个新线程
+				Thread.ofVirtual().factory() // 使用虚拟线程工厂
 			);
-		}
-		else {
+		} else {
 			this.consumeExecutor = new ThreadPoolExecutor(this.defaultMQPushConsumer.getConsumeThreadMin(),
-					this.defaultMQPushConsumer.getConsumeThreadMax(), 1000 * 60, TimeUnit.MILLISECONDS,
-					this.consumeRequestQueue, new ThreadFactoryImpl("ConsumeMessageThread_" + consumerGroupTag));
+				this.defaultMQPushConsumer.getConsumeThreadMax(), 1000 * 60, TimeUnit.MILLISECONDS,
+				this.consumeRequestQueue, new ThreadFactoryImpl("ConsumeMessageThread_" + consumerGroupTag));
 		}
 
 		this.scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(
-				new ThreadFactoryImpl("ConsumeMessageScheduledThread_" + consumerGroupTag));
+			new ThreadFactoryImpl("ConsumeMessageScheduledThread_" + consumerGroupTag));
 		this.cleanExpireMsgExecutors = Executors.newSingleThreadScheduledExecutor(
-				new ThreadFactoryImpl("CleanExpireMsgScheduledThread_" + consumerGroupTag));
+			new ThreadFactoryImpl("CleanExpireMsgScheduledThread_" + consumerGroupTag));
 	}
 
 	public void start() {
 		this.cleanExpireMsgExecutors.scheduleAtFixedRate(() -> {
-			try {
-				cleanExpireMsg();
-			}
-			catch (Throwable e) {
-				log.error("scheduleAtFixedRate cleanExpireMsg exception", e);
-			}
-		}, this.defaultMQPushConsumer.getConsumeTimeout(), this.defaultMQPushConsumer.getConsumeTimeout(),
-				TimeUnit.MINUTES);
+				try {
+					cleanExpireMsg();
+				} catch (Throwable e) {
+					log.error("scheduleAtFixedRate cleanExpireMsg exception", e);
+				}
+			}, this.defaultMQPushConsumer.getConsumeTimeout(), this.defaultMQPushConsumer.getConsumeTimeout(),
+			TimeUnit.MINUTES);
 	}
 
 	public void shutdown(long awaitTerminateMillis) {
@@ -156,7 +154,7 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 	@Override
 	public void updateCorePoolSize(int corePoolSize) {
 		if (corePoolSize > 0 && corePoolSize <= Short.MAX_VALUE
-				&& corePoolSize < this.defaultMQPushConsumer.getConsumeThreadMax()) {
+			&& corePoolSize < this.defaultMQPushConsumer.getConsumeThreadMax()) {
 			this.consumeExecutor.setCorePoolSize(corePoolSize);
 		}
 	}
@@ -211,17 +209,15 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 					default:
 						break;
 				}
-			}
-			else {
+			} else {
 				result.setConsumeResult(CMResult.CR_RETURN_NULL);
 			}
-		}
-		catch (Throwable e) {
+		} catch (Throwable e) {
 			result.setConsumeResult(CMResult.CR_THROW_EXCEPTION);
 			result.setRemark(UtilAll.exceptionSimpleDesc(e));
 
 			log.warn("consumeMessageDirectly exception: {} Group: {} Msgs: {} MQ: {}", UtilAll.exceptionSimpleDesc(e),
-					ConsumeMessageConcurrentlyService.this.consumerGroup, msgs, mq, e);
+				ConsumeMessageConcurrentlyService.this.consumerGroup, msgs, mq, e);
 		}
 
 		result.setSpentTimeMills(System.currentTimeMillis() - beginTime);
@@ -233,25 +229,22 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 
 	@Override
 	public void submitConsumeRequest(final List<MessageExt> msgs, final ProcessQueue processQueue,
-			final MessageQueue messageQueue, final boolean dispatchToConsume) {
+									 final MessageQueue messageQueue, final boolean dispatchToConsume) {
 		final int consumeBatchSize = this.defaultMQPushConsumer.getConsumeMessageBatchMaxSize();
 		if (msgs.size() <= consumeBatchSize) {
 			ConsumeRequest consumeRequest = new ConsumeRequest(msgs, processQueue, messageQueue);
 			try {
 				this.consumeExecutor.submit(consumeRequest);
-			}
-			catch (RejectedExecutionException e) {
+			} catch (RejectedExecutionException e) {
 				this.submitConsumeRequestLater(consumeRequest);
 			}
-		}
-		else {
-			for (int total = 0; total < msgs.size();) {
+		} else {
+			for (int total = 0; total < msgs.size(); ) {
 				List<MessageExt> msgThis = new ArrayList<>(consumeBatchSize);
 				for (int i = 0; i < consumeBatchSize; i++, total++) {
 					if (total < msgs.size()) {
 						msgThis.add(msgs.get(total));
-					}
-					else {
+					} else {
 						break;
 					}
 				}
@@ -259,8 +252,7 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 				ConsumeRequest consumeRequest = new ConsumeRequest(msgThis, processQueue, messageQueue);
 				try {
 					this.consumeExecutor.submit(consumeRequest);
-				}
-				catch (RejectedExecutionException e) {
+				} catch (RejectedExecutionException e) {
 					for (; total < msgs.size(); total++) {
 						msgThis.add(msgs.get(total));
 					}
@@ -273,7 +265,7 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 
 	@Override
 	public void submitPopConsumeRequest(final List<MessageExt> msgs, final PopProcessQueue processQueue,
-			final MessageQueue messageQueue) {
+										final MessageQueue messageQueue) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -290,7 +282,7 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 	}
 
 	public void processConsumeResult(final ConsumeConcurrentlyStatus status, final ConsumeConcurrentlyContext context,
-			final ConsumeRequest consumeRequest) {
+									 final ConsumeRequest consumeRequest) {
 		int ackIndex = context.getAckIndex();
 
 		if (consumeRequest.getMsgs().isEmpty())
@@ -312,7 +304,7 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 				ackIndex = -1;
 				this.getConsumerStatsManager()
 					.incConsumeFailedTPS(consumerGroup, consumeRequest.getMessageQueue().getTopic(),
-							consumeRequest.getMsgs().size());
+						consumeRequest.getMsgs().size());
 				break;
 			default:
 				break;
@@ -332,9 +324,9 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 					// Maybe message is expired and cleaned, just ignore it.
 					if (!consumeRequest.getProcessQueue().containsMessage(msg)) {
 						log.info(
-								"Message is not found in its process queue; skip send-back-procedure, topic={}, "
-										+ "brokerName={}, queueId={}, queueOffset={}",
-								msg.getTopic(), msg.getBrokerName(), msg.getQueueId(), msg.getQueueOffset());
+							"Message is not found in its process queue; skip send-back-procedure, topic={}, "
+								+ "brokerName={}, queueId={}, queueOffset={}",
+							msg.getTopic(), msg.getBrokerName(), msg.getQueueId(), msg.getQueueOffset());
 						continue;
 					}
 					boolean result = this.sendMessageBack(msg, context);
@@ -348,7 +340,7 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 					consumeRequest.getMsgs().removeAll(msgBackFailed);
 
 					this.submitConsumeRequestLater(msgBackFailed, consumeRequest.getProcessQueue(),
-							consumeRequest.getMessageQueue());
+						consumeRequest.getMessageQueue());
 				}
 				break;
 			default:
@@ -373,10 +365,9 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 		msg.setTopic(this.defaultMQPushConsumer.withNamespace(msg.getTopic()));
 		try {
 			this.defaultMQPushConsumerImpl.sendMessageBack(msg, delayLevel,
-					this.defaultMQPushConsumer.queueWithNamespace(context.getMessageQueue()));
+				this.defaultMQPushConsumer.queueWithNamespace(context.getMessageQueue()));
 			return true;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("sendMessageBack exception, group: " + this.consumerGroup + " msg: " + msg, e);
 		}
 
@@ -384,7 +375,7 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 	}
 
 	private void submitConsumeRequestLater(final List<MessageExt> msgs, final ProcessQueue processQueue,
-			final MessageQueue messageQueue) {
+										   final MessageQueue messageQueue) {
 
 		this.scheduledExecutorService.schedule(new Runnable() {
 
@@ -432,7 +423,7 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 		public void run() {
 			if (this.processQueue.isDropped()) {
 				log.info("the message queue not be able to consume, because it's dropped. group={} {}",
-						ConsumeMessageConcurrentlyService.this.consumerGroup, this.messageQueue);
+					ConsumeMessageConcurrentlyService.this.consumerGroup, this.messageQueue);
 				return;
 			}
 
@@ -465,28 +456,23 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 					}
 				}
 				status = listener.consumeMessage(Collections.unmodifiableList(msgs), context);
-			}
-			catch (Throwable e) {
+			} catch (Throwable e) {
 				log.warn("consumeMessage exception: {} Group: {} Msgs: {} MQ: {}", UtilAll.exceptionSimpleDesc(e),
-						ConsumeMessageConcurrentlyService.this.consumerGroup, msgs, messageQueue, e);
+					ConsumeMessageConcurrentlyService.this.consumerGroup, msgs, messageQueue, e);
 				hasException = true;
 			}
 			long consumeRT = System.currentTimeMillis() - beginTimestamp;
 			if (null == status) {
 				if (hasException) {
 					returnType = ConsumeReturnType.EXCEPTION;
-				}
-				else {
+				} else {
 					returnType = ConsumeReturnType.RETURNNULL;
 				}
-			}
-			else if (consumeRT >= defaultMQPushConsumer.getConsumeTimeout() * 60 * 1000) {
+			} else if (consumeRT >= defaultMQPushConsumer.getConsumeTimeout() * 60 * 1000) {
 				returnType = ConsumeReturnType.TIME_OUT;
-			}
-			else if (ConsumeConcurrentlyStatus.RECONSUME_LATER == status) {
+			} else if (ConsumeConcurrentlyStatus.RECONSUME_LATER == status) {
 				returnType = ConsumeReturnType.FAILED;
-			}
-			else if (ConsumeConcurrentlyStatus.CONSUME_SUCCESS == status) {
+			} else if (ConsumeConcurrentlyStatus.CONSUME_SUCCESS == status) {
 				returnType = ConsumeReturnType.SUCCESS;
 			}
 
@@ -496,7 +482,7 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 
 			if (null == status) {
 				log.warn("consumeMessage return null, Group: {} Msgs: {} MQ: {}",
-						ConsumeMessageConcurrentlyService.this.consumerGroup, msgs, messageQueue);
+					ConsumeMessageConcurrentlyService.this.consumerGroup, msgs, messageQueue);
 				status = ConsumeConcurrentlyStatus.RECONSUME_LATER;
 			}
 
@@ -513,10 +499,9 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 
 			if (!processQueue.isDropped()) {
 				ConsumeMessageConcurrentlyService.this.processConsumeResult(status, context, this);
-			}
-			else {
+			} else {
 				log.warn("processQueue is dropped without process consume result. messageQueue={}, msgs={}",
-						messageQueue, msgs);
+					messageQueue, msgs);
 			}
 		}
 

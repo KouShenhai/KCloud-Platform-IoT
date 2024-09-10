@@ -15,20 +15,27 @@
  *
  */
 
-package org.laokou.common.core.annotation;
+package org.laokou.common.core.config;
 
-import org.laokou.common.core.config.TtlTaskExecutorAutoConfig;
-import org.springframework.context.annotation.Import;
 
-import java.lang.annotation.*;
+import org.springframework.lang.NonNull;
+
+import java.util.concurrent.ThreadFactory;
 
 /**
- * @author laokou
+ * 自定义线程工厂【虚拟】.
  */
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import(TtlTaskExecutorAutoConfig.class)
-public @interface EnableTaskExecutor {
+public final class TtlVirtualThreadFactory implements ThreadFactory {
+
+	public static final TtlVirtualThreadFactory INSTANCE = new TtlVirtualThreadFactory();
+
+	@Override
+	public Thread newThread(@NonNull Runnable r) {
+		Thread.Builder.OfVirtual ofVirtualBuilder = Thread.ofVirtual();
+		if (r instanceof Thread thread) {
+			ofVirtualBuilder.name("ttl-virtual-task-".concat(thread.getName()));
+		}
+		return ofVirtualBuilder.inheritInheritableThreadLocals(true).unstarted(r);
+	}
 
 }
