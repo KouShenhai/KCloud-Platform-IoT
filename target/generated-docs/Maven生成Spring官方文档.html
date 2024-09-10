@@ -1,76 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta content="IE=edge" http-equiv="X-UA-Compatible">
-	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<meta content="Asciidoctor 2.0.20" name="generator">
-	<title>Maven生成Spring官方文档</title>
-	<link href="css/site.css" rel="stylesheet">
-	<script src="js/setup.js"></script>
-	<script defer src="js/site.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.20">
+<title>Maven生成Spring官方文档</title>
+<link rel="stylesheet" href="css/site.css">
+<script src="js/setup.js"></script><script defer src="js/site.js"></script>
 
 </head>
-<body class="article">
-<div class="container" id="banner-container" role="banner">
-	<div class="contained" id="banner" role="banner">
-		<div id="switch-theme">
-			<input id="switch-theme-checkbox" type="checkbox"/>
-			<label for="switch-theme-checkbox">Dark Theme</label>
-		</div>
-	</div>
+<body class="article"><div id="banner-container" class="container" role="banner">
+  <div id="banner" class="contained" role="banner">
+    <div id="switch-theme">
+      <input type="checkbox" id="switch-theme-checkbox" />
+      <label for="switch-theme-checkbox">Dark Theme</label>
+    </div>
+  </div>
 </div>
-<div class="container" id="tocbar-container" role="navigation">
-	<div class="contained" id="tocbar" role="navigation">
-		<button id="toggle-toc"></button>
-	</div>
+<div id="tocbar-container" class="container" role="navigation">
+  <div id="tocbar" class="contained" role="navigation">
+    <button id="toggle-toc"></button>
+  </div>
 </div>
-<div class="container" id="main-container">
-	<div class="contained" id="main">
-		<div class="doc" id="doc">
-			<div id="header">
-				<h1>Maven生成Spring官方文档</h1>
-				<div class="toc" id="toc">
-					<div id="toctitle">Table of Contents</div>
-					<span id="back-to-index"><a href="index.html">Back to index</a></span>
-					<ul class="sectlevel1">
-						<li><a href="#_介绍">介绍</a></li>
-						<li><a href="#_html文档生成">HTML文档生成</a>
-							<ul class="sectlevel2">
-								<li><a href="#_导入依赖">导入依赖</a></li>
-								<li><a href="#_创建目录">创建目录</a></li>
-								<li><a href="#_编写asciidoc">编写AsciiDoc</a></li>
-								<li><a href="#_执行命令">执行命令</a></li>
-							</ul>
-						</li>
-						<li><a href="#_带目录的html页面生成">带目录的HTML页面生成</a>
-							<ul class="sectlevel2">
-								<li><a href="#_创建首页">创建首页</a></li>
-								<li><a href="#_执行命令_2">执行命令</a></li>
-								<li><a href="#_查看页面">查看页面</a></li>
-							</ul>
-						</li>
-						<li><a href="#_替换logo">替换logo</a></li>
-						<li><a href="#_源码地址">源码地址</a></li>
-					</ul>
-				</div>
-			</div>
-			<div id="content">
-				<div class="sect1">
-					<h2 id="_介绍"><a class="anchor" href="#_介绍"></a>介绍</h2>
-					<div class="sectionbody">
-						<div class="paragraph">
-							<p>通过该插件可以将 <code>Asciidoctor</code> 转换成 <code>Spring</code> 风格的HTML页面</p>
-						</div>
-					</div>
-				</div>
-				<div class="sect1">
-					<h2 id="_html文档生成"><a class="anchor" href="#_html文档生成"></a>HTML文档生成</h2>
-					<div class="sectionbody">
-						<div class="sect2">
-							<h3 id="_导入依赖"><a class="anchor" href="#_导入依赖"></a>导入依赖</h3>
-							<div class="listingblock">
-								<div class="content">
+<div id="main-container" class="container">
+  <div id="main" class="contained">
+    <div id="doc" class="doc">
+<div id="header">
+<h1>Maven生成Spring官方文档</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<span id="back-to-index"><a href="index.html">Back to index</a></span><ul class="sectlevel1">
+<li><a href="#_介绍">介绍</a></li>
+<li><a href="#_html文档生成">HTML文档生成</a>
+<ul class="sectlevel2">
+<li><a href="#_导入依赖">导入依赖</a></li>
+<li><a href="#_创建目录">创建目录</a></li>
+<li><a href="#_编写asciidoc">编写AsciiDoc</a></li>
+<li><a href="#_执行命令">执行命令</a></li>
+</ul>
+</li>
+<li><a href="#_带目录的html页面生成">带目录的HTML页面生成</a>
+<ul class="sectlevel2">
+<li><a href="#_创建首页">创建首页</a></li>
+<li><a href="#_执行命令_2">执行命令</a></li>
+<li><a href="#_查看页面">查看页面</a></li>
+</ul>
+</li>
+<li><a href="#_替换logo">替换logo</a></li>
+<li><a href="#_源码地址">源码地址</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_介绍"><a class="anchor" href="#_介绍"></a>介绍</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>通过该插件可以将 <code>Asciidoctor</code> 转换成 <code>Spring</code> 风格的HTML页面</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_html文档生成"><a class="anchor" href="#_html文档生成"></a>HTML文档生成</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_导入依赖"><a class="anchor" href="#_导入依赖"></a>导入依赖</h3>
+<div class="listingblock">
+<div class="content">
 <pre class="highlight nowrap"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
 	&lt;groupId&gt;org.asciidoctor&lt;/groupId&gt;
 	&lt;artifactId&gt;asciidoctor-maven-plugin&lt;/artifactId&gt;
@@ -95,125 +92,114 @@
 		&lt;/dependency&gt;
 	&lt;/dependencies&gt;
 &lt;/plugin&gt;</code></pre>
-								</div>
-							</div>
-						</div>
-						<div class="sect2">
-							<h3 id="_创建目录"><a class="anchor" href="#_创建目录"></a>创建目录</h3>
-							<div class="paragraph">
-								<p>使用 <a href="https://github.com/asciidoctor/asciidoctor-maven-plugin">Asciidoctor
-									Maven</a> 插件来生成文档</p>
-							</div>
-							<div class="paragraph">
-								<p><code>AsciiDoc</code> 源代码默认放在 <code>src/docs/asciidoc</code></p>
-							</div>
-							<div class="paragraph">
-								<p>因此，需要我们创建目录 <code>src/docs/asciidoc</code></p>
-							</div>
-							<div class="paragraph">
-								<p><span class="image"><img alt="目录" height="150" src="image/tools/img.png"
-															width="150"></span></p>
-							</div>
-						</div>
-						<div class="sect2">
-							<h3 id="_编写asciidoc"><a class="anchor" href="#_编写asciidoc"></a>编写AsciiDoc</h3>
-							<div class="paragraph">
-								<p>在 <code>src/docs/asciidoc</code> 新建文档 <code>test.adoc</code> 文档里面随便写一段话
-								</p>
-							</div>
-						</div>
-						<div class="sect2">
-							<h3 id="_执行命令"><a class="anchor" href="#_执行命令"></a>执行命令</h3>
-							<div class="paragraph">
-								<p>在 <code>根目录</code> 执行命令 <code>mvn prepare-package</code> 转换成
-									<code>HTML</code> 页面</p>
-							</div>
-							<div class="paragraph">
-								<p>默认生成位置为 <code>根目录/target</code></p>
-							</div>
-							<div class="paragraph">
-								<p>找到 <code>test.html</code> 并打开</p>
-							</div>
-							<div class="paragraph">
-								<p><span class="image"><img alt="test.html" height="100" src="image/tools/img_1.png"
-															width="600"></span></p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="sect1">
-					<h2 id="_带目录的html页面生成"><a class="anchor" href="#_带目录的html页面生成"></a>带目录的HTML页面生成
-					</h2>
-					<div class="sectionbody">
-						<div class="sect2">
-							<h3 id="_创建首页"><a class="anchor" href="#_创建首页"></a>创建首页</h3>
-							<div class="paragraph">
-								<p>在 <code>src/docs/asciidoc</code> 新建 <code>index.adoc</code> 文档里面填写如下内容
-								</p>
-							</div>
-							<div class="paragraph">
-								<p><span class="image"><img alt="index.html" height="100" src="image/tools/img_2.png"
-															width="500"></span></p>
-							</div>
-							<div class="paragraph">
-								<p><a href="Asciidoctor使用指南.html">请查看Asciidoctor语法</a></p>
-							</div>
-						</div>
-						<div class="sect2">
-							<h3 id="_执行命令_2"><a class="anchor" href="#_执行命令_2"></a>执行命令</h3>
-							<div class="paragraph">
-								<p>略，同上文</p>
-							</div>
-						</div>
-						<div class="sect2">
-							<h3 id="_查看页面"><a class="anchor" href="#_查看页面"></a>查看页面</h3>
-							<div class="paragraph">
-								<p>找到 <code>index.html</code> 打开</p>
-							</div>
-							<div class="paragraph">
-								<p><span class="image"><img alt="查看首页" height="100" src="image/tools/img_3.gif"
-															width="300"></span></p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="sect1">
-					<h2 id="_替换logo"><a class="anchor" href="#_替换logo"></a>替换logo</h2>
-					<div class="sectionbody">
-						<div class="openblock">
-							<div class="content">
-								<div class="literalblock">
-									<div class="content">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_创建目录"><a class="anchor" href="#_创建目录"></a>创建目录</h3>
+<div class="paragraph">
+<p>使用 <a href="https://github.com/asciidoctor/asciidoctor-maven-plugin">Asciidoctor Maven</a> 插件来生成文档</p>
+</div>
+<div class="paragraph">
+<p><code>AsciiDoc</code> 源代码默认放在 <code>src/docs/asciidoc</code></p>
+</div>
+<div class="paragraph">
+<p>因此，需要我们创建目录 <code>src/docs/asciidoc</code></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="image/tools/img.png" alt="目录" width="150" height="150"></span></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_编写asciidoc"><a class="anchor" href="#_编写asciidoc"></a>编写AsciiDoc</h3>
+<div class="paragraph">
+<p>在 <code>src/docs/asciidoc</code> 新建文档 <code>test.adoc</code> 文档里面随便写一段话</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_执行命令"><a class="anchor" href="#_执行命令"></a>执行命令</h3>
+<div class="paragraph">
+<p>在 <code>根目录</code> 执行命令 <code>mvn prepare-package</code> 转换成 <code>HTML</code> 页面</p>
+</div>
+<div class="paragraph">
+<p>默认生成位置为 <code>根目录/target</code></p>
+</div>
+<div class="paragraph">
+<p>找到 <code>test.html</code> 并打开</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="image/tools/img_1.png" alt="test.html" width="600" height="100"></span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_带目录的html页面生成"><a class="anchor" href="#_带目录的html页面生成"></a>带目录的HTML页面生成</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_创建首页"><a class="anchor" href="#_创建首页"></a>创建首页</h3>
+<div class="paragraph">
+<p>在 <code>src/docs/asciidoc</code> 新建 <code>index.adoc</code> 文档里面填写如下内容</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="image/tools/img_2.png" alt="index.html" width="500" height="100"></span></p>
+</div>
+<div class="paragraph">
+<p><a href="Asciidoctor使用指南.html">请查看Asciidoctor语法</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_执行命令_2"><a class="anchor" href="#_执行命令_2"></a>执行命令</h3>
+<div class="paragraph">
+<p>略，同上文</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_查看页面"><a class="anchor" href="#_查看页面"></a>查看页面</h3>
+<div class="paragraph">
+<p>找到 <code>index.html</code> 打开</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="image/tools/img_3.gif" alt="查看首页" width="300" height="100"></span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_替换logo"><a class="anchor" href="#_替换logo"></a>替换logo</h2>
+<div class="sectionbody">
+<div class="openblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
 <pre>替换logo，我提供两种思路：
 1.修改maven plugin源码，修改完之后打包并替换掉之前的插件
 2.直接修改生成的HTML页面样式[本文采用这种方式]</pre>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="paragraph">
-							<p><span class="image"><img alt="替换logo" height="100" src="image/tools/img_4.gif"
-														width="400"></span></p>
-						</div>
-					</div>
-				</div>
-				<div class="sect1">
-					<h2 id="_源码地址"><a class="anchor" href="#_源码地址"></a>源码地址</h2>
-					<div class="sectionbody">
-						<div class="paragraph">
-							<p><a href="https://github.com/KouShenhai/KCloud-Platform-IoT/blob/master/pom.xml">本项目已集成，直接使用即可</a>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div id="footer">
-				<div id="footer-text">
-					Last updated 2024-07-14 22:09:23 +0800
-				</div>
-			</div>
-		</div>
-	</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="image/tools/img_4.gif" alt="替换logo" width="400" height="100"></span></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_源码地址"><a class="anchor" href="#_源码地址"></a>源码地址</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://github.com/KouShenhai/KCloud-Platform-IoT/blob/master/pom.xml">本项目已集成，直接使用即可</a></p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2024-07-15 09:22:56 +0800
+</div>
+</div>
+</div>
+  </div>
 </div>
 </body>
 </html>
