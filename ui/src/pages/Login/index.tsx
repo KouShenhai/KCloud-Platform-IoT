@@ -22,7 +22,7 @@ import {JSEncrypt} from 'jsencrypt';
 import {v7 as uuidV7} from 'uuid';
 import {getTenantIdByDomainNameV3, listTenantOptionV3} from "@/services/auth/tenantsV3Controller";
 import {ProFormInstance, ProFormSelect} from "@ant-design/pro-form/lib";
-import {setToken} from "@/access";
+import {clearToken, setToken} from "@/access";
 
 type LoginType = 'usernamePassword' | 'mobile' | 'mail';
 
@@ -180,6 +180,7 @@ export default () => {
 			.then((res) => {
 				if (res.code === 'OK') {
 					// 登录成功【59分钟后自动刷新令牌】
+					clearToken()
 					setToken(res.data?.access_token, res.data?.refresh_token, new Date().getTime() + 59 * 60 * 1000)
 					// 跳转路由
 					const urlParams = new URL(window.location.href).searchParams;
