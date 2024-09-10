@@ -8,6 +8,7 @@ import {history} from 'umi';
 import {LogoutOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
 import {logoutV3} from "@/services/auth/logoutsV3Controller";
+import {clearToken, getAccessToken} from "@/access";
 
 export async function getInitialState(): Promise<{
 	name: string;
@@ -47,10 +48,9 @@ export const layout = () => {
 									icon: <LogoutOutlined/>,
 									label: '注销',
 									onClick: async () => {
-										const token = localStorage.getItem('access_token')
 										// @ts-ignore
-										logoutV3({token: token}).then(() => {
-											localStorage.removeItem('access_token')
+										logoutV3({token: getAccessToken()}).then(() => {
+											clearToken()
 											history.push('/login')
 										})
 									},
@@ -134,9 +134,11 @@ export const request: {
 	// 请求拦截
 	requestInterceptors: [
 		(config: any) => {
-			let token = localStorage.getItem('token') || '';
-			if (token) {
-				config.headers.Authorization = `Bearer ${token}`
+			const headers = config.headers ? config.headers : [];
+			// 刷新令牌
+			let accessToken = getAccessToken() || '';
+			if (accessToken) {
+				headers['Authorization'] = `Bearer ${accessToken}`
 			}
 			return config;
 		},

@@ -16,7 +16,7 @@ export default {
 			target: 'https://gateway:5555',
 			changeOrigin: true,
 			secure: false,
-			pathRewrite: {'^/api': ''},
+			pathRewrite: {'^/api': ''}
 		},
 	},
 };
