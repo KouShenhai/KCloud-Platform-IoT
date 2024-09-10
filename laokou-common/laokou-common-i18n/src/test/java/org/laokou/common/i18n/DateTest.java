@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @author laokou
  */
-public class DateTest {
+class DateTest {
 
 	@Test
 	void test_yyyy_rod_mm_rod_dd_space_hh_risk_hh_risk_ss() {

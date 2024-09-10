@@ -27,7 +27,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author laokou
  */
-public class CryptoTest {
+class CryptoTest {
 
 	private static final String USERNAME = "laokou";
 
@@ -40,9 +40,9 @@ public class CryptoTest {
 		String decryptUsername = RSAUtil.decryptByPrivateKey(encryptUsername);
 		String decryptPassword = RSAUtil.decryptByPrivateKey(encryptPassword);
 		Assertions.assertArrayEquals(decryptUsername.getBytes(StandardCharsets.UTF_8),
-				USERNAME.getBytes(StandardCharsets.UTF_8));
+			USERNAME.getBytes(StandardCharsets.UTF_8));
 		Assertions.assertArrayEquals(decryptPassword.getBytes(StandardCharsets.UTF_8),
-				PASSWORD.getBytes(StandardCharsets.UTF_8));
+			PASSWORD.getBytes(StandardCharsets.UTF_8));
 	}
 
 	@Test
@@ -50,7 +50,7 @@ public class CryptoTest {
 		String encryptUsername = AESUtil.encrypt(USERNAME);
 		String decryptUsername = AESUtil.decrypt(encryptUsername);
 		Assertions.assertArrayEquals(decryptUsername.getBytes(StandardCharsets.UTF_8),
-				USERNAME.getBytes(StandardCharsets.UTF_8));
+			USERNAME.getBytes(StandardCharsets.UTF_8));
 	}
 
 }

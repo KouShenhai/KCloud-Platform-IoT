@@ -26,7 +26,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author laokou
  */
-public class Base64Test {
+class Base64Test {
 
 	@Test
 	void testBase64() {
