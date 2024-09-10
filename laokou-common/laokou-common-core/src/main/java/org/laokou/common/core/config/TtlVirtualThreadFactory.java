@@ -24,6 +24,8 @@ import java.util.concurrent.ThreadFactory;
 
 /**
  * 自定义线程工厂【虚拟】.
+ *
+ * @author laokou
  */
 public final class TtlVirtualThreadFactory implements ThreadFactory {
 
