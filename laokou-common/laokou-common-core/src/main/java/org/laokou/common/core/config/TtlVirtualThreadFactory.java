@@ -17,7 +17,6 @@
 
 package org.laokou.common.core.config;
 
-
 import org.springframework.lang.NonNull;
 
 import java.util.concurrent.ThreadFactory;

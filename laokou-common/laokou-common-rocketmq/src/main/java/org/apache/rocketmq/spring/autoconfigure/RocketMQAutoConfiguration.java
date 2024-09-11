@@ -79,13 +79,13 @@ import static org.laokou.common.core.config.TtlTaskExecutorAutoConfig.THREADS_VI
 @NonNullApi
 @Configuration
 @EnableConfigurationProperties(RocketMQProperties.class)
-@ConditionalOnClass({MQAdmin.class})
+@ConditionalOnClass({ MQAdmin.class })
 @ConditionalOnProperty(prefix = "rocketmq", value = "name-server", matchIfMissing = true)
-@Import({MessageConverterConfiguration.class, ListenerContainerConfiguration.class,
-	ExtProducerResetConfiguration.class, ExtConsumerResetConfiguration.class,
-	RocketMQTransactionConfiguration.class, RocketMQListenerConfiguration.class})
-@AutoConfigureAfter({MessageConverterConfiguration.class})
-@AutoConfigureBefore({RocketMQTransactionConfiguration.class})
+@Import({ MessageConverterConfiguration.class, ListenerContainerConfiguration.class,
+		ExtProducerResetConfiguration.class, ExtConsumerResetConfiguration.class,
+		RocketMQTransactionConfiguration.class, RocketMQListenerConfiguration.class })
+@AutoConfigureAfter({ MessageConverterConfiguration.class })
+@AutoConfigureBefore({ RocketMQTransactionConfiguration.class })
 public class RocketMQAutoConfiguration implements ApplicationContextAware {
 
 	public static final String ROCKETMQ_TEMPLATE_DEFAULT_GLOBAL_NAME = "rocketMQTemplate";
@@ -115,13 +115,13 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 		log.debug("rocketmq.nameServer = {}", nameServer);
 		if (nameServer == null) {
 			log.warn(
-				"The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!");
+					"The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!");
 		}
 	}
 
 	@Bean(PRODUCER_BEAN_NAME)
 	@ConditionalOnMissingBean(DefaultMQProducer.class)
-	@ConditionalOnProperty(prefix = "rocketmq", value = {"name-server", "producer.group"})
+	@ConditionalOnProperty(prefix = "rocketmq", value = { "name-server", "producer.group" })
 	public DefaultMQProducer defaultMQProducer(RocketMQProperties rocketMQProperties) {
 		RocketMQProperties.Producer producerConfig = rocketMQProperties.getProducer();
 		String nameServer = rocketMQProperties.getNameServer();
@@ -137,7 +137,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 		String customizedTraceTopic = rocketMQProperties.getProducer().getCustomizedTraceTopic();
 
 		DefaultMQProducer producer = RocketMQUtil.createDefaultMQProducer(groupName, ak, sk, isEnableMsgTrace,
-			customizedTraceTopic);
+				customizedTraceTopic);
 
 		producer.setNamesrvAddr(nameServer);
 		if (StringUtils.hasLength(accessChannel)) {
@@ -163,9 +163,9 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 
 	@Bean(CONSUMER_BEAN_NAME)
 	@ConditionalOnMissingBean(DefaultLitePullConsumer.class)
-	@ConditionalOnProperty(prefix = "rocketmq", value = {"name-server", "pull-consumer.group", "pull-consumer.topic"})
+	@ConditionalOnProperty(prefix = "rocketmq", value = { "name-server", "pull-consumer.group", "pull-consumer.topic" })
 	public DefaultLitePullConsumer defaultLitePullConsumer(RocketMQProperties rocketMQProperties)
-		throws MQClientException {
+			throws MQClientException {
 		RocketMQProperties.PullConsumer consumerConfig = rocketMQProperties.getPullConsumer();
 		String nameServer = rocketMQProperties.getNameServer();
 		String groupName = consumerConfig.getGroup();
@@ -184,7 +184,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 		boolean useTLS = consumerConfig.isTlsEnable();
 
 		DefaultLitePullConsumer litePullConsumer = RocketMQUtil.createDefaultLitePullConsumer(nameServer, accessChannel,
-			groupName, topicName, messageModel, selectorType, selectorExpression, ak, sk, pullBatchSize, useTLS);
+				groupName, topicName, messageModel, selectorType, selectorExpression, ak, sk, pullBatchSize, useTLS);
 		litePullConsumer.setEnableMsgTrace(consumerConfig.isEnableMsgTrace());
 		litePullConsumer.setCustomizedTraceTopic(consumerConfig.getCustomizedTraceTopic());
 		if (StringUtils.hasText(consumerConfig.getNamespace())) {
@@ -212,10 +212,12 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 		rocketMQTemplate.setMessageConverter(rocketMQMessageConverter.getMessageConverter());
 
 		if (environment.getProperty(THREADS_VIRTUAL_ENABLED, Boolean.class, false)) {
-			rocketMQTemplate.setAsyncSenderExecutor(Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE));
-		} else {
+			rocketMQTemplate
+				.setAsyncSenderExecutor(Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE));
+		}
+		else {
 			ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(8, 16, 60, TimeUnit.SECONDS,
-				new LinkedBlockingQueue<>(256));
+					new LinkedBlockingQueue<>(256));
 			rocketMQTemplate.setAsyncSenderExecutor(threadPoolExecutor);
 		}
 		return rocketMQTemplate;

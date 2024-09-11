@@ -39,7 +39,7 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @Component
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_API_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
-	selectorExpression = API_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+		selectorExpression = API_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class CallApiEventHandler extends AbstractDomainEventHandler {
 
 	private final AuthDomainService authDomainService;

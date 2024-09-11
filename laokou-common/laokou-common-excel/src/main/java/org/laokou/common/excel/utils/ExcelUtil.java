@@ -71,20 +71,20 @@ public class ExcelUtil {
 	private static final int DEFAULT_SIZE = 1000;
 
 	public static <M, T> void doImport(InputStream inputStream, HttpServletResponse response, Class<M> clazz,
-									   BiConsumer<M, T> consumer, MybatisUtil mybatisUtil) {
+			BiConsumer<M, T> consumer, MybatisUtil mybatisUtil) {
 		EasyExcel.read(inputStream, new DataListener<>(clazz, consumer, response, mybatisUtil)).sheet().doRead();
 	}
 
 	public static <DO extends BaseDO> void doExport(HttpServletResponse response, DO param, PageQuery pageQuery,
-													CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
+			CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
 		doExport(DEFAULT_SIZE, response, param, pageQuery, crudMapper, clazz);
 	}
 
 	@SneakyThrows
 	public static <DO extends BaseDO> void doExport(int size, HttpServletResponse response, DO param,
-													PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
+			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<?> clazz) {
 		try (ServletOutputStream out = response.getOutputStream();
-			 ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
+				ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
 			// 设置请求头
 			header(response);
 			if (crudMapper.selectObjCount(pageQuery) > 0) {
@@ -99,13 +99,15 @@ public class ExcelUtil {
 				if (list.size() % size != 0) {
 					writeSheet(list, clazz, excelWriter);
 				}
-			} else {
+			}
+			else {
 				excelWriter.write(Collections.singletonList(new Error("数据为空，导出失败")),
-					EasyExcel.writerSheet().head(Error.class).build());
+						EasyExcel.writerSheet().head(Error.class).build());
 			}
 			// 刷新数据
 			excelWriter.finish();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("Excel导出失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 		}
 	}
@@ -115,7 +117,7 @@ public class ExcelUtil {
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType("application/vnd.ms-excel;charset=UTF-8");
 		response.setHeader("Content-disposition",
-			"attachment;filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + ".xlsx");
+				"attachment;filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + ".xlsx");
 		response.addHeader("Access-Control-Expose-Headers", "Content-disposition");
 	}
 
@@ -158,7 +160,7 @@ public class ExcelUtil {
 		}
 
 		DataListener(Class<M> clazz, BiConsumer<M, T> consumer, int batchCount, HttpServletResponse response,
-					 MybatisUtil mybatisUtil) {
+				MybatisUtil mybatisUtil) {
 			this.batchCount = batchCount;
 			this.clazz = clazz;
 			this.response = response;
@@ -175,7 +177,8 @@ public class ExcelUtil {
 			Set<String> set = ValidatorUtil.validateEntity(data);
 			if (CollectionUtil.isNotEmpty(set)) {
 				ERRORS.add(template(currentRowNum, StringUtil.collectionToDelimitedString(set, DROP)));
-			} else {
+			}
+			else {
 				CACHED_DATA_LIST.add(data);
 				if (CACHED_DATA_LIST.size() % batchCount == 0) {
 					mybatisUtil.batch(CACHED_DATA_LIST, clazz, consumer);
@@ -198,13 +201,14 @@ public class ExcelUtil {
 			}
 			// 写入excel
 			try (ServletOutputStream out = response.getOutputStream();
-				 ExcelWriter excelWriter = EasyExcel.write(out, Error.class).build()) {
+					ExcelWriter excelWriter = EasyExcel.write(out, Error.class).build()) {
 				// 设置请求头
 				header(response);
 				if (CollectionUtil.isEmpty(ERRORS)) {
 					excelWriter.write(Collections.singletonList(new Error(EMPTY)),
-						EasyExcel.writerSheet().head(Error.class).build());
-				} else {
+							EasyExcel.writerSheet().head(Error.class).build());
+				}
+				else {
 					List<List<String>> partition = Lists.partition(ERRORS, BATCH_COUNT);
 					partition.forEach(item -> writeSheet(item, Error.class, excelWriter));
 				}
@@ -226,7 +230,7 @@ public class ExcelUtil {
 
 		@ColumnWidth(30)
 		@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
-			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
+				verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
 		@ExcelProperty(value = "错误信息", index = 0)
 		private String msg;
 

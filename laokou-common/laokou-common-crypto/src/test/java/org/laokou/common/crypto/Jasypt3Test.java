@@ -42,14 +42,13 @@ class Jasypt3Test {
 		log.info("采用PBEWITHHMACSHA512ANDAES_256加密前原文密文：{}", encryptWithMD5ANDAES256Str);
 		log.info("采用PBEWITHHMACSHA512ANDAES_256解密后密文原文：{}", decryptWithMD5ANDAES256Str);
 		Assertions.assertArrayEquals(decryptWithMD5ANDAES256Str.getBytes(StandardCharsets.UTF_8),
-			plainText.getBytes(StandardCharsets.UTF_8));
+				plainText.getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
 	 * Jasypt 3.x 加密（PBEWITHHMACSHA512ANDAES_256）.
-	 *
 	 * @param plainText 待加密的原文
-	 * @param factor    加密秘钥
+	 * @param factor 加密秘钥
 	 * @return java.lang.String
 	 */
 	public String encryptWithHMACSHA512ANDAES256(String plainText, String factor) {
@@ -58,9 +57,8 @@ class Jasypt3Test {
 
 	/**
 	 * Jasypt 3.x 解密（PBEWITHHMACSHA512ANDAES_256）.
-	 *
 	 * @param encryptedText 待解密密文
-	 * @param factor        解密秘钥
+	 * @param factor 解密秘钥
 	 * @return java.lang.String
 	 */
 	public String decryptWithHMACSHA512ANDAES256(String encryptedText, String factor) {

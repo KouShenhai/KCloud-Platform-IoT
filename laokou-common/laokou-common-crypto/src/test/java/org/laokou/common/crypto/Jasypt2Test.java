@@ -42,14 +42,13 @@ class Jasypt2Test {
 		log.info("采用PBEWithMD5AndDES加密前原文密文：{}", encryptWithMD5AndDESStr);
 		log.info("采用PBEWithMD5AndDES解密后密文原文：{}", decryptWithMD5AndDESStr);
 		Assertions.assertArrayEquals(decryptWithMD5AndDESStr.getBytes(StandardCharsets.UTF_8),
-			plainText.getBytes(StandardCharsets.UTF_8));
+				plainText.getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
 	 * Jasyp2.x 加密（PBEWithMD5AndDES）.
-	 *
 	 * @param plainText 待加密的原文
-	 * @param factor    加密秘钥
+	 * @param factor 加密秘钥
 	 * @return java.lang.String
 	 */
 	private String encryptWithMD5AndDES(String plainText, String factor) {
@@ -59,9 +58,8 @@ class Jasypt2Test {
 
 	/**
 	 * Jaspy2.x 解密（PBEWithMD5AndDES）.
-	 *
 	 * @param encryptedText 待解密密文
-	 * @param factor        解密秘钥
+	 * @param factor 解密秘钥
 	 * @return java.lang.String
 	 */
 	private String decryptWithMD5AndDES(String encryptedText, String factor) {

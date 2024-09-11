@@ -52,7 +52,8 @@ public class TtlTaskExecutorAutoConfig {
 	public Executor executor(SpringTaskExecutionProperties springTaskExecutionProperties, Environment environment) {
 		if (environment.getProperty(THREADS_VIRTUAL_ENABLED, Boolean.class, false)) {
 			// 虚拟线程
-			return TtlExecutors.getTtlExecutorService(Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE));
+			return TtlExecutors
+				.getTtlExecutorService(Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE));
 		}
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 		// 核心池大小
