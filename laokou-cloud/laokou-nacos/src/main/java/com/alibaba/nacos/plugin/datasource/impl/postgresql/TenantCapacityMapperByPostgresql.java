@@ -39,6 +39,9 @@ import com.alibaba.nacos.plugin.datasource.mapper.TenantCapacityMapper;
 import com.alibaba.nacos.plugin.datasource.model.MapperContext;
 import com.alibaba.nacos.plugin.datasource.model.MapperResult;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * The postgresql implementation of TenantCapacityMapper.
  *
@@ -58,6 +61,11 @@ public class TenantCapacityMapperByPostgresql extends AbstractMapperByPostgresql
 		String sql = "SELECT id, tenant_id FROM tenant_capacity WHERE id>? LIMIT ?";
 		return new MapperResult(sql,
 				CollectionUtils.list(context.getWhereParameter("id"), context.getWhereParameter("limitSize")));
+	}
+
+	@Override
+	public List<String> getSqlColumns() {
+		return Arrays.asList("id", "quota", "usage", "max_size", "max_aggr_count", "max_aggr_size", "tenant_id");
 	}
 
 }
