@@ -48,11 +48,11 @@ image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源
 - 复制粘贴代码提高生产效率
 - 学习DDD思想并落地实践
 
-=== 🔗 在线体验[科学上网]
+=== 🔗 在线体验
 
 https://www.laokou.org.cn[老寇IoT云平台在线体验（请点击我，境外服务器网络延迟请稍候）]
 
-=== 🔖 在线文档[科学上网]
+=== 🔖 在线文档
 
 https://koushenhai.github.io[老寇IoT云平台在线文档（请点击我）]
 
@@ -60,7 +60,7 @@ https://koushenhai.github.io[老寇IoT云平台在线文档（请点击我）]
 
 https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2[开发计划（需要登录）]
 
-=== 🎁 项目推荐[科学上网]
+=== 🎁 项目推荐
 
 https://github.com/KouShenhai/KCloud-Platform-Reactive-IoT[作者的另一个开源IoT项目（响应式）]
 
