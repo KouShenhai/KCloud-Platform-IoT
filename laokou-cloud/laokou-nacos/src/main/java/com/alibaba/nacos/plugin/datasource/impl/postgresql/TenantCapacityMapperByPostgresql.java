@@ -60,11 +60,11 @@ public class TenantCapacityMapperByPostgresql extends AbstractMapperByPostgresql
 	public MapperResult getCapacityList4CorrectUsage(MapperContext context) {
 		String sql = "SELECT id, tenant_id FROM tenant_capacity WHERE id>? LIMIT ?";
 		return new MapperResult(sql,
-				CollectionUtils.list(context.getWhereParameter("id"), context.getWhereParameter("limitSize")));
+			CollectionUtils.list(context.getWhereParameter("id"), context.getWhereParameter("limitSize")));
 	}
 
 	@Override
-	public List<String> getSqlColumns() {
+	public List<String> getColumns() {
 		return Arrays.asList("id", "quota", "usage", "max_size", "max_aggr_count", "max_aggr_size", "tenant_id");
 	}
 
