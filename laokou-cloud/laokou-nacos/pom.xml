@@ -45,7 +45,7 @@
     <!--error_prone_annotations版本-->
     <error_prone_annotations.version>2.32.0</error_prone_annotations.version>
     <!--hessian版本-->
-    <hessian.version>4.0.4</hessian.version>
+    <hessian.version>3.5.4</hessian.version>
   </properties>
 
   <dependencies>
