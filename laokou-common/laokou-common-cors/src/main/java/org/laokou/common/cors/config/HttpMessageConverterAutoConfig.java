@@ -29,8 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.CustomInstantDeserializer;
 import org.laokou.common.core.config.CustomInstantSerializer;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
@@ -50,9 +50,9 @@ import static org.laokou.common.i18n.utils.DateUtil.Constant.DEFAULT_TIMEZONE;
  *
  * @author laokou
  */
-@Configuration
 @Slf4j
-public class HttpMessageConverterConfig {
+@AutoConfiguration
+public class HttpMessageConverterAutoConfig {
 
 	// @formatter:off
 	@Bean("jackson2HttpMessageConverter")

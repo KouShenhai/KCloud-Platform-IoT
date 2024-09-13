@@ -35,9 +35,9 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
  */
 @Slf4j
 @AutoConfiguration
+@Order(HIGHEST_PRECEDENCE + 10)
 public class CorsAutoConfig {
 
-	@Order(HIGHEST_PRECEDENCE + 10)
 	@Bean
 	@ConditionalOnMissingBean(CorsFilter.class)
 	public CorsFilter corsFilter() {

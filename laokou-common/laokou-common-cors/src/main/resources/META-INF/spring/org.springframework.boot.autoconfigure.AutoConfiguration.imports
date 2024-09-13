@@ -1,2 +1,2 @@
 org.laokou.common.cors.config.CorsAutoConfig
-org.laokou.common.cors.config.HttpMessageConverterConfig
+org.laokou.common.cors.config.HttpMessageConverterAutoConfig
