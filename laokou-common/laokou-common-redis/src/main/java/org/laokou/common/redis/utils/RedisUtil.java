@@ -91,8 +91,8 @@ public class RedisUtil {
 		return redissonClient.getReadWriteLock(key).writeLock();
 	}
 
-	public boolean tryLock(RLock lock, long expire, long timeout) throws InterruptedException {
-		return lock.tryLock(timeout, expire, TimeUnit.MILLISECONDS);
+	public boolean tryLock(RLock lock, long timeout) throws InterruptedException {
+		return lock.tryLock(timeout, TimeUnit.MILLISECONDS);
 	}
 
 	public boolean rateLimiter(String key, RateType mode, long replenishRate, long rateInterval,
@@ -103,7 +103,7 @@ public class RedisUtil {
 	}
 
 	public boolean tryLock(String key, long expire, long timeout) throws InterruptedException {
-		return tryLock(getLock(key), expire, timeout);
+		return tryLock(getLock(key), timeout);
 	}
 
 	public void unlock(String key) {

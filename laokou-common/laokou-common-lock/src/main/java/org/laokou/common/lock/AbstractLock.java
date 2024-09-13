@@ -27,15 +27,14 @@ public abstract class AbstractLock<T> implements Lock {
 	/**
 	 * 尝试加锁.
 	 * @param type 类型
-	 * @param key 键
-	 * @param expire 过期时间
+	 * @param key 标识
 	 * @param timeout 锁等待超时时间
 	 * @return Boolean
 	 * @throws InterruptedException 线程中断异常
 	 */
 	@Override
-	public Boolean tryLock(Type type, String key, long expire, long timeout) throws InterruptedException {
-		return tryLock(getLock(type, key), expire, timeout);
+	public boolean tryLock(Type type, String key, long timeout) throws InterruptedException {
+		return tryLock(getLock(type, key), timeout);
 	}
 
 	/**
@@ -59,12 +58,11 @@ public abstract class AbstractLock<T> implements Lock {
 	/**
 	 * 尝试加锁.
 	 * @param lock 锁
-	 * @param expire 过期时间
 	 * @param timeout 线程等待超时时间
 	 * @return Boolean
 	 * @throws InterruptedException 线程中断异常
 	 */
-	public abstract Boolean tryLock(T lock, long expire, long timeout) throws InterruptedException;
+	public abstract boolean tryLock(T lock, long timeout) throws InterruptedException;
 
 	/**
 	 * 释放锁.
