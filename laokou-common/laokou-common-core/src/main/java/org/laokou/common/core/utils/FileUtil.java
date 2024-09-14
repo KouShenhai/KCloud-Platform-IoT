@@ -73,8 +73,8 @@ public final class FileUtil {
 	}
 
 	@SneakyThrows
-	public static Path walkFileTree(Path path, FileVisitor<? super Path> visitor) {
-		return Files.walkFileTree(path, visitor);
+	public static void walkFileTree(Path path, FileVisitor<? super Path> visitor) {
+		Files.walkFileTree(path, visitor);
 	}
 
 	@SneakyThrows

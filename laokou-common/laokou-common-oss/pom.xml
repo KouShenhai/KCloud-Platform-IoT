@@ -7,4 +7,12 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-common-oss</artifactId>
+
+  <dependencies>
+      <dependency>
+          <groupId>org.laokou</groupId>
+          <artifactId>laokou-common-core</artifactId>
+      </dependency>
+  </dependencies>
+
 </project>
