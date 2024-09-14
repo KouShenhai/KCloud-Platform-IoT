@@ -17,8 +17,19 @@
 
 package org.laokou.common.oss.config;
 
+import org.laokou.common.oss.template.StorageTemplate;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Bean;
+
 /**
  * @author laokou
  */
+@AutoConfiguration
 public class OssAutoConfig {
+
+    @Bean
+    public StorageTemplate storageTemplate() {
+        return new StorageTemplate();
+    }
+
 }

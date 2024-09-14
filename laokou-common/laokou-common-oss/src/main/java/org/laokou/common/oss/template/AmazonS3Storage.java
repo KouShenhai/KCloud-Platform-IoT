@@ -17,9 +17,15 @@
 
 package org.laokou.common.oss.template;
 
+import org.laokou.common.oss.entity.FileInfo;
+
 /**
  * @author laokou
  */
 public class AmazonS3Storage extends AbstractStorage {
 
+    @Override
+    public String getUrl(FileInfo fileInfo) {
+        return "";
+    }
 }

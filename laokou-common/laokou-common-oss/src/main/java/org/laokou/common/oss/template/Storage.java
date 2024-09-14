@@ -26,4 +26,6 @@ public interface Storage {
 
     void upload(FileInfo fileInfo);
 
+    String getUrl(FileInfo fileInfo);
+
 }
