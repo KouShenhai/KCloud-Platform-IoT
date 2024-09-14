@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Bean;
  * @author laokou
  */
 @AutoConfiguration
-public class OssAutoConfig {
+public class StorageAutoConfig {
 
     @Bean
     public StorageTemplate storageTemplate() {
