@@ -1,13 +1,19 @@
 import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {pageV3} from "@/services/admin/loginLog";
-import {useState} from "react";
 
 export default () => {
 
-	const valueEnum = {
-		0: 'ok',
-		1: 'fail'
+	const statusEnum = {
+		0: '0',
+		1: '1'
+	};
+
+	const typeEnum = {
+		'password': 'password',
+		'mobile': 'mobile',
+		'mail': 'mail',
+		'authorization_code': 'authorization_code'
 	};
 
 	type TableColumns = {
@@ -16,33 +22,41 @@ export default () => {
 		ip: string | undefined;
 		address: string | undefined;
 		browser: string | undefined;
-		os: number | undefined;
+		os: string | undefined;
 		status: string | undefined;
-		errorMessage: number | undefined;
+		errorMessage: string | undefined;
 		type: string | undefined;
 		createTime: string | undefined;
 	};
 
-	type Param = {
-		pageNum: number | undefined;
-		pageSize: number | undefined;
-		username: string | undefined;
+	const getPageQuery = (params: any) => {
+		return {
+			pageSize: params?.pageSize,
+			pageNum: params?.current,
+			username: params?.username,
+			ip: params?.ip,
+			address: params?.address,
+			browser: params?.browser,
+			createTime: params?.createTime,
+			status: params?.status,
+			os: params?.os,
+			type: params?.type,
+			errorMessage: params?.errorMessage
+		};
 	}
 
-	const loginLogList: TableColumns[] = [];
-
-	const [pageQuery, setPageQuery] = useState<Param>({pageSize: 10, pageNum: 1, username: ""});
-
-	let listLoginLog = async () => {
-		return pageV3(pageQuery).then(res => {
+	const listLoginLog = async (params: any) => {
+		return pageV3(getPageQuery(params)).then(res => {
+			const list: TableColumns[] = []
 			res?.data?.records?.forEach((item: TableColumns) => {
-				item.status = valueEnum[item.status as '0'];
-				loginLogList.push(item);
+				item.status = statusEnum[item.status as '0'];
+				item.type = typeEnum[item.type as 'password'];
+				list.push(item);
 			});
 			return Promise.resolve({
-				data: loginLogList,
+				data: list,
 				total: res.data.total,
-				success: res.code === 'OK',
+				success: true,
 			});
 		})
 	}
@@ -77,12 +91,9 @@ export default () => {
 		{
 			title: '登录状态',
 			dataIndex: 'status',
-			initialValue: 'ok',
-			filters: true,
-			onFilter: true,
 			valueEnum: {
-				ok: {text: '登录成功', status: 'Success'},
-				fail: {text: '登录失败', status: 'Error'},
+				0: {text: '登录成功', status: 'Success'},
+				1: {text: '登录失败', status: 'Error'},
 			},
 		},
 		{
@@ -91,12 +102,35 @@ export default () => {
 		},
 		{
 			title: '登录类型',
-			dataIndex: 'type'
+			dataIndex: 'type',
+			valueEnum: {
+				password: {text: '用户密码登录', status: 'Processing'},
+				mobile: {text: '手机号登录', status: 'Default'},
+				mail: {text: '邮箱登录', status: 'Success'},
+				authorization_code: {text: '授权码登录', status: 'Error'}
+			},
 		},
 		{
 			title: '登录日期',
-			dataIndex: 'createTime'
+			key: 'createTime',
+			dataIndex: 'createTime',
+			valueType: 'dateTime',
+			hideInSearch: true,
 		},
+		{
+			title: '登录日期',
+			dataIndex: 'createTime',
+			valueType: 'dateRange',
+			hideInTable: true,
+			search: {
+				transform: (value) => {
+					return {
+						startTime: value[0],
+						endTime: value[1],
+					};
+				},
+			}
+		}
 	];
 
 	return (
@@ -104,17 +138,13 @@ export default () => {
 			columns={columns}
 			request={(params) => {
 				// 表单搜索项会从 params 传入，传递给后端接口。
-				setPageQuery({pageSize: params?.pageSize, pageNum: params?.pageSize, username: params?.username})
-				return listLoginLog()
+				return listLoginLog(params)
 			}}
 			rowKey="id"
 			pagination={{
 				showQuickJumper: true,
-				showSizeChanger: true,
-				pageSize: 10,
-				onChange: (pageNum, pageSize) => {
-					setPageQuery({pageSize: pageSize, pageNum: pageNum, username: pageQuery.username})
-				},
+				showSizeChanger: false,
+				pageSize: 10
 			}}
 			search={{
 				layout: 'vertical',
