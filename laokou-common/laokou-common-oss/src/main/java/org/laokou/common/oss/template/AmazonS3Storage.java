@@ -24,8 +24,9 @@ import org.laokou.common.oss.entity.FileInfo;
  */
 public class AmazonS3Storage extends AbstractStorage {
 
-    @Override
-    public String getUrl(FileInfo fileInfo) {
-        return "";
-    }
+	@Override
+	public String getUrl(FileInfo fileInfo) {
+		return "";
+	}
+
 }

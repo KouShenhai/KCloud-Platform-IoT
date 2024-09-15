@@ -17,6 +17,7 @@
 
 package org.laokou.generator.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.generator.gateway.TableGateway;
@@ -35,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
 
@@ -49,6 +51,7 @@ public class TableGatewayImpl implements TableGateway {
 
 	private final TableColumnMapper tableColumnMapper;
 
+	@DS(MASTER)
 	public List<TableV> list(TableE tableE) {
 		List<TableDO> tables = tableMapper.selectObjects(tableE.getTable());
 		List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects(tableE.getTable());

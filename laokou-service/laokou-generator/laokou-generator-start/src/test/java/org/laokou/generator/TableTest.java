@@ -64,7 +64,7 @@ class TableTest {
 	}
 
 	@Test
-	void testGenerateCode() {
+	void testMasterGenerateCode() {
 		// 版本号
 		String version = "v3";
 		// 作者
@@ -79,6 +79,55 @@ class TableTest {
 		App app = App.SYS;
 		// 表名
 		Set<String> tableNames = Set.of("boot_sys_user", "boot_sys_menu", "boot_sys_tenant");
+		generateCode(version, author, tablePrefix, moduleName, packageName, tableNames, app);
+	}
+
+	@Test
+	void testDomainGenerateCode() {
+
+		// 注意：需要手动切换数据源至domain
+
+		// 版本号
+		String version = "v3";
+		// 作者
+		String author = "laokou";
+		// 表前缀
+		String tablePrefix = "boot_";
+		// 模块名
+		String moduleName = "laokou-admin";
+		// 包名
+		String packageName = "org.laokou.admin";
+		// 应用
+		App app = App.SYS;
+		// 表名
+		Set<String> tableNames = Set.of("boot_domain_event");
+		generateCode(version, author, tablePrefix, moduleName, packageName, tableNames, app);
+	}
+
+	@Test
+	void testIotGenerateCode() {
+
+		// 注意：需要手动切换数据源至iot
+
+		// 版本号
+		String version = "v3";
+		// 作者
+		String author = "laokou";
+		// 表前缀
+		String tablePrefix = "boot_";
+		// 模块名
+		String moduleName = "laokou-iot";
+		// 包名
+		String packageName = "org.laokou.iot";
+		// 应用
+		App app = App.IOT;
+		// 表名
+		Set<String> tableNames = Set.of("boot_iot_device");
+		generateCode(version, author, tablePrefix, moduleName, packageName, tableNames, app);
+	}
+
+	private void generateCode(String version, String author, String tablePrefix, String moduleName, String packageName,
+			Set<String> tableNames, App app) {
 		tableNames.stream().map(item -> CompletableFuture.runAsync(() -> {
 			TableE tableE = new TableE(item, tablePrefix);
 			GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE, app);

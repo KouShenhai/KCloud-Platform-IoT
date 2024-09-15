@@ -27,9 +27,9 @@ import org.springframework.context.annotation.Bean;
 @AutoConfiguration
 public class StorageAutoConfig {
 
-    @Bean
-    public StorageTemplate storageTemplate() {
-        return new StorageTemplate();
-    }
+	@Bean
+	public StorageTemplate storageTemplate() {
+		return new StorageTemplate();
+	}
 
 }

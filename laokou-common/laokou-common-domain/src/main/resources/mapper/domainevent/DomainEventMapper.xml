@@ -27,4 +27,25 @@
       and service_id = #{serviceId}
   </delete>
 
+  <select id="selectPageByCondition"
+          resultType="org.laokou.common.domain.entity.DomainEventDO">
+    SELECT *
+    from boot_domain_event
+    where del_flag = 0
+    order by id desc
+    limit ${pageQuery.pageSize} OFFSET ${pageQuery.pageIndex}
+  </select>
+
+  <select id="selectCountByCondition" resultType="long">
+    SELECT count(1)
+    from boot_domain_event
+    where del_flag = 0
+  </select>
+
+  <select id="selectVersion" resultType="integer">
+    select version
+    from boot_domain_event
+    where id = #{id}
+  </select>
+
 </mapper>

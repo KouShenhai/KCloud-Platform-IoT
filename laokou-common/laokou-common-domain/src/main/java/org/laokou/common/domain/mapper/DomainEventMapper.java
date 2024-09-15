@@ -20,8 +20,11 @@ package org.laokou.common.domain.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.common.domain.entity.DomainEventDO;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -31,5 +34,9 @@ import org.springframework.stereotype.Repository;
 public interface DomainEventMapper extends CrudMapper<Long, Integer, DomainEventDO> {
 
 	void deleteOldByServiceIdOfThreeMonths(@Param("serviceId") String serviceId);
+
+	List<DomainEventDO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
+
+	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
 
 }

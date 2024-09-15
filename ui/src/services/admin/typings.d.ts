@@ -110,60 +110,34 @@ declare namespace API {
 		co?: DictTypeCO;
 	};
 
-	type getByIdV310Params = {
-		id: number;
+	type DomainEventCO = {
+		extValues?: Record<string, any>;
+		id?: number;
+		aggregateId?: number;
+		eventType?: string;
+		topic?: string;
+		sourceName?: string;
+		attribute?: string;
+		serviceId?: string;
+		tag?: string;
 	};
 
-	type getByIdV311Params = {
-		id: number;
+	type DomainEventExportCmd = true;
+
+	type DomainEventModifyCmd = {
+		co?: DomainEventCO;
 	};
 
-	type getByIdV312Params = {
-		id: number;
+	type DomainEventPageQry = {
+		pageNum?: number;
+		pageSize?: number;
+		pageIndex?: number;
+		sqlFilter?: string;
+		params?: Record<string, any>;
 	};
 
-	type getByIdV313Params = {
-		id: number;
-	};
-
-	type getByIdV314Params = {
-		id: number;
-	};
-
-	type getByIdV31Params = {
-		id: number;
-	};
-
-	type getByIdV32Params = {
-		id: number;
-	};
-
-	type getByIdV33Params = {
-		id: number;
-	};
-
-	type getByIdV34Params = {
-		id: number;
-	};
-
-	type getByIdV35Params = {
-		id: number;
-	};
-
-	type getByIdV36Params = {
-		id: number;
-	};
-
-	type getByIdV37Params = {
-		id: number;
-	};
-
-	type getByIdV38Params = {
-		id: number;
-	};
-
-	type getByIdV39Params = {
-		id: number;
+	type DomainEventSaveCmd = {
+		co?: DomainEventCO;
 	};
 
 	type getByIdV3Params = {

@@ -28,9 +28,12 @@ import java.io.Serializable;
 @Data
 public class FileInfo implements Serializable {
 
-    private InputStream in;
-    private long size;
-    private String name;
-    private String md5;
+	private InputStream in;
+
+	private long size;
+
+	private String name;
+
+	private String md5;
 
 }

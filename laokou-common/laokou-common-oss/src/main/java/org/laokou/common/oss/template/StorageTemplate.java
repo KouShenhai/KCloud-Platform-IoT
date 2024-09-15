@@ -21,4 +21,5 @@ package org.laokou.common.oss.template;
  * @author laokou
  */
 public class StorageTemplate {
+
 }

@@ -24,8 +24,8 @@ import org.laokou.common.oss.entity.FileInfo;
  */
 public interface Storage {
 
-    void upload(FileInfo fileInfo);
+	void upload(FileInfo fileInfo);
 
-    String getUrl(FileInfo fileInfo);
+	String getUrl(FileInfo fileInfo);
 
 }

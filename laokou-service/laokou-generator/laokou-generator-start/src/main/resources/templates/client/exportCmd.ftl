@@ -18,9 +18,7 @@
 
 package ${packageName}.${instanceName}.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
@@ -30,8 +28,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author ${author}
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ${className}ExportCmd extends CommonCommand {
 
 }

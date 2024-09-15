@@ -17,6 +17,7 @@ import * as dictType from './dictType';
 import * as dictItem from './dictItem';
 import * as dept from './dept';
 import * as apiLog from './apiLog';
+import * as domainEvent from './domainEvent';
 
 export default {
 	user,
@@ -34,4 +35,5 @@ export default {
 	dictItem,
 	dept,
 	apiLog,
+	domainEvent,
 };

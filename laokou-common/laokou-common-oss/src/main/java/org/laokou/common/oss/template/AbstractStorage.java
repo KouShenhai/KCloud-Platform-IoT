@@ -24,9 +24,9 @@ import org.laokou.common.oss.entity.FileInfo;
  */
 public abstract class AbstractStorage implements Storage {
 
-    @Override
-    public void upload(FileInfo fileInfo) {
+	@Override
+	public void upload(FileInfo fileInfo) {
 
-    }
+	}
 
 }

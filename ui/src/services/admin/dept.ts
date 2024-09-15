@@ -41,7 +41,7 @@ export async function removeV3(body: number[], options?: { [key: string]: any })
 /** 查看部门详情 查看部门详情 GET /v3/depts/${param0} */
 export async function getByIdV3(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-	params: API.getByIdV313Params,
+	params: API.getByIdV3Params,
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;

@@ -24,8 +24,9 @@ import org.laokou.common.oss.entity.FileInfo;
  */
 public class LocalStorage extends AbstractStorage {
 
-    @Override
-    public String getUrl(FileInfo fileInfo) {
-        return "";
-    }
+	@Override
+	public String getUrl(FileInfo fileInfo) {
+		return "";
+	}
+
 }

@@ -49,7 +49,7 @@ public class GeneratorDomainService {
 	/**
 	 * 代码生成路径.
 	 */
-	private static final String SOURCE_PATH = "D:\\koushenhai\\project\\KCloud-Platform-IoT\\laokou-service\\laokou-admin";
+	private static final String SOURCE_PATH = "D:\\koushenhai\\project\\KCloud-Platform-IoT\\laokou-service\\";
 
 	/**
 	 * ZIP压缩路径.
@@ -78,9 +78,9 @@ public class GeneratorDomainService {
 		// 生成到本地指定目录【临时】
 		tables.forEach(item -> generateCode(generatorA, item, templates));
 		// ZIP压缩到指定目录
-		// FileUtil.zip(SOURCE_PATH, TARGET_PATH);
+		// FileUtil.zip(SOURCE_PATH + generatorA.getModuleName(), TARGET_PATH);
 		// 删除【临时文件夹及目录】
-		// FileUtil.delete(SOURCE_PATH);
+		// FileUtil.delete(SOURCE_PATH + generatorA.getModuleName());
 	}
 
 	private void generateCode(GeneratorA generatorA, TableV tableV, List<Template> templates) {
@@ -90,7 +90,7 @@ public class GeneratorDomainService {
 		templates.parallelStream().map(item -> CompletableFuture.runAsync(() -> {
 			String content = getContent(generatorA.toMap(), item.getTemplatePath(TEMPLATE_PATH));
 			// 写入文件
-			String directory = SOURCE_PATH + SLASH + item.getFileDirectory(generatorA);
+			String directory = SOURCE_PATH + generatorA.getModuleName() + SLASH + item.getFileDirectory(generatorA);
 			File file = FileUtil.create(directory, item.getFileName(generatorA));
 			FileUtil.write(file, content.getBytes(StandardCharsets.UTF_8));
 		}, executor)).toList().forEach(CompletableFuture::join);
