@@ -34,7 +34,7 @@ public class LoginLogConvertor {
 	public static LoginEvent toClientObject(AuthA authA) {
 		LogV logV = authA.getLog();
 		return new LoginEvent(logV.type(), logV.errorMessage(), logV.status(), logV.browser(), logV.os(), logV.ip(),
-				logV.address(), logV.username(), authA, LAOKOU_LOG_TOPIC, LOGIN_TAG, LOGIN, logV.timestamp());
+			logV.address(), logV.username(), authA, LAOKOU_LOG_TOPIC, LOGIN_TAG, LOGIN, logV.instant());
 	}
 
 	public static LoginLogDO toDataObject(LoginEvent loginEvent) {
