@@ -41,13 +41,15 @@ import java.util.Arrays;
 public class DomainEventGatewayImpl implements DomainEventGateway {
 
 	private final DomainEventMapper domainEventMapper;
+
 	private final TransactionalUtil transactionalUtil;
 
 	public void create(DomainEventE domainEventE) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				domainEventMapper.insert(DomainEventConvertor.toDataObject(domainEventE, true));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -66,7 +68,8 @@ public class DomainEventGatewayImpl implements DomainEventGateway {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				domainEventMapper.deleteByIds(Arrays.asList(ids));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();
@@ -79,7 +82,8 @@ public class DomainEventGatewayImpl implements DomainEventGateway {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				domainEventMapper.updateById(domainEventDO);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
 				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
 				r.setRollbackOnly();

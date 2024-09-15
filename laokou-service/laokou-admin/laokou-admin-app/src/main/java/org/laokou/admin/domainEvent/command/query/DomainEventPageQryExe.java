@@ -51,10 +51,10 @@ public class DomainEventPageQryExe {
 		CompletableFuture<List<DomainEventDO>> c1 = CompletableFuture
 			.supplyAsync(() -> domainEventMapper.selectPageByCondition(qry), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> domainEventMapper.selectCountByCondition(qry),
-			executor);
+				executor);
 		return Result
 			.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(DomainEventConvertor::toClientObject).toList(),
-				c2.get(30, TimeUnit.SECONDS)));
+					c2.get(30, TimeUnit.SECONDS)));
 	}
 
 }
