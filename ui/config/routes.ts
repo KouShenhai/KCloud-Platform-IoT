@@ -46,11 +46,17 @@ export default [
 						name: 'Api日志',
 						path: '/sys/log/api',
 						component: './Sys/Log/api'
-					},
+					}
+				]
+			},
+			{
+				name: '事件管理',
+				path: '/sys/event',
+				routes: [
 					{
-						name: '领域日志',
-						path: '/sys/log/domain',
-						component: './Sys/Log/domain'
+						name: '领域事件',
+						path: '/sys/event/domain',
+						component: './Sys/Event/domain'
 					}
 				]
 			}

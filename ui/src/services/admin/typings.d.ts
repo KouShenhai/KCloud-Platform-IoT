@@ -380,11 +380,6 @@ declare namespace API {
 		co?: OssCO;
 	};
 
-	type PageUserCO = {
-		total?: number;
-		records?: UserCO[];
-	};
-
 	type Result = {
 		/** 状态编码 */
 		code?: string;

@@ -26,6 +26,7 @@ import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
+import org.laokou.common.secret.annotation.EnableApiSecret;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -49,6 +50,7 @@ import java.net.InetAddress;
 @EnableRouter
 @EnableSecurity
 @EnableSnailJob
+@EnableApiSecret
 @EnableFeignClients
 @EnableTaskExecutor
 @EnableRedisRepository
@@ -56,8 +58,8 @@ import java.net.InetAddress;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
-@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
-@SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
+@ServletComponentScan(basePackageClasses = {ShutdownFilter.class})
+@SpringBootApplication(exclude = {SecurityFilterAutoConfiguration.class}, scanBasePackages = "org.laokou")
 public class AdminApp {
 
 	/**

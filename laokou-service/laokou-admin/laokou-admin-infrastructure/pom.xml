@@ -72,6 +72,10 @@
       <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-secret</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

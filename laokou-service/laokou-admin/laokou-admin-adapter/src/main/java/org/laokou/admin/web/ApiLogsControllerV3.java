@@ -27,6 +27,7 @@ import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
+import org.laokou.common.secret.annotation.ApiSecret;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,6 +47,7 @@ public class ApiLogsControllerV3 {
 
 	private final ApiLogsServiceI apiLogsServiceI;
 
+	@ApiSecret
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:api-log:save')")
@@ -55,6 +57,7 @@ public class ApiLogsControllerV3 {
 		apiLogsServiceI.save(cmd);
 	}
 
+	@ApiSecret
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:api-log:modify')")
 	@OperateLog(module = "修改Api日志", operation = "修改Api日志")
@@ -63,6 +66,7 @@ public class ApiLogsControllerV3 {
 		apiLogsServiceI.modify(cmd);
 	}
 
+	@ApiSecret
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:api-log:remove')")
 	@OperateLog(module = "删除Api日志", operation = "删除Api日志")
@@ -71,6 +75,7 @@ public class ApiLogsControllerV3 {
 		apiLogsServiceI.remove(new ApiLogRemoveCmd(ids));
 	}
 
+	@ApiSecret
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:api-log:import')")
 	@Operation(summary = "导入Api日志", description = "导入Api日志")

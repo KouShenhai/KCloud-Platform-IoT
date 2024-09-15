@@ -27,6 +27,7 @@ import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
+import org.laokou.common.secret.annotation.ApiSecret;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,6 +47,7 @@ public class OssLogsControllerV3 {
 
 	private final OssLogsServiceI ossLogsServiceI;
 
+	@ApiSecret
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:oss-log:save')")
@@ -55,6 +57,7 @@ public class OssLogsControllerV3 {
 		ossLogsServiceI.save(cmd);
 	}
 
+	@ApiSecret
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:oss-log:modify')")
 	@OperateLog(module = "修改OSS日志", operation = "修改OSS日志")
@@ -63,6 +66,7 @@ public class OssLogsControllerV3 {
 		ossLogsServiceI.modify(cmd);
 	}
 
+	@ApiSecret
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:oss-log:remove')")
 	@OperateLog(module = "删除OSS日志", operation = "删除OSS日志")
@@ -71,6 +75,7 @@ public class OssLogsControllerV3 {
 		ossLogsServiceI.remove(new OssLogRemoveCmd(ids));
 	}
 
+	@ApiSecret
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:oss-log:import')")
 	@Operation(summary = "导入OSS日志", description = "导入OSS日志")
