@@ -1,8 +1,6 @@
 import {request} from '@umijs/max';
 
-/** OAuth2 认证授权 POST /oauth2/token */
-export async function login(
-	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+async function token(
 	params: API.OAuth2Param,
 	options?: { [key: string]: any },
 ) {
@@ -21,4 +19,13 @@ export async function login(
 		},
 		...(options || {}),
 	});
+}
+
+/** OAuth2 认证授权 POST /oauth2/token */
+export async function login(
+	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+	params: API.OAuth2Param,
+	options?: { [key: string]: any },
+) {
+	return token(params, options)
 }

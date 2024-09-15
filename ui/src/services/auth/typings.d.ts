@@ -51,6 +51,8 @@ declare namespace API {
 		/** 响应结果 */
 		data?: any;
 		/** 链路ID */
-		traceId?: number;
+		traceId?: string;
+		/** 标签ID */
+		spanId?: string;
 	};
 }

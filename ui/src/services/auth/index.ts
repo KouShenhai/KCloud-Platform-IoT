@@ -3,16 +3,16 @@
 // API 更新时间：
 // API 唯一标识：
 // @ts-ignore
-import * as authsController from './authsController';
-import * as captchasV3Controller from './captchasV3Controller';
-import * as logoutsV3Controller from './logoutsV3Controller';
-import * as secretsV3Controller from './secretsV3Controller';
-import * as tenantsV3Controller from './tenantsV3Controller';
+import * as auth from './auth';
+import * as captcha from './captcha';
+import * as logout from './logout';
+import * as secret from './secret';
+import * as tenant from './tenant';
 
 export default {
-	authsController,
-	tenantsV3Controller,
-	secretsV3Controller,
-	captchasV3Controller,
-	logoutsV3Controller,
+	auth,
+	tenant,
+	secret,
+	captcha,
+	logout,
 };

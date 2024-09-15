@@ -30,7 +30,6 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
 /**
  * 数据缓存切面.
@@ -78,7 +77,9 @@ public class CacheAop {
 
 	private Cache cache(String name) {
 		Cache cache = cacheManager.getCache(name);
-		Assert.isTrue(ObjectUtil.isNotNull(cache), "cache is null");
+		if (ObjectUtil.isNull(cache)) {
+			throw new RuntimeException();
+		}
 		return cache;
 	}
 

@@ -12,15 +12,15 @@ import {
 import {LoginFormPage, ProFormCaptcha, ProFormText,} from '@ant-design/pro-components';
 import {Col, Divider, Image, message, Row, Space, Tabs} from 'antd';
 import {CSSProperties, useEffect, useRef, useState} from 'react';
-import {login} from '@/services/auth/authsController';
-import {getCaptchaImageByUuidV3, sendCaptchaV3} from '@/services/auth/captchasV3Controller';
+import {login} from '@/services/auth/auth';
+import {getCaptchaImageByUuidV3, sendCaptchaV3} from '@/services/auth/captcha';
 // @ts-ignore
 import {history} from 'umi';
-import {getSecretInfoV3} from '@/services/auth/secretsV3Controller';
+import {getSecretInfoV3} from '@/services/auth/secret';
 import {JSEncrypt} from 'jsencrypt';
 // @ts-ignore
 import {v7 as uuidV7} from 'uuid';
-import {getTenantIdByDomainNameV3, listTenantOptionV3} from "@/services/auth/tenantsV3Controller";
+import {getTenantIdByDomainNameV3, listTenantOptionV3} from "@/services/auth/tenant";
 import {ProFormInstance, ProFormSelect} from "@ant-design/pro-form/lib";
 import {clearToken, setToken} from "@/access";
 
