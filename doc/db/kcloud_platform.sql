@@ -471,30 +471,32 @@ comment on column public.boot_sys_menu.url is '菜单链接';
 alter table public.boot_sys_menu
 	owner to root;
 
-INSERT INTO public.boot_sys_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
-								  tenant_id, pid, permission, type, name, path, icon, sort, hidden, status, url)
-VALUES (1, 1, 1, '2024-06-04 17:20:42.000000', '2024-06-04 17:20:46.000000', 0, 0, 1, '0,1', 0, 0, null, 0, '系统管理',
-		null, 'sys', 9000, 0, 0, null);
-INSERT INTO public.boot_sys_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
-								  tenant_id, pid, permission, type, name, path, icon, sort, hidden, status, url)
-VALUES (2, 1, 1, '2024-06-04 17:27:14.000000', '2024-06-04 17:27:12.000000', 0, 0, 1, '0,1', 0, 1, null, 0, '菜单管理',
-		null, 'sys', 900, 0, 0, null);
-INSERT INTO public.boot_sys_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
-								  tenant_id, pid, permission, type, name, path, icon, sort, hidden, status, url)
-VALUES (4, 1, 1, '2024-06-04 17:27:14.000000', '2024-06-04 17:27:12.000000', 0, 0, 1, '0,1', 0, 2, 'menu:save', 1,
-		'新增', null, 'sys', 30, 0, 0, null);
-INSERT INTO public.boot_sys_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
-								  tenant_id, pid, permission, type, name, path, icon, sort, hidden, status, url)
-VALUES (5, 1, 1, '2024-06-04 17:27:14.000000', '2024-06-04 17:27:12.000000', 0, 0, 1, '0,1', 0, 2, 'menu:modify', 1,
-		'修改', null, 'sys', 20, 0, 0, null);
-INSERT INTO public.boot_sys_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
-								  tenant_id, pid, permission, type, name, path, icon, sort, hidden, status, url)
-VALUES (3, 1, 1, '2024-06-04 17:27:14.000000', '2024-06-04 17:27:12.000000', 0, 0, 1, '0,1', 0, 2, 'menu:list', 1,
-		'查询', null, 'sys', 40, 0, 0, null);
-INSERT INTO public.boot_sys_menu (id, creator, editor, create_time, update_time, del_flag, version, dept_id, dept_path,
-								  tenant_id, pid, permission, type, name, path, icon, sort, hidden, status, url)
-VALUES (6, 1, 1, '2024-06-04 17:27:14.000000', '2024-06-04 17:27:12.000000', 0, 0, 1, '0,1', 0, 2, 'menu:remove', 1,
-		'删除', null, 'sys', 10, 0, 0, null);
+INSERT INTO public.boot_sys_menu ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version",
+								  "dept_id", "dept_path", "tenant_id", "pid", "permission", "type", "name", "path",
+								  "icon", "sort", "hidden", "status", "url")
+VALUES (1, 1, 1, '2024-06-04 17:20:42', '2024-06-04 17:20:46', 0, 0, 1, '0,1', 0, 0, NULL, 0, '系统管理', NULL, 'sys',
+		90000, 0, 0, NULL);
+INSERT INTO public.boot_sys_menu ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version",
+								  "dept_id", "dept_path", "tenant_id", "pid", "permission", "type", "name", "path",
+								  "icon", "sort", "hidden", "status", "url")
+VALUES (2, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 1, '0,1', 0, 1, NULL, 0, '日志管理', NULL, 'sys',
+		1000, 0, 0, NULL);
+INSERT INTO public.boot_sys_menu ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version",
+								  "dept_id", "dept_path", "tenant_id", "pid", "permission", "type", "name", "path",
+								  "icon", "sort", "hidden", "status", "url")
+VALUES (3, 1, 1, '2024-09-15 12:56:07', '2024-09-15 12:56:10', 0, 0, 1, '0,1', 0, 2, NULL, 0, '登录日志', NULL, 'sys',
+		900, 0, 0, NULL);
+INSERT INTO public.boot_sys_menu ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version",
+								  "dept_id", "dept_path", "tenant_id", "pid", "permission", "type", "name", "path",
+								  "icon", "sort", "hidden", "status", "url")
+VALUES (4, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 1, '0,1', 0, 3, 'sys:login-log:page', 1,
+		'分页查询', NULL, 'sys', 20, 0, 0, NULL);
+INSERT INTO public.boot_sys_menu ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version",
+								  "dept_id", "dept_path", "tenant_id", "pid", "permission", "type", "name", "path",
+								  "icon", "sort", "hidden", "status", "url")
+VALUES (5, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 1, '0,1', 0, 3, 'sys:login-log:export', 1,
+		'导出全部', NULL, 'sys', 10, 0, 0, NULL);
+
 
 create table if not exists public.boot_sys_message
 (

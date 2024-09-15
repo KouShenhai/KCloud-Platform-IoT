@@ -48,8 +48,8 @@ public class OssPageQryExe {
 
 	@SneakyThrows
 	public Result<Page<OssCO>> execute(OssPageQry qry) {
-		CompletableFuture<List<OssDO>> c1 = CompletableFuture.supplyAsync(() -> ossMapper.selectPageByCondition(qry),
-				executor);
+		CompletableFuture<List<OssDO>> c1 = CompletableFuture
+			.supplyAsync(() -> ossMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ossMapper.selectCountByCondition(qry),
 				executor);
 		return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(OssConvertor::toClientObject).toList(),

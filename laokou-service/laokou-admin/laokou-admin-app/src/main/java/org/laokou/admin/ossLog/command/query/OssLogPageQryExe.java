@@ -49,7 +49,7 @@ public class OssLogPageQryExe {
 	@SneakyThrows
 	public Result<Page<OssLogCO>> execute(OssLogPageQry qry) {
 		CompletableFuture<List<OssLogDO>> c1 = CompletableFuture
-			.supplyAsync(() -> ossLogMapper.selectPageByCondition(qry), executor);
+			.supplyAsync(() -> ossLogMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ossLogMapper.selectCountByCondition(qry),
 				executor);
 		return Result

@@ -4,7 +4,7 @@ import {request} from '@umijs/max';
 
 /** 修改登录日志 修改登录日志 PUT /v3/login-logs */
 export async function modifyV3(body: API.LoginLogModifyCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/login-logs', {
+	return request<any>('/api/admin/v3/login-logs', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ export async function modifyV3(body: API.LoginLogModifyCmd, options?: { [key: st
 
 /** 保存登录日志 保存登录日志 POST /v3/login-logs */
 export async function saveV3(body: API.LoginLogSaveCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/login-logs', {
+	return request<any>('/api/admin/v3/login-logs', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export async function saveV3(body: API.LoginLogSaveCmd, options?: { [key: string
 
 /** 删除登录日志 删除登录日志 DELETE /v3/login-logs */
 export async function removeV3(body: number[], options?: { [key: string]: any }) {
-	return request<any>('/v3/login-logs', {
+	return request<any>('/api/admin/v3/login-logs', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export async function getByIdV3(
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
-	return request<API.Result>(`/v3/login-logs/${param0}`, {
+	return request<API.Result>(`/api/admin/v3/login-logs/${param0}`, {
 		method: 'GET',
 		params: {...queryParams},
 		...(options || {}),
@@ -54,7 +54,7 @@ export async function getByIdV3(
 
 /** 导出登录日志 导出登录日志 POST /v3/login-logs/export */
 export async function exportV3(body: API.LoginLogExportCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/login-logs/export', {
+	return request<any>('/api/admin/v3/login-logs/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 		}
 	});
 
-	return request<any>('/v3/login-logs/import', {
+	return request<any>('/api/admin/v3/login-logs/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -98,7 +98,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 
 /** 分页查询登录日志列表 分页查询登录日志列表 POST /v3/login-logs/page */
 export async function pageV3(body: API.LoginLogPageQry, options?: { [key: string]: any }) {
-	return request<API.Result>('/v3/login-logs/page', {
+	return request<API.Result>('/api/admin/v3/login-logs/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

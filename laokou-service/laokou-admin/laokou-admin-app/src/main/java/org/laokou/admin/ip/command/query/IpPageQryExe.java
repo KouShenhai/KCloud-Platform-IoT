@@ -48,8 +48,8 @@ public class IpPageQryExe {
 
 	@SneakyThrows
 	public Result<Page<IpCO>> execute(IpPageQry qry) {
-		CompletableFuture<List<IpDO>> c1 = CompletableFuture.supplyAsync(() -> ipMapper.selectPageByCondition(qry),
-				executor);
+		CompletableFuture<List<IpDO>> c1 = CompletableFuture
+			.supplyAsync(() -> ipMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ipMapper.selectCountByCondition(qry),
 				executor);
 		return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(IpConvertor::toClientObject).toList(),

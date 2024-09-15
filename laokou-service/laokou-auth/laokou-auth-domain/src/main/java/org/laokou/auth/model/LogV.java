@@ -30,9 +30,9 @@ import java.time.Instant;
  * @param status 登录状态 0登录成功 1登录失败
  * @param errorMessage 错误信息
  * @param type 类型
- * @param timestamp 时间
+ * @param instant 日期
  */
 public record LogV(String username, String os, String ip, String address, String browser, Integer status,
-		String errorMessage, String type, Instant timestamp) {
+		String errorMessage, String type, Instant instant) {
 
 }

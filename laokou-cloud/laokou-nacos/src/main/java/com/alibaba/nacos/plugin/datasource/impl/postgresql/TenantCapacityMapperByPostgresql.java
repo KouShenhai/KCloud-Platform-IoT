@@ -39,7 +39,6 @@ import com.alibaba.nacos.plugin.datasource.mapper.TenantCapacityMapper;
 import com.alibaba.nacos.plugin.datasource.model.MapperContext;
 import com.alibaba.nacos.plugin.datasource.model.MapperResult;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -65,7 +64,7 @@ public class TenantCapacityMapperByPostgresql extends AbstractMapperByPostgresql
 
 	@Override
 	public List<String> getColumns() {
-		return Arrays.asList("id", "quota", "usage", "max_size", "max_aggr_count", "max_aggr_size", "tenant_id");
+		return TenantCapacityMapper.super.getColumns();
 	}
 
 }

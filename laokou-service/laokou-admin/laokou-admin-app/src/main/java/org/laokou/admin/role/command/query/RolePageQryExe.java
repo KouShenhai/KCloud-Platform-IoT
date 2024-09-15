@@ -48,8 +48,8 @@ public class RolePageQryExe {
 
 	@SneakyThrows
 	public Result<Page<RoleCO>> execute(RolePageQry qry) {
-		CompletableFuture<List<RoleDO>> c1 = CompletableFuture.supplyAsync(() -> roleMapper.selectPageByCondition(qry),
-				executor);
+		CompletableFuture<List<RoleDO>> c1 = CompletableFuture
+			.supplyAsync(() -> roleMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> roleMapper.selectCountByCondition(qry),
 				executor);
 		return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(RoleConvertor::toClientObject).toList(),

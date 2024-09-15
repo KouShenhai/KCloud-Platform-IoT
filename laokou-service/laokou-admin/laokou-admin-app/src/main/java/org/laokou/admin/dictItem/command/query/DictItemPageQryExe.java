@@ -18,6 +18,8 @@
 package org.laokou.admin.dictItem.command.query;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.laokou.admin.dictItem.convertor.DictItemConvertor;
 import org.laokou.admin.dictItem.dto.DictItemPageQry;
 import org.laokou.admin.dictItem.dto.clientobject.DictItemCO;
 import org.laokou.admin.dictItem.gatewayimpl.database.DictItemMapper;
@@ -25,8 +27,6 @@ import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.admin.dictItem.convertor.DictItemConvertor;
-import lombok.SneakyThrows;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -49,7 +49,7 @@ public class DictItemPageQryExe {
 	@SneakyThrows
 	public Result<Page<DictItemCO>> execute(DictItemPageQry qry) {
 		CompletableFuture<List<DictItemDO>> c1 = CompletableFuture
-			.supplyAsync(() -> dictItemMapper.selectPageByCondition(qry), executor);
+			.supplyAsync(() -> dictItemMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> dictItemMapper.selectCountByCondition(qry),
 				executor);
 		return Result

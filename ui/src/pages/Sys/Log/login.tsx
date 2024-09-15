@@ -1,25 +1,53 @@
 import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
+import {pageV3} from "@/services/admin/loginLog";
+import {useState} from "react";
 
 export default () => {
-	// const valueEnum = {
-	// 	0: 'ok',
-	// 	1: 'fail'
-	// };
 
-	type TableListItem = {
-		id: number;
-		name: string;
-		containers: number;
-		creator: string;
-		status: string;
-		createdAt: number;
-		progress: number;
-		money: number;
-		memo: string;
+	const valueEnum = {
+		0: 'ok',
+		1: 'fail'
 	};
 
-	const columns: ProColumns<TableListItem>[] = [
+	type TableColumns = {
+		id: number | undefined;
+		username: string | undefined;
+		ip: string | undefined;
+		address: string | undefined;
+		browser: string | undefined;
+		os: number | undefined;
+		status: string | undefined;
+		errorMessage: number | undefined;
+		type: string | undefined;
+		createTime: string | undefined;
+	};
+
+	type Param = {
+		pageNum: number | undefined;
+		pageSize: number | undefined;
+		username: string | undefined;
+	}
+
+	const loginLogList: TableColumns[] = [];
+
+	const [pageQuery, setPageQuery] = useState<Param>({pageSize: 10, pageNum: 1, username: ""});
+
+	let listLoginLog = async () => {
+		return pageV3(pageQuery).then(res => {
+			res?.data?.records?.forEach((item: TableColumns) => {
+				item.status = valueEnum[item.status as '0'];
+				loginLogList.push(item);
+			});
+			return Promise.resolve({
+				data: loginLogList,
+				total: res.data.total,
+				success: res.code === 'OK',
+			});
+		})
+	}
+
+	const columns: ProColumns<TableColumns>[] = [
 		{
 			title: '序号',
 			dataIndex: 'index',
@@ -27,15 +55,27 @@ export default () => {
 			width: 48,
 		},
 		{
-			title: '应用名称',
-			dataIndex: 'name'
+			title: '用户名',
+			dataIndex: 'username'
 		},
 		{
-			title: '创建者',
-			dataIndex: 'creator'
+			title: 'IP地址',
+			dataIndex: 'ip'
 		},
 		{
-			title: '状态',
+			title: '归属地',
+			dataIndex: 'address'
+		},
+		{
+			title: '浏览器',
+			dataIndex: 'browser'
+		},
+		{
+			title: '操作系统',
+			dataIndex: 'os'
+		},
+		{
+			title: '登录状态',
 			dataIndex: 'status',
 			initialValue: 'ok',
 			filters: true,
@@ -46,39 +86,35 @@ export default () => {
 			},
 		},
 		{
-			title: '备注',
-			dataIndex: 'memo',
-			ellipsis: true,
-			copyable: true,
+			title: '错误信息',
+			dataIndex: 'errorMessage'
 		},
 		{
-			title: '操作',
-			width: 180,
-			key: 'option',
-			valueType: 'option',
-			render: () => [
-				<a key="link">查看</a>
-			],
+			title: '登录类型',
+			dataIndex: 'type'
+		},
+		{
+			title: '登录日期',
+			dataIndex: 'createTime'
 		},
 	];
 
 	return (
-		<ProTable<TableListItem>
+		<ProTable<TableColumns>
 			columns={columns}
-			request={(params, sorter, filter) => {
+			request={(params) => {
 				// 表单搜索项会从 params 传入，传递给后端接口。
-				console.log(params, sorter, filter);
-				return Promise.resolve({
-					data: [],
-					success: true,
-				});
+				setPageQuery({pageSize: params?.pageSize, pageNum: params?.pageSize, username: params?.username})
+				return listLoginLog()
 			}}
 			rowKey="id"
 			pagination={{
 				showQuickJumper: true,
 				showSizeChanger: true,
 				pageSize: 10,
-				onChange: (pageNo, pageSize) => console.log(pageNo, pageSize),
+				onChange: (pageNum, pageSize) => {
+					setPageQuery({pageSize: pageSize, pageNum: pageNum, username: pageQuery.username})
+				},
 			}}
 			search={{
 				layout: 'vertical',

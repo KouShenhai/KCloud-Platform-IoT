@@ -49,7 +49,7 @@ public class OperateLogPageQryExe {
 	@SneakyThrows
 	public Result<Page<OperateLogCO>> execute(OperateLogPageQry qry) {
 		CompletableFuture<List<OperateLogDO>> c1 = CompletableFuture
-			.supplyAsync(() -> operateLogMapper.selectPageByCondition(qry), executor);
+			.supplyAsync(() -> operateLogMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> operateLogMapper.selectCountByCondition(qry),
 				executor);
 		return Result

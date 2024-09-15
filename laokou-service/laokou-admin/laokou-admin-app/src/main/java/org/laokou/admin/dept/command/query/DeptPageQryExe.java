@@ -18,6 +18,8 @@
 package org.laokou.admin.dept.command.query;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.laokou.admin.dept.convertor.DeptConvertor;
 import org.laokou.admin.dept.dto.DeptPageQry;
 import org.laokou.admin.dept.dto.clientobject.DeptCO;
 import org.laokou.admin.dept.gatewayimpl.database.DeptMapper;
@@ -25,8 +27,6 @@ import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.admin.dept.convertor.DeptConvertor;
-import lombok.SneakyThrows;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -48,8 +48,8 @@ public class DeptPageQryExe {
 
 	@SneakyThrows
 	public Result<Page<DeptCO>> execute(DeptPageQry qry) {
-		CompletableFuture<List<DeptDO>> c1 = CompletableFuture.supplyAsync(() -> deptMapper.selectPageByCondition(qry),
-				executor);
+		CompletableFuture<List<DeptDO>> c1 = CompletableFuture
+			.supplyAsync(() -> deptMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> deptMapper.selectCountByCondition(qry),
 				executor);
 		return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(DeptConvertor::toClientObject).toList(),

@@ -48,8 +48,8 @@ public class UserPageQryExe {
 
 	@SneakyThrows
 	public Result<Page<UserCO>> execute(UserPageQry qry) {
-		CompletableFuture<List<UserDO>> c1 = CompletableFuture.supplyAsync(() -> userMapper.selectPageByCondition(qry),
-				executor);
+		CompletableFuture<List<UserDO>> c1 = CompletableFuture
+			.supplyAsync(() -> userMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> userMapper.selectCountByCondition(qry),
 				executor);
 		return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(UserConvertor::toClientObject).toList(),

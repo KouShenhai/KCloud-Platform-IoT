@@ -48,8 +48,8 @@ public class MenuPageQryExe {
 
 	@SneakyThrows
 	public Result<Page<MenuCO>> execute(MenuPageQry qry) {
-		CompletableFuture<List<MenuDO>> c1 = CompletableFuture.supplyAsync(() -> menuMapper.selectPageByCondition(qry),
-				executor);
+		CompletableFuture<List<MenuDO>> c1 = CompletableFuture
+			.supplyAsync(() -> menuMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> menuMapper.selectCountByCondition(qry),
 				executor);
 		return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(MenuConvertor::toClientObject).toList(),

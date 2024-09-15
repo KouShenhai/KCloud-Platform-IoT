@@ -49,7 +49,7 @@ public class I18nMessagePageQryExe {
 	@SneakyThrows
 	public Result<Page<I18nMessageCO>> execute(I18nMessagePageQry qry) {
 		CompletableFuture<List<I18nMessageDO>> c1 = CompletableFuture
-			.supplyAsync(() -> i18nMessageMapper.selectPageByCondition(qry), executor);
+			.supplyAsync(() -> i18nMessageMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> i18nMessageMapper.selectCountByCondition(qry),
 				executor);
 		return Result

@@ -35,13 +35,13 @@ import java.util.Map;
 @AllArgsConstructor
 public class PageQuery extends Query {
 
-	@Serial
-	private static final long serialVersionUID = 6412915892334241813L;
-
 	/**
 	 * 分页参数.
 	 */
 	public static final String PAGE_QUERY = "pageQuery";
+
+	@Serial
+	private static final long serialVersionUID = 6412915892334241813L;
 
 	/**
 	 * 页码.
@@ -67,5 +67,10 @@ public class PageQuery extends Query {
 	 * 参数.
 	 */
 	private Map<String, Object> params;
+
+	public PageQuery index() {
+		this.pageIndex = (pageNum - 1) * pageSize;
+		return this;
+	}
 
 }

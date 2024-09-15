@@ -66,7 +66,6 @@ public class LoginLogsControllerV3 {
 		loginLogsServiceI.modify(cmd);
 	}
 
-	@ApiSecret
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:login-log:remove')")
 	@OperateLog(module = "删除登录日志", operation = "删除登录日志")
@@ -101,6 +100,7 @@ public class LoginLogsControllerV3 {
 	}
 
 	@TraceLog
+	@ApiSecret
 	@GetMapping("{id}")
 	@Operation(summary = "查看登录日志详情", description = "查看登录日志详情")
 	public Result<LoginLogCO> getByIdV3(@PathVariable("id") Long id) {

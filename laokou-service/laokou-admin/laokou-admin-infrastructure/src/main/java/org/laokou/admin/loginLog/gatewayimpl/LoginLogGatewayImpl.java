@@ -47,7 +47,7 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 	public void create(LoginLogE loginLogE) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				loginLogMapper.insert(LoginLogConvertor.toDataObject(loginLogE));
+				loginLogMapper.insert(LoginLogConvertor.toDataObject(loginLogE, true));
 			}
 			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
@@ -59,7 +59,7 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 	}
 
 	public void update(LoginLogE loginLogE) {
-		LoginLogDO loginLogDO = LoginLogConvertor.toDataObject(loginLogE);
+		LoginLogDO loginLogDO = LoginLogConvertor.toDataObject(loginLogE, false);
 		loginLogDO.setVersion(loginLogMapper.selectVersion(loginLogE.getId()));
 		update(loginLogDO);
 	}

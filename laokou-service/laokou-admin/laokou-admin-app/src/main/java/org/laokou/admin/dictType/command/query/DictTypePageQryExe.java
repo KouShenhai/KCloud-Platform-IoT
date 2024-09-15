@@ -49,7 +49,7 @@ public class DictTypePageQryExe {
 	@SneakyThrows
 	public Result<Page<DictTypeCO>> execute(DictTypePageQry qry) {
 		CompletableFuture<List<DictTypeDO>> c1 = CompletableFuture
-			.supplyAsync(() -> dictTypeMapper.selectPageByCondition(qry), executor);
+			.supplyAsync(() -> dictTypeMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> dictTypeMapper.selectCountByCondition(qry),
 				executor);
 		return Result

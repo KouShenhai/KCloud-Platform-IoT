@@ -49,7 +49,7 @@ public class SourcePageQryExe {
 	@SneakyThrows
 	public Result<Page<SourceCO>> execute(SourcePageQry qry) {
 		CompletableFuture<List<SourceDO>> c1 = CompletableFuture
-			.supplyAsync(() -> sourceMapper.selectPageByCondition(qry), executor);
+			.supplyAsync(() -> sourceMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> sourceMapper.selectCountByCondition(qry),
 				executor);
 		return Result

@@ -22,6 +22,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
+import java.time.Instant;
+
 /**
  * 登录日志客户端对象.
  *
@@ -76,5 +78,10 @@ public class LoginLogCO extends ClientObject {
 	 * 登录类型.
 	 */
 	private String type;
+
+	/**
+	 * 登录日期.
+	 */
+	private Instant createTime;
 
 }

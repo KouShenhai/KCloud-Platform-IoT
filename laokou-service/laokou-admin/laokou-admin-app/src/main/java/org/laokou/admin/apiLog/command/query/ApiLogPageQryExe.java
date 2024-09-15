@@ -18,6 +18,8 @@
 package org.laokou.admin.apiLog.command.query;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.laokou.admin.apiLog.convertor.ApiLogConvertor;
 import org.laokou.admin.apiLog.dto.ApiLogPageQry;
 import org.laokou.admin.apiLog.dto.clientobject.ApiLogCO;
 import org.laokou.admin.apiLog.gatewayimpl.database.ApiLogMapper;
@@ -25,8 +27,6 @@ import org.laokou.admin.apiLog.gatewayimpl.database.dataobject.ApiLogDO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.admin.apiLog.convertor.ApiLogConvertor;
-import lombok.SneakyThrows;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -49,7 +49,7 @@ public class ApiLogPageQryExe {
 	@SneakyThrows
 	public Result<Page<ApiLogCO>> execute(ApiLogPageQry qry) {
 		CompletableFuture<List<ApiLogDO>> c1 = CompletableFuture
-			.supplyAsync(() -> apiLogMapper.selectPageByCondition(qry), executor);
+			.supplyAsync(() -> apiLogMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> apiLogMapper.selectCountByCondition(qry),
 				executor);
 		return Result

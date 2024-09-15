@@ -49,7 +49,7 @@ public class TenantPageQryExe {
 	@SneakyThrows
 	public Result<Page<TenantCO>> execute(TenantPageQry qry) {
 		CompletableFuture<List<TenantDO>> c1 = CompletableFuture
-			.supplyAsync(() -> tenantMapper.selectPageByCondition(qry), executor);
+			.supplyAsync(() -> tenantMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> tenantMapper.selectCountByCondition(qry),
 				executor);
 		return Result

@@ -20,8 +20,6 @@ package org.laokou.admin.loginLog.convertor;
 import org.laokou.admin.loginLog.dto.clientobject.LoginLogCO;
 import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.loginLog.model.LoginLogE;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
  * 登录日志转换器.
@@ -30,20 +28,52 @@ import org.laokou.common.i18n.utils.ObjectUtil;
  */
 public class LoginLogConvertor {
 
-	public static LoginLogDO toDataObject(LoginLogE loginLogE) {
-		LoginLogDO loginLogDO = ConvertUtil.sourceToTarget(loginLogE, LoginLogDO.class);
-		if (ObjectUtil.isNull(loginLogDO.getId())) {
+	public static LoginLogDO toDataObject(LoginLogE loginLogE, boolean isInsert) {
+		LoginLogDO loginLogDO = new LoginLogDO();
+		if (isInsert) {
 			loginLogDO.generatorId();
 		}
+		else {
+			loginLogDO.setId(loginLogE.getId());
+		}
+		loginLogDO.setUsername(loginLogE.getUsername());
+		loginLogDO.setIp(loginLogE.getIp());
+		loginLogDO.setAddress(loginLogE.getAddress());
+		loginLogDO.setBrowser(loginLogE.getBrowser());
+		loginLogDO.setOs(loginLogE.getOs());
+		loginLogDO.setStatus(loginLogE.getStatus());
+		loginLogDO.setErrorMessage(loginLogE.getErrorMessage());
+		loginLogDO.setType(loginLogE.getType());
 		return loginLogDO;
 	}
 
 	public static LoginLogCO toClientObject(LoginLogDO loginLogDO) {
-		return ConvertUtil.sourceToTarget(loginLogDO, LoginLogCO.class);
+		LoginLogCO loginLogCO = new LoginLogCO();
+		loginLogCO.setId(loginLogDO.getId());
+		loginLogCO.setUsername(loginLogDO.getUsername());
+		loginLogCO.setIp(loginLogDO.getIp());
+		loginLogCO.setAddress(loginLogDO.getAddress());
+		loginLogCO.setBrowser(loginLogDO.getBrowser());
+		loginLogCO.setOs(loginLogDO.getOs());
+		loginLogCO.setStatus(loginLogDO.getStatus());
+		loginLogCO.setErrorMessage(loginLogDO.getErrorMessage());
+		loginLogCO.setType(loginLogDO.getType());
+		loginLogCO.setCreateTime(loginLogDO.getCreateTime());
+		return loginLogCO;
 	}
 
 	public static LoginLogE toEntity(LoginLogCO loginLogCO) {
-		return ConvertUtil.sourceToTarget(loginLogCO, LoginLogE.class);
+		LoginLogE loginLogE = new LoginLogE();
+		loginLogE.setId(loginLogCO.getId());
+		loginLogE.setUsername(loginLogCO.getUsername());
+		loginLogE.setIp(loginLogCO.getIp());
+		loginLogE.setAddress(loginLogCO.getAddress());
+		loginLogE.setBrowser(loginLogCO.getBrowser());
+		loginLogE.setOs(loginLogCO.getOs());
+		loginLogE.setStatus(loginLogCO.getStatus());
+		loginLogE.setErrorMessage(loginLogCO.getErrorMessage());
+		loginLogE.setType(loginLogCO.getType());
+		return loginLogE;
 	}
 
 }

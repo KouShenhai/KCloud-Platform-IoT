@@ -49,7 +49,7 @@ public class DomainEventPageQryExe {
 	@SneakyThrows
 	public Result<Page<DomainEventCO>> execute(DomainEventPageQry qry) {
 		CompletableFuture<List<DomainEventDO>> c1 = CompletableFuture
-			.supplyAsync(() -> domainEventMapper.selectPageByCondition(qry), executor);
+			.supplyAsync(() -> domainEventMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> domainEventMapper.selectCountByCondition(qry),
 				executor);
 		return Result
