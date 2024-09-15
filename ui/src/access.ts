@@ -26,7 +26,7 @@ export function getRefreshToken() {
 }
 
 export function getExpiresTime() {
-	return localStorage.getItem('expires_time');
+	return parseInt(String(localStorage.getItem('expires_time')));
 }
 
 export function clearToken() {

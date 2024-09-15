@@ -135,6 +135,7 @@ export const request: {
 	requestInterceptors: [
 		(config: any) => {
 			const headers = config.headers ? config.headers : [];
+			// 令牌过期前5分钟刷新
 			const time = 5 * 60 * 1000;
 			const expiresTime = getExpiresTime();
 			const diffTime = expiresTime - new Date().getTime()

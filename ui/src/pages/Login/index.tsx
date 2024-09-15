@@ -179,9 +179,9 @@ export default () => {
 		login({...params})
 			.then((res) => {
 				if (res.code === 'OK') {
-					// 登录成功【59分钟后自动刷新令牌】
+					// 登录成功【55分钟后自动刷新令牌】
 					clearToken()
-					setToken(res.data?.access_token, res.data?.refresh_token, new Date().getTime() + 59 * 60 * 1000)
+					setToken(res.data?.access_token, res.data?.refresh_token, new Date().getTime() + res.data?.expires_in)
 					// 跳转路由
 					const urlParams = new URL(window.location.href).searchParams;
 					history.push(urlParams.get('redirect') || '/');
