@@ -19,6 +19,7 @@ package org.laokou.admin.loginLog.dto;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.StringUtil;
 
 /**
  * 分页查询登录日志命令.
@@ -27,5 +28,49 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 @Data
 public class LoginLogPageQry extends PageQuery {
+
+	private String username;
+
+	private String type;
+
+	private String ip;
+
+	private String address;
+
+	private String browser;
+
+	private String os;
+
+	private Integer status;
+
+	private String errorMessage;
+
+	public void setUsername(String username) {
+		this.username = StringUtil.like(username.trim());
+	}
+
+	public void setIp(String ip) {
+		this.ip = StringUtil.like(ip.trim());
+	}
+
+	public void setAddress(String address) {
+		this.address = StringUtil.like(address.trim());
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = StringUtil.like(browser.trim());
+	}
+
+	public void setOs(String os) {
+		this.os = StringUtil.like(os.trim());
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = StringUtil.like(errorMessage.trim());
+	}
+
+	public void setType(String type) {
+		this.type = type.trim();
+	}
 
 }

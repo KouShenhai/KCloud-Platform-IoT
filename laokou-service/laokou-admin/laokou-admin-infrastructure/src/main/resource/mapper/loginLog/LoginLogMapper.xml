@@ -23,17 +23,47 @@
   <select id="selectPageByCondition"
           resultType="org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO">
     SELECT id,
-           username,
-           ip,
-           address,
-           browser,
-           os,
-           status,
-           error_message,
-           type,
-           create_time
+    username,
+    ip,
+    address,
+    browser,
+    os,
+    status,
+    error_message,
+    type,
+    create_time
     from boot_sys_login_log
     where del_flag = 0
+    <if test="pageQuery.username != null and pageQuery.username != ''">
+      and username like #{pageQuery.username}
+    </if>
+    <if test="pageQuery.ip != null and pageQuery.ip != ''">
+      and ip like #{pageQuery.ip}
+    </if>
+    <if test="pageQuery.address != null and pageQuery.address != ''">
+      and address like #{pageQuery.address}
+    </if>
+    <if test="pageQuery.browser != null and pageQuery.browser != ''">
+      and browser like #{pageQuery.browser}
+    </if>
+    <if test="pageQuery.os != null and pageQuery.os != ''">
+      and os like #{pageQuery.os}
+    </if>
+    <if test="pageQuery.errorMessage != null and pageQuery.errorMessage != ''">
+      and error_message like #{pageQuery.errorMessage}
+    </if>
+    <if test="pageQuery.type != null and pageQuery.type != ''">
+      and type = #{pageQuery.type}
+    </if>
+    <if test="pageQuery.status != null">
+      and status = #{pageQuery.status}
+    </if>
+    <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
+      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> #{pageQuery.params.startDate}
+    </if>
+    <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
+      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> #{pageQuery.params.endDate}
+    </if>
     order by id desc
     limit ${pageQuery.pageSize} OFFSET ${pageQuery.pageIndex}
   </select>
@@ -42,6 +72,36 @@
     SELECT count(1)
     from boot_sys_login_log
     where del_flag = 0
+    <if test="pageQuery.username != null and pageQuery.username != ''">
+      and username like #{pageQuery.username}
+    </if>
+    <if test="pageQuery.ip != null and pageQuery.ip != ''">
+      and ip like #{pageQuery.ip}
+    </if>
+    <if test="pageQuery.address != null and pageQuery.address != ''">
+      and address like #{pageQuery.address}
+    </if>
+    <if test="pageQuery.browser != null and pageQuery.browser != ''">
+      and browser like #{pageQuery.browser}
+    </if>
+    <if test="pageQuery.os != null and pageQuery.os != ''">
+      and os like #{pageQuery.os}
+    </if>
+    <if test="pageQuery.errorMessage != null and pageQuery.errorMessage != ''">
+      and error_message like #{pageQuery.errorMessage}
+    </if>
+    <if test="pageQuery.type != null and pageQuery.type != ''">
+      and type = #{pageQuery.type}
+    </if>
+    <if test="pageQuery.status != null">
+      and status = #{pageQuery.status}
+    </if>
+    <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
+      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> #{pageQuery.params.startDate}
+    </if>
+    <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
+      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> #{pageQuery.params.endDate}
+    </if>
   </select>
 
   <select id="selectVersion" resultType="integer">

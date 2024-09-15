@@ -37,11 +37,14 @@ export default () => {
 			ip: params?.ip,
 			address: params?.address,
 			browser: params?.browser,
-			createTime: params?.createTime,
 			status: params?.status,
 			os: params?.os,
 			type: params?.type,
-			errorMessage: params?.errorMessage
+			errorMessage: params?.errorMessage,
+			params: {
+				startDate: params?.startDate,
+				endDate: params?.endDate
+			}
 		};
 	}
 
@@ -125,8 +128,8 @@ export default () => {
 			search: {
 				transform: (value) => {
 					return {
-						startTime: value[0],
-						endTime: value[1],
+						startDate: value[0],
+						endDate: value[1],
 					};
 				},
 			}
