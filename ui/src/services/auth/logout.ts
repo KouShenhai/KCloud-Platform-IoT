@@ -2,7 +2,7 @@
 /* eslint-disable */
 import {request} from '@umijs/max';
 
-/** 退出登录 清除令牌 DELETE /v3/logouts */
+/** 清除令牌 清除令牌 DELETE /v3/logouts */
 export async function logoutV3(
 	body: API.LogoutParam,
 	options?: { [key: string]: any },
