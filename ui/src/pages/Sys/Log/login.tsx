@@ -1,6 +1,8 @@
 import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {pageV3} from "@/services/admin/loginLog";
+import {Button} from "antd";
+import {DeleteOutlined, ExportOutlined} from "@ant-design/icons";
 
 export default () => {
 
@@ -69,7 +71,7 @@ export default () => {
 			title: '序号',
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 48,
+			width: 60,
 		},
 		{
 			title: '用户名',
@@ -153,6 +155,22 @@ export default () => {
 				layout: 'vertical',
 				defaultCollapsed: true,
 			}}
+			toolBarRender={
+				() => [
+					<Button key="delete" danger ghost icon={<DeleteOutlined/>}>
+						删除
+					</Button>,
+					<Button key="truncate" type="primary" danger icon={<DeleteOutlined/>}>
+						清空
+					</Button>,
+					<Button key="export" type="primary" ghost icon={<ExportOutlined/>}>
+						导出
+					</Button>,
+					<Button key="exportAll" type="primary" icon={<ExportOutlined/>}>
+						导出全部
+					</Button>
+				]
+			}
 			dateFormatter="string"
 			toolbar={{
 				title: '登录日志',

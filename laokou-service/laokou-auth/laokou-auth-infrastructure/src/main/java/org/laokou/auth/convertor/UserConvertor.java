@@ -29,14 +29,14 @@ import org.laokou.common.security.utils.UserDetail;
  */
 public class UserConvertor {
 
-	public static UserDetail toClientObject(AuthA authA) {
+	public static UserDetail to(AuthA authA) {
 		UserE userE = authA.getUser();
 		MenuV menuV = authA.getMenu();
 		DeptV deptV = authA.getDept();
 		return new UserDetail(userE.getId(), userE.getUsername(), userE.getPassword(), userE.getAvatar(),
-				userE.getSuperAdmin(), userE.getStatus(), userE.getMail(), userE.getMobile(), userE.getDeptId(),
-				userE.getDeptPath(), deptV.deptPaths(), menuV.permissions(), userE.getTenantId(),
-				authA.getSourceName());
+			userE.getSuperAdmin(), userE.getStatus(), userE.getMail(), userE.getMobile(), userE.getDeptId(),
+			userE.getDeptPath(), deptV.deptPaths(), menuV.permissions(), userE.getTenantId(),
+			authA.getSourceName());
 	}
 
 	public static UserE toEntity(UserDO userDO) {

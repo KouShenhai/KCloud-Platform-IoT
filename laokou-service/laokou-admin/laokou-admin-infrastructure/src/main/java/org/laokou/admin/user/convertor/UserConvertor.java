@@ -25,6 +25,8 @@ import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
 
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+
 /**
  * 用户转换器.
  *
@@ -36,8 +38,7 @@ public class UserConvertor {
 		UserDO userDO = new UserDO();
 		if (isInsert) {
 			userDO.generatorId();
-		}
-		else {
+		} else {
 			userDO.setId(userE.getId());
 		}
 		userDO.setPassword(userE.getPassword());
@@ -98,13 +99,14 @@ public class UserConvertor {
 		userE.setStatus(userCO.getStatus());
 		userE.setAvatar(userCO.getAvatar());
 		if (StringUtil.isNotEmpty(username) && isInsert) {
-			userE.setUsernamePhrase("");
+			userE.setUsername(AESUtil.decrypt(username));
+			userE.setUsernamePhrase(EMPTY);
 		}
 		if (StringUtil.isNotEmpty(mail)) {
-			userE.setMailPhrase("");
+			userE.setMailPhrase(EMPTY);
 		}
 		if (StringUtil.isNotEmpty(mobile)) {
-			userE.setMobilePhrase("");
+			userE.setMobilePhrase(EMPTY);
 		}
 		return userE;
 	}

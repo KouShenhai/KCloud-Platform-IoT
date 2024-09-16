@@ -31,7 +31,7 @@ import static org.laokou.common.i18n.common.constant.EventType.LOGIN;
  */
 public class LoginLogConvertor {
 
-	public static LoginEvent toClientObject(AuthA authA) {
+	public static LoginEvent toEvent(AuthA authA) {
 		LogV logV = authA.getLog();
 		return new LoginEvent(logV.type(), logV.errorMessage(), logV.status(), logV.browser(), logV.os(), logV.ip(),
 			logV.address(), logV.username(), authA, LAOKOU_LOG_TOPIC, LOGIN_TAG, LOGIN, logV.instant());
