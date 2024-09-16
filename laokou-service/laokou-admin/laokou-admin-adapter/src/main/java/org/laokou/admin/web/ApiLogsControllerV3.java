@@ -51,7 +51,7 @@ public class ApiLogsControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:api-log:save')")
-	@OperateLog(module = "保存Api日志", operation = "保存Api日志")
+	@OperateLog(module = "Api日志管理", operation = "保存Api日志")
 	@Operation(summary = "保存Api日志", description = "保存Api日志")
 	public void saveV3(@RequestBody ApiLogSaveCmd cmd) {
 		apiLogsServiceI.save(cmd);
@@ -60,7 +60,7 @@ public class ApiLogsControllerV3 {
 	@ApiSecret
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:api-log:modify')")
-	@OperateLog(module = "修改Api日志", operation = "修改Api日志")
+	@OperateLog(module = "Api日志管理", operation = "修改Api日志")
 	@Operation(summary = "修改Api日志", description = "修改Api日志")
 	public void modifyV3(@RequestBody ApiLogModifyCmd cmd) {
 		apiLogsServiceI.modify(cmd);
@@ -69,7 +69,7 @@ public class ApiLogsControllerV3 {
 	@ApiSecret
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:api-log:remove')")
-	@OperateLog(module = "删除Api日志", operation = "删除Api日志")
+	@OperateLog(module = "Api日志管理", operation = "删除Api日志")
 	@Operation(summary = "删除Api日志", description = "删除Api日志")
 	public void removeV3(@RequestBody Long[] ids) {
 		apiLogsServiceI.remove(new ApiLogRemoveCmd(ids));
@@ -78,16 +78,16 @@ public class ApiLogsControllerV3 {
 	@ApiSecret
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:api-log:import')")
+	@OperateLog(module = "Api日志管理", operation = "导入Api日志")
 	@Operation(summary = "导入Api日志", description = "导入Api日志")
-	@OperateLog(module = "导入Api日志", operation = "导入Api日志")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		apiLogsServiceI.importI(new ApiLogImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:api-log:export')")
+	@OperateLog(module = "Api日志管理", operation = "导出Api日志")
 	@Operation(summary = "导出Api日志", description = "导出Api日志")
-	@OperateLog(module = "导出Api日志", operation = "导出Api日志")
 	public void exportV3(@RequestBody ApiLogExportCmd cmd) {
 		apiLogsServiceI.export(cmd);
 	}

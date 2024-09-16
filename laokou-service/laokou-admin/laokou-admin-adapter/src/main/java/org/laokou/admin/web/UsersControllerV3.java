@@ -54,7 +54,7 @@ public class UsersControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:user:save')")
-	@OperateLog(module = "保存用户", operation = "保存用户")
+	@OperateLog(module = "用户管理", operation = "保存用户")
 	@Operation(summary = "保存用户", description = "保存用户")
 	public void saveV3(@RequestBody UserSaveCmd cmd) {
 		usersServiceI.save(cmd);
@@ -62,7 +62,7 @@ public class UsersControllerV3 {
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:user:modify')")
-	@OperateLog(module = "修改用户", operation = "修改用户")
+	@OperateLog(module = "用户管理", operation = "修改用户")
 	@Operation(summary = "修改用户", description = "修改用户")
 	@DataCache(name = USERS, key = "#cmd.co.id", type = DEL)
 	public void modifyV3(@RequestBody UserModifyCmd cmd) {
@@ -71,7 +71,7 @@ public class UsersControllerV3 {
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:user:remove')")
-	@OperateLog(module = "删除用户", operation = "删除用户")
+	@OperateLog(module = "用户管理", operation = "删除用户")
 	@Operation(summary = "删除用户", description = "删除用户")
 	public void removeV3(@RequestBody Long[] ids) {
 		usersServiceI.remove(new UserRemoveCmd(ids));
@@ -79,16 +79,16 @@ public class UsersControllerV3 {
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:user:import')")
+	@OperateLog(module = "用户管理", operation = "导入用户")
 	@Operation(summary = "导入用户", description = "导入用户")
-	@OperateLog(module = "导入用户", operation = "导入用户")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		usersServiceI.importI(new UserImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:user:export')")
+	@OperateLog(module = "用户管理", operation = "导出用户")
 	@Operation(summary = "导出用户", description = "导出用户")
-	@OperateLog(module = "导出用户", operation = "导出用户")
 	public void exportV3(@RequestBody UserExportCmd cmd) {
 		usersServiceI.export(cmd);
 	}

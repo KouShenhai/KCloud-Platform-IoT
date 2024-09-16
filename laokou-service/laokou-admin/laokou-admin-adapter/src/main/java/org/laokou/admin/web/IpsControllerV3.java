@@ -49,7 +49,7 @@ public class IpsControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:ip:save')")
-	@OperateLog(module = "保存IP", operation = "保存IP")
+	@OperateLog(module = "IP管理", operation = "保存IP")
 	@Operation(summary = "保存IP", description = "保存IP")
 	public void saveV3(@RequestBody IpSaveCmd cmd) {
 		ipsServiceI.save(cmd);
@@ -57,7 +57,7 @@ public class IpsControllerV3 {
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:ip:modify')")
-	@OperateLog(module = "修改IP", operation = "修改IP")
+	@OperateLog(module = "IP管理", operation = "修改IP")
 	@Operation(summary = "修改IP", description = "修改IP")
 	public void modifyV3(@RequestBody IpModifyCmd cmd) {
 		ipsServiceI.modify(cmd);
@@ -65,7 +65,7 @@ public class IpsControllerV3 {
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:ip:remove')")
-	@OperateLog(module = "删除IP", operation = "删除IP")
+	@OperateLog(module = "IP管理", operation = "删除IP")
 	@Operation(summary = "删除IP", description = "删除IP")
 	public void removeV3(@RequestBody Long[] ids) {
 		ipsServiceI.remove(new IpRemoveCmd(ids));
@@ -73,16 +73,16 @@ public class IpsControllerV3 {
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:ip:import')")
+	@OperateLog(module = "IP管理", operation = "导入IP")
 	@Operation(summary = "导入IP", description = "导入IP")
-	@OperateLog(module = "导入IP", operation = "导入IP")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		ipsServiceI.importI(new IpImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:ip:export')")
+	@OperateLog(module = "IP管理", operation = "导出IP")
 	@Operation(summary = "导出IP", description = "导出IP")
-	@OperateLog(module = "导出IP", operation = "导出IP")
 	public void exportV3(@RequestBody IpExportCmd cmd) {
 		ipsServiceI.export(cmd);
 	}

@@ -51,7 +51,7 @@ public class OssLogsControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:oss-log:save')")
-	@OperateLog(module = "保存OSS日志", operation = "保存OSS日志")
+	@OperateLog(module = "OSS日志管理", operation = "保存OSS日志")
 	@Operation(summary = "保存OSS日志", description = "保存OSS日志")
 	public void saveV3(@RequestBody OssLogSaveCmd cmd) {
 		ossLogsServiceI.save(cmd);
@@ -60,7 +60,7 @@ public class OssLogsControllerV3 {
 	@ApiSecret
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:oss-log:modify')")
-	@OperateLog(module = "修改OSS日志", operation = "修改OSS日志")
+	@OperateLog(module = "OSS日志管理", operation = "修改OSS日志")
 	@Operation(summary = "修改OSS日志", description = "修改OSS日志")
 	public void modifyV3(@RequestBody OssLogModifyCmd cmd) {
 		ossLogsServiceI.modify(cmd);
@@ -69,7 +69,7 @@ public class OssLogsControllerV3 {
 	@ApiSecret
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:oss-log:remove')")
-	@OperateLog(module = "删除OSS日志", operation = "删除OSS日志")
+	@OperateLog(module = "OSS日志管理", operation = "删除OSS日志")
 	@Operation(summary = "删除OSS日志", description = "删除OSS日志")
 	public void removeV3(@RequestBody Long[] ids) {
 		ossLogsServiceI.remove(new OssLogRemoveCmd(ids));
@@ -78,16 +78,16 @@ public class OssLogsControllerV3 {
 	@ApiSecret
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:oss-log:import')")
+	@OperateLog(module = "OSS日志管理", operation = "导入OSS日志")
 	@Operation(summary = "导入OSS日志", description = "导入OSS日志")
-	@OperateLog(module = "导入OSS日志", operation = "导入OSS日志")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		ossLogsServiceI.importI(new OssLogImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:oss-log:export')")
+	@OperateLog(module = "OSS日志管理", operation = "导出OSS日志")
 	@Operation(summary = "导出OSS日志", description = "导出OSS日志")
-	@OperateLog(module = "导出OSS日志", operation = "导出OSS日志")
 	public void exportV3(@RequestBody OssLogExportCmd cmd) {
 		ossLogsServiceI.export(cmd);
 	}

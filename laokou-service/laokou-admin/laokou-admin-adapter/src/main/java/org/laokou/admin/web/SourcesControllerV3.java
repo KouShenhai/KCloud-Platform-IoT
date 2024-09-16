@@ -53,7 +53,7 @@ public class SourcesControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:source:save')")
-	@OperateLog(module = "保存数据源", operation = "保存数据源")
+	@OperateLog(module = "数据源管理", operation = "保存数据源")
 	@Operation(summary = "保存数据源", description = "保存数据源")
 	public void saveV3(@RequestBody SourceSaveCmd cmd) {
 		sourcesServiceI.save(cmd);
@@ -61,7 +61,7 @@ public class SourcesControllerV3 {
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:source:modify')")
-	@OperateLog(module = "修改数据源", operation = "修改数据源")
+	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@Operation(summary = "修改数据源", description = "修改数据源")
 	@DataCache(name = SOURCES, key = "#cmd.co.id", type = DEL)
 	public void modifyV3(@RequestBody SourceModifyCmd cmd) {
@@ -70,7 +70,7 @@ public class SourcesControllerV3 {
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:source:remove')")
-	@OperateLog(module = "删除数据源", operation = "删除数据源")
+	@OperateLog(module = "数据源管理", operation = "删除数据源")
 	@Operation(summary = "删除数据源", description = "删除数据源")
 	public void removeV3(@RequestBody Long[] ids) {
 		sourcesServiceI.remove(new SourceRemoveCmd(ids));
@@ -78,16 +78,16 @@ public class SourcesControllerV3 {
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:source:import')")
+	@OperateLog(module = "数据源管理", operation = "导入数据源")
 	@Operation(summary = "导入数据源", description = "导入数据源")
-	@OperateLog(module = "导入数据源", operation = "导入数据源")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		sourcesServiceI.importI(new SourceImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:source:export')")
+	@OperateLog(module = "数据源管理", operation = "导出数据源")
 	@Operation(summary = "导出数据源", description = "导出数据源")
-	@OperateLog(module = "导出数据源", operation = "导出数据源")
 	public void exportV3(@RequestBody SourceExportCmd cmd) {
 		sourcesServiceI.export(cmd);
 	}

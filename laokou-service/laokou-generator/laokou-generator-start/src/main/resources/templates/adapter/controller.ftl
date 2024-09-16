@@ -55,7 +55,7 @@ public class ${className}sController${(version)?upper_case} {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('${app?lower_case}:${instanceName}:save')")
-	@OperateLog(module = "保存${comment}", operation = "保存${comment}")
+	@OperateLog(module = "${comment}管理", operation = "保存${comment}")
 	@Operation(summary = "保存${comment}", description = "保存${comment}")
 	public void save${(version)?upper_case}(@RequestBody ${className}SaveCmd cmd) {
 		${instanceName}sServiceI.save(cmd);
@@ -63,7 +63,7 @@ public class ${className}sController${(version)?upper_case} {
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('${app?lower_case}:${instanceName}:modify')")
-	@OperateLog(module = "修改${comment}", operation = "修改${comment}")
+	@OperateLog(module = "${comment}管理", operation = "修改${comment}")
 	@Operation(summary = "修改${comment}", description = "修改${comment}")
 	@DataCache(name = ${(className)?upper_case}S, key = "#cmd.co.id", type = DEL)
 	public void modify${(version)?upper_case}(@RequestBody ${className}ModifyCmd cmd) {
@@ -72,7 +72,7 @@ public class ${className}sController${(version)?upper_case} {
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('${app?lower_case}:${instanceName}:remove')")
-	@OperateLog(module = "删除${comment}", operation = "删除${comment}")
+	@OperateLog(module = "${comment}管理", operation = "删除${comment}")
 	@Operation(summary = "删除${comment}", description = "删除${comment}")
 	public void remove${(version)?upper_case}(@RequestBody Long[] ids) {
 		${instanceName}sServiceI.remove(new ${className}RemoveCmd(ids));
@@ -80,16 +80,16 @@ public class ${className}sController${(version)?upper_case} {
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('${app?lower_case}:${instanceName}:import')")
+	@OperateLog(module = "${comment}管理", operation = "导入${comment}")
 	@Operation(summary = "导入${comment}", description = "导入${comment}")
-	@OperateLog(module = "导入${comment}", operation = "导入${comment}")
 	public void import${(version)?upper_case}(@RequestPart("file") MultipartFile[] files) {
 		${instanceName}sServiceI.importI(new ${className}ImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('${app?lower_case}:${instanceName}:export')")
+	@OperateLog(module = "${comment}管理", operation = "导出${comment}")
 	@Operation(summary = "导出${comment}", description = "导出${comment}")
-	@OperateLog(module = "导出${comment}", operation = "导出${comment}")
 	public void export${(version)?upper_case}(@RequestBody ${className}ExportCmd cmd) {
 		${instanceName}sServiceI.export(cmd);
 	}

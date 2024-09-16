@@ -51,7 +51,7 @@ public class OperateLogsControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:operate-log:save')")
-	@OperateLog(module = "保存操作日志", operation = "保存操作日志")
+	@OperateLog(module = "操作日志管理", operation = "保存操作日志")
 	@Operation(summary = "保存操作日志", description = "保存操作日志")
 	public void saveV3(@RequestBody OperateLogSaveCmd cmd) {
 		operateLogsServiceI.save(cmd);
@@ -60,7 +60,7 @@ public class OperateLogsControllerV3 {
 	@ApiSecret
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:operate-log:modify')")
-	@OperateLog(module = "修改操作日志", operation = "修改操作日志")
+	@OperateLog(module = "操作日志管理", operation = "修改操作日志")
 	@Operation(summary = "修改操作日志", description = "修改操作日志")
 	public void modifyV3(@RequestBody OperateLogModifyCmd cmd) {
 		operateLogsServiceI.modify(cmd);
@@ -69,7 +69,7 @@ public class OperateLogsControllerV3 {
 	@ApiSecret
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:operate-log:remove')")
-	@OperateLog(module = "删除操作日志", operation = "删除操作日志")
+	@OperateLog(module = "操作日志管理", operation = "删除操作日志")
 	@Operation(summary = "删除操作日志", description = "删除操作日志")
 	public void removeV3(@RequestBody Long[] ids) {
 		operateLogsServiceI.remove(new OperateLogRemoveCmd(ids));
@@ -78,16 +78,16 @@ public class OperateLogsControllerV3 {
 	@ApiSecret
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:operate-log:import')")
+	@OperateLog(module = "操作日志管理", operation = "导入操作日志")
 	@Operation(summary = "导入操作日志", description = "导入操作日志")
-	@OperateLog(module = "导入操作日志", operation = "导入操作日志")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		operateLogsServiceI.importI(new OperateLogImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:operate-log:export')")
+	@OperateLog(module = "操作日志管理", operation = "导出操作日志")
 	@Operation(summary = "导出操作日志", description = "导出操作日志")
-	@OperateLog(module = "导出操作日志", operation = "导出操作日志")
 	public void exportV3(@RequestBody OperateLogExportCmd cmd) {
 		operateLogsServiceI.export(cmd);
 	}

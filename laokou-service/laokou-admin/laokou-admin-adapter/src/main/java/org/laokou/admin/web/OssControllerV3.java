@@ -49,7 +49,7 @@ public class OssControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:oss:save')")
-	@OperateLog(module = "保存OSS", operation = "保存OSS")
+	@OperateLog(module = "OSS管理", operation = "保存OSS")
 	@Operation(summary = "保存OSS", description = "保存OSS")
 	public void saveV3(@RequestBody OssSaveCmd cmd) {
 		ossServiceI.save(cmd);
@@ -57,7 +57,7 @@ public class OssControllerV3 {
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:oss:modify')")
-	@OperateLog(module = "修改OSS", operation = "修改OSS")
+	@OperateLog(module = "OSS管理", operation = "修改OSS")
 	@Operation(summary = "修改OSS", description = "修改OSS")
 	public void modifyV3(@RequestBody OssModifyCmd cmd) {
 		ossServiceI.modify(cmd);
@@ -65,7 +65,7 @@ public class OssControllerV3 {
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:oss:remove')")
-	@OperateLog(module = "删除OSS", operation = "删除OSS")
+	@OperateLog(module = "OSS管理", operation = "删除OSS")
 	@Operation(summary = "删除OSS", description = "删除OSS")
 	public void removeV3(@RequestBody Long[] ids) {
 		ossServiceI.remove(new OssRemoveCmd(ids));
@@ -73,16 +73,16 @@ public class OssControllerV3 {
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:oss:import')")
+	@OperateLog(module = "OSS管理", operation = "导入OSS")
 	@Operation(summary = "导入OSS", description = "导入OSS")
-	@OperateLog(module = "导入OSS", operation = "导入OSS")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		ossServiceI.importI(new OssImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:oss:export')")
+	@OperateLog(module = "OSS管理", operation = "导出OSS")
 	@Operation(summary = "导出OSS", description = "导出OSS")
-	@OperateLog(module = "导出OSS", operation = "导出OSS")
 	public void exportV3(@RequestBody OssExportCmd cmd) {
 		ossServiceI.export(cmd);
 	}

@@ -53,7 +53,7 @@ public class DeptsControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:dept:save')")
-	@OperateLog(module = "保存部门", operation = "保存部门")
+	@OperateLog(module = "部门管理", operation = "保存部门")
 	@Operation(summary = "保存部门", description = "保存部门")
 	public void saveV3(@RequestBody DeptSaveCmd cmd) {
 		deptsServiceI.save(cmd);
@@ -61,7 +61,7 @@ public class DeptsControllerV3 {
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:dept:modify')")
-	@OperateLog(module = "修改部门", operation = "修改部门")
+	@OperateLog(module = "部门管理", operation = "修改部门")
 	@Operation(summary = "修改部门", description = "修改部门")
 	@DataCache(name = DEPTS, key = "#cmd.co.id", type = DEL)
 	public void modifyV3(@RequestBody DeptModifyCmd cmd) {
@@ -70,7 +70,7 @@ public class DeptsControllerV3 {
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:dept:remove')")
-	@OperateLog(module = "删除部门", operation = "删除部门")
+	@OperateLog(module = "部门管理", operation = "删除部门")
 	@Operation(summary = "删除部门", description = "删除部门")
 	public void removeV3(@RequestBody Long[] ids) {
 		deptsServiceI.remove(new DeptRemoveCmd(ids));
@@ -78,16 +78,16 @@ public class DeptsControllerV3 {
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:dept:import')")
+	@OperateLog(module = "部门管理", operation = "导入部门")
 	@Operation(summary = "导入部门", description = "导入部门")
-	@OperateLog(module = "导入部门", operation = "导入部门")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		deptsServiceI.importI(new DeptImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:dept:export')")
+	@OperateLog(module = "部门管理", operation = "导出部门")
 	@Operation(summary = "导出部门", description = "导出部门")
-	@OperateLog(module = "导出部门", operation = "导出部门")
 	public void exportV3(@RequestBody DeptExportCmd cmd) {
 		deptsServiceI.export(cmd);
 	}

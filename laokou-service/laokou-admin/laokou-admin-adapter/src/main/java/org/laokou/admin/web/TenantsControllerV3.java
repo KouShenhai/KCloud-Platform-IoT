@@ -53,7 +53,7 @@ public class TenantsControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:tenant:save')")
-	@OperateLog(module = "保存租户", operation = "保存租户")
+	@OperateLog(module = "租户管理", operation = "保存租户")
 	@Operation(summary = "保存租户", description = "保存租户")
 	public void saveV3(@RequestBody TenantSaveCmd cmd) {
 		tenantsServiceI.save(cmd);
@@ -61,7 +61,7 @@ public class TenantsControllerV3 {
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:tenant:modify')")
-	@OperateLog(module = "修改租户", operation = "修改租户")
+	@OperateLog(module = "租户管理", operation = "修改租户")
 	@Operation(summary = "修改租户", description = "修改租户")
 	@DataCache(name = TENANTS, key = "#cmd.co.id", type = DEL)
 	public void modifyV3(@RequestBody TenantModifyCmd cmd) {
@@ -70,7 +70,7 @@ public class TenantsControllerV3 {
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:tenant:remove')")
-	@OperateLog(module = "删除租户", operation = "删除租户")
+	@OperateLog(module = "租户管理", operation = "删除租户")
 	@Operation(summary = "删除租户", description = "删除租户")
 	public void removeV3(@RequestBody Long[] ids) {
 		tenantsServiceI.remove(new TenantRemoveCmd(ids));
@@ -78,16 +78,16 @@ public class TenantsControllerV3 {
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:tenant:import')")
+	@OperateLog(module = "租户管理", operation = "导入租户")
 	@Operation(summary = "导入租户", description = "导入租户")
-	@OperateLog(module = "导入租户", operation = "导入租户")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		tenantsServiceI.importI(new TenantImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:tenant:export')")
+	@OperateLog(module = "租户管理", operation = "导出租户")
 	@Operation(summary = "导出租户", description = "导出租户")
-	@OperateLog(module = "导出租户", operation = "导出租户")
 	public void exportV3(@RequestBody TenantExportCmd cmd) {
 		tenantsServiceI.export(cmd);
 	}

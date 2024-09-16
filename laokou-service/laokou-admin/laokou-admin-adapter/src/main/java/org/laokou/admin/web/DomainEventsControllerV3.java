@@ -51,7 +51,7 @@ public class DomainEventsControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:domain-event:save')")
-	@OperateLog(module = "保存领域事件", operation = "保存领域事件")
+	@OperateLog(module = "领域事件管理", operation = "保存领域事件")
 	@Operation(summary = "保存领域事件", description = "保存领域事件")
 	public void saveV3(@RequestBody DomainEventSaveCmd cmd) {
 		domainEventsServiceI.save(cmd);
@@ -60,7 +60,7 @@ public class DomainEventsControllerV3 {
 	@ApiSecret
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:domain-event:modify')")
-	@OperateLog(module = "修改领域事件", operation = "修改领域事件")
+	@OperateLog(module = "领域事件管理", operation = "修改领域事件")
 	@Operation(summary = "修改领域事件", description = "修改领域事件")
 	public void modifyV3(@RequestBody DomainEventModifyCmd cmd) {
 		domainEventsServiceI.modify(cmd);
@@ -69,7 +69,7 @@ public class DomainEventsControllerV3 {
 	@ApiSecret
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:domain-event:remove')")
-	@OperateLog(module = "删除领域事件", operation = "删除领域事件")
+	@OperateLog(module = "领域事件管理", operation = "删除领域事件")
 	@Operation(summary = "删除领域事件", description = "删除领域事件")
 	public void removeV3(@RequestBody Long[] ids) {
 		domainEventsServiceI.remove(new DomainEventRemoveCmd(ids));
@@ -78,16 +78,16 @@ public class DomainEventsControllerV3 {
 	@ApiSecret
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:domain-event:import')")
+	@OperateLog(module = "领域事件管理", operation = "导入领域事件")
 	@Operation(summary = "导入领域事件", description = "导入领域事件")
-	@OperateLog(module = "导入领域事件", operation = "导入领域事件")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		domainEventsServiceI.importI(new DomainEventImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:domain-event:export')")
+	@OperateLog(module = "领域事件管理", operation = "导出领域事件")
 	@Operation(summary = "导出领域事件", description = "导出领域事件")
-	@OperateLog(module = "导出领域事件", operation = "导出领域事件")
 	public void exportV3(@RequestBody DomainEventExportCmd cmd) {
 		domainEventsServiceI.export(cmd);
 	}

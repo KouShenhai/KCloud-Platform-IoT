@@ -49,7 +49,7 @@ public class RolesControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:role:save')")
-	@OperateLog(module = "保存角色", operation = "保存角色")
+	@OperateLog(module = "角色管理", operation = "保存角色")
 	@Operation(summary = "保存角色", description = "保存角色")
 	public void saveV3(@RequestBody RoleSaveCmd cmd) {
 		rolesServiceI.save(cmd);
@@ -57,7 +57,7 @@ public class RolesControllerV3 {
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:role:modify')")
-	@OperateLog(module = "修改角色", operation = "修改角色")
+	@OperateLog(module = "角色管理", operation = "修改角色")
 	@Operation(summary = "修改角色", description = "修改角色")
 	public void modifyV3(@RequestBody RoleModifyCmd cmd) {
 		rolesServiceI.modify(cmd);
@@ -65,7 +65,7 @@ public class RolesControllerV3 {
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:role:remove')")
-	@OperateLog(module = "删除角色", operation = "删除角色")
+	@OperateLog(module = "角色管理", operation = "删除角色")
 	@Operation(summary = "删除角色", description = "删除角色")
 	public void removeV3(@RequestBody Long[] ids) {
 		rolesServiceI.remove(new RoleRemoveCmd(ids));
@@ -73,16 +73,16 @@ public class RolesControllerV3 {
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:role:import')")
+	@OperateLog(module = "角色管理", operation = "导入角色")
 	@Operation(summary = "导入角色", description = "导入角色")
-	@OperateLog(module = "导入角色", operation = "导入角色")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		rolesServiceI.importI(new RoleImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:role:export')")
+	@OperateLog(module = "角色管理", operation = "导出角色")
 	@Operation(summary = "导出角色", description = "导出角色")
-	@OperateLog(module = "导出角色", operation = "导出角色")
 	public void exportV3(@RequestBody RoleExportCmd cmd) {
 		rolesServiceI.export(cmd);
 	}

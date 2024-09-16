@@ -49,7 +49,7 @@ public class DictItemsControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:dict-item:save')")
-	@OperateLog(module = "保存字典项", operation = "保存字典项")
+	@OperateLog(module = "字典项管理", operation = "保存字典项")
 	@Operation(summary = "保存字典项", description = "保存字典项")
 	public void saveV3(@RequestBody DictItemSaveCmd cmd) {
 		dictItemsServiceI.save(cmd);
@@ -57,7 +57,7 @@ public class DictItemsControllerV3 {
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:dict-item:modify')")
-	@OperateLog(module = "修改字典项", operation = "修改字典项")
+	@OperateLog(module = "字典项管理", operation = "修改字典项")
 	@Operation(summary = "修改字典项", description = "修改字典项")
 	public void modifyV3(@RequestBody DictItemModifyCmd cmd) {
 		dictItemsServiceI.modify(cmd);
@@ -65,7 +65,7 @@ public class DictItemsControllerV3 {
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:dict-item:remove')")
-	@OperateLog(module = "删除字典项", operation = "删除字典项")
+	@OperateLog(module = "字典项管理", operation = "删除字典项")
 	@Operation(summary = "删除字典项", description = "删除字典项")
 	public void removeV3(@RequestBody Long[] ids) {
 		dictItemsServiceI.remove(new DictItemRemoveCmd(ids));
@@ -73,16 +73,16 @@ public class DictItemsControllerV3 {
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:dict-item:import')")
+	@OperateLog(module = "字典项管理", operation = "导入字典项")
 	@Operation(summary = "导入字典项", description = "导入字典项")
-	@OperateLog(module = "导入字典项", operation = "导入字典项")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		dictItemsServiceI.importI(new DictItemImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:dict-item:export')")
+	@OperateLog(module = "字典项管理", operation = "导出字典项")
 	@Operation(summary = "导出字典项", description = "导出字典项")
-	@OperateLog(module = "导出字典项", operation = "导出字典项")
 	public void exportV3(@RequestBody DictItemExportCmd cmd) {
 		dictItemsServiceI.export(cmd);
 	}

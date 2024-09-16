@@ -51,7 +51,7 @@ public class LoginLogsControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:login-log:save')")
-	@OperateLog(module = "保存登录日志", operation = "保存登录日志")
+	@OperateLog(module = "登录日志管理", operation = "保存登录日志")
 	@Operation(summary = "保存登录日志", description = "保存登录日志")
 	public void saveV3(@RequestBody LoginLogSaveCmd cmd) {
 		loginLogsServiceI.save(cmd);
@@ -60,7 +60,7 @@ public class LoginLogsControllerV3 {
 	@ApiSecret
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:login-log:modify')")
-	@OperateLog(module = "修改登录日志", operation = "修改登录日志")
+	@OperateLog(module = "登录日志管理", operation = "修改登录日志")
 	@Operation(summary = "修改登录日志", description = "修改登录日志")
 	public void modifyV3(@RequestBody LoginLogModifyCmd cmd) {
 		loginLogsServiceI.modify(cmd);
@@ -68,7 +68,7 @@ public class LoginLogsControllerV3 {
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:login-log:remove')")
-	@OperateLog(module = "删除登录日志", operation = "删除登录日志")
+	@OperateLog(module = "登录日志管理", operation = "删除登录日志")
 	@Operation(summary = "删除登录日志", description = "删除登录日志")
 	public void removeV3(@RequestBody Long[] ids) {
 		loginLogsServiceI.remove(new LoginLogRemoveCmd(ids));
@@ -77,16 +77,16 @@ public class LoginLogsControllerV3 {
 	@ApiSecret
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:login-log:import')")
+	@OperateLog(module = "登录日志管理", operation = "导入登录日志")
 	@Operation(summary = "导入登录日志", description = "导入登录日志")
-	@OperateLog(module = "导入登录日志", operation = "导入登录日志")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		loginLogsServiceI.importI(new LoginLogImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:login-log:export')")
+	@OperateLog(module = "登录日志管理", operation = "导出登录日志")
 	@Operation(summary = "导出登录日志", description = "导出登录日志")
-	@OperateLog(module = "导出登录日志", operation = "导出登录日志")
 	public void exportV3(@RequestBody LoginLogExportCmd cmd) {
 		loginLogsServiceI.export(cmd);
 	}

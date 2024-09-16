@@ -49,7 +49,7 @@ public class DictTypesControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:dict-type:save')")
-	@OperateLog(module = "保存字典类型", operation = "保存字典类型")
+	@OperateLog(module = "字典类型管理", operation = "保存字典类型")
 	@Operation(summary = "保存字典类型", description = "保存字典类型")
 	public void saveV3(@RequestBody DictTypeSaveCmd cmd) {
 		dictTypesServiceI.save(cmd);
@@ -57,7 +57,7 @@ public class DictTypesControllerV3 {
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:dict-type:modify')")
-	@OperateLog(module = "修改字典类型", operation = "修改字典类型")
+	@OperateLog(module = "字典类型管理", operation = "修改字典类型")
 	@Operation(summary = "修改字典类型", description = "修改字典类型")
 	public void modifyV3(@RequestBody DictTypeModifyCmd cmd) {
 		dictTypesServiceI.modify(cmd);
@@ -65,7 +65,7 @@ public class DictTypesControllerV3 {
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:dict-type:remove')")
-	@OperateLog(module = "删除字典类型", operation = "删除字典类型")
+	@OperateLog(module = "字典类型管理", operation = "删除字典类型")
 	@Operation(summary = "删除字典类型", description = "删除字典类型")
 	public void removeV3(@RequestBody Long[] ids) {
 		dictTypesServiceI.remove(new DictTypeRemoveCmd(ids));
@@ -73,16 +73,16 @@ public class DictTypesControllerV3 {
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:dict-type:import')")
+	@OperateLog(module = "字典类型管理", operation = "导入字典类型")
 	@Operation(summary = "导入字典类型", description = "导入字典类型")
-	@OperateLog(module = "导入字典类型", operation = "导入字典类型")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		dictTypesServiceI.importI(new DictTypeImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:dict-type:export')")
+	@OperateLog(module = "字典类型管理", operation = "导出字典类型")
 	@Operation(summary = "导出字典类型", description = "导出字典类型")
-	@OperateLog(module = "导出字典类型", operation = "导出字典类型")
 	public void exportV3(@RequestBody DictTypeExportCmd cmd) {
 		dictTypesServiceI.export(cmd);
 	}
