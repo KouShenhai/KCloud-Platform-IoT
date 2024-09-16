@@ -11,7 +11,7 @@
   "license": "Apache 2.0",
   "devDependencies": {
     "dayjs": "^1.9.7",
-    "inquirer": "^10.0.0",
+    "inquirer": "^11.0.0",
     "json2yaml": "^1.1.0",
     "vuepress": "1.9.10",
     "vuepress-plugin-baidu-tongji": "^1.0.1",
