@@ -110,7 +110,7 @@
     <!--liquibase-core版本-->
     <liquibase-core.version>4.29.2</liquibase-core.version>
     <!--protobuf-java版本-->
-    <protobuf-java.version>3.25.4</protobuf-java.version>
+    <protobuf-java.version>4.28.1</protobuf-java.version>
     <!--jsqlparser版本-->
     <jsqlparser.version>5.0</jsqlparser.version>
     <!--grpc版本-->
