@@ -18,7 +18,6 @@
 package org.laokou.auth.event.handler;
 
 import io.micrometer.common.lang.NonNullApi;
-import io.micrometer.tracing.Tracer;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.ability.AuthDomainService;
 import org.laokou.auth.dto.domainevent.LoginEvent;
@@ -45,8 +44,7 @@ public class LoginEventHandler extends AbstractDomainEventHandler {
 
 	private final AuthDomainService authDomainService;
 
-	public LoginEventHandler(DomainEventPublisher domainEventPublisher, AuthDomainService authDomainService,
-			Tracer tracer) {
+	public LoginEventHandler(DomainEventPublisher domainEventPublisher, AuthDomainService authDomainService) {
 		super(domainEventPublisher);
 		this.authDomainService = authDomainService;
 	}

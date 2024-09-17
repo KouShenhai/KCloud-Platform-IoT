@@ -23,8 +23,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-
 /**
  * @author laokou
  */
@@ -36,12 +34,12 @@ public class TraceUtil {
 
 	public String getTraceId() {
 		TraceContext context = getContext();
-		return ObjectUtil.isNull(context) ? EMPTY : context.traceId();
+		return ObjectUtil.isNull(context) ? MDCUtil.getTraceId() : context.traceId();
 	}
 
 	public String getSpanId() {
 		TraceContext context = getContext();
-		return ObjectUtil.isNull(context) ? EMPTY : context.spanId();
+		return ObjectUtil.isNull(context) ? MDCUtil.getSpanId() : context.spanId();
 	}
 
 	private TraceContext getContext() {

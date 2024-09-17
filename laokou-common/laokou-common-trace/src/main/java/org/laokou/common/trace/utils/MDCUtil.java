@@ -33,6 +33,14 @@ public class MDCUtil {
 		MDC.put(SPAN_ID, spanId);
 	}
 
+	public static String getTraceId() {
+		return MDC.get(TRACE_ID);
+	}
+
+	public static String getSpanId() {
+		return MDC.get(SPAN_ID);
+	}
+
 	public static void clear() {
 		MDC.clear();
 	}

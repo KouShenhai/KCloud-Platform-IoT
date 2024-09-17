@@ -50,11 +50,10 @@ public class ApiLogPageQryExe {
 	public Result<Page<ApiLogCO>> execute(ApiLogPageQry qry) {
 		CompletableFuture<List<ApiLogDO>> c1 = CompletableFuture
 			.supplyAsync(() -> apiLogMapper.selectObjectPage(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> apiLogMapper.selectObjectCount(qry),
-			executor);
+		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> apiLogMapper.selectObjectCount(qry), executor);
 		return Result
 			.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(ApiLogConvertor::toClientObject).toList(),
-				c2.get(30, TimeUnit.SECONDS)));
+					c2.get(30, TimeUnit.SECONDS)));
 	}
 
 }

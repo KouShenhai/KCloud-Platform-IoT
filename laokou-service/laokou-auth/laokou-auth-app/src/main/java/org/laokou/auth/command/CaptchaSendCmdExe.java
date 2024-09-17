@@ -57,8 +57,9 @@ public class CaptchaSendCmdExe {
 				BizScenario.valueOf(cmd.getTag(), USE_CASE_CAPTCHA, SCENARIO),
 				extension -> extension.validate(cmd.getUuid()));
 		// 发布发送验证码事件
-		SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getTag(), cmd.getUuid(), LAOKOU_CAPTCHA_TOPIC,
-				cmd.getTag(), CAPTCHA, SpringContextUtil.getServiceId(), getSourceName(cmd.getTenantId()));
+		Long tenantId = cmd.getTenantId();
+		SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getUuid(), LAOKOU_CAPTCHA_TOPIC, cmd.getTag(),
+				CAPTCHA, SpringContextUtil.getServiceId(), getSourceName(tenantId), tenantId);
 		rocketMQDomainEventPublisher.publish(sendCaptchaEvent);
 	}
 

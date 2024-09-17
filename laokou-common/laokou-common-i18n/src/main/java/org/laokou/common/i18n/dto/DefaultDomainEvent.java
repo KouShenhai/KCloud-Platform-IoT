@@ -32,13 +32,8 @@ import java.time.Instant;
 @NoArgsConstructor
 public class DefaultDomainEvent extends DomainEvent<Long> {
 
-	@Override
-	protected void generatorId() {
-		super.id = System.currentTimeMillis();
-	}
-
 	protected DefaultDomainEvent(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
-			Instant timestamp) {
+			Instant instant) {
 		generatorId();
 		super.tenantId = aggregateRoot.getTenantId();
 		super.deptId = aggregateRoot.getDeptId();
@@ -51,12 +46,12 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.aggregateId = aggregateRoot.getId();
 		super.tag = tag;
 		super.topic = topic;
-		super.createTime = timestamp;
-		super.updateTime = timestamp;
+		super.createTime = instant;
+		super.updateTime = instant;
 	}
 
 	protected DefaultDomainEvent(String topic, String tag, EventType eventType, String serviceId, String sourceName,
-			Instant timestamp, Long aggregateId) {
+			Instant timestamp, Long aggregateId, Long tenantId) {
 		generatorId();
 		super.aggregateId = aggregateId;
 		super.eventType = eventType;
@@ -66,6 +61,12 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.updateTime = timestamp;
 		super.serviceId = serviceId;
 		super.sourceName = sourceName;
+		super.tenantId = tenantId;
+	}
+
+	@Override
+	protected void generatorId() {
+		super.id = System.currentTimeMillis();
 	}
 
 }

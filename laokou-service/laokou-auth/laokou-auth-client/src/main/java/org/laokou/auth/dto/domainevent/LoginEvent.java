@@ -79,15 +79,10 @@ public class LoginEvent extends DefaultDomainEvent {
 	 */
 	private String type;
 
-	@Override
-	public void generatorId() {
-		super.id = IdGenerator.defaultSnowflakeId();
-	}
-
 	public LoginEvent(String type, String errorMessage, Integer status, String browser, String os, String ip,
 			String address, String username, AggregateRoot<Long> aggregateRoot, String topic, String tag,
-			EventType eventType, Instant timestamp) {
-		super(aggregateRoot, topic, tag, eventType, timestamp);
+			EventType eventType, Instant instant) {
+		super(aggregateRoot, topic, tag, eventType, instant);
 		this.type = type;
 		this.errorMessage = errorMessage;
 		this.status = status;
@@ -96,6 +91,11 @@ public class LoginEvent extends DefaultDomainEvent {
 		this.ip = ip;
 		this.address = address;
 		this.username = username;
+	}
+
+	@Override
+	public void generatorId() {
+		super.id = IdGenerator.defaultSnowflakeId();
 	}
 
 }

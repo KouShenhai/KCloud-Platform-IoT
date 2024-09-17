@@ -31,15 +31,13 @@ import org.laokou.common.i18n.utils.DateUtil;
 @NoArgsConstructor
 public class SendCaptchaEvent extends DefaultDomainEvent {
 
-	private String captchaTag;
-
 	private String uuid;
 
-	public SendCaptchaEvent(String uuid, String captchaTag, String topic, String tag, EventType eventType,
-			String serviceId, String sourceName) {
-		super(topic, tag, eventType, serviceId, sourceName, DateUtil.nowInstant(), IdGenerator.defaultSnowflakeId());
+	public SendCaptchaEvent(String uuid, String topic, String tag, EventType eventType, String serviceId,
+			String sourceName, Long tenantId) {
+		super(topic, tag, eventType, serviceId, sourceName, DateUtil.nowInstant(), IdGenerator.defaultSnowflakeId(),
+				tenantId);
 		this.uuid = uuid;
-		this.captchaTag = captchaTag;
 	}
 
 	@Override

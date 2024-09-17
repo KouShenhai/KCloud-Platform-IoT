@@ -62,7 +62,7 @@ public abstract class ApiLog extends DTO {
 	/*
 	 * 时间戳.
 	 */
-	private Instant timestamp;
+	private Instant instant;
 
 	protected abstract String getApiCode();
 
@@ -75,7 +75,7 @@ public abstract class ApiLog extends DTO {
 		this.status = status;
 		this.remark = remark;
 		this.errorMessage = errorMessage;
-		this.timestamp = DateUtil.nowInstant();
+		this.instant = DateUtil.nowInstant();
 	}
 
 }
