@@ -33,7 +33,7 @@ export default () => {
 		createTime: string | undefined;
 	};
 
-	const loginLogList: TableColumns[] = []
+	let loginLogList: TableColumns[]
 
 	const getPageQuery = (params: any) => {
 		return {
@@ -69,7 +69,7 @@ export default () => {
 			return "邮箱登录"
 		} else if (type === "mobile") {
 			return "手机号登录";
-		} else {
+		} else if (type === "authorization_code") {
 			return "授权码登录";
 		}
 	}
@@ -94,6 +94,7 @@ export default () => {
 	}
 
 	const listLoginLog = async (params: any) => {
+		loginLogList = []
 		return pageV3(getPageQuery(params)).then(res => {
 			res?.data?.records?.forEach((item: TableColumns) => {
 				item.status = statusEnum[item.status as '0'];
