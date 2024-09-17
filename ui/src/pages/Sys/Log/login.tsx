@@ -1,10 +1,11 @@
 import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {pageV3} from "@/services/admin/loginLog";
+import {exportV3, pageV3} from "@/services/admin/loginLog";
 import {Button} from "antd";
 import {DeleteOutlined, ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
 import {Excel, ExportToExcel} from "@/utils/export";
+import moment from "moment";
 
 export default () => {
 
@@ -34,9 +35,10 @@ export default () => {
 	};
 
 	let loginLogList: TableColumns[]
+	let loginLogParam: any
 
 	const getPageQuery = (params: any) => {
-		return {
+		loginLogParam = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			username: trim(params?.username),
@@ -52,6 +54,7 @@ export default () => {
 				endDate: params?.endDate
 			}
 		};
+		return loginLogParam;
 	}
 
 	const getStatusDesc = (status: string | undefined) => {
@@ -87,10 +90,14 @@ export default () => {
 			sheetData: list,
 			sheetFilter: ["username", "ip", "address", "browser", "os", "status", "errorMessage", "type", "createTime"],
 			sheetHeader: ["用户名", "IP地址", "归属地", "浏览器", "操作系统", "登录状态", "错误信息", "登录类型", "登录日期"],
-			fileName: "登录日志",
+			fileName: "登录日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
 			sheetName: "登录日志"
 		}
 		ExportToExcel(params)
+	}
+
+	const exportAllToExcel = async () => {
+		await exportV3(loginLogParam)
 	}
 
 	const listLoginLog = async (params: any) => {
@@ -103,7 +110,7 @@ export default () => {
 			});
 			return Promise.resolve({
 				data: loginLogList,
-				total: res.data.total,
+				total: parseInt(res.data.total),
 				success: true,
 			});
 		})
@@ -209,7 +216,7 @@ export default () => {
 					<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={exportToExcel}>
 						导出
 					</Button>,
-					<Button key="exportAll" type="primary" icon={<ExportOutlined/>}>
+					<Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={exportAllToExcel}>
 						导出全部
 					</Button>
 				]

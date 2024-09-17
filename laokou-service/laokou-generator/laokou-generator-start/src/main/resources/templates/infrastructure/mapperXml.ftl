@@ -20,7 +20,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${packageName}.${instanceName}.gatewayimpl.database.${className}Mapper">
 
-	<select id="selectPageByCondition"
+	<select id="selectObjPage"
 			resultType="${packageName}.${instanceName}.gatewayimpl.database.dataobject.${className}DO">
 		SELECT *
 		from ${name}
@@ -29,7 +29,7 @@
 		limit ${pageQuery}.pageSize} OFFSET ${pageQuery}.pageIndex}
 	</select>
 
-	<select id="selectCountByCondition" resultType="long">
+	<select id="selectObjCount" resultType="long">
 		SELECT count(1)
 		from ${name}
 		where del_flag = 0

@@ -125,8 +125,7 @@ export const request: {
 			if (code === 'ERR_BAD_RESPONSE') {
 				errorMessage = '网络请求错误，请稍后再试'
 			}
-			message.error(errorMessage).then(() => {
-			});
+			message.error(errorMessage).then();
 		},
 		errorThrower() {
 		},
@@ -160,8 +159,7 @@ export const request: {
 			if (status === 200 && data.code === undefined) {
 				response.data = {code: 'OK', msg: '请求成功', data: data};
 			} else if (status === 200 && data.code !== 'OK') {
-				message.error(data.msg).then(() => {
-				});
+				message.error(data.msg).then();
 			}
 			return response;
 		},

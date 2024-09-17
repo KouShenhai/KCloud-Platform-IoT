@@ -18,7 +18,7 @@
 package org.laokou.admin.domainEvent.dto;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * 导出领域事件命令.
@@ -26,6 +26,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-public class DomainEventExportCmd extends CommonCommand {
+public class DomainEventExportCmd extends PageQuery {
 
 }

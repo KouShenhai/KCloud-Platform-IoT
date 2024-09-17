@@ -20,7 +20,11 @@ package org.laokou.common.core.utils;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.Assert;
 import org.springframework.util.MimeTypeUtils;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -46,6 +50,16 @@ public final class ResponseUtil {
 			writer.write(JacksonUtil.toJsonStr(obj));
 			writer.flush();
 		}
+	}
+
+	/**
+	 * 获取请求对象.
+	 * @return 请求对象
+	 */
+	public static HttpServletResponse getHttpServletResponse() {
+		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+		Assert.notNull(requestAttributes, "requestAttributes not be null");
+		return ((ServletRequestAttributes) requestAttributes).getResponse();
 	}
 
 }

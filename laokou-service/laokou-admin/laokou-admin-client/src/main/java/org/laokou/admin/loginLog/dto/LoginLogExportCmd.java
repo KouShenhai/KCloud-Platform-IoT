@@ -19,7 +19,6 @@ package org.laokou.admin.loginLog.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * 导出登录日志命令.
@@ -28,6 +27,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
  */
 @Data
 @NoArgsConstructor
-public class LoginLogExportCmd extends CommonCommand {
+public class LoginLogExportCmd extends LoginLogPageQry {
 
 }

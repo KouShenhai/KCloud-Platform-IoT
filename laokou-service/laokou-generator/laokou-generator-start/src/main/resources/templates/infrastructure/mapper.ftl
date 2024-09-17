@@ -36,9 +36,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Repository
 public interface ${className}Mapper extends CrudMapper<Long, Integer, ${className}DO> {
 
-	List<${className}DO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
-
-	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
+	List<${className}DO> selectObjPage(@Param("pageQuery") PageQuery pageQuery);
 
 }
 // @formatter:on

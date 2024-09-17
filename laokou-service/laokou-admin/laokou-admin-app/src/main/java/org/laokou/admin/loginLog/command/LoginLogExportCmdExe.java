@@ -18,7 +18,12 @@
 package org.laokou.admin.loginLog.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.loginLog.convertor.LoginLogConvertor;
 import org.laokou.admin.loginLog.dto.LoginLogExportCmd;
+import org.laokou.admin.loginLog.dto.excel.LoginLogExcel;
+import org.laokou.admin.loginLog.gatewayimpl.database.LoginLogMapper;
+import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.excel.utils.ExcelUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,8 +35,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoginLogExportCmdExe {
 
+	private final LoginLogMapper loginLogMapper;
+
 	public void executeVoid(LoginLogExportCmd cmd) {
 		// 校验参数
+		ExcelUtil.doExport(ResponseUtil.getHttpServletResponse(), "登录日志", cmd, loginLogMapper, LoginLogExcel.class,
+				LoginLogConvertor.INSTANCE);
 	}
 
 }

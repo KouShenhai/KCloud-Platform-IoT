@@ -1,6 +1,8 @@
 // @ts-ignore
 /* eslint-disable */
 import {request} from '@umijs/max';
+import {ExportAllToExcel} from "@/utils/export";
+import moment from "moment/moment";
 
 /** 修改登录日志 修改登录日志 PUT /v3/login-logs */
 export async function modifyV3(body: API.LoginLogModifyCmd, options?: { [key: string]: any }) {
@@ -54,14 +56,7 @@ export async function getByIdV3(
 
 /** 导出登录日志 导出登录日志 POST /v3/login-logs/export */
 export async function exportV3(body: API.LoginLogExportCmd, options?: { [key: string]: any }) {
-	return request<any>('/api/admin/v3/login-logs/export', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		data: body,
-		...(options || {}),
-	});
+	ExportAllToExcel("登录日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/api/admin/v3/login-logs/export', 'POST', body, options)
 }
 
 /** 导入登录日志 导入登录日志 POST /v3/login-logs/import */

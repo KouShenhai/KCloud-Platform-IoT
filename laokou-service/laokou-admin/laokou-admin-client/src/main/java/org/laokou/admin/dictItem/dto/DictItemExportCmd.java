@@ -19,7 +19,7 @@ package org.laokou.admin.dictItem.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * 导出字典项命令.
@@ -28,6 +28,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
  */
 @Data
 @NoArgsConstructor
-public class DictItemExportCmd extends CommonCommand {
+public class DictItemExportCmd extends PageQuery {
 
 }

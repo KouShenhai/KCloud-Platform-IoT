@@ -35,8 +35,6 @@ import java.util.List;
 @Repository
 public interface LoginLogMapper extends CrudMapper<Long, Integer, LoginLogDO> {
 
-	List<LoginLogDO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
-
-	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
+	List<LoginLogDO> selectObjPage(@Param("pageQuery") PageQuery pageQuery);
 
 }

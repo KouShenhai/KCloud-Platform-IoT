@@ -19,7 +19,7 @@ package org.laokou.admin.role.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * 导出角色命令.
@@ -28,6 +28,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
  */
 @Data
 @NoArgsConstructor
-public class RoleExportCmd extends CommonCommand {
+public class RoleExportCmd extends PageQuery {
 
 }
