@@ -19,6 +19,10 @@ package org.laokou.admin.loginLog.dto.excel;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.alibaba.excel.annotation.write.style.ContentStyle;
+import com.alibaba.excel.enums.BooleanEnum;
+import com.alibaba.excel.enums.poi.HorizontalAlignmentEnum;
+import com.alibaba.excel.enums.poi.VerticalAlignmentEnum;
 import lombok.Data;
 import org.laokou.common.i18n.dto.DTO;
 
@@ -32,6 +36,8 @@ public class LoginLogExcel extends DTO {
 	 * 登录的用户名.
 	 */
 	@ColumnWidth(30)
+	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
+			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
 	@ExcelProperty(value = "用户名称", index = 0)
 	private String username;
 
@@ -39,6 +45,8 @@ public class LoginLogExcel extends DTO {
 	 * 登录的IP地址.
 	 */
 	@ColumnWidth(30)
+	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
+			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
 	@ExcelProperty(value = "登录地址", index = 1)
 	private String ip;
 
@@ -46,6 +54,8 @@ public class LoginLogExcel extends DTO {
 	 * 登录的归属地.
 	 */
 	@ColumnWidth(30)
+	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
+			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
 	@ExcelProperty(value = "登录地点", index = 2)
 	private String address;
 
@@ -53,6 +63,8 @@ public class LoginLogExcel extends DTO {
 	 * 登录的浏览器.
 	 */
 	@ColumnWidth(30)
+	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
+			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
 	@ExcelProperty(value = "浏览器", index = 3)
 	private String browser;
 
@@ -60,6 +72,8 @@ public class LoginLogExcel extends DTO {
 	 * 登录的操作系统.
 	 */
 	@ColumnWidth(30)
+	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
+			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
 	@ExcelProperty(value = "操作系统", index = 4)
 	private String os;
 
@@ -67,6 +81,8 @@ public class LoginLogExcel extends DTO {
 	 * 登录状态 0登录成功 1登录失败.
 	 */
 	@ColumnWidth(30)
+	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
+			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
 	@ExcelProperty(value = "登录状态", index = 5)
 	private String status;
 
@@ -74,6 +90,8 @@ public class LoginLogExcel extends DTO {
 	 * 错误信息.
 	 */
 	@ColumnWidth(30)
+	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
+			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
 	@ExcelProperty(value = "错误信息", index = 6)
 	private String errorMessage;
 
@@ -81,6 +99,8 @@ public class LoginLogExcel extends DTO {
 	 * 登录类型.
 	 */
 	@ColumnWidth(30)
+	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
+			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
 	@ExcelProperty(value = "登录类型", index = 7)
 	private String type;
 
@@ -88,6 +108,8 @@ public class LoginLogExcel extends DTO {
 	 * 登录日期.
 	 */
 	@ColumnWidth(30)
+	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
+			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
 	@ExcelProperty(value = "登录日期", index = 8)
 	private String createTime;
 

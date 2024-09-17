@@ -35,13 +35,15 @@ import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAIL
  * @author laokou
  */
 @NonNullApi
-public class TraceRequestFilter extends OncePerRequestFilter {
+public class UsernamePasswordFilter extends OncePerRequestFilter {
+
+	public static final UsernamePasswordFilter INSTANCE = new UsernamePasswordFilter();
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 		if (ShutdownHolder.status()) {
-			ResponseUtil.response(response, Result.fail(SERVICE_UNAVAILABLE));
+			ResponseUtil.responseOk(response, Result.fail(SERVICE_UNAVAILABLE));
 			return;
 		}
 		chain.doFilter(request, response);

@@ -115,7 +115,7 @@ class OAuth2AuthorizationServerConfig {
 			.oidc(Customizer.withDefaults())
 			.authorizationService(authorizationService)
 			.authorizationServerSettings(authorizationServerSettings);
-		return http.addFilterBefore(new TraceRequestFilter(), UsernamePasswordAuthenticationFilter.class)
+		return http.addFilterBefore(UsernamePasswordFilter.INSTANCE, UsernamePasswordAuthenticationFilter.class)
 			.exceptionHandling(configurer -> configurer
 				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))).build();
 	}

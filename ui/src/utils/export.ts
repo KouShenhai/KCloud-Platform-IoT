@@ -37,28 +37,23 @@ export function ExportAllToExcel(fileName: string, url: string, method: string, 
 		},
 		data: body,
 		...(options || {}),
-	}).then(res => {
+	}).then((res: { data: BlobPart; }) => {
 		const blob = new Blob([res.data])
 		//将blob格式的响应数据转换为原本的格式，方便判断接口是否返回报错信息
 		let reader = new FileReader()
 		reader.readAsText(blob)
-		reader.onload = e => {
+		reader.onload = () => {
 			// @ts-ignore
-			if (e?.target?.result?.indexOf('"statusCode"') >= 0) {
-				message.error(JSON.parse(<string>e?.target?.result).message).then()
-			} else {
-				// @ts-ignore
-				const link = document.createElement('a')
-				link.download = fileName
-				link.style.display = 'none'
-				link.href = URL.createObjectURL(blob)
-				document.body.appendChild(link)
-				link.click()
-				// @ts-ignore
-				URL.revokeObjectURL(link)
-				document.body.removeChild(link)
-				message.success('导出成功').then()
-			}
+			const link = document.createElement('a')
+			link.download = fileName
+			link.style.display = 'none'
+			link.href = URL.createObjectURL(blob)
+			document.body.appendChild(link)
+			link.click()
+			// @ts-ignore
+			URL.revokeObjectURL(link)
+			document.body.removeChild(link)
+			message.success('导出成功').then()
 		}
 	});
 }

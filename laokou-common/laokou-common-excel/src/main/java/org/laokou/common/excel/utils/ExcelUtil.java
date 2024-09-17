@@ -29,6 +29,7 @@ import com.alibaba.excel.enums.poi.VerticalAlignmentEnum;
 import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.util.ListUtils;
 import com.alibaba.excel.write.metadata.WriteSheet;
+import com.google.common.collect.Lists;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -56,6 +57,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.DROP;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * Excel工具类.
@@ -67,12 +69,14 @@ public class ExcelUtil {
 
 	private static final int DEFAULT_SIZE = 1000;
 
-	public static <M, T> void doImport(InputStream inputStream, HttpServletResponse response, Class<M> clazz,
-			BiConsumer<M, T> consumer, MybatisUtil mybatisUtil) {
-		EasyExcel.read(inputStream, new DataListener<>(clazz, consumer, response, mybatisUtil)).sheet().doRead();
+	public static <M, T> void doImport(String fileName, InputStream inputStream, HttpServletResponse response,
+			Class<M> clazz, BiConsumer<M, T> consumer, MybatisUtil mybatisUtil) {
+		EasyExcel.read(inputStream, new DataListener<>(clazz, consumer, response, mybatisUtil, fileName))
+			.sheet()
+			.doRead();
 	}
 
-	public static <EXCEL, DO extends BaseDO> void doExport(HttpServletResponse response, String fileName,
+	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, HttpServletResponse response,
 			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
 			ExcelConvert<DO, EXCEL> convertor) {
 		doExport(fileName, DEFAULT_SIZE, response, pageQuery, crudMapper, clazz, convertor);
@@ -86,10 +90,10 @@ public class ExcelUtil {
 				ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
 			// 设置请求头
 			header(fileName, response);
-			if (crudMapper.selectObjCount(pageQuery) > 0) {
+			if (crudMapper.selectObjectCount(pageQuery) > 0) {
 				// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
-				crudMapper.selectObjList(pageQuery, resultContext -> {
+				crudMapper.selectObjectList(pageQuery, resultContext -> {
 					list.add(resultContext.getResultObject());
 					if (list.size() % size == 0) {
 						writeSheet(list, clazz, convertor, excelWriter);
@@ -153,6 +157,8 @@ public class ExcelUtil {
 		 */
 		private final int batchCount;
 
+		private final String fileName;
+
 		private final HttpServletResponse response;
 
 		private final MybatisUtil mybatisUtil;
@@ -161,14 +167,16 @@ public class ExcelUtil {
 
 		private final BiConsumer<M, T> consumer;
 
-		DataListener(Class<M> clazz, BiConsumer<M, T> consumer, HttpServletResponse response, MybatisUtil mybatisUtil) {
-			this(clazz, consumer, BATCH_COUNT, response, mybatisUtil);
+		DataListener(Class<M> clazz, BiConsumer<M, T> consumer, HttpServletResponse response, MybatisUtil mybatisUtil,
+				String fileName) {
+			this(clazz, consumer, BATCH_COUNT, fileName, response, mybatisUtil);
 		}
 
-		DataListener(Class<M> clazz, BiConsumer<M, T> consumer, int batchCount, HttpServletResponse response,
-				MybatisUtil mybatisUtil) {
+		DataListener(Class<M> clazz, BiConsumer<M, T> consumer, int batchCount, String fileName,
+				HttpServletResponse response, MybatisUtil mybatisUtil) {
 			this.batchCount = batchCount;
 			this.clazz = clazz;
+			this.fileName = fileName;
 			this.response = response;
 			this.ERRORS = new ArrayList<>();
 			this.CACHED_DATA_LIST = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
@@ -206,24 +214,37 @@ public class ExcelUtil {
 				mybatisUtil.batch(CACHED_DATA_LIST, clazz, consumer);
 			}
 			// 写入excel
-			// try (ServletOutputStream out = response.getOutputStream();
-			// ExcelWriter excelWriter = EasyExcel.write(out, Error.class).build()) {
-			// 设置请求头
-			// header(EMPTY, response);
-			// if (CollectionUtil.isEmpty(ERRORS)) {
-			// excelWriter.write(Collections.singletonList(new Error(EMPTY)),
-			// EasyExcel.writerSheet().head(Error.class).build());
-			// } else {
-			// List<List<String>> partition = Lists.partition(ERRORS, BATCH_COUNT);
-			// partition.forEach(item -> writeSheet(item, Error.class, excelWriter));
-			// }
-			// 刷新数据
-			// excelWriter.finish();
-			// }
+			try (ServletOutputStream out = response.getOutputStream();
+					ExcelWriter excelWriter = EasyExcel.write(out, Error.class).build()) {
+				// 设置请求头
+				header(fileName, response);
+				if (CollectionUtil.isEmpty(ERRORS)) {
+					excelWriter.write(Collections.singletonList(new Error(EMPTY)),
+							EasyExcel.writerSheet().head(Error.class).build());
+				}
+				else {
+					List<List<String>> partition = Lists.partition(ERRORS, BATCH_COUNT);
+					partition
+						.forEach(item -> writeSheet(item, Error.class, ImportExcelConvertor.INSTANCE, excelWriter));
+				}
+				// 刷新数据
+				excelWriter.finish();
+			}
 		}
 
 		private String template(int num, String msg) {
 			return String.format("第%s行，%s", num, msg);
+		}
+
+	}
+
+	private static class ImportExcelConvertor implements ExcelConvert<String, Error> {
+
+		public static final ImportExcelConvertor INSTANCE = new ImportExcelConvertor();
+
+		@Override
+		public List<Error> toExcelList(List<String> list) {
+			return list.stream().map(Error::new).toList();
 		}
 
 	}

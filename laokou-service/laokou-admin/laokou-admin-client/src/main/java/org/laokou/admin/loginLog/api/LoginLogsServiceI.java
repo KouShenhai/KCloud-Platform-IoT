@@ -71,4 +71,6 @@ public interface LoginLogsServiceI {
 	 */
 	Result<LoginLogCO> getById(LoginLogGetQry qry);
 
+	void truncate();
+
 }

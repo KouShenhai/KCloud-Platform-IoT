@@ -42,8 +42,13 @@ public final class ResponseUtil {
 	 * @param obj 对象
 	 */
 	@SneakyThrows
-	public static void response(HttpServletResponse response, Object obj) {
+	public static void responseOk(HttpServletResponse response, Object obj) {
 		response.setStatus(HttpStatus.OK.value());
+		response(response, obj);
+	}
+
+	@SneakyThrows
+	private static void response(HttpServletResponse response, Object obj) {
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
 		try (PrintWriter writer = response.getWriter()) {

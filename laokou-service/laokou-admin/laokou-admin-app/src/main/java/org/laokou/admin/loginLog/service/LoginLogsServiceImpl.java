@@ -51,6 +51,8 @@ public class LoginLogsServiceImpl implements LoginLogsServiceI {
 
 	private final LoginLogGetQryExe loginLogGetQryExe;
 
+	private final LoginLogTruncateCmdExe loginLogTruncateCmdExe;
+
 	@Override
 	public void save(LoginLogSaveCmd cmd) {
 		loginLogSaveCmdExe.executeVoid(cmd);
@@ -84,6 +86,11 @@ public class LoginLogsServiceImpl implements LoginLogsServiceI {
 	@Override
 	public Result<LoginLogCO> getById(LoginLogGetQry qry) {
 		return loginLogGetQryExe.execute(qry);
+	}
+
+	@Override
+	public void truncate() {
+		loginLogTruncateCmdExe.executeVoid();
 	}
 
 }

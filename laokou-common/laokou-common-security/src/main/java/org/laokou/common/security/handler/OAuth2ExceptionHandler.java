@@ -50,7 +50,7 @@ public class OAuth2ExceptionHandler {
 	@SneakyThrows
 	public static void handleAccessDenied(HttpServletResponse response, Throwable ex) {
 		if (ex instanceof AccessDeniedException) {
-			ResponseUtil.response(response, Result.fail(StatusCode.FORBIDDEN));
+			ResponseUtil.responseOk(response, Result.fail(StatusCode.FORBIDDEN));
 		}
 	}
 
@@ -59,11 +59,11 @@ public class OAuth2ExceptionHandler {
 		if (ex instanceof OAuth2AuthenticationException authenticationException) {
 			String msg = authenticationException.getError().getDescription();
 			String code = authenticationException.getError().getErrorCode();
-			ResponseUtil.response(response, Result.fail(code, msg));
+			ResponseUtil.responseOk(response, Result.fail(code, msg));
 			return;
 		}
 		if (ex instanceof InsufficientAuthenticationException) {
-			ResponseUtil.response(response, Result.fail(StatusCode.UNAUTHORIZED));
+			ResponseUtil.responseOk(response, Result.fail(StatusCode.UNAUTHORIZED));
 		}
 	}
 

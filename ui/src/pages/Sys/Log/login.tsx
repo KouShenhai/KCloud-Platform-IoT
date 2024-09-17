@@ -1,11 +1,12 @@
 import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {exportV3, pageV3} from "@/services/admin/loginLog";
-import {Button} from "antd";
+import {exportV3, pageV3, removeV3, truncateV3} from "@/services/admin/loginLog";
+import {Button, message, Modal} from "antd";
 import {DeleteOutlined, ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
 import {Excel, ExportToExcel} from "@/utils/export";
 import moment from "moment";
+import {useRef, useState} from "react";
 
 export default () => {
 
@@ -34,7 +35,12 @@ export default () => {
 		createTime: string | undefined;
 	};
 
+	const actionRef = useRef();
+
+	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
 	let loginLogList: TableColumns[]
+
 	let loginLogParam: any
 
 	const getPageQuery = (params: any) => {
@@ -97,7 +103,7 @@ export default () => {
 	}
 
 	const exportAllToExcel = async () => {
-		await exportV3(loginLogParam)
+		exportV3(loginLogParam)
 	}
 
 	const listLoginLog = async (params: any) => {
@@ -114,6 +120,45 @@ export default () => {
 				success: true,
 			});
 		})
+	}
+
+	const rowSelection = {
+		onChange: (selectedRowKeys: any) => {
+			setSelectedRowKeys(selectedRowKeys);
+		}
+	};
+
+	const truncateLoginLog = async () => {
+		Modal.confirm({
+			title: '确认清空?',
+			content: '您确定要清空数据吗?',
+			okText: '确认',
+			cancelText: '取消',
+			onOk: async () => {
+				truncateV3().then(() => {
+					message.success("数据已清空").then()
+					// @ts-ignore
+					actionRef?.current?.reload();
+				})
+			},
+		});
+	}
+
+	const deleteLoginLog = async () => {
+		Modal.confirm({
+			title: '确认删除?',
+			content: '您确定要删除吗?',
+			okText: '确认',
+			cancelText: '取消',
+			onOk: async () => {
+				removeV3(selectedRowKeys).then(() => {
+					message.success("删除成功").then()
+					// @ts-ignore
+					actionRef?.current?.reload();
+				})
+				setSelectedRowKeys([])
+			},
+		});
 	}
 
 	const columns: ProColumns<TableColumns>[] = [
@@ -188,8 +233,10 @@ export default () => {
 		}
 	];
 
+	// @ts-ignore
 	return (
 		<ProTable<TableColumns>
+			actionRef={actionRef}
 			columns={columns}
 			request={(params) => {
 				// 表单搜索项会从 params 传入，传递给后端接口。
@@ -207,10 +254,10 @@ export default () => {
 			}}
 			toolBarRender={
 				() => [
-					<Button key="delete" danger ghost icon={<DeleteOutlined/>}>
+					<Button key="delete" danger ghost icon={<DeleteOutlined/>} onClick={deleteLoginLog}>
 						删除
 					</Button>,
-					<Button key="truncate" type="primary" danger icon={<DeleteOutlined/>}>
+					<Button key="truncate" type="primary" danger icon={<DeleteOutlined/>} onClick={truncateLoginLog}>
 						清空
 					</Button>,
 					<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={exportToExcel}>
@@ -220,6 +267,10 @@ export default () => {
 						导出全部
 					</Button>
 				]
+			}
+			rowSelection={
+				// 自定义选择项参考: https://ant.design/components/table-cn/#components-table-demo-row-selection-custom
+				rowSelection
 			}
 			dateFormatter="string"
 			toolbar={{

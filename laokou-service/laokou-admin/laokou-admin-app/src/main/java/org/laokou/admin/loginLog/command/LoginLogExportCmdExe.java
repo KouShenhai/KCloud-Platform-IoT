@@ -39,7 +39,7 @@ public class LoginLogExportCmdExe {
 
 	public void executeVoid(LoginLogExportCmd cmd) {
 		// 校验参数
-		ExcelUtil.doExport(ResponseUtil.getHttpServletResponse(), "登录日志", cmd, loginLogMapper, LoginLogExcel.class,
+		ExcelUtil.doExport("登录日志", ResponseUtil.getHttpServletResponse(), cmd, loginLogMapper, LoginLogExcel.class,
 				LoginLogConvertor.INSTANCE);
 	}
 

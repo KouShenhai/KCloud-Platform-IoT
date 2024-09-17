@@ -24,6 +24,7 @@ import org.laokou.admin.loginLog.gateway.LoginLogGateway;
 import org.laokou.admin.loginLog.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.loginLog.model.LoginLogE;
+import org.laokou.common.core.utils.ArrayUtil;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
@@ -67,7 +68,12 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 	public void delete(Long[] ids) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				loginLogMapper.deleteByIds(Arrays.asList(ids));
+				if (ArrayUtil.isNotEmpty(ids)) {
+					loginLogMapper.deleteByIds(Arrays.asList(ids));
+				}
+				else {
+					loginLogMapper.deleteAll();
+				}
 			}
 			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());

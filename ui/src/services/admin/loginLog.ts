@@ -55,7 +55,7 @@ export async function getByIdV3(
 }
 
 /** 导出登录日志 导出登录日志 POST /v3/login-logs/export */
-export async function exportV3(body: API.LoginLogExportCmd, options?: { [key: string]: any }) {
+export function exportV3(body: API.LoginLogExportCmd, options?: { [key: string]: any }) {
 	ExportAllToExcel("登录日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/api/admin/v3/login-logs/export', 'POST', body, options)
 }
 
@@ -99,6 +99,16 @@ export async function pageV3(body: API.LoginLogPageQry, options?: { [key: string
 			'Content-Type': 'application/json',
 		},
 		data: body,
+		...(options || {}),
+	});
+}
+
+export async function truncateV3(options?: { [key: string]: any }) {
+	return request<API.Result>('/api/admin/v3/login-logs/truncate', {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json',
+		},
 		...(options || {}),
 	});
 }

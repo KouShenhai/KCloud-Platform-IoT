@@ -15,26 +15,24 @@
  *
  */
 
-package org.laokou.admin.loginLog.gatewayimpl.database;
+package org.laokou.admin.loginLog.command;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.loginLog.gatewayimpl.database.LoginLogMapper;
+import org.springframework.stereotype.Component;
 
 /**
- * 登录日志数据库映射.
- *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface LoginLogMapper extends CrudMapper<Long, Integer, LoginLogDO> {
 
-	List<LoginLogDO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
+@Component
+@RequiredArgsConstructor
+public class LoginLogTruncateCmdExe {
+
+	private final LoginLogMapper loginLogMapper;
+
+	public void executeVoid() {
+		loginLogMapper.truncateTable();
+	}
 
 }

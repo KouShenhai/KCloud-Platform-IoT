@@ -49,8 +49,9 @@ public class LoginLogPageQryExe {
 	@SneakyThrows
 	public Result<Page<LoginLogCO>> execute(LoginLogPageQry qry) {
 		CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture
-			.supplyAsync(() -> loginLogMapper.selectObjPage(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> loginLogMapper.selectObjCount(qry), executor);
+			.supplyAsync(() -> loginLogMapper.selectObjectPage(qry.index()), executor);
+		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> loginLogMapper.selectObjectCount(qry),
+				executor);
 		return Result
 			.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(LoginLogConvertor::toClientObject).toList(),
 					c2.get(30, TimeUnit.SECONDS)));

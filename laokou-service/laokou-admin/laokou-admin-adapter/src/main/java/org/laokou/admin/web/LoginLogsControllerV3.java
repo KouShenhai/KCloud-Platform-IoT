@@ -107,4 +107,12 @@ public class LoginLogsControllerV3 {
 		return loginLogsServiceI.getById(new LoginLogGetQry(id));
 	}
 
+	@DeleteMapping("truncate")
+	@PreAuthorize("hasAuthority('sys:login-log:truncate')")
+	@OperateLog(module = "登录日志管理", operation = "清空登录日志")
+	@Operation(summary = "清空登录日志", description = "清空登录日志")
+	public void truncateV3() {
+		loginLogsServiceI.truncate();
+	}
+
 }
