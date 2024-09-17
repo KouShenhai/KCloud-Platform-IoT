@@ -18,7 +18,6 @@
 package org.laokou.common.mybatisplus.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -26,9 +25,10 @@ import org.laokou.common.i18n.dto.PageQuery;
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
+ * 增删改查Mapper.
+ *
  * @author laokou
  */
-@Schema(name = "增删改查Mapper", description = "增删改查Mapper")
 public interface CrudMapper<ID, VERSION, DO> extends BaseMapper<DO> {
 
 	VERSION selectVersion(ID id);

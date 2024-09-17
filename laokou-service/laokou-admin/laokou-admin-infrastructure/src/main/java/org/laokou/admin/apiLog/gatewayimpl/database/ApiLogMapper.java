@@ -35,8 +35,6 @@ import java.util.List;
 @Repository
 public interface ApiLogMapper extends CrudMapper<Long, Integer, ApiLogDO> {
 
-	List<ApiLogDO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
-
-	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
+	List<ApiLogDO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
 
 }

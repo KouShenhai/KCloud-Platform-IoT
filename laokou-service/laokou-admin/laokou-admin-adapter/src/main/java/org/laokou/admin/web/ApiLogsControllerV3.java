@@ -66,7 +66,6 @@ public class ApiLogsControllerV3 {
 		apiLogsServiceI.modify(cmd);
 	}
 
-	@ApiSecret
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:api-log:remove')")
 	@OperateLog(module = "Api日志管理", operation = "删除Api日志")
