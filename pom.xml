@@ -485,19 +485,7 @@
           <exclude>log4j2*.xml</exclude>
           <exclude>*.json</exclude>
           <exclude>*.properties</exclude>
-          <exclude>*.html</exclude>
-        </excludes>
-      </resource>
-      <resource>
-        <directory>src/main/resources/img</directory>
-        <excludes>
-          <exclude>**</exclude>
-        </excludes>
-      </resource>
-      <resource>
-        <directory>src/main/resources/webjars</directory>
-        <excludes>
-          <exclude>**</exclude>
+          <exclude>*.crt</exclude>
         </excludes>
       </resource>
       <!-- 添加需要包含的文件 -->
@@ -515,38 +503,6 @@
           <include>init_router.json</include>
           <include>log4j2.component.properties</include>
         </includes>
-      </resource>
-      <resource>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>doc.html</include>
-        </includes>
-        <targetPath>META-INF/resources</targetPath>
-      </resource>
-      <resource>
-        <directory>src/main/resources/img</directory>
-        <includes>
-          <include>**/*.png</include>
-          <include>**/*.svg</include>
-        </includes>
-        <targetPath>META-INF/resources/img</targetPath>
-      </resource>
-      <resource>
-        <directory>src/main/resources/webjars</directory>
-        <includes>
-          <include>**/*.css</include>
-          <include>**/*.js</include>
-          <include>**/*.css.gz</include>
-          <include>**/*.js.gz</include>
-          <include>**/*.html</include>
-          <include>**/*.eot</include>
-          <include>**/*.woff2</include>
-          <include>**/*.ttf</include>
-          <include>**/*.woff</include>
-          <include>**/*.gif</include>
-          <include>**/*.svg</include>
-        </includes>
-        <targetPath>META-INF/resources/webjars</targetPath>
       </resource>
     </resources>
   </build>

@@ -3,6 +3,8 @@ import {ProTable} from '@ant-design/pro-components';
 import {pageV3} from "@/services/admin/loginLog";
 import {Button} from "antd";
 import {DeleteOutlined, ExportOutlined} from "@ant-design/icons";
+import {trim} from "@/utils/format";
+import {Excel, ExportToExcel} from "@/utils/export";
 
 export default () => {
 
@@ -31,18 +33,20 @@ export default () => {
 		createTime: string | undefined;
 	};
 
+	const loginLogList: TableColumns[] = []
+
 	const getPageQuery = (params: any) => {
 		return {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
-			username: params?.username,
-			ip: params?.ip,
-			address: params?.address,
-			browser: params?.browser,
+			username: trim(params?.username),
+			ip: trim(params?.ip),
+			address: trim(params?.address),
+			browser: trim(params?.browser),
 			status: params?.status,
-			os: params?.os,
+			os: trim(params?.os),
 			type: params?.type,
-			errorMessage: params?.errorMessage,
+			errorMessage: trim(params?.errorMessage),
 			params: {
 				startDate: params?.startDate,
 				endDate: params?.endDate
@@ -50,16 +54,54 @@ export default () => {
 		};
 	}
 
+	const getStatusDesc = (status: string | undefined) => {
+		if (status === "0") {
+			return "登录成功"
+		} else {
+			return "登录失败"
+		}
+	}
+
+	const getTypeDesc = (type: string | undefined) => {
+		if (type === "password") {
+			return "用户名密码登录";
+		} else if (type === "mail") {
+			return "邮箱登录"
+		} else if (type === "mobile") {
+			return "手机号登录";
+		} else {
+			return "授权码登录";
+		}
+	}
+
+	const exportToExcel = async () => {
+		let params: Excel
+		const list: TableColumns[] = [];
+		// 格式化数据
+		loginLogList.forEach(item => {
+			item.status = getStatusDesc(item.status)
+			item.type = getTypeDesc(item.type)
+			list.push(item)
+		})
+		params = {
+			sheetData: list,
+			sheetFilter: ["username", "ip", "address", "browser", "os", "status", "errorMessage", "type", "createTime"],
+			sheetHeader: ["用户名", "IP地址", "归属地", "浏览器", "操作系统", "登录状态", "错误信息", "登录类型", "登录日期"],
+			fileName: "登录日志",
+			sheetName: "登录日志"
+		}
+		ExportToExcel(params)
+	}
+
 	const listLoginLog = async (params: any) => {
 		return pageV3(getPageQuery(params)).then(res => {
-			const list: TableColumns[] = []
 			res?.data?.records?.forEach((item: TableColumns) => {
 				item.status = statusEnum[item.status as '0'];
 				item.type = typeEnum[item.type as 'password'];
-				list.push(item);
+				loginLogList.push(item);
 			});
 			return Promise.resolve({
-				data: list,
+				data: loginLogList,
 				total: res.data.total,
 				success: true,
 			});
@@ -109,7 +151,7 @@ export default () => {
 			title: '登录类型',
 			dataIndex: 'type',
 			valueEnum: {
-				password: {text: '用户密码登录', status: 'Processing'},
+				password: {text: '用户名密码登录', status: 'Processing'},
 				mobile: {text: '手机号登录', status: 'Default'},
 				mail: {text: '邮箱登录', status: 'Success'},
 				authorization_code: {text: '授权码登录', status: 'Error'}
@@ -163,7 +205,7 @@ export default () => {
 					<Button key="truncate" type="primary" danger icon={<DeleteOutlined/>}>
 						清空
 					</Button>,
-					<Button key="export" type="primary" ghost icon={<ExportOutlined/>}>
+					<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={exportToExcel}>
 						导出
 					</Button>,
 					<Button key="exportAll" type="primary" icon={<ExportOutlined/>}>
