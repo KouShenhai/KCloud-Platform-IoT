@@ -18,7 +18,6 @@
 package org.laokou.iot;
 
 import org.laokou.common.core.annotation.EnableTaskExecutor;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -31,21 +30,11 @@ import java.net.UnknownHostException;
  */
 @EnableTaskExecutor
 @SpringBootApplication(scanBasePackages = "org.laokou")
-public class IotApp implements CommandLineRunner {
-
-	// private final TDengineMapper tDengineMapper;
-
-	// private final RocketMqTemplate rocketMqTemplate;
+public class IotApp {
 
 	public static void main(String[] args) throws UnknownHostException {
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		new SpringApplicationBuilder(IotApp.class).web(WebApplicationType.SERVLET).run(args);
-	}
-
-	@Override
-	public void run(String... args) {
-		// tDengineMapper.insert();
-		// rocketMqTemplate.sendAsyncMessage("test", "333");
 	}
 
 }
