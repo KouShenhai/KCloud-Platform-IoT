@@ -33,10 +33,15 @@ class Base64Test {
 		String name = "zzzzzzzzzzzccccc\nccccccccccccccccccc231231qweqweqw";
 		String encodeToString = Base64Util.encodeToString(name.getBytes(StandardCharsets.UTF_8));
 		byte[] decode = Base64Util.decode(encodeToString);
-		String encodeToStringOfMime = Base64Util.encodeToStringOfMime(name.getBytes(StandardCharsets.UTF_8));
-		byte[] mimeDecode = Base64Util.decodeOfMime(encodeToStringOfMime);
 		Assertions.assertArrayEquals(name.getBytes(StandardCharsets.UTF_8), decode);
-		Assertions.assertArrayEquals(name.getBytes(StandardCharsets.UTF_8), mimeDecode);
 	}
+
+    @Test
+    void testMimeBase64() {
+        String name = "zzzzzzzzzzzccccc\nccccccccccccccccccc231231qweqweqw";
+        String encodeToStringOfMime = Base64Util.encodeToStringOfMime(name.getBytes(StandardCharsets.UTF_8));
+        byte[] mimeDecode = Base64Util.decodeOfMime(encodeToStringOfMime);
+        Assertions.assertArrayEquals(name.getBytes(StandardCharsets.UTF_8), mimeDecode);
+    }
 
 }
