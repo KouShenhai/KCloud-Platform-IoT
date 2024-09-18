@@ -1,173 +1,233 @@
-import {EllipsisOutlined, SearchOutlined} from '@ant-design/icons';
 import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {Button, Dropdown, Input} from 'antd';
+import {exportV3, pageV3, removeV3} from "@/services/admin/apiLog";
+import {Button, message, Modal} from "antd";
+import {DeleteOutlined, ExportOutlined} from "@ant-design/icons";
+import {trim} from "@/utils/format";
+import {Excel, ExportToExcel} from "@/utils/export";
+import moment from "moment";
+import {useRef, useState} from "react";
 
 export default () => {
-	const valueEnum = {
-		0: 'close',
-		1: 'running',
-		2: 'online',
-		3: 'error',
+
+	const statusEnum = {
+		0: '0',
+		1: '1'
 	};
 
-	type TableListItem = {
-		key: number;
-		name: string;
-		containers: number;
-		creator: string;
-		status: string;
-		createdAt: number;
-		progress: number;
-		money: number;
-		memo: string;
+	type TableColumns = {
+		id: number | undefined;
+		code: string | undefined;
+		name: string | undefined;
+		param: string | undefined;
+		address: string | undefined;
+		status: string | undefined;
+		errorMessage: string | undefined;
+		createTime: string | undefined;
 	};
-	const tableListDataSource: TableListItem[] = [];
 
-	const creators = ['付小小', '曲丽丽', '林东东', '陈帅帅', '兼某某'];
+	const actionRef = useRef();
 
-	for (let i = 0; i < 25; i += 1) {
-		tableListDataSource.push({
-			key: i,
-			name: 'AppName',
-			containers: Math.floor(Math.random() * 10),
-			creator: creators[Math.floor(Math.random() * creators.length)],
-			status: valueEnum[((Math.floor(Math.random() * 10) % 4) + '') as '0'],
-			createdAt: Date.now() - Math.floor(Math.random() * 2000),
-			money: Math.floor(Math.random() * 2000) * i,
-			progress: Math.ceil(Math.random() * 100) + 1,
-			memo:
-				i % 2 === 1
-					? '很长很长很长很长很长很长很长的文字要展示但是要留下尾巴'
-					: '简短备注文案',
+	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
+	let apiLogList: TableColumns[]
+
+	let apiLogParam: any
+
+	const getPageQuery = (params: any) => {
+		apiLogParam = {
+			pageSize: params?.pageSize,
+			pageNum: params?.current,
+			name: trim(params?.name),
+			code: trim(params?.code),
+			status: params?.status,
+			errorMessage: trim(params?.errorMessage),
+			params: {
+				startDate: params?.startDate,
+				endDate: params?.endDate
+			}
+		};
+		return apiLogParam;
+	}
+
+	const getStatusDesc = (status: string | undefined) => {
+		if (status === "0") {
+			return "请求成功"
+		} else {
+			return "请求失败"
+		}
+	}
+
+	const exportToExcel = async () => {
+		let params: Excel
+		const list: TableColumns[] = [];
+		// 格式化数据
+		apiLogList.forEach(item => {
+			item.status = getStatusDesc(item.status)
+			list.push(item)
+		})
+		params = {
+			sheetData: list,
+			sheetFilter: ["username", "ip", "address", "browser", "os", "status", "errorMessage", "type", "createTime"],
+			sheetHeader: ["用户名", "IP地址", "归属地", "浏览器", "操作系统", "登录状态", "错误信息", "登录类型", "登录日期"],
+			fileName: "Api日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
+			sheetName: "Api日志"
+		}
+		ExportToExcel(params)
+	}
+
+	const exportAllToExcel = async () => {
+		exportV3(apiLogParam)
+	}
+
+	const listApiLog = async (params: any) => {
+		apiLogList = []
+		return pageV3(getPageQuery(params)).then(res => {
+			res?.data?.records?.forEach((item: TableColumns) => {
+				item.status = statusEnum[item.status as '0'];
+				apiLogList.push(item);
+			});
+			return Promise.resolve({
+				data: apiLogList,
+				total: parseInt(res.data.total),
+				success: true,
+			});
+		})
+	}
+
+	const rowSelection = {
+		onChange: (selectedRowKeys: any) => {
+			setSelectedRowKeys(selectedRowKeys);
+		}
+	};
+
+	const truncateApiLog = async () => {
+		Modal.confirm({
+			title: '确认清空?',
+			content: '您确定要清空数据吗?',
+			okText: '确认',
+			cancelText: '取消',
+			onOk: async () => {
+				// truncateV3().then(() => {
+				// 	message.success("数据已清空").then()
+				// 	// @ts-ignore
+				// 	actionRef?.current?.reload();
+				// })
+			},
 		});
 	}
 
-	const columns: ProColumns<TableListItem>[] = [
+	const deleteApiLog = async () => {
+		Modal.confirm({
+			title: '确认删除?',
+			content: '您确定要删除吗?',
+			okText: '确认',
+			cancelText: '取消',
+			onOk: async () => {
+				removeV3(selectedRowKeys).then(() => {
+					message.success("删除成功").then()
+					// @ts-ignore
+					actionRef?.current?.reload();
+				})
+				setSelectedRowKeys([])
+			},
+		});
+	}
+
+	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '排序',
+			title: '序号',
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 48,
+			width: 60,
 		},
 		{
-			title: '应用名称',
-			dataIndex: 'name',
-			render: (_) => <a>{_}</a>,
-			// 自定义筛选项功能具体实现请参考 https://ant.design/components/table-cn/#components-table-demo-custom-filter-panel
-			filterDropdown: () => (
-				<div style={{padding: 8}}>
-					<Input style={{width: 188, marginBlockEnd: 8, display: 'block'}}/>
-				</div>
-			),
-			filterIcon: (filtered) => (
-				<SearchOutlined style={{color: filtered ? '#1890ff' : undefined}}/>
-			),
+			title: 'Api编码',
+			dataIndex: 'code'
 		},
 		{
-			title: '创建者',
-			dataIndex: 'creator',
-			valueEnum: {
-				all: {text: '全部'},
-				付小小: {text: '付小小'},
-				曲丽丽: {text: '曲丽丽'},
-				林东东: {text: '林东东'},
-				陈帅帅: {text: '陈帅帅'},
-				兼某某: {text: '兼某某'},
-			},
+			title: 'Api名称',
+			dataIndex: 'name'
 		},
 		{
-			title: '状态',
+			title: 'Api状态',
 			dataIndex: 'status',
-			initialValue: 'all',
-			filters: true,
-			onFilter: true,
 			valueEnum: {
-				all: {text: '全部', status: 'Default'},
-				close: {text: '关闭', status: 'Default'},
-				running: {text: '运行中', status: 'Processing'},
-				online: {text: '已上线', status: 'Success'},
-				error: {text: '异常', status: 'Error'},
+				0: {text: '请求成功', status: 'Success'},
+				1: {text: '请求失败', status: 'Error'},
 			},
 		},
 		{
-			title: '备注',
-			dataIndex: 'memo',
-			ellipsis: true,
-			copyable: true,
+			title: '错误信息',
+			dataIndex: 'errorMessage'
 		},
 		{
-			title: '操作',
-			width: 180,
-			key: 'option',
-			valueType: 'option',
-			render: () => [
-				<a key="link">查看</a>
-			],
+			title: '创建时间',
+			key: 'createTime',
+			dataIndex: 'createTime',
+			valueType: 'dateTime',
+			hideInSearch: true,
 		},
+		{
+			title: '创建时间',
+			dataIndex: 'createTime',
+			valueType: 'dateRange',
+			hideInTable: true,
+			search: {
+				transform: (value) => {
+					return {
+						startDate: value[0],
+						endDate: value[1],
+					};
+				},
+			}
+		}
 	];
 
+	// @ts-ignore
 	return (
-		<ProTable<TableListItem>
+		<ProTable<TableColumns>
+			actionRef={actionRef}
 			columns={columns}
-			request={(params, sorter, filter) => {
+			request={(params) => {
 				// 表单搜索项会从 params 传入，传递给后端接口。
-				console.log(params, sorter, filter);
-				return Promise.resolve({
-					data: tableListDataSource,
-					total: 1,
-					success: true,
-				});
+				return listApiLog(params)
 			}}
-			rowKey="key"
+			rowKey="id"
 			pagination={{
 				showQuickJumper: true,
-				showSizeChanger: true,
-				pageSize: 10,
-				onChange: (pageNo, pageSize) => console.log(pageNo, pageSize),
+				showSizeChanger: false,
+				pageSize: 10
 			}}
 			search={{
 				layout: 'vertical',
-				defaultCollapsed: false,
+				defaultCollapsed: true,
 			}}
+			toolBarRender={
+				() => [
+					<Button key="delete" danger ghost icon={<DeleteOutlined/>} onClick={deleteApiLog}>
+						删除
+					</Button>,
+					<Button key="truncate" type="primary" danger icon={<DeleteOutlined/>} onClick={truncateApiLog}>
+						清空
+					</Button>,
+					<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={exportToExcel}>
+						导出
+					</Button>,
+					<Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={exportAllToExcel}>
+						导出全部
+					</Button>
+				]
+			}
+			rowSelection={
+				// 自定义选择项参考: https://ant.design/components/table-cn/#components-table-demo-row-selection-custom
+				rowSelection
+			}
 			dateFormatter="string"
 			toolbar={{
-				title: '高级表格',
-				tooltip: '这是一个标题提示',
+				title: 'Api日志',
+				tooltip: 'Api日志',
 			}}
-			toolBarRender={() => [
-				<Button key="danger" danger>
-					危险按钮
-				</Button>,
-				<Button key="show">查看日志</Button>,
-				<Button type="primary" key="primary">
-					创建应用
-				</Button>,
-
-				<Dropdown
-					key="menu"
-					menu={{
-						items: [
-							{
-								label: '1st item',
-								key: '1',
-							},
-							{
-								label: '2nd item',
-								key: '2',
-							},
-							{
-								label: '3rd item',
-								key: '3',
-							},
-						],
-					}}
-				>
-					<Button>
-						<EllipsisOutlined/>
-					</Button>
-				</Dropdown>,
-			]}
 		/>
 	);
 };

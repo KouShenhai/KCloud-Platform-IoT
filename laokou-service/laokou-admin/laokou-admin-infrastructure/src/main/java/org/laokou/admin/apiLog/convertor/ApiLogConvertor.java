@@ -20,8 +20,6 @@ package org.laokou.admin.apiLog.convertor;
 import org.laokou.admin.apiLog.dto.clientobject.ApiLogCO;
 import org.laokou.admin.apiLog.gatewayimpl.database.dataobject.ApiLogDO;
 import org.laokou.admin.apiLog.model.ApiLogE;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
  * Api日志转换器.
@@ -30,20 +28,43 @@ import org.laokou.common.i18n.utils.ObjectUtil;
  */
 public class ApiLogConvertor {
 
-	public static ApiLogDO toDataObject(ApiLogE apiLogE) {
-		ApiLogDO apiLogDO = ConvertUtil.sourceToTarget(apiLogE, ApiLogDO.class);
-		if (ObjectUtil.isNull(apiLogDO.getId())) {
+	public static ApiLogDO toDataObject(ApiLogE apiLogE, boolean isInsert) {
+		ApiLogDO apiLogDO = new ApiLogDO();
+		if (isInsert) {
 			apiLogDO.generatorId();
 		}
+		else {
+			apiLogDO.setId(apiLogE.getId());
+		}
+		apiLogDO.setCode(apiLogE.getCode());
+		apiLogDO.setName(apiLogE.getName());
+		apiLogDO.setStatus(apiLogE.getStatus());
+		apiLogDO.setErrorMessage(apiLogE.getErrorMessage());
+		apiLogDO.setParam(apiLogE.getParam());
 		return apiLogDO;
 	}
 
 	public static ApiLogCO toClientObject(ApiLogDO apiLogDO) {
-		return ConvertUtil.sourceToTarget(apiLogDO, ApiLogCO.class);
+		ApiLogCO apiLogCO = new ApiLogCO();
+		apiLogCO.setId(apiLogDO.getId());
+		apiLogCO.setCode(apiLogDO.getCode());
+		apiLogCO.setName(apiLogDO.getName());
+		apiLogCO.setStatus(apiLogDO.getStatus());
+		apiLogCO.setErrorMessage(apiLogDO.getErrorMessage());
+		apiLogCO.setParam(apiLogDO.getParam());
+		apiLogCO.setCreateTime(apiLogDO.getCreateTime());
+		return apiLogCO;
 	}
 
 	public static ApiLogE toEntity(ApiLogCO apiLogCO) {
-		return ConvertUtil.sourceToTarget(apiLogCO, ApiLogE.class);
+		ApiLogE apiLogE = new ApiLogE();
+		apiLogE.setId(apiLogCO.getId());
+		apiLogE.setCode(apiLogCO.getCode());
+		apiLogE.setName(apiLogCO.getName());
+		apiLogE.setStatus(apiLogCO.getStatus());
+		apiLogE.setErrorMessage(apiLogCO.getErrorMessage());
+		apiLogE.setParam(apiLogCO.getParam());
+		return apiLogE;
 	}
 
 }

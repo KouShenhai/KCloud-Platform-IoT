@@ -18,13 +18,19 @@
 package org.laokou.common.mail.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ApiLog;
 
 /**
  * @author laokou
  */
 @Data
+@NoArgsConstructor
 public class SendMailApiLog extends ApiLog {
+
+	public SendMailApiLog(String param, Integer status, String errorMessage, String remark) {
+		super(param, status, errorMessage, remark);
+	}
 
 	@Override
 	protected String getApiCode() {

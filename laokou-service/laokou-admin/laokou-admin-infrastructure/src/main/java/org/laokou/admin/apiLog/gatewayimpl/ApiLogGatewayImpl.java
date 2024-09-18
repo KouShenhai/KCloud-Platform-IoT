@@ -47,7 +47,7 @@ public class ApiLogGatewayImpl implements ApiLogGateway {
 	public void create(ApiLogE apiLogE) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				apiLogMapper.insert(ApiLogConvertor.toDataObject(apiLogE));
+				apiLogMapper.insert(ApiLogConvertor.toDataObject(apiLogE, true));
 			}
 			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
@@ -59,7 +59,7 @@ public class ApiLogGatewayImpl implements ApiLogGateway {
 	}
 
 	public void update(ApiLogE apiLogE) {
-		ApiLogDO apiLogDO = ApiLogConvertor.toDataObject(apiLogE);
+		ApiLogDO apiLogDO = ApiLogConvertor.toDataObject(apiLogE, false);
 		apiLogDO.setVersion(apiLogMapper.selectVersion(apiLogE.getId()));
 		update(apiLogDO);
 	}

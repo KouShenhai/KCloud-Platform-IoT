@@ -22,6 +22,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
+import java.time.Instant;
+
 /**
  * Api日志客户端对象.
  *
@@ -38,17 +40,17 @@ public class ApiLogCO extends ClientObject {
 	private Long id;
 
 	/**
-	 * 编码.
+	 * Api编码.
 	 */
 	private String code;
 
 	/**
-	 * 名称.
+	 * Api名称.
 	 */
 	private String name;
 
 	/**
-	 * 状态 0成功 1失败.
+	 * Api状态 0成功 1失败.
 	 */
 	private Integer status;
 
@@ -58,8 +60,13 @@ public class ApiLogCO extends ClientObject {
 	private String errorMessage;
 
 	/**
-	 * 参数.
+	 * Api参数.
 	 */
 	private String param;
+
+	/**
+	 * 创建时间.
+	 */
+	private Instant createTime;
 
 }

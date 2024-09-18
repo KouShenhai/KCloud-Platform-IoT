@@ -210,7 +210,7 @@ export default () => {
 			<LoginFormPage
 				formRef={formRef}
 				onFinish={onSubmit}
-				backgroundImageUrl="https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png"
+				backgroundImageUrl={"/FfdJeJRQWjEeGTpqgBKj.png"}
 				logo={<img alt="logo" src="/logo.png"/>}
 				title="老寇IoT云平台"
 				subTitle="企业级微服务架构云服务多租户IoT平台"

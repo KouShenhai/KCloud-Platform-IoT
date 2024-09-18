@@ -41,9 +41,8 @@ public abstract class AbstractSendCaptchaEventHandler extends AbstractDomainEven
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
-		ApiLog apiLog = getApiLog(event);
-		CallApiEvent callApiEvent = new CallApiEvent(apiLog, LAOKOU_LOG_TOPIC, API_TAG, API, event.getServiceId(),
-				event.getSourceName(), event.getAggregateId(), event.getTenantId());
+		CallApiEvent callApiEvent = new CallApiEvent(getApiLog(event), LAOKOU_LOG_TOPIC, API_TAG, API,
+				event.getServiceId(), event.getSourceName(), event.getAggregateId(), event.getTenantId());
 		rocketMQDomainEventPublisher.publish(callApiEvent);
 	}
 

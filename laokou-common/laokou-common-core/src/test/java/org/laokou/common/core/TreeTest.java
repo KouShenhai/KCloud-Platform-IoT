@@ -26,21 +26,21 @@ import java.util.List;
 
 public class TreeTest {
 
-    @Test
-    void testTree() {
-        Node n1 = new Node(1L, "节点1", 0L);
-        Node n2 = new Node(11L, "节点1-1", 1L);
-        Node node = TreeUtil.buildTreeNode(List.of(n1, n2), Node.class);
-        Assertions.assertEquals(node.getId(), node.getChildren().getFirst().getPid());
-    }
+	@Test
+	void testTree() {
+		Node n1 = new Node(1L, "节点1", 0L);
+		Node n2 = new Node(11L, "节点1-1", 1L);
+		Node node = TreeUtil.buildTreeNode(List.of(n1, n2), Node.class);
+		Assertions.assertEquals(node.getId(), node.getChildren().getFirst().getPid());
+	}
 
-    @NoArgsConstructor
-    static class Node extends TreeUtil.TreeNode<Node> {
+	@NoArgsConstructor
+	static class Node extends TreeUtil.TreeNode<Node> {
 
-        public Node(Long id, String name, Long pid) {
-            super(id, name, pid);
-        }
+		public Node(Long id, String name, Long pid) {
+			super(id, name, pid);
+		}
 
-    }
+	}
 
 }

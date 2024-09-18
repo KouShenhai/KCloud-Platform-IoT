@@ -23,18 +23,18 @@ import org.laokou.common.core.utils.ArrayUtil;
 
 public class ArrayTest {
 
-    @Test
-    void testStrArray() {
-        String[] str = {"1"};
-        Assertions.assertTrue(ArrayUtil.isNotEmpty(str));
-        Assertions.assertFalse(ArrayUtil.isEmpty(str));
-    }
+	@Test
+	void testStrArray() {
+		String[] str = { "1" };
+		Assertions.assertTrue(ArrayUtil.isNotEmpty(str));
+		Assertions.assertFalse(ArrayUtil.isEmpty(str));
+	}
 
-    @Test
-    void testObjArray() {
-        Object[] obj = {"1"};
-        Assertions.assertTrue(ArrayUtil.isNotEmpty(obj));
-        Assertions.assertFalse(ArrayUtil.isEmpty(obj));
-    }
+	@Test
+	void testObjArray() {
+		Object[] obj = { "1" };
+		Assertions.assertTrue(ArrayUtil.isNotEmpty(obj));
+		Assertions.assertFalse(ArrayUtil.isEmpty(obj));
+	}
 
 }

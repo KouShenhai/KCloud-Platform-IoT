@@ -64,11 +64,7 @@ public abstract class ApiLog extends DTO {
 	 */
 	private Instant instant;
 
-	protected abstract String getApiCode();
-
-	protected abstract String getApiName();
-
-	public void update(String param, Integer status, String errorMessage, String remark) {
+	public ApiLog(String param, Integer status, String errorMessage, String remark) {
 		this.code = getApiCode();
 		this.name = getApiName();
 		this.param = param;
@@ -77,5 +73,9 @@ public abstract class ApiLog extends DTO {
 		this.errorMessage = errorMessage;
 		this.instant = DateUtil.nowInstant();
 	}
+
+	protected abstract String getApiCode();
+
+	protected abstract String getApiName();
 
 }

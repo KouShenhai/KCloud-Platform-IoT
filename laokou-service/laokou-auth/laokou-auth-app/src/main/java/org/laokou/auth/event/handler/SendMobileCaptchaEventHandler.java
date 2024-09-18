@@ -25,7 +25,6 @@ import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.ApiLog;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.sms.entity.SendSmsApiLog;
 import org.laokou.common.sms.service.SmsService;
 import org.springframework.stereotype.Component;
 
@@ -56,13 +55,11 @@ public class SendMobileCaptchaEventHandler extends AbstractSendCaptchaEventHandl
 
 	@Override
 	protected ApiLog getApiLog(SendCaptchaEvent event) {
-		SendSmsApiLog smsApiLog = new SendSmsApiLog();
-		smsService.send(smsApiLog, event.getUuid(), 5, (value, expireTime) -> {
+		return smsService.send(event.getUuid(), 5, (value, expireTime) -> {
 			String mobileCaptchaKey = RedisKeyUtil.getMobileCaptchaKey(event.getUuid());
 			redisUtil.del(mobileCaptchaKey);
 			redisUtil.set(mobileCaptchaKey, value, expireTime);
 		});
-		return smsApiLog;
 	}
 
 }

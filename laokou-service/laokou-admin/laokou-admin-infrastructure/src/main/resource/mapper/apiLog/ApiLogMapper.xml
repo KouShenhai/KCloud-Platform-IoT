@@ -22,9 +22,21 @@
 
   <select id="selectObjectPage"
           resultType="org.laokou.admin.apiLog.gatewayimpl.database.dataobject.ApiLogDO">
-    SELECT *
+    SELECT id,
+           "code",
+           "name",
+           status,
+           error_message,
+           param,
+           create_time
     from boot_sys_api_log
     where del_flag = 0
+    <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
+      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> #{pageQuery.params.startDate}
+    </if>
+    <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
+      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> #{pageQuery.params.endDate}
+    </if>
     order by id desc
     limit ${pageQuery.pageSize} OFFSET ${pageQuery.pageIndex}
   </select>
@@ -33,6 +45,12 @@
     SELECT count(1)
     from boot_sys_api_log
     where del_flag = 0
+    <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
+      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> #{pageQuery.params.startDate}
+    </if>
+    <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
+      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> #{pageQuery.params.endDate}
+    </if>
   </select>
 
   <select id="selectVersion" resultType="integer">

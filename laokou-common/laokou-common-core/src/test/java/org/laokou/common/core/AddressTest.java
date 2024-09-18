@@ -23,10 +23,10 @@ import org.laokou.common.core.utils.AddressUtil;
 
 public class AddressTest {
 
-    @Test
-    void testAddress() {
-        String address = "127.0.0.1";
-        Assertions.assertEquals("内网", AddressUtil.getRealAddress(address));
-    }
+	@Test
+	void testAddress() {
+		String address = "127.0.0.1";
+		Assertions.assertEquals("内网IP", AddressUtil.getRealAddress(address));
+	}
 
 }

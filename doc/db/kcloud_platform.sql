@@ -1545,15 +1545,15 @@ comment on column public.boot_sys_api_log.dept_path is '部门PATH';
 
 comment on column public.boot_sys_api_log.tenant_id is '租户ID';
 
-comment on column public.boot_sys_api_log.code is '编码';
+comment on column public.boot_sys_api_log.code is 'Api编码';
 
-comment on column public.boot_sys_api_log.name is '名称';
+comment on column public.boot_sys_api_log.name is 'Api名称';
 
-comment on column public.boot_sys_api_log.status is '状态 0成功 1失败';
+comment on column public.boot_sys_api_log.status is 'Api状态 0成功 1失败';
 
 comment on column public.boot_sys_api_log.error_message is '错误信息';
 
-comment on column public.boot_sys_api_log.param is '参数';
+comment on column public.boot_sys_api_log.param is 'Api参数';
 
 alter table public.boot_sys_api_log
 	owner to root;

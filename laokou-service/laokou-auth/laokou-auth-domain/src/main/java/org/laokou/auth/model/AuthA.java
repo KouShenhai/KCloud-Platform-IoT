@@ -47,6 +47,11 @@ import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
 public class AuthA extends AggregateRoot<Long> {
 
 	/**
+	 * 业务用例.
+	 */
+	public static final String USE_CASE_AUTH = "auth";
+
+	/**
 	 * 用户名.
 	 */
 	private String username;
@@ -95,11 +100,6 @@ public class AuthA extends AggregateRoot<Long> {
 	 * 当前用户.
 	 */
 	private String currentUser;
-
-	/**
-	 * 业务用例.
-	 */
-	public static final String USE_CASE_AUTH = "auth";
 
 	public AuthA() {
 		super(IdGenerator.defaultSnowflakeId());
@@ -154,7 +154,7 @@ public class AuthA extends AggregateRoot<Long> {
 		}
 	}
 
-	public boolean isHasLog() {
+	public boolean checkNotEmptyLog() {
 		return ObjectUtil.isNotNull(this.log);
 	}
 

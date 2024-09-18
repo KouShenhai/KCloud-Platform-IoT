@@ -33,17 +33,17 @@ public class ApiLogE {
 	private Long id;
 
 	/**
-	 * 编码.
+	 * Api编码.
 	 */
 	private String code;
 
 	/**
-	 * 名称.
+	 * Api名称.
 	 */
 	private String name;
 
 	/**
-	 * 状态 0成功 1失败.
+	 * Api状态 0成功 1失败.
 	 */
 	private Integer status;
 
@@ -53,7 +53,7 @@ public class ApiLogE {
 	private String errorMessage;
 
 	/**
-	 * 参数.
+	 * Api参数.
 	 */
 	private String param;
 

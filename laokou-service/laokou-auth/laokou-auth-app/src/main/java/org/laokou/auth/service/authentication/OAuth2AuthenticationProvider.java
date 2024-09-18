@@ -68,12 +68,12 @@ public class OAuth2AuthenticationProvider {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 		finally {
-			// 清除数据源上下文
-			DynamicDataSourceContextHolder.clear();
-			if (auth.isHasLog()) {
+			if (auth.checkNotEmptyLog()) {
 				// 发布登录事件
 				rocketMQDomainEventPublisher.publish(LoginLogConvertor.toEvent(auth));
 			}
+			// 清除数据源上下文
+			DynamicDataSourceContextHolder.clear();
 		}
 	}
 

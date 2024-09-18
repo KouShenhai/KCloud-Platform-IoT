@@ -43,7 +43,7 @@ public final class AddressUtil {
 	/**
 	 * 本地的位置.
 	 */
-	private static final String LOCAL_ADDR = "内网";
+	private static final String LOCAL_ADDR = "内网IP";
 
 	/**
 	 * IP搜索器.

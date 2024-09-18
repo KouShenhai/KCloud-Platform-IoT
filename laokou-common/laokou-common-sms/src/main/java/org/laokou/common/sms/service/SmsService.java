@@ -25,6 +25,6 @@ import org.laokou.common.i18n.dto.Cache;
  */
 public interface SmsService {
 
-	void send(ApiLog apiLog, String mobile, int minute, Cache cache);
+	ApiLog send(String mobile, int minute, Cache cache);
 
 }

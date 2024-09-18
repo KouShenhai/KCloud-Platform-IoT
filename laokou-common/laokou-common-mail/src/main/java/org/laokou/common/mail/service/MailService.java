@@ -25,6 +25,6 @@ import org.laokou.common.i18n.dto.Cache;
  */
 public interface MailService {
 
-	void send(ApiLog apiLog, String mail, int minute, Cache cache);
+	ApiLog send(String mail, int minute, Cache cache);
 
 }

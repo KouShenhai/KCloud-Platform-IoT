@@ -18,10 +18,16 @@
 package org.laokou.common.sms.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ApiLog;
 
 @Data
+@NoArgsConstructor
 public class SendSmsApiLog extends ApiLog {
+
+	public SendSmsApiLog(String param, Integer status, String errorMessage, String remark) {
+		super(param, status, errorMessage, remark);
+	}
 
 	@Override
 	protected String getApiCode() {
