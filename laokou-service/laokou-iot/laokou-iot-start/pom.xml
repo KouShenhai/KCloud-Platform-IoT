@@ -13,24 +13,12 @@
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-iot-app</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
+      <artifactId>laokou-iot-adapter</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-algorithm</artifactId>
-    </dependency>
-    <!--    <dependency>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-rocketmq</artifactId>
-        </dependency>-->
   </dependencies>
 </project>

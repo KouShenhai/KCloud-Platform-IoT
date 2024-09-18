@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <groupId>org.laokou</groupId>
@@ -11,38 +11,6 @@
   <artifactId>laokou-admin-adapter</artifactId>
 
   <dependencies>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-cors</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-openapi-doc</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-core</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-idempotent</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-redis</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-trace</artifactId>
-    </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-admin-app</artifactId>

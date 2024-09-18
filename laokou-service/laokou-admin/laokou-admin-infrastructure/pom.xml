@@ -13,6 +13,38 @@
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-cors</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-openapi-doc</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.laokou</groupId>
+          <artifactId>laokou-common-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-idempotent</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.laokou</groupId>
+          <artifactId>laokou-common-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.laokou</groupId>
+          <artifactId>laokou-common-redis</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-trace</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
       <artifactId>laokou-admin-client</artifactId>
     </dependency>
     <dependency>
@@ -75,6 +107,18 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-secret</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-mail</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-lock</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-data-cache</artifactId>
     </dependency>
   </dependencies>
 

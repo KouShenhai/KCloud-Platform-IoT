@@ -49,8 +49,8 @@ public class ${className}PageQryExe {
 
 	@SneakyThrows
 	public Result<Page<${className}CO>> execute(${className}PageQry qry) {
-		CompletableFuture<List<${className}DO>> c1 = CompletableFuture.supplyAsync(() -> ${instanceName}Mapper.selectObjPage(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ${instanceName}Mapper.selectObjCount(qry), executor);
+		CompletableFuture<List<${className}DO>> c1 = CompletableFuture.supplyAsync(() -> ${instanceName}Mapper.selectObjectPage(qry.index()), executor);
+		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ${instanceName}Mapper.selectObjectCount(qry), executor);
 		return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(${className}Convertor::toClientObject).toList(), c2.get(30, TimeUnit.SECONDS)));
 	}
 

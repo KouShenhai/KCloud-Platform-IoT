@@ -114,7 +114,7 @@ class TableTest {
 		// 作者
 		String author = "laokou";
 		// 表前缀
-		String tablePrefix = "boot_";
+		String tablePrefix = "boot_iot_";
 		// 模块名
 		String moduleName = "laokou-iot";
 		// 包名
