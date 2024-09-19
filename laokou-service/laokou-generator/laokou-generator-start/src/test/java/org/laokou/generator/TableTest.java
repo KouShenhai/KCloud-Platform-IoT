@@ -46,7 +46,7 @@ import java.util.concurrent.Executor;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class TableTest {
 
-    private final Executor executor;
+	private final Executor executor;
 
 	private final TableMapper tableMapper;
 
@@ -68,8 +68,8 @@ class TableTest {
 
 	@Test
 	void testMasterGenerateCode() {
-        // 数据源
-        String sourceName = "master";
+		// 数据源
+		String sourceName = "master";
 		// 版本号
 		String version = "v3";
 		// 作者
@@ -89,8 +89,8 @@ class TableTest {
 
 	@Test
 	void testDomainGenerateCode() {
-        // 数据源
-        String sourceName = "domain";
+		// 数据源
+		String sourceName = "domain";
 		// 版本号
 		String version = "v3";
 		// 作者
@@ -110,8 +110,8 @@ class TableTest {
 
 	@Test
 	void testIotGenerateCode() {
-        // 数据源
-        String sourceName = "iot";
+		// 数据源
+		String sourceName = "iot";
 		// 版本号
 		String version = "v3";
 		// 作者
@@ -129,8 +129,8 @@ class TableTest {
 		generateCode(sourceName, version, author, tablePrefix, moduleName, packageName, tableNames, app);
 	}
 
-	private void generateCode(String sourceName,String version, String author, String tablePrefix, String moduleName, String packageName,
-			Set<String> tableNames, App app) {
+	private void generateCode(String sourceName, String version, String author, String tablePrefix, String moduleName,
+			String packageName, Set<String> tableNames, App app) {
 		tableNames.stream().map(item -> CompletableFuture.runAsync(() -> {
 			TableE tableE = new TableE(item, tablePrefix, sourceName);
 			GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE, app);

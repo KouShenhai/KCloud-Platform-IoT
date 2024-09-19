@@ -51,18 +51,20 @@ public class TableGatewayImpl implements TableGateway {
 	private final TableColumnMapper tableColumnMapper;
 
 	public List<TableV> list(TableE tableE) {
-        try {
-            DynamicDataSourceContextHolder.push(tableE.getSourceName());
-            List<TableDO> tables = tableMapper.selectObjects(tableE.getTable());
-            List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects(tableE.getTable());
-            Map<String, List<TableColumnDO>> cloumnMap = tableColumns.stream()
-                    .collect(Collectors.groupingBy(TableColumnDO::getTableName));
-            Map<String, String> tableMap = tables.stream().collect(Collectors.toMap(TableDO::getName, TableDO::getComment));
-            return convert(tableE, tableMap, cloumnMap);
-        } finally {
-            DynamicDataSourceContextHolder.clear();
-        }
-    }
+		try {
+			DynamicDataSourceContextHolder.push(tableE.getSourceName());
+			List<TableDO> tables = tableMapper.selectObjects(tableE.getTable());
+			List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects(tableE.getTable());
+			Map<String, List<TableColumnDO>> cloumnMap = tableColumns.stream()
+				.collect(Collectors.groupingBy(TableColumnDO::getTableName));
+			Map<String, String> tableMap = tables.stream()
+				.collect(Collectors.toMap(TableDO::getName, TableDO::getComment));
+			return convert(tableE, tableMap, cloumnMap);
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
+	}
 
 	private List<TableV> convert(TableE tableE, Map<String, String> tableMap,
 			Map<String, List<TableColumnDO>> cloumnMap) {
