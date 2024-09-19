@@ -18,10 +18,12 @@
 
 package ${packageName}.${instanceName}.dto.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
+import java.time.Instant;
 
 /**
  *
@@ -32,19 +34,19 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "${comment}客户端对象", description = "${comment}客户端对象")
 public class ${className}CO extends ClientObject {
 
-    /**
-     * ID.
-	 */
+    @Schema(name = "ID", description = "ID")
 	private Long id;
 <#list fields as field>
 
-	/**
-	* ${field.comment}.
-	*/
+    @Schema(name = "${field.comment}", description = "${field.comment}
 	private ${field.fieldType} ${field.fieldName};
 </#list>
+
+    @Schema(name = "创建时间", description = "创建时间")
+    private Instant createTime;
 
 }
 // @formatter:on

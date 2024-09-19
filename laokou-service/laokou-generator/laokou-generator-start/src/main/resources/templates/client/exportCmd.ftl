@@ -19,7 +19,6 @@
 package ${packageName}.${instanceName}.dto;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  *
@@ -28,7 +27,7 @@ import org.laokou.common.i18n.dto.PageQuery;
  * @author ${author}
  */
 @Data
-public class ${className}ExportCmd extends PageQuery {
+public class ${className}ExportCmd extends ${className}PageQry {
 
 }
 // @formatter:on

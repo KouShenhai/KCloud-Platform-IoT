@@ -22,9 +22,19 @@
 
 	<select id="selectObjectPage"
 			resultType="${packageName}.${instanceName}.gatewayimpl.database.dataobject.${className}DO">
-		SELECT *
+		SELECT id,
+             <#list fields as field>
+                 ${field.columnName},
+             </#list>
+             create_time
 		from ${name}
 		where del_flag = 0
+        <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
+            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> ${pageQuery}.params.startDate}
+        </if>
+        <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
+            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> ${pageQuery}.params.endDate}
+        </if>
 		order by id desc
 		limit ${pageQuery}.pageSize} OFFSET ${pageQuery}.pageIndex}
 	</select>
@@ -33,6 +43,12 @@
 		SELECT count(1)
 		from ${name}
 		where del_flag = 0
+        <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
+            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> ${pageQuery}.params.startDate}
+        </if>
+        <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
+            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> ${pageQuery}.params.endDate}
+        </if>
 	</select>
 
 	<select id="selectVersion" resultType="integer">

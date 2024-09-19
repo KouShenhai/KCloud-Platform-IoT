@@ -80,7 +80,7 @@ public class TableGatewayImpl implements TableGateway {
 	private TableColumnV convert(TableColumnDO columnDO) {
 		String fieldName = StringUtil.convertUnder(columnDO.getName());
 		String fieldType = DataType.valueOf(columnDO.getDataType().toUpperCase()).getValue();
-		return new TableColumnV(columnDO.getComment(), fieldName, fieldType);
+		return new TableColumnV(columnDO.getComment(), fieldName, fieldType, columnDO.getName());
 	}
 
 	private TableV convert(String name, String comment, String tablePrefix, List<TableColumnV> columns) {

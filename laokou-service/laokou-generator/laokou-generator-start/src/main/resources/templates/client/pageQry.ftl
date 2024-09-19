@@ -30,5 +30,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Data
 public class ${className}PageQry extends PageQuery {
 
+
+
 }
 // @formatter:on

@@ -21,8 +21,9 @@ package org.laokou.generator.model;
  * @param comment 备注.
  * @param fieldName 属性名称.
  * @param fieldType 属性类型.
+ * @param columnName 列名
  * @author laokou
  */
-public record TableColumnV(String comment, String fieldName, String fieldType) {
+public record TableColumnV(String comment, String fieldName, String fieldType, String columnName) {
 
 }
