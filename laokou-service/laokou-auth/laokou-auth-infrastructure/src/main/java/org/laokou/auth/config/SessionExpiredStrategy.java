@@ -15,32 +15,23 @@
  *
  */
 
-package org.laokou.common.data.cache.listener;
+package org.laokou.auth.config;
 
-import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.connection.Message;
-import org.springframework.data.redis.listener.KeyExpirationEventMessageListener;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
+import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.security.web.session.SessionInformationExpiredEvent;
+import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.springframework.stereotype.Component;
 
 /**
- * 监听key过期事件.
- *
  * @author laokou
  */
-@Slf4j
 @Component
-public class RedisKeyExpirationListener extends KeyExpirationEventMessageListener {
-
-	public RedisKeyExpirationListener(RedisMessageListenerContainer listenerContainer) {
-		super(listenerContainer);
-	}
+public class SessionExpiredStrategy implements SessionInformationExpiredStrategy {
 
 	@Override
-	public void onMessage(@NonNull Message message, byte[] pattern) {
-		// String key = new String(message.getBody(), StandardCharsets.UTF_8);
-		// log.info("监听key为{}的过期事件", key);
+	public void onExpiredSessionDetected(SessionInformationExpiredEvent event) {
+		ResponseUtil.responseOk(event.getResponse(), Result.fail("A_OAuth2_SessionExpired", "会话过期"));
 	}
 
 }

@@ -27,9 +27,13 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.session.data.redis.RedisIndexedSessionRepository;
+import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 import static org.laokou.common.security.config.OAuth2ResourceServerConfig.customizer;
+import static org.springframework.security.config.http.SessionCreationPolicy.IF_REQUIRED;
 
 /**
  * 资源服务器配置.
@@ -54,8 +58,20 @@ class OAuth2ResourceServerConfig {
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, Environment environment,
-			OAuth2ResourceServerProperties oAuth2ResourceServerProperties) throws Exception {
+												   OAuth2ResourceServerProperties oAuth2ResourceServerProperties,
+												   SessionExpiredStrategy sessionExpiredStrategy,
+												   SessionInvalidStrategy sessionInvalidStrategy,
+												   SessionRegistry springSessionBackedSessionRegistry
+												   ) throws Exception {
 		return http
+			// 只会在需要时创建 HttpSession【默认配置】
+			.sessionManagement(config -> config.sessionCreationPolicy(IF_REQUIRED)
+				.invalidSessionStrategy(sessionInvalidStrategy)
+				// 最大会话1
+				.maximumSessions(1)
+				.sessionRegistry(springSessionBackedSessionRegistry)
+				.expiredSessionStrategy(sessionExpiredStrategy)
+			)
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.httpStrictTransportSecurity(
 					hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)))
 			.authorizeHttpRequests(customizer(oAuth2ResourceServerProperties, environment))
@@ -71,6 +87,11 @@ class OAuth2ResourceServerConfig {
 			// 清除session
 			.logout(logout -> logout.clearAuthentication(true).invalidateHttpSession(true))
 			.build();
+	}
+
+	@Bean
+	SessionRegistry springSessionBackedSessionRegistry(RedisIndexedSessionRepository redisIndexedSessionRepository) {
+		return new SpringSessionBackedSessionRegistry<>(redisIndexedSessionRepository);
 	}
 
 }

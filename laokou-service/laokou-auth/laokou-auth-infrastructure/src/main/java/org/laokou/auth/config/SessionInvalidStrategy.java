@@ -15,7 +15,24 @@
  *
  */
 
+package org.laokou.auth.config;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.security.web.session.InvalidSessionStrategy;
+import org.springframework.stereotype.Component;
+
 /**
  * @author laokou
  */
-package org.laokou.common.data.cache.listener;
+@Component
+public class SessionInvalidStrategy implements InvalidSessionStrategy {
+
+	@Override
+	public void onInvalidSessionDetected(HttpServletRequest request, HttpServletResponse response) {
+		ResponseUtil.responseOk(response, Result.fail("A_OAuth2_SessionInvalid", "会话无效"));
+	}
+
+}
