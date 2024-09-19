@@ -71,9 +71,9 @@ public interface LoginLogsServiceI {
 	 */
 	Result<LoginLogCO> getById(LoginLogGetQry qry);
 
-    /**
-     * 清空登录日志.
-     */
+	/**
+	 * 清空登录日志.
+	 */
 	void truncate();
 
 }
