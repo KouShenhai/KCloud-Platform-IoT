@@ -58,11 +58,9 @@ class OAuth2ResourceServerConfig {
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, Environment environment,
-												   OAuth2ResourceServerProperties oAuth2ResourceServerProperties,
-												   SessionExpiredStrategy sessionExpiredStrategy,
-												   SessionInvalidStrategy sessionInvalidStrategy,
-												   SessionRegistry springSessionBackedSessionRegistry
-												   ) throws Exception {
+			OAuth2ResourceServerProperties oAuth2ResourceServerProperties,
+			SessionExpiredStrategy sessionExpiredStrategy, SessionInvalidStrategy sessionInvalidStrategy,
+			SessionRegistry springSessionBackedSessionRegistry) throws Exception {
 		return http
 			// 只会在需要时创建 HttpSession【默认配置】
 			.sessionManagement(config -> config.sessionCreationPolicy(IF_REQUIRED)
@@ -70,8 +68,7 @@ class OAuth2ResourceServerConfig {
 				// 最大会话1
 				.maximumSessions(1)
 				.sessionRegistry(springSessionBackedSessionRegistry)
-				.expiredSessionStrategy(sessionExpiredStrategy)
-			)
+				.expiredSessionStrategy(sessionExpiredStrategy))
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.httpStrictTransportSecurity(
 					hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)))
 			.authorizeHttpRequests(customizer(oAuth2ResourceServerProperties, environment))

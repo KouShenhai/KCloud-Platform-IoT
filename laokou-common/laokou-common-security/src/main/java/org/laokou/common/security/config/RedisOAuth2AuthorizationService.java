@@ -82,7 +82,8 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 			.toList();
 		expireAtList.stream()
 			.max(Comparator.comparing(Instant::getEpochSecond))
-			.ifPresent(instant -> redisOAuth2Authorization.setTtl(ChronoUnit.SECONDS.between(DateUtil.nowInstant(), instant)));
+			.ifPresent(instant -> redisOAuth2Authorization
+				.setTtl(ChronoUnit.SECONDS.between(DateUtil.nowInstant(), instant)));
 		// 先删除后新增
 		redisOAuth2AuthorizationRepository.deleteById(authorization.getId());
 		redisOAuth2AuthorizationRepository.save(redisOAuth2Authorization);

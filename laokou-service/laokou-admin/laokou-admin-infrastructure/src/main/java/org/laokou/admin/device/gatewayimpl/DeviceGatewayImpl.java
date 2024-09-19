@@ -30,17 +30,18 @@ import org.laokou.admin.device.convertor.DeviceConvertor;
 import org.laokou.admin.device.gatewayimpl.database.dataobject.DeviceDO;
 
 /**
-*
-* 设备网关实现.
-*
-* @author laokou
-*/
+ *
+ * 设备网关实现.
+ *
+ * @author laokou
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class DeviceGatewayImpl implements DeviceGateway {
 
 	private final DeviceMapper deviceMapper;
+
 	private final TransactionalUtil transactionalUtil;
 
 	public void create(DeviceE deviceE) {
