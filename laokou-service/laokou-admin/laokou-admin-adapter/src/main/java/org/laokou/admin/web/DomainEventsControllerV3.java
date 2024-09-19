@@ -50,7 +50,7 @@ public class DomainEventsControllerV3 {
 	@ApiSecret
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('sys:domain-event:save')")
+	@PreAuthorize("hasAuthority('domain:domain-event:save')")
 	@OperateLog(module = "领域事件管理", operation = "保存领域事件")
 	@Operation(summary = "保存领域事件", description = "保存领域事件")
 	public void saveV3(@RequestBody DomainEventSaveCmd cmd) {
@@ -59,7 +59,7 @@ public class DomainEventsControllerV3 {
 
 	@ApiSecret
 	@PutMapping
-	@PreAuthorize("hasAuthority('sys:domain-event:modify')")
+	@PreAuthorize("hasAuthority('domain:domain-event:modify')")
 	@OperateLog(module = "领域事件管理", operation = "修改领域事件")
 	@Operation(summary = "修改领域事件", description = "修改领域事件")
 	public void modifyV3(@RequestBody DomainEventModifyCmd cmd) {
@@ -68,7 +68,7 @@ public class DomainEventsControllerV3 {
 
 	@ApiSecret
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('sys:domain-event:remove')")
+	@PreAuthorize("hasAuthority('domain:domain-event:remove')")
 	@OperateLog(module = "领域事件管理", operation = "删除领域事件")
 	@Operation(summary = "删除领域事件", description = "删除领域事件")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -77,7 +77,7 @@ public class DomainEventsControllerV3 {
 
 	@ApiSecret
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:domain-event:import')")
+	@PreAuthorize("hasAuthority('domain:domain-event:import')")
 	@OperateLog(module = "领域事件管理", operation = "导入领域事件")
 	@Operation(summary = "导入领域事件", description = "导入领域事件")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -85,7 +85,7 @@ public class DomainEventsControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('sys:domain-event:export')")
+	@PreAuthorize("hasAuthority('domain:domain-event:export')")
 	@OperateLog(module = "领域事件管理", operation = "导出领域事件")
 	@Operation(summary = "导出领域事件", description = "导出领域事件")
 	public void exportV3(@RequestBody DomainEventExportCmd cmd) {
@@ -94,7 +94,7 @@ public class DomainEventsControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('sys:domain-event:page')")
+	@PreAuthorize("hasAuthority('domain:domain-event:page')")
 	@Operation(summary = "分页查询领域事件列表", description = "分页查询领域事件列表")
 	public Result<Page<DomainEventCO>> pageV3(@RequestBody DomainEventPageQry qry) {
 		return domainEventsServiceI.page(qry);

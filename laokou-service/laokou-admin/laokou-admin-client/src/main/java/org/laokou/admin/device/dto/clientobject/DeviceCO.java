@@ -1,4 +1,3 @@
-// @formatter:off
 /*
  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
@@ -16,7 +15,7 @@
  *
  */
 
-package ${packageName}.${instanceName}.dto.clientobject;
+package org.laokou.admin.device.dto.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -27,26 +26,29 @@ import java.time.Instant;
 
 /**
  *
- * ${comment}客户端对象.
+ * 设备客户端对象.
  *
- * @author ${author}
+ * @author laokou
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "${comment}客户端对象", description = "${comment}客户端对象")
-public class ${className}CO extends ClientObject {
+@Schema(name = "设备客户端对象", description = "设备客户端对象")
+public class DeviceCO extends ClientObject {
 
-    @Schema(name = "ID", description = "ID")
+	@Schema(name = "ID", description = "ID")
 	private Long id;
-<#list fields as field>
 
-    @Schema(name = "${field.comment}", description = "${field.comment}")
-	private ${field.fieldType} ${field.fieldName};
-</#list>
+	@Schema(name = "设备标识", description = "设备标识")
+	private String key;
 
-    @Schema(name = "创建时间", description = "创建时间")
-    private Instant createTime;
+	@Schema(name = "设备名称", description = "设备名称")
+	private String name;
+
+	@Schema(name = "设备状态 0在线 1离线", description = "设备状态 0在线 1离线")
+	private Integer status;
+
+	@Schema(name = "创建时间", description = "创建时间")
+	private Instant createTime;
 
 }
-// @formatter:on

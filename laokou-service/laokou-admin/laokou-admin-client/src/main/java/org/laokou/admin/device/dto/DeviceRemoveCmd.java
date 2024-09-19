@@ -1,4 +1,3 @@
-// @formatter:off
 /*
  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
@@ -16,37 +15,24 @@
  *
  */
 
-package ${packageName}.${instanceName}.dto.clientobject;
+package org.laokou.admin.device.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.ClientObject;
-import java.time.Instant;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  *
- * ${comment}客户端对象.
+ * 删除设备命令.
  *
- * @author ${author}
+ * @author laokou
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "${comment}客户端对象", description = "${comment}客户端对象")
-public class ${className}CO extends ClientObject {
+public class DeviceRemoveCmd extends CommonCommand {
 
-    @Schema(name = "ID", description = "ID")
-	private Long id;
-<#list fields as field>
-
-    @Schema(name = "${field.comment}", description = "${field.comment}")
-	private ${field.fieldType} ${field.fieldName};
-</#list>
-
-    @Schema(name = "创建时间", description = "创建时间")
-    private Instant createTime;
+	private Long[] ids;
 
 }
-// @formatter:on
