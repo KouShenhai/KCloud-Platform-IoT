@@ -17,7 +17,7 @@
 
 package org.laokou.generator.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.generator.gateway.TableGateway;
@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
 
@@ -51,15 +50,19 @@ public class TableGatewayImpl implements TableGateway {
 
 	private final TableColumnMapper tableColumnMapper;
 
-	@DS(MASTER)
 	public List<TableV> list(TableE tableE) {
-		List<TableDO> tables = tableMapper.selectObjects(tableE.getTable());
-		List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects(tableE.getTable());
-		Map<String, List<TableColumnDO>> cloumnMap = tableColumns.stream()
-			.collect(Collectors.groupingBy(TableColumnDO::getTableName));
-		Map<String, String> tableMap = tables.stream().collect(Collectors.toMap(TableDO::getName, TableDO::getComment));
-		return convert(tableE, tableMap, cloumnMap);
-	}
+        try {
+            DynamicDataSourceContextHolder.push(tableE.getSourceName());
+            List<TableDO> tables = tableMapper.selectObjects(tableE.getTable());
+            List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects(tableE.getTable());
+            Map<String, List<TableColumnDO>> cloumnMap = tableColumns.stream()
+                    .collect(Collectors.groupingBy(TableColumnDO::getTableName));
+            Map<String, String> tableMap = tables.stream().collect(Collectors.toMap(TableDO::getName, TableDO::getComment));
+            return convert(tableE, tableMap, cloumnMap);
+        } finally {
+            DynamicDataSourceContextHolder.clear();
+        }
+    }
 
 	private List<TableV> convert(TableE tableE, Map<String, String> tableMap,
 			Map<String, List<TableColumnDO>> cloumnMap) {

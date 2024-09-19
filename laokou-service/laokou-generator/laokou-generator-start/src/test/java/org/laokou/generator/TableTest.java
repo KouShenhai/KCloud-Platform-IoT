@@ -35,6 +35,7 @@ import org.springframework.test.context.TestConstructor;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 /**
  * @author laokou
@@ -44,6 +45,8 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class TableTest {
+
+    private final Executor executor;
 
 	private final TableMapper tableMapper;
 
@@ -65,6 +68,8 @@ class TableTest {
 
 	@Test
 	void testMasterGenerateCode() {
+        // 数据源
+        String sourceName = "master";
 		// 版本号
 		String version = "v3";
 		// 作者
@@ -79,14 +84,13 @@ class TableTest {
 		App app = App.SYS;
 		// 表名
 		Set<String> tableNames = Set.of("boot_sys_user", "boot_sys_menu", "boot_sys_tenant");
-		generateCode(version, author, tablePrefix, moduleName, packageName, tableNames, app);
+		generateCode(sourceName, version, author, tablePrefix, moduleName, packageName, tableNames, app);
 	}
 
 	@Test
 	void testDomainGenerateCode() {
-
-		// 注意：需要手动切换数据源至domain
-
+        // 数据源
+        String sourceName = "domain";
 		// 版本号
 		String version = "v3";
 		// 作者
@@ -101,14 +105,13 @@ class TableTest {
 		App app = App.SYS;
 		// 表名
 		Set<String> tableNames = Set.of("boot_domain_event");
-		generateCode(version, author, tablePrefix, moduleName, packageName, tableNames, app);
+		generateCode(sourceName, version, author, tablePrefix, moduleName, packageName, tableNames, app);
 	}
 
 	@Test
 	void testIotGenerateCode() {
-
-		// 注意：需要手动切换数据源至iot
-
+        // 数据源
+        String sourceName = "iot";
 		// 版本号
 		String version = "v3";
 		// 作者
@@ -123,16 +126,16 @@ class TableTest {
 		App app = App.IOT;
 		// 表名
 		Set<String> tableNames = Set.of("boot_iot_device");
-		generateCode(version, author, tablePrefix, moduleName, packageName, tableNames, app);
+		generateCode(sourceName, version, author, tablePrefix, moduleName, packageName, tableNames, app);
 	}
 
-	private void generateCode(String version, String author, String tablePrefix, String moduleName, String packageName,
+	private void generateCode(String sourceName,String version, String author, String tablePrefix, String moduleName, String packageName,
 			Set<String> tableNames, App app) {
 		tableNames.stream().map(item -> CompletableFuture.runAsync(() -> {
-			TableE tableE = new TableE(item, tablePrefix);
+			TableE tableE = new TableE(item, tablePrefix, sourceName);
 			GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE, app);
 			generatorDomainService.generateCode(generatorA);
-		})).forEach(CompletableFuture::join);
+		}, executor)).forEach(CompletableFuture::join);
 	}
 
 }

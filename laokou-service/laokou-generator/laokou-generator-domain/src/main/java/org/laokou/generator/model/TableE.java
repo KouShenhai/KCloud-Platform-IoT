@@ -33,4 +33,6 @@ public class TableE {
 
 	private String tablePrefix;
 
+    private String sourceName;
+
 }
