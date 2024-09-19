@@ -63,10 +63,10 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-    <spring-boot-maven-plugin.version>3.3.3</spring-boot-maven-plugin.version>
+    <spring-boot-maven-plugin.version>3.3.4</spring-boot-maven-plugin.version>
     <maven-surefire-plugin.version>3.5.0</maven-surefire-plugin.version>
     <!--spring-boot版本-->
-    <spring-boot.version>3.3.3</spring-boot.version>
+    <spring-boot.version>3.3.4</spring-boot.version>
     <!--spring-cloud版本-->
     <spring-cloud.version>2023.0.3</spring-cloud.version>
     <!--spring-framework版本-->
