@@ -19,7 +19,6 @@
 package ${packageName}.${instanceName}.convertor;
 
 import ${packageName}.${instanceName}.gatewayimpl.database.dataobject.${className}DO;
-import org.laokou.common.core.utils.ConvertUtil;
 import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
 import ${packageName}.${instanceName}.model.${className}E;
 
@@ -32,19 +31,32 @@ import ${packageName}.${instanceName}.model.${className}E;
 public class ${className}Convertor {
 
 	public static ${className}DO toDataObject(${className}E ${instanceName}E, boolean isInsert) {
-		${className}DO ${instanceName}DO = ConvertUtil.sourceToTarget(${instanceName}E, ${className}DO.class);
+        ${className}DO ${instanceName}DO = new ${className}DO();
 		if (isInsert) {
 			${instanceName}DO.generatorId();
-		}
-		return ${instanceName}DO;
+		} else {
+            ${instanceName}DO.setId(${instanceName}E.getId());
+        }
+        <#list fields as field>
+        ${instanceName}DO.set${field.fieldName?cap_first}(${instanceName}E.get${field.fieldName?cap_first}());
+        </#list>
+        return ${instanceName}DO;
 	}
 
 	public static ${className}CO toClientObject(${className}DO ${instanceName}DO) {
-		return ConvertUtil.sourceToTarget(${instanceName}DO, ${className}CO.class);
+        ${className}CO ${instanceName}CO = new ${className}CO();
+        <#list fields as field>
+            ${instanceName}CO.set${field.fieldName?cap_first}(${instanceName}DO.get${field.fieldName?cap_first}());
+        </#list>
+		return ${instanceName}CO;
 	}
 
 	public static ${className}E toEntity(${className}CO ${instanceName}CO) {
-		return ConvertUtil.sourceToTarget(${instanceName}CO, ${className}E.class);
+        ${className}E ${instanceName}E = new ${className}E();
+        <#list fields as field>
+            ${instanceName}E.set${field.fieldName?cap_first}(${instanceName}CO.get${field.fieldName?cap_first}());
+        </#list>
+		return ${instanceName}E;
 	}
 
 }

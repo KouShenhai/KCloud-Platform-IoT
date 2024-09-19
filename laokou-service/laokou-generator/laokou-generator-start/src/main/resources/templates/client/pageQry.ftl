@@ -30,7 +30,13 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Data
 public class ${className}PageQry extends PageQuery {
 
+<#list fields as field>
 
+    /**
+    * ${field.comment}.
+    */
+    private ${field.fieldType} ${field.fieldName};
+</#list>
 
 }
 // @formatter:on

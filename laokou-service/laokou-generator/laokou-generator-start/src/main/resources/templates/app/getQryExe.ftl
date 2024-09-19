@@ -35,11 +35,11 @@ import ${packageName}.${instanceName}.convertor.${className}Convertor;
 @RequiredArgsConstructor
 public class ${className}GetQryExe {
 
-private final ${className}Mapper ${instanceName}Mapper;
+    private final ${className}Mapper ${instanceName}Mapper;
 
-public Result
-<${className}CO> execute(${className}GetQry qry) {
-	return Result.ok(${className}Convertor.toClientObject(${instanceName}Mapper.selectById(qry.getId())));
+    public Result<${className}CO> execute(${className}GetQry qry) {
+	    return Result.ok(${className}Convertor.toClientObject(${instanceName}Mapper.selectById(qry.getId())));
 	}
-	}
-	// @formatter:on
+
+}
+// @formatter:on
