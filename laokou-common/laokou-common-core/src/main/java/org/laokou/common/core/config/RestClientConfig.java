@@ -17,6 +17,7 @@
 
 package org.laokou.common.core.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -29,6 +30,7 @@ import static org.laokou.common.core.utils.HttpUtil.getHttpClient;
  * @author laokou
  */
 @Configuration
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class RestClientConfig {
 
 	@Bean
