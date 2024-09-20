@@ -18,20 +18,19 @@
 package org.laokou.admin;
 
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.security.Principal;
-import java.util.Objects;
 
 /**
  * @author laokou
@@ -52,10 +51,9 @@ class CommonTest {
 	@BeforeEach
 	public void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(TOKEN, OAuth2TokenType.ACCESS_TOKEN);
-		assert authorization != null;
-		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = Objects
-			.requireNonNull(authorization.getAttribute(Principal.class.getName()));
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findById(TOKEN);
+		Assertions.assertNotNull(authorization);
+		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = authorization.getAttribute(Principal.class.getName());
 		SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 	}
 

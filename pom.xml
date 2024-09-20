@@ -441,7 +441,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
-          <skip>true</skip>
+          <skip>false</skip>
           <testFailureIgnore>true</testFailureIgnore>
         </configuration>
       </plugin>

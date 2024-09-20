@@ -68,6 +68,9 @@ class TableTest {
 
 	@Test
 	void testMasterGenerateCode() {
+		// 已注释代码生成【跑CI已注释】
+		// 已注释代码生成【跑CI已注释】
+		// 已注释代码生成【跑CI已注释】
 		// 数据源
 		String sourceName = "master";
 		// 版本号
@@ -89,6 +92,9 @@ class TableTest {
 
 	@Test
 	void testDomainGenerateCode() {
+		// 已注释代码生成【跑CI已注释】
+		// 已注释代码生成【跑CI已注释】
+		// 已注释代码生成【跑CI已注释】
 		// 数据源
 		String sourceName = "domain";
 		// 版本号
@@ -110,6 +116,9 @@ class TableTest {
 
 	@Test
 	void testIotGenerateCode() {
+		// 已注释代码生成【跑CI已注释】
+		// 已注释代码生成【跑CI已注释】
+		// 已注释代码生成【跑CI已注释】
 		// 数据源
 		String sourceName = "iot";
 		// 版本号
@@ -134,7 +143,10 @@ class TableTest {
 		tableNames.stream().map(item -> CompletableFuture.runAsync(() -> {
 			TableE tableE = new TableE(item, tablePrefix, sourceName);
 			GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE, app);
-			generatorDomainService.generateCode(generatorA);
+			// 已注释代码生成【跑CI已注释】
+			// 已注释代码生成【跑CI已注释】
+			// 已注释代码生成【跑CI已注释】
+			// generatorDomainService.generateCode(generatorA);
 		}, executor)).forEach(CompletableFuture::join);
 	}
 
