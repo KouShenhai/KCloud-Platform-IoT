@@ -4,7 +4,6 @@ jobs:
   build:
     docker:
       - image: cimg/openjdk:21.0.2
-      - image: maven:latest
 
     environment:
       JVM_OPTS: -Xmx2048m
