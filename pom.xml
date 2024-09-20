@@ -88,6 +88,7 @@
     <asciidoctor-maven-plugin.version>3.0.0</asciidoctor-maven-plugin.version>
     <spring-javaformat-maven-plugin.version>0.0.43</spring-javaformat-maven-plugin.version>
     <maven-archetype-plugin.version>3.2.1</maven-archetype-plugin.version>
+    <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -444,6 +445,31 @@
           <skip>false</skip>
           <testFailureIgnore>true</testFailureIgnore>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco-maven-plugin.version}</version>
+        <configuration>
+          <skip>false</skip>
+          <destFile>${project.build.directory}/coverage-reports/jacoco-unit.exec</destFile>
+          <dataFile>${project.build.directory}/coverage-reports/jacoco-unit.exec</dataFile>
+        </configuration>
+        <executions>
+          <execution>
+            <id>pre-test</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>post-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.asciidoctor</groupId>
