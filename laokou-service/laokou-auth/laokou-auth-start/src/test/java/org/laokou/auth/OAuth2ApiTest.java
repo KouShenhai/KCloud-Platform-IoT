@@ -17,8 +17,7 @@
 
 package org.laokou.auth;
 
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +28,7 @@ import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.crypto.utils.RSAUtil;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
@@ -46,6 +46,8 @@ import org.springframework.util.Assert;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.io.Serializable;
+import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
 
@@ -102,6 +104,22 @@ class OAuth2ApiTest {
 	@BeforeEach
 	void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+	}
+
+	@Test
+	void testSetInstantObj() {
+		String key = "test:instant:obj";
+		redisUtil.set(key, new InstantTest(DateUtil.nowInstant()));
+		log.info("获取Instant obj值：{}", redisUtil.get(key));
+		redisUtil.del(key);
+	}
+
+	@Test
+	void testSetInstant() {
+		String key = "test:instant";
+		redisUtil.set(key, DateUtil.nowInstant());
+		log.info("获取Instant值：{}", redisUtil.get(key));
+		redisUtil.del(key);
 	}
 
 	@Test
@@ -428,6 +446,15 @@ class OAuth2ApiTest {
 
 	private boolean disabledSsl() {
 		return serverProperties.getSsl().isEnabled();
+	}
+
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	static class InstantTest implements Serializable {
+
+		private Instant instant;
+
 	}
 
 }

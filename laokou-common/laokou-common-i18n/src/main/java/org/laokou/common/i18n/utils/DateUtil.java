@@ -153,7 +153,18 @@ public final class DateUtil {
 	 */
 	public static DateTimeFormatter getDateTimeFormatter(int index) {
 		String timePattern = getTimePattern(index);
-		return DateTimeFormatter.ofPattern(timePattern);
+		return DateTimeFormatter.ofPattern(timePattern).withZone(getDefaultZoneId());
+	}
+
+	/**
+	 * 格式化配置.
+	 * @param index 索引
+	 * @param zoneId 时区
+	 * @return 格式化配置
+	 */
+	public static DateTimeFormatter getDateTimeFormatter(int index, ZoneId zoneId) {
+		String timePattern = getTimePattern(index);
+		return DateTimeFormatter.ofPattern(timePattern).withZone(zoneId);
 	}
 
 	/**
