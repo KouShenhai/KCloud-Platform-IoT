@@ -53,7 +53,8 @@ class CommonTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findById(TOKEN);
 		Assertions.assertNotNull(authorization);
-		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = authorization.getAttribute(Principal.class.getName());
+		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = authorization
+			.getAttribute(Principal.class.getName());
 		SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 	}
 

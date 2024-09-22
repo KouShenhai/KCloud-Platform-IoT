@@ -567,7 +567,7 @@ public enum Template {
 
 		protected static final String JAVA_PATH = "/src/main/java/";
 
-		protected static final String RESOURCE_PATH = "/src/main/resource/";
+		protected static final String RESOURCE_PATH = "/src/main/resources/";
 
 		protected static final String COLA_APP = "app";
 
