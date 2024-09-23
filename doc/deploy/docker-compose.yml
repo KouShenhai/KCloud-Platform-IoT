@@ -15,6 +15,33 @@
 #  */
 version: '3'
 services:
+  jaeger-collector:
+    image: jaegertracing/jaeger-collector:1.60
+    container_name: jaeger-collector
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      # grpc
+      - "4317:4317"
+      - "14250:14250"
+      # http
+      - "4318:4318"
+      - "14268:14268"
+      - "14269:14269"
+    environment:
+      - TZ=Asia/Shanghai
+      - SPAN_STORAGE_TYPE=elasticsearch
+      - ES_SERVER_URLS=https://elasticsearch:9200
+      - ES_USERNAME=elastic
+      - ES_PASSWORD=laokou123
+      - ES_TLS_ENABLED=true
+      - ES_TLS_SKIP_HOST_VERIFY=true
+    networks:
+      - laokou_network
+    depends_on:
+      - elasticsearch
   # web控制台地址：http://127.0.0.1:6060
   # root/taosdata
   tdengine:
@@ -181,6 +208,7 @@ services:
       memlock:
         soft: -1
         hard: -1
+  # ./bin/elasticsearch-setup-passwords interactive
   kibana:
     image: kibana:8.15.0
     container_name: kibana
