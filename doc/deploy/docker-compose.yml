@@ -15,6 +15,30 @@
 #  */
 version: '3'
 services:
+  # ui => http://ip:16686
+  jaeger-query:
+    image: jaegertracing/jaeger-query:1.60
+    container_name: jaeger-query
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "16685:16685"
+      - "16686:16686"
+      - "16687:16687"
+    environment:
+      - TZ=Asia/Shanghai
+      - SPAN_STORAGE_TYPE=elasticsearch
+      - ES_SERVER_URLS=https://elasticsearch:9200
+      - ES_USERNAME=elastic
+      - ES_PASSWORD=laokou123
+      - ES_TLS_ENABLED=true
+      - ES_TLS_SKIP_HOST_VERIFY=true
+    networks:
+      - laokou_network
+    depends_on:
+      - elasticsearch
   jaeger-collector:
     image: jaegertracing/jaeger-collector:1.60
     container_name: jaeger-collector
