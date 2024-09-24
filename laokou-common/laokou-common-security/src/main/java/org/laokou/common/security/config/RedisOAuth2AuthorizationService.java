@@ -66,13 +66,14 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		.registerModules(SecurityJackson2Modules.getModules(RedisOAuth2AuthorizationService.class.getClassLoader()))
 		// https://docs.spring.io/spring-authorization-server/docs/current-SNAPSHOT/api/org/springframework/security/oauth2/server/authorization/jackson2/OAuth2AuthorizationServerJackson2Module.html
 		.registerModule(new OAuth2AuthorizationServerJackson2Module());
+
 	private final RedisOAuth2AuthorizationRepository redisOAuth2AuthorizationRepository;
+
 	private final RegisteredClientRepository registeredClientRepository;
 	// @formatter:on
 
 	@Override
-	public void save(OAuth2Authorization authorization) {
-		Assert.isTrue(ObjectUtil.isNotNull(authorization), "authorization is null");
+	public void save(@NonNull OAuth2Authorization authorization) {
 		RedisOAuth2Authorization redisOAuth2Authorization = convert(authorization);
 		List<Instant> expireAtList = Stream.of(redisOAuth2Authorization.getAuthorizationCodeExpiresAt(),
 				redisOAuth2Authorization.getAccessTokenExpiresAt(), redisOAuth2Authorization.getOidcIdTokenExpiresAt(),
@@ -85,21 +86,20 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 			.ifPresent(instant -> redisOAuth2Authorization
 				.setTtl(ChronoUnit.SECONDS.between(DateUtil.nowInstant(), instant)));
 		// 先删除后新增
-		redisOAuth2AuthorizationRepository.deleteById(authorization.getId());
+		remove(authorization);
 		redisOAuth2AuthorizationRepository.save(redisOAuth2Authorization);
 	}
 
 	// @formatter:off
 	@Override
-	public void remove(OAuth2Authorization authorization) {
-		Assert.isTrue(ObjectUtil.isNotNull(authorization), "authorization is null");
+	public void remove(@NonNull OAuth2Authorization authorization) {
 		redisOAuth2AuthorizationRepository.deleteById(authorization.getId());
 	}
 	// @formatter:on
 
 	@Nullable
 	@Override
-	public OAuth2Authorization findById(String id) {
+	public OAuth2Authorization findById(@NonNull String id) {
 		throw new UnsupportedOperationException();
 	}
 

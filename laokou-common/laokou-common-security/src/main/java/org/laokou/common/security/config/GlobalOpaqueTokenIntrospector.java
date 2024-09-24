@@ -22,9 +22,8 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
-import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -56,18 +55,10 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 
-	private final RedisUtil redisUtil;
-
 	@Master
 	@Override
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
-		// 用户相关数据，低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
-		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-		Object obj = redisUtil.get(userInfoKey);
-		if (ObjectUtil.isNotNull(obj)) {
-			// 解密
-			return decryptInfo((UserDetail) obj);
-		}
+		// 低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token,
 				new OAuth2TokenType(ACCESS_TOKEN));
 		if (ObjectUtil.isNull(authorization)) {
@@ -75,18 +66,16 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 		}
 		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
 		Instant expiresAt = accessToken.getToken().getExpiresAt();
-		Instant nowAt = Instant.now();
-		long expireTime = ChronoUnit.SECONDS.between(nowAt, expiresAt);
-		// 10秒后过期
-		long minTime = 10;
-		if (expireTime > minTime) {
+		long expireTime = ChronoUnit.SECONDS.between(DateUtil.nowInstant(), expiresAt);
+		if (expireTime > 0) {
 			Object principal = ((UsernamePasswordAuthenticationToken) Objects
 				.requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
 			UserDetail userDetail = (UserDetail) principal;
-			redisUtil.set(userInfoKey, userDetail, expireTime - 5);
 			// 解密
 			return decryptInfo(userDetail);
 		}
+		// 移除
+		oAuth2AuthorizationService.remove(authorization);
 		throw OAuth2ExceptionHandler.getException(UNAUTHORIZED);
 	}
 	// @formatter:on

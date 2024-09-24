@@ -149,8 +149,7 @@ class OAuth2ApiTest {
 		log.info("刷新token：{}", token);
 		log.info("---------- 模拟认证开始 ----------");
 		Assertions.assertNotNull(token);
-		GlobalOpaqueTokenIntrospector introspector = new GlobalOpaqueTokenIntrospector(oAuth2AuthorizationService,
-				redisUtil);
+		GlobalOpaqueTokenIntrospector introspector = new GlobalOpaqueTokenIntrospector(oAuth2AuthorizationService);
 		log.info("认证数据：{}", JacksonUtil.toJsonStr(introspector.introspect(token)));
 		log.info("认证数据：{}", JacksonUtil.toJsonStr(introspector.introspect(token)));
 		log.info("---------- 模拟认证结束 ----------");
