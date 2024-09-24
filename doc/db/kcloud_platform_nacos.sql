@@ -12,7 +12,7 @@
  Target Server Version : 160004 (160004)
  File Encoding         : 65001
 
- Date: 23/09/2024 23:13:26
+ Date: 25/09/2024 00:19:48
 */
 
 
@@ -1278,13 +1278,13 @@ management:
       type: w3c
   otlp:
     tracing:
-      endpoint: http://jaeger-collector:4318/v1/traces
+      endpoint: http://otel-collector:4318/v1/traces
       compression: gzip
+      timeout: 60s
     metrics:
       export:
-        url: http://opentelemetry-collector:4320/v1/metrics
-        enabled: true
-
+        enabled: false
+        
 # server
 server:
   servlet:
@@ -1324,7 +1324,7 @@ tenant:
 knife4j:
   enable: true
   setting:
-    language: zh_cn', 'e97e19963c8f88a2bfee27e82a7d5b6a', '2024-05-25 18:13:33.393', '2024-09-23 23:01:18.459', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+    language: zh_cn', 'd579a8cd0a076dc5defddf2f13a81f70', '2024-05-25 18:13:33.393', '2024-09-25 00:07:46.524', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', '[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
@@ -3405,12 +3405,12 @@ management:
       type: w3c
   otlp:
     tracing:
-      endpoint: http://jaeger-collector:4318/v1/traces
+      endpoint: http://otel-collector:4318/v1/traces
       compression: gzip
+      timeout: 60s
     metrics:
       export:
-        url: http://opentelemetry-collector:4320/v1/metrics
-        enabled: true
+        enabled: false
 
 # server
 server:
@@ -3451,7 +3451,7 @@ tenant:
 knife4j:
   enable: true
   setting:
-    language: zh_cn', 'd53545ca62b0b03fe3c99184869fb6fa', '2023-01-13 12:16:46', '2024-09-23 23:00:57.028', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+    language: zh_cn', '6421e5a9975a860a5b8af4a3a8b72701', '2023-01-13 12:16:46', '2024-09-25 00:07:32.596', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
 spring:
   # security
@@ -3540,12 +3540,12 @@ management:
       type: w3c
   otlp:
     tracing:
-      endpoint: http://jaeger-collector:4318/v1/traces
+      endpoint: http://otel-collector:4318/v1/traces
       compression: gzip
+      timeout: 60s
     metrics:
       export:
-        url: http://opentelemetry-collector:4320/v1/metrics
-        enabled: true
+        enabled: false
 
 # server
 server:
@@ -3586,7 +3586,7 @@ tenant:
 knife4j:
   enable: false
   setting:
-    language: zh_cn', '8960d5789adfbebcd2936438dbe788da', '2024-05-25 18:13:10.622', '2024-09-23 23:04:24.842', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+    language: zh_cn', '687294932b79d5169d56d7dc6d2a8ab8', '2024-05-25 18:13:10.622', '2024-09-25 00:07:59.236', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
@@ -3756,7 +3756,7 @@ INSERT INTO "public"."config_tags_relation" VALUES (4, 'im', '', 'application-im
 INSERT INTO "public"."config_tags_relation" VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 11);
 INSERT INTO "public"."config_tags_relation" VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 3);
 INSERT INTO "public"."config_tags_relation" VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 1);
-INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 13);
+INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 23);
 
 -- ----------------------------
 -- Table structure for databasechangelog
@@ -4178,7 +4178,7 @@ SELECT setval('"public"."config_tags_relation_nid_seq3"', 1, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."config_tags_relation_nid_seq4"
 OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq4"', 13, true);
+SELECT setval('"public"."config_tags_relation_nid_seq4"', 23, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4248,7 +4248,7 @@ SELECT setval('"public"."his_config_info_nid_seq3"', 3, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."his_config_info_nid_seq4"
 OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq4"', 19, true);
+SELECT setval('"public"."his_config_info_nid_seq4"', 45, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4401,7 +4401,7 @@ ALTER TABLE "public"."config_info_tag" ADD CONSTRAINT "config_info_tag_pkey" PRI
 -- ----------------------------
 -- Auto increment value for config_tags_relation
 -- ----------------------------
-SELECT setval('"public"."config_tags_relation_nid_seq4"', 13, true);
+SELECT setval('"public"."config_tags_relation_nid_seq4"', 23, true);
 
 -- ----------------------------
 -- Indexes structure for table config_tags_relation
@@ -4445,7 +4445,7 @@ ALTER TABLE "public"."group_capacity" ADD CONSTRAINT "group_capacity_pkey" PRIMA
 -- ----------------------------
 -- Auto increment value for his_config_info
 -- ----------------------------
-SELECT setval('"public"."his_config_info_nid_seq4"', 19, true);
+SELECT setval('"public"."his_config_info_nid_seq4"', 45, true);
 
 -- ----------------------------
 -- Indexes structure for table his_config_info

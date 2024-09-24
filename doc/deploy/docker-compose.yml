@@ -15,6 +15,19 @@
 #  */
 version: '3'
 services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    volumes:
+      - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - laokou_network
   # ui => http://ip:16686
   jaeger-query:
     image: jaegertracing/jaeger-query:1.60
