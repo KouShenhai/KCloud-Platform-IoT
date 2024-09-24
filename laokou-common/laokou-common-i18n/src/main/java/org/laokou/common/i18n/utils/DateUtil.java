@@ -22,6 +22,7 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Locale;
 
@@ -181,6 +182,10 @@ public final class DateUtil {
 		return Instant.now();
 	}
 
+	public static long betweenSeconds(Instant instant1, Instant instant2) {
+		return ChronoUnit.SECONDS.between(instant1, instant2);
+	}
+
 	/**
 	 * 判断 d1 在 d2 前.
 	 * @param localDateTime1 时间1
@@ -208,21 +213,35 @@ public final class DateUtil {
 	 * @return 时间
 	 */
 	public static LocalDateTime parseTime(String dateTime, int index) {
-		String timePattern = getTimePattern(index);
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(timePattern);
-		return LocalDateTime.parse(dateTime, dateTimeFormatter);
+		return LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(getTimePattern(index)));
 	}
 
 	/**
 	 * 字符串转换日期.
-	 * @param dateTime 日期
+	 * @param date 日期
 	 * @param index 索引
 	 * @return 日期
 	 */
-	public static LocalDate parseDate(String dateTime, int index) {
-		String timePattern = getTimePattern(index);
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(timePattern);
-		return LocalDate.parse(dateTime, dateTimeFormatter);
+	public static LocalDate parseDate(String date, int index) {
+		return LocalDate.parse(date, DateTimeFormatter.ofPattern(getTimePattern(index)));
+	}
+
+	public static ZoneOffset getDefaultZoneOffset() {
+		return OffsetDateTime.now().getOffset();
+	}
+
+	public static ZoneOffset getZoneOffset(ZoneId zoneId) {
+		return OffsetDateTime.now(zoneId).getOffset();
+	}
+
+	public static Instant parsInstant(String instant, ZoneId zoneId, int index) {
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(getTimePattern(index));
+		LocalDateTime localDateTime = LocalDateTime.parse(instant, dateTimeFormatter);
+		return localDateTime.toInstant(getZoneOffset(zoneId));
+	}
+
+	public static Instant parsInstant(String instant, int index) {
+		return parsInstant(instant, getDefaultZoneId(), index);
 	}
 
 	/**

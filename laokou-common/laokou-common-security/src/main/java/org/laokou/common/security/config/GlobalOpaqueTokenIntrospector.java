@@ -37,10 +37,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.security.Principal;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Objects;
-
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 
@@ -56,7 +52,8 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 
-	@Master
+	// @formatter:off
+    @Master
 	@Override
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
 		// 低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
@@ -65,14 +62,14 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED);
 		}
 		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
-		Instant expiresAt = accessToken.getToken().getExpiresAt();
-		long expireTime = ChronoUnit.SECONDS.between(DateUtil.nowInstant(), expiresAt);
+		long expireTime = DateUtil.betweenSeconds(DateUtil.nowInstant(), accessToken.getToken().getExpiresAt());
 		if (expireTime > 0) {
-			Object principal = ((UsernamePasswordAuthenticationToken) Objects
-				.requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
-			UserDetail userDetail = (UserDetail) principal;
-			// 解密
-			return decryptInfo(userDetail);
+            Object obj = authorization.getAttribute(Principal.class.getName());
+            if (ObjectUtil.isNotNull(obj)) {
+                UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) obj).getPrincipal();
+                // 解密
+                return decryptInfo(userDetail);
+            }
 		}
 		// 移除
 		oAuth2AuthorizationService.remove(authorization);

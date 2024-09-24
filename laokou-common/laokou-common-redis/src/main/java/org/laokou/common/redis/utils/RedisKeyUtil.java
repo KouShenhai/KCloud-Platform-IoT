@@ -36,14 +36,6 @@ public final class RedisKeyUtil {
 	}
 
 	/**
-	 * 用户信息Key.
-	 * @param token 令牌
-	 */
-	public static String getUserInfoKey(String token) {
-		return "user:info:" + token;
-	}
-
-	/**
 	 * 布隆过滤器Key.
 	 */
 	public static String getBloomFilterKey() {
