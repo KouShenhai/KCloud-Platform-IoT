@@ -21,13 +21,12 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.LogoutCmd;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.stereotype.Component;
 
-import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
+import static org.laokou.common.security.config.GlobalOpaqueTokenIntrospector.FULL;
 
 /**
  * 退出登录执行器.
@@ -53,11 +52,9 @@ public class LogoutCmdExe {
 		if (StringUtil.isEmpty(token)) {
 			return;
 		}
-		// 删除用户信息key
-		redisUtil.del(RedisKeyUtil.getUserInfoKey(token));
 		// 删除树形菜单key
 		redisUtil.hDelFast(MENU_TREE, token);
-		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, ACCESS_TOKEN);
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, FULL);
 		if (ObjectUtil.isNotNull(authorization)) {
 			// 删除token
 			oAuth2AuthorizationService.remove(authorization);

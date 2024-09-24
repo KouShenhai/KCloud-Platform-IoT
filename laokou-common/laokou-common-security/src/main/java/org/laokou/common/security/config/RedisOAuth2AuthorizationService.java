@@ -58,7 +58,7 @@ import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParamet
 @RequiredArgsConstructor
 public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationService {
 
-	private static final String FULL = "full";
+	public static final String FULL = "full";
 
 	// @formatter:off
 	private static final ObjectMapper MAPPER = new ObjectMapper()
@@ -120,13 +120,13 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 				redisOAuth2AuthorizationRepository.findByUserCodeValue(token).map(this::parse).orElse(null);
 			case DEVICE_CODE ->
 				redisOAuth2AuthorizationRepository.findByDeviceCodeValue(token).map(this::parse).orElse(null);
-			case FULL -> redisOAuth2AuthorizationRepository.findByState(token)
+			case FULL -> redisOAuth2AuthorizationRepository.findByAccessTokenValue(token)
 				.or(() -> redisOAuth2AuthorizationRepository.findByAuthorizationCodeValue(token))
-				.or(() -> redisOAuth2AuthorizationRepository.findByAccessTokenValue(token))
 				.or(() -> redisOAuth2AuthorizationRepository.findByOidcIdTokenValue(token))
-				.or(() -> redisOAuth2AuthorizationRepository.findByRefreshTokenValue(token))
-				.or(() -> redisOAuth2AuthorizationRepository.findByUserCodeValue(token))
 				.or(() -> redisOAuth2AuthorizationRepository.findByDeviceCodeValue(token))
+				.or(() -> redisOAuth2AuthorizationRepository.findByUserCodeValue(token))
+				.or(() -> redisOAuth2AuthorizationRepository.findByRefreshTokenValue(token))
+				.or(() -> redisOAuth2AuthorizationRepository.findByState(token))
 				.map(this::parse)
 				.orElse(null);
 			default -> null;

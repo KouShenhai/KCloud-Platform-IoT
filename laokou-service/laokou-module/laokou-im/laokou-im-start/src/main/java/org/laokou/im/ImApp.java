@@ -21,12 +21,8 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.nacos.annotation.EnableRouter;
-import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.springframework.boot.WebApplicationType;
-import org.springframework.boot.actuate.autoconfigure.security.reactive.ReactiveManagementWebSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
@@ -38,10 +34,8 @@ import java.net.InetAddress;
 @EnableRouter
 @EnableTaskExecutor
 @EnableDiscoveryClient
-@EnableRedisRepository
 @EnableEncryptableProperties
-@SpringBootApplication(scanBasePackages = "org.laokou", exclude = { ReactiveSecurityAutoConfiguration.class,
-		ReactiveManagementWebSecurityAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
+@SpringBootApplication(scanBasePackages = "org.laokou")
 public class ImApp {
 
 	/**

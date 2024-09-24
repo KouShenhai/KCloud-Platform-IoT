@@ -43,7 +43,6 @@ import java.util.Objects;
 
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
-import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ACCESS_TOKEN;
 
 /**
  * @author laokou
@@ -53,14 +52,15 @@ import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterN
 @RequiredArgsConstructor
 public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, WebMvcConfigurer {
 
+	public static final OAuth2TokenType FULL = new OAuth2TokenType(RedisOAuth2AuthorizationService.FULL);
+
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 
 	@Master
 	@Override
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
 		// 低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
-		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token,
-				new OAuth2TokenType(ACCESS_TOKEN));
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, FULL);
 		if (ObjectUtil.isNull(authorization)) {
 			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED);
 		}

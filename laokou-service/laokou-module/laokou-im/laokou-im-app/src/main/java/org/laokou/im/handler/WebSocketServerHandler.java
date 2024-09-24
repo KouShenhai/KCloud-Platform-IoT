@@ -27,14 +27,8 @@ import io.netty.handler.timeout.IdleStateEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.netty.config.WebSocketSession;
-import org.laokou.common.redis.utils.RedisKeyUtil;
-import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.security.utils.UserDetail;
 import org.springframework.stereotype.Component;
-import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 
 /**
  * WebSocket自定义处理器.
@@ -46,8 +40,6 @@ import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
 public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
-
-	private final RedisUtil redisUtil;
 
 	@Override
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
@@ -96,22 +88,22 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
 		Channel channel = ctx.channel();
 		String authorization = frame.text();
-		String userInfoKey = RedisKeyUtil.getUserInfoKey(authorization);
-		Object obj = redisUtil.get(userInfoKey);
-		if (obj != null) {
-			UserDetail userDetail = (UserDetail) obj;
-			Long id = userDetail.getId();
-			WebSocketSession.put(id.toString(), channel);
-		}
-		else {
-			if (channel.isActive() && channel.isWritable()) {
-				channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
-				ctx.close();
-			}
-			else {
-				log.error("丢弃消息");
-			}
-		}
+		// TODO reactive feign调用
+		// if (obj != null) {
+		// UserDetail userDetail = (UserDetail) obj;
+		// Long id = userDetail.getId();
+		// WebSocketSession.put(id.toString(), channel);
+		// }
+		// else {
+		// if (channel.isActive() && channel.isWritable()) {
+		// channel.writeAndFlush(new
+		// TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
+		// ctx.close();
+		// }
+		// else {
+		// log.error("丢弃消息");
+		// }
+		// }
 	}
 
 }
