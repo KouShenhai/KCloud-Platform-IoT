@@ -62,31 +62,32 @@ import java.net.InetAddress;
 @SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
 public class AdminApp {
 
-	/**
-	 * 启动项目.
-	 */
+	// @formatter:off
+    /// ```properties
+    /// -Dnacos.remote.client.rpc.tls.enable=true
+    /// -Dnacos.remote.client.rpc.tls.mutualAuth=true
+    /// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
+    /// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
+    /// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
+    /// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
+    /// -Dcsp.sentinel.api.port=8723
+    /// -Dserver.port=9990
+    /// ```
+    /// ```properties
+    /// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
+    /// client_secret => FpHwIfw4wY92dO
+    /// ```
 	@SneakyThrows
 	public static void main(String[] args) {
-		// @formatter:off
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		// SpringSecurity 子线程读取父线程的上下文
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.TTL_MODE_INHERITABLETHREADLOCAL);
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
-		// -Dnacos.remote.client.rpc.tls.enable=true
-		// -Dnacos.remote.client.rpc.tls.mutualAuth=true
-		// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
-		// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
-		// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
-		// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
-		// -Dcsp.sentinel.api.port=8723
-		// -Dserver.port=9990
-		// @formatter:on
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
-		// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
-		// client_secret => FpHwIfw4wY92dO
 		new SpringApplicationBuilder(AdminApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
+    // @formatter:on
 
 }

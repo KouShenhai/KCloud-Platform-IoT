@@ -49,30 +49,31 @@ import java.net.InetAddress;
 		exclude = { RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
 public class GatewayApp {
 
-	/**
-	 * 启动项目.
-	 */
+	// @formatter:off
+    /// ```properties
+    /// -Dnacos.remote.client.rpc.tls.enable=true
+    /// -Dnacos.remote.client.rpc.tls.mutualAuth=true
+    /// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
+    /// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
+    /// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
+    /// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
+    /// -Dserver.port=5555
+    /// ```
+    /// ```properties
+    /// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
+    /// client_secret => FpHwIfw4wY92dO
+    /// ```
 	@SneakyThrows
 	public static void main(String[] args) {
-		// @formatter:off
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
-		// -Dnacos.remote.client.rpc.tls.enable=true
-		// -Dnacos.remote.client.rpc.tls.mutualAuth=true
-		// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
-		// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
-		// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
-		// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
-		// -Dserver.port=5555
-		// @formatter:on
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
 		// 开启reactor的上下文传递
-		// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
-		// client_secret => FpHwIfw4wY92dO
 		Hooks.enableAutomaticContextPropagation();
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
+    // @formatter:on
 
 }

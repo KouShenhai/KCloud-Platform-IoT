@@ -39,27 +39,25 @@ import java.net.InetAddress;
 @EnableEncryptableProperties
 public class MonitorApp {
 
-	/**
-	 * 启动项目.
-	 */
+	// @formatter:off
+    /// ```properties
+    /// -Dnacos.remote.client.rpc.tls.enable=true
+    /// -Dnacos.remote.client.rpc.tls.mutualAuth=true
+    /// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
+    /// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
+    /// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
+    /// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
+    /// -Dserver.port=5000
+    /// ```
 	@SneakyThrows
 	public static void main(String[] args) {
-		// @formatter:off
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
-		// @formatter:off
-		// -Dnacos.remote.client.rpc.tls.enable=true
-		// -Dnacos.remote.client.rpc.tls.mutualAuth=true
-		// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
-		// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
-		// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
-		// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
-		// -Dserver.port=5000
-		// @formatter:on
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
 		new SpringApplicationBuilder(MonitorApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
+    // @formatter:on
 
 }
