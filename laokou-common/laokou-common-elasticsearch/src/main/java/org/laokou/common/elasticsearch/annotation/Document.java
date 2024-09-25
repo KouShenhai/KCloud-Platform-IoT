@@ -28,7 +28,6 @@ import java.util.List;
  * @author laokou
  */
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Document {

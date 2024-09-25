@@ -385,13 +385,8 @@ public class ElasticsearchTemplate {
 		boolean annotationPresent = clazz.isAnnotationPresent(Index.class);
 		if (annotationPresent) {
 			Index index = clazz.getAnnotation(Index.class);
-			return Document.builder()
-				.name(name)
-				.alias(StringUtil.isNotEmpty(alias) ? alias : name)
-				.mappings(getMappings(clazz))
-				.setting(getSetting(index))
-				.analysis(getAnalysis(index))
-				.build();
+			alias = StringUtil.isNotEmpty(alias) ? alias : name;
+			return new Document(name, alias, getMappings(clazz), getSetting(index), getAnalysis(index));
 		}
 		throw new RuntimeException("Not found @Index");
 	}

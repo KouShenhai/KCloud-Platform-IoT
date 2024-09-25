@@ -148,7 +148,6 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
         └── laokou-common-mongodb                  --- 报表组件
         └── laokou-common-rocketmq                 --- 消息组件
         └── laokou-common-algorithm                --- 算法组件
-        └── laokou-common-prometheus               --- 监控组件
         └── laokou-common-openapi-doc              --- 文档组件
         └── laokou-common-rate-limiter             --- 限流组件
         └── laokou-common-elasticsearch            --- 搜索组件

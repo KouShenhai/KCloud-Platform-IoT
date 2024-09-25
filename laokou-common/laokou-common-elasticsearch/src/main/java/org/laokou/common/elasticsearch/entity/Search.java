@@ -31,7 +31,6 @@ import static org.laokou.common.elasticsearch.annotation.Constant.PRE_TAGS;
  * @author laokou
  */
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Search {

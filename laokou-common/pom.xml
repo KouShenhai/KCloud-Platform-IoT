@@ -46,7 +46,6 @@
     <module>laokou-common-mongodb</module>
     <module>laokou-common-sentinel</module>
     <module>laokou-common-openfeign</module>
-    <module>laokou-common-prometheus</module>
     <module>laokou-common-kafka</module>
     <module>laokou-common-cors</module>
     <module>laokou-common-log4j2</module>
