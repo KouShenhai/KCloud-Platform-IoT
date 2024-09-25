@@ -121,8 +121,8 @@
       <artifactId>laokou-common-data-cache</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.micrometer</groupId>
-      <artifactId>micrometer-registry-prometheus</artifactId>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-prometheus</artifactId>
     </dependency>
   </dependencies>
 

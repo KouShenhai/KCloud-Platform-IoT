@@ -93,8 +93,8 @@
       <artifactId>spring-session-data-redis</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.micrometer</groupId>
-      <artifactId>micrometer-registry-prometheus</artifactId>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-prometheus</artifactId>
     </dependency>
   </dependencies>
 

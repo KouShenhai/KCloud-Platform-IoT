@@ -69,6 +69,7 @@
     <module>laokou-common-oss</module>
     <module>laokou-common-excel</module>
     <module>laokou-common-snail-job</module>
+    <module>laokou-common-prometheus</module>
   </modules>
 
 </project>
