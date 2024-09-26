@@ -220,7 +220,7 @@ services:
     depends_on:
       - rocketmq-namesrv
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.2
     container_name: elasticsearch
     # 保持容器在没有守护程序的情况下运行
     tty: true
