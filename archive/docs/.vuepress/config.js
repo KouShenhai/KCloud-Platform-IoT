@@ -68,21 +68,53 @@ module.exports = {
 						]
 					},
 					{
-						text: '项目部署', link: '/test2', items: [
+						text: '项目部署', link: '/pages/61389d/', items: [
 							{text: '项目部署之镜像打包与推送', link: '/pages/61389d/'}
 						]
 					},
 					{
-						text: '其他', link: '', items: [
+						text: '其他', link: '/pages/643da2/', items: [
 							{text: 'Java如何快速转Go', link: '/pages/643da2/'}
 						]
 					},
 				]
 			},
 			{
+				text: '摘抄',link: '/pages/85233a/', items: [
+					{
+						text: '儒学', link: '', items: [
+							{text: '儒学摘抄（一）', link: '/pages/85233a/'}
+						]
+					},
+					{
+						text: '禅语',link: '/pages/59b0b4/', items: [
+							{text: '禅语摘抄（一）', link: '/pages/59b0b4/'},
+						]
+					},
+					{
+						text: '诗词', link: '/pages/f8adf5/', items: [
+							{text: '诗词摘抄（一）', link: '/pages/f8adf5/'}
+						]
+					}
+				]
+			},
+			{
 				text: '感悟', link: '/pages/623577/', items: [
-					{text: '读《强者，都是含泪奔跑的人》读后感', link: '/pages/623577/'},
-					{text: '修身/养生/情感', link: '/pages/623578/'}
+					{
+						text: '读后感', items: [
+							{text: '读《强者，都是含泪奔跑的人》读后感', link: '/pages/623577/'}
+						]
+					},
+					{
+						text: '修行', items: [
+							{text: '修身/养生/情感', link: '/pages/623578/'}
+						]
+					},
+					{
+						text: '觉悟', items: [
+							{text: '觉悟日记（一）', link: '/pages/b5ee4c/'}
+						]
+					}
 				]
 			},
 			{text: '赞助', link: '/pages/1b12ed/'},
@@ -206,13 +238,7 @@ module.exports = {
 			},
 		],
 		[
-			'@vuepress/last-updated', // "上次更新"时间格式
-			{
-				transformer: (timestamp, lang) => {
-					const dayjs = require('dayjs') // https://day.js.org/
-					return dayjs(timestamp).format('YYYY/MM/DD, HH:mm:ss')
-				},
-			}
+			'@vuepress/last-updated' // "上次更新"时间格式
 		]
 	],
 
