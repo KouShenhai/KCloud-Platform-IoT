@@ -20,11 +20,14 @@ package org.laokou.im;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
+import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.common.nacos.annotation.EnableRouter;
+import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import java.net.InetAddress;
 
@@ -32,8 +35,10 @@ import java.net.InetAddress;
  * @author laokou
  */
 @EnableRouter
+@EnableFeignClients
 @EnableTaskExecutor
 @EnableDiscoveryClient
+@EnableRedisRepository
 @EnableEncryptableProperties
 @SpringBootApplication(scanBasePackages = "org.laokou")
 public class ImApp {
@@ -53,6 +58,8 @@ public class ImApp {
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
+		// 忽略SSL认证
+		SslUtil.ignoreSSLTrust();
 		new SpringApplicationBuilder(ImApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
     // @formatter:on
