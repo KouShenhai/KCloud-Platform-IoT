@@ -103,8 +103,8 @@ export async function pageV3(body: API.LoginLogPageQry, options?: { [key: string
 	});
 }
 
-export async function truncateV3(options?: { [key: string]: any }) {
-	return request<API.Result>('/api/admin/v3/login-logs/truncate', {
+export async function clearV3(options?: { [key: string]: any }) {
+	return request<API.Result>('/api/admin/v3/login-logs/all', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',

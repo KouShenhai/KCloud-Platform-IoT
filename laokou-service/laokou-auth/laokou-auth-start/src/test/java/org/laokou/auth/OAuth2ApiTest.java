@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.laokou.auth.dto.LogoutCmd;
+import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.IdGenerator;
@@ -230,7 +230,7 @@ class OAuth2ApiTest {
 		String apiUrl = getLogoutApiUrlV3();
 		restClient.method(HttpMethod.DELETE)
 			.uri(apiUrl)
-			.body(new LogoutCmd(TOKEN))
+			.body(new TokenRemoveCmd(TOKEN))
 			.contentType(MediaType.APPLICATION_JSON)
 			.retrieve();
 		log.info("---------- 登录已注销，结束令牌清除 ----------");

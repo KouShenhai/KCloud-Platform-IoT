@@ -20,8 +20,8 @@ package org.laokou.auth.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.api.LogoutsServiceI;
-import org.laokou.auth.dto.LogoutCmd;
+import org.laokou.auth.api.TokensServiceI;
+import org.laokou.auth.dto.TokenRemoveCmd;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,16 +32,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/logouts")
-@Tag(name = "退出登录", description = "退出登录")
-public class LogoutsV3Controller {
+@RequestMapping("v3/tokens")
+@Tag(name = "令牌管理", description = "令牌管理")
+public class TokensV3Controller {
 
-	private final LogoutsServiceI logoutsServiceI;
+	private final TokensServiceI tokensServiceI;
 
 	@DeleteMapping
-	@Operation(summary = "清除令牌", description = "清除令牌")
-	public void removeTokenV3(@RequestBody LogoutCmd cmd) {
-		logoutsServiceI.removeToken(cmd);
+	@Operation(summary = "删除令牌", description = "删除令牌")
+	public void removeTokenV3(@RequestBody TokenRemoveCmd cmd) {
+		tokensServiceI.removeToken(cmd);
 	}
 
 }

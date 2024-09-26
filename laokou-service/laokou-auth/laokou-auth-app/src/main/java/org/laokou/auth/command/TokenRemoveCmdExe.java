@@ -18,7 +18,7 @@
 package org.laokou.auth.command;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.dto.LogoutCmd;
+import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -35,7 +35,7 @@ import static org.laokou.common.security.config.GlobalOpaqueTokenIntrospector.FU
  */
 @Component
 @RequiredArgsConstructor
-public class LogoutCmdExe {
+public class TokenRemoveCmdExe {
 
 	private static final String MENU_TREE = "menu_tree";
 
@@ -47,13 +47,13 @@ public class LogoutCmdExe {
 	 * 执行退出登录.
 	 * @param cmd 退出登录参数
 	 */
-	public void executeVoid(LogoutCmd cmd) {
+	public void executeVoid(TokenRemoveCmd cmd) {
 		String token = cmd.getToken();
 		if (StringUtil.isEmpty(token)) {
 			return;
 		}
 		// 删除树形菜单key
-		redisUtil.hDelFast(MENU_TREE, token);
+		redisUtil.hDel(MENU_TREE, token);
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, FULL);
 		if (ObjectUtil.isNotNull(authorization)) {
 			// 删除token

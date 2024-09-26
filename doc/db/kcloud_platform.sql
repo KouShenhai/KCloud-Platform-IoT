@@ -504,7 +504,7 @@ VALUES (6, 1, 1, '2024-06-17 17:27:14', '2024-06-17 17:27:12', 0, 0, 1, '0,1', 0
 INSERT INTO public.boot_sys_menu ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version",
 								  "dept_id", "dept_path", "tenant_id", "pid", "permission", "type", "name", "path",
 								  "icon", "sort", "hidden", "status", "url")
-VALUES (7, 1, 1, '2024-06-17 17:27:14', '2024-06-17 17:27:12', 0, 0, 1, '0,1', 0, 3, 'sys:login-log:truncate', 1,
+VALUES (7, 1, 1, '2024-06-17 17:27:14', '2024-06-17 17:27:12', 0, 0, 1, '0,1', 0, 3, 'sys:login-log:clear', 1,
 		'清空', NULL, 'sys', 10, 0, 0, NULL);
 
 INSERT INTO public.boot_sys_menu ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version",
@@ -530,7 +530,7 @@ VALUES (11, 1, 1, '2024-09-17 18:41:32', '2024-09-17 18:41:34', 0, 0, 1, '0,1', 
 INSERT INTO public.boot_sys_menu ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version",
 								  "dept_id", "dept_path", "tenant_id", "pid", "permission", "type", "name", "path",
 								  "icon", "sort", "hidden", "status", "url")
-VALUES (12, 1, 1, '2024-09-17 18:41:32', '2024-09-17 18:41:34', 0, 0, 1, '0,1', 0, 8, 'sys:api-log:truncate', 1, '清空',
+VALUES (12, 1, 1, '2024-09-17 18:41:32', '2024-09-17 18:41:34', 0, 0, 1, '0,1', 0, 8, 'sys:api-log:clear', 1, '清空',
 		NULL, 'sys', 10, 0, 0, NULL);
 
 create table if not exists public.boot_sys_message

@@ -51,7 +51,7 @@ public class LoginLogsServiceImpl implements LoginLogsServiceI {
 
 	private final LoginLogGetQryExe loginLogGetQryExe;
 
-	private final LoginLogTruncateCmdExe loginLogTruncateCmdExe;
+	private final LoginLogClearCmdExe loginLogClearCmdExe;
 
 	@Override
 	public void save(LoginLogSaveCmd cmd) {
@@ -89,8 +89,8 @@ public class LoginLogsServiceImpl implements LoginLogsServiceI {
 	}
 
 	@Override
-	public void truncate() {
-		loginLogTruncateCmdExe.executeVoid();
+	public void clear() {
+		loginLogClearCmdExe.executeVoid();
 	}
 
 }

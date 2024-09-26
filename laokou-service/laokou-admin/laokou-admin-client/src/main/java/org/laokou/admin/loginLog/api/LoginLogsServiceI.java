@@ -74,6 +74,6 @@ public interface LoginLogsServiceI {
 	/**
 	 * 清空登录日志.
 	 */
-	void truncate();
+	void clear();
 
 }

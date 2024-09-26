@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class LoginLogTruncateCmdExe {
+public class LoginLogClearCmdExe {
 
 	private final LoginLogMapper loginLogMapper;
 

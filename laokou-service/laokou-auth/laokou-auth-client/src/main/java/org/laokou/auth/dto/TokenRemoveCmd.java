@@ -29,8 +29,8 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "退出登录命令请求", description = "退出登录命令请求")
-public class LogoutCmd extends CommonCommand {
+@Schema(name = "删除令牌命令请求", description = "删除令牌命令请求")
+public class TokenRemoveCmd extends CommonCommand {
 
 	@Schema(name = "令牌", description = "令牌")
 	private String token;
