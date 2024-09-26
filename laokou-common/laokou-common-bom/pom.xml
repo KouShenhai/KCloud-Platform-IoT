@@ -146,7 +146,7 @@
     <!--opentelemetry-exporter-jaeger版本-->
     <opentelemetry-exporter-jaeger.version>1.33.0</opentelemetry-exporter-jaeger.version>
     <!--micrometer-registry-prometheus版本-->
-    <micrometer-registry-prometheus.version>1.11.12</micrometer-registry-prometheus.version>
+    <micrometer-registry-prometheus.version>1.13.4</micrometer-registry-prometheus.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
