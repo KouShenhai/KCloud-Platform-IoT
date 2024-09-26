@@ -144,7 +144,7 @@
     <!--opentelemetry-api-incubator版本-->
     <opentelemetry-api-incubator.version>1.40.0-alpha</opentelemetry-api-incubator.version>
     <!--opentelemetry-exporter-jaeger版本-->
-    <opentelemetry-exporter-jaeger.version>1.33.0</opentelemetry-exporter-jaeger.version>
+    <opentelemetry-exporter-jaeger.version>1.34.1</opentelemetry-exporter-jaeger.version>
     <!--micrometer-registry-prometheus版本-->
     <micrometer-registry-prometheus.version>1.11.12</micrometer-registry-prometheus.version>
   </properties>
