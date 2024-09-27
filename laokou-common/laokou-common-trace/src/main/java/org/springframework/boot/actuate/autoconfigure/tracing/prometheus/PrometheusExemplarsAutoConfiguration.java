@@ -37,6 +37,7 @@ import io.micrometer.tracing.Span;
 import io.micrometer.tracing.Tracer;
 import io.prometheus.metrics.tracer.common.SpanContext;
 
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.actuate.autoconfigure.metrics.export.prometheus.PrometheusMetricsExportAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.tracing.MicrometerTracingAutoConfiguration;
@@ -74,22 +75,24 @@ public class PrometheusExemplarsAutoConfiguration {
 	 */
 	static class LazyTracingSpanContext implements SpanContext {
 
-		private final Tracer tracer;
+		private Tracer tracer;
+
+        private final ObjectProvider<Tracer> tracerProvider;
 
 		LazyTracingSpanContext(ObjectProvider<Tracer> tracerProvider) {
-			this.tracer = tracerProvider.getObject();
+			this.tracerProvider = tracerProvider;
 		}
 
 		@Override
 		public String getCurrentTraceId() {
 			Span currentSpan = currentSpan();
-			return (currentSpan != null) ? currentSpan.context().traceId() : null;
+			return ObjectUtil.isNotNull(currentSpan) ? currentSpan.context().traceId() : null;
 		}
 
 		@Override
 		public String getCurrentSpanId() {
 			Span currentSpan = currentSpan();
-			return (currentSpan != null) ? currentSpan.context().spanId() : null;
+			return ObjectUtil.isNotNull(currentSpan) ? currentSpan.context().spanId() : null;
 		}
 
 		@Override
@@ -106,8 +109,15 @@ public class PrometheusExemplarsAutoConfiguration {
 		}
 
 		private Span currentSpan() {
-			return this.tracer.currentSpan();
+			return getTracer().currentSpan();
 		}
+
+        private Tracer getTracer() {
+            if (ObjectUtil.isNull(this.tracer)) {
+                this.tracer = tracerProvider.getObject();
+            }
+            return tracer;
+        }
 
 	}
 
