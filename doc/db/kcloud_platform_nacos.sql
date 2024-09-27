@@ -12,7 +12,7 @@
  Target Server Version : 160004 (160004)
  File Encoding         : 65001
 
- Date: 25/09/2024 23:13:50
+ Date: 27/09/2024 21:52:48
 */
 
 
@@ -65,6 +65,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq4";
 CREATE SEQUENCE "public"."config_info_aggr_id_seq4" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_aggr_id_seq5
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq5";
+CREATE SEQUENCE "public"."config_info_aggr_id_seq5" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -127,6 +138,17 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for config_info_beta_id_seq5
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq5";
+CREATE SEQUENCE "public"."config_info_beta_id_seq5" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for config_info_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq";
@@ -175,6 +197,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq4";
 CREATE SEQUENCE "public"."config_info_id_seq4" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_id_seq5
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_id_seq5";
+CREATE SEQUENCE "public"."config_info_id_seq5" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -237,6 +270,17 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for config_info_tag_id_seq5
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq5";
+CREATE SEQUENCE "public"."config_info_tag_id_seq5" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for config_tags_relation_nid_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq";
@@ -285,6 +329,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq4";
 CREATE SEQUENCE "public"."config_tags_relation_nid_seq4" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_tags_relation_nid_seq5
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq5";
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq5" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -347,6 +402,17 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for group_capacity_id_seq5
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq5";
+CREATE SEQUENCE "public"."group_capacity_id_seq5" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for his_config_info_nid_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq";
@@ -395,6 +461,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq4";
 CREATE SEQUENCE "public"."his_config_info_nid_seq4" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for his_config_info_nid_seq5
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq5";
+CREATE SEQUENCE "public"."his_config_info_nid_seq5" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -457,6 +534,17 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for tenant_capacity_id_seq5
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq5";
+CREATE SEQUENCE "public"."tenant_capacity_id_seq5" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for tenant_info_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq";
@@ -505,6 +593,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq4";
 CREATE SEQUENCE "public"."tenant_info_id_seq4" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for tenant_info_id_seq5
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq5";
+CREATE SEQUENCE "public"."tenant_info_id_seq5" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -1276,11 +1375,14 @@ management:
     enabled: true
     propagation:
       type: w3c
+    # 采样率 => 100%  
+    sampling:
+      probability: 1
   otlp:
     tracing:
       endpoint: http://otel-collector:4318/v1/traces
       compression: gzip
-      timeout: 60s
+      timeout: 10s
     metrics:
       export:
         enabled: false
@@ -1327,7 +1429,7 @@ tenant:
 knife4j:
   enable: true
   setting:
-    language: zh_cn', '2cee0d6bba07f178c53a952cb5765ef3', '2024-05-25 18:13:33.393', '2024-09-25 23:12:44.075', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+    language: zh_cn', 'fc47d001cf6d9224b0010160d37d15d9', '2024-05-25 18:13:33.393', '2024-09-27 21:50:57.967', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', '[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
@@ -3406,11 +3508,14 @@ management:
     enabled: true
     propagation:
       type: w3c
+    # 采样率 => 100%  
+    sampling:
+      probability: 1
   otlp:
     tracing:
       endpoint: http://otel-collector:4318/v1/traces
       compression: gzip
-      timeout: 60s
+      timeout: 10s
     metrics:
       export:
         enabled: false
@@ -3457,7 +3562,7 @@ tenant:
 knife4j:
   enable: true
   setting:
-    language: zh_cn', 'b0d86b4ec56227bd7e088c5e05402036', '2023-01-13 12:16:46', '2024-09-25 23:12:14.706', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+    language: zh_cn', 'fce9f6fca3cdbbff82e1922a90ec2a14', '2023-01-13 12:16:46', '2024-09-27 21:48:27.149', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
 spring:
   # security
@@ -3544,11 +3649,14 @@ management:
     enabled: true
     propagation:
       type: w3c
+    # 采样率 => 100%  
+    sampling:
+      probability: 1
   otlp:
     tracing:
       endpoint: http://otel-collector:4318/v1/traces
       compression: gzip
-      timeout: 60s
+      timeout: 10s
     metrics:
       export:
         enabled: false
@@ -3595,7 +3703,7 @@ tenant:
 knife4j:
   enable: false
   setting:
-    language: zh_cn', 'f7586881901ef8991ffc334e21f21940', '2024-05-25 18:13:10.622', '2024-09-25 23:13:04.788', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+    language: zh_cn', 'a7a8d5837dc30d1ebecfa73eb0a75825', '2024-05-25 18:13:10.622', '2024-09-27 21:51:24.323', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
@@ -3765,7 +3873,7 @@ INSERT INTO "public"."config_tags_relation" VALUES (4, 'im', '', 'application-im
 INSERT INTO "public"."config_tags_relation" VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 11);
 INSERT INTO "public"."config_tags_relation" VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 3);
 INSERT INTO "public"."config_tags_relation" VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 1);
-INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 24);
+INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 7);
 
 -- ----------------------------
 -- Table structure for databasechangelog
@@ -4052,6 +4160,13 @@ SELECT setval('"public"."config_info_aggr_id_seq4"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_info_aggr_id_seq5"
+OWNED BY "public"."config_info_aggr"."id";
+SELECT setval('"public"."config_info_aggr_id_seq5"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."config_info_beta_id_seq"
 OWNED BY "public"."config_info_beta"."id";
 SELECT setval('"public"."config_info_beta_id_seq"', 1, false);
@@ -4083,6 +4198,13 @@ SELECT setval('"public"."config_info_beta_id_seq3"', 1, false);
 ALTER SEQUENCE "public"."config_info_beta_id_seq4"
 OWNED BY "public"."config_info_beta"."id";
 SELECT setval('"public"."config_info_beta_id_seq4"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_info_beta_id_seq5"
+OWNED BY "public"."config_info_beta"."id";
+SELECT setval('"public"."config_info_beta_id_seq5"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4122,6 +4244,13 @@ SELECT setval('"public"."config_info_id_seq4"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_info_id_seq5"
+OWNED BY "public"."config_info"."id";
+SELECT setval('"public"."config_info_id_seq5"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."config_info_tag_id_seq"
 OWNED BY "public"."config_info_tag"."id";
 SELECT setval('"public"."config_info_tag_id_seq"', 1, false);
@@ -4153,6 +4282,13 @@ SELECT setval('"public"."config_info_tag_id_seq3"', 1, false);
 ALTER SEQUENCE "public"."config_info_tag_id_seq4"
 OWNED BY "public"."config_info_tag"."id";
 SELECT setval('"public"."config_info_tag_id_seq4"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_info_tag_id_seq5"
+OWNED BY "public"."config_info_tag"."id";
+SELECT setval('"public"."config_info_tag_id_seq5"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4192,6 +4328,13 @@ SELECT setval('"public"."config_tags_relation_nid_seq4"', 24, true);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_tags_relation_nid_seq5"
+OWNED BY "public"."config_tags_relation"."nid";
+SELECT setval('"public"."config_tags_relation_nid_seq5"', 7, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."group_capacity_id_seq"
 OWNED BY "public"."group_capacity"."id";
 SELECT setval('"public"."group_capacity_id_seq"', 1, false);
@@ -4223,6 +4366,13 @@ SELECT setval('"public"."group_capacity_id_seq3"', 1, false);
 ALTER SEQUENCE "public"."group_capacity_id_seq4"
 OWNED BY "public"."group_capacity"."id";
 SELECT setval('"public"."group_capacity_id_seq4"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."group_capacity_id_seq5"
+OWNED BY "public"."group_capacity"."id";
+SELECT setval('"public"."group_capacity_id_seq5"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4262,6 +4412,13 @@ SELECT setval('"public"."his_config_info_nid_seq4"', 48, true);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."his_config_info_nid_seq5"
+OWNED BY "public"."his_config_info"."nid";
+SELECT setval('"public"."his_config_info_nid_seq5"', 5, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."tenant_capacity_id_seq"
 OWNED BY "public"."tenant_capacity"."id";
 SELECT setval('"public"."tenant_capacity_id_seq"', 1, false);
@@ -4293,6 +4450,13 @@ SELECT setval('"public"."tenant_capacity_id_seq3"', 1, false);
 ALTER SEQUENCE "public"."tenant_capacity_id_seq4"
 OWNED BY "public"."tenant_capacity"."id";
 SELECT setval('"public"."tenant_capacity_id_seq4"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."tenant_capacity_id_seq5"
+OWNED BY "public"."tenant_capacity"."id";
+SELECT setval('"public"."tenant_capacity_id_seq5"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4330,9 +4494,16 @@ OWNED BY "public"."tenant_info"."id";
 SELECT setval('"public"."tenant_info_id_seq4"', 1, false);
 
 -- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."tenant_info_id_seq5"
+OWNED BY "public"."tenant_info"."id";
+SELECT setval('"public"."tenant_info_id_seq5"', 1, false);
+
+-- ----------------------------
 -- Auto increment value for config_info
 -- ----------------------------
-SELECT setval('"public"."config_info_id_seq4"', 1, false);
+SELECT setval('"public"."config_info_id_seq5"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info
@@ -4351,7 +4522,7 @@ ALTER TABLE "public"."config_info" ADD CONSTRAINT "config_info_pkey" PRIMARY KEY
 -- ----------------------------
 -- Auto increment value for config_info_aggr
 -- ----------------------------
-SELECT setval('"public"."config_info_aggr_id_seq4"', 1, false);
+SELECT setval('"public"."config_info_aggr_id_seq5"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_aggr
@@ -4371,7 +4542,7 @@ ALTER TABLE "public"."config_info_aggr" ADD CONSTRAINT "config_info_aggr_pkey" P
 -- ----------------------------
 -- Auto increment value for config_info_beta
 -- ----------------------------
-SELECT setval('"public"."config_info_beta_id_seq4"', 1, false);
+SELECT setval('"public"."config_info_beta_id_seq5"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_beta
@@ -4390,7 +4561,7 @@ ALTER TABLE "public"."config_info_beta" ADD CONSTRAINT "config_info_beta_pkey" P
 -- ----------------------------
 -- Auto increment value for config_info_tag
 -- ----------------------------
-SELECT setval('"public"."config_info_tag_id_seq4"', 1, false);
+SELECT setval('"public"."config_info_tag_id_seq5"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_tag
@@ -4410,7 +4581,7 @@ ALTER TABLE "public"."config_info_tag" ADD CONSTRAINT "config_info_tag_pkey" PRI
 -- ----------------------------
 -- Auto increment value for config_tags_relation
 -- ----------------------------
-SELECT setval('"public"."config_tags_relation_nid_seq4"', 24, true);
+SELECT setval('"public"."config_tags_relation_nid_seq5"', 7, true);
 
 -- ----------------------------
 -- Indexes structure for table config_tags_relation
@@ -4437,7 +4608,7 @@ ALTER TABLE "public"."databasechangeloglock" ADD CONSTRAINT "databasechangeloglo
 -- ----------------------------
 -- Auto increment value for group_capacity
 -- ----------------------------
-SELECT setval('"public"."group_capacity_id_seq4"', 1, false);
+SELECT setval('"public"."group_capacity_id_seq5"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table group_capacity
@@ -4454,7 +4625,7 @@ ALTER TABLE "public"."group_capacity" ADD CONSTRAINT "group_capacity_pkey" PRIMA
 -- ----------------------------
 -- Auto increment value for his_config_info
 -- ----------------------------
-SELECT setval('"public"."his_config_info_nid_seq4"', 48, true);
+SELECT setval('"public"."his_config_info_nid_seq5"', 5, true);
 
 -- ----------------------------
 -- Indexes structure for table his_config_info
@@ -4494,7 +4665,7 @@ CREATE UNIQUE INDEX "roles_username_role_idx" ON "public"."roles" USING btree (
 -- ----------------------------
 -- Auto increment value for tenant_capacity
 -- ----------------------------
-SELECT setval('"public"."tenant_capacity_id_seq4"', 1, false);
+SELECT setval('"public"."tenant_capacity_id_seq5"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table tenant_capacity
@@ -4511,7 +4682,7 @@ ALTER TABLE "public"."tenant_capacity" ADD CONSTRAINT "tenant_capacity_pkey" PRI
 -- ----------------------------
 -- Auto increment value for tenant_info
 -- ----------------------------
-SELECT setval('"public"."tenant_info_id_seq4"', 1, false);
+SELECT setval('"public"."tenant_info_id_seq5"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table tenant_info
