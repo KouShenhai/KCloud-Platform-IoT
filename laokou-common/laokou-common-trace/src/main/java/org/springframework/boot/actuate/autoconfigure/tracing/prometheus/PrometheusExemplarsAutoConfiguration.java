@@ -52,6 +52,7 @@ import org.springframework.context.annotation.Bean;
  * Micrometer Tracing.
  *
  * @author Jonatan Ivanov
+ * @author laokou
  * @since 3.0.0
  */
 @AutoConfiguration(before = PrometheusMetricsExportAutoConfiguration.class,

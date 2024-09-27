@@ -95,7 +95,12 @@ module.exports = {
 						text: '诗词', link: '/pages/f8adf5/', items: [
 							{text: '诗词摘抄（一）', link: '/pages/f8adf5/'}
 						]
-					}
+					},
+                    {
+                        text: '道法', link: '/pages/e03540/', items: [
+                            {text: '道法摘抄（一）', link: '/pages/e03540/'}
+                        ]
+                    }
 				]
 			},
 			{
