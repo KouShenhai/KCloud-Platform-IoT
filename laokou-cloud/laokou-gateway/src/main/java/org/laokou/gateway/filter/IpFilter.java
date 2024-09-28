@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.gateway.filter.ip.Ip;
 import org.laokou.gateway.utils.ReactiveI18nUtil;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.handler.predicate.RemoteAddrRoutePredicateFactory;
@@ -37,7 +36,6 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
-@RefreshScope
 @RequiredArgsConstructor
 public class IpFilter implements GlobalFilter, Ordered {
 

@@ -40,10 +40,10 @@ import static org.springframework.security.config.http.SessionCreationPolicy.IF_
  *
  * @author laokou
  */
+// @formatter:off
 @Data
 @Configuration
-@ConditionalOnProperty(havingValue = "true", matchIfMissing = true,
-		prefix = "spring.security.oauth2.authorization-server", name = "enabled")
+@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.security.oauth2.authorization-server", name = "enabled")
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class OAuth2ResourceServerConfig {
 
@@ -57,20 +57,27 @@ class OAuth2ResourceServerConfig {
 	 * @throws Exception 异常
 	 */
 	@Bean
-	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, SpringUtil springUtil,
-			OAuth2ResourceServerProperties oAuth2ResourceServerProperties,
-			SessionExpiredStrategy sessionExpiredStrategy, SessionInvalidStrategy sessionInvalidStrategy,
-			SessionRegistry springSessionBackedSessionRegistry) throws Exception {
+	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
+		SpringUtil springUtil,
+		OAuth2ResourceServerProperties oAuth2ResourceServerProperties,
+		SessionExpiredStrategy sessionExpiredStrategy,
+        SessionInvalidStrategy sessionInvalidStrategy,
+		SessionRegistry springSessionBackedSessionRegistry
+	) throws Exception {
 		return http
 			// 只会在需要时创建 HttpSession【默认配置】
-			.sessionManagement(config -> config.sessionCreationPolicy(IF_REQUIRED)
+			.sessionManagement(config -> config
+				.sessionCreationPolicy(IF_REQUIRED)
 				.invalidSessionStrategy(sessionInvalidStrategy)
 				// 最大会话1
 				.maximumSessions(1)
 				.sessionRegistry(springSessionBackedSessionRegistry)
 				.expiredSessionStrategy(sessionExpiredStrategy))
-			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.httpStrictTransportSecurity(
-					hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)))
+			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer
+				.httpStrictTransportSecurity(hsts -> hsts
+					.includeSubDomains(true)
+					.preload(true)
+					.maxAgeInSeconds(31536000)))
 			.authorizeHttpRequests(customizer(oAuth2ResourceServerProperties, springUtil))
 			.cors(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
@@ -92,3 +99,4 @@ class OAuth2ResourceServerConfig {
 	}
 
 }
+// @formatter:on
