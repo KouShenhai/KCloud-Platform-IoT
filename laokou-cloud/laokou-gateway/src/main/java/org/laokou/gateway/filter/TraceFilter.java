@@ -42,7 +42,6 @@ public class TraceFilter implements GlobalFilter, Ordered {
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerHttpRequest request = exchange.getRequest();
-		String host = getHost(request);
 		String serviceGray = ReactiveRequestUtil.getParamValue(request, SERVICE_GRAY);
 		String serviceHost = ReactiveRequestUtil.getParamValue(request, SERVICE_HOST);
 		String servicePort = ReactiveRequestUtil.getParamValue(request, SERVICE_PORT);
@@ -51,7 +50,7 @@ public class TraceFilter implements GlobalFilter, Ordered {
 				.header(SERVICE_HOST, serviceHost)
 				.header(SERVICE_PORT, servicePort)
 				.header(SERVICE_GRAY, serviceGray)
-				.header(DOMAIN_NAME, host)
+				.header(DOMAIN_NAME, getHost(request))
 				.build())
 			.build());
 	}

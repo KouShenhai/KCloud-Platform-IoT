@@ -139,7 +139,7 @@ export default () => {
 			tag: 'mailCaptcha',
 			uuid: formRef?.current?.getFieldValue("mail")
 		}
-		sendCaptchaV3(param as API.SendCaptchaParam).catch(console.error)
+		sendCaptchaV3(param as API.SendCaptchaParam).then()
 	}
 
 	const sendMobileCaptcha = async () => {
@@ -148,7 +148,7 @@ export default () => {
 			tag: 'mobileCaptcha',
 			uuid: formRef?.current?.getFieldValue("mobile")
 		}
-		sendCaptchaV3(param as API.SendCaptchaParam).catch(console.error)
+		sendCaptchaV3(param as API.SendCaptchaParam).then()
 	}
 
 	const getTenantIdByDomain = async () => {
@@ -168,10 +168,10 @@ export default () => {
 	}
 
 	useEffect(() => {
-		listTenantOption().catch(console.error)
-		getPublicKey().catch(console.error);
-		getCaptchaImage().catch(console.error);
-		getTenantIdByDomain().catch(console.error)
+		listTenantOption().then()
+		getPublicKey().then()
+		getCaptchaImage().then()
+		getTenantIdByDomain().then()
 	}, []);
 
 	const onSubmit = async (form: API.LoginParam) => {

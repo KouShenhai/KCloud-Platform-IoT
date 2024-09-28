@@ -51,8 +51,8 @@ export const layout = () => {
 										// @ts-ignore
 										logoutV3({token: getAccessToken()}).then(() => {
 											clearToken()
-											history.push('/login')
 										})
+										history.push('/login')
 									},
 								},
 							],
@@ -159,6 +159,9 @@ export const request: {
 			if (status === 200 && data.code === undefined) {
 				response.data = {code: 'OK', msg: '请求成功', data: data};
 			} else if (status === 200 && data.code !== 'OK') {
+				if (data.code === "Unauthorized") {
+					history.push('/login')
+				}
 				message.error(data.msg).then();
 			}
 			return response;

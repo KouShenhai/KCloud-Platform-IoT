@@ -170,23 +170,28 @@ export default () => {
 		},
 		{
 			title: '用户名',
-			dataIndex: 'username'
+			dataIndex: 'username',
+			ellipsis: true
 		},
 		{
 			title: 'IP地址',
-			dataIndex: 'ip'
+			dataIndex: 'ip',
+			ellipsis: true
 		},
 		{
 			title: '归属地',
-			dataIndex: 'address'
+			dataIndex: 'address',
+			ellipsis: true
 		},
 		{
 			title: '浏览器',
-			dataIndex: 'browser'
+			dataIndex: 'browser',
+			ellipsis: true
 		},
 		{
 			title: '操作系统',
-			dataIndex: 'os'
+			dataIndex: 'os',
+			ellipsis: true
 		},
 		{
 			title: '登录状态',
@@ -195,10 +200,12 @@ export default () => {
 				0: {text: '登录成功', status: 'Success'},
 				1: {text: '登录失败', status: 'Error'},
 			},
+			ellipsis: true
 		},
 		{
 			title: '错误信息',
-			dataIndex: 'errorMessage'
+			dataIndex: 'errorMessage',
+			ellipsis: true
 		},
 		{
 			title: '登录类型',
@@ -209,6 +216,7 @@ export default () => {
 				mail: {text: '邮箱登录', status: 'Success'},
 				authorization_code: {text: '授权码登录', status: 'Error'}
 			},
+			ellipsis: true
 		},
 		{
 			title: '登录日期',
@@ -216,6 +224,8 @@ export default () => {
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
 			hideInSearch: true,
+			width: 160,
+			ellipsis: true
 		},
 		{
 			title: '登录日期',
@@ -260,6 +270,7 @@ export default () => {
 		},
 	];
 
+	// @ts-ignore
 	// @ts-ignore
 	return (
 		<ProTable<TableColumns>

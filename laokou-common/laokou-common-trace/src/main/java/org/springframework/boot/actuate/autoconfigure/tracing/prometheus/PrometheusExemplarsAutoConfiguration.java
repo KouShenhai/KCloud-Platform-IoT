@@ -36,9 +36,8 @@ package org.springframework.boot.actuate.autoconfigure.tracing.prometheus;
 import io.micrometer.tracing.Span;
 import io.micrometer.tracing.Tracer;
 import io.prometheus.metrics.tracer.common.SpanContext;
-
+import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.actuate.autoconfigure.metrics.export.prometheus.PrometheusMetricsExportAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.tracing.MicrometerTracingAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -64,8 +63,8 @@ public class PrometheusExemplarsAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	SpanContext spanContext(ObjectProvider<Tracer> tracerProvider) {
-		return new LazyTracingSpanContext(tracerProvider);
+	SpanContext spanContext() {
+		return new TracingSpanContext();
 	}
 
 	/**
@@ -73,15 +72,7 @@ public class PrometheusExemplarsAutoConfiguration {
 	 * {@link Tracer} can depend on the MeterRegistry (recording metrics), this
 	 * {@link SpanContext} breaks the cycle by lazily loading the {@link Tracer}.
 	 */
-	static class LazyTracingSpanContext implements SpanContext {
-
-		private Tracer tracer;
-
-		private final ObjectProvider<Tracer> tracerProvider;
-
-		LazyTracingSpanContext(ObjectProvider<Tracer> tracerProvider) {
-			this.tracerProvider = tracerProvider;
-		}
+	static class TracingSpanContext implements SpanContext {
 
 		@Override
 		public String getCurrentTraceId() {
@@ -98,7 +89,7 @@ public class PrometheusExemplarsAutoConfiguration {
 		@Override
 		public boolean isCurrentSpanSampled() {
 			Span currentSpan = currentSpan();
-			if (currentSpan == null) {
+			if (ObjectUtil.isNull(currentSpan)) {
 				return false;
 			}
 			return currentSpan.context().sampled();
@@ -109,14 +100,12 @@ public class PrometheusExemplarsAutoConfiguration {
 		}
 
 		private Span currentSpan() {
-			return getTracer().currentSpan();
-		}
-
-		private Tracer getTracer() {
-			if (ObjectUtil.isNull(this.tracer)) {
-				this.tracer = tracerProvider.getObject();
+			try {
+				return SpringContextUtil.getBean(Tracer.class).currentSpan();
 			}
-			return tracer;
+			catch (Exception e) {
+				return null;
+			}
 		}
 
 	}
