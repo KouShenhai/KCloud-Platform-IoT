@@ -168,6 +168,7 @@ export default () => {
 	}
 
 	useEffect(() => {
+		clearToken()
 		listTenantOption().then()
 		getPublicKey().then()
 		getCaptchaImage().then()

@@ -436,7 +436,7 @@ class OAuth2ApiTest {
 	}
 
 	private String getLogoutApiUrlV3() {
-		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/logouts";
+		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/tokens";
 	}
 
 	private String getSchema(boolean disabled) {

@@ -143,11 +143,13 @@ export default () => {
 		},
 		{
 			title: 'Api编码',
-			dataIndex: 'code'
+			dataIndex: 'code',
+			ellipsis: true
 		},
 		{
 			title: 'Api名称',
-			dataIndex: 'name'
+			dataIndex: 'name',
+			ellipsis: true
 		},
 		{
 			title: 'Api状态',
@@ -156,10 +158,12 @@ export default () => {
 				0: {text: '请求成功', status: 'Success'},
 				1: {text: '请求失败', status: 'Error'},
 			},
+			ellipsis: true
 		},
 		{
 			title: '错误信息',
-			dataIndex: 'errorMessage'
+			dataIndex: 'errorMessage',
+			ellipsis: true
 		},
 		{
 			title: '创建时间',
@@ -167,6 +171,8 @@ export default () => {
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
 			hideInSearch: true,
+			width: 160,
+			ellipsis: true
 		},
 		{
 			title: '创建时间',
