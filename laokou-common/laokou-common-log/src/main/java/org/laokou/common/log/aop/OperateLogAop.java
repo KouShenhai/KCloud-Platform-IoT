@@ -25,7 +25,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.core.utils.SpringContextUtil;
+import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.model.LogA;
 import org.springframework.stereotype.Component;
@@ -41,11 +41,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OperateLogAop {
 
+	private final SpringUtil springUtil;
+
 	@Around("@annotation(operateLog)")
 	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) {
 		long startTime = IdGenerator.SystemClock.now();
 		// 服务ID
-		String serviceId = SpringContextUtil.getServiceId();
+		String serviceId = springUtil.getServiceId();
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		LogA operate = new LogA(operateLog.module(), operateLog.operation(), request, serviceId);
 		String className = point.getTarget().getClass().getName();

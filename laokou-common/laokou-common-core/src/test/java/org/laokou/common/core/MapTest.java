@@ -19,14 +19,20 @@ package org.laokou.common.core;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.utils.AddressUtil;
+import org.laokou.common.core.utils.MapUtil;
 
-class AddressTest {
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * @author laokou
+ */
+class MapTest {
 
 	@Test
-	void testAddress() {
-		String address = "127.0.0.1";
-		Assertions.assertEquals("内网IP", AddressUtil.getRealAddress(address));
+	void testEmptyMap() {
+		Map<String, Set<String>> map = MapUtil.toUriMap(Map.of(), "test");
+		Assertions.assertTrue(MapUtil.isEmpty(map));
 	}
 
 }

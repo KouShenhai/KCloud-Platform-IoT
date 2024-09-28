@@ -24,7 +24,7 @@ import org.laokou.auth.extensionpoint.CaptchaValidatorExtPt;
 import org.laokou.auth.gateway.SourceGateway;
 import org.laokou.auth.model.SourceV;
 import org.laokou.auth.model.UserE;
-import org.laokou.common.core.utils.SpringContextUtil;
+import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
@@ -51,6 +51,8 @@ public class CaptchaSendCmdExe {
 
 	private final SourceGateway sourceGateway;
 
+	private final SpringUtil springUtil;
+
 	public void executeVoid(CaptchaSendCmd cmd) {
 		// 校验
 		extensionExecutor.executeVoid(CaptchaValidatorExtPt.class,
@@ -59,7 +61,7 @@ public class CaptchaSendCmdExe {
 		// 发布发送验证码事件
 		Long tenantId = cmd.getTenantId();
 		SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getUuid(), LAOKOU_CAPTCHA_TOPIC, cmd.getTag(),
-				CAPTCHA, SpringContextUtil.getServiceId(), getSourceName(tenantId), tenantId);
+				CAPTCHA, springUtil.getServiceId(), getSourceName(tenantId), tenantId);
 		rocketMQDomainEventPublisher.publish(sendCaptchaEvent);
 	}
 

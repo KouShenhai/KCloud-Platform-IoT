@@ -55,6 +55,12 @@
       <property name="processJavadoc" value="true"/>
     </module>
 
+    <!-- 禁止使用System.out.println https://checkstyle.sourceforge.io/checks/regexp/regexp.html -->
+    <module name="Regexp">
+      <property name="format" value="System\.out\.println"/>
+      <property name="illegalPattern" value="true"/>
+    </module>
+
   </module>
 
 </module>

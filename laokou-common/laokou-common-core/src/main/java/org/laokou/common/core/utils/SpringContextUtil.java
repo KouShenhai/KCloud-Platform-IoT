@@ -38,9 +38,9 @@ import java.util.Map;
  *
  * @author laokou
  */
-@Order(Ordered.HIGHEST_PRECEDENCE)
 @Component
 @NonNullApi
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public final class SpringContextUtil implements ApplicationContextAware, DisposableBean {
 
 	public static final String APPLICATION_NAME = "spring.application.name";
@@ -158,11 +158,7 @@ public final class SpringContextUtil implements ApplicationContextAware, Disposa
 	}
 
 	public static String getServiceId() {
-		String property = applicationContext.getEnvironment().getProperty(APPLICATION_NAME);
-		if (property != null) {
-			return property;
-		}
-		return DEFAULT_SERVICE_ID;
+		return applicationContext.getEnvironment().getProperty(APPLICATION_NAME, DEFAULT_SERVICE_ID);
 	}
 
 	@Override

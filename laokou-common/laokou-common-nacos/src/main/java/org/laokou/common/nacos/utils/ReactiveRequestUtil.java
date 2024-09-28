@@ -95,11 +95,11 @@ public class ReactiveRequestUtil {
 	 * 路径匹配.
 	 * @param requestMethod 请求方法
 	 * @param requestURL 请求路径URL
-	 * @param urlMap url集合
+	 * @param uriMap uri集合
 	 * @return 匹配结果
 	 */
-	public static boolean pathMatcher(String requestMethod, String requestURL, Map<String, Set<String>> urlMap) {
-		Set<String> urls = urlMap.get(requestMethod);
+	public static boolean pathMatcher(String requestMethod, String requestURL, Map<String, Set<String>> uriMap) {
+		Set<String> urls = uriMap.get(requestMethod);
 		if (CollectionUtil.isEmpty(urls)) {
 			return false;
 		}

@@ -24,7 +24,7 @@ import org.laokou.common.core.utils.TreeUtil;
 
 import java.util.List;
 
-public class TreeTest {
+class TreeTest {
 
 	@Test
 	void testTree() {

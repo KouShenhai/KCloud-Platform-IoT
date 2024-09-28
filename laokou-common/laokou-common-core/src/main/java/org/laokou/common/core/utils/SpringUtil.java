@@ -15,18 +15,26 @@
  *
  */
 
-package org.laokou.common.core;
+package org.laokou.common.core.utils;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.laokou.common.core.utils.AddressUtil;
+import lombok.RequiredArgsConstructor;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
-class AddressTest {
+import static org.laokou.common.core.utils.SpringContextUtil.APPLICATION_NAME;
+import static org.laokou.common.core.utils.SpringContextUtil.DEFAULT_SERVICE_ID;
 
-	@Test
-	void testAddress() {
-		String address = "127.0.0.1";
-		Assertions.assertEquals("内网IP", AddressUtil.getRealAddress(address));
+/**
+ * @author laokou
+ */
+@Component
+@RequiredArgsConstructor
+public class SpringUtil {
+
+	private final Environment environment;
+
+	public String getServiceId() {
+		return environment.getProperty(APPLICATION_NAME, DEFAULT_SERVICE_ID);
 	}
 
 }

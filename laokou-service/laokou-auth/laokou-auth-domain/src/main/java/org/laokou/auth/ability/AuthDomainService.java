@@ -20,7 +20,7 @@ package org.laokou.auth.ability;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.AuthA;
-import org.laokou.common.core.utils.SpringContextUtil;
+import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -51,6 +51,8 @@ public class AuthDomainService {
 
 	private final ApiLogGateway apiLogGateway;
 
+	private final SpringUtil springUtil;
+
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void recordLoginLog(DefaultDomainEvent domainEvent) {
 		loginLogGateway.create(domainEvent);
@@ -62,7 +64,7 @@ public class AuthDomainService {
 	}
 
 	public void auth(AuthA auth) {
-		auth.updateServiceId(SpringContextUtil.getServiceId());
+		auth.updateServiceId(springUtil.getServiceId());
 		auth.updateSource(sourceGateway.getName(auth.getUser()));
 		// 校验验证码
 		checkCaptcha(auth);

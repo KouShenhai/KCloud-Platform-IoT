@@ -21,7 +21,7 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.SpringContextUtil;
+import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -44,9 +44,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class RouterHandler implements ApplicationListener<ApplicationReadyEvent> {
 
+	private final SpringUtil springUtil;
+
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
-		String serviceId = SpringContextUtil.getServiceId();
+		String serviceId = springUtil.getServiceId();
 		Assert.isTrue(StringUtil.isNotEmpty(serviceId), "ServiceID is empty");
 		Map<String, Object> map = new HashMap<>(2);
 		String abbr = serviceId.substring(7);

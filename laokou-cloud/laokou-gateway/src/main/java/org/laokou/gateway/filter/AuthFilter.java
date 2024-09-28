@@ -17,28 +17,22 @@
 
 package org.laokou.gateway.filter;
 
-import com.alibaba.nacos.api.config.ConfigService;
-import com.alibaba.nacos.api.config.listener.Listener;
-import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.laokou.common.core.utils.Base64Util;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.core.utils.SpringContextUtil;
+import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.crypto.utils.RSAUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.laokou.gateway.utils.ReactiveI18nUtil;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.factory.rewrite.CachedBodyOutputMessage;
@@ -62,12 +56,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.function.Function;
 
 import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
@@ -87,7 +78,6 @@ import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VAL
  */
 @Slf4j
 @Component
-@RefreshScope
 @RequiredArgsConstructor
 public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
@@ -120,16 +110,11 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 */
 	private static final String GRANT_TYPE = "grant_type";
 
-	/**
-	 * Nacos公共配置标识.
-	 */
-	private static final String COMMON_DATA_ID = "application-common.yaml";
+	private static final Map<String, Set<String>> URI_MAP = new HashMap<>();
 
 	private final OAuth2ResourceServerProperties oAuth2ResourceServerProperties;
 
-	private final ConfigUtil configUtil;
-
-	private volatile Map<String, Set<String>> urlMap;
+	private final SpringUtil springUtil;
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -141,7 +126,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			// 获取uri
 			String requestURL = getRequestURL(request);
 			// 请求放行，无需验证权限
-			if (pathMatcher(getMethodName(request), requestURL, urlMap)) {
+			if (pathMatcher(getMethodName(request), requestURL, URI_MAP)) {
 				// 无需验证权限的URL，需要将令牌置空
 				return chain
 					.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
@@ -279,37 +264,12 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		};
 	}
 
-	/**
-	 * 订阅nacos消息通知，用于实时更新白名单URL.
-	 */
-	@SneakyThrows
-	@PostConstruct
-	public void initURL() {
-		String group = configUtil.getGroup();
-		ConfigService configService = configUtil.getConfigService();
-		configService.addListener(COMMON_DATA_ID, group, new Listener() {
-			@Override
-			public Executor getExecutor() {
-				return Executors.newSingleThreadExecutor();
-			}
-
-			@Override
-			public void receiveConfigInfo(String configInfo) {
-				initURLMap();
-			}
-		});
-	}
-
+	// @formatter:off
 	@Override
 	public void afterPropertiesSet() {
-		initURLMap();
+		URI_MAP.putAll(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(), springUtil.getServiceId()));
 	}
-
-	private void initURLMap() {
-		urlMap = Optional.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
-				SpringContextUtil.getServiceId()))
-			.orElseGet(ConcurrentHashMap::new);
-	}
+	// @formatter:on
 
 	@Data
 	@NoArgsConstructor

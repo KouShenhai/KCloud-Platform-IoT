@@ -29,7 +29,6 @@ import org.yaml.snakeyaml.util.UriEncoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.*;
@@ -82,16 +81,14 @@ public final class MapUtil {
 	 */
 	public static Map<String, Set<String>> toUriMap(Map<String, Set<String>> uriMap, String serviceId,
 			String separator) {
-		if (uriMap.isEmpty()) {
-			return new ConcurrentHashMap<>(0);
-		}
-		Map<String, Set<String>> maps = new ConcurrentHashMap<>(uriMap.size());
-		uriMap.forEach((k, v) -> maps.put(k,
-				v.stream()
-					.filter(item -> item.contains(serviceId))
-					.map(item -> item.substring(0, item.indexOf(separator)))
-					.collect(Collectors.toSet())));
-		return maps;
+		return uriMap.entrySet()
+			.stream()
+			.collect(Collectors.toMap(Map.Entry::getKey,
+					entry -> entry.getValue()
+						.stream()
+						.filter(item -> item.contains(serviceId))
+						.map(item -> item.substring(0, item.indexOf(separator)))
+						.collect(Collectors.toSet())));
 	}
 
 	/**

@@ -60,7 +60,7 @@ public abstract class ApiLog extends DTO {
 	private String remark;
 
 	/*
-	 * 时间戳.
+	 * 日期.
 	 */
 	private Instant instant;
 

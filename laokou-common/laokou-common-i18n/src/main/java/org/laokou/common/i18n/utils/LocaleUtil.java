@@ -25,7 +25,7 @@ import java.util.Locale;
 import static org.laokou.common.i18n.common.constant.StringConstant.*;
 
 /**
- * 本地工具类.
+ * 国际化语言工具类.
  *
  * @author laokou
  */
@@ -46,8 +46,7 @@ public final class LocaleUtil {
 	}
 
 	private static String getLanguage(String language) {
-		String[] array = language.split(COMMA);
-		return Arrays.stream(array).filter(i -> i.contains(ROD)).findFirst().orElse(EMPTY);
+		return Arrays.stream(language.split(COMMA)).filter(i -> i.contains(ROD)).findFirst().orElse(EMPTY);
 	}
 
 }

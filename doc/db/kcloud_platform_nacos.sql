@@ -12,7 +12,7 @@
  Target Server Version : 160004 (160004)
  File Encoding         : 65001
 
- Date: 27/09/2024 21:52:48
+ Date: 28/09/2024 11:16:03
 */
 
 
@@ -1320,7 +1320,7 @@ spring:
             POST:
               - /v3/captchas=laokou-auth,laokou-gateway
             DELETE:
-              - /v3/logouts=laokou-auth,laokou-gateway
+              - /v3/tokens=laokou-auth,laokou-gateway
   # task
   task-execution:
     pool:
@@ -1429,7 +1429,7 @@ tenant:
 knife4j:
   enable: true
   setting:
-    language: zh_cn', 'fc47d001cf6d9224b0010160d37d15d9', '2024-05-25 18:13:33.393', '2024-09-27 21:50:57.967', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+    language: zh_cn', '4d6b20803cf7c8875ccf48fea67bb523', '2024-05-25 18:13:33.393', '2024-09-28 11:14:44.572', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', '[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
@@ -3453,7 +3453,7 @@ spring:
             POST:
               - /v3/captchas=laokou-auth,laokou-gateway
             DELETE:
-              - /v3/logouts=laokou-auth,laokou-gateway
+              - /v3/tokens=laokou-auth,laokou-gateway
   # task
   task-execution:
     pool:
@@ -3562,7 +3562,7 @@ tenant:
 knife4j:
   enable: true
   setting:
-    language: zh_cn', 'fce9f6fca3cdbbff82e1922a90ec2a14', '2023-01-13 12:16:46', '2024-09-27 21:48:27.149', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+    language: zh_cn', '15e3d61d01ab3dd6b24fdb45f9cb603b', '2023-01-13 12:16:46', '2024-09-28 11:14:56.341', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
 spring:
   # security
@@ -3593,7 +3593,7 @@ spring:
             POST:
               - /v3/captchas=laokou-auth,laokou-gateway
             DELETE:
-              - /v3/logouts=laokou-auth,laokou-gateway
+              - /v3/tokens=laokou-auth,laokou-gateway
   # task
   task-execution:
     pool:
@@ -3703,7 +3703,7 @@ tenant:
 knife4j:
   enable: false
   setting:
-    language: zh_cn', 'a7a8d5837dc30d1ebecfa73eb0a75825', '2024-05-25 18:13:10.622', '2024-09-27 21:51:24.323', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+    language: zh_cn', '7aacd72900c025099d22ab251c414993', '2024-05-25 18:13:10.622', '2024-09-28 11:15:07.405', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
@@ -3873,7 +3873,7 @@ INSERT INTO "public"."config_tags_relation" VALUES (4, 'im', '', 'application-im
 INSERT INTO "public"."config_tags_relation" VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 11);
 INSERT INTO "public"."config_tags_relation" VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 3);
 INSERT INTO "public"."config_tags_relation" VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 1);
-INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 7);
+INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 9);
 
 -- ----------------------------
 -- Table structure for databasechangelog
@@ -4330,7 +4330,7 @@ SELECT setval('"public"."config_tags_relation_nid_seq4"', 24, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."config_tags_relation_nid_seq5"
 OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq5"', 7, true);
+SELECT setval('"public"."config_tags_relation_nid_seq5"', 9, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4414,7 +4414,7 @@ SELECT setval('"public"."his_config_info_nid_seq4"', 48, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."his_config_info_nid_seq5"
 OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq5"', 5, true);
+SELECT setval('"public"."his_config_info_nid_seq5"', 9, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4581,7 +4581,7 @@ ALTER TABLE "public"."config_info_tag" ADD CONSTRAINT "config_info_tag_pkey" PRI
 -- ----------------------------
 -- Auto increment value for config_tags_relation
 -- ----------------------------
-SELECT setval('"public"."config_tags_relation_nid_seq5"', 7, true);
+SELECT setval('"public"."config_tags_relation_nid_seq5"', 9, true);
 
 -- ----------------------------
 -- Indexes structure for table config_tags_relation
@@ -4625,7 +4625,7 @@ ALTER TABLE "public"."group_capacity" ADD CONSTRAINT "group_capacity_pkey" PRIMA
 -- ----------------------------
 -- Auto increment value for his_config_info
 -- ----------------------------
-SELECT setval('"public"."his_config_info_nid_seq5"', 5, true);
+SELECT setval('"public"."his_config_info_nid_seq5"', 9, true);
 
 -- ----------------------------
 -- Indexes structure for table his_config_info

@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.utils.ArrayUtil;
 
-public class ArrayTest {
+class ArrayTest {
 
 	@Test
 	void testStrArray() {

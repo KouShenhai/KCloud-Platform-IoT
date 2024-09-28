@@ -77,7 +77,7 @@ public class PrometheusExemplarsAutoConfiguration {
 
 		private Tracer tracer;
 
-        private final ObjectProvider<Tracer> tracerProvider;
+		private final ObjectProvider<Tracer> tracerProvider;
 
 		LazyTracingSpanContext(ObjectProvider<Tracer> tracerProvider) {
 			this.tracerProvider = tracerProvider;
@@ -112,12 +112,12 @@ public class PrometheusExemplarsAutoConfiguration {
 			return getTracer().currentSpan();
 		}
 
-        private Tracer getTracer() {
-            if (ObjectUtil.isNull(this.tracer)) {
-                this.tracer = tracerProvider.getObject();
-            }
-            return tracer;
-        }
+		private Tracer getTracer() {
+			if (ObjectUtil.isNull(this.tracer)) {
+				this.tracer = tracerProvider.getObject();
+			}
+			return tracer;
+		}
 
 	}
 
