@@ -69,12 +69,10 @@ import org.apache.rocketmq.logging.org.slf4j.LoggerFactory;
 import org.apache.rocketmq.remoting.protocol.body.CMResult;
 import org.apache.rocketmq.remoting.protocol.body.ConsumeMessageDirectlyResult;
 import org.laokou.common.core.utils.SpringContextUtil;
-import org.springframework.core.env.Environment;
+import org.laokou.common.core.utils.SpringUtil;
 
 import java.util.*;
 import java.util.concurrent.*;
-
-import static org.laokou.common.core.config.TtlTaskExecutorAutoConfig.THREADS_VIRTUAL_ENABLED;
 
 /**
  * @author rocketmq
@@ -112,8 +110,8 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 		String consumerGroupTag = (consumerGroup.length() > 100 ? consumerGroup.substring(0, 100) : consumerGroup)
 				+ "_";
 
-		Environment environment = SpringContextUtil.getBean(Environment.class);
-		if (environment.getProperty(THREADS_VIRTUAL_ENABLED, Boolean.class, false)) {
+		SpringUtil springUtil = SpringContextUtil.getBean(SpringUtil.class);
+		if (springUtil.isVirtualThread()) {
 			this.consumeExecutor = new ThreadPoolExecutor(0, // corePoolSize:
 					// 0，因为不需要保留核心线程
 					Integer.MAX_VALUE, // maximumPoolSize: 无限制，允许任意数量的虚拟线程

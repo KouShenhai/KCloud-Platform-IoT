@@ -19,9 +19,9 @@ package org.laokou.common.core.config;
 
 import com.alibaba.ttl.threadpool.TtlExecutors;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.core.utils.SpringUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
@@ -43,14 +43,9 @@ public class TtlTaskExecutorAutoConfig {
 	 */
 	public static final String THREAD_POOL_TASK_EXECUTOR_NAME = "executor";
 
-	/**
-	 * 虚拟线程开关.
-	 */
-	public static final String THREADS_VIRTUAL_ENABLED = "spring.threads.virtual.enabled";
-
 	@Bean(value = THREAD_POOL_TASK_EXECUTOR_NAME)
-	public Executor executor(SpringTaskExecutionProperties springTaskExecutionProperties, Environment environment) {
-		if (environment.getProperty(THREADS_VIRTUAL_ENABLED, Boolean.class, false)) {
+	public Executor executor(SpringTaskExecutionProperties springTaskExecutionProperties, SpringUtil springUtil) {
+		if (springUtil.isVirtualThread()) {
 			// 虚拟线程
 			return TtlExecutors
 				.getTtlExecutorService(Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE));

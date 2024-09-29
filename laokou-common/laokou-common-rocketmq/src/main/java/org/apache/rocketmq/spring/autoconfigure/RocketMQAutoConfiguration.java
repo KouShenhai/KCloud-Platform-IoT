@@ -46,6 +46,7 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQMessageConverter;
 import org.apache.rocketmq.spring.support.RocketMQUtil;
 import org.laokou.common.core.config.TtlVirtualThreadFactory;
+import org.laokou.common.core.utils.SpringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -67,8 +68,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import static org.laokou.common.core.config.TtlTaskExecutorAutoConfig.THREADS_VIRTUAL_ENABLED;
 
 /**
  * rocketmq支持虚拟线程池.
@@ -201,7 +200,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 	@Bean(destroyMethod = "destroy")
 	@Conditional(ProducerOrConsumerPropertyCondition.class)
 	@ConditionalOnMissingBean(name = ROCKETMQ_TEMPLATE_DEFAULT_GLOBAL_NAME)
-	public RocketMQTemplate rocketMQTemplate(RocketMQMessageConverter rocketMQMessageConverter) {
+	public RocketMQTemplate rocketMQTemplate(RocketMQMessageConverter rocketMQMessageConverter, SpringUtil springUtil) {
 		RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
 		if (applicationContext.containsBean(PRODUCER_BEAN_NAME)) {
 			rocketMQTemplate.setProducer((DefaultMQProducer) applicationContext.getBean(PRODUCER_BEAN_NAME));
@@ -211,7 +210,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 		}
 		rocketMQTemplate.setMessageConverter(rocketMQMessageConverter.getMessageConverter());
 
-		if (environment.getProperty(THREADS_VIRTUAL_ENABLED, Boolean.class, false)) {
+		if (springUtil.isVirtualThread()) {
 			rocketMQTemplate
 				.setAsyncSenderExecutor(Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE));
 		}

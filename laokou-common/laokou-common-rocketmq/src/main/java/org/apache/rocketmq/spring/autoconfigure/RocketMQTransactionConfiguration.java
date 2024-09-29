@@ -42,6 +42,7 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQUtil;
 import org.jetbrains.annotations.NotNull;
 import org.laokou.common.core.config.TtlVirtualThreadFactory;
+import org.laokou.common.core.utils.SpringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -52,15 +53,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
-
-import static org.laokou.common.core.config.TtlTaskExecutorAutoConfig.THREADS_VIRTUAL_ENABLED;
 
 /**
  * @author rocketmq
@@ -73,8 +71,6 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
 	private final static Logger log = LoggerFactory.getLogger(RocketMQTransactionConfiguration.class);
 
 	private ConfigurableApplicationContext applicationContext;
-
-	private final Environment environment;
 
 	@Override
 	public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
@@ -106,7 +102,8 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
 			throw new IllegalStateException(
 					annotation.rocketMQTemplateBeanName() + " already exists RocketMQLocalTransactionListener");
 		}
-		if (environment.getProperty(THREADS_VIRTUAL_ENABLED, Boolean.class, false)) {
+		SpringUtil springUtil = this.applicationContext.getBean(SpringUtil.class);
+		if (springUtil.isVirtualThread()) {
 			((TransactionMQProducer) rocketMQTemplate.getProducer())
 				.setExecutorService(Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE));
 		}

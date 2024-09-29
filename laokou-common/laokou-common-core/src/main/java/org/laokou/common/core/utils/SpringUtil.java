@@ -20,7 +20,6 @@ package org.laokou.common.core.utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-
 import static org.laokou.common.core.utils.SpringContextUtil.APPLICATION_NAME;
 import static org.laokou.common.core.utils.SpringContextUtil.DEFAULT_SERVICE_ID;
 
@@ -31,10 +30,19 @@ import static org.laokou.common.core.utils.SpringContextUtil.DEFAULT_SERVICE_ID;
 @RequiredArgsConstructor
 public class SpringUtil {
 
+	/**
+	 * 虚拟线程开关.
+	 */
+	private static final String THREADS_VIRTUAL_ENABLED = "spring.threads.virtual.enabled";
+
 	private final Environment environment;
 
 	public String getServiceId() {
 		return environment.getProperty(APPLICATION_NAME, DEFAULT_SERVICE_ID);
+	}
+
+	public boolean isVirtualThread() {
+		return environment.getProperty(THREADS_VIRTUAL_ENABLED, Boolean.class, false);
 	}
 
 }
