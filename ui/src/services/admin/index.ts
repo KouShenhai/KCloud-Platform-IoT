@@ -13,7 +13,7 @@ import * as menu from './menu';
 import * as loginLog from './loginLog';
 import * as ip from './ip';
 import * as i18nMessage from './i18nMessage';
-import * as dictType from './dictType';
+import * as dictType from './dict';
 import * as dictItem from './dictItem';
 import * as dept from './dept';
 import * as apiLog from './apiLog';

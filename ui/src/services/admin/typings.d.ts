@@ -83,7 +83,7 @@ declare namespace API {
 		co?: DictItemCO;
 	};
 
-	type DictTypeCO = {
+	type DictCO = {
 		extValues?: Record<string, any>;
 		id?: number;
 		name?: string;
@@ -92,13 +92,13 @@ declare namespace API {
 		status?: number;
 	};
 
-	type DictTypeExportCmd = true;
+	type DictExportCmd = true;
 
-	type DictTypeModifyCmd = {
-		co?: DictTypeCO;
+	type DictModifyCmd = {
+		co?: DictCO;
 	};
 
-	type DictTypePageQry = {
+	type DictPageQry = {
 		pageNum?: number;
 		pageSize?: number;
 		pageIndex?: number;
@@ -106,8 +106,8 @@ declare namespace API {
 		params?: Record<string, any>;
 	};
 
-	type DictTypeSaveCmd = {
-		co?: DictTypeCO;
+	type DictSaveCmd = {
+		co?: DictCO;
 	};
 
 	type DomainEventCO = {
