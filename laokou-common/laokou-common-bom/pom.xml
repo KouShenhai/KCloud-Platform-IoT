@@ -142,7 +142,7 @@
         <!--nimbus-jose-jwt版本-->
         <nimbus-jose-jwt.version>9.41.1</nimbus-jose-jwt.version>
         <!--opentelemetry-api-incubator版本-->
-        <opentelemetry-api-incubator.version>1.40.0-alpha</opentelemetry-api-incubator.version>
+        <opentelemetry-api-incubator.version>1.42.1-alpha</opentelemetry-api-incubator.version>
         <!--opentelemetry-exporter-jaeger版本-->
         <opentelemetry-exporter-jaeger.version>1.33.0</opentelemetry-exporter-jaeger.version>
     </properties>
