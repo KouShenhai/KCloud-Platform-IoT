@@ -23,10 +23,10 @@ jobs:
           architecture: x64
       - name: Run the Maven verify phase
         run: mvn --batch-mode --update-snapshots verify
-      - name: Test with Maven
-        run: mvn clean test -P prod
       - name: Build with Maven
-        run: mvn clean install -P prod -DskipTests
+        run: mvn clean install -P prod -DskipTests      
+      - name: Test with Maven
+        run: mvn clean test -P prod 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.5.0
         env:
