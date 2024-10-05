@@ -15,17 +15,22 @@
  *
  */
 
-package org.laokou.im.common.constant;
+package org.laokou.im.gatewayimpl.rpc.fallback;
+
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.im.dto.clientobject.UserProfileCO;
+import org.laokou.im.gatewayimpl.rpc.UserFeignClient;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public final class Constant {
+@Component
+public class UserFeignClientFallback implements UserFeignClient {
 
-	public static final String LAOKOU_ADMIN = "laokou-admin";
-
-	private Constant() {
-
+	@Override
+	public Result<UserProfileCO> getProfileV3(String Authorization) {
+		return Result.fail("S_Feign_CallGetUserProfileFail", "获取个人信息失败，请联系管理员");
 	}
 
 }

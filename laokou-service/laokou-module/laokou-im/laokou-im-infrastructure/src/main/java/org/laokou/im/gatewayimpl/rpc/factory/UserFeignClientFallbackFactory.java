@@ -15,17 +15,19 @@
  *
  */
 
-package org.laokou.im.common.constant;
+package org.laokou.im.gatewayimpl.rpc.factory;
+
+import org.laokou.im.gatewayimpl.rpc.fallback.UserFeignClientFallback;
+import org.springframework.cloud.openfeign.FallbackFactory;
 
 /**
  * @author laokou
  */
-public final class Constant {
+public class UserFeignClientFallbackFactory implements FallbackFactory<UserFeignClientFallback> {
 
-	public static final String LAOKOU_ADMIN = "laokou-admin";
-
-	private Constant() {
-
+	@Override
+	public UserFeignClientFallback create(Throwable cause) {
+		return new UserFeignClientFallback();
 	}
 
 }

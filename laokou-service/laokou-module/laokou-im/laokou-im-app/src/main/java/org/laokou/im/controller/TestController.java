@@ -15,27 +15,33 @@
  *
  */
 
-package org.laokou.im.gatewayimpl.rpc;
+package org.laokou.im.controller;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.im.dto.clientobject.UserProfileCO;
-import org.laokou.im.gatewayimpl.rpc.factory.UserFeignClientFallbackFactory;
-import org.laokou.im.gatewayimpl.rpc.fallback.UserFeignClientFallback;
-import org.springframework.cloud.openfeign.FeignClient;
+import org.laokou.im.gatewayimpl.rpc.UserFeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-
-import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
-import static org.laokou.im.common.constant.Constant.LAOKOU_ADMIN;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author laokou
  */
-@FeignClient(name = LAOKOU_ADMIN, contextId = "user", path = "/v3/users", fallback = UserFeignClientFallback.class,
-		fallbackFactory = UserFeignClientFallbackFactory.class)
-public interface UserFeignClient {
+@Slf4j
+@RestController
+@RequestMapping("/test")
+@RequiredArgsConstructor
+public class TestController {
 
-	@GetMapping("profile")
-	Result<UserProfileCO> getProfileV3(@RequestHeader(AUTHORIZATION) String Authorization);
+	private final UserFeignClient userFeignClient;
+
+	@GetMapping
+	public void test() {
+		Result<UserProfileCO> test = userFeignClient.getProfileV3("test");
+		log.info("{}", JacksonUtil.toJsonStr(test));
+	}
 
 }

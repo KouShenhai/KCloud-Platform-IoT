@@ -30,10 +30,13 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Map;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
 import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
 import static org.laokou.common.i18n.common.constant.TraceConstant.*;
@@ -97,14 +100,28 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 
 	@Bean
 	public Retryer retryer() {
-		// 最大请求次数为3，初始间隔时间为100ms
+		// 最大请求次数为5，初始间隔时间为100ms
 		// 下次间隔时间1.5倍递增，重试间最大间隔时间为1s
-		return new Retryer.Default(100, SECONDS.toMillis(1), 3);
+		return new Retryer.Default();
 	}
 
 	@Override
 	public Exception decode(String methodKey, Response response) {
 		return super.decode(methodKey, response);
+	}
+
+	@Bean
+	SecurityFilterChain resourceClient(HttpSecurity http) throws Exception {
+		return http.authorizeHttpRequests(c -> c.requestMatchers("/**").permitAll())
+			.requestCache(AbstractHttpConfigurer::disable)
+			.sessionManagement(AbstractHttpConfigurer::disable)
+			.securityContext(AbstractHttpConfigurer::disable)
+			.csrf(AbstractHttpConfigurer::disable)
+			.cors(AbstractHttpConfigurer::disable)
+			.httpBasic(AbstractHttpConfigurer::disable)
+			// 基于token，关闭session
+			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			.build();
 	}
 
 }

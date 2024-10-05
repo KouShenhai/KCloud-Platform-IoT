@@ -79,8 +79,8 @@ public class OAuth2ResourceServerConfig {
 			.authenticated();
 	}
 
-	@Order(HIGHEST_PRECEDENCE + 1000)
 	@Bean
+	@Order(HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
 	SecurityFilterChain resourceFilterChain(GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector,
 			SpringUtil springUtil, OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http)
