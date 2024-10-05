@@ -60,7 +60,7 @@ public class ImApp {
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
-		new SpringApplicationBuilder(ImApp.class).web(WebApplicationType.REACTIVE).run(args);
+		new SpringApplicationBuilder(ImApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
     // @formatter:on
 

@@ -23,10 +23,8 @@ jobs:
           architecture: x64
       - name: Run the Maven verify phase
         run: mvn --batch-mode --update-snapshots verify
-      - name: Build with Maven
-        run: mvn clean install -P prod -DskipTests      
       - name: Test with Maven
-        run: mvn clean test -P prod 
+        run: mvn clean test -P prod
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.6.0
         env:
@@ -36,3 +34,5 @@ jobs:
           fail_ci_if_error: true
           files: ./laokou-common/laokou-common-core/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-crypto/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-i18n/target/site/jacoco/jacoco.xml
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Build with Maven
+        run: mvn clean install -P prod -DskipTests

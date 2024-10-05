@@ -14,17 +14,17 @@
  * limitations under the License.
  *
  */
-
-package org.laokou.im.gatewayimpl.rpc;
-
-import org.springframework.cloud.openfeign.FeignClient;
-
-import static org.laokou.im.common.constant.Constant.LAOKOU_ADMIN;
+package org.laokou.im.common.constant;
 
 /**
  * @author laokou
  */
-@FeignClient(name = LAOKOU_ADMIN, contextId = "user", path = "/v3/users", fallbackFactory = Object.class)
-public interface UserFeignClient {
+public final class Constant {
+
+	public static final String LAOKOU_ADMIN = "laokou-admin";
+
+	private Constant() {
+
+	}
 
 }
