@@ -115,7 +115,7 @@ services:
     networks:
       - laokou_network
   postgresql:
-    image: postgres:17.0
+    image: timescale/timescaledb:latest-pg16
     container_name: postgresql
     # 保持容器在没有守护程序的情况下运行
     tty: true
