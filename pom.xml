@@ -64,7 +64,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
     <spring-boot-maven-plugin.version>3.3.4</spring-boot-maven-plugin.version>
-    <maven-surefire-plugin.version>3.5.0</maven-surefire-plugin.version>
+    <maven-surefire-plugin.version>3.5.1</maven-surefire-plugin.version>
     <!--spring-boot版本-->
     <spring-boot.version>3.3.4</spring-boot.version>
     <!--spring-cloud版本-->
