@@ -22,12 +22,12 @@ import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.common.nacos.annotation.EnableRouter;
+import org.laokou.common.openfeign.annotation.EnableOAuth2Feign;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import java.net.InetAddress;
 
@@ -35,7 +35,7 @@ import java.net.InetAddress;
  * @author laokou
  */
 @EnableRouter
-@EnableFeignClients
+@EnableOAuth2Feign
 @EnableTaskExecutor
 @EnableDiscoveryClient
 @EnableRedisRepository

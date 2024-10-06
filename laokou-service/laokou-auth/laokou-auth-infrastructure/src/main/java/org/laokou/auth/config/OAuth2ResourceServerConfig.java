@@ -32,7 +32,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.session.data.redis.RedisIndexedSessionRepository;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
-import static org.laokou.common.security.config.OAuth2ResourceServerConfig.customizer;
+import static org.laokou.common.security.config.OAuth2ResourceConfig.customizer;
 import static org.springframework.security.config.http.SessionCreationPolicy.IF_REQUIRED;
 
 /**

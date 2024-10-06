@@ -30,10 +30,6 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Map;
 
@@ -53,7 +49,7 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.*;
 
 @Slf4j
 @RequiredArgsConstructor
-@Import(FeignClientsConfiguration.class)
+@Import({ FeignClientsConfiguration.class })
 @AutoConfiguration(before = SentinelFeignAutoConfiguration.class)
 public class OpenFeignAutoConfig extends ErrorDecoder.Default implements RequestInterceptor {
 
@@ -108,20 +104,6 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 	@Override
 	public Exception decode(String methodKey, Response response) {
 		return super.decode(methodKey, response);
-	}
-
-	@Bean
-	SecurityFilterChain resourceClient(HttpSecurity http) throws Exception {
-		return http.authorizeHttpRequests(c -> c.requestMatchers("/**").permitAll())
-			.requestCache(AbstractHttpConfigurer::disable)
-			.sessionManagement(AbstractHttpConfigurer::disable)
-			.securityContext(AbstractHttpConfigurer::disable)
-			.csrf(AbstractHttpConfigurer::disable)
-			.cors(AbstractHttpConfigurer::disable)
-			.httpBasic(AbstractHttpConfigurer::disable)
-			// 基于token，关闭session
-			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.build();
 	}
 
 }
