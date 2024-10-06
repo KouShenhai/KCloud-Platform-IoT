@@ -49,7 +49,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
-import org.springframework.security.web.util.CssUtils;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
@@ -169,28 +168,31 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 		String contextPath = request.getContextPath();
 		StringBuilder sb = new StringBuilder();
 		sb.append("<!DOCTYPE html>\n");
-		sb.append("<html lang=\"en\">\n");
+		sb.append("<html lang=\"zh\">\n");
 		sb.append("  <head>\n");
 		sb.append("    <meta charset=\"utf-8\">\n");
 		sb.append("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n");
-		sb.append("    <meta name=\"description\" content=\"\">\n");
-		sb.append("    <meta name=\"author\" content=\"\">\n");
+		sb.append("    <meta name=\"description\" content=\"老寇IoT云平台统一认证\">\n");
+		sb.append("    <meta name=\"author\" content=\"laokou\">\n");
 		sb.append("    <title>老寇IoT云平台统一认证</title>\n");
-		sb.append(CssUtils.getCssStyleBlock().indent(4));
+		sb.append("    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" "
+				+ "rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n");
+		sb.append("    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" "
+				+ "rel=\"stylesheet\" integrity=\"sha384-oOE/3m0LUMPub4kaC09mrdEhIc+e3exm4xOGxAmuFXhBNF4hcg/6MiAXAf5p0P56\" crossorigin=\"anonymous\"/>\n");
 		sb.append("  </head>\n");
 		sb.append("  <body>\n");
-		sb.append("     <div class=\"content\">\n");
+		sb.append("     <div class=\"container\">\n");
 		if (this.formLoginEnabled) {
-			sb.append("      <form class=\"login-form\" method=\"post\" action=\"")
+			sb.append("      <form class=\"form-signin\" method=\"post\" action=\"")
 				.append(contextPath)
 				.append(this.authenticationUrl)
 				.append("\">\n");
 			sb.append("		   <div style='text-align:center;'>\n");
-			sb.append("        	<h3>老寇IoT云平台统一认证</h3>\n");
+			sb.append("        	<h3 class=\"form-signin-heading\">老寇IoT云平台统一认证</h3>\n");
 			sb.append("		   </div>\n");
 			sb.append(createError(loginError, errorMsg)).append(createLogoutSuccess(logoutSuccess));
 			sb.append("        <p>\n");
-			sb.append("          <label for=\"tenantId\" class=\"screenreader\">租户</label>\n");
+			sb.append("          <label for=\"tenantId\" class=\"sr-only\">租户</label>\n");
 			sb.append("			  <select name=\"tenant_id\" id=\"tenant_id\">\n");
 			sb.append("           	<option value=\"")
 				.append("0")
@@ -207,13 +209,13 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 			sb.append("           </select>\n");
 			sb.append("        </p>\n");
 			sb.append("        <p>\n");
-			sb.append("          <label for=\"username\" class=\"screenreader\">用户名</label>\n");
+			sb.append("          <label for=\"username\" class=\"sr-only\">用户名</label>\n");
 			sb.append("          <input type=\"text\" id=\"username\" name=\"")
 				.append(this.usernameParameter)
 				.append("\" placeholder=\"用户名\" required autofocus>\n");
 			sb.append("        </p>\n");
 			sb.append("        <p>\n");
-			sb.append("          <label for=\"password\" class=\"screenreader\">密码</label>\n");
+			sb.append("          <label for=\"password\" class=\"sr-only\">密码</label>\n");
 			sb.append("          <input type=\"password\" id=\"password\" name=\"")
 				.append(this.passwordParameter)
 				.append("\" placeholder=\"密码\" required>\n");
@@ -223,7 +225,7 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 			sb.append("      </form>\n");
 		}
 		if (this.oauth2LoginEnabled) {
-			sb.append("<h2>Login with OAuth 2.0</h2>");
+			sb.append("<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2>");
 			sb.append(createError(loginError, errorMsg));
 			sb.append(createLogoutSuccess(logoutSuccess));
 			sb.append("<table class=\"table table-striped\">\n");
@@ -240,7 +242,7 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 			sb.append("</table>\n");
 		}
 		if (this.saml2LoginEnabled) {
-			sb.append("<h2>Login with SAML 2.0</h2>");
+			sb.append("<h2 class=\"form-signin-heading\">Login with SAML 2.0</h2>");
 			sb.append(createError(loginError, errorMsg));
 			sb.append(createLogoutSuccess(logoutSuccess));
 			sb.append("<table class=\"table table-striped\">\n");

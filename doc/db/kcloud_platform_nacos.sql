@@ -3,16 +3,16 @@
 
  Source Server         : 127.0.0.1
  Source Server Type    : PostgreSQL
- Source Server Version : 160004 (160004)
+ Source Server Version : 160003 (160003)
  Source Host           : 127.0.0.1:5432
  Source Catalog        : kcloud_platform_nacos
  Source Schema         : public
 
  Target Server Type    : PostgreSQL
- Target Server Version : 160004 (160004)
+ Target Server Version : 160003 (160003)
  File Encoding         : 65001
 
- Date: 28/09/2024 11:16:03
+ Date: 06/10/2024 18:08:37
 */
 
 
@@ -1295,6 +1295,21 @@ spring:
   # security
   security:
     oauth2:
+      client:
+        registration:
+          default:
+            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+            client-name: OAuth2.1认证
+            client-secret: FpHwIfw4wY92dO
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: client_credentials
+            scope:
+              - read
+              - write
+        provider:
+          default:
+            token-uri: https://auth:1111/oauth2/token
+            authorization-uri: https://auth:1111/oauth2/token
       resource-server:
         enabled: true
         authorization-url: http://auth:1111/oauth2/authorize
@@ -1429,7 +1444,7 @@ tenant:
 knife4j:
   enable: true
   setting:
-    language: zh_cn', '4d6b20803cf7c8875ccf48fea67bb523', '2024-05-25 18:13:33.393', '2024-09-28 11:14:44.572', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+    language: zh_cn', 'a3aad05a1aed22c5ac4d8ee38ed1f16a', '2024-05-25 18:13:33.393', '2024-10-06 17:22:40.455', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', '[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
@@ -2046,7 +2061,7 @@ spring:
     openfeign:
       oauth2:
         enabled: true
-        client-registrationId: 95TxSsTPFA3tF12TBSMmUVK0da
+        clientRegistrationId: "default"
     # sentinel
     sentinel:
       filter:
@@ -2173,7 +2188,7 @@ snail-job:
   # 接入组 token
   token: SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj
   # 客户端通讯端口，默认 1789
-  port: 1790', 'add99c60048d821529e2235cf4af4233', '2024-05-25 18:13:33.447', '2024-09-20 14:17:47.21', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+  port: 1790', '15d0915c30202eb08f98e143e9b30394', '2024-05-25 18:13:33.447', '2024-10-06 17:03:20.674', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (1475, 'application-sms.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -2259,88 +2274,6 @@ management:
   endpoint:
     health:
       show-details: always', '8de077fd51216a4f43ffce6cd420dca0', '2024-05-25 18:12:47.335', '2024-08-16 00:13:48.075', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'spring boot admin monitor', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (5, 'application-im.yaml', 'LAOKOU_GROUP', 'server:
-  ssl:
-    # 开启证书
-    enabled: false
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: false
-  shutdown: graceful
-#spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  websocket-server:
-    ip: 0.0.0.0
-    port: ${WEBSOCKET_SERVER_PORT:1000}
-    service-id: ${spring.application.name}-server
-    boss-core-size: 2
-    worker-core-size: 32
-  webflux:
-    multipart:
-      max-in-memory-size: -1
-      max-parts: -1
-      max-disk-usage-per-part: -1
-      max-headers-size: -1
-  cloud:
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-
-logging:
-  config: classpath:log4j2-dev.xml
-', '944465d8411b828b761d95020c586d34', '2024-08-15 22:09:12.648', '2024-08-16 00:13:59.972', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-im', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (6, 'application-im.yaml', 'LAOKOU_GROUP', 'server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  shutdown: graceful
-#spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  websocket-server:
-    ip: 0.0.0.0
-    port: ${WEBSOCKET_SERVER_PORT:1000}
-    service-id: ${spring.application.name}-server
-    boss-core-size: 2
-    worker-core-size: 32
-  webflux:
-    multipart:
-      max-in-memory-size: -1
-      max-parts: -1
-      max-disk-usage-per-part: -1
-      max-headers-size: -1
-  cloud:
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-
-logging:
-  config: classpath:log4j2-prod.xml
-', '22705d26748bcbddeb8334c4c0851fc4', '2024-08-15 22:09:22.47', '2024-08-16 00:14:14.076', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-im', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (28, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -2800,166 +2733,6 @@ snail-job:
   group: laokou_auth_job_group
   # 接入组 token
   token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI', 'eb43a263c2f9d46be73e36b28830def5', '2024-05-25 18:13:10.697', '2024-09-19 23:48:17.083', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (2022, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
-spring:
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: -1
-      max-request-size: -1
-  cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        client-registrationId: 95TxSsTPFA3tF12TBSMmUVK0da
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            group-id: LAOKOU_GROUP
-            data-id: admin-flow.json
-            data-type: json
-            rule-type: flow
-            username: nacos
-            password: nacos
-        db1:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            group-id: LAOKOU_GROUP
-            data-id: admin-degrade.json
-            data-type: json
-            rule-type: degrade
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # 不开启虚拟线程
-  threads:
-    virtual:
-      enabled: true
-  liquibase:
-    enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.xml
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-
-logging:
-  config: classpath:log4j2-test.xml
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    enabled: true
-    path: /v3/api-docs
-  group-configs:
-    - group: ''default''
-      paths-to-match: ''/**''
-      packages-to-scan: org.laokou.admin.web
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-snail-job:
-  # 任务调度服务器信息
-  server:
-    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
-    host: job
-    # 服务器通讯端口（不是后台管理页面服务端口）
-    port: 1788
-  # 命名空间
-  namespace: 764d604ec6fc45f68cd92514c40e9e1a
-  # 接入组名
-  group: laokou_admin_job_group
-  # 接入组 token
-  token: SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj
-  # 客户端通讯端口，默认 1789
-  port: 1790', '06bd1d4384392dd191be0937a91b7cf6', '2023-09-28 11:37:33', '2024-09-20 14:17:28.352', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (46, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -2992,7 +2765,7 @@ spring:
     openfeign:
       oauth2:
         enabled: true
-        client-registrationId: 95TxSsTPFA3tF12TBSMmUVK0da
+        clientRegistrationId: "default"
     # sentinel
     sentinel:
       filter:
@@ -3119,7 +2892,167 @@ snail-job:
   # 接入组 token
   token: SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj
   # 客户端通讯端口，默认 1789
-  port: 1790', 'f8c64c85e8e87836194b0c576738061c', '2024-05-25 18:13:10.69', '2024-09-20 14:18:31.416', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+  port: 1790', '4b8b1b57a0c6bf025584e79bbecfd19e', '2024-05-25 18:13:10.69', '2024-10-06 17:03:44.012', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (2022, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: "default"
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: https://nacos:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            group-id: LAOKOU_GROUP
+            data-id: admin-flow.json
+            data-type: json
+            rule-type: flow
+            username: nacos
+            password: nacos
+        db1:
+          nacos:
+            server-addr: https://nacos:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            group-id: LAOKOU_GROUP
+            data-id: admin-degrade.json
+            data-type: json
+            rule-type: degrade
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # 不开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+
+logging:
+  config: classpath:log4j2-test.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.admin.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+snail-job:
+  # 任务调度服务器信息
+  server:
+    # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
+    host: job
+    # 服务器通讯端口（不是后台管理页面服务端口）
+    port: 1788
+  # 命名空间
+  namespace: 764d604ec6fc45f68cd92514c40e9e1a
+  # 接入组名
+  group: laokou_admin_job_group
+  # 接入组 token
+  token: SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj
+  # 客户端通讯端口，默认 1789
+  port: 1790', '98b87955bfa8185cc37e26b5deeab2a3', '2023-09-28 11:37:33', '2024-10-06 17:02:48.154', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (82, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -3185,47 +3118,6 @@ management:
   endpoint:
     health:
       show-details: always', 'd8fe931c686586663ab9db98c2c6b1de', '2023-01-16 12:01:23', '2024-08-16 00:11:57.928', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'spring boot admin monitor', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (4, 'application-im.yaml', 'LAOKOU_GROUP', 'server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  shutdown: graceful
-#spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  websocket-server:
-    ip: 0.0.0.0
-    port: ${WEBSOCKET_SERVER_PORT:1000}
-    service-id: ${spring.application.name}-server
-    boss-core-size: 2
-    worker-core-size: 32
-  webflux:
-    multipart:
-      max-in-memory-size: -1
-      max-parts: -1
-      max-disk-usage-per-part: -1
-      max-headers-size: -1
-  cloud:
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-
-logging:
-  config: classpath:log4j2-test.xml
-', 'f896579eeda9c5bbe075bc00cd310988', '2024-08-15 22:08:53.835', '2024-08-16 00:12:29.145', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-im', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (69, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -3423,151 +3315,71 @@ snail-job:
   group: laokou_auth_job_group
   # 接入组 token
   token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI', '77ea44e956e961a91cfb749df6bddf35', '2024-05-25 18:13:33.452', '2024-09-19 23:48:03.216', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
+INSERT INTO "public"."config_info" VALUES (5, 'application-im.yaml', 'LAOKOU_GROUP', 'server:
+  ssl:
+    # 开启证书
+    enabled: false
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: false
+  shutdown: graceful
+#spring
 spring:
-  # security
-  security:
-    oauth2:
-      resource-server:
-        enabled: true
-        authorization-url: https://auth:1111/oauth2/authorize
-        token-url: https://gateway:5555/auth/oauth2/token
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /**/v3/api-docs/**=laokou-gateway
-              - /v3/api-docs/**=laokou-auth,laokou-admin
-              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
-              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
-              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
-              - /error=laokou-admin,laokou-auth
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
-              - /favicon.ico=laokou-gateway
-              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
-              - /v3/secrets=laokou-gateway,laokou-auth
-              - /graceful-shutdown=laokou-auth
-              - /ws=laokou-gateway
-              - /doc.html=laokou-gateway,laokou-auth,laokou-admin
-              - /webjars/**=laokou-auth,laokou-admin,laokou-gateway
-            POST:
-              - /v3/captchas=laokou-auth,laokou-gateway
-            DELETE:
-              - /v3/tokens=laokou-auth,laokou-gateway
-  # task
-  task-execution:
-    pool:
-      core-size: 33
-      keep-alive: 180s
-    fork-join-pool:
-      core-size: 33
-  cloud:
-    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
-    openfeign:
-      compression:
-        response:
-          enabled: true
-        request:
-          enabled: true
-      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
-      okhttp:
-        enabled: true
-      circuitbreaker:
-        enabled: true
-      httpclient:
-        enabled: false
-        hc5:
-          enabled: false
-        disable-ssl-validation: true
-      client:
-        config:
-          default:
-            connectTimeout: 120000 #连接超时
-            readTimeout: 120000 #读取超时
-            logger-level: none
-      lazy-attributes-resolution: true
-    # sentinel
-    sentinel:
-      web-context-unify: false
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        dashboard: sentinel:8972
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    gateway:
+  threads:
+    virtual:
       enabled: true
-    health:
-      show-details: always
-  tracing:
-    enabled: true
-    propagation:
-      type: w3c
-    # 采样率 => 100%  
-    sampling:
-      probability: 1
-  otlp:
-    tracing:
-      endpoint: http://otel-collector:4318/v1/traces
-      compression: gzip
-      timeout: 10s
-    metrics:
-      export:
-        enabled: false
-  metrics:
-    tags:
-      application: ${spring.application.name}
+  websocket-server:
+    ip: 0.0.0.0
+    port: ${WEBSOCKET_SERVER_PORT:1000}
+    service-id: ${spring.application.name}-server
+    boss-core-size: 2
+    worker-core-size: 32
+  webflux:
+    multipart:
+      max-in-memory-size: -1
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-headers-size: -1
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: "default"
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
 
-# server
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
-    threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 256
-    # 每块buffer的空间大小
-    buffer-size: 1024
-    # 分配堆外内存
-    direct-buffers: true
-
-# feign
-feign:
-  sentinel:
-    enabled: true
-    default-rule: default
-    rules:
-      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
-      default:
-        - grade: 2 # 异常数策略
-          count: 1 # 异常数模式下为对应的阈值
-          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
-          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
-          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
-
-# knife4j的增强配置，不需要增强可以不配
-knife4j:
-  enable: true
-  setting:
-    language: zh_cn', '15e3d61d01ab3dd6b24fdb45f9cb603b', '2023-01-13 12:16:46', '2024-09-28 11:14:56.341', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+logging:
+  config: classpath:log4j2-dev.xml
+', '2304d15d119b128d26b9e062e179aedc', '2024-08-15 22:09:12.648', '2024-10-06 17:03:05.033', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-im', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
 spring:
   # security
   security:
     oauth2:
+      client:
+        registration:
+          default:
+            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+            client-name: OAuth2.1认证
+            client-secret: FpHwIfw4wY92dO
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: client_credentials
+            scope:
+              - read
+              - write
+        provider:
+          default:
+            token-uri: https://auth:1111/oauth2/token
+            authorization-uri: https://auth:1111/oauth2/token
       resource-server:
         enabled: true
         authorization-url: https://auth:1111/oauth2/authorize
@@ -3703,7 +3515,252 @@ tenant:
 knife4j:
   enable: false
   setting:
-    language: zh_cn', '7aacd72900c025099d22ab251c414993', '2024-05-25 18:13:10.622', '2024-09-28 11:15:07.405', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+    language: zh_cn', '011ae54e3c5e5bfc0b3d93d18026cb7b', '2024-05-25 18:13:10.622', '2024-10-06 17:23:02.498', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (4, 'application-im.yaml', 'LAOKOU_GROUP', 'server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  shutdown: graceful
+#spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  websocket-server:
+    ip: 0.0.0.0
+    port: ${WEBSOCKET_SERVER_PORT:1000}
+    service-id: ${spring.application.name}-server
+    boss-core-size: 2
+    worker-core-size: 32
+  webflux:
+    multipart:
+      max-in-memory-size: -1
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-headers-size: -1
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: "default"
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+
+logging:
+  config: classpath:log4j2-test.xml
+', '44d160cb7a2e90869ef6239e9dd25671', '2024-08-15 22:08:53.835', '2024-10-06 17:01:26.927', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-im', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (6, 'application-im.yaml', 'LAOKOU_GROUP', 'server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  shutdown: graceful
+#spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  websocket-server:
+    ip: 0.0.0.0
+    port: ${WEBSOCKET_SERVER_PORT:1000}
+    service-id: ${spring.application.name}-server
+    boss-core-size: 2
+    worker-core-size: 32
+  webflux:
+    multipart:
+      max-in-memory-size: -1
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-headers-size: -1
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: "default"
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+
+logging:
+  config: classpath:log4j2-prod.xml
+', 'f99222858ec025f17234ce1b297ada92', '2024-08-15 22:09:22.47', '2024-10-06 17:03:57.729', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-im', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
+spring:
+  # security
+  security:
+    oauth2:
+      client:
+        registration:
+          default:
+            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+            client-name: OAuth2.1认证
+            client-secret: FpHwIfw4wY92dO
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: client_credentials
+            scope:
+              - read
+              - write
+        provider:
+          default:
+            token-uri: https://auth:1111/oauth2/token
+            authorization-uri: https://auth:1111/oauth2/token
+      resource-server:
+        enabled: true
+        authorization-url: https://auth:1111/oauth2/authorize
+        token-url: https://gateway:5555/auth/oauth2/token
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /**/v3/api-docs/**=laokou-gateway
+              - /v3/api-docs/**=laokou-auth,laokou-admin
+              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
+              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
+              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
+              - /error=laokou-admin,laokou-auth
+              - /v3/tenants/options=laokou-auth,laokou-gateway
+              - /v3/tenants/id=laokou-auth,laokou-gateway
+              - /favicon.ico=laokou-gateway
+              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
+              - /v3/secrets=laokou-gateway,laokou-auth
+              - /graceful-shutdown=laokou-auth
+              - /ws=laokou-gateway
+              - /doc.html=laokou-gateway,laokou-auth,laokou-admin
+              - /webjars/**=laokou-auth,laokou-admin,laokou-gateway
+            POST:
+              - /v3/captchas=laokou-auth,laokou-gateway
+            DELETE:
+              - /v3/tokens=laokou-auth,laokou-gateway
+  # task
+  task-execution:
+    pool:
+      core-size: 33
+      keep-alive: 180s
+    fork-join-pool:
+      core-size: 33
+  cloud:
+    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
+    openfeign:
+      compression:
+        response:
+          enabled: true
+        request:
+          enabled: true
+      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
+      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
+      okhttp:
+        enabled: true
+      circuitbreaker:
+        enabled: true
+      httpclient:
+        enabled: false
+        hc5:
+          enabled: false
+        disable-ssl-validation: true
+      client:
+        config:
+          default:
+            connectTimeout: 120000 #连接超时
+            readTimeout: 120000 #读取超时
+            logger-level: none
+      lazy-attributes-resolution: true
+    # sentinel
+    sentinel:
+      web-context-unify: false
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        dashboard: sentinel:8972
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+    # 采样率 => 100%  
+    sampling:
+      probability: 1
+  otlp:
+    tracing:
+      endpoint: http://otel-collector:4318/v1/traces
+      compression: gzip
+      timeout: 10s
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# server
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 256
+    # 每块buffer的空间大小
+    buffer-size: 1024
+    # 分配堆外内存
+    direct-buffers: true
+
+# feign
+feign:
+  sentinel:
+    enabled: true
+    default-rule: default
+    rules:
+      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
+      default:
+        - grade: 2 # 异常数策略
+          count: 1 # 异常数模式下为对应的阈值
+          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
+          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
+          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
+tenant:
+  domain-names:
+    - laokou.org
+    - laokouyun.org
+    - laokou.org.cn
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn', 'e6883b7f678b4cc6faa41c1a8c0f36c7', '2023-01-13 12:16:46', '2024-10-06 18:08:00.225', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
@@ -3869,11 +3926,11 @@ INSERT INTO "public"."config_tags_relation" VALUES (26, 'gateway', '', 'router.j
 INSERT INTO "public"."config_tags_relation" VALUES (1475, 'sms', '', 'application-sms.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 5);
 INSERT INTO "public"."config_tags_relation" VALUES (1477, 'mail', '', 'application-mail.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 6);
 INSERT INTO "public"."config_tags_relation" VALUES (82, 'monitor', '', 'application-monitor.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 47);
-INSERT INTO "public"."config_tags_relation" VALUES (4, 'im', '', 'application-im.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 48);
 INSERT INTO "public"."config_tags_relation" VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 11);
 INSERT INTO "public"."config_tags_relation" VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 3);
-INSERT INTO "public"."config_tags_relation" VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 1);
-INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 9);
+INSERT INTO "public"."config_tags_relation" VALUES (4, 'im', '', 'application-im.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 32);
+INSERT INTO "public"."config_tags_relation" VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 33);
+INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 35);
 
 -- ----------------------------
 -- Table structure for databasechangelog
@@ -4330,7 +4387,7 @@ SELECT setval('"public"."config_tags_relation_nid_seq4"', 24, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."config_tags_relation_nid_seq5"
 OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq5"', 9, true);
+SELECT setval('"public"."config_tags_relation_nid_seq5"', 35, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4414,7 +4471,7 @@ SELECT setval('"public"."his_config_info_nid_seq4"', 48, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."his_config_info_nid_seq5"
 OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq5"', 9, true);
+SELECT setval('"public"."his_config_info_nid_seq5"', 54, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4581,7 +4638,7 @@ ALTER TABLE "public"."config_info_tag" ADD CONSTRAINT "config_info_tag_pkey" PRI
 -- ----------------------------
 -- Auto increment value for config_tags_relation
 -- ----------------------------
-SELECT setval('"public"."config_tags_relation_nid_seq5"', 9, true);
+SELECT setval('"public"."config_tags_relation_nid_seq5"', 35, true);
 
 -- ----------------------------
 -- Indexes structure for table config_tags_relation
@@ -4625,7 +4682,7 @@ ALTER TABLE "public"."group_capacity" ADD CONSTRAINT "group_capacity_pkey" PRIMA
 -- ----------------------------
 -- Auto increment value for his_config_info
 -- ----------------------------
-SELECT setval('"public"."his_config_info_nid_seq5"', 9, true);
+SELECT setval('"public"."his_config_info_nid_seq5"', 54, true);
 
 -- ----------------------------
 -- Indexes structure for table his_config_info

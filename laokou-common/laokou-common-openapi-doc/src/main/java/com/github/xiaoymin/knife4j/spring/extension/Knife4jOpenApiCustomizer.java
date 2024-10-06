@@ -59,7 +59,7 @@ import java.util.stream.Collectors;
  * 增强扩展属性支持.
  *
  * @author <a href="xiaoymin@foxmail.com">xiaoymin@foxmail.com</a>
- * @author laokou 2022/12/11 22:40
+ * @author laokou
  * @since 4.1.0
  */
 @Slf4j

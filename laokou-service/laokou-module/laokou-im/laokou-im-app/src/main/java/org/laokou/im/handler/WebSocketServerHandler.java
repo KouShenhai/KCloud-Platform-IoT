@@ -17,7 +17,10 @@
 
 package org.laokou.im.handler;
 
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.websocketx.PingWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -27,8 +30,14 @@ import io.netty.handler.timeout.IdleStateEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.netty.config.WebSocketSession;
+import org.laokou.im.dto.clientobject.UserProfileCO;
+import org.laokou.im.gatewayimpl.rpc.UserFeignClient;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 
 /**
  * WebSocket自定义处理器.
@@ -40,6 +49,8 @@ import org.springframework.stereotype.Component;
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
 public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
+
+	private final UserFeignClient userFeignClient;
 
 	@Override
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
@@ -87,23 +98,15 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 
 	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
 		Channel channel = ctx.channel();
-		String authorization = frame.text();
-		// TODO reactive feign调用
-		// if (obj != null) {
-		// UserDetail userDetail = (UserDetail) obj;
-		// Long id = userDetail.getId();
-		// WebSocketSession.put(id.toString(), channel);
-		// }
-		// else {
-		// if (channel.isActive() && channel.isWritable()) {
-		// channel.writeAndFlush(new
-		// TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
-		// ctx.close();
-		// }
-		// else {
-		// log.error("丢弃消息");
-		// }
-		// }
+		String Authorization = frame.text();
+		Result<UserProfileCO> result = userFeignClient.getProfileV3(Authorization);
+		if (result.error()) {
+			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
+			ctx.close();
+		}
+		else {
+			WebSocketSession.put(result.getData().getId().toString(), channel);
+		}
 	}
 
 }

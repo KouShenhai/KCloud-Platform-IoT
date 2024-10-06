@@ -24,10 +24,12 @@ import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.openfeign.annotation.EnableOAuth2Feign;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
+import org.laokou.common.security.config.OAuth2ResourceConfig;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.Import;
 
 import java.net.InetAddress;
 
@@ -40,6 +42,7 @@ import java.net.InetAddress;
 @EnableDiscoveryClient
 @EnableRedisRepository
 @EnableEncryptableProperties
+@Import(OAuth2ResourceConfig.class)
 @SpringBootApplication(scanBasePackages = "org.laokou")
 public class ImApp {
 
