@@ -20,7 +20,7 @@
 -- Sequence structure for config_info_aggr_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq" 
+CREATE SEQUENCE "public"."config_info_aggr_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -31,7 +31,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq1";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq1" 
+CREATE SEQUENCE "public"."config_info_aggr_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -42,7 +42,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq2";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq2" 
+CREATE SEQUENCE "public"."config_info_aggr_id_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -53,7 +53,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq3";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq3" 
+CREATE SEQUENCE "public"."config_info_aggr_id_seq3"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -64,7 +64,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq4";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq4" 
+CREATE SEQUENCE "public"."config_info_aggr_id_seq4"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -75,7 +75,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq5";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq5" 
+CREATE SEQUENCE "public"."config_info_aggr_id_seq5"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -86,7 +86,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq";
-CREATE SEQUENCE "public"."config_info_beta_id_seq" 
+CREATE SEQUENCE "public"."config_info_beta_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -97,7 +97,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq1";
-CREATE SEQUENCE "public"."config_info_beta_id_seq1" 
+CREATE SEQUENCE "public"."config_info_beta_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -108,7 +108,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq2";
-CREATE SEQUENCE "public"."config_info_beta_id_seq2" 
+CREATE SEQUENCE "public"."config_info_beta_id_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -119,7 +119,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq3";
-CREATE SEQUENCE "public"."config_info_beta_id_seq3" 
+CREATE SEQUENCE "public"."config_info_beta_id_seq3"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -130,7 +130,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq4";
-CREATE SEQUENCE "public"."config_info_beta_id_seq4" 
+CREATE SEQUENCE "public"."config_info_beta_id_seq4"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -141,7 +141,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq5";
-CREATE SEQUENCE "public"."config_info_beta_id_seq5" 
+CREATE SEQUENCE "public"."config_info_beta_id_seq5"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -152,7 +152,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq";
-CREATE SEQUENCE "public"."config_info_id_seq" 
+CREATE SEQUENCE "public"."config_info_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -163,7 +163,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq1";
-CREATE SEQUENCE "public"."config_info_id_seq1" 
+CREATE SEQUENCE "public"."config_info_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -174,7 +174,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq2";
-CREATE SEQUENCE "public"."config_info_id_seq2" 
+CREATE SEQUENCE "public"."config_info_id_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -185,7 +185,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq3";
-CREATE SEQUENCE "public"."config_info_id_seq3" 
+CREATE SEQUENCE "public"."config_info_id_seq3"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -196,7 +196,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq4";
-CREATE SEQUENCE "public"."config_info_id_seq4" 
+CREATE SEQUENCE "public"."config_info_id_seq4"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -207,7 +207,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq5";
-CREATE SEQUENCE "public"."config_info_id_seq5" 
+CREATE SEQUENCE "public"."config_info_id_seq5"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -218,7 +218,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq";
-CREATE SEQUENCE "public"."config_info_tag_id_seq" 
+CREATE SEQUENCE "public"."config_info_tag_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -229,7 +229,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq1";
-CREATE SEQUENCE "public"."config_info_tag_id_seq1" 
+CREATE SEQUENCE "public"."config_info_tag_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -240,7 +240,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq2";
-CREATE SEQUENCE "public"."config_info_tag_id_seq2" 
+CREATE SEQUENCE "public"."config_info_tag_id_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -251,7 +251,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq3";
-CREATE SEQUENCE "public"."config_info_tag_id_seq3" 
+CREATE SEQUENCE "public"."config_info_tag_id_seq3"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -262,7 +262,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq4";
-CREATE SEQUENCE "public"."config_info_tag_id_seq4" 
+CREATE SEQUENCE "public"."config_info_tag_id_seq4"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -273,7 +273,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq5";
-CREATE SEQUENCE "public"."config_info_tag_id_seq5" 
+CREATE SEQUENCE "public"."config_info_tag_id_seq5"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -284,7 +284,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq" 
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -295,7 +295,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq1";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq1" 
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -306,7 +306,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq2";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq2" 
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -317,7 +317,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq3";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq3" 
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq3"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -328,7 +328,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq4";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq4" 
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq4"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -339,7 +339,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq5";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq5" 
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq5"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -350,7 +350,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq";
-CREATE SEQUENCE "public"."group_capacity_id_seq" 
+CREATE SEQUENCE "public"."group_capacity_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -361,7 +361,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq1";
-CREATE SEQUENCE "public"."group_capacity_id_seq1" 
+CREATE SEQUENCE "public"."group_capacity_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -372,7 +372,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq2";
-CREATE SEQUENCE "public"."group_capacity_id_seq2" 
+CREATE SEQUENCE "public"."group_capacity_id_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -383,7 +383,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq3";
-CREATE SEQUENCE "public"."group_capacity_id_seq3" 
+CREATE SEQUENCE "public"."group_capacity_id_seq3"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -394,7 +394,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq4";
-CREATE SEQUENCE "public"."group_capacity_id_seq4" 
+CREATE SEQUENCE "public"."group_capacity_id_seq4"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -405,7 +405,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq5";
-CREATE SEQUENCE "public"."group_capacity_id_seq5" 
+CREATE SEQUENCE "public"."group_capacity_id_seq5"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -416,7 +416,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq";
-CREATE SEQUENCE "public"."his_config_info_nid_seq" 
+CREATE SEQUENCE "public"."his_config_info_nid_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -427,7 +427,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq1";
-CREATE SEQUENCE "public"."his_config_info_nid_seq1" 
+CREATE SEQUENCE "public"."his_config_info_nid_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -438,7 +438,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq2";
-CREATE SEQUENCE "public"."his_config_info_nid_seq2" 
+CREATE SEQUENCE "public"."his_config_info_nid_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -449,7 +449,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq3";
-CREATE SEQUENCE "public"."his_config_info_nid_seq3" 
+CREATE SEQUENCE "public"."his_config_info_nid_seq3"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -460,7 +460,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq4";
-CREATE SEQUENCE "public"."his_config_info_nid_seq4" 
+CREATE SEQUENCE "public"."his_config_info_nid_seq4"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -471,7 +471,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq5";
-CREATE SEQUENCE "public"."his_config_info_nid_seq5" 
+CREATE SEQUENCE "public"."his_config_info_nid_seq5"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -482,7 +482,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq" 
+CREATE SEQUENCE "public"."tenant_capacity_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -493,7 +493,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq1";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq1" 
+CREATE SEQUENCE "public"."tenant_capacity_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -504,7 +504,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq2";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq2" 
+CREATE SEQUENCE "public"."tenant_capacity_id_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -515,7 +515,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq3";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq3" 
+CREATE SEQUENCE "public"."tenant_capacity_id_seq3"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -526,7 +526,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq4";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq4" 
+CREATE SEQUENCE "public"."tenant_capacity_id_seq4"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -537,7 +537,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq5";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq5" 
+CREATE SEQUENCE "public"."tenant_capacity_id_seq5"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -548,7 +548,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq";
-CREATE SEQUENCE "public"."tenant_info_id_seq" 
+CREATE SEQUENCE "public"."tenant_info_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -559,7 +559,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq1";
-CREATE SEQUENCE "public"."tenant_info_id_seq1" 
+CREATE SEQUENCE "public"."tenant_info_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -570,7 +570,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq2";
-CREATE SEQUENCE "public"."tenant_info_id_seq2" 
+CREATE SEQUENCE "public"."tenant_info_id_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -581,7 +581,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq3";
-CREATE SEQUENCE "public"."tenant_info_id_seq3" 
+CREATE SEQUENCE "public"."tenant_info_id_seq3"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -592,7 +592,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq4";
-CREATE SEQUENCE "public"."tenant_info_id_seq4" 
+CREATE SEQUENCE "public"."tenant_info_id_seq4"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -603,7 +603,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq5";
-CREATE SEQUENCE "public"."tenant_info_id_seq5" 
+CREATE SEQUENCE "public"."tenant_info_id_seq5"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -1308,8 +1308,8 @@ spring:
               - write
         provider:
           default:
-            token-uri: https://auth:1111/oauth2/token
-            authorization-uri: https://auth:1111/oauth2/token
+            token-uri: https://gateway:5555/auth/oauth2/token
+            authorization-uri: https://gateway:5555/auth/oauth2/token
       resource-server:
         enabled: true
         authorization-url: http://auth:1111/oauth2/authorize
@@ -1390,7 +1390,7 @@ management:
     enabled: true
     propagation:
       type: w3c
-    # 采样率 => 100%  
+    # 采样率 => 100%
     sampling:
       probability: 1
   otlp:
@@ -1404,7 +1404,7 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
-        
+
 # server
 server:
   servlet:
@@ -3378,8 +3378,8 @@ spring:
               - write
         provider:
           default:
-            token-uri: https://auth:1111/oauth2/token
-            authorization-uri: https://auth:1111/oauth2/token
+            token-uri: https://gateway:5555/auth/oauth2/token
+            authorization-uri: https://gateway:5555/auth/oauth2/token
       resource-server:
         enabled: true
         authorization-url: https://auth:1111/oauth2/authorize
@@ -3461,7 +3461,7 @@ management:
     enabled: true
     propagation:
       type: w3c
-    # 采样率 => 100%  
+    # 采样率 => 100%
     sampling:
       probability: 1
   otlp:
@@ -3624,8 +3624,8 @@ spring:
               - write
         provider:
           default:
-            token-uri: https://auth:1111/oauth2/token
-            authorization-uri: https://auth:1111/oauth2/token
+            token-uri: https://gateway:5555/auth/oauth2/token
+            authorization-uri: https://gateway:5555/auth/oauth2/token
       resource-server:
         enabled: true
         authorization-url: https://auth:1111/oauth2/authorize
@@ -3706,7 +3706,7 @@ management:
     enabled: true
     propagation:
       type: w3c
-    # 采样率 => 100%  
+    # 采样率 => 100%
     sampling:
       probability: 1
   otlp:
