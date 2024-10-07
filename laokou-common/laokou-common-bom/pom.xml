@@ -144,7 +144,7 @@
         <!--opentelemetry-api-incubator版本-->
         <opentelemetry-api-incubator.version>1.42.1-alpha</opentelemetry-api-incubator.version>
         <!--opentelemetry-exporter-jaeger版本-->
-        <opentelemetry-exporter-jaeger.version>1.33.0</opentelemetry-exporter-jaeger.version>
+        <opentelemetry-exporter-jaeger.version>1.34.1</opentelemetry-exporter-jaeger.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
