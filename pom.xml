@@ -79,9 +79,9 @@
     <docker.registry>registry.cn-shenzhen.aliyuncs.com</docker.registry>
     <docker.namespace>koushenhai</docker.namespace>
     <!--suppress UnresolvedMavenProperty -->
-    <docker.username>${env.ALIYUN_DOCKER_USERNAME:username}</docker.username>
+    <docker.username>${env.DOCKER_USERNAME:username}</docker.username>
     <!--suppress UnresolvedMavenProperty -->
-    <docker.password>${env.ALIYUN_DOCKER_PASSWORD:password}</docker.password>
+    <docker.password>${env.DOCKER_PASSWORD:password}</docker.password>
     <docker-maven-plugin.version>0.45.1</docker-maven-plugin.version>
     <maven-checkstyle-plugin.version>3.5.0</maven-checkstyle-plugin.version>
     <native-maven-plugin.version>0.10.3</native-maven-plugin.version>

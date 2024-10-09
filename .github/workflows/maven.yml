@@ -36,3 +36,8 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Build with Maven
         run: mvn clean install -P prod -DskipTests
+      - name: Build the Docker image
+        run: |
+          cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-cloud/laokou-gateway
+          mvn docker:remove
+          mvn docker:build
