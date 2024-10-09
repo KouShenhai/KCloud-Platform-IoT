@@ -73,17 +73,17 @@ jobs:
           # ========== 构建laokou-auth ==========
           cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-service/laokou-auth-start
           # 使用Dockerfile构建镜像
-          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.4.0
+          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth/laokou-auth-start:3.4.0
           # 推送镜像到镜像仓库
           docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.4.0
           # ========== 构建laokou-admin ==========
           cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-service/laokou-admin-start
           # 使用Dockerfile构建镜像
-          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.4.0
+          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin/laokou-admin-start:3.4.0
           # 推送镜像到镜像仓库
           docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.4.0
           # ========== 构建laokou-logstash ==========
-          cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-service/laokou-module/laokou-logstash-start
+          cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-service/laokou-module/laokou-logstash/laokou-logstash-start
           # 使用Dockerfile构建镜像
           docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.0
           # 推送镜像到镜像仓库
