@@ -17,7 +17,9 @@
 
 package org.laokou.common.security.config;
 
+import jakarta.validation.constraints.NotNull;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
+import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -25,14 +27,21 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.laokou.common.security.config.OAuth2ResourceConfig.customizer;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
@@ -47,6 +56,29 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.security.oauth2.resource-server",
 		name = "enabled")
 public class OAuth2ResourceServerConfig {
+
+	// @formatter:off
+	@NotNull
+	public static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> customizer(
+		OAuth2ResourceServerProperties oAuth2ResourceServerProperties, SpringUtil springUtil) {
+		Map<String, Set<String>> uriMap = MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(), springUtil.getServiceId());
+		return request -> request
+			.requestMatchers(HttpMethod.GET, Optional.ofNullable(uriMap.get(HttpMethod.GET.name())).orElseGet(HashSet::new).toArray(String[]::new))
+			.permitAll()
+			.requestMatchers(HttpMethod.POST, Optional.ofNullable(uriMap.get(HttpMethod.POST.name())).orElseGet(HashSet::new).toArray(String[]::new))
+			.permitAll()
+			.requestMatchers(HttpMethod.PUT, Optional.ofNullable(uriMap.get(HttpMethod.PUT.name())).orElseGet(HashSet::new).toArray(String[]::new))
+			.permitAll()
+			.requestMatchers(HttpMethod.DELETE, Optional.ofNullable(uriMap.get(HttpMethod.DELETE.name())).orElseGet(HashSet::new).toArray(String[]::new))
+			.permitAll()
+			.requestMatchers(HttpMethod.HEAD, Optional.ofNullable(uriMap.get(HttpMethod.HEAD.name())).orElseGet(HashSet::new).toArray(String[]::new))
+			.permitAll()
+			.requestMatchers(HttpMethod.PATCH, Optional.ofNullable(uriMap.get(HttpMethod.PATCH.name())).orElseGet(HashSet::new).toArray(String[]::new))
+			.permitAll()
+			.anyRequest()
+			.authenticated();
+	}
+	// @formatter:on
 
 	// @formatter:off
 	@Bean

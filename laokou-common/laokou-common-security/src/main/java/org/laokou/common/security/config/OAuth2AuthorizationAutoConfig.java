@@ -35,7 +35,6 @@ import static org.springframework.data.redis.core.RedisKeyValueAdapter.EnableKey
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnClass(OAuth2Authorization.class)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @EnableRedisRepositories(enableKeyspaceEvents = ON_STARTUP, basePackages = { "org.laokou.common.security.config" })
 public class OAuth2AuthorizationAutoConfig {

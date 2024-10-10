@@ -142,7 +142,7 @@ export const request: {
 			if (expiresTime && refreshToken && diffTime >= 0 && diffTime <= time) {
 				// 刷新令牌
 			}
-			const accessToken = getAccessToken() || '';
+			const accessToken = getAccessToken()
 			if (accessToken) {
 				headers['Authorization'] = `Bearer ${accessToken}`
 			}

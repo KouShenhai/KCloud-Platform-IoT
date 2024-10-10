@@ -25,7 +25,6 @@ import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.nacos.filter.ShutdownFilter;
-import org.laokou.common.openfeign.annotation.EnableOAuth2Feign;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.secret.annotation.EnableApiSecret;
 import org.laokou.common.security.annotation.EnableSecurity;
@@ -36,6 +35,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -51,7 +51,7 @@ import java.net.InetAddress;
 @EnableSecurity
 @EnableSnailJob
 @EnableApiSecret
-@EnableOAuth2Feign
+@EnableFeignClients
 @EnableTaskExecutor
 @EnableRedisRepository
 @EnableDiscoveryClient
@@ -81,7 +81,7 @@ public class AdminApp {
 	public static void main(String[] args) {
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		// SpringSecurity 子线程读取父线程的上下文
-		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.TTL_MODE_INHERITABLETHREADLOCAL);
+		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		// 忽略SSL认证

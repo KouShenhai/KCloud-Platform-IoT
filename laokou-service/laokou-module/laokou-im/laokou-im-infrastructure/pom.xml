@@ -68,6 +68,12 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-openfeign</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>

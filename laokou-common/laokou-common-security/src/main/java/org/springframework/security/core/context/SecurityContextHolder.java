@@ -33,6 +33,7 @@
 
 package org.springframework.security.core.context;
 
+import lombok.Getter;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
@@ -85,6 +86,12 @@ public class SecurityContextHolder {
 
 	private static SecurityContextHolderStrategy strategy;
 
+	/**
+	 * -- GETTER -- Primarily for troubleshooting purposes, this method shows how many
+	 * times the class has re-initialized its <code>SecurityContextHolderStrategy</code>.
+	 *
+	 */
+	@Getter
 	private static int initializeCount = 0;
 
 	static {
@@ -106,21 +113,23 @@ public class SecurityContextHolder {
 			// Set default
 			strategyName = MODE_THREADLOCAL;
 		}
-		if (strategyName.equals(MODE_THREADLOCAL)) {
-			strategy = new ThreadLocalSecurityContextHolderStrategy();
-			return;
-		}
-		if (strategyName.equals(MODE_INHERITABLETHREADLOCAL)) {
-			strategy = new InheritableThreadLocalSecurityContextHolderStrategy();
-			return;
-		}
-		if (strategyName.equals(TTL_MODE_INHERITABLETHREADLOCAL)) {
-			strategy = new TransmittableThreadLocalSecurityContextHolderStrategy();
-			return;
-		}
-		if (strategyName.equals(MODE_GLOBAL)) {
-			strategy = new GlobalSecurityContextHolderStrategy();
-			return;
+		switch (strategyName) {
+			case MODE_THREADLOCAL -> {
+				strategy = new ThreadLocalSecurityContextHolderStrategy();
+				return;
+			}
+			case MODE_INHERITABLETHREADLOCAL -> {
+				strategy = new InheritableThreadLocalSecurityContextHolderStrategy();
+				return;
+			}
+			case TTL_MODE_INHERITABLETHREADLOCAL -> {
+				strategy = new TransmittableThreadLocalSecurityContextHolderStrategy();
+				return;
+			}
+			case MODE_GLOBAL -> {
+				strategy = new GlobalSecurityContextHolderStrategy();
+				return;
+			}
 		}
 		// Try to load a custom strategy
 		try {
@@ -174,18 +183,6 @@ public class SecurityContextHolder {
 	 */
 	public static void setDeferredContext(Supplier<SecurityContext> deferredContext) {
 		strategy.setDeferredContext(deferredContext);
-	}
-
-	/**
-	 * Primarily for troubleshooting purposes, this method shows how many times the class
-	 * has re-initialized its <code>SecurityContextHolderStrategy</code>.
-	 * @return the count (should be one unless you've called
-	 * {@link #setStrategyName(String)} or
-	 * {@link #setContextHolderStrategy(SecurityContextHolderStrategy)} to switch to an
-	 * alternate strategy).
-	 */
-	public static int getInitializeCount() {
-		return initializeCount;
 	}
 
 	/**
