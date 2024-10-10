@@ -82,7 +82,7 @@
     <docker.password>password</docker.password>
     <docker-maven-plugin.version>0.45.1</docker-maven-plugin.version>
     <maven-checkstyle-plugin.version>3.5.0</maven-checkstyle-plugin.version>
-    <native-maven-plugin.version>0.10.3</native-maven-plugin.version>
+    <native-maven-plugin.version>0.10.2</native-maven-plugin.version>
     <versions-maven-plugin.version>2.17.1</versions-maven-plugin.version>
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <asciidoctor-maven-plugin.version>3.0.0</asciidoctor-maven-plugin.version>

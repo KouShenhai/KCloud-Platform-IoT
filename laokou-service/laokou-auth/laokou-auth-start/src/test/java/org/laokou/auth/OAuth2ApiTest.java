@@ -51,7 +51,9 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
+import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -107,6 +109,16 @@ class OAuth2ApiTest {
 	}
 
 	@Test
+	void testRestClientToSendJsonPostRequest() {
+		String url = "https://jsonplaceholder.typicode.com/posts";
+		String json = restClient.method(POST)
+			.uri(url)
+			.contentType(MediaType.APPLICATION_JSON)
+			.retrieve().toEntity(String.class).toString();
+		assertNotNull(json);
+	}
+
+	@Test
 	void testSetInstantObj() {
 		String key = "test:instant:obj";
 		redisUtil.set(key, new InstantTest(DateUtil.nowInstant()));
@@ -148,7 +160,7 @@ class OAuth2ApiTest {
 		String token = getRefreshToken(tokenMap.get(REFRESH_TOKEN));
 		log.info("刷新token：{}", token);
 		log.info("---------- 模拟认证开始 ----------");
-		Assertions.assertNotNull(token);
+		assertNotNull(token);
 		GlobalOpaqueTokenIntrospector introspector = new GlobalOpaqueTokenIntrospector(oAuth2AuthorizationService);
 		log.info("认证数据：{}", JacksonUtil.toJsonStr(introspector.introspect(token)));
 		log.info("---------- 模拟认证结束 ----------");
