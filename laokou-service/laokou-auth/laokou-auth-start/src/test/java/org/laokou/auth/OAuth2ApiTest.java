@@ -114,7 +114,9 @@ class OAuth2ApiTest {
 		String json = restClient.method(POST)
 			.uri(url)
 			.contentType(MediaType.APPLICATION_JSON)
-			.retrieve().toEntity(String.class).toString();
+			.retrieve()
+			.toEntity(String.class)
+			.toString();
 		assertNotNull(json);
 	}
 
