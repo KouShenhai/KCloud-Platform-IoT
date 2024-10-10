@@ -13,6 +13,10 @@
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
       <artifactId>laokou-common-cors</artifactId>
     </dependency>
     <dependency>
@@ -119,10 +123,6 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-prometheus</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-security</artifactId>
     </dependency>
   </dependencies>
 
