@@ -184,7 +184,6 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
         └── laokou-generator                       --- 模板生成模块
         └── laokou-modlule
                 └── laokou-api                     --- API模块
-                └── laokou-im                      --- 即时通讯模块
                 └── laokou-logstash                --- 日志收集模块
 ----
 

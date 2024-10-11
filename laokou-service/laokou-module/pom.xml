@@ -17,7 +17,7 @@
  *
  */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <artifactId>laokou-service</artifactId>
@@ -29,7 +29,6 @@
   <artifactId>laokou-module</artifactId>
   <packaging>pom</packaging>
   <modules>
-    <module>laokou-im</module>
     <module>laokou-api</module>
     <module>laokou-logstash</module>
   </modules>

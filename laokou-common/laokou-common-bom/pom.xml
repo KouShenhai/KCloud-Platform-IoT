@@ -200,11 +200,6 @@
                 <artifactId>laokou-generator-start</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
-          <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-im-client</artifactId>
-            <version>${laokou.version}</version>
-          </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-iot-adapter</artifactId>
@@ -572,11 +567,6 @@
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-im-infrastructure</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.lmax</groupId>
                 <artifactId>disruptor</artifactId>
                 <version>${disruptor.version}</version>
@@ -644,11 +634,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-logstash-start</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-im-start</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -916,11 +901,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-auth-client</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-im-app</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

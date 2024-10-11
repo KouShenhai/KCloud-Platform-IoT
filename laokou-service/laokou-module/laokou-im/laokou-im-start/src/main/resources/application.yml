@@ -1,8 +1,0 @@
-server:
-  port: ${SERVER_PORT:10001}
-
-spring:
-  application:
-    name: ${SERVICE_ID:laokou-im}
-  profiles:
-    active: @PROFILE-ACTIVE@
