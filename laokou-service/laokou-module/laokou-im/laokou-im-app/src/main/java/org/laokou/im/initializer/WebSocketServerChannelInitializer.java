@@ -24,7 +24,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
-import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.flush.FlushConsolidationHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
@@ -53,16 +52,14 @@ public class WebSocketServerChannelInitializer extends ChannelInitializer<NioSoc
 		ChannelPipeline pipeline = channel.pipeline();
 		// HTTP解码器
 		pipeline.addLast("httpServerCodec", new HttpServerCodec());
-		// 数据压缩
-		pipeline.addLast("webSocketServerCompressionHandler", new WebSocketServerCompressionHandler());
 		// 块状方式写入
 		pipeline.addLast("chunkedWriteHandler", new ChunkedWriteHandler());
 		// 最大内容长度
 		pipeline.addLast("httpObjectAggregator", new HttpObjectAggregator(65536));
 		// WebSocket协议
 		pipeline.addLast("webSocketServerProtocolHandler", new WebSocketServerProtocolHandler("/ws"));
-        // 心跳检测
-        pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, SECONDS));
+		// 心跳检测
+		pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, SECONDS));
 		// flush合并
 		pipeline.addLast("flushConsolidationHandler", new FlushConsolidationHandler(10, true));
 		// 业务处理handler
