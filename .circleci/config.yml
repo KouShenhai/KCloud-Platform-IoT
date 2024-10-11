@@ -12,7 +12,7 @@ jobs:
     steps:
       - checkout
       - run: mvn clean test -P prod
-      - run: mvn clean install -P prod -DskipTests -∪ -e -X -B
+      - run: mvn clean install -P prod -DskipTests -B
 workflows:
   maven-build:
     jobs:
