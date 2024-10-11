@@ -26,27 +26,12 @@ import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.flush.FlushConsolidationHandler;
-import io.netty.handler.logging.LoggingHandler;
-import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.EventExecutorGroup;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.common.i18n.utils.ResourceUtil;
-import org.laokou.common.i18n.utils.SslUtil;
-import org.laokou.common.netty.utils.LogUtil;
-import org.laokou.im.handler.MetricHandler;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.boot.web.server.Ssl;
 import org.springframework.stereotype.Component;
-
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLEngine;
-import java.io.InputStream;
-import java.security.KeyStore;
-
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
@@ -60,22 +45,12 @@ public class WebSocketServerChannelInitializer extends ChannelInitializer<NioSoc
 
 	private final ChannelInboundHandlerAdapter webSocketServerHandler;
 
-	private final ServerProperties serverProperties;
-
-	private final MetricHandler metricHandler;
-
 	private final EventExecutorGroup eventExecutorGroup;
-
-	private final LogUtil logUtil;
 
 	@Override
 	@SneakyThrows
 	protected void initChannel(NioSocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
-		// SSL认证
-		addSSL(pipeline);
-		// 日志
-		pipeline.addLast("loggingHandler", new LoggingHandler(logUtil.getLogLevel()));
 		// HTTP解码器
 		pipeline.addLast("httpServerCodec", new HttpServerCodec());
 		// 数据压缩
@@ -86,43 +61,12 @@ public class WebSocketServerChannelInitializer extends ChannelInitializer<NioSoc
 		pipeline.addLast("httpObjectAggregator", new HttpObjectAggregator(65536));
 		// WebSocket协议
 		pipeline.addLast("webSocketServerProtocolHandler", new WebSocketServerProtocolHandler("/ws"));
-		// 度量
-		pipeline.addLast("metricHandler", metricHandler);
-		// 心跳检测
-		pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, SECONDS));
+        // 心跳检测
+        pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, SECONDS));
 		// flush合并
 		pipeline.addLast("flushConsolidationHandler", new FlushConsolidationHandler(10, true));
 		// 业务处理handler
 		pipeline.addLast(eventExecutorGroup, webSocketServerHandler);
-	}
-
-	private void addSSL(ChannelPipeline pipeline) {
-		if (serverProperties.getSsl().isEnabled()) {
-			SSLEngine sslEngine = sslContext().createSSLEngine();
-			sslEngine.setNeedClientAuth(false);
-			sslEngine.setUseClientMode(false);
-			// SSL
-			pipeline.addLast("sslHandler", new SslHandler(sslEngine));
-		}
-	}
-
-	@SneakyThrows
-	private SSLContext sslContext() {
-		Ssl ssl = serverProperties.getSsl();
-		String path = ssl.getKeyStore();
-		String password = ssl.getKeyStorePassword();
-		String type = ssl.getKeyStoreType();
-		try (InputStream inputStream = ResourceUtil.getResource(path).getInputStream()) {
-			char[] passArray = password.toCharArray();
-			KeyStore keyStore = KeyStore.getInstance(type);
-			SSLContext sslContext = SSLContext.getInstance(SslUtil.TLS_PROTOCOL_VERSION);
-			keyStore.load(inputStream, passArray);
-			KeyManagerFactory keyManagerFactory = KeyManagerFactory
-				.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-			keyManagerFactory.init(keyStore, passArray);
-			sslContext.init(keyManagerFactory.getKeyManagers(), null, null);
-			return sslContext;
-		}
 	}
 
 }

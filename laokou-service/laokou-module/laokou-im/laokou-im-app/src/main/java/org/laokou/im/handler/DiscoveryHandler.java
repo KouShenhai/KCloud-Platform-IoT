@@ -56,8 +56,8 @@ public class DiscoveryHandler implements ApplicationListener<ApplicationReadyEve
 		serviceUtil.registerInstance(serviceId, group, ip, port);
 	}
 
-	@SneakyThrows
-	@PreDestroy
+    @PreDestroy
+    @SneakyThrows
 	public void close() {
 		String ip = InetAddress.getLocalHost().getHostAddress();
 		String group = configUtil.getGroup();

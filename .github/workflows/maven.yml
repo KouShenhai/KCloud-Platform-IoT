@@ -35,7 +35,7 @@ jobs:
           files: ./laokou-common/laokou-common-core/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-crypto/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-i18n/target/site/jacoco/jacoco.xml
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Build with Maven
-        run: mvn clean install -P prod -DskipTests
+        run: mvn clean install -P prod -DskipTests -∪ -e -X -B
       - name: Build the Docker image
         run: |        
           # 登录阿里云镜像仓库
