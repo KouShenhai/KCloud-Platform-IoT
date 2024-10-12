@@ -17,43 +17,17 @@
 
 package org.laokou.common.netty.config;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
 
 /**
- * WebSocketServer属性配置.
- *
  * @author laokou
  */
-@Data
-@Component
-@ConfigurationProperties(prefix = "spring.websocket-server")
-public class WebSocketServerProperties {
+public abstract class AbstractChannelInitializer<C extends Channel> extends ChannelInitializer<C> {
 
-	/**
-	 * 监听核心线程数.
-	 */
-	private Integer bossCoreSize = 1;
+	abstract protected void preHandler(ChannelPipeline pipeline);
 
-	/**
-	 * 读写核心线程数.
-	 */
-	private Integer workerCoreSize = 8;
-
-	/**
-	 * IP.
-	 */
-	private String ip;
-
-	/**
-	 * 端口.
-	 */
-	private int port;
-
-	/**
-	 * 服务ID.
-	 */
-	private String serviceId;
+	abstract protected void postHandler(ChannelPipeline pipeline);
 
 }

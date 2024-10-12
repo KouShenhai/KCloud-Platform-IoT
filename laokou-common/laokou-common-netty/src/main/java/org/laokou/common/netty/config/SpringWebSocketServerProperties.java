@@ -22,34 +22,19 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * TcpServer属性配置.
+ * WebSocketServer属性配置.
  *
  * @author laokou
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "spring.tcp-server")
-public class SpringTcpServerProperties {
+@ConfigurationProperties(prefix = "spring.websocket-server")
+public class SpringWebSocketServerProperties {
 
 	/**
 	 * 开关，默认不开启.
 	 */
 	private boolean enabled = false;
-
-	/**
-	 * IP.
-	 */
-	private String ip;
-
-	/**
-	 * 端口.
-	 */
-	private int port;
-
-	/**
-	 * 服务ID.
-	 */
-	private String serviceId;
 
 	/**
 	 * 监听核心线程数.
@@ -65,5 +50,20 @@ public class SpringTcpServerProperties {
 	 * 线程池数.
 	 */
 	private Integer corePoolSize = 8;
+
+	/**
+	 * IP.
+	 */
+	private String ip;
+
+	/**
+	 * 端口.
+	 */
+	private int port;
+
+	/**
+	 * 服务ID.
+	 */
+	private String serviceId;
 
 }
