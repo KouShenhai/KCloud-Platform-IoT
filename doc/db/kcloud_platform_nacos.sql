@@ -12,7 +12,7 @@
  Target Server Version : 160003 (160003)
  File Encoding         : 65001
 
- Date: 06/10/2024 18:08:37
+ Date: 12/10/2024 00:17:24
 */
 
 
@@ -20,7 +20,7 @@
 -- Sequence structure for config_info_aggr_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -31,7 +31,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq1";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq1"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -42,7 +42,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq2";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq2"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -53,7 +53,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq3";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq3"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -64,7 +64,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq4";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq4"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -75,7 +75,18 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq5";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq5"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq5" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_aggr_id_seq6
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq6";
+CREATE SEQUENCE "public"."config_info_aggr_id_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -86,7 +97,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq";
-CREATE SEQUENCE "public"."config_info_beta_id_seq"
+CREATE SEQUENCE "public"."config_info_beta_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -97,7 +108,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq1";
-CREATE SEQUENCE "public"."config_info_beta_id_seq1"
+CREATE SEQUENCE "public"."config_info_beta_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -108,7 +119,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq2";
-CREATE SEQUENCE "public"."config_info_beta_id_seq2"
+CREATE SEQUENCE "public"."config_info_beta_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -119,7 +130,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq3";
-CREATE SEQUENCE "public"."config_info_beta_id_seq3"
+CREATE SEQUENCE "public"."config_info_beta_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -130,7 +141,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq4";
-CREATE SEQUENCE "public"."config_info_beta_id_seq4"
+CREATE SEQUENCE "public"."config_info_beta_id_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -141,7 +152,18 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq5";
-CREATE SEQUENCE "public"."config_info_beta_id_seq5"
+CREATE SEQUENCE "public"."config_info_beta_id_seq5" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_beta_id_seq6
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq6";
+CREATE SEQUENCE "public"."config_info_beta_id_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -152,7 +174,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq";
-CREATE SEQUENCE "public"."config_info_id_seq"
+CREATE SEQUENCE "public"."config_info_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -163,7 +185,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq1";
-CREATE SEQUENCE "public"."config_info_id_seq1"
+CREATE SEQUENCE "public"."config_info_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -174,7 +196,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq2";
-CREATE SEQUENCE "public"."config_info_id_seq2"
+CREATE SEQUENCE "public"."config_info_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -185,7 +207,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq3";
-CREATE SEQUENCE "public"."config_info_id_seq3"
+CREATE SEQUENCE "public"."config_info_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -196,7 +218,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq4";
-CREATE SEQUENCE "public"."config_info_id_seq4"
+CREATE SEQUENCE "public"."config_info_id_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -207,7 +229,18 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq5";
-CREATE SEQUENCE "public"."config_info_id_seq5"
+CREATE SEQUENCE "public"."config_info_id_seq5" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_id_seq6
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_id_seq6";
+CREATE SEQUENCE "public"."config_info_id_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -218,7 +251,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq";
-CREATE SEQUENCE "public"."config_info_tag_id_seq"
+CREATE SEQUENCE "public"."config_info_tag_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -229,7 +262,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq1";
-CREATE SEQUENCE "public"."config_info_tag_id_seq1"
+CREATE SEQUENCE "public"."config_info_tag_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -240,7 +273,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq2";
-CREATE SEQUENCE "public"."config_info_tag_id_seq2"
+CREATE SEQUENCE "public"."config_info_tag_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -251,7 +284,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq3";
-CREATE SEQUENCE "public"."config_info_tag_id_seq3"
+CREATE SEQUENCE "public"."config_info_tag_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -262,7 +295,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq4";
-CREATE SEQUENCE "public"."config_info_tag_id_seq4"
+CREATE SEQUENCE "public"."config_info_tag_id_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -273,7 +306,18 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq5";
-CREATE SEQUENCE "public"."config_info_tag_id_seq5"
+CREATE SEQUENCE "public"."config_info_tag_id_seq5" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_tag_id_seq6
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq6";
+CREATE SEQUENCE "public"."config_info_tag_id_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -284,7 +328,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -295,7 +339,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq1";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq1"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -306,7 +350,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq2";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq2"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -317,7 +361,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq3";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq3"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -328,7 +372,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq4";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq4"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -339,7 +383,18 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq5";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq5"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq5" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_tags_relation_nid_seq6
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq6";
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -350,7 +405,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq";
-CREATE SEQUENCE "public"."group_capacity_id_seq"
+CREATE SEQUENCE "public"."group_capacity_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -361,7 +416,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq1";
-CREATE SEQUENCE "public"."group_capacity_id_seq1"
+CREATE SEQUENCE "public"."group_capacity_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -372,7 +427,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq2";
-CREATE SEQUENCE "public"."group_capacity_id_seq2"
+CREATE SEQUENCE "public"."group_capacity_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -383,7 +438,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq3";
-CREATE SEQUENCE "public"."group_capacity_id_seq3"
+CREATE SEQUENCE "public"."group_capacity_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -394,7 +449,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq4";
-CREATE SEQUENCE "public"."group_capacity_id_seq4"
+CREATE SEQUENCE "public"."group_capacity_id_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -405,7 +460,18 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq5";
-CREATE SEQUENCE "public"."group_capacity_id_seq5"
+CREATE SEQUENCE "public"."group_capacity_id_seq5" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for group_capacity_id_seq6
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq6";
+CREATE SEQUENCE "public"."group_capacity_id_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -416,7 +482,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq";
-CREATE SEQUENCE "public"."his_config_info_nid_seq"
+CREATE SEQUENCE "public"."his_config_info_nid_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -427,7 +493,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq1";
-CREATE SEQUENCE "public"."his_config_info_nid_seq1"
+CREATE SEQUENCE "public"."his_config_info_nid_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -438,7 +504,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq2";
-CREATE SEQUENCE "public"."his_config_info_nid_seq2"
+CREATE SEQUENCE "public"."his_config_info_nid_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -449,7 +515,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq3";
-CREATE SEQUENCE "public"."his_config_info_nid_seq3"
+CREATE SEQUENCE "public"."his_config_info_nid_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -460,7 +526,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq4";
-CREATE SEQUENCE "public"."his_config_info_nid_seq4"
+CREATE SEQUENCE "public"."his_config_info_nid_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -471,7 +537,18 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq5";
-CREATE SEQUENCE "public"."his_config_info_nid_seq5"
+CREATE SEQUENCE "public"."his_config_info_nid_seq5" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for his_config_info_nid_seq6
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq6";
+CREATE SEQUENCE "public"."his_config_info_nid_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -482,7 +559,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -493,7 +570,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq1";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq1"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -504,7 +581,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq2";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq2"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -515,7 +592,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq3";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq3"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -526,7 +603,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq4";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq4"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -537,7 +614,18 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq5";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq5"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq5" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for tenant_capacity_id_seq6
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq6";
+CREATE SEQUENCE "public"."tenant_capacity_id_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -548,7 +636,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq";
-CREATE SEQUENCE "public"."tenant_info_id_seq"
+CREATE SEQUENCE "public"."tenant_info_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -559,7 +647,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq1";
-CREATE SEQUENCE "public"."tenant_info_id_seq1"
+CREATE SEQUENCE "public"."tenant_info_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -570,7 +658,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq2";
-CREATE SEQUENCE "public"."tenant_info_id_seq2"
+CREATE SEQUENCE "public"."tenant_info_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -581,7 +669,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq3";
-CREATE SEQUENCE "public"."tenant_info_id_seq3"
+CREATE SEQUENCE "public"."tenant_info_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -592,7 +680,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq4";
-CREATE SEQUENCE "public"."tenant_info_id_seq4"
+CREATE SEQUENCE "public"."tenant_info_id_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -603,7 +691,18 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq5";
-CREATE SEQUENCE "public"."tenant_info_id_seq5"
+CREATE SEQUENCE "public"."tenant_info_id_seq5" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for tenant_info_id_seq6
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq6";
+CREATE SEQUENCE "public"."tenant_info_id_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -733,122 +832,6 @@ INSERT INTO "public"."config_info" VALUES (1568, 'auth-flow.json', 'LAOKOU_GROUP
     "controlBehavior": 0
   }
 ]', '6ae7639ff49789dd99787e908efa836d', '2023-02-26 15:01:51', '2024-05-25 18:20:09.951', 'nacos', '127.0.0.1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'auth sentinel  flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (26, 'router.json', 'LAOKOU_GROUP', '[
-  {
-    "id": "laokou-auth",
-    "uri": "lb://laokou-auth",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/auth/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "auth",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/auth/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  },
-  {
-    "id": "laokou-admin",
-    "uri": "lb://laokou-admin",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/admin/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "admin",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/admin/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  },
-  {
-    "id": "laokou-im",
-    "uri": "lb:wss://laokou-im",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/im/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "im",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/im/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  }
-]', '0ed5d74d692a46b070c46572b94ca61d', '2023-01-13 15:44:25', '2024-05-25 18:14:53.409', 'nacos', '127.0.0.1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '动态路由配置', '', '', 'json', '', '');
 INSERT INTO "public"."config_info" VALUES (1569, 'admin-flow.json', 'LAOKOU_GROUP', '[
   {
     "resource": "/v3/users/profile",
@@ -872,122 +855,6 @@ spring:
     username: 2413176044@qq.com
     password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
     default-encoding: UTF-8', '3e16e7d481fcc41559736dc5f7258251', '2023-02-13 20:00:32', '2024-07-16 21:52:10.149', 'nacos', '127.0.0.1', 'laokou-mail', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'mail配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (36, 'router.json', 'LAOKOU_GROUP', '[
-  {
-    "id": "laokou-auth",
-    "uri": "lb://laokou-auth",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/auth/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "auth",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/auth/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  },
-  {
-    "id": "laokou-admin",
-    "uri": "lb://laokou-admin",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/admin/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "admin",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/admin/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  },
-  {
-    "id": "laokou-im",
-    "uri": "lb:wss://laokou-im",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/im/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "im",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/im/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  }
-]', '0ed5d74d692a46b070c46572b94ca61d', '2024-05-25 18:13:10.616', '2024-05-25 18:16:32.596', 'nacos', '127.0.0.1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', '动态路由配置', '', '', 'json', '', '');
 INSERT INTO "public"."config_info" VALUES (2159, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
   kafka:
     bootstrap-servers: kafka:9092
@@ -1329,7 +1196,6 @@ spring:
               - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
               - /v3/secrets=laokou-gateway,laokou-auth
               - /graceful-shutdown=laokou-auth
-              - /ws=laokou-gateway
               - /doc.html=laokou-gateway,laokou-auth,laokou-admin
               - /webjars/**=laokou-auth,laokou-admin,laokou-gateway
             POST:
@@ -1444,7 +1310,7 @@ tenant:
 knife4j:
   enable: true
   setting:
-    language: zh_cn', 'a3aad05a1aed22c5ac4d8ee38ed1f16a', '2024-05-25 18:13:33.393', '2024-10-06 17:22:40.455', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+    language: zh_cn', 'aebca354d91efc2f6ade4d3fcd130b33', '2024-05-25 18:13:33.393', '2024-10-12 00:07:49.717', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', '[
   {
     "resource": "POST:https://laokou-flowable/work/task/api/query",
@@ -1717,122 +1583,6 @@ spring:
     default-encoding: UTF-8', '3e16e7d481fcc41559736dc5f7258251', '2024-05-25 18:13:10.594', '2024-07-16 21:52:24.67', 'nacos', '127.0.0.1', 'laokou-mail', '8140e92b-fb43-48f5-b63b-7506185206a5', 'mail配置', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (61, 'application-report.yaml', 'LAOKOU_GROUP', 'server:
   port: 8088', '89f7b26715cf760d099a258200381fe0', '2024-05-25 18:13:33.406', '2024-05-25 18:13:33.406', NULL, '127.0.0.1', 'laokou-report', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', NULL, NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info" VALUES (58, 'router.json', 'LAOKOU_GROUP', '[
-  {
-    "id": "laokou-auth",
-    "uri": "lb://laokou-auth",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/auth/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "auth",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/auth/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  },
-  {
-    "id": "laokou-admin",
-    "uri": "lb://laokou-admin",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/admin/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "admin",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/admin/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  },
-  {
-    "id": "laokou-im",
-    "uri": "lb:wss://laokou-im",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/im/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "im",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/im/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  }
-]', '0ed5d74d692a46b070c46572b94ca61d', '2024-05-25 18:13:33.387', '2024-05-25 18:15:59.61', 'nacos', '127.0.0.1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '动态路由配置', '', '', 'json', '', '');
 INSERT INTO "public"."config_info" VALUES (57, 'admin-flow.json', 'LAOKOU_GROUP', '[
   {
     "resource": "/v3/users/profile",
@@ -2209,136 +1959,6 @@ sms:
     template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
     sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
     appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)', '3adcbf9b68966d16ac2136f236f2f919', '2024-05-25 18:12:47.349', '2024-07-16 21:51:04.709', 'nacos', '127.0.0.1', 'laokou-sms', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'sms配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (19, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: false
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: false
-  shutdown: graceful
-# spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  cloud:
-    config:
-      initialize-on-context-refresh: true
-  boot:
-    # admin
-    admin:
-      discovery:
-        ignored-services:
-          - laokou-im
-      notify:
-        mail:
-          from: 2413176044@qq.com
-          to: 2413176044@qq.com
-          template: META-INF/spring-boot-admin-server/mail/status-changed.html
-  # security
-  security:
-    user:
-      # root
-      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
-      # laokou123
-      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
-  # mail
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8
-
-logging:
-  config: classpath:log4j2-dev.xml
-
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always', '8de077fd51216a4f43ffce6cd420dca0', '2024-05-25 18:12:47.335', '2024-08-16 00:13:48.075', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'spring boot admin monitor', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (28, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  shutdown: graceful
-# spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  cloud:
-    config:
-      initialize-on-context-refresh: true
-  boot:
-    # admin
-    admin:
-      discovery:
-        ignored-services:
-          - laokou-im
-      notify:
-        mail:
-          from: 2413176044@qq.com
-          to: 2413176044@qq.com
-          template: META-INF/spring-boot-admin-server/mail/status-changed.html
-  # security
-  security:
-    user:
-      # root
-      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
-      # laokou123
-      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
-  # mail
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8
-
-logging:
-  config: classpath:log4j2-prod.xml
-
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always', '2eb46bd1e2c5705aef472a5efb248ec6', '2024-05-25 18:13:10.57', '2024-08-16 00:14:26.94', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', '8140e92b-fb43-48f5-b63b-7506185206a5', 'spring boot admin monitor', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (2025, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -3053,71 +2673,6 @@ snail-job:
   token: SJ_Wyz3dmsdbDOkDujOTSSoBjGQP1BMsVnj
   # 客户端通讯端口，默认 1789
   port: 1790', '98b87955bfa8185cc37e26b5deeab2a3', '2023-09-28 11:37:33', '2024-10-06 17:02:48.154', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (82, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  shutdown: graceful
-# spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  cloud:
-    config:
-      initialize-on-context-refresh: true
-  boot:
-    # admin
-    admin:
-      discovery:
-        ignored-services:
-          - laokou-im
-      notify:
-        mail:
-          from: 2413176044@qq.com
-          to: 2413176044@qq.com
-          template: META-INF/spring-boot-admin-server/mail/status-changed.html
-  # security
-  security:
-    user:
-      # root
-      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
-      # laokou123
-      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
-  # mail
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8
-
-logging:
-  config: classpath:log4j2-test.xml
-
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always', 'd8fe931c686586663ab9db98c2c6b1de', '2023-01-16 12:01:23', '2024-08-16 00:11:57.928', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'spring boot admin monitor', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (69, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -3315,7 +2870,12 @@ snail-job:
   group: laokou_auth_job_group
   # 接入组 token
   token: SJ_uzGns9tvloMTHwjpNSrSga3TMLtyAtSI', '77ea44e956e961a91cfb749df6bddf35', '2024-05-25 18:13:33.452', '2024-09-19 23:48:03.216', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (5, 'application-im.yaml', 'LAOKOU_GROUP', 'server:
+INSERT INTO "public"."config_info" VALUES (19, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
   ssl:
     # 开启证书
     enabled: false
@@ -3330,36 +2890,264 @@ INSERT INTO "public"."config_info" VALUES (5, 'application-im.yaml', 'LAOKOU_GRO
   http2:
     enabled: false
   shutdown: graceful
-#spring
+# spring
 spring:
   threads:
     virtual:
       enabled: true
-  websocket-server:
-    ip: 0.0.0.0
-    port: ${WEBSOCKET_SERVER_PORT:1000}
-    service-id: ${spring.application.name}-server
-    boss-core-size: 2
-    worker-core-size: 32
-  webflux:
-    multipart:
-      max-in-memory-size: -1
-      max-parts: -1
-      max-disk-usage-per-part: -1
-      max-headers-size: -1
   cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
+    config:
+      initialize-on-context-refresh: true
+  boot:
+    # admin
+    admin:
+      notify:
+        mail:
+          from: 2413176044@qq.com
+          to: 2413176044@qq.com
+          template: META-INF/spring-boot-admin-server/mail/status-changed.html
+  # security
+  security:
+    user:
+      # root
+      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
+      # laokou123
+      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
+  # mail
+  mail:
+    host: smtp.qq.com
+    username: 2413176044@qq.com
+    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
+    default-encoding: UTF-8
 
 logging:
   config: classpath:log4j2-dev.xml
-', '2304d15d119b128d26b9e062e179aedc', '2024-08-15 22:09:12.648', '2024-10-06 17:03:05.033', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-im', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always', 'bb561a1b2a08e2bbe282c4b3d39396bc', '2024-05-25 18:12:47.335', '2024-10-12 00:14:58.804', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'spring boot admin monitor', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (28, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  shutdown: graceful
+# spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  cloud:
+    config:
+      initialize-on-context-refresh: true
+  boot:
+    # admin
+    admin:
+      notify:
+        mail:
+          from: 2413176044@qq.com
+          to: 2413176044@qq.com
+          template: META-INF/spring-boot-admin-server/mail/status-changed.html
+  # security
+  security:
+    user:
+      # root
+      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
+      # laokou123
+      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
+  # mail
+  mail:
+    host: smtp.qq.com
+    username: 2413176044@qq.com
+    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
+    default-encoding: UTF-8
+
+logging:
+  config: classpath:log4j2-prod.xml
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always', '90a67f1cbc3594606d9df4d2a5c8067c', '2024-05-25 18:13:10.57', '2024-10-12 00:15:13.245', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', '8140e92b-fb43-48f5-b63b-7506185206a5', 'spring boot admin monitor', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
+spring:
+  # security
+  security:
+    oauth2:
+      client:
+        registration:
+          default:
+            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+            client-name: OAuth2.1认证
+            client-secret: FpHwIfw4wY92dO
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: client_credentials
+            scope:
+              - read
+              - write
+        provider:
+          default:
+            token-uri: https://gateway:5555/auth/oauth2/token
+            authorization-uri: https://gateway:5555/auth/oauth2/token
+      resource-server:
+        enabled: true
+        authorization-url: https://auth:1111/oauth2/authorize
+        token-url: https://gateway:5555/auth/oauth2/token
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /**/v3/api-docs/**=laokou-gateway
+              - /v3/api-docs/**=laokou-auth,laokou-admin
+              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
+              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
+              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
+              - /error=laokou-admin,laokou-auth
+              - /v3/tenants/options=laokou-auth,laokou-gateway
+              - /v3/tenants/id=laokou-auth,laokou-gateway
+              - /favicon.ico=laokou-gateway
+              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
+              - /v3/secrets=laokou-gateway,laokou-auth
+              - /graceful-shutdown=laokou-auth
+              - /doc.html=laokou-gateway,laokou-auth,laokou-admin
+              - /webjars/**=laokou-auth,laokou-admin,laokou-gateway
+            POST:
+              - /v3/captchas=laokou-auth,laokou-gateway
+            DELETE:
+              - /v3/tokens=laokou-auth,laokou-gateway
+  # task
+  task-execution:
+    pool:
+      core-size: 33
+      keep-alive: 180s
+    fork-join-pool:
+      core-size: 33
+  cloud:
+    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
+    openfeign:
+      compression:
+        response:
+          enabled: true
+        request:
+          enabled: true
+      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
+      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
+      okhttp:
+        enabled: true
+      circuitbreaker:
+        enabled: true
+      httpclient:
+        enabled: false
+        hc5:
+          enabled: false
+        disable-ssl-validation: true
+      client:
+        config:
+          default:
+            connectTimeout: 120000 #连接超时
+            readTimeout: 120000 #读取超时
+            logger-level: none
+      lazy-attributes-resolution: true
+    # sentinel
+    sentinel:
+      web-context-unify: false
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        dashboard: sentinel:8972
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+    # 采样率 => 100%
+    sampling:
+      probability: 1
+  otlp:
+    tracing:
+      endpoint: http://otel-collector:4318/v1/traces
+      compression: gzip
+      timeout: 10s
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# server
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 256
+    # 每块buffer的空间大小
+    buffer-size: 1024
+    # 分配堆外内存
+    direct-buffers: true
+
+# feign
+feign:
+  sentinel:
+    enabled: true
+    default-rule: default
+    rules:
+      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
+      default:
+        - grade: 2 # 异常数策略
+          count: 1 # 异常数模式下为对应的阈值
+          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
+          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
+          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
+tenant:
+  domain-names:
+    - laokou.org
+    - laokouyun.org
+    - laokou.org.cn
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn', 'cb622faaf653f3ca1964eee37d5d74c4', '2023-01-13 12:16:46', '2024-10-12 00:16:50.69', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
 spring:
   # security
@@ -3399,7 +3187,6 @@ spring:
               - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
               - /v3/secrets=laokou-gateway,laokou-auth
               - /graceful-shutdown=laokou-auth
-              - /ws=laokou-gateway
               - /doc.html=laokou-gateway,laokou-auth,laokou-admin
               - /webjars/**=laokou-auth,laokou-admin,laokou-gateway
             POST:
@@ -3515,8 +3302,247 @@ tenant:
 knife4j:
   enable: false
   setting:
-    language: zh_cn', '011ae54e3c5e5bfc0b3d93d18026cb7b', '2024-05-25 18:13:10.622', '2024-10-06 17:23:02.498', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (4, 'application-im.yaml', 'LAOKOU_GROUP', 'server:
+    language: zh_cn', '70701c7436f9ad3d1d3e13cfe87e39aa', '2024-05-25 18:13:10.622', '2024-10-12 00:08:38.089', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (26, 'router.json', 'LAOKOU_GROUP', '[
+  {
+    "id": "laokou-auth",
+    "uri": "lb://laokou-auth",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/auth/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "auth",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/auth/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  },
+  {
+    "id": "laokou-admin",
+    "uri": "lb://laokou-admin",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/admin/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "admin",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/admin/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  }
+]', 'ed49c55c612fb22e4c6ea7a78e258d0c', '2023-01-13 15:44:25', '2024-10-12 00:09:25.877', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'text', '', '');
+INSERT INTO "public"."config_info" VALUES (58, 'router.json', 'LAOKOU_GROUP', '[
+  {
+    "id": "laokou-auth",
+    "uri": "lb://laokou-auth",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/auth/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "auth",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/auth/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  },
+  {
+    "id": "laokou-admin",
+    "uri": "lb://laokou-admin",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/admin/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "admin",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/admin/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  }
+]', 'ed49c55c612fb22e4c6ea7a78e258d0c', '2024-05-25 18:13:33.387', '2024-10-12 00:09:50.962', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '动态路由配置', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" VALUES (36, 'router.json', 'LAOKOU_GROUP', '[
+  {
+    "id": "laokou-auth",
+    "uri": "lb://laokou-auth",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/auth/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "auth",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/auth/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  },
+  {
+    "id": "laokou-admin",
+    "uri": "lb://laokou-admin",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/admin/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "admin",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/admin/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  }
+]', 'ed49c55c612fb22e4c6ea7a78e258d0c', '2024-05-25 18:13:10.616', '2024-10-12 00:10:19.043', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', '动态路由配置', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" VALUES (82, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
   ssl:
     # 开启证书
     enabled: true
@@ -3531,166 +3557,39 @@ INSERT INTO "public"."config_info" VALUES (4, 'application-im.yaml', 'LAOKOU_GRO
   http2:
     enabled: true
   shutdown: graceful
-#spring
+# spring
 spring:
   threads:
     virtual:
       enabled: true
-  websocket-server:
-    ip: 0.0.0.0
-    port: ${WEBSOCKET_SERVER_PORT:1000}
-    service-id: ${spring.application.name}-server
-    boss-core-size: 2
-    worker-core-size: 32
-  webflux:
-    multipart:
-      max-in-memory-size: -1
-      max-parts: -1
-      max-disk-usage-per-part: -1
-      max-headers-size: -1
   cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
+    config:
+      initialize-on-context-refresh: true
+  boot:
+    # admin
+    admin:
+      notify:
+        mail:
+          from: 2413176044@qq.com
+          to: 2413176044@qq.com
+          template: META-INF/spring-boot-admin-server/mail/status-changed.html
+  # security
+  security:
+    user:
+      # root
+      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
+      # laokou123
+      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
+  # mail
+  mail:
+    host: smtp.qq.com
+    username: 2413176044@qq.com
+    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
+    default-encoding: UTF-8
 
 logging:
   config: classpath:log4j2-test.xml
-', '44d160cb7a2e90869ef6239e9dd25671', '2024-08-15 22:08:53.835', '2024-10-06 17:01:26.927', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-im', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (6, 'application-im.yaml', 'LAOKOU_GROUP', 'server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  shutdown: graceful
-#spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  websocket-server:
-    ip: 0.0.0.0
-    port: ${WEBSOCKET_SERVER_PORT:1000}
-    service-id: ${spring.application.name}-server
-    boss-core-size: 2
-    worker-core-size: 32
-  webflux:
-    multipart:
-      max-in-memory-size: -1
-      max-parts: -1
-      max-disk-usage-per-part: -1
-      max-headers-size: -1
-  cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
 
-logging:
-  config: classpath:log4j2-prod.xml
-', 'f99222858ec025f17234ce1b297ada92', '2024-08-15 22:09:22.47', '2024-10-06 17:03:57.729', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-im', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
-spring:
-  # security
-  security:
-    oauth2:
-      client:
-        registration:
-          default:
-            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-            client-name: OAuth2.1认证
-            client-secret: FpHwIfw4wY92dO
-            client-authentication-method: client_secret_basic
-            authorization-grant-type: client_credentials
-            scope:
-              - read
-              - write
-        provider:
-          default:
-            token-uri: https://gateway:5555/auth/oauth2/token
-            authorization-uri: https://gateway:5555/auth/oauth2/token
-      resource-server:
-        enabled: true
-        authorization-url: https://auth:1111/oauth2/authorize
-        token-url: https://gateway:5555/auth/oauth2/token
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /**/v3/api-docs/**=laokou-gateway
-              - /v3/api-docs/**=laokou-auth,laokou-admin
-              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
-              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
-              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
-              - /error=laokou-admin,laokou-auth
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
-              - /favicon.ico=laokou-gateway
-              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
-              - /v3/secrets=laokou-gateway,laokou-auth
-              - /graceful-shutdown=laokou-auth
-              - /ws=laokou-gateway
-              - /doc.html=laokou-gateway,laokou-auth,laokou-admin
-              - /webjars/**=laokou-auth,laokou-admin,laokou-gateway
-            POST:
-              - /v3/captchas=laokou-auth,laokou-gateway
-            DELETE:
-              - /v3/tokens=laokou-auth,laokou-gateway
-  # task
-  task-execution:
-    pool:
-      core-size: 33
-      keep-alive: 180s
-    fork-join-pool:
-      core-size: 33
-  cloud:
-    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
-    openfeign:
-      compression:
-        response:
-          enabled: true
-        request:
-          enabled: true
-      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
-      okhttp:
-        enabled: true
-      circuitbreaker:
-        enabled: true
-      httpclient:
-        enabled: false
-        hc5:
-          enabled: false
-        disable-ssl-validation: true
-      client:
-        config:
-          default:
-            connectTimeout: 120000 #连接超时
-            readTimeout: 120000 #读取超时
-            logger-level: none
-      lazy-attributes-resolution: true
-    # sentinel
-    sentinel:
-      web-context-unify: false
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        dashboard: sentinel:8972
 # actuator
 management:
   endpoints:
@@ -3698,69 +3597,8 @@ management:
       exposure:
         include: "*"
   endpoint:
-    gateway:
-      enabled: true
     health:
-      show-details: always
-  tracing:
-    enabled: true
-    propagation:
-      type: w3c
-    # 采样率 => 100%
-    sampling:
-      probability: 1
-  otlp:
-    tracing:
-      endpoint: http://otel-collector:4318/v1/traces
-      compression: gzip
-      timeout: 10s
-    metrics:
-      export:
-        enabled: false
-  metrics:
-    tags:
-      application: ${spring.application.name}
-
-# server
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
-    threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 256
-    # 每块buffer的空间大小
-    buffer-size: 1024
-    # 分配堆外内存
-    direct-buffers: true
-
-# feign
-feign:
-  sentinel:
-    enabled: true
-    default-rule: default
-    rules:
-      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
-      default:
-        - grade: 2 # 异常数策略
-          count: 1 # 异常数模式下为对应的阈值
-          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
-          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
-          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
-
-# knife4j的增强配置，不需要增强可以不配
-knife4j:
-  enable: true
-  setting:
-    language: zh_cn', 'e6883b7f678b4cc6faa41c1a8c0f36c7', '2023-01-13 12:16:46', '2024-10-06 18:08:00.225', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+      show-details: always', '797a4e0f738fd13b22da52906dd9e80b', '2023-01-16 12:01:23', '2024-10-12 00:14:44.667', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'spring boot admin monitor', '', '', 'yaml', '', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
@@ -3922,15 +3760,14 @@ INSERT INTO "public"."config_tags_relation" VALUES (2159, 'kafka', '', 'applicat
 INSERT INTO "public"."config_tags_relation" VALUES (103, 'elasticsearch', '', 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 689);
 INSERT INTO "public"."config_tags_relation" VALUES (2118, 'report', '', 'application-report.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 720);
 INSERT INTO "public"."config_tags_relation" VALUES (1570, 'admin', '', 'admin-degrade.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 4);
-INSERT INTO "public"."config_tags_relation" VALUES (26, 'gateway', '', 'router.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 54);
 INSERT INTO "public"."config_tags_relation" VALUES (1475, 'sms', '', 'application-sms.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 5);
 INSERT INTO "public"."config_tags_relation" VALUES (1477, 'mail', '', 'application-mail.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 6);
-INSERT INTO "public"."config_tags_relation" VALUES (82, 'monitor', '', 'application-monitor.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 47);
 INSERT INTO "public"."config_tags_relation" VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 11);
 INSERT INTO "public"."config_tags_relation" VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 3);
-INSERT INTO "public"."config_tags_relation" VALUES (4, 'im', '', 'application-im.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 32);
 INSERT INTO "public"."config_tags_relation" VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 33);
-INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 35);
+INSERT INTO "public"."config_tags_relation" VALUES (26, 'gateway', '', 'router.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 10);
+INSERT INTO "public"."config_tags_relation" VALUES (82, 'monitor', '', 'application-monitor.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 12);
+INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 13);
 
 -- ----------------------------
 -- Table structure for databasechangelog
@@ -4224,6 +4061,13 @@ SELECT setval('"public"."config_info_aggr_id_seq5"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_info_aggr_id_seq6"
+OWNED BY "public"."config_info_aggr"."id";
+SELECT setval('"public"."config_info_aggr_id_seq6"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."config_info_beta_id_seq"
 OWNED BY "public"."config_info_beta"."id";
 SELECT setval('"public"."config_info_beta_id_seq"', 1, false);
@@ -4262,6 +4106,13 @@ SELECT setval('"public"."config_info_beta_id_seq4"', 1, false);
 ALTER SEQUENCE "public"."config_info_beta_id_seq5"
 OWNED BY "public"."config_info_beta"."id";
 SELECT setval('"public"."config_info_beta_id_seq5"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_info_beta_id_seq6"
+OWNED BY "public"."config_info_beta"."id";
+SELECT setval('"public"."config_info_beta_id_seq6"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4308,6 +4159,13 @@ SELECT setval('"public"."config_info_id_seq5"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_info_id_seq6"
+OWNED BY "public"."config_info"."id";
+SELECT setval('"public"."config_info_id_seq6"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."config_info_tag_id_seq"
 OWNED BY "public"."config_info_tag"."id";
 SELECT setval('"public"."config_info_tag_id_seq"', 1, false);
@@ -4346,6 +4204,13 @@ SELECT setval('"public"."config_info_tag_id_seq4"', 1, false);
 ALTER SEQUENCE "public"."config_info_tag_id_seq5"
 OWNED BY "public"."config_info_tag"."id";
 SELECT setval('"public"."config_info_tag_id_seq5"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_info_tag_id_seq6"
+OWNED BY "public"."config_info_tag"."id";
+SELECT setval('"public"."config_info_tag_id_seq6"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4392,6 +4257,13 @@ SELECT setval('"public"."config_tags_relation_nid_seq5"', 35, true);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_tags_relation_nid_seq6"
+OWNED BY "public"."config_tags_relation"."nid";
+SELECT setval('"public"."config_tags_relation_nid_seq6"', 13, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."group_capacity_id_seq"
 OWNED BY "public"."group_capacity"."id";
 SELECT setval('"public"."group_capacity_id_seq"', 1, false);
@@ -4430,6 +4302,13 @@ SELECT setval('"public"."group_capacity_id_seq4"', 1, false);
 ALTER SEQUENCE "public"."group_capacity_id_seq5"
 OWNED BY "public"."group_capacity"."id";
 SELECT setval('"public"."group_capacity_id_seq5"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."group_capacity_id_seq6"
+OWNED BY "public"."group_capacity"."id";
+SELECT setval('"public"."group_capacity_id_seq6"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4476,6 +4355,13 @@ SELECT setval('"public"."his_config_info_nid_seq5"', 54, true);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."his_config_info_nid_seq6"
+OWNED BY "public"."his_config_info"."nid";
+SELECT setval('"public"."his_config_info_nid_seq6"', 18, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."tenant_capacity_id_seq"
 OWNED BY "public"."tenant_capacity"."id";
 SELECT setval('"public"."tenant_capacity_id_seq"', 1, false);
@@ -4514,6 +4400,13 @@ SELECT setval('"public"."tenant_capacity_id_seq4"', 1, false);
 ALTER SEQUENCE "public"."tenant_capacity_id_seq5"
 OWNED BY "public"."tenant_capacity"."id";
 SELECT setval('"public"."tenant_capacity_id_seq5"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."tenant_capacity_id_seq6"
+OWNED BY "public"."tenant_capacity"."id";
+SELECT setval('"public"."tenant_capacity_id_seq6"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4558,9 +4451,16 @@ OWNED BY "public"."tenant_info"."id";
 SELECT setval('"public"."tenant_info_id_seq5"', 1, false);
 
 -- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."tenant_info_id_seq6"
+OWNED BY "public"."tenant_info"."id";
+SELECT setval('"public"."tenant_info_id_seq6"', 1, false);
+
+-- ----------------------------
 -- Auto increment value for config_info
 -- ----------------------------
-SELECT setval('"public"."config_info_id_seq5"', 1, false);
+SELECT setval('"public"."config_info_id_seq6"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info
@@ -4579,7 +4479,7 @@ ALTER TABLE "public"."config_info" ADD CONSTRAINT "config_info_pkey" PRIMARY KEY
 -- ----------------------------
 -- Auto increment value for config_info_aggr
 -- ----------------------------
-SELECT setval('"public"."config_info_aggr_id_seq5"', 1, false);
+SELECT setval('"public"."config_info_aggr_id_seq6"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_aggr
@@ -4599,7 +4499,7 @@ ALTER TABLE "public"."config_info_aggr" ADD CONSTRAINT "config_info_aggr_pkey" P
 -- ----------------------------
 -- Auto increment value for config_info_beta
 -- ----------------------------
-SELECT setval('"public"."config_info_beta_id_seq5"', 1, false);
+SELECT setval('"public"."config_info_beta_id_seq6"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_beta
@@ -4618,7 +4518,7 @@ ALTER TABLE "public"."config_info_beta" ADD CONSTRAINT "config_info_beta_pkey" P
 -- ----------------------------
 -- Auto increment value for config_info_tag
 -- ----------------------------
-SELECT setval('"public"."config_info_tag_id_seq5"', 1, false);
+SELECT setval('"public"."config_info_tag_id_seq6"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_tag
@@ -4638,7 +4538,7 @@ ALTER TABLE "public"."config_info_tag" ADD CONSTRAINT "config_info_tag_pkey" PRI
 -- ----------------------------
 -- Auto increment value for config_tags_relation
 -- ----------------------------
-SELECT setval('"public"."config_tags_relation_nid_seq5"', 35, true);
+SELECT setval('"public"."config_tags_relation_nid_seq6"', 13, true);
 
 -- ----------------------------
 -- Indexes structure for table config_tags_relation
@@ -4665,7 +4565,7 @@ ALTER TABLE "public"."databasechangeloglock" ADD CONSTRAINT "databasechangeloglo
 -- ----------------------------
 -- Auto increment value for group_capacity
 -- ----------------------------
-SELECT setval('"public"."group_capacity_id_seq5"', 1, false);
+SELECT setval('"public"."group_capacity_id_seq6"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table group_capacity
@@ -4682,7 +4582,7 @@ ALTER TABLE "public"."group_capacity" ADD CONSTRAINT "group_capacity_pkey" PRIMA
 -- ----------------------------
 -- Auto increment value for his_config_info
 -- ----------------------------
-SELECT setval('"public"."his_config_info_nid_seq5"', 54, true);
+SELECT setval('"public"."his_config_info_nid_seq6"', 18, true);
 
 -- ----------------------------
 -- Indexes structure for table his_config_info
@@ -4722,7 +4622,7 @@ CREATE UNIQUE INDEX "roles_username_role_idx" ON "public"."roles" USING btree (
 -- ----------------------------
 -- Auto increment value for tenant_capacity
 -- ----------------------------
-SELECT setval('"public"."tenant_capacity_id_seq5"', 1, false);
+SELECT setval('"public"."tenant_capacity_id_seq6"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table tenant_capacity
@@ -4739,7 +4639,7 @@ ALTER TABLE "public"."tenant_capacity" ADD CONSTRAINT "tenant_capacity_pkey" PRI
 -- ----------------------------
 -- Auto increment value for tenant_info
 -- ----------------------------
-SELECT setval('"public"."tenant_info_id_seq5"', 1, false);
+SELECT setval('"public"."tenant_info_id_seq6"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table tenant_info

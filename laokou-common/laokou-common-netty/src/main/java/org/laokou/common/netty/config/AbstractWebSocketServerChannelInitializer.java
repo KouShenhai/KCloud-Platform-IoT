@@ -15,10 +15,8 @@
  *
  */
 
-package org.laokou.im.initializer;
+package org.laokou.common.netty.config;
 
-import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
@@ -27,29 +25,19 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.flush.FlushConsolidationHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
-import io.netty.util.concurrent.EventExecutorGroup;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-import org.springframework.stereotype.Component;
+
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
- * WebSocket处理类.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class WebSocketServerChannelInitializer extends ChannelInitializer<NioSocketChannel> {
-
-	private final ChannelInboundHandlerAdapter webSocketServerHandler;
-
-	private final EventExecutorGroup eventExecutorGroup;
+public abstract class AbstractWebSocketServerChannelInitializer extends AbstractChannelInitializer<NioSocketChannel> {
 
 	@Override
-	@SneakyThrows
 	protected void initChannel(NioSocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
+		// 前置处理
+		preHandler(pipeline);
 		// HTTP解码器
 		pipeline.addLast("httpServerCodec", new HttpServerCodec());
 		// 块状方式写入
@@ -62,8 +50,8 @@ public class WebSocketServerChannelInitializer extends ChannelInitializer<NioSoc
 		pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, SECONDS));
 		// flush合并
 		pipeline.addLast("flushConsolidationHandler", new FlushConsolidationHandler(10, true));
-		// 业务处理handler
-		pipeline.addLast(eventExecutorGroup, webSocketServerHandler);
+		// 后置处理
+		postHandler(pipeline);
 	}
 
 }

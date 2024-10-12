@@ -15,22 +15,55 @@
  *
  */
 
-package org.laokou.im.gatewayimpl.rpc.fallback;
+package org.laokou.common.netty.config;
 
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.im.dto.clientobject.UserProfileCO;
-import org.laokou.im.gatewayimpl.rpc.UserFeignClient;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
+ * WebSocketServer属性配置.
+ *
  * @author laokou
  */
+@Data
 @Component
-public class UserFeignClientFallback implements UserFeignClient {
+@ConfigurationProperties(prefix = "spring.websocket-server")
+public class SpringWebSocketServerProperties {
 
-	@Override
-	public Result<UserProfileCO> getProfileV3(String Authorization) {
-		return Result.fail("S_Feign_CallGetUserProfileFail", "获取个人信息失败，请联系管理员");
-	}
+	/**
+	 * 开关，默认不开启.
+	 */
+	private boolean enabled = false;
+
+	/**
+	 * 监听核心线程数.
+	 */
+	private Integer bossCoreSize = 1;
+
+	/**
+	 * 读写核心线程数.
+	 */
+	private Integer workerCoreSize = 8;
+
+	/**
+	 * 线程池数.
+	 */
+	private Integer corePoolSize = 8;
+
+	/**
+	 * IP.
+	 */
+	private String ip;
+
+	/**
+	 * 端口.
+	 */
+	private int port;
+
+	/**
+	 * 服务ID.
+	 */
+	private String serviceId;
 
 }

@@ -15,7 +15,19 @@
  *
  */
 
+package org.laokou.common.netty.config;
+
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
+
 /**
  * @author laokou
  */
-package org.laokou.im.handler;
+public abstract class AbstractChannelInitializer<C extends Channel> extends ChannelInitializer<C> {
+
+	abstract protected void preHandler(ChannelPipeline pipeline);
+
+	abstract protected void postHandler(ChannelPipeline pipeline);
+
+}

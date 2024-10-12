@@ -32,6 +32,11 @@ import org.springframework.stereotype.Component;
 public class SpringTcpServerProperties {
 
 	/**
+	 * 开关，默认不开启.
+	 */
+	private boolean enabled = false;
+
+	/**
 	 * IP.
 	 */
 	private String ip;
@@ -46,8 +51,19 @@ public class SpringTcpServerProperties {
 	 */
 	private String serviceId;
 
+	/**
+	 * 监听核心线程数.
+	 */
 	private Integer bossCoreSize = 1;
 
+	/**
+	 * 读写核心线程数.
+	 */
 	private Integer workerCoreSize = 8;
+
+	/**
+	 * 线程池数.
+	 */
+	private Integer corePoolSize = 8;
 
 }
