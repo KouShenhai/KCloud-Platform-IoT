@@ -26,9 +26,10 @@ import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.redisson.api.RateIntervalUnit;
 import org.redisson.api.RateType;
 import org.springframework.stereotype.Component;
+
+import java.time.Duration;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
 import static org.laokou.common.i18n.common.exception.StatusCode.TOO_MANY_REQUESTS;
@@ -58,9 +59,8 @@ public class RateLimiterAop {
 			.concat(rateLimiter.type().resolve(RequestUtil.getHttpServletRequest())));
 		long rate = rateLimiter.rate();
 		long interval = rateLimiter.interval();
-		RateIntervalUnit unit = rateLimiter.unit();
 		RateType mode = rateLimiter.mode();
-		if (!redisUtil.rateLimiter(key, mode, rate, interval, unit)) {
+		if (!redisUtil.rateLimiter(key, mode, rate, Duration.ofSeconds(interval))) {
 			throw new SystemException(TOO_MANY_REQUESTS);
 		}
 		return point.proceed();

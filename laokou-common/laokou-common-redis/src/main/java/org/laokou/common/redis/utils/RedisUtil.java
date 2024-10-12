@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.redisson.api.*;
+import org.redisson.api.options.KeysScanOptions;
 import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -95,14 +96,13 @@ public class RedisUtil {
 		return lock.tryLock(timeout, TimeUnit.MILLISECONDS);
 	}
 
-	public boolean rateLimiter(String key, RateType mode, long replenishRate, long rateInterval,
-			RateIntervalUnit rateIntervalUnit) {
+	public boolean rateLimiter(String key, RateType mode, long replenishRate, Duration rateInterval) {
 		RRateLimiter rateLimiter = redissonClient.getRateLimiter(key);
-		rateLimiter.trySetRate(mode, replenishRate, rateInterval, rateIntervalUnit);
+		rateLimiter.trySetRate(mode, replenishRate, rateInterval);
 		return rateLimiter.tryAcquire();
 	}
 
-	public boolean tryLock(String key, long expire, long timeout) throws InterruptedException {
+	public boolean tryLock(String key, long timeout) throws InterruptedException {
 		return tryLock(getLock(key), timeout);
 	}
 
@@ -238,7 +238,9 @@ public class RedisUtil {
 	}
 
 	public Set<String> keys(String pattern) {
-		return redissonClient.getKeys().getKeysStreamByPattern(pattern).collect(Collectors.toSet());
+		return redissonClient.getKeys()
+			.getKeysStream(KeysScanOptions.defaults().pattern(pattern))
+			.collect(Collectors.toSet());
 	}
 
 	public Set<String> keys() {
