@@ -5,7 +5,6 @@
 // @ts-ignore
 import * as auth from './auth';
 import * as captcha from './captcha';
-import * as logout from './logout';
 import * as secret from './secret';
 import * as tenant from './tenant';
 
@@ -14,5 +13,4 @@ export default {
 	tenant,
 	secret,
 	captcha,
-	logout,
 };

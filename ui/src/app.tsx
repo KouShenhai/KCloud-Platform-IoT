@@ -7,7 +7,7 @@ import {Dropdown, message, theme} from "antd";
 import {history} from 'umi';
 import {LogoutOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
-import {logoutV3} from "@/services/auth/logout";
+import {logoutV3} from "@/services/auth/auth";
 import {clearToken, getAccessToken, getExpiresTime, getRefreshToken} from "@/access";
 
 export async function getInitialState(): Promise<{
