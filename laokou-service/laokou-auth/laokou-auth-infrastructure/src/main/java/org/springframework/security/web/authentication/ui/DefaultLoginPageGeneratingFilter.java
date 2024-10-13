@@ -168,7 +168,7 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 		String contextPath = request.getContextPath();
 		StringBuilder sb = new StringBuilder();
 		sb.append("<!DOCTYPE html>\n");
-		sb.append("<html lang=\"zh\">\n");
+		sb.append("<html lang=\"en\">\n");
 		sb.append("  <head>\n");
 		sb.append("    <meta charset=\"utf-8\">\n");
 		sb.append("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n");
@@ -187,20 +187,15 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 				.append(contextPath)
 				.append(this.authenticationUrl)
 				.append("\">\n");
-			sb.append("		   <div style='text-align:center;'>\n");
-			sb.append("        	<h3 class=\"form-signin-heading\">老寇IoT云平台统一认证</h3>\n");
-			sb.append("		   </div>\n");
+			sb.append("        <h3 class=\"form-signin-heading\">老寇IoT云平台统一认证</h3>\n");
 			sb.append(createError(loginError, errorMsg)).append(createLogoutSuccess(logoutSuccess));
 			sb.append("        <p>\n");
-			sb.append("          <label for=\"tenantId\" class=\"sr-only\">租户</label>\n");
-			sb.append("			  <select name=\"tenant_id\" id=\"tenant_id\">\n");
-			sb.append("           	<option value=\"")
-				.append("0")
-				.append("\" selected=\"selected\">\n")
-				.append("老寇云集团")
-				.append("</option>");
+			sb.append("          <label for=\"tenant_id\" class=\"sr-only\">租户</label>\n");
+			sb.append(
+					"			  <select style=\"height:100%;\" name=\"tenant_id\" id=\"tenant_id\" class=\"form-control\">\n");
+			sb.append("           	<option value=\"0\" selected=\"selected\">老寇云集团</option>");
 			for (Option option : result.getData()) {
-				sb.append("           	<option value=\"")
+				sb.append("         <option value=\"")
 					.append(option.getValue())
 					.append("\">\n")
 					.append(option.getLabel())
@@ -212,16 +207,15 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 			sb.append("          <label for=\"username\" class=\"sr-only\">用户名</label>\n");
 			sb.append("          <input type=\"text\" id=\"username\" name=\"")
 				.append(this.usernameParameter)
-				.append("\" placeholder=\"用户名\" required autofocus>\n");
+				.append("\" class=\"form-control\" placeholder=\"用户名\" required autofocus>\n");
 			sb.append("        </p>\n");
 			sb.append("        <p>\n");
 			sb.append("          <label for=\"password\" class=\"sr-only\">密码</label>\n");
 			sb.append("          <input type=\"password\" id=\"password\" name=\"")
 				.append(this.passwordParameter)
-				.append("\" placeholder=\"密码\" required>\n");
+				.append("\" class=\"form-control\" placeholder=\"密码\" required>\n");
 			sb.append("        </p>\n");
-			sb.append(createRememberMe(this.rememberMeParameter)).append(renderHiddenInputs(request));
-			sb.append("        <button type=\"submit\" class=\"primary\">登录</button>\n");
+			sb.append("        <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">登 录</button>\n");
 			sb.append("      </form>\n");
 		}
 		if (this.oauth2LoginEnabled) {
@@ -276,25 +270,6 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 			return "Invalid credentials";
 		}
 		return exception.getMessage();
-	}
-
-	private String renderHiddenInputs(HttpServletRequest request) {
-		StringBuilder sb = new StringBuilder();
-		for (Map.Entry<String, String> input : this.resolveHiddenInputs.apply(request).entrySet()) {
-			sb.append("<input name=\"");
-			sb.append(input.getKey());
-			sb.append("\" type=\"hidden\" value=\"");
-			sb.append(input.getValue());
-			sb.append("\" />\n");
-		}
-		return sb.toString();
-	}
-
-	private String createRememberMe(String paramName) {
-		if (paramName == null) {
-			return "";
-		}
-		return "<p><input type='checkbox' name='" + paramName + "'/> Remember me on this computer.</p>\n";
 	}
 
 	private boolean isLogoutSuccess(HttpServletRequest request) {
