@@ -24,6 +24,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -50,11 +51,11 @@ public class IdempotentAop {
 	public Object doAround(ProceedingJoinPoint point) throws Throwable {
 		String requestId = getRequestId();
 		if (StringUtil.isEmpty(requestId)) {
-			throw new RuntimeException("提交失败，令牌不能为空");
+			throw new SystemException("S_Idempotent_RequestIDIsNull", "请求ID不能为空");
 		}
 		String apiIdempotentKey = RedisKeyUtil.getApiIdempotentKey(requestId);
 		if (!redisUtil.setIfAbsent(apiIdempotentKey, 0, MINUTE_FIVE_EXPIRE)) {
-			throw new RuntimeException("不可重复提交请求");
+			throw new SystemException("S_Idempotent_RequestRepeatedSubmit","不可重复提交请求");
 		}
 		doBefore();
 		Object proceed = point.proceed();

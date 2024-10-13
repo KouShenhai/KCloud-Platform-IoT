@@ -22,7 +22,8 @@ import {JSEncrypt} from 'jsencrypt';
 import {v7 as uuidV7} from 'uuid';
 import {getTenantIdByDomainNameV3, listTenantOptionV3} from "@/services/auth/tenant";
 import {ProFormInstance, ProFormSelect} from "@ant-design/pro-form/lib";
-import {clearToken, setToken} from "@/access";
+import {clearToken} from "@/access";
+import {getTokenV3} from "@/services/auth/tokens";
 
 type LoginType = 'usernamePassword' | 'mobile' | 'mail';
 
@@ -45,6 +46,7 @@ export default () => {
 	const [publicKey, setPublicKey] = useState<string>('');
 	const [tenantOptions, setTenantOptions] = useState<API.TenantOptionParam[]>([])
 	const formRef = useRef<ProFormInstance>();
+	const [requestToken, setRequestToken] = useState<string>('')
 
 	const setFormField = (form: API.LoginParam) => {
 		formRef?.current?.setFieldsValue(form);
@@ -121,6 +123,12 @@ export default () => {
 		});
 	};
 
+	const getToken = async () => {
+		getTokenV3().then(res => {
+			setRequestToken(res.data)
+		})
+	}
+
 	const listTenantOption = async () => {
 		listTenantOptionV3().then(res => {
 			if (res.code === 'OK') {
@@ -139,7 +147,7 @@ export default () => {
 			tag: 'mailCaptcha',
 			uuid: formRef?.current?.getFieldValue("mail")
 		}
-		sendCaptchaV3(param as API.SendCaptchaParam).then()
+		sendCaptchaV3(param as API.SendCaptchaParam, requestToken).catch(console.log)
 	}
 
 	const sendMobileCaptcha = async () => {
@@ -148,7 +156,7 @@ export default () => {
 			tag: 'mobileCaptcha',
 			uuid: formRef?.current?.getFieldValue("mobile")
 		}
-		sendCaptchaV3(param as API.SendCaptchaParam).then()
+		sendCaptchaV3(param as API.SendCaptchaParam, requestToken).catch(console.log)
 	}
 
 	const getTenantIdByDomain = async () => {
@@ -169,10 +177,11 @@ export default () => {
 
 	useEffect(() => {
 		clearToken()
-		listTenantOption().then()
-		getPublicKey().then()
-		getCaptchaImage().then()
-		getTenantIdByDomain().then()
+		listTenantOption().catch(console.log)
+		getPublicKey().catch(console.log)
+		getCaptchaImage().catch(console.log)
+		getTenantIdByDomain().catch(console.log)
+		getToken().catch(console.log)
 	}, []);
 
 	const onSubmit = async (form: API.LoginParam) => {
@@ -182,6 +191,7 @@ export default () => {
 				if (res.code === 'OK') {
 					// 登录成功【55分钟后自动刷新令牌】
 					clearToken()
+					// @ts-ignore
 					setToken(res.data?.access_token, res.data?.refresh_token, new Date().getTime() + res.data?.expires_in)
 					// 跳转路由
 					const urlParams = new URL(window.location.href).searchParams;
