@@ -25,21 +25,31 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           cache-dependency-path: "./ui/package-lock.json"
-      - name: Cache Clean
+      - name: Cache Clean UI
         run: npm cache clean --force
-      - name: Install
+      - name: Install UI
         run: npm install --prefix ./ui
-      - name: Build
+      - name: Build UI
         run: npm run build --prefix ./ui
+      - name: Build the Docker image
+        run: |
+          # 登录阿里云镜像仓库
+          docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }} registry.cn-shenzhen.aliyuncs.com
+          # ========== 构建UI ==========
+          cd ui
+          # 使用Dockerfile构建镜像
+          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.4.0
+          # 推送镜像到镜像仓库
+          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.4.0
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           cache-dependency-path: "./archive/package-lock.json"
-      - name: Cache Clean
+      - name: Cache Clean Doc
         run: npm cache clean --force
-      - name: Install
+      - name: Install Doc
         run: npm install --prefix ./archive
-      - name: Build
+      - name: Build Doc
         run: npm run build --prefix ./archive
