@@ -15,41 +15,24 @@
  *
  */
 
-package org.laokou.auth.service;
+package org.laokou.auth.command.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.api.TokensServiceI;
-import org.laokou.auth.command.TokenRemoveCmdExe;
-import org.laokou.auth.command.query.TokenGetQryExe;
-import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Service;
+import org.laokou.common.idempotent.utils.IdempotentUtil;
+import org.springframework.stereotype.Component;
 
 /**
- * 退出登录.
- *
  * @author laokou
  */
-@Service
+@Component
 @RequiredArgsConstructor
-public class TokensServiceImpl implements TokensServiceI {
+public class TokenGetQryExe {
 
-	private final TokenRemoveCmdExe tokenRemoveCmdExe;
+	private final IdempotentUtil idempotentUtil;
 
-	private final TokenGetQryExe tokenGetQryExe;
-
-	/**
-	 * 移除Token.
-	 * @param cmd 退出登录参数
-	 */
-	@Override
-	public void removeToken(TokenRemoveCmd cmd) {
-		tokenRemoveCmdExe.executeVoid(cmd);
-	}
-
-	@Override
-	public Result<String> getTokenV3() {
-		return tokenGetQryExe.execute();
+	public Result<String> execute() {
+		return Result.ok(idempotentUtil.getIdempotentKey());
 	}
 
 }

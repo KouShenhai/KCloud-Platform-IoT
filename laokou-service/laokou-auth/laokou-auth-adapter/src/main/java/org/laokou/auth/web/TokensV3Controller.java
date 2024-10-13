@@ -22,10 +22,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.TokensServiceI;
 import org.laokou.auth.dto.TokenRemoveCmd;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author laokou
@@ -37,6 +35,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class TokensV3Controller {
 
 	private final TokensServiceI tokensServiceI;
+
+	@GetMapping
+	@Operation(summary = "查看令牌", description = "查看令牌")
+	public Result<String> getTokenV3() {
+		return tokensServiceI.getTokenV3();
+	}
 
 	@DeleteMapping
 	@Operation(summary = "删除令牌", description = "删除令牌")
