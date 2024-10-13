@@ -16,7 +16,7 @@
     <!--spring-boot版本-->
     <spring-boot.version>2.7.18</spring-boot.version>
     <!--curator版本-->
-    <curator.version>5.7.0</curator.version>
+    <curator.version>5.7.1</curator.version>
     <!--log4j版本-->
     <log4j.version>2.24.1</log4j.version>
     <!--commons-lang版本-->
