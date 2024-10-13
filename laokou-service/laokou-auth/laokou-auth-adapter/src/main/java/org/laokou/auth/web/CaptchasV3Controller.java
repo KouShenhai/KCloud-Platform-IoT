@@ -24,6 +24,7 @@ import org.laokou.auth.api.CaptchasServiceI;
 import org.laokou.auth.dto.CaptchaGetQry;
 import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.validation.annotation.Validated;
@@ -50,6 +51,7 @@ public class CaptchasV3Controller {
 		return captchasServiceI.getByUuid(new CaptchaGetQry(uuid));
 	}
 
+	@Idempotent
 	@PostMapping
 	@RateLimiter(key = "SEND_CAPTCHA", type = IP, interval = 60)
 	@Operation(summary = "根据UUID发送验证码", description = "根据UUID发送验证码")
