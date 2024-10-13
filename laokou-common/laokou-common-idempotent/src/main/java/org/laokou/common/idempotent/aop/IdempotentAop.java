@@ -55,7 +55,7 @@ public class IdempotentAop {
 		}
 		String apiIdempotentKey = RedisKeyUtil.getApiIdempotentKey(requestId);
 		if (!redisUtil.setIfAbsent(apiIdempotentKey, 0, MINUTE_FIVE_EXPIRE)) {
-			throw new SystemException("S_Idempotent_RequestRepeatedSubmit","不可重复提交请求");
+			throw new SystemException("S_Idempotent_RequestRepeatedSubmit", "不可重复提交请求");
 		}
 		doBefore();
 		Object proceed = point.proceed();
