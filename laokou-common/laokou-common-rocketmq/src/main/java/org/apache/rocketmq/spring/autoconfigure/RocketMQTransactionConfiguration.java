@@ -34,7 +34,11 @@
 
 package org.apache.rocketmq.spring.autoconfigure;
 
-import lombok.RequiredArgsConstructor;
+import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.stream.Collectors;
 import org.apache.rocketmq.client.producer.TransactionMQProducer;
 import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
@@ -54,18 +58,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.stream.Collectors;
-
-/**
- * @author rocketmq
- * @author laokou
- */
 @Configuration
-@RequiredArgsConstructor
 public class RocketMQTransactionConfiguration implements ApplicationContextAware, SmartInitializingSingleton {
 
 	private final static Logger log = LoggerFactory.getLogger(RocketMQTransactionConfiguration.class);
@@ -102,6 +95,7 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
 			throw new IllegalStateException(
 					annotation.rocketMQTemplateBeanName() + " already exists RocketMQLocalTransactionListener");
 		}
+
 		SpringUtil springUtil = this.applicationContext.getBean(SpringUtil.class);
 		if (springUtil.isVirtualThread()) {
 			((TransactionMQProducer) rocketMQTemplate.getProducer())
@@ -113,6 +107,7 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
 					new LinkedBlockingDeque<>(annotation.blockingQueueSize()));
 			((TransactionMQProducer) rocketMQTemplate.getProducer()).setExecutorService(threadPoolExecutor);
 		}
+
 		((TransactionMQProducer) rocketMQTemplate.getProducer())
 			.setTransactionListener(RocketMQUtil.convert((RocketMQLocalTransactionListener) bean));
 		log.debug("RocketMQLocalTransactionListener {} register to {} success", clazz.getName(),

@@ -48,7 +48,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.rocketmq.client.impl.consumer;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.*;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
@@ -64,18 +73,15 @@ import org.apache.rocketmq.common.message.MessageAccessor;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.common.message.MessageQueue;
 import org.apache.rocketmq.common.utils.ThreadUtils;
-import org.apache.rocketmq.logging.org.slf4j.Logger;
-import org.apache.rocketmq.logging.org.slf4j.LoggerFactory;
 import org.apache.rocketmq.remoting.protocol.body.CMResult;
 import org.apache.rocketmq.remoting.protocol.body.ConsumeMessageDirectlyResult;
+import org.apache.rocketmq.logging.org.slf4j.Logger;
+import org.apache.rocketmq.logging.org.slf4j.LoggerFactory;
+import org.laokou.common.core.config.TtlVirtualThreadFactory;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.core.utils.SpringUtil;
 
-import java.util.*;
-import java.util.concurrent.*;
-
 /**
- * @author rocketmq
  * @author laokou
  */
 public class ConsumeMessageConcurrentlyService implements ConsumeMessageService {
@@ -87,8 +93,6 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 	private final DefaultMQPushConsumer defaultMQPushConsumer;
 
 	private final MessageListenerConcurrently messageListener;
-
-	private final BlockingQueue<Runnable> consumeRequestQueue;
 
 	private final ThreadPoolExecutor consumeExecutor;
 
@@ -105,26 +109,25 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 
 		this.defaultMQPushConsumer = this.defaultMQPushConsumerImpl.getDefaultMQPushConsumer();
 		this.consumerGroup = this.defaultMQPushConsumer.getConsumerGroup();
-		this.consumeRequestQueue = new LinkedBlockingQueue<>();
+		BlockingQueue<Runnable> consumeRequestQueue = new LinkedBlockingQueue<>();
 
 		String consumerGroupTag = (consumerGroup.length() > 100 ? consumerGroup.substring(0, 100) : consumerGroup)
 				+ "_";
 
 		SpringUtil springUtil = SpringContextUtil.getBean(SpringUtil.class);
 		if (springUtil.isVirtualThread()) {
-			this.consumeExecutor = new ThreadPoolExecutor(0, // corePoolSize:
-					// 0，因为不需要保留核心线程
+			this.consumeExecutor = new ThreadPoolExecutor(0, // corePoolSize为0，因为不需要保留核心线程
 					Integer.MAX_VALUE, // maximumPoolSize: 无限制，允许任意数量的虚拟线程
 					60L, // keepAliveTime: 虚拟线程不需要保持存活时间
 					TimeUnit.SECONDS, // 时间单位
 					new SynchronousQueue<>(), // 使用SynchronousQueue以确保每个任务都会创建一个新线程
-					Thread.ofVirtual().factory() // 使用虚拟线程工厂
+					TtlVirtualThreadFactory.INSTANCE // 使用虚拟线程工厂
 			);
 		}
 		else {
 			this.consumeExecutor = new ThreadPoolExecutor(this.defaultMQPushConsumer.getConsumeThreadMin(),
 					this.defaultMQPushConsumer.getConsumeThreadMax(), 1000 * 60, TimeUnit.MILLISECONDS,
-					this.consumeRequestQueue, new ThreadFactoryImpl("ConsumeMessageThread_" + consumerGroupTag));
+					consumeRequestQueue, new ThreadFactoryImpl("ConsumeMessageThread_" + consumerGroupTag));
 		}
 
 		this.scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(
@@ -134,13 +137,18 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 	}
 
 	public void start() {
-		this.cleanExpireMsgExecutors.scheduleAtFixedRate(() -> {
-			try {
-				cleanExpireMsg();
+		this.cleanExpireMsgExecutors.scheduleAtFixedRate(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					cleanExpireMsg();
+				}
+				catch (Throwable e) {
+					log.error("scheduleAtFixedRate cleanExpireMsg exception", e);
+				}
 			}
-			catch (Throwable e) {
-				log.error("scheduleAtFixedRate cleanExpireMsg exception", e);
-			}
+
 		}, this.defaultMQPushConsumer.getConsumeTimeout(), this.defaultMQPushConsumer.getConsumeTimeout(),
 				TimeUnit.MINUTES);
 	}
