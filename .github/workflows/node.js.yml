@@ -58,6 +58,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.USER_TOKEN }}
         with:
+          branch: 'main'
           source-directory: './archive/docs/.vuepress/dist'
           destination-github-username: 'KouShenhai'
           destination-repository-name: 'koushenhai.github.io'
