@@ -43,7 +43,8 @@ declare namespace API {
 		tenant_id?: number
 	};
 
-	type Result = {
+	// @ts-ignore
+    type Result = {
 		/** 状态编码 */
 		code?: string;
 		/** 响应描述 */

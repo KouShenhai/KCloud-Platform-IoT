@@ -1,5 +1,6 @@
 // @ts-ignore
 /* eslint-disable */
+// @ts-ignore
 import { request } from '@umijs/max';
 
 /** 查看令牌 查看令牌 GET /v3/tokens */

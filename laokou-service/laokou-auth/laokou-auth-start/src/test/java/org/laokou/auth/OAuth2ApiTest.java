@@ -238,9 +238,23 @@ class OAuth2ApiTest {
 	}
 
 	@Test
+	void testGetTokenApi() {
+		log.info("---------- 获取令牌 ----------");
+		String apiUrl = getTokenUrlV3();
+		String json = restClient.method(HttpMethod.GET)
+			.uri(apiUrl)
+			.contentType(MediaType.APPLICATION_JSON)
+			.retrieve()
+			.toEntity(String.class)
+			.toString();
+		assertNotNull(json);
+		log.info("---------- 获取令牌 ----------");
+	}
+
+	@Test
 	void testLogoutApi() {
 		log.info("---------- 登录已注销，开始清除令牌 ----------");
-		String apiUrl = getLogoutApiUrlV3();
+		String apiUrl = getTokenUrlV3();
 		restClient.method(HttpMethod.DELETE)
 			.uri(apiUrl)
 			.body(new TokenRemoveCmd(TOKEN))
@@ -424,32 +438,31 @@ class OAuth2ApiTest {
 	}
 
 	private String getOAuthApiUrl() {
-		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/oauth2/token";
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/oauth2/token";
 	}
 
 	private String getDeviceCodeApiUrl() {
-		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort()
-				+ "/oauth2/device_authorization";
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/oauth2/device_authorization";
 	}
 
 	private String getCaptchaApiUrlV3(String uuid) {
-		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/captchas/" + uuid;
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/captchas/" + uuid;
 	}
 
 	private String getSecretApiUrlV3() {
-		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/secrets";
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/secrets";
 	}
 
 	private String getTenantOptionsApiUrlV3() {
-		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/tenants/options";
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/tenants/options";
 	}
 
 	private String getTenantIdByDomainNameApiUrlV3() {
-		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/tenants/id";
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/tenants/id";
 	}
 
-	private String getLogoutApiUrlV3() {
-		return getSchema(disabledSsl()) + "127.0.0.1" + RISK + serverProperties.getPort() + "/v3/tokens";
+	private String getTokenUrlV3() {
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/tokens";
 	}
 
 	private String getSchema(boolean disabled) {
