@@ -157,10 +157,6 @@ public interface TenantCapacityMapper extends Mapper {
 				paramList);
 	}
 
-	default List<String> getColumns() {
-		return Arrays.asList("id", "quota", "usage", "max_size", "max_aggr_count", "max_aggr_size", "tenant_id");
-	}
-
 	/**
 	 * 获取返回表名.
 	 * @return 表名

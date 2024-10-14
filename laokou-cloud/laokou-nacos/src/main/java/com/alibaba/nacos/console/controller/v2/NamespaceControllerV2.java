@@ -33,7 +33,13 @@ import com.alibaba.nacos.plugin.auth.constant.ActionTypes;
 import com.alibaba.nacos.plugin.auth.constant.SignType;
 import com.alibaba.nacos.plugin.auth.impl.constant.AuthConstants;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
@@ -51,13 +57,7 @@ import java.util.regex.Pattern;
 @ExtractorManager.Extractor(httpExtractor = ConsoleDefaultHttpParamExtractor.class)
 public class NamespaceControllerV2 {
 
-	private static final int NAMESPACE_ID_MAX_LENGTH = 128;
-
 	private final NamespaceOperationService namespaceOperationService;
-
-	private final Pattern namespaceIdCheckPattern = Pattern.compile("^[\\w-]+");
-
-	private final Pattern namespaceNameCheckPattern = Pattern.compile("^[^@#$%^&*]+$");
 
 	private NamespacePersistService namespacePersistService;
 
@@ -66,6 +66,12 @@ public class NamespaceControllerV2 {
 		this.namespaceOperationService = namespaceOperationService;
 		this.namespacePersistService = namespacePersistService;
 	}
+
+	private final Pattern namespaceIdCheckPattern = Pattern.compile("^[\\w-]+");
+
+	private final Pattern namespaceNameCheckPattern = Pattern.compile("^[^@#$%^&*]+$");
+
+	private static final int NAMESPACE_ID_MAX_LENGTH = 128;
 
 	/**
 	 * Get namespace list.

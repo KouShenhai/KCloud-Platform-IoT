@@ -354,7 +354,8 @@ declare namespace API {
 		co?: OssCO;
 	};
 
-	type Result = {
+	// @ts-ignore
+    type Result = {
 		/** 状态编码 */
 		code?: string;
 		/** 响应描述 */

@@ -12,18 +12,24 @@ import {
 import {LoginFormPage, ProFormCaptcha, ProFormText,} from '@ant-design/pro-components';
 import {Col, Divider, Image, message, Row, Space, Tabs} from 'antd';
 import {CSSProperties, useEffect, useRef, useState} from 'react';
+// @ts-ignore
 import {login} from '@/services/auth/auth';
+// @ts-ignore
 import {getCaptchaImageByUuidV3, sendCaptchaV3} from '@/services/auth/captcha';
 // @ts-ignore
 import {history} from 'umi';
+// @ts-ignore
 import {getSecretInfoV3} from '@/services/auth/secret';
 import {JSEncrypt} from 'jsencrypt';
 // @ts-ignore
 import {v7 as uuidV7} from 'uuid';
-import {getTenantIdByDomainNameV3, listTenantOptionV3} from "@/services/auth/tenant";
-import {ProFormInstance, ProFormSelect} from "@ant-design/pro-form/lib";
-import {clearToken, setToken} from "@/access";
-import {getTokenV3} from "@/services/auth/tokens";
+// @ts-ignore
+import {getTenantIdByDomainNameV3, listTenantOptionV3} from "@/services/auth/tenant"
+import {ProFormInstance, ProFormSelect} from "@ant-design/pro-form/lib"
+// @ts-ignore
+import {clearToken, setToken} from "@/access"
+// @ts-ignore
+import {getTokenV3} from "@/services/auth/tokens"
 
 type LoginType = 'usernamePassword' | 'mobile' | 'mail';
 
@@ -107,7 +113,8 @@ export default () => {
 		setFormField({captcha: ''})
 		// 调用验证码API
 		const uuid = uuidV7();
-		getCaptchaImageByUuidV3({uuid: uuid}).then((res) => {
+		// @ts-ignore
+        getCaptchaImageByUuidV3({uuid: uuid}).then((res: { code: string; data: React.SetStateAction<string>; }) => {
 			if (res.code === 'OK') {
 				setCaptchaImage(res.data);
 			}
@@ -116,7 +123,8 @@ export default () => {
 	};
 
 	const getPublicKey = async () => {
-		getSecretInfoV3().then((res) => {
+		// @ts-ignore
+        getSecretInfoV3().then((res: { code: string; data: { publicKey: React.SetStateAction<string>; }; }) => {
 			if (res.code === 'OK') {
 				setPublicKey(res.data.publicKey);
 			}
@@ -124,13 +132,15 @@ export default () => {
 	};
 
 	const getToken = async () => {
-		getTokenV3().then(res => {
+		// @ts-ignore
+        getTokenV3().then((res: { data: React.SetStateAction<string>; }) => {
 			setRequestToken(res.data)
 		})
 	}
 
 	const listTenantOption = async () => {
-		listTenantOptionV3().then(res => {
+		// @ts-ignore
+        listTenantOptionV3().then((res: { code: string; data: API.TenantOptionParam[]; }) => {
 			if (res.code === 'OK') {
 				const options = []
 				const defaultOption = {label: '老寇云集团', value: '0'}
@@ -160,7 +170,8 @@ export default () => {
 	}
 
 	const getTenantIdByDomain = async () => {
-		getTenantIdByDomainNameV3().then(res => {
+		// @ts-ignore
+        getTenantIdByDomainNameV3().then((res: { code: string; data: any; }) => {
 			if (res.code === 'OK') {
 				setFormField({tenant_id: res.data})
 			}
@@ -186,8 +197,9 @@ export default () => {
 
 	const onSubmit = async (form: API.LoginParam) => {
 		const params = getParams(form);
-		login({...params})
-			.then((res) => {
+        login({...params})
+            // @ts-ignore
+            .then((res: { code: string; data: { access_token: string; refresh_token: string; expires_in: number; }; }) => {
 				if (res.code === 'OK') {
 					// 登录成功【令牌过期前5分钟，自动刷新令牌】
 					clearToken()
