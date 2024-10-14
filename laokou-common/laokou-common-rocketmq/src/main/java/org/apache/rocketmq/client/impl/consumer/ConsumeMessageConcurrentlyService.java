@@ -59,6 +59,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
+import lombok.Getter;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -392,26 +393,18 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 	private void submitConsumeRequestLater(final List<MessageExt> msgs, final ProcessQueue processQueue,
 			final MessageQueue messageQueue) {
 
-		this.scheduledExecutorService.schedule(new Runnable() {
-
-			@Override
-			public void run() {
-				ConsumeMessageConcurrentlyService.this.submitConsumeRequest(msgs, processQueue, messageQueue, true);
-			}
-		}, 5000, TimeUnit.MILLISECONDS);
+		this.scheduledExecutorService.schedule(() -> ConsumeMessageConcurrentlyService.this.submitConsumeRequest(msgs,
+				processQueue, messageQueue, true), 5000, TimeUnit.MILLISECONDS);
 	}
 
 	private void submitConsumeRequestLater(final ConsumeRequest consumeRequest) {
 
-		this.scheduledExecutorService.schedule(new Runnable() {
-
-			@Override
-			public void run() {
-				ConsumeMessageConcurrentlyService.this.consumeExecutor.submit(consumeRequest);
-			}
+		this.scheduledExecutorService.schedule(() -> {
+			ConsumeMessageConcurrentlyService.this.consumeExecutor.submit(consumeRequest);
 		}, 5000, TimeUnit.MILLISECONDS);
 	}
 
+	@Getter
 	class ConsumeRequest implements Runnable {
 
 		private final List<MessageExt> msgs;
@@ -426,14 +419,6 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 			this.messageQueue = messageQueue;
 		}
 
-		public List<MessageExt> getMsgs() {
-			return msgs;
-		}
-
-		public ProcessQueue getProcessQueue() {
-			return processQueue;
-		}
-
 		@Override
 		public void run() {
 			if (this.processQueue.isDropped()) {
@@ -442,7 +427,6 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 				return;
 			}
 
-			MessageListenerConcurrently listener = ConsumeMessageConcurrentlyService.this.messageListener;
 			ConsumeConcurrentlyContext context = new ConsumeConcurrentlyContext(messageQueue);
 			ConsumeConcurrentlyStatus status = null;
 			defaultMQPushConsumerImpl.tryResetPopRetryTopic(msgs, consumerGroup);
@@ -470,7 +454,8 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 						MessageAccessor.setConsumeStartTimeStamp(msg, String.valueOf(System.currentTimeMillis()));
 					}
 				}
-				status = listener.consumeMessage(Collections.unmodifiableList(msgs), context);
+				status = ConsumeMessageConcurrentlyService.this.messageListener
+					.consumeMessage(Collections.unmodifiableList(msgs), context);
 			}
 			catch (Throwable e) {
 				log.warn("consumeMessage exception: {} Group: {} Msgs: {} MQ: {}", UtilAll.exceptionSimpleDesc(e),
@@ -524,10 +509,6 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 				log.warn("processQueue is dropped without process consume result. messageQueue={}, msgs={}",
 						messageQueue, msgs);
 			}
-		}
-
-		public MessageQueue getMessageQueue() {
-			return messageQueue;
 		}
 
 	}

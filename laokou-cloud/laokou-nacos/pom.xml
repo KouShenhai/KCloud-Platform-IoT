@@ -296,11 +296,13 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin.version}</version>
         <configuration>
-          <source>21</source>
-          <target>21</target>
-          <encoding>UTF-8</encoding>
+            <source>${maven.compiler.source}</source>
+            <target>${maven.compiler.target}</target>
+          <encoding>${project.build.sourceEncoding}</encoding>
           <compilerArgs>
+            <!-- 启用对使用过时 API 的警告 -->
             <arg>-Xlint:deprecation</arg>
+            <!-- 在编译的字节码中保留方法参数的名称，这对反射或序列化框架非常有用 -->
             <arg>-parameters</arg>
           </compilerArgs>
         </configuration>

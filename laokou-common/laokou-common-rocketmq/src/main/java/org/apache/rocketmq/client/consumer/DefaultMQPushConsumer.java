@@ -71,8 +71,8 @@ import java.util.Set;
  * In most scenarios, this is the mostly recommended class to consume messages.
  * Technically speaking, this push client is virtually a wrapper of the underlying pull
  * service. Specifically, on arrival of messages pulled from brokers, it roughly invokes
- * the registered callback handler to feed the messages.
- * See quickstart/Consumer in the example module for a typical usage.
+ * the registered callback handler to feed the messages. See quickstart/Consumer in the
+ * example module for a typical usage.
  *
  * <p>
  * <strong>Thread Safety:</strong> After initialization, the instance can be regarded as
@@ -94,8 +94,8 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
 	/**
 	 * Consumers of the same role is required to have exactly same subscriptions and
 	 * consumerGroup to correctly achieve load balance. It's required and needs to be
-	 * globally unique.
-	 * See <a href="https://rocketmq.apache.org/docs/introduction/02concepts">here</a> for
+	 * globally unique. See
+	 * <a href="https://rocketmq.apache.org/docs/introduction/02concepts">here</a> for
 	 * further discussion.
 	 */
 	private String consumerGroup;
@@ -106,14 +106,12 @@ public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsume
 	 * set, consumer clients with the same {@link #consumerGroup} would only consume
 	 * shards of the messages subscribed, which achieves load balances; Conversely, if the
 	 * broadcasting is set, each consumer client will consume all subscribed messages
-	 * separately.
-	 * This field defaults to clustering.
+	 * separately. This field defaults to clustering.
 	 */
 	private MessageModel messageModel = MessageModel.CLUSTERING;
 
 	/**
-	 * Consuming point on consumer booting.
-	 * There are three consuming points:
+	 * Consuming point on consumer booting. There are three consuming points:
 	 * <ul>
 	 * <li><code>CONSUME_FROM_LAST_OFFSET</code>: consumer clients pick up where it
 	 * stopped previously. If it were a newly booting up consumer client, according aging

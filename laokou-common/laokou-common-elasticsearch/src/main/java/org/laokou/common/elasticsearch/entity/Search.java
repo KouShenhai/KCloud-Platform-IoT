@@ -17,6 +17,7 @@
 
 package org.laokou.common.elasticsearch.entity;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,6 @@ import java.util.List;
 
 import static org.laokou.common.elasticsearch.annotation.Constant.POST_TAGS;
 import static org.laokou.common.elasticsearch.annotation.Constant.PRE_TAGS;
-
 /**
  * @author laokou
  */
@@ -40,7 +40,7 @@ public class Search {
 
 	private Integer pageSize = 10;
 
-	private co.elastic.clients.elasticsearch._types.query_dsl.Query query;
+	private Query query;
 
 	@Data
 	@NoArgsConstructor
