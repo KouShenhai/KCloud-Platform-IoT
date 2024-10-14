@@ -34,7 +34,6 @@
 
 package org.apache.rocketmq.spring.autoconfigure;
 
-import io.micrometer.common.lang.NonNullApi;
 import org.apache.rocketmq.client.AccessChannel;
 import org.apache.rocketmq.client.MQAdmin;
 import org.apache.rocketmq.client.consumer.DefaultLitePullConsumer;
@@ -45,6 +44,7 @@ import org.apache.rocketmq.spring.annotation.SelectorType;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQMessageConverter;
 import org.apache.rocketmq.spring.support.RocketMQUtil;
+import org.jetbrains.annotations.NotNull;
 import org.laokou.common.core.config.TtlVirtualThreadFactory;
 import org.laokou.common.core.utils.SpringUtil;
 import org.slf4j.Logger;
@@ -52,7 +52,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.condition.*;
+import org.springframework.boot.autoconfigure.condition.AnyNestedCondition;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -72,10 +76,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * rocketmq支持虚拟线程池.
  *
- * @author rocektmq
  * @author laokou
  */
-@NonNullApi
+
 @Configuration
 @EnableConfigurationProperties(RocketMQProperties.class)
 @ConditionalOnClass({ MQAdmin.class })
@@ -87,13 +90,13 @@ import java.util.concurrent.TimeUnit;
 @AutoConfigureBefore({ RocketMQTransactionConfiguration.class })
 public class RocketMQAutoConfiguration implements ApplicationContextAware {
 
+	private static final Logger log = LoggerFactory.getLogger(RocketMQAutoConfiguration.class);
+
 	public static final String ROCKETMQ_TEMPLATE_DEFAULT_GLOBAL_NAME = "rocketMQTemplate";
 
 	public static final String PRODUCER_BEAN_NAME = "defaultMQProducer";
 
 	public static final String CONSUMER_BEAN_NAME = "defaultLitePullConsumer";
-
-	private static final Logger log = LoggerFactory.getLogger(RocketMQAutoConfiguration.class);
 
 	private final Environment environment;
 
@@ -105,7 +108,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 	}
 
 	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+	public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
 		this.applicationContext = applicationContext;
 	}
 
@@ -215,7 +218,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 				.setAsyncSenderExecutor(Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE));
 		}
 		else {
-			ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(8, 16, 60, TimeUnit.SECONDS,
+			ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(16, 32, 60, TimeUnit.SECONDS,
 					new LinkedBlockingQueue<>(256));
 			rocketMQTemplate.setAsyncSenderExecutor(threadPoolExecutor);
 		}
