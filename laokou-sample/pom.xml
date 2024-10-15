@@ -13,5 +13,9 @@
   <artifactId>laokou-sample</artifactId>
   <version>3.4.0</version>
   <packaging>pom</packaging>
+  <modules>
+      <module>laokou-sample-websocket</module>
+      <module>laokou-sample-shardingsphere</module>
+  </modules>
 
 </project>
