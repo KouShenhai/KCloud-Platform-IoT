@@ -25,7 +25,7 @@
     "angular-table-resize": "^2.0.1",
     "angular-touch": "^1.4.0",
     "angular-ui-notification": "^0.3.6",
-    "angular-ui-router": "^1.0.18",
+    "angular-ui-router": "^1.0.30",
     "angular-utils-pagination": "^0.11.1",
     "angularjs-bootstrap-datetimepicker": "^1.1.4",
     "bootstrap-switch": "^3.3.4",
