@@ -27,6 +27,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.SpringExpressionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.lock.Lock;
 import org.laokou.common.lock.RedissonLock;
 import org.laokou.common.lock.Type;
@@ -55,9 +56,13 @@ public class LockAop {
 		Signature signature = joinPoint.getSignature();
 		MethodSignature methodSignature = (MethodSignature) signature;
 		String[] parameterNames = methodSignature.getParameterNames();
+		String name = lock4j.name();
 		String key = lock4j.key();
-		if (key.contains("#{") && key.contains("}")) {
-			key = SpringExpressionUtil.parse(key, parameterNames, joinPoint.getArgs(), String.class);
+		if (StringUtil.isNotEmpty(key) && key.contains("#")) {
+			key = name + "_" + SpringExpressionUtil.parse(key, parameterNames, joinPoint.getArgs(), String.class);
+		}
+		else {
+			key = name;
 		}
 		long timeout = lock4j.timeout();
 		int retry = lock4j.retry();

@@ -60,7 +60,7 @@ public class SqlMonitorInterceptor implements Interceptor {
 			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", SPACE);
 			SpringContextUtil.publishEvent(
 					new SqlLogEvent("SQL日志", SpringContextUtil.getServiceId(), sql, time, DateUtil.nowInstant()));
-			log.info("Consume Time：{} ms Execute SQL：{}", time, sql);
+			log.info("Consume Time：{} ms，Execute SQL：{}", time, sql);
 		}
 		return obj;
 	}

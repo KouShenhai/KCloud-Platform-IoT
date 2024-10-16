@@ -18,34 +18,30 @@
 package org.laokou.common.domain.scheduler;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.SpringUtil;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.laokou.common.domain.entity.DomainEvent;
+import org.laokou.common.lock.annotation.Lock4j;
+import org.laokou.common.rocketmq.template.RocketMqTemplate;
+import org.laokou.common.trace.utils.TraceUtil;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.domain.constant.MqConstant.LAOKOU_DOMAIN_EVENT_TOPIC;
+import static org.laokou.common.domain.entity.Type.REMOVE;
 
 /**
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
-public class DomainEventScheduler {
+public class RemoveDomainEventTask {
 
-	private final SpringUtil springUtil;
+	private final RocketMqTemplate rocketMqTemplate;
 
-	private final RemoveDomainEventTask removeDomainEventTask;
+	private final TraceUtil traceUtil;
 
-	/**
-	 * 每天凌晨1点执行.
-	 */
-	@Scheduled(cron = "0 0 1 * * ?")
-	public void removeDomainEvent() {
-		try {
-			removeDomainEventTask.execute(springUtil.getServiceId());
-		}
-		catch (Exception e) {
-			log.error("定时执行删除前三个月的领域事件任务失败，错误信息：{}", e.getMessage(), e);
-		}
+	@Lock4j(name = "REMOVE_DOMAIN_EVENT", key = "#serviceId", timeout = 100, retry = 0)
+	public void execute(String serviceId) {
+		rocketMqTemplate.sendAsyncMessage(LAOKOU_DOMAIN_EVENT_TOPIC, new DomainEvent(serviceId, REMOVE),
+				traceUtil.getTraceId(), traceUtil.getSpanId());
 	}
 
 }
