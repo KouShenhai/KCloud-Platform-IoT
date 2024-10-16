@@ -35,6 +35,7 @@ import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
 import static org.laokou.common.i18n.common.exception.StatusCode.TOO_MANY_REQUESTS;
 
 /**
@@ -59,7 +60,7 @@ public class LockAop {
 		String name = lock4j.name();
 		String key = lock4j.key();
 		if (StringUtil.isNotEmpty(key) && key.contains("#")) {
-			key = name + "_" + SpringExpressionUtil.parse(key, parameterNames, joinPoint.getArgs(), String.class);
+			key = name + UNDER + SpringExpressionUtil.parse(key, parameterNames, joinPoint.getArgs(), String.class);
 		}
 		else {
 			key = name;
