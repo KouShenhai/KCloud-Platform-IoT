@@ -15,47 +15,22 @@
  *
  */
 
-package org.laokou.common.lock.annotation;
+package org.laokou.common.domain.entity;
 
-import org.laokou.common.lock.Type;
-
-import java.lang.annotation.*;
-
-import static org.laokou.common.lock.Type.LOCK;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * 分布式式锁注解.
- *
  * @author laokou
  */
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Lock4j {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class DomainEvent {
 
-	/**
-	 * 名称.
-	 */
-	String name();
+	private String serviceId;
 
-	/**
-	 * key支持表达式.
-	 */
-	String key() default "";
-
-	/**
-	 * 获取锁超时时间 单位：毫秒 结合业务,建议该时间不宜设置过长,特别在并发高的情况下.
-	 */
-	long timeout() default 50;
-
-	/**
-	 * 分布式锁类型.
-	 */
-	Type type() default LOCK;
-
-	/**
-	 * 重试次数，默认3次.
-	 */
-	int retry() default 3;
+	private Type type;
 
 }

@@ -17,7 +17,6 @@
 
 package org.laokou.admin;
 
-import com.aizuda.snailjob.client.starter.EnableSnailJob;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
@@ -37,6 +36,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.net.InetAddress;
@@ -49,8 +49,8 @@ import java.net.InetAddress;
 @EnableWarmUp
 @EnableRouter
 @EnableSecurity
-@EnableSnailJob
 @EnableApiSecret
+@EnableScheduling
 @EnableFeignClients
 @EnableTaskExecutor
 @EnableRedisRepository

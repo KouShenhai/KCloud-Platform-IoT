@@ -15,47 +15,18 @@
  *
  */
 
-package org.laokou.common.lock.annotation;
-
-import org.laokou.common.lock.Type;
-
-import java.lang.annotation.*;
-
-import static org.laokou.common.lock.Type.LOCK;
+package org.laokou.common.domain.constant;
 
 /**
- * 分布式式锁注解.
- *
  * @author laokou
  */
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Lock4j {
+public final class MqConstant {
 
-	/**
-	 * 名称.
-	 */
-	String name();
+	public static final String LAOKOU_DOMAIN_EVENT_TOPIC = "laokou_domain_event_topic";
 
-	/**
-	 * key支持表达式.
-	 */
-	String key() default "";
+	public static final String LAOKOU_DOMAIN_EVENT_CONSUMER_GROUP = "laokou_domain_event_consumer_group";
 
-	/**
-	 * 获取锁超时时间 单位：毫秒 结合业务,建议该时间不宜设置过长,特别在并发高的情况下.
-	 */
-	long timeout() default 50;
-
-	/**
-	 * 分布式锁类型.
-	 */
-	Type type() default LOCK;
-
-	/**
-	 * 重试次数，默认3次.
-	 */
-	int retry() default 3;
+	private MqConstant() {
+	}
 
 }
