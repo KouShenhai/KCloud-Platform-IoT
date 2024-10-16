@@ -41,6 +41,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -78,7 +79,8 @@ class Elasticsearch8ApiTest extends CommonTest {
 	void testCreateIndexApi() {
 		elasticsearchTemplate.createIndex("laokou_res_1", "laokou_res", Resource.class);
 		elasticsearchTemplate.createIndex("laokou_pro_1", "laokou_pro", Project.class);
-		elasticsearchTemplate.asyncCreateIndex("laokou_resp_1", "laokou_resp", Resp.class);
+		elasticsearchTemplate.asyncCreateIndex("laokou_resp_1", "laokou_resp", Resp.class,
+				Executors.newSingleThreadExecutor());
 	}
 
 	@Test
@@ -88,7 +90,8 @@ class Elasticsearch8ApiTest extends CommonTest {
 
 	@Test
 	void testAsyncBulkCreateDocumentApi() {
-		elasticsearchTemplate.asyncBulkCreateDocument("laokou_res_1", Map.of("555", new Resource("6666")));
+		elasticsearchTemplate.asyncBulkCreateDocument("laokou_res_1", Map.of("555", new Resource("6666")),
+				Executors.newSingleThreadExecutor());
 	}
 
 	@Test
