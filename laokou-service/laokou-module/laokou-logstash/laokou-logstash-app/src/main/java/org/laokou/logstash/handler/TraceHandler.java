@@ -38,6 +38,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
@@ -53,6 +54,8 @@ public class TraceHandler {
 
 	private static final String TRACE = "laokou_trace";
 
+	private final Executor executor;
+
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_trace_consumer_group")
@@ -65,8 +68,10 @@ public class TraceHandler {
 				.stream()
 				.collect(Collectors.toMap(TraceIndex::getId, traceIndex -> traceIndex));
 			if (MapUtil.isNotEmpty(dataMap)) {
-				elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE, TraceIndex.class)
-					.thenAcceptAsync(res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap));
+				elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE, TraceIndex.class, executor)
+					.thenAcceptAsync(
+							res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap, executor),
+							executor);
 			}
 		}
 		catch (Throwable e) {
@@ -82,7 +87,7 @@ public class TraceHandler {
 			TraceIndex traceIndex = JacksonUtil.toBean(str, TraceIndex.class);
 			String traceId = traceIndex.getTraceId();
 			String spanId = traceIndex.getSpanId();
-			if (isTrace(traceId, spanId)) {
+			if (isTraceLog(traceId, spanId)) {
 				traceIndex.setId(String.valueOf(IdGenerator.defaultSnowflakeId()));
 				return traceIndex;
 			}
@@ -93,11 +98,11 @@ public class TraceHandler {
 		return null;
 	}
 
-	private boolean isTrace(String traceId, String spanId) {
-		return isTrace(traceId) && isTrace(spanId);
+	private boolean isTraceLog(String traceId, String spanId) {
+		return isTraceLog(traceId) && isTraceLog(spanId);
 	}
 
-	private boolean isTrace(String str) {
+	private boolean isTraceLog(String str) {
 		return StringUtil.isNotEmpty(str) && !str.startsWith("${") && !str.endsWith("}");
 	}
 

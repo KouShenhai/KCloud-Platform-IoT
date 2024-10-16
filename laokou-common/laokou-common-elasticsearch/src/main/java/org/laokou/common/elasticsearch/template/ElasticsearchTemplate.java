@@ -51,6 +51,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.COMMA;
@@ -70,14 +71,15 @@ public class ElasticsearchTemplate {
 	private final ElasticsearchAsyncClient elasticsearchAsyncClient;
 
 	@SneakyThrows
-	public <TDocument> CompletableFuture<Boolean> asyncCreateIndex(String name, String alias, Class<TDocument> clazz) {
-		return asyncExist(List.of(name)).thenApplyAsync(resp -> {
+	public <TDocument> CompletableFuture<Boolean> asyncCreateIndex(String name, String alias, Class<TDocument> clazz,
+			Executor executor) {
+		return asyncExist(List.of(name), executor).thenApplyAsync(resp -> {
 			if (resp) {
 				log.info("索引：{} -> 创建索引失败，索引已存在", name);
 				return Boolean.FALSE;
 			}
 			return Boolean.TRUE;
-		}).thenApplyAsync(resp -> {
+		}, executor).thenApplyAsync(resp -> {
 			if (resp) {
 				Document document = convert(name, alias, clazz);
 				elasticsearchAsyncClient.indices().create(getCreateIndexRequest(document)).thenApplyAsync(response -> {
@@ -92,7 +94,7 @@ public class ElasticsearchTemplate {
 				});
 			}
 			return Boolean.FALSE;
-		});
+		}, executor);
 	}
 
 	@SneakyThrows
@@ -179,7 +181,8 @@ public class ElasticsearchTemplate {
 	}
 
 	@SneakyThrows
-	public CompletableFuture<Boolean> asyncBulkCreateDocument(String index, Map<String, Object> map) {
+	public CompletableFuture<Boolean> asyncBulkCreateDocument(String index, Map<String, Object> map,
+			Executor executor) {
 		return elasticsearchAsyncClient
 			.bulk(bulk -> bulk.index(index).refresh(Refresh.True).operations(getBulkOperations(map)))
 			.thenApplyAsync(resp -> {
@@ -191,7 +194,7 @@ public class ElasticsearchTemplate {
 					log.info("索引：{} -> 异步批量同步索引成功", index);
 					return Boolean.TRUE;
 				}
-			});
+			}, executor);
 	}
 
 	@SneakyThrows
@@ -242,8 +245,10 @@ public class ElasticsearchTemplate {
 		}
 	}
 
-	public CompletableFuture<Boolean> asyncExist(List<String> names) {
-		return elasticsearchAsyncClient.indices().exists(getExists(names)).thenApplyAsync(BooleanResponse::value);
+	public CompletableFuture<Boolean> asyncExist(List<String> names, Executor executor) {
+		return elasticsearchAsyncClient.indices()
+			.exists(getExists(names))
+			.thenApplyAsync(BooleanResponse::value, executor);
 	}
 
 	private SearchRequest getSearchRequest(List<String> names, Search search) {
