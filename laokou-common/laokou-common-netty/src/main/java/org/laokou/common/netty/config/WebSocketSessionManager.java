@@ -17,42 +17,35 @@
 
 package org.laokou.common.netty.config;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import io.netty.channel.Channel;
 import org.laokou.common.i18n.utils.StringUtil;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author laokou
  */
-public final class WebSocketSession {
+public final class WebSocketSessionManager {
 
-	private static final Cache<String, Channel> CLIENT_CACHE = Caffeine.newBuilder()
-		.expireAfterAccess(3600, SECONDS)
-		.initialCapacity(1024)
-		.build();
+	private static final Map<String, Channel> CLIENT_CACHE = new ConcurrentHashMap<>();
 
-	private static final Cache<String, String> CHANNEL_CACHE = Caffeine.newBuilder()
-		.expireAfterAccess(3600, SECONDS)
-		.initialCapacity(1024)
-		.build();
+	private static final Map<String, String> CHANNEL_CACHE = new ConcurrentHashMap<>();
 
-	public static void put(String clientId, Channel channel) {
+	public static void add(String clientId, Channel channel) {
 		CLIENT_CACHE.put(clientId, channel);
 		CHANNEL_CACHE.put(channel.id().asLongText(), clientId);
 	}
 
 	public static Channel get(String clientId) {
-		return CLIENT_CACHE.getIfPresent(clientId);
+		return CLIENT_CACHE.get(clientId);
 	}
 
 	public static void remove(String channelId) {
-		String clientId = CHANNEL_CACHE.getIfPresent(channelId);
+		String clientId = CHANNEL_CACHE.get(channelId);
 		if (StringUtil.isNotEmpty(clientId)) {
-			CLIENT_CACHE.invalidate(clientId);
-			CHANNEL_CACHE.invalidate(channelId);
+			CLIENT_CACHE.remove(clientId);
+			CHANNEL_CACHE.remove(channelId);
 		}
 	}
 

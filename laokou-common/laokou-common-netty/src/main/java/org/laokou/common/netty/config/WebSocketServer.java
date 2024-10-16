@@ -69,7 +69,7 @@ public class WebSocketServer extends AbstractServer {
 
 	@Override
 	public void send(String clientId, Object obj) {
-		Channel channel = WebSocketSession.get(clientId);
+		Channel channel = WebSocketSessionManager.get(clientId);
 		if (ObjectUtil.isNotNull(channel)) {
 			if (channel.isActive() && channel.isWritable()) {
 				channel.writeAndFlush(obj);
