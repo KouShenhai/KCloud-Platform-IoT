@@ -23,10 +23,11 @@ import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
-import org.laokou.common.trace.utils.MDCUtil;
+import org.laokou.common.core.utils.MDCUtil;
 
 import java.nio.charset.StandardCharsets;
 
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
 import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
@@ -55,7 +56,7 @@ public abstract class AbstractDLQHandler implements RocketMQListener<MessageExt>
 				rocketMqTemplate.sendAsyncMessage(topic, tag, payload, traceId, spanId);
 			}
 			else {
-				rocketMqTemplate.sendAsyncMessage(topic, payload, traceId, spanId);
+				rocketMqTemplate.sendAsyncMessage(topic, EMPTY, payload, traceId, spanId);
 			}
 		}
 		finally {

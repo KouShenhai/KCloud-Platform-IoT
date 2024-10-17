@@ -64,6 +64,10 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.tenantId = tenantId;
 	}
 
+	public DefaultDomainEvent(String serviceId) {
+		super.serviceId = serviceId;
+	}
+
 	@Override
 	protected void generatorId() {
 		super.id = System.currentTimeMillis();
