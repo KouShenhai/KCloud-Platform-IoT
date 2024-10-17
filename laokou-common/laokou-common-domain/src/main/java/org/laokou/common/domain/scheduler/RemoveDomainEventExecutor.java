@@ -26,19 +26,20 @@ import org.springframework.stereotype.Component;
 
 import static org.laokou.common.domain.constant.MqConstant.LAOKOU_DOMAIN_EVENT_TOPIC;
 import static org.laokou.common.domain.entity.Type.REMOVE;
+import static org.laokou.common.lock.Type.FENCED_LOCK;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class RemoveDomainEventTask {
+public class RemoveDomainEventExecutor {
 
 	private final RocketMqTemplate rocketMqTemplate;
 
 	private final TraceUtil traceUtil;
 
-	@Lock4j(name = "REMOVE_DOMAIN_EVENT", key = "#serviceId", timeout = 100, retry = 0)
+	@Lock4j(name = "REMOVE_DOMAIN_EVENT", key = "#serviceId", timeout = 100, retry = 0, type = FENCED_LOCK)
 	public void execute(String serviceId) {
 		rocketMqTemplate.sendAsyncMessage(LAOKOU_DOMAIN_EVENT_TOPIC, new DomainEvent(serviceId, REMOVE),
 				traceUtil.getTraceId(), traceUtil.getSpanId());

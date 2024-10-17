@@ -33,7 +33,7 @@ public class DomainEventScheduler {
 
 	private final SpringUtil springUtil;
 
-	private final RemoveDomainEventTask removeDomainEventTask;
+	private final RemoveDomainEventExecutor removeDomainEventExecutor;
 
 	/**
 	 * 每天凌晨1点执行.
@@ -41,7 +41,7 @@ public class DomainEventScheduler {
 	@Scheduled(cron = "0 0 1 * * ?")
 	public void removeDomainEvent() {
 		try {
-			removeDomainEventTask.execute(springUtil.getServiceId());
+			removeDomainEventExecutor.execute(springUtil.getServiceId());
 		}
 		catch (Exception e) {
 			log.error("定时执行删除前三个月的领域事件任务失败，错误信息：{}", e.getMessage(), e);
