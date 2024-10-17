@@ -25,7 +25,7 @@ import {JSEncrypt} from 'jsencrypt';
 import {v7 as uuidV7} from 'uuid';
 // @ts-ignore
 import {getTenantIdByDomainNameV3, listTenantOptionV3} from "@/services/auth/tenant"
-import {ProFormInstance, ProFormSelect} from "@ant-design/pro-form/lib"
+import {ProFormInstance, ProFormSelect} from "@ant-design/pro-form"
 // @ts-ignore
 import {clearToken, setToken} from "@/access"
 // @ts-ignore
