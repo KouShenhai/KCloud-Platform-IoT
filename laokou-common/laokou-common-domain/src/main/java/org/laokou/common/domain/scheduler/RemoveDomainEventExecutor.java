@@ -18,14 +18,14 @@
 package org.laokou.common.domain.scheduler;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.domain.entity.DomainEvent;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.common.trace.utils.TraceUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.domain.constant.MqConstant.LAOKOU_DOMAIN_EVENT_TOPIC;
-import static org.laokou.common.domain.entity.Type.REMOVE;
+import static org.laokou.common.domain.constant.MqConstant.REMOVE_TAG;
 import static org.laokou.common.lock.Type.FENCED_LOCK;
 
 /**
@@ -41,7 +41,7 @@ public class RemoveDomainEventExecutor {
 
 	@Lock4j(name = "REMOVE_DOMAIN_EVENT", key = "#serviceId", timeout = 100, retry = 0, type = FENCED_LOCK)
 	public void execute(String serviceId) {
-		rocketMqTemplate.sendAsyncMessage(LAOKOU_DOMAIN_EVENT_TOPIC, new DomainEvent(serviceId, REMOVE),
+		rocketMqTemplate.sendAsyncMessage(LAOKOU_DOMAIN_EVENT_TOPIC, REMOVE_TAG, new DefaultDomainEvent(serviceId),
 				traceUtil.getTraceId(), traceUtil.getSpanId());
 	}
 

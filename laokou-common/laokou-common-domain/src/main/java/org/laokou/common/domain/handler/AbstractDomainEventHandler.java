@@ -23,7 +23,7 @@ import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
-import org.laokou.common.trace.utils.MDCUtil;
+import org.laokou.common.core.utils.MDCUtil;
 
 import java.nio.charset.StandardCharsets;
 

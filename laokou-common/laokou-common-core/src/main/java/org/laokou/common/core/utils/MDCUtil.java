@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.trace.utils;
+package org.laokou.common.core.utils;
 
 import org.slf4j.MDC;
 
