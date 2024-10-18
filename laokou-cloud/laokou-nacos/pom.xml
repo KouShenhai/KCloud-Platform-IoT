@@ -43,7 +43,7 @@
     <!--grpc版本-->
     <grpc.version>1.68.0</grpc.version>
     <!--error_prone_annotations版本-->
-    <error_prone_annotations.version>2.33.0</error_prone_annotations.version>
+    <error_prone_annotations.version>2.34.0</error_prone_annotations.version>
     <!--hessian版本-->
     <hessian.version>3.5.5</hessian.version>
   </properties>
