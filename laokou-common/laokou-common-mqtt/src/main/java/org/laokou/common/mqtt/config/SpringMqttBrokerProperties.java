@@ -33,7 +33,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "spring.mqtt-broker")
 public class SpringMqttBrokerProperties implements InitializingBean {
 
-	private Boolean enabled = false;
+	private boolean enabled = false;
 
 	private Map<String, MqttBrokerProperties> configs = Map.of("default", new MqttBrokerProperties());
 

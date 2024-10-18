@@ -1,0 +1,11 @@
+{
+  "groups": [],
+  "properties": [
+    {
+      "name": "sms.gyy.enabled",
+      "type": "java.lang.Boolean",
+      "description": "true开启，false关闭，默认为true.",
+      "defaultValue": true
+    }
+  ]
+}
