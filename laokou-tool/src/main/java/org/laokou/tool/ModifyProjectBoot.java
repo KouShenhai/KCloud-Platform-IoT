@@ -98,15 +98,15 @@ public class ModifyProjectBoot {
 
 			@Override
 			public FileVisitResult preVisitDirectory(Path path, BasicFileAttributes attrs) {
-				boolean isExecute = false;
+				boolean isExclude = false;
 				String dir = path.toString();
 				for (String module : MODULES) {
 					if (dir.contains(module)) {
-						isExecute = true;
+						isExclude = true;
 						break;
 					}
 				}
-				if (isExecute || count++ < 1) {
+				if (isExclude || count++ < 1) {
 					return FileVisitResult.CONTINUE;
 				}
 				return FileVisitResult.SKIP_SUBTREE;

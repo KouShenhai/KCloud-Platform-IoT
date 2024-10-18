@@ -29,8 +29,6 @@
     ,status
     ,mail
     ,mobile
-    ,dept_id
-    ,dept_path
     ,tenant_id
     from boot_sys_user
     <where>

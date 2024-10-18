@@ -1,0 +1,30 @@
+server:
+  port: 9032
+
+spring:
+  application:
+    name: laokou-sample-websocket
+  tcp-server:
+    enabled: false
+  websocket-server:
+    enabled: true
+    boss-core-size: 2
+    core-pool-size: 16
+    worker-core-size: 16
+    ip: 0.0.0.0
+    port: 1112
+    service-id: ${spring.application.name}-server
+  task-execution:
+    enabled: false
+    fork-join-pool:
+      core-size: 17
+    pool:
+      core-size: 17
+      allow-core-thread-timeout: true
+
+rocketmq:
+  producer:
+    group: laokou_producer_group
+  name-server: rocketmq-namesrv:9876
+  consumer:
+    pull-batch-size: 16

@@ -12,4 +12,19 @@
     <artifactId>laokou-sample-websocket</artifactId>
     <version>3.4.0</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-rocketmq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-netty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

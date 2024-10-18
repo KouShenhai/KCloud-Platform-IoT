@@ -30,17 +30,18 @@ import org.laokou.admin.cluster.convertor.ClusterConvertor;
 import org.laokou.admin.cluster.gatewayimpl.database.dataobject.ClusterDO;
 
 /**
-*
-* 集群网关实现.
-*
-* @author laokou
-*/
+ *
+ * 集群网关实现.
+ *
+ * @author laokou
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class ClusterGatewayImpl implements ClusterGateway {
 
 	private final ClusterMapper clusterMapper;
+
 	private final TransactionalUtil transactionalUtil;
 
 	public void create(ClusterE clusterE) {
