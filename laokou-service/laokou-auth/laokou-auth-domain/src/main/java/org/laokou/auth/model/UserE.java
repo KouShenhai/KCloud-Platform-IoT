@@ -76,19 +76,9 @@ public class UserE {
 	private String mobile;
 
 	/**
-	 * 部门ID.
-	 */
-	private Long deptId;
-
-	/**
 	 * 租户ID.
 	 */
 	private Long tenantId;
-
-	/**
-	 * 部门PATH.
-	 */
-	private String deptPath;
 
 	public UserE(String username, String mail, String mobile, Long tenantId) {
 		this.username = AESUtil.encrypt(username);

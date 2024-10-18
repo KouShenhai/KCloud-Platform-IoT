@@ -34,11 +34,6 @@ import java.time.Instant;
 public abstract class BaseDO implements Serializable {
 
 	/**
-	 * ID.
-	 */
-	public static final String PRIMARY_KEY = "id";
-
-	/**
 	 * 创建人。
 	 */
 	public static final String CREATOR = "creator";
@@ -67,16 +62,6 @@ public abstract class BaseDO implements Serializable {
 	 * 版本.
 	 */
 	public static final String VERSION = "version";
-
-	/**
-	 * 部门ID.
-	 */
-	public static final String DEPT_ID = "deptId";
-
-	/**
-	 * 部门PATH.
-	 */
-	public static final String DEPT_PATH = "deptPath";
 
 	/**
 	 * 租户ID.
@@ -134,18 +119,6 @@ public abstract class BaseDO implements Serializable {
 	@Version
 	@TableField(fill = FieldFill.INSERT)
 	protected Integer version;
-
-	/**
-	 * 部门ID.
-	 */
-	@TableField(fill = FieldFill.INSERT)
-	protected Long deptId;
-
-	/**
-	 * 部门PATH.
-	 */
-	@TableField(fill = FieldFill.INSERT)
-	protected String deptPath;
 
 	/**
 	 * 租户ID.

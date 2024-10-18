@@ -32,8 +32,6 @@ public class ApiLogConvertor {
 		apiLogDO.setEditor(callApiEvent.getEditor());
 		apiLogDO.setCreateTime(callApiEvent.getCreateTime());
 		apiLogDO.setUpdateTime(callApiEvent.getUpdateTime());
-		apiLogDO.setDeptId(callApiEvent.getDeptId());
-		apiLogDO.setDeptPath(callApiEvent.getDeptPath());
 		apiLogDO.setTenantId(callApiEvent.getTenantId());
 		apiLogDO.setCode(callApiEvent.getCode());
 		apiLogDO.setName(callApiEvent.getName());
