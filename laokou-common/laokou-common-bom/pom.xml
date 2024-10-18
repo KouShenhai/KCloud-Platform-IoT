@@ -102,7 +102,7 @@
         <!--knife4j版本-->
         <knife4j.version>4.5.0</knife4j.version>
         <!--taos-jdbcdriver版本-->
-        <taos-jdbcdriver.version>3.3.3</taos-jdbcdriver.version>
+        <taos-jdbcdriver.version>3.4.0</taos-jdbcdriver.version>
         <!--fury-core版本-->
         <fury-core.version>0.7.1</fury-core.version>
         <!--browscap-java版本-->
