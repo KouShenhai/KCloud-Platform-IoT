@@ -37,7 +37,7 @@ public class DeviceConvertor {
 		else {
 			deviceDO.setId(deviceE.getId());
 		}
-		deviceDO.setKey(deviceE.getKey());
+		deviceDO.setSn(deviceE.getSn());
 		deviceDO.setName(deviceE.getName());
 		deviceDO.setStatus(deviceE.getStatus());
 		return deviceDO;
@@ -45,7 +45,7 @@ public class DeviceConvertor {
 
 	public static DeviceCO toClientObject(DeviceDO deviceDO) {
 		DeviceCO deviceCO = new DeviceCO();
-		deviceCO.setKey(deviceDO.getKey());
+		deviceCO.setSn(deviceDO.getSn());
 		deviceCO.setName(deviceDO.getName());
 		deviceCO.setStatus(deviceDO.getStatus());
 		return deviceCO;
@@ -53,7 +53,7 @@ public class DeviceConvertor {
 
 	public static DeviceE toEntity(DeviceCO deviceCO) {
 		DeviceE deviceE = new DeviceE();
-		deviceE.setKey(deviceCO.getKey());
+		deviceE.setSn(deviceCO.getSn());
 		deviceE.setName(deviceCO.getName());
 		deviceE.setStatus(deviceCO.getStatus());
 		return deviceE;

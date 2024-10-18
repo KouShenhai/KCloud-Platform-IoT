@@ -34,9 +34,9 @@ public class DeviceE {
 	private Long id;
 
 	/**
-	 * 设备标识.
+	 * 设备序列号.
 	 */
-	private String key;
+	private String sn;
 
 	/**
 	 * 设备名称.

@@ -32,9 +32,9 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 public class DeviceDO extends BaseDO {
 
 	/**
-	 * 设备标识.
+	 * 设备序列号.
 	 */
-	private String key;
+	private String sn;
 
 	/**
 	 * 设备名称.

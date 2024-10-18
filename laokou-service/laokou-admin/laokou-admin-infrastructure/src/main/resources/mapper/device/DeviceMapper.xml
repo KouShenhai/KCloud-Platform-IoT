@@ -23,7 +23,7 @@
 	<select id="selectObjectPage"
 			resultType="org.laokou.admin.device.gatewayimpl.database.dataobject.DeviceDO">
 		SELECT id,
-                 key,
+                 sn,
                  name,
                  status,
              create_time
