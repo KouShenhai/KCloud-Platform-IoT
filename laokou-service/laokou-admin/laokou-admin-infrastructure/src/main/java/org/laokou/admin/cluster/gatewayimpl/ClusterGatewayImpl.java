@@ -1,4 +1,3 @@
-// @formatter:off
 /*
  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
@@ -16,38 +15,38 @@
  *
  */
 
-package ${packageName}.${instanceName}.gatewayimpl;
+package org.laokou.admin.cluster.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import ${packageName}.${instanceName}.model.${className}E;
+import org.laokou.admin.cluster.model.ClusterE;
 import org.springframework.stereotype.Component;
-import ${packageName}.${instanceName}.gateway.${className}Gateway;
-import ${packageName}.${instanceName}.gatewayimpl.database.${className}Mapper;
+import org.laokou.admin.cluster.gateway.ClusterGateway;
+import org.laokou.admin.cluster.gatewayimpl.database.ClusterMapper;
 import java.util.Arrays;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.LogUtil;
-import ${packageName}.${instanceName}.convertor.${className}Convertor;
-import ${packageName}.${instanceName}.gatewayimpl.database.dataobject.${className}DO;
+import org.laokou.admin.cluster.convertor.ClusterConvertor;
+import org.laokou.admin.cluster.gatewayimpl.database.dataobject.ClusterDO;
 
 /**
 *
-* ${comment}网关实现.
+* 集群网关实现.
 *
-* @author ${author}
+* @author laokou
 */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ${className}GatewayImpl implements ${className}Gateway {
+public class ClusterGatewayImpl implements ClusterGateway {
 
-	private final ${className}Mapper ${instanceName}Mapper;
+	private final ClusterMapper clusterMapper;
 	private final TransactionalUtil transactionalUtil;
 
-	public void create(${className}E ${instanceName}E) {
+	public void create(ClusterE clusterE) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				${instanceName}Mapper.insert(${className}Convertor.toDataObject(${instanceName}E, true));
+				clusterMapper.insert(ClusterConvertor.toDataObject(clusterE, true));
 			}
 			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
@@ -58,16 +57,16 @@ public class ${className}GatewayImpl implements ${className}Gateway {
 		});
 	}
 
-	public void update(${className}E ${instanceName}E) {
-		${className}DO ${instanceName}DO = ${className}Convertor.toDataObject(${instanceName}E, false);
-		${instanceName}DO.setVersion(${instanceName}Mapper.selectVersion(${instanceName}E.getId()));
-		update(${instanceName}DO);
+	public void update(ClusterE clusterE) {
+		ClusterDO clusterDO = ClusterConvertor.toDataObject(clusterE, false);
+		clusterDO.setVersion(clusterMapper.selectVersion(clusterE.getId()));
+		update(clusterDO);
 	}
 
 	public void delete(Long[] ids) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				${instanceName}Mapper.deleteByIds(Arrays.asList(ids));
+				clusterMapper.deleteByIds(Arrays.asList(ids));
 			}
 			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
@@ -78,10 +77,10 @@ public class ${className}GatewayImpl implements ${className}Gateway {
 		});
 	}
 
-	private void update(${className}DO ${instanceName}DO) {
+	private void update(ClusterDO clusterDO) {
 		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
-				${instanceName}Mapper.updateById(${instanceName}DO);
+				clusterMapper.updateById(clusterDO);
 			}
 			catch (Exception e) {
 				String msg = LogUtil.record(e.getMessage());
@@ -93,4 +92,3 @@ public class ${className}GatewayImpl implements ${className}Gateway {
 	}
 
 }
-// @formatter:on
