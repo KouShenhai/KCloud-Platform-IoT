@@ -39,8 +39,8 @@ public class DeviceCO extends ClientObject {
 	@Schema(name = "ID", description = "ID")
 	private Long id;
 
-	@Schema(name = "设备标识", description = "设备标识")
-	private String key;
+	@Schema(name = "设备序列号", description = "设备序列号")
+	private String sn;
 
 	@Schema(name = "设备名称", description = "设备名称")
 	private String name;

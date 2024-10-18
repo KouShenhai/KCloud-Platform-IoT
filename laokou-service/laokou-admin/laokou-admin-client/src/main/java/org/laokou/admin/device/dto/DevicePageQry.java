@@ -30,9 +30,9 @@ import org.laokou.common.i18n.dto.PageQuery;
 public class DevicePageQry extends PageQuery {
 
 	/**
-	 * 设备标识.
+	 * 设备序列号.
 	 */
-	private String key;
+	private String sn;
 
 	/**
 	 * 设备名称.
