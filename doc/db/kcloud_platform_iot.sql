@@ -12,7 +12,7 @@
  Target Server Version : 160002 (160002)
  File Encoding         : 65001
 
- Date: 18/10/2024 13:30:03
+ Date: 18/10/2024 14:27:30
 */
 
 
@@ -46,7 +46,7 @@ CACHE 1
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
-  "key" varchar(64) COLLATE "pg_catalog"."default" NOT NULL,
+  "sn" varchar(64) COLLATE "pg_catalog"."default" NOT NULL,
   "name" varchar(20) COLLATE "pg_catalog"."default" NOT NULL,
   "status" int2 NOT NULL DEFAULT 0
 )
@@ -59,7 +59,7 @@ COMMENT ON COLUMN "public"."boot_iot_device"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."boot_iot_device"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."boot_iot_device"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_iot_device"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."boot_iot_device"."key" IS '设备标识';
+COMMENT ON COLUMN "public"."boot_iot_device"."sn" IS '设备序列号';
 COMMENT ON COLUMN "public"."boot_iot_device"."name" IS '设备名称';
 COMMENT ON COLUMN "public"."boot_iot_device"."status" IS '设备状态 0在线 1离线';
 COMMENT ON TABLE "public"."boot_iot_device" IS '设备';
