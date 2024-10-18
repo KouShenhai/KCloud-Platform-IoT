@@ -27,10 +27,10 @@ import org.springframework.context.annotation.Bean;
  * @author laokou
  */
 @AutoConfiguration
+@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "sms.gyy", name = "enabled")
 public class SmsAutoConfig {
 
 	@Bean("smsService")
-	@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "sms.gyy", name = "enabled")
 	public SmsService gyySmsServiceImpl(SmsProperties smsProperties) {
 		return new GYYSmsServiceImpl(smsProperties);
 	}

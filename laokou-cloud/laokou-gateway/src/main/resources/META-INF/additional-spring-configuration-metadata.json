@@ -1,0 +1,17 @@
+{
+  "groups": [],
+  "properties": [
+    {
+      "name": "spring.cloud.gateway.ip.black.enabled",
+      "type": "java.lang.Boolean",
+      "description": "true开启，false关闭，默认为false.",
+      "defaultValue": false
+    },
+    {
+      "name": "spring.cloud.gateway.ip.white.enabled",
+      "type": "java.lang.Boolean",
+      "description": "true开启，false关闭，默认为false.",
+      "defaultValue": false
+    }
+  ]
+}
