@@ -122,8 +122,6 @@ public class LogA extends AggregateRoot<Long> {
 		this.userAgent = request.getHeader(USER_AGENT);
 		this.ip = IpUtil.getIpAddr(request);
 		this.address = AddressUtil.getRealAddress(ip);
-		this.deptId = user.getDeptId();
-		this.deptPath = user.getDeptPath();
 		this.tenantId = user.getTenantId();
 		this.createTime = DateUtil.nowInstant();
 		this.updateTime = this.createTime;

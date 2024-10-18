@@ -23,7 +23,7 @@ import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
-import org.laokou.common.core.utils.MDCUtil;
+import org.laokou.common.core.utils.MdcUtil;
 
 import java.nio.charset.StandardCharsets;
 
@@ -46,7 +46,7 @@ public abstract class AbstractDLQHandler implements RocketMQListener<MessageExt>
 	public void onMessage(MessageExt messageExt) {
 		String traceId = messageExt.getProperty(TRACE_ID);
 		String spanId = messageExt.getProperty(SPAN_ID);
-		MDCUtil.put(traceId, spanId);
+		MdcUtil.put(traceId, spanId);
 		String topic = messageExt.getTopic();
 		String tag = messageExt.getTags();
 		Object payload = new String(messageExt.getBody(), StandardCharsets.UTF_8);
@@ -60,7 +60,7 @@ public abstract class AbstractDLQHandler implements RocketMQListener<MessageExt>
 			}
 		}
 		finally {
-			MDCUtil.clear();
+			MdcUtil.clear();
 		}
 	}
 

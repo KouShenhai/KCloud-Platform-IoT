@@ -36,8 +36,6 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 			Instant instant) {
 		generatorId();
 		super.tenantId = aggregateRoot.getTenantId();
-		super.deptId = aggregateRoot.getDeptId();
-		super.deptPath = aggregateRoot.getDeptPath();
 		super.creator = aggregateRoot.getCreator();
 		super.editor = aggregateRoot.getEditor();
 		super.eventType = eventType;

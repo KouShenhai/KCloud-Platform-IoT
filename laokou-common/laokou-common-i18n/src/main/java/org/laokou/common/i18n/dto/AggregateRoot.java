@@ -40,16 +40,6 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	protected ID editor;
 
 	/**
-	 * 部门ID.
-	 */
-	protected ID deptId;
-
-	/**
-	 * 部门PATH.
-	 */
-	protected String deptPath;
-
-	/**
 	 * 租户ID.
 	 */
 	protected ID tenantId;
