@@ -72,7 +72,7 @@
         <!--dynamic-datasource版本-->
         <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
         <!--httpclient5版本-->
-        <httpclient5.version>5.4</httpclient5.version>
+        <httpclient5.version>5.3.1</httpclient5.version>
         <!--hibernate-validator版本-->
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <!--ip2region版本-->
