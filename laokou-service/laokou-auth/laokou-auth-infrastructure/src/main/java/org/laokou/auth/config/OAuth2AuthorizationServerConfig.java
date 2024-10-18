@@ -64,18 +64,17 @@ import java.util.UUID;
 import static org.laokou.common.crypto.utils.RSAUtil.RSA;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
+// @formatter:off
 /**
  * 认证服务器配置. 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}.
  *
  * @author laokou
  */
 @Configuration
-@ConditionalOnProperty(havingValue = "true", matchIfMissing = true,
-		prefix = "spring.security.oauth2.authorization-server", name = "enabled")
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.security.oauth2.authorization-server", name = "enabled")
 class OAuth2AuthorizationServerConfig {
 
-	// @formatter:off
 	/**
 	 * OAuth2AuthorizationServer核心配置.
 	 * @param http http配置

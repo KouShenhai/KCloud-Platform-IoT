@@ -3,16 +3,16 @@
 
  Source Server         : 127.0.0.1
  Source Server Type    : PostgreSQL
- Source Server Version : 160003 (160003)
+ Source Server Version : 160002 (160002)
  Source Host           : 127.0.0.1:5432
  Source Catalog        : kcloud_platform_nacos
  Source Schema         : public
 
  Target Server Type    : PostgreSQL
- Target Server Version : 160003 (160003)
+ Target Server Version : 160002 (160002)
  File Encoding         : 65001
 
- Date: 16/10/2024 23:17:05
+ Date: 18/10/2024 19:19:16
 */
 
 
@@ -87,6 +87,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq6";
 CREATE SEQUENCE "public"."config_info_aggr_id_seq6" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_aggr_id_seq7
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq7";
+CREATE SEQUENCE "public"."config_info_aggr_id_seq7" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -171,6 +182,17 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for config_info_beta_id_seq7
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq7";
+CREATE SEQUENCE "public"."config_info_beta_id_seq7" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for config_info_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq";
@@ -241,6 +263,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq6";
 CREATE SEQUENCE "public"."config_info_id_seq6" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_id_seq7
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_id_seq7";
+CREATE SEQUENCE "public"."config_info_id_seq7" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -325,6 +358,17 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for config_info_tag_id_seq7
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq7";
+CREATE SEQUENCE "public"."config_info_tag_id_seq7" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for config_tags_relation_nid_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq";
@@ -395,6 +439,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq6";
 CREATE SEQUENCE "public"."config_tags_relation_nid_seq6" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_tags_relation_nid_seq7
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq7";
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq7" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -479,6 +534,17 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for group_capacity_id_seq7
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq7";
+CREATE SEQUENCE "public"."group_capacity_id_seq7" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for his_config_info_nid_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq";
@@ -549,6 +615,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq6";
 CREATE SEQUENCE "public"."his_config_info_nid_seq6" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for his_config_info_nid_seq7
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq7";
+CREATE SEQUENCE "public"."his_config_info_nid_seq7" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -633,6 +710,17 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for tenant_capacity_id_seq7
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq7";
+CREATE SEQUENCE "public"."tenant_capacity_id_seq7" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for tenant_info_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq";
@@ -703,6 +791,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq6";
 CREATE SEQUENCE "public"."tenant_info_id_seq6" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for tenant_info_id_seq7
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq7";
+CREATE SEQUENCE "public"."tenant_info_id_seq7" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -1157,6 +1256,24 @@ knife4j:
         service-name: laokou-admin
         context-path: /admin
         order: 2', '4e9b78290343eb4d89e9fd86d9c6774f', '2024-05-25 18:13:10.704', '2024-09-07 16:39:05.047', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway配置', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "POST:https://laokou-flowable/work/task/api/query",
+    "count": 200,
+    "grade": 0,
+    "slowRatioThreshold": 0.1,
+    "minRequestAmount": 5,
+    "timeWindow": 30
+  },
+  {
+    "resource": "POST:https://laokou-flowable/work/definition/api/query",
+    "count": 200,
+    "grade": 0,
+    "slowRatioThreshold": 0.1,
+    "minRequestAmount": 5,
+    "timeWindow": 30
+  }
+]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2023-02-26 15:55:49', '2024-05-03 09:24:56.976', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel degrade rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info" VALUES (59, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
 spring:
   # security
@@ -1205,6 +1322,7 @@ spring:
               - /v3/tokens=laokou-auth,laokou-gateway
   # task
   task-execution:
+    enabled: true
     pool:
       core-size: 33
       keep-alive: 180s
@@ -1311,25 +1429,7 @@ tenant:
 knife4j:
   enable: true
   setting:
-    language: zh_cn', '311c47a9a9005ce2e06804f039d2afd8', '2024-05-25 18:13:33.393', '2024-10-13 17:52:15.51', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "POST:https://laokou-flowable/work/task/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  },
-  {
-    "resource": "POST:https://laokou-flowable/work/definition/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  }
-]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2023-02-26 15:55:49', '2024-05-03 09:24:56.976', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel degrade rule', '', '', 'json', '', '');
+    language: zh_cn', 'fff8ea24d07c20ee79049d314f78da0b', '2024-05-25 18:13:33.393', '2024-10-18 19:18:19.875', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (18, 'application-common-redis.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -2923,317 +3023,6 @@ mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'e337bc2cd1b34ad7fed6aeb632808e16', '2024-05-25 18:13:33.452', '2024-10-16 23:14:38.115', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
-spring:
-  # security
-  security:
-    oauth2:
-      client:
-        registration:
-          default:
-            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-            client-name: OAuth2.1认证
-            client-secret: FpHwIfw4wY92dO
-            client-authentication-method: client_secret_basic
-            authorization-grant-type: client_credentials
-            scope:
-              - read
-              - write
-        provider:
-          default:
-            token-uri: https://gateway:5555/auth/oauth2/token
-            authorization-uri: https://gateway:5555/auth/oauth2/token
-      resource-server:
-        enabled: true
-        authorization-url: https://auth:1111/oauth2/authorize
-        token-url: https://gateway:5555/auth/oauth2/token
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /**/v3/api-docs/**=laokou-gateway
-              - /v3/api-docs/**=laokou-auth,laokou-admin
-              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
-              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
-              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
-              - /error=laokou-admin,laokou-auth
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
-              - /favicon.ico=laokou-gateway
-              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
-              - /v3/secrets=laokou-gateway,laokou-auth
-              - /graceful-shutdown=laokou-auth
-              - /doc.html=laokou-gateway,laokou-auth,laokou-admin
-              - /webjars/**=laokou-auth,laokou-admin,laokou-gateway
-              - /v3/tokens=laokou-auth,laokou-gateway
-            POST:
-              - /v3/captchas=laokou-auth,laokou-gateway
-            DELETE:
-              - /v3/tokens=laokou-auth,laokou-gateway
-  # task
-  task-execution:
-    pool:
-      core-size: 33
-      keep-alive: 180s
-    fork-join-pool:
-      core-size: 33
-  cloud:
-    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
-    openfeign:
-      compression:
-        response:
-          enabled: true
-        request:
-          enabled: true
-      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
-      okhttp:
-        enabled: true
-      circuitbreaker:
-        enabled: true
-      httpclient:
-        enabled: false
-        hc5:
-          enabled: false
-        disable-ssl-validation: true
-      client:
-        config:
-          default:
-            connectTimeout: 120000 #连接超时
-            readTimeout: 120000 #读取超时
-            logger-level: none
-      lazy-attributes-resolution: true
-    # sentinel
-    sentinel:
-      web-context-unify: false
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        dashboard: sentinel:8972
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    gateway:
-      enabled: true
-    health:
-      show-details: always
-  tracing:
-    enabled: true
-    propagation:
-      type: w3c
-    # 采样率 => 100%
-    sampling:
-      probability: 1
-  otlp:
-    tracing:
-      endpoint: http://otel-collector:4318/v1/traces
-      compression: gzip
-      timeout: 10s
-    metrics:
-      export:
-        enabled: false
-  metrics:
-    tags:
-      application: ${spring.application.name}
-
-# server
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
-    threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 256
-    # 每块buffer的空间大小
-    buffer-size: 1024
-    # 分配堆外内存
-    direct-buffers: true
-
-# feign
-feign:
-  sentinel:
-    enabled: true
-    default-rule: default
-    rules:
-      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
-      default:
-        - grade: 2 # 异常数策略
-          count: 1 # 异常数模式下为对应的阈值
-          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
-          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
-          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
-
-# knife4j的增强配置，不需要增强可以不配
-knife4j:
-  enable: true
-  setting:
-    language: zh_cn', 'bdef076362f9e092ec5543440b549317', '2023-01-13 12:16:46', '2024-10-13 17:52:01.908', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
-spring:
-  # security
-  security:
-    oauth2:
-      client:
-        registration:
-          default:
-            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-            client-name: OAuth2.1认证
-            client-secret: FpHwIfw4wY92dO
-            client-authentication-method: client_secret_basic
-            authorization-grant-type: client_credentials
-            scope:
-              - read
-              - write
-        provider:
-          default:
-            token-uri: https://gateway:5555/auth/oauth2/token
-            authorization-uri: https://gateway:5555/auth/oauth2/token
-      resource-server:
-        enabled: true
-        authorization-url: https://auth:1111/oauth2/authorize
-        token-url: https://gateway:5555/auth/oauth2/token
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /**/v3/api-docs/**=laokou-gateway
-              - /v3/api-docs/**=laokou-auth,laokou-admin
-              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
-              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
-              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
-              - /error=laokou-admin,laokou-auth
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
-              - /favicon.ico=laokou-gateway
-              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
-              - /v3/secrets=laokou-gateway,laokou-auth
-              - /graceful-shutdown=laokou-auth
-              - /doc.html=laokou-gateway,laokou-auth,laokou-admin
-              - /webjars/**=laokou-auth,laokou-admin,laokou-gateway
-              - /v3/tokens=laokou-auth,laokou-gateway
-            POST:
-              - /v3/captchas=laokou-auth,laokou-gateway
-            DELETE:
-              - /v3/tokens=laokou-auth,laokou-gateway
-  # task
-  task-execution:
-    pool:
-      core-size: 33
-      keep-alive: 180s
-    fork-join-pool:
-      core-size: 33
-  cloud:
-    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
-    openfeign:
-      compression:
-        response:
-          enabled: true
-        request:
-          enabled: true
-      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
-      okhttp:
-        enabled: true
-      circuitbreaker:
-        enabled: true
-      httpclient:
-        enabled: false
-        hc5:
-          enabled: false
-        disable-ssl-validation: true
-      client:
-        config:
-          default:
-            connectTimeout: 120000 #连接超时
-            readTimeout: 120000 #读取超时
-            logger-level: none
-      lazy-attributes-resolution: true
-    # sentinel
-    sentinel:
-      web-context-unify: false
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        dashboard: sentinel:8972
-
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    gateway:
-      enabled: true
-    health:
-      show-details: always
-  tracing:
-    enabled: true
-    propagation:
-      type: w3c
-    # 采样率 => 100%
-    sampling:
-      probability: 1
-  otlp:
-    tracing:
-      endpoint: http://otel-collector:4318/v1/traces
-      compression: gzip
-      timeout: 10s
-    metrics:
-      export:
-        enabled: false
-  metrics:
-    tags:
-      application: ${spring.application.name}
-
-# server
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
-    threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 256
-    # 每块buffer的空间大小
-    buffer-size: 1024
-    # 分配堆外内存
-    direct-buffers: true
-
-# feign
-feign:
-  sentinel:
-    enabled: true
-    default-rule: default
-    rules:
-      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
-      default:
-        - grade: 2 # 异常数策略
-          count: 1 # 异常数模式下为对应的阈值
-          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
-          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
-          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
-
-# knife4j的增强配置，不需要增强可以不配
-knife4j:
-  enable: false
-  setting:
-    language: zh_cn', 'b4cfc3ad800aafe9b775a0e6eb32e56e', '2024-05-25 18:13:10.622', '2024-10-13 17:52:45.28', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (26, 'router.json', 'LAOKOU_GROUP', '[
   {
     "id": "laokou-auth",
@@ -3390,6 +3179,163 @@ INSERT INTO "public"."config_info" VALUES (58, 'router.json', 'LAOKOU_GROUP', '[
     "order": 1
   }
 ]', 'ed49c55c612fb22e4c6ea7a78e258d0c', '2024-05-25 18:13:33.387', '2024-10-12 00:09:50.962', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '动态路由配置', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
+spring:
+  # security
+  security:
+    oauth2:
+      client:
+        registration:
+          default:
+            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+            client-name: OAuth2.1认证
+            client-secret: FpHwIfw4wY92dO
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: client_credentials
+            scope:
+              - read
+              - write
+        provider:
+          default:
+            token-uri: https://gateway:5555/auth/oauth2/token
+            authorization-uri: https://gateway:5555/auth/oauth2/token
+      resource-server:
+        enabled: true
+        authorization-url: https://auth:1111/oauth2/authorize
+        token-url: https://gateway:5555/auth/oauth2/token
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /**/v3/api-docs/**=laokou-gateway
+              - /v3/api-docs/**=laokou-auth,laokou-admin
+              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
+              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
+              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
+              - /error=laokou-admin,laokou-auth
+              - /v3/tenants/options=laokou-auth,laokou-gateway
+              - /v3/tenants/id=laokou-auth,laokou-gateway
+              - /favicon.ico=laokou-gateway
+              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
+              - /v3/secrets=laokou-gateway,laokou-auth
+              - /graceful-shutdown=laokou-auth
+              - /doc.html=laokou-gateway,laokou-auth,laokou-admin
+              - /webjars/**=laokou-auth,laokou-admin,laokou-gateway
+              - /v3/tokens=laokou-auth,laokou-gateway
+            POST:
+              - /v3/captchas=laokou-auth,laokou-gateway
+            DELETE:
+              - /v3/tokens=laokou-auth,laokou-gateway
+  # task
+  task-execution:
+    enabled: true
+    pool:
+      core-size: 33
+      keep-alive: 180s
+    fork-join-pool:
+      core-size: 33
+  cloud:
+    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
+    openfeign:
+      compression:
+        response:
+          enabled: true
+        request:
+          enabled: true
+      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
+      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
+      okhttp:
+        enabled: true
+      circuitbreaker:
+        enabled: true
+      httpclient:
+        enabled: false
+        hc5:
+          enabled: false
+        disable-ssl-validation: true
+      client:
+        config:
+          default:
+            connectTimeout: 120000 #连接超时
+            readTimeout: 120000 #读取超时
+            logger-level: none
+      lazy-attributes-resolution: true
+    # sentinel
+    sentinel:
+      web-context-unify: false
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        dashboard: sentinel:8972
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+    # 采样率 => 100%
+    sampling:
+      probability: 1
+  otlp:
+    tracing:
+      endpoint: http://otel-collector:4318/v1/traces
+      compression: gzip
+      timeout: 10s
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# server
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 256
+    # 每块buffer的空间大小
+    buffer-size: 1024
+    # 分配堆外内存
+    direct-buffers: true
+
+# feign
+feign:
+  sentinel:
+    enabled: true
+    default-rule: default
+    rules:
+      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
+      default:
+        - grade: 2 # 异常数策略
+          count: 1 # 异常数模式下为对应的阈值
+          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
+          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
+          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
+tenant:
+  domain-names:
+    - laokou.org
+    - laokouyun.org
+    - laokou.org.cn
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: false
+  setting:
+    language: zh_cn', 'c66db97b9a5aa815bebd2afa9f09b7f8', '2024-05-25 18:13:10.622', '2024-10-18 19:18:39.146', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (36, 'router.json', 'LAOKOU_GROUP', '[
   {
     "id": "laokou-auth",
@@ -3530,6 +3476,162 @@ management:
   endpoint:
     health:
       show-details: always', '797a4e0f738fd13b22da52906dd9e80b', '2023-01-16 12:01:23', '2024-10-12 00:14:44.667', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'spring boot admin monitor', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
+spring:
+  # security
+  security:
+    oauth2:
+      client:
+        registration:
+          default:
+            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+            client-name: OAuth2.1认证
+            client-secret: FpHwIfw4wY92dO
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: client_credentials
+            scope:
+              - read
+              - write
+        provider:
+          default:
+            token-uri: https://gateway:5555/auth/oauth2/token
+            authorization-uri: https://gateway:5555/auth/oauth2/token
+      resource-server:
+        enabled: true
+        authorization-url: https://auth:1111/oauth2/authorize
+        token-url: https://gateway:5555/auth/oauth2/token
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /**/v3/api-docs/**=laokou-gateway
+              - /v3/api-docs/**=laokou-auth,laokou-admin
+              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
+              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
+              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
+              - /error=laokou-admin,laokou-auth
+              - /v3/tenants/options=laokou-auth,laokou-gateway
+              - /v3/tenants/id=laokou-auth,laokou-gateway
+              - /favicon.ico=laokou-gateway
+              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
+              - /v3/secrets=laokou-gateway,laokou-auth
+              - /graceful-shutdown=laokou-auth
+              - /doc.html=laokou-gateway,laokou-auth,laokou-admin
+              - /webjars/**=laokou-auth,laokou-admin,laokou-gateway
+              - /v3/tokens=laokou-auth,laokou-gateway
+            POST:
+              - /v3/captchas=laokou-auth,laokou-gateway
+            DELETE:
+              - /v3/tokens=laokou-auth,laokou-gateway
+  # task
+  task-execution:
+    enabled: true
+    pool:
+      core-size: 33
+      keep-alive: 180s
+    fork-join-pool:
+      core-size: 33
+  cloud:
+    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
+    openfeign:
+      compression:
+        response:
+          enabled: true
+        request:
+          enabled: true
+      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
+      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
+      okhttp:
+        enabled: true
+      circuitbreaker:
+        enabled: true
+      httpclient:
+        enabled: false
+        hc5:
+          enabled: false
+        disable-ssl-validation: true
+      client:
+        config:
+          default:
+            connectTimeout: 120000 #连接超时
+            readTimeout: 120000 #读取超时
+            logger-level: none
+      lazy-attributes-resolution: true
+    # sentinel
+    sentinel:
+      web-context-unify: false
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        dashboard: sentinel:8972
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+    # 采样率 => 100%
+    sampling:
+      probability: 1
+  otlp:
+    tracing:
+      endpoint: http://otel-collector:4318/v1/traces
+      compression: gzip
+      timeout: 10s
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# server
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 256
+    # 每块buffer的空间大小
+    buffer-size: 1024
+    # 分配堆外内存
+    direct-buffers: true
+
+# feign
+feign:
+  sentinel:
+    enabled: true
+    default-rule: default
+    rules:
+      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
+      default:
+        - grade: 2 # 异常数策略
+          count: 1 # 异常数模式下为对应的阈值
+          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
+          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
+          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
+tenant:
+  domain-names:
+    - laokou.org
+    - laokouyun.org
+    - laokou.org.cn
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn', '6cd127e0de4ed6b9333d6087cdd03987', '2023-01-13 12:16:46', '2024-10-18 19:16:55.238', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
@@ -3696,9 +3798,9 @@ INSERT INTO "public"."config_tags_relation" VALUES (1477, 'mail', '', 'applicati
 INSERT INTO "public"."config_tags_relation" VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 11);
 INSERT INTO "public"."config_tags_relation" VALUES (26, 'gateway', '', 'router.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 10);
 INSERT INTO "public"."config_tags_relation" VALUES (82, 'monitor', '', 'application-monitor.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 12);
-INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 14);
 INSERT INTO "public"."config_tags_relation" VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 19);
 INSERT INTO "public"."config_tags_relation" VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 20);
+INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 1);
 
 -- ----------------------------
 -- Table structure for databasechangelog
@@ -3999,6 +4101,13 @@ SELECT setval('"public"."config_info_aggr_id_seq6"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_info_aggr_id_seq7"
+OWNED BY "public"."config_info_aggr"."id";
+SELECT setval('"public"."config_info_aggr_id_seq7"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."config_info_beta_id_seq"
 OWNED BY "public"."config_info_beta"."id";
 SELECT setval('"public"."config_info_beta_id_seq"', 1, false);
@@ -4044,6 +4153,13 @@ SELECT setval('"public"."config_info_beta_id_seq5"', 1, false);
 ALTER SEQUENCE "public"."config_info_beta_id_seq6"
 OWNED BY "public"."config_info_beta"."id";
 SELECT setval('"public"."config_info_beta_id_seq6"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_info_beta_id_seq7"
+OWNED BY "public"."config_info_beta"."id";
+SELECT setval('"public"."config_info_beta_id_seq7"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4097,6 +4213,13 @@ SELECT setval('"public"."config_info_id_seq6"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_info_id_seq7"
+OWNED BY "public"."config_info"."id";
+SELECT setval('"public"."config_info_id_seq7"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."config_info_tag_id_seq"
 OWNED BY "public"."config_info_tag"."id";
 SELECT setval('"public"."config_info_tag_id_seq"', 1, false);
@@ -4142,6 +4265,13 @@ SELECT setval('"public"."config_info_tag_id_seq5"', 1, false);
 ALTER SEQUENCE "public"."config_info_tag_id_seq6"
 OWNED BY "public"."config_info_tag"."id";
 SELECT setval('"public"."config_info_tag_id_seq6"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_info_tag_id_seq7"
+OWNED BY "public"."config_info_tag"."id";
+SELECT setval('"public"."config_info_tag_id_seq7"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4195,6 +4325,13 @@ SELECT setval('"public"."config_tags_relation_nid_seq6"', 20, true);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_tags_relation_nid_seq7"
+OWNED BY "public"."config_tags_relation"."nid";
+SELECT setval('"public"."config_tags_relation_nid_seq7"', 1, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."group_capacity_id_seq"
 OWNED BY "public"."group_capacity"."id";
 SELECT setval('"public"."group_capacity_id_seq"', 1, false);
@@ -4240,6 +4377,13 @@ SELECT setval('"public"."group_capacity_id_seq5"', 1, false);
 ALTER SEQUENCE "public"."group_capacity_id_seq6"
 OWNED BY "public"."group_capacity"."id";
 SELECT setval('"public"."group_capacity_id_seq6"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."group_capacity_id_seq7"
+OWNED BY "public"."group_capacity"."id";
+SELECT setval('"public"."group_capacity_id_seq7"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4293,6 +4437,13 @@ SELECT setval('"public"."his_config_info_nid_seq6"', 39, true);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."his_config_info_nid_seq7"
+OWNED BY "public"."his_config_info"."nid";
+SELECT setval('"public"."his_config_info_nid_seq7"', 3, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."tenant_capacity_id_seq"
 OWNED BY "public"."tenant_capacity"."id";
 SELECT setval('"public"."tenant_capacity_id_seq"', 1, false);
@@ -4338,6 +4489,13 @@ SELECT setval('"public"."tenant_capacity_id_seq5"', 1, false);
 ALTER SEQUENCE "public"."tenant_capacity_id_seq6"
 OWNED BY "public"."tenant_capacity"."id";
 SELECT setval('"public"."tenant_capacity_id_seq6"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."tenant_capacity_id_seq7"
+OWNED BY "public"."tenant_capacity"."id";
+SELECT setval('"public"."tenant_capacity_id_seq7"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4389,9 +4547,16 @@ OWNED BY "public"."tenant_info"."id";
 SELECT setval('"public"."tenant_info_id_seq6"', 1, false);
 
 -- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."tenant_info_id_seq7"
+OWNED BY "public"."tenant_info"."id";
+SELECT setval('"public"."tenant_info_id_seq7"', 1, false);
+
+-- ----------------------------
 -- Auto increment value for config_info
 -- ----------------------------
-SELECT setval('"public"."config_info_id_seq6"', 1, false);
+SELECT setval('"public"."config_info_id_seq7"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info
@@ -4410,7 +4575,7 @@ ALTER TABLE "public"."config_info" ADD CONSTRAINT "config_info_pkey" PRIMARY KEY
 -- ----------------------------
 -- Auto increment value for config_info_aggr
 -- ----------------------------
-SELECT setval('"public"."config_info_aggr_id_seq6"', 1, false);
+SELECT setval('"public"."config_info_aggr_id_seq7"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_aggr
@@ -4430,7 +4595,7 @@ ALTER TABLE "public"."config_info_aggr" ADD CONSTRAINT "config_info_aggr_pkey" P
 -- ----------------------------
 -- Auto increment value for config_info_beta
 -- ----------------------------
-SELECT setval('"public"."config_info_beta_id_seq6"', 1, false);
+SELECT setval('"public"."config_info_beta_id_seq7"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_beta
@@ -4449,7 +4614,7 @@ ALTER TABLE "public"."config_info_beta" ADD CONSTRAINT "config_info_beta_pkey" P
 -- ----------------------------
 -- Auto increment value for config_info_tag
 -- ----------------------------
-SELECT setval('"public"."config_info_tag_id_seq6"', 1, false);
+SELECT setval('"public"."config_info_tag_id_seq7"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_tag
@@ -4469,7 +4634,7 @@ ALTER TABLE "public"."config_info_tag" ADD CONSTRAINT "config_info_tag_pkey" PRI
 -- ----------------------------
 -- Auto increment value for config_tags_relation
 -- ----------------------------
-SELECT setval('"public"."config_tags_relation_nid_seq6"', 20, true);
+SELECT setval('"public"."config_tags_relation_nid_seq7"', 1, true);
 
 -- ----------------------------
 -- Indexes structure for table config_tags_relation
@@ -4496,7 +4661,7 @@ ALTER TABLE "public"."databasechangeloglock" ADD CONSTRAINT "databasechangeloglo
 -- ----------------------------
 -- Auto increment value for group_capacity
 -- ----------------------------
-SELECT setval('"public"."group_capacity_id_seq6"', 1, false);
+SELECT setval('"public"."group_capacity_id_seq7"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table group_capacity
@@ -4513,7 +4678,7 @@ ALTER TABLE "public"."group_capacity" ADD CONSTRAINT "group_capacity_pkey" PRIMA
 -- ----------------------------
 -- Auto increment value for his_config_info
 -- ----------------------------
-SELECT setval('"public"."his_config_info_nid_seq6"', 39, true);
+SELECT setval('"public"."his_config_info_nid_seq7"', 3, true);
 
 -- ----------------------------
 -- Indexes structure for table his_config_info
@@ -4553,7 +4718,7 @@ CREATE UNIQUE INDEX "roles_username_role_idx" ON "public"."roles" USING btree (
 -- ----------------------------
 -- Auto increment value for tenant_capacity
 -- ----------------------------
-SELECT setval('"public"."tenant_capacity_id_seq6"', 1, false);
+SELECT setval('"public"."tenant_capacity_id_seq7"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table tenant_capacity
@@ -4570,7 +4735,7 @@ ALTER TABLE "public"."tenant_capacity" ADD CONSTRAINT "tenant_capacity_pkey" PRI
 -- ----------------------------
 -- Auto increment value for tenant_info
 -- ----------------------------
-SELECT setval('"public"."tenant_info_id_seq6"', 1, false);
+SELECT setval('"public"."tenant_info_id_seq7"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table tenant_info
