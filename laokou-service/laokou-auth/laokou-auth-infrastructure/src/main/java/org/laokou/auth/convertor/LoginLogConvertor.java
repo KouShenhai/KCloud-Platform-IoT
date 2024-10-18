@@ -44,8 +44,6 @@ public class LoginLogConvertor {
 		loginLogDO.setEditor(loginEvent.getEditor());
 		loginLogDO.setCreateTime(loginEvent.getCreateTime());
 		loginLogDO.setUpdateTime(loginEvent.getUpdateTime());
-		loginLogDO.setDeptId(loginEvent.getDeptId());
-		loginLogDO.setDeptPath(loginEvent.getDeptPath());
 		loginLogDO.setTenantId(loginEvent.getTenantId());
 		loginLogDO.setUsername(loginEvent.getUsername());
 		loginLogDO.setIp(loginEvent.getIp());

@@ -23,7 +23,7 @@ import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
-import org.laokou.common.core.utils.MDCUtil;
+import org.laokou.common.core.utils.MdcUtil;
 
 import java.nio.charset.StandardCharsets;
 
@@ -43,7 +43,7 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 	public void onMessage(MessageExt messageExt) {
 		String traceId = messageExt.getProperty(TRACE_ID);
 		String spanId = messageExt.getProperty(SPAN_ID);
-		MDCUtil.put(traceId, spanId);
+		MdcUtil.put(traceId, spanId);
 		try {
 			String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
 			handleDomainEvent(convert(msg));
@@ -54,7 +54,7 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 			throw e;
 		}
 		finally {
-			MDCUtil.clear();
+			MdcUtil.clear();
 		}
 	}
 

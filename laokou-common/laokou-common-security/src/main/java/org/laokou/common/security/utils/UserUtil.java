@@ -20,6 +20,8 @@ package org.laokou.common.security.utils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Set;
+
 /**
  * @author laokou
  */
@@ -55,19 +57,11 @@ public class UserUtil {
 	}
 
 	/**
-	 * 部门ID.
+	 * 部门PATHS.
 	 * @return Long
 	 */
-	public static Long getDeptId() {
-		return user().getDeptId();
-	}
-
-	/**
-	 * 部门PATH.
-	 * @return Long
-	 */
-	public static String getDeptPath() {
-		return user().getDeptPath();
+	public static Set<String> getDeptPaths() {
+		return user().getDeptPaths();
 	}
 
 	/**

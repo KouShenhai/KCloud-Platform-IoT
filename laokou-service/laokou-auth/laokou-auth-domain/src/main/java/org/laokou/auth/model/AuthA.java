@@ -146,8 +146,6 @@ public class AuthA extends AggregateRoot<Long> {
 			this.user = user;
 			this.creator = user.getId();
 			this.editor = user.getId();
-			this.deptId = user.getDeptId();
-			this.deptPath = user.getDeptPath();
 		}
 		else {
 			fail(grantType.getErrorCode());

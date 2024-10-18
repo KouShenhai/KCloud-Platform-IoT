@@ -56,7 +56,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	private static final long serialVersionUID = 3319752558160144611L;
 
 	/**
-	 * 部门PATH集合.
+	 * 部门PATHS.
 	 */
 	private final Set<String> deptPaths;
 
@@ -102,16 +102,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	private transient String password;
 
 	/**
-	 * 部门ID.
-	 */
-	private Long deptId;
-
-	/**
-	 * 部门PATH.
-	 */
-	private String deptPath;
-
-	/**
 	 * 租户ID.
 	 */
 	private Long tenantId;
@@ -128,8 +118,8 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	}
 
 	public UserDetail(Long id, String username, String password, String avatar, Integer superAdmin, Integer status,
-			String mail, String mobile, Long deptId, String deptPath, Set<String> deptPaths, Set<String> permissions,
-			Long tenantId, String sourceName) {
+			String mail, String mobile, Set<String> deptPaths, Set<String> permissions, Long tenantId,
+			String sourceName) {
 		super(id);
 		this.username = username;
 		this.password = password;
@@ -138,8 +128,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		this.status = status;
 		this.mail = mail;
 		this.mobile = mobile;
-		this.deptId = deptId;
-		this.deptPath = deptPath;
 		this.deptPaths = deptPaths;
 		this.permissions = permissions;
 		this.tenantId = tenantId;
@@ -170,12 +158,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (!status.equals(that.status)) {
 			return false;
 		}
-		if (!deptId.equals(that.deptId)) {
-			return false;
-		}
-		if (!deptPath.equals(that.deptPath)) {
-			return false;
-		}
 		if (!deptPaths.equals(that.deptPaths)) {
 			return false;
 		}
@@ -201,8 +183,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		result = 31 * result + avatar.hashCode();
 		result = 31 * result + superAdmin.hashCode();
 		result = 31 * result + status.hashCode();
-		result = 31 * result + deptId.hashCode();
-		result = 31 * result + deptPath.hashCode();
 		result = 31 * result + deptPaths.hashCode();
 		result = 31 * result + permissions.hashCode();
 		result = 31 * result + tenantId.hashCode();

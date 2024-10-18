@@ -83,24 +83,9 @@ public class UserContextHolder {
 		private Long tenantId;
 
 		/**
-		 * 部门PATH.
-		 */
-		private String deptPath;
-
-		/**
-		 * 部门ID.
-		 */
-		private Long deptId;
-
-		/**
 		 * 数据源名称.
 		 */
 		private String sourceName;
-
-		/**
-		 * 令牌.
-		 */
-		private String token;
 
 	}
 

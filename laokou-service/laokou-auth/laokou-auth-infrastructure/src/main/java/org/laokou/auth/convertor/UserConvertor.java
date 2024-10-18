@@ -34,9 +34,8 @@ public class UserConvertor {
 		MenuV menuV = authA.getMenu();
 		DeptV deptV = authA.getDept();
 		return new UserDetail(userE.getId(), userE.getUsername(), userE.getPassword(), userE.getAvatar(),
-				userE.getSuperAdmin(), userE.getStatus(), userE.getMail(), userE.getMobile(), userE.getDeptId(),
-				userE.getDeptPath(), deptV.deptPaths(), menuV.permissions(), userE.getTenantId(),
-				authA.getSourceName());
+				userE.getSuperAdmin(), userE.getStatus(), userE.getMail(), userE.getMobile(), deptV.deptPaths(),
+				menuV.permissions(), userE.getTenantId(), authA.getSourceName());
 	}
 
 	public static UserE toEntity(UserDO userDO) {
@@ -49,17 +48,13 @@ public class UserConvertor {
 		userE.setMail(userDO.getMail());
 		userE.setStatus(userDO.getStatus());
 		userE.setMobile(userDO.getMobile());
-		userE.setDeptId(userDO.getDeptId());
 		userE.setTenantId(userDO.getTenantId());
-		userE.setDeptPath(userDO.getDeptPath());
 		return userE;
 	}
 
 	public static UserDO toDataObject(UserE userE) {
 		UserDO userDO = new UserDO();
 		userDO.setId(userE.getId());
-		userDO.setDeptId(userE.getDeptId());
-		userDO.setDeptPath(userE.getDeptPath());
 		userDO.setTenantId(userE.getTenantId());
 		userDO.setUsername(userE.getUsername());
 		userDO.setPassword(userE.getPassword());

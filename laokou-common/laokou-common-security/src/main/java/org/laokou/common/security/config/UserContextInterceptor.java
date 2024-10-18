@@ -21,13 +21,10 @@ import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.context.UserContextHolder;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
-
-import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
 
 /**
  * @author laokou
@@ -37,7 +34,7 @@ public class UserContextInterceptor implements AsyncHandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		UserContextHolder.set(convert(UserUtil.user(), request));
+		UserContextHolder.set(convert(UserUtil.user()));
 		return true;
 	}
 
@@ -47,17 +44,9 @@ public class UserContextInterceptor implements AsyncHandlerInterceptor {
 		UserContextHolder.clear();
 	}
 
-	private UserContextHolder.User convert(UserDetail userDetail, HttpServletRequest request) {
+	private UserContextHolder.User convert(UserDetail userDetail) {
 		return new UserContextHolder.User(userDetail.getId(), userDetail.getUsername(), userDetail.getTenantId(),
-				userDetail.getDeptPath(), userDetail.getDeptId(), userDetail.getSourceName(), getToken(request));
-	}
-
-	private String getToken(HttpServletRequest request) {
-		String token = request.getHeader(AUTHORIZATION);
-		if (StringUtil.isNotEmpty(token)) {
-			return token.substring(7);
-		}
-		return token;
+				userDetail.getSourceName());
 	}
 
 }

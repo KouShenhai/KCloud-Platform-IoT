@@ -57,8 +57,6 @@ public class DomainEventA extends AggregateRoot<Long> {
 	public DomainEventA(byte[] payload, DefaultDomainEvent domainEvent) {
 		super(domainEvent.getId());
 		this.tenantId = domainEvent.getTenantId();
-		this.deptId = domainEvent.getDeptId();
-		this.deptPath = domainEvent.getDeptPath();
 		this.creator = domainEvent.getCreator();
 		this.editor = domainEvent.getEditor();
 		this.eventType = domainEvent.getEventType().name();

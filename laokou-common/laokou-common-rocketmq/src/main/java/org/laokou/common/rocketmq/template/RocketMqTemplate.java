@@ -24,7 +24,7 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
-import org.laokou.common.core.utils.MDCUtil;
+import org.laokou.common.core.utils.MdcUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.messaging.Message;
@@ -86,7 +86,7 @@ public class RocketMqTemplate {
 	public <T> void sendTransactionMessage(String topic, String tag, T payload, Long transactionId, String traceId,
 			String spanId) {
 		try {
-			MDCUtil.put(traceId, spanId);
+			MdcUtil.put(traceId, spanId);
 			Message<T> message = MessageBuilder.withPayload(payload)
 				.setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId)
 				.setHeader(TRACE_ID, traceId)
@@ -105,14 +105,14 @@ public class RocketMqTemplate {
 			log.error("RocketMQ事务消息发送失败【Tag标签】，报错信息：{}", e.getMessage(), e);
 		}
 		finally {
-			MDCUtil.clear();
+			MdcUtil.clear();
 		}
 	}
 
 	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message, long timeout, String traceId,
 			String spanId) {
 		try {
-			MDCUtil.put(traceId, spanId);
+			MdcUtil.put(traceId, spanId);
 			rocketMQTemplate.asyncSend(getTopicTag(topic, tag), message, new SendCallback() {
 				@Override
 				public void onSuccess(SendResult sendResult) {
@@ -126,7 +126,7 @@ public class RocketMqTemplate {
 			}, timeout);
 		}
 		finally {
-			MDCUtil.clear();
+			MdcUtil.clear();
 		}
 	}
 
