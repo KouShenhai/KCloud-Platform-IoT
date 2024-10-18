@@ -96,7 +96,7 @@
         <!--mockito版本-->
         <mockito.version>5.14.2</mockito.version>
         <!--retry版本-->
-        <retry.version>2.0.9</retry.version>
+        <retry.version>2.0.10</retry.version>
         <!--nacos版本-->
         <nacos.version>2.4.3</nacos.version>
         <!--knife4j版本-->
