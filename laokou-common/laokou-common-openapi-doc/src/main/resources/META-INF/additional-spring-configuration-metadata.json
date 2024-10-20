@@ -2,7 +2,7 @@
   "groups": [],
   "properties": [
     {
-      "name": "openapi-doc.enabled",
+      "name": "springdoc.api-docs.enabled",
       "type": "java.lang.Boolean",
       "description": "true开启，false关闭，默认为true.",
       "defaultValue": true
