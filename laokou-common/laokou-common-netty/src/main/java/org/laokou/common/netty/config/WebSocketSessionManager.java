@@ -28,9 +28,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class WebSocketSessionManager {
 
-	private static final Map<String, Channel> CLIENT_CACHE = new ConcurrentHashMap<>();
+	private static final Map<String, Channel> CLIENT_CACHE = new ConcurrentHashMap<>(4096);
 
-	private static final Map<String, String> CHANNEL_CACHE = new ConcurrentHashMap<>();
+	private static final Map<String, String> CHANNEL_CACHE = new ConcurrentHashMap<>(4096);
 
 	public static void add(String clientId, Channel channel) {
 		CLIENT_CACHE.put(clientId, channel);

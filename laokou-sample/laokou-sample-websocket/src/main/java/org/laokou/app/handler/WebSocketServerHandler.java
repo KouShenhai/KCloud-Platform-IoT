@@ -95,13 +95,14 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 
 	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
 		Channel channel = ctx.channel();
-		String id = frame.text();
-		if (StringUtil.isEmpty(id)) {
+		String clientId = frame.text();
+		if (StringUtil.isEmpty(clientId)) {
 			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
 			ctx.close();
 		}
 		else {
-			WebSocketSessionManager.add(id, channel);
+			log.info("已连接ClientID：{}", clientId);
+			WebSocketSessionManager.add(clientId, channel);
 		}
 	}
 
