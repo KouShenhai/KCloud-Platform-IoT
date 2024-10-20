@@ -24,13 +24,14 @@ import org.laokou.admin.user.dto.UserPageQry;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,10 +45,9 @@ public class UserPageQryExe {
 
 	private final UserMapper userMapper;
 
-	private final Executor executor;
-
 	@SneakyThrows
 	public Result<Page<UserCO>> execute(UserPageQry qry) {
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		CompletableFuture<List<UserDO>> c1 = CompletableFuture
 			.supplyAsync(() -> userMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> userMapper.selectCountByCondition(qry),

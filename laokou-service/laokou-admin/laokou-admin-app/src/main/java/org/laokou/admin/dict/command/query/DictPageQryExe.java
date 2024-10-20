@@ -24,13 +24,14 @@ import org.laokou.admin.dict.dto.DictPageQry;
 import org.laokou.admin.dict.dto.clientobject.DictCO;
 import org.laokou.admin.dict.gatewayimpl.database.DictMapper;
 import org.laokou.admin.dict.gatewayimpl.database.dataobject.DictDO;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,10 +45,9 @@ public class DictPageQryExe {
 
 	private final DictMapper dictMapper;
 
-	private final Executor executor;
-
 	@SneakyThrows
 	public Result<Page<DictCO>> execute(DictPageQry qry) {
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		CompletableFuture<List<DictDO>> c1 = CompletableFuture
 			.supplyAsync(() -> dictMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> dictMapper.selectCountByCondition(qry),

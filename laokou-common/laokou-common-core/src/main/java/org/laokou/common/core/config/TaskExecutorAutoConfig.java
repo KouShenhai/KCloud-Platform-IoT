@@ -27,7 +27,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 /**
  * 异步配置.
@@ -38,7 +37,7 @@ import java.util.concurrent.Executors;
 @AutoConfiguration
 @RequiredArgsConstructor
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.task-execution", name = "enabled")
-public class TtlTaskExecutorAutoConfig {
+public class TaskExecutorAutoConfig {
 
 	/**
 	 * 线程池名称.
@@ -47,11 +46,6 @@ public class TtlTaskExecutorAutoConfig {
 
 	@Bean(value = THREAD_POOL_TASK_EXECUTOR_NAME)
 	public Executor executor(SpringTaskExecutionProperties springTaskExecutionProperties, SpringUtil springUtil) {
-		if (springUtil.isVirtualThread()) {
-			// 虚拟线程
-			return TtlExecutors
-				.getTtlExecutorService(Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE));
-		}
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 		// 核心池大小
 		executor.setCorePoolSize(springTaskExecutionProperties.getPool().getCoreSize());

@@ -24,13 +24,14 @@ import org.laokou.admin.loginLog.dto.LoginLogPageQry;
 import org.laokou.admin.loginLog.dto.clientobject.LoginLogCO;
 import org.laokou.admin.loginLog.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,10 +45,9 @@ public class LoginLogPageQryExe {
 
 	private final LoginLogMapper loginLogMapper;
 
-	private final Executor executor;
-
 	@SneakyThrows
 	public Result<Page<LoginLogCO>> execute(LoginLogPageQry qry) {
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture
 			.supplyAsync(() -> loginLogMapper.selectObjectPage(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> loginLogMapper.selectObjectCount(qry),

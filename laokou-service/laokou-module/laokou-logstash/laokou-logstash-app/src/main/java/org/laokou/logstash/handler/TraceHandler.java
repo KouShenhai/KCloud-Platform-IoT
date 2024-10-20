@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.elasticsearch.annotation.Field;
 import org.laokou.common.elasticsearch.annotation.Index;
 import org.laokou.common.elasticsearch.annotation.Setting;
@@ -38,7 +39,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
@@ -54,12 +55,11 @@ public class TraceHandler {
 
 	private static final String TRACE = "laokou_trace";
 
-	private final Executor executor;
-
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_trace_consumer_group")
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		try {
 			Map<String, Object> dataMap = messages.stream()
 				.map(this::getTraceIndex)

@@ -22,6 +22,7 @@ import lombok.SneakyThrows;
 import org.laokou.admin.domainEvent.convertor.DomainEventConvertor;
 import org.laokou.admin.domainEvent.dto.DomainEventPageQry;
 import org.laokou.admin.domainEvent.dto.clientobject.DomainEventCO;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.domain.entity.DomainEventDO;
 import org.laokou.common.domain.mapper.DomainEventMapper;
 import org.laokou.common.i18n.dto.Page;
@@ -30,7 +31,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,10 +45,9 @@ public class DomainEventPageQryExe {
 
 	private final DomainEventMapper domainEventMapper;
 
-	private final Executor executor;
-
 	@SneakyThrows
 	public Result<Page<DomainEventCO>> execute(DomainEventPageQry qry) {
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		CompletableFuture<List<DomainEventDO>> c1 = CompletableFuture
 			.supplyAsync(() -> domainEventMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> domainEventMapper.selectCountByCondition(qry),

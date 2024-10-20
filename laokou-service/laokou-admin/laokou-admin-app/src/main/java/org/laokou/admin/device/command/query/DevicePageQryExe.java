@@ -18,19 +18,20 @@
 package org.laokou.admin.device.command.query;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.laokou.admin.device.convertor.DeviceConvertor;
 import org.laokou.admin.device.dto.DevicePageQry;
 import org.laokou.admin.device.dto.clientobject.DeviceCO;
 import org.laokou.admin.device.gatewayimpl.database.DeviceMapper;
 import org.laokou.admin.device.gatewayimpl.database.dataobject.DeviceDO;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.admin.device.convertor.DeviceConvertor;
-import lombok.SneakyThrows;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,10 +45,9 @@ public class DevicePageQryExe {
 
 	private final DeviceMapper deviceMapper;
 
-	private final Executor executor;
-
 	@SneakyThrows
 	public Result<Page<DeviceCO>> execute(DevicePageQry qry) {
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		CompletableFuture<List<DeviceDO>> c1 = CompletableFuture
 			.supplyAsync(() -> deviceMapper.selectObjectPage(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> deviceMapper.selectObjectCount(qry), executor);

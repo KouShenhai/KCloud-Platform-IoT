@@ -18,19 +18,20 @@
 package org.laokou.admin.cluster.command.query;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.laokou.admin.cluster.convertor.ClusterConvertor;
 import org.laokou.admin.cluster.dto.ClusterPageQry;
 import org.laokou.admin.cluster.dto.clientobject.ClusterCO;
 import org.laokou.admin.cluster.gatewayimpl.database.ClusterMapper;
 import org.laokou.admin.cluster.gatewayimpl.database.dataobject.ClusterDO;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.admin.cluster.convertor.ClusterConvertor;
-import lombok.SneakyThrows;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,10 +45,9 @@ public class ClusterPageQryExe {
 
 	private final ClusterMapper clusterMapper;
 
-	private final Executor executor;
-
 	@SneakyThrows
 	public Result<Page<ClusterCO>> execute(ClusterPageQry qry) {
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		CompletableFuture<List<ClusterDO>> c1 = CompletableFuture
 			.supplyAsync(() -> clusterMapper.selectObjectPage(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> clusterMapper.selectObjectCount(qry),

@@ -24,13 +24,14 @@ import org.laokou.admin.operateLog.dto.OperateLogPageQry;
 import org.laokou.admin.operateLog.dto.clientobject.OperateLogCO;
 import org.laokou.admin.operateLog.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.operateLog.gatewayimpl.database.dataobject.OperateLogDO;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,10 +45,9 @@ public class OperateLogPageQryExe {
 
 	private final OperateLogMapper operateLogMapper;
 
-	private final Executor executor;
-
 	@SneakyThrows
 	public Result<Page<OperateLogCO>> execute(OperateLogPageQry qry) {
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		CompletableFuture<List<OperateLogDO>> c1 = CompletableFuture
 			.supplyAsync(() -> operateLogMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> operateLogMapper.selectCountByCondition(qry),

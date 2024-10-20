@@ -23,6 +23,7 @@ import ${packageName}.${instanceName}.dto.${className}PageQry;
 import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
 import ${packageName}.${instanceName}.gatewayimpl.database.${className}Mapper;
 import ${packageName}.${instanceName}.gatewayimpl.database.dataobject.${className}DO;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -31,7 +32,7 @@ import lombok.SneakyThrows;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -45,10 +46,9 @@ public class ${className}PageQryExe {
 
 	private final ${className}Mapper ${instanceName}Mapper;
 
-	private final Executor executor;
-
 	@SneakyThrows
 	public Result<Page<${className}CO>> execute(${className}PageQry qry) {
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		CompletableFuture<List<${className}DO>> c1 = CompletableFuture.supplyAsync(() -> ${instanceName}Mapper.selectObjectPage(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ${instanceName}Mapper.selectObjectCount(qry), executor);
 		return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(${className}Convertor::toClientObject).toList(), c2.get(30, TimeUnit.SECONDS)));

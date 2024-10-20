@@ -25,11 +25,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 
@@ -43,11 +44,9 @@ import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 @Component
 public class MybatisUtil {
 
-	private final Executor executor;
+	private static final int DEFAULT_BATCH_NUM = 100000;
 
 	private final SqlSessionFactory sqlSessionFactory;
-
-	private static final int DEFAULT_BATCH_NUM = 100000;
 
 	public <T, M> void batch(List<T> dataList, int batchNum, Class<M> clazz, BiConsumer<M, T> consumer) {
 		batch(dataList, batchNum, clazz, MASTER, consumer);
@@ -73,6 +72,7 @@ public class MybatisUtil {
 	 */
 	@SneakyThrows
 	public <T, M> void batch(List<T> dataList, int batchNum, Class<M> clazz, String ds, BiConsumer<M, T> consumer) {
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		// 数据分组
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);

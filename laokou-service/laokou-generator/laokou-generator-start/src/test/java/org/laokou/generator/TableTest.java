@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.generator.ability.GeneratorDomainService;
 import org.laokou.generator.gatewayimpl.database.TableColumnMapper;
 import org.laokou.generator.gatewayimpl.database.TableMapper;
@@ -35,7 +36,7 @@ import org.springframework.test.context.TestConstructor;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -45,8 +46,6 @@ import java.util.concurrent.Executor;
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class TableTest {
-
-	private final Executor executor;
 
 	private final TableMapper tableMapper;
 
@@ -140,6 +139,7 @@ class TableTest {
 
 	private void generateCode(String sourceName, String version, String author, String tablePrefix, String moduleName,
 			String packageName, Set<String> tableNames, App app) {
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		tableNames.stream().map(item -> CompletableFuture.runAsync(() -> {
 			TableE tableE = new TableE(item, tablePrefix, sourceName);
 			GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE, app);

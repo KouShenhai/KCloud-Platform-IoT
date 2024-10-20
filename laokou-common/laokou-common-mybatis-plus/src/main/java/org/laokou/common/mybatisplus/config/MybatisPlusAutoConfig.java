@@ -30,7 +30,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.SneakyThrows;
-import org.laokou.common.core.config.TtlVirtualThreadFactory;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -43,8 +43,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
 import java.net.InetAddress;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -60,7 +59,7 @@ public class MybatisPlusAutoConfig {
 	static {
 		JsqlParserGlobal.setJsqlParseCache(new FurySerialCaffeineJsqlParseCache(
 				Caffeine.newBuilder().maximumSize(1024).expireAfterWrite(5, TimeUnit.SECONDS).build(),
-				Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE), true));
+				ThreadUtil.newVirtualTaskExecutor(), true));
 	}
 
 	@Bean
@@ -87,7 +86,7 @@ public class MybatisPlusAutoConfig {
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
 	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties,
-			DataSource dataSource, Executor executor) {
+			DataSource dataSource) {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 		// 数据权限插件
 		interceptor.addInnerInterceptor(new DataFilterInterceptor());
@@ -101,7 +100,7 @@ public class MybatisPlusAutoConfig {
 		dynamicTableNameInnerInterceptor.setTableNameHandler(new DynamicTableNameHandler());
 		interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
 		// 分页插件
-		interceptor.addInnerInterceptor(asyncPaginationInnerInterceptor(dataSource, executor));
+		interceptor.addInnerInterceptor(asyncPaginationInnerInterceptor(dataSource));
 		// 乐观锁插件
 		interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
 		// 防止全表更新与删除插件
@@ -141,10 +140,11 @@ public class MybatisPlusAutoConfig {
 	/**
 	 * 异步分页. 解除每页500条限制.
 	 */
-	private AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor(DataSource dataSource, Executor executor) {
+	private AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor(DataSource dataSource) {
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor = new AsyncPaginationInnerInterceptor(
 				DbType.POSTGRE_SQL, dataSource, executor);
 		// -1表示不受限制
