@@ -24,13 +24,14 @@ import org.laokou.admin.oss.dto.OssPageQry;
 import org.laokou.admin.oss.dto.clientobject.OssCO;
 import org.laokou.admin.oss.gatewayimpl.database.OssMapper;
 import org.laokou.admin.oss.gatewayimpl.database.dataobject.OssDO;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,10 +45,9 @@ public class OssPageQryExe {
 
 	private final OssMapper ossMapper;
 
-	private final Executor executor;
-
 	@SneakyThrows
 	public Result<Page<OssCO>> execute(OssPageQry qry) {
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		CompletableFuture<List<OssDO>> c1 = CompletableFuture
 			.supplyAsync(() -> ossMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ossMapper.selectCountByCondition(qry),

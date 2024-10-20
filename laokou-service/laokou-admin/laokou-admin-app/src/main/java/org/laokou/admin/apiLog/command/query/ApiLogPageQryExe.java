@@ -24,13 +24,14 @@ import org.laokou.admin.apiLog.dto.ApiLogPageQry;
 import org.laokou.admin.apiLog.dto.clientobject.ApiLogCO;
 import org.laokou.admin.apiLog.gatewayimpl.database.ApiLogMapper;
 import org.laokou.admin.apiLog.gatewayimpl.database.dataobject.ApiLogDO;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,10 +45,9 @@ public class ApiLogPageQryExe {
 
 	private final ApiLogMapper apiLogMapper;
 
-	private final Executor executor;
-
 	@SneakyThrows
 	public Result<Page<ApiLogCO>> execute(ApiLogPageQry qry) {
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		CompletableFuture<List<ApiLogDO>> c1 = CompletableFuture
 			.supplyAsync(() -> apiLogMapper.selectObjectPage(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> apiLogMapper.selectObjectCount(qry), executor);

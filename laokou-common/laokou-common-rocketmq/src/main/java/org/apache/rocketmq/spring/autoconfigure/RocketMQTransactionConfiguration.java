@@ -34,19 +34,14 @@
 
 package org.apache.rocketmq.spring.autoconfigure;
 
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.stream.Collectors;
 import org.apache.rocketmq.client.producer.TransactionMQProducer;
 import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQUtil;
 import org.jetbrains.annotations.NotNull;
-import org.laokou.common.core.config.TtlVirtualThreadFactory;
 import org.laokou.common.core.utils.SpringUtil;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -57,6 +52,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Map;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.stream.Collectors;
 
 @Configuration
 public class RocketMQTransactionConfiguration implements ApplicationContextAware, SmartInitializingSingleton {
@@ -99,7 +99,7 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
 		SpringUtil springUtil = this.applicationContext.getBean(SpringUtil.class);
 		if (springUtil.isVirtualThread()) {
 			((TransactionMQProducer) rocketMQTemplate.getProducer())
-				.setExecutorService(Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE));
+				.setExecutorService(ThreadUtil.newVirtualTaskExecutor());
 		}
 		else {
 			ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(annotation.corePoolSize(),

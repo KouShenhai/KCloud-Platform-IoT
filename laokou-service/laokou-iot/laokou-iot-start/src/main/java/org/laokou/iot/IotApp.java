@@ -17,7 +17,6 @@
 
 package org.laokou.iot;
 
-import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -28,7 +27,6 @@ import java.net.UnknownHostException;
 /**
  * @author laokou
  */
-@EnableTaskExecutor
 @SpringBootApplication(scanBasePackages = "org.laokou")
 public class IotApp {
 

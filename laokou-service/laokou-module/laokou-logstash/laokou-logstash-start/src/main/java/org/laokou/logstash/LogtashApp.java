@@ -19,7 +19,6 @@ package org.laokou.logstash;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
-import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.i18n.utils.SslUtil;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,7 +31,6 @@ import java.net.InetAddress;
 /**
  * @author laokou
  */
-@EnableTaskExecutor
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableEncryptableProperties

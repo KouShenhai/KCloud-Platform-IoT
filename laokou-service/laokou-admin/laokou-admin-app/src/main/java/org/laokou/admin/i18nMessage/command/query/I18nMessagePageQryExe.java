@@ -24,13 +24,14 @@ import org.laokou.admin.i18nMessage.dto.I18nMessagePageQry;
 import org.laokou.admin.i18nMessage.dto.clientobject.I18nMessageCO;
 import org.laokou.admin.i18nMessage.gatewayimpl.database.I18nMessageMapper;
 import org.laokou.admin.i18nMessage.gatewayimpl.database.dataobject.I18nMessageDO;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,10 +45,9 @@ public class I18nMessagePageQryExe {
 
 	private final I18nMessageMapper i18nMessageMapper;
 
-	private final Executor executor;
-
 	@SneakyThrows
 	public Result<Page<I18nMessageCO>> execute(I18nMessagePageQry qry) {
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		CompletableFuture<List<I18nMessageDO>> c1 = CompletableFuture
 			.supplyAsync(() -> i18nMessageMapper.selectPageByCondition(qry.index()), executor);
 		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> i18nMessageMapper.selectCountByCondition(qry),

@@ -19,7 +19,6 @@ package org.laokou.admin;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
-import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.common.nacos.annotation.EnableRouter;
@@ -52,7 +51,6 @@ import java.net.InetAddress;
 @EnableApiSecret
 @EnableScheduling
 @EnableFeignClients
-@EnableTaskExecutor
 @EnableRedisRepository
 @EnableDiscoveryClient
 @EnableEncryptableProperties

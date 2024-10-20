@@ -17,10 +17,13 @@
 
 package org.laokou.common.core.utils;
 
+import com.alibaba.ttl.threadpool.TtlExecutors;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.config.TtlVirtualThreadFactory;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -53,6 +56,16 @@ public final class ThreadUtil {
 				log.info("关闭线程池");
 			}
 		}
+	}
+
+	public static ExecutorService newVirtualTaskExecutor() {
+		try (ExecutorService executorService = Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE)) {
+			return executorService;
+		}
+	}
+
+	public static ExecutorService newTtlVirtualTaskExecutor() {
+		return TtlExecutors.getTtlExecutorService(newVirtualTaskExecutor());
 	}
 
 }
