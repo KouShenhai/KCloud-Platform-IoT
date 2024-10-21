@@ -28,6 +28,7 @@ import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Message;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.netty.config.Server;
+import org.laokou.common.rocketmq.handler.TraceHandler;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -37,8 +38,6 @@ import java.util.concurrent.ExecutorService;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
-import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
-import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAGE_CONSUMER_GROUP;
 import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAGE_TOPIC;
 
@@ -50,24 +49,26 @@ import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAG
 @RequiredArgsConstructor
 @RocketMQMessageListener(consumerGroup = LAOKOU_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC,
 		messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
-public abstract class MessageHandler implements RocketMQListener<MessageExt> {
+public class MessageHandler extends TraceHandler implements RocketMQListener<MessageExt> {
 
 	private final Server webSocketServer;
 
 	@Override
 	public void onMessage(MessageExt messageExt) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			putTrace(messageExt);
 			String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
-			String traceId = messageExt.getProperty(TRACE_ID);
-			String spanId = messageExt.getProperty(SPAN_ID);
 			Message msg = JacksonUtil.toBean(message, Message.class);
 			String payload = msg.getPayload();
 			Set<String> receiver = msg.getReceiver();
-			log.info("推送消息，TraceId：{}，SpanId：{}", traceId, spanId);
+			log.info("接收消息：{}", message);
 			TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.ok(payload)));
 			receiver.parallelStream()
 				.forEach(clientId -> CompletableFuture.runAsync(() -> webSocketServer.send(clientId, webSocketFrame),
 						executor));
+		}
+		finally {
+			clearTrace();
 		}
 	}
 

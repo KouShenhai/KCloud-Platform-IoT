@@ -6,15 +6,15 @@
 </head>
 <body>
 <label for="clientId">
-    <input type="text" id="clientId">
+    <input id="clientId" type="text">
 </label>
 <button id="btn1" onclick="connect()">连接</button>
 <br/>
 <label for="receiver">
-    <input type="text" id="receiver">
+    <input id="receiver" type="text">
 </label>
 <label for="payload">
-    <input type="text" id="payload">
+    <input id="payload" type="text">
 </label>
 <button id="btn2" onclick="send()">发送</button>
 </body>
@@ -37,7 +37,9 @@
         }
 
         socket.onmessage = function(event) {
-            console.log("Received message from server: " + event.data)
+			const result = JSON.parse(event.data)
+			alert("接收消息：" + result.data)
+            console.log("接收消息", event.data)
         }
 
         socket.onerror = function(event) {

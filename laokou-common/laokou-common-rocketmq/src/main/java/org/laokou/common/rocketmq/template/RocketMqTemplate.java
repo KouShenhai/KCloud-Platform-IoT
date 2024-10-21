@@ -41,8 +41,6 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 @RequiredArgsConstructor
 public class RocketMqTemplate {
 
-	private static final String TOPIC_TAG = "%s:%s";
-
 	private final RocketMQTemplate rocketMQTemplate;
 
 	/**
@@ -129,7 +127,7 @@ public class RocketMqTemplate {
 	}
 
 	private String getTopicTag(String topic, String tag) {
-		return StringUtil.isEmpty(tag) ? topic : String.format(TOPIC_TAG, topic, tag);
+		return StringUtil.isEmpty(tag) ? topic : String.format("%s:%s", topic, tag);
 	}
 
 }
