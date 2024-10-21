@@ -521,6 +521,7 @@
           <include>application-${PROFILE-ACTIVE}.yml</include>
           <include>bootstrap.yml</include>
           <include>bootstrap-${PROFILE-ACTIVE}.yml</include>
+          <include>log4j2.xml</include>
           <include>log4j2-${PROFILE-ACTIVE}.xml</include>
           <include>init_router.json</include>
           <include>log4j2.component.properties</include>
