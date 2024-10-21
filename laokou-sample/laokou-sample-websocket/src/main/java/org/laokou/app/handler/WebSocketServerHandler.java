@@ -25,8 +25,6 @@ import io.netty.handler.codec.http.websocketx.PingWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
-import io.netty.handler.timeout.IdleState;
-import io.netty.handler.timeout.IdleStateEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -48,19 +46,6 @@ import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
 public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
-
-	@Override
-	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-		if (evt instanceof IdleStateEvent event) {
-			if (event.state() == IdleState.READER_IDLE) {
-				log.error("读取空闲，关闭连接");
-				ctx.close();
-			}
-			else {
-				super.userEventTriggered(ctx, evt);
-			}
-		}
-	}
 
 	@Override
 	@SneakyThrows

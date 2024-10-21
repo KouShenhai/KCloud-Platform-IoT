@@ -72,17 +72,19 @@ public class MybatisUtil {
 	 */
 	@SneakyThrows
 	public <T, M> void batch(List<T> dataList, int batchNum, Class<M> clazz, String ds, BiConsumer<M, T> consumer) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		// 数据分组
-		List<List<T>> partition = Lists.partition(dataList, batchNum);
-		AtomicBoolean rollback = new AtomicBoolean(false);
-		// 虚拟线程池 => 使用forkJoin，执行大批量的独立任务
-		partition.parallelStream()
-			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds), executor))
-			.toList()
-			.forEach(CompletableFuture::join);
-		if (rollback.get()) {
-			throw new RuntimeException("事务已回滚");
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			// 数据分组
+			List<List<T>> partition = Lists.partition(dataList, batchNum);
+			AtomicBoolean rollback = new AtomicBoolean(false);
+			// 虚拟线程池 => 使用forkJoin，执行大批量的独立任务
+			partition.parallelStream()
+				.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds),
+						executor))
+				.toList()
+				.forEach(CompletableFuture::join);
+			if (rollback.get()) {
+				throw new RuntimeException("事务已回滚");
+			}
 		}
 	}
 

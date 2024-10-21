@@ -27,3 +27,6 @@ rocketmq:
   name-server: rocketmq-namesrv:9876
   consumer:
     pull-batch-size: 16
+
+logging:
+  config: classpath:log4j2.xml

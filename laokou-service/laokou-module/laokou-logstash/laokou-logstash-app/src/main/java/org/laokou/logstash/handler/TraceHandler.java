@@ -59,8 +59,7 @@ public class TraceHandler {
 
 	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_trace_consumer_group")
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		try {
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			Map<String, Object> dataMap = messages.stream()
 				.map(this::getTraceIndex)
 				.filter(Objects::nonNull)

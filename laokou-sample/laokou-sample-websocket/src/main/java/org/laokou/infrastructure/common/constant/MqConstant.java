@@ -15,29 +15,18 @@
  *
  */
 
-package org.laokou.common.core.utils;
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
-import static org.laokou.common.core.utils.SpringContextUtil.APPLICATION_NAME;
-import static org.laokou.common.core.utils.SpringContextUtil.DEFAULT_SERVICE_ID;
+package org.laokou.infrastructure.common.constant;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class SpringUtil {
+public final class MqConstant {
 
-	private final Environment environment;
-
-	public String getServiceId() {
-		return environment.getProperty(APPLICATION_NAME, DEFAULT_SERVICE_ID);
+	private MqConstant() {
 	}
 
-	public boolean isVirtualThread() {
-		return environment.getProperty("spring.threads.virtual.enabled", Boolean.class, false);
-	}
+	public static final String LAOKOU_MESSAGE_TOPIC = "laokou_message_topic";
+
+	public static final String LAOKOU_MESSAGE_CONSUMER_GROUP = "laokou_message_consumer_group";
 
 }

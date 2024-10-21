@@ -59,9 +59,7 @@ public final class ThreadUtil {
 	}
 
 	public static ExecutorService newVirtualTaskExecutor() {
-		try (ExecutorService executorService = Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE)) {
-			return executorService;
-		}
+		return Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE);
 	}
 
 	public static ExecutorService newTtlVirtualTaskExecutor() {

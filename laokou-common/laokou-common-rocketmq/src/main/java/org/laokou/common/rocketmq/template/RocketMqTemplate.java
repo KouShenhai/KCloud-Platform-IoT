@@ -111,23 +111,21 @@ public class RocketMqTemplate {
 
 	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message, long timeout, String traceId,
 			String spanId) {
-		try {
-			MdcUtil.put(traceId, spanId);
-			rocketMQTemplate.asyncSend(getTopicTag(topic, tag), message, new SendCallback() {
-				@Override
-				public void onSuccess(SendResult sendResult) {
-					log.info("RocketMQ异步消息发送成功【Tag标签，指定超时时间】");
-				}
+		rocketMQTemplate.asyncSend(getTopicTag(topic, tag), message, new SendCallback() {
+			@Override
+			public void onSuccess(SendResult sendResult) {
+				MdcUtil.put(traceId, spanId);
+				log.info("RocketMQ异步消息发送成功【Tag标签，指定超时时间】");
+				MdcUtil.clear();
+			}
 
-				@Override
-				public void onException(Throwable throwable) {
-					log.error("RocketMQ异步消息失败【Tag标签，指定超时时间】，报错信息：{}", throwable.getMessage(), throwable);
-				}
-			}, timeout);
-		}
-		finally {
-			MdcUtil.clear();
-		}
+			@Override
+			public void onException(Throwable throwable) {
+				MdcUtil.put(traceId, spanId);
+				log.error("RocketMQ异步消息失败【Tag标签，指定超时时间】，报错信息：{}", throwable.getMessage(), throwable);
+				MdcUtil.clear();
+			}
+		}, timeout);
 	}
 
 	private String getTopicTag(String topic, String tag) {
