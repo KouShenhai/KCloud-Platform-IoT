@@ -48,7 +48,9 @@ public class MqttClient {
 	private static final byte[] WILL_DATA = "offline".getBytes(UTF_8);
 
 	private final MqttBrokerProperties mqttBrokerProperties;
+
 	private final MqttLoadBalancer mqttLoadBalancer;
+
 	private org.eclipse.paho.mqttv5.client.MqttClient client;
 
 	public MqttClient(MqttBrokerProperties mqttBrokerProperties, MqttLoadBalancer mqttLoadBalancer) {
