@@ -26,11 +26,12 @@ import org.springframework.messaging.Message;
  * @author laokou
  */
 @Slf4j
-public abstract class AbstractTransactionHandler implements RocketMQLocalTransactionListener {
+public abstract class AbstractTransactionHandler extends TraceHandler implements RocketMQLocalTransactionListener {
 
 	@Override
 	public RocketMQLocalTransactionState executeLocalTransaction(Message message, Object args) {
 		try {
+			putTrace(message);
 			executeExtLocalTransaction(message, args);
 			log.info("执行本地事务，事务提交");
 			return RocketMQLocalTransactionState.COMMIT;
@@ -39,11 +40,15 @@ public abstract class AbstractTransactionHandler implements RocketMQLocalTransac
 			log.error("执行本地事务，事务回滚，错误信息：{}", e.getMessage(), e);
 			return RocketMQLocalTransactionState.ROLLBACK;
 		}
+		finally {
+			clearTrace();
+		}
 	}
 
 	@Override
 	public RocketMQLocalTransactionState checkLocalTransaction(Message message) {
 		try {
+			putTrace(message);
 			if (checkExtLocalTransaction(message)) {
 				log.info("事务回查后，事务提交");
 				return RocketMQLocalTransactionState.COMMIT;
@@ -54,6 +59,9 @@ public abstract class AbstractTransactionHandler implements RocketMQLocalTransac
 		catch (Exception e) {
 			log.error("事务回查异常，事务回滚，错误信息：{}", e.getMessage(), e);
 			return RocketMQLocalTransactionState.ROLLBACK;
+		}
+		finally {
+			clearTrace();
 		}
 	}
 

@@ -27,8 +27,7 @@ import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.laokou.common.rocketmq.handler.AbstractTransactionHandler;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
+import org.springframework.util.Assert;
 
 /**
  * @author laokou
@@ -48,8 +47,9 @@ public class DomainEventTransactionHandler extends AbstractTransactionHandler {
 
 	@Override
 	protected boolean checkExtLocalTransaction(Message message) {
-		String txId = Objects.requireNonNull(message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID)).toString();
-		return domainEventService.countById(Long.parseLong(txId)) > 0;
+		Object obj = message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID);
+		Assert.notNull(obj, "事务ID不为空");
+		return domainEventService.countById(Long.parseLong(obj.toString())) > 0;
 	}
 
 }
