@@ -19,7 +19,7 @@ package org.laokou.common.netty.config;
 
 import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -30,9 +30,8 @@ import io.netty.util.concurrent.DefaultThreadFactory;
  */
 public class TcpServer extends AbstractServer {
 
-	public TcpServer(String ip, int port, ChannelInitializer<?> channelInitializer, int bossCoreSize,
-			int workerCoreSize) {
-		super(ip, port, channelInitializer, bossCoreSize, workerCoreSize);
+	public TcpServer(String ip, int port, ChannelHandler channelHandler, int bossCoreSize, int workerCoreSize) {
+		super(ip, port, channelHandler, bossCoreSize, workerCoreSize);
 	}
 
 	@Override
@@ -52,7 +51,7 @@ public class TcpServer extends AbstractServer {
 			// 请求队列最大长度（如果连接建立频繁，服务器处理创建新连接较慢，可以适当调整参数）
 			.option(ChannelOption.SO_BACKLOG, 1024)
 			// tcp处理类
-			.childHandler(channelInitializer);
+			.childHandler(channelHandler);
 	}
 
 	@Override

@@ -33,9 +33,11 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  */
 public abstract class AbstractWebSocketServerChannelInitializer extends AbstractChannelInitializer<NioSocketChannel> {
 
+	// @formatter:off
 	@Override
 	protected void initChannel(NioSocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
+		SpringWebSocketServerProperties properties = getProperties();
 		// 前置处理
 		preHandler(pipeline);
 		// HTTP解码器
@@ -43,15 +45,18 @@ public abstract class AbstractWebSocketServerChannelInitializer extends Abstract
 		// 块状方式写入
 		pipeline.addLast("chunkedWriteHandler", new ChunkedWriteHandler());
 		// 最大内容长度
-		pipeline.addLast("httpObjectAggregator", new HttpObjectAggregator(65536));
+		pipeline.addLast("httpObjectAggregator", new HttpObjectAggregator(properties.getMaxContentLength()));
 		// WebSocket协议
-		pipeline.addLast("webSocketServerProtocolHandler", new WebSocketServerProtocolHandler("/ws"));
+		pipeline.addLast("webSocketServerProtocolHandler", new WebSocketServerProtocolHandler(properties.getWebsocketPath()));
 		// 心跳检测
-		pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, SECONDS));
-		// flush合并
-		pipeline.addLast("flushConsolidationHandler", new FlushConsolidationHandler(10, true));
+		pipeline.addLast("idleStateHandler", new IdleStateHandler(properties.getReaderIdleTime(), properties.getWriterIdleTime(), properties.getAllIdleTime(), SECONDS));
+		// Flush合并
+		pipeline.addLast("flushConsolidationHandler", new FlushConsolidationHandler(properties.getExplicitFlushAfterFlushes(), properties.isConsolidateWhenNoReadInProgress()));
 		// 后置处理
 		postHandler(pipeline);
 	}
+	// @formatter:on
+
+	protected abstract SpringWebSocketServerProperties getProperties();
 
 }

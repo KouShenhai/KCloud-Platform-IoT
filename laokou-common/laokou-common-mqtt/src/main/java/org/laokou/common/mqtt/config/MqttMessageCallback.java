@@ -43,7 +43,7 @@ public class MqttMessageCallback implements MqttCallback {
 
 	@Override
 	public void disconnected(MqttDisconnectResponse disconnectResponse) {
-		log.info("MQTT关闭连接");
+		log.error("MQTT关闭连接");
 	}
 
 	@Override
@@ -58,28 +58,23 @@ public class MqttMessageCallback implements MqttCallback {
 
 	@Override
 	public void deliveryComplete(IMqttToken token) {
-		log.info("MQTT消息发送成功");
+		log.info("MQTT消息发送成功，消息ID：{}", token.getMessageId());
 	}
 
 	@Override
 	@SneakyThrows
 	public void connectComplete(boolean reconnect, String uri) {
 		if (reconnect) {
-			// client.subscribe(mqttBrokerProperties.getTopics().toArray(String[]::new),
-			// mqttBrokerProperties.getTopics()
-			// .stream()
-			// .mapToInt(item -> mqttBrokerProperties.getQos())
-			// .toArray());
-			// log.info("MQTT重新建立连接");
+			log.info("MQTT重连成功，URI：{}", uri);
 		}
 		else {
-			log.info("MQTT建立连接");
+			log.info("MQTT建立连接，URI：{}", uri);
 		}
 	}
 
 	@Override
 	public void authPacketArrived(int reasonCode, MqttProperties properties) {
-		log.info("接收到身份验证数据包");
+		log.info("接收到身份验证数据包：{}", reasonCode);
 	}
 
 }

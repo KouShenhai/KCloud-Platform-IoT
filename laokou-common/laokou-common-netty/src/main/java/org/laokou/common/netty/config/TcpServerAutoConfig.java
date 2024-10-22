@@ -17,7 +17,7 @@
 
 package org.laokou.common.netty.config;
 
-import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelHandler;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import io.netty.util.concurrent.EventExecutorGroup;
 import io.netty.util.concurrent.UnorderedThreadPoolEventExecutor;
@@ -35,7 +35,7 @@ public class TcpServerAutoConfig {
 
     @Bean(name = "tcpServer", initMethod = "start", destroyMethod = "stop")
     public Server tcpServer(SpringTcpServerProperties springTcpServerProperties,
-                            ChannelInitializer<?> tcpServerChannelInitializer) {
+                            ChannelHandler tcpServerChannelInitializer) {
         return new TcpServer(springTcpServerProperties.getIp(), springTcpServerProperties.getPort(),
                 tcpServerChannelInitializer, springTcpServerProperties.getBossCoreSize(),
                 springTcpServerProperties.getWorkerCoreSize());

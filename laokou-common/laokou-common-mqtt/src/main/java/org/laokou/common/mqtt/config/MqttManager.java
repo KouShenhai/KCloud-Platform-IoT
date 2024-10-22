@@ -28,11 +28,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class MqttManager {
 
+	private static final Map<String, MqttClient> MQTT_SESSION_MAP = new ConcurrentHashMap<>(16);
+
 	private final SpringMqttBrokerProperties springMqttBrokerProperties;
 
 	private final MqttLoadBalancer mqttLoadBalancer;
-
-	private static final Map<String, MqttClient> MQTT_SESSION_MAP = new ConcurrentHashMap<>(16);
 
 	public MqttClient getSession(String key) {
 		return MQTT_SESSION_MAP.get(key);
@@ -41,16 +41,18 @@ public class MqttManager {
 	public synchronized void open() {
 		springMqttBrokerProperties.getConfigs().forEach((k, v) -> {
 			MqttClient client = new MqttClient(v, mqttLoadBalancer);
-			client.open();
-			MQTT_SESSION_MAP.put(k, client);
+			if (client.open()) {
+				MQTT_SESSION_MAP.put(k, client);
+			}
 		});
 	}
 
 	public synchronized void close() {
 		springMqttBrokerProperties.getConfigs().forEach((k, v) -> {
 			MqttClient client = new MqttClient(v, mqttLoadBalancer);
-			client.close();
-			MQTT_SESSION_MAP.remove(k);
+			if (client.close()) {
+				MQTT_SESSION_MAP.remove(k);
+			}
 		});
 	}
 

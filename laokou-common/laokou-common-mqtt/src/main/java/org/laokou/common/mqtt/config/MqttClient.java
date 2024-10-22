@@ -49,9 +49,9 @@ public class MqttClient {
 
 	private final MqttBrokerProperties mqttBrokerProperties;
 
-	private org.eclipse.paho.mqttv5.client.MqttClient client;
-
 	private final MqttLoadBalancer mqttLoadBalancer;
+
+	private volatile org.eclipse.paho.mqttv5.client.MqttClient client;
 
 	public MqttClient(MqttBrokerProperties mqttBrokerProperties, MqttLoadBalancer mqttLoadBalancer) {
 		this.mqttBrokerProperties = mqttBrokerProperties;
@@ -59,7 +59,7 @@ public class MqttClient {
 	}
 
 	@SneakyThrows
-	public void open() {
+	public boolean open() {
 		try {
 			client = new org.eclipse.paho.mqttv5.client.MqttClient(mqttBrokerProperties.getUri(),
 					mqttBrokerProperties.getClientId(), new MemoryPersistence());
@@ -72,20 +72,24 @@ public class MqttClient {
 						.mapToInt(item -> mqttBrokerProperties.getSubscribeQos())
 						.toArray());
 			log.info("MQTT连接成功");
+			return true;
 		}
 		catch (Exception e) {
 			log.error("MQTT连接失败，错误信息：{}", e.getMessage(), e);
+			return false;
 		}
 	}
 
 	@SneakyThrows
-	public void close() {
+	public boolean close() {
 		if (ObjectUtil.isNotNull(client)) {
 			// 等待10秒
 			client.disconnectForcibly(10);
 			client.close();
 			log.info("关闭MQTT连接");
+			return true;
 		}
+		return false;
 	}
 
 	@SneakyThrows
