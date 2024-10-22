@@ -34,11 +34,12 @@ import org.springframework.context.annotation.Bean;
 public class WebSocketServerAutoConfig {
 
     @Bean(name = "webSocketServer", initMethod = "start", destroyMethod = "stop")
-    public Server webSocketServer(SpringWebSocketServerProperties springWebSocketServerProperties,
-                                  ChannelHandler webSocketServerChannelInitializer) {
-        return new WebSocketServer(springWebSocketServerProperties.getIp(), springWebSocketServerProperties.getPort(),
-                webSocketServerChannelInitializer, springWebSocketServerProperties.getBossCoreSize(),
-                springWebSocketServerProperties.getWorkerCoreSize());
+    public Server webSocketServer(ChannelHandler webSocketChannelHandler,SpringWebSocketServerProperties springWebSocketServerProperties) {
+        return new WebSocketServer(springWebSocketServerProperties.getIp()
+			, springWebSocketServerProperties.getPort()
+			, webSocketChannelHandler
+			, springWebSocketServerProperties.getBossCoreSize()
+			, springWebSocketServerProperties.getWorkerCoreSize());
     }
 
     @Bean

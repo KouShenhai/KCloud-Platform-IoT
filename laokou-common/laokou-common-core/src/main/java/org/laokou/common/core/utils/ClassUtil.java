@@ -18,11 +18,12 @@
 package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
+import org.springframework.util.ClassUtils;
 
 /**
  * @author laokou
  */
-public class ClassUtil {
+public class ClassUtil extends ClassUtils {
 
 	@SneakyThrows
 	public static Class<?> parseClass(String className) {
