@@ -23,7 +23,7 @@
     "angular-route": "^1.4.0",
     "angular-selectize2": "^v1.2.3",
     "angular-table-resize": "^2.0.1",
-    "angular-touch": "^1.4.0",
+    "angular-touch": "^1.8.2",
     "angular-ui-notification": "^0.3.6",
     "angular-ui-router": "^1.0.30",
     "angular-utils-pagination": "^0.11.1",
