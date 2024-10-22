@@ -19,10 +19,7 @@ package org.laokou.common.netty.config;
 
 import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.ServerChannel;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -38,9 +35,8 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 @Slf4j
 public class WebSocketServer extends AbstractServer {
 
-	public WebSocketServer(String ip, int port, ChannelInitializer<?> channelInitializer, int bossCoreSize,
-			int workerCoreSize) {
-		super(ip, port, channelInitializer, bossCoreSize, workerCoreSize);
+	public WebSocketServer(String ip, int port, ChannelHandler channelHandler, int bossCoreSize, int workerCoreSize) {
+		super(ip, port, channelHandler, bossCoreSize, workerCoreSize);
 	}
 
 	/**
@@ -64,7 +60,7 @@ public class WebSocketServer extends AbstractServer {
 			// 延迟发送
 			.childOption(ChannelOption.TCP_NODELAY, true)
 			// WebSocket处理类
-			.childHandler(channelInitializer);
+			.childHandler(channelHandler);
 	}
 
 	@Override

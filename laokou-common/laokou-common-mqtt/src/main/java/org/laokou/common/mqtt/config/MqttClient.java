@@ -51,7 +51,7 @@ public class MqttClient {
 
 	private final MqttLoadBalancer mqttLoadBalancer;
 
-	private org.eclipse.paho.mqttv5.client.MqttClient client;
+	private volatile org.eclipse.paho.mqttv5.client.MqttClient client;
 
 	public MqttClient(MqttBrokerProperties mqttBrokerProperties, MqttLoadBalancer mqttLoadBalancer) {
 		this.mqttBrokerProperties = mqttBrokerProperties;

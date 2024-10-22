@@ -17,7 +17,7 @@
 
 package org.laokou.common.netty.config;
 
-import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelHandler;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import io.netty.util.concurrent.EventExecutorGroup;
 import io.netty.util.concurrent.UnorderedThreadPoolEventExecutor;
@@ -35,7 +35,7 @@ public class WebSocketServerAutoConfig {
 
     @Bean(name = "webSocketServer", initMethod = "start", destroyMethod = "stop")
     public Server webSocketServer(SpringWebSocketServerProperties springWebSocketServerProperties,
-                                  ChannelInitializer<?> webSocketServerChannelInitializer) {
+                                  ChannelHandler webSocketServerChannelInitializer) {
         return new WebSocketServer(springWebSocketServerProperties.getIp(), springWebSocketServerProperties.getPort(),
                 webSocketServerChannelInitializer, springWebSocketServerProperties.getBossCoreSize(),
                 springWebSocketServerProperties.getWorkerCoreSize());

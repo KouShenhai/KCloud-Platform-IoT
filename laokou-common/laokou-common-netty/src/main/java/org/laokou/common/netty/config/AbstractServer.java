@@ -19,7 +19,7 @@ package org.laokou.common.netty.config;
 
 import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.EventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -35,7 +35,7 @@ public abstract class AbstractServer implements Server {
 
 	protected final int port;
 
-	protected final ChannelInitializer<?> channelInitializer;
+	protected final ChannelHandler channelHandler;
 
 	protected final int bossCoreSize;
 
@@ -56,11 +56,10 @@ public abstract class AbstractServer implements Server {
 	 */
 	private volatile boolean running;
 
-	protected AbstractServer(String ip, int port, ChannelInitializer<?> channelInitializer, int bossCoreSize,
-			int workerCoreSize) {
+	protected AbstractServer(String ip, int port, ChannelHandler channelHandler, int bossCoreSize, int workerCoreSize) {
 		this.ip = ip;
 		this.port = port;
-		this.channelInitializer = channelInitializer;
+		this.channelHandler = channelHandler;
 		this.bossCoreSize = bossCoreSize;
 		this.workerCoreSize = workerCoreSize;
 	}
