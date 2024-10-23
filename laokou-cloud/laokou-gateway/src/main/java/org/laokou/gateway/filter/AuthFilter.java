@@ -17,12 +17,9 @@
 
 package org.laokou.gateway.filter;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
-import org.laokou.common.core.utils.Base64Util;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.crypto.utils.RSAUtil;
@@ -55,7 +52,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -96,10 +92,6 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 */
 	private static final String TOKEN_URL = "/oauth2/token";
 
-	private static final String CLIENT_ID = "client_id";
-
-	private static final String CLIENT_SECRET = "client_secret";
-
 	/**
 	 * Chunked.
 	 */
@@ -116,6 +108,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	private final SpringUtil springUtil;
 
+	// @formatter:off
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		try {
@@ -128,11 +121,9 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			// 请求放行，无需验证权限
 			if (pathMatcher(getMethodName(request), requestURL, URI_MAP)) {
 				// 无需验证权限的URL，需要将令牌置空
-				return chain
-					.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
+				return chain.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
 			}
-			if (requestURL.contains(TOKEN_URL) && POST.matches(getMethodName(request))
-					&& APPLICATION_FORM_URLENCODED.isCompatibleWith(getContentType(request))) {
+			if (requestURL.contains(TOKEN_URL) && POST.matches(getMethodName(request)) && APPLICATION_FORM_URLENCODED.isCompatibleWith(getContentType(request))) {
 				return decodeOAuth2(exchange, chain);
 			}
 			// 获取token
@@ -141,8 +132,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 				return ReactiveResponseUtil.response(exchange, Result.fail(UNAUTHORIZED));
 			}
 			// 增加令牌
-			return chain
-				.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, token).build()).build());
+			return chain.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, token).build()).build());
 		}
 		finally {
 			ReactiveI18nUtil.reset();
@@ -162,25 +152,14 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 */
 	private Mono<Void> decodeOAuth2(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerRequest serverRequest = ServerRequest.create(exchange, HandlerStrategies.withDefaults().messageReaders());
-		AuthorizationCode authorizationCode = new AuthorizationCode();
-		Mono<String> modifiedBody = serverRequest.bodyToMono(String.class).flatMap(decrypt(authorizationCode));
-		BodyInserter<Mono<String>, ReactiveHttpOutputMessage> bodyInserter = BodyInserters.fromPublisher(modifiedBody,
-				String.class);
+		Mono<String> modifiedBody = serverRequest.bodyToMono(String.class).flatMap(decrypt());
+		BodyInserter<Mono<String>, ReactiveHttpOutputMessage> bodyInserter = BodyInserters.fromPublisher(modifiedBody, String.class);
 		HttpHeaders headers = new HttpHeaders();
 		headers.putAll(exchange.getRequest().getHeaders());
 		headers.remove(CONTENT_LENGTH);
 		headers.set(CONTENT_TYPE, APPLICATION_FORM_URLENCODED_VALUE);
 		CachedBodyOutputMessage outputMessage = new CachedBodyOutputMessage(exchange, headers);
-		return bodyInserter.insert(outputMessage, new BodyInserterContext()).then(Mono.defer(() -> {
-			ServerHttpRequest decorator = requestDecorator(exchange, headers, outputMessage);
-			String clientToken = authorizationCode.getClientToken();
-			if (StringUtil.isNotEmpty(clientToken)) {
-				return chain.filter(exchange.mutate()
-					.request(decorator.mutate().header(AUTHORIZATION, clientToken).build())
-					.build());
-			}
-			return chain.filter(exchange.mutate().request(decorator).build());
-		})).onErrorResume((Function<Throwable, Mono<Void>>) throwable -> release(outputMessage, throwable));
+		return bodyInserter.insert(outputMessage, new BodyInserterContext()).then(Mono.defer(() -> chain.filter(exchange.mutate().request(requestDecorator(exchange, headers, outputMessage)).build()))).onErrorResume((Function<Throwable, Mono<Void>>) throwable -> release(outputMessage, throwable));
 	}
 
 	/**
@@ -197,12 +176,11 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 * 用户名/密码 解密.
 	 * @return 解密结果
 	 */
-	private Function<String, Mono<String>> decrypt(AuthorizationCode authorizationCode) {
+	private Function<String, Mono<String>> decrypt() {
 		return s -> {
 			// 获取请求密码并解密
 			Map<String, String> paramMap = MapUtil.parseParamMap(s);
-			if (ObjectUtil.equals(PASSWORD, paramMap.getOrDefault(GRANT_TYPE, EMPTY)) && paramMap.containsKey(PASSWORD)
-					&& paramMap.containsKey(USERNAME)) {
+			if (ObjectUtil.equals(PASSWORD, paramMap.getOrDefault(GRANT_TYPE, EMPTY)) && paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
 				try {
 					String password = paramMap.get(PASSWORD);
 					String username = paramMap.get(USERNAME);
@@ -218,15 +196,6 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 					log.error("用户名密码认证模式，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 				}
 			}
-			// 适配Knife4j授权码模式【真TMD坑】
-			else if (paramMap.containsKey(CLIENT_ID) && paramMap.containsKey(CLIENT_SECRET)) {
-				String clientId = paramMap.get(CLIENT_ID);
-				String clientSecret = paramMap.get(CLIENT_SECRET);
-				authorizationCode.setClientToken("Basic " + Base64Util
-					.encodeToString(String.format("%s:%s", clientId, clientSecret).getBytes(StandardCharsets.UTF_8)));
-				paramMap.remove(CLIENT_ID);
-				paramMap.remove(CLIENT_SECRET);
-			}
 			return Mono.just(MapUtil.parseParams(paramMap));
 		};
 	}
@@ -238,9 +207,9 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 * @param outputMessage 输出消息
 	 * @return 请求装饰器
 	 */
-	private ServerHttpRequestDecorator requestDecorator(ServerWebExchange exchange, HttpHeaders headers,
-			CachedBodyOutputMessage outputMessage) {
+	private ServerHttpRequestDecorator requestDecorator(ServerWebExchange exchange, HttpHeaders headers, CachedBodyOutputMessage outputMessage) {
 		return new ServerHttpRequestDecorator(exchange.getRequest()) {
+
 			@Override
 			@NonNull
 			public HttpHeaders getHeaders() {
@@ -264,19 +233,10 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		};
 	}
 
-	// @formatter:off
 	@Override
 	public void afterPropertiesSet() {
 		URI_MAP.putAll(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(), springUtil.getServiceId()));
 	}
 	// @formatter:on
-
-	@Data
-	@NoArgsConstructor
-	static class AuthorizationCode {
-
-		private String clientToken;
-
-	}
 
 }
