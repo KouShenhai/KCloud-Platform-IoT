@@ -33,21 +33,7 @@
     </dependency>
     <dependency>
       <groupId>com.baomidou</groupId>
-      <artifactId>mybatis-plus-boot-starter</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.mybatis</groupId>
-          <artifactId>mybatis-spring</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.github.jsqlparser</groupId>
-          <artifactId>jsqlparser</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.mybatis</groupId>
-      <artifactId>mybatis-spring</artifactId>
+      <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
     </dependency>
     <dependency>
       <groupId>com.github.ben-manes.caffeine</groupId>
@@ -91,8 +77,12 @@
       <artifactId>fury-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.github.jsqlparser</groupId>
-      <artifactId>jsqlparser</artifactId>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-extension</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-jsqlparser</artifactId>
     </dependency>
   </dependencies>
 </project>

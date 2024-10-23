@@ -205,13 +205,13 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 			sb.append("        </p>\n");
 			sb.append("        <p>\n");
 			sb.append("          <label for=\"username\" class=\"sr-only\">用户名</label>\n");
-			sb.append("          <input type=\"text\" id=\"username\" name=\"")
+			sb.append("          <input autoComplete=\"off\" type=\"text\" id=\"username\" name=\"")
 				.append(this.usernameParameter)
 				.append("\" class=\"form-control\" placeholder=\"用户名\" required autofocus>\n");
 			sb.append("        </p>\n");
 			sb.append("        <p>\n");
 			sb.append("          <label for=\"password\" class=\"sr-only\">密码</label>\n");
-			sb.append("          <input type=\"password\" id=\"password\" name=\"")
+			sb.append("          <input autoComplete=\"off\" type=\"password\" id=\"password\" name=\"")
 				.append(this.passwordParameter)
 				.append("\" class=\"form-control\" placeholder=\"密码\" required>\n");
 			sb.append("        </p>\n");
