@@ -247,8 +247,8 @@ class OAuth2AuthorizationServerConfig {
 		}
 	}
 
-    private void applyDefaultSecurity(HttpSecurity http) throws Exception {
-        // @formatter:off
+	private void applyDefaultSecurity(HttpSecurity http) throws Exception {
+		// @formatter:off
         OAuth2AuthorizationServerConfigurer authorizationServerConfigurer =
                 OAuth2AuthorizationServerConfigurer.authorizationServer();
         http
@@ -258,6 +258,6 @@ class OAuth2AuthorizationServerConfig {
                         authorize.anyRequest().authenticated()
                 );
         // @formatter:on
-    }
+	}
 
 }
