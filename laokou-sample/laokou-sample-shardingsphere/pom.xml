@@ -12,4 +12,11 @@
     <artifactId>laokou-sample-shardingsphere</artifactId>
     <version>3.4.0</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>shardingsphere-jdbc</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
