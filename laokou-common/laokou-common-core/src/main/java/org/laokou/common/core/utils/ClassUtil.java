@@ -23,7 +23,7 @@ import org.springframework.util.ClassUtils;
 /**
  * @author laokou
  */
-public class ClassUtil extends ClassUtils {
+public final class ClassUtil extends ClassUtils {
 
 	@SneakyThrows
 	public static Class<?> parseClass(String className) {
