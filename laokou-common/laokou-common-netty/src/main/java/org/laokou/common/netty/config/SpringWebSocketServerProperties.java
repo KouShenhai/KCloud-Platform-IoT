@@ -66,18 +66,39 @@ public class SpringWebSocketServerProperties {
 	 */
 	private String serviceId;
 
+	/**
+	 * 最大内容长度.
+	 */
 	private int maxContentLength = 65536;
 
+	/**
+	 * WebSocket路径.
+	 */
 	private String websocketPath = "/ws";
 
+	/**
+	 * 显示刷新Flush大小.
+	 */
 	private int explicitFlushAfterFlushes = 10;
 
+	/**
+	 * 当没有正在进行的读取时进行合并.
+	 */
 	private boolean consolidateWhenNoReadInProgress = true;
 
+	/**
+	 * 读取空闲时间.
+	 */
 	private long readerIdleTime = 60;
 
+	/**
+	 * 写入空闲时间.
+	 */
 	private long writerIdleTime = 0;
 
+	/**
+	 * 全部时间.
+	 */
 	private long allIdleTime = 0;
 
 }

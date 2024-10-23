@@ -84,7 +84,6 @@ public class RocketMqTemplate {
 	public <T> void sendTransactionMessage(String topic, String tag, T payload, Long transactionId, String traceId,
 			String spanId) {
 		try {
-			MdcUtil.put(traceId, spanId);
 			Message<T> message = MessageBuilder.withPayload(payload)
 				.setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId)
 				.setHeader(TRACE_ID, traceId)
@@ -92,6 +91,7 @@ public class RocketMqTemplate {
 				.build();
 			SendStatus sendStatus = rocketMQTemplate.sendMessageInTransaction(getTopicTag(topic, tag), message, null)
 				.getSendStatus();
+			MdcUtil.put(traceId, spanId);
 			if (ObjectUtil.equals(sendStatus, SEND_OK)) {
 				log.info("RocketMQ事务消息发送成功【Tag标签】");
 			}
@@ -100,6 +100,7 @@ public class RocketMqTemplate {
 			}
 		}
 		catch (Exception e) {
+			MdcUtil.put(traceId, spanId);
 			log.error("RocketMQ事务消息发送失败【Tag标签】，报错信息：{}", e.getMessage(), e);
 		}
 		finally {
