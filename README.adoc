@@ -91,12 +91,12 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 |Spring Cloud Alibaba        |2023.0.1.2
 |Spring Boot Admin           |3.3.4
 |Spring Authorization Server |1.4.0
-|Mybatis Plus                |3.5.8
+|Mybatis Plus                |3.5.9
 |Nacos                       |2.4.3
 |Sentinel                    |1.8.8
 |Redis                       |7.4.0
 |Elasticsearch               |8.15.0
-|RocketMQ                    |5.3.0
+|RocketMQ                    |5.3.2
 |Netty                       |4.1.113.Final
 |Kafka                       |3.8.0
 |EMQX                        |5.8.1
@@ -133,6 +133,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 - 数据库：Postgresql
 - 时序数据库：TDengine
 - 数据库迁移：Liquibase
+- 链路&指标采集：Micrometer
 
 ==== 🌴 项目结构
 
