@@ -53,120 +53,122 @@ import org.slf4j.spi.MDCAdapter;
  */
 public class Log4jMDCAdapter implements MDCAdapter {
 
-    private static final Logger LOGGER = StatusLogger.getLogger();
+	private static final Logger LOGGER = StatusLogger.getLogger();
 
-    private final ThreadLocalMapOfStacks mapOfStacks = new ThreadLocalMapOfStacks();
+	private final ThreadLocalMapOfStacks MAP_OF_STACKS = new ThreadLocalMapOfStacks();
 
-    @Override
-    public void put(final String key, final String val) {
-        ThreadContext.put(key, val);
-    }
+	@Override
+	public void put(final String key, final String val) {
+		ThreadContext.put(key, val);
+	}
 
-    @Override
-    public String get(final String key) {
-        return ThreadContext.get(key);
-    }
+	@Override
+	public String get(final String key) {
+		return ThreadContext.get(key);
+	}
 
-    @Override
-    public void remove(final String key) {
-        ThreadContext.remove(key);
-    }
+	@Override
+	public void remove(final String key) {
+		ThreadContext.remove(key);
+	}
 
-    @Override
-    public void clear() {
-        ThreadContext.clearMap();
-    }
+	@Override
+	public void clear() {
+		ThreadContext.clearMap();
+	}
 
-    @Override
-    public Map<String, String> getCopyOfContextMap() {
-        return ThreadContext.getContext();
-    }
+	@Override
+	public Map<String, String> getCopyOfContextMap() {
+		return ThreadContext.getContext();
+	}
 
-    @Override
-    public void setContextMap(final Map<String, String> map) {
-        ThreadContext.clearMap();
-        ThreadContext.putAll(map);
-    }
+	@Override
+	public void setContextMap(final Map<String, String> map) {
+		ThreadContext.clearMap();
+		ThreadContext.putAll(map);
+	}
 
-    @Override
-    public void pushByKey(final String key, final String value) {
-        if (key == null) {
-            ThreadContext.push(value);
-        } else {
-            final String oldValue = mapOfStacks.peekByKey(key);
-            if (!Objects.equals(ThreadContext.get(key), oldValue)) {
-                LOGGER.warn("The key {} was used in both the string and stack-valued MDC.", key);
-            }
-            mapOfStacks.pushByKey(key, value);
-            ThreadContext.put(key, value);
-        }
-    }
+	@Override
+	public void pushByKey(final String key, final String value) {
+		if (key == null) {
+			ThreadContext.push(value);
+		}
+		else {
+			final String oldValue = MAP_OF_STACKS.peekByKey(key);
+			if (!Objects.equals(ThreadContext.get(key), oldValue)) {
+				LOGGER.warn("The key {} was used in both the string and stack-valued MDC.", key);
+			}
+			MAP_OF_STACKS.pushByKey(key, value);
+			ThreadContext.put(key, value);
+		}
+	}
 
-    @Override
-    public String popByKey(final String key) {
-        if (key == null) {
-            return ThreadContext.getDepth() > 0 ? ThreadContext.pop() : null;
-        }
-        final String value = mapOfStacks.popByKey(key);
-        if (!Objects.equals(ThreadContext.get(key), value)) {
-            LOGGER.warn("The key {} was used in both the string and stack-valued MDC.", key);
-        }
-        ThreadContext.put(key, mapOfStacks.peekByKey(key));
-        return value;
-    }
+	@Override
+	public String popByKey(final String key) {
+		if (key == null) {
+			return ThreadContext.getDepth() > 0 ? ThreadContext.pop() : null;
+		}
+		final String value = MAP_OF_STACKS.popByKey(key);
+		if (!Objects.equals(ThreadContext.get(key), value)) {
+			LOGGER.warn("The key {} was used in both the string and stack-valued MDC.", key);
+		}
+		ThreadContext.put(key, MAP_OF_STACKS.peekByKey(key));
+		return value;
+	}
 
-    @Override
-    public Deque<String> getCopyOfDequeByKey(final String key) {
-        if (key == null) {
-            final ContextStack stack = ThreadContext.getImmutableStack();
-            final Deque<String> copy = new ArrayDeque<>(stack.size());
-            stack.forEach(copy::push);
-            return copy;
-        }
-        return mapOfStacks.getCopyOfDequeByKey(key);
-    }
+	@Override
+	public Deque<String> getCopyOfDequeByKey(final String key) {
+		if (key == null) {
+			final ContextStack stack = ThreadContext.getImmutableStack();
+			final Deque<String> copy = new ArrayDeque<>(stack.size());
+			stack.forEach(copy::push);
+			return copy;
+		}
+		return MAP_OF_STACKS.getCopyOfDequeByKey(key);
+	}
 
-    @Override
-    public void clearDequeByKey(final String key) {
-        if (key == null) {
-            ThreadContext.clearStack();
-        } else {
-            mapOfStacks.clearByKey(key);
-            ThreadContext.put(key, null);
-        }
-    }
+	@Override
+	public void clearDequeByKey(final String key) {
+		if (key == null) {
+			ThreadContext.clearStack();
+		}
+		else {
+			MAP_OF_STACKS.clearByKey(key);
+			ThreadContext.put(key, null);
+		}
+	}
 
-    private static class ThreadLocalMapOfStacks {
+	private static class ThreadLocalMapOfStacks {
 
-        private final ThreadLocal<Map<String, Deque<String>>> tlMapOfStacks = TransmittableThreadLocal.withInitial(HashMap::new);
+		private final ThreadLocal<Map<String, Deque<String>>> TL_MAP_OF_STACKS = TransmittableThreadLocal
+			.withInitial(HashMap::new);
 
-        public void pushByKey(final String key, final String value) {
-            tlMapOfStacks
-                    .get()
-                    .computeIfAbsent(key, ignored -> new ArrayDeque<>())
-                    .push(value);
-        }
+		public void pushByKey(final String key, final String value) {
+			TL_MAP_OF_STACKS.get().computeIfAbsent(key, ignored -> new ArrayDeque<>()).push(value);
+		}
 
-        public String popByKey(final String key) {
-            final Deque<String> deque = tlMapOfStacks.get().get(key);
-            return deque != null ? deque.poll() : null;
-        }
+		public String popByKey(final String key) {
+			final Deque<String> deque = TL_MAP_OF_STACKS.get().get(key);
+			return deque != null ? deque.poll() : null;
+		}
 
-        public Deque<String> getCopyOfDequeByKey(final String key) {
-            final Deque<String> deque = tlMapOfStacks.get().get(key);
-            return deque != null ? new ArrayDeque<>(deque) : null;
-        }
+		public Deque<String> getCopyOfDequeByKey(final String key) {
+			final Deque<String> deque = TL_MAP_OF_STACKS.get().get(key);
+			return deque != null ? new ArrayDeque<>(deque) : null;
+		}
 
-        public void clearByKey(final String key) {
-            final Deque<String> deque = tlMapOfStacks.get().get(key);
-            if (deque != null) {
-                deque.clear();
-            }
-        }
+		public void clearByKey(final String key) {
+			final Deque<String> deque = TL_MAP_OF_STACKS.get().get(key);
+			if (deque != null) {
+				deque.clear();
+			}
+		}
 
-        public String peekByKey(final String key) {
-            final Deque<String> deque = tlMapOfStacks.get().get(key);
-            return deque != null ? deque.peek() : null;
-        }
-    }
+		public String peekByKey(final String key) {
+			final Deque<String> deque = TL_MAP_OF_STACKS.get().get(key);
+			return deque != null ? deque.peek() : null;
+		}
+
+	}
+
 }

@@ -107,13 +107,13 @@ class OAuth2ApiTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 
-    @Test
-    void testTtlMDC() {
-        MDCUtil.put("111","222");
-        try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-            executor.execute(() -> log.info("TraceId：{}，SpanId：{}", MDCUtil.getSpanId(), MDCUtil.getSpanId()));
-        }
-    }
+	@Test
+	void testTtlMDC() {
+		MDCUtil.put("111", "222");
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			executor.execute(() -> log.info("TraceId：{}，SpanId：{}", MDCUtil.getSpanId(), MDCUtil.getSpanId()));
+		}
+	}
 
 	@Test
 	void testRestClientToSendJsonPostRequest() {
