@@ -71,7 +71,7 @@ public class WhiteIp extends AbstractIp {
 		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
 			if (ObjectUtil.equals(Boolean.FALSE, r)) {
 				log.info("IP为{}被限制", hostAddress);
-				return ReactiveResponseUtil.response(exchange, Result.fail(IP_RESTRICTED));
+				return ReactiveResponseUtil.responseOk(exchange, Result.fail(IP_RESTRICTED));
 			}
 			return chain.filter(exchange);
 		});

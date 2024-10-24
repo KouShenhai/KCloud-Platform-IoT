@@ -71,7 +71,7 @@ public class BlackIp extends AbstractIp {
 		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
 			if (ObjectUtil.equals(Boolean.TRUE, r)) {
 				log.info("IP为{}已列入黑名单", hostAddress);
-				return ReactiveResponseUtil.response(exchange, Result.fail(IP_BLACKED));
+				return ReactiveResponseUtil.responseOk(exchange, Result.fail(IP_BLACKED));
 			}
 			return chain.filter(exchange);
 		});

@@ -129,7 +129,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			// 获取token
 			String token = getParamValue(request, AUTHORIZATION);
 			if (StringUtil.isEmpty(token)) {
-				return ReactiveResponseUtil.response(exchange, Result.fail(UNAUTHORIZED));
+				return ReactiveResponseUtil.responseOk(exchange, Result.fail(UNAUTHORIZED));
 			}
 			// 增加令牌
 			return chain.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, token).build()).build());

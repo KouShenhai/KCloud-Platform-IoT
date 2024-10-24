@@ -79,9 +79,9 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 		if (open()) {
-			return ReactiveResponseUtil.response(exchange, Result.ok(EMPTY));
+			return ReactiveResponseUtil.responseOk(exchange, Result.ok(EMPTY));
 		}
-		return ReactiveResponseUtil.response(exchange, Result.fail(SERVICE_UNAVAILABLE));
+		return ReactiveResponseUtil.responseOk(exchange, Result.fail(SERVICE_UNAVAILABLE));
 	}
 
 	private boolean open() {
