@@ -22,7 +22,7 @@ import org.slf4j.MDC;
 /**
  * @author laokou
  */
-public class MdcUtil {
+public class MDCUtil {
 
 	private static final String TRACE_ID = "traceId";
 
