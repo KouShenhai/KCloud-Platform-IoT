@@ -124,7 +124,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 				return chain.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
 			}
 			if (requestURL.contains(TOKEN_URL) && POST.matches(getMethodName(request)) && APPLICATION_FORM_URLENCODED.isCompatibleWith(getContentType(request))) {
-				return decodeOAuth2(exchange, chain);
+				return decodeOAuth2Password(exchange, chain);
 			}
 			// 获取token
 			String token = getParamValue(request, AUTHORIZATION);
@@ -150,7 +150,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 * @param exchange exchange
 	 * @return 响应式
 	 */
-	private Mono<Void> decodeOAuth2(ServerWebExchange exchange, GatewayFilterChain chain) {
+	private Mono<Void> decodeOAuth2Password(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerRequest serverRequest = ServerRequest.create(exchange, HandlerStrategies.withDefaults().messageReaders());
 		Mono<String> modifiedBody = serverRequest.bodyToMono(String.class).flatMap(decrypt());
 		BodyInserter<Mono<String>, ReactiveHttpOutputMessage> bodyInserter = BodyInserters.fromPublisher(modifiedBody, String.class);

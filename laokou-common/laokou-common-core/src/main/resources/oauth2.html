@@ -60,7 +60,7 @@
         this.cacheValue.tokenType = this.tokenType
         this.cacheValue.granted = true
         window.localStorage.setItem(this.state,JSON.stringify(this.cacheValue))
-        //window.close()
+        window.close()
     }
     OAuth2.prototype.authorizationCode = function(){
         const that = this;
@@ -75,22 +75,20 @@
             url: url,
             method: 'post',
             timeout: 0,
-            //此data必传,不然默认是data:undefined,https://github.com/axios/axios/issues/86
-            //否则axios会忽略请求头Content-Type
-            data: {
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
 				Authorization: 'Basic ' + btoa(this.cacheValue.clientId + ":" + this.cacheValue.clientSecret)
-            },
-            params:params
+			},
+            data: params
         }
         instance.request(requestConfig).then(res => {
-			localStorage.setItem("test",res)
             let data = res.data
             if(data != null) {
                 that.cacheValue.accessToken = data.token_type + " " + data.access_token
                 that.cacheValue.tokenType = data.token_type
                 that.cacheValue.granted = true
                 window.localStorage.setItem(that.state,JSON.stringify(that.cacheValue))
-                //window.close()
+                window.close()
             }
         })
     }
