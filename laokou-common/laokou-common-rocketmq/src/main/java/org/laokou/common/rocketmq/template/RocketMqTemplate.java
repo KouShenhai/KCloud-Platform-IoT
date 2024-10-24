@@ -24,7 +24,7 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
-import org.laokou.common.core.utils.MdcUtil;
+import org.laokou.common.core.utils.MDCUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.messaging.Message;
@@ -71,6 +71,7 @@ public class RocketMqTemplate {
 		sendAsyncMessage(topic, tag, message, timeout, traceId, spanId);
 	}
 
+	// @formatter:off
 	/**
 	 * 事务消息.
 	 * @param topic 主题
@@ -89,9 +90,9 @@ public class RocketMqTemplate {
 				.setHeader(TRACE_ID, traceId)
 				.setHeader(SPAN_ID, spanId)
 				.build();
-			SendStatus sendStatus = rocketMQTemplate.sendMessageInTransaction(getTopicTag(topic, tag), message, null)
-				.getSendStatus();
-			MdcUtil.put(traceId, spanId);
+			SendStatus sendStatus = rocketMQTemplate.sendMessageInTransaction(getTopicTag(topic, tag), message, null).getSendStatus();
+			// 链路
+			MDCUtil.put(traceId, spanId);
 			if (ObjectUtil.equals(sendStatus, SEND_OK)) {
 				log.info("RocketMQ事务消息发送成功【Tag标签】");
 			}
@@ -100,32 +101,32 @@ public class RocketMqTemplate {
 			}
 		}
 		catch (Exception e) {
-			MdcUtil.put(traceId, spanId);
 			log.error("RocketMQ事务消息发送失败【Tag标签】，报错信息：{}", e.getMessage(), e);
 		}
 		finally {
-			MdcUtil.clear();
+			MDCUtil.clear();
 		}
 	}
 
 	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message, long timeout, String traceId,
 			String spanId) {
+		// 链路
+		MDCUtil.put(traceId, spanId);
 		rocketMQTemplate.asyncSend(getTopicTag(topic, tag), message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
-				MdcUtil.put(traceId, spanId);
 				log.info("RocketMQ异步消息发送成功【Tag标签，指定超时时间】");
-				MdcUtil.clear();
+				MDCUtil.clear();
 			}
 
 			@Override
 			public void onException(Throwable throwable) {
-				MdcUtil.put(traceId, spanId);
 				log.error("RocketMQ异步消息失败【Tag标签，指定超时时间】，报错信息：{}", throwable.getMessage(), throwable);
-				MdcUtil.clear();
+				MDCUtil.clear();
 			}
 		}, timeout);
 	}
+	// @formatter:on
 
 	private String getTopicTag(String topic, String tag) {
 		return StringUtil.isEmpty(tag) ? topic : String.format("%s:%s", topic, tag);
