@@ -145,7 +145,7 @@ export default () => {
 				const options = []
 				const defaultOption = {label: '老寇云集团', value: '0'}
 				options.push(defaultOption)
-				res.data.forEach((item: API.TenantOptionParam) => options.push(item))
+				res.data?.forEach((item: API.TenantOptionParam) => options.push(item))
 				setTenantOptions(options)
 			}
 		})

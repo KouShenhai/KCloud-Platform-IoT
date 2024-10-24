@@ -104,8 +104,8 @@ Content-Disposition: form-data; name="tenant_id"
 
 # 授权码模式(默认数据库)
 # 用户名/密码：admin/admin123
-# 获取code地址：https://127.0.0.1:1111/oauth2/authorize?client_id=95TxSsTPFA3tF12TBSMmUVK0da&client_secret=FpHwIfw4wY92dO&response_type=code&scope=read write&redirect_uri=http://127.0.0.1:8000
-# 获取code地址：http://127.0.0.1:1111/oauth2/authorize?client_id=95TxSsTPFA3tF12TBSMmUVK0da&client_secret=FpHwIfw4wY92dO&response_type=code&scope=read write&redirect_uri=http://127.0.0.1:8000
+# 获取code地址：https://127.0.0.1:1111/oauth2/authorize?client_id=95TxSsTPFA3tF12TBSMmUVK0da&response_type=code&scope=read write&redirect_uri=http://127.0.0.1:8000
+# 获取code地址：http://127.0.0.1:1111/oauth2/authorize?client_id=95TxSsTPFA3tF12TBSMmUVK0da&response_type=code&scope=read write&redirect_uri=http://127.0.0.1:8000
 POST {{schema}}{{host}}/oauth2/token
 Authorization: {{Authorization}}
 Content-Type: multipart/form-data; boundary=WebAppBoundary

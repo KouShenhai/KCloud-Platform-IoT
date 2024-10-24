@@ -21,13 +21,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 /**
  * 响应工具类.
@@ -43,16 +44,27 @@ public final class ResponseUtil {
 	 */
 	@SneakyThrows
 	public static void responseOk(HttpServletResponse response, Object obj) {
+		responseOk(response, JacksonUtil.toJsonStr(obj), APPLICATION_JSON_VALUE);
+	}
+
+	/**
+	 * 响应给视图解析.
+	 * @param response 响应对象
+	 * @param str 对象
+	 */
+	@SneakyThrows
+	public static void responseOk(HttpServletResponse response, String str, String contentType) {
 		response.setStatus(HttpStatus.OK.value());
-		response(response, obj);
+		response(response, str, contentType);
 	}
 
 	@SneakyThrows
-	private static void response(HttpServletResponse response, Object obj) {
+	private static void response(HttpServletResponse response, String str, String contentType) {
+		response.setContentType(contentType);
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-		response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
+		response.setContentLength(str.getBytes(StandardCharsets.UTF_8).length);
 		try (PrintWriter writer = response.getWriter()) {
-			writer.write(JacksonUtil.toJsonStr(obj));
+			writer.write(str);
 			writer.flush();
 		}
 	}

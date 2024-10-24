@@ -513,7 +513,6 @@
           <exclude>log4j2*.xml</exclude>
           <exclude>*.json</exclude>
           <exclude>*.properties</exclude>
-          <exclude>*.crt</exclude>
         </excludes>
       </resource>
       <!-- 添加需要包含的文件 -->
