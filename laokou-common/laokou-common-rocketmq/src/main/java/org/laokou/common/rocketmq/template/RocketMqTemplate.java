@@ -71,6 +71,7 @@ public class RocketMqTemplate {
 		sendAsyncMessage(topic, tag, message, timeout, traceId, spanId);
 	}
 
+	// @formatter:off
 	/**
 	 * 事务消息.
 	 * @param topic 主题
@@ -89,8 +90,8 @@ public class RocketMqTemplate {
 				.setHeader(TRACE_ID, traceId)
 				.setHeader(SPAN_ID, spanId)
 				.build();
-			SendStatus sendStatus = rocketMQTemplate.sendMessageInTransaction(getTopicTag(topic, tag), message, null)
-				.getSendStatus();
+			SendStatus sendStatus = rocketMQTemplate.sendMessageInTransaction(getTopicTag(topic, tag), message, null).getSendStatus();
+			// 链路
 			MDCUtil.put(traceId, spanId);
 			if (ObjectUtil.equals(sendStatus, SEND_OK)) {
 				log.info("RocketMQ事务消息发送成功【Tag标签】");
@@ -100,7 +101,6 @@ public class RocketMqTemplate {
 			}
 		}
 		catch (Exception e) {
-			MDCUtil.put(traceId, spanId);
 			log.error("RocketMQ事务消息发送失败【Tag标签】，报错信息：{}", e.getMessage(), e);
 		}
 		finally {
@@ -110,22 +110,23 @@ public class RocketMqTemplate {
 
 	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message, long timeout, String traceId,
 			String spanId) {
+		// 链路
+		MDCUtil.put(traceId, spanId);
 		rocketMQTemplate.asyncSend(getTopicTag(topic, tag), message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
-				MDCUtil.put(traceId, spanId);
 				log.info("RocketMQ异步消息发送成功【Tag标签，指定超时时间】");
 				MDCUtil.clear();
 			}
 
 			@Override
 			public void onException(Throwable throwable) {
-				MDCUtil.put(traceId, spanId);
 				log.error("RocketMQ异步消息失败【Tag标签，指定超时时间】，报错信息：{}", throwable.getMessage(), throwable);
 				MDCUtil.clear();
 			}
 		}, timeout);
 	}
+	// @formatter:on
 
 	private String getTopicTag(String topic, String tag) {
 		return StringUtil.isEmpty(tag) ? topic : String.format("%s:%s", topic, tag);
