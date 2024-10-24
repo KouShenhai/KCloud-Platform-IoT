@@ -18,7 +18,7 @@
 package org.laokou.common.rocketmq.handler;
 
 import org.apache.rocketmq.common.message.MessageExt;
-import org.laokou.common.core.utils.MdcUtil;
+import org.laokou.common.core.utils.MDCUtil;
 import org.springframework.messaging.Message;
 import org.springframework.util.Assert;
 
@@ -33,7 +33,7 @@ public class TraceHandler {
 	protected void putTrace(MessageExt messageExt) {
 		String traceId = messageExt.getProperty(TRACE_ID);
 		String spanId = messageExt.getProperty(SPAN_ID);
-		MdcUtil.put(traceId, spanId);
+		MDCUtil.put(traceId, spanId);
 	}
 
 	protected void putTrace(Message message) {
@@ -41,11 +41,11 @@ public class TraceHandler {
 		Object obj2 = message.getHeaders().get(SPAN_ID);
 		Assert.notNull(obj1, "链路ID不为空");
 		Assert.notNull(obj2, "标签ID不为空");
-		MdcUtil.put(obj1.toString(), obj2.toString());
+		MDCUtil.put(obj1.toString(), obj2.toString());
 	}
 
 	protected void clearTrace() {
-		MdcUtil.clear();
+		MDCUtil.clear();
 	}
 
 }

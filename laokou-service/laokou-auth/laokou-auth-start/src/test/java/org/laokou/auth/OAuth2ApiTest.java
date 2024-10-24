@@ -24,9 +24,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.gateway.CaptchaGateway;
-import org.laokou.common.core.utils.HttpUtil;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.core.utils.*;
 import org.laokou.common.crypto.utils.RSAUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -50,6 +48,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
@@ -107,6 +106,14 @@ class OAuth2ApiTest {
 	void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
+
+    @Test
+    void testTtlMDC() {
+        MDCUtil.put("111","222");
+        try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+            executor.execute(() -> log.info("TraceId：{}，SpanId：{}", MDCUtil.getSpanId(), MDCUtil.getSpanId()));
+        }
+    }
 
 	@Test
 	void testRestClientToSendJsonPostRequest() {
