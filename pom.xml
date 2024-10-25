@@ -81,7 +81,7 @@
     <docker.username>username</docker.username>
     <docker.password>password</docker.password>
     <docker-maven-plugin.version>0.45.1</docker-maven-plugin.version>
-    <maven-checkstyle-plugin.version>3.5.0</maven-checkstyle-plugin.version>
+    <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <native-maven-plugin.version>0.10.3</native-maven-plugin.version>
     <versions-maven-plugin.version>2.17.1</versions-maven-plugin.version>
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
@@ -148,10 +148,10 @@
       <name>Maven Central</name>
       <url>https://repo.maven.apache.org/maven2</url>
       <snapshots>
-          <enabled>true</enabled>
+        <enabled>true</enabled>
       </snapshots>
       <releases>
-          <enabled>true</enabled>
+        <enabled>true</enabled>
       </releases>
     </repository>
     <repository>
