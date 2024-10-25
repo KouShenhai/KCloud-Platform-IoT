@@ -1,0 +1,8 @@
+server:
+  port: 9033
+
+spring:
+  profiles:
+    active: @PROFILE-ACTIVE@
+  application:
+    name: laokou-sample-shardingsphere
