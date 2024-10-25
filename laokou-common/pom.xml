@@ -70,6 +70,7 @@
     <module>laokou-common-excel</module>
     <module>laokou-common-snail-job</module>
     <module>laokou-common-prometheus</module>
+    <module>laokou-common-xss</module>
   </modules>
 
 </project>
