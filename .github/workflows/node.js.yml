@@ -5,9 +5,9 @@ name: JavaScript CI with Node.js
 
 on:
   push:
-    branches: [ "prod" ]
+    branches: [ "prod_生产分支_仅用于老寇使用_其他人请使用master分支" ]
   pull_request:
-    branches: [ "prod" ]
+    branches: [ "prod_生产分支_仅用于老寇使用_其他人请使用master分支" ]
 
 jobs:
   build:
