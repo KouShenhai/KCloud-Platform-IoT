@@ -22,6 +22,8 @@ import org.jsoup.safety.Safelist;
 import org.laokou.common.i18n.utils.StringUtil;
 import java.util.regex.Pattern;
 
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+
 /**
  * @author laokou
  */
@@ -41,7 +43,7 @@ public class XssUtil {
 	public static String clear(String str) {
 		if (StringUtil.isNotEmpty(str)) {
 			for (Pattern pattern : SCRIPT_PATTERNS) {
-				str = pattern.matcher(str).replaceAll("");
+				str = pattern.matcher(str).replaceAll(EMPTY);
 			}
 			str = clear(str, getSafelist());
 		}
