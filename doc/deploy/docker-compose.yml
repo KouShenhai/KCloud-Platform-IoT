@@ -355,7 +355,6 @@ services:
     networks:
       - laokou_network
     depends_on:
-      - job
       - nacos
       - admin
       - rocketmq-namesrv
@@ -376,7 +375,6 @@ services:
     networks:
       - laokou_network
     depends_on:
-      - job
       - nacos
       - elasticsearch
       - rocketmq-namesrv
