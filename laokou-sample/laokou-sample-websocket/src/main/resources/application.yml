@@ -2,6 +2,8 @@ server:
   port: 9032
 
 spring:
+  profiles:
+    active: @PROFILE-ACTIVE@
   application:
     name: laokou-sample-websocket
   tcp-server:

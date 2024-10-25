@@ -20,7 +20,6 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>org.laokou</groupId>
   <artifactId>laokou-common-bom</artifactId>
   <version>3.4.0</version>
@@ -149,9 +148,9 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-xss</artifactId>
-          <version>${laokou.version}</version>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-xss</artifactId>
+        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>com.baomidou</groupId>
@@ -164,9 +163,9 @@
         <version>${mybatis-plus.version}</version>
       </dependency>
       <dependency>
-          <groupId>org.apache.shardingsphere</groupId>
-          <artifactId>shardingsphere-jdbc</artifactId>
-          <version>${shardingsphere.version}</version>
+        <groupId>org.apache.shardingsphere</groupId>
+        <artifactId>shardingsphere-jdbc</artifactId>
+        <version>${shardingsphere.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>

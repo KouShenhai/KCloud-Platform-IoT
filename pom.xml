@@ -148,10 +148,10 @@
       <name>Maven Central</name>
       <url>https://repo.maven.apache.org/maven2</url>
       <snapshots>
-          <enabled>true</enabled>
+        <enabled>true</enabled>
       </snapshots>
       <releases>
-          <enabled>true</enabled>
+        <enabled>true</enabled>
       </releases>
     </repository>
     <repository>
