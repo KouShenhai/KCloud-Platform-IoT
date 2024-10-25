@@ -324,6 +324,9 @@ export default () => {
 				<ProFormSelect
 					name="tenant_id"
 					showSearch
+					fieldProps={{
+						size: 'large'
+					}}
 					options={tenantOptions}
 					debounceTime={300}
 					placeholder="请选择租户"
@@ -370,13 +373,10 @@ export default () => {
 						<Row>
 							<Col flex={3}>
 								<ProFormText
-									style={{
-										float: 'right',
-									}}
+									width={"sm"}
 									fieldProps={{
-										prefix: (
-											<SafetyCertificateOutlined className={'prefixIcon'}/>
-										),
+										size: 'large',
+										prefix: <SafetyCertificateOutlined className={'prefixIcon'}/>,
 										autoComplete: 'new-password',
 									}}
 									name="captcha"
