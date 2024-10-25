@@ -20,12 +20,17 @@ package org.laokou.common.domain.support;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 /**
- * 领域事件推送器.
+ * 领域事件发布器.
  *
  * @author laokou
  */
 public interface DomainEventPublisher {
 
-	void publish(DomainEvent<Long> payload);
+	/**
+	 * 发布领域事件.
+	 * @param payload 内容
+	 * @param isTX 事务标识，true是，false否
+	 */
+	void publish(DomainEvent<Long> payload, boolean isTX);
 
 }

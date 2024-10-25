@@ -70,7 +70,7 @@ public class OAuth2AuthenticationProvider {
 		finally {
 			if (auth.checkNotEmptyLog()) {
 				// 发布登录事件
-				rocketMQDomainEventPublisher.publish(LoginLogConvertor.toEvent(auth));
+				rocketMQDomainEventPublisher.publish(LoginLogConvertor.toEvent(auth), false);
 			}
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();

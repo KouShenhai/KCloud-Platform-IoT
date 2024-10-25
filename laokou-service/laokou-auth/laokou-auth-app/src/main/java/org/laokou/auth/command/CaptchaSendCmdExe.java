@@ -62,7 +62,7 @@ public class CaptchaSendCmdExe {
 		Long tenantId = cmd.getTenantId();
 		SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getUuid(), LAOKOU_CAPTCHA_TOPIC, cmd.getTag(),
 				CAPTCHA, springUtil.getServiceId(), getSourceName(tenantId), tenantId);
-		rocketMQDomainEventPublisher.publish(sendCaptchaEvent);
+		rocketMQDomainEventPublisher.publish(sendCaptchaEvent, false);
 	}
 
 	private String getSourceName(Long tenantId) {
