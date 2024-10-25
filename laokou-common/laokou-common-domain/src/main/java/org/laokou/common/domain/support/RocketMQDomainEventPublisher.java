@@ -32,9 +32,15 @@ public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 	private final TraceUtil traceUtil;
 
 	@Override
-	public void publish(DomainEvent<Long> payload) {
-		rocketMqTemplate.sendTransactionMessage(payload.getTopic(), payload.getTag(), payload, payload.getId(),
-				traceUtil.getTraceId(), traceUtil.getSpanId());
+	public void publish(DomainEvent<Long> payload, boolean isTX) {
+		if (isTX) {
+			rocketMqTemplate.sendTransactionMessage(payload.getTopic(), payload.getTag(), payload, payload.getId(),
+					traceUtil.getTraceId(), traceUtil.getSpanId());
+		}
+		else {
+			rocketMqTemplate.sendAsyncMessage(payload.getTopic(), payload.getTag(), payload, payload.getId(),
+					traceUtil.getTraceId(), traceUtil.getSpanId());
+		}
 	}
 
 }
