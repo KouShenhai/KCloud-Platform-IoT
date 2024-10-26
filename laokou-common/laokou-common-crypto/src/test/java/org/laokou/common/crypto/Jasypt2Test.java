@@ -23,8 +23,6 @@ import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.nio.charset.StandardCharsets;
-
 /**
  * 只针对 spring-boot 2.x.x.
  *
@@ -41,8 +39,7 @@ class Jasypt2Test {
 		String decryptWithMD5AndDESStr = decryptWithMD5AndDES(encryptWithMD5AndDESStr, factor);
 		log.info("采用PBEWithMD5AndDES加密前原文密文：{}", encryptWithMD5AndDESStr);
 		log.info("采用PBEWithMD5AndDES解密后密文原文：{}", decryptWithMD5AndDESStr);
-		Assertions.assertArrayEquals(decryptWithMD5AndDESStr.getBytes(StandardCharsets.UTF_8),
-				plainText.getBytes(StandardCharsets.UTF_8));
+		Assertions.assertEquals(decryptWithMD5AndDESStr, plainText);
 	}
 
 	/**
