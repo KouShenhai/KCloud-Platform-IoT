@@ -143,6 +143,13 @@ public final class DateUtil {
 		return zonedDateTime.format(dateTimeFormatter);
 	}
 
+	public static String format(Instant instant, int index) {
+		// 指定时区
+		ZonedDateTime zonedDateTime = instant.atZone(getDefaultZoneId());
+		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter(index);
+		return zonedDateTime.format(dateTimeFormatter);
+	}
+
 	public static ZoneId getDefaultZoneId() {
 		return ZoneId.systemDefault();
 	}
@@ -326,8 +333,11 @@ public final class DateUtil {
 	 * @return 时间
 	 */
 	public static LocalDateTime getLocalDateTimeOfTimestamp(long timestamp, ZoneId zoneId) {
-		Instant instant = Instant.ofEpochMilli(timestamp);
-		return LocalDateTime.ofInstant(instant, zoneId);
+		return LocalDateTime.ofInstant(getInstantOfTimestamp(timestamp), zoneId);
+	}
+
+	public static Instant getInstantOfTimestamp(long timestamp) {
+		return Instant.ofEpochMilli(timestamp);
 	}
 
 	/**

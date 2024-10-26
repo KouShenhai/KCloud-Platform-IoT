@@ -21,18 +21,14 @@ import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.nacos.utils.ServiceUtil;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.client.serviceregistry.Registration;
-import org.springframework.context.annotation.Import;
 
 /**
  * @author laokou
  */
 @Slf4j
-@AutoConfiguration
 @RequiredArgsConstructor
-@Import(ServiceUtil.class)
-public class NacosAutoConfig {
+public class NacosShutDownConfig {
 
 	private final ServiceUtil serviceUtil;
 
@@ -44,7 +40,6 @@ public class NacosAutoConfig {
 		log.info("开始执行服务下线");
 		serviceUtil.deregisterInstance(registration.getServiceId(), registration.getHost(), registration.getPort());
 		log.info("服务下线执行成功");
-		log.info("关闭服务执行完毕");
 	}
 
 }

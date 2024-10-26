@@ -18,10 +18,12 @@
 package org.laokou.start;
 
 import lombok.SneakyThrows;
+import org.laokou.common.i18n.utils.SslUtil;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import java.net.InetAddress;
 
@@ -29,11 +31,22 @@ import java.net.InetAddress;
  * @author laokou
  */
 @EnableConfigurationProperties
+@EnableDiscoveryClient(autoRegister = false)
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
 public class ShardingTestApp {
 
+	/// ```properties
+	/// -Dnacos.remote.client.rpc.tls.enable=true
+	/// -Dnacos.remote.client.rpc.tls.mutualAuth=true
+	/// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
+	/// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
+	/// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
+	/// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
+	/// ```
 	@SneakyThrows
 	public static void main(String[] args) {
+		// 忽略SSL认证
+		SslUtil.ignoreSSLTrust();
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		new SpringApplicationBuilder(ShardingTestApp.class).web(WebApplicationType.SERVLET).run(args);
 	}

@@ -20,6 +20,7 @@ package org.laokou.gateway;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.common.nacos.annotation.EnableNacosShutDown;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
 import org.laokou.gateway.annotation.EnableAuth;
 import org.springframework.boot.WebApplicationType;
@@ -40,6 +41,7 @@ import java.net.InetAddress;
  * @author laokou
  */
 @EnableAuth
+@EnableNacosShutDown
 @EnableDiscoveryClient
 @EnableEncryptableProperties
 @EnableConfigurationProperties

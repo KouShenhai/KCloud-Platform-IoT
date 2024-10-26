@@ -15,34 +15,29 @@
  *
  */
 
-package org.laokou.adapter;
+package org.laokou.adapter.web;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.client.dto.clientobject.ReceiveCO;
-import org.laokou.common.rocketmq.template.RocketMqTemplate;
-import org.laokou.common.trace.utils.TraceUtil;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.laokou.client.api.UserServiceI;
+import org.laokou.client.dto.clientobject.UserCO;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAGE_TOPIC;
+import java.util.List;
 
 /**
  * @author laokou
  */
 @RestController
 @RequiredArgsConstructor
-public class ApiController {
+public class UserController {
 
-	private final TraceUtil traceUtil;
+	private final UserServiceI userServiceI;
 
-	private final RocketMqTemplate rocketMqTemplate;
-
-	@PostMapping("send")
-	public void send(@RequestBody ReceiveCO co) {
-		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, EMPTY, co, traceUtil.getTraceId(),
-				traceUtil.getSpanId());
+	@GetMapping
+	public Result<List<UserCO>> list() {
+		return userServiceI.list();
 	}
 
 }

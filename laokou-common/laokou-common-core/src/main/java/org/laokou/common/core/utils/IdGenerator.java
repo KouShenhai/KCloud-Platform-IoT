@@ -27,6 +27,7 @@ import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.concurrent.Executors;
@@ -78,10 +79,22 @@ public final class IdGenerator {
 	 * @param snowflakeId 雪花ID
 	 * @return 时间
 	 */
+	public static Instant getInstant(long snowflakeId) {
+		return DateUtil.getInstantOfTimestamp(getTimestamp(snowflakeId));
+	}
+
+	/**
+	 * 雪花ID生成时间.
+	 * @param snowflakeId 雪花ID
+	 * @return 时间
+	 */
 	public static LocalDateTime getLocalDateTime(long snowflakeId, ZoneId zoneId) {
+		return DateUtil.getLocalDateTimeOfTimestamp(getTimestamp(snowflakeId), zoneId);
+	}
+
+	private static long getTimestamp(long snowflakeId) {
 		// 第一段 时间戳部分 (反推 -> 右移left + start)
-		long timestamp = (snowflakeId >> Snowflake.TIMESTAMP_LEFT) + Snowflake.START_TIMESTAMP;
-		return DateUtil.getLocalDateTimeOfTimestamp(timestamp, zoneId);
+		return (snowflakeId >> Snowflake.TIMESTAMP_LEFT) + Snowflake.START_TIMESTAMP;
 	}
 
 	static class Snowflake {

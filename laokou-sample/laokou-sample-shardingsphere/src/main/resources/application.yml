@@ -6,3 +6,9 @@ spring:
     active: @PROFILE-ACTIVE@
   application:
     name: laokou-sample-shardingsphere
+  datasource:
+    dynamic:
+      datasource:
+        master:
+          url: jdbc:shardingsphere:nacos:application-shardingsphere.yaml
+          driver-class-name: org.laokou.infrastructure.config.NacosShardingSphereDriver
