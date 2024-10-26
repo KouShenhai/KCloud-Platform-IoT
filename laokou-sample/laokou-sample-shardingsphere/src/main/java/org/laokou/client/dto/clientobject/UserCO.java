@@ -17,13 +17,17 @@
 
 package org.laokou.client.dto.clientobject;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserCO extends ClientObject {
 
 	private Long id;

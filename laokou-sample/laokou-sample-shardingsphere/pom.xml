@@ -61,6 +61,10 @@
       <artifactId>laokou-common-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-cors</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

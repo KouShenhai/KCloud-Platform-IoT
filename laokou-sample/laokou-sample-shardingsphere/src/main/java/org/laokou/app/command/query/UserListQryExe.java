@@ -36,7 +36,10 @@ public class UserListQryExe {
 	private final UserMapper userMapper;
 
 	public Result<List<UserCO>> execute() {
-		return Result.ok(userMapper.selectObjs(Wrappers.emptyWrapper()));
+		return Result.ok(userMapper.selectList(Wrappers.emptyWrapper())
+			.stream()
+			.map(item -> new UserCO(item.getId(), item.getName()))
+			.toList());
 	}
 
 }

@@ -36,6 +36,7 @@ package org.laokou.infrastructure.config;
 
 import lombok.Getter;
 import org.apache.shardingsphere.driver.api.yaml.YamlShardingSphereDataSourceFactory;
+import org.apache.shardingsphere.infra.url.core.ShardingSphereURL;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -64,11 +65,11 @@ public final class NacosDriverDataSourceCache {
 			return dataSourceMap.get(url);
 		}
 		return dataSourceMap.computeIfAbsent(url,
-				driverUrl -> createDataSource(NacosShardingSphereURL.parse(driverUrl.substring(urlPrefix.length()))));
+				driverUrl -> createDataSource(ShardingSphereURL.parse(driverUrl.substring(urlPrefix.length()))));
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T extends Throwable> DataSource createDataSource(final NacosShardingSphereURL url) throws T {
+	private <T extends Throwable> DataSource createDataSource(final ShardingSphereURL url) throws T {
 		try {
 			NacosShardingSphereURLLoadEngine urlLoadEngine = new NacosShardingSphereURLLoadEngine(url);
 			return YamlShardingSphereDataSourceFactory.createDataSource(urlLoadEngine.loadContent());

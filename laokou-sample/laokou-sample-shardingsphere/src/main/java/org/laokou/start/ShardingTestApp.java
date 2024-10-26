@@ -19,6 +19,7 @@ package org.laokou.start;
 
 import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.SslUtil;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -33,6 +34,7 @@ import java.net.InetAddress;
 @EnableConfigurationProperties
 @EnableDiscoveryClient(autoRegister = false)
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
+@MapperScan(basePackages = "org.laokou.infrastructure.gatewayimpl.database")
 public class ShardingTestApp {
 
 	/// ```properties

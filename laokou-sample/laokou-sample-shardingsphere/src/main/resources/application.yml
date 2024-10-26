@@ -12,3 +12,14 @@ spring:
         master:
           url: jdbc:shardingsphere:nacos:application-shardingsphere.yaml
           driver-class-name: org.laokou.infrastructure.config.NacosShardingSphereDriver
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: false
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl

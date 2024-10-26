@@ -41,6 +41,7 @@ import com.baomidou.dynamic.datasource.toolkit.CryptoUtils;
 import com.google.common.base.Preconditions;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shardingsphere.infra.url.core.ShardingSphereURL;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.PropertyUtil;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -81,9 +82,9 @@ public final class NacosShardingSphereURLLoadEngine {
 
 	private static final String CRYPTO_SUFFIX_NAME = ")";
 
-	private final NacosShardingSphereURL url;
+	private final ShardingSphereURL url;
 
-	public NacosShardingSphereURLLoadEngine(final NacosShardingSphereURL url) {
+	public NacosShardingSphereURLLoadEngine(final ShardingSphereURL url) {
 		this.url = url;
 	}
 
