@@ -3,16 +3,16 @@
 
  Source Server         : 127.0.0.1
  Source Server Type    : PostgreSQL
- Source Server Version : 160002 (160002)
+ Source Server Version : 160003 (160003)
  Source Host           : 127.0.0.1:5432
  Source Catalog        : kcloud_platform_nacos
  Source Schema         : public
 
  Target Server Type    : PostgreSQL
- Target Server Version : 160002 (160002)
+ Target Server Version : 160003 (160003)
  File Encoding         : 65001
 
- Date: 18/10/2024 19:19:16
+ Date: 26/10/2024 20:34:51
 */
 
 
@@ -20,7 +20,7 @@
 -- Sequence structure for config_info_aggr_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -31,7 +31,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq1";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq1"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -42,7 +42,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq2";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq2"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -53,7 +53,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq3";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq3"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -64,7 +64,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq4";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq4"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -75,7 +75,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq5";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq5"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq5" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -86,7 +86,7 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq6
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq6";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq6"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -97,7 +97,18 @@ CACHE 1;
 -- Sequence structure for config_info_aggr_id_seq7
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq7";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq7"
+CREATE SEQUENCE "public"."config_info_aggr_id_seq7" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_aggr_id_seq8
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq8";
+CREATE SEQUENCE "public"."config_info_aggr_id_seq8" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -108,7 +119,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq";
-CREATE SEQUENCE "public"."config_info_beta_id_seq"
+CREATE SEQUENCE "public"."config_info_beta_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -119,7 +130,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq1";
-CREATE SEQUENCE "public"."config_info_beta_id_seq1"
+CREATE SEQUENCE "public"."config_info_beta_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -130,7 +141,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq2";
-CREATE SEQUENCE "public"."config_info_beta_id_seq2"
+CREATE SEQUENCE "public"."config_info_beta_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -141,7 +152,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq3";
-CREATE SEQUENCE "public"."config_info_beta_id_seq3"
+CREATE SEQUENCE "public"."config_info_beta_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -152,7 +163,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq4";
-CREATE SEQUENCE "public"."config_info_beta_id_seq4"
+CREATE SEQUENCE "public"."config_info_beta_id_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -163,7 +174,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq5";
-CREATE SEQUENCE "public"."config_info_beta_id_seq5"
+CREATE SEQUENCE "public"."config_info_beta_id_seq5" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -174,7 +185,7 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq6
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq6";
-CREATE SEQUENCE "public"."config_info_beta_id_seq6"
+CREATE SEQUENCE "public"."config_info_beta_id_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -185,7 +196,18 @@ CACHE 1;
 -- Sequence structure for config_info_beta_id_seq7
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq7";
-CREATE SEQUENCE "public"."config_info_beta_id_seq7"
+CREATE SEQUENCE "public"."config_info_beta_id_seq7" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_beta_id_seq8
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq8";
+CREATE SEQUENCE "public"."config_info_beta_id_seq8" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -196,7 +218,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq";
-CREATE SEQUENCE "public"."config_info_id_seq"
+CREATE SEQUENCE "public"."config_info_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -207,7 +229,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq1";
-CREATE SEQUENCE "public"."config_info_id_seq1"
+CREATE SEQUENCE "public"."config_info_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -218,7 +240,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq2";
-CREATE SEQUENCE "public"."config_info_id_seq2"
+CREATE SEQUENCE "public"."config_info_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -229,7 +251,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq3";
-CREATE SEQUENCE "public"."config_info_id_seq3"
+CREATE SEQUENCE "public"."config_info_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -240,7 +262,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq4";
-CREATE SEQUENCE "public"."config_info_id_seq4"
+CREATE SEQUENCE "public"."config_info_id_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -251,7 +273,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq5";
-CREATE SEQUENCE "public"."config_info_id_seq5"
+CREATE SEQUENCE "public"."config_info_id_seq5" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -262,7 +284,7 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq6
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq6";
-CREATE SEQUENCE "public"."config_info_id_seq6"
+CREATE SEQUENCE "public"."config_info_id_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -273,7 +295,18 @@ CACHE 1;
 -- Sequence structure for config_info_id_seq7
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_id_seq7";
-CREATE SEQUENCE "public"."config_info_id_seq7"
+CREATE SEQUENCE "public"."config_info_id_seq7" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_id_seq8
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_id_seq8";
+CREATE SEQUENCE "public"."config_info_id_seq8" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -284,7 +317,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq";
-CREATE SEQUENCE "public"."config_info_tag_id_seq"
+CREATE SEQUENCE "public"."config_info_tag_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -295,7 +328,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq1";
-CREATE SEQUENCE "public"."config_info_tag_id_seq1"
+CREATE SEQUENCE "public"."config_info_tag_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -306,7 +339,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq2";
-CREATE SEQUENCE "public"."config_info_tag_id_seq2"
+CREATE SEQUENCE "public"."config_info_tag_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -317,7 +350,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq3";
-CREATE SEQUENCE "public"."config_info_tag_id_seq3"
+CREATE SEQUENCE "public"."config_info_tag_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -328,7 +361,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq4";
-CREATE SEQUENCE "public"."config_info_tag_id_seq4"
+CREATE SEQUENCE "public"."config_info_tag_id_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -339,7 +372,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq5";
-CREATE SEQUENCE "public"."config_info_tag_id_seq5"
+CREATE SEQUENCE "public"."config_info_tag_id_seq5" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -350,7 +383,7 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq6
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq6";
-CREATE SEQUENCE "public"."config_info_tag_id_seq6"
+CREATE SEQUENCE "public"."config_info_tag_id_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -361,7 +394,18 @@ CACHE 1;
 -- Sequence structure for config_info_tag_id_seq7
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq7";
-CREATE SEQUENCE "public"."config_info_tag_id_seq7"
+CREATE SEQUENCE "public"."config_info_tag_id_seq7" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_info_tag_id_seq8
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq8";
+CREATE SEQUENCE "public"."config_info_tag_id_seq8" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -372,7 +416,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -383,7 +427,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq1";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq1"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -394,7 +438,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq2";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq2"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -405,7 +449,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq3";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq3"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -416,7 +460,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq4";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq4"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -427,7 +471,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq5";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq5"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq5" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -438,7 +482,7 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq6
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq6";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq6"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -449,7 +493,18 @@ CACHE 1;
 -- Sequence structure for config_tags_relation_nid_seq7
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq7";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq7"
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq7" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for config_tags_relation_nid_seq8
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq8";
+CREATE SEQUENCE "public"."config_tags_relation_nid_seq8" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -460,7 +515,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq";
-CREATE SEQUENCE "public"."group_capacity_id_seq"
+CREATE SEQUENCE "public"."group_capacity_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -471,7 +526,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq1";
-CREATE SEQUENCE "public"."group_capacity_id_seq1"
+CREATE SEQUENCE "public"."group_capacity_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -482,7 +537,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq2";
-CREATE SEQUENCE "public"."group_capacity_id_seq2"
+CREATE SEQUENCE "public"."group_capacity_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -493,7 +548,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq3";
-CREATE SEQUENCE "public"."group_capacity_id_seq3"
+CREATE SEQUENCE "public"."group_capacity_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -504,7 +559,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq4";
-CREATE SEQUENCE "public"."group_capacity_id_seq4"
+CREATE SEQUENCE "public"."group_capacity_id_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -515,7 +570,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq5";
-CREATE SEQUENCE "public"."group_capacity_id_seq5"
+CREATE SEQUENCE "public"."group_capacity_id_seq5" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -526,7 +581,7 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq6
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq6";
-CREATE SEQUENCE "public"."group_capacity_id_seq6"
+CREATE SEQUENCE "public"."group_capacity_id_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -537,7 +592,18 @@ CACHE 1;
 -- Sequence structure for group_capacity_id_seq7
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq7";
-CREATE SEQUENCE "public"."group_capacity_id_seq7"
+CREATE SEQUENCE "public"."group_capacity_id_seq7" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for group_capacity_id_seq8
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq8";
+CREATE SEQUENCE "public"."group_capacity_id_seq8" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -548,7 +614,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq";
-CREATE SEQUENCE "public"."his_config_info_nid_seq"
+CREATE SEQUENCE "public"."his_config_info_nid_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -559,7 +625,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq1";
-CREATE SEQUENCE "public"."his_config_info_nid_seq1"
+CREATE SEQUENCE "public"."his_config_info_nid_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -570,7 +636,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq2";
-CREATE SEQUENCE "public"."his_config_info_nid_seq2"
+CREATE SEQUENCE "public"."his_config_info_nid_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -581,7 +647,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq3";
-CREATE SEQUENCE "public"."his_config_info_nid_seq3"
+CREATE SEQUENCE "public"."his_config_info_nid_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -592,7 +658,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq4";
-CREATE SEQUENCE "public"."his_config_info_nid_seq4"
+CREATE SEQUENCE "public"."his_config_info_nid_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -603,7 +669,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq5";
-CREATE SEQUENCE "public"."his_config_info_nid_seq5"
+CREATE SEQUENCE "public"."his_config_info_nid_seq5" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -614,7 +680,7 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq6
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq6";
-CREATE SEQUENCE "public"."his_config_info_nid_seq6"
+CREATE SEQUENCE "public"."his_config_info_nid_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -625,7 +691,18 @@ CACHE 1;
 -- Sequence structure for his_config_info_nid_seq7
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq7";
-CREATE SEQUENCE "public"."his_config_info_nid_seq7"
+CREATE SEQUENCE "public"."his_config_info_nid_seq7" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for his_config_info_nid_seq8
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq8";
+CREATE SEQUENCE "public"."his_config_info_nid_seq8" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -636,7 +713,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -647,7 +724,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq1";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq1"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -658,7 +735,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq2";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq2"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -669,7 +746,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq3";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq3"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -680,7 +757,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq4";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq4"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -691,7 +768,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq5";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq5"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq5" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -702,7 +779,7 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq6
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq6";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq6"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -713,7 +790,18 @@ CACHE 1;
 -- Sequence structure for tenant_capacity_id_seq7
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq7";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq7"
+CREATE SEQUENCE "public"."tenant_capacity_id_seq7" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for tenant_capacity_id_seq8
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq8";
+CREATE SEQUENCE "public"."tenant_capacity_id_seq8" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -724,7 +812,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq";
-CREATE SEQUENCE "public"."tenant_info_id_seq"
+CREATE SEQUENCE "public"."tenant_info_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -735,7 +823,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq1";
-CREATE SEQUENCE "public"."tenant_info_id_seq1"
+CREATE SEQUENCE "public"."tenant_info_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -746,7 +834,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq2";
-CREATE SEQUENCE "public"."tenant_info_id_seq2"
+CREATE SEQUENCE "public"."tenant_info_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -757,7 +845,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq3
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq3";
-CREATE SEQUENCE "public"."tenant_info_id_seq3"
+CREATE SEQUENCE "public"."tenant_info_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -768,7 +856,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq4
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq4";
-CREATE SEQUENCE "public"."tenant_info_id_seq4"
+CREATE SEQUENCE "public"."tenant_info_id_seq4" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -779,7 +867,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq5
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq5";
-CREATE SEQUENCE "public"."tenant_info_id_seq5"
+CREATE SEQUENCE "public"."tenant_info_id_seq5" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -790,7 +878,7 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq6
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq6";
-CREATE SEQUENCE "public"."tenant_info_id_seq6"
+CREATE SEQUENCE "public"."tenant_info_id_seq6" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -801,7 +889,18 @@ CACHE 1;
 -- Sequence structure for tenant_info_id_seq7
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq7";
-CREATE SEQUENCE "public"."tenant_info_id_seq7"
+CREATE SEQUENCE "public"."tenant_info_id_seq7" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for tenant_info_id_seq8
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq8";
+CREATE SEQUENCE "public"."tenant_info_id_seq8" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -1879,150 +1978,6 @@ knife4j:
         service-name: laokou-admin
         context-path: /admin
         order: 2', '83a42fbb3c7e33650b926996566b5857', '2023-01-22 13:16:13', '2024-09-07 16:38:31.713', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (68, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: false
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: false
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
-spring:
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: -1
-      max-request-size: -1
-  cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: http://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            group-id: LAOKOU_GROUP
-            data-id: admin-flow.json
-            data-type: json
-            rule-type: flow
-            username: nacos
-            password: nacos
-        db1:
-          nacos:
-            server-addr: http://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            group-id: LAOKOU_GROUP
-            data-id: admin-degrade.json
-            data-type: json
-            rule-type: degrade
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # 不开启虚拟线程
-  threads:
-    virtual:
-      enabled: true
-  liquibase:
-    enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.xml
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-
-logging:
-  config: classpath:log4j2-dev.xml
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    enabled: true
-    path: /v3/api-docs
-  group-configs:
-    - group: ''default''
-      paths-to-match: ''/**''
-      packages-to-scan: org.laokou.admin.web
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '2cbd6a7b166616f09c980b06bece7fa9', '2024-05-25 18:13:33.447', '2024-10-16 23:14:12.189', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (1475, 'application-sms.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -2167,861 +2122,6 @@ management:
   endpoint:
     health:
       show-details: always', '90a67f1cbc3594606d9df4d2a5c8067c', '2024-05-25 18:13:10.57', '2024-10-12 00:15:13.245', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', '8140e92b-fb43-48f5-b63b-7506185206a5', 'spring boot admin monitor', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (46, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
-spring:
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: -1
-      max-request-size: -1
-  cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            group-id: LAOKOU_GROUP
-            data-id: admin-flow.json
-            data-type: json
-            rule-type: flow
-            username: nacos
-            password: nacos
-        db1:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            group-id: LAOKOU_GROUP
-            data-id: admin-degrade.json
-            data-type: json
-            rule-type: degrade
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # 不开启虚拟线程
-  threads:
-    virtual:
-      enabled: true
-  liquibase:
-    enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.xml
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-
-logging:
-  config: classpath:log4j2-prod.xml
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    enabled: false
-    path: /v3/api-docs
-  group-configs:
-    - group: ''default''
-      paths-to-match: ''/**''
-      packages-to-scan: org.laokou.admin.web
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '70f8d84be27922eb1d5100b448c86cb8', '2024-05-25 18:13:10.69', '2024-10-16 23:14:58.464', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (47, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
-spring:
-  session:
-    redis:
-      repository-type: indexed
-      namespace: spring:session:auth
-    timeout: 3600
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-  cloud:
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            data-id: auth-flow.json
-            data-type: json
-            group-id: LAOKOU_GROUP
-            rule-type: flow
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    # network
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # OAuth2
-  security:
-    oauth2:
-      authorization-server:
-        enabled: true
-        # 多租户
-        multiple-issuers-allowed: false
-        client:
-          default:
-            token:
-              authorization-code-time-to-live: 1h
-              access-token-time-to-live: 1h
-              refresh-token-time-to-live: 6h
-              device-code-time-to-live: 1h
-            registration:
-              id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-name: OAuth2.1认证
-              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
-              client-authentication-methods:
-                - client_secret_basic
-              authorization-grant-types:
-                - password
-                - mail
-                - mobile
-                - client_credentials
-                - refresh_token
-                - authorization_code
-                - urn:ietf:params:oauth:grant-type:device_code
-                - urn:ietf:params:oauth:grant-type:jwt-bearer
-                - urn:ietf:params:oauth:grant-type:token-exchange
-              scopes:
-                - read
-                - write
-              redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://vue.laokou.org
-                - https://laokou.org.cn
-                - https://laokou.org.cn/api/webjars/oauth/oauth2.html
-                - http://laokou.org.cn/api/webjars/oauth/oauth2.html
-                - https://ui/api/webjars/oauth/oauth2.html
-                - http://ui/api/webjars/oauth/oauth2.html
-                - https://gateway:5555/webjars/oauth/oauth2.html
-                - http://gateway:5555/webjars/oauth/oauth2.html
-                - https://auth:1111/webjars/oauth/oauth2.html
-                - http://auth:1111/webjars/oauth/oauth2.html
-                - https://admin:9990/webjars/oauth/oauth2.html
-                - http://admin:9990/webjars/oauth/oauth2.html
-              post-logout-redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://vue.laokou.org
-                - https://laokou.org.cn
-                - https://ui
-                - http://ui
-            # 客户端请求访问时需要授权同意
-            require-authorization-consent: true
-            # PKCE
-            require-proof-key: false
-  threads:
-    virtual:
-      enabled: true
-
-logging:
-  config: classpath:log4j2-prod.xml
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    enabled: false
-    path: /v3/api-docs
-  group-configs:
-    - group: ''default''
-      paths-to-match: ''/**''
-      packages-to-scan: org.laokou.auth.web
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-      - boot_sys_user
-      - boot_sys_menu
-      - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '8b9b54cd3fbdd29f301918eeebd89565', '2024-05-25 18:13:10.697', '2024-10-16 23:15:17.672', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (2022, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
-spring:
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: -1
-      max-request-size: -1
-  cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            group-id: LAOKOU_GROUP
-            data-id: admin-flow.json
-            data-type: json
-            rule-type: flow
-            username: nacos
-            password: nacos
-        db1:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            group-id: LAOKOU_GROUP
-            data-id: admin-degrade.json
-            data-type: json
-            rule-type: degrade
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # 不开启虚拟线程
-  threads:
-    virtual:
-      enabled: true
-  liquibase:
-    enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.xml
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-
-logging:
-  config: classpath:log4j2-test.xml
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    enabled: true
-    path: /v3/api-docs
-  group-configs:
-    - group: ''default''
-      paths-to-match: ''/**''
-      packages-to-scan: org.laokou.admin.web
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '3f5ab00737ec66449e0ad8eacb6c3fdf', '2023-09-28 11:37:33', '2024-10-16 23:13:12.149', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (2025, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
-spring:
-  session:
-    redis:
-      repository-type: indexed
-      namespace: spring:session:auth
-    timeout: 3600
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-  cloud:
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            data-id: auth-flow.json
-            data-type: json
-            group-id: LAOKOU_GROUP
-            rule-type: flow
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    # network
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # OAuth2
-  security:
-    oauth2:
-      authorization-server:
-        enabled: true
-        # 多租户
-        multiple-issuers-allowed: false
-        client:
-          default:
-            token:
-              authorization-code-time-to-live: 1h
-              access-token-time-to-live: 1h
-              refresh-token-time-to-live: 6h
-              device-code-time-to-live: 1h
-            registration:
-              id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-name: OAuth2.1认证
-              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
-              client-authentication-methods:
-                - client_secret_basic
-              authorization-grant-types:
-                - password
-                - mail
-                - mobile
-                - client_credentials
-                - refresh_token
-                - authorization_code
-                - urn:ietf:params:oauth:grant-type:device_code
-                - urn:ietf:params:oauth:grant-type:jwt-bearer
-                - urn:ietf:params:oauth:grant-type:token-exchange
-              scopes:
-                - read
-                - write
-              redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://vue.laokou.org
-                - https://laokou.org.cn
-                - https://laokou.org.cn/api/webjars/oauth/oauth2.html
-                - http://laokou.org.cn/api/webjars/oauth/oauth2.html
-                - https://ui/api/webjars/oauth/oauth2.html
-                - http://ui/api/webjars/oauth/oauth2.html
-                - https://gateway:5555/webjars/oauth/oauth2.html
-                - http://gateway:5555/webjars/oauth/oauth2.html
-                - https://auth:1111/webjars/oauth/oauth2.html
-                - http://auth:1111/webjars/oauth/oauth2.html
-                - https://admin:9990/webjars/oauth/oauth2.html
-                - http://admin:9990/webjars/oauth/oauth2.html
-              post-logout-redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://vue.laokou.org
-                - https://laokou.org.cn
-                - https://ui
-                - http://ui
-            # 客户端请求访问时需要授权同意
-            require-authorization-consent: true
-            # PKCE
-            require-proof-key: false
-  threads:
-    virtual:
-      enabled: true
-
-logging:
-  config: classpath:log4j2-test.xml
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    enabled: true
-    path: /v3/api-docs
-  group-configs:
-    - group: ''default''
-      paths-to-match: ''/**''
-      packages-to-scan: org.laokou.auth.web
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-      - boot_sys_user
-      - boot_sys_menu
-      - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '5ee8dcd2ab0294561055ad74408b9cba', '2023-09-28 11:51:44', '2024-10-16 23:13:31.927', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (69, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: false
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: false
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
-spring:
-  session:
-    redis:
-      repository-type: indexed
-      namespace: spring:session:auth
-    timeout: 3600
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-  cloud:
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: http://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            data-id: auth-flow.json
-            data-type: json
-            group-id: LAOKOU_GROUP
-            rule-type: flow
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    # network
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # OAuth2
-  security:
-    oauth2:
-      authorization-server:
-        enabled: true
-        # 多租户
-        multiple-issuers-allowed: false
-        client:
-          default:
-            token:
-              authorization-code-time-to-live: 1h
-              access-token-time-to-live: 1h
-              refresh-token-time-to-live: 6h
-              device-code-time-to-live: 1h
-            registration:
-              id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-name: OAuth2.1认证
-              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
-              client-authentication-methods:
-                - client_secret_basic
-              authorization-grant-types:
-                - password
-                - mail
-                - mobile
-                - client_credentials
-                - refresh_token
-                - authorization_code
-                - urn:ietf:params:oauth:grant-type:device_code
-                - urn:ietf:params:oauth:grant-type:jwt-bearer
-                - urn:ietf:params:oauth:grant-type:token-exchange
-              scopes:
-                - read
-                - write
-              redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://vue.laokou.org
-                - https://laokou.org.cn
-                - https://laokou.org.cn/api/webjars/oauth/oauth2.html
-                - http://laokou.org.cn/api/webjars/oauth/oauth2.html
-                - https://ui/api/webjars/oauth/oauth2.html
-                - http://ui/api/webjars/oauth/oauth2.html
-                - https://gateway:5555/webjars/oauth/oauth2.html
-                - http://gateway:5555/webjars/oauth/oauth2.html
-                - https://auth:1111/webjars/oauth/oauth2.html
-                - http://auth:1111/webjars/oauth/oauth2.html
-                - https://admin:9990/webjars/oauth/oauth2.html
-                - http://admin:9990/webjars/oauth/oauth2.html
-              post-logout-redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://vue.laokou.org
-                - https://laokou.org.cn
-                - https://ui
-                - http://ui
-            # 客户端请求访问时需要授权同意
-            require-authorization-consent: true
-            # PKCE
-            require-proof-key: false
-  threads:
-    virtual:
-      enabled: true
-
-logging:
-  config: classpath:log4j2-dev.xml
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    enabled: true
-    path: /v3/api-docs
-  group-configs:
-    - group: ''default''
-      paths-to-match: ''/**''
-      packages-to-scan: org.laokou.auth.web
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-      - boot_sys_user
-      - boot_sys_menu
-      - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'e337bc2cd1b34ad7fed6aeb632808e16', '2024-05-25 18:13:33.452', '2024-10-16 23:14:38.115', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (26, 'router.json', 'LAOKOU_GROUP', '[
   {
     "id": "laokou-auth",
@@ -3334,6 +2434,861 @@ knife4j:
   enable: false
   setting:
     language: zh_cn', 'c66db97b9a5aa815bebd2afa9f09b7f8', '2024-05-25 18:13:10.622', '2024-10-18 19:18:39.146', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (2022, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: "default"
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: https://nacos:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            group-id: LAOKOU_GROUP
+            data-id: admin-flow.json
+            data-type: json
+            rule-type: flow
+            username: nacos
+            password: nacos
+        db1:
+          nacos:
+            server-addr: https://nacos:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            group-id: LAOKOU_GROUP
+            data-id: admin-degrade.json
+            data-type: json
+            rule-type: degrade
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # 不开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+
+logging:
+  config: classpath:log4j2-test.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.admin.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '16c359d75f00b21b2654166e795f8679', '2023-09-28 11:37:33', '2024-10-26 17:48:41.05', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (2025, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  session:
+    redis:
+      repository-type: indexed
+      namespace: spring:session:auth
+    timeout: 3600
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 60000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: https://nacos:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            data-id: auth-flow.json
+            data-type: json
+            group-id: LAOKOU_GROUP
+            rule-type: flow
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # OAuth2
+  security:
+    oauth2:
+      authorization-server:
+        enabled: true
+        # 多租户
+        multiple-issuers-allowed: false
+        client:
+          default:
+            token:
+              authorization-code-time-to-live: 1h
+              access-token-time-to-live: 1h
+              refresh-token-time-to-live: 6h
+              device-code-time-to-live: 1h
+            registration:
+              id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-name: OAuth2.1认证
+              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
+              client-authentication-methods:
+                - client_secret_basic
+              authorization-grant-types:
+                - password
+                - mail
+                - mobile
+                - client_credentials
+                - refresh_token
+                - authorization_code
+                - urn:ietf:params:oauth:grant-type:device_code
+                - urn:ietf:params:oauth:grant-type:jwt-bearer
+                - urn:ietf:params:oauth:grant-type:token-exchange
+              scopes:
+                - read
+                - write
+              redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+                - https://laokou.org.cn/api/webjars/oauth/oauth2.html
+                - http://laokou.org.cn/api/webjars/oauth/oauth2.html
+                - https://ui/api/webjars/oauth/oauth2.html
+                - http://ui/api/webjars/oauth/oauth2.html
+                - https://gateway:5555/webjars/oauth/oauth2.html
+                - http://gateway:5555/webjars/oauth/oauth2.html
+                - https://auth:1111/webjars/oauth/oauth2.html
+                - http://auth:1111/webjars/oauth/oauth2.html
+                - https://admin:9990/webjars/oauth/oauth2.html
+                - http://admin:9990/webjars/oauth/oauth2.html
+              post-logout-redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+                - https://ui
+                - http://ui
+            # 客户端请求访问时需要授权同意
+            require-authorization-consent: true
+            # PKCE
+            require-proof-key: false
+  threads:
+    virtual:
+      enabled: true
+
+logging:
+  config: classpath:log4j2-test.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.auth.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: true
+    ignore-tables:
+      - boot_sys_source
+      - boot_sys_tenant
+      - boot_domain_event
+      - boot_sys_user
+      - boot_sys_menu
+      - boot_sys_dept
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '253903cc91b01e4a7d4072e408980d53', '2023-09-28 11:51:44', '2024-10-26 17:49:11.407', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (69, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: false
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: false
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  session:
+    redis:
+      repository-type: indexed
+      namespace: spring:session:auth
+    timeout: 3600
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 60000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: http://nacos:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            data-id: auth-flow.json
+            data-type: json
+            group-id: LAOKOU_GROUP
+            rule-type: flow
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # OAuth2
+  security:
+    oauth2:
+      authorization-server:
+        enabled: true
+        # 多租户
+        multiple-issuers-allowed: false
+        client:
+          default:
+            token:
+              authorization-code-time-to-live: 1h
+              access-token-time-to-live: 1h
+              refresh-token-time-to-live: 6h
+              device-code-time-to-live: 1h
+            registration:
+              id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-name: OAuth2.1认证
+              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
+              client-authentication-methods:
+                - client_secret_basic
+              authorization-grant-types:
+                - password
+                - mail
+                - mobile
+                - client_credentials
+                - refresh_token
+                - authorization_code
+                - urn:ietf:params:oauth:grant-type:device_code
+                - urn:ietf:params:oauth:grant-type:jwt-bearer
+                - urn:ietf:params:oauth:grant-type:token-exchange
+              scopes:
+                - read
+                - write
+              redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+                - https://laokou.org.cn/api/webjars/oauth/oauth2.html
+                - http://laokou.org.cn/api/webjars/oauth/oauth2.html
+                - https://ui/api/webjars/oauth/oauth2.html
+                - http://ui/api/webjars/oauth/oauth2.html
+                - https://gateway:5555/webjars/oauth/oauth2.html
+                - http://gateway:5555/webjars/oauth/oauth2.html
+                - https://auth:1111/webjars/oauth/oauth2.html
+                - http://auth:1111/webjars/oauth/oauth2.html
+                - https://admin:9990/webjars/oauth/oauth2.html
+                - http://admin:9990/webjars/oauth/oauth2.html
+              post-logout-redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+                - https://ui
+                - http://ui
+            # 客户端请求访问时需要授权同意
+            require-authorization-consent: true
+            # PKCE
+            require-proof-key: false
+  threads:
+    virtual:
+      enabled: true
+
+logging:
+  config: classpath:log4j2-dev.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.auth.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: true
+    ignore-tables:
+      - boot_sys_source
+      - boot_sys_tenant
+      - boot_domain_event
+      - boot_sys_user
+      - boot_sys_menu
+      - boot_sys_dept
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'd8785b6c05cbfab213afdefd29857507', '2024-05-25 18:13:33.452', '2024-10-26 17:49:53.433', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (47, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  session:
+    redis:
+      repository-type: indexed
+      namespace: spring:session:auth
+    timeout: 3600
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 60000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: https://nacos:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            data-id: auth-flow.json
+            data-type: json
+            group-id: LAOKOU_GROUP
+            rule-type: flow
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # OAuth2
+  security:
+    oauth2:
+      authorization-server:
+        enabled: true
+        # 多租户
+        multiple-issuers-allowed: false
+        client:
+          default:
+            token:
+              authorization-code-time-to-live: 1h
+              access-token-time-to-live: 1h
+              refresh-token-time-to-live: 6h
+              device-code-time-to-live: 1h
+            registration:
+              id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-name: OAuth2.1认证
+              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
+              client-authentication-methods:
+                - client_secret_basic
+              authorization-grant-types:
+                - password
+                - mail
+                - mobile
+                - client_credentials
+                - refresh_token
+                - authorization_code
+                - urn:ietf:params:oauth:grant-type:device_code
+                - urn:ietf:params:oauth:grant-type:jwt-bearer
+                - urn:ietf:params:oauth:grant-type:token-exchange
+              scopes:
+                - read
+                - write
+              redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+                - https://laokou.org.cn/api/webjars/oauth/oauth2.html
+                - http://laokou.org.cn/api/webjars/oauth/oauth2.html
+                - https://ui/api/webjars/oauth/oauth2.html
+                - http://ui/api/webjars/oauth/oauth2.html
+                - https://gateway:5555/webjars/oauth/oauth2.html
+                - http://gateway:5555/webjars/oauth/oauth2.html
+                - https://auth:1111/webjars/oauth/oauth2.html
+                - http://auth:1111/webjars/oauth/oauth2.html
+                - https://admin:9990/webjars/oauth/oauth2.html
+                - http://admin:9990/webjars/oauth/oauth2.html
+              post-logout-redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+                - https://ui
+                - http://ui
+            # 客户端请求访问时需要授权同意
+            require-authorization-consent: true
+            # PKCE
+            require-proof-key: false
+  threads:
+    virtual:
+      enabled: true
+
+logging:
+  config: classpath:log4j2-prod.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: false
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.auth.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: true
+    ignore-tables:
+      - boot_sys_source
+      - boot_sys_tenant
+      - boot_domain_event
+      - boot_sys_user
+      - boot_sys_menu
+      - boot_sys_dept
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '5221bbdd27b08dc9fc7abdcd42c7f8d7', '2024-05-25 18:13:10.697', '2024-10-26 17:50:11.722', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (46, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: "default"
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: https://nacos:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            group-id: LAOKOU_GROUP
+            data-id: admin-flow.json
+            data-type: json
+            rule-type: flow
+            username: nacos
+            password: nacos
+        db1:
+          nacos:
+            server-addr: https://nacos:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            group-id: LAOKOU_GROUP
+            data-id: admin-degrade.json
+            data-type: json
+            rule-type: degrade
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # 不开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+
+logging:
+  config: classpath:log4j2-prod.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: false
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.admin.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'd09b32a864381eb9b4e24ae953da3ba1', '2024-05-25 18:13:10.69', '2024-10-26 17:50:31.643', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (36, 'router.json', 'LAOKOU_GROUP', '[
   {
     "id": "laokou-auth",
@@ -3629,6 +3584,210 @@ knife4j:
   enable: true
   setting:
     language: zh_cn', '6cd127e0de4ed6b9333d6087cdd03987', '2023-01-13 12:16:46', '2024-10-18 19:16:55.238', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (68, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: false
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: false
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: "default"
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: http://nacos:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            group-id: LAOKOU_GROUP
+            data-id: admin-flow.json
+            data-type: json
+            rule-type: flow
+            username: nacos
+            password: nacos
+        db1:
+          nacos:
+            server-addr: http://nacos:8848
+            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+            group-id: LAOKOU_GROUP
+            data-id: admin-degrade.json
+            data-type: json
+            rule-type: degrade
+            username: nacos
+            password: nacos
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # 不开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+
+logging:
+  config: classpath:log4j2-dev.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.admin.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'fcda382398edf5c428abca55fe8bc1b8', '2024-05-25 18:13:33.447', '2024-10-26 17:49:35.041', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" VALUES (2, 'application-shardingsphere.yaml', 'DEFAULT_GROUP', 'public-key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ4o6sn4WoPmbs7DR9mGQzuuUQM9erQTVPpwxIzB0ETYkyKffO097qXVRLA6KPmaV+/siWewR7vpfYYjWajw5KkCAwEAAQ==
+dataSources:
+  master:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: org.postgresql.Driver
+    jdbcUrl: jdbc:postgresql://postgresql:5432/kcloud_platform_test?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-sample-shardingsphere&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+    username: ENC(VZamSTMi224AH6RUtJGXNldiDp/XEL2ozRhBUu/o9ChodT4JEb9kE/j0EFhXKbjsfvLVacUW0AUzetA6OrNJug==)
+    password: ENC(laIHkPM/z03tYjA95hES4+BhyjyhvrPjJynrC65oDyXnUTP0Tge1UxwERWFBbHoOOQZ2GzzUrRhEYJ3jFb89eQ==)
+  slave:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: org.postgresql.Driver
+    jdbcUrl: jdbc:postgresql://postgresql:5432/kcloud_platform_test?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-sample-shardingsphere&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+    username: ENC(VZamSTMi224AH6RUtJGXNldiDp/XEL2ozRhBUu/o9ChodT4JEb9kE/j0EFhXKbjsfvLVacUW0AUzetA6OrNJug==)
+    password: ENC(laIHkPM/z03tYjA95hES4+BhyjyhvrPjJynrC65oDyXnUTP0Tge1UxwERWFBbHoOOQZ2GzzUrRhEYJ3jFb89eQ==)
+rules:
+- !SHARDING
+  tables:
+    boot_sys_user:
+      actualDataNodes: master.boot_sys_user_20240$->{1..9},master.boot_sys_user_2024$->{10..12}
+      tableStrategy:
+        standard:
+          shardingColumn: create_date
+          shardingAlgorithmName: laokou_table_inline
+      keyGenerateStrategy:
+        column: id
+        keyGeneratorName: snowflake
+  shardingAlgorithms:
+    laokou_table_inline:
+      # 时间范围分片算法
+      type: INTERVAL
+      props:
+          # 分片键的时间戳格式
+        datetime-pattern: "yyyy-MM-dd HH:mm:ss"
+        # 真实表的后缀格式
+        sharding-suffix-pattern: "yyyyMM"
+        # 时间分片下界值
+        datetime-lower: "2024-01-01 00:00:00"
+        # 时间分片上界值
+        datetime-upper: "2024-12-31 23:59:59"
+        # 分片间隔
+        datetime-interval-amount: 1
+        # 按月分表
+        datetime-interval-unit: "months"
+  keyGenerators:
+    snowflake:
+      type: SNOWFLAKE
+      props:
+        work-id: 123
+- !READWRITE_SPLITTING
+  dataSourceGroups:
+    laokou_readwrite_data_sources:
+      writeDataSourceName: master
+      readDataSourceNames: 
+        - slave
+      loadBalancerName: laokou_load_balance_algorithm
+  loadBalancers:
+    laokou_load_balance_algorithm:
+      type: ROUND_ROBIN
+props:
+  sql-show: true', '71f24dc33bc0a8cb31b1172c53cc4760', '2024-10-26 19:01:28.101', '2024-10-26 20:10:28.884', 'nacos', '0:0:0:0:0:0:0:1', '', '', '', '', '', 'yaml', '', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
@@ -3795,9 +3954,9 @@ INSERT INTO "public"."config_tags_relation" VALUES (1477, 'mail', '', 'applicati
 INSERT INTO "public"."config_tags_relation" VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 11);
 INSERT INTO "public"."config_tags_relation" VALUES (26, 'gateway', '', 'router.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 10);
 INSERT INTO "public"."config_tags_relation" VALUES (82, 'monitor', '', 'application-monitor.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 12);
-INSERT INTO "public"."config_tags_relation" VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 19);
-INSERT INTO "public"."config_tags_relation" VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 20);
 INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 1);
+INSERT INTO "public"."config_tags_relation" VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 2);
+INSERT INTO "public"."config_tags_relation" VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 3);
 
 -- ----------------------------
 -- Table structure for databasechangelog
@@ -4105,6 +4264,13 @@ SELECT setval('"public"."config_info_aggr_id_seq7"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_info_aggr_id_seq8"
+OWNED BY "public"."config_info_aggr"."id";
+SELECT setval('"public"."config_info_aggr_id_seq8"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."config_info_beta_id_seq"
 OWNED BY "public"."config_info_beta"."id";
 SELECT setval('"public"."config_info_beta_id_seq"', 1, false);
@@ -4157,6 +4323,13 @@ SELECT setval('"public"."config_info_beta_id_seq6"', 1, false);
 ALTER SEQUENCE "public"."config_info_beta_id_seq7"
 OWNED BY "public"."config_info_beta"."id";
 SELECT setval('"public"."config_info_beta_id_seq7"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_info_beta_id_seq8"
+OWNED BY "public"."config_info_beta"."id";
+SELECT setval('"public"."config_info_beta_id_seq8"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4217,6 +4390,13 @@ SELECT setval('"public"."config_info_id_seq7"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_info_id_seq8"
+OWNED BY "public"."config_info"."id";
+SELECT setval('"public"."config_info_id_seq8"', 2, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."config_info_tag_id_seq"
 OWNED BY "public"."config_info_tag"."id";
 SELECT setval('"public"."config_info_tag_id_seq"', 1, false);
@@ -4269,6 +4449,13 @@ SELECT setval('"public"."config_info_tag_id_seq6"', 1, false);
 ALTER SEQUENCE "public"."config_info_tag_id_seq7"
 OWNED BY "public"."config_info_tag"."id";
 SELECT setval('"public"."config_info_tag_id_seq7"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."config_info_tag_id_seq8"
+OWNED BY "public"."config_info_tag"."id";
+SELECT setval('"public"."config_info_tag_id_seq8"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4329,6 +4516,13 @@ SELECT setval('"public"."config_tags_relation_nid_seq7"', 1, true);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."config_tags_relation_nid_seq8"
+OWNED BY "public"."config_tags_relation"."nid";
+SELECT setval('"public"."config_tags_relation_nid_seq8"', 3, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."group_capacity_id_seq"
 OWNED BY "public"."group_capacity"."id";
 SELECT setval('"public"."group_capacity_id_seq"', 1, false);
@@ -4381,6 +4575,13 @@ SELECT setval('"public"."group_capacity_id_seq6"', 1, false);
 ALTER SEQUENCE "public"."group_capacity_id_seq7"
 OWNED BY "public"."group_capacity"."id";
 SELECT setval('"public"."group_capacity_id_seq7"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."group_capacity_id_seq8"
+OWNED BY "public"."group_capacity"."id";
+SELECT setval('"public"."group_capacity_id_seq8"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4441,6 +4642,13 @@ SELECT setval('"public"."his_config_info_nid_seq7"', 3, true);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."his_config_info_nid_seq8"
+OWNED BY "public"."his_config_info"."nid";
+SELECT setval('"public"."his_config_info_nid_seq8"', 17, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."tenant_capacity_id_seq"
 OWNED BY "public"."tenant_capacity"."id";
 SELECT setval('"public"."tenant_capacity_id_seq"', 1, false);
@@ -4493,6 +4701,13 @@ SELECT setval('"public"."tenant_capacity_id_seq6"', 1, false);
 ALTER SEQUENCE "public"."tenant_capacity_id_seq7"
 OWNED BY "public"."tenant_capacity"."id";
 SELECT setval('"public"."tenant_capacity_id_seq7"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."tenant_capacity_id_seq8"
+OWNED BY "public"."tenant_capacity"."id";
+SELECT setval('"public"."tenant_capacity_id_seq8"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -4551,9 +4766,16 @@ OWNED BY "public"."tenant_info"."id";
 SELECT setval('"public"."tenant_info_id_seq7"', 1, false);
 
 -- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."tenant_info_id_seq8"
+OWNED BY "public"."tenant_info"."id";
+SELECT setval('"public"."tenant_info_id_seq8"', 1, false);
+
+-- ----------------------------
 -- Auto increment value for config_info
 -- ----------------------------
-SELECT setval('"public"."config_info_id_seq7"', 1, false);
+SELECT setval('"public"."config_info_id_seq8"', 2, true);
 
 -- ----------------------------
 -- Indexes structure for table config_info
@@ -4572,7 +4794,7 @@ ALTER TABLE "public"."config_info" ADD CONSTRAINT "config_info_pkey" PRIMARY KEY
 -- ----------------------------
 -- Auto increment value for config_info_aggr
 -- ----------------------------
-SELECT setval('"public"."config_info_aggr_id_seq7"', 1, false);
+SELECT setval('"public"."config_info_aggr_id_seq8"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_aggr
@@ -4592,7 +4814,7 @@ ALTER TABLE "public"."config_info_aggr" ADD CONSTRAINT "config_info_aggr_pkey" P
 -- ----------------------------
 -- Auto increment value for config_info_beta
 -- ----------------------------
-SELECT setval('"public"."config_info_beta_id_seq7"', 1, false);
+SELECT setval('"public"."config_info_beta_id_seq8"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_beta
@@ -4611,7 +4833,7 @@ ALTER TABLE "public"."config_info_beta" ADD CONSTRAINT "config_info_beta_pkey" P
 -- ----------------------------
 -- Auto increment value for config_info_tag
 -- ----------------------------
-SELECT setval('"public"."config_info_tag_id_seq7"', 1, false);
+SELECT setval('"public"."config_info_tag_id_seq8"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_tag
@@ -4631,7 +4853,7 @@ ALTER TABLE "public"."config_info_tag" ADD CONSTRAINT "config_info_tag_pkey" PRI
 -- ----------------------------
 -- Auto increment value for config_tags_relation
 -- ----------------------------
-SELECT setval('"public"."config_tags_relation_nid_seq7"', 1, true);
+SELECT setval('"public"."config_tags_relation_nid_seq8"', 3, true);
 
 -- ----------------------------
 -- Indexes structure for table config_tags_relation
@@ -4658,7 +4880,7 @@ ALTER TABLE "public"."databasechangeloglock" ADD CONSTRAINT "databasechangeloglo
 -- ----------------------------
 -- Auto increment value for group_capacity
 -- ----------------------------
-SELECT setval('"public"."group_capacity_id_seq7"', 1, false);
+SELECT setval('"public"."group_capacity_id_seq8"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table group_capacity
@@ -4675,7 +4897,7 @@ ALTER TABLE "public"."group_capacity" ADD CONSTRAINT "group_capacity_pkey" PRIMA
 -- ----------------------------
 -- Auto increment value for his_config_info
 -- ----------------------------
-SELECT setval('"public"."his_config_info_nid_seq7"', 3, true);
+SELECT setval('"public"."his_config_info_nid_seq8"', 17, true);
 
 -- ----------------------------
 -- Indexes structure for table his_config_info
@@ -4715,7 +4937,7 @@ CREATE UNIQUE INDEX "roles_username_role_idx" ON "public"."roles" USING btree (
 -- ----------------------------
 -- Auto increment value for tenant_capacity
 -- ----------------------------
-SELECT setval('"public"."tenant_capacity_id_seq7"', 1, false);
+SELECT setval('"public"."tenant_capacity_id_seq8"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table tenant_capacity
@@ -4732,7 +4954,7 @@ ALTER TABLE "public"."tenant_capacity" ADD CONSTRAINT "tenant_capacity_pkey" PRI
 -- ----------------------------
 -- Auto increment value for tenant_info
 -- ----------------------------
-SELECT setval('"public"."tenant_info_id_seq7"', 1, false);
+SELECT setval('"public"."tenant_info_id_seq8"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table tenant_info

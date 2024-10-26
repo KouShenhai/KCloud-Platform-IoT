@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.adapter;
+package org.laokou.adapter.web;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.client.dto.clientobject.ReceiveCO;

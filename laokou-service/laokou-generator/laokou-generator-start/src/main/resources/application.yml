@@ -20,17 +20,17 @@ spring:
       datasource:
         master:
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: root
           password: laokou123
         domain:
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: root
           password: laokou123
         iot:
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: root
           password: laokou123
 
