@@ -5,18 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.laokou</groupId>
-    <artifactId>KCloud-Platform-IoT</artifactId>
+    <artifactId>laokou-sample</artifactId>
     <version>3.4.0</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>laokou-sample</artifactId>
+  <artifactId>laokou-sample-tcp</artifactId>
   <version>3.4.0</version>
-  <packaging>pom</packaging>
-  <modules>
-      <module>laokou-sample-websocket</module>
-      <module>laokou-sample-shardingsphere</module>
-      <module>laokou-sample-tcp</module>
-  </modules>
 
 </project>
