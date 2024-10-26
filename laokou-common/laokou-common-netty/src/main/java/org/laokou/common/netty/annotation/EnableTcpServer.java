@@ -15,26 +15,20 @@
  *
  */
 
-package org.laokou.iot;
+package org.laokou.common.netty.annotation;
 
-import org.laokou.common.mqtt.annotation.EnableMqtt;
-import org.springframework.boot.WebApplicationType;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.laokou.common.netty.config.TcpServerConfig;
+import org.springframework.context.annotation.Import;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.lang.annotation.*;
 
 /**
  * @author laokou
  */
-@EnableMqtt
-@SpringBootApplication(scanBasePackages = "org.laokou")
-public class IotApp {
-
-	public static void main(String[] args) throws UnknownHostException {
-		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
-		new SpringApplicationBuilder(IotApp.class).web(WebApplicationType.SERVLET).run(args);
-	}
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import({ TcpServerConfig.class })
+public @interface EnableTcpServer {
 
 }

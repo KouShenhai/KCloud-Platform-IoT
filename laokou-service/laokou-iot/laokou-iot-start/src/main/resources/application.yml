@@ -25,7 +25,6 @@ spring:
     worker-core-size: 32
     service-id: ${spring.application.name}-server
   mqtt-broker:
-    enabled: true
     configs:
       default:
         username: emqx

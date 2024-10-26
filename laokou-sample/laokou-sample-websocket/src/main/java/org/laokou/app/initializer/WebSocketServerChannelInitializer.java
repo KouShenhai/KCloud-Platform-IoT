@@ -21,17 +21,17 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
 import io.netty.util.concurrent.EventExecutorGroup;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.netty.annotation.WebSocketServer;
 import org.laokou.common.netty.config.AbstractWebSocketServerChannelInitializer;
 import org.laokou.common.netty.config.SpringWebSocketServerProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * WebSocket处理类.
  *
  * @author laokou
  */
+@WebSocketServer
 @RequiredArgsConstructor
-@Component("webSocketChannelHandler")
 public class WebSocketServerChannelInitializer extends AbstractWebSocketServerChannelInitializer {
 
 	private final ChannelInboundHandlerAdapter webSocketServerHandler;

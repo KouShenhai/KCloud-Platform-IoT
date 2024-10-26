@@ -31,8 +31,6 @@ import java.time.Duration;
 @ConfigurationProperties(prefix = "spring.task-execution")
 public class SpringTaskExecutionProperties {
 
-	private boolean enabled = false;
-
 	private Pool pool = new Pool();
 
 	private ForkJoinPool forkJoinPool = new ForkJoinPool();

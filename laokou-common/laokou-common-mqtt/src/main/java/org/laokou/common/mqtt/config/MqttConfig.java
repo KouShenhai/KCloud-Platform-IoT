@@ -18,16 +18,12 @@
 package org.laokou.common.mqtt.config;
 
 import org.laokou.common.mqtt.template.MqttTemplate;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
 /**
  * @author laokou
  */
-@AutoConfiguration
-@ConditionalOnProperty(prefix = "spring.mqtt-broker", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class MqttAutoConfig {
+public class MqttConfig {
 
 	@Bean(name = "mqttManager", initMethod = "open", destroyMethod = "close")
 	public MqttManager mqttManager(SpringMqttBrokerProperties springMqttBrokerProperties,

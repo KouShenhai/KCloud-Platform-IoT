@@ -32,26 +32,6 @@ import org.springframework.stereotype.Component;
 public class SpringWebSocketServerProperties {
 
 	/**
-	 * 开关，默认不开启.
-	 */
-	private boolean enabled = false;
-
-	/**
-	 * 监听核心线程数.
-	 */
-	private Integer bossCoreSize = 1;
-
-	/**
-	 * 读写核心线程数.
-	 */
-	private Integer workerCoreSize = 8;
-
-	/**
-	 * 线程池数.
-	 */
-	private Integer corePoolSize = 8;
-
-	/**
 	 * IP.
 	 */
 	private String ip;
@@ -100,5 +80,20 @@ public class SpringWebSocketServerProperties {
 	 * 全部时间.
 	 */
 	private long allIdleTime = 0;
+
+	/**
+	 * 监听核心线程数.
+	 */
+	private Integer bossCoreSize = 1;
+
+	/**
+	 * 读写核心线程数.
+	 */
+	private Integer workerCoreSize = 8;
+
+	/**
+	 * 线程池数.
+	 */
+	private Integer corePoolSize = 8;
 
 }
