@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class MqttManager {
 
-	private static final Map<String, MqttClient> MQTT_SESSION_MAP = new ConcurrentHashMap<>(16);
+	private static final Map<String, MqttClient> MQTT_SESSION_MAP = new ConcurrentHashMap<>(4096);
 
 	private final SpringMqttBrokerProperties springMqttBrokerProperties;
 
