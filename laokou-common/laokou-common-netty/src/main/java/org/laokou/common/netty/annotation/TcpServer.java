@@ -15,50 +15,16 @@
  *
  */
 
-package org.laokou.common.netty.config;
+package org.laokou.common.netty.annotation;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-/**
- * TcpServer属性配置.
- *
- * @author laokou
- */
-@Data
-@Component
-@ConfigurationProperties(prefix = "spring.tcp-server")
-public class SpringTcpServerProperties {
+import java.lang.annotation.*;
 
-	/**
-	 * IP.
-	 */
-	private String ip;
-
-	/**
-	 * 端口.
-	 */
-	private int port;
-
-	/**
-	 * 服务ID.
-	 */
-	private String serviceId;
-
-	/**
-	 * 监听核心线程数.
-	 */
-	private Integer bossCoreSize = 1;
-
-	/**
-	 * 读写核心线程数.
-	 */
-	private Integer workerCoreSize = 8;
-
-	/**
-	 * 线程池数.
-	 */
-	private Integer corePoolSize = 8;
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Component("tcpServerChannelInitializer")
+public @interface TcpServer {
 
 }

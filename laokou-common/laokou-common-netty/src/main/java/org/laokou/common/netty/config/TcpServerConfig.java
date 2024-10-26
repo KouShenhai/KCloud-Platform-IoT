@@ -21,24 +21,21 @@ import io.netty.channel.ChannelHandler;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import io.netty.util.concurrent.EventExecutorGroup;
 import io.netty.util.concurrent.UnorderedThreadPoolEventExecutor;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
 // @formatter:off
 /**
  * @author laokou
  */
-@AutoConfiguration
-@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.tcp-server", name = "enabled")
-public class TcpServerAutoConfig {
+public class TcpServerConfig {
 
     @Bean(name = "tcpServer", initMethod = "start", destroyMethod = "stop")
-    public Server tcpServer(SpringTcpServerProperties springTcpServerProperties,
-                            ChannelHandler tcpServerChannelInitializer) {
-        return new TcpServer(springTcpServerProperties.getIp(), springTcpServerProperties.getPort(),
-                tcpServerChannelInitializer, springTcpServerProperties.getBossCoreSize(),
-                springTcpServerProperties.getWorkerCoreSize());
+	public Server tcpServer(SpringTcpServerProperties springTcpServerProperties, ChannelHandler tcpServerChannelInitializer) {
+        return new TcpServer(springTcpServerProperties.getIp()
+			, springTcpServerProperties.getPort()
+			, tcpServerChannelInitializer
+			, springTcpServerProperties.getBossCoreSize()
+			, springTcpServerProperties.getWorkerCoreSize());
     }
 
     @Bean

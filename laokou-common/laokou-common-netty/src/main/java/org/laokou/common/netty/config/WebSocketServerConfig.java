@@ -21,23 +21,19 @@ import io.netty.channel.ChannelHandler;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import io.netty.util.concurrent.EventExecutorGroup;
 import io.netty.util.concurrent.UnorderedThreadPoolEventExecutor;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
 // @formatter:off
 /**
  * @author laokou
  */
-@AutoConfiguration
-@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.websocket-server", name = "enabled")
-public class WebSocketServerAutoConfig {
+public class WebSocketServerConfig {
 
     @Bean(name = "webSocketServer", initMethod = "start", destroyMethod = "stop")
-    public Server webSocketServer(ChannelHandler webSocketChannelHandler,SpringWebSocketServerProperties springWebSocketServerProperties) {
+	public Server webSocketServer(ChannelHandler webSocketServerChannelInitializer,SpringWebSocketServerProperties springWebSocketServerProperties) {
         return new WebSocketServer(springWebSocketServerProperties.getIp()
 			, springWebSocketServerProperties.getPort()
-			, webSocketChannelHandler
+			, webSocketServerChannelInitializer
 			, springWebSocketServerProperties.getBossCoreSize()
 			, springWebSocketServerProperties.getWorkerCoreSize());
     }

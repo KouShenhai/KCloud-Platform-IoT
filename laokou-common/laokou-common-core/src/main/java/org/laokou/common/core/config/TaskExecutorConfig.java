@@ -18,12 +18,8 @@
 package org.laokou.common.core.config;
 
 import com.alibaba.ttl.threadpool.TtlExecutors;
-import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.SpringUtil;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
@@ -33,11 +29,7 @@ import java.util.concurrent.Executor;
  *
  * @author laokou
  */
-@EnableAsync
-@AutoConfiguration
-@RequiredArgsConstructor
-@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.task-execution", name = "enabled")
-public class TaskExecutorAutoConfig {
+public class TaskExecutorConfig {
 
 	/**
 	 * 线程池名称.
