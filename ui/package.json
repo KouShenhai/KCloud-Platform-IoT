@@ -18,7 +18,7 @@
     "antd": "^5.4.4",
     "js-export-excel": "^1.1.4",
     "jsencrypt": "^3.3.2",
-    "uuid": "^10.0.0"
+    "uuid": "^11.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.33",
