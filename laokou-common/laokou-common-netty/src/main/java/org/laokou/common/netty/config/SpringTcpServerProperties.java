@@ -71,4 +71,19 @@ public class SpringTcpServerProperties {
 	 */
 	private int backlogLength = 1024;
 
+	/**
+	 * 读取空闲时间.
+	 */
+	private long readerIdleTime = 60;
+
+	/**
+	 * 写入空闲时间.
+	 */
+	private long writerIdleTime = 0;
+
+	/**
+	 * 全部时间.
+	 */
+	private long allIdleTime = 0;
+
 }

@@ -19,7 +19,6 @@ package org.laokou.common.netty.config;
 
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
 
 import java.util.concurrent.TimeUnit;
@@ -32,18 +31,16 @@ public abstract class AbstractTcpServerChannelInitializer extends AbstractChanne
 	@Override
 	protected void initChannel(SocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
+		SpringTcpServerProperties properties = getProperties();
 		// 前置处理
 		preHandler(pipeline);
-		// 定长截取
-		pipeline.addLast("fixedLengthFrameDecoder", new FixedLengthFrameDecoder(55));
-		// 扩展处理
-		extHandler(pipeline);
 		// 心跳检测
-		pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, TimeUnit.SECONDS));
+		pipeline.addLast("idleStateHandler", new IdleStateHandler(properties.getReaderIdleTime(),
+				properties.getWriterIdleTime(), properties.getAllIdleTime(), TimeUnit.SECONDS));
 		// 后置处理
 		postHandler(pipeline);
 	}
 
-	abstract protected void extHandler(ChannelPipeline pipeline);
+	protected abstract SpringTcpServerProperties getProperties();
 
 }

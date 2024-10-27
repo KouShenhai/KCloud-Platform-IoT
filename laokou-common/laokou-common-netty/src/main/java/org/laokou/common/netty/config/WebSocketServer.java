@@ -33,7 +33,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
  * @author laokou
  */
 @Slf4j
-public class WebSocketServer extends AbstractServer {
+public final class WebSocketServer extends AbstractServer {
 
 	private final SpringWebSocketServerProperties properties;
 

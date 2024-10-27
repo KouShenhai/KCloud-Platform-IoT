@@ -28,7 +28,7 @@ import io.netty.util.concurrent.DefaultThreadFactory;
 /**
  * @author laokou
  */
-public class TcpServer extends AbstractServer {
+public final class TcpServer extends AbstractServer {
 
 	private final SpringTcpServerProperties properties;
 
@@ -60,7 +60,7 @@ public class TcpServer extends AbstractServer {
 
 	@Override
 	public void send(String clientId, Object obj) {
-
+		throw new UnsupportedOperationException("不支持发送操作");
 	}
 
 }

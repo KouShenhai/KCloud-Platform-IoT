@@ -25,6 +25,7 @@ import io.netty.handler.codec.http.websocketx.PingWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
+import io.netty.util.ReferenceCountUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -47,22 +48,40 @@ import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 @RequiredArgsConstructor
 public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 
+	/**
+	 * see
+	 * {@link io.netty.channel.SimpleChannelInboundHandler#channelRead(ChannelHandlerContext, Object)}.
+	 * @param ctx 处理器上下文
+	 * @param msg 消息
+	 */
 	@Override
 	@SneakyThrows
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
-		if (msg instanceof WebSocketFrame frame) {
-			if (frame instanceof PingWebSocketFrame pingWebSocketFrame) {
-				ctx.writeAndFlush(new PongWebSocketFrame(pingWebSocketFrame.content().retain()));
-			}
-			else if (frame instanceof TextWebSocketFrame textWebSocketFrame) {
-				read(ctx, textWebSocketFrame);
+		boolean release = true;
+		try {
+			if (msg instanceof WebSocketFrame frame) {
+				if (frame instanceof PingWebSocketFrame pingWebSocketFrame) {
+					ctx.writeAndFlush(new PongWebSocketFrame(pingWebSocketFrame.content().retain()));
+				}
+				else if (frame instanceof TextWebSocketFrame textWebSocketFrame) {
+					read(ctx, textWebSocketFrame);
+				}
+				else {
+					// 传递下一个处理器
+					release = false;
+					super.channelRead(ctx, msg);
+				}
 			}
 			else {
+				// 传递下一个处理器
+				release = false;
 				super.channelRead(ctx, msg);
 			}
 		}
-		else {
-			super.channelRead(ctx, msg);
+		finally {
+			if (release) {
+				ReferenceCountUtil.release(msg);
+			}
 		}
 	}
 

@@ -18,28 +18,44 @@
 package org.laokou.app.initializer;
 
 import io.netty.channel.ChannelPipeline;
+import io.netty.handler.codec.FixedLengthFrameDecoder;
+import lombok.RequiredArgsConstructor;
+import org.laokou.app.handler.TcpDecoder;
+import org.laokou.app.handler.TcpEncoder;
+import org.laokou.app.handler.TcpServerHandler;
 import org.laokou.common.netty.annotation.TcpServer;
 import org.laokou.common.netty.config.AbstractTcpServerChannelInitializer;
+import org.laokou.common.netty.config.SpringTcpServerProperties;
 
 /**
  * @author laokou
  */
 @TcpServer
+@RequiredArgsConstructor
 public class TcpServerChannelInitializer extends AbstractTcpServerChannelInitializer {
 
-	@Override
-	protected void extHandler(ChannelPipeline pipeline) {
+	private final SpringTcpServerProperties springTcpServerProperties;
 
-	}
+	private final TcpServerHandler tcpServerHandler;
 
 	@Override
 	protected void preHandler(ChannelPipeline pipeline) {
-
+		// 定长截取
+		pipeline.addLast("fixedLengthFrameDecoder", new FixedLengthFrameDecoder(2));
+		// 解码
+		pipeline.addLast(new TcpDecoder());
+		// 编码
+		pipeline.addLast(new TcpEncoder());
 	}
 
 	@Override
 	protected void postHandler(ChannelPipeline pipeline) {
+		pipeline.addLast("tcpServerHandler", tcpServerHandler);
+	}
 
+	@Override
+	protected SpringTcpServerProperties getProperties() {
+		return springTcpServerProperties;
 	}
 
 }

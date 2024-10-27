@@ -15,6 +15,9 @@ spring:
     service-id: ${spring.application.name}-server
     backlog-length: 4096
     tcp-nodelay: false
+    all-idle-time: 0
+    reader-idle-time: 60
+    writer-idle-time: 0
 
 logging:
   config: classpath:log4j2.xml
