@@ -216,6 +216,7 @@ export default () => {
 				mail: {text: '邮箱登录', status: 'Success'},
 				authorization_code: {text: '授权码登录', status: 'Error'}
 			},
+			width: 160,
 			ellipsis: true
 		},
 		{
